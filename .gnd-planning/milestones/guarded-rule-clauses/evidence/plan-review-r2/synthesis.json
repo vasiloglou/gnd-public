@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "run_sha256": "d65d882dfbe5c33b0e63f6cba37270ffc782d3375f97e8292a17f24df559b8ba",
+  "summary": "Four valid reviews confirmed the main r1 repairs. Negative membership oracle coverage and existential unknown precedence each had multiple reviewers. A divergent finding identifies the derived-relation constraint view as the correct input for GC2 negation. Gemini and Kimi returned malformed responses.",
+  "agreed_concerns": [
+    {
+      "group_id": "negative-oracle",
+      "severity": "high",
+      "title": "Pin a differential oracle for not in",
+      "summary": "GC1 must compare both membership operators. Cover the negated helper with a covered absence and assert the comparable domain.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc1-not-in-differential-unspecified"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-not-in-oracle"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc-plan-r2-notin-differential-wording"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "exists-unknown",
+      "severity": "high",
+      "title": "Preserve the existing existential result inside any_of",
+      "summary": "Apply true-over-unknown between alternatives after evaluating each exists with its existing local precedence.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc3-exists-alternative-undefined-drift"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc3-exists-unknown-precedence"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc1-temporal-guard-path-unnamed"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc2-derived-view-vs-completed-extensions"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc2-empty-negated-relation-vacuity"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc2-n4-negation-only-pass-unreachable"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "gc1-literal-domain-walk"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "gc-plan-r2-ruleids-feedback-uncovered"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "bullet1-verbalization-mapping"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "d1-proposed-but-treated-as-decided"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "diagnostics-version-policy-inconsistent"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "differential-populations-vacuous-gates"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "duration-day-count-normalization-granularity"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "exhaustive-domain-refusal-unmapped-gc2-gc3"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "exporter-gates-cannot-fail"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc1-membership-identity-vs-helper-equality"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc2-unknown-filter-aggregation-unpinned"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "oneof-schema-error-identity-drift"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "negative-oracle",
+      "rank": 1,
+      "title": "Pin a differential oracle for not in",
+      "action": "GC1 must compare both membership operators. Cover the negated helper with a covered absence and assert the comparable domain.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc1-not-in-differential-unspecified"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-not-in-oracle"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc-plan-r2-notin-differential-wording"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc1-not-in-differential-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-not-in-oracle",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc-plan-r2-notin-differential-wording",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "exists-unknown",
+      "rank": 2,
+      "title": "Preserve the existing existential result inside any_of",
+      "action": "Apply true-over-unknown between alternatives after evaluating each exists with its existing local precedence.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc3-exists-alternative-undefined-drift"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc3-exists-unknown-precedence"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc3-exists-alternative-undefined-drift",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc3-exists-unknown-precedence",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

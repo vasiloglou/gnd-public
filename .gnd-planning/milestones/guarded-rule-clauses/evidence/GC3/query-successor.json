@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "reason": "Count two typed snapshot lookups for the disjunction reference and one typed wire diagnostic read. The accessed data are not Model documents.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-clauses/evidence/GC2/query-successor.json",
+  "predecessor_sha256": "318031033e09e219eb45899076a1fa50e538478e812aabca853119afb95d3c11",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/commands/checking.py",
+      "_cmd_check",
+      "alternative['fact_types']",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "_reference_guarded_disjunction",
+      "snapshot.fact_types",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "guarded_relation_availability",
+      "snapshot.fact_types",
+      1
+    ]
+  ],
+  "result_distinct_rows": 291,
+  "result_occurrences": 359,
+  "original_metric_current": 303
+}

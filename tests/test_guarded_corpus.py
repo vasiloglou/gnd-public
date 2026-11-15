@@ -395,8 +395,8 @@ def test_indexed_guarded_join_preserves_reference_bindings(case):
     snapshot = adapt_snapshot_observed(model, population).snapshot
     constraint = next(row for row in snapshot.constraints if row.ref == case['constraint_ref'])
     expected = semantic_spec.guarded_bindings(constraint, snapshot)
-    actual = _indexed_guarded_bindings(constraint, snapshot)
-    assert actual == (expected[0], expected[1], tuple(expected[2]))
+    valid, names, bindings, _observation = _indexed_guarded_bindings(constraint, snapshot)
+    assert (valid, names, bindings) == (expected[0], expected[1], tuple(expected[2]))
 
 
 def test_indexed_guarded_join_keeps_exact_work_boundary():

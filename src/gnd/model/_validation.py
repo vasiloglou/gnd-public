@@ -71,10 +71,15 @@ from gnd.model._unattended import _rule_unattended
 from gnd.terms import (
     DEFAULT_LIMITS,
     FLOAT_FUNCTION_ARITY,
+    MAX_MEMBERSHIP_ITEMS,
+    MEMBERSHIP_OPERATORS,
     NUMERIC_PRIMITIVES,
     analyze_term,
+    compile_membership,
     is_function_term,
+    membership_domain,
     term_variables,
+    valid_duration,
 )
 from gnd.universe import (
     DERIVATION_TERM_CACHE as _DERIVATION_TERM_CACHE,
@@ -2331,39 +2336,85 @@ def _iter_guarded_atoms(constraint: Any):
     if isinstance(antecedent, list):
         for index, atom in enumerate(antecedent):
             yield f".antecedent[{index}]", atom
-    consequent = constraint.get("consequent")
+    negate = constraint.get("negate")
+    if isinstance(negate, list):
+        for index, atom in enumerate(negate):
+            yield f".negate[{index}]", atom
+    for prefix, consequent in _guarded_alternatives(constraint.get("consequent")):
+        for kind in ("atom", "absence"):
+            if kind in consequent:
+                yield f"{prefix}.{kind}", consequent[kind]
+        exists = consequent.get("exists")
+        if isinstance(exists, dict) and isinstance(exists.get("atoms"), list):
+            for index, atom in enumerate(exists["atoms"]):
+                yield f"{prefix}.exists.atoms[{index}]", atom
+
+
+def _guarded_alternatives(consequent):
+    """Yield each single consequent and its document path suffix."""
     if not isinstance(consequent, dict):
         return
-    for kind in ("atom", "absence"):
-        if kind in consequent:
-            yield f".consequent.{kind}", consequent.get(kind)
-    exists = consequent.get("exists")
-    if isinstance(exists, dict) and isinstance(exists.get("atoms"), list):
-        for index, atom in enumerate(exists["atoms"]):
-            yield f".consequent.exists.atoms[{index}]", atom
+    alternatives = consequent.get("any_of")
+    if isinstance(alternatives, list):
+        for index, alternative in enumerate(alternatives):
+            if isinstance(alternative, dict):
+                yield f".consequent.any_of[{index}]", alternative
+    else:
+        yield ".consequent", consequent
+
+
+def _iter_guarded_scopes(doc):
+    """Use the shared antecedent with one consequent's local variable scope."""
+    for path, constraint in _iter_guarded_constraints(doc):
+        for prefix, consequent in _guarded_alternatives(constraint.get("consequent")):
+            yield path, prefix, {**constraint, "consequent": consequent}
 
 
 def _iter_guarded_consequent_terms(constraint: Any):
-    """Yield ``(suffix, term)`` for every term used by a guarded consequent."""
-    if not isinstance(constraint, dict):
-        return
+    """Yield path and term for each single consequent's grounding check."""
     consequent = constraint.get("consequent")
-    if not isinstance(consequent, dict):
-        return
-    for kind in ("atom", "absence"):
-        atom = consequent.get(kind)
-        if not isinstance(atom, dict):
-            continue
-        bind = atom_bind(atom)
-        if not isinstance(bind, dict):
-            continue
-        for role_name, term in bind.items():
-            yield f".consequent.{kind}.bind[{role_name}]", term
-    comparison = consequent.get("comparison")
-    if isinstance(comparison, dict):
-        for side in ("left", "right"):
-            if side in comparison:
-                yield f".consequent.comparison.{side}", comparison.get(side)
+    for prefix, alternative in _guarded_alternatives(consequent):
+        for kind in ("atom", "absence"):
+            for role_name, term in atom_bind(alternative.get(kind)).items():
+                yield f"{prefix}.{kind}.bind[{role_name}]", term
+    for path, comparison in _iter_guarded_comparisons(consequent):
+        if path.endswith(".comparison") or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+            yield from _iter_guarded_comparison_terms(path, comparison)
+
+
+def _iter_guarded_comparisons(consequent, where=None):
+    if isinstance(where, list):
+        for index, comparison in enumerate(where):
+            if isinstance(comparison, dict):
+                yield f".where[{index}]", comparison
+    for prefix, alternative in _guarded_alternatives(consequent):
+        direct = alternative.get("comparison")
+        if isinstance(direct, dict):
+            yield f"{prefix}.comparison", direct
+        exists = alternative.get("exists")
+        if isinstance(exists, dict) and isinstance(exists.get("where"), list):
+            for index, comparison in enumerate(exists["where"]):
+                if isinstance(comparison, dict):
+                    yield f"{prefix}.exists.where[{index}]", comparison
+
+
+def _iter_guarded_memberships(guard):
+    for path, comparison in _iter_guarded_comparisons(guard.get("consequent"), guard.get("where")):
+        right = comparison.get("right")
+        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
+            yield comparison.get("left"), right, path
+
+
+def _iter_guarded_comparison_terms(path, comparison):
+    if "left" in comparison:
+        yield f"{path}.left", comparison["left"]
+    if "right" in comparison:
+        right = comparison["right"]
+        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
+            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
+                yield f"{path}.right[{index}]", member
+        else:
+            yield f"{path}.right", right
 
 
 def _rule_guarded_term_ref(doc: dict[str, Any]) -> list[ValidationIssue]:
@@ -2528,46 +2579,65 @@ def _rule_guarded_literal_domain(doc: dict[str, Any]) -> list[ValidationIssue]:
                 return False
         return True
 
-    for ref, guard in guards:
+    def literals(guard):
+        sites = {}
         for suffix, atom in _iter_guarded_atoms(guard):
             if not isinstance(atom, dict) or not isinstance(atom.get("fact_type"), str):
                 continue
             fact = atom["fact_type"]
             for role, value in atom_bind(atom).items():
-                role_type = roles.get(fact, {}).get(role)
-                if role_type not in objects_by_id or _variable_name(value) is not None:
-                    continue
-                if type(value) not in (bool, int, float, str):
-                    continue
-                raw = canonical_scalar(value, None)
-                if not isinstance(raw, Scalar):
-                    continue
-                path = f"{ref}{suffix}.bind[{role}]"
-                try:
-                    domains = chain(
-                        by_role.get((fact, role), ()), chain.from_iterable(domains_for_type(role_type))
-                    )
-                    restricting = []
-                    for domain_ref, domain in domains:
-                        charge()
-                        key = domain_ref, raw.identity_kind, raw.token
-                        if key not in tested:
-                            tested[key] = excluded(value, raw, domain)
-                        if tested[key]:
-                            restricting.append(domain_ref)
-                except _GuardedLiteralDomainLimit:
-                    issues.append(ValidationIssue(
-                        path=path, severity="warning",
-                        rule_id="semantic:guarded-literal-domain-work-limit",
-                        message="Guarded literal domain validation reached its work limit.",
-                    ))
-                    return issues
-                if restricting:
-                    issues.append(ValidationIssue(
-                        path=path, severity="warning",
-                        rule_id="semantic:guarded-literal-outside-domain",
-                        message=f"Literal lies outside the value domain declared by {', '.join(restricting)}.",
-                    ))
+                variable = _variable_name(value)
+                if variable is None:
+                    yield f"{suffix}.bind[{role}]", fact, role, value
+                elif suffix.startswith(".antecedent[") or ".exists.atoms[" in suffix:
+                    scope = "" if suffix.startswith(".antecedent[") else suffix.split(".exists.", 1)[0]
+                    sites.setdefault((scope, variable), set()).add((fact, role))
+        for left, right, prefix in _iter_guarded_memberships(guard):
+            variable = _variable_name(left)
+            scope = prefix.split(".exists.", 1)[0] if ".exists." in prefix else ""
+            roles_for_left = sorted(sites.get(("", variable), set()) | sites.get((scope, variable), set()))
+            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
+                if isinstance(member, dict) and set(member) in ({"date"}, {"duration_days"}):
+                    member = next(iter(member.values()))
+                for fact, role in roles_for_left:
+                    yield f"{prefix}.right[{index}]", fact, role, member
+
+    for ref, guard in guards:
+        for suffix, fact, role, value in literals(guard):
+            role_type = roles.get(fact, {}).get(role)
+            if role_type not in objects_by_id or _variable_name(value) is not None:
+                continue
+            if type(value) not in (bool, int, float, str):
+                continue
+            raw = canonical_scalar(value, None)
+            if not isinstance(raw, Scalar):
+                continue
+            path = f"{ref}{suffix}"
+            try:
+                domains = chain(
+                    by_role.get((fact, role), ()), chain.from_iterable(domains_for_type(role_type))
+                )
+                restricting = []
+                for domain_ref, domain in domains:
+                    charge()
+                    key = domain_ref, raw.identity_kind, raw.token
+                    if key not in tested:
+                        tested[key] = excluded(value, raw, domain)
+                    if tested[key]:
+                        restricting.append(domain_ref)
+            except _GuardedLiteralDomainLimit:
+                issues.append(ValidationIssue(
+                    path=path, severity="warning",
+                    rule_id="semantic:guarded-literal-domain-work-limit",
+                    message="Guarded literal domain validation reached its work limit.",
+                ))
+                return issues
+            if restricting:
+                issues.append(ValidationIssue(
+                    path=path, severity="warning",
+                    rule_id="semantic:guarded-literal-outside-domain",
+                    message=f"Literal lies outside the value domain declared by {', '.join(restricting)}.",
+                ))
     return issues
 
 
@@ -2578,7 +2648,7 @@ class _GuardedLiteralDomainLimit(Exception):
 def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every guarded consequent variable is bound by its antecedent or exists atom."""
     issues: list[ValidationIssue] = []
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         bound: set[str] = set()
         antecedent = constraint.get("antecedent")
         if isinstance(antecedent, list):
@@ -2614,7 +2684,7 @@ def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue
             if unbound:
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}{suffix}",
+                        path=path + prefix + suffix.removeprefix(".consequent"),
                         message=(
                             f"consequent variables {sorted('$' + item for item in unbound)} "
                             f"{grounding_message}"
@@ -2622,6 +2692,85 @@ def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue
                         rule_id="semantic:guarded-consequent-ground",
                     )
                 )
+    return issues
+
+
+def _rule_guarded_filters(doc: dict[str, Any]) -> list[ValidationIssue]:
+    issues = []
+    guards = [(path, guard) for path, guard in _iter_guarded_constraints(doc)
+              if "negate" in guard or "where" in guard]
+    if not guards or not all(isinstance(doc.get(field, []), list)
+                             for field in ("fact_types", "object_types")):
+        return issues
+    role_types, primitives = _primitive_maps(doc)
+    for path, guard in guards:
+        scopes: dict[str, set[str]] = {}
+        for suffix, atom in _iter_guarded_atoms(guard):
+            if not suffix.startswith(".antecedent[") or not isinstance(atom, dict):
+                continue
+            for role, term in atom_bind(atom).items():
+                variable = _variable_name(term)
+                if variable is not None:
+                    object_type = role_types.get(str(atom.get("fact_type")), {}).get(str(role))
+                    choices = scopes.setdefault(variable, set())
+                    primitive = primitives.get(object_type or "")
+                    if primitive is not None:
+                        choices.add(primitive)
+        types = {
+            variable: next(iter(choices)) if len(choices) == 1 else "Number"
+            for variable, choices in scopes.items()
+            if choices and (len(choices) == 1 or choices <= NUMERIC_PRIMITIVES)
+        }
+        terms = []
+        for suffix, atom in _iter_guarded_atoms(guard):
+            if not suffix.startswith(".negate[") or not isinstance(atom, dict):
+                continue
+            fact_type = str(atom.get("fact_type"))
+            for role, term in atom_bind(atom).items():
+                location = f"{suffix}.bind[{role}]"
+                terms.append((location, term))
+                object_type = role_types.get(fact_type, {}).get(str(role))
+                primitive = primitives.get(object_type or "")
+                variable = _variable_name(term)
+                declared = scopes.get(variable, ())
+                literal_matches = (valid_duration(term) if primitive == "Duration"
+                                   else _guarded_literal_matches_primitive(primitive, term))
+                if primitive is not None and (
+                    (declared and any(not _guarded_primitives_compatible(primitive, bound) for bound in declared))
+                    or (variable is None and not literal_matches)
+                ):
+                    issues.append(ValidationIssue(
+                        path=f"{path}{location}", message="Negative binding has an incompatible primitive.",
+                        rule_id="semantic:guarded-binding-type",
+                    ))
+        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
+            terms.extend(_iter_guarded_comparison_terms(suffix, comparison))
+        for suffix, term in terms:
+            unbound = set(term_variables(term)) - scopes.keys()
+            if unbound:
+                issues.append(ValidationIssue(
+                    path=f"{path}{suffix}",
+                    message=f"Guarded filter variables require a positive binding: {sorted(unbound)}.",
+                    rule_id="semantic:guarded-filter-unbound",
+                ))
+        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                issues.extend(_membership_comparison_issues(f"{path}{suffix}", comparison, types))
+                continue
+            left = analyze_term(comparison.get("left"), types)
+            right = analyze_term(comparison.get("right"), types)
+            for side, term in (("left", left), ("right", right)):
+                if term.issue is not None and not (set(term.variables) - scopes.keys()):
+                    issues.append(ValidationIssue(
+                        path=f"{path}{suffix}.{side}", message="Invalid guarded filter comparison term.",
+                        rule_id=term.issue,
+                    ))
+            if (left.primitive and right.primitive
+                    and not _guarded_primitives_compatible(left.primitive, right.primitive)):
+                issues.append(ValidationIssue(
+                    path=f"{path}{suffix}", message="Guarded filter operands have incompatible types.",
+                    rule_id="semantic:term-comparison-type",
+                ))
     return issues
 
 
@@ -2645,7 +2794,7 @@ def _guarded_nested_function_variables(term: Any) -> set[str]:
 def _rule_guarded_exists_range(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Exact-function variables must be positively range-restricted."""
     issues: list[ValidationIssue] = []
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         exists = consequent.get("exists") if isinstance(consequent, dict) else None
         if not isinstance(exists, dict):
@@ -2670,7 +2819,7 @@ def _rule_guarded_exists_range(doc: dict[str, Any]) -> list[ValidationIssue]:
         if unsafe:
             issues.append(
                 ValidationIssue(
-                    path=f"{path}.consequent.exists",
+                    path=f"{path}{prefix}.exists",
                     message=(
                         "exact where-term variables must occur in an antecedent or positive "
                         f"exists atom: {sorted('$' + item for item in unsafe)}"
@@ -2684,7 +2833,7 @@ def _rule_guarded_exists_range(doc: dict[str, Any]) -> list[ValidationIssue]:
 def _rule_guarded_exists_where_bound(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every exists.where variable is antecedent-bound or positively exists-bound."""
     issues: list[ValidationIssue] = []
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         exists = consequent.get("exists") if isinstance(consequent, dict) else None
         if not isinstance(exists, dict):
@@ -2708,7 +2857,7 @@ def _rule_guarded_exists_where_bound(doc: dict[str, Any]) -> list[ValidationIssu
             if unbound:
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.exists.where[{index}]",
+                        path=f"{path}{prefix}.exists.where[{index}]",
                         message=(
                             "where variables must be introduced by an antecedent or positive "
                             f"exists atom: {sorted('$' + item for item in unbound)}"
@@ -2757,6 +2906,28 @@ def _guarded_literal_kinds_compatible(left: Any, right: Any) -> bool:
     return isinstance(left, str) and isinstance(right, str)
 
 
+def _membership_comparison_issues(path, comparison, variable_primitives):
+    left = analyze_term(comparison.get("left"), variable_primitives, limits=DEFAULT_LIMITS)
+    if left.issue is not None:
+        yield ValidationIssue(path=f"{path}.left", message=f"membership term is invalid: {left.issue}", rule_id=left.issue)
+    right = comparison.get("right")
+    members = compile_membership(right)
+    domain = membership_domain(left.primitive)
+    if members is None or (domain is not None and domain != members.domain):
+        yield ValidationIssue(
+            path=f"{path}.right",
+            message="Membership requires a non-empty homogeneous list of compatible literals.",
+            rule_id="semantic:membership-list",
+        )
+    elif len(members.keys) < len(right):
+        yield ValidationIssue(
+            path=f"{path}.right",
+            message="Membership list contains duplicate values.",
+            severity="warning",
+            rule_id="semantic:membership-duplicate",
+        )
+
+
 def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every guarded comparison has compatible resolved operand types."""
     # Local import avoids the module-import cycle: popvalidate imports Model and
@@ -2779,7 +2950,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
             primitive_cache[object_type_id] = resolve_primitive(object_type_id, primitive_model)
         return primitive_cache[object_type_id]
 
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         comparison = consequent.get("comparison") if isinstance(consequent, dict) else None
         if not isinstance(comparison, dict) or not {"left", "right"} <= comparison.keys():
@@ -2816,6 +2987,11 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
             )
             for variable, values in variable_primitives.items()
         }
+        if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+            issues.extend(_membership_comparison_issues(
+                f"{path}{prefix}.comparison", comparison, collapsed_primitives
+            ))
+            continue
         if isinstance(left, dict) or isinstance(right, dict):
             left_analysis = analyze_term(left, collapsed_primitives, limits=DEFAULT_LIMITS)
             right_analysis = analyze_term(right, collapsed_primitives, limits=DEFAULT_LIMITS)
@@ -2823,7 +2999,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
                 if analysis.issue is not None:
                     issues.append(
                         ValidationIssue(
-                            path=f"{path}.consequent.comparison.{side}",
+                            path=f"{path}{prefix}.comparison.{side}",
                             message=f"guarded term is invalid: {analysis.issue}",
                             rule_id=analysis.issue,
                         )
@@ -2839,7 +3015,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
             ):
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.comparison",
+                        path=f"{path}{prefix}.comparison",
                         message=(
                             "guarded comparison operands have incompatible resolved "
                             f"types: {left_analysis.primitive!r} and "
@@ -2894,7 +3070,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
         if compatible is False:
             issues.append(
                 ValidationIssue(
-                    path=f"{path}.consequent.comparison",
+                    path=f"{path}{prefix}.comparison",
                     message=(
                         "guarded comparison operands have incompatible resolved "
                         f"types: {left!r} and {right!r}"
@@ -2924,7 +3100,7 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
             primitive_cache[object_type_id] = resolve_primitive(object_type_id, primitive_model)
         return primitive_cache[object_type_id]
 
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         exists = consequent.get("exists") if isinstance(consequent, dict) else None
         if not isinstance(exists, dict):
@@ -2958,6 +3134,11 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
         for index, comparison in enumerate(exists.get("where") or []):
             if not isinstance(comparison, dict) or not {"left", "right"} <= comparison.keys():
                 continue
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                issues.extend(_membership_comparison_issues(
+                    f"{path}{prefix}.exists.where[{index}]", comparison, collapsed
+                ))
+                continue
             left, right = comparison.get("left"), comparison.get("right")
             analyses = (
                 analyze_term(left, collapsed, limits=DEFAULT_LIMITS),
@@ -2967,7 +3148,7 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
                 if analysis.issue is not None:
                     issues.append(
                         ValidationIssue(
-                            path=f"{path}.consequent.exists.where[{index}].{side}",
+                            path=f"{path}{prefix}.exists.where[{index}].{side}",
                             message=f"guarded exists term is invalid: {analysis.issue}",
                             rule_id=analysis.issue,
                         )
@@ -2982,7 +3163,7 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
             ):
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.exists.where[{index}]",
+                        path=f"{path}{prefix}.exists.where[{index}]",
                         message=(
                             "guarded exists comparison operands have incompatible resolved "
                             f"types: {left_primitive!r} and {right_primitive!r}"
@@ -3411,9 +3592,10 @@ def _primitive_maps(doc: dict[str, Any]) -> tuple[dict[str, dict[str, str]], dic
 
 
 def _derivation_variable_primitives(
-    doc: dict[str, Any], rule: dict[str, Any], *, include_aggregate_result: bool = True
+    doc: dict[str, Any], rule: dict[str, Any], *, include_aggregate_result: bool = True,
+    primitive_maps: tuple[dict[str, dict[str, str]], dict[str, str]] | None = None,
 ) -> dict[str, str]:
-    role_types, primitives = _primitive_maps(doc)
+    role_types, primitives = _primitive_maps(doc) if primitive_maps is None else primitive_maps
     observed: dict[str, set[str]] = {}
     for suffix, atom, polarity in _derivation_atoms(rule):
         if not isinstance(atom, dict):
@@ -4319,6 +4501,11 @@ def _derivation_head_term_issues(doc: dict[str, Any]) -> list[ValidationIssue]:
         for index, comparison in enumerate(where):
             if not isinstance(comparison, dict):
                 continue
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                issues.extend(_membership_comparison_issues(
+                    f"{path}.where[{index}]", comparison, variable_primitives
+                ))
+                continue
             analyses = {
                 side: analyze_term(comparison.get(side), variable_primitives, limits=DEFAULT_LIMITS)
                 for side in ("left", "right")
@@ -4380,7 +4567,7 @@ def _rule_term_argument_type(doc: dict[str, Any]) -> list[ValidationIssue]:
 
 def _rule_term_non_finite_number(doc: dict[str, Any]) -> list[ValidationIssue]:
     issues = _filter_derivation_term_issues(doc, rule_id="semantic:term-non-finite-number")
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         comparison = consequent.get("comparison") if isinstance(consequent, dict) else None
         if not isinstance(comparison, dict):
@@ -4390,7 +4577,7 @@ def _rule_term_non_finite_number(doc: dict[str, Any]) -> list[ValidationIssue]:
             if isinstance(operand, float) and not math.isfinite(operand):
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.comparison.{side}",
+                        path=f"{path}{prefix}.comparison.{side}",
                         message="guarded term is invalid: semantic:term-non-finite-number",
                         rule_id="semantic:term-non-finite-number",
                     )
@@ -4430,6 +4617,14 @@ def _rule_derivation_float_head_unquantized(doc: dict[str, Any]) -> list[Validat
 
 def _rule_derivation_term_unbound(doc: dict[str, Any]) -> list[ValidationIssue]:
     return _filter_derivation_term_issues(doc, rule_id="semantic:derivation-term-unbound")
+
+
+def _rule_derivation_membership(doc: dict[str, Any]) -> list[ValidationIssue]:
+    return [
+        issue
+        for rule in ("semantic:membership-list", "semantic:membership-duplicate")
+        for issue in _filter_derivation_term_issues(doc, rule_id=rule)
+    ]
 
 
 def _rule_term_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
@@ -4683,16 +4878,24 @@ def _rule_derivation_unstratified(doc: dict[str, Any]) -> list[ValidationIssue]:
 
 
 def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
-    """Temporal syntax is v3-only and confined to guarded comparison operands."""
+    """Temporal syntax is v3-only and confined to admitted comparison sites."""
     from gnd.terms import is_temporal_node, temporal_nodes
 
     allowed: set[int] = set()
     for _, constraint in _iter_guarded_constraints(doc):
         consequent = constraint.get("consequent")
-        comparison = consequent.get("comparison") if isinstance(consequent, dict) else None
-        if isinstance(comparison, dict):
-            for side in ("left", "right"):
-                allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
+        for path, comparison in _iter_guarded_comparisons(consequent, constraint.get("where")):
+            if path.startswith(".where[") or path.endswith(".comparison") or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                for side in ("left", "right"):
+                    allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
+    for _, _, clause in _iter_structured_fact_derivations(doc):
+        where = clause.get("where")
+        if not isinstance(where, list):
+            continue
+        for comparison in where:
+            if isinstance(comparison, dict) and comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                for side in ("left", "right"):
+                    allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
     issues = []
     role_types, primitives = _primitive_maps(doc)
     hosts = {
@@ -4723,29 +4926,48 @@ def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
                     rule_id="semantic:temporal-comparison-type",
                 )
             )
-    for path, constraint in _iter_guarded_constraints(doc):
-        observed: dict[str, set[str]] = {}
-        for _, atom in _iter_guarded_atoms(constraint):
+    def duration_conflicts(atoms, observed):
+        for atom in atoms:
             if not isinstance(atom, dict):
                 continue
-            bindings = atom_bind(atom)
-            if not isinstance(bindings, dict):
-                continue
-            for role, term in bindings.items():
+            for role, term in atom_bind(atom).items():
                 variable = _variable_name(term)
                 object_type = role_types.get(str(atom.get("fact_type")), {}).get(str(role))
                 primitive = primitives.get(object_type or "")
                 if variable is not None and primitive is not None:
                     observed.setdefault(variable, set()).add(primitive)
-        for variable, choices in observed.items():
-            if "Duration" in choices and len(choices) > 1:
-                issues.append(
-                    ValidationIssue(
-                        path=path,
-                        message=f"Variable ${variable} mixes Duration and another primitive.",
-                        rule_id="semantic:guarded-binding-type",
-                    )
-                )
+        return [variable for variable, choices in observed.items() if "Duration" in choices and len(choices) > 1]
+
+    def record_conflicts(path, conflicts):
+        for variable in conflicts:
+            issues.append(ValidationIssue(
+                path=path,
+                message=f"Variable ${variable} mixes Duration and another primitive.",
+                rule_id="semantic:guarded-binding-type",
+            ))
+
+    for path, constraint in _iter_guarded_constraints(doc):
+        if not isinstance(constraint.get("consequent"), dict) or "any_of" not in constraint["consequent"]:
+            record_conflicts(path, duration_conflicts(
+                (atom for _, atom in _iter_guarded_atoms(constraint)), {},
+            ))
+            continue
+        observed = {}
+        local_atoms = {}
+        common_atoms = []
+        for suffix, atom in _iter_guarded_atoms(constraint):
+            if suffix.startswith(".consequent."):
+                prefix = suffix.split("]", 1)[0] + "]"
+                local_atoms.setdefault(prefix, []).append(atom)
+            else:
+                common_atoms.append(atom)
+        base = duration_conflicts(common_atoms, observed)
+        record_conflicts(path, base)
+        for prefix, atoms in local_atoms.items():
+            local = duration_conflicts(
+                atoms, {variable: domains.copy() for variable, domains in observed.items()},
+            )
+            record_conflicts(path + prefix, (variable for variable in local if variable not in base))
     for path, node in temporal_nodes(doc):
         if node.get("primitive") == "Duration" or is_temporal_node(node):
             reason = None
@@ -4818,6 +5040,7 @@ _SEMANTIC_RULES = (
     # never interleaved; the normative table follows this registration order.
     _rule_guarded_term_ref,
     _rule_guarded_role_claim,
+    _rule_guarded_filters,
     _rule_guarded_consequent_ground,
     _rule_guarded_comparison_type,
     _rule_guarded_exists_range,
@@ -4855,6 +5078,7 @@ _SEMANTIC_RULES = (
     _rule_derivation_head_needs_round,
     _rule_derivation_float_head_unquantized,
     _rule_derivation_term_unbound,
+    _rule_derivation_membership,
     _rule_term_comparison_type,
     _rule_derivation_head_unbound,
     _rule_derivation_negate_unbound,

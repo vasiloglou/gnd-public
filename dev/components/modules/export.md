@@ -27,7 +27,7 @@ Offline publication of a self-contained optional PyRel program.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 18 | Render from one bounded input read; no checker or foreign-runtime import. |
-| `render_pyrel_rules(model_path, target)` | function | 48 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+| `render_pyrel_rules(model_path, target)` | function | 60 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
 
 ## gnd.export.ilp — `src/gnd/export/ilp.py`
 Components: export.ilp_neutral
@@ -164,29 +164,29 @@ Offline lowering of explicit finite carriers and positive acyclic models.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `WorkLimit` | class(ValueError) | 37 | (no docstring) |
-| `scalar(value, primitive)` | function | 41 | (no docstring) |
-| `tuple_expr(values)` | function | 55 | (no docstring) |
-| `list_expr(values)` | function | 59 | (no docstring) |
-| `component(name, index, arity)` | function | 63 | (no docstring) |
-| `constraints(md)` | function | 67 | (no docstring) |
-| `Renderer` | class | 81 | (no docstring) |
-| `Renderer.charge(self, n)` | method | 124 | (no docstring) |
-| `Renderer.add(self, i, v)` | method | 129 | (no docstring) |
-| `Renderer.roles(self, i)` | method | 140 | (no docstring) |
-| `Renderer.rel(self, i, p)` | method | 143 | (no docstring) |
-| `Renderer.row(self, i, row)` | method | 150 | (no docstring) |
-| `Renderer.classify(self)` | method | 158 | (no docstring) |
-| `Renderer.carriers(self)` | method | 245 | (no docstring) |
-| `Renderer.bindings(self, atoms, names)` | method | 290 | (no docstring) |
-| `Renderer.primitive_expr(self, term, bindings, expected)` | method | 313 | (no docstring) |
-| `Renderer.comparison(self, cmp, bindings)` | method | 364 | (no docstring) |
-| `Renderer.joins(self, atoms, names, leaf, guards)` | method | 399 | (no docstring) |
-| `Renderer.clause(self, i, n, c)` | method | 420 | (no docstring) |
-| `Renderer.relation_type(self, i)` | method | 452 | (no docstring) |
-| `Renderer.family(self, n, c, i)` | method | 456 | (no docstring) |
-| `Renderer.render(self)` | method | 540 | (no docstring) |
-| `render_lean(model_bytes, candidate_bytes, *, toolchain, model_format, candidate_format, reference_i…` | function | 791 | (no docstring) |
+| `WorkLimit` | class(ValueError) | 39 | (no docstring) |
+| `scalar(value, primitive)` | function | 43 | (no docstring) |
+| `tuple_expr(values)` | function | 57 | (no docstring) |
+| `list_expr(values)` | function | 61 | (no docstring) |
+| `component(name, index, arity)` | function | 65 | (no docstring) |
+| `constraints(md)` | function | 69 | (no docstring) |
+| `Renderer` | class | 83 | (no docstring) |
+| `Renderer.charge(self, n)` | method | 126 | (no docstring) |
+| `Renderer.add(self, i, v)` | method | 131 | (no docstring) |
+| `Renderer.roles(self, i)` | method | 142 | (no docstring) |
+| `Renderer.rel(self, i, p)` | method | 145 | (no docstring) |
+| `Renderer.row(self, i, row)` | method | 152 | (no docstring) |
+| `Renderer.classify(self)` | method | 160 | (no docstring) |
+| `Renderer.carriers(self)` | method | 247 | (no docstring) |
+| `Renderer.bindings(self, atoms, names)` | method | 292 | (no docstring) |
+| `Renderer.primitive_expr(self, term, bindings, expected)` | method | 315 | (no docstring) |
+| `Renderer.comparison(self, cmp, bindings)` | method | 366 | (no docstring) |
+| `Renderer.joins(self, atoms, names, leaf, guards)` | method | 401 | (no docstring) |
+| `Renderer.clause(self, i, n, c)` | method | 422 | (no docstring) |
+| `Renderer.relation_type(self, i)` | method | 454 | (no docstring) |
+| `Renderer.family(self, n, c, i)` | method | 458 | (no docstring) |
+| `Renderer.render(self)` | method | 542 | (no docstring) |
+| `render_lean(model_bytes, candidate_bytes, *, toolchain, model_format, candidate_format, reference_i…` | function | 793 | (no docstring) |
 
 ## gnd.export.lean_cli — `src/gnd/export/lean_cli.py`
 Components: export.command
@@ -232,9 +232,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 39 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 44 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 416 | Render three deterministic artifacts from one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 46 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 51 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 423 | Render three deterministic artifacts from one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -246,7 +246,7 @@ Place the reviewed subset of requirement and derivation shapes in Ossie scopes.
 | `ProjectedRelation.arguments(self, atom) -> tuple[Any, ...]` | method | 61 | (no docstring) |
 | `ProjectedRelation.path(self) -> str` | method | 65 | (no docstring) |
 | `ProjectedRelation.token(self, position) -> str` | method | 68 | (no docstring) |
-| `place_formulas(document, ontology, components, relations, mapped, fact_types)` | function | 265 | Mutate the ontology and disposition index only after a complete group lowers. |
+| `place_formulas(document, ontology, components, relations, mapped, fact_types)` | function | 267 | Mutate the ontology and disposition index only after a complete group lowers. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules
@@ -254,18 +254,18 @@ Render a model's rules as a readable PyRel program, as requirements.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Atom` | class | 60 | (no docstring) |
-| `Count` | class | 66 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
-| `Compare` | class | 73 | (no docstring) |
-| `Check` | class | 80 | (no docstring) |
-| `Requirement` | class | 88 | (no docstring) |
-| `spanning_uniqueness(doc) -> list[str]` | function | 624 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
-| `constraint_context(doc) -> _Model` | function | 761 | Index the admitted source for lowerers that assign their own constraint IDs. |
-| `constraint_requirements(model, c, fact_id) -> list[Requirement]` | function | 766 | Lower one admitted constraint through the shared requirement IR. |
-| `requirements(doc, model) -> list[Requirement]` | function | 810 | Lower every supported constraint to requirements, in model order. One walk for all families. |
-| `require_text(req, names, model) -> str` | function | 999 | (no docstring) |
-| `denial_text(req, names, model) -> str` | function | 1011 | (no docstring) |
-| `render(model_path, target) -> str` | function | 2286 | (no docstring) |
+| `Atom` | class | 67 | (no docstring) |
+| `Count` | class | 73 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
+| `Compare` | class | 80 | (no docstring) |
+| `Check` | class | 87 | (no docstring) |
+| `Requirement` | class | 95 | (no docstring) |
+| `spanning_uniqueness(doc) -> list[str]` | function | 702 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
+| `constraint_context(doc) -> _Model` | function | 840 | Index the admitted source for lowerers that assign their own constraint IDs. |
+| `constraint_requirements(model, c, fact_id) -> list[Requirement]` | function | 845 | Lower one admitted constraint through the shared requirement IR. |
+| `requirements(doc, model) -> list[Requirement]` | function | 889 | Lower every supported constraint to requirements, in model order. One walk for all families. |
+| `require_text(req, names, model) -> str` | function | 1085 | (no docstring) |
+| `denial_text(req, names, model) -> str` | function | 1097 | (no docstring) |
+| `render(model_path, target) -> str` | function | 2408 | (no docstring) |
 
 ## gnd.export.pyrel_runtime — `src/gnd/export/pyrel_runtime.py`
 Components: export.pyrel_runtime
@@ -333,13 +333,13 @@ Deterministic offline lowering to Souffle's bounded relational fragment.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Unsupported` | class(ValueError) | 39 | Valid input outside the selected fragment. |
-| `wire(document)` | function | 43 | (no docstring) |
-| `digest(data)` | function | 47 | (no docstring) |
-| `parse(raw, fmt, limits)` | function | 51 | (no docstring) |
-| `token(value, primitive)` | function | 71 | (no docstring) |
-| `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 89 | (no docstring) |
-| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 206 | (no docstring) |
+| `Unsupported` | class(ValueError) | 41 | Valid input outside the selected fragment. |
+| `wire(document)` | function | 45 | (no docstring) |
+| `digest(data)` | function | 49 | (no docstring) |
+| `parse(raw, fmt, limits)` | function | 53 | (no docstring) |
+| `token(value, primitive)` | function | 73 | (no docstring) |
+| `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 91 | (no docstring) |
+| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 225 | (no docstring) |
 
 ## gnd.export.souffle_cli — `src/gnd/export/souffle_cli.py`
 Components: export.command

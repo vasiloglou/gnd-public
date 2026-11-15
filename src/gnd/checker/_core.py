@@ -347,7 +347,7 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
 
     extensions, derivations = extension_core.evaluate_derivations(model, population)
     constraint_population: Population | extension_core.RuledFactView = population
-    if extensions:
+    if extensions or getattr(extensions, "unavailable", None):
         constraint_population = extension_core.constraint_view(model, population, extensions)
 
     constraint_inputs: dict[str, tuple[dict[str, Any], dict[str, Any] | None]] = {}
@@ -374,6 +374,7 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
             else None
         ),
         variant_aliases=aliases,
+        computed_available=frozenset(extensions),
     )
     projection = project_snapshot(decision, adapted.observation)
     from gnd.correspondence import ReferenceJoinLimit, project_reference_limit
@@ -408,6 +409,7 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
             "reason_code": finding.reason_code,
             "binding_count": finding.binding_count,
             "first_empty_atom_index": finding.first_empty_atom_index,
+            "guarded_alternatives": finding.guarded_alternatives,
         }
         verdicts.append(
             ConstraintVerdict.model_validate(
@@ -537,6 +539,10 @@ def _correspondence_message(
                 "Existential consequent was NOT evaluated — source population coverage is "
                 f"missing for witness relation(s): {', '.join(missing)}."
             )
+        if family == "guarded" and reason == "guarded-disjunction-work-limit":
+            return "Guarded disjunction exceeded its shared evaluation ceiling."
+        if family == "guarded" and reason == "guarded-disjunction-undecidable":
+            return "A guarded binding has an unavailable alternative and no satisfied alternative."
         if family == "guarded" and reason == "reference-join-work-limit":
             return (
                 "Guarded join was not evaluated: reference combined work ceiling 100000 exceeded."
@@ -2206,13 +2212,15 @@ def _family_message_guarded(constraint, fact_type, finding, witness, model, popu
     kind = next(
         (
             key
-            for key in ("comparison", "atom", "absence", "exists")
+            for key in ("comparison", "atom", "absence", "exists", "any_of")
             if key in (constraint.get("consequent") or {})
         ),
         "consequent",
     )
     from gnd.terms import is_temporal_node, temporal_nodes
 
+    if kind == "any_of" or constraint.get("negate") or constraint.get("where"):
+        return verbalize.guarded_message(kind, finding.binding_count or 0, witness if violated else [])
     if any(is_temporal_node(node) for _, node in temporal_nodes(constraint.get("consequent"))):
         return verbalize.temporal_guarded_message(kind, witness if violated else [])
     bindings = _guarded_bindings(list(constraint.get("antecedent") or []), population)

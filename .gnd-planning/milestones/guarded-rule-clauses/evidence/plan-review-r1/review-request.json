@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/guarded-rule-clauses/notes/guarded-rule-clauses-plan.md",
+    "sha256": "34c60d292b867fdf2f53c249b092efdef4331ea7288b759d488b2b2988f6b9e6",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "Guarded rule clauses milestone plan review",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Check the proposed guarded forms against issue 195 as described in the plan and the implementability of the linked GC1 draft where directly relevant.",
+      "Look for detectable semantic drift across schema, guarded evaluation, derivation-helper comparisons, unknown and missing coverage behavior, synthesis, and exporter refusals.",
+      "Check whether the phase gates can measure the stated acceptance predicates, preserve existing public behavior, and expose impossible witness requirements."
+    ]
+  }
+}

@@ -271,7 +271,7 @@ def _declared_from_payload(
     payload: dict,
 ) -> dict[str, tuple[str, str | None, str, str | None]] | None:
     """(address, remedy, message, novelty) per positional ref, read back from a version-15 payload."""
-    if payload.get("schema_version") not in (15, 16):
+    if payload.get("schema_version") not in (15, 16, 17):
         return None
     return {
         row["constraint_ref"]: (row["address"], row["remedy"], row["message"], row["novelty"])
@@ -342,6 +342,12 @@ def _cmd_check(
                 if index is not None:
                     detail += f" (first empty antecedent atom {index})"
                 print(f"GUARDED {row['address']}: bindings={detail}")
+                for failure in row.get("guarded_alternatives", []):
+                    print(f"  {failure['binding']}")
+                    for alternative in failure["alternatives"]:
+                        facts = ", ".join(alternative["fact_types"])
+                        detail = f" ({facts})" if facts else ""
+                        print(f"    [{alternative['index']}] {alternative['reason']}{detail}")
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
         _print_lineage(result.payload)
@@ -917,7 +923,7 @@ def _register_check(subparsers):
     check_parser.add_argument(
         "--guarded-diagnostics",
         action="store_true",
-        help="report version 16: include antecedent binding diagnostics; implies --rule-ids",
+        help="include guarded binding and disjunction diagnostics; implies --rule-ids",
     )
     _add_format_argument(check_parser)
     _add_unredacted_argument(check_parser)

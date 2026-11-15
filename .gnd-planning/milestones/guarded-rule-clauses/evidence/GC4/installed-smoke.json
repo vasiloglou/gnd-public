@@ -1,0 +1,160 @@
+{
+  "installed_version": "0.3.1",
+  "wheel_sha256": "4d8097917fc3846aeea73ec5cae6048086952a7d49eec6d0874f4abdc41f82b1",
+  "lock_sha256": "7ee5d2e0bb3fc7ceff7779ec0fccd29b03defd53f51993220b759a5ac67a9cbc",
+  "input_sha256": {
+    "retail-model.json": "a0626d5985b89b7bf360d7686fae03fdf9ebf6f30d78a06022f9515decc93f7e",
+    "all-violations.population.json": "872ca2a0cab0e346a77fa3e10316c04f8f9444242670690b02b5025be100261e",
+    "via-d.population.json": "c172dfc6600db27e8ee0858a0cdae0bc4bff7fbd66cc225a9ac4bde93c5a6771",
+    "via-p-confirmed.population.json": "7bc6d5da9390ac2795eedc833d1a5f078567f361bb95814611608f3063873645"
+  },
+  "checked": {
+    "all-violations": {
+      "exit": 0,
+      "verdicts": {
+        "active_means_a_or_s": "warning",
+        "shipped_over_raw_code": "warning",
+        "delivered_two_forms": "warning",
+        "exclude_test_accounts": "warning"
+      },
+      "delivery_diagnostics": [
+        {
+          "binding": {},
+          "alternatives": [
+            {
+              "index": 0,
+              "reason": "missing-exists-atom",
+              "fact_types": [
+                "filter_literal"
+              ],
+              "atom_indexes": [
+                1
+              ]
+            },
+            {
+              "index": 1,
+              "reason": "missing-exists-atom",
+              "fact_types": [
+                "plan_uses_unary"
+              ],
+              "atom_indexes": [
+                2
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "via-d": {
+      "exit": 2,
+      "verdicts": {
+        "active_means_a_or_s": "pass",
+        "shipped_over_raw_code": "vacuous",
+        "delivered_two_forms": "pass",
+        "exclude_test_accounts": "pass"
+      }
+    },
+    "via-p-confirmed": {
+      "exit": 2,
+      "verdicts": {
+        "active_means_a_or_s": "pass",
+        "shipped_over_raw_code": "vacuous",
+        "delivered_two_forms": "pass",
+        "exclude_test_accounts": "pass"
+      }
+    }
+  },
+  "synthesized": {
+    "active_means_a_or_s": {
+      "reason": null,
+      "cases": [
+        {
+          "kind": "failing",
+          "population": "cases/0000.fail.json",
+          "verdict": "warning",
+          "binding_count": 1,
+          "other_findings": [
+            {
+              "constraint_ref": "constraints[1]",
+              "verdict": "vacuous",
+              "reason_code": null
+            }
+          ]
+        },
+        {
+          "kind": "passing",
+          "population": "cases/0000.pass.json",
+          "verdict": "pass",
+          "binding_count": 1,
+          "other_findings": []
+        }
+      ]
+    },
+    "shipped_over_raw_code": {
+      "reason": "no-passing-case",
+      "cases": []
+    },
+    "delivered_two_forms": {
+      "reason": null,
+      "cases": [
+        {
+          "kind": "failing",
+          "population": "cases/0002.fail.json",
+          "verdict": "warning",
+          "binding_count": 1,
+          "other_findings": [
+            {
+              "constraint_ref": "constraints[1]",
+              "verdict": "vacuous",
+              "reason_code": null
+            }
+          ]
+        },
+        {
+          "kind": "passing",
+          "population": "cases/0002.pass.json",
+          "verdict": "pass",
+          "binding_count": 1,
+          "other_findings": []
+        }
+      ]
+    },
+    "exclude_test_accounts": {
+      "reason": null,
+      "cases": [
+        {
+          "kind": "failing",
+          "population": "cases/0003.fail.json",
+          "verdict": "warning",
+          "binding_count": 1,
+          "other_findings": [
+            {
+              "constraint_ref": "constraints[1]",
+              "verdict": "vacuous",
+              "reason_code": null
+            }
+          ]
+        },
+        {
+          "kind": "passing",
+          "population": "cases/0003.pass.json",
+          "verdict": "pass",
+          "binding_count": 1,
+          "other_findings": [
+            {
+              "constraint_ref": "constraints[1]",
+              "verdict": "vacuous",
+              "reason_code": null
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "verbalization": {
+    "active_means_a_or_s": "If question_mentions_phrase(phrase = \"active customers\"), then there exists a joint assignment such that filter_on(filter = $f, concept = \"Customer\", role = \"status\") holds and filter_literal(filter = $f, literal = $v) holds and $v is one of \"A\", \"S\".",
+    "shipped_over_raw_code": "If filter_on(filter = $f, concept = \"Order\", role = \"state_code\") and filter_literal(filter = $f, literal = \"S\"), unless plan_uses_unary(fact_type = \"Order_is_shipped\"), then no filter_on(filter = $f, concept = \"Order\", role = \"state_code\") fact holds.",
+    "exclude_test_accounts": "If question_mentions_phrase(phrase = \"exclude test accounts\"), then there exists a joint assignment such that plan_negates_unary(fact_type = \"Customer_is_test\") holds and plan_negates_unary(fact_type = \"Customer_is_internal\") holds.",
+    "delivered_two_forms": "If question_mentions_phrase(phrase = \"delivered\"), then at least one of these alternatives must hold (there exists a joint assignment such that filter_on(filter = $f, concept = \"Order\", role = \"status\") holds and filter_literal(filter = $f, literal = \"D\") holds) or (there exists a joint assignment such that filter_on(filter = $f, concept = \"Order\", role = \"status\") holds and filter_literal(filter = $f, literal = \"P\") holds and plan_uses_unary(fact_type = \"Carrier_confirmation\") holds)."
+  }
+}

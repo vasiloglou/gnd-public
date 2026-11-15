@@ -16,7 +16,9 @@ from gnd.model import (
     iter_derivation_clauses,
 )
 from gnd.model._includes import guard_bytes, include_reason
+from gnd.model_index import ModelIndex
 from gnd.population import PopulationLoadError
+from gnd.terms import guard_uses_membership, where_uses_membership
 from gnd.witness import io as witness_io
 from gnd.witness.types import DEFAULT_LIMITS as WITNESS_LIMITS
 
@@ -101,6 +103,21 @@ def admit(model_bytes, candidate_bytes, model_format, candidate_format, referenc
         numeric_digits=limits.numeric_digits,
     )
     model, candidate, refs = witness_io.intake(md, pd, reference_inputs, limits=wl)
+    if any(
+        constraint.get("type") == "guarded" and "any_of" in (constraint.get("consequent") or {})
+        for _, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+    ):
+        raise Unsupported("guarded-disjunction-unsupported")
+    if any(
+        constraint.get("type") == "guarded" and (constraint.get("negate") or constraint.get("where"))
+        for constraint in model.constraints
+    ):
+        raise Unsupported("guarded-antecedent-filters-unsupported")
+    if any(
+        guard_uses_membership(constraint.get("consequent"))
+        for constraint in model.constraints if constraint.get("type") == "guarded"
+    ):
+        raise Unsupported("membership-unsupported")
     rows, origins = {}, []
     roles = witness_io.roster(model)
     owners = {f: d["id"] for d in model.reference_populations for f in d["fact_types"]}
@@ -172,6 +189,8 @@ def admit(model_bytes, candidate_bytes, model_format, candidate_format, referenc
             raise Unsupported("opaque derivation")
         for c in cs:
             a = c.get("aggregate")
+            if where_uses_membership(c.get("where")):
+                raise Unsupported("membership-unsupported")
             if c.get("where") and not a:
                 raise Unsupported("scalar filters")
             if a and (
@@ -394,8 +413,11 @@ def render_souffle(
             },
             files=files,
         )
-    except Unsupported:
-        return refused(2, "fragment-unsupported")
+    except Unsupported as error:
+        reason = str(error)
+        if reason not in {"membership-unsupported", "guarded-antecedent-filters-unsupported", "guarded-disjunction-unsupported"}:
+            reason = "fragment-unsupported"
+        return refused(2, reason)
     except ModelValidationError as error:
         return refused(3, include_reason(error) or "input-invalid")
     except INPUT_ERRORS:

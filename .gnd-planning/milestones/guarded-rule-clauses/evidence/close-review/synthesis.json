@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "run_sha256": "e0d3342c31d92ae8c070b80a423ab21c98c3eef021d8dce95cbe8d8feeee61af",
+  "summary": "Five valid seats met the four-seat project bar. Two seats approve, two request evidence or wording revisions, and one marks the shipped synthesis boundary blocking. All three concerns from that last seat are unanchored. The recommended fixes make the measured scope and direct evidence explicit.",
+  "agreed_concerns": [
+    {
+      "group_id": "shipped-code-synthesis",
+      "severity": "high",
+      "title": "The shipped-code synthesis boundary needs an explicit close ruling",
+      "summary": "The exact self-denial guard yields vacuity when the exception excludes the binding. Its active-pass synthesis requirement is unreachable.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "synth-shipped-issue-example-no-cases"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c1-synthesis-passing-case"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "close-artifacts",
+      "severity": "medium",
+      "title": "The close audit needs direct differential and synthesis evidence",
+      "summary": "Record replayable differential outputs and guarded case manifests instead of relying solely on phase summaries.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-artifact-inventory-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-audit-differential-synth-artifacts-uncited"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c2-missing-closure-artifacts"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "finite-export-profiles",
+      "severity": "medium",
+      "title": "Name the Lean and Souffl\u00e9 dispositions",
+      "summary": "The close evidence should name each finite-profile refusal and make the separate Ossie loss behavior clear.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc4-lean-souffle-refusals-unrecorded"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c3-omitted-exporters"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "compliant-exception-exits-vacuous-band"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "smoke-does-not-assert-exclusion-observation"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "bookrec-limits-contradict-filter-vacuity"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc1-finite-domain-synth-refusal-unmapped"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc4-gate-deselection-unreproducible"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "finite-profile-filter-refusal-untested"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc4-finite-profile-disposition-conflict"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "close-1",
+      "rank": 1,
+      "title": "Record the shipped-code synthesis decision",
+      "action": "Bind the exact no-passing-case manifest result and use the separate reachable GC2 negation fixture for active synthesis.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "synth-shipped-issue-example-no-cases"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c1-synthesis-passing-case"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "synth-shipped-issue-example-no-cases",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c1-synthesis-passing-case",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "close-2",
+      "rank": 2,
+      "title": "Retain the replay evidence",
+      "action": "Store the focused differential replays, phase synthesis manifests, finite Boolean control, and inherited pytest selection.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-artifact-inventory-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-audit-differential-synth-artifacts-uncited"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c2-missing-closure-artifacts"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc1-finite-domain-synth-refusal-unmapped"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc4-gate-deselection-unreproducible"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-artifact-inventory-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-audit-differential-synth-artifacts-uncited",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c2-missing-closure-artifacts",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc1-finite-domain-synth-refusal-unmapped",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc4-gate-deselection-unreproducible",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "close-3",
+      "rank": 3,
+      "title": "Pin the finite exporter matrix",
+      "action": "Name the unsupported-form reasons and add direct Lean and Souffl\u00e9 filter tests. Keep Ossie loss metadata distinct from strict refusal.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc4-lean-souffle-refusals-unrecorded"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c3-omitted-exporters"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "finite-profile-filter-refusal-untested"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc4-finite-profile-disposition-conflict"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc4-lean-souffle-refusals-unrecorded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c3-omitted-exporters",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "finite-profile-filter-refusal-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gc4-finite-profile-disposition-conflict",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "close-4",
+      "rank": 4,
+      "title": "Measure the exception outcome",
+      "action": "Pin the installed vacuous exit and filter-only zero-binding observation. Update the BookRec distinction.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compliant-exception-exits-vacuous-band"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "smoke-does-not-assert-exclusion-observation"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bookrec-limits-contradict-filter-vacuity"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compliant-exception-exits-vacuous-band",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "smoke-does-not-assert-exclusion-observation",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bookrec-limits-contradict-filter-vacuity",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    }
+  ]
+}

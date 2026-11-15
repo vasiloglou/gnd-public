@@ -1,0 +1,26 @@
+{
+  "population": {
+    "model": "model.orm.json",
+    "source": "synthetic",
+    "covers": [
+      "expense_in_category",
+      "expense_has_amount",
+      "expense_has_status"
+    ],
+    "model_id": "urn:gnd-fixture:guarded-minimal@1"
+  },
+  "facts": {
+    "expense_in_category": [
+      {
+        "expense": 412651,
+        "category": "travel"
+      }
+    ],
+    "expense_has_amount": [
+      {
+        "expense": 412651,
+        "amount": 2001
+      }
+    ]
+  }
+}

@@ -505,10 +505,11 @@ For self-referential or multi-occurrence fact types where the role name disambig
 `guarded` is GND's top-level conditional constraint family. Its `antecedent`
 is a non-empty conjunction of positive atoms. Every atom binds exactly the
 roles declared by its fact type; a bind value is either a scalar literal or a
-`$`-prefixed variable. The consequent is exactly one of four shapes: `atom`
-requires a fact, `comparison` compares two terms with `<`, `<=`, `=`, `>=`,
-`>`, or `!=`, `absence` requires that a fact be absent, and `exists` requires
-a conjunction of positive atoms with a joint witness assignment. An exists-only
+`$`-prefixed variable. The four single consequents are `atom`, which
+requires a fact, `comparison`, which compares terms, `absence`, which
+requires an absent fact, and `exists`, which requires a joint witness for a
+conjunction of atoms. A consequent can also use `any_of` over single
+consequents. An exists-only
 variable must occur in a positive exists atom. Every `exists.where` variable
 must be bound by an antecedent or positive exists atom, and comparison operands
 must have compatible resolved primitive types.
@@ -534,6 +535,49 @@ the recursive exact term shape defined under ORM++ derivations; atom bindings
 remain scalar literals or variables. An `exists` consequent is an object with
 non-empty `atoms` and optional non-empty `where`, whose items reuse the atom
 and exact term-comparison shapes.
+
+### Antecedent filters
+
+A guarded rule can add non-empty `negate` and `where` lists alongside
+`antecedent`. A negative entry is an atom. A where entry is a term comparison.
+Every filter variable must be bound by a positive antecedent atom. A negative
+atom with no variables tests the same existence condition for each binding.
+
+A matching negative atom or a false where comparison excludes the binding.
+A negative absence test requires a covered asserted or fully derived
+relation, or an available calculated semiderived relation. A fully derived
+relation uses its claimed rows, with consistency evaluated separately.
+An uncovered or unavailable negative relation and an unavailable comparison
+leave the binding unresolved unless another filter definitely excludes it.
+An unresolved binding makes the guard unchecked. When every positive binding
+is definitely excluded, the guard is vacuous. Existing positive-join vacuity
+and positive-only disconnection checks apply before the filters.
+A guarded rule has no output relation and adds no derivation dependency edge.
+Relations read by the guard still have to satisfy the derivation stratification
+rules that apply to their own definitions.
+
+
+### Membership comparisons
+
+Use `in` or `not in` with a term on the left and a list of 1 to 1,024 literals
+on the right. The operators are available in a guarded comparison, an
+existential `where` filter, and a derivation `where` filter.
+
+```yaml
+comparison: {operator: in, left: $status, right: ["A", "S"]}
+```
+
+All members must belong to one domain compatible with the left term. Integer
+and floating-point spellings share exact numeric identity. Boolean values
+remain distinct from numbers. Use `{date: YYYY-MM-DD}` for a calendar date
+and `{duration_days: N}` for a duration. Those domains are distinct from
+ordinary strings and numbers. Variables and functions may occur in the left
+term, while list entries are literals. Duplicate members produce a warning.
+
+`in` holds when the left value belongs to the list. `not in` holds when it
+belongs to the same domain and is absent from the list. An unavailable or
+incompatible left value leaves the comparison unknown. Existing value
+comparisons and dynamic rule operators retain their respective operator sets.
 
 Evaluation enumerates the antecedent's variable bindings. A literal must match
 by scalar identity; a variable repeated within one atom or across atoms must
@@ -577,6 +621,44 @@ constraint; each is emitted as an ordered object in `offending_facts`, keyed by
 the model's `$`-spelled variable names in first-introduction order. With no
 violations the verdict is `pass`. Every non-vacuous guarded verdict message
 includes the binding count.
+
+### Disjunctive consequents
+
+`any_of` is an ordered list of at least two alternatives. Each entry is one
+`atom`, `comparison`, `absence` or `exists` consequent. Every alternative
+reads the same antecedent binding. An existential alternative has its own
+local variables and conditions. An alternative cannot read a sibling's local
+variables. Nested disjunctions are invalid.
+
+```yaml
+consequent:
+  any_of:
+    - comparison: {operator: "=", left: $status, right: "D"}
+    - exists:
+        atoms:
+          - fact_type: order_has_status
+            bind: {order: $order, status: "P"}
+          - fact_type: order_has_carrier_confirmation
+            bind: {order: $order}
+```
+
+For a surviving antecedent binding, any true alternative satisfies the
+rule. With no true alternative, an unknown alternative makes the binding
+undecidable. If every alternative is false, the binding violates the rule.
+Within an existential alternative, an undefined term reached in a local
+candidate leaves that alternative unknown even when another candidate is
+a witness. A true sibling can still satisfy the disjunction. Work exhaustion
+makes the rule unchecked with `guarded-disjunction-work-limit`. If work
+completes and any binding is undecidable, the rule is unchecked with
+`guarded-disjunction-undecidable`. Unavailable semiderived inputs make the
+affected alternative unknown. Available semiderived relations supply their
+calculated rows to the disjunction.
+
+A decided violation uses the ordinary offending bindings. With
+`gnd check --guarded-diagnostics`, each offending binding also lists the
+failed alternatives in declaration order, including any individually
+unmatched existential atoms.
+
 
 ## Provenance and modality — every constraint carries
 

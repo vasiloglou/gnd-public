@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reason": "Apply the exact recorded LI2 query delta after the guarded-rule-clauses GC4 successor on main.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/query-successor.json",
+  "predecessor_sha256": "9ec679ad282648415cd69d3d6296d6ea476596ae38f15a2ca74bf914be4e43c2",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/composition_resolution.py",
+      "__init__",
+      "anchor['fact_key']['roles']",
+      1
+    ]
+  ],
+  "result_distinct_rows": 293,
+  "result_occurrences": 361,
+  "original_metric_current": 304
+}

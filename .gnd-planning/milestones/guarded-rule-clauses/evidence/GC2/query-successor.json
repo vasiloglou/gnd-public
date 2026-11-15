@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reason": "One typed snapshot IR traversal builds the negative-relation fact-role index. This is not a raw Model query.",
+  "predecessor": ".gnd-planning/maintenance/2026-11-11-query-budget-headroom/query-successor.json",
+  "predecessor_sha256": "dbb5756c8b2c295be58953a76bff155932d8deaafef4ce5b2f4301ec168c2a84",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/semantic_spec.py",
+      "guarded_filtered_bindings",
+      "snapshot.fact_types",
+      1
+    ]
+  ],
+  "result_distinct_rows": 288,
+  "result_occurrences": 356,
+  "original_metric_current": 301
+}

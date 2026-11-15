@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "model_id": "urn:gnd-fixture:retail-plan-guards@1",
+  "source": {"kind": "text-conversation", "confidence": "standard", "mode": "one-shot"},
+  "object_types": [
+    {"id": "filter", "name": "Filter", "kind": "value", "primitive": "String"},
+    {"id": "phrase", "name": "Phrase", "kind": "value", "primitive": "String"},
+    {"id": "concept", "name": "Concept", "kind": "value", "primitive": "String"},
+    {"id": "role", "name": "RoleName", "kind": "value", "primitive": "String"},
+    {"id": "literal", "name": "Literal", "kind": "value", "primitive": "String"},
+    {"id": "fact_name", "name": "FactName", "kind": "value", "primitive": "String"}
+  ],
+  "fact_types": [
+    {"id": "question_mentions_phrase", "reading": "The question mentions {Phrase}", "roles": [
+      {"role_name": "phrase", "object_type": "phrase"}
+    ]},
+    {"id": "filter_on", "reading": "{Filter} applies to {Concept} on {RoleName}", "roles": [
+      {"role_name": "filter", "object_type": "filter"}, {"role_name": "concept", "object_type": "concept"},
+      {"role_name": "role", "object_type": "role"}
+    ]},
+    {"id": "filter_literal", "reading": "{Filter} compares {Literal}", "roles": [
+      {"role_name": "filter", "object_type": "filter"}, {"role_name": "literal", "object_type": "literal"}
+    ]},
+    {"id": "plan_uses_unary", "reading": "The plan uses {FactName}", "roles": [
+      {"role_name": "fact_type", "object_type": "fact_name"}
+    ]},
+    {"id": "plan_negates_unary", "reading": "The plan negates {FactName}", "roles": [
+      {"role_name": "fact_type", "object_type": "fact_name"}
+    ]}
+  ],
+  "constraints": [
+    {"id": "active_means_a_or_s", "type": "guarded", "modality": "deontic", "source": "explicit", "status": "confirmed",
+     "antecedent": [{"fact_type": "question_mentions_phrase", "bind": {"phrase": "active customers"}}],
+     "consequent": {"exists": {
+       "atoms": [
+         {"fact_type": "filter_on", "bind": {"filter": "$f", "concept": "Customer", "role": "status"}},
+         {"fact_type": "filter_literal", "bind": {"filter": "$f", "literal": "$v"}}
+       ],
+       "where": [{"operator": "in", "left": "$v", "right": ["A", "S"]}]
+     }},
+     "provenance": {"user_quote": "Active customers means status A or S."}},
+    {"id": "shipped_over_raw_code", "type": "guarded", "modality": "deontic", "source": "explicit", "status": "confirmed",
+     "antecedent": [
+       {"fact_type": "filter_on", "bind": {"filter": "$f", "concept": "Order", "role": "state_code"}},
+       {"fact_type": "filter_literal", "bind": {"filter": "$f", "literal": "S"}}
+     ],
+     "negate": [{"fact_type": "plan_uses_unary", "bind": {"fact_type": "Order_is_shipped"}}],
+     "consequent": {"absence": {"fact_type": "filter_on", "bind": {"filter": "$f", "concept": "Order", "role": "state_code"}}},
+     "provenance": {"user_quote": "Use is_shipped instead of the raw state code."}},
+    {"id": "delivered_two_forms", "type": "guarded", "modality": "deontic", "source": "explicit", "status": "confirmed",
+     "antecedent": [{"fact_type": "question_mentions_phrase", "bind": {"phrase": "delivered"}}],
+     "consequent": {"any_of": [
+       {"exists": {"atoms": [
+         {"fact_type": "filter_on", "bind": {"filter": "$f", "concept": "Order", "role": "status"}},
+         {"fact_type": "filter_literal", "bind": {"filter": "$f", "literal": "D"}}
+       ]}},
+       {"exists": {"atoms": [
+         {"fact_type": "filter_on", "bind": {"filter": "$f", "concept": "Order", "role": "status"}},
+         {"fact_type": "filter_literal", "bind": {"filter": "$f", "literal": "P"}},
+         {"fact_type": "plan_uses_unary", "bind": {"fact_type": "Carrier_confirmation"}}
+       ]}}
+     ]},
+     "provenance": {"user_quote": "Delivered means status D or status P with carrier confirmation."}},
+    {"id": "exclude_test_accounts", "type": "guarded", "modality": "deontic", "source": "explicit", "status": "confirmed",
+     "antecedent": [{"fact_type": "question_mentions_phrase", "bind": {"phrase": "exclude test accounts"}}],
+     "consequent": {"exists": {"atoms": [
+       {"fact_type": "plan_negates_unary", "bind": {"fact_type": "Customer_is_test"}},
+       {"fact_type": "plan_negates_unary", "bind": {"fact_type": "Customer_is_internal"}}
+     ]}},
+     "provenance": {"user_quote": "Exclude test accounts by negating is_test and is_internal."}}
+  ],
+  "rejected_proposals": []
+}

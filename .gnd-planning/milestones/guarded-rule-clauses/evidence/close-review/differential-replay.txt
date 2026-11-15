@@ -1,0 +1,12 @@
+uv run pytest -q --tb=short --basetemp <scratch> \
+    tests/test_guarded_membership.py::test_membership_matches_independent_covered_helper
+    tests/test_guarded_membership.py::test_synth_membership_constructs_both_reachable_verdicts
+    tests/test_guarded_membership.py::test_synth_membership_proves_an_exhausted_boolean_domain
+    tests/test_guarded_antecedent_filters.py::test_filtered_guard_matches_the_covered_helper_and_reference_over_seeded_cases
+    tests/test_guarded_antecedent_filters.py::test_synthesis_excludes_a_binding_that_would_otherwise_fail
+    tests/test_guarded_disjunction.py::test_covered_disjunction_and_semiderived_union_agree_on_seeded_populations
+    tests/test_guarded_disjunction.py::test_mixed_disjunction_synthesizes_and_verbalizes
+    tests/test_guarded_clause_exports.py::test_finite_exports_refuse_guarded_antecedent_filters_by_name
+............                                                             [100%]
+12 passed in 3.19s
+exit 0

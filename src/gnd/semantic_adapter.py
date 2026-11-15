@@ -50,6 +50,7 @@ from gnd.semantic_ir import (
     Scalar,
     SnapshotIR,
 )
+from gnd.terms import MEMBERSHIP_OPERATORS, compile_membership
 from gnd.universe import resolve_primitive
 
 canonical_scalar = scalar_values.canonical_scalar
@@ -593,6 +594,7 @@ def adapt_snapshot(
     population: Population,
     *,
     effective_facts: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+    computed_available: frozenset[str] = frozenset(),
 ) -> SnapshotIR:
     if not population.matches_validation_marker(model):
         raise UnvalidatedPopulationError(population, model)
@@ -727,6 +729,7 @@ def adapt_snapshot(
         tuple(derivations),
         tuple(head for component in derivation_strata(document) for head in component) if structured else (),
         refusals,
+        computed_available=computed_available,
     )
 
 
@@ -745,11 +748,12 @@ def adapt_snapshot_observed(
     population: Population,
     *,
     effective_facts: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+    computed_available: frozenset[str] = frozenset(),
     effective_lineage: Mapping[str, Sequence[tuple[tuple[str | int, ...], ...]]] | None = None,
 ) -> AdaptedSnapshot:
     """Retain the exact value origins beside the immutable semantic snapshot."""
     fact_source = population.facts if effective_facts is None else effective_facts
-    snapshot = adapt_snapshot(model, population, effective_facts=effective_facts)
+    snapshot = adapt_snapshot(model, population, effective_facts=effective_facts, computed_available=computed_available)
     fact_types = {str(row.get("id")): row for row in model.fact_types}
     relations = {row.fact_type: row for row in snapshot.relations}
     origins: list[ValueOrigin] = []
@@ -955,25 +959,80 @@ def _family_adapt_value_comparison(base, source, model, fact_type):
     return base
 
 
+def _membership_operand(right):
+    members = compile_membership(right)
+    if members is None:
+        raise _ShapeError("invalid membership list")
+    return IROperand("membership", primitive=members.domain, membership=members)
+
+
+def _guarded_where(comparisons, primitives):
+    rows = []
+    for value in _list(comparisons):
+        comparison = _mapping(value)
+        operator = _text(comparison.get("operator"))
+        if operator not in (*_ORDERING, "=", "!=", *MEMBERSHIP_OPERATORS):
+            raise _ShapeError("unknown guarded filter operator")
+        left = _guarded_term(comparison.get("left"), primitives)
+        right = (_membership_operand(comparison.get("right"))
+                 if operator in MEMBERSHIP_OPERATORS
+                 else _guarded_term(comparison.get("right"), primitives))
+        rows.append((operator, left, right))
+    return tuple(rows)
+
+
 def _family_adapt_guarded(base, source, model, fact_type):
     atoms = tuple(_atom(value, model) for value in _list(source.get("antecedent")))
     consequent = _mapping(source.get("consequent"))
-    kinds = tuple(
-        key for key in ("comparison", "atom", "absence", "exists") if key in consequent
-    )
+    base = replace(base, antecedent=atoms)
+    if "negate" in source or "where" in source:
+        primitives = _guarded_primitives(atoms)
+        base = replace(
+            base,
+            negate=tuple(_atom(atom, model) for atom in _list(source.get("negate", []))),
+            where=_guarded_where(source.get("where", []), primitives),
+        )
+    if "any_of" in consequent:
+        alternatives = _list(consequent["any_of"])
+        if set(consequent) != {"any_of"} or len(alternatives) < 2:
+            raise _ShapeError("a disjunction needs at least two alternatives")
+        alternate_base = replace(base, negate=(), where=())
+        return replace(base, consequent_kind="any_of", alternatives=tuple(
+            _adapt_guarded_alternative(alternate_base, _mapping(item), model)
+            for item in alternatives
+        ))
+    return _adapt_guarded_alternative(base, consequent, model)
+
+
+def _guarded_primitives(atoms):
+    primitives = {}
+    for atom in atoms:
+        for _, term in atom.bindings:
+            if term.kind == "variable":
+                primitives.setdefault(term.variable, term.primitive)
+    return primitives
+
+
+def _adapt_guarded_alternative(base, consequent, model):
+    atoms = base.antecedent
+    kinds = tuple(key for key in ("comparison", "atom", "absence", "exists") if key in consequent)
     if len(kinds) != 1 or not atoms:
         raise _ShapeError("a guarded constraint needs one consequent")
     kind = kinds[0]
-    base = replace(base, consequent_kind=kind, antecedent=atoms)
+    if len(consequent) != 1:
+        raise _ShapeError("a guarded alternative needs exactly one shape")
+    base = replace(base, consequent_kind=kind, variant=kind)
     if kind not in {"comparison", "exists"}:
         base = replace(base, consequent=(_atom(consequent[kind], model),))
     elif kind == "comparison":
         comparison = _mapping(consequent[kind])
-        primitives = {}
-        for atom in atoms:
-            for _, term in atom.bindings:
-                if term.kind == "variable":
-                    primitives.setdefault(term.variable, term.primitive)
+        primitives = _guarded_primitives(atoms)
+        operator = _text(comparison.get("operator"))
+        if operator in MEMBERSHIP_OPERATORS:
+            return replace(base, operator=operator, operands=(
+                _guarded_term(comparison["left"], primitives),
+                _membership_operand(comparison["right"]),
+            ))
         terms = tuple(comparison[key] for key in ("left", "right"))
         operands = []
         for index, term in enumerate(terms):
@@ -1014,21 +1073,21 @@ def _family_adapt_guarded(base, source, model, fact_type):
     else:
         exists = _mapping(consequent[kind])
         exists_atoms = tuple(_atom(value, model) for value in _list(exists.get("atoms")))
-        primitives = {}
-        for atom in (*atoms, *exists_atoms):
-            for _, term in atom.bindings:
-                if term.kind == "variable":
-                    primitives.setdefault(term.variable, term.primitive)
+        primitives = _guarded_primitives((*atoms, *exists_atoms))
         where_rows = []
         where_value = exists.get("where")
         where_comparisons = [] if where_value is None else _list(where_value)
         for comparison_value in where_comparisons:
             comparison = _mapping(comparison_value)
             operator = _text(comparison.get("operator"))
-            if operator not in (*_ORDERING, "=", "!="):
+            if operator not in (*_ORDERING, "=", "!=", *MEMBERSHIP_OPERATORS):
                 raise _ShapeError("unknown exists where operator")
             left = _guarded_term(comparison.get("left"), primitives)
-            right = _guarded_term(comparison.get("right"), primitives)
+            right = (
+                _membership_operand(comparison.get("right"))
+                if operator in MEMBERSHIP_OPERATORS
+                else _guarded_term(comparison.get("right"), primitives)
+            )
             where_rows.append((operator, left, right))
         base = replace(
             base,

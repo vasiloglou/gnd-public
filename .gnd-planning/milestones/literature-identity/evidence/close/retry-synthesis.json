@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "run_sha256": "ebf6bfd8eb5c3c9b69ec182b1a7b19199d959d78b5d9e0a96d502c294fb613bf",
+  "summary": "All six seats returned valid responses and the requested evidence stayed byte-identical. Codex approved. Claude, Qwen, Kimi and GLM requested revisions. Gemini retained its substantive dissent about reliance on the recovered pre-score input. The driver separately checked the operating-system isolation and exact inputs and dispositioned the concerns in the panel and close records.",
+  "agreed_concerns": [
+    {
+      "group_id": "plan-close-history",
+      "severity": "high",
+      "title": "Bring plan \u00a711 forward to the renewed ruling",
+      "summary": "Preserve the original L1 miss and initial close ruling. Cite the separately approved fresh corpus and first executable score in the new close narrative.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-close-amendment-predates-fresh-reserve"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-s11-denies-fresh-independent-reserve"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "stale-plan-close-amendment"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "plan-s11-stale-fresh-reserve-claim"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "frozen-input-binding",
+      "severity": "high",
+      "title": "Bind the measurement to its frozen execution inputs",
+      "summary": "Tie the score to the original policy and scorer pins and the exact rubric copy used by the private assembly. Preserve the original receipt format.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "private-rubric-copy-unbound"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "frozen-model-scorer-key-digests-unbound"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li5-reserve-evidence-missing-path-policy-binding"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "decision-repair-audit",
+      "severity": "medium",
+      "title": "Bind the pre-score decision correction",
+      "summary": "Show the actual admission-based subset, exact statement equality and the one omitted inadmissible reference. State the scope and authority of the recovery.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "recovery-authority-and-neutrality-unrecorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "decision-only-repair-equality-unbound"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "fresh-false-exclusion-mechanism-unrecorded"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "bound-provenance-labels-custodian"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li5-fresh-reserve-annotation-isolation-unproven"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "l1-development-counts-not-cited-in-fresh-record"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "freeze-verbatim-output-attribution"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "repair-affects-l1-closure"
+    },
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "li5-fresh-reserve-substitution-vs-026-condition"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "freeze-claim-format-only-mislabels-reference-omission"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "bind-isolation",
+      "rank": 1,
+      "title": "Record the execution isolation",
+      "action": "Bind the actual OS-level file-access probe and the transcript digests. The read-only flag in the abbreviated command is only the inner CLI mode.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-fresh-reserve-annotation-isolation-unproven"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-fresh-reserve-annotation-isolation-unproven",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "bind-recovery",
+      "rank": 2,
+      "title": "Rule on the executable blind input",
+      "action": "Retain the first refusal, report the pre-score comparison and admit the recovered run only as a first scored result. Preserve the dissent and distinguish the scope of the fresh and original reserves.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "recovery-authority-and-neutrality-unrecorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "decision-only-repair-equality-unbound"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "repair-affects-l1-closure"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li5-fresh-reserve-substitution-vs-026-condition"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "freeze-claim-format-only-mislabels-reference-omission"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "recovery-authority-and-neutrality-unrecorded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "decision-only-repair-equality-unbound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "repair-affects-l1-closure",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li5-fresh-reserve-substitution-vs-026-condition",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "freeze-claim-format-only-mislabels-reference-omission",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "bind-receipt",
+      "rank": 3,
+      "title": "Reference the full freeze",
+      "action": "Record the verified frozen execution inputs alongside the unchanged score receipt.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "private-rubric-copy-unbound"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "frozen-model-scorer-key-digests-unbound"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li5-reserve-evidence-missing-path-policy-binding"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "private-rubric-copy-unbound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "frozen-model-scorer-key-digests-unbound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li5-reserve-evidence-missing-path-policy-binding",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "append-close-history",
+      "rank": 4,
+      "title": "Update the close narrative",
+      "action": "Append the fresh protocol and first-scored result to the original chronology. Keep the original threshold, old miss, and named residuals visible.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-close-amendment-predates-fresh-reserve"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-s11-denies-fresh-independent-reserve"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "stale-plan-close-amendment"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "plan-s11-stale-fresh-reserve-claim"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-close-amendment-predates-fresh-reserve",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-s11-denies-fresh-independent-reserve",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "stale-plan-close-amendment",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "plan-s11-stale-fresh-reserve-claim",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

@@ -750,3 +750,25 @@ The [close dispositions](close-delta.md) carry the criterion trace and
 the originally approved successor assignments. D1–D9, release,
 publication and certification authority remain governed by their
 existing records.
+
+### Renewed close on the independent L1 score
+
+The [earlier close](../026-milestone-close.md) retained the original
+reserved miss and its post-score correction. C6's original
+pre-LI5 freeze applies to that reserve. A separately approved
+follow-up [protocol](../027-phase-LI5-independent-reserve-spec-gate.md)
+and [sealed corpus](../028-phase-LI5-independent-reserve-corpus-gate.md)
+set the conditions for a new independent measurement after LI5.
+
+The first blind input [refused assembly](../029-phase-LI5-independent-reserve-assembly.md).
+Before any scoring, the annotator removed one inadmissible resolution
+reference. The source statements and valid decision stayed fixed.
+The [pre-score freeze](../030-phase-LI5-independent-reserve-freeze.md)
+binds the executable annotation and composition. Its
+[first score](../031-phase-LI5-independent-reserve.md) retained
+one of one supported paths and excluded two of two false paths.
+
+This is the separately approved smoke measurement used for the
+[renewed close ruling](../035-milestone-close.md). The original results,
+W3 certificate-byte residual, host-scale scope and existing successor
+assignments stay in the historical record.

@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "run_sha256": "516fc624961e9997551c4844072c93062aded3fb30b8a6f8a36a17b334c82e5a",
+  "summary": "Three seats returned valid responses, which establishes the runtime advisory quorum. The repository requires four valid reviewers for milestone close. Claude and GLM regarded the fresh first score as evidence for a renewed ruling with documented limits. Gemini objected to relying on the recovered input after the first assembly refusal. The fresh score and the original refusal remain intact. Milestone acceptance remains open.",
+  "agreed_concerns": [
+    {
+      "group_id": "plan-current-evidence",
+      "severity": "medium",
+      "title": "Bind the fresh score in the close narrative",
+      "summary": "Plan section 11 describes the previous close, when the only passing score used the corrected original reserve. A renewed ruling should explicitly reference the later owner-approved corpus and first executable fresh score while retaining the original results and existing residuals.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-s11-stale-fresh-claim"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "li-close-s11-fresh-reserve-binding"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "recovery-authority-unrecorded"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "recovery-comparison-unbound"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "score-binding-incomplete"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "fresh-positive-scope-undisclosed"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "invalid-reference-deletion-bypasses-exit-3"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "mischaracterized-format-recovery"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "li-031-corpus-custodian-disclosure"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "bind-fresh-close",
+      "rank": 1,
+      "title": "Bind the history and fresh measurement",
+      "action": "Keep the old sentence as history and add a dated ruling referencing the new sealed corpus, freeze, and first independent score if the project review bar is later met.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-s11-stale-fresh-claim"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "li-close-s11-fresh-reserve-binding"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-s11-stale-fresh-claim",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "li-close-s11-fresh-reserve-binding",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "clarify-recovery-limits",
+      "rank": 2,
+      "title": "Record the scope of the recovery",
+      "action": "State that the initial input refused, an inadmissible resolution reference was later removed before scoring, all statements and admitted decisions stayed fixed, and the development-side custodian held the key separately.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "recovery-authority-unrecorded"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "recovery-comparison-unbound"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "invalid-reference-deletion-bypasses-exit-3"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "mischaracterized-format-recovery"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "li-031-corpus-custodian-disclosure"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "gemini",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "recovery-authority-unrecorded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "recovery-comparison-unbound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "invalid-reference-deletion-bypasses-exit-3",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "mischaracterized-format-recovery",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "li-031-corpus-custodian-disclosure",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

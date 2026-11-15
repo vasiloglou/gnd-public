@@ -49,6 +49,8 @@ The same reserve retained 1/1 supported and excluded 2/2 after an input
 correction informed by the first result. The
 [fresh independent reserve](031-phase-LI5-independent-reserve.md)
 subsequently retained 1/1 supported and excluded 2/2 false paths in
-its first score. A new milestone ruling remains pending.
+its first score. The [renewed panel](033-panel.md) returned three
+valid responses against the project's four-reviewer requirement.
+The milestone remains open.
 
 The [Codex handoff](notes/codex-handoff.md) records the starting point.

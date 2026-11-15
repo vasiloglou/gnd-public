@@ -1,0 +1,157 @@
+{
+  "reviewed_commit": "93eb8e1c9c8c1faaa69213f2d47c18a6ebc4de2d",
+  "run_sha256": "516fc624961e9997551c4844072c93062aded3fb30b8a6f8a36a17b334c82e5a",
+  "request_sha256": "947cc5bddb4da7d997ede896dc73b4892338ec6401dc29ade4b604b9b0688a69",
+  "reviewed_artifacts_before_sha256": "194e987ce3289afceab55614462c8a79d7a3b9b8c7ebf9dda88af7c3db8d9973",
+  "reviewed_artifacts_after_sha256": "194e987ce3289afceab55614462c8a79d7a3b9b8c7ebf9dda88af7c3db8d9973",
+  "effort": "xhigh",
+  "runtime_required_seats": 3,
+  "project_required_seats": 4,
+  "seats": [
+    {
+      "reviewer_id": "claude",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "88ffa101e15df9cc1e28a3cb80c77e99b47bcd3f9118f2acef0d15f2f3b985e6",
+      "streams_sha256": {
+        "capability.stdout": "5ca3a9dac2026e56c221fdd34380c7d7d45ebbb51c1d01b7c17c75cb076a0be8",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "d4dc27d0f913b5649a5af81082f7717b83813f8ee0d2884f7bf86a2b2c08421d",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "revise",
+      "response_sha256": "f2740ca1c4ecad26d10b3cc34a3f670e8df921a588ef6e8084aa809433ad3825",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 5,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 5,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 5,
+        "total_concerns": 5,
+        "unanchored_concern_ids": []
+      },
+      "relevance_counts": {
+        "hardening": 4,
+        "completeness": 1
+      }
+    },
+    {
+      "reviewer_id": "codex",
+      "status": "malformed",
+      "issue_codes": [
+        "malformed"
+      ],
+      "envelope_sha256": "aa4dc26596e1e892cfe7525a4f9fc9537cf4ea6948944429c1bbb58cd51a4e5a",
+      "streams_sha256": {
+        "capability.stdout": "df0d864ca2076f7654288c6a1e3394e3eaa2ea8f15021df2524efdd90c70986c",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "94a76325f4e8a3e1a816ecf033874f14e6101dd29481a831db3fbd7ff070d8ff",
+        "stderr": "12a33e2effd08ac218038af631807190dc96063f465d8a0251291ba06764eb3d"
+      }
+    },
+    {
+      "reviewer_id": "qwen",
+      "status": "nonzero",
+      "issue_codes": [
+        "nonzero"
+      ],
+      "envelope_sha256": "03ad56716d100e6a9f74019119939610352d874e3db06c825a7eb6528fa45656",
+      "streams_sha256": {
+        "capability.stdout": "a8b68ecacf715b6c89ced11b02c8f25c46d35117f2eee5782882f2232a2d4c66",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "259005c80c896b0a652029fffee1421462c988c278cf76091b20e025f9e00f61"
+      }
+    },
+    {
+      "reviewer_id": "gemini",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "685a79c7e572094a6b556261db512114d111598dbdd491c3765d7713cb982a3d",
+      "streams_sha256": {
+        "capability.stdout": "b5c6e1af180f48adb3700982e7b06e905f29d2965f047eaeebd0b5c4f676b632",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "9f86a564f2a3abe70c73a58c922cd20fe23bce9d1aadc925aaeacff0447785f7",
+        "stderr": "c1783b13dd49a0ff893752fdf1fc5c36f45374b7e9e6c97ced3ad80ed3fbe93f"
+      },
+      "disposition": "block",
+      "response_sha256": "c2755631256b1b365d0e5b09d42b40e5686b2f949de14813f34f1fb57e14d0e1",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 2,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 2,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 2,
+        "unanchored_concern_ids": [
+          "invalid-reference-deletion-bypasses-exit-3",
+          "mischaracterized-format-recovery"
+        ]
+      },
+      "relevance_counts": {
+        "blocking": 1,
+        "hardening": 1
+      }
+    },
+    {
+      "reviewer_id": "kimi",
+      "status": "malformed",
+      "issue_codes": [
+        "malformed"
+      ],
+      "envelope_sha256": "d11b0d426ca3b18f28e1299c7a28e855e17b9e46769634b50a32e39bbf0ac75a",
+      "streams_sha256": {
+        "capability.stdout": "38366cf8f3a746da0527b722bb8f017d5cdcecd16e6885148a05b19794ef0ca0",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "3df8eb150ec71d173edde466a7d58a17e5ff82c91376b2fd7129f5b34545c6cd",
+        "stderr": "21a1694b2739b17f7fa8f44708625dcc47d5ef2002ae5b4138ce2ce09aa0bb4f"
+      }
+    },
+    {
+      "reviewer_id": "glm",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "41915a33e57ff2f2d9b3e74256a50541e8d1263f4538e808141a4c2d6f842909",
+      "streams_sha256": {
+        "capability.stdout": "5ca3a9dac2026e56c221fdd34380c7d7d45ebbb51c1d01b7c17c75cb076a0be8",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "f14079e99ef49ce663ed445d2712390ed253b547360ecbe3e1123bf83151f2f4",
+        "stderr": "84a7a92addfe6124967bec188da43c69300fa0c093fdc46484e5700bb5091db1"
+      },
+      "disposition": "revise",
+      "response_sha256": "4619584d6724b96bfeab936d811e8b388c7fa038a6f2ffe7a0a8f4ebad30ab06",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 2,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 2,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 1,
+        "total_concerns": 2,
+        "unanchored_concern_ids": [
+          "li-031-corpus-custodian-disclosure"
+        ]
+      },
+      "relevance_counts": {
+        "hardening": 2
+      }
+    }
+  ]
+}

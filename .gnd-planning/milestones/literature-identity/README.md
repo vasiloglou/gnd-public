@@ -14,7 +14,7 @@ Draft r3, 2026-11-15, from [issue #193](https://github.com/vasiloglou/gnd-public
 
 [Milestone plan](notes/literature-identity-plan.md) ·
 [LI0 spec](notes/phase-LI0-spec.md) ·
-[LI1 draft spec](notes/phase-LI1-spec.md)
+[LI1 spec](notes/phase-LI1-spec.md)
 
 Parts 5–8 and 10 go to [literature-interop](../literature-interop/README.md)
 and [literature-depth](../literature-depth/README.md). The partition table is
@@ -25,5 +25,6 @@ recorded. The [LI1 spec](notes/phase-LI1-spec.md) r1 was approved on 2026-11-15
 ([gate](004-phase-LI1-spec-gate.md)), with D1–D10 ruled as proposed and a
 corpus-first instrument. The corpus, answer key, reference run, expected
 outcomes and red tests are committed, and the owner approved them at the
-[corpus gate](005-phase-LI1-corpus-gate.md), ruling A1–A5 as proposed. The
-harness waits for a separate go-ahead.
+[corpus gate](005-phase-LI1-corpus-gate.md), ruling A1–A5 as proposed. [LI1](006-phase-LI1.md) is
+implemented, reviewed by one reviewer, and recorded. Next is LI2, which starts
+with its spec under `process-phase`.

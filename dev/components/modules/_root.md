@@ -331,15 +331,36 @@ Compose several anchored populations into one population with lineage (CT2).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `CompositionError` | class(ValueError) | 48 | A bounded, value-free composition refusal (exit 3). |
-| `Manifest` | class | 56 | (no docstring) |
-| `Source` | class | 63 | (no docstring) |
-| `Composition` | class | 72 | (no docstring) |
-| `parse_manifest(raw) -> Manifest` | function | 104 | (no docstring) |
-| `parse_record(raw) -> dict[str, Any]` | function | 151 | (no docstring) |
-| `compose(model, model_raw, directory) -> Composition` | function | 223 | Compose the sources a manifest names; refuse instead of guessing. |
-| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 358 | Re-derive a composition from its inputs and compare it with the record. |
-| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 375 | (no docstring) |
+| `Manifest` | class | 59 | (no docstring) |
+| `Source` | class | 67 | (no docstring) |
+| `Composition` | class | 76 | (no docstring) |
+| `parse_manifest(raw) -> Manifest` | function | 87 | (no docstring) |
+| `parse_record(raw) -> dict[str, Any]` | function | 154 | (no docstring) |
+| `compose(model, model_raw, directory) -> Composition` | function | 237 | Compose the sources a manifest names; refuse instead of guessing. |
+| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 391 | Re-derive a composition from its inputs and compare it with the record. |
+| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 408 | (no docstring) |
+
+## gnd.composition_resolution — `src/gnd/composition_resolution.py`
+Components: model.composition_resolution
+Bind source evidence and verify an explicit composition identity policy.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `CompositionError` | class(ValueError) | 22 | A bounded, value-free composition refusal (exit 3). |
+| `scalar(value) -> bool` | function | 33 | (no docstring) |
+| `exact_fields(value, fields, what) -> dict[str, Any]` | function | 37 | (no docstring) |
+| `read_json(raw, *, max_bytes, what) -> Any` | function | 43 | (no docstring) |
+| `scalar_key(value) -> tuple[str, str]` | function | 50 | (no docstring) |
+| `row_key(row) -> tuple[Any, ...]` | function | 54 | (no docstring) |
+| `Resolution` | class | 84 | (no docstring) |
+| `Resolution.check_renaming(self, number, renaming, object_type) -> None` | method | 88 | (no docstring) |
+| `parse_resolution(raw, index, sources) -> Resolution` | function | 97 | Parse bounded resolution JSON and validate its model and manifest references. |
+| `ResolutionEvidence` | class | 153 | Index asserted roles and the anchors bound to each cited source. |
+| `ResolutionEvidence.bind(self) -> None` | method | 181 | Verify each decision's population digests and asserted evidence. |
+| `ResolutionEvidence.collect_keys(self, renamings) -> dict` | method | 210 | Collect the first asserted coordinate and outcome of each key. |
+| `ResolutionEvidence.other_outcomes(self, keys, kept, renamings) -> Iterable[tuple]` | method | 232 | Yield outcomes of other entities, including instance-only values. |
+| `ResolutionEvidence.stamp_lineage(self, facts, max_bytes) -> None` | method | 254 | Attach decision indexes, checking expansion before storing each list. |
+| `check_coverage(keys, decisions, *, other_outcomes) -> None` | function | 304 | Verify indexed decisions and all required joins and separations. |
 
 ## gnd.constraint_families — `src/gnd/constraint_families.py`
 Components: check.constraint_families

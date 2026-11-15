@@ -23,6 +23,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import re
 import shutil
 import subprocess
@@ -35,13 +36,14 @@ from typing import Any
 
 SCHEMA = "literature-assurance-report/1"
 DOCUMENT_CAP = 4 * 1024 * 1024
+COMPOSITION_RECORD_CAP = 16 * 1024 * 1024
 ROUTE_CAP = 64 * 1024 * 1024
 MAX_DEPTH = 64
 MAX_DIGITS = 128
 WORKERS = 8
 STAGES = ("model-population-validity", "source-binding", "semantic-support", "identity-decisions",
           "derivation", "coverage", "freshness")
-DORMANT = {"identity-decisions": "LI2", "coverage": "literature-depth LD3"}
+DORMANT = {"coverage": "literature-depth LD3"}
 UNITS = {
     "model-population-validity": "run source population",
     "source-binding": "anchored fact role",
@@ -56,6 +58,7 @@ FLOORS = {
     "model-population-validity": {"agreement": (1, 1)},
     "source-binding": {"precision": (1, 1), "recall": (1, 1)},
     "semantic-support": {"precision": (9, 10), "recall": (9, 10), "abstention_max": (1, 5)},
+    "identity-decisions": {"precision": (1, 1), "recall": (9, 10), "abstention_max": (1, 5)},
     "derivation": {"precision": (1, 1), "recall": (1, 1), "abstention_max": (0, 1)},
     "freshness": {"precision": (1, 1), "recall": (1, 1)},
 }
@@ -192,6 +195,14 @@ def _fact_ok(fact: Any) -> bool:
     return isinstance(fact, dict) and _is_str(fact.get("fact_type")) and isinstance(fact.get("roles"), dict)
 
 
+def _identity_key_ok(key: Any) -> bool:
+    if not isinstance(key, dict) or set(key) != {"source", "object_type", "value"}:
+        return False
+    value = key["value"]
+    return (_is_str(key["source"]) and _is_str(key["object_type"])
+            and (isinstance(value, (str, bool, int)) or isinstance(value, float) and math.isfinite(value)))
+
+
 def check_key_shape(key: Any) -> None:
     _need(isinstance(key, dict) and key.get("schema") == "literature-answer-key/1")
     _need(_is_str(key.get("corpus_sha256")) and isinstance(key.get("labeller"), dict))
@@ -206,6 +217,10 @@ def check_key_shape(key: Any) -> None:
               and _fact_ok(item.get("fact")) and _is_str(item.get("role")) and _span_ok(item.get("span")))
     for item in key["populations"]:
         _need(isinstance(item, dict) and _is_str(item.get("source")) and type(item.get("expected_check_exit")) is int)
+
+    for item in key["identity_pairs"]:
+        _need(isinstance(item, dict) and _is_str(item.get("id")) and item.get("label") in ("same", "different")
+              and _identity_key_ok(item.get("left")) and _identity_key_ok(item.get("right")))
 
 
 def check_run_shape(run: Any) -> None:
@@ -519,6 +534,77 @@ def _semantic(inputs: Inputs, r3: dict | None, per_domain: list) -> dict:
                   **common)
 
 
+def _identity_key(key: dict) -> tuple[str, str, str, str]:
+    value = key["value"]
+    return key["source"], key["object_type"], type(value).__name__, repr(value)
+
+
+def _identity_decisions(inputs: Inputs, r4: dict | None) -> dict:
+    name = "identity-decisions"
+    pairs = inputs.key["identity_pairs"]
+    common = {"floors": FLOORS[name], "sample_size": len(pairs), "routes": [_public(r4)] if r4 else []}
+    if r4 is None or _refused(r4):
+        return _stage(name, metrics={}, route_present=r4 is not None, route_refused=r4 is not None, **common)
+    try:
+        composition = inputs.run_dir / "composition"
+        record, record_raw = read_json(inputs.run_dir / "composed" / "record.json", COMPOSITION_RECORD_CAP)
+        manifest, manifest_raw = read_json(composition / "manifest.json")
+        verified = r4["payload"]["composition"]["record_sha256"]
+        if (_sha(record_raw) != verified or _sha(manifest_raw) != record["manifest_sha256"]):
+            raise Refusal("run:composition-changed")
+        binding = manifest.get("resolution")
+        if binding is None:
+            return _stage(name, metrics={}, route_present=False, **common)
+        if not _relative_ok(binding["path"]) or "/" in binding["path"]:
+            raise Refusal("run:invalid-resolution-path")
+        resolution, raw = read_json(composition / binding["path"])
+        if _sha(raw) != binding["sha256"] or _sha(raw) != record["resolution_sha256"]:
+            raise Refusal("run:resolution-changed")
+    except (Refusal, KeyError, TypeError):
+        return _stage(name, metrics={}, route_present=True, route_refused=True, **common)
+
+    parent = {}
+    size = {}
+    unresolved = set()
+
+    def root(key):
+        while parent[key] != key:
+            parent[key] = parent[parent[key]]
+            key = parent[key]
+        return key
+
+    for decision in resolution["decisions"]:
+        left, right = map(_identity_key, decision["keys"])
+        if decision["decision"] == "unresolved":
+            unresolved.add(frozenset((left, right)))
+        if decision["decision"] == "same":
+            for key in (left, right):
+                parent.setdefault(key, key)
+                size.setdefault(key, 1)
+            left, right = root(left), root(right)
+            if left != right:
+                if size[left] < size[right]:
+                    left, right = right, left
+                parent[right] = left
+                size[left] += size[right]
+    actual = expected = matched = abstentions = 0
+    disagreements = []
+    for pair in pairs:
+        left, right = _identity_key(pair["left"]), _identity_key(pair["right"])
+        positive = left in parent and right in parent and root(left) == root(right)
+        gold = pair["label"] == "same"
+        actual += positive
+        expected += gold
+        matched += positive and gold
+        abstentions += frozenset((left, right)) in unresolved
+        if positive != gold:
+            disagreements.append(pair["id"])
+    metrics = {"precision": (matched, actual), "recall": (matched, expected),
+               "abstention": (abstentions, len(pairs))}
+    return _stage(name, metrics=metrics, route_present=True, unresolved=abstentions,
+                  disagreements={"count": len(disagreements), "units": disagreements}, **common)
+
+
 def _derivation(inputs: Inputs, r4: dict | None) -> dict:
     if r4 is None:
         return _stage("derivation", metrics={}, floors=FLOORS["derivation"], route_present=False)
@@ -743,7 +829,7 @@ def score(corpus_root: Path, answers: Path, run_dir: Path, *,
             "model-population-validity": _validity(inputs, r1),
             "source-binding": _source_binding(inputs, r2),
             "semantic-support": _semantic(inputs, r3, _per_domain(inputs, results)),
-            "identity-decisions": _dormant("identity-decisions"),
+            "identity-decisions": _identity_decisions(inputs, r4),
             "derivation": _derivation(inputs, r4),
             "coverage": _dormant("coverage"),
             "freshness": _freshness(inputs, r2, r3, r4),
@@ -768,8 +854,9 @@ def score(corpus_root: Path, answers: Path, run_dir: Path, *,
         "not_measured": [{"stage": s["stage"], "owner": s["owner"]} for s in ordered if s["status"] == "not-measured"],
         "unscored_labels": [{"kind": "chains", "count": len(key["chains"]), "owner": "LI5"},
                             {"kind": "reuse_cases", "count": len(key["reuse_cases"]), "owner": "LI2, LI3"},
-                            {"kind": "identity_pairs", "count": len(key["identity_pairs"]), "owner": "LI2"},
-                            {"kind": "name_pairs", "count": len(key["name_pairs"]), "owner": "LI3"}],
+                            {"kind": "name_pairs", "count": len(key["name_pairs"]), "owner": "LI3"}]
+                           + ([{"kind": "identity_pairs", "count": len(key["identity_pairs"]), "owner": "run"}]
+                              if "precision" not in stages["identity-decisions"] else []),
     }
 
 

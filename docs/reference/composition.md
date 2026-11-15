@@ -96,6 +96,57 @@ value. Composition with reference populations is refused.
 `{"schema": "gnd-compose/1", "exit_code": 0, "population": ..., "record": ...}`
 and writes nothing; a refusal returns `exit_code: 3` with an `error` object.
 
+## Resolution
+
+A manifest may bind a resolution file with
+`"resolution": {"path": "resolution.json", "sha256": "..."}`.
+The path is a single JSON filename in the composition directory. Its stem
+follows the source id syntax. GND reads up to 4 MiB and verifies the raw
+SHA-256. Older manifests retain their original behavior.
+
+The [resolution schema](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/resolution.schema.json)
+describes a `gnd-resolution/1` object with `object_types` and `decisions`.
+The object types are distinct ids declared in the model. Each decision
+supplies these fields.
+
+| Field | Meaning |
+|---|---|
+| `decision` | `same`, `different` or `unresolved`. |
+| `keys` | Two objects with `source`, `object_type` and `value`. The sources differ and belong to the manifest. The object type is shared and listed in `object_types`. Values match by JSON type and exact value. |
+| `evidence` | At least one coordinate per key. Each has a zero-based `key` index, `source`, `fact_type`, zero-based `fact_index` and `role`. The role of the asserted fact holds the key's value and has the key's object type. An anchored role requires a `span` with `start` and `end` matching its bound sidecar. Other roles omit `span`. |
+| `producer` | A `kind` of `reviewer` or `tool` and an `id` of 1 to 128 characters. |
+| `input_sha256` | The raw population SHA-256 for each key's source, keyed by source id. |
+| `placeholders` | Two distinct scalars of the respective keys' JSON types for `unresolved`. Other decisions use `null`. |
+
+Every renaming in a manifest with a resolution cites a zero-based
+`decision` index. That decision must name the renaming's source, object
+type and original value. Manifests without a resolution omit these indexes.
+
+GND checks that the decisions agree with the composed result. Keys come
+from asserted roles before renaming. Coverage applies to types listed
+by the file.
+
+- Keys from different sources that end at one value must be connected
+  through `same` decisions. Each `same` pair must end at one value.
+- When equal original values from different sources end apart, each
+  separated pair requires its own `different` or `unresolved` decision.
+- `different` keys must end at distinct values and remain disconnected
+  through `same`.
+- Each `unresolved` key must take its own placeholder through the
+  manifest's renamings and remain disconnected from its partner. Other
+  keys of that object type cannot share the placeholder.
+
+Refusals are checked in order. GND parses the manifest, verifies the
+resolution digest, parses the resolution and verifies citations and
+evidence, then applies the existing composition checks. The final step
+verifies coverage and closure on the composition. Resolution refusals
+identify the involved decisions, sources or coordinates.
+
+A composition with a resolution adds `resolution_sha256` to its record
+and `decisions` to every fact entry. The latter lists the sorted distinct
+decision indexes involving keys of the fact's source rows. Verification
+re-derives both fields. A witness binds the composition record's bytes.
+
 ## The record
 
 ```json

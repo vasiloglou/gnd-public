@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -243,14 +244,13 @@ ONE_WALK = [
 
 @pytest.mark.parametrize(("keys", "decisions", "refusal"), ONE_WALK)
 def test_one_walk_over_every_outcome(keys, decisions, refusal):
-    from gnd.composition_resolution import check_coverage
-
     from gnd.composition import CompositionError
+    from gnd.composition_resolution import check_coverage
 
     if refusal is None:
         check_coverage(keys, decisions)
     else:
-        with pytest.raises(CompositionError, match=refusal):
+        with pytest.raises(CompositionError, match=re.escape(refusal)):
             check_coverage(keys, decisions)
 
 
@@ -308,4 +308,78 @@ def test_coverage_walk_time_bound():
     started = time.monotonic()
     with pytest.raises(Exception, match="joined without a same decision"):
         check_coverage(keys, decisions[:19_900])
+    assert time.monotonic() - started < 10
+
+
+def test_unresolved_placeholder_cannot_reuse_an_instance(tmp_path):
+    directory = _copy_case("H-unresolved", tmp_path)
+    source = directory / "hom-b"
+    population_path = source / "population.json"
+    population = json.loads(population_path.read_text())
+    population["instances"].setdefault("method", []).append("TRACE#1")
+    raw = json.dumps(population).encode()
+    population_path.write_bytes(raw)
+    digest = hashlib.sha256(raw).hexdigest()
+    sidecar_path = source / "population.json.anchors.json"
+    sidecar = json.loads(sidecar_path.read_text())
+    sidecar["population_sha256"] = digest
+    sidecar_path.write_text(json.dumps(sidecar))
+    resolution = json.loads((directory / "resolution.json").read_text())
+    resolution["decisions"][0]["input_sha256"]["hom-b"] = digest
+    _rebind(directory, resolution)
+    result = _compose(directory)
+    assert result["exit_code"] == 3
+    assert "has a shared placeholder" in result["error"]["message"]
+
+
+def test_resolution_schema_matches_committed_inputs():
+    import jsonschema
+
+    modules = ROOT / "src/gnd"
+    for name, filename in (("resolution", "resolution.json"), ("composition-manifest", "manifest.json")):
+        schema = json.loads((modules / f"{name}.schema.json").read_text())
+        jsonschema.Draft202012Validator.check_schema(schema)
+        for case in ("W-flat", "W-resolved", "A-alias", "H-unresolved"):
+            path = FIXTURES / "cases" / case / filename
+            if path.exists():
+                jsonschema.validate(json.loads(path.read_text()), schema)
+    record = _compose(FIXTURES / "cases/A-alias")["record"]
+    schema = json.loads((modules / "composition.schema.json").read_text())
+    jsonschema.validate(record, schema)
+
+
+def test_fact_level_anchoring_applies_to_every_role(tmp_path):
+    from ruamel.yaml import YAML
+
+    from gnd import api
+
+    model = YAML(typ="safe").load(MODEL.read_text())
+    fact = next(row for row in model["fact_types"] if row["id"] == "method_builds_on_method")
+    anchored = dict(fact["constraints"][0])
+    del anchored["role"]
+    fact["constraints"] = [anchored]
+    model_path = tmp_path / "all-roles.orm.yaml"
+    model_path.write_text(json.dumps(model))
+    directory = _copy_case("A-alias", tmp_path)
+    assert api.compose(str(model_path), str(directory))["exit_code"] == 0
+    resolution = json.loads((directory / "resolution.json").read_text())
+    del resolution["decisions"][0]["evidence"][0]["span"]
+    _rebind(directory, resolution)
+    result = api.compose(str(model_path), str(directory))
+    assert result["exit_code"] == 3
+    assert "has no anchor at its span" in result["error"]["message"]
+
+
+def test_coverage_walk_times_closed_spelling_separations():
+    from gnd.composition_resolution import check_coverage
+
+    keys, decisions = [], []
+    for index in range(20_000):
+        value = f"m{index}"
+        left, right = value + "#a", value + "#b"
+        keys.extend((_key("a", value, left, f"a f#{index}.m"),
+                     _key("b", value, right, f"b f#{index}.m")))
+        decisions.append(_decision("unresolved", ("a", value), ("b", value), [left, right]))
+    started = time.monotonic()
+    check_coverage(keys, decisions)
     assert time.monotonic() - started < 10

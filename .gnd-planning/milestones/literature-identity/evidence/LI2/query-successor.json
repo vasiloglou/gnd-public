@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reason": "LI2 compares an already bound anchor sidecar's roles with a source row. This is sidecar JSON, rather than a model query. Model roles come from ModelIndex.",
+  "predecessor": ".gnd-planning/maintenance/2026-11-11-query-budget-headroom/query-successor.json",
+  "predecessor_sha256": "dbb5756c8b2c295be58953a76bff155932d8deaafef4ce5b2f4301ec168c2a84",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/composition_resolution.py",
+      "__init__",
+      "anchor['fact_key']['roles']",
+      1
+    ]
+  ],
+  "result_distinct_rows": 288,
+  "result_occurrences": 356,
+  "original_metric_current": 300
+}

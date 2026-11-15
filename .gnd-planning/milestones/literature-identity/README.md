@@ -32,7 +32,7 @@ implemented, reviewed by one reviewer, and recorded. The
 corpus-first instrument. The LI2 fixtures, the baseline, the LI1 reference
 decisions and the amended LI1 expectations are committed red, and the owner
 approved them at the [LI2 corpus gate](008-phase-LI2-corpus-gate.md), ruling
-B1–B4 as proposed. The implementation waits for a separate go-ahead.
+B1–B4 as proposed. The current milestone delegation supplied the go-ahead. [LI2](010-phase-LI2.md) is implemented, independently reviewed and recorded.
 
 To run the rest of the milestone from Codex, start at the
 [Codex handoff](notes/codex-handoff.md).

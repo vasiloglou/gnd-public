@@ -170,5 +170,11 @@ The stages are, in order:
 6. `coverage`
 7. `freshness`
 
-`identity-decisions` and `coverage` are not measured yet. Their owners are the
-sense-resolution phase and the reading-coverage milestone.
+`identity-decisions` scores cross-source pairs against the answer key after
+the composition route verifies the run's resolution. A pair connected by
+`same` decisions counts as a join. A pair with an `unresolved` decision
+counts toward abstention. The precision floor is 1, the recall floor is
+9/10 and the abstention ceiling is 1/5. A run without a verified composition
+and resolution cannot pass this stage.
+
+`coverage` remains dormant, owned by the reading-coverage milestone.

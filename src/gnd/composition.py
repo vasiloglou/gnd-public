@@ -10,9 +10,9 @@ and indexes only.
 from __future__ import annotations
 
 import hashlib
-import math
 import re
 from dataclasses import dataclass
+from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
@@ -23,9 +23,19 @@ from gnd.anchors import (
     bind_anchors,
     parse_anchor_sidecar,
     read_regular_path,
-    strict_json,
 )
 from gnd.artifacts import canonical_json_bytes
+from gnd.composition_resolution import (
+    MAX_RESOLUTION_BYTES,
+    CompositionError,
+    ResolutionEvidence,
+    check_coverage,
+    parse_resolution,
+)
+from gnd.composition_resolution import exact_fields as _keys
+from gnd.composition_resolution import read_json as _json
+from gnd.composition_resolution import row_key as _row_key
+from gnd.composition_resolution import scalar as _scalar
 from gnd.model import MAX_ENTRIES, Model
 from gnd.model_index import ModelIndex
 from gnd.population import (
@@ -45,18 +55,12 @@ _HEX = re.compile(r"^[0-9a-f]{64}$")
 _positions_factory = dict
 
 
-class CompositionError(ValueError):
-    """A bounded, value-free composition refusal (exit 3)."""
-
-    def __init__(self, message: str) -> None:
-        super().__init__(f"composition:invalid: {message}")
-
-
 @dataclass(frozen=True)
 class Manifest:
     sources: tuple[str, ...]
     renamings: tuple[dict[str, Any], ...]
     scope_tags: tuple[dict[str, str], ...]
+    resolution: dict[str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -80,30 +84,21 @@ def _sha(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def _row_key(row: dict[str, Any]) -> tuple[Any, ...]:
-    return tuple((name, type(value).__name__, repr(value)) for name, value in sorted(row.items()))
-
-
-def _scalar(value: Any) -> bool:
-    return isinstance(value, (str, bool, int)) or (isinstance(value, float) and math.isfinite(value))
-
-
-def _keys(value: Any, keys: set[str], what: str) -> dict[str, Any]:
-    if not isinstance(value, dict) or set(value) != keys:
-        raise CompositionError(f"{what} has missing or unexpected fields")
-    return value
-
-
-def _json(raw: bytes, *, max_bytes: int, what: str) -> Any:
-    try:
-        return strict_json(raw, max_bytes=max_bytes, too_large=f"{what} exceeds its size cap")
-    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
-        raise CompositionError(f"{what}: {error}") from error
-
-
 def parse_manifest(raw: bytes) -> Manifest:
-    data = _keys(_json(raw, max_bytes=MAX_MANIFEST_BYTES, what="manifest"),
-                 {"schema", "sources", "renamings", "deduplications", "scope_tags"}, "manifest")
+    data = _json(raw, max_bytes=MAX_MANIFEST_BYTES, what="manifest")
+    fields = {"schema", "sources", "renamings", "deduplications", "scope_tags"}
+    has_resolution = isinstance(data, dict) and "resolution" in data
+    if has_resolution:
+        fields.add("resolution")
+    _keys(data, fields, "manifest")
+    resolution = data.get("resolution")
+    if has_resolution:
+        _keys(resolution, {"path", "sha256"}, "manifest resolution")
+        path, digest = resolution["path"], resolution["sha256"]
+        if not isinstance(path, str) or not path.endswith(".json") or not _ID.fullmatch(path[:-5]):
+            raise CompositionError("manifest resolution path must be a single JSON filename")
+        if not isinstance(digest, str) or not _HEX.fullmatch(digest):
+            raise CompositionError("manifest resolution sha256 is not a SHA-256 digest")
     if data["schema"] != MANIFEST_SCHEMA:
         raise CompositionError("manifest schema is not gnd-composition-manifest/1")
     sources = data["sources"]
@@ -118,9 +113,17 @@ def parse_manifest(raw: bytes) -> Manifest:
     if not isinstance(data["renamings"], list) or not isinstance(data["scope_tags"], list):
         raise CompositionError("manifest renamings and scope_tags must be lists")
     seen = set()
+    source_ids = set(sources)
     for index, renaming in enumerate(data["renamings"]):
-        _keys(renaming, {"source", "fact_type", "role", "from", "to"}, f"renaming {index}")
-        if renaming["source"] not in sources:
+        fields = {"source", "fact_type", "role", "from", "to"}
+        if has_resolution:
+            if isinstance(renaming, dict) and set(renaming) == fields:
+                raise CompositionError(f"renaming {index} cites no decision")
+            fields.add("decision")
+        _keys(renaming, fields, f"renaming {index}")
+        if has_resolution and (type(renaming["decision"]) is not int or renaming["decision"] < 0):
+            raise CompositionError(f"renaming {index} decision must be a nonnegative index")
+        if not isinstance(renaming["source"], str) or renaming["source"] not in source_ids:
             raise CompositionError(f"renaming {index} names an unknown source")
         if not all(isinstance(renaming[key], str) and renaming[key] for key in ("fact_type", "role")):
             raise CompositionError(f"renaming {index} has an invalid fact type or role")
@@ -133,11 +136,11 @@ def parse_manifest(raw: bytes) -> Manifest:
         seen.add(identity)
     for index, tag in enumerate(data["scope_tags"]):
         _keys(tag, {"source", "tag"}, f"scope tag {index}")
-        if tag["source"] not in sources:
+        if not isinstance(tag["source"], str) or tag["source"] not in source_ids:
             raise CompositionError(f"scope tag {index} names an unknown source")
         if not isinstance(tag["tag"], str) or not 0 < len(tag["tag"]) <= 128:
             raise CompositionError(f"scope tag {index} must be 1 to 128 characters")
-    return Manifest(tuple(sources), tuple(data["renamings"]), tuple(data["scope_tags"]))
+    return Manifest(tuple(sources), tuple(data["renamings"]), tuple(data["scope_tags"]), resolution)
 
 
 def _lineage_entry(value: Any, what: str) -> dict[str, Any]:
@@ -149,12 +152,15 @@ def _lineage_entry(value: Any, what: str) -> dict[str, Any]:
 
 
 def parse_record(raw: bytes) -> dict[str, Any]:
-    data = _keys(_json(raw, max_bytes=MAX_RECORD_BYTES, what="record"),
-                 {"schema", "model_sha256", "manifest_sha256", "population_sha256", "sources", "scope_tags", "facts"},
-                 "record")
+    data = _json(raw, max_bytes=MAX_RECORD_BYTES, what="record")
+    digests = ["model_sha256", "manifest_sha256", "population_sha256"]
+    has_resolution = isinstance(data, dict) and "resolution_sha256" in data
+    if has_resolution:
+        digests.append("resolution_sha256")
+    _keys(data, {"schema", "sources", "scope_tags", "facts"} | set(digests), "record")
     if data["schema"] != RECORD_SCHEMA:
         raise CompositionError("record schema is not gnd-composition/1")
-    for key in ("model_sha256", "manifest_sha256", "population_sha256"):
+    for key in digests:
         if not isinstance(data[key], str) or not _HEX.fullmatch(data[key]):
             raise CompositionError(f"record {key} is not a SHA-256 digest")
     if not isinstance(data["sources"], list) or not data["sources"]:
@@ -174,8 +180,16 @@ def parse_record(raw: bytes) -> dict[str, Any]:
             raise CompositionError(f"record scope tag {index} is invalid")
     if not isinstance(data["facts"], list):
         raise CompositionError("record facts must be a list")
+    fields = {"fact_type", "index", "sources", "renamings"}
+    if has_resolution:
+        fields.add("decisions")
     for index, fact in enumerate(data["facts"]):
-        _keys(fact, {"fact_type", "index", "sources", "renamings"}, f"record fact {index}")
+        _keys(fact, fields, f"record fact {index}")
+        if has_resolution:
+            decisions = fact["decisions"]
+            if (not isinstance(decisions, list) or not all(type(i) is int and i >= 0 for i in decisions)
+                    or any(a >= b for a, b in pairwise(decisions))):
+                raise CompositionError(f"record fact {index} decisions must be sorted distinct indexes")
         if not isinstance(fact["fact_type"], str) or type(fact["index"]) is not int or fact["index"] < 0:
             raise CompositionError(f"record fact {index} is invalid")
         if not isinstance(fact["sources"], list) or not fact["sources"]:
@@ -228,6 +242,18 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
     manifest_raw = _read(directory / "manifest.json", label="composition manifest", max_bytes=MAX_MANIFEST_BYTES)
     manifest = parse_manifest(manifest_raw)
     index_ = ModelIndex.for_model(model)
+    evidence = None
+    if manifest.resolution is not None:
+        raw = _read(directory / manifest.resolution["path"], label="resolution", max_bytes=MAX_RESOLUTION_BYTES)
+        if _sha(raw) != manifest.resolution["sha256"]:
+            raise CompositionError("resolution digest differs from the manifest")
+        resolution = parse_resolution(raw, index_, manifest.sources)
+        for number, renaming in enumerate(manifest.renamings):
+            object_type = index_.role_object_type(renaming["fact_type"], renaming["role"])
+            resolution.check_renaming(number, renaming, object_type)
+        sources = tuple(_load_source(model, directory, source_id) for source_id in manifest.sources)
+        evidence = ResolutionEvidence(index_, sources, resolution)
+        evidence.bind()
     roles = index_.fact_type_roles()
     renamings: dict[tuple[Any, ...], tuple[int, Any]] = {}
     instance_renamings: dict[tuple[Any, ...], tuple[int, Any]] = {}
@@ -248,7 +274,8 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
             # source value of one object type must agree on the new value.
             if (type(first[1]).__name__, repr(first[1])) != target:
                 raise CompositionError(f"renamings {first[0]} and {index} rename one value to different values")
-    sources = tuple(_load_source(model, directory, source_id) for source_id in manifest.sources)
+    if evidence is None:
+        sources = tuple(_load_source(model, directory, source_id) for source_id in manifest.sources)
     if sum(len(rows) for source in sources for rows in source.population.facts.values()) > MAX_ENTRIES:
         raise CompositionError(f"composed fact count exceeds {MAX_ENTRIES}")
 
@@ -349,6 +376,12 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
             for fact_type in sorted(facts) for position in range(len(facts[fact_type]))
         ],
     }
+    if evidence is not None:
+        keys = evidence.collect_keys(instance_renamings)
+        check_coverage(list(keys.values()), evidence.resolution.decisions,
+                       other_outcomes=evidence.other_outcomes(keys, kept, instance_renamings))
+        record["resolution_sha256"] = manifest.resolution["sha256"]
+        evidence.stamp_lineage(record["facts"], MAX_RECORD_BYTES)
     record_bytes = canonical_json_bytes(record)
     if len(record_bytes) > MAX_RECORD_BYTES:
         raise CompositionError("the composition record would exceed its 16 MiB cap")
@@ -364,8 +397,8 @@ def verify_composition(
     if record["population_sha256"] != _sha(population_raw):
         raise CompositionError("the composed population differs from the record's digest")
     derived = compose(model, model_raw, directory)
-    for key in ("manifest_sha256", "sources", "scope_tags", "facts"):
-        if derived.record[key] != record[key]:
+    for key in ("manifest_sha256", "sources", "scope_tags", "resolution_sha256", "facts"):
+        if derived.record.get(key) != record.get(key):
             raise CompositionError(f"re-derived composition differs from the record at {key}")
     if derived.population_bytes != population_raw:
         raise CompositionError("re-derived composed population bytes differ")

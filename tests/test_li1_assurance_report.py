@@ -196,7 +196,7 @@ def test_dormant_stages():
     # LI2 D8: identity-decisions is active; only coverage stays dormant.
     assert report["not_measured"] == [{"stage": "coverage", "owner": "literature-depth LD3"}]
     assert report["exit_code"] == 0
-    assert {u["kind"] for u in report["unscored_labels"]} == {"chains", "reuse_cases", "identity_pairs", "name_pairs"}
+    assert {u["kind"] for u in report["unscored_labels"]} == {"chains", "reuse_cases", "name_pairs"}
 
 
 # --- T9: the one status function -------------------------------------------------------
@@ -469,3 +469,38 @@ if __name__ == "__main__" and sys.argv[1:] == ["--write-goldens"]:
             (EXPECTED / f"{case}.report.json").write_text(
                 json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
             print(f"wrote expected/{case}.report.json exit {report['exit_code']}")
+
+
+def test_malformed_identity_label_is_schema_refusal(tmp_path):
+    corpus, answers, run = _copy_inputs(tmp_path)
+    key = json.loads(answers.read_text())
+    key["identity_pairs"][0]["left"]["value"] = {}
+    answers.write_text(json.dumps(key))
+    assert _score(run, answers, corpus)["reason"] == "input:schema"
+
+
+def test_identity_scoring_refuses_resolution_replaced_after_route(tmp_path, monkeypatch):
+    _, answers, run = _copy_inputs(tmp_path)
+    harness = _harness()
+    original = harness._routes
+
+    def routes(inputs, gnd, work):
+        results = original(inputs, gnd, work)
+        directory = inputs.run_dir / "composition"
+        manifest_path = directory / "manifest.json"
+        manifest = json.loads(manifest_path.read_text())
+        resolution_path = directory / manifest["resolution"]["path"]
+        resolution = json.loads(resolution_path.read_text())
+        resolution["decisions"][0]["producer"]["id"] = "replaced-after-verification"
+        raw = json.dumps(resolution).encode()
+        resolution_path.write_bytes(raw)
+        manifest["resolution"]["sha256"] = hashlib.sha256(raw).hexdigest()
+        manifest_path.write_text(json.dumps(manifest))
+        return results
+
+    monkeypatch.setattr(harness, "_routes", routes)
+    report = harness.score(EXAMPLE, answers, run)
+    stage = next(s for s in report["stages"] if s["stage"] == "identity-decisions")
+    assert stage["route_refused"] is True
+    assert report["exit_code"] == 1
+    assert any(item["kind"] == "identity_pairs" for item in report["unscored_labels"])

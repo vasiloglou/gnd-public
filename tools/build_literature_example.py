@@ -701,7 +701,9 @@ def resolution_for(sources: dict, pairs: list | None = None) -> dict:
 
 
 def write_reference_run(root: Path, corpus: dict, corpus_raw: bytes) -> None:
-    made = write_run(root, corpus, corpus_raw, root / "runs" / "reference", reference_sources(root, corpus))
+    sources = reference_sources(root, corpus)
+    made = write_run(root, corpus, corpus_raw, root / "runs" / "reference", sources,
+                     resolution=resolution_for(sources))
     if made.returncode != 0:
         raise SystemExit(made.stdout + made.stderr)
 

@@ -1981,7 +1981,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, extract.source_anchors, model.composition, model.population_sentences, model.validation, witness.service
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -2122,15 +2122,27 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.composition
-- does: Compose anchored source populations using explicit renamings and identical-row deduplication with replayable lineage.
+- does: Compose anchored source populations using explicit renamings and optional resolution decisions, with replayable lineage.
 - verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding
 - in: model bytes and source directory with manifest, populations, documents and sidecars
 - out: composed population bytes and canonical value-free lineage record
 - status: canonical
 - modules: src/gnd/composition.py
-- uses: infra.artifacts, model.anchors, model.loading, model.population_loading, model.query_index
+- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index
 - used_by: check.service, cli.api, witness.service
 - tests: tests/test_composition.py
+
+
+### model.composition_resolution
+- does: Bind identity decisions to asserted source evidence and verify cross-source joins, separations and lineage.
+- verbs: resolution, identity decision, same connectivity, source evidence, separation coverage, parse_resolution, check_coverage
+- in: Bounded resolution JSON, model roles, source populations and bound anchor sidecars.
+- out: Verified decision indexes and covered keys, or a composition refusal.
+- status: canonical
+- modules: src/gnd/composition_resolution.py
+- uses: model.anchors, model.query_index
+- used_by: model.composition
+- tests: tests/test_li2_resolution.py
 
 
 ### model.architecture
@@ -2433,7 +2445,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +35 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +36 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -3246,7 +3258,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### examples.literature_assurance
 - does: Example: score a literature pipeline run against an answer key in seven separate stages, with exact-fraction floors and value-free refusals [score, stage_status].
-- verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages
+- verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, identity decisions, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages
 - in: The literature example root (corpus/corpus.json, model, documents, extract artifacts), a literature-answer-key/1 file with gold/ and render/ beside it, and a literature-run/1 directory.
 - out: A literature-assurance-report/1 payload and exit 0, 1 or 3. The routes are gnd check (plain, --anchors, --composition) and gnd fidelity, run as subprocesses.
 - status: canonical
@@ -3568,6 +3580,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - report: examples.book_rules, examples.governance_reports
 - report schema: fidelity.service, infra.report_payloads
 - required tests: exp.junit, exp.tests_runner
+- resolution: exp.conclusions, model.composition_resolution
 - resolve primitive: check.universe, model.reference_resolution
 - resume session: exp.service, exp.session_store
 - reviewed preview: cli.evolve_command, evolve.command

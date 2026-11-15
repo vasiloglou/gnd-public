@@ -1,6 +1,10 @@
 {
   "deduplications": "identical-rows",
   "renamings": [],
+  "resolution": {
+    "path": "resolution.json",
+    "sha256": "62c7847ae1f2097c71fa88aecdf1261847c3c499603b7ce5b958f387d6891ea9"
+  },
   "schema": "gnd-composition-manifest/1",
   "scope_tags": [
     {

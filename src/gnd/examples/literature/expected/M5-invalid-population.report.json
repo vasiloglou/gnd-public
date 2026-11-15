@@ -4,6 +4,7 @@
     "model-population-validity",
     "source-binding",
     "semantic-support",
+    "identity-decisions",
     "derivation",
     "freshness"
   ],
@@ -11,8 +12,8 @@
     "answers_sha256": "e183f2cf840b176925da2bbcf4d3cd207fb116933ebbd732301f96a385058944",
     "corpus_sha256": "9b572f981660f273a6db95ec248f106db0e618fecea7de8dda934c329fdcd5f1",
     "gnd_version": "0.3.1",
-    "harness_sha256": "ce46bbb837443a52ca55d89315766e0d1943dc8ca8c3382526a947a498dd6149",
-    "run_sha256": "121d12725f225777e392671e978699c1d74cb53ffba8e8ae55d07e9f3738b6ab"
+    "harness_sha256": "b3dc219528f3d2131357ce6a4cd5fb55a25dad37a5fbd5b4d1ea43663ac481e4",
+    "run_sha256": "b8816dc78ce3ce6059f4423ecb3e2dd233004ff282c74c89865f886c60257f1f"
   },
   "labels": {
     "independent": false,
@@ -21,7 +22,7 @@
   },
   "not_measured": [
     {
-      "owner": "LI2",
+      "owner": "run",
       "stage": "identity-decisions"
     },
     {
@@ -642,13 +643,36 @@
       "unresolved": 0
     },
     {
-      "active": false,
+      "active": true,
+      "disagreements": {
+        "count": 0,
+        "units": []
+      },
+      "exclusions": [],
       "failed_floors": [],
-      "owner": "LI2",
-      "sample_size": 0,
+      "floor": {
+        "abstention_max": [
+          1,
+          5
+        ],
+        "precision": [
+          1,
+          1
+        ],
+        "recall": [
+          9,
+          10
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": "run",
+      "refused_units": 0,
+      "routes": [],
+      "sample_size": 6,
       "stage": "identity-decisions",
       "status": "not-measured",
-      "unit": "cross-source key pair with an identity label"
+      "unit": "cross-source key pair with an identity label",
+      "unresolved": 0
     },
     {
       "active": true,
@@ -928,14 +952,14 @@
       "owner": "LI2, LI3"
     },
     {
-      "count": 6,
-      "kind": "identity_pairs",
-      "owner": "LI2"
-    },
-    {
       "count": 4,
       "kind": "name_pairs",
       "owner": "LI3"
+    },
+    {
+      "count": 6,
+      "kind": "identity_pairs",
+      "owner": "run"
     }
   ]
 }

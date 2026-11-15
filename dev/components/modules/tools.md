@@ -64,7 +64,7 @@ Build the LI1 literature regression corpus over src/gnd/examples/literature/.
 | `write_run(root, corpus, corpus_raw, run, sources, *, abstentions, resolution, renamings) -> subproc…` | function | 603 | Write a literature-run/1 directory, bind every sidecar to the bytes written, and compose. |
 | `resolution_for(sources, pairs) -> dict` | function | 678 | Decisions for the identity pairs whose two keys still exist in the run's sources. |
 | `write_reference_run(root, corpus, corpus_raw) -> None` | function | 703 | (no docstring) |
-| `main(argv) -> None` | function | 709 | (no docstring) |
+| `main(argv) -> None` | function | 711 | (no docstring) |
 
 ## tools.build_resolution_fixtures — `tools/build_resolution_fixtures.py`
 Components: unassigned

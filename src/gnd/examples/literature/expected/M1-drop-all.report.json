@@ -3,14 +3,15 @@
   "failed_stages": [
     "source-binding",
     "semantic-support",
+    "identity-decisions",
     "derivation"
   ],
   "inputs": {
     "answers_sha256": "e183f2cf840b176925da2bbcf4d3cd207fb116933ebbd732301f96a385058944",
     "corpus_sha256": "9b572f981660f273a6db95ec248f106db0e618fecea7de8dda934c329fdcd5f1",
     "gnd_version": "0.3.1",
-    "harness_sha256": "ce46bbb837443a52ca55d89315766e0d1943dc8ca8c3382526a947a498dd6149",
-    "run_sha256": "0cd2a2581c158952437489badaa027621ef27f6af655ffa11c29d9cd48eec0ea"
+    "harness_sha256": "b3dc219528f3d2131357ce6a4cd5fb55a25dad37a5fbd5b4d1ea43663ac481e4",
+    "run_sha256": "7297a28d9643f060fbe619e13442de73d44b12ecd8aacd0f9a067044d2002e52"
   },
   "labels": {
     "independent": false,
@@ -18,10 +19,6 @@
     "note": "Labels were written by the corpus author from the public works; they are not independent expert ground truth."
   },
   "not_measured": [
-    {
-      "owner": "LI2",
-      "stage": "identity-decisions"
-    },
     {
       "owner": "literature-depth LD3",
       "stage": "coverage"
@@ -670,13 +667,73 @@
       "unresolved": 0
     },
     {
-      "active": false,
-      "failed_floors": [],
-      "owner": "LI2",
-      "sample_size": 0,
+      "abstention": {
+        "denominator": 6,
+        "numerator": 0,
+        "rate": 0.0
+      },
+      "active": true,
+      "disagreements": {
+        "count": 3,
+        "units": [
+          "i04",
+          "i05",
+          "i06"
+        ]
+      },
+      "exclusions": [],
+      "failed_floors": [
+        "precision",
+        "recall"
+      ],
+      "floor": {
+        "abstention_max": [
+          1,
+          5
+        ],
+        "precision": [
+          1,
+          1
+        ],
+        "recall": [
+          9,
+          10
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": null,
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "recall": {
+        "denominator": 3,
+        "numerator": 0,
+        "rate": 0.0
+      },
+      "refused_units": 0,
+      "routes": [
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composed/population.json",
+            "--composition",
+            "run/composed/record.json",
+            "--sources",
+            "run/composition",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        }
+      ],
+      "sample_size": 6,
       "stage": "identity-decisions",
-      "status": "not-measured",
-      "unit": "cross-source key pair with an identity label"
+      "status": "fail",
+      "unit": "cross-source key pair with an identity label",
+      "unresolved": 0
     },
     {
       "abstention": {
@@ -998,11 +1055,6 @@
       "count": 8,
       "kind": "reuse_cases",
       "owner": "LI2, LI3"
-    },
-    {
-      "count": 6,
-      "kind": "identity_pairs",
-      "owner": "LI2"
     },
     {
       "count": 4,

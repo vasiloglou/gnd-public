@@ -1,0 +1,30 @@
+{
+  "delta": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-identity/030-phase-LI5-independent-reserve-freeze.md",
+    "sha256": "b497393b933d388d443a4541257986856ff73e3847ee0ac1381356ca568de423"
+  },
+  "kind": "spec-results-delta",
+  "results": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-identity/031-phase-LI5-independent-reserve.md",
+    "sha256": "2651d5c4c92a4b1cacb3f39c8ce7a2e4ca0661cf08a4403dcecb53d54b650f56"
+  },
+  "rubric": {
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Review C6 and L1 against the exact first scored result. Distinguish the old reserved miss and its post-score correction from the fresh reserve.",
+      "Assess whether the fresh annotation and score were independent. Check the corpus ruling, separation, first assembly refusal and pre-score decision-only repair. Ask whether deleting the invalid reference while leaving every statement and valid decision fixed affects the closure claim. State concrete evidence or consequence.",
+      "Check the three-case denominator, source and key hashes, unchanged model and scorer, and the before-score annotation and composition bindings. A successful smoke measurement has only its declared scope.",
+      "Review whether the fresh evidence resolves the acceptance condition in record 026. Carry forward the prior W3 certificate-byte and other scoped residuals and leave the successor rulings in their existing homes. The review is advisory.",
+      "Cite the three exact artifacts. Consult the prior close and the committed gate records only for corroboration. No private source pack, answer key, transcripts or raw scores are in scope."
+    ],
+    "name": "literature-identity renewed close after independent L1 score"
+  },
+  "schema_version": 1,
+  "spec": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-identity/notes/literature-identity-plan.md",
+    "sha256": "4f496a6b47f17cf6fe166821e75e924b43857153b391b05825a3f1e46084c1b5"
+  }
+}

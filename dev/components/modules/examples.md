@@ -230,9 +230,9 @@ Assemble admitted contextual sources and score named lineage paths.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `assemble(example, model, annotations, out) -> None` | function | 179 | Build a no-replace run from accepted contextual statements and verified identities. |
-| `score(model, run, answer_key) -> dict` | function | 247 | Grade exact directed paths through the public witness route. |
-| `main(argv) -> int` | function | 285 | (no docstring) |
+| `assemble(example, model, annotations, out) -> None` | function | 180 | Build a no-replace run from accepted contextual statements and verified identities. |
+| `score(model, run, answer_key) -> dict` | function | 270 | Grade exact directed paths through the public witness route. |
+| `main(argv) -> int` | function | 310 | (no docstring) |
 
 ## gnd.examples.literature.name_diagnostics — `src/gnd/examples/literature/name_diagnostics.py`
 Components: examples.literature_name_diagnostics

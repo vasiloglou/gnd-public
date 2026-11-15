@@ -40,5 +40,9 @@ met the predeclared ceiling in all measured strata.
 [LI4](018-phase-LI4.md) is implemented and recorded. The example projects
 positive contextual assertions through a digest-bound saved-opinion route.
 
+[LI5](024-phase-LI5.md) implements qualified lineage and records the
+first reserved miss alongside the corrected smoke result. The initial
+reserved acceptance condition is pending the close disposition.
+
 To run the rest of the milestone from Codex, start at the
 [Codex handoff](notes/codex-handoff.md).

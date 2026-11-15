@@ -277,7 +277,8 @@ python -m gnd.examples.literature.lineage_run score \
   "$example/lineage/model.orm.yaml" lineage-run "$example/answers/answer-key.json"
 ```
 
-The scorer checks the composition binding, then requests both the
+The scorer checks the retained admission bundles and composition binding,
+then requests both the
 directed steps and the ancestry query for each path. It reports the
 supported and excluded counts separately. The original flat whale
 fixture is in the [resolution example](resolution/README.md).

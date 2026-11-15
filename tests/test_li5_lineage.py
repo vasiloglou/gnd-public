@@ -65,6 +65,9 @@ def test_only_eligible_relationships_supply_a_lineage_edge(runs, tmp_path):
     statements = read(run / "composed.population.json")["facts"]["assertion_statement"]
     for pair in cases["non_chaining"]:
         assert any([r["actor"], r["object"]] == pair for r in statements)
+    for pair in (["Adaptor A", "System P"], ["Tuned A", "System P"], ["Port A", "System P"]):
+        assert query(run, tmp_path, "lineage_ancestor", pair)[0].returncode == 0
+    assert query(run, tmp_path, "lineage_ancestor", ["Atlas", "Nimbus"])[0].returncode == 2
     for pair in cases["non_chaining"] + cases["blocked"]:
         assert query(run, tmp_path, "lineage_ancestor", pair)[0].returncode == cases["missing_exit"]
 
@@ -93,7 +96,8 @@ def test_proof_binds_contextual_claims_and_decision_lineage(runs, tmp_path):
     decoded = read(record)
     source = contextual[0]["sources"][0]
     lineage = next(row for row in decoded["facts"] if source in row["sources"])
-    assert lineage["decisions"]
+    assert all(next(row for row in decoded["facts"] if src in row["sources"])["decisions"]
+               for node in contextual for src in node["sources"])
     # Modify the asserted source coordinate and the decision binding independently.
     assert gnd("replay", MODEL, population, proof, "--composition", record, "--raw", "--json").returncode == 0
     contextual[0]["sources"][0]["fact_index"] += 100
@@ -106,6 +110,9 @@ def test_proof_binds_contextual_claims_and_decision_lineage(runs, tmp_path):
     other.write_bytes(canonical_json_bytes(decoded))
     stale = gnd("replay", MODEL, population, proof, "--composition", other, "--raw", "--json")
     assert stale.returncode == cases["replay_record_exit"] and "binding-stale" in stale.stdout
+    rebound = gnd("check", MODEL, population, "--composition", other, "--sources", run / "sources",
+                  "--format", "json")
+    assert rebound.returncode == 3 and "differs from the record at facts" in rebound.stdout
 
 
 def test_cycle_warning_and_reversed_relation(runs, tmp_path):
@@ -143,7 +150,9 @@ def test_cycle_warning_and_reversed_relation(runs, tmp_path):
     ordinary["lineage_arc"] = [{"descendant": b, "ancestor": a}]
     result, report = check(original, "reversed")
     assert result.returncode == 1
-    assert any(row["verdict"] == "fail" for row in report["derivations"])
+    verdict = next(row for row in report["derivations"] if row["derivation_ref"] == "derivation:lineage_arc")
+    assert verdict["verdict"] == "fail"
+    assert {item["kind"] for item in verdict["findings"]} >= {"derived-extension-unsound"}
 
 
 def test_invalid_annotation_and_changed_resolution_refuse(runs, tmp_path):
@@ -162,3 +171,63 @@ def test_invalid_annotation_and_changed_resolution_refuse(runs, tmp_path):
     with (run / "sources/resolution.json").open("a") as stream:
         stream.write(" ")
     assert main(["score", str(MODEL), str(run), str(EXAMPLE / "answers/answer-key.json")]) == 3
+
+
+def test_score_requires_the_admission_publication(runs, tmp_path):
+    import shutil
+
+    from gnd.examples.literature.lineage_run import main
+
+    run = tmp_path / "missing-admission"
+    shutil.copytree(runs["development"], run)
+    (run / "admissions/wham-whale/admission.json").unlink()
+    assert main(["score", str(MODEL), str(run), str(EXAMPLE / "answers/answer-key.json")]) == 3
+
+
+def test_false_chain_exclusion_can_fail(tmp_path):
+    from gnd.examples.literature.lineage_run import assemble, score
+
+    doc = read(DATA / "development-input.json")
+    changed = {"sbi-frontier.p2", "sensor-placement.p2"}
+    for source in doc["sources"]:
+        for statement in source["statements"]:
+            if statement["passage"] in changed:
+                statement["disposition"] = "supported"
+    shared = "simulation-based inference"
+    doc["decisions"].append({"decision": "same", "keys": [
+        {"source": source, "value": shared} for source in ("sbi-frontier", "sensor-placement")]})
+    path = tmp_path / "incorrectly-approved-input.json"
+    path.write_bytes(canonical_json_bytes(doc))
+    run = tmp_path / "mutated"
+    assemble(EXAMPLE, MODEL, path, run)
+    report = score(MODEL, run, EXAMPLE / "answers/answer-key.json")
+    assert report["exit_code"] == 1
+    assert report["counts"] == {"supported": [3, 3], "excluded": [4, 5]}
+    assert {"id": "c08", "witness_exit": 0, "correct": False} in report["paths"]
+
+
+def test_transfer_model_checks_the_assumption_separately(runs, tmp_path):
+    population = read(runs["control"] / "composed.population.json")
+    statement = next(row for row in population["facts"]["assertion_statement"] if row["actor"] == "Nimbus")
+    assert statement["regime"] != "unspecified"
+    statement["condition"] = "unspecified"
+    subject = tmp_path / "model-layer-control.json"
+    subject.write_bytes(canonical_json_bytes(population))
+    target = tmp_path / "targets.json"
+    for relation, expect in (("lineage_ancestor", 0), ("transfer_ancestor", 2)):
+        target.write_bytes(canonical_json_bytes({"version": 1, "targets": [{
+            "fact_type": relation, "tuple": [{"primitive": "String", "value": name} for name in ("Nimbus", "Atlas")],
+        }]}))
+        got = gnd("witness", MODEL, subject, "--targets", target, "--raw")
+        assert got.returncode == expect, got.stdout + got.stderr
+
+
+def test_model_regeneration_matches_the_path_policy(tmp_path):
+    root = EXAMPLE.parents[3]
+    generated = tmp_path / "lineage.orm.yaml"
+    result = subprocess.run([sys.executable, str(root / "tools/build_literature_lineage_model.py"),
+                             "--out", str(generated)], capture_output=True, text=True, check=False)
+    assert result.returncode == 0, result.stderr
+    assert generated.read_bytes() == MODEL.read_bytes()
+    policy = read(DATA / "path-policy.json")
+    assert set(policy["chainable"]).isdisjoint(policy["non_chaining"])

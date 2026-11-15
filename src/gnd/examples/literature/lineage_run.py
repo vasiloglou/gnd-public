@@ -22,6 +22,7 @@ from gnd.artifacts import (
 from gnd.composition import (
     MAX_RECORD_BYTES,
     CompositionError,
+    Source,
     compose,
     parse_record,
     verify_composition,
@@ -29,7 +30,7 @@ from gnd.composition import (
 from gnd.judgments import JudgmentInputError, judgment_fact_digest, judgment_receipt_digest
 from gnd.model import ModelLoadError, load_model_bytes
 
-from .assertion_admission import ABSENT_CONDITIONS, PASSAGE, ROLES, STATEMENT, WORK, admit
+from .assertion_admission import ABSENT_CONDITIONS, PASSAGE, ROLES, SCHEMA, STATEMENT, WORK, admit
 from .assurance_report import Refusal
 
 INPUT_SCHEMA = "literature-lineage-input/1"
@@ -244,6 +245,28 @@ def _chains(data: Any) -> list[dict]:
     return rows
 
 
+def _bind_admissions(run: Path, sources: tuple[Source, ...], model_sha: str) -> None:
+    """Require each composed source to be the retained, byte-bound admission output."""
+    for source in sources:
+        publication = run / "admissions" / source.id
+        authority = run / "opinions" / source.id
+        marker = _decode(_read(publication / "admission.json"))
+        _require(isinstance(marker, dict) and marker.get("schema") == SCHEMA,
+                 "input:invalid-admission-marker")
+        bindings = {
+            "model_sha256": model_sha,
+            "admitted_sha256": source.digests["population_sha256"],
+            "raw_sha256": sha256_hex(_read(publication / "raw.population.json", MODEL_CAP)),
+            "judgment_report_sha256": sha256_hex(_read(publication / "judgment-report.json", MAX_RECORD_BYTES)),
+            "policy_sha256": sha256_hex(_read(authority / "policy.json", MODEL_CAP)),
+            "receipts_sha256": sha256_hex(_read(authority / "receipts.json", MODEL_CAP)),
+        }
+        _require(all(marker.get(key) == digest for key, digest in bindings.items()),
+                 "input:admission-binding")
+        _require(sha256_hex(_read(publication / "admitted.population.json", MODEL_CAP)) ==
+                 bindings["admitted_sha256"], "input:admission-binding")
+
+
 def score(model: Path, run: Path, answer_key: Path) -> dict:
     """Grade exact directed paths through the public witness route."""
     answer_raw = _read(answer_key)
@@ -253,7 +276,9 @@ def score(model: Path, run: Path, answer_key: Path) -> dict:
     record = run / "composition.json"
     pop_raw, record_raw = _read(population, MODEL_CAP), _read(record, MAX_RECORD_BYTES)
     checked_model = load_model_bytes(model_raw, source=model)
-    verify_composition(checked_model, model_raw, pop_raw, parse_record(record_raw), run/"sources")
+    verified = verify_composition(checked_model, model_raw, pop_raw, parse_record(record_raw), run/"sources")
+    model_sha = sha256_hex(model_raw)
+    _bind_admissions(run, verified.sources, model_sha)
     counts = {"supported": [0, 0], "excluded": [0, 0]}
     results = []
     with tempfile.TemporaryDirectory(prefix="gnd-lineage-score-") as scratch:
@@ -278,7 +303,7 @@ def score(model: Path, run: Path, answer_key: Path) -> dict:
             counts[kind][1] += 1
             results.append({"id": row["id"], "witness_exit": exit_code, "correct": correct})
     return {"schema": SCORE_SCHEMA, "exit_code": int(any(a != b for a, b in counts.values())),
-            "model_sha256": sha256_hex(model_raw), "composition_sha256": sha256_hex(record_raw),
+            "model_sha256": model_sha, "composition_sha256": sha256_hex(record_raw),
             "answers_sha256": sha256_hex(answer_raw), "counts": counts, "paths": results}
 
 

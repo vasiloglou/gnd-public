@@ -1,0 +1,1952 @@
+{
+  "independent": false,
+  "labeller": "Corpus author, generated from the authored synthetic scenarios",
+  "labels": [
+    {
+      "kind": "homonym",
+      "name_seed": "VampNet",
+      "pair": [
+        "h00-0",
+        "h00-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "WHAM",
+      "pair": [
+        "h01-0",
+        "h01-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "TRACE",
+      "pair": [
+        "h02-0",
+        "h02-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "h03-0",
+        "h03-1"
+      ],
+      "story": "The papers use one method across different contexts."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "OpenCap",
+      "pair": [
+        "h04-0",
+        "h04-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "h05-0",
+        "h05-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "h06-0",
+        "h06-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "PINN",
+      "pair": [
+        "h07-0",
+        "h07-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "NeRF",
+      "pair": [
+        "h08-0",
+        "h08-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "DeepONet",
+      "pair": [
+        "h09-0",
+        "h09-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "DiffDock",
+      "pair": [
+        "h10-0",
+        "h10-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "h11-0",
+        "h11-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "VampNet",
+      "pair": [
+        "h12-0",
+        "h12-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "WHAM",
+      "pair": [
+        "h13-0",
+        "h13-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "h14-0",
+        "h14-1"
+      ],
+      "story": "The papers use one method across different contexts."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "Boltz",
+      "pair": [
+        "h15-0",
+        "h15-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "OpenCap",
+      "pair": [
+        "h16-0",
+        "h16-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "h17-0",
+        "h17-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "h18-0",
+        "h18-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "PINN",
+      "pair": [
+        "h19-0",
+        "h19-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "NeRF",
+      "pair": [
+        "h20-0",
+        "h20-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "DeepONet",
+      "pair": [
+        "h21-0",
+        "h21-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "DiffDock",
+      "pair": [
+        "h22-0",
+        "h22-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "h23-0",
+        "h23-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "VampNet",
+      "pair": [
+        "h24-0",
+        "h24-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "WHAM",
+      "pair": [
+        "h25-0",
+        "h25-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "TRACE",
+      "pair": [
+        "h26-0",
+        "h26-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "h27-0",
+        "h27-1"
+      ],
+      "story": "The papers use one method across different contexts."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "OpenCap",
+      "pair": [
+        "h28-0",
+        "h28-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "h29-0",
+        "h29-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "h30-0",
+        "h30-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "PINN",
+      "pair": [
+        "h31-0",
+        "h31-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "NeRF",
+      "pair": [
+        "h32-0",
+        "h32-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "DeepONet",
+      "pair": [
+        "h33-0",
+        "h33-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "DiffDock",
+      "pair": [
+        "h34-0",
+        "h34-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "homonym",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "h35-0",
+        "h35-1"
+      ],
+      "story": "Two separate methods were given the same name by different works."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "VampNet",
+      "pair": [
+        "s00-0",
+        "s00-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "WHAM",
+      "pair": [
+        "s01-0",
+        "s01-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "s02-0",
+        "s02-1"
+      ],
+      "story": "Two unrelated methods happen to differ by one character in a shared field."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "Boltz",
+      "pair": [
+        "s03-0",
+        "s03-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "OpenCap",
+      "pair": [
+        "s04-0",
+        "s04-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "s05-0",
+        "s05-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "s06-0",
+        "s06-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "PINN",
+      "pair": [
+        "s07-0",
+        "s07-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "NeRF",
+      "pair": [
+        "s08-0",
+        "s08-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "DeepONet",
+      "pair": [
+        "s09-0",
+        "s09-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "DiffDock",
+      "pair": [
+        "s10-0",
+        "s10-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "s11-0",
+        "s11-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "VampNet",
+      "pair": [
+        "s12-0",
+        "s12-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "WHAM",
+      "pair": [
+        "s13-0",
+        "s13-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "TRACE",
+      "pair": [
+        "s14-0",
+        "s14-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "s15-0",
+        "s15-1"
+      ],
+      "story": "Two unrelated methods happen to differ by one character in a shared field."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "OpenCap",
+      "pair": [
+        "s16-0",
+        "s16-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "s17-0",
+        "s17-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "s18-0",
+        "s18-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "PINN",
+      "pair": [
+        "s19-0",
+        "s19-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "NeRF",
+      "pair": [
+        "s20-0",
+        "s20-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "DeepONet",
+      "pair": [
+        "s21-0",
+        "s21-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "DiffDock",
+      "pair": [
+        "s22-0",
+        "s22-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "s23-0",
+        "s23-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "VampNet",
+      "pair": [
+        "s24-0",
+        "s24-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "WHAM",
+      "pair": [
+        "s25-0",
+        "s25-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "s26-0",
+        "s26-1"
+      ],
+      "story": "Two unrelated methods happen to differ by one character in a shared field."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "Boltz",
+      "pair": [
+        "s27-0",
+        "s27-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "OpenCap",
+      "pair": [
+        "s28-0",
+        "s28-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "s29-0",
+        "s29-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "s30-0",
+        "s30-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "PINN",
+      "pair": [
+        "s31-0",
+        "s31-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "NeRF",
+      "pair": [
+        "s32-0",
+        "s32-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "DeepONet",
+      "pair": [
+        "s33-0",
+        "s33-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "DiffDock",
+      "pair": [
+        "s34-0",
+        "s34-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "synonym",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "s35-0",
+        "s35-1"
+      ],
+      "story": "The two texts use inflected spellings for a single method."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f00-0",
+        "f00-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f00-0",
+        "f00-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f00-0",
+        "f00-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f00-1",
+        "f00-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f00-1",
+        "f00-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f00-2",
+        "f00-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f01-0",
+        "f01-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f01-0",
+        "f01-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f01-0",
+        "f01-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f01-1",
+        "f01-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f01-1",
+        "f01-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f01-2",
+        "f01-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "f02-0",
+        "f02-1"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "f02-0",
+        "f02-2"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "f02-0",
+        "f02-3"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "f02-1",
+        "f02-2"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "f02-1",
+        "f02-3"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "TRACE",
+      "pair": [
+        "f02-2",
+        "f02-3"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": "family",
+      "name_seed": "Boltz",
+      "pair": [
+        "f03-0",
+        "f03-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "Boltz",
+      "pair": [
+        "f03-0",
+        "f03-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "Boltz",
+      "pair": [
+        "f03-0",
+        "f03-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "Boltz",
+      "pair": [
+        "f03-1",
+        "f03-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "Boltz",
+      "pair": [
+        "f03-1",
+        "f03-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "Boltz",
+      "pair": [
+        "f03-2",
+        "f03-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f04-0",
+        "f04-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f04-0",
+        "f04-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f04-0",
+        "f04-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f04-1",
+        "f04-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f04-1",
+        "f04-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f04-2",
+        "f04-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f05-0",
+        "f05-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f05-0",
+        "f05-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f05-0",
+        "f05-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f05-1",
+        "f05-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f05-1",
+        "f05-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f05-2",
+        "f05-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f06-0",
+        "f06-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f06-0",
+        "f06-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f06-0",
+        "f06-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f06-1",
+        "f06-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f06-1",
+        "f06-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f06-2",
+        "f06-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f07-0",
+        "f07-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f07-0",
+        "f07-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f07-0",
+        "f07-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f07-1",
+        "f07-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f07-1",
+        "f07-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f07-2",
+        "f07-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f08-0",
+        "f08-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f08-0",
+        "f08-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f08-0",
+        "f08-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f08-1",
+        "f08-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f08-1",
+        "f08-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f08-2",
+        "f08-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f09-0",
+        "f09-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f09-0",
+        "f09-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f09-0",
+        "f09-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f09-1",
+        "f09-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f09-1",
+        "f09-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f09-2",
+        "f09-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f10-0",
+        "f10-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f10-0",
+        "f10-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f10-0",
+        "f10-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f10-1",
+        "f10-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f10-1",
+        "f10-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f10-2",
+        "f10-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f11-0",
+        "f11-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f11-0",
+        "f11-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f11-0",
+        "f11-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f11-1",
+        "f11-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f11-1",
+        "f11-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f11-2",
+        "f11-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f12-0",
+        "f12-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f12-0",
+        "f12-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f12-0",
+        "f12-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f12-1",
+        "f12-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f12-1",
+        "f12-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "VampNet",
+      "pair": [
+        "f12-2",
+        "f12-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f13-0",
+        "f13-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f13-0",
+        "f13-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f13-0",
+        "f13-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f13-1",
+        "f13-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f13-1",
+        "f13-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "WHAM",
+      "pair": [
+        "f13-2",
+        "f13-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "TRACE",
+      "pair": [
+        "f14-0",
+        "f14-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "TRACE",
+      "pair": [
+        "f14-0",
+        "f14-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "TRACE",
+      "pair": [
+        "f14-0",
+        "f14-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "TRACE",
+      "pair": [
+        "f14-1",
+        "f14-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "TRACE",
+      "pair": [
+        "f14-1",
+        "f14-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "TRACE",
+      "pair": [
+        "f14-2",
+        "f14-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "f15-0",
+        "f15-1"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "f15-0",
+        "f15-2"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "f15-0",
+        "f15-3"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "f15-1",
+        "f15-2"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "f15-1",
+        "f15-3"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": null,
+      "name_seed": "Boltz",
+      "pair": [
+        "f15-2",
+        "f15-3"
+      ],
+      "story": "The common token is a label collision across independent methods."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f16-0",
+        "f16-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f16-0",
+        "f16-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f16-0",
+        "f16-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f16-1",
+        "f16-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f16-1",
+        "f16-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "OpenCap",
+      "pair": [
+        "f16-2",
+        "f16-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f17-0",
+        "f17-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f17-0",
+        "f17-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f17-0",
+        "f17-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f17-1",
+        "f17-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f17-1",
+        "f17-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "AlphaFold",
+      "pair": [
+        "f17-2",
+        "f17-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f18-0",
+        "f18-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f18-0",
+        "f18-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f18-0",
+        "f18-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f18-1",
+        "f18-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f18-1",
+        "f18-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "RoBERTa",
+      "pair": [
+        "f18-2",
+        "f18-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f19-0",
+        "f19-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f19-0",
+        "f19-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f19-0",
+        "f19-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f19-1",
+        "f19-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f19-1",
+        "f19-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "PINN",
+      "pair": [
+        "f19-2",
+        "f19-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f20-0",
+        "f20-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f20-0",
+        "f20-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f20-0",
+        "f20-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f20-1",
+        "f20-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f20-1",
+        "f20-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "NeRF",
+      "pair": [
+        "f20-2",
+        "f20-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f21-0",
+        "f21-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f21-0",
+        "f21-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f21-0",
+        "f21-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f21-1",
+        "f21-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f21-1",
+        "f21-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DeepONet",
+      "pair": [
+        "f21-2",
+        "f21-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f22-0",
+        "f22-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f22-0",
+        "f22-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f22-0",
+        "f22-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f22-1",
+        "f22-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f22-1",
+        "f22-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "DiffDock",
+      "pair": [
+        "f22-2",
+        "f22-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f23-0",
+        "f23-1"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f23-0",
+        "f23-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f23-0",
+        "f23-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f23-1",
+        "f23-2"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f23-1",
+        "f23-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    },
+    {
+      "kind": "family",
+      "name_seed": "BioCLIP",
+      "pair": [
+        "f23-2",
+        "f23-3"
+      ],
+      "story": "Four works use named members of one method family with no single introduction."
+    }
+  ],
+  "schema": "literature-diagnostic-labels/1",
+  "unlisted_pair_kind": null
+}

@@ -1,0 +1,39 @@
+{
+  "exit_code": 0,
+  "forbidden_homonym": [
+    "flow-density",
+    "flow-motion"
+  ],
+  "malformed_exit": 3,
+  "required": [
+    [
+      [
+        "vampnet",
+        "vampnets"
+      ],
+      "homonym"
+    ],
+    [
+      [
+        "wham-pose",
+        "wham-whale"
+      ],
+      "homonym"
+    ],
+    [
+      [
+        "flows-review",
+        "sbi-frontier"
+      ],
+      "synonym"
+    ],
+    [
+      [
+        "apinn",
+        "pinn-failure-modes"
+      ],
+      "family"
+    ]
+  ],
+  "schema": "literature-diagnostic-cases/1"
+}

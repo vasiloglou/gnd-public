@@ -9,6 +9,7 @@ from gnd.population import PopulationLoadError
 from gnd.references import bind_population, resolve_context
 from gnd.witness.io import (
     classify_targets,
+    model_wire,
     roster,
     validate_targets,
     validate_witness_structure,
@@ -194,7 +195,7 @@ def produce_witness(model, candidate, targets, *, references=None, limits=DEFAUL
         # internal representation and is used only for the documented identity.
         candidate_doc = population_wire(candidate)
         intake(
-            model.model_dump(mode="json", exclude={"warnings"}),
+            model_wire(model),
             candidate_doc,
             raw_refs,
             limits=limits,

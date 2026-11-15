@@ -40,8 +40,9 @@ Bounded wire intake, structural validation and byte-bound input identities.
 | `roster(model)` | function | 345 | (no docstring) |
 | `validate_targets(targets, model)` | function | 354 | (no docstring) |
 | `support_closure(model, targets)` | function | 380 | Conservative syntactic classifier; no tuple or comparison evaluation. |
-| `population_wire(pop)` | function | 436 | (no docstring) |
-| `classify_targets(model, targets, populations)` | function | 450 | Classify each request independently, caching only within this call. |
+| `model_wire(model)` | function | 436 | The authored-shape document of a loaded model, for re-entry into intake. |
+| `population_wire(pop)` | function | 459 | (no docstring) |
+| `classify_targets(model, targets, populations)` | function | 473 | Classify each request independently, caching only within this call. |
 
 ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
 Components: witness.replay
@@ -60,15 +61,15 @@ Capture grounded firings from the production evaluator into a finite DAG.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `GroundedTrace` | class | 28 | (no docstring) |
-| `GroundedTrace.resolve(self, key)` | method | 66 | (no docstring) |
-| `GroundedTrace.key(self, fid, cells)` | method | 87 | (no docstring) |
-| `GroundedTrace.typed_row(self, fid, row)` | method | 90 | (no docstring) |
-| `GroundedTrace.charge(self, amount)` | method | 95 | (no docstring) |
-| `GroundedTrace.add(self, node)` | method | 100 | (no docstring) |
-| `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 117 | (no docstring) |
-| `GroundedTrace.compact(self, roots)` | method | 164 | (no docstring) |
-| `produce_witness(model, candidate, targets, *, references, limits)` | function | 181 | (no docstring) |
+| `GroundedTrace` | class | 29 | (no docstring) |
+| `GroundedTrace.resolve(self, key)` | method | 67 | (no docstring) |
+| `GroundedTrace.key(self, fid, cells)` | method | 88 | (no docstring) |
+| `GroundedTrace.typed_row(self, fid, row)` | method | 91 | (no docstring) |
+| `GroundedTrace.charge(self, amount)` | method | 96 | (no docstring) |
+| `GroundedTrace.add(self, node)` | method | 101 | (no docstring) |
+| `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 118 | (no docstring) |
+| `GroundedTrace.compact(self, roots)` | method | 165 | (no docstring) |
+| `produce_witness(model, candidate, targets, *, references, limits)` | function | 182 | (no docstring) |
 
 ## gnd.witness.service — `src/gnd/witness/service.py`
 Components: witness.service

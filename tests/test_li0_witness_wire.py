@@ -49,12 +49,12 @@ def _json(run):
 
 def _fixture_models():
     """Every loadable fixture model without includes, in a stable order."""
-    from gnd.model import load_model
+    from gnd.model import ModelValidationError, load_model
 
     for path in sorted(FIXTURES.rglob("*.orm.yaml")):
         try:
             model = load_model(path)
-        except Exception:  # noqa: BLE001 - unloadable fixtures are out of T4 scope
+        except ModelValidationError:  # deliberately invalid fixtures are out of T4 scope
             continue
         if model.includes:
             continue

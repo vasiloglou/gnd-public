@@ -230,7 +230,7 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
     """Explain why a derived fact type, or one claimed row of it, is not derived."""
     from ruamel.yaml.error import YAMLError
 
-    from gnd.witness.io import intake, load_targets, population_wire
+    from gnd.witness.io import intake, load_targets, model_wire, population_wire
     from gnd.witness.why_not import WhyNotWorkError, explain
 
     refused = _why_not_envelope(3, "refused", "input-invalid", work={})
@@ -249,7 +249,7 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
         )
         raw_refs = tuple((o.id, raw) for o, _, raw in context._snapshots) if context else ()
         intake(
-            model.model_dump(mode="json", exclude={"warnings"}),
+            model_wire(model),
             population_wire(candidate),
             raw_refs,
             limits=limits,

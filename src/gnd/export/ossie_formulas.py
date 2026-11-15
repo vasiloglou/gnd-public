@@ -242,6 +242,8 @@ def _supported_shape(constraint, relations):
     ):
         return False
     if family == "guarded":
+        if constraint.get("negate") or constraint.get("where"):
+            return False
         atoms = constraint["antecedent"]
         comparison = constraint["consequent"].get("comparison")
         return (

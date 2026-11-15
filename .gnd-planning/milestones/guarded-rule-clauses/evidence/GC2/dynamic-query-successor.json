@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "reason": "GC2 introduces bounded guarded antecedent filters and scoped binding projections.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-clauses/evidence/GC1/dynamic-query-successor.json",
+  "predecessor_sha256": "65d0c4294dc5972a50cdcda7b66115423ff1c405b34a2064d962ad51cfb31cc0",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/correspondence.py",
+      "correspond_snapshot",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "adapt_snapshot",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "adapt_snapshot_observed",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_ir.py",
+      "IRConstraint",
+      "tuple[IRAtom, ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_ir.py",
+      "IRConstraint",
+      "tuple[str, IROperand, IROperand]",
+      1
+    ],
+    [
+      "src/gnd/semantic_ir.py",
+      "IRConstraint",
+      "tuple[tuple[str, IROperand, IROperand], ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_ir.py",
+      "SnapshotIR",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "guarded_filtered_bindings",
+      "facts.get(atom.fact_type)",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "guarded_filtered_bindings",
+      "ordered[role.name]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "guarded_filtered_bindings",
+      "relations.get(atom.fact_type)",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7678,
+  "result_occurrences": 9544
+}

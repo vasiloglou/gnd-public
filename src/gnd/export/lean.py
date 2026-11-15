@@ -820,6 +820,11 @@ def render_lean(
         )
         model, candidate, refs = witness_io.intake(md, pd, reference_inputs, limits=wl)
         if any(
+            constraint.get("type") == "guarded" and (constraint.get("negate") or constraint.get("where"))
+            for constraint in model.constraints
+        ):
+            return refused(2, "guarded-antecedent-filters-unsupported")
+        if any(
             guard_uses_membership(constraint.get("consequent"))
             for constraint in model.constraints if constraint.get("type") == "guarded"
         ) or any(

@@ -374,6 +374,7 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
             else None
         ),
         variant_aliases=aliases,
+        computed_available=frozenset(extensions),
     )
     projection = project_snapshot(decision, adapted.observation)
     from gnd.correspondence import ReferenceJoinLimit, project_reference_limit
@@ -2215,6 +2216,8 @@ def _family_message_guarded(constraint, fact_type, finding, witness, model, popu
 
     if any(is_temporal_node(node) for _, node in temporal_nodes(constraint.get("consequent"))):
         return verbalize.temporal_guarded_message(kind, witness if violated else [])
+    if constraint.get("negate") or constraint.get("where"):
+        return verbalize.guarded_message(kind, finding.binding_count or 0, witness if violated else [])
     bindings = _guarded_bindings(list(constraint.get("antecedent") or []), population)
     if model.reference_populations and len(bindings) > 100_000:
         from gnd.correspondence import ReferenceJoinLimit

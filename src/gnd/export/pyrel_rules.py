@@ -2299,6 +2299,11 @@ def render(model_path: Path, target: str) -> str:
     model = _Model(doc)
     reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything
     if any(
+        constraint.get("type") == "guarded" and (constraint.get("negate") or constraint.get("where"))
+        for constraint in loaded.constraints
+    ):
+        raise ExportInputError("guarded-antecedent-filters-unsupported")
+    if any(
         guard_uses_membership(constraint.get("consequent"))
         for constraint in loaded.constraints if constraint.get("type") == "guarded"
     ) or any(

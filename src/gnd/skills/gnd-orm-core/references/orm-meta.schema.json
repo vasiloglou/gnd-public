@@ -1895,6 +1895,20 @@
               }
             }
           ]
+        },
+        "negate": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/atom"
+          }
+        },
+        "where": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/term_comparison"
+          }
         }
       }
     },

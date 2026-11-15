@@ -165,6 +165,8 @@ class IRConstraint:
     refused: str
     exists_atoms: tuple[IRAtom, ...] = field(default_factory=tuple)
     exists_where: tuple[tuple[str, IROperand, IROperand], ...] = field(default_factory=tuple)
+    negate: tuple[IRAtom, ...] = field(default_factory=tuple)
+    where: tuple[tuple[str, IROperand, IROperand], ...] = field(default_factory=tuple)
 
 
 @dataclass(frozen=True)
@@ -180,3 +182,4 @@ class SnapshotIR:
     derivations: tuple[IRDerivation, ...]
     derivation_order: tuple[str, ...]
     refusals: tuple[IRRefusal, ...]
+    computed_available: frozenset[str] = field(default_factory=frozenset)

@@ -79,3 +79,201 @@ def test_unsafe_negative_binding_is_refused(tmp_path):
     run = run_main(["validate", model_path, "--format", "json"])
     assert run.returncode == 3
     assert b"semantic:guarded-filter-unbound" in run.stdout
+
+
+def test_unknown_where_and_filter_only_empty_have_distinct_outcomes(tmp_path):
+    paths = _case(
+        tmp_path, negative=False,
+        where=[{"operator": "=", "left": {"fn": "mod", "args": ["$a", 0]}, "right": 1}],
+    )
+    run = run_main(["check", *paths, "--format", "json"])
+    report = json.loads(run.stdout)
+    guard, = [row for row in report["verdicts"] if row["constraint_type"] == "guarded"]
+    assert guard["verdict"] == "unchecked"
+    assert guard["reason_code"] == "guarded-filter-term-unavailable"
+
+
+def test_synthesis_excludes_a_binding_that_would_otherwise_fail(tmp_path):
+    model, _ = _case(tmp_path)
+    out = tmp_path / "generated"
+    result = run_main(["synth", model, "--guarded-cases", "--out", str(out), "--seed", "19"])
+    assert result.returncode == 0, (result.stdout, result.stderr)
+    manifest = json.loads((out / "guarded-cases.json").read_bytes())
+    rule, = manifest["rules"]
+    assert rule["reason"] is None
+    cases = {case["kind"]: case for case in rule["cases"]}
+    assert {key: row["verdict"] for key, row in cases.items()} == {
+        "failing": "fail", "passing": "pass",
+    }
+    assert cases["passing"]["binding_count"] > 0
+    passing = out / cases["passing"]["population"]
+    original = json.loads(Path(model).read_text())
+    original["constraints"][0].pop("negate")
+    Path(model).write_text(json.dumps(original), encoding="utf-8")
+    run = run_main(["check", model, str(passing), "--format", "json"])
+    report = json.loads(run.stdout)
+    guard, = [row for row in report["verdicts"] if row["constraint_type"] == "guarded"]
+    assert guard["verdict"] == "fail"
+
+
+def test_ground_negated_atom_has_global_scope(tmp_path):
+    model, pop = _case(tmp_path, statuses=[{"expense": 1, "status": "exempt"}])
+    document = json.loads(Path(model).read_text())
+    document["constraints"][0]["negate"][0]["bind"]["expense"] = 1
+    Path(model).write_text(json.dumps(document), encoding="utf-8")
+    run = run_main(["check", model, pop, "--guarded-diagnostics", "--format", "json"])
+    report = json.loads(run.stdout)
+    guard, = [row for row in report["verdicts"] if row["constraint_type"] == "guarded"]
+    assert guard["verdict"] == "vacuous"
+
+
+def test_filters_verbalize_and_pyrel_refuses_them(tmp_path):
+    from gnd.export.pyrel_rules import ExportInputError, render
+    from gnd.model_verbalization import _guarded_cnl
+
+    model, _ = _case(tmp_path, where=[{"operator": ">=", "left": "$a", "right": 100}])
+    document = json.loads(Path(model).read_text())
+    line = _guarded_cnl(document["constraints"][0])
+    assert "$a is at least 100, unless " in line
+    assert 'status = "exempt"' in line
+    with pytest.raises(ExportInputError, match="^guarded-antecedent-filters-unsupported$"):
+        render(Path(model), "duckdb")
+
+
+@pytest.mark.parametrize(("covered", "claimed", "verdict"), [
+    (True, True, "vacuous"),
+    (True, False, "fail"),
+    (False, False, "unchecked"),
+])
+def test_negation_reads_a_covered_derived_claim_separately_from_its_consistency(tmp_path, covered, claimed, verdict):
+    statuses = [{"expense": 1, "status": "exempt"}] if claimed else []
+    model, pop = _case(tmp_path, cover=covered, statuses=statuses)
+    document = json.loads(Path(model).read_text())
+    relation = next(fact for fact in document["fact_types"] if fact["id"] == "expense_has_status")
+    relation["derivation"] = "derived"
+    relation["derivation_rule"] = {
+        "body": [{"fact_type": "expense_in_category", "bind": {"expense": "$e", "category": "travel"}}],
+        "head": {"expense": "$e", "status": "exempt"},
+    }
+    Path(model).write_text(json.dumps(document), encoding="utf-8")
+    from gnd.checker import check
+    from gnd.model import load_model
+    from gnd.population import load_population
+
+    loaded = load_model(model)
+    checked = check(loaded, load_population(pop, model=loaded))
+    guard, = [row for row in checked.verdicts if row.constraint_type == "guarded"]
+    assert guard.verdict == verdict
+    derived, = [row for row in checked.derivations if row.fact_type == "expense_has_status"]
+    assert derived.verdict == ("pass" if claimed else "fail" if covered else "unchecked")
+
+
+def test_filtered_guard_matches_the_covered_helper_and_reference_over_seeded_cases(tmp_path):
+    from random import Random
+
+    from gnd.checker import check
+    from gnd.model import load_model
+    from gnd.population import load_population
+    from gnd.semantic_adapter import adapt_snapshot
+    from gnd.semantic_spec import verdict_of
+
+    comparison = {"operator": ">=", "left": "$a", "right": 100}
+    model_path, pop_path = _case(tmp_path, where=[comparison])
+    native_doc = json.loads(Path(model_path).read_text())
+    helper_doc = json.loads(Path(model_path).read_text())
+    rule = helper_doc["constraints"][0]
+    helper_doc["fact_types"].append({
+        "id": "expense_to_review",
+        "reading": "{Expense} has a screened amount {Amount}",
+        "roles": [
+            {"role_name": "expense", "object_type": "expense"},
+            {"role_name": "amount", "object_type": "amount"},
+        ],
+        "derivation": "semiderived",
+        "derivation_rule": {
+            "body": rule["antecedent"], "negate": rule.pop("negate"),
+            "where": rule.pop("where"), "head": {"expense": "$e", "amount": "$a"},
+        },
+    })
+    rule["antecedent"] = [{"fact_type": "expense_to_review", "bind": {"expense": "$e", "amount": "$a"}}]
+    model_files = [tmp_path / "native.orm.json", tmp_path / "helper.orm.json"]
+    for path, document in zip(model_files, (native_doc, helper_doc), strict=True):
+        path.write_text(json.dumps(document), encoding="utf-8")
+    models = [load_model(path) for path in model_files]
+    population = json.loads(Path(pop_path).read_text())
+    rng = Random(195)
+    verdicts = set()
+
+    def checked(model, *, reference=False):
+        loaded = load_population(pop_path, model=model)
+        assert set(loaded.covers) >= {"expense_in_category", "expense_has_amount", "expense_has_status"}
+        report = check(model, loaded)
+        decision, = [row for row in report.verdicts if row.constraint_type == "guarded"]
+        if reference:
+            snapshot = adapt_snapshot(model, loaded)
+            constraint, = snapshot.constraints
+            assert verdict_of(constraint, snapshot)[0] == decision.verdict
+        return decision.verdict, {row["$e"] for row in decision.offending_facts or []}
+
+    for _ in range(200):
+        facts = population["facts"]
+        facts["expense_in_category"] = [{"expense": e, "category": "travel"} for e in range(1, 4)]
+        facts["expense_has_amount"] = [
+            {"expense": e, "amount": rng.choice([50, 500, 2500])} for e in range(1, 4)
+        ]
+        facts["expense_has_status"] = [
+            {"expense": e, "status": "exempt"} for e in range(1, 4) if rng.randrange(2)
+        ]
+        Path(pop_path).write_text(json.dumps(population), encoding="utf-8")
+        direct = checked(models[0], reference=True)
+        assert direct == checked(models[1])
+        verdicts.add(direct[0])
+    assert verdicts == {"pass", "fail", "vacuous"}
+
+
+def test_synthesis_uses_membership_in_antecedent_where(tmp_path):
+    model, _ = _case(
+        tmp_path, negative=False,
+        where=[{"operator": "in", "left": "$a", "right": [1500, 2500]}],
+    )
+    out = tmp_path / "generated"
+    result = run_main(["synth", model, "--guarded-cases", "--out", str(out), "--seed", "11"])
+    assert result.returncode == 0, (result.stdout, result.stderr)
+    manifest = json.loads((out / "guarded-cases.json").read_bytes())
+    rule, = manifest["rules"]
+    assert rule["reason"] is None
+    assert {case["verdict"] for case in rule["cases"]} == {"pass", "fail"}
+
+
+def test_negation_index_covers_wide_relation_and_refuses_excess_work(tmp_path, monkeypatch):
+    from time import perf_counter
+
+    from gnd import semantic_spec
+    from gnd.model import load_model
+    from gnd.population import load_population
+    from gnd.semantic_adapter import adapt_snapshot
+
+    model_path, pop_path = _case(tmp_path)
+    model = load_model(model_path)
+    population = json.loads(Path(pop_path).read_text())
+    count = 10_000
+    population["facts"] = {
+        "expense_in_category": [{"expense": i, "category": "travel"} for i in range(count)],
+        "expense_has_amount": [{"expense": i, "amount": 2500} for i in range(count)],
+        "expense_has_status": [{"expense": i, "status": "exempt"} for i in range(1, count, 2)],
+    }
+    Path(pop_path).write_text(json.dumps(population), encoding="utf-8")
+    snapshot = adapt_snapshot(model, load_population(pop_path, model=model))
+    constraint, = snapshot.constraints
+    from gnd.correspondence import _indexed_guarded_bindings
+
+    valid, names, rows, _ = _indexed_guarded_bindings(constraint, snapshot)
+    assert valid and len(rows) == count
+    started = perf_counter()
+    survivors, reason = semantic_spec.guarded_filtered_bindings(constraint, snapshot, names, rows)
+    assert perf_counter() - started < 5.0
+    assert reason is None and len(survivors) == count // 2
+    monkeypatch.setattr(semantic_spec, "_GUARDED_FILTER_WORK_LIMIT", 100)
+    assert semantic_spec.guarded_filtered_bindings(constraint, snapshot, names, rows) == (
+        (), "guarded-filter-work-limit",
+    )

@@ -119,9 +119,9 @@ existing version message.
 ## Related formats
 
 - `remedy` is a constraint field: see the [constraint
-  reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
+  reference](../../src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
 - `source: tool-output` and `producer` are population header fields: see the
-  [population format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/population-format.md).
+  [population format](../../src/gnd/skills/gnd-orm-core/references/population-format.md).
 
 ## Guarded antecedent diagnostics
 
@@ -145,7 +145,7 @@ undecided. These fields leave verdicts and exit bands as reported by the
 same check without this option. Text output lists the same observations.
 
 For authoring-time findings on literal values, see the ORM
-[constraint reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
+[constraint reference](../../src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
 
 ## Comparing two rule editions
 
@@ -177,3 +177,9 @@ Exhausting the comparison's 1,000,000-unit work budget yields an empty rule
 list and `comparison-work-limit`. The text form lists the directional
 bindings and the side check bands. This option is exclusive with
 `--baseline`, other rule-ID output flags, and other check arms.
+
+For guarded rules with [antecedent filters](../../src/gnd/skills/gnd-orm-core/references/representation-format.md#antecedent-filters),
+`binding_count` counts definite surviving bindings. A filter that excludes
+every positive binding yields a count of zero and a null
+`first_empty_atom_index`. The index continues to describe only the positive
+antecedent. Unresolved bindings are excluded from the count.

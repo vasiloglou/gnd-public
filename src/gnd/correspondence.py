@@ -147,6 +147,8 @@ def _finding_scope(
     variant: str,
     guarded_binding_count: int | None = None,
 ) -> str:
+    if applicability == "vacuous-filter-empty":
+        return snapshot_branch("guarded", "n-a", "vacuous-filter-empty")
     if verdict == "vacuous" and variant.startswith("phase1-"):
         return snapshot_branch(
             constraint.family,
@@ -871,7 +873,8 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
     semantic_snapshot = evaluation_snapshot(adapted.snapshot, constraint.family)
     from gnd.temporal_guarded import evaluate_temporal_guard
 
-    temporal = evaluate_temporal_guard(constraint, semantic_snapshot)
+    filtered_guard = bool(constraint.negate or constraint.where)
+    temporal = None if filtered_guard else evaluate_temporal_guard(constraint, semantic_snapshot)
     applicability = (
         "evaluate"
         if temporal is not None
@@ -890,7 +893,20 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
             binding_count, first_empty_atom_index = observation
         except ReferenceJoinLimit:
             work_exceeded = True
-    if work_exceeded:
+    filter_reason = None
+    filter_empty = False
+    if filtered_guard and guarded_valid and guarded_bindings and applicability == "evaluate":
+        guarded_bindings, filter_reason = semantic_spec.guarded_filtered_bindings(
+            constraint, adapted.snapshot, guarded_names, guarded_bindings
+        )
+        binding_count = len(guarded_bindings)
+        filter_empty = not guarded_bindings and filter_reason is None
+    if filter_reason is not None:
+        verdict, reason, witness = "unchecked", filter_reason, ()
+    elif filter_empty:
+        applicability = "vacuous-filter-empty"
+        verdict, reason, witness = "vacuous", None, ()
+    elif work_exceeded:
         applicability = "evaluate"
         verdict, reason, witness = "unchecked", "reference-join-work-limit", ()
     elif temporal is not None:
@@ -1259,12 +1275,14 @@ def correspond_snapshot(
     ]
     | None = None,
     variant_aliases: Mapping[str, str] | None = None,
+    computed_available: frozenset[str] = frozenset(),
 ) -> tuple[AdaptedSnapshot, SnapshotDecision]:
     adapted = adapt_snapshot_observed(
         model,
         population,
         effective_facts=effective_facts,
         effective_lineage=effective_lineage,
+        computed_available=computed_available,
     )
     return adapted, evaluate_snapshot(
         adapted,

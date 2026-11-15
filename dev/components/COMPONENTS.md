@@ -1765,7 +1765,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.validation
 - does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
-- verbs: validate model, structural validation, semantic validation, guarded literal domain, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
+- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
@@ -2694,7 +2694,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### semantics.snapshot_spec
 - does: Evaluate snapshot constraint specifications with explicit applicability, witnesses, modality and exit-band rules.
-- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, ring_pairs, acyclic_extent, strongly connected groups, guarded rule, value comparison, cardinality, subtype partition, assurance_of, band_of
+- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, ring_pairs, acyclic_extent, strongly connected groups, guarded rule, bounded negative relation index, guarded term filters, value comparison, cardinality, subtype partition, assurance_of, band_of
 - status: canonical
 - modules: src/gnd/semantic_spec.py
 - uses: check.constraint_families, infra.graphs, model.scalar_terms, semantics.snapshot_ir
@@ -2945,7 +2945,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### synth.guarded
 - does: Construct and independently evaluate guarded-rule case pairs and bounded existential witnesses [build_pair, exists_witness].
-- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, membership witnesses, active passing case
+- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, antecedent filters, negative exceptions, membership witnesses, active passing case
 - in: Guarded constraint, raw fact rows, optional covered fact types; model for private-source analysis.
 - out: Bindings, a modular repair plan or witness true/false/None; None represents unsupported or unavailable work.
 - status: canonical

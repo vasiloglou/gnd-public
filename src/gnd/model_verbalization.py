@@ -314,6 +314,12 @@ def _guarded_cnl(item: dict[str, Any]) -> str:
         )
     else:
         conclusion = f"no {_guarded_atom(consequent.get('absence'))} fact holds"
+    comparisons = [_comparison_cnl(row) for row in item.get("where") or []]
+    if comparisons:
+        antecedent += " and " + " and ".join(comparisons)
+    exceptions = [_guarded_atom(atom) for atom in item.get("negate") or []]
+    if exceptions:
+        antecedent += ", unless " + " or ".join(exceptions)
     return f"If {antecedent}, then {conclusion}."
 
 

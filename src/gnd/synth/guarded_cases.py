@@ -185,15 +185,27 @@ def _join(facts, atoms, budget, binding=None):
     return rows
 
 
-def _outcome(facts, antecedent, kind, where, witnesses, budget):
+def _outcome(facts, antecedent, kind, where, witnesses, budget, *, negate=(), filters=None):
     bindings = _join(facts, antecedent, budget)
     if not bindings:
         return None
     distinct = {}
     for binding in bindings:
         charge(budget, 1 + len(binding))
+        if any(_join(facts, [atom], budget, binding) for atom in negate):
+            continue
+        if filters:
+            survives = _where_holds(filters, binding, budget=budget)
+            if budget.exhausted:
+                raise SearchLimit
+            if survives is None:
+                return None
+            if not survives:
+                continue
         key = tuple(sorted((name, scalar_identity(value)) for name, value in binding.items()))
         distinct.setdefault(key, binding)
+    if not distinct:
+        return None
     satisfied = True
     for binding in distinct.values():
         charge(budget)
@@ -216,6 +228,28 @@ def _outcome(facts, antecedent, kind, where, witnesses, budget):
     return satisfied, Candidate(facts, len(distinct))
 
 
+def _pass_with_excluded_binding(passing, failing, *, antecedent, negate, budget, evaluate):
+    if not negate:
+        return passing
+    additions = [
+        _facts(negate, binding, budget)
+        for binding in _join(failing.facts, antecedent, budget)
+    ]
+    merged = {}
+    for facts in (passing.facts, failing.facts, *additions):
+        for name, rows in facts.items():
+            indexed = merged.setdefault(name, {})
+            for row in rows:
+                charge(budget, 1 + len(row))
+                key = tuple((role, scalar_identity(value)) for role, value in sorted(row.items()))
+                indexed.setdefault(key, row)
+    candidate = {name: list(rows.values()) for name, rows in merged.items()}
+    outcome = evaluate(candidate)
+    if outcome is not None and outcome[0]:
+        return outcome[1]
+    return passing
+
+
 def confirmation_work(pair, guards, budget):
     """Charge an upper bound on the checker's guarded joins."""
     for case in pair:
@@ -236,6 +270,8 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
     """Return an independently evaluated failure and active pass, or a reason."""
     antecedent = rule["antecedent"]
     kind, payload = next(iter(rule["consequent"].items()))
+    negate = rule.get("negate") or ()
+    raw_filters = rule.get("where") or ()
     witnesses = []
     if kind in {"atom", "absence"}:
         witnesses = [payload]
@@ -263,6 +299,12 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
         domains, reachable = _domains(model, index, antecedent, roles, asserted, budget)
         if not reachable:
             return None, "antecedent-unreachable"
+        if negate:
+            _domains(model, index, negate, roles, asserted, budget)
+        filters = list(prepare_comparisons(raw_filters))
+        for comparison in raw_filters:
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                charge(budget, len(comparison["right"]))
         extension, possible = _domains(model, index, witnesses, roles, asserted, budget)
         if not possible:
             return None, "no-failing-case" if kind == "absence" else "no-passing-case"
@@ -279,6 +321,10 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
             return None, "no-passing-case" if kind == "absence" else "no-failing-case"
 
         comparison = raw_where[0] if raw_where else {}
+        preferred_filter = next(
+            (row for row in raw_filters if row.get("operator") in MEMBERSHIP_OPERATORS),
+            comparison,
+        )
         left = variable_name(comparison.get("left"))
         if kind == "comparison" and comparison.get("operator") in MEMBERSHIP_OPERATORS:
             domains_for_left = domains.get(left, ())
@@ -294,13 +340,16 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
                     return None, "no-failing-case"
                 if outcomes == {False}:
                     return None, "no-passing-case"
+        def evaluate(facts):
+            return _outcome(facts, antecedent, kind, where, witnesses, budget, negate=negate, filters=filters)
+
         seen = {}
         for attempt in range(ATTEMPTS):
-            assignment = _assignment(domains, comparison, attempt, rng, budget)
+            assignment = _assignment(domains, preferred_filter, attempt, rng, budget)
             if assignment is None:
                 continue
             base = _facts(antecedent, assignment, budget)
-            first = _outcome(base, antecedent, kind, where, witnesses, budget)
+            first = evaluate(base)
             if first is None:
                 continue
             truth, case = first
@@ -312,18 +361,14 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
                 seen = {truth: case}
                 expanded = _assignment(extension, comparison, attempt, rng, budget, initial=assignment)
                 if expanded is not None:
-                    second = _outcome(
-                        _facts([*antecedent, *witnesses], expanded, budget),
-                        antecedent,
-                        kind,
-                        where,
-                        witnesses,
-                        budget,
-                    )
+                    second = evaluate(_facts([*antecedent, *witnesses], expanded, budget))
                     if second is not None:
                         seen.setdefault(*second)
             if len(seen) == 2:
-                return (seen[False], seen[True]), None
+                passing = _pass_with_excluded_binding(
+                    seen[True], seen[False], antecedent=antecedent, negate=negate, budget=budget, evaluate=evaluate
+                )
+                return (seen[False], passing), None
     except SearchLimit:
         return None, "search-limit"
     except UnsupportedShape:

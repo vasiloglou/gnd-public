@@ -2335,6 +2335,10 @@ def _iter_guarded_atoms(constraint: Any):
     if isinstance(antecedent, list):
         for index, atom in enumerate(antecedent):
             yield f".antecedent[{index}]", atom
+    negate = constraint.get("negate")
+    if isinstance(negate, list):
+        for index, atom in enumerate(negate):
+            yield f".negate[{index}]", atom
     consequent = constraint.get("consequent")
     if not isinstance(consequent, dict):
         return
@@ -2363,12 +2367,16 @@ def _iter_guarded_consequent_terms(constraint: Any):
             continue
         for role_name, term in bind.items():
             yield f".consequent.{kind}.bind[{role_name}]", term
-    for path, comparison in _iter_guarded_comparisons(consequent):
-        if path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+    for path, comparison in _iter_guarded_comparisons(consequent, constraint.get("where")):
+        if path.startswith(".where[") or path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
             yield from _iter_guarded_comparison_terms(path, comparison)
 
 
-def _iter_guarded_comparisons(consequent):
+def _iter_guarded_comparisons(consequent, where=None):
+    if isinstance(where, list):
+        for index, comparison in enumerate(where):
+            if isinstance(comparison, dict):
+                yield f".where[{index}]", comparison
     if not isinstance(consequent, dict):
         return
     direct = consequent.get("comparison")
@@ -2382,7 +2390,7 @@ def _iter_guarded_comparisons(consequent):
 
 
 def _iter_guarded_memberships(guard):
-    for path, comparison in _iter_guarded_comparisons(guard.get("consequent")):
+    for path, comparison in _iter_guarded_comparisons(guard.get("consequent"), guard.get("where")):
         right = comparison.get("right")
         if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
             yield comparison.get("left"), right, path
@@ -2661,6 +2669,8 @@ def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue
             else "are not introduced by an antecedent bind"
         )
         for suffix, term in _iter_guarded_consequent_terms(constraint):
+            if suffix.startswith(".where["):
+                continue
             unbound = set(term_variables(term)) - allowed
             if unbound:
                 issues.append(
@@ -2673,6 +2683,82 @@ def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue
                         rule_id="semantic:guarded-consequent-ground",
                     )
                 )
+    return issues
+
+
+def _rule_guarded_filters(doc: dict[str, Any]) -> list[ValidationIssue]:
+    issues = []
+    guards = [(path, guard) for path, guard in _iter_guarded_constraints(doc)
+              if "negate" in guard or "where" in guard]
+    if not guards:
+        return issues
+    role_types, primitives = _primitive_maps(doc)
+    for path, guard in guards:
+        scopes: dict[str, set[str]] = {}
+        for suffix, atom in _iter_guarded_atoms(guard):
+            if not suffix.startswith(".antecedent[") or not isinstance(atom, dict):
+                continue
+            for role, term in atom_bind(atom).items():
+                variable = _variable_name(term)
+                if variable is not None:
+                    object_type = role_types.get(str(atom.get("fact_type")), {}).get(str(role))
+                    choices = scopes.setdefault(variable, set())
+                    primitive = primitives.get(object_type or "")
+                    if primitive is not None:
+                        choices.add(primitive)
+        types = {
+            variable: next(iter(choices)) if len(choices) == 1 else "Number"
+            for variable, choices in scopes.items()
+            if choices and (len(choices) == 1 or choices <= NUMERIC_PRIMITIVES)
+        }
+        terms = []
+        for suffix, atom in _iter_guarded_atoms(guard):
+            if not suffix.startswith(".negate[") or not isinstance(atom, dict):
+                continue
+            fact_type = str(atom.get("fact_type"))
+            for role, term in atom_bind(atom).items():
+                location = f"{suffix}.bind[{role}]"
+                terms.append((location, term))
+                object_type = role_types.get(fact_type, {}).get(str(role))
+                primitive = primitives.get(object_type or "")
+                variable = _variable_name(term)
+                declared = scopes.get(variable, ())
+                if primitive is not None and (
+                    (declared and any(not _guarded_primitives_compatible(primitive, bound) for bound in declared))
+                    or (variable is None and not _guarded_literal_matches_primitive(primitive, term))
+                ):
+                    issues.append(ValidationIssue(
+                        path=f"{path}{location}", message="Negative binding has an incompatible primitive.",
+                        rule_id="semantic:guarded-binding-type",
+                    ))
+        terms.extend((suffix, term) for suffix, term in _iter_guarded_consequent_terms(guard)
+                     if suffix.startswith(".where["))
+        for suffix, term in terms:
+            unbound = set(term_variables(term)) - scopes.keys()
+            if unbound:
+                issues.append(ValidationIssue(
+                    path=f"{path}{suffix}",
+                    message=f"Guarded filter variables require a positive binding: {sorted(unbound)}.",
+                    rule_id="semantic:guarded-filter-unbound",
+                ))
+        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                issues.extend(_membership_comparison_issues(f"{path}{suffix}", comparison, types))
+                continue
+            left = analyze_term(comparison.get("left"), types)
+            right = analyze_term(comparison.get("right"), types)
+            for side, term in (("left", left), ("right", right)):
+                if term.issue is not None and not (set(term.variables) - scopes.keys()):
+                    issues.append(ValidationIssue(
+                        path=f"{path}{suffix}.{side}", message="Invalid guarded filter comparison term.",
+                        rule_id=term.issue,
+                    ))
+            if (left.primitive and right.primitive
+                    and not _guarded_primitives_compatible(left.primitive, right.primitive)):
+                issues.append(ValidationIssue(
+                    path=f"{path}{suffix}", message="Guarded filter operands have incompatible types.",
+                    rule_id="semantic:term-comparison-type",
+                ))
     return issues
 
 
@@ -4786,8 +4872,8 @@ def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
     allowed: set[int] = set()
     for _, constraint in _iter_guarded_constraints(doc):
         consequent = constraint.get("consequent")
-        for path, comparison in _iter_guarded_comparisons(consequent):
-            if path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+        for path, comparison in _iter_guarded_comparisons(consequent, constraint.get("where")):
+            if path.startswith(".where[") or path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
                 for side in ("left", "right"):
                     allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
     for _, _, clause in _iter_structured_fact_derivations(doc):
@@ -4923,6 +5009,7 @@ _SEMANTIC_RULES = (
     # never interleaved; the normative table follows this registration order.
     _rule_guarded_term_ref,
     _rule_guarded_role_claim,
+    _rule_guarded_filters,
     _rule_guarded_consequent_ground,
     _rule_guarded_comparison_type,
     _rule_guarded_exists_range,

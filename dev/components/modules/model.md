@@ -97,17 +97,17 @@ Model loading with two-layer validation.
 | --- | --- | --- | --- |
 | `yaml_stream_guard_error(path) -> str \| None` | function | 104 | Pre-load guard for untrusted YAML input (T-01-02), or None when safe. |
 | `dynamic_subject_is_functional(subject, fact_types) -> bool \| None` | function | 2139 | Do the roles the SUBJECT BINDS determine at most one value? |
-| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 3097 | Present legacy sugar and every explicit clause without changing model bytes. |
-| `AggregateAnalysis` | class | 3259 | The one shared, total interpretation of a structured aggregate. |
-| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3273 | Analyze an aggregate without assuming schema-valid input. |
-| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3534 | Use the one aggregate policy walk with declared body-role primitives. |
-| `body_components(rule) -> list[frozenset[str]]` | function | 3549 | The connected components of a rule body's join graph, canonically ordered. |
-| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3609 | Fact type -> the fact types its rule reads. |
-| `DerivationEdge` | class | 3628 | (no docstring) |
-| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3636 | Keep every labelled atom edge, including duplicate and mixed edges. |
-| `DerivationClassification` | class | 3660 | One structured fact type's stability under the declared operations. |
-| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3673 | Return asserted leaves beneath one structured head, failing closed. |
-| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3764 | Classify every structured fact type against every operation touch. |
-| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3891 | SCC-condensed, dependency-first deterministic structured strata. |
-| `semantic_validate(doc) -> list[ValidationIssue]` | function | 4986 | Run every layer-2 semantic rule over a parsed model document. |
-| `parse_model_document(data, *, source) -> Any` | function | 5194 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 3183 | Present legacy sugar and every explicit clause without changing model bytes. |
+| `AggregateAnalysis` | class | 3345 | The one shared, total interpretation of a structured aggregate. |
+| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3359 | Analyze an aggregate without assuming schema-valid input. |
+| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3620 | Use the one aggregate policy walk with declared body-role primitives. |
+| `body_components(rule) -> list[frozenset[str]]` | function | 3635 | The connected components of a rule body's join graph, canonically ordered. |
+| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3695 | Fact type -> the fact types its rule reads. |
+| `DerivationEdge` | class | 3714 | (no docstring) |
+| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3722 | Keep every labelled atom edge, including duplicate and mixed edges. |
+| `DerivationClassification` | class | 3746 | One structured fact type's stability under the declared operations. |
+| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3759 | Return asserted leaves beneath one structured head, failing closed. |
+| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3850 | Classify every structured fact type against every operation touch. |
+| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3977 | SCC-condensed, dependency-first deterministic structured strata. |
+| `semantic_validate(doc) -> list[ValidationIssue]` | function | 5073 | Run every layer-2 semantic rule over a parsed model document. |
+| `parse_model_document(data, *, source) -> Any` | function | 5281 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |

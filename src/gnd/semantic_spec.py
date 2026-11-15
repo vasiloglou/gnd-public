@@ -1698,11 +1698,14 @@ def guarded_atom_state(
 
 
 def guarded_comparison_state(constraint, names, binding) -> int:
-    left_operand, right_operand = constraint.operands
+    return guarded_pair_state(constraint.operator, *constraint.operands, names, binding)
+
+
+def guarded_pair_state(operator, left_operand, right_operand, names, binding) -> int:
     left = guarded_operand_value(left_operand, names, binding)
     if left is None:
         return -1
-    if constraint.operator in MEMBERSHIP_OPERATORS:
+    if operator in MEMBERSHIP_OPERATORS:
         members = right_operand.membership
         if members is None:
             return -1
@@ -1716,16 +1719,91 @@ def guarded_comparison_state(constraint, names, binding) -> int:
         else:
             return -1
         answer = membership_verdict(
-            constraint.operator, raw, members,
+            operator, raw, members,
             left_operand.primitive or ("Date" if left.kind == "date" else None),
         )
         return -1 if answer is None else int(answer)
     right = guarded_operand_value(right_operand, names, binding)
-    return -1 if right is None else comparison_pair_state(left, right, constraint.operator)
+    return -1 if right is None else comparison_pair_state(left, right, operator)
+
+
+_GUARDED_FILTER_WORK_LIMIT = 100_000
+
+
+def guarded_filtered_bindings(constraint, snapshot, names, bindings):
+    """Filter positive bindings using a bounded negative relation index."""
+    if not (constraint.negate or constraint.where) or not bindings:
+        return bindings, None
+    prepared = []
+    work = 0
+    facts = {fact.id: fact for fact in snapshot.fact_types}
+    relations = {relation.fact_type: relation for relation in snapshot.relations}
+    covered_facts = frozenset(snapshot.covers)
+    for atom in constraint.negate:
+        fact = facts.get(atom.fact_type)
+        relation = relations.get(atom.fact_type)
+        if fact is None or relation is None:
+            return (), "guarded-filter-coverage-missing"
+        work += 1 + len(fact.roles)
+        if work > _GUARDED_FILTER_WORK_LIMIT:
+            return (), "guarded-filter-work-limit"
+        ordered = dict(atom.bindings)
+        if set(ordered) != {role.name for role in fact.roles}:
+            return (), "guarded-filter-coverage-missing"
+        terms = tuple(ordered[role.name] for role in fact.roles)
+        covered = (atom.fact_type in snapshot.computed_available if fact.relation_source == "computed-extension"
+                   else atom.fact_type in covered_facts)
+        covered &= not relation.refusals
+        keys = set()
+        for row in relation.rows:
+            work += 1 + len(row)
+            if work > _GUARDED_FILTER_WORK_LIMIT:
+                return (), "guarded-filter-work-limit"
+            if len(row) != len(terms) or any(cell is None for cell in row):
+                covered = False
+                continue
+            keys.add(tuple((cell.identity_kind, cell.token) for cell in row))
+        prepared.append((terms, keys, covered))
+    survivors = []
+    unknown_reason = None
+    for binding in bindings:
+        deferred = None
+        excluded = False
+        for terms, keys, covered in prepared:
+            work += 1 + len(terms)
+            if work > _GUARDED_FILTER_WORK_LIMIT:
+                return (), "guarded-filter-work-limit"
+            row = [guarded_operand_value(term, names, binding) for term in terms]
+            if all(cell is not None for cell in row):
+                key = tuple((cell.identity_kind, cell.token) for cell in row)
+                if key in keys:
+                    excluded = True
+                    break
+                if covered:
+                    continue
+            deferred = "guarded-filter-coverage-missing"
+        if excluded:
+            continue
+        for operator, left, right in constraint.where:
+            work += 1
+            if work > _GUARDED_FILTER_WORK_LIMIT:
+                return (), "guarded-filter-work-limit"
+            state = guarded_pair_state(operator, left, right, names, binding)
+            if state == 0:
+                excluded = True
+                break
+            if state == -1 and deferred is None:
+                deferred = "guarded-filter-term-unavailable"
+        if not excluded:
+            if deferred is None:
+                survivors.append(binding)
+            elif unknown_reason is None:
+                unknown_reason = deferred
+    return tuple(survivors), unknown_reason
 
 
 def guarded_result(
-    constraint: IRConstraint, snapshot: SnapshotIR
+    constraint: IRConstraint, snapshot: SnapshotIR, *, prepared_bindings=None
 ) -> tuple[int, list[list[Scalar]]]:
     """NF-GUARDED result with unknown precedence and exhaustive bindings."""
     empty: list[list[Scalar]] = []
@@ -1746,9 +1824,15 @@ def guarded_result(
             return -1, empty
     elif len(constraint.consequent) != 1 or constraint.operands:
         return -1, empty
-    valid, names, bindings = guarded_bindings(constraint, snapshot)
-    if not valid:
-        return -1, empty
+    if prepared_bindings is None:
+        valid, names, bindings = guarded_bindings(constraint, snapshot)
+        if not valid:
+            return -1, empty
+        bindings, reason = guarded_filtered_bindings(constraint, snapshot, names, bindings)
+        if reason is not None:
+            return -1, empty
+    else:
+        names, bindings = prepared_bindings
     violations: list[tuple[Scalar, ...]] = []
     undecidable = False
     binding_index = 0
@@ -2601,7 +2685,18 @@ def verdict_of(
         return "vacuous", None, ()
     if applicability.startswith("unchecked-"):
         return "unchecked", applicability.removeprefix("unchecked-"), ()
-    state, rows = snapshot_family_result(constraint, snapshot)
+    if constraint.family == "guarded" and (constraint.negate or constraint.where):
+        valid, names, positive = guarded_bindings(constraint, snapshot)
+        if not valid:
+            return "unchecked", unchecked_reason_of(constraint, snapshot), ()
+        active, reason = guarded_filtered_bindings(constraint, snapshot, names, positive)
+        if reason is not None:
+            return "unchecked", reason, ()
+        if positive and not active:
+            return "vacuous", None, ()
+        state, rows = guarded_result(constraint, snapshot, prepared_bindings=(names, active))
+    else:
+        state, rows = snapshot_family_result(constraint, snapshot)
     if state < 0:
         return "unchecked", unchecked_reason_of(constraint, snapshot), ()
     witness = tuple(tuple(row) for row in rows)

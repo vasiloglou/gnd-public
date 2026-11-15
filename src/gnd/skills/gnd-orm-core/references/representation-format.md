@@ -535,6 +535,23 @@ remain scalar literals or variables. An `exists` consequent is an object with
 non-empty `atoms` and optional non-empty `where`, whose items reuse the atom
 and exact term-comparison shapes.
 
+### Antecedent filters
+
+A guarded rule can add non-empty `negate` and `where` lists alongside
+`antecedent`. A negative entry is an atom. A where entry is a term comparison.
+Every filter variable must be bound by a positive antecedent atom. A negative
+atom with no variables tests the same existence condition for each binding.
+
+A matching negative atom or a false where comparison excludes the binding.
+A negative absence test requires a covered asserted or fully derived
+relation, or an available calculated semiderived relation. A fully derived
+relation uses its claimed rows, with consistency evaluated separately.
+An uncovered or unavailable negative relation and an unavailable comparison
+leave the binding unresolved unless another filter definitely excludes it.
+An unresolved binding makes the guard unchecked. When every positive binding
+is definitely excluded, the guard is vacuous. Existing positive-join vacuity
+and positive-only disconnection checks apply before the filters.
+
 ### Membership comparisons
 
 Use `in` or `not in` with a term on the left and a list of 1 to 1,024 literals

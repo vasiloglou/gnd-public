@@ -594,6 +594,7 @@ def adapt_snapshot(
     population: Population,
     *,
     effective_facts: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+    computed_available: frozenset[str] = frozenset(),
 ) -> SnapshotIR:
     if not population.matches_validation_marker(model):
         raise UnvalidatedPopulationError(population, model)
@@ -728,6 +729,7 @@ def adapt_snapshot(
         tuple(derivations),
         tuple(head for component in derivation_strata(document) for head in component) if structured else (),
         refusals,
+        computed_available=computed_available,
     )
 
 
@@ -746,11 +748,12 @@ def adapt_snapshot_observed(
     population: Population,
     *,
     effective_facts: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+    computed_available: frozenset[str] = frozenset(),
     effective_lineage: Mapping[str, Sequence[tuple[tuple[str | int, ...], ...]]] | None = None,
 ) -> AdaptedSnapshot:
     """Retain the exact value origins beside the immutable semantic snapshot."""
     fact_source = population.facts if effective_facts is None else effective_facts
-    snapshot = adapt_snapshot(model, population, effective_facts=effective_facts)
+    snapshot = adapt_snapshot(model, population, effective_facts=effective_facts, computed_available=computed_available)
     fact_types = {str(row.get("id")): row for row in model.fact_types}
     relations = {row.fact_type: row for row in snapshot.relations}
     origins: list[ValueOrigin] = []
@@ -963,6 +966,21 @@ def _membership_operand(right):
     return IROperand("membership", primitive=members.domain, membership=members)
 
 
+def _guarded_where(comparisons, primitives):
+    rows = []
+    for value in _list(comparisons):
+        comparison = _mapping(value)
+        operator = _text(comparison.get("operator"))
+        if operator not in (*_ORDERING, "=", "!=", *MEMBERSHIP_OPERATORS):
+            raise _ShapeError("unknown guarded filter operator")
+        left = _guarded_term(comparison.get("left"), primitives)
+        right = (_membership_operand(comparison.get("right"))
+                 if operator in MEMBERSHIP_OPERATORS
+                 else _guarded_term(comparison.get("right"), primitives))
+        rows.append((operator, left, right))
+    return tuple(rows)
+
+
 def _family_adapt_guarded(base, source, model, fact_type):
     atoms = tuple(_atom(value, model) for value in _list(source.get("antecedent")))
     consequent = _mapping(source.get("consequent"))
@@ -973,6 +991,17 @@ def _family_adapt_guarded(base, source, model, fact_type):
         raise _ShapeError("a guarded constraint needs one consequent")
     kind = kinds[0]
     base = replace(base, consequent_kind=kind, antecedent=atoms)
+    if "negate" in source or "where" in source:
+        primitives = {}
+        for atom in atoms:
+            for _, term in atom.bindings:
+                if term.kind == "variable":
+                    primitives.setdefault(term.variable, term.primitive)
+        base = replace(
+            base,
+            negate=tuple(_atom(atom, model) for atom in _list(source.get("negate", []))),
+            where=_guarded_where(source.get("where", []), primitives),
+        )
     if kind not in {"comparison", "exists"}:
         base = replace(base, consequent=(_atom(consequent[kind], model),))
     elif kind == "comparison":

@@ -392,6 +392,21 @@ def _snapshot_rows() -> Iterator[Branch]:
         owner="gnd.correspondence.evaluate_snapshot",
         inputs=("identity", "role-order"),
     )
+    yield _row(
+        "snapshot", "guarded", "n-a", "vacuous-filter-empty", "vacuous",
+        owner="gnd.semantic_spec.guarded_filtered_bindings",
+        inputs=("antecedent-atoms", "negative-relations", "term-comparisons"),
+    )
+    for reason in (
+        "guarded-filter-coverage-missing",
+        "guarded-filter-term-unavailable",
+        "guarded-filter-work-limit",
+    ):
+        yield _row(
+            "snapshot", "guarded", "n-a", "unchecked-" + reason, "unchecked",
+            owner="gnd.semantic_spec.guarded_filtered_bindings",
+            reason=reason, witness="none", inputs=("covers", "term-comparisons", "work-budget"),
+        )
     for event, reason in (
         ("unchecked-guarded-exists-coverage-missing", "guarded-exists-coverage-missing"),
         ("unchecked-guarded-exists-work-limit", "guarded-exists-work-limit"),

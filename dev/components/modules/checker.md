@@ -24,12 +24,12 @@ Deterministic constraint checker with the 5-state verdict lattice.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `check_legacy(model, population) -> CheckReport` | function | 331 | Check a population against every constraint in the model. |
-| `JoinAmbiguousError` | class(Exception) | 1063 | A fact type offers multiple same-type candidates for one join anchor. |
-| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1426 | Return the computed structured extensions as fact-shaped rows. |
-| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 1958 | (no docstring) |
-| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 1976 | (no docstring) |
-| `check_partial(model, population) -> CheckReport` | function | 2001 | Evaluate opaque input with the three-valued internal extension view. |
-| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2010 | Use the same opaque semantics when an anchored check is requested. |
+| `JoinAmbiguousError` | class(Exception) | 1064 | A fact type offers multiple same-type candidates for one join anchor. |
+| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1427 | Return the computed structured extensions as fact-shaped rows. |
+| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 1959 | (no docstring) |
+| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 1977 | (no docstring) |
+| `check_partial(model, population) -> CheckReport` | function | 2002 | Evaluate opaque input with the three-valued internal extension view. |
+| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2011 | Use the same opaque semantics when an anchored check is requested. |
 
 ## gnd.checker._reports — `src/gnd/checker/_reports.py`
 Components: checker.reports

@@ -246,7 +246,7 @@ Place the reviewed subset of requirement and derivation shapes in Ossie scopes.
 | `ProjectedRelation.arguments(self, atom) -> tuple[Any, ...]` | method | 61 | (no docstring) |
 | `ProjectedRelation.path(self) -> str` | method | 65 | (no docstring) |
 | `ProjectedRelation.token(self, position) -> str` | method | 68 | (no docstring) |
-| `place_formulas(document, ontology, components, relations, mapped, fact_types)` | function | 265 | Mutate the ontology and disposition index only after a complete group lowers. |
+| `place_formulas(document, ontology, components, relations, mapped, fact_types)` | function | 267 | Mutate the ontology and disposition index only after a complete group lowers. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules
@@ -339,7 +339,7 @@ Deterministic offline lowering to Souffle's bounded relational fragment.
 | `parse(raw, fmt, limits)` | function | 52 | (no docstring) |
 | `token(value, primitive)` | function | 72 | (no docstring) |
 | `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 90 | (no docstring) |
-| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 214 | (no docstring) |
+| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 219 | (no docstring) |
 
 ## gnd.export.souffle_cli — `src/gnd/export/souffle_cli.py`
 Components: export.command

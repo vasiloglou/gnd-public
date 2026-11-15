@@ -3,7 +3,20 @@
   "reason": "GC2 introduces bounded guarded antecedent filters and scoped binding projections.",
   "predecessor": ".gnd-planning/milestones/guarded-rule-clauses/evidence/GC1/dynamic-query-successor.json",
   "predecessor_sha256": "65d0c4294dc5972a50cdcda7b66115423ff1c405b34a2064d962ad51cfb31cc0",
-  "removed": [],
+  "removed": [
+    [
+      "src/gnd/temporal_guarded.py",
+      "evaluate_temporal_guard",
+      "binding[name]",
+      1
+    ],
+    [
+      "src/gnd/temporal_guarded.py",
+      "evaluate_temporal_guard",
+      "constraint.operands[:1]",
+      1
+    ]
+  ],
   "added": [
     [
       "src/gnd/correspondence.py",
@@ -64,8 +77,26 @@
       "guarded_filtered_bindings",
       "relations.get(atom.fact_type)",
       1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "confirmation_work",
+      "case.facts.get(atom['fact_type'], ())",
+      2
+    ],
+    [
+      "src/gnd/temporal_guarded.py",
+      "_evaluate_temporal_bindings",
+      "binding[name]",
+      1
+    ],
+    [
+      "src/gnd/temporal_guarded.py",
+      "_evaluate_temporal_bindings",
+      "constraint.operands[:1]",
+      1
     ]
   ],
   "result_distinct_rows": 7678,
-  "result_occurrences": 9544
+  "result_occurrences": 9546
 }

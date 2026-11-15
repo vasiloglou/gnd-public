@@ -17,4 +17,5 @@ guarded rules gain the clause language derivations already have.
 and the [delegated plan gate](001-plan-gate.md). GC1 proceeds through the
 corpus and spec gate.
 
-GC1 is recorded in the [phase record](003-phase-GC1.md). GC2 follows.
+GC1 and GC2 are recorded in the [GC1 phase record](003-phase-GC1.md) and
+[GC2 phase record](005-phase-GC2.md). GC3 follows.

@@ -176,6 +176,18 @@ def _reject_exists_where_type(document: Any) -> None:
     constraint = _comparison(document)
     constraint['consequent'] = {'exists': {'atoms': [{'fact_type': 'expense_has_status', 'bind': {'expense': '$e', 'status': 'review'}}], 'where': [{'operator': '=', 'left': '$a', 'right': 'review'}]}}
 REJECTING_CASES: list[tuple[str, Callable[[Any], None], str]] = [('R-01-comparison-unbound', _reject_comparison_unbound, 'semantic:guarded-consequent-ground'), ('R-01b-atom-unbound', _reject_atom_unbound, 'semantic:guarded-consequent-ground'), ('R-01c-absence-unbound', _reject_absence_unbound, 'semantic:guarded-consequent-ground'), ('R-02-comparison-type', _reject_comparison_type, 'semantic:guarded-comparison-type'), ('R-03-antecedent-fact-type', _reject_antecedent_fact_type, 'semantic:guarded-term-ref'), ('R-03b-atom-fact-type', _reject_atom_fact_type, 'semantic:guarded-term-ref'), ('R-04-antecedent-role', _reject_antecedent_role, 'semantic:guarded-term-ref'), ('R-04b-absence-role', _reject_absence_role, 'semantic:guarded-term-ref'), ('R-05-antecedent-missing-role', _reject_antecedent_missing_role, 'semantic:guarded-role-claim'), ('R-05b-atom-missing-role', _reject_atom_missing_role, 'semantic:guarded-role-claim'), ('R-05c-absence-missing-role', _reject_absence_missing_role, 'semantic:guarded-role-claim'), ('R-07-mixed-consequent', _reject_mixed_consequent, 'jsonschema:'), ('R-08-empty-antecedent', _reject_empty_antecedent, 'jsonschema:'), ('R-09-operator', _reject_operator, 'jsonschema:'), ('R-10-unknown-key', _reject_unknown_guarded_key, 'jsonschema:'), ('R-11-inline', _reject_inline_guarded, 'jsonschema:'), ('R-12-missing-antecedent', _reject_missing_antecedent, 'jsonschema:'), ('R-13-missing-consequent', _reject_missing_consequent, 'jsonschema:'), ('R-14-missing-right', _reject_missing_right, 'jsonschema:'), ('R-14b-missing-left', _reject_missing_left, 'jsonschema:'), ('R-14c-missing-operator', _reject_missing_operator, 'jsonschema:'), ('R-15-kindless-consequent', _reject_kindless_consequent, 'jsonschema:'), ('R-16-var-var-type', _reject_var_var_incompatible, 'semantic:guarded-comparison-type'), ('R-17-right-variable-type', _reject_right_side_variable, 'semantic:guarded-comparison-type'), ('R-18-multi-site-type', _reject_multiply_bound_incompatible, 'semantic:guarded-comparison-type'), ('E10A-exists-variable-only-in-where', _reject_exists_where_unbound, 'semantic:guarded-exists-range'), ('E10B-where-variable-neither-antecedent-nor-exists', _reject_exists_where_unbound_nested, 'semantic:guarded-exists-where-bound'), ('exists-where-compatible-types', _reject_exists_where_type, 'semantic:guarded-exists-where-type')]
+def _reject_filter_unbound(document: Any) -> None:
+    _comparison(document)["where"] = [{"operator": "=", "left": "$missing", "right": 1}]
+
+
+def _reject_filter_type(document: Any) -> None:
+    _comparison(document)["where"] = [{"operator": "=", "left": "$a", "right": "review"}]
+
+
+REJECTING_CASES += [
+    ("GC2-filter-unbound", _reject_filter_unbound, "semantic:guarded-filter-unbound"),
+    ("GC2-filter-type", _reject_filter_type, "semantic:term-comparison-type"),
+]
 REJECTING_CASES += P3_TEMPORAL_REJECTING_CASES
 
 @pytest.mark.parametrize(('name', 'edit', 'expected_rule_id'), REJECTING_CASES, ids=[case[0] for case in REJECTING_CASES])

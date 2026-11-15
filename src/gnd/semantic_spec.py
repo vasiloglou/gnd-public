@@ -1701,8 +1701,13 @@ def guarded_comparison_state(constraint, names, binding) -> int:
     return guarded_pair_state(constraint.operator, *constraint.operands, names, binding)
 
 
-def guarded_pair_state(operator, left_operand, right_operand, names, binding) -> int:
-    left = guarded_operand_value(left_operand, names, binding)
+def guarded_pair_state(operator, left_operand, right_operand, names, binding, *, temporal_work=None) -> int:
+    def operand_value(operand):
+        if temporal_work is None:
+            return guarded_operand_value(operand, names, binding)
+        return guarded_operand_value(operand, names, binding, temporal_work=temporal_work)
+
+    left = operand_value(left_operand)
     if left is None:
         return -1
     if operator in MEMBERSHIP_OPERATORS:
@@ -1723,7 +1728,7 @@ def guarded_pair_state(operator, left_operand, right_operand, names, binding) ->
             left_operand.primitive or ("Date" if left.kind == "date" else None),
         )
         return -1 if answer is None else int(answer)
-    right = guarded_operand_value(right_operand, names, binding)
+    right = operand_value(right_operand)
     return -1 if right is None else comparison_pair_state(left, right, operator)
 
 
@@ -1751,8 +1756,13 @@ def guarded_filtered_bindings(constraint, snapshot, names, bindings):
         if set(ordered) != {role.name for role in fact.roles}:
             return (), "guarded-filter-coverage-missing"
         terms = tuple(ordered[role.name] for role in fact.roles)
-        covered = (atom.fact_type in snapshot.computed_available if fact.relation_source == "computed-extension"
-                   else atom.fact_type in covered_facts)
+        if fact.relation_source == "computed-extension":
+            if atom.fact_type not in snapshot.computed_available:
+                prepared.append((terms, set(), False))
+                continue
+            covered = True
+        else:
+            covered = atom.fact_type in covered_facts
         covered &= not relation.refusals
         keys = set()
         for row in relation.rows:
@@ -1766,6 +1776,7 @@ def guarded_filtered_bindings(constraint, snapshot, names, bindings):
         prepared.append((terms, keys, covered))
     survivors = []
     unknown_reason = None
+    temporal_work = [0]
     for binding in bindings:
         deferred = None
         excluded = False
@@ -1788,7 +1799,7 @@ def guarded_filtered_bindings(constraint, snapshot, names, bindings):
             work += 1
             if work > _GUARDED_FILTER_WORK_LIMIT:
                 return (), "guarded-filter-work-limit"
-            state = guarded_pair_state(operator, left, right, names, binding)
+            state = guarded_pair_state(operator, left, right, names, binding, temporal_work=temporal_work)
             if state == 0:
                 excluded = True
                 break

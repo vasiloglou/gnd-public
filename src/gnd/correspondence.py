@@ -148,7 +148,7 @@ def _finding_scope(
     guarded_binding_count: int | None = None,
 ) -> str:
     if applicability == "vacuous-filter-empty":
-        return snapshot_branch("guarded", "n-a", "vacuous-filter-empty")
+        return snapshot_branch("guarded", "filtered", "vacuous-filter-empty")
     if verdict == "vacuous" and variant.startswith("phase1-"):
         return snapshot_branch(
             constraint.family,
@@ -899,8 +899,12 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
         guarded_bindings, filter_reason = semantic_spec.guarded_filtered_bindings(
             constraint, adapted.snapshot, guarded_names, guarded_bindings
         )
-        binding_count = len(guarded_bindings)
+        binding_count = None if filter_reason == "guarded-filter-work-limit" else len(guarded_bindings)
         filter_empty = not guarded_bindings and filter_reason is None
+    if filtered_guard and filter_reason is None and guarded_valid and guarded_bindings and applicability == "evaluate":
+        temporal = temporal_guarded.evaluate_filtered_temporal_guard(
+            constraint, guarded_names, guarded_bindings
+        )
     if filter_reason is not None:
         verdict, reason, witness = "unchecked", filter_reason, ()
     elif filter_empty:

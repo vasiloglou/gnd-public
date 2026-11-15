@@ -393,7 +393,7 @@ def _snapshot_rows() -> Iterator[Branch]:
         inputs=("identity", "role-order"),
     )
     yield _row(
-        "snapshot", "guarded", "n-a", "vacuous-filter-empty", "vacuous",
+        "snapshot", "guarded", "filtered", "vacuous-filter-empty", "vacuous",
         owner="gnd.semantic_spec.guarded_filtered_bindings",
         inputs=("antecedent-atoms", "negative-relations", "term-comparisons"),
     )
@@ -403,7 +403,7 @@ def _snapshot_rows() -> Iterator[Branch]:
         "guarded-filter-work-limit",
     ):
         yield _row(
-            "snapshot", "guarded", "n-a", "unchecked-" + reason, "unchecked",
+            "snapshot", "guarded", "filtered", "unchecked-" + reason, "unchecked",
             owner="gnd.semantic_spec.guarded_filtered_bindings",
             reason=reason, witness="none", inputs=("covers", "term-comparisons", "work-budget"),
         )

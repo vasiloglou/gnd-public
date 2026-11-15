@@ -171,10 +171,10 @@ def guarded_operand_evaluator(legacy, scalar_factory):
     numerator/denominator pair regardless of source tier.
     """
 
-    def evaluate(operand, names, binding):
+    def evaluate(operand, names, binding, *, temporal_work=None):
         if operand.kind != "function":
             return legacy(operand, names, binding)
-        values = [evaluate(item, names, binding) for item in operand.arguments]
+        values = [evaluate(item, names, binding, temporal_work=temporal_work) for item in operand.arguments]
         if operand.function in TEMPORAL_FUNCTIONS:
             if (
                 not operand.valid
@@ -203,6 +203,7 @@ def guarded_operand_evaluator(legacy, scalar_factory):
                     ],
                 },
                 {},
+                temporal_work=temporal_work,
             )
             if not result.available:
                 return None

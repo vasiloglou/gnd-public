@@ -79,6 +79,7 @@ from gnd.terms import (
     is_function_term,
     membership_domain,
     term_variables,
+    valid_duration,
 )
 from gnd.universe import (
     DERIVATION_TERM_CACHE as _DERIVATION_TERM_CACHE,
@@ -2690,7 +2691,8 @@ def _rule_guarded_filters(doc: dict[str, Any]) -> list[ValidationIssue]:
     issues = []
     guards = [(path, guard) for path, guard in _iter_guarded_constraints(doc)
               if "negate" in guard or "where" in guard]
-    if not guards:
+    if not guards or not all(isinstance(doc.get(field, []), list)
+                             for field in ("fact_types", "object_types")):
         return issues
     role_types, primitives = _primitive_maps(doc)
     for path, guard in guards:
@@ -2723,9 +2725,11 @@ def _rule_guarded_filters(doc: dict[str, Any]) -> list[ValidationIssue]:
                 primitive = primitives.get(object_type or "")
                 variable = _variable_name(term)
                 declared = scopes.get(variable, ())
+                literal_matches = (valid_duration(term) if primitive == "Duration"
+                                   else _guarded_literal_matches_primitive(primitive, term))
                 if primitive is not None and (
                     (declared and any(not _guarded_primitives_compatible(primitive, bound) for bound in declared))
-                    or (variable is None and not _guarded_literal_matches_primitive(primitive, term))
+                    or (variable is None and not literal_matches)
                 ):
                     issues.append(ValidationIssue(
                         path=f"{path}{location}", message="Negative binding has an incompatible primitive.",

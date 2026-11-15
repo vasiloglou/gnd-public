@@ -55,7 +55,6 @@ def evaluate_temporal_guard(constraint: IRConstraint, snapshot: SnapshotIR):
     ):
         return None
     from gnd import semantic_spec
-    from gnd.semantic_adapter import canonical_scalar
 
     facts = {fact.id: fact for fact in snapshot.fact_types}
     relations = {relation.fact_type: relation for relation in snapshot.relations}
@@ -165,6 +164,22 @@ def evaluate_temporal_guard(constraint: IRConstraint, snapshot: SnapshotIR):
             yield from walk(position + 1, merged, uncertain or uncertainties[id(candidate)])
 
     names = semantic_spec.guarded_variable_names(constraint)
+    return _evaluate_temporal_bindings(constraint, names, walk(0, {}))
+
+
+def evaluate_filtered_temporal_guard(constraint, names, bindings):
+    if constraint.variant != "comparison" or not any(
+        temporal_operand(operand) for operand in constraint.operands
+    ):
+        return None
+    source = ((dict(zip(names, row, strict=True)), None) for row in bindings)
+    return _evaluate_temporal_bindings(constraint, names, source)
+
+
+def _evaluate_temporal_bindings(constraint, names, source):
+    from gnd import semantic_spec
+    from gnd.semantic_adapter import canonical_scalar
+
     membership = constraint.operator in MEMBERSHIP_OPERATORS
     operands = constraint.operands[:1] if membership else constraint.operands
     syntax = [term_syntax(operand) for operand in operands]
@@ -172,7 +187,7 @@ def evaluate_temporal_guard(constraint: IRConstraint, snapshot: SnapshotIR):
     seen = set()
     violations = []
     unknown = None
-    for binding, uncertain in walk(0, {}):
+    for binding, uncertain in source:
         row = tuple(binding[name] for name in names)
         seen_key = (row, uncertain)
         if seen_key in seen:

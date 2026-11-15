@@ -277,3 +277,87 @@ def test_negation_index_covers_wide_relation_and_refuses_excess_work(tmp_path, m
     assert semantic_spec.guarded_filtered_bindings(constraint, snapshot, names, rows) == (
         (), "guarded-filter-work-limit",
     )
+
+
+def test_unavailable_semiderived_negation_does_not_use_a_raw_claim(tmp_path):
+    model, pop = _case(tmp_path, statuses=[{"expense": 1, "status": "exempt"}])
+    document = json.loads(Path(model).read_text())
+    relation = next(fact for fact in document["fact_types"] if fact["id"] == "expense_has_status")
+    relation["derivation"] = "semiderived"
+    relation["derivation_rule"] = {
+        "body": [{"fact_type": "expense_has_amount", "bind": {"expense": "$e", "amount": "$a"}}],
+        "where": [{"operator": "=", "left": {"fn": "mod", "args": ["$a", 0]}, "right": 0}],
+        "head": {"expense": "$e", "status": "exempt"},
+    }
+    Path(model).write_text(json.dumps(document), encoding="utf-8")
+    run = run_main(["check", model, pop, "--format", "json"])
+    payload = json.loads(run.stdout)
+    verdict, = [row for row in payload["verdicts"] if row["constraint_type"] == "guarded"]
+    assert verdict["verdict"] == "unchecked"
+    assert verdict["reason_code"] == "guarded-filter-coverage-missing"
+
+
+def test_duration_literals_can_bind_negative_roles(tmp_path):
+    model, pop = _case(tmp_path, statuses=[{"expense": 1, "status": 1}])
+    document = json.loads(Path(model).read_text())
+    document["version"] = 3
+    status = next(item for item in document["object_types"] if item["id"] == "status")
+    status["primitive"] = "Duration"
+    document["constraints"][0]["negate"][0]["bind"]["status"] = 1
+    Path(model).write_text(json.dumps(document), encoding="utf-8")
+    run = run_main(["check", model, pop, "--format", "json"])
+    payload = json.loads(run.stdout)
+    guard, = [row for row in payload["verdicts"] if row["constraint_type"] == "guarded"]
+    assert guard["verdict"] == "vacuous"
+
+
+def test_partial_negative_atom_refuses_before_applying_filters(tmp_path):
+    model, _ = _case(tmp_path, where=[{"operator": "=", "left": "$a", "right": -1}])
+    document = json.loads(Path(model).read_text())
+    document["constraints"][0]["negate"][0]["bind"].pop("status")
+    Path(model).write_text(json.dumps(document), encoding="utf-8")
+    run = run_main(["validate", model, "--format", "json"])
+    assert run.returncode == 3
+    assert b"semantic:guarded-role-claim" in run.stdout
+
+
+def test_filter_and_consequent_can_both_use_temporal_terms(tmp_path):
+    model, pop = _case(tmp_path, cover=True)
+    document = json.loads(Path(model).read_text())
+    document["version"] = 3
+    next(item for item in document["object_types"] if item["id"] == "amount")["primitive"] = "Date"
+    term = {"fn": "date_add", "args": ["$a", {"duration_days": 1}]}
+    comparison = {"operator": "=", "left": term, "right": {"date": "2024-02-29"}}
+    document["constraints"][0]["where"] = [comparison]
+    document["constraints"][0]["consequent"] = {"comparison": comparison}
+    population = json.loads(Path(pop).read_text())
+    population["facts"]["expense_has_amount"][0]["amount"] = "2024-02-28"
+    Path(model).write_text(json.dumps(document), encoding="utf-8")
+    Path(pop).write_text(json.dumps(population), encoding="utf-8")
+    run = run_main(["check", model, pop, "--format", "json"])
+    assert run.returncode == 0, run.stdout
+    guard = json.loads(run.stdout)["verdicts"][0]
+    assert guard["verdict"] == "pass"
+    assert "bindings=1" in guard["message"]
+
+
+def test_exhausted_filter_does_not_publish_a_known_zero_count(tmp_path, monkeypatch):
+    from gnd import semantic_spec
+
+    monkeypatch.setattr(semantic_spec, "_GUARDED_FILTER_WORK_LIMIT", 1)
+    paths = _case(tmp_path)
+    run = run_main(["check", *paths, "--guarded-diagnostics", "--format", "json"])
+    guard = json.loads(run.stdout)["verdicts"][0]
+    assert guard["verdict"] == "unchecked"
+    assert guard["reason_code"] == "guarded-filter-work-limit"
+    assert guard["guarded_antecedent"] == {"binding_count": None, "first_empty_atom_index": None}
+
+
+def test_where_membership_incompatible_list_has_one_validation_issue(tmp_path):
+    paths = _case(tmp_path, where=[{"operator": "in", "left": "$a", "right": ["x", "x"]}])
+    result = run_main(["validate", paths[0], "--format", "json"])
+    assert result.returncode == 3
+    issues = json.loads(result.stdout)["issues"]
+    assert [
+        item["path"] for item in issues if item["rule_id"] == "semantic:membership-list"
+    ] == ["$.constraints[0].where[0].right"]

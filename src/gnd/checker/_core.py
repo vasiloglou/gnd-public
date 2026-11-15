@@ -347,7 +347,7 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
 
     extensions, derivations = extension_core.evaluate_derivations(model, population)
     constraint_population: Population | extension_core.RuledFactView = population
-    if extensions:
+    if extensions or getattr(extensions, "unavailable", None):
         constraint_population = extension_core.constraint_view(model, population, extensions)
 
     constraint_inputs: dict[str, tuple[dict[str, Any], dict[str, Any] | None]] = {}
@@ -2214,10 +2214,10 @@ def _family_message_guarded(constraint, fact_type, finding, witness, model, popu
     )
     from gnd.terms import is_temporal_node, temporal_nodes
 
-    if any(is_temporal_node(node) for _, node in temporal_nodes(constraint.get("consequent"))):
-        return verbalize.temporal_guarded_message(kind, witness if violated else [])
     if constraint.get("negate") or constraint.get("where"):
         return verbalize.guarded_message(kind, finding.binding_count or 0, witness if violated else [])
+    if any(is_temporal_node(node) for _, node in temporal_nodes(constraint.get("consequent"))):
+        return verbalize.temporal_guarded_message(kind, witness if violated else [])
     bindings = _guarded_bindings(list(constraint.get("antecedent") or []), population)
     if model.reference_populations and len(bindings) > 100_000:
         from gnd.correspondence import ReferenceJoinLimit

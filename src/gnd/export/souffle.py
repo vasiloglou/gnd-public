@@ -17,7 +17,7 @@ from gnd.model import (
 )
 from gnd.model._includes import guard_bytes, include_reason
 from gnd.population import PopulationLoadError
-from gnd.terms import where_uses_membership
+from gnd.terms import guard_uses_membership, where_uses_membership
 from gnd.witness import io as witness_io
 from gnd.witness.types import DEFAULT_LIMITS as WITNESS_LIMITS
 
@@ -102,6 +102,11 @@ def admit(model_bytes, candidate_bytes, model_format, candidate_format, referenc
         numeric_digits=limits.numeric_digits,
     )
     model, candidate, refs = witness_io.intake(md, pd, reference_inputs, limits=wl)
+    if any(
+        guard_uses_membership(constraint.get("consequent"))
+        for constraint in model.constraints if constraint.get("type") == "guarded"
+    ):
+        raise Unsupported("membership-unsupported")
     rows, origins = {}, []
     roles = witness_io.roster(model)
     owners = {f: d["id"] for d in model.reference_populations for f in d["fact_types"]}
@@ -173,7 +178,9 @@ def admit(model_bytes, candidate_bytes, model_format, candidate_format, referenc
             raise Unsupported("opaque derivation")
         for c in cs:
             a = c.get("aggregate")
-            if where_uses_membership(c.get("where")) or (c.get("where") and not a):
+            if where_uses_membership(c.get("where")):
+                raise Unsupported("membership-unsupported")
+            if c.get("where") and not a:
                 raise Unsupported("scalar filters")
             if a and (
                 a.get("fn") != "count"
@@ -395,8 +402,9 @@ def render_souffle(
             },
             files=files,
         )
-    except Unsupported:
-        return refused(2, "fragment-unsupported")
+    except Unsupported as error:
+        reason = "membership-unsupported" if str(error) == "membership-unsupported" else "fragment-unsupported"
+        return refused(2, reason)
     except ModelValidationError as error:
         return refused(3, include_reason(error) or "input-invalid")
     except INPUT_ERRORS:

@@ -506,18 +506,18 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `DerivationFinding` | class(BaseModel) | 92 | One missing or offending row in a structured derivation claim. |
-| `DerivationVerdict` | class(BaseModel) | 100 | One alethic comparison obligation for one derived fact type. |
-| `JoinDisconnectedError` | class(Exception) | 156 | The referenced fact types cannot be chained through shared anchor object |
-| `RelationUnavailable` | class | 242 | (no docstring) |
-| `exact_extension_envelope(model, population) -> dict[str, Any]` | function | 1997 | Canonical parity envelope for exact relations and unavailability. |
-| `DynamicRefreshWork` | class | 2033 | (no docstring) |
-| `StructuredExtensionView` | class | 2063 | (no docstring) |
-| `structured_extension_view(model, population, *, previous, previous_unavailable, previous_possible, …` | function | 2121 | Compute all structured rows or selectively refresh named strata. |
-| `derivation_claims_against(model, claimed, computed_from) -> list[DerivationVerdict]` | function | 2379 | Compare one population's claims with another population's extension. |
-| `evaluate_derivations_legacy(model, population, *, calculator) -> tuple[Mapping[str, _TypedRelation]…` | function | 2550 | (no docstring) |
-| `constraint_view_legacy(model, population, extensions) -> _RuledFactView` | function | 2577 | (no docstring) |
-| `effective_view(model, population) -> Population \| _RuledFactView` | function | 2977 | Validated effective facts for applicability, using the checker policies. |
+| `DerivationFinding` | class(BaseModel) | 95 | One missing or offending row in a structured derivation claim. |
+| `DerivationVerdict` | class(BaseModel) | 103 | One alethic comparison obligation for one derived fact type. |
+| `JoinDisconnectedError` | class(Exception) | 159 | The referenced fact types cannot be chained through shared anchor object |
+| `RelationUnavailable` | class | 275 | (no docstring) |
+| `exact_extension_envelope(model, population) -> dict[str, Any]` | function | 2038 | Canonical parity envelope for exact relations and unavailability. |
+| `DynamicRefreshWork` | class | 2074 | (no docstring) |
+| `StructuredExtensionView` | class | 2104 | (no docstring) |
+| `structured_extension_view(model, population, *, previous, previous_unavailable, previous_possible, …` | function | 2162 | Compute all structured rows or selectively refresh named strata. |
+| `derivation_claims_against(model, claimed, computed_from) -> list[DerivationVerdict]` | function | 2420 | Compare one population's claims with another population's extension. |
+| `evaluate_derivations_legacy(model, population, *, calculator) -> tuple[Mapping[str, _TypedRelation]…` | function | 2591 | (no docstring) |
+| `constraint_view_legacy(model, population, extensions) -> _RuledFactView` | function | 2618 | (no docstring) |
+| `effective_view(model, population) -> Population \| _RuledFactView` | function | 3018 | Validated effective facts for applicability, using the checker policies. |
 
 ## gnd.extraction_scope — `src/gnd/extraction_scope.py`
 Components: model.extraction_scope
@@ -1197,7 +1197,7 @@ Closed exact scalar-term language shared by derivations and guarded rules.
 | `prepare_comparisons(comparisons)` | function | 473 | Keep the existing filter rows while compiling any membership lists. |
 | `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 486 | Evaluate exactly, returning a named unavailable result instead of raising. |
 | `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive) -> Ex…` | function | 730 | (no docstring) |
-| `materialize_scalar(value) -> Any` | function | 839 | Return the existing wire scalar for a head value; fractions never escape. |
+| `materialize_scalar(value) -> Any` | function | 836 | Return the existing wire scalar for a head value; fractions never escape. |
 
 ## gnd.transition — `src/gnd/transition.py`
 Components: semantics.transitions

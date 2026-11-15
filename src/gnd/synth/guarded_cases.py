@@ -138,9 +138,14 @@ def _assignment(domains, comparison, attempt, rng, budget, *, initial=None):
             if side and other_name is not None:
                 preferred = [pair[int(side == "right")] for pair in COMPARISON_PAIRS]
             elif side == "left" and comparison.get("operator") in MEMBERSHIP_OPERATORS:
-                members = other or []
+                members = (other or [])[:ATTEMPTS]
+                if any(domain.primitive == "Integer" for domain in occurrences):
+                    members = [
+                        int(member) if type(member) is float and member.is_integer() else member
+                        for member in members
+                    ]
                 if members:
-                    preferred = [*_preferred(members[0]), *members[1:ATTEMPTS]]
+                    preferred = [*_preferred(members[0]), *members[1:]]
             elif side and other is not None:
                 preferred = _preferred(other)
             if attempt < len(preferred):

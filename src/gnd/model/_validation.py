@@ -3494,9 +3494,10 @@ def _primitive_maps(doc: dict[str, Any]) -> tuple[dict[str, dict[str, str]], dic
 
 
 def _derivation_variable_primitives(
-    doc: dict[str, Any], rule: dict[str, Any], *, include_aggregate_result: bool = True
+    doc: dict[str, Any], rule: dict[str, Any], *, include_aggregate_result: bool = True,
+    primitive_maps: tuple[dict[str, dict[str, str]], dict[str, str]] | None = None,
 ) -> dict[str, str]:
-    role_types, primitives = _primitive_maps(doc)
+    role_types, primitives = _primitive_maps(doc) if primitive_maps is None else primitive_maps
     observed: dict[str, set[str]] = {}
     for suffix, atom, polarity in _derivation_atoms(rule):
         if not isinstance(atom, dict):

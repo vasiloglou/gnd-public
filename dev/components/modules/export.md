@@ -339,7 +339,7 @@ Deterministic offline lowering to Souffle's bounded relational fragment.
 | `parse(raw, fmt, limits)` | function | 52 | (no docstring) |
 | `token(value, primitive)` | function | 72 | (no docstring) |
 | `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 90 | (no docstring) |
-| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 207 | (no docstring) |
+| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 214 | (no docstring) |
 
 ## gnd.export.souffle_cli — `src/gnd/export/souffle_cli.py`
 Components: export.command

@@ -353,3 +353,93 @@ def test_derivation_where_membership_checks_the_computed_extension(tmp_path, cla
     population = load_population(good, model=model)
     report = check(model, population)
     assert [(row.fact_type, row.verdict) for row in report.derivations] == [("eligible_expense", "pass")]
+
+
+def test_untyped_runtime_variable_cannot_inherit_date_kind_from_list():
+    from gnd.terms import compare_terms
+
+    comparison = compare_terms(
+        "in", "$value", [{"date": "2024-02-29"}], {"value": "2024-02-29"}
+    )
+    assert comparison.reason == "term:values-not-comparable"
+
+
+def test_pyrel_membership_preserves_reference_refusal_order(tmp_path, monkeypatch):
+    from gnd.export import pyrel_rules
+
+    def refuse_reference(*args):
+        raise pyrel_rules.ExportInputError("missing reference fixture")
+
+    monkeypatch.setattr(pyrel_rules, "_bind_reference", refuse_reference)
+    path = Path(_write_json(tmp_path, "model.orm.json", _direct()))
+    with pytest.raises(pyrel_rules.ExportInputError, match="^missing reference fixture$"):
+        pyrel_rules.render(path, "duckdb")
+
+
+@pytest.mark.parametrize("exporter", ["lean", "souffle"])
+def test_finite_exporters_refuse_guarded_membership_explicitly(exporter):
+    from gnd.export.lean import render_lean
+    from gnd.export.souffle import render_souffle
+
+    model = _direct()
+    population = {
+        "population": {
+            "model": "model.orm.json", "model_id": model["model_id"], "source": "fixture",
+            "covers": ["expense_in_category", "expense_has_amount", "expense_has_status"],
+        },
+        "instances": {},
+        "facts": {
+            "expense_in_category": [{"expense": 1, "category": "travel"}],
+            "expense_has_amount": [{"expense": 1, "amount": 1500}],
+            "expense_has_status": [],
+        },
+    }
+    raw_model, raw_population = (json.dumps(value).encode() for value in (model, population))
+    if exporter == "lean":
+        result = render_lean(raw_model, raw_population, toolchain="leanprover/lean4:v4.34.0")
+    else:
+        result = render_souffle(raw_model, raw_population, model_format="json")
+    assert (result.exit_code, result.reason) == (2, "membership-unsupported")
+
+
+def test_derivation_compiles_and_charges_members_under_declared_temporal_type(tmp_path):
+    from gnd.extensions import structured_extension_view
+    from gnd.model import load_model
+    from gnd.population import load_population
+
+    model_doc = _direct("in", [{"date": "2024-02-29"}, {"date": "2024-03-01"}])
+    model_doc["version"] = 3
+    next(ot for ot in model_doc["object_types"] if ot["id"] == "amount")["primitive"] = "Date"
+    _derived(model_doc)
+    model = load_model(_write_json(tmp_path, "model.orm.json", model_doc))
+    population_path = _write_json(tmp_path, "population.json", {
+        "population": {
+            "model": "model.orm.json", "model_id": model.model_id, "source": "fixture",
+            "covers": ["expense_in_category", "expense_has_amount"],
+        },
+        "instances": {},
+        "facts": {
+            "expense_in_category": [{"expense": 1, "category": "travel"}],
+            "expense_has_amount": [{"expense": 1, "amount": "2024-02-29"}],
+        },
+    })
+    population = load_population(population_path, model=model)
+    view = structured_extension_view(model, population)
+    assert [row["expense"] for row in view.facts["eligible_expense"]] == [1]
+    assert view.work.term_operations == 3
+
+
+def test_synth_accepts_a_float_spelling_in_an_integer_membership_list(tmp_path):
+    path = _write_json(tmp_path, "model.orm.json", _direct("in", [1500.0]))
+    output = tmp_path / "cases"
+    result = run_main(["synth", path, "--guarded-cases", "--out", str(output)])
+    assert result.returncode == 0, (result.stdout, result.stderr)
+    manifest = json.loads((output / "guarded-cases.json").read_bytes())
+    rule, = manifest["rules"]
+    assert rule["reason"] is None
+    assert sorted(case["kind"] for case in rule["cases"]) == EXPECTED["synth"]["reachable"]
+    for case in rule["cases"]:
+        checked = run_main(["check", path, str(output / case["population"]), "--format", "json"])
+        report = json.loads(checked.stdout)
+        guard, = [row for row in report["verdicts"] if row["constraint_type"] == "guarded"]
+        assert guard["verdict"] == case["verdict"]

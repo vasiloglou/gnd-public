@@ -37,12 +37,15 @@ from gnd.model_index import ModelIndex
 from gnd.population import Population
 from gnd.terms import (
     DEFAULT_LIMITS,
+    MEMBERSHIP_OPERATORS,
+    analyze_term,
     compare_terms,
     evaluate_term,
     is_function_term,
     materialize_scalar,
     prepare_comparisons,
     term_variables,
+    where_uses_membership,
 )
 from gnd.universe import resolve_primitive
 from gnd.values import identity_key as _identity_key
@@ -221,6 +224,36 @@ class _ExactJoinWork(_JoinWork):
 class _FixpointJoinWork(_ExactJoinWork):
     fixpoint_iterations: int = 0
     canonical_insertions: int = 0
+
+
+def _derivation_where_preparer(document, work):
+    primitive_maps = None
+    compiled_where = {}
+
+    def prepare(head_id, clause_index, clause):
+        nonlocal primitive_maps
+        comparisons = clause.get("where") or ()
+        if not where_uses_membership(comparisons):
+            return comparisons
+        key = (head_id, clause_index)
+        if key in compiled_where:
+            return compiled_where[key]
+        if primitive_maps is None:
+            primitive_maps = model_validation._primitive_maps(document)
+        primitives = model_validation._derivation_variable_primitives(
+            document, clause, primitive_maps=primitive_maps
+        )
+        result = []
+        for authored, comparison in zip(comparisons, prepare_comparisons(comparisons), strict=True):
+            if authored.get("operator") in MEMBERSHIP_OPERATORS:
+                work.term_operations += len(authored["right"])
+                left_type = analyze_term(authored["left"], primitives).primitive
+                comparison = {**comparison, "left_primitive": left_type}
+            result.append(comparison)
+        compiled_where[key] = tuple(result)
+        return compiled_where[key]
+
+    return prepare
 
 
 def _count_term_work(work: _ExactJoinWork, result: Any) -> None:
@@ -477,6 +510,7 @@ def _partial_clause_rows(
     work: _FixpointJoinWork,
     *,
     definite: bool,
+    where: Sequence[Mapping[str, Any]],
 ) -> list[tuple[tuple[Scalar | _Wildcard, ...], RowLineage]]:
     source = must_facts if definite else may_facts
     bindings = _partial_bindings(clause.get("body") or (), source, work, compact=not definite)
@@ -524,9 +558,8 @@ def _partial_clause_rows(
                         raise _PartialTermFailure(failure.reason, failure.binding)
                     collapsed.extend(exact_rows)
             bindings = collapsed
-    if clause.get("where"):
+    if where:
         filtered = []
-        where = prepare_comparisons(clause["where"])
         for binding in bindings:
             keep = True
             for comparison in where:
@@ -539,7 +572,10 @@ def _partial_clause_rows(
                     str(comparison.get("operator")), comparison.get("left"),
                     comparison.get("right"), binding,
                     bound_cross_product=bool(clause.get("aggregate")),
+                    left_primitive=comparison.get("left_primitive"),
                 )
+                if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                    _count_term_work(work, result)
                 if not result.available:
                     raise _PartialTermFailure(str(result.reason), binding)
                 if result.available and result.value is not True:
@@ -1496,6 +1532,7 @@ def _evaluate_stratified_extensions(
     extensions: dict[str, _TypedRelation] = {}
     unavailable: dict[str, RelationUnavailable] = dict(prior_unavailable or {})
     work = _FixpointJoinWork()
+    prepare_where = _derivation_where_preparer(document, work)
     partial = any(
         isinstance(value, dict) and set(value) == {"$opaque"}
         for relation in state.values() for row in relation.rows for value in row
@@ -1572,7 +1609,7 @@ def _evaluate_stratified_extensions(
                         tuple(_partial_token(value) for value in row): row
                         for row in possible[head_id]
                     }
-                    for clause in iter_derivation_clauses(head["derivation_rule"]):
+                    for clause_index, clause in enumerate(iter_derivation_clauses(head["derivation_rule"])):
                         dependency = next((
                             str(atom.get("fact_type"))
                             for key in ("body", "negate")
@@ -1589,7 +1626,7 @@ def _evaluate_stratified_extensions(
                             try:
                                 produced = _partial_clause_rows(
                                     model, head, clause, must_facts, may_facts, must_lineages,
-                                    work, definite=definite,
+                                    work, definite=definite, where=prepare_where(head_id, clause_index, clause),
                                 )
                             except _PartialTermFailure as failure:
                                 partial_failure = RelationUnavailable(
@@ -1650,7 +1687,7 @@ def _evaluate_stratified_extensions(
             for head_id in component:
                 fact_type = fact_types[head_id]
                 derivation = str(fact_type.get("derivation"))
-                for clause in iter_derivation_clauses(fact_type["derivation_rule"]):
+                for clause_index, clause in enumerate(iter_derivation_clauses(fact_type["derivation_rule"])):
                     dependency = next((
                         str(atom.get("fact_type"))
                         for key in ("body", "negate")
@@ -1696,13 +1733,14 @@ def _evaluate_stratified_extensions(
                         if not bindings:
                             record_branch(f"derivation:extension:{derivation}:aggregate-group-absent")
                     filtered = []
-                    where = prepare_comparisons(clause.get("where") or ())
+                    where = prepare_where(head_id, clause_index, clause)
                     for binding in bindings:
                         keep = True
                         for comparison in where:
                             result = compare_terms(
                                 str(comparison.get("operator")), comparison.get("left"),
                                 comparison.get("right"), binding, bound_cross_product=aggregate,
+                                left_primitive=comparison.get("left_primitive"),
                             )
                             _count_term_work(work, result)
                             if not result.available:
@@ -1844,12 +1882,14 @@ def _exact_extension_calculator(
     extensions: dict[str, _TypedRelation] = {}
     unavailable: dict[str, RelationUnavailable] = dict(prior_unavailable or {})
     work = _ExactJoinWork()
+    document = model.model_dump()
+    prepare_where = _derivation_where_preparer(document, work)
     fact_types = {str(fact_type.get("id")): fact_type for fact_type in model.fact_types}
     selected = None if heads is None else frozenset(str(head) for head in heads)
     if selected is not None:
         for head in selected:
             unavailable.pop(head, None)
-    for component in derivation_strata(model.model_dump()):
+    for component in derivation_strata(document):
         fact_type_id = component[0]
         if selected is not None and fact_type_id not in selected:
             continue
@@ -1899,7 +1939,7 @@ def _exact_extension_calculator(
             record_branch(f"derivation:extension:{derivation}:aggregate-group-absent")
         filtered: list[dict[str, Scalar]] = []
         failed: RelationUnavailable | None = None
-        where = prepare_comparisons(rule.get("where") or ())
+        where = prepare_where(fact_type_id, 0, rule)
         for binding in bindings:
             keep = True
             for comparison in where:
@@ -1909,6 +1949,7 @@ def _exact_extension_calculator(
                     comparison.get("right"),
                     binding,
                     bound_cross_product=uses_aggregate,
+                    left_primitive=comparison.get("left_primitive"),
                 )
                 _count_term_work(work, result)
                 if not result.available:

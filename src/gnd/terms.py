@@ -747,13 +747,10 @@ def compare_terms(
             return ExactTermResult(None, "term:values-not-comparable", dict(binding))
         primitive = left_primitive
         if not primitive and isinstance(left, dict):
-            primitive = analyze_term(left, {}).primitive
-            if left.get("fn") in TEMPORAL_FUNCTIONS:
+            if "date" in left or left.get("fn") in TEMPORAL_FUNCTIONS:
                 primitive = "Date"
-        if not primitive and variable_name(left) is not None:
-            # In a derivation filter the validated variable domain is represented
-            # by the list's compatible domain; binding values retain wire types.
-            primitive = members.domain
+            elif "duration_days" in left:
+                primitive = "Duration"
         result = membership_verdict(operator, left_result.value, members, primitive)
         return ExactTermResult(
             result, None if result is not None else "term:values-not-comparable",

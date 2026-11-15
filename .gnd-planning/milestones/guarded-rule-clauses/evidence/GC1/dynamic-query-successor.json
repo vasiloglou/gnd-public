@@ -13,6 +13,24 @@
   ],
   "added": [
     [
+      "src/gnd/extensions.py",
+      "_partial_clause_rows",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_partial_clause_rows",
+      "Sequence[Mapping[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "prepare",
+      "compiled_where[key]",
+      2
+    ],
+    [
       "src/gnd/model_verbalization.py",
       "_comparison_cnl",
       "dict[str, Any]",
@@ -33,7 +51,13 @@
     [
       "src/gnd/synth/guarded_cases.py",
       "_assignment",
-      "members[1:ATTEMPTS]",
+      "(other or [])[:ATTEMPTS]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "members[1:]",
       1
     ],
     [
@@ -61,6 +85,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7667,
-  "result_occurrences": 9529
+  "result_distinct_rows": 7671,
+  "result_occurrences": 9534
 }

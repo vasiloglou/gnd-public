@@ -2295,6 +2295,9 @@ def render(model_path: Path, target: str) -> str:
         loaded = load_model_bytes(raw, source=str(model_path))
     except (ModelLoadError, ModelValidationError, ReferenceInputError) as error:
         raise ExportInputError(f"invalid model: {error}") from error
+    doc = _parse_document(raw.decode("utf-8"))
+    model = _Model(doc)
+    reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything
     if any(
         guard_uses_membership(constraint.get("consequent"))
         for constraint in loaded.constraints if constraint.get("type") == "guarded"
@@ -2304,9 +2307,6 @@ def render(model_path: Path, target: str) -> str:
         for clause in iter_derivation_clauses(fact.get("derivation_rule"))
     ):
         raise ExportInputError("membership-unsupported")
-    doc = _parse_document(raw.decode("utf-8"))
-    model = _Model(doc)
-    reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything
     if reference and doc.get("operations"):
         for head in model.derived:
             if {a["fact_type"] for a in _rule_atoms(model.facts[head]["derivation_rule"])} & set(reference["owned"]):

@@ -32,9 +32,12 @@ names; this table is the contract.
 | 1 | **Spec** | `notes/phase-N-spec.md` | **STOP** |
 | 2 | **Owner gate** — approve or amend; optional review over the spec bytes | owner decisions, recorded in the spec with a mark | **STOP** |
 | 3 | **Implement + verify** | code + tests; the plan's section 9 row and the phase's impact-closure gates run | no |
-| 4 | **Adversarial review of the diff** | `notes/phase-N-<reviewer>-review.md` + one regression test per finding | no |
+| 4 | **Adversarial review of the diff** | the review round (`notes/reviews/phase-N-r1/`: brief, review, findings ledger) + one regression test per finding | no |
 | 5 | **Refactoring review** | the record's `Refactoring review` section | no |
 | 6 | **Record + commit** | `milestones/<milestone>/NNN-phase-N.md` + a commit in the record contract's grammar | done; a STOP only as step 6 says |
+
+`notes/` is the milestone's own folder, `.gnd-planning/milestones/<milestone>/notes/`
+([record format](references/milestone-record-format.md)).
 
 **When to use:**
 - The owner says "phase N", "the next phase", or "process this phase"
@@ -237,7 +240,10 @@ A single reviewer is admissible for a phase diff **and the record must say
 tool) remains the bar for plan review and milestone close. Invocation, prompt
 shape, the reproduce-before-believe rule, the retained-evidence sanitization
 trap, and what a review that finds nothing still owes are in
-[`references/review-and-record.md`](references/review-and-record.md).
+[`references/review-and-record.md`](references/review-and-record.md). Where the
+project names no instrument of its own, the review helper
+([`references/review-tool.md`](references/review-tool.md)) writes the brief,
+runs the reviewer in the other harness and keeps the findings ledger.
 
 Every finding is reproduced before it is believed, every fix carries a
 regression test **proven to fail against the pre-fix code**, and the reviewer's
@@ -286,7 +292,12 @@ python scripts/components_index.py changed --base <the phase's base commit> --st
 Fix every `fail:`. For a `warn:` (a new caller of a retired component), call the
 replacement or record the reason in the boundary section and rerun without
 `--strict`, saying so. For each `reread:` line, read the entry beside the diff
-and either edit it or state in the record that it is still accurate. Duplicates
+and either edit it or state in the record that it is still accurate. In a
+project with rules of its own (`docs/components/rules.json`), also run
+`python .claude/skills/components/scripts/rules_check.py check --base <the phase's base commit>`
+and list it the same way: fix every `fail:`, record the reason for a `warn:`
+that stays, and record a `skip:` (the checker is not installed) or an exit 2
+(the check did not run) as not run, never as passed. Duplicates
 and tangles the phase exposed in code it did not touch go to the step 5 answer
 as deferred refactors, not into this phase.
 

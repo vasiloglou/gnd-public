@@ -35,6 +35,15 @@ source = "skills/milestone/start-milestone"
 dest = ".codex/skills/start-milestone"
 values = { planning_dir = ".gnd-planning" }
 
+# handle-issue triages, reproduces and routes a GitHub issue, delivered to both roots.
+[[sync]]
+source = "skills/handle-issue"
+dest = ".claude/skills/handle-issue"
+
+[[sync]]
+source = "skills/handle-issue"
+dest = ".codex/skills/handle-issue"
+
 # The component index: the skill in both discovery roots, and the script that builds it.
 [[sync]]
 source = "skills/components"

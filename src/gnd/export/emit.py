@@ -5,7 +5,7 @@ from __future__ import annotations
 from importlib.resources import files
 from pathlib import Path
 
-from .pyrel_runtime import _parse_document, _read_text, admit_model
+from .pyrel_runtime import _constraint_entries, _parse_document, _read_text, admit_model
 
 SCRIPT_HEADER = (
     '# /// script\n'
@@ -24,18 +24,25 @@ def render_pyrel(
     from gnd.errors import ModelValidationError
     from gnd.model._includes import guard_document
 
-    from .pyrel_runtime import ExportInputError
+    from .pyrel_runtime import ExportInputError, ProfileRefusal
     try:
         guard_document(document, "export.pyrel")
     except ModelValidationError as error:
         raise ExportInputError(str(error)) from error
-    from gnd.terms import uses_temporal
+    from gnd.terms import derivation_uses_membership, guarded_clause_refusal, uses_temporal
 
+    admitted = admit_model(document)
+    try:
+        for _, constraint, _ in _constraint_entries(admitted):
+            reason = guarded_clause_refusal(constraint)
+            if reason is not None:
+                raise ProfileRefusal(reason)
+        if any(derivation_uses_membership(fact.get("derivation_rule")) for fact in admitted.fact_types.values()):
+            raise ProfileRefusal("membership-unsupported")
+    except ProfileRefusal as error:
+        raise ExportInputError(str(error)) from error
     if uses_temporal(document):
-        from .pyrel_runtime import ExportInputError
-
         raise ExportInputError("PyRel export does not support temporal models in Phase 1")
-    admit_model(document)
     runtime = files("gnd.export").joinpath("pyrel_runtime.py").read_text(encoding="utf-8")
     config = {"duckdb_path": duckdb_path, "connection": connection}
     source = (SCRIPT_HEADER + runtime + f"\nMODEL_TEXT = {text!r}\n"

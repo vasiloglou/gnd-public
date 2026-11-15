@@ -745,6 +745,63 @@ rule-id options with a usage error, exit 64.
 | the rules | the population | `--baseline POPULATION` | `new`, `standing`, resolved |
 | the population | the rules | `--baseline-model MODEL` | `head-only`, `standing`, `base-only` |
 
+## Put the policy in one guarded rule
+
+Suppose the catalogue team checks recommendations on the fantasy and mystery
+shelves. Fantasy qualifies, and mystery needs an explicit preference. The policy has
+an exception for books that reader already rated. This fragment uses the
+BookRec fact types and adds three clauses to one guarded rule.
+
+```yaml
+id: match_fantasy_or_requested_mystery
+type: guarded
+modality: deontic
+source: explicit
+status: confirmed
+antecedent:
+  - fact_type: recommendation
+    bind: {user: $u, book: $b}
+  - fact_type: book_has_genre
+    bind: {book: $b, genre: $g}
+where:
+  - {operator: in, left: $g, right: [fantasy, mystery]}
+negate:
+  - fact_type: user_rated_book
+    bind: {user: $u, book: $b}
+consequent:
+  any_of:
+    - comparison: {operator: "=", left: $g, right: fantasy}
+    - exists:
+        atoms:
+          - fact_type: user_prefers_genre
+            bind: {user: $u, genre: mystery}
+        where:
+          - {operator: in, left: $g, right: [mystery]}
+provenance:
+  user_quote: Use fantasy or explicitly requested mystery, except for books already rated.
+```
+
+Cover `user_rated_book` when checking the exception and
+`user_prefers_genre` when deciding the existential alternative. In a covered
+population, an unrated mystery recommendation for a user who never named
+mystery triggers a warning for `constraint:match_fantasy_or_requested_mystery`.
+An existing rating removes the binding. An unrated fantasy recommendation
+satisfies the first alternative.
+
+With a helper encoding, a derivation would select eligible recommendations
+with a comparison and anti-join, then derive acceptable recommendations
+with a union of a fantasy clause and a mystery-plus-preference clause. A
+guard would require the acceptable helper for each eligible recommendation.
+With the clauses in the guard, the author can keep the original rule ID in
+feedback and see each failed alternative in version 17 diagnostics.
+
+```sh
+gnd check MODEL POPULATION --guarded-diagnostics --format json
+```
+
+[Guarded constraint format](../../src/gnd/skills/gnd-orm-core/references/representation-format.md#guarded-constraints)
+
+
 ## Limits
 
 - **Diagnostics describe; they do not decide.** A rule with zero bindings over
@@ -758,10 +815,11 @@ rule-id options with a usage error, exit 64.
   enumeration or range definitely excludes the literal. It is a warning, never
   an error.
 - **Case generation serves a fragment.** It covers asserted scalar facts with
-  atom, absence and scalar comparison consequents, and existential consequents
-  without a `where` filter. A rule outside it gets the reason
-  `unsupported-shape`, not a guessed case. Generated cases
-  do not show that the rule matches the policy you meant.
+  supported atom, absence, comparison, existential and disjunctive
+  consequents. It can generate examples for reachable membership and
+  antecedent filter cases. Unsupported shapes and bounded searches can
+  return a reason in the manifest. Review the populations against the
+  policy you meant.
 - **Edition comparison needs one vocabulary.** Both models must use the same
   vocabulary, and the population must be valid under both; otherwise the
   comparison is refused with exit 3. Comparing across a renamed or removed

@@ -505,10 +505,11 @@ For self-referential or multi-occurrence fact types where the role name disambig
 `guarded` is GND's top-level conditional constraint family. Its `antecedent`
 is a non-empty conjunction of positive atoms. Every atom binds exactly the
 roles declared by its fact type; a bind value is either a scalar literal or a
-`$`-prefixed variable. The consequent is exactly one of four shapes: `atom`
-requires a fact, `comparison` compares two terms with `<`, `<=`, `=`, `>=`,
-`>`, or `!=`, `absence` requires that a fact be absent, and `exists` requires
-a conjunction of positive atoms with a joint witness assignment. An exists-only
+`$`-prefixed variable. The four single consequents are `atom`, which
+requires a fact, `comparison`, which compares terms, `absence`, which
+requires an absent fact, and `exists`, which requires a joint witness for a
+conjunction of atoms. A consequent can also use `any_of` over single
+consequents. An exists-only
 variable must occur in a positive exists atom. Every `exists.where` variable
 must be bound by an antecedent or positive exists atom, and comparison operands
 must have compatible resolved primitive types.
@@ -551,6 +552,10 @@ leave the binding unresolved unless another filter definitely excludes it.
 An unresolved binding makes the guard unchecked. When every positive binding
 is definitely excluded, the guard is vacuous. Existing positive-join vacuity
 and positive-only disconnection checks apply before the filters.
+A guarded rule has no output relation and adds no derivation dependency edge.
+Relations read by the guard still have to satisfy the derivation stratification
+rules that apply to their own definitions.
+
 
 ### Membership comparisons
 
@@ -616,6 +621,44 @@ constraint; each is emitted as an ordered object in `offending_facts`, keyed by
 the model's `$`-spelled variable names in first-introduction order. With no
 violations the verdict is `pass`. Every non-vacuous guarded verdict message
 includes the binding count.
+
+### Disjunctive consequents
+
+`any_of` is an ordered list of at least two alternatives. Each entry is one
+`atom`, `comparison`, `absence` or `exists` consequent. Every alternative
+reads the same antecedent binding. An existential alternative has its own
+local variables and conditions. An alternative cannot read a sibling's local
+variables. Nested disjunctions are invalid.
+
+```yaml
+consequent:
+  any_of:
+    - comparison: {operator: "=", left: $status, right: "D"}
+    - exists:
+        atoms:
+          - fact_type: order_has_status
+            bind: {order: $order, status: "P"}
+          - fact_type: order_has_carrier_confirmation
+            bind: {order: $order}
+```
+
+For a surviving antecedent binding, any true alternative satisfies the
+rule. With no true alternative, an unknown alternative makes the binding
+undecidable. If every alternative is false, the binding violates the rule.
+Within an existential alternative, an undefined term reached in a local
+candidate leaves that alternative unknown even when another candidate is
+a witness. A true sibling can still satisfy the disjunction. Work exhaustion
+makes the rule unchecked with `guarded-disjunction-work-limit`. If work
+completes and any binding is undecidable, the rule is unchecked with
+`guarded-disjunction-undecidable`. Unavailable semiderived inputs make the
+affected alternative unknown. Available semiderived relations supply their
+calculated rows to the disjunction.
+
+A decided violation uses the ordinary offending bindings. With
+`gnd check --guarded-diagnostics`, each offending binding also lists the
+failed alternatives in declaration order, including any individually
+unmatched existential atoms.
+
 
 ## Provenance and modality — every constraint carries
 

@@ -27,7 +27,7 @@ Offline publication of a self-contained optional PyRel program.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 18 | Render from one bounded input read; no checker or foreign-runtime import. |
-| `render_pyrel_rules(model_path, target)` | function | 48 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+| `render_pyrel_rules(model_path, target)` | function | 55 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
 
 ## gnd.export.ilp — `src/gnd/export/ilp.py`
 Components: export.ilp_neutral
@@ -232,9 +232,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 39 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 44 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 416 | Render three deterministic artifacts from one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 40 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 45 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 417 | Render three deterministic artifacts from one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -254,18 +254,18 @@ Render a model's rules as a readable PyRel program, as requirements.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Atom` | class | 61 | (no docstring) |
-| `Count` | class | 67 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
-| `Compare` | class | 74 | (no docstring) |
-| `Check` | class | 81 | (no docstring) |
-| `Requirement` | class | 89 | (no docstring) |
-| `spanning_uniqueness(doc) -> list[str]` | function | 625 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
-| `constraint_context(doc) -> _Model` | function | 762 | Index the admitted source for lowerers that assign their own constraint IDs. |
-| `constraint_requirements(model, c, fact_id) -> list[Requirement]` | function | 767 | Lower one admitted constraint through the shared requirement IR. |
-| `requirements(doc, model) -> list[Requirement]` | function | 811 | Lower every supported constraint to requirements, in model order. One walk for all families. |
-| `require_text(req, names, model) -> str` | function | 1000 | (no docstring) |
-| `denial_text(req, names, model) -> str` | function | 1012 | (no docstring) |
-| `render(model_path, target) -> str` | function | 2287 | (no docstring) |
+| `Atom` | class | 67 | (no docstring) |
+| `Count` | class | 73 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
+| `Compare` | class | 80 | (no docstring) |
+| `Check` | class | 87 | (no docstring) |
+| `Requirement` | class | 95 | (no docstring) |
+| `spanning_uniqueness(doc) -> list[str]` | function | 702 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
+| `constraint_context(doc) -> _Model` | function | 840 | Index the admitted source for lowerers that assign their own constraint IDs. |
+| `constraint_requirements(model, c, fact_id) -> list[Requirement]` | function | 845 | Lower one admitted constraint through the shared requirement IR. |
+| `requirements(doc, model) -> list[Requirement]` | function | 889 | Lower every supported constraint to requirements, in model order. One walk for all families. |
+| `require_text(req, names, model) -> str` | function | 1085 | (no docstring) |
+| `denial_text(req, names, model) -> str` | function | 1097 | (no docstring) |
+| `render(model_path, target) -> str` | function | 2399 | (no docstring) |
 
 ## gnd.export.pyrel_runtime — `src/gnd/export/pyrel_runtime.py`
 Components: export.pyrel_runtime

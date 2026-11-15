@@ -127,8 +127,9 @@ existing version message.
 
 `gnd check MODEL POPULATION --guarded-diagnostics` uses the plain
 rule-check scope above and implies `--rule-ids`. It can be combined with
-`--baseline` and `--allow-vacuous`. The JSON report uses version 16. Its
-guarded verdicts include:
+`--baseline` and `--allow-vacuous`. JSON reports use version 16, or
+version 17 when the model has a guarded `any_of`. Both versions add an
+antecedent observation to guarded verdicts.
 
 ```json
 {"guarded_antecedent": {"binding_count": 0, "first_empty_atom_index": 1}}
@@ -146,6 +147,37 @@ same check without this option. Text output lists the same observations.
 
 For authoring-time findings on literal values, see the ORM
 [constraint reference](../../src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
+
+
+For guarded rules with [antecedent filters](../../src/gnd/skills/gnd-orm-core/references/representation-format.md#antecedent-filters),
+`binding_count` counts definite surviving bindings. A filter that excludes
+every positive binding yields a count of zero and a null
+`first_empty_atom_index`. The index continues to describe only the positive
+antecedent. Unresolved bindings are excluded from the count.
+
+### Version 17 alternative failures
+
+A failed or warned `any_of` verdict carries `guarded_alternatives`. Each
+entry has the public antecedent `binding` and its ordered list of
+`alternatives`. Alternative `index` is zero-based in declared `any_of` order.
+The reason identifies the failed condition.
+
+| Reason | Evidence |
+|---|---|
+| `false-comparison` | The comparison was false. |
+| `missing-required-fact` | The required fact was absent. |
+| `present-forbidden-fact` | The fact forbidden by the absence alternative was present. |
+| `missing-exists-atom` | At least one existential atom had no match under the antecedent binding. |
+| `no-joint-witness` | Each atom can match individually, but no joint assignment satisfies the atoms and filters. |
+
+`fact_types` lists the relations of the unmatched, required or forbidden
+atoms. `atom_indexes` identifies missing atoms by zero-based position in
+the alternative's `exists.atoms`, including when several atoms read the same
+fact type. These arrays are empty when no corresponding atom evidence
+applies. Unchecked verdicts carry their ordinary reason and omit failure
+details. The text diagnostics display the same per-alternative reasons.
+The field is opt-in and reports without the flag keep their existing format.
+
 
 ## Comparing two rule editions
 
@@ -177,9 +209,3 @@ Exhausting the comparison's 1,000,000-unit work budget yields an empty rule
 list and `comparison-work-limit`. The text form lists the directional
 bindings and the side check bands. This option is exclusive with
 `--baseline`, other rule-ID output flags, and other check arms.
-
-For guarded rules with [antecedent filters](../../src/gnd/skills/gnd-orm-core/references/representation-format.md#antecedent-filters),
-`binding_count` counts definite surviving bindings. A filter that excludes
-every positive binding yields a count of zero and a null
-`first_empty_atom_index`. The index continues to describe only the positive
-antecedent. Unresolved bindings are excluded from the count.

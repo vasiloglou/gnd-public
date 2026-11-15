@@ -371,6 +371,10 @@ Routine fast-lane prototype modeling needs no station record. When this run is e
 
 ## Calendar-day fragment (v7.1)
 
+Author guarded membership, antecedent filters and consequent alternatives by
+the [guarded constraint format](../gnd-orm-core/references/representation-format.md#guarded-constraints).
+Use the original business rule's ID when checking violation feedback.
+
 Follow [calendar-day terms](../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71) for model version 3, Duration roles, tagged literals and guarded date functions.
 Preserve declared typing and provenance. For recovery/adoption, retain ambiguous calendar evidence for owner review. Validation and ordinary checks/transitions support this fragment; consult that reference before choosing a downstream consumer.
 

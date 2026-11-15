@@ -24,6 +24,7 @@ from gnd.model._documents import ModelValueError
 from gnd.model._includes import guard_document
 from gnd.model_index import ModelIndex
 from gnd.safefs import NotRegularFileError, open_regular
+from gnd.terms import derivation_uses_membership, guarded_clause_refusal
 from gnd.values import ModelIdentityError, model_identity
 
 _VERSION = "0.3.0.dev0"
@@ -418,6 +419,17 @@ def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) 
     document, model = _read_model(model_path)
     ontology, mapped = _ontology(document, model)
     _schema().validate(ontology)
+    incompatible = {}
+    for index, constraint in enumerate(document.get("constraints", ())):
+        reason = guarded_clause_refusal(constraint)
+        if reason is not None:
+            incompatible[("constraints", index)] = reason
+    for index, fact in enumerate(ModelIndex.for_model(model).iter_fact_types_shared()):
+        if derivation_uses_membership(fact.get("derivation_rule")):
+            incompatible[("fact_types", index, "derivation_rule")] = "membership-unsupported"
+    if strict and incompatible:
+        raise OssieInputError(next(iter(incompatible.values())))
+    mapped.update((path, ("extension", reason, None)) for path, reason in incompatible.items())
     rows, elements, refused = _metadata(document, mapped)
     if strict and refused:
         raise OssieInputError(_POPULATION_REFUSAL)

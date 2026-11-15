@@ -27,15 +27,21 @@ import datetime as _dt
 import json
 import keyword
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
 from gnd.errors import ModelLoadError, ModelValidationError
 from gnd.graphs import strongly_connected_components
-from gnd.model import iter_derivation_clauses, load_model_bytes
+from gnd.model import load_model_bytes
 from gnd.model_index import ModelIndex
-from gnd.terms import guard_uses_membership, where_uses_membership
+from gnd.terms import (
+    MEMBERSHIP_OPERATORS,
+    compile_membership,
+    derivation_uses_membership,
+    guard_uses_membership,
+    guarded_clause_refusal,
+)
 
 from .pyrel_runtime import ExportInputError, _parse_document
 
@@ -99,6 +105,7 @@ class Requirement:
     part: str = ""                 # several requirements may make up one constraint (same id)
     listing: bool = False          # a plain query the DuckDB report needs; not a requirement
     info: tuple[tuple[str, Any], ...] = ()      # family details the report needs (bounds, scope, ...)
+    filters: tuple[Check, ...] = ()
 
 
 def _with_constraint_ids(doc: dict[str, Any]) -> dict[str, Any]:
@@ -235,6 +242,48 @@ def _variables(atoms: tuple[Atom, ...]) -> tuple[str, ...]:
     return tuple(sorted(seen))
 
 
+def _membership_check(model, label, comparison, types):
+    member = comparison["left"]
+    primitive = types.get(member) if isinstance(member, str) else None
+    compiled = compile_membership(comparison["right"])
+    domain = {"Integer": "Number", "String": "String", "Boolean": "Boolean"}.get(primitive)
+    if compiled is None or domain is None or compiled.domain != domain:
+        raise ExportInputError("membership-unsupported")
+    literals = sorted(compiled.keys)
+    if primitive == "Integer":
+        if any(item.denominator != 1 or abs(item.numerator) > 2**53 - 1 for item in literals):
+            raise ExportInputError("membership-unsupported")
+        literals = [item.numerator for item in literals]
+    if label in model.facts or label in model.derived_relations or label in model.helpers:
+        raise ExportInputError("membership-helper-name-collision")
+    relation = model.helper(label, [("value", primitive)], "literal-membership", literals=literals)
+    kind = "holds" if comparison["operator"] == "in" else "absent"
+    return Check(kind, atom=Atom(relation, (member,)))
+
+
+def _guarded_filter(model, label, comparison, types):
+    operator, left, right = (comparison[key] for key in ("operator", "left", "right"))
+    if operator in MEMBERSHIP_OPERATORS:
+        return _membership_check(model, label, comparison, types)
+
+    def primitive(term):
+        bound = types.get(term) if isinstance(term, str) else None
+        if bound is not None:
+            return bound
+        if type(term) is int and abs(term) > 2**53 - 1:
+            return None
+        return {int: "Integer", str: "String", bool: "Boolean"}.get(type(term))
+
+    if not any(isinstance(value, str) and value in types for value in (left, right)):
+        raise ExportInputError("guarded-where-term-unsupported")
+    left_type, right_type = primitive(left), primitive(right)
+    if left_type != right_type or left_type not in {"Integer", "String", "Boolean"}:
+        raise ExportInputError("guarded-where-term-unsupported")
+    if operator not in _NEGATED or (left_type != "Integer" and operator not in {"=", "!="}):
+        raise ExportInputError("guarded-where-term-unsupported")
+    return Check("compare", compare=Compare(operator, left, right))
+
+
 def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
     domain = tuple(_atom(model, a) for a in c.get("antecedent", []))
     if not domain:
@@ -248,13 +297,20 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
     elif kind == "absence":
         check = Check("absent", atom=_atom(model, payload))
     elif kind == "comparison":
-        if payload.get("operator") not in _NEGATED:
-            raise ExportInputError(f"{c.get('id')}: unknown operator {payload.get('operator')!r}")
         types = _atom_types(model, domain)
-        left, right = (_typed_term(model, c["id"], payload[side], types, payload["right" if side == "left" else "left"])
-                       for side in ("left", "right"))
-        check = Check("compare", compare=Compare(payload["operator"], left, right))
+        if payload.get("operator") in MEMBERSHIP_OPERATORS:
+            check = _membership_check(model, f"{c['id']}_membership", payload, types)
+        else:
+            if payload.get("operator") not in _NEGATED:
+                raise ExportInputError(f"{c.get('id')}: unknown operator {payload.get('operator')!r}")
+            left, right = (_typed_term(model, c["id"], payload[side], types, payload["right" if side == "left" else "left"])
+                           for side in ("left", "right"))
+            check = Check("compare", compare=Compare(payload["operator"], left, right))
     else:
+        if guard_uses_membership(consequent):
+            raise ExportInputError("membership-unsupported")
+        if c.get("negate") or c.get("where"):
+            raise ExportInputError("guarded-antecedent-filters-unsupported")
         raise ExportInputError(f"{c.get('id')}: consequent kind {kind!r} is not supported")
     if not _connected(domain):
         raise ExportInputError(f"{c.get('id')}: a disconnected antecedent is left unchecked by GND; "
@@ -274,6 +330,27 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
         found.insert(0, Requirement(c["id"], "guarded", c["modality"], _quote(c), domain, Check("none"),
                                     _variables(domain), ("any", antecedents), refs, part="bindings", listing=True,
                                     info=info))
+    if c.get("negate") or c.get("where"):
+        types = _atom_types(model, domain)
+        negative = tuple(_atom(model, pattern) for pattern in c.get("negate") or ())
+        if not types or any(
+            types.get(name) != primitive
+            for atom in negative for name, primitive in _atom_types(model, (atom,)).items()
+        ) or temporal:
+            raise ExportInputError("guarded-antecedent-filters-unsupported")
+        filters = (*(Check("absent", atom=atom) for atom in negative), *(
+            _guarded_filter(model, f"{c['id']}_where_membership_{position}", comparison, types)
+            for position, comparison in enumerate(c.get("where") or ())
+        ))
+        guard = found[0]
+        needs_coverage = [atom.relation for atom in negative if atom.relation not in model.derived
+                          or model.facts[atom.relation]["derivation"] != "semiderived"]
+        info = (*guard.info, ("guarded_filtered", True), ("negative_coverage", needs_coverage))
+        found = [
+            replace(guard, filters=filters, info=info),
+            replace(guard, check=Check("none"), part="positive-bindings", listing=True),
+            replace(guard, check=Check("none"), filters=filters, part="filtered-bindings", listing=True),
+        ]
     return found
 
 
@@ -732,12 +809,13 @@ def _unswap(model: _Model, atoms: list[Atom], seen_order: list[str] | tuple[str,
 
 
 def _unswapped(model: _Model, req: Requirement) -> Requirement:
-    atoms = _unswap(model, [*req.domain, *([req.check.atom] if req.check.atom else [])])
+    checks = (*req.filters, req.check)
+    atoms = _unswap(model, [*req.domain, *(item.atom for item in checks if item.atom)])
     domain = tuple(atoms[: len(req.domain)])
-    check = req.check if not req.check.atom else Check(req.check.kind, atom=atoms[-1], compare=req.check.compare,
-                                                       pairs=req.check.pairs)
-    return Requirement(req.id, req.family, req.modality, req.quote, domain, check, req.witness, req.vacuous_when,
-                       req.refs, req.part, req.listing, req.info)
+    operands = iter(atoms[len(req.domain):])
+    filters = tuple(replace(item, atom=next(operands)) if item.atom else item for item in req.filters)
+    check = replace(req.check, atom=next(operands)) if req.check.atom else req.check
+    return replace(req, domain=domain, filters=filters, check=check)
 
 
 def _derivation(model: _Model, head: str) -> list[Requirement]:
@@ -997,10 +1075,17 @@ def _check_text(check: Check, names: _Names, model: _Model, *, negate: bool) -> 
     raise ExportInputError(f"unknown check kind {check.kind}")
 
 
+def _domain_text(req: Requirement, names: _Names, model: _Model) -> list[str]:
+    return [
+        *(_atom_text(atom, names, model) for atom in req.domain),
+        *(part for item in req.filters for part in _check_text(item, names, model, negate=False)),
+    ]
+
+
 def require_text(req: Requirement, names: _Names, model: _Model) -> str:
     if req.listing:
         return f"(listing for the report) {denial_text(req, names, model)}"
-    domain = ", ".join(_atom_text(a, names, model) for a in req.domain)
+    domain = ", ".join(_domain_text(req, names, model))
     if req.family == "cardinality" and req.part == "min" and not names.step:
         # no outer domain: with none, the rule still applies to an empty universe, which GND fails
         count = _operand(req.check.compare.left, names)
@@ -1010,7 +1095,7 @@ def require_text(req: Requirement, names: _Names, model: _Model) -> str:
 
 
 def denial_text(req: Requirement, names: _Names, model: _Model) -> str:
-    parts = [*(_atom_text(a, names, model) for a in req.domain), *_check_text(req.check, names, model, negate=True)]
+    parts = [*_domain_text(req, names, model), *_check_text(req.check, names, model, negate=True)]
     selected = ", ".join(([names.step] if names.step else []) + [names.var(v) for v in req.witness])
     return f"m.where({', '.join(parts)}).select({selected})"
 
@@ -1098,6 +1183,9 @@ def _helpers(model: _Model, names: _Names, kinds: tuple[str, ...] | None = None)
                                  for r in model.roles(fact_id))
                 lines.append(f"    h_x = {spec['fields'][0][1]}.ref()")
                 lines.append(f"    m.where({names.relation(fact_id)}({st}{args})).define({rel}({st}h_x))")
+        elif spec["kind"] == "literal-membership":
+            values = ", ".join(_literal(value, spec["fields"][0][1]) for value in spec["literals"])
+            lines.append(f"    m.define(*[{rel}(value) for value in [{values}]])")
         elif spec["kind"] == "ranges":
             universe = names.relation(f"{spec['object_type']}_any")
             lines.insert(-1, f"    # the values of {spec['object_type']} that fall inside a declared range")
@@ -1212,9 +1300,9 @@ def _derivations(model: _Model, names: _Names, target: str) -> list[str]:
     for head in model.derived:
         fact = model.facts[head]
         clauses.append(f"    # {head} ({fact['derivation']}): {fact.get('reading', head)}")
-        for clause in _clauses(fact["derivation_rule"]):
-            clauses += _clause_lines(model, names, head, clause)
-    lines += _helpers(model, names, kinds=("reverse", "permute"))   # registered while lowering the clauses
+        for position, clause in enumerate(_clauses(fact["derivation_rule"])):
+            clauses += _clause_lines(model, names, head, clause, position=position)
+    lines += _helpers(model, names, kinds=("reverse", "permute", "literal-membership"))
     lines += clauses
     for head in model.derived:
         semi = model.facts[head]["derivation"] == "semiderived"
@@ -1231,7 +1319,7 @@ def _derivations(model: _Model, names: _Names, target: str) -> list[str]:
             lines.append(f"    found['computed:{head}'] = rows(m.where({names.relation(head + '_derived')}(*h_row)).select(*h_row))")
     return lines
 
-def _clause_lines(model: _Model, names: _Names, head: str, clause: dict[str, Any]) -> list[str]:
+def _clause_lines(model: _Model, names: _Names, head: str, clause: dict[str, Any], *, position: int = 0) -> list[str]:
     types: dict[str, str] = {}
     atoms = []
     for pattern in clause["body"]:
@@ -1264,8 +1352,14 @@ def _clause_lines(model: _Model, names: _Names, head: str, clause: dict[str, Any
         if per:
             text += f".per({', '.join(per)})"
         lines.append(f"    {names.var(bound)} = {text}   # GND counts each distinct ({', '.join([*over, of])}) once")
-    for comparison in clause["where"]:
-        parts.append(f"{_expr(comparison['left'], names)} {_PYOP[comparison['operator']]} {_expr(comparison['right'], names)}")
+    for filter_index, comparison in enumerate(clause["where"]):
+        if comparison["operator"] in MEMBERSHIP_OPERATORS:
+            check = _membership_check(
+                model, f"{head}_membership_{position}_{filter_index}", comparison, types,
+            )
+            parts.extend(_check_text(check, names, model, negate=False))
+        else:
+            parts.append(f"{_expr(comparison['left'], names)} {_PYOP[comparison['operator']]} {_expr(comparison['right'], names)}")
     head_args = ", ".join(_expr(t, names) for t in head_terms)
     lines.append(f"    m.where({', '.join(parts)}).define({names.relation(head + '_derived')}({_at(names)}{head_args}))")
     return lines
@@ -1315,6 +1409,24 @@ def _rules_table(reqs: list[Requirement]) -> str:
              "info": dict(r.info)}
             for r in reqs]
     return json.dumps(rows, indent=1)
+
+
+_FILTERED_VACUITY = """\
+        if (rule['info'].get('guarded_filtered') and found[f'{name}::positive-bindings']
+                and not found[f'{name}::filtered-bindings']):
+            print(f'{name}  vacuous  (antecedent filters excluded all bindings)')
+            vacuous = True
+            continue
+"""
+
+_FILTERED_COVERAGE = """\
+    missing = sorted({
+        relation for rule in RULES for relation in rule['info'].get('negative_coverage', [])
+        if relation not in covers
+    })
+    if missing:
+        raise ValueError('guarded-filter-coverage-missing: ' + ', '.join(missing))
+"""
 
 
 _DUCKDB_MAIN = '''
@@ -2298,25 +2410,18 @@ def render(model_path: Path, target: str) -> str:
     doc = _parse_document(raw.decode("utf-8"))
     model = _Model(doc)
     reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything
-    if any(
-        constraint.get("type") == "guarded" and "any_of" in (constraint.get("consequent") or {})
-        for _, constraint, _ in ModelIndex.for_model(loaded).iter_constraints_shared()
-    ):
+    index = ModelIndex.for_model(loaded)
+    guarded_forms = {
+        reason for _, constraint, _ in index.iter_constraints_shared()
+        if (reason := guarded_clause_refusal(constraint)) is not None
+    }
+    derived_membership = any(
+        derivation_uses_membership(fact.get("derivation_rule")) for fact in index.iter_fact_types_shared()
+    )
+    if "guarded-disjunction-unsupported" in guarded_forms:
         raise ExportInputError("guarded-disjunction-unsupported")
-    if any(
-        constraint.get("type") == "guarded" and (constraint.get("negate") or constraint.get("where"))
-        for constraint in loaded.constraints
-    ):
-        raise ExportInputError("guarded-antecedent-filters-unsupported")
-    if any(
-        guard_uses_membership(constraint.get("consequent"))
-        for constraint in loaded.constraints if constraint.get("type") == "guarded"
-    ) or any(
-        where_uses_membership(clause.get("where"))
-        for fact in ModelIndex.for_model(loaded).iter_fact_types_shared()
-        for clause in iter_derivation_clauses(fact.get("derivation_rule"))
-    ):
-        raise ExportInputError("membership-unsupported")
+    if doc.get("operations") and (guarded_forms or derived_membership):
+        raise ExportInputError("guarded-clauses-plan-unsupported")
     if reference and doc.get("operations"):
         for head in model.derived:
             if {a["fact_type"] for a in _rule_atoms(model.facts[head]["derivation_rule"])} & set(reference["owned"]):
@@ -2481,6 +2586,13 @@ def render(model_path: Path, target: str) -> str:
         out.append(f"    probe_vars = [{refs}]")
         out.append(f"    return m, lambda: rows(m.where({names.relation(first)}(*probe_vars)).select(*probe_vars))")
     main = _DUCKDB_MAIN if target == "duckdb" else _LQP_MAIN
+    filtered = "guarded-antecedent-filters-unsupported" in guarded_forms
+    if filtered and target == "duckdb":
+        marker = "        status = 'violated' if rule['modality'] == 'alethic' else 'warning'"
+        main = main.replace(marker, _FILTERED_VACUITY + marker, 1)
+    if filtered:
+        marker = "    return document\n"
+        out = [block.replace(marker, _FILTERED_COVERAGE + marker, 1) for block in out]
     if names.step:
         main = (main.replace("build({'facts': {}, 'population': {}}, config)", "build([{'facts': {}, 'population': {}}], [], config)")
                     .replace("m, probe = build(population, config)", "m, probe = build([population], [], config)"))

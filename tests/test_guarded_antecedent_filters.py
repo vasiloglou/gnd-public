@@ -127,8 +127,8 @@ def test_ground_negated_atom_has_global_scope(tmp_path):
     assert guard["verdict"] == "vacuous"
 
 
-def test_filters_verbalize_and_pyrel_refuses_them(tmp_path):
-    from gnd.export.pyrel_rules import ExportInputError, render
+def test_filters_verbalize_and_pyrel_lowers_them(tmp_path):
+    from gnd.export.pyrel_rules import render
     from gnd.model_verbalization import _guarded_cnl
 
     model, _ = _case(tmp_path, where=[{"operator": ">=", "left": "$a", "right": 100}])
@@ -136,8 +136,8 @@ def test_filters_verbalize_and_pyrel_refuses_them(tmp_path):
     line = _guarded_cnl(document["constraints"][0])
     assert "$a is at least 100, unless " in line
     assert 'status = "exempt"' in line
-    with pytest.raises(ExportInputError, match="^guarded-antecedent-filters-unsupported$"):
-        render(Path(model), "duckdb")
+    program = render(Path(model), "duckdb")
+    assert "not_(expense_has_status(e, 'exempt'))" in program and "a >= 100" in program
 
 
 @pytest.mark.parametrize(("covered", "claimed", "verdict"), [

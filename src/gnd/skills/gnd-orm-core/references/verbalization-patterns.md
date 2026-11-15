@@ -599,6 +599,16 @@ their declared order. The
 [membership comparison contract](representation-format.md#membership-comparisons)
 owns the syntax and semantics.
 
+### Guarded antecedent filters and alternatives
+
+Keep the guarded statement in one sentence. Join positive atoms and where
+comparisons with “and”. Introduce negative atoms with “unless”. Introduce
+`any_of` with “at least one of these alternatives must hold”, and render each
+alternative separately in declared order. An `exists` alternative names its
+joint assignment within that alternative.
+[Guarded constraints](representation-format.md#guarded-constraints)
+
+
 ### Temporal guarded comparisons (v7.1)
 
 Use “calendar days after” for `date_add` and “calendar days before” for

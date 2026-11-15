@@ -472,6 +472,33 @@ def guard_uses_membership(consequent: object) -> bool:
     return isinstance(exists, Mapping) and where_uses_membership(exists.get("where"))
 
 
+def guarded_clause_refusal(constraint: Mapping) -> str | None:
+    """Name the new clause shapes for profiles that cannot represent them."""
+    if constraint.get("type") != "guarded":
+        return None
+    consequent = constraint.get("consequent")
+    if isinstance(consequent, Mapping) and "any_of" in consequent:
+        return "guarded-disjunction-unsupported"
+    if constraint.get("negate") or constraint.get("where"):
+        return "guarded-antecedent-filters-unsupported"
+    if guard_uses_membership(consequent):
+        return "membership-unsupported"
+    return None
+
+
+def derivation_uses_membership(rule: object) -> bool:
+    """Detect root and single-level clause where operators in a raw rule."""
+    if not isinstance(rule, Mapping):
+        return False
+    if where_uses_membership(rule.get("where")):
+        return True
+    clauses = rule.get("clauses")
+    return isinstance(clauses, list) and any(
+        isinstance(clause, Mapping) and where_uses_membership(clause.get("where"))
+        for clause in clauses
+    )
+
+
 def prepare_comparisons(comparisons):
     """Keep the existing filter rows while compiling any membership lists."""
     return tuple(

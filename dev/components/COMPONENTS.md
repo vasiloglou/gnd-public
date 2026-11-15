@@ -1571,7 +1571,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: ontology, sidecar and loss report bytes
 - status: canonical
 - modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
-- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
+- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity, model.scalar_terms
 - used_by: cli.export_command
 - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py
 - notes: The three output artifacts use the importer's input size cap.
@@ -2712,7 +2712,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/terms.py
 - uses: infra.errors, semantics.snapshot_ir
-- used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +22 more (graph.md)
+- used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +23 more (graph.md)
 - tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py
 - notes: Includes the guarded operand evaluator adapter and temporal syntax detection used to refuse unsupported consumers.
 

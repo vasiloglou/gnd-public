@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reason": "Register the admitted standalone PyRel ModelIndex traversal used to reject unsupported derivation membership.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/query-successor.json",
+  "predecessor_sha256": "cfde10e1cd3019ce36eb91355103418b8dc6a762595f57c974216864b4db7cbc",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/export/emit.py",
+      "render_pyrel",
+      "admitted.fact_types",
+      1
+    ]
+  ],
+  "result_distinct_rows": 292,
+  "result_occurrences": 360,
+  "original_metric_current": 304
+}

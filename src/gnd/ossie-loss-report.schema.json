@@ -17,12 +17,12 @@
         "properties": {
           "pointer": {"type": "string", "pattern": "^(?:/(?:[^~/]|~[01])*)*$"},
           "disposition": {"enum": ["native", "requires", "extension", "refused"]},
-          "reason": {"enum": ["projection", "projected-with-source-spelling", "formula", "gnd-source", "population:out-of-scope"]}
+          "reason": {"enum": ["projection", "projected-with-source-spelling", "formula", "gnd-source", "guarded-disjunction-unsupported", "guarded-antecedent-filters-unsupported", "membership-unsupported", "population:out-of-scope"]}
         },
         "allOf": [
           {"if": {"properties": {"disposition": {"const": "native"}}}, "then": {"properties": {"reason": {"enum": ["projection", "projected-with-source-spelling"]}}}},
           {"if": {"properties": {"disposition": {"const": "requires"}}}, "then": {"properties": {"reason": {"const": "formula"}}}},
-          {"if": {"properties": {"disposition": {"const": "extension"}}}, "then": {"properties": {"reason": {"const": "gnd-source"}}}},
+          {"if": {"properties": {"disposition": {"const": "extension"}}}, "then": {"properties": {"reason": {"enum": ["gnd-source", "guarded-disjunction-unsupported", "guarded-antecedent-filters-unsupported", "membership-unsupported"]}}}},
           {"if": {"properties": {"disposition": {"const": "refused"}}}, "then": {"properties": {"reason": {"const": "population:out-of-scope"}}}}
         ]
       }

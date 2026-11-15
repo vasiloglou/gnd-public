@@ -273,15 +273,20 @@ def test_membership_matches_independent_covered_helper(tmp_path, operator):
 
 
 @pytest.mark.parametrize("shape", ["direct", "exists", "derived"])
-def test_pyrel_rules_refuses_unsupported_membership_without_a_traceback(tmp_path, shape):
+def test_pyrel_rules_translates_or_refuses_membership_without_a_traceback(tmp_path, shape):
     from gnd.export.pyrel_rules import ExportInputError, render
 
     model = _direct()
     if shape != "direct":
         (_existential if shape == "exists" else _derived)(model)
     filename = _write_json(tmp_path, "model.orm.json", model)
-    with pytest.raises(ExportInputError, match="^membership-unsupported$"):
-        render(Path(filename), "duckdb")
+    if shape == "exists":
+        with pytest.raises(ExportInputError, match="^membership-unsupported$"):
+            render(Path(filename), "duckdb")
+    else:
+        program = render(Path(filename), "duckdb")
+        assert "_membership" in program and "[1000, 1500]" in program
+
 
 
 def test_guarded_membership_verbalizes_the_ordered_values():

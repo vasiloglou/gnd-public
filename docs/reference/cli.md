@@ -23,7 +23,7 @@ for a process. It is accepted only at the root.
 | `gnd check MODEL POPULATION --rule-ids --format json` | Report version 15: each verdict carries its rule's declared id and remedy when present, else its position and `null` ([rule-check report](rule-check-report.md)) |
 | `gnd check MODEL POPULATION --baseline BASE --format json` | Marks each violation new or standing against BASE; exit 1 only for new must-hold violations, while vacuous and undecided rules keep their own exits ([how-to](../how-to/adopt-rules-with-a-baseline.md)) |
 | `gnd check MODEL POPULATION --allow-vacuous --format json` | Exits 0 when vacuous rules are the only shortfall |
-| `gnd check MODEL POPULATION --guarded-diagnostics --format json` | Reports guarded antecedent binding counts and first empty atoms. See [rule-check reports](rule-check-report.md). |
+| `gnd check MODEL POPULATION --guarded-diagnostics --format json` | Reports guarded binding counts, first empty positive atoms and `any_of` failures. See [rule-check reports](rule-check-report.md). |
 | `gnd check HEAD POPULATION --baseline-model BASE --format json` | Compares offending findings by rule ID across editions. See [rule-check reports](rule-check-report.md). |
 | `gnd check MODEL POPULATION --admission --format json` | The check plus an asserted-occurrence admission partition |
 | `gnd check MODEL --populations DIR` | Batch checking of population files |
@@ -110,6 +110,17 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 | `gnd doctor --project` | Diagnose installed skills and shadowing across scopes |
 | `gnd install --sync` | Refresh standard roots with existing installation receipts |
 | `gnd uninstall --project` | Remove managed skills while preserving user edits |
+
+The readable PyRel rules profiles (`gnd export pyrel --rules duckdb` and
+`--rules lqp`) lower simple guarded antecedent filters and finite membership
+on bound Integer, String or Boolean variables. A negative filter over a
+claimed relation requires declared coverage. Unsupported terms, existential
+membership, disjunctions and plans with the new clauses receive named
+refusals. The embedded PyRel checker profile also refuses the new clauses.
+Lean and Soufflé refuse unsupported guarded forms. Ossie's loss report
+names which rules remain in the source sidecar. Strict Ossie export
+refuses those rules.
+
 
 ## Interpret exits in the command's context
 

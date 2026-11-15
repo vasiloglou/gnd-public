@@ -2,9 +2,10 @@
 
 ## 1. Status
 
-**Awaiting owner review (2026-11-15).** Nothing is implemented. The owner gate
-must rule D1–D11 (§7) and choose the approval instrument (§11) before any
-file outside `.gnd-planning/` is created. `auto=false`.
+**Owner-decided (2026-11-15) `(o)`.** The owner approved r1
+([007](../007-phase-LI2-spec-gate.md)), ruled D1–D11 as proposed, and chose
+the corpus-first instrument. **Next: the corpus gate** (§11 step 2). No
+composition code before that gate. `auto=false`.
 
 ## 2. Provenance
 
@@ -397,21 +398,22 @@ outside `tests/fixtures/` (§3, last row).
 
 ## 7. Decisions
 
-All rows are **proposed**. None is ruled.
+All rows were proposed in r1. The owner ruled every row as proposed on
+2026-11-15 `(o)`, and each row's ruling is marked in its proposal cell.
 
 | ID | Question | Proposal | The other reading and its cost |
 |---|---|---|---|
-| D1 | Schema ids (the plan-gate open question) | **Keep** `gnd-composition-manifest/1` and `gnd-composition/1`, with the new fields optional and paired. Without `resolution`, the bytes equal the baseline (R5) | Bump to `/2`: a clearer message from 0.3.1 readers, which refuse a new document at exit 3 either way, but every reader must then accept two ids and every existing record keeps `/1` |
-| D2 | Which object types the coverage set covers | **Those the resolution record lists** in `object_types`, each declared by the model | All object types: dates and numbers would then need decisions whenever they repeat. Entity kind only: LI1's flat model uses value types for methods, so nothing would be covered |
-| D3 | How a decision takes effect | **The manifest's renamings cite decisions, and GND verifies them.** Renaming stays the only way a value changes, and `unresolved` placeholders are renamings the host writes | GND applies `unresolved` placeholders itself, as plan §2's wording ("composition applies those as separating renamings") could also be read: a second way to change values, contrary to plan D3's "binds and verifies only" |
-| D4 | A `same` decision whose keys are not joined | **Refuse** (rule 5). The decision record and the composition must agree | Allow it: a recorded `same` could silently not hold, which #193 crit 5 forbids |
-| D5 | Approval instrument | **Corpus-first** (§11): serialized formats and exit codes again | Prose only: the refusal messages and the amended LI1 outcomes go unseen until implementation |
-| D6 | Home of the decision policy | **A new module** `gnd.composition_resolution` at layer `model`, called by `compose` | Extending `composition.py`: one file, but ≈ 650 lines mixing two contracts |
-| D7 | How the harness reads the run's identity outcome | **The `same`-connectivity of the run's resolution**, valid because R4 verified it against the composition | Recomputing joins from composed values: the harness would need role-to-object-type lookups from the model, against LI1's CLI-only rule |
-| D8 | The LI1 approved expectations | **Amend them:** the reference run gains a resolution; every case gains `identity-decisions` values; M5 and M6 also fail it (no composed output); M7 is added. These go back to the owner at the corpus gate | Keep the stage dormant in LI1's corpus: then R6 has no case and plan C7's "active from LI2" is not met |
-| D9 | The `Mention` id form | **`<document>@<start>-<end>`**, a string value of a `Mention` value type | A composite reference scheme (document, start, end): more structure, but it changes the anchoring pattern LI4 will build on before LI4's spec exists |
-| D10 | Decision arity and evidence | **Exactly two keys, with at least one coordinate per key** | Groups of keys: fewer decisions, but a partial group is ambiguous about which pair is evidenced |
-| D11 | Spec review | **None.** The corpus gate is the second look | A panel round over these bytes |
+| D1 | Schema ids (the plan-gate open question) | **Ruled as proposed `(o)` 2026-11-15.** **Keep** `gnd-composition-manifest/1` and `gnd-composition/1`, with the new fields optional and paired. Without `resolution`, the bytes equal the baseline (R5) | Bump to `/2`: a clearer message from 0.3.1 readers, which refuse a new document at exit 3 either way, but every reader must then accept two ids and every existing record keeps `/1` |
+| D2 | Which object types the coverage set covers | **Ruled as proposed `(o)` 2026-11-15.** **Those the resolution record lists** in `object_types`, each declared by the model | All object types: dates and numbers would then need decisions whenever they repeat. Entity kind only: LI1's flat model uses value types for methods, so nothing would be covered |
+| D3 | How a decision takes effect | **Ruled as proposed `(o)` 2026-11-15.** **The manifest's renamings cite decisions, and GND verifies them.** Renaming stays the only way a value changes, and `unresolved` placeholders are renamings the host writes | GND applies `unresolved` placeholders itself, as plan §2's wording ("composition applies those as separating renamings") could also be read: a second way to change values, contrary to plan D3's "binds and verifies only" |
+| D4 | A `same` decision whose keys are not joined | **Ruled as proposed `(o)` 2026-11-15.** **Refuse** (rule 5). The decision record and the composition must agree | Allow it: a recorded `same` could silently not hold, which #193 crit 5 forbids |
+| D5 | Approval instrument | **Ruled as proposed `(o)` 2026-11-15.** **Corpus-first** (§11): serialized formats and exit codes again | Prose only: the refusal messages and the amended LI1 outcomes go unseen until implementation |
+| D6 | Home of the decision policy | **Ruled as proposed `(o)` 2026-11-15.** **A new module** `gnd.composition_resolution` at layer `model`, called by `compose` | Extending `composition.py`: one file, but ≈ 650 lines mixing two contracts |
+| D7 | How the harness reads the run's identity outcome | **Ruled as proposed `(o)` 2026-11-15.** **The `same`-connectivity of the run's resolution**, valid because R4 verified it against the composition | Recomputing joins from composed values: the harness would need role-to-object-type lookups from the model, against LI1's CLI-only rule |
+| D8 | The LI1 approved expectations | **Ruled as proposed `(o)` 2026-11-15.** **Amend them:** the reference run gains a resolution; every case gains `identity-decisions` values; M5 and M6 also fail it (no composed output); M7 is added. These go back to the owner at the corpus gate | Keep the stage dormant in LI1's corpus: then R6 has no case and plan C7's "active from LI2" is not met |
+| D9 | The `Mention` id form | **Ruled as proposed `(o)` 2026-11-15.** **`<document>@<start>-<end>`**, a string value of a `Mention` value type | A composite reference scheme (document, start, end): more structure, but it changes the anchoring pattern LI4 will build on before LI4's spec exists |
+| D10 | Decision arity and evidence | **Ruled as proposed `(o)` 2026-11-15.** **Exactly two keys, with at least one coordinate per key** | Groups of keys: fewer decisions, but a partial group is ambiguous about which pair is evidenced |
+| D11 | Spec review | **Ruled as proposed `(o)` 2026-11-15.** **None.** The corpus gate is the second look | A panel round over these bytes |
 
 ## 8. Tests and verification
 

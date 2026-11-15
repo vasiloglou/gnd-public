@@ -4,8 +4,8 @@
 
 **Owner-decided (2026-11-15).** The owner approved r2 at SHA-256 `a8015970…106f9`
 ([002](../002-phase-LI0-spec-gate.md)), ruled D1–D4 as proposed, chose no
-spec review, and gave the go-ahead. Implementation is in progress.
-`auto=false`.
+spec review, and gave the go-ahead. **Implemented and recorded** in
+[003](../003-phase-LI0.md) (2026-11-15). `auto=false`.
 
 ## 2. Provenance
 

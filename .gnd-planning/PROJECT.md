@@ -201,4 +201,4 @@ on sense-aware literature ontologies. The partition has one home:
 - [literature-depth](milestones/literature-depth/README.md) is an outline
   covering parts 6–8. Part 10 is deferred.
 
-The owner approved literature-identity plan r3 on 2026-11-15 ([plan gate](milestones/literature-identity/001-plan-gate.md)), with D1–D9 as proposed. Review stopped after round 2, and the bar was not met in that round. The two outline plans are not approved. Next is the LI0 spec gate.
+The owner approved literature-identity plan r3 on 2026-11-15 ([plan gate](milestones/literature-identity/001-plan-gate.md)), with D1–D9 as proposed. Review stopped after round 2, and the bar was not met in that round. The two outline plans are not approved. LI0 (#193 part 9) is implemented and recorded ([003](milestones/literature-identity/003-phase-LI0.md)). Next is LI1.

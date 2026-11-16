@@ -1,0 +1,2162 @@
+diff --git a/.gnd-planning/milestones/literature-interop/006-phase-LX2-spec-gate.md b/.gnd-planning/milestones/literature-interop/006-phase-LX2-spec-gate.md
+new file mode 100644
+index 00000000..b0b37e41
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/006-phase-LX2-spec-gate.md
+@@ -0,0 +1,59 @@
++---
++milestone: literature-interop
++station: phase-LX2-spec-gate
++skill: "n/a -- repository development under process-phase"
++scope: phase-LX2-spec-gate
++date: 2026-11-15
++gates:
++  - command: "ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md sha256 763c8de32f74d90a3b9a2f6cf9dcc13b9cbacdfb1de81a5b1c129904312308ad"
++    exit: "n/a -- ruling"
++  - command: "uv run pytest -q tests/test_lx2_witness_flattening.py --tb=short"
++    exit: 1
++evidence:
++  - path: .gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md
++    sha256: 763c8de32f74d90a3b9a2f6cf9dcc13b9cbacdfb1de81a5b1c129904312308ad
++  - path: tests/test_lx2_witness_flattening.py
++    sha256: 0c5d88bb6d23255a82f3641bd5334727d130571867ab1c2b102b30613d7cb7ae
++  - path: tests/fixtures/lx2-witness-flattening/README.md
++    sha256: 66de950b2d63dc4173b072e0806954b226db88f61868bf60cdcdb61203c17ea7
++  - path: tests/fixtures/lx2-witness-flattening/expected.json
++    sha256: 5eb62aef78678b89f3e5b552444a5d011149a83f5f9505bfb6e77de851bbf578
++---
++
++# Claim
++
++Approve the LX2 spec and corpus under the named auto delegation. The
++corpus exits 1 against the predecessor, as expected for the absent route.
++
++## Ruling and implementability
++
++ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md sha256 763c8de32f74d90a3b9a2f6cf9dcc13b9cbacdfb1de81a5b1c129904312308ad
++
++**Delegated approval (auto=true), 2026-11-15.** Authority is the owner's
++`process-milestone literature-interop auto` instruction. Decisions D1–D4
++and the exact corpus are approved. The approval instrument is corpus-first.
++The project phase-diff instrument is selected for completion and needs
++its own invocation authority. The spec has no paid review.
++
++The existing evaluator proved the successor root's target from the LX1
++flat artifact and returned one base node and one rule node. The public
++composition route wrote an authentic three-fact reference-free record over
++the authored root. V2 producer bytes were equal on two fresh runs. The
++LX2 corpus can exercise root and include origins and mutate one axis at a
++time without requiring changes to inference or composition.
++
++## Gate output
++
++    12 failed, 1 passed in 6.43s
++
++The phase-base path consumer refuses includes and lacks the paired CLI
++options. The exact pre-change v2 producer and replay control passes.
++
++## Boundary
++
++The red harness binds expected outcomes. Runtime verification, independent
++review and phase closure remain separate.
++
++## Open questions
++
++- None at the spec gate.
+diff --git a/.gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json b/.gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json
+new file mode 100644
+index 00000000..f5dbf5c1
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json
+@@ -0,0 +1,53 @@
++{
++  "schema_version": 1,
++  "reason": "LX2 adds counted certificate and origin lookups and preserves the model-query policy.",
++  "predecessor": ".gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json",
++  "predecessor_sha256": "6309a0664fb9dc6411e2c8a71881e717cf26dba63c5d795baa70d1515e316d94",
++  "removed": [],
++  "added": [
++    [
++      "src/gnd/witness/flattening.py",
++      "WitnessProjection",
++      "dict[str, dict]",
++      1
++    ],
++    [
++      "src/gnd/witness/flattening.py",
++      "binding",
++      "dict[str, dict]",
++      1
++    ],
++    [
++      "src/gnd/witness/flattening.py",
++      "binding",
++      "tuple[str, dict[str, dict]]",
++      1
++    ],
++    [
++      "src/gnd/witness/flattening.py",
++      "node_model_origin",
++      "dict[str, dict]",
++      1
++    ],
++    [
++      "src/gnd/witness/flattening.py",
++      "node_model_origin",
++      "origins[fact_type]",
++      1
++    ],
++    [
++      "src/gnd/witness/io.py",
++      "certificate_shape",
++      "model_origin[field]",
++      1
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "replay_witness",
++      "tuple[str, dict]",
++      1
++    ]
++  ],
++  "result_distinct_rows": 7800,
++  "result_occurrences": 9694
++}
+diff --git a/.gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md b/.gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md
+new file mode 100644
+index 00000000..d252b8b5
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md
+@@ -0,0 +1,207 @@
++# LX2 · model origins in witnesses and replay
++
++Status: delegated approval (auto=true), 2026-11-15. See [006](../006-phase-LX2-spec-gate.md).
++
++## Provenance
++
++The [r4 milestone plan](literature-interop-plan.md), approved in
++[003](../003-plan-gate.md), supplies the LX2 scope. The
++[LX1 record](../005-phase-LX1.md) supplies the rooted resolver, canonical
++flat model and origin bytes. The
++[LI0 record](../../literature-identity/003-phase-LI0.md) supplies the existing
++legacy re-entry and identity controls. This spec has no independent review.
++
++## Obligations
++
++| Source | Requirement | Evidence |
++|---|---|---|
++| LX2.a | Produce and replay using the LX1 flattening, with and without a reference-free composition record. Distinguish fact and model origins. | T1–T5 |
++| LX2.b | Stale include replay is exit 3 with `binding-stale`. Legacy v1/v2 proofs and producer bytes retain their existing contracts. | T5, T7 |
++| Plan §7 | Keep direct authored include bytes guarded where no trusted root exists. | T6 |
++| Plan §§0, 2 and 5 | Shared bounded origin producer, exact binding and one normative contract. | Design and T8 |
++| Plan §§3, 6 and X3 | Give LX3 stable model origins before it adds reference-backed composition provenance. | D2, T3 |
++| Plan §9 | Direct and focused witness, replay, schema and include consumers, plus structural and lint gates. | Verification ledger |
++
++## Standing rules
++
++- **Totality.** Apply the existing witness byte, list, nesting, numeric and
++  structural gates before graph traversal. Compare caller flat/record
++  artifacts as bounded opaque bytes. T8 exercises malformed and oversized
++  inputs at both boundaries.
++- **Input-bounded work.** Build one fact-origin map from the resolver's
++  existing origin list, then visit each proof node once. T8 times the
++  added layer and hits the stamped certificate byte ceiling.
++- **Validation order.** Freeze the order between syntax, flat binding,
++  composition binding and proof checking. Pair stale and forged data in T5.
++- **One policy walk.** Model origins use one lookup by fact-type identity
++  for base and rule nodes and by rule fact-type identity for comparisons.
++- **One normative home.** The witness contract owns certificate v3 and
++  replay exits. It cites the representation format for the existing
++  flattening record and origin semantics.
++- **Measure representation.** Preserve the selected legacy wire bytes and
++  confirm v3 runtime/JSON Schema behavior on actual certificates. T4, T7
++  and T8 exercise the independent validator and semantic mutations.
++
++## Goal
++
++Run `gnd witness ROOT POP --targets TARGETS --raw --out CERT` and
++`gnd replay ROOT POP CERT --raw` on the authentic include model, with or
++without a reference-free `--composition RECORD`. Both commands exit 0 on the
++valid fixture. Replay independently checks model origin, occurrence origin,
++composition lineage and the existing inference work limits.
++
++## Design
++
++| Capability | Searches | Reuse or adaptation |
++|---|---|---|
++| Read and bind include roots, flat bytes and origin metadata | `model pinned includes flatten projection addresses`, `path resolved vocabulary record provenance`, and `rg 'flatten_model\|_authored_sha256' src/gnd` | Reuse `model.loading`, `model.document` and LX1's `flatten_model`, plus the descriptor-bound artifact reader. |
++| Produce and independently replay grounded witness | `witness replay certificate producer canonical binding`, `grounded proof origin verified graph` | Adapt `witness.service`, `witness.schema`, `witness.produce` and `witness.replay`. Preserve the existing proof extraction and evaluator. |
++| Bind candidate population to source facts | `rg '_composition_lineage\|lineage_index' src/gnd` | Reuse the existing composition record reader and source index. Its v2 record already binds authored root and candidate bytes. |
++
++### CLI path boundary
++
++Witness and replay accept optional paired `--flat-model PATH` and
++`--flattening-record PATH`. The model positional argument remains the
++authored root. Both supplied paths must bind to that root's re-derived
++LX1 artifacts. One option alone is usage exit 64. If the options are
++omitted, derive the same bindings from the rooted model in memory. A flat
++artifact presented as the root cannot establish an origin binding. The
++ordinary include-free routes preserve their certificate and API signatures.
++
++Use the resolved root's model and population coordinates to verify a
++supplied reference-free composition record, then pass the canonical flat
++document to the existing witness intake. Relative references, where
++admitted by the standalone witness route, retain the authored-root
++coordinate. The composed reference-catalog route stays under LX3's gate.
++The unrooted model-document intake and why-not preserve their guards.
++
++### Wire and replay
++
++Certificate v3 binds the LX1 flattening record by its unprefixed lower-case
++SHA-256. The binding has the v1 fields plus `flattening_sha256` and uses
++`composition_sha256` only on the composed route. V1 and v2 retain their
++existing exact keys and version restrictions. A v3 node adds a
++`model_origin` object with the exact LX1 origin keys:
++
++```json
++{
++  "origin": "includes[components]",
++  "original_address": "$.fact_types[0]",
++  "composed_address": "$.fact_types[0]",
++  "element_id": "component_uses_component"
++}
++```
++
++Proof-side `base.origin` and composed `base.sources` remain separate.
++A comparison node uses the declaring rule fact type's origin. The replay
++path supplies independently derived origins from the authenticated root.
++A structurally valid forged model origin gives proof-invalid exit 1, just
++as a forged base fact coordinate does. Wrong bound bytes or a v3 proof
++presented without its needed resolved root context yield `binding-stale`,
++exit 3. Arbitrary malformed documents retain the existing input-invalid
++exit 3, and budget refusal retains exit 4. Recompute certificate budget
++after stamping provenance.
++
++Shape changes apply in the two shipped witness certificate schema copies and
++the embedded certificate definition of the witness result schema. Retain
++the v1/v2 validation rules. Existing redacted results retain closed
++metadata selection. Raw views retain v3 origins on the same bounded route.
++
++### Refusal order
++
++The CLI checks option pairing. Replay parses the certificate before the
++path service authenticates root, includes, flat bytes and record. Bind
++composition to the same root and population before kernel replay compares
++digests and semantic origins. The independently checked proof graph follows
++only after current binding. Tests pair a stale input with valid-schema
++forged provenance, and a malformed certificate with stale input.
++
++## Decisions
++
++| ID | Proposed ruling | Status |
++|---|---|---|
++| D1 | New v3 fence for model provenance, keeping v1/v2 exact wire. | Delegated approval (auto=true), 2026-11-15 |
++| D2 | Keep model provenance entirely separate from candidate/reference fact origins and composition source rows. | Delegated approval (auto=true), 2026-11-15 |
++| D3 | Use optional paired CLI artifact paths with root-derived defaults, avoiding a temporal extraction dependency for LX4's checking root. Keep existing public Python wrapper signatures. | Delegated approval (auto=true), 2026-11-15 |
++| D4 | Use the LX1 fixture verbatim for base witnesses and an LX2 successor retaining both pins plus an owned derived fact type to exercise proof nodes from both ownership kinds. | Delegated approval (auto=true), 2026-11-15 |
++
++## Tests and verification
++
++| ID | Observable check |
++|---|---|
++| T1 | Extract the original two-include LX1 fixture. Produce and replay a v3 base witness using the actual artifact paths. Both commands exit 0. |
++| T2 | Add an owned root derivation in a separate successor fixture. Assert base/rule origins from both root and include, then independently forge a model origin or a base origin and assert exit 1. |
++| T3 | Run through existing composition entry points behind a reference-free record. Verify composition digest and per-fact source coordinates. Forge a source coordinate with model origins fixed and expect exit 1. |
++| T4 | Round-trip v3 through raw view, CLI certificate parsing, both certificate schemas and result schema. Reject unknown and missing model-origin fields. |
++| T5 | Replace a flat file or record while keeping authenticated root fixed. Separate controls change a pinned include, update a valid authored root/pins under an old witness, and pair stale binding with a valid-schema forged origin. Replay exits 3 with binding-stale. |
++| T6 | Direct byte intake on authored include declarations retains the existing refusal. Unpaired CLI paths exit 64. Include-free roots cannot opt into model origins by presenting arbitrary files. |
++| T7 | Compare pinned v1 and v2 produced bytes, replay pre-change v1/v2 certificates, and validate existing redaction and work limits. |
++| T8 | Exercise malformed/deep certificates and capped flat/record files. Run a predeclared time-bound origin walk and cap refusal after stamps. |
++
++| Gate | Disposition | Command and impact |
++|---|---|---|
++| Direct and consumers | Run, expect 0 | `uv run pytest -q tests/test_lx2_witness_flattening.py tests/test_witness_composition.py tests/test_public_replay_admission.py tests/test_mc1_model_includes.py tests/test_mc1_guards.py tests/test_li0_witness_wire.py tests/test_lx1_flattening.py --tb=short`. Pin any additionally affected witness-view and schema consumers after source inventory. |
++| Structure, lint and component index | Run | Project guard list, whole-tree Ruff, changed-file Ruff with retained baseline comparison if needed, and `python3 scripts/components_index.py changed --base <LX2-base> --strict`. |
++| Broad historical, reserved and certification lanes | Cadence | Select only under their documented triggers. Current wire controls discharge the declared local compatibility claims. |
++
++## Phase boundary
++
++LX2 proves include-root witness and replay and the model-origin axis for
++reference-free composition. LX3 owns catalog-backed composition and mixed
++fact provenance. LX4 owns checking-model rebinding and the full public
++example. Other include-bearing routes retain their admission policy.
++
++## Size
++
++Estimate 210 Python source lines, 200 schema/test and fixture lines, and
++affected documentation and generated component catalog entries.
++
++## Approval instrument
++
++Corpus-first. Planned entry point `tests/fixtures/lx2-witness-flattening/README.md`,
++with expected outputs in a separate answer file. Commit the named red tests
++and corpus before runtime changes. Independent phase-diff review is a
++separate gate.
++
++## Implementation findings
++
++- The rooted API and CLI routes produce v3 without changing the public Python
++  signatures. The raw standalone helpers retain their exact RF4/MC1 bodies.
++  The LI0 Why-not refusal and direct witness byte guard are still tested.
++- RF1 observes the literal parser change through a successor reconstructed
++  from the frozen parser. It adds only the paired flags and their composition
++  help descriptions. The packaged cross-reference gains one exact inventory
++  edge. The RF6 scan accounts for seven additional witness dictionary or type
++  subscriptions without changing the model-query budget.
++- A structurally valid node claiming an unknown fact type first returned
++  input-invalid. The extra regression proved the wrong exit before the fix;
++  the current kernel reports proof-invalid. A separately valid stale
++  composition record now wins over a forged fact provenance coordinate on the
++  rooted route, with binding-stale. Legacy composition refusals retain their
++  old contract.
++- The unchanged v2 producer reproduced the captured digest and replayed
++  before and after LX2. The v1 fixture goldens, model identities, raw-view
++  checks and byte-identical schema-copy check run with the candidate.
++- The full Ruff diagnostics equal the untouched predecessor's 188 findings.
++  The changed-file lint passes. The phase carries forward LX1's exact
++  known-red comparison rule for whole-tree lint under delegated approval.
++  The strict component check passes. Its witness command, replay and
++  subsystem flow descriptions remain accurate alongside the changed
++  service and wire entries.
++
++### Candidate verification
++
++The focused stage in the locked GND 0.3.1 environment exited 0. Alongside the
++spec list it ran the witness disclosure and envelope consumers, the MC2
++composed refusal control and the MC1 raw-body mutation guard. Existing
++replay-admission tests used process inspection as their harness requires.
++
++    285 passed in 50.06s
++
++The structural guard command exited 0 under the default lane filter:
++
++    679 passed, 2 deselected in 112.95s (0:01:52)
++
++Changed-file Ruff and the strict component check exit 0. Whole-tree Ruff
++returns the same 188 diagnostics bound to the LX1 predecessor. The
++independent LX2 review and phase completion record are pending.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index f5748e7c..93b59dd8 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -3081,7 +3081,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### witness.schema
+-- does: Validate bounded witness requests, certificates, typed targets and input identities before production or replay.
++- does: Validate bounded witness requests, certificates, typed targets, input identities and model-origin claims before production or replay.
+ - verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire, model wire, version-1 model intake, model without model_id
+ - in: JSON requests or certificates, model and population documents, reference bytes, fixed or lowered WitnessLimits.
+ - out: Validated documents, loaded model/populations, population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
+@@ -3096,13 +3096,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### witness.service
+ - does: Orchestrate path-based witness production, replay and why-not requests with composition lineage, disclosure modes and preserved include-free input refusals.
+-- verbs: produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
++- verbs: rooted witness projection, flattening binding, model origins, produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
+ - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
+ - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
+ - status: canonical
+-- modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py
++- modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py, src/gnd/witness/flattening.py
+ - uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
+-- used_by: cli.api, witness.command
++- used_by: cli.api, witness.command, witness.replay
+ - part_of: subsystem.witness
+ - tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py
+ - notes: The package marker is documentation only; gnd.api exposes the service functions through compatibility aliases. Composition certificates bind the record digest and each base fact's source lineage.
+@@ -3143,7 +3143,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - out: WitnessResult with independently checked per-target statuses and graph work counts.
+ - status: canonical
+ - modules: src/gnd/witness/kernel.py
+-- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema
++- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema, witness.service
+ - used_by: export.souffle_runtime, witness.service
+ - part_of: subsystem.witness
+ - tests: tests/test_v71_phase3_successors.py, tests/test_witness_composition.py
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index a2adf6e8..677f123f 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -5067,7 +5067,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/witness/producer.py -> src/gnd/witness/types.py`
+ 
+ ### witness.replay
+-- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema
++- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema, witness.service
+ - used_by: export.souffle_runtime, witness.service
+ 
+ #### witness.replay -> infra.artifacts
+@@ -5086,6 +5086,9 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/witness/kernel.py -> src/gnd/witness/io.py`
+ - `src/gnd/witness/kernel.py -> src/gnd/witness/types.py`
+ 
++#### witness.replay -> witness.service
++- `src/gnd/witness/kernel.py -> src/gnd/witness/flattening.py`
++
+ ### witness.schema
+ - uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+ - used_by: export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+@@ -5114,29 +5117,33 @@ Generated by `scripts/components_index.py`.
+ 
+ ### witness.service
+ - uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
+-- used_by: cli.api, witness.command
++- used_by: cli.api, witness.command, witness.replay
+ 
+ #### witness.service -> infra.artifacts
++- `src/gnd/witness/flattening.py -> src/gnd/artifacts.py`
+ - `src/gnd/witness/service.py -> src/gnd/artifacts.py`
+ 
+ #### witness.service -> infra.disclosure
+ - `src/gnd/witness/service.py -> src/gnd/disclosure.py`
+ 
+ #### witness.service -> infra.errors
++- `src/gnd/witness/flattening.py -> src/gnd/errors.py`
+ - `src/gnd/witness/service.py -> src/gnd/errors.py`
+ 
+ #### witness.service -> infra.input_policy
+ - `src/gnd/witness/service.py -> src/gnd/input_policy.py`
+ 
+ #### witness.service -> model.anchors
++- `src/gnd/witness/flattening.py -> src/gnd/anchors.py`
+ - `src/gnd/witness/service.py -> src/gnd/anchors.py`
+ 
+ #### witness.service -> model.composition
+ - `src/gnd/witness/service.py -> src/gnd/composition.py`
+ 
+ #### witness.service -> model.loading
+-- `src/gnd/witness/service.py -> src/gnd/model/__init__.py`
+-- `src/gnd/witness/service.py -> src/gnd/model/_includes.py`
++- `src/gnd/witness/flattening.py -> src/gnd/model/__init__.py`
++- `src/gnd/witness/flattening.py -> src/gnd/model/_includes.py`
++- `src/gnd/witness/flattening.py -> src/gnd/model/flattening.py`
+ 
+ #### witness.service -> model.population_loading
+ - `src/gnd/witness/service.py -> src/gnd/population.py`
+@@ -5151,8 +5158,9 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/witness/service.py -> src/gnd/witness/kernel.py`
+ 
+ #### witness.service -> witness.schema
++- `src/gnd/witness/flattening.py -> src/gnd/witness/io.py`
++- `src/gnd/witness/flattening.py -> src/gnd/witness/types.py`
+ - `src/gnd/witness/service.py -> src/gnd/witness/io.py`
+-- `src/gnd/witness/service.py -> src/gnd/witness/types.py`
+ 
+ #### witness.service -> witness.why_not
+ - `src/gnd/witness/service.py -> src/gnd/witness/why_not.py`
+diff --git a/dev/components/modules/witness.md b/dev/components/modules/witness.md
+index 4e085546..a5d3b5c2 100644
+--- a/dev/components/modules/witness.md
++++ b/dev/components/modules/witness.md
+@@ -16,7 +16,21 @@ CLI boundary for explicit finite-witness export and read-only replay.
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ | `add_parsers(subparsers)` | function | 13 | (no docstring) |
+-| `run(args)` | function | 46 | (no docstring) |
++| `run(args)` | function | 50 | (no docstring) |
++
++## gnd.witness.flattening — `src/gnd/witness/flattening.py`
++Components: witness.service
++Rooted include bindings for path-based witness production and replay.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `StaleWitnessBinding` | class(WitnessInputError) | 16 | The current inputs differ from a rooted witness binding. |
++| `WitnessProjection` | class | 21 | (no docstring) |
++| `WitnessProjection.binding(self) -> tuple[str, dict[str, dict]]` | method | 27 | (no docstring) |
++| `resolved_projection(model_path, flat_model, flattening_record)` | function | 31 | Return the authenticated projection when the authored root declares includes. |
++| `node_model_origin(node, origins) -> dict` | function | 72 | (no docstring) |
++| `stamp_projection(result, projection) -> dict` | function | 77 | (no docstring) |
++| `load_flat_model(projection)` | function | 98 | (no docstring) |
+ 
+ ## gnd.witness.io — `src/gnd/witness/io.py`
+ Components: witness.schema
+@@ -33,15 +47,15 @@ Bounded wire intake, structural validation and byte-bound input identities.
+ | `target_shape(t)` | function | 139 | (no docstring) |
+ | `load_targets(path, *, limits)` | function | 147 | (no docstring) |
+ | `certificate_shape(doc, *, limits)` | function | 159 | (no docstring) |
+-| `load_certificate(path, *, limits)` | function | 270 | (no docstring) |
+-| `witness_input_identity(model, candidate, *, references)` | function | 276 | (no docstring) |
+-| `identity(model, candidate, refs)` | function | 281 | (no docstring) |
+-| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 293 | (no docstring) |
+-| `roster(model)` | function | 346 | (no docstring) |
+-| `validate_targets(targets, model)` | function | 355 | (no docstring) |
+-| `support_closure(model, targets)` | function | 381 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+-| `population_wire(pop)` | function | 437 | (no docstring) |
+-| `classify_targets(model, targets, populations)` | function | 451 | Classify each request independently, caching only within this call. |
++| `load_certificate(path, *, limits)` | function | 285 | (no docstring) |
++| `witness_input_identity(model, candidate, *, references)` | function | 291 | (no docstring) |
++| `identity(model, candidate, refs)` | function | 296 | (no docstring) |
++| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 308 | (no docstring) |
++| `roster(model)` | function | 361 | (no docstring) |
++| `validate_targets(targets, model)` | function | 370 | (no docstring) |
++| `support_closure(model, targets)` | function | 396 | Conservative syntactic classifier; no tuple or comparison evaluation. |
++| `population_wire(pop)` | function | 452 | (no docstring) |
++| `classify_targets(model, targets, populations)` | function | 466 | Classify each request independently, caching only within this call. |
+ 
+ ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
+ Components: witness.replay
+@@ -76,14 +90,16 @@ Bounded witness/replay input orchestration.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 86 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+-| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 117 | Replay a finite proof with an independent local inference kernel. |
+-| `composed_witness_result(model_path, population_path, targets_path, *, composition)` | function | 153 | A version-2 witness over a composed population: each base node names its source facts (CT3). |
+-| `composed_replay_result(model_path, population_path, certificate_path, *, composition)` | function | 170 | Replay a version-2 witness against the composition record it binds (CT3). |
+-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 229 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 283 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 297 | Replay a finite proof with an independent local inference kernel. |
+-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 311 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 150 | Produce finite witnesses, authenticating model origins for a rooted include model. |
++| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 173 | Produce finite witnesses; exit zero requires every requested tuple proved. |
++| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 204 | Replay a finite proof with an independent local inference kernel. |
++| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 232 | Replay a finite proof with an independent local inference kernel. |
++| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 267 | Produce a composed witness whose base nodes name their source facts. |
++| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 292 | Replay a witness against the composition record it binds. |
++| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 359 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 413 | Produce finite witnesses; exit zero requires every requested tuple proved. |
++| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 427 | Replay a finite proof with an independent local inference kernel. |
++| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 441 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+ 
+ ## gnd.witness.types — `src/gnd/witness/types.py`
+ Components: witness.schema
+diff --git a/src/gnd/schema/witness-result.schema.json b/src/gnd/schema/witness-result.schema.json
+index f2308863..b42096d5 100644
+--- a/src/gnd/schema/witness-result.schema.json
++++ b/src/gnd/schema/witness-result.schema.json
+@@ -373,6 +373,9 @@
+             ],
+             "additionalProperties": false
+           }
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -419,6 +422,9 @@
+             "type": "integer",
+             "minimum": 0
+           }
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -462,6 +468,9 @@
+         "premises": {
+           "type": "array",
+           "maxItems": 0
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -481,7 +490,8 @@
+         "version": {
+           "enum": [
+             1,
+-            2
++            2,
++            3
+           ]
+         },
+         "kind": {
+@@ -521,6 +531,10 @@
+             "composition_sha256": {
+               "type": "string",
+               "pattern": "^[0-9a-f]{64}$"
++            },
++            "flattening_sha256": {
++              "type": "string",
++              "pattern": "^[0-9a-f]{64}$"
+             }
+           },
+           "required": [
+@@ -566,13 +580,43 @@
+       "allOf": [
+         {
+           "if": {
+-            "properties": {
+-              "version": {
+-                "const": 2
++            "anyOf": [
++              {
++                "properties": {
++                  "version": {
++                    "const": 2
++                  }
++                },
++                "required": [
++                  "version"
++                ]
++              },
++              {
++                "allOf": [
++                  {
++                    "properties": {
++                      "version": {
++                        "const": 3
++                      }
++                    },
++                    "required": [
++                      "version"
++                    ]
++                  },
++                  {
++                    "properties": {
++                      "binding": {
++                        "required": [
++                          "composition_sha256"
++                        ]
++                      }
++                    },
++                    "required": [
++                      "binding"
++                    ]
++                  }
++                ]
+               }
+-            },
+-            "required": [
+-              "version"
+             ]
+           },
+           "then": {
+@@ -635,8 +679,80 @@
+               }
+             }
+           }
++        },
++        {
++          "if": {
++            "properties": {
++              "version": {
++                "const": 3
++              }
++            },
++            "required": [
++              "version"
++            ]
++          },
++          "then": {
++            "properties": {
++              "binding": {
++                "required": [
++                  "flattening_sha256"
++                ]
++              },
++              "nodes": {
++                "items": {
++                  "required": [
++                    "model_origin"
++                  ]
++                }
++              }
++            }
++          },
++          "else": {
++            "properties": {
++              "binding": {
++                "not": {
++                  "required": [
++                    "flattening_sha256"
++                  ]
++                }
++              },
++              "nodes": {
++                "items": {
++                  "not": {
++                    "required": [
++                      "model_origin"
++                    ]
++                  }
++                }
++              }
++            }
++          }
+         }
+       ]
++    },
++    "modelOrigin": {
++      "type": "object",
++      "properties": {
++        "origin": {
++          "type": "string"
++        },
++        "original_address": {
++          "type": "string"
++        },
++        "composed_address": {
++          "type": "string"
++        },
++        "element_id": {
++          "type": "string"
++        }
++      },
++      "required": [
++        "origin",
++        "original_address",
++        "composed_address",
++        "element_id"
++      ],
++      "additionalProperties": false
+     }
+   }
+ }
+diff --git a/src/gnd/schema/witness.schema.json b/src/gnd/schema/witness.schema.json
+index 36cde28c..0f30871a 100644
+--- a/src/gnd/schema/witness.schema.json
++++ b/src/gnd/schema/witness.schema.json
+@@ -6,7 +6,8 @@
+     "version": {
+       "enum": [
+         1,
+-        2
++        2,
++        3
+       ]
+     },
+     "kind": {
+@@ -46,6 +47,10 @@
+         "composition_sha256": {
+           "type": "string",
+           "pattern": "^[0-9a-f]{64}$"
++        },
++        "flattening_sha256": {
++          "type": "string",
++          "pattern": "^[0-9a-f]{64}$"
+         }
+       },
+       "required": [
+@@ -208,6 +213,9 @@
+             ],
+             "additionalProperties": false
+           }
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -254,6 +262,9 @@
+             "type": "integer",
+             "minimum": 0
+           }
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -297,6 +308,9 @@
+         "premises": {
+           "type": "array",
+           "maxItems": 0
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -517,18 +531,72 @@
+           "additionalProperties": false
+         }
+       ]
++    },
++    "modelOrigin": {
++      "type": "object",
++      "properties": {
++        "origin": {
++          "type": "string"
++        },
++        "original_address": {
++          "type": "string"
++        },
++        "composed_address": {
++          "type": "string"
++        },
++        "element_id": {
++          "type": "string"
++        }
++      },
++      "required": [
++        "origin",
++        "original_address",
++        "composed_address",
++        "element_id"
++      ],
++      "additionalProperties": false
+     }
+   },
+   "allOf": [
+     {
+       "if": {
+-        "properties": {
+-          "version": {
+-            "const": 2
++        "anyOf": [
++          {
++            "properties": {
++              "version": {
++                "const": 2
++              }
++            },
++            "required": [
++              "version"
++            ]
++          },
++          {
++            "allOf": [
++              {
++                "properties": {
++                  "version": {
++                    "const": 3
++                  }
++                },
++                "required": [
++                  "version"
++                ]
++              },
++              {
++                "properties": {
++                  "binding": {
++                    "required": [
++                      "composition_sha256"
++                    ]
++                  }
++                },
++                "required": [
++                  "binding"
++                ]
++              }
++            ]
+           }
+-        },
+-        "required": [
+-          "version"
+         ]
+       },
+       "then": {
+@@ -591,6 +659,54 @@
+           }
+         }
+       }
++    },
++    {
++      "if": {
++        "properties": {
++          "version": {
++            "const": 3
++          }
++        },
++        "required": [
++          "version"
++        ]
++      },
++      "then": {
++        "properties": {
++          "binding": {
++            "required": [
++              "flattening_sha256"
++            ]
++          },
++          "nodes": {
++            "items": {
++              "required": [
++                "model_origin"
++              ]
++            }
++          }
++        }
++      },
++      "else": {
++        "properties": {
++          "binding": {
++            "not": {
++              "required": [
++                "flattening_sha256"
++              ]
++            }
++          },
++          "nodes": {
++            "items": {
++              "not": {
++                "required": [
++                  "model_origin"
++                ]
++              }
++            }
++          }
++        }
++      }
+     }
+   ]
+ }
+diff --git a/src/gnd/skills/gnd-export/references/witness-contract.md b/src/gnd/skills/gnd-export/references/witness-contract.md
+index 465c71d6..42aaa1ff 100644
+--- a/src/gnd/skills/gnd-export/references/witness-contract.md
++++ b/src/gnd/skills/gnd-export/references/witness-contract.md
+@@ -1,4 +1,4 @@
+-# Certificate versions 1 and 2
++# Certificate versions 1, 2 and 3
+ 
+ See the [closed wire schema](witness.schema.json) and [workflow](../SKILL.md).
+ Bindings include the existing model identity, SHA-256 of canonical candidate
+@@ -55,3 +55,32 @@ that the witness agrees with the record; it does not re-derive the record
+ from the sources, which `gnd check --composition --sources` does. Witness views list `sources` as ids and
+ indexes. `--composition` excludes `--reference-root` (64): composition refuses
+ reference populations. Version 1 is unchanged.
++
++
++## Version 3: rooted model origins
++
++`gnd witness ROOT POP --targets T --raw --out CERT` resolves the authored
++include root and emits version 3. `gnd replay ROOT POP CERT` resolves the same
++root before examining any model-origin claim. Either command accepts
++`--flat-model FILE --flattening-record FILE` as a pair. Supplied files must
++match the rooted, re-derived bytes from the
++[flattening contract](../../gnd-orm-core/references/representation-format.md#extraction-flattening-record).
++Without the options, the commands derive the same projection in memory.
++The binding uses the raw SHA-256 of the canonical flattening record in
++`flattening_sha256`. A valid include-free root continues to produce versions
++1 or 2.
++
++Each node carries `model_origin` with `origin`, `original_address`,
++`composed_address` and `element_id`. These are the origin entry for the
++node's fact type, or the declaring rule fact type for a comparison node.
++The element ID is a string. A base node's `origin` still identifies the
++candidate or reference fact occurrence. Version 3 additionally uses
++`composition_sha256` and the base nodes' `sources` when a reference-free
++composition record is supplied.
++
++Replay parses the certificate, authenticates the rooted model and its
++provided artifacts, then binds the composition if supplied. A changed
++bound digest is `binding-stale` (3). A structurally valid but forged model
++origin or fact occurrence is `proof-invalid` (1). The unrooted model-byte
++intake cannot resolve authored includes. An incomplete option pair exits 64.
++The same witness byte and work ceilings govern the stamped output.
+diff --git a/src/gnd/skills/gnd-export/references/witness.schema.json b/src/gnd/skills/gnd-export/references/witness.schema.json
+index 36cde28c..0f30871a 100644
+--- a/src/gnd/skills/gnd-export/references/witness.schema.json
++++ b/src/gnd/skills/gnd-export/references/witness.schema.json
+@@ -6,7 +6,8 @@
+     "version": {
+       "enum": [
+         1,
+-        2
++        2,
++        3
+       ]
+     },
+     "kind": {
+@@ -46,6 +47,10 @@
+         "composition_sha256": {
+           "type": "string",
+           "pattern": "^[0-9a-f]{64}$"
++        },
++        "flattening_sha256": {
++          "type": "string",
++          "pattern": "^[0-9a-f]{64}$"
+         }
+       },
+       "required": [
+@@ -208,6 +213,9 @@
+             ],
+             "additionalProperties": false
+           }
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -254,6 +262,9 @@
+             "type": "integer",
+             "minimum": 0
+           }
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -297,6 +308,9 @@
+         "premises": {
+           "type": "array",
+           "maxItems": 0
++        },
++        "model_origin": {
++          "$ref": "#/$defs/modelOrigin"
+         }
+       },
+       "required": [
+@@ -517,18 +531,72 @@
+           "additionalProperties": false
+         }
+       ]
++    },
++    "modelOrigin": {
++      "type": "object",
++      "properties": {
++        "origin": {
++          "type": "string"
++        },
++        "original_address": {
++          "type": "string"
++        },
++        "composed_address": {
++          "type": "string"
++        },
++        "element_id": {
++          "type": "string"
++        }
++      },
++      "required": [
++        "origin",
++        "original_address",
++        "composed_address",
++        "element_id"
++      ],
++      "additionalProperties": false
+     }
+   },
+   "allOf": [
+     {
+       "if": {
+-        "properties": {
+-          "version": {
+-            "const": 2
++        "anyOf": [
++          {
++            "properties": {
++              "version": {
++                "const": 2
++              }
++            },
++            "required": [
++              "version"
++            ]
++          },
++          {
++            "allOf": [
++              {
++                "properties": {
++                  "version": {
++                    "const": 3
++                  }
++                },
++                "required": [
++                  "version"
++                ]
++              },
++              {
++                "properties": {
++                  "binding": {
++                    "required": [
++                      "composition_sha256"
++                    ]
++                  }
++                },
++                "required": [
++                  "binding"
++                ]
++              }
++            ]
+           }
+-        },
+-        "required": [
+-          "version"
+         ]
+       },
+       "then": {
+@@ -591,6 +659,54 @@
+           }
+         }
+       }
++    },
++    {
++      "if": {
++        "properties": {
++          "version": {
++            "const": 3
++          }
++        },
++        "required": [
++          "version"
++        ]
++      },
++      "then": {
++        "properties": {
++          "binding": {
++            "required": [
++              "flattening_sha256"
++            ]
++          },
++          "nodes": {
++            "items": {
++              "required": [
++                "model_origin"
++              ]
++            }
++          }
++        }
++      },
++      "else": {
++        "properties": {
++          "binding": {
++            "not": {
++              "required": [
++                "flattening_sha256"
++              ]
++            }
++          },
++          "nodes": {
++            "items": {
++              "not": {
++                "required": [
++                  "model_origin"
++                ]
++              }
++            }
++          }
++        }
++      }
+     }
+   ]
+ }
+diff --git a/src/gnd/witness/cli.py b/src/gnd/witness/cli.py
+index b35bd8b2..7a4a39a7 100644
+--- a/src/gnd/witness/cli.py
++++ b/src/gnd/witness/cli.py
+@@ -18,13 +18,17 @@ def add_parsers(subparsers):
+     p.add_argument("--reference-root")
+     p.add_argument("--raw", action="store_true", help="explicitly expose replayable raw values")
+     p.add_argument("--out", help="create a new raw certificate; requires --raw")
+-    p.add_argument("--composition", help="composition record of a composed population: writes a version-2 witness")
++    p.add_argument("--composition", help="composition record for a composed population")
++    p.add_argument("--flat-model", help="bound flat model from an include-root extraction")
++    p.add_argument("--flattening-record", help="origin record paired with --flat-model")
+     p = subparsers.add_parser("replay", help="independently replay a finite derivation witness")
+     p.add_argument("model")
+     p.add_argument("population")
+     p.add_argument("certificate")
+     p.add_argument("--reference-root")
+-    p.add_argument("--composition", help="composition record a version-2 witness binds")
++    p.add_argument("--composition", help="composition record bound by the witness")
++    p.add_argument("--flat-model", help="bound flat model from an include-root extraction")
++    p.add_argument("--flattening-record", help="origin record paired with --flat-model")
+     p.add_argument("--json", action="store_true")
+     p.add_argument("--raw", action="store_true", help="explicitly expose target values")
+     p = subparsers.add_parser("witness-view", help="view a witness with default value redaction")
+@@ -58,15 +62,22 @@ def run(args):
+             }
+             print(json.dumps(view, ensure_ascii=False, sort_keys=True))
+             return result["exit_code"]
++        projected_paths = {}
++        if args.command in {"witness", "replay"}:
++            if (args.flat_model is None) != (args.flattening_record is None):
++                print("gnd: error: --flat-model requires --flattening-record and vice versa", file=sys.stderr)
++                return 64
++            if args.flat_model is not None:
++                projected_paths = {"flat_model": args.flat_model, "flattening_record": args.flattening_record}
+         if args.command in {"witness", "replay"} and args.composition is not None and args.reference_root is not None:
+             print("gnd: error: --composition cannot be combined with --reference-root", file=sys.stderr)
+             return 64
+         if args.command == "replay":
+             result = (
+-                api.replay_result(args.model, args.population, args.certificate, reference_root=args.reference_root)
++                api.rooted_replay_result(args.model, args.population, args.certificate, reference_root=args.reference_root, **projected_paths)
+                 if args.composition is None
+                 else api.composed_replay_result(
+-                    args.model, args.population, args.certificate, composition=args.composition)
++                    args.model, args.population, args.certificate, composition=args.composition, **projected_paths)
+             )
+         elif args.command == "witness-view":
+             result = witness_view(
+@@ -76,10 +87,10 @@ def run(args):
+             if args.out and not args.raw:
+                 raise ValueError("--out requires --raw")
+             result = (
+-                api.witness_result(args.model, args.population, args.targets, reference_root=args.reference_root)
++                api.rooted_witness_result(args.model, args.population, args.targets, reference_root=args.reference_root, **projected_paths)
+                 if args.composition is None
+                 else api.composed_witness_result(
+-                    args.model, args.population, args.targets, composition=args.composition)
++                    args.model, args.population, args.targets, composition=args.composition, **projected_paths)
+             )
+             certificate = result["certificate"]
+             if args.out and certificate is not None:
+diff --git a/src/gnd/witness/flattening.py b/src/gnd/witness/flattening.py
+new file mode 100644
+index 00000000..f2457fa7
+--- /dev/null
++++ b/src/gnd/witness/flattening.py
+@@ -0,0 +1,99 @@
++"""Rooted include bindings for path-based witness production and replay."""
++
++import re
++from dataclasses import asdict, dataclass
++from pathlib import Path
++
++from gnd.anchors import read_regular_path
++from gnd.artifacts import canonical_json_bytes, sha256_hex
++from gnd.errors import ModelValidationError
++from gnd.model import load_model, load_model_bytes
++from gnd.model._includes import guard_bytes, include_reason
++from gnd.model.flattening import FlattenedModel, flatten_model
++from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, WitnessResult, result_rows
++
++
++class StaleWitnessBinding(WitnessInputError):
++    """The current inputs differ from a rooted witness binding."""
++
++
++@dataclass(frozen=True)
++class WitnessProjection:
++    root_sha256: str
++    flat: FlattenedModel
++    fact_origins: dict[str, dict]
++
++    @property
++    def binding(self) -> tuple[str, dict[str, dict]]:
++        return sha256_hex(self.flat.record_bytes), self.fact_origins
++
++
++def resolved_projection(model_path, flat_model=None, flattening_record=None):
++    """Return the authenticated projection when the authored root declares includes."""
++    raw = read_regular_path(
++        Path(model_path).resolve(strict=True), label="authored model", max_bytes=DEFAULT_LIMITS.bytes
++    )
++    try:
++        guard_bytes(raw, source=model_path, route="rooted witness")
++    except ModelValidationError as error:
++        if include_reason(error) != "include:unsupported-route":
++            raise
++    else:
++        if flat_model is not None or flattening_record is not None:
++            raise WitnessInputError("flattening requires an authored include root")
++        return None
++    if (flat_model is None) != (flattening_record is None):
++        raise WitnessInputError("paired flat model and flattening record required")
++
++    try:
++        model = load_model(model_path)
++    except ModelValidationError as error:
++        if include_reason(error) == "include:hash-mismatch":
++            raise StaleWitnessBinding("include digest differs from its declaration") from error
++        raise
++    root_sha256 = sha256_hex(raw)
++    if model._authored_sha256 != root_sha256:
++        raise StaleWitnessBinding("authored root changed while resolving includes")
++    flat = flatten_model(model)
++    for path, expected, label in (
++        (flat_model, flat.model_bytes, "flat model"),
++        (flattening_record, flat.record_bytes, "flattening record"),
++    ):
++        if path is not None and read_regular_path(path, label=label, max_bytes=DEFAULT_LIMITS.bytes) != expected:
++            raise StaleWitnessBinding(f"{label} differs from the resolved model")
++    origins = {
++        origin.element_id: asdict(origin)
++        for origin in model._provenance
++        if origin.element_id is not None and re.fullmatch(r"\$\.fact_types\[\d+\]", origin.composed_address)
++    }
++    return WitnessProjection(root_sha256, flat, origins)
++
++
++def node_model_origin(node: dict, origins: dict[str, dict]) -> dict:
++    fact_type = node["rule_fact_type"] if node["kind"] == "comparison" else node["fact_type"]
++    return origins[fact_type]
++
++
++def stamp_projection(result: dict, projection: WitnessProjection) -> dict:
++    certificate = result["certificate"]
++    if certificate is None:
++        return result
++    certificate["version"] = 3
++    digest, origins = projection.binding
++    certificate["binding"]["flattening_sha256"] = digest
++    for node in certificate["nodes"]:
++        node["model_origin"] = dict(node_model_origin(node, origins))
++    from gnd.witness.io import certificate_shape
++
++    try:
++        certificate_shape(certificate, limits=DEFAULT_LIMITS)
++        if len(canonical_json_bytes(certificate)) > DEFAULT_LIMITS.bytes:
++            raise WitnessInputError("projected certificate exceeds byte ceiling")
++    except WitnessInputError:
++        targets = tuple(row["target"] for row in certificate["results"])
++        return WitnessResult(4, result_rows(targets, "resource-refused"), reason="work-limit").model_dump(mode="json")
++    return result
++
++
++def load_flat_model(projection: WitnessProjection):
++    return load_model_bytes(projection.flat.model_bytes, source="flat.orm.json")
+diff --git a/src/gnd/witness/io.py b/src/gnd/witness/io.py
+index 35b54eb4..93f19a07 100644
+--- a/src/gnd/witness/io.py
++++ b/src/gnd/witness/io.py
+@@ -161,15 +161,24 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
+     record(doc, "version kind binding results nodes")
+     if (
+         type(doc["version"]) is not int
+-        or doc["version"] not in (1, 2)
++        or doc["version"] not in (1, 2, 3)
+         or doc["kind"] != "derivation-witness"
+     ):
+         raise WitnessInputError("unknown certificate kind/version")
+     # Version 2 is a witness over a composed population (CT3): the binding
+     # names the composition record and each base node its source facts.
+-    composed = doc["version"] == 2
++    projected = doc["version"] == 3
+     b = doc["binding"]
+-    record(b, "model_digest candidate_digest references" + (" composition_sha256" if composed else ""))
++    composed = doc["version"] == 2 or (projected and type(b) is dict and "composition_sha256" in b)
++    keys = "model_digest candidate_digest references"
++    if composed:
++        keys += " composition_sha256"
++    if projected:
++        keys += " flattening_sha256"
++    record(b, keys)
++    if projected and (type(b["flattening_sha256"]) is not str
++                      or not re.fullmatch(r"[0-9a-f]{64}", b["flattening_sha256"])):
++        raise WitnessInputError("invalid flattening digest")
+     if composed and (type(b["composition_sha256"]) is not str
+                      or not re.fullmatch(r"[0-9a-f]{64}", b["composition_sha256"])):
+         raise WitnessInputError("invalid composition digest")
+@@ -223,7 +232,13 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
+         }
+         if kind not in keys:
+             raise WitnessInputError("unknown node kind")
+-        record(n, keys[kind])
++        record(n, keys[kind] + (" model_origin" if projected else ""))
++        if projected:
++            model_origin = n["model_origin"]
++            fields = "origin original_address composed_address element_id"
++            record(model_origin, fields)
++            if any(type(model_origin[field]) is not str for field in fields.split()):
++                raise WitnessInputError("invalid model origin")
+         integer(n["id"])
+         if n["id"] != i:
+             raise WitnessInputError("node ids must be consecutive")
+diff --git a/src/gnd/witness/kernel.py b/src/gnd/witness/kernel.py
+index 8dc85f0c..9c79f502 100644
+--- a/src/gnd/witness/kernel.py
++++ b/src/gnd/witness/kernel.py
+@@ -295,6 +295,7 @@ def replay_witness(
+     reference_inputs: tuple[tuple[str, bytes], ...] = (),
+     limits=DEFAULT_LIMITS,
+     composition: tuple[str, dict] | None = None,
++    flattening: tuple[str, dict] | None = None,
+ ):
+     targets = ()
+     try:
+@@ -305,7 +306,12 @@ def replay_witness(
+             model_document, candidate_document, reference_inputs, limits=limits
+         )
+         binding = dict(certificate["binding"])
+-        composed = certificate["version"] == 2
++        projected = certificate["version"] == 3
++        composed = "composition_sha256" in binding
++        if projected != (flattening is not None):
++            return WitnessResult(3, reason="binding-stale")
++        if flattening is not None and binding.pop("flattening_sha256") != flattening[0]:
++            return WitnessResult(3, reason="binding-stale")
+         if composed and composition is None:
+             return WitnessResult(3, reason="composition-required")
+         if not composed and composition is not None:
+@@ -325,6 +331,16 @@ def replay_witness(
+             )
+         ):
+             return WitnessResult(3, reason="binding-stale")
++        if flattening is not None:
++            from gnd.witness.flattening import node_model_origin
++
++            for node in certificate["nodes"]:
++                try:
++                    origin = node_model_origin(node, flattening[1])
++                except KeyError as error:
++                    raise InvalidProof("model origin has no resolved fact type") from error
++                if node["model_origin"] != origin:
++                    raise InvalidProof("model origin differs from the resolved model")
+         if composed:
+             lineage = composition[1]
+             for node in certificate["nodes"]:
+diff --git a/src/gnd/witness/service.py b/src/gnd/witness/service.py
+index bc8cc109..14013fb7 100644
+--- a/src/gnd/witness/service.py
++++ b/src/gnd/witness/service.py
+@@ -7,6 +7,12 @@ from gnd import input_policy as _rf7_input
+ from gnd import model as model_module
+ from gnd.disclosure import resolve
+ from gnd.errors import ModelValidationError, PopulationLoadError
++from gnd.witness.flattening import (
++    StaleWitnessBinding,
++    load_flat_model,
++    resolved_projection,
++    stamp_projection,
++)
+ from gnd.witness.view import result_view, why_not_view
+ 
+ 
+@@ -41,7 +47,7 @@ def _witness_inputs(model_path, population_path, reference_root):
+     return model, candidate, context, md, pd
+ 
+ 
+-def _composition_lineage(composition, model_path, population_path):
++def _composition_lineage(composition, model_path, population_path, *, digests=None):
+     """Read a composition record bound to these model and population bytes (CT3)."""
+     import hashlib
+ 
+@@ -49,13 +55,18 @@ def _composition_lineage(composition, model_path, population_path):
+     from gnd.composition import MAX_RECORD_BYTES, lineage_index, parse_record
+     from gnd.model._includes import guard_path
+     from gnd.witness.types import WitnessInputError
+-    guard_path(model_path, "witness.composition")
++    if digests is None:
++        guard_path(model_path, "witness.composition")
+     raw = read_regular_path(composition, label="composition record", max_bytes=MAX_RECORD_BYTES)
+     record = parse_record(raw)
+-    for path, key in ((model_path, "model_sha256"), (population_path, "population_sha256")):
+-        digest = hashlib.sha256(read_regular_path(path, label="witness input", max_bytes=MAX_DOCUMENT_BYTES)).hexdigest()
+-        if digest != record[key]:
+-            raise WitnessInputError("composition record does not bind these inputs")
++    fields = ("model_sha256", "population_sha256")
++    if digests is None:
++        for path, key in zip((model_path, population_path), fields, strict=True):
++            digest = hashlib.sha256(read_regular_path(path, label="witness input", max_bytes=MAX_DOCUMENT_BYTES)).hexdigest()
++            if digest != record[key]:
++                raise WitnessInputError("composition record does not bind these inputs")
++    elif digests != (record["model_sha256"], record["population_sha256"]):
++        raise StaleWitnessBinding("composition record does not bind the projected inputs")
+     return hashlib.sha256(raw).hexdigest(), lineage_index(record)
+ 
+ 
+@@ -83,6 +94,82 @@ def _stamp_composition(result, composition):
+     return result
+ 
+ 
++def _projected_inputs(projection, model_path, population_path, *, reference_root=None, composition=None):
++    from pathlib import Path
++
++    from gnd.anchors import read_regular_path
++    from gnd.artifacts import sha256_hex
++    from gnd.model import bind_declared_references
++    from gnd.population import _parse_document_bytes, load_population_bytes
++    from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError
++
++    model = load_flat_model(projection)
++    raw = read_regular_path(population_path, label="candidate population", max_bytes=DEFAULT_LIMITS.bytes)
++    lineage = None
++    if composition is not None:
++        if model.reference_populations:
++            raise WitnessInputError("composition with reference populations is unsupported")
++        lineage = _composition_lineage(
++            composition, model_path, population_path, digests=(projection.root_sha256, sha256_hex(raw))
++        )
++    candidate = load_population_bytes(raw, source=population_path, model=model)
++    context = bind_declared_references(
++        model, root=reference_root if reference_root is not None else Path(model_path).parent
++    )
++    document = _parse_document_bytes(raw, suffix=Path(population_path).suffix, source=str(population_path))
++    return model, candidate, context, document, lineage
++
++
++def _produce_projected(projection, model_path, population_path, targets_path, **options):
++    from gnd.witness.io import load_targets
++    from gnd.witness.producer import produce_witness
++
++    targets = load_targets(targets_path)
++    model, candidate, references, _, lineage = _projected_inputs(
++        projection, model_path, population_path, **options
++    )
++    result = produce_witness(model, candidate, targets, references=references).model_dump(mode="json")
++    if lineage is not None:
++        result = _stamp_composition(result, lineage)
++    return stamp_projection(result, projection)
++
++
++def _replay_projected(projection, model_path, population_path, certificate, **options):
++    from gnd.witness.kernel import replay_witness
++
++    _, _, references, document, lineage = _projected_inputs(
++        projection, model_path, population_path, **options
++    )
++    refs = tuple((origin.id, raw) for origin, _, raw in references._snapshots) if references else ()
++    return replay_witness(
++        _rf7_input.loads(projection.flat.model_bytes), document, certificate,
++        reference_inputs=refs, composition=lineage, flattening=projection.binding,
++    ).model_dump(mode="json")
++
++
++def rooted_witness_result(model_path, population_path, targets_path, *, reference_root=None,
++                          flat_model=None, flattening_record=None):
++    """Produce finite witnesses, authenticating model origins for a rooted include model."""
++    from ruamel.yaml.error import YAMLError
++
++    from gnd.witness.types import WitnessResult
++
++    try:
++        projection = resolved_projection(model_path, flat_model, flattening_record)
++        if projection is not None:
++            return _produce_projected(
++                projection, model_path, population_path, targets_path, reference_root=reference_root
++            )
++        return witness_result(
++            model_path, population_path, targets_path, reference_root=reference_root
++        )
++    except ModelValidationError as error:
++        reason = next((issue.rule_id for issue in error.issues if issue.rule_id.startswith("include:")), "input-invalid")
++        return WitnessResult(3, reason=reason).model_dump(mode="json")
++    except (*_input_errors(), RuntimeError, YAMLError):
++        return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
++
++
+ def witness_result(model_path, population_path, targets_path, *, reference_root=None):
+     """Produce finite witnesses; exit zero requires every requested tuple proved."""
+     from ruamel.yaml.error import YAMLError
+@@ -142,6 +229,33 @@ def replay_result(model_path, population_path, certificate_path, *, reference_ro
+         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
+ 
+ 
++def rooted_replay_result(model_path, population_path, certificate_path, *, reference_root=None,
++                         flat_model=None, flattening_record=None):
++    """Replay a finite proof with an independent local inference kernel."""
++    from ruamel.yaml.error import YAMLError
++
++    from gnd.witness.io import load_certificate
++    from gnd.witness.types import WitnessResult
++
++    try:
++        certificate = load_certificate(certificate_path)
++        projection = resolved_projection(model_path, flat_model, flattening_record)
++        if projection is not None:
++            return _replay_projected(
++                projection, model_path, population_path, certificate, reference_root=reference_root
++            )
++        return replay_result(
++            model_path, population_path, certificate_path, reference_root=reference_root
++        )
++    except StaleWitnessBinding:
++        return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
++    except ModelValidationError as error:
++        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
++        return WitnessResult(3, reason=reason).model_dump(mode="json")
++    except (*_input_errors(), RuntimeError, YAMLError):
++        return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
++
++
+ def _input_errors():
+     from gnd.artifacts import ArtifactError
+ 
+@@ -150,11 +264,19 @@ def _input_errors():
+             model_module.ModelLoadError, PopulationLoadError, ArtifactError)
+ 
+ 
+-def composed_witness_result(model_path, population_path, targets_path, *, composition):
+-    """A version-2 witness over a composed population: each base node names its source facts (CT3)."""
++def composed_witness_result(model_path, population_path, targets_path, *, composition,
++                            flat_model=None, flattening_record=None):
++    """Produce a composed witness whose base nodes name their source facts."""
++    from ruamel.yaml.error import YAMLError
++
+     from gnd.witness.types import WitnessResult
+ 
+     try:
++        projection = resolved_projection(model_path, flat_model, flattening_record)
++        if projection is not None:
++            return _produce_projected(
++                projection, model_path, population_path, targets_path, composition=composition
++            )
+         lineage = _composition_lineage(composition, model_path, population_path)
+         if model_module.load_model(model_path).reference_populations:
+             raise ValueError("a composed population has no reference populations")
+@@ -163,12 +285,13 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
+         from gnd.witness.types import WitnessResult
+         reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+         return WitnessResult(3, reason=reason).model_dump(mode="json")
+-    except _input_errors():
++    except (*_input_errors(), RuntimeError, YAMLError):
+         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
+ 
+ 
+-def composed_replay_result(model_path, population_path, certificate_path, *, composition):
+-    """Replay a version-2 witness against the composition record it binds (CT3)."""
++def composed_replay_result(model_path, population_path, certificate_path, *, composition,
++                           flat_model=None, flattening_record=None):
++    """Replay a witness against the composition record it binds."""
+     from ruamel.yaml.error import YAMLError
+ 
+     from gnd.witness.io import load_certificate
+@@ -177,14 +300,21 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
+ 
+     try:
+         certificate = load_certificate(certificate_path)
++        projection = resolved_projection(model_path, flat_model, flattening_record)
++        if projection is not None:
++            return _replay_projected(
++                projection, model_path, population_path, certificate, composition=composition
++            )
+         lineage = _composition_lineage(composition, model_path, population_path)
+         _, _, _, md, pd = _witness_inputs(model_path, population_path, None)
+         return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
++    except StaleWitnessBinding:
++        return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
+     except ModelValidationError as error:
+         from gnd.witness.types import WitnessResult
+         reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+         return WitnessResult(3, reason=reason).model_dump(mode="json")
+-    except (*_input_errors(), YAMLError):
++    except (*_input_errors(), RuntimeError, YAMLError):
+         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
+ 
+ 
+@@ -287,7 +417,7 @@ def witness(model_path, population_path, targets_path, *, reference_root=None, c
+     if composition is not None and reference_root is not None:
+         raise ValueError("composition cannot be combined with reference_root")
+     result = (
+-        witness_result(model_path, population_path, targets_path, reference_root=reference_root)
++        rooted_witness_result(model_path, population_path, targets_path, reference_root=reference_root)
+         if composition is None
+         else composed_witness_result(model_path, population_path, targets_path, composition=composition)
+     )
+@@ -301,7 +431,7 @@ def replay(model_path, population_path, certificate_path, *, reference_root=None
+     if composition is not None and reference_root is not None:
+         raise ValueError("composition cannot be combined with reference_root")
+     result = (
+-        replay_result(model_path, population_path, certificate_path, reference_root=reference_root)
++        rooted_replay_result(model_path, population_path, certificate_path, reference_root=reference_root)
+         if composition is None
+         else composed_replay_result(model_path, population_path, certificate_path, composition=composition)
+     )
+diff --git a/tests/fixtures/lx2-witness-flattening/README.md b/tests/fixtures/lx2-witness-flattening/README.md
+new file mode 100644
+index 00000000..07451d23
+--- /dev/null
++++ b/tests/fixtures/lx2-witness-flattening/README.md
+@@ -0,0 +1,7 @@
++# LX2 witness corpus
++
++The public CLI tests reuse the exact LX1 root, both pinned vocabulary files
++and the ownership and uses facts. A successor adds one authored derived
++fact type. Reported model origins must therefore span a root and an include.
++An anchored composition source names the same candidate facts. Expected wire
++and refusal data live in the separate answer file.
+diff --git a/tests/fixtures/lx2-witness-flattening/expected.json b/tests/fixtures/lx2-witness-flattening/expected.json
+new file mode 100644
+index 00000000..d208d028
+--- /dev/null
++++ b/tests/fixtures/lx2-witness-flattening/expected.json
+@@ -0,0 +1,20 @@
++{
++  "version": 3,
++  "origin_sources": [
++    "includes[components]",
++    "model"
++  ],
++  "stale": [
++    3,
++    "binding-stale"
++  ],
++  "forged": [
++    1,
++    "proof-invalid"
++  ],
++  "invalid": [
++    3,
++    "input-invalid"
++  ],
++  "legacy_composed_sha256": "93776b765d3aefe04d5fdcc0916d0f363f7ce5b2ba266b04a7f3e541152291a7"
++}
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index 2bbc1c67..e650f211 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -143,6 +143,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_li0_witness_wire.py b/tests/test_li0_witness_wire.py
+index 682f6dc8..ed96696e 100644
+--- a/tests/test_li0_witness_wire.py
++++ b/tests/test_li0_witness_wire.py
+@@ -141,7 +141,7 @@ def test_model_wire_round_trips_every_fixture_model():
+ # --- T6: include-bearing models keep their reason -------------------------------------
+ 
+ 
+-def test_include_bearing_model_keeps_its_include_reason(tmp_path):
++def test_why_not_keeps_its_include_refusal(tmp_path):
+     vocabulary = tmp_path / "vocab.orm.yaml"
+     vocabulary.write_text((LI0 / "grandparent-v2.orm.yaml").read_text())
+     digest = hashlib.sha256(vocabulary.read_bytes()).hexdigest()
+@@ -151,10 +151,10 @@ def test_include_bearing_model_keeps_its_include_reason(tmp_path):
+         f"includes:\n  - {{id: vocab, path: vocab.orm.yaml, sha256: {digest}}}\n"
+         "constraints: []\n"
+     )
+-    run = gnd("witness", includer, LI0 / "population.json", "--targets", LI0 / "targets.json")
++    run = gnd("why-not", includer, LI0 / "population.json", "--fact-type", "grandparent")
+     payload = _json(run)
+     assert payload["exit_code"] == 3
+-    assert payload["reason"].startswith("include:")
++    assert payload["reason"] == "include:unsupported-route"
+ 
+ 
+ # --- T7, T11: golden certificate bytes and model identities ---------------------------
+diff --git a/tests/test_lx2_witness_flattening.py b/tests/test_lx2_witness_flattening.py
+new file mode 100644
+index 00000000..5e2abc97
+--- /dev/null
++++ b/tests/test_lx2_witness_flattening.py
+@@ -0,0 +1,306 @@
++"""Exercise include-model certificate provenance through witness and replay."""
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++from pathlib import Path
++
++import jsonschema
++import pytest
++
++from gnd import api
++from gnd.anchors import vocabulary_digest
++from gnd.artifacts import canonical_json_bytes
++from gnd.cli import main
++from gnd.model import load_model
++from gnd.witness.io import certificate_shape
++
++ROOT = Path(__file__).resolve().parents[1]
++FIXTURES = ROOT / "tests/fixtures"
++EXPECTED = json.loads((FIXTURES / "lx2-witness-flattening/expected.json").read_bytes())
++DERIVED = {
++    "id": "root_uses_component",
++    "reading": "{Component} uses {Component} according to the root",
++    "roles": [
++        {"role_name": "using", "object_type": "component"},
++        {"role_name": "used", "object_type": "component"},
++    ],
++    "derivation": "derived",
++    "derivation_rule": {
++        "body": [{"fact_type": "component_uses_component",
++                  "bind": {"using": "$a", "used": "$b"}}],
++        "head": {"using": "$a", "used": "$b"},
++    },
++}
++
++
++def write(path, value):
++    path.write_bytes(canonical_json_bytes(value))
++
++
++def digest(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def dirs(tmp_path, *, derived=False):
++    tmp_path = tmp_path.resolve()
++    source = tmp_path / "root"
++    shutil.copytree(FIXTURES / "lx1-flattening", source)
++    model = source / "project.orm.json"
++    if derived:
++        root = json.loads(model.read_bytes())
++        root["fact_types"] = [DERIVED]
++        write(model, root)
++    population = tmp_path / "candidate.json"
++    facts = json.loads((source / "facts.json").read_bytes())
++    write(population, {"population": {"model": model.name, "source": "fixture"}, "facts": facts})
++    target = tmp_path / "target.json"
++    write(target, {"version": 1, "targets": [
++        {"fact_type": "root_uses_component" if derived else "component_uses_component",
++         "tuple": [{"primitive": "String", "value": value} for value in ("a", "b")]}
++    ]})
++    certificate = tmp_path / "witness.json"
++    return model, population, target, certificate
++
++
++def make_artifacts(model, tmp_path, capsys):
++    bundle = tmp_path.resolve() / "artifacts"
++    assert main(["extract", str(model), "--out", str(bundle)]) == 0
++    capsys.readouterr()
++    return bundle / "project.orm.flat.orm.json", bundle / "project.orm.flattening.json"
++
++
++def witness(paths, *options):
++    model, population, target, certificate = paths
++    return main(["witness", str(model), str(population), "--targets", str(target),
++                 "--raw", "--out", str(certificate), *map(str, options)])
++
++
++def replay(paths, capsys, *options):
++    model, population, _, certificate = paths
++    capsys.readouterr()
++    code = main(["replay", str(model), str(population), str(certificate),
++                 "--raw", *map(str, options)])
++    result = json.loads(capsys.readouterr().out)
++    reason = result["reason"]
++    if reason is None and code:
++        reason = result["results"][0]["reason"]
++    return [code, reason]
++
++
++def test_public_extract_witness_and_replay(tmp_path, capsys):
++    paths = dirs(tmp_path)
++    flat, record = make_artifacts(paths[0], tmp_path, capsys)
++    args = ("--flat-model", flat, "--flattening-record", record)
++    assert witness(paths, *args) == 0
++    cert = json.loads(paths[3].read_bytes())
++    assert cert["version"] == EXPECTED["version"]
++    assert cert["binding"]["flattening_sha256"] == digest(record)
++    assert cert["nodes"][0]["model_origin"]["origin"] == "includes[components]"
++    assert replay(paths, capsys, *args) == [0, None]
++    for name in ("src/gnd/schema/witness.schema.json",
++                 "src/gnd/skills/gnd-export/references/witness.schema.json"):
++        jsonschema.validate(cert, json.loads((ROOT / name).read_bytes()))
++
++
++@pytest.mark.parametrize("axis", ["model", "fact", "owner", "binding", "schema"])
++def test_each_origin_axis(tmp_path, capsys, axis):
++    paths = dirs(tmp_path, derived=True)
++    assert witness(paths) == 0
++    assert replay(paths, capsys) == [0, None]
++    cert = json.loads(paths[3].read_bytes())
++    assert sorted({n["model_origin"]["origin"] for n in cert["nodes"]}) == EXPECTED["origin_sources"]
++    node = next(n for n in cert["nodes"] if n["kind"] == "base")
++    if axis == "model":
++        node["model_origin"]["origin"] = "model"
++    elif axis == "fact":
++        node["origin"]["fact_index"] += 1
++    elif axis == "owner":
++        node["fact_type"] = "absent_fact_type"
++    elif axis == "binding":
++        cert["binding"]["flattening_sha256"] = "0" * 64
++    else:
++        node["model_origin"]["extra"] = True
++        with pytest.raises(ValueError):
++            certificate_shape(cert)
++    write(paths[3], cert)
++    name = {"model": "forged", "fact": "forged", "owner": "forged", "binding": "stale", "schema": "invalid"}[axis]
++    assert replay(paths, capsys) == EXPECTED[name]
++
++
++@pytest.mark.parametrize("coordinate", ["root", "include", "flat", "record"])
++def test_stale_projection_inputs(tmp_path, capsys, coordinate):
++    paths = dirs(tmp_path)
++    flat, record = make_artifacts(paths[0], tmp_path, capsys)
++    args = ("--flat-model", flat, "--flattening-record", record)
++    assert witness(paths, *args) == 0
++    path = {"root": paths[0], "include": paths[0].parent / "components.orm.json",
++            "flat": flat, "record": record}[coordinate]
++    cert = json.loads(paths[3].read_bytes())
++    cert["nodes"][0]["model_origin"]["origin"] = "model"
++    write(paths[3], cert)
++    path.write_bytes(path.read_bytes() + b" ")
++    assert replay(paths, capsys, *args) == EXPECTED["stale"]
++
++
++def test_reference_free_composition_proof(tmp_path, capsys):
++    model, pop, target, certificate = dirs(tmp_path, derived=True)
++    folder = tmp_path.resolve() / "sources" / "a"
++    folder.mkdir(parents=True)
++    document = "Component a uses component b. Both components have owner x.\n"
++    facts = json.loads(pop.read_bytes())["facts"]
++    (folder / "document.txt").write_text(document)
++    source = folder / "population.json"
++    source.write_bytes(pop.read_bytes())
++    loaded = load_model(model)
++    start = document.index(" a ") + 1
++    write(folder / "population.json.anchors.json", {
++        "schema_version": 2, "population_sha256": digest(source),
++        "vocabulary_digest": vocabulary_digest(loaded),
++        "document_sha256": digest(folder / "document.txt"),
++        "anchors": [{
++            "fact_key": {"fact_type": "component_uses_component",
++                         "roles": facts["component_uses_component"][0]},
++            "role": "using", "span": {"start": start, "end": start + 1},
++            "occurrence": 0, "excerpt_sha256": hashlib.sha256(b"a").hexdigest(),
++        }],
++    })
++    write(folder.parent / "manifest.json", {
++        "schema": "gnd-composition-manifest/1", "sources": ["a"], "renamings": [],
++        "deduplications": "identical-rows", "scope_tags": [],
++    })
++    record = tmp_path.resolve() / "composed.json"
++    composed = tmp_path.resolve() / "composed.population.json"
++    assert main(["compose", str(model), str(folder.parent), "--out", str(composed), "--record", str(record)]) == 0
++    result = api.witness(model, composed, target, composition=record)
++    assert result["exit_code"] == 0
++    result_schema = json.loads((ROOT / "src/gnd/schema/witness-result.schema.json").read_bytes())
++    jsonschema.validate(result, result_schema)
++    cert = result["certificate"]
++    assert cert["version"] == EXPECTED["version"]
++    assert cert["binding"]["composition_sha256"] == digest(record)
++    write(certificate, cert)
++    paths = model, composed, target, certificate
++    assert replay(paths, capsys, "--composition", record) == [0, None]
++    base = next(node for node in cert["nodes"] if node["kind"] == "base")
++    assert base["sources"] == [{"source": "a", "fact_type": "component_uses_component", "fact_index": 0}]
++    base["sources"][0]["fact_index"] = 1
++    write(certificate, cert)
++    assert replay(paths, capsys, "--composition", record) == EXPECTED["forged"]
++    stale = json.loads(record.read_bytes())
++    stale["model_sha256"] = "0" * 64
++    write(record, stale)
++    assert replay(paths, capsys, "--composition", record) == EXPECTED["stale"]
++
++
++def test_unpaired_paths_refuse_at_cli(tmp_path, capsys):
++    paths = dirs(tmp_path)
++    flat, _ = make_artifacts(paths[0], tmp_path, capsys)
++    assert witness(paths, "--flat-model", flat) == 64
++    assert "requires" in capsys.readouterr().err
++
++
++def test_legacy_composed_bytes_and_replay(tmp_path, monkeypatch):
++    from test_witness_composition import gnd, produce
++
++    model, _, population, record, _, certificate = produce(tmp_path.resolve(), monkeypatch)
++    assert digest(certificate) == EXPECTED["legacy_composed_sha256"]
++    assert gnd("replay", model, population, certificate, "--composition", record).returncode == 0
++
++
++def test_flat_inputs_are_bounded(tmp_path, capsys):
++    paths = dirs(tmp_path)
++    flat, record = make_artifacts(paths[0], tmp_path, capsys)
++    assert witness(paths) == 0
++    with record.open("wb") as stream:
++        stream.truncate(10 * 1024 * 1024 + 1)
++    assert replay(paths, capsys, "--flat-model", flat, "--flattening-record", record) == EXPECTED["invalid"]
++
++
++def test_comparison_origin_uses_its_rule_fact_type(tmp_path, capsys):
++    paths = dirs(tmp_path, derived=True)
++    root = json.loads(paths[0].read_bytes())
++    root["fact_types"][0]["derivation_rule"]["where"] = [
++        {"left": "$a", "operator": "!=", "right": "$b"},
++    ]
++    write(paths[0], root)
++    assert witness(paths) == 0
++    cert = json.loads(paths[3].read_bytes())
++    comparisons = [node for node in cert["nodes"] if node["kind"] == "comparison"]
++    assert len(comparisons) == 1
++    assert comparisons[0]["model_origin"]["origin"] == "model"
++    assert comparisons[0]["model_origin"]["element_id"] == "root_uses_component"
++    assert replay(paths, capsys) == [0, None]
++
++
++def test_projected_certificate_stamping_respects_wire_limit(tmp_path, capsys, monkeypatch):
++    from dataclasses import replace
++
++    from gnd.witness import flattening
++
++    paths = dirs(tmp_path)
++    flat, _ = make_artifacts(paths[0], tmp_path, capsys)
++    result = api.witness(flat, paths[1], paths[2])
++    projection = flattening.resolved_projection(paths[0])
++    cap = len(canonical_json_bytes(result["certificate"])) + 1
++    monkeypatch.setattr(flattening, "DEFAULT_LIMITS", replace(flattening.DEFAULT_LIMITS, bytes=cap))
++    refused = flattening.stamp_projection(result, projection)
++    assert (refused["exit_code"], refused["reason"], refused["certificate"]) == (4, "work-limit", None)
++
++
++def test_projected_certificate_stamping_is_time_bounded(tmp_path, capsys):
++    import subprocess
++    import sys
++
++    paths = dirs(tmp_path)
++    flat, _ = make_artifacts(paths[0], tmp_path, capsys)
++    source = tmp_path.resolve() / "legacy-result.json"
++    write(source, api.witness(flat, paths[1], paths[2]))
++    program = """
++import json
++import sys
++from copy import deepcopy
++from pathlib import Path
++from gnd.witness.flattening import resolved_projection, stamp_projection
++
++projection = resolved_projection(sys.argv[1])
++result = json.loads(Path(sys.argv[2]).read_bytes())
++certificate = result["certificate"]
++first = certificate["nodes"][0]
++nodes = []
++for index in range(1000):
++    node = deepcopy(first)
++    node["id"] = index
++    nodes.append(node)
++certificate["nodes"] = nodes
++certificate["results"][0]["root"] = 999
++output = stamp_projection(result, projection)["certificate"]
++assert len(output["nodes"]) == 1000
++assert all(node["model_origin"]["element_id"] == "component_uses_component"
++           for node in output["nodes"])
++"""
++    result = subprocess.run(
++        [sys.executable, "-c", program, str(paths[0]), str(source)],
++        capture_output=True, text=True, check=False, timeout=5,
++    )
++    assert result.returncode == 0, result.stderr
++
++
++def test_malformed_certificate_precedes_a_stale_include(tmp_path, capsys):
++    paths = dirs(tmp_path)
++    assert witness(paths) == 0
++    include = paths[0].parent / "components.orm.json"
++    include.write_bytes(include.read_bytes() + b" ")
++    paths[3].write_bytes(b"[" * 1024)
++    assert replay(paths, capsys) == EXPECTED["invalid"]
++
++
++def test_projected_certificate_raw_view(tmp_path, capsys):
++    paths = dirs(tmp_path)
++    assert witness(paths) == 0
++    capsys.readouterr()
++    assert main(["witness-view", str(paths[3]), "--raw"]) == 0
++    result = json.loads(capsys.readouterr().out)
++    assert result["replayable"] is True
++    assert result["certificate"] == json.loads(paths[3].read_bytes())
+diff --git a/tests/test_mc2_consumers.py b/tests/test_mc2_consumers.py
+index 3097a648..c9503717 100644
+--- a/tests/test_mc2_consumers.py
++++ b/tests/test_mc2_consumers.py
+@@ -36,7 +36,9 @@ def test_composed_witness_validation_refusal_compatibility(corpus, adapter, incl
+     binding.write_bytes(canonical_json_bytes(record))
+     certificate = ROOT / 'tests/fixtures/v71/phase3/dispatch/direct.witness.json'
+     result = getattr(service, adapter)(model, population, certificate, composition=binding)
+-    reason = 'include:unsupported-route' if included else 'input-invalid'
++    # LX2 authenticates the root. The v1 certificate cannot bind that rooted
++    # composition, and it still is not a valid witness targets document.
++    reason = 'binding-stale' if included and adapter == 'composed_replay_result' else 'input-invalid'
+     assert result == WitnessResult(3, reason=reason).model_dump(mode='json')
+ 
+ 
+diff --git a/tests/test_packaged_skills.py b/tests/test_packaged_skills.py
+index 26387859..149a27fe 100644
+--- a/tests/test_packaged_skills.py
++++ b/tests/test_packaged_skills.py
+@@ -91,6 +91,12 @@ def test_the_packaged_tree_holds_exactly_the_named_skills() -> None:
+     assert names == EXPECTED_SKILL_NAMES, f'packaged skills are {sorted(names)}, expected {sorted(EXPECTED_SKILL_NAMES)}.\n  missing: {sorted(EXPECTED_SKILL_NAMES - names)}\n  extra:   {sorted(names - EXPECTED_SKILL_NAMES)}'
+     assert len(EXPECTED_SKILL_NAMES) == 18, 'the packaged surface is exactly the named skills; another is a decision with a plan behind it, not an edit to this literal (the latest: gnd-model-multivalued, type-induction-skills TS4)'
+ 
++LX2_FLATTENING_EDGE = (
++    'gnd-export/references/witness-contract.md',
++    '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record',
++)
++
++
+ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
+     root = _skills_root()
+     assert root.is_dir(), 'gnd/skills resource directory is absent (see the sibling test)'
+@@ -116,10 +122,12 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
+             if resolved not in entries and resolved not in directories:
+                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
+     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
+-    missing = sorted(GC4_RELATIVE_LINKS - edges)
+-    extra = sorted(edges - GC4_RELATIVE_LINKS)
++    expected = GC4_RELATIVE_LINKS | {LX2_FLATTENING_EDGE}
++    missing = sorted(expected - edges)
++    extra = sorted(edges - expected)
+     assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
+-    assert checked == GC4_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {GC4_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
++    expected_count = GC4_RELATIVE_LINK_COUNT + 1
++    assert checked == expected_count, f'checked {checked} relative links, expected {expected_count}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+ 
+ def test_pep723_validator_sibling_schema_ships() -> None:
+     root = _skills_root()
+diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
+index 5a298a18..e6d0eaf0 100644
+--- a/tests/test_rf1_cli_pins.py
++++ b/tests/test_rf1_cli_pins.py
+@@ -196,6 +196,36 @@ def _restore_frozen(parser, node, *, types=None):
+     return children
+ 
+ 
++def _witness_projection_successor(command):
++    """Add the two rooted projection options to the frozen witness parser."""
++    base = json.loads(golden_path("cli", "tree").read_text())["subcommands"][command]
++    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
++    _restore_frozen(parser, base)
++    inherited = _walk(parser, ("gnd", command), {})
++    inherited["listed_help"] = base["listed_help"]
++    assert canonical(inherited) == canonical(base)
++    composition = next(action for action in parser._actions if action.dest == "composition")
++    composition.help = {
++        "witness": "composition record for a composed population",
++        "replay": "composition record bound by the witness",
++    }[command]
++    # The rooted flags are declared before the existing replay presentation flags.
++    position = parser._actions.index(composition) + 1
++    flags = [
++        parser.add_argument("--flat-model", help="bound flat model from an include-root extraction"),
++        parser.add_argument("--flattening-record", help="origin record paired with --flat-model"),
++    ]
++    for offset, flag in enumerate(flags):
++        parser._actions.remove(flag)
++        parser._actions.insert(position + offset, flag)
++        group = parser._optionals._group_actions
++        group.remove(flag)
++        group.insert(group.index(composition) + 1 + offset, flag)
++    after = _walk(parser, ("gnd", command), {})
++    after["listed_help"] = base["listed_help"]
++    return after, parser
++
++
+ def _model_review_successor():
+     """Decode the frozen grammar independently, then add only MC2's literal leaf."""
+     base = json.loads(golden_path('cli', 'tree').read_text())['subcommands']['verbalize']
+@@ -406,11 +436,18 @@ def test_cli_tree(tree):
+     expected['subcommands']['verbalize'] = _model_review_successor()['tree']
+     for command in ("export", "import"):
+         expected["subcommands"][command] = _ossie_successor(command)["tree"]
++    for command in ("witness", "replay"):
++        expected["subcommands"][command] = _witness_projection_successor(command)[0]
+     _assert_successor("cli", "tree", tree[0], expected)
+ 
+ 
+ @pytest.mark.parametrize("path", PATHS)
+ def test_cli_help(tree, path):
++    if path in {"gnd witness", "gnd replay"}:
++        parser = _witness_projection_successor(path.split()[1])[1]
++        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
++                          {"path": path, "help": parser.format_help()})
++        return
+     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:
+         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                           {"path": path, "help": _ossie_successor(path.split()[1])["help"][path]})
+@@ -452,6 +489,14 @@ def test_cli_exit_probe(path, monkeypatch):
+     argv = path.split()[1:]
+     shown = run_main([*argv, "--help"])
+     refused = run_main([*argv, "--rf1-unknown-flag"])
++    if path in {"gnd witness", "gnd replay"}:
++        observed = {
++            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
++            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
++        }
++        parser = _witness_projection_successor(path.split()[1])[1]
++        _assert_successor("cli-exit", path, observed, _guarded_successor_probe(parser))
++        return
+     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:
+         observed = {
+             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index 1487a04e..8a7f7282 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -975,6 +975,10 @@
+       "lane": "witness",
+       "layer": "lanes"
+     },
++    "gnd.witness.flattening": {
++      "lane": "witness",
++      "layer": "lanes"
++    },
+     "gnd.witness.io": {
+       "lane": "witness",
+       "layer": "lanes"

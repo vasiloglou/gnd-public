@@ -1,0 +1,124 @@
+{
+  "base": "ac157120",
+  "claims": [
+    "The rooted verifier re-derives flat bytes, the record binding and model origin entries, independently of proof fact and composition coordinates.",
+    "Malformed or over-budget inputs and stale root, include, artifact or composition bindings refuse in the pinned order.",
+    "V1 and v2 production and replay bytes, disclosure behavior and direct authored include guards remain compatible."
+  ],
+  "created": "2026-11-16T01:21:10.326733+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/reviews/phase-LX2-r1/diff.patch",
+      "sha256": "d216fd96948411015f7ae935cb1f391275fd3cef8d63706c05d3d9a4baa1afbc"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/006-phase-LX2-spec-gate.md",
+      "sha256": "7eb5b012125d8020fa510079611c4429baca0d4e3c90f2e350bc9b6d0c991dde"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json",
+      "sha256": "e14ff83d7e3f527dd5a390b5e871720457d0775c146328bcba2e13d40d8e48e7"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md",
+      "sha256": "a221efdedd240abafa0291a9e2bab2cbca837f74e3b869431c9968ccdbbeb6f2"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "375ed71ac5672882c7eda05e9cbd2648331f84dd78d10ebf2def341202a7342d"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "62b85aaf62b96f57cdd0eae0fca5df6f60c7935fe9f917dd23b4dd662528c605"
+    },
+    {
+      "path": "dev/components/modules/witness.md",
+      "sha256": "f739ea3f2f910af2f4206765b10d87c6467a753478ceed3f636bbab9118391de"
+    },
+    {
+      "path": "src/gnd/schema/witness-result.schema.json",
+      "sha256": "68dcfc71c8089fbd09e7f2e3593d773f90de0ce30792adeeb35984804f7f824b"
+    },
+    {
+      "path": "src/gnd/schema/witness.schema.json",
+      "sha256": "b0a08258abf500929e53026ce2322bfea083ef1b8763fa0bd1c4c79eb7e3304d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/references/witness-contract.md",
+      "sha256": "5af72b86c97c53c4b3541df4d0d2892ece24ffef49a4246c43e184943aa6bb9e"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/references/witness.schema.json",
+      "sha256": "b0a08258abf500929e53026ce2322bfea083ef1b8763fa0bd1c4c79eb7e3304d"
+    },
+    {
+      "path": "src/gnd/witness/cli.py",
+      "sha256": "11f790e18aee6919383a88205bad02ffcbfa3b10e8906f2c1c552e9e20434334"
+    },
+    {
+      "path": "src/gnd/witness/flattening.py",
+      "sha256": "c9b5abdcefcc0660738988eeb8fef4e01fad5cb55422f1197e6d9a1b77d8c2a3"
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "sha256": "bd4833cdac2ecd1632dec1a5807dc85254e3d76640ceb2132043a4b2495701fc"
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "sha256": "7911387d2a79cea38c707f7168e1fb5d7bdd9de1cb2bfcf69cf0d9042c0bd674"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "sha256": "35d6d67b4fd86b3746e533e167abd9c64a47d68b12187e1aa39c8b382bacf16e"
+    },
+    {
+      "path": "tests/fixtures/lx2-witness-flattening/README.md",
+      "sha256": "66de950b2d63dc4173b072e0806954b226db88f61868bf60cdcdb61203c17ea7"
+    },
+    {
+      "path": "tests/fixtures/lx2-witness-flattening/expected.json",
+      "sha256": "5eb62aef78678b89f3e5b552444a5d011149a83f5f9505bfb6e77de851bbf578"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "b83f7b06d2c73b25146c3463721204116307fb34510237f1b107c1da45ab1724"
+    },
+    {
+      "path": "tests/test_li0_witness_wire.py",
+      "sha256": "4b9db634335fe4be9850fe1368584e7faa55fe65fe2c8ca69e628762910fb154"
+    },
+    {
+      "path": "tests/test_lx2_witness_flattening.py",
+      "sha256": "9b0dbe4e05dde3b52440a360b0327472c50be58802175a9979c81b68a8cdc406"
+    },
+    {
+      "path": "tests/test_mc2_consumers.py",
+      "sha256": "965391f7ce9800860c136f4537ff8f9ac52e07c9cc7cd0421a89ad3e8767302c"
+    },
+    {
+      "path": "tests/test_packaged_skills.py",
+      "sha256": "43c09a91831bb74cd238cc68f085bcf3dec821d49fb97ccae36cdb066529b140"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "20fbe1431434b28f4ee6c6fadfb0009401b02100d81b8a6b86e1ef1bc6f05427"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "a0a8ecb54e1f19f4a33f134d12f22db1e0e4b8120ebe8e7655fa7ad4b0ac60e0"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/literature-interop-plan.md",
+      "sha256": "0b0b8be165233078e7048948eef45266f007165df557fbdd3c629cd106ae5454"
+    }
+  ],
+  "head": "1274776436b62a666f7d72e94e0547b5ae9bc8b3",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Where can a rooted v3 witness or replay accept stale inputs, confuse a model origin with a fact occurrence, or regress the legacy wire and guarded intake?",
+  "subject": "phase",
+  "version": 1
+}

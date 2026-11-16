@@ -336,10 +336,10 @@ Compose several anchored populations into one population with lineage (CT2).
 | `Composition` | class | 78 | (no docstring) |
 | `parse_manifest(raw) -> Manifest` | function | 89 | (no docstring) |
 | `parse_record(raw) -> dict[str, Any]` | function | 156 | (no docstring) |
-| `catalog_roster(model, *, references) -> list[dict[str, str]]` | function | 238 | Validate fixed catalog keys and admission before using candidate evidence. |
-| `compose(model, model_raw, directory) -> Composition` | function | 297 | Compose the sources a manifest names; refuse instead of guessing. |
-| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 455 | Re-derive a composition from its inputs and compare it with the record. |
-| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 475 | (no docstring) |
+| `catalog_roster(model, *, references) -> list[dict[str, str]]` | function | 244 | Validate fixed catalog keys and admission before using candidate evidence. |
+| `compose(model, model_raw, directory) -> Composition` | function | 307 | Compose the sources a manifest names; refuse instead of guessing. |
+| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 465 | Re-derive a composition from its inputs and compare it with the record. |
+| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 485 | (no docstring) |
 
 ## gnd.composition_resolution — `src/gnd/composition_resolution.py`
 Components: model.composition_resolution
@@ -486,6 +486,7 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `UnvalidatedPopulationError` | class(Exception) | 87 | :func:`check` was called with a population that never passed layer-2 |
 | `TransitionLoadError` | class(Exception) | 131 | A walk was refused before evaluation. Always exit 3. |
 | `ReferenceInputError` | class(ValueError) | 174 | A reference boundary refused its input before domain evaluation. |
+| `ReferenceHashMismatch` | class(ReferenceInputError) | 185 | The loaded catalog bytes differ from their declared digest. |
 
 ## gnd.evaluation_feedback — `src/gnd/evaluation_feedback.py`
 Components: check.evaluation_feedback

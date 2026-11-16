@@ -99,6 +99,7 @@ Candidate base nodes carry the nonempty `sources` list from the record.
 Reference base nodes carry the reference ID and fact index in `origin` and
 an empty `sources` list. Replay verifies each occurrence in its named input
 before accepting a proof. Changed catalog bytes or a mismatching roster give
-`binding-stale` (3). A structurally valid forged occurrence or model origin
+`binding-stale` (3). An invalid catalog whose bytes match its pin gives
+`input-invalid` (3). A structurally valid forged occurrence or model origin
 gives `proof-invalid` (1). Check with the source directory independently
 re-derives candidate lineage.

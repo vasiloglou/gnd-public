@@ -178,7 +178,7 @@ describes it.
 The authored model may declare fixed reference populations. Composition
 authenticates the declarations and loads the catalog before reading the source
 manifest. A populated catalog cannot depend on candidate rows through a
-confirmed alethic subset. Distinct catalog rows must agree with the relation's
+confirmed alethic subset or equality. Distinct catalog rows must agree with the relation's
 confirmed alethic internal uniqueness keys. These checks and a stale declared
 catalog digest give input refusal (3).
 

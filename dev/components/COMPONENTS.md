@@ -2086,7 +2086,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
 - status: canonical
 - modules: src/gnd/api.py
-- uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
+- uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
 - used_by: cli.checking_command, cli.dispatch, cli.judgments_command, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
 - part_of: subsystem.check
 - tests: tests/test_v61_phase2_api.py, tests/test_tp3_check_receipts.py, tests/test_incremental_sessions.py, tests/test_composition.py
@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +22 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, … +23 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 

@@ -217,7 +217,7 @@ def test_composed_check_binds_catalog_and_candidate_sources(tmp_path, capsys, mo
                for row in json.loads(output)["verdicts"])
 
 
-@pytest.mark.parametrize("defect", ["dependency", "key", "stale"])
+@pytest.mark.parametrize("defect", ["dependency", "equality", "key", "stale"])
 def test_catalog_is_refused_before_invalid_manifest(tmp_path, defect):
     model, sources, catalog, _ = setup(tmp_path, dependency=defect == "dependency")
     if defect == "key":
@@ -227,12 +227,20 @@ def test_catalog_is_refused_before_invalid_manifest(tmp_path, defect):
         root = read(model)
         root["reference_populations"][0]["sha256"] = digest(catalog)
         write(model, root)
+    elif defect == "equality":
+        root = read(model)
+        clause = root["constraints"][0]
+        clause["type"] = "equality"
+        clause["role_seq_a"] = clause.pop("subset_role_seq")
+        clause["role_seq_b"] = clause.pop("superset_role_seq")
+        write(model, root)
     elif defect == "stale":
         catalog.write_bytes(catalog.read_bytes() + b" ")
     (sources / "manifest.json").write_text("{}")
     result = api.compose(model, sources)
     assert result["exit_code"] == 3
-    key = {"dependency": "catalog_candidate_dependency", "key": "catalog_key_conflict", "stale": "catalog_stale"}[defect]
+    key = {"dependency": "catalog_candidate_dependency", "equality": "catalog_candidate_dependency",
+           "key": "catalog_key_conflict", "stale": "catalog_stale"}[defect]
     assert EXPECTED[key] in result["error"]["message"]
 
 
@@ -306,6 +314,38 @@ def test_mixed_proof_origin_axes(tmp_path, capsys, axis):
     assert replay(capsys, model, population, record, certificate) == EXPECTED[
         "binding_stale" if axis == "catalog-pin" else "proof_invalid"
     ]
+
+
+@pytest.mark.parametrize("includes", [True, False])
+def test_invalid_catalog_with_current_pin_is_input_invalid(tmp_path, capsys, includes):
+    model, _, catalog, targets, population, record = composition(tmp_path, capsys, includes=includes)
+    certificate = model.with_name("witness.json")
+    assert witness(capsys, model, population, record, targets, "--out", certificate)[0] == 0
+    ref = read(catalog)
+    ref["facts"][SUBJECT] = [{"shipment": "S", "warehouse": "WH-A"}]
+    write(catalog, ref)
+    root = read(model)
+    root["reference_populations"][0]["sha256"] = digest(catalog)
+    write(model, root)
+    receipt = read(record)
+    receipt["model_sha256"] = digest(model)
+    receipt["references"][0]["raw_sha256"] = digest(catalog)
+    write(record, receipt)
+    code, output, _ = witness(capsys, model, population, record, targets)
+    assert [code, json.loads(output)["reason"]] == [3, "input-invalid"]
+    assert replay(capsys, model, population, record, certificate) == [3, "input-invalid"]
+
+
+def test_witness_refuses_a_catalog_fact_in_candidate_lineage(tmp_path, capsys):
+    model, _, _, targets, population, record = composition(tmp_path, capsys)
+    changed = read(record)
+    changed["facts"].append({
+        "fact_type": CATALOG, "index": 0, "renamings": [],
+        "sources": [{"source": "first", "fact_type": CATALOG, "fact_index": 0}],
+    })
+    write(record, changed)
+    code, output, _ = witness(capsys, model, population, record, targets)
+    assert [code, json.loads(output)["reason"]] == [3, "input-invalid"]
 
 
 def test_include_free_catalog_witness_has_no_flattening_binding(tmp_path, capsys):

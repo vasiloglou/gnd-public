@@ -976,6 +976,7 @@ def _compose_with_inputs(model, directory):
     from gnd.anchors import MAX_DOCUMENT_BYTES, read_regular_path
     from gnd.composition import CompositionError
     from gnd.composition import compose as compose_sources
+    from gnd.errors import ReferenceHashMismatch
 
     if not isinstance(model, (str, os.PathLike)) or not isinstance(directory, (str, os.PathLike)):
         raise TypeError("compose takes a model path and a directory path")
@@ -999,8 +1000,7 @@ def _compose_with_inputs(model, directory):
         return {"schema": "gnd-compose/1", "exit_code": 3,
                 "error": {"kind": "input", "message": include_reason(error) or "invalid model"}}, ()
     except model_module.ReferenceInputError as error:
-        stale = "reference raw hash does not match declared sha256"
-        detail = stale if str(error) == stale else "reference catalog could not be bound"
+        detail = str(error) if isinstance(error, ReferenceHashMismatch) else "reference catalog could not be bound"
         return {"schema": "gnd-compose/1", "exit_code": 3,
                 "error": {"kind": "input", "message": str(CompositionError(detail))}}, ()
     except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model

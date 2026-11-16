@@ -180,3 +180,7 @@ class ReferenceInputError(ValueError):
 
 
 ReferenceInputError.__module__ = "gnd.model"
+
+
+class ReferenceHashMismatch(ReferenceInputError):
+    """The loaded catalog bytes differ from their declared digest."""

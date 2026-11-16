@@ -195,6 +195,7 @@ def parse_record(raw: bytes) -> dict[str, Any]:
     fields = {"fact_type", "index", "sources", "renamings"}
     if has_resolution:
         fields.add("decisions")
+    fact_coordinates = set()
     for index, fact in enumerate(data["facts"]):
         _keys(fact, fields, f"record fact {index}")
         if has_resolution:
@@ -204,6 +205,11 @@ def parse_record(raw: bytes) -> dict[str, Any]:
                 raise CompositionError(f"record fact {index} decisions must be sorted distinct indexes")
         if not isinstance(fact["fact_type"], str) or type(fact["index"]) is not int or fact["index"] < 0:
             raise CompositionError(f"record fact {index} is invalid")
+        if catalog:
+            coordinate = fact["fact_type"], fact["index"]
+            if coordinate in fact_coordinates:
+                raise CompositionError(f"record fact {index} duplicates a candidate coordinate")
+            fact_coordinates.add(coordinate)
         if not isinstance(fact["sources"], list) or not fact["sources"]:
             raise CompositionError(f"record fact {index} needs at least one source fact")
         for position, entry in enumerate(fact["sources"]):
@@ -245,6 +251,10 @@ def catalog_roster(model: Model, *, references=None) -> list[dict[str, str]]:
         raise CompositionError("reference populations require a current bound catalog context") from error
     owners = dict(context._owners)
     rows = {fact_type: facts for pop in context._populations for fact_type, facts in pop.facts.items()}
+    directions = {
+        "subset": (("subset_role_seq", "superset_role_seq"),),
+        "equality": (("role_seq_a", "role_seq_b"), ("role_seq_b", "role_seq_a")),
+    }
     for _, constraint, fact_type in ModelIndex.for_model(model).iter_constraints_shared():
         if constraint.get("status") != "confirmed" or constraint.get("modality", "alethic") != "alethic":
             continue
@@ -255,9 +265,9 @@ def catalog_roster(model: Model, *, references=None) -> list[dict[str, str]]:
             facts = rows.get(fact_id, ())
             if facts and len({tuple(identity_key(row[role]) for role in roles) for row in facts}) != len(facts):
                 raise CompositionError(f"reference catalog key conflict for {fact_id}")
-        if constraint.get("type") == "subset":
-            left = {role.get("fact_type") for role in constraint.get("subset_role_seq", ())}
-            right = {role.get("fact_type") for role in constraint.get("superset_role_seq", ())}
+        for antecedent, consequent in directions.get(constraint.get("type"), ()):
+            left = {role.get("fact_type") for role in constraint.get(antecedent, ())}
+            right = {role.get("fact_type") for role in constraint.get(consequent, ())}
             if left and all(rows.get(fact_id) for fact_id in left) and right.difference(owners):
                 raise CompositionError("reference catalog depends on candidate rows")
     return [{"id": origin.id, "raw_sha256": origin.raw_sha256} for origin, _, _ in context._snapshots]

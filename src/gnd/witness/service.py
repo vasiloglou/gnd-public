@@ -6,7 +6,7 @@ import json  # noqa: F401 -- historical compatibility binding
 from gnd import input_policy as _rf7_input
 from gnd import model as model_module
 from gnd.disclosure import resolve
-from gnd.errors import ModelValidationError, PopulationLoadError
+from gnd.errors import ModelValidationError, PopulationLoadError, ReferenceHashMismatch
 from gnd.witness.flattening import (
     StaleWitnessBinding,
     load_flat_model,
@@ -116,7 +116,7 @@ def _bound_witness_inputs(model, model_path, population_path, model_sha256, *, r
     from pathlib import Path
 
     from gnd.artifacts import sha256_hex
-    from gnd.composition import catalog_roster
+    from gnd.composition import CompositionError, catalog_roster
     from gnd.model import bind_declared_references
     from gnd.population import _parse_document_bytes, load_population_bytes
 
@@ -131,6 +131,14 @@ def _bound_witness_inputs(model, model_path, population_path, model_sha256, *, r
             digests=(model_sha256, sha256_hex(raw)), catalog=catalog_roster(model, references=context),
         )
     candidate = load_population_bytes(raw, source=population_path, model=model)
+    if context is not None and lineage is not None:
+        coordinates = {
+            (fact_type, index)
+            for fact_type, rows in candidate.facts.items()
+            for index in range(len(rows))
+        }
+        if coordinates != lineage[1].keys():
+            raise CompositionError("record lineage differs from candidate coordinates")
     document = _parse_document_bytes(raw, suffix=Path(population_path).suffix, source=str(population_path))
     return model, candidate, context, document, lineage
 
@@ -313,7 +321,7 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
             return _stamp_composition(result, lineage, catalog=True)
         lineage = _composition_lineage(composition, model_path, population_path)
         return _stamp_composition(witness_result(model_path, population_path, targets_path), lineage)
-    except (StaleWitnessBinding, model_module.ReferenceInputError):
+    except (StaleWitnessBinding, ReferenceHashMismatch):
         return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult
@@ -353,7 +361,7 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
         lineage = _composition_lineage(composition, model_path, population_path)
         _, _, _, md, pd = _witness_inputs(model_path, population_path, None)
         return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
-    except (StaleWitnessBinding, model_module.ReferenceInputError):
+    except (StaleWitnessBinding, ReferenceHashMismatch):
         return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult

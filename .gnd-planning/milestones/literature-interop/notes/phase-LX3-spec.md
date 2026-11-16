@@ -213,3 +213,19 @@ ran with host process inspection for the admission harness.
     54 passed in 7.90s
 
 Independent diff review is pending.
+
+## Review repairs
+
+The exact candidate reviewed at `28dc21b7` is retained in the round's
+brief. The delegated review disposition extends the catalog-independence
+check to both directions of an equality between role sequences, using the
+same check as a directed subset. A digest mismatch retains `binding-stale`
+while a digest-current invalid catalog is `input-invalid`. The catalog
+composition reader and witness intake check that the record coordinates
+are distinct and exactly cover the candidate facts. The checked catalog
+occurrences are outside those coordinates.
+
+The regressions reproduced four failing cases at the reviewed candidate.
+They pass in the repaired local gates. The reviewer did not reproduce an
+ambiguous candidate-lineage omission on a public verdict. The ledger
+retains the disposition and scope of the original review.

@@ -1,7 +1,7 @@
 # Literature interoperability
 
-Outline r1, 2026-11-14, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193)
-part 5 and the dates step of part 4. Not reviewed and not approved.
+Plan r3, 2026-11-15, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193)
+part 5 and the dates step of part 4. [Round 1](001-panel.md) reviewed r2. Delegated approval is pending.
 
 | Phase | Deliverable |
 |---|---|
@@ -10,6 +10,6 @@ part 5 and the dates step of part 4. Not reviewed and not approved.
 | LX3 | Composition with reference populations as fixed inputs |
 | LX4 | Split between the checking model and the extraction model, an advisory date check, and an end-to-end fixture |
 
-[Plan outline](notes/literature-interop-plan.md). It starts after
-literature-identity LI0. Whether it runs alongside LI1–LI5 is owner decision D6
-in the [literature-identity plan](../literature-identity/notes/literature-identity-plan.md).
+[Plan and readiness ledger](notes/literature-interop-plan.md).
+The [literature-identity close](../literature-identity/035-milestone-close.md)
+records the merged prerequisites.

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/literature-interop/notes/literature-interop-plan.md",
+    "sha256": "dc0b3fd0f1dfea5f6a299fc6a12e8cf2d0d77452c6e67a0c46761515c1d14573",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "literature-interop plan r2",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Check whether the declared phase dependencies and public fixture deliver issue 193 part 5 and the advisory dates step from part 4. Anchor each concern to the requested draft.",
+      "Check that provenance is reproducible across extraction, catalog binding, composition, checking, witnessing and replay. Identify concrete stale-input or origin controls that would distinguish success from a shallow implementation.",
+      "Check that validation ordering, reference versus candidate provenance, projection and rebinding, compatibility, and remaining unsupported combinations have implementable acceptance criteria.",
+      "Check that the LI1 evidence-layout carryover and focused verification have owners and observable outcomes."
+    ]
+  }
+}

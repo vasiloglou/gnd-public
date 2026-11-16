@@ -1,0 +1,127 @@
+{
+  "run_sha256": "2a2f359f5d322c60903b5f075eb45bd157ab025a65893cd4856c2f3829229708",
+  "source_commit": "befea8f1f3f438e1cc86239c259941218aaae91f",
+  "successful_reviewer_ids": [
+    "claude",
+    "codex",
+    "qwen",
+    "kimi",
+    "glm"
+  ],
+  "reviewed_artifacts_unchanged": true,
+  "reviewers": [
+    {
+      "reviewer_id": "claude",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 15,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 15,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 15,
+        "total_concerns": 15,
+        "unanchored_concern_ids": []
+      }
+    },
+    {
+      "reviewer_id": "codex",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 4,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 4,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 4,
+        "total_concerns": 4,
+        "unanchored_concern_ids": []
+      }
+    },
+    {
+      "reviewer_id": "qwen",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 14,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 14,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 14,
+        "total_concerns": 14,
+        "unanchored_concern_ids": []
+      }
+    },
+    {
+      "reviewer_id": "gemini",
+      "status": "malformed",
+      "issues": [
+        {
+          "code": "malformed",
+          "location": null,
+          "message": "reviewer response failed closed validation: invalid reviewer response: output contains no JSON object"
+        }
+      ],
+      "response_salvage": null,
+      "evidence_resolution": null
+    },
+    {
+      "reviewer_id": "kimi",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 0,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 0,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 0,
+        "unanchored_concern_ids": []
+      }
+    },
+    {
+      "reviewer_id": "glm",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 6,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 6,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 6,
+        "total_concerns": 6,
+        "unanchored_concern_ids": []
+      }
+    }
+  ]
+}

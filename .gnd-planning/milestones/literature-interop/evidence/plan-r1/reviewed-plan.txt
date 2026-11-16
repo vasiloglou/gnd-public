@@ -1,0 +1,165 @@
+# Literature interoperability · plan r2 draft for review
+
+**Status: draft for review, 2026-11-15. Review and delegated approval pending.** This
+plan covers #193 part 5 and the dates step of part 4. The cross-milestone
+partition has one home, the
+[literature-identity plan §1.1](../../literature-identity/notes/literature-identity-plan.md#11-partition-of-issue-193).
+Expanded from r1 (SHA-256
+`a287b667dfc9c0077d97d7dbc5dd565fbeb16ae9ad622a9de8b1e92284c6ea7a`).
+This is framework development. Acceptance measures the runtime contracts below.
+
+## Goal and completion predicates
+
+A shared vocabulary pinned through includes, a catalog of known entities held
+as a reference population, extraction, composition, `gnd check` and a
+witnessed query all run on one end-to-end fixture. Digests chain from the
+vocabulary through to the witness. Each combination that stays unsupported
+refuses with a message naming that combination.
+
+- **LX1.** `gnd extract` accepts an include-bearing model through a recorded,
+  digest-bound flattened projection. The flattening record maps each element
+  to the include it came from.
+- **LX2.** `gnd witness` and `gnd replay` accept the same flattened model.
+  Certificates name elements by their origin.
+- **LX3.** `gnd compose` accepts a model with reference populations, and
+  treats the reference rows as fixed inputs that are not themselves composed.
+  Candidate rows may refer to the entities they define.
+- **LX4.** A documented checking-model/extraction-model split runs: the
+  checking model includes the extraction vocabulary and adds constraints that
+  extraction never evaluates, temporal ones among them. An advisory date-order
+  check on lineage edges runs beside a real extraction.
+
+## 0. Binding design rules
+
+Apply the [literature-identity plan §0](../../literature-identity/notes/literature-identity-plan.md#0-binding-design-rules) and the six project design rules by name in every phase spec.
+
+- **Projections are recorded.** Each projection and rebinding gets a record
+  bound to the bytes it consumed. Never a silent fallback.
+- **Includes stay as they are.** Their rules (standalone-valid, no nesting,
+  confined paths) stay as written, and LX1 projects them; it does not relax
+  them.
+
+## 1. Scope, sources and authority
+
+| Source | Obligation | Phase |
+|---|---|---|
+| #193 part 5, "In 0.3.1 these refuse one another" | `guard_path` in `extract/service.py:110-116`. `guard_bytes` in `witness/service.py:28-31`. Composition refusal in `composition.py:225-227`. Include restrictions in `representation-format.md:1755-1759`. `require_non_temporal` in extract. All confirmed at `ecd12986` on 2026-11-14 | LX1–LX4 |
+| #193 part 5, Proposal 1–4 and criteria | Flattened extraction, flattened witnesses, reference populations as fixed inputs, checking/extraction split, end-to-end fixture, digest chain, clear refusals | LX1–LX4 |
+| #193 part 4, "Folded in: dates" | Date roles say which date they are. The check is advisory, and missing or conflicting dates are unresolved. A 2026 paper with a 2019 parent passes. The PINN edge is reported with both works and dates | LX4 |
+| [#95](https://github.com/vasiloglou/gnd-public/issues/95), closed | The includes contract as shipped | LX1, LX2 |
+| [LI0 result](../../literature-identity/003-phase-LI0.md) | Preserve legacy model serialization and witness compatibility | LX1, LX2 |
+| [LI1 carryover](../../literature-identity/006-phase-LI1.md#open-questions) | Measure the friction between the fidelity and composition evidence layouts and record a disposition | LX4 |
+| [LI2 result](../../literature-identity/010-phase-LI2.md) | Preserve candidate cross-source identity verification | LX3 |
+
+## 2. Proposed contracts
+
+- **LX1.** Reuse the path-aware include resolver and its element origins. The
+  proposed `gnd-flattening/1` record binds root bytes, include IDs and bytes, and
+  the canonical projected model. Origin addresses cover imported elements,
+  root elements, anonymous constraints and attachments. Verify projection
+  identity after serialization and bind the record and projected bytes into
+  the extraction artifact index.
+- **LX2.** Witness and replay consume LX1's projection and verification path.
+  The certificate binds the flattening record and identifies the model origin
+  of the elements its nodes use. Replay verifies each model origin separately
+  from its candidate/reference fact provenance. Specify how this coexists with
+  composition lineage and preserve the selected include-free wire bytes.
+- **LX3.** Use the existing declared-reference binder. Candidate rows may
+  survive validation using catalog entities, including via explicit renaming.
+  Keep catalog rows outside source renaming, deduplication and lineage. Bind
+  catalog digests in the composition record and verify them in check and
+  witness consumers. Preserve LI2 resolution checks among candidate sources.
+- **LX4.** A checking model shares the pinned extraction vocabulary and adds
+  temporal constraints. Record and validate the population rebind. The
+  advisory example compares publication dates and retains both work IDs
+  and dates. Unknown or conflicting dates stay unresolved. Compare the LI1
+  evidence layouts on this fixture and record the number of artifact copies
+  required by each route. Use a common example layout if the readers support
+  it without changing their existing public input contract.
+
+## 3. Dependencies and readiness
+
+Review base `befea8f1`. LI0–LI2 are merged, as recorded in the
+[literature-identity close](../../literature-identity/035-milestone-close.md).
+D6 permits this milestone after LI0. No LX spec, approval, result or review
+record exists yet.
+
+| Phase | Prerequisite | Next action after plan gate |
+|---|---|---|
+| LX1 | LI0 merged | Prepare LX1 spec and corpus |
+| LX2 | LX1 projection and LI0 model wire | Prepare LX2 spec after LX1 |
+| LX3 | LI2 resolution contract | Prepare LX3 spec after LX2 in the ordered walk |
+| LX4 | LX1–LX3 results and LI1 fixtures | Prepare integration spec and public fixture |
+
+## 4. Acceptance criteria
+
+| ID | Observable result |
+|---|---|
+| LX1.a | Extraction over two pinned includes exits 0. The bundle validates against the original root and every mapped address resolves to its source. Exercise an anonymous constraint and root attachment. |
+| LX1.b | Independently change the root, an included file, the flat projection and the record. Each control refuses or reports stale. Nested and unattended inputs retain their named refusals. |
+| LX2.a | Produce and replay a witness over the LX1 model. Exercise both root and included origins and refuse a fabricated origin. |
+| LX2.b | Changed include bytes yield `binding-stale` on replay. Selected include-free certificate bytes match the pre-change control. |
+| LX3.a | Compose two sources against a pinned catalog. A candidate fact refers to the catalog, and an explicit rename onto a catalog identity verifies. The candidate population and source lineage exclude reference rows. |
+| LX3.b | Refuse conflicting catalog input and a stale catalog binding. Refuse an unjustified cross-source join where LI2 requires a decision. |
+| LX4.a | Extraction operates on its own root. Verify rebinding to the checking root, and show with a discriminating control that checking evaluates the added temporal constraint. |
+| LX4.b | The 2026-to-2019 case passes the advisory date check. The PINN 2019-to-2021 case reports both works and dates. Missing and conflicting dates each yield unresolved status. |
+| LX4.c | A single public fixture runs extraction, catalog-assisted resolution, composition, check, witness and replay. Verify digest continuity and stale-link refusal. Record unsupported combinations and the LI1 layout disposition. |
+
+## 5. Surfaces
+
+The representation format owns flattening and origin rules, the witness
+contract owns replay bindings, and the composition reference owns fixed
+catalog rules. The documents guide demonstrates the supported flow and links
+to those contracts.
+
+## 6. Implementability and risks
+
+- The include resolver already supplies source and flattened addresses. LX1
+  must verify that the serializer preserves or correctly maps those addresses.
+- Verify bindings over the actual bytes consumed. Re-resolve pinned inputs
+  at the downstream trust boundary to detect post-extraction changes.
+- Witness composition currently expects candidate lineage for base nodes.
+  Define the treatment of reference-backed nodes in the LX2 and LX3 specs
+  and independently verify catalog and candidate provenance.
+- Bind the reference context apart from candidate output. Use a stale catalog
+  control even when candidate output bytes remain identical.
+- Choose a named publication date role for LX4 and test ambiguity explicitly.
+
+## 7. Deferred and out of scope
+
+- **Includes.** Nested includes, includes that declare reference populations,
+  and relabelling an unattended model to make it importable (#193 part 6).
+- **Temporal extraction.** Temporal support inside extraction is out of
+  scope. LX4 keeps temporal constraints in the checking model.
+
+## 8. Execution protocol
+
+Apply the [literature-identity protocol](../../literature-identity/notes/literature-identity-plan.md#8-execution-approval-and-review-protocol)
+and the project hook. The maintained panel is the plan and close instrument,
+with at least four valid responses required by the project. The proposed plan
+review budget is two rounds with the documented convergence rule. The
+`literature-interop auto` invocation delegates exact-byte milestone rulings.
+Panel invocation needs scoped authorization. Phase specs use the corpus-first
+default for wire formats, validation predicates and exit codes.
+
+## 9. Verification
+
+Select direct tests plus focused consumers under the default lane filters.
+Apply the project structure guard list, component check and Ruff gate. Pin
+exact commands and bounded-input controls in each spec.
+
+| Phase | Initial consumer selection |
+|---|---|
+| LX1 | `test_mc1_model_includes.py`, `test_extract_cli.py`, `test_extract_manifest.py`, `test_extract_projection.py` |
+| LX2 | `test_witness_composition.py`, `test_public_replay_admission.py`, `test_mc1_model_includes.py` |
+| LX3 | `test_composition.py`, `test_composition_example.py`, `test_witness_composition.py` and affected reference and resolution controls |
+| LX4 | LX1–LX3 integration consumers and focused temporal, composition and fixture controls |
+
+## 10. Owner decisions
+
+| ID | Question | Proposal |
+|---|---|---|
+| X1 | One flattening record format shared by extract and witness | Yes, one home in the representation format |
+| X2 | Is the date check advisory or deontic? | Advisory first, as #193 asks |
+| X3 | Is the order of LX3 within the milestone free? | Yes at the dependency level. Dispatch after LX2 in the ordered walk. |
+| X4 | Where does the LI1 evidence-layout carryover land? | LX4 records a measured disposition on the fixture |

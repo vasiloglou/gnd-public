@@ -1,0 +1,924 @@
+{
+  "schema_version": 1,
+  "run_sha256": "2a2f359f5d322c60903b5f075eb45bd157ab025a65893cd4856c2f3829229708",
+  "summary": "Five schema-valid responses. Four requested revisions and Kimi approved. Gemini returned no JSON response object. The revisions below make the r2 plan criteria discriminating before the delegated plan gate.",
+  "agreed_concerns": [
+    {
+      "group_id": "origin",
+      "severity": "high",
+      "title": "Require both reference and candidate witness origins",
+      "summary": "Produce and replay both origins in one proof and refuse swapped or fabricated origins.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ref-vs-candidate-witness-provenance"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "reference-witness-control"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "witness-reference-backed-nodes-no-criterion"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-witness-reference-provenance-unobserved"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "rebind",
+      "severity": "high",
+      "title": "Test freshness at the checking-model handoff",
+      "summary": "Bind and independently mutate the checking root, shared vocabulary, population and rebind evidence.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-rebind-control"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "checking-rebind-staleness"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-no-stale-controls"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "advisory",
+      "severity": "high",
+      "title": "Distinguish date role and advisory results",
+      "summary": "Select a named role and prove flagged or unresolved edges leave checking and witness outcomes unchanged.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-date-semantics"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-advisory-exit-status-unpinned"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "date-role-ambiguity-uncovered"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "refuse",
+      "severity": "medium",
+      "title": "Test the named unsupported combinations",
+      "summary": "Enumerate unsupported routes and assert the exit and diagnostic.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unsupported-combinations-untested"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unsupported-combination-matrix"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "unsupported-combination-refusals-unenumerated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-unsupported-combination-refusal-criterion"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "catalog",
+      "severity": "high",
+      "title": "Exercise stale composition evidence at consumers",
+      "summary": "Mutate the catalog without changing candidate bytes. Verify check, witness and replay, plus source and record mutation controls.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-catalog-consumers"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "composition-stale-controls-incomplete"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-catalog-digest-downstream-control"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "lineage",
+      "severity": "high",
+      "title": "Run the date check on lineage data",
+      "summary": "Use the fixture lineage stage and correlate edge and work identities.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-lineage-dependency"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "lx4-lineage-dependency"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "order",
+      "severity": "medium",
+      "title": "Test boundary refusal precedence",
+      "summary": "Resolve order in the phase specs and add two-defect controls.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "validation-ordering"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "validation-ordering-unpinned"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "legacy",
+      "severity": "high",
+      "title": "Pin legacy extraction, composition and witness bytes",
+      "summary": "Measure include-free and reference-free predecessor controls.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compatibility-controls"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "include-free-byte-compatibility-extract"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-li0-compatibility-criterion"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "layout",
+      "severity": "medium",
+      "title": "Measure per-document layout against both readers",
+      "summary": "Run fidelity and composition and count materialized copies.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-carryover-measurable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-layout-gate-unenforceable"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "tests",
+      "severity": "medium",
+      "title": "Name focused consumers and fixtures",
+      "summary": "Name actual adjacent tests and designate the new phase test home.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "focused-verification-gaps"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "verification-lx4-consumers-unnamed"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx4-verification-consumers-unnamed"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "owner",
+      "severity": "medium",
+      "title": "Give mixed provenance one phase owner",
+      "summary": "Use LX2 as a prerequisite for LX3 mixed witness integration.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx2-lx3-ordering"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-lx3-dependency-contradiction"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "anchor",
+      "severity": "low",
+      "title": "Identify source locations at the review base",
+      "summary": "Cite symbols in the current checkout.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-source-anchors"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-source-pin-commit-vs-review-base"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx4c-fixture-scope"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx4c-digest-chain-links"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "witness-guard-inventory"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "lx1-stale-controls-disjunctive"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "path-confinement-control-missing"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "surfaces-missing-checking-split-home"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fixture",
+      "rank": 1,
+      "title": "Run all features on one fixture",
+      "action": "Include pinned vocabulary, a declared catalog, the checking model and the date check in the same integration gate.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4c-fixture-scope"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4c-fixture-scope",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "chain",
+      "rank": 2,
+      "title": "Verify each handoff in the digest chain",
+      "action": "Identify the verifier for each link and require one mutation per link.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4c-digest-chain-links"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4c-digest-chain-links",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "origin",
+      "rank": 3,
+      "title": "Require both reference and candidate witness origins",
+      "action": "Produce and replay both origins in one proof and refuse swapped or fabricated origins.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ref-vs-candidate-witness-provenance"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "reference-witness-control"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "witness-reference-backed-nodes-no-criterion"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-witness-reference-provenance-unobserved"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ref-vs-candidate-witness-provenance",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "reference-witness-control",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "witness-reference-backed-nodes-no-criterion",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-witness-reference-provenance-unobserved",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "rebind",
+      "rank": 4,
+      "title": "Test freshness at the checking-model handoff",
+      "action": "Bind and independently mutate the checking root, shared vocabulary, population and rebind evidence.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-rebind-control"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "checking-rebind-staleness"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-no-stale-controls"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-rebind-control",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "checking-rebind-staleness",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-no-stale-controls",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "advisory",
+      "rank": 5,
+      "title": "Distinguish date role and advisory results",
+      "action": "Select a named role and prove flagged or unresolved edges leave checking and witness outcomes unchanged.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-date-semantics"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-advisory-exit-status-unpinned"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "date-role-ambiguity-uncovered"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-date-semantics",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-advisory-exit-status-unpinned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "date-role-ambiguity-uncovered",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "refuse",
+      "rank": 6,
+      "title": "Test the named unsupported combinations",
+      "action": "Enumerate unsupported routes and assert the exit and diagnostic.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unsupported-combinations-untested"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unsupported-combination-matrix"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "unsupported-combination-refusals-unenumerated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-unsupported-combination-refusal-criterion"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unsupported-combinations-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unsupported-combination-matrix",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "unsupported-combination-refusals-unenumerated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-unsupported-combination-refusal-criterion",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "catalog",
+      "rank": 7,
+      "title": "Exercise stale composition evidence at consumers",
+      "action": "Mutate the catalog without changing candidate bytes. Verify check, witness and replay, plus source and record mutation controls.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-catalog-consumers"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "composition-stale-controls-incomplete"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-catalog-digest-downstream-control"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-catalog-consumers",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "composition-stale-controls-incomplete",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-catalog-digest-downstream-control",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "route",
+      "rank": 8,
+      "title": "Inventory guarded witness entry points",
+      "action": "Record path and direct intake boundaries and their intended support.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "witness-guard-inventory"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "witness-guard-inventory",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "lineage",
+      "rank": 9,
+      "title": "Run the date check on lineage data",
+      "action": "Use the fixture lineage stage and correlate edge and work identities.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-lineage-dependency"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "lx4-lineage-dependency"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-lineage-dependency",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "lx4-lineage-dependency",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "order",
+      "rank": 10,
+      "title": "Test boundary refusal precedence",
+      "action": "Resolve order in the phase specs and add two-defect controls.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "validation-ordering"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "validation-ordering-unpinned"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "validation-ordering",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "validation-ordering-unpinned",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "legacy",
+      "rank": 11,
+      "title": "Pin legacy extraction, composition and witness bytes",
+      "action": "Measure include-free and reference-free predecessor controls.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compatibility-controls"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "include-free-byte-compatibility-extract"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-li0-compatibility-criterion"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compatibility-controls",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "include-free-byte-compatibility-extract",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-li0-compatibility-criterion",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "layout",
+      "rank": 12,
+      "title": "Measure per-document layout against both readers",
+      "action": "Run fidelity and composition and count materialized copies.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-carryover-measurable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-layout-gate-unenforceable"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-carryover-measurable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-layout-gate-unenforceable",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "tests",
+      "rank": 13,
+      "title": "Name focused consumers and fixtures",
+      "action": "Name actual adjacent tests and designate the new phase test home.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "focused-verification-gaps"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "verification-lx4-consumers-unnamed"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx4-verification-consumers-unnamed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "focused-verification-gaps",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "verification-lx4-consumers-unnamed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx4-verification-consumers-unnamed",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "owner",
+      "rank": 14,
+      "title": "Give mixed provenance one phase owner",
+      "action": "Use LX2 as a prerequisite for LX3 mixed witness integration.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx2-lx3-ordering"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-lx3-dependency-contradiction"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx2-lx3-ordering",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-lx3-dependency-contradiction",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "anchor",
+      "rank": 15,
+      "title": "Identify source locations at the review base",
+      "action": "Cite symbols in the current checkout.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-source-anchors"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-source-pin-commit-vs-review-base"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-source-anchors",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx-source-pin-commit-vs-review-base",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "binding",
+      "rank": 16,
+      "title": "Make LX1 stale controls discriminating",
+      "action": "Pin refusal codes per mutation and include mutually consistent forged flat and record bytes.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx1-stale-controls-disjunctive"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx1-stale-controls-disjunctive",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "confinement",
+      "rank": 17,
+      "title": "Exercise include path and standalone validity",
+      "action": "Assert the existing confined-path and validation refusals on the new route.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "path-confinement-control-missing"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "path-confinement-control-missing",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "docs",
+      "rank": 18,
+      "title": "Assign one normative home per contract",
+      "action": "Assign the rebind wire and advisory behavior to their owning documents.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "surfaces-missing-checking-split-home"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "surfaces-missing-checking-split-home",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    }
+  ]
+}

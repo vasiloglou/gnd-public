@@ -107,3 +107,23 @@ def test_a_candidate_cannot_repin_its_own_opinions(release, tmp_path):
     altered.write_bytes(canonical_json_bytes(doc))
     with pytest.raises(ValueError, match="verdict digest"):
         verdict.evaluate(root, "both-approved", opinions=altered, opinions_sha256=verdict.OPINIONS_SHA256)
+
+
+def test_invalid_pinned_opinion_shapes_fail_before_release_reads(tmp_path):
+    from time import monotonic
+
+    from gnd.examples.literature import verdict
+
+    fixture = tmp_path / "opinions.json"
+    release = tmp_path / "missing-release"
+    document = _read(verdict.OPINIONS)
+    first = document["cases"][0]
+    empty = {**document, "cases": [{**first, "source_opinions": []}, *document["cases"][1:]]}
+    duplicate = {**document, "cases": [first] * len(document["cases"])}
+    started = monotonic()
+    for raw in (b" " * (1 << 20), b"[" * 3000 + b"]" * 3000, b'{"value":NaN}',
+                canonical_json_bytes(empty), canonical_json_bytes(duplicate)):
+        fixture.write_bytes(raw)
+        with pytest.raises((ValueError, verdict.ArtifactError)):
+            verdict.evaluate(release, "both-approved", opinions=fixture, opinions_sha256=_digest(raw))
+    assert monotonic() - started < 3

@@ -303,10 +303,11 @@ Publish and replay the literature semantic revision example offline.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `run(reading_run, out) -> dict` | function | 391 | Recheck captured evidence and publish both snapshots under a new root. |
-| `replay(root, *, snapshot) -> dict` | function | 412 | Re-derive the release from authenticated retained inputs in private scratch. |
-| `replay_support(root, source) -> dict` | function | 432 | Check one certificate against the independent source and review inputs. |
-| `main(argv) -> int` | function | 455 | (no docstring) |
+| `run(reading_run, out) -> dict` | function | 392 | Recheck captured evidence and publish both snapshots under a new root. |
+| `replay(root, *, snapshot) -> dict` | function | 413 | Re-derive the release from authenticated retained inputs in private scratch. |
+| `replay_support(root, source) -> dict` | function | 433 | Check one certificate against the independent source and review inputs. |
+| `replay_renewed_support(root) -> dict` | function | 456 | Verify the selected replacement review and proof for the evolved predicate. |
+| `main(argv) -> int` | function | 478 | (no docstring) |
 
 ## gnd.examples.literature.revision_manifest — `src/gnd/examples/literature/revision_manifest.py`
 Components: examples.literature_revision
@@ -322,6 +323,17 @@ Bind a release to an independently selected, bounded dependency policy.
 | `Policy.inspect(self, root, snapshot) -> tuple[dict, dict[str, bytes]]` | method | 93 | (no docstring) |
 | `status(root, *, policy, policy_sha256) -> dict` | function | 145 | Check a candidate against the consumer's exact policy and propagate staleness. |
 | `publish(root, files) -> None` | function | 154 | (no docstring) |
+
+## gnd.examples.literature.verdict — `src/gnd/examples/literature/verdict.py`
+Components: examples.literature_verdict
+Evaluate consumer-pinned verdicts on the literature fixture's derived claim.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `evaluate(root, case, *, edition, opinions, opinions_sha256) -> dict` | function | 140 | Check one independently pinned reading opinion set against the release. |
+| `run(root, out) -> dict[str, dict]` | function | 155 | Capture the reproducible worked verdicts in a new directory. |
+| `replay(root, out) -> dict[str, dict]` | function | 167 | Recompute a retained verdict report from the expected release evidence. |
+| `main(argv) -> int` | function | 181 | (no docstring) |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

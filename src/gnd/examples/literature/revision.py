@@ -131,12 +131,13 @@ def _review(root: Path, source: str, authored: dict, *, model: str = MODEL, expe
     }
 
 
-def _proof(root: Path, folder: str, population: str, target: str, *, composition: str | None = None) -> dict:
+def _proof(root: Path, folder: str, population: str, target: str, *, composition: str | None = None,
+           model: str = MODEL) -> dict:
     witness = f"{folder}witness.json"
     composed = ("--composition", composition) if composition else ()
-    proof = _command(root, "witness", MODEL, population, "--targets", target,
+    proof = _command(root, "witness", model, population, "--targets", target,
                      *composed, "--raw", "--out", witness)
-    repeated = _command(root, "replay", MODEL, population, witness, *composed, "--raw")
+    repeated = _command(root, "replay", model, population, witness, *composed, "--raw")
     require(proof.return_code == repeated.return_code and proof.return_code in (0, 2),
             "witness and replay did not agree")
     emitted, replayed = _decode(proof.stdout), _decode(repeated.stdout)
@@ -319,13 +320,13 @@ def _rule_comparison(root: Path) -> dict:
     return result
 
 
-def _support(root: Path, source: str, reviewed: dict, editions: dict) -> dict:
+def _support(root: Path, source: str, reviewed: dict, editions: dict, *, model: str = MODEL) -> dict:
     evidence, folder = f"sources/{source}", f"supports/{source}/"
     _check_asserted_anchors(root, f"{evidence}/population.json", "--document", f"{evidence}/document.txt",
                             "--anchors", f"{evidence}/population.json.anchors.json")
     require(reviewed["admitted"], "support review is stale")
     review_raw = _write(root, folder + "review.json", reviewed)
-    proof = _proof(root, folder, f"{evidence}/population.json", folder + "targets.json")
+    proof = _proof(root, folder, f"{evidence}/population.json", folder + "targets.json", model=model)
     require(len(proof["queries"]) == 1 and proof["queries"][0][-1], "support did not prove the selected claim")
     target = _decode(_read(root, folder + "targets.json"))["targets"][0]
     roles = dict(zip(("method", "base_method"), (part["value"] for part in target["tuple"]), strict=True))
@@ -450,6 +451,28 @@ def replay_support(root: Path, source: str) -> dict:
                 _read(work, folder + "review.json") == files[folder + "review.json"] and
                 canonical_json_bytes(computed) == files[folder + "support.json"], "support evidence differs")
     return computed
+
+
+def replay_renewed_support(root: Path) -> dict:
+    """Verify the selected replacement review and proof for the evolved predicate."""
+    policy = Policy.load()
+    state, files = policy.inspect(root / "after", "after")
+    source = "whale-a"
+    evolved = f"evolution/{MODEL}"
+    observed = (evolved, "evolution/definition.json", "evolution/reviews.json", "evolution/transition.json")
+    inputs = (
+        MODEL, "interpretation.json", "review-inputs.json", "evolution/proposal.json",
+        "rule.json", "decisions.json", "sources/resolution.json", f"supports/{source}/targets.json",
+        *(f"sources/{source}/{name}" for name in SOURCE_FILES),
+    )
+    require({*observed, *inputs} <= set(state["current"]), "renewed support evidence is stale")
+    with tempfile.TemporaryDirectory(prefix="gnd-revision-renewed-") as temporary:
+        work = Path(temporary).resolve()
+        _copy(work, {path: files[path] for path in inputs})
+        _transition(work, _review_inputs(work))
+        require(all(_read(work, path) == files[path] for path in observed), "renewed evidence differs on replay")
+        review = _decode(_read(work, "evolution/reviews.json"))["renewed"]
+        return _support(work, source, review, _editions(work), model=evolved)
 
 
 def main(argv: list[str] | None = None) -> int:

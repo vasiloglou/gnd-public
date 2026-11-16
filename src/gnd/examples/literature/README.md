@@ -357,3 +357,7 @@ replays completed stages without calling its producer.
 The [release migration example](revision_fixture/README.md) traces a whale
 identity split through assertions, reviews, coverage and lineage witnesses.
 It retains the original snapshot for independent replay.
+
+The [derived verdict example](verdict_fixture/README.md) applies saved source
+opinions to the released claim. It checks which supports survive rejection
+or a change to their evidence.

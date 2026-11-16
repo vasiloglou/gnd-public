@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +71 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +72 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +25 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +26 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -3650,6 +3650,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - source digest: conformance.currency, fidelity.doccheck, model.rai_import
 - source lineage: model.composition, witness.presentation
 - source spans: extract.source_anchors, model.anchors
+- source support: examples.literature_depth, examples.literature_verdict
 - stagnation: exp.service, exp.session_runtime
 - stale evidence: exp.acceptance, semantics.proof_currency
 - station timeout: agent.solve, cli.solve_command
@@ -3713,7 +3714,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/depth.py
 - uses: infra.artifacts, infra.bounded_process, model.anchors
-- used_by: examples.literature_reading, examples.literature_revision
+- used_by: examples.literature_reading, examples.literature_revision, examples.literature_verdict
 - tests: tests/test_ld1_competency_examples.py
 
 ### examples.literature_reading
@@ -3736,5 +3737,17 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/revision.py, src/gnd/examples/literature/revision_manifest.py
 - uses: examples.literature_depth, examples.literature_reading, infra.artifacts, infra.errors, model.loading
-- used_by: (none)
+- used_by: examples.literature_verdict
 - tests: tests/test_ld4_revision.py
+- notes: Independently replays both original and renewed source support certificates.
+
+### examples.literature_verdict
+- does: Recheck consumer-pinned source opinions on a derived literature claim and report which support certificates remain effective.
+- verbs: derived verdict, source support, independent support, reviewed definition, resolution edition, claim bindings, revalidation
+- in: Completed revision release and synthetic source opinions pinned to exact evidence.
+- out: Supported, unsupported and revalidation-required decisions with source-level reasons and a replayable report.
+- status: canonical
+- modules: src/gnd/examples/literature/verdict.py
+- uses: examples.literature_depth, examples.literature_revision, infra.artifacts, infra.errors
+- used_by: (none)
+- tests: tests/test_ld5_verdict.py

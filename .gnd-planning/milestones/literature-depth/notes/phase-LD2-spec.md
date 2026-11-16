@@ -111,3 +111,8 @@ checker or certificate format change. The fixed-scale fact uses the
 existing anchored and value constraints. Witness and replay authenticate
 the coefficient, scale and unit as one tuple. The raw fractional Number
 and Float controls continue to check and then return the same refusal.
+
+The RF6 guard rejected the additional scanned accesses in the new anchor
+helper. The exact inventory successor records its four occurrences
+across three counted rows with no removals. This changes the live
+inventory and leaves the query exception policy and predecessor bytes intact.

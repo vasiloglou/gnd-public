@@ -1,0 +1,4 @@
+{
+  "population": {"model": "time.orm.yaml", "source": "fixture"},
+  "facts": {"time_step": [{"coefficient": 2, "places": 3, "unit": "ps"}]}
+}

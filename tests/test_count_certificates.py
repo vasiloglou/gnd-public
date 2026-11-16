@@ -382,6 +382,35 @@ def test_malformed_snapshot_yaml_gets_a_structured_refusal(case):
     assert not stderr
 
 
+@pytest.mark.parametrize("snapshot", ("model", "population"))
+def test_deep_yaml_is_refused_before_loading_snapshot(case, monkeypatch, snapshot):
+    from gnd.witness import count_membership
+    from gnd.witness.count_producer import produce_count
+    from gnd.witness.count_replay import replay_count
+
+    proof = _certify(case)
+    model = case / "model.orm.yaml"
+    population = case / "population.yaml"
+    request = case / "group.json"
+    certificate = case / "certificate.json"
+    # A sufficiently deep but small flow sequence would reach the slow loader path.
+    deep_yaml = "a: " + "[" * 16_000 + "]" * 16_000
+    population.write_bytes((case / "population.json").read_bytes())
+    path = model if snapshot == "model" else population
+    path.write_text(deep_yaml)
+
+    def unexpected_load(*_args, **_kwargs):
+        pytest.fail("snapshot loader must not construct an over-depth YAML document")
+
+    monkeypatch.setattr(count_membership, f"load_{snapshot}_bytes", unexpected_load)
+    refusal = {"exit_code": 3, "reason": "input-invalid"}
+    assert produce_count(model, population, request) == refusal
+    assert replay_count(model, population, certificate, request)["reason"] == "binding-stale"
+    proof["binding"][f"{snapshot}_sha256"] = sha256_hex(path.read_bytes())
+    _write(certificate, proof)
+    assert replay_count(model, population, certificate, request) == refusal
+
+
 def test_public_count_routes_share_disclosure_policy(case):
     args = ("model.orm.yaml", "population.json", "--request", "group.json")
     default = _command(case, "witness-count", *args)

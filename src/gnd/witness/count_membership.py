@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes, is_sha256_hex, sha256_hex
 from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
+from gnd.input_policy import guard_yaml
 from gnd.model import iter_derivation_clauses, load_model_bytes
 from gnd.model_index import ModelIndex
 from gnd.population import load_population_bytes
@@ -166,12 +168,19 @@ def _declared_rule(model, request):
     return body["fact_type"], len(inputs), filters, over_roles, of_role
 
 
+def _guard_yaml_snapshot(raw, path, limits):
+    if Path(path).suffix != ".json":
+        guard_yaml(raw, max_bytes=limits.bytes, max_depth=limits.container_depth)
+
+
 def members_from_snapshot(model_path, population_path, snapshot, request, limits):
     raw_model, raw_population, _ = snapshot
+    _guard_yaml_snapshot(raw_model, model_path, limits)
     model = load_model_bytes(raw_model, source=model_path)
     if model.reference_populations:
         raise CountRefusal(2, "fragment-unsupported")
     source, body_width, filters, over_roles, of_role = _declared_rule(model, request)
+    _guard_yaml_snapshot(raw_population, population_path, limits)
     population = load_population_bytes(raw_population, source=population_path, model=model)
     if source not in population.covers:
         raise CountRefusal(2, "coverage-undeclared")

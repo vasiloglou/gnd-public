@@ -73,8 +73,11 @@ Replay validates certificate shape first, then reads the external request
 and bounded snapshot bytes. An oversized snapshot refuses before digest
 comparison. Replay checks bindings before model evaluation and checks
 declared coverage before deciding membership. Request and certificate
-input byte, depth and scalar limits apply at intake. Inputs are regular
-files. Unresolved includes fail model intake.
+input byte, depth and scalar limits apply at intake. After checking
+bindings, the commands guard YAML snapshot depth before the normal
+loaders construct nodes. The JSON snapshot readers apply their existing
+depth guard. Inputs are regular files. Unresolved includes fail model
+intake.
 
 The limits are 10 MiB per request, certificate, model or population file,
 64 container levels, 4,096 UTF-8 bytes per wire string and 128 digits

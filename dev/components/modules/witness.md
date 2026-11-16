@@ -33,17 +33,17 @@ Bounded intake and exact source enumeration for a selected COUNT group.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `CountRefusal` | class(ValueError) | 25 | (no docstring) |
-| `refused(error) -> dict` | function | 32 | (no docstring) |
-| `request_shape(doc)` | function | 50 | (no docstring) |
-| `certificate_shape(doc, limits)` | function | 59 | (no docstring) |
-| `read_bytes(path, limits, *, snapshot)` | function | 83 | (no docstring) |
-| `read_request(path, limits)` | function | 91 | (no docstring) |
-| `read_snapshot(model, population, request_digest, limits)` | function | 98 | (no docstring) |
-| `members_from_snapshot(model_path, population_path, snapshot, request, limits)` | function | 169 | (no docstring) |
-| `make_document(binding, request, members)` | function | 212 | (no docstring) |
-| `check_result_bound(document, limits)` | function | 217 | (no docstring) |
-| `success(document, *, include_certificate)` | function | 226 | (no docstring) |
+| `CountRefusal` | class(ValueError) | 27 | (no docstring) |
+| `refused(error) -> dict` | function | 34 | (no docstring) |
+| `request_shape(doc)` | function | 52 | (no docstring) |
+| `certificate_shape(doc, limits)` | function | 61 | (no docstring) |
+| `read_bytes(path, limits, *, snapshot)` | function | 85 | (no docstring) |
+| `read_request(path, limits)` | function | 93 | (no docstring) |
+| `read_snapshot(model, population, request_digest, limits)` | function | 100 | (no docstring) |
+| `members_from_snapshot(model_path, population_path, snapshot, request, limits)` | function | 176 | (no docstring) |
+| `make_document(binding, request, members)` | function | 221 | (no docstring) |
+| `check_result_bound(document, limits)` | function | 226 | (no docstring) |
+| `success(document, *, include_certificate)` | function | 235 | (no docstring) |
 
 ## gnd.witness.count_producer — `src/gnd/witness/count_producer.py`
 Components: witness.count_membership

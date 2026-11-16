@@ -2193,7 +2193,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +52 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +53 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -3129,7 +3129,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Bound certificate with ordered representative occurrences or a replay verdict, including empty-group success.
 - status: canonical
 - modules: src/gnd/witness/count_cli.py, src/gnd/witness/count_membership.py, src/gnd/witness/count_producer.py, src/gnd/witness/count_replay.py
-- uses: infra.artifacts, infra.errors, infra.safe_filesystem, model.loading, model.population_loading, model.query_index, witness.schema
+- uses: infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.loading, model.population_loading, model.query_index, witness.schema
 - used_by: cli.witness_command
 - part_of: subsystem.witness
 - tests: tests/test_count_certificates.py

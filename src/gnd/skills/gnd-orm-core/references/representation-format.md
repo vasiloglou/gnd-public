@@ -1930,15 +1930,16 @@ The canonical JSON record has `format: "gnd-flattening/1"`,
 order, `flat_model_sha256`, and `origins`. Each origin has `origin`,
 `original_address`, `composed_address`, and nullable `element_id`.
 The source is `model` for root-owned elements and `includes[ID]` for an
-imported element. Origins are sorted by composed address. An anonymous
+imported element. Origins are sorted by the composed address string in Unicode code-point order. An anonymous
 constraint has a null ID. A root attachment retains its authored
 `fact_type_constraints` address and identifies its inline address in the
 flat model.
 
 For an extraction handoff, `gnd verify` checks the index against the root
 bytes, resolves and authenticates the include pins, then checks the flat
-model and record against re-derived bytes. The command uses that resolved
-model snapshot for verification. A missing binding, changed coordinate, or
+model and record against re-derived bytes. It also re-derives the shape-only
+projection schema and compares its JSON content before accepting the
+sidecar. The command uses the resolved model snapshot for verification. A missing binding, changed coordinate, or
 a pair of forged artifacts with mutually consistent digests refuses in input
 band 3. The root and its includes are required to establish current binding.
 

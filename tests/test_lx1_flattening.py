@@ -286,3 +286,23 @@ def test_output_cannot_replace_an_include(inputs, capsys) -> None:
     assert "overlap" in capsys.readouterr().out
     assert bound_input.read_bytes() == original
     assert not (model.parent / "project.orm.artifacts.json").exists()
+
+
+def test_repinning_a_forged_extraction_schema_does_not_verify(handoff, capsys) -> None:
+    _, bundle, population = handoff
+    index_path = bundle / "project.orm.artifacts.json"
+    projection = bundle / "project.orm.projection.schema.json"
+    sidecar = population.with_suffix(".extraction.json")
+    index = json.loads(index_path.read_bytes())
+    extraction = json.loads(sidecar.read_bytes())
+
+    write_doc(projection, {})
+    index["artifacts"][projection.name]["sha256"] = sha(projection)
+    extraction["projection_sha256"] = sha(projection)
+    write_doc(index_path, index)
+    write_doc(sidecar, extraction)
+
+    capsys.readouterr()
+    assert verify(handoff) == 3
+    result = json.loads(capsys.readouterr().out)
+    assert "projection schema" in result["extraction"]["reason"]

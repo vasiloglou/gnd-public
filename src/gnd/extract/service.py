@@ -132,6 +132,14 @@ def _verify_artifact_index(
                 raise ExtractionBundleError(
                     f"the bundle index records {rel} sha256 {recorded} but the artifact bytes hash to {actual}"
                 )
+            if model is not None and rel == f"{stem}.projection.schema.json":
+                from gnd.extract.projection import project
+
+                actual_schema = wire.canonical_json_bytes(_rf7_input.loads(raw))
+                if actual_schema != wire.canonical_json_bytes(project(model)):
+                    raise ExtractionBundleError(
+                        "the projection schema does not match the resolved include snapshot"
+                    )
             digests[rel] = actual
     except ExtractionBundleError:
         raise

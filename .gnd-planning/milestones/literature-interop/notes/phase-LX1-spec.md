@@ -263,3 +263,23 @@ The changed-file Ruff check exited 0. Whole-tree Ruff exited 1 with the
 188 predecessor diagnostics above. The strict component check and
 `git diff --check` exited 0. LX1 awaits its independent diff review and
 phase completion record.
+
+### Independent review and driver regression
+
+Claude Code Opus returned APPROVE on `e2ce2ade`. The two comments were
+classified as completeness. The overlap guard keeps its own route-specific
+failure semantics. The normative origin ordering now names its comparator.
+The review folder retains the first client refusal and the successful retry
+with the prompt separator.
+
+A driver probe exposed an include-backed projection schema forgery after
+both the digest index and sidecar were rewritten. The new regression
+showed exit 0 on the reviewed bytes (pytest exit 1). Verification now
+re-derives the shape-only schema from the authenticated model before
+accepting the handoff. The regression then exited 0.
+
+A transient bytecode cache from loading the review helper caused the
+first repaired structural run to report a skill-tree difference. Removing
+that generated file restored the intended test boundary. The final
+independent read binds the reviewed commit. Post-review edits have their
+own local verification.

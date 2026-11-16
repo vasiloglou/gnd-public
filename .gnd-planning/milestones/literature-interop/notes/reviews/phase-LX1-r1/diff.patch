@@ -1,0 +1,2153 @@
+diff --git a/.gnd-planning/milestones/literature-interop/004-phase-LX1-spec-gate.md b/.gnd-planning/milestones/literature-interop/004-phase-LX1-spec-gate.md
+new file mode 100644
+index 00000000..ed872b8a
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/004-phase-LX1-spec-gate.md
+@@ -0,0 +1,75 @@
++---
++milestone: literature-interop
++station: phase-LX1-spec-gate
++skill: "n/a -- repository development under process-phase"
++scope: phase-LX1-spec-gate
++date: 2026-11-15
++gates:
++  - command: "ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md sha256 ae928cb6fb3caf2e8174812b386868c60b0517ab0ebf7829e5bc63d0f9ef823a"
++    exit: "n/a -- ruling"
++  - command: "python -m pytest -q -p no:cacheprovider tests/test_lx1_flattening.py --tb=short"
++    exit: 1
++evidence:
++  - path: .gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md
++    sha256: ae928cb6fb3caf2e8174812b386868c60b0517ab0ebf7829e5bc63d0f9ef823a
++  - path: tests/test_lx1_flattening.py
++    sha256: 8f9b592c7e6b12a7ccf93f226faae6e2ee5b45196d6fd67d1a7ee95d0c7063be
++  - path: tests/fixtures/lx1-flattening/README.md
++    sha256: 81cf195c66f34617cb6d1e0fdf7a158f94bb7ef6efd15ce38d731074518132c4
++  - path: tests/fixtures/lx1-flattening/components.orm.json
++    sha256: c1b7802153351c2aa2dc827a191f14a4870d59ec30fbcfcd8fa9f53eb2f67320
++  - path: tests/fixtures/lx1-flattening/document.txt
++    sha256: 953221e526b6a2f6eac34a62dfde4a09056b078725bb8b3ee3dc32ddc3a1f8d1
++  - path: tests/fixtures/lx1-flattening/expected.json
++    sha256: d3838579e32af331aa4f25bff242d3d21a534180fd60f293dc529e016acc6d09
++  - path: tests/fixtures/lx1-flattening/facts.json
++    sha256: e0e135cac1f5b567258994e136aebf5820279ea95850ea59dda6e76a435c0484
++  - path: tests/fixtures/lx1-flattening/project.orm.json
++    sha256: 9e7a9e7a5b5f76f6f253a3fc965d386db667b97468737169b93d4320fe99e4bb
++  - path: tests/fixtures/lx1-flattening/topics.orm.json
++    sha256: 7f09b19990e17cf9b6f368150538eab65d22b21e534268711f8b0c4c10a51178
++---
++
++# Claim
++
++The LX1 delegated gate approves the spec and the corpus bound above. The
++corpus establishes a red predecessor for include-backed extraction.
++
++## Ruling and implementability
++
++ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md sha256 ae928cb6fb3caf2e8174812b386868c60b0517ab0ebf7829e5bc63d0f9ef823a
++
++**Delegated approval (auto=true), 2026-11-15.** The owner's
++`process-milestone literature-interop auto` instruction authorizes the spec
++and corpus decisions D1–D4. The approval instrument is corpus-first.
++All test and fixture bytes above are bound to this ruling. The spec sets
++the required focused, structural and lint gates. The selected post-change
++review is the project phase-diff instrument, with its own execution
++authorization. No spec panel was selected.
++
++The loaded two-include fixture has nine resolver origins, including the
++anonymous constraint and both root attachments. The model-loader probe
++showed the underlying projection can round-trip. The test harness drives
++the actual extract and verify commands, rewrites bound bytes independently,
++and has a same-root coordinated forgery arm. It captures pre-change
++include-free bytes with the package version pinned to 0.3.1.
++
++## Gate output
++
++Run with the host's existing dev dependencies and this worktree's source
++on the import path. The phase base is `183972ea`.
++
++    8 failed, 1 passed, 13 errors in 3.57s
++
++The predecessor extract route returns `include:unsupported-route`. Tests
++that require its bundle stop at setup. The flattening layer is absent.
++The include-free exact-byte control exits 0.
++
++## Boundary
++
++The red corpus binds expected transitions under LX1. Runtime implementation,
++focused verification, independent review and phase closure are separate gates.
++
++## Open questions
++
++- None at the spec gate.
+diff --git a/.gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json b/.gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json
+new file mode 100644
+index 00000000..e64a6765
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json
+@@ -0,0 +1,60 @@
++{
++  "schema_version": 1,
++  "reason": "LX1 moves bundle-index lookups to the shared verifier and adds exact artifact and digest indexing. These syntax candidates are not model structure queries.",
++  "predecessor": ".gnd-planning/milestones/literature-identity/evidence/main-integration/dynamic-query-successor.json",
++  "predecessor_sha256": "49a355fa0718c5ee66d7be235f69bb2f58a7bc558929686371ddde1af0070b52",
++  "removed": [
++    [
++      "src/gnd/extract/service.py",
++      "_artifact_index_issue",
++      "index['artifacts'][rel]",
++      1
++    ]
++  ],
++  "added": [
++    [
++      "src/gnd/export/verification_service.py",
++      "_cmd_verify",
++      "verified_bundle.artifact_digests[projection_rel]",
++      1
++    ],
++    [
++      "src/gnd/extract/service.py",
++      "_VerifiedBundle",
++      "dict[str, str]",
++      1
++    ],
++    [
++      "src/gnd/extract/service.py",
++      "_flattening_names",
++      "dict[str, str]",
++      1
++    ],
++    [
++      "src/gnd/extract/service.py",
++      "_verify_artifact_index",
++      "dict[str, bytes]",
++      1
++    ],
++    [
++      "src/gnd/extract/service.py",
++      "_verify_artifact_index",
++      "expected[rel]",
++      1
++    ],
++    [
++      "src/gnd/extract/service.py",
++      "_verify_artifact_index",
++      "index['artifacts'][rel]",
++      2
++    ],
++    [
++      "src/gnd/extract/service.py",
++      "_verify_artifact_index",
++      "tuple[str, ...]",
++      1
++    ]
++  ],
++  "result_distinct_rows": 7794,
++  "result_occurrences": 9687
++}
+diff --git a/.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json b/.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json
+new file mode 100644
+index 00000000..77568bd6
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json
+@@ -0,0 +1,53 @@
++{
++  "schema_version": 1,
++  "reason": "LX1 changes three guarded CLI bodies behind the existing defining modules and aliases.",
++  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
++  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
++  "successors": [
++    {
++      "kind": "RF5",
++      "old": "gnd.cli",
++      "name": "_artifact_index_issue",
++      "home": "gnd.extract.service",
++      "reason": "Delegate indexed validation to the shared snapshot verifier while preserving the historical tuple API.",
++      "before": {
++        "algorithm_sha256": "e0d3cd34bc6e6a672ecb2d2758688d53e7486e4cfa73682c90dbc83fd3747b9e",
++        "raw_sha256": "57750ffe87359bb499aec4f3d8dcfecd657dc7cb4876b6f56180a4ee73915b92"
++      },
++      "after": {
++        "algorithm_sha256": "407190d4c4e03c16553dc7c54d30e96ad5a2416f7f0650faf6c884ab8f755051",
++        "raw_sha256": "26b86bcf7d154e4a0dd30593f61e1da704323b8dbb0393124d7705f6d1ad209a"
++      }
++    },
++    {
++      "kind": "RF5",
++      "old": "gnd.cli",
++      "name": "_cmd_extract",
++      "home": "gnd.extract.service",
++      "reason": "Publish the bounded flat model and its origin record for resolved include roots.",
++      "before": {
++        "algorithm_sha256": "f4174258b8d0fc439a1ff64d07eb2e41883e2828beebba78e5003ba7004b79c1",
++        "raw_sha256": "a6352d4972608a9652aba32db7c55131e143a263f90909366f76b8499c026d9f"
++      },
++      "after": {
++        "algorithm_sha256": "8c66b155876e01f85a77b927cb6a7df766cfacb04d4c4c96d4419fb0d981ced7",
++        "raw_sha256": "24cbbd9e6eacc479178ff0b68cd6291aea9ed36a5f2ff0dc51da959a2f922c20"
++      }
++    },
++    {
++      "kind": "RF5",
++      "old": "gnd.cli",
++      "name": "_cmd_verify",
++      "home": "gnd.export.verification_service",
++      "reason": "Consume and retain the authenticated include snapshot and its digests for the extraction handoff.",
++      "before": {
++        "raw_sha256": "2d82002ae964cd900789466f0c86f90944f27ca5e71dcc344fdec4ab9b231ca8",
++        "algorithm_sha256": "3731062e32175fc226a07f59263d69ff87d610cdcb572e672905252168c989a4"
++      },
++      "after": {
++        "algorithm_sha256": "01029413a8f2e19ac207d9755919e09be2fda8ee090cf60f59268408abb9e8be",
++        "raw_sha256": "35836319252325918c66eca7a3b5a4365af32c0f318fe701b61e9a066a4f45d0"
++      }
++    }
++  ]
++}
+diff --git a/.gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md b/.gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md
+new file mode 100644
+index 00000000..d1970dd8
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md
+@@ -0,0 +1,265 @@
++# LX1 · digest-bound flattening for extraction
++
++Status: delegated approval (auto=true), 2026-11-15. See [004](../004-phase-LX1-spec-gate.md).
++
++## Provenance
++
++This draft consumes r4 of the [milestone plan](literature-interop-plan.md),
++SHA-256 `0b0b8be165233078e7048948eef45266f007165df557fbdd3c629cd106ae5454`,
++approved at the [plan gate](../003-plan-gate.md). The first and second panels reviewed r2 and r3.
++No review has run on this spec.
++
++## Obligations
++
++| Source | Obligation | Discharge |
++|---|---|---|
++| Plan LX1.a, #193 part 5 | Extract over two pinned includes and verify the bundle from the authored root. Provide complete address provenance for anonymous and attached constraints. | Design, T1–T3 |
++| Plan LX1.b, §4 chain and §7 | Isolate root, include, flat bytes and record changes. Refuse coordinated flat/record forgery and preserve include admission. | Verification order, T4–T7 |
++| Plan LX1.c and LI0 | Match predecessor index and bundle bytes on the include-free route. Preserve LI0 model and witness behavior. | Design, T8 |
++| Plan X1 | Prepare the shared wire and verification boundary for LX2. | Wire format, D1 |
++| Plan §§0, 5 and 6 | Use one bounded provenance producer, select normative home, pin parser and binding order, and prove re-entry parity. | Standing rules, T2, T6, T9 |
++| Plan §9 | Direct tests plus include, extraction and affected verification consumers. Run the project guards. | Verification ledger |
++| Plan §7 and MC1 guard inventory | Only enable the supported LX1 path. Keep unrelated consumer refusals and temporal extraction admission. | T7, T10 and Phase boundary |
++
++## Standing rules
++
++- **Totality.** The include-backed bundle validator bounds index, record and
++  projected-model reads and rejects duplicate keys, non-finite numbers,
++  invalid UTF-8, deep containers, and malformed types. It maps errors at the
++  service boundary to a refusal. T9 proves the hostile-input cases.
++- **Input-bounded work.** Reuse the resolver's existing root/include limits.
++  Build one linear origin map and compare canonical bytes over bounded outputs.
++  Time the flattening layer on a predeclared origin-count fixture in T9.
++- **Validation order.** The design lists the order per route. T6 pairs defects
++  with different diagnostics.
++- **One policy walk.** Reuse the resolver's origin walk for all tracked
++  element kinds. Compare authored and flattened address targets in T2.
++- **One normative home.** Extend the representation-format include section
++  with the flat wire, record and binding rules. The user-facing extract guide
++  links there.
++- **Measure representation.** On the predecessor MC1 component model a
++  read-only probe round-tripped the flat wire and retained all eight origin
++  entries. Projection, applicability and verbalization matched. T2 repeats
++  the equivalence at the new boundary with two include files. T8 pins legacy
++  bytes.
++
++## Goal
++
++`gnd extract ROOT --out DIR` exits 0 for the admitted two-include root.
++`gnd verify ROOT POPULATION --artifacts DIR --sidecar SIDECAR` accepts its
++fresh extraction handoff and exits 3 with the bound coordinate on stale
++input. The flat document loads through ordinary model-byte intake, while
++the provenance record can be reproduced from the original root and its
++pins.
++
++## Design
++
++| Capability | Searches | Reuse decision |
++|---|---|---|
++| Resolve pinned models and retain origin addresses | `pinned include model origin address`, `compose vocabulary provenance authored model` | Reuse `model.loading`, `model.document` and `model._includes.compose`. Their resolved snapshot already records origin and exact include byte identity. |
++| Produce and validate an extraction index | `verify extraction bundle artifact manifest`, `digest index stale projection format` and `rg _artifact_index_issue src/gnd` | Adapt `extract.service` and `extract.bundle`. Reuse naming, header and atomic writing. The codegen manifest owns a different binding and stays separate. |
++| Canonical model re-entry and bounded byte reads | `canonical model wire serialization`, `reload flat model JSON` and `rg 'def model_wire\|def canonical_json_bytes' src/gnd` | Reuse LI0's `model_wire` by moving its implementation to the model layer, retaining the witness import as an identity alias. Reuse `infra.artifacts` for canonical bytes and bounded reads. |
++
++### Model projection
++
++Proposed `gnd.model.flattening` owns
++`flatten_model(model: Model) -> FlattenedModel`, where `FlattenedModel`
++contains `model_bytes: bytes` and `record_bytes: bytes`. It accepts a
++resolver-backed model with a root SHA-256 and matching include metadata.
++Create the re-entry wire with the shared LI0 serializer, omitting only the
++already-resolved `includes` and `fact_type_constraints` fields in addition
++to the serializer's existing omissions. Retain root model identity,
++operations, version and reference declarations. Resolve any relative
++reference paths from the authored root, never the artifact directory.
++
++Pass the projected bytes through the existing model-byte loader. The
++flattened document and the loaded authored model agree on every retained
++semantic section. Refuse projection that cannot enter the existing model
++byte cap. Source hash syntax and canonical encoding follow the existing
++artifact primitives. Place the serializer in `gnd.model._documents` and retain
++`gnd.witness.io.model_wire` as the same function object. Relocate the LI0
++source-scan assertion with the defining function. The updated assertion
++requires zero direct model dumps in witness and one serializer at its new
++home. The estimate is 110 source lines.
++
++### Wire format
++
++The record has this closed shape, in canonical JSON. Arrays are ordered.
++The include list uses authored pin order. Origins sort by composed address.
++Each origin uses the resolver's source and address strings verbatim.
++
++```json
++{
++  "format": "gnd-flattening/1",
++  "root_sha256": "<sha256>",
++  "includes": [{"id": "vocabulary", "path": "vocabulary.orm.yaml", "sha256": "<sha256>"}],
++  "flat_model_sha256": "<sha256>",
++  "origins": [{
++    "origin": "includes[vocabulary]",
++    "original_address": "$.fact_types[0].constraints[0]",
++    "composed_address": "$.fact_types[1].constraints[0]",
++    "element_id": null
++  }]
++}
++```
++
++A root attachment's origin is `model` and its original address is its
++authored attachment address. The flat model's composed address names the
++materialized constraint. Omitted semantic fields and extra origin labels
++are detectable by re-derivation. The verifier compares exact canonical
++record bytes. Treat the stored record as opaque bounded bytes.
++
++### Extraction integration and order
++
++The filename stem is the authored root's normal extract stem. Add
++`<stem>.flat.orm.json` and `<stem>.flattening.json` to the existing atomic
++bundle publication and artifact index. Use an explicit top-level
++`flattening` object in the include-backed index with two fields,
++`flat_model` and `record`, naming those respective fixed filenames. The
++index's existing `model.sha256` retains its authored-root meaning.
++The existing `artifacts` dictionary contains the two new artifact digests.
++Keep the 1 MiB index cap and cap each flat or record read at the existing
++10 MiB model ceiling. An oversized projection or record exits 3 before
++publication. Use bounded path reads for all new binding inputs.
++
++Extract resolves the root with the existing loader before projecting,
++applies non-temporal admission before any publication, and binds the
++include snapshot captured by model loading. Index validation verifies the
++authored root before accepting any output binding. It then re-resolves
++the root with pins, compares the resolved root identity to the indexed
++identity, and compares fixed artifact paths and bytes to their indexed
++digests and the re-derived projection and record. This catches a forged
++record and flat model even when the index names both forged digests.
++Check root, include, flat model and record in that order. Snapshot classification
++comes from the loaded root. An include-bearing root with the flattening marker
++or either binding removed refuses. An include-free root cannot opt in by
++inserting the marker. Model construction remains bounded and uses retained-root
++reads.
++
++Adapt the verifier's extraction handoff to use the verified model snapshot
++on the include-backed route. Reading a second model would create a new
++unbound input. For legacy bundles, preserve existing paths, output bytes
++and normal error precedence. The existing `_artifact_index_issue` alias
++keeps its call and result contract for callers that need diagnostics only.
++Missing required legacy artifacts keep their current exit band. Missing or
++changed include snapshot coordinates in an indexed include-backed bundle
++use exit 3. Identify the failing root, flat model or record coordinate
++in the diagnostic. An invalid pin preserves the resolver's include ID and
++failure code. The verification service keeps its existing
++`extraction:binding-mismatch` issue contract for indexed artifacts.
++
++For nested includes, reference declarations in an include, and unattended
++included source, keep `include:forbidden-section` and name the forbidden
++field or source mode. An invalid standalone model retains the resolver's
++`include:invalid-included-model` refusal and a confined-path escape
++retains `include:path`. If multiple forbidden sections are present, identify
++the first according to the resolver's fixed field order.
++Use the same bounded resolver for extract and verify. The estimate is 135
++source lines plus docs and component metadata.
++
++## Decisions
++
++| ID | Proposal | Status |
++|---|---|---|
++| D1 | Place the shared format and producer in the model layer and preserve the LI0 serializer import alias. This keeps LX2 from importing extraction-specific code. | Delegated approval (auto=true), 2026-11-15 |
++| D2 | Bind root bytes and compare re-derived flat and record bytes. Validation of mutual equality among stored artifacts alone would accept a coordinated forgery. | Delegated approval (auto=true), 2026-11-15 |
++| D3 | Use the existing verify extraction handoff as the LX1 consumer. Keep fidelity and doccheck path enablement for their own phase scope. | Delegated approval (auto=true), 2026-11-15 |
++| D4 | Limit flat serialization to the existing model-byte intake ceiling. A larger artifact would pass extract and refuse at the next modeled stage. | Delegated approval (auto=true), 2026-11-15 |
++
++## Tests and verification
++
++| Case | Coverage and expected outcome |
++|---|---|
++| T1 | `tests/test_lx1_flattening.py`, two-include public CLI extraction and exact sidecar verification both exit 0. |
++| T2 | Every recorded composed address resolves in the canonical flat document and corresponds to the authored root or include element. Include one root attachment and one anonymous nested constraint. Re-entry preserves projection, applicability and verbalization. |
++| T3 | Two runs over the same paths and inputs yield the same flat and record bytes. Assert their exact index and root bindings. The wire is directly consumable by model-byte intake. |
++| T4 | Independently mutate root, one include, flat bytes and record bytes. Verify exits 3 and identifies each failing coordinate. |
++| T5 | Write a different valid flat model, a matching record and updated index digests. Verify exits 3 after re-resolving the original unchanged root. Strip the flattening marker and bindings and verify exit 3 again. |
++| T6 | Change root bytes and the flat output together. Root binding wins. Keep root unchanged and pair the stale include and bad flat bytes. Include hash refusal wins. |
++| T7 | Confined-path escape, standalone-invalid include, nested include, include reference declaration and unattended source each exit 3 at the public extract entry point with the named refusal and no published index. |
++| T8 | Compare every artifact of a legacy extraction against the captured phase-base digests. Run the LI0 wire controls with the serializer identity alias, sole source-scan owner and unchanged model identity. |
++| T9 | Feed the include-backed index hostile JSON, wrong containers and cap-plus-one input. Exercise a predeclared 1,000-element provenance census on a valid snapshot, assert full map and a 5-second process timeout on the projection layer. Include a cap refusal for oversized flat wire. |
++| T10 | A temporal include-bearing model exits 3 in extraction. Unrelated public MC1 guards remain in the focused suite, with only the newly enabled extraction assertion replaced by T1 and T7. |
++
++| Obligation | Disposition | Command or evidence | Input boundary, justification and invalidation |
++|---|---|---|---|
++| Direct and downstream | Run, expect 0 | `uv run pytest -q tests/test_lx1_flattening.py tests/test_mc1_model_includes.py tests/test_mc1_guards.py tests/test_extract_cli.py tests/test_extract_manifest.py tests/test_extract_projection.py tests/test_verify_cli.py tests/test_li0_witness_wire.py --tb=short` | Rerun when model-wire, loaded origin, extract or verification behavior or fixture bytes change. Covers the new producer and consumer plus legacy routes. |
++| Project structure guards and Ruff | Run, expect 0 | Use the project hook's exact guard list and `uv run ruff check`. | Covers dependency, query, disclosure, packaging and structure consequences. Run after source/catalog changes. |
++| Index | Run, expect 0 | `python3 scripts/components_index.py changed --base <LX1-base-commit> --strict` | Regenerate the index and update component/layer assignments in the source commit. |
++| Historical suites and certification | Cadence | `uv run pytest -q -m "evidence or census"` when explicitly selected. | The direct gate establishes current behaviors; historical and certification claims retain their own input bounds and triggers. |
++
++## Phase boundary
++
++LX2 owns witness route enablement. LX3 owns reference composition. LX4
++owns the checking split, temporal verification, fidelity fixture and advisory
++date report. Direct include byte readers without a trusted root retain
++their existing refusal. This spec does not expand the nested, unattended or
++reference-in-include model policy.
++
++## Size
++
++Approximately 245 source lines and 240 fixture, test and documentation
++lines. The existing layer map acquires one model home and the component
++index records the same owner.
++
++## Approval instrument
++
++Corpus-first. Planned fixture root `tests/fixtures/lx1-flattening/` with
++`README.md` as the entry point and separate `expected.json` for wire and
++exit expectations. Commit the red controls after the exact-byte spec and
++corpus rulings. The phase starts implementation after the delegated spec and corpus rulings.
++
++## Implementation findings
++
++- The red harness initially spelled output paths using a `project` stem.
++  The existing extraction stem strips `.json` and retains `.orm` for
++  `project.orm.json`. The fixture harness now names `project.orm` artifacts.
++  The expected wire, origin and exit outcomes in the approved answer file
++  are unchanged.
++- A pinned include can have the same name as a new output artifact if a
++  caller selects its model directory as `--out`. The direct overlap
++  regression reproduced exit 0 with the include replaced before the fix.
++  Refuse overlap at publication preflight with exit 74, before staging.
++- The phase changed three source-pinned historical CLI functions. Preserve
++  the identity aliases and add an authenticated RF5 successor for each.
++  The RF6 syntax scan gained eight artifact/digest subscriptions and
++  annotations and lost one moved index subscription. Record that exact
++  delta against the current inventory. The actual model-query policy
++  retains its existing budget.
++- The shared interpreter's installed version 0.2.0 failed two package
++  guards on the untouched baseline and the candidate. The worktree now
++  uses its own locked CPython 3.11 environment and its GND 0.3.1 install.
++
++### Lint gate amendment
++
++Delegated approval (auto=true), 2026-11-15. The original verification row
++expected exit 0 from whole-tree `uv run ruff check`. The full command still
++runs and its actual exit is recorded. The predecessor `8cee22f8` and the
++candidate each report the same 188 diagnostics under locked Ruff, compared
++by file, code, line and message. Require that equality and exit 0 on the
++changed Python files. The workflow-skill diagnostics from the predecessor
++remain visible in the full gate.
++
++The component check requested rereads of the shared-loader subsystems and
++the extraction and witness subsystems. Their existing flow descriptions
++remain accurate. The entries for extraction, verification, model loading,
++JSON document handling and witness wire ownership describe the changed
++module responsibilities.
++
++### Candidate verification
++
++The locked worktree environment reports GND 0.3.1. The final direct and
++affected set in the verification ledger ran with `tests/test_extract_guidelines.py`
++also selected because it consumes the extraction index. It exited 0:
++
++    289 passed in 153.46s (0:02:33)
++
++The project structure guard command ran under the default lane filter and
++exited 0:
++
++    679 passed, 2 deselected in 290.77s (0:04:50)
++
++The changed-file Ruff check exited 0. Whole-tree Ruff exited 1 with the
++188 predecessor diagnostics above. The strict component check and
++`git diff --check` exited 0. LX1 awaits its independent diff review and
++phase completion record.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index a768393d..f5748e7c 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -50,7 +50,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - verbs: gnd extract, extraction schema, shape only projection, extraction guidelines, gnd fidelity, gnd doccheck, document manifest
+ - status: canonical
+ - components: cli.extract_command, extract.service, extract.bundle, extract.projection, extract.guidelines, extract.manifest, cli.fidelity_command, fidelity.service, fidelity.match, fidelity.report, cli.doccheck_command, fidelity.doccheck
+-- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +9 more (graph.md)
++- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +10 more (graph.md)
+ - notes: Three entry points share the manifest and bundle helpers: extract writes artifacts, fidelity matches extracted facts to source facts, doccheck validates rendered documents.
+ 
+ ### subsystem.measure
+@@ -92,7 +92,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
+ - status: canonical
+ - components: cli.witness_command, witness.command, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
+-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, … +1 more (graph.md)
++- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, … +2 more (graph.md)
+ - notes: Production evaluates through the checker; replay does not search for a fixpoint.
+ 
+ ### subsystem.review_panel
+@@ -429,16 +429,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### extract.service
+-- does: Write the offline extraction artifact bundle and verify consumer-required artifact digests [_cmd_extract].
+-- verbs: extract command, _cmd_extract, artifact bundle, _artifact_index_issue, projection schema, verbalization artifact, applicable set, digest index, header template, guidelines option, staged bundle, index last
++- does: Write offline extraction bundles and verify indexed artifacts and include-backed model provenance [_cmd_extract].
++- verbs: extract command, _cmd_extract, artifact bundle, _artifact_index_issue, projection schema, verbalization artifact, applicable set, digest index, header template, guidelines option, staged bundle, index last, flattening record, bundle currency
+ - in: Model path, output directory and optional guidelines flag
+ - out: Extraction files, artifact index, command exit or consumer index issue
+ - status: canonical
+ - modules: src/gnd/extract/__init__.py, src/gnd/extract/service.py
+-- uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.loading, model.scalar_terms, synth.paths
++- uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.document, model.loading, model.scalar_terms, model.validation, synth.paths
+ - used_by: cli.dispatch, cli.extract_command, export.verification, fidelity.doccheck, fidelity.service
+ - part_of: subsystem.extract
+-- tests: tests/test_extract_guidelines.py, tests/test_extract_projection.py
++- tests: tests/test_extract_guidelines.py, tests/test_extract_projection.py, tests/test_lx1_flattening.py
+ - notes: The command derives artifacts for an extracting agent; the actual language extraction is performed outside this service.
+ 
+ 
+@@ -1737,7 +1737,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### export.verification
+-- does: Verify extraction sidecar bindings before population checking, preserving extraction state and redacted provenance [_cmd_verify].
++- does: Verify extraction sidecar and include-backed bundle bindings before population checking, preserving extraction state and redacted provenance [_cmd_verify].
+ - verbs: verify population, extraction handoff, sidecar binding, projection digest, document digest, population validation, anchor binding, checker composition, extraction state, no extraction, header ownership, assurance receipt, redacted report, _cmd_verify
+ - in: Model and pre-extracted population paths, optional sidecar/artifact/output paths and extraction/disclosure options.
+ - out: Verify report and exit band with extraction ran/skipped/failed metadata, checker evidence and assurance receipt.
+@@ -1750,12 +1750,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### model.loading
+-- does: Load bounded YAML or JSON models, compose pinned vocabularies and bind immutable reference populations [load_model, bind_population].
+-- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance
++- does: Load bounded models, compose pinned vocabularies, record flattened origins and bind reference populations [load_model, flatten_model, bind_population].
++- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance, flatten includes, projected model bytes
+ - in: Model path or immutable bytes; optional composition/reference root, declared content hashes and validated candidate population.
+ - out: Validated Model with warnings, include provenance/private authored-byte binding and compiled side table; bound reference context or combined population.
+ - status: canonical
+-- modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
++- modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+ - used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +70 more (graph.md)
+ - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
+@@ -1771,23 +1771,23 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: model.loading, model.operation_obligations, semantics.extensions
++- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
+ - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
+ - checked: partial
+ - notes: The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
+ 
+ 
+ ### model.json_document
+-- does: Convert parsed model values into plain JSON data with path-specific refusals [json_document].
+-- verbs: json_document, plain document, JSON values, YAML conversion, canonical input, nonfinite float, string keys, tagged scalar, timestamp refusal, binary refusal, encodable document, model value error, normalize collections, preserve YAML values
++- does: Normalize parsed model values and serialize validated models for byte intake [json_document, model_wire].
++- verbs: model wire, model re-entry serialization, json_document, plain document, JSON values, YAML conversion, canonical input, nonfinite float, string keys, tagged scalar, timestamp refusal, binary refusal, encodable document, model value error, normalize collections, preserve YAML values
+ - in: Parsed model document; refusal and JSON-encodable compatibility switches.
+ - out: Plain Python document or ModelValueError naming the offending path and value kind.
+ - status: canonical
+ - modules: src/gnd/model/_documents.py
+ - uses: (none)
+-- used_by: export.ossie, model.loading, model.ossie_import
++- used_by: export.ossie, model.loading, model.ossie_import, witness.schema
+ - tests: tests/test_evolve_loading.py
+-- notes: Strict JSON-domain conversion, permissive YAML preservation and JSON-encoder compatibility share one recursive walk with explicit switches. gnd.model re-exports this capability.
++- notes: Strict JSON-domain conversion, permissive YAML preservation and JSON-encoder compatibility share one recursive walk with explicit switches. gnd.model re-exports json_document. model_wire omits loader-only defaults for re-entry and preserves the historical witness import.
+ 
+ 
+ ### model.operation_obligations
+@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +65 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +66 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+ - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
+@@ -2206,7 +2206,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/documents.py
+ - uses: infra.errors
+-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +15 more (graph.md)
++- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +16 more (graph.md)
+ - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
+ - notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
+ 
+@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/errors.py
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +21 more (graph.md)
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +22 more (graph.md)
+ - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
+ - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
+ 
+@@ -3084,14 +3084,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - does: Validate bounded witness requests, certificates, typed targets and input identities before production or replay.
+ - verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire, model wire, version-1 model intake, model without model_id
+ - in: JSON requests or certificates, model and population documents, reference bytes, fixed or lowered WitnessLimits.
+-- out: Validated documents, loaded model/populations, authored-shape model and population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
++- out: Validated documents, loaded model/populations, population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
+ - status: canonical
+ - modules: src/gnd/witness/io.py, src/gnd/witness/types.py
+-- uses: check.population_structure, infra.artifacts, infra.input_policy, model.loading, model.population_loading, model.reference_binding
++- uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+ - used_by: export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+ - part_of: subsystem.witness
+ - tests: tests/test_v71_phase3_successors.py, tests/test_public_why_not.py, tests/test_witness_composition.py
+-- notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Limits may only be lowered from the fixed ceilings.
++- notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Model wire is re-exported from model.json_document. Limits may only be lowered from the fixed ceilings.
+ 
+ 
+ ### witness.service
+@@ -3547,6 +3547,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - model digest: codegen.manifest, measure.labels, model.scalar_identity, synth.provenance
+ - model id: check.population_structure, extract.bundle
+ - model identifier: export.ilp_prompt, model.labels
++- model wire: model.json_document, witness.schema
+ - native query: examples.book_recommendations, examples.expense_application, export.applications
+ - near misses: discover.service, witness.why_not
+ - no extraction: cli.verify_command, export.verification
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 9c3e1e4e..a2adf6e8 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -3074,7 +3074,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/extract/identity.py -> src/gnd/anchor_identity.py`
+ 
+ ### extract.service
+-- uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.loading, model.scalar_terms, synth.paths
++- uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.document, model.loading, model.scalar_terms, model.validation, synth.paths
+ - used_by: cli.dispatch, cli.extract_command, export.verification, fidelity.doccheck, fidelity.service
+ 
+ #### extract.service -> extract.bundle
+@@ -3092,6 +3092,12 @@ Generated by `scripts/components_index.py`.
+ #### extract.service -> extract.vocabulary
+ - `src/gnd/extract/service.py -> src/gnd/extract/vocabulary.py`
+ 
++#### extract.service -> infra.artifacts
++- `src/gnd/extract/service.py -> src/gnd/artifacts.py`
++
++#### extract.service -> infra.errors
++- `src/gnd/extract/service.py -> src/gnd/errors.py`
++
+ #### extract.service -> infra.exit_codes
+ - `src/gnd/extract/service.py -> src/gnd/exits.py`
+ 
+@@ -3107,13 +3113,20 @@ Generated by `scripts/components_index.py`.
+ #### extract.service -> infra.version
+ - `src/gnd/extract/service.py -> src/gnd/__init__.py`
+ 
++#### extract.service -> model.document
++- `src/gnd/extract/service.py -> src/gnd/documents.py`
++
+ #### extract.service -> model.loading
+ - `src/gnd/extract/service.py -> src/gnd/model/__init__.py`
+ - `src/gnd/extract/service.py -> src/gnd/model/_includes.py`
++- `src/gnd/extract/service.py -> src/gnd/model/flattening.py`
+ 
+ #### extract.service -> model.scalar_terms
+ - `src/gnd/extract/service.py -> src/gnd/terms.py`
+ 
++#### extract.service -> model.validation
++- `src/gnd/extract/service.py -> src/gnd/model/_validation.py`
++
+ #### extract.service -> synth.paths
+ - `src/gnd/extract/service.py -> src/gnd/synth/paths.py`
+ 
+@@ -3253,7 +3266,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, fidelity.report, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+@@ -3272,7 +3285,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.errors
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.service
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.service
+ 
+ ### infra.exit_codes
+ - uses: (none)
+@@ -3765,7 +3778,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.document
+ - uses: infra.errors
+-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, infra.report_payloads, model.extraction_scope, model.loading, model.operation_obligations, model.population_loading, model.population_sentences, model.query_index, model.scalar_identity, model.validation, model.verbalization, semantics.extensions, semantics.phase1_slice, semantics.snapshot_adapter, semantics.transitions, synth.guarded
++- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, extract.service, infra.report_payloads, model.extraction_scope, model.loading, model.operation_obligations, model.population_loading, model.population_sentences, model.query_index, model.scalar_identity, model.validation, model.verbalization, semantics.extensions, semantics.phase1_slice, semantics.snapshot_adapter, semantics.transitions, synth.guarded
+ 
+ #### model.document -> infra.errors
+ - `src/gnd/documents.py -> src/gnd/errors.py`
+@@ -3795,7 +3808,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.json_document
+ - uses: (none)
+-- used_by: export.ossie, model.loading, model.ossie_import
++- used_by: export.ossie, model.loading, model.ossie_import, witness.schema
+ 
+ ### model.labels
+ - uses: (none)
+@@ -3808,6 +3821,7 @@ Generated by `scripts/components_index.py`.
+ #### model.loading -> infra.artifacts
+ - `src/gnd/model/__init__.py -> src/gnd/artifacts.py`
+ - `src/gnd/model/_includes.py -> src/gnd/artifacts.py`
++- `src/gnd/model/flattening.py -> src/gnd/artifacts.py`
+ 
+ #### model.loading -> infra.errors
+ - `src/gnd/model/__init__.py -> src/gnd/errors.py`
+@@ -3816,9 +3830,11 @@ Generated by `scripts/components_index.py`.
+ 
+ #### model.loading -> model.document
+ - `src/gnd/model/_includes.py -> src/gnd/documents.py`
++- `src/gnd/model/flattening.py -> src/gnd/documents.py`
+ 
+ #### model.loading -> model.json_document
+ - `src/gnd/model/__init__.py -> src/gnd/model/_documents.py`
++- `src/gnd/model/flattening.py -> src/gnd/model/_documents.py`
+ 
+ #### model.loading -> model.operation_obligations
+ - `src/gnd/model/__init__.py -> src/gnd/model/_operations.py`
+@@ -4038,7 +4054,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.validation
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: model.loading, model.operation_obligations, semantics.extensions
++- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
+ 
+ #### model.validation -> check.universe
+ - `src/gnd/model/_validation.py -> src/gnd/universe.py`
+@@ -4563,7 +4579,7 @@ Generated by `scripts/components_index.py`.
+ - members_uses: agent.invocation, assurance.evidence, assurance.policy, assurance.transport, check.branches, checker.evaluate, cli.arguments, conformance.integrity, conformance.report, conformance.service, exp.conclusions, exp.evidence_paths, exp.expectation_author, exp.frontmatter, exp.session_profile, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, exp.verifier_environment, extract.manifest, infra.artifacts, infra.bounded_json, infra.bounded_process, infra.disclosure, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.text_output, model.loading, model.query_index, model.scalar_terms, semantics.transitions, synth.paths
+ 
+ ### subsystem.extract
+-- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.document, model.extraction_scope, model.labels, model.loading, model.population_loading, model.query_index, model.reference_schemes, model.scalar_terms, synth.paths
++- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.document, model.extraction_scope, model.labels, model.loading, model.population_loading, model.query_index, model.reference_schemes, model.scalar_terms, model.validation, synth.paths
+ 
+ ### subsystem.measure
+ - members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, model.address, model.document, model.json_document, model.labels, model.operation_obligations, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, model.validation, synth.assemble, synth.boundary, synth.comparison, synth.corpus, synth.frontier, synth.paths, synth.pool, synth.provenance
+@@ -4578,7 +4594,7 @@ Generated by `scripts/components_index.py`.
+ - members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.document, model.json_document, model.operation_obligations, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, model.validation, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.guarded, synth.identity, synth.paths, synth.value_domain
+ 
+ ### subsystem.witness
+-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_identity
++- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_identity
+ 
+ ### synth.assemble
+ - uses: check.population_structure, checker.evaluate, infra.input_policy, model.address, model.loading, model.population_loading, model.scalar_terms, synth.comparison, synth.constructive, synth.guarded, synth.identity, synth.pool, synth.prediction, synth.value_domain
+@@ -5071,7 +5087,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/witness/kernel.py -> src/gnd/witness/types.py`
+ 
+ ### witness.schema
+-- uses: check.population_structure, infra.artifacts, infra.input_policy, model.loading, model.population_loading, model.reference_binding
++- uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+ - used_by: export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+ 
+ #### witness.schema -> check.population_structure
+@@ -5083,6 +5099,9 @@ Generated by `scripts/components_index.py`.
+ #### witness.schema -> infra.input_policy
+ - `src/gnd/witness/io.py -> src/gnd/input_policy.py`
+ 
++#### witness.schema -> model.json_document
++- `src/gnd/witness/io.py -> src/gnd/model/_documents.py`
++
+ #### witness.schema -> model.loading
+ - `src/gnd/witness/io.py -> src/gnd/model/__init__.py`
+ - `src/gnd/witness/io.py -> src/gnd/model/_includes.py`
+diff --git a/dev/components/modules/extract.md b/dev/components/modules/extract.md
+index d4dbf87f..e150ca2a 100644
+--- a/dev/components/modules/extract.md
++++ b/dev/components/modules/extract.md
+@@ -80,6 +80,7 @@ Components: extract.service
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
++| `ExtractionBundleError` | class(ValueError) | 48 | An indexed extraction input could not be authenticated. |
+ 
+ ## gnd.extract.vocabulary — `src/gnd/extract/vocabulary.py`
+ Components: extract.vocabulary
+diff --git a/dev/components/modules/model.md b/dev/components/modules/model.md
+index 5aed4f09..22372bf0 100644
+--- a/dev/components/modules/model.md
++++ b/dev/components/modules/model.md
+@@ -33,6 +33,7 @@ Model documents as plain JSON values (evolve-loading follow-up, IK4-Q3, IKE-Q2).
+ | --- | --- | --- | --- |
+ | `ModelValueError` | class(ValueError) | 13 | A model value outside the JSON data model, named by path and kind. |
+ | `json_document(document, *, refuse, encodable) -> dict[str, Any]` | function | 27 | The parsed model document as plain Python, in one walk over every value. |
++| `model_wire(model)` | function | 111 | The authored-shape document of a loaded model, for re-entry into intake. |
+ 
+ ## gnd.model._includes — `src/gnd/model/_includes.py`
+ Components: model.loading
+@@ -47,11 +48,11 @@ One resolver and admission guards for pinned version-5 model includes.
+ | `parse_included(raw, *, include_id, path) -> dict` | function | 91 | (no docstring) |
+ | `include_reason(error) -> str \| None` | function | 116 | (no docstring) |
+ | `compose(document, *, descriptor, source, historical, issues)` | function | 181 | (no docstring) |
+-| `remap_issues(issues, origins)` | function | 242 | (no docstring) |
+-| `refuse_unsupported(route) -> NoReturn` | function | 273 | (no docstring) |
+-| `guard_document(document, route)` | function | 277 | (no docstring) |
+-| `guard_bytes(raw, *, source, route)` | function | 282 | (no docstring) |
+-| `guard_path(path, route)` | function | 292 | (no docstring) |
++| `remap_issues(issues, origins)` | function | 244 | (no docstring) |
++| `refuse_unsupported(route) -> NoReturn` | function | 275 | (no docstring) |
++| `guard_document(document, route)` | function | 279 | (no docstring) |
++| `guard_bytes(raw, *, source, route)` | function | 284 | (no docstring) |
++| `guard_path(path, route)` | function | 294 | (no docstring) |
+ 
+ ## gnd.model._induction — `src/gnd/model/_induction.py`
+ Components: model.validation
+@@ -111,3 +112,13 @@ Model loading with two-layer validation.
+ | `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3989 | SCC-condensed, dependency-first deterministic structured strata. |
+ | `semantic_validate(doc) -> list[ValidationIssue]` | function | 5104 | Run every layer-2 semantic rule over a parsed model document. |
+ | `parse_model_document(data, *, source) -> Any` | function | 5312 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
++
++## gnd.model.flattening — `src/gnd/model/flattening.py`
++Components: model.loading
++Canonical re-entry bytes and provenance for a resolved model include root.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `FlatteningError` | class(ValueError) | 14 | A resolved model cannot be represented within the flat wire contract. |
++| `FlattenedModel` | class | 19 | (no docstring) |
++| `flatten_model(model) -> FlattenedModel` | function | 24 | Serialize an include snapshot made by the model loader. |
+diff --git a/dev/components/modules/witness.md b/dev/components/modules/witness.md
+index a56250de..4e085546 100644
+--- a/dev/components/modules/witness.md
++++ b/dev/components/modules/witness.md
+@@ -24,25 +24,24 @@ Bounded wire intake, structural validation and byte-bound input identities.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `validate_witness_structure(document, *, limits) -> int` | function | 34 | (no docstring) |
+-| `parse_wire(raw, *, limits)` | function | 96 | (no docstring) |
+-| `read_wire(path, *, limits)` | function | 112 | (no docstring) |
+-| `record(value, keys)` | function | 118 | (no docstring) |
+-| `integer(value)` | function | 123 | (no docstring) |
+-| `typed(value)` | function | 128 | (no docstring) |
+-| `target_shape(t)` | function | 138 | (no docstring) |
+-| `load_targets(path, *, limits)` | function | 146 | (no docstring) |
+-| `certificate_shape(doc, *, limits)` | function | 158 | (no docstring) |
+-| `load_certificate(path, *, limits)` | function | 269 | (no docstring) |
+-| `witness_input_identity(model, candidate, *, references)` | function | 275 | (no docstring) |
+-| `identity(model, candidate, refs)` | function | 280 | (no docstring) |
+-| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 292 | (no docstring) |
+-| `roster(model)` | function | 345 | (no docstring) |
+-| `validate_targets(targets, model)` | function | 354 | (no docstring) |
+-| `support_closure(model, targets)` | function | 380 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+-| `model_wire(model)` | function | 436 | The authored-shape document of a loaded model, for re-entry into intake. |
+-| `population_wire(pop)` | function | 459 | (no docstring) |
+-| `classify_targets(model, targets, populations)` | function | 473 | Classify each request independently, caching only within this call. |
++| `validate_witness_structure(document, *, limits) -> int` | function | 35 | (no docstring) |
++| `parse_wire(raw, *, limits)` | function | 97 | (no docstring) |
++| `read_wire(path, *, limits)` | function | 113 | (no docstring) |
++| `record(value, keys)` | function | 119 | (no docstring) |
++| `integer(value)` | function | 124 | (no docstring) |
++| `typed(value)` | function | 129 | (no docstring) |
++| `target_shape(t)` | function | 139 | (no docstring) |
++| `load_targets(path, *, limits)` | function | 147 | (no docstring) |
++| `certificate_shape(doc, *, limits)` | function | 159 | (no docstring) |
++| `load_certificate(path, *, limits)` | function | 270 | (no docstring) |
++| `witness_input_identity(model, candidate, *, references)` | function | 276 | (no docstring) |
++| `identity(model, candidate, refs)` | function | 281 | (no docstring) |
++| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 293 | (no docstring) |
++| `roster(model)` | function | 346 | (no docstring) |
++| `validate_targets(targets, model)` | function | 355 | (no docstring) |
++| `support_closure(model, targets)` | function | 381 | Conservative syntactic classifier; no tuple or comparison evaluation. |
++| `population_wire(pop)` | function | 437 | (no docstring) |
++| `classify_targets(model, targets, populations)` | function | 451 | Classify each request independently, caching only within this call. |
+ 
+ ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
+ Components: witness.replay
+diff --git a/docs/guides/documents.md b/docs/guides/documents.md
+index 55f563d9..917edb6c 100644
+--- a/docs/guides/documents.md
++++ b/docs/guides/documents.md
+@@ -35,6 +35,13 @@ uniqueness, mandatory, or other domain rules. If a document describes an
+ invalid application state, the extraction should preserve that state so the
+ checker can reveal it.
+ 
++For a version-5 model with pinned includes, use the authored root in both
++`gnd extract` and `gnd verify`. Keep the flat model and flattening record
++with the bundle for verification. Give the extraction agent the shape-only
++schema and verbalization as usual. Verification checks the bundle against the
++root and its pinned files. See the [flattening record contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#extraction-flattening-record)
++for the two additional files.
++
+ ## Ask an agent to extract, then verify its output
+ 
+ In an agent session with the GND skills installed, explicitly select the
+diff --git a/src/gnd/export/verification_service.py b/src/gnd/export/verification_service.py
+index d90fd3e3..519af5e0 100644
+--- a/src/gnd/export/verification_service.py
++++ b/src/gnd/export/verification_service.py
+@@ -9,7 +9,12 @@ from gnd import safefs as install_module
+ from gnd import transition
+ from gnd.checker import CheckReport, check, check_with_anchors
+ from gnd.exits import EXIT_INTERNAL, EXIT_IO
+-from gnd.extract.service import _artifact_index_issue, _extract_stem, _extraction_header_template
++from gnd.extract.service import (
++    ExtractionBundleError,
++    _extract_stem,
++    _extraction_header_template,
++    _verify_artifact_index,
++)
+ from gnd.model import ModelValidationError, ValidationIssue, load_model, structured_derivation_ids
+ from gnd.output import (
+     _band,
+@@ -85,6 +90,7 @@ def _cmd_verify(
+         "skill_version": None,
+         "executing_model": None,
+     }
++    verified_bundle = None
+     verified_population_bytes: bytes | None = None
+     verified_document_bytes: bytes | None = None
+     verified_population_source: Path | None = None
+@@ -270,15 +276,15 @@ def _cmd_verify(
+             return emit(3, issues=[issue])
+ 
+         projection_rel = f"{_extract_stem(model_path)}.projection.schema.json"
+-        bundle_issue = _artifact_index_issue(model_path, artifacts_dir, (projection_rel,))
+-        if bundle_issue is not None:
+-            _code, message = bundle_issue
++        try:
++            verified_bundle = _verify_artifact_index(model_path, artifacts_dir, (projection_rel,))
++        except ExtractionBundleError as error:
+             issue = ValidationIssue(
+                 path="projection_sha256",
+-                message=message,
++                message=str(error),
+                 rule_id="extraction:binding-mismatch",
+             )
+-            extraction["reason"] = message
++            extraction["reason"] = issue.message
+             if output_format != "json" and not active_redaction():
+                 _print_issues([issue])
+             return emit(3, issues=[issue])
+@@ -344,23 +350,27 @@ def _cmd_verify(
+         # every digest the sidecar publishes against the actual bytes on disk.
+         binding_issues: list[ValidationIssue] = []
+         digests: dict[str, str] = {}
+-        for field, path in (
+-            ("model_sha256", Path(model_path)),
+-            ("projection_sha256", projection_path),
+-        ):
+-            try:
+-                digests[field] = _hashlib.sha256(path.read_bytes()).hexdigest()
+-            except OSError as error:
+-                binding_issues.append(
+-                    ValidationIssue(
+-                        path=field,
+-                        message=(
+-                            f"the sidecar's {field} cannot be verified: {path} "
+-                            f"could not be read ({error})"
+-                        ),
+-                        rule_id="extraction:binding-mismatch",
++        if verified_bundle.model is not None:
++            digests["model_sha256"] = verified_bundle.root_sha256
++            digests["projection_sha256"] = verified_bundle.artifact_digests[projection_rel]
++        else:
++            for field, path in (
++                ("model_sha256", Path(model_path)),
++                ("projection_sha256", projection_path),
++            ):
++                try:
++                    digests[field] = _hashlib.sha256(path.read_bytes()).hexdigest()
++                except OSError as error:
++                    binding_issues.append(
++                        ValidationIssue(
++                            path=field,
++                            message=(
++                                f"the sidecar's {field} cannot be verified: {path} "
++                                f"could not be read ({error})"
++                            ),
++                            rule_id="extraction:binding-mismatch",
++                        )
+                     )
+-                )
+         assert verified_population_bytes is not None
+         digests["population_sha256"] = _hashlib.sha256(verified_population_bytes).hexdigest()
+         digests["document_sha256"] = document_digest.hexdigest()
+@@ -407,7 +417,9 @@ def _cmd_verify(
+ 
+     # --- the existing composition: popvalidate → check → band (R-03″) ---
+     try:
+-        model = load_model(model_path)
++        model = verified_bundle.model if verified_bundle is not None else None
++        if model is None:
++            model = load_model(model_path)
+     except ModelValidationError as error:
+         if output_format != "json" and not active_redaction():
+             for warning in error.warnings:
+@@ -419,6 +431,17 @@ def _cmd_verify(
+             print(f"ERROR: {error}")
+         return emit(3, error=error)
+ 
++    if model.includes and verified_bundle is not None and verified_bundle.model is None:
++        issue = ValidationIssue(
++            path="projection_sha256",
++            message="the include-bearing root requires a verified flattening binding",
++            rule_id="extraction:binding-mismatch",
++        )
++        extraction.update(state="failed", reason=issue.message)
++        if output_format != "json" and not active_redaction():
++            _print_issues([issue])
++        return emit(3, issues=[issue])
++
+     structured = bool(structured_derivation_ids(model))
+     model_digest = transition.transition_model_identity(model)
+ 
+diff --git a/src/gnd/extract/service.py b/src/gnd/extract/service.py
+index 46df2cec..7e0f513e 100644
+--- a/src/gnd/extract/service.py
++++ b/src/gnd/extract/service.py
+@@ -1,14 +1,19 @@
+ from __future__ import annotations
+ 
+ import json
++from dataclasses import dataclass
+ from pathlib import Path
+ from typing import Any
+ 
++from gnd import artifacts as wire
+ from gnd import input_policy as _rf7_input
+ from gnd import resolve_version
+ from gnd import safefs as install_module
++from gnd.documents import Model
++from gnd.errors import ModelLoadError
+ from gnd.exits import EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT
+ from gnd.model import ModelValidationError, load_model
++from gnd.model._validation import MAX_MODEL_BYTES
+ from gnd.output import _print_issues
+ 
+ 
+@@ -36,56 +41,119 @@ def _extraction_header_template(model_path: str, model: Any) -> dict[str, Any]:
+ 
+     return header_template(model_path, model)
+ 
+-def _artifact_index_issue(
++def _flattening_names(stem: str) -> dict[str, str]:
++    return {"flat_model": f"{stem}.flat.orm.json", "record": f"{stem}.flattening.json"}
++
++
++class ExtractionBundleError(ValueError):
++    """An indexed extraction input could not be authenticated."""
++
++    def __init__(self, message: str, code: int = 3) -> None:
++        super().__init__(message)
++        self.code = code
++
++
++@dataclass(frozen=True)
++class _VerifiedBundle:
++    model: Model | None
++    root_sha256: str
++    artifact_digests: dict[str, str]
++
++
++def _bounded_bytes(path: Path, *, cap: int) -> bytes:
++    resolved = path.resolve(strict=True)
++    return wire.read_regular_file_bytes(resolved.parent, resolved.name, label=str(path), max_bytes=cap)
++
++
++def _verify_artifact_index(
+     model_path: str,
+     artifacts_dir: str,
+     required_artifacts: tuple[str, ...],
+-) -> tuple[int, str] | None:
+-    """Validate the bundle index and every artifact this consumer will read."""
+-    import hashlib as _hashlib
+-
++) -> _VerifiedBundle:
++    """Authenticate required bundle bytes and retain a resolved include snapshot."""
+     root = Path(artifacts_dir)
+-    index_path = root / f"{_extract_stem(model_path)}.artifacts.json"
++    stem = _extract_stem(model_path)
++    index_path = root / f"{stem}.artifacts.json"
+     if not index_path.is_file():
+-        return (
+-            EXIT_NO_INPUT,
+-            f"the extraction bundle index at {index_path} does not exist",
+-        )
++        raise ExtractionBundleError(f"the extraction bundle index at {index_path} does not exist", EXIT_NO_INPUT)
++
+     try:
+-        if index_path.stat().st_size > 1024 * 1024:
+-            return (3, f"the extraction bundle index at {index_path} exceeds 1 MiB")
+-        index = _rf7_input.loads(index_path.read_text(encoding="utf-8"))
+-        model_actual = _hashlib.sha256(Path(model_path).read_bytes()).hexdigest()
++        index = _rf7_input.loads(_bounded_bytes(index_path, cap=1024 * 1024))
++        root_bytes = _bounded_bytes(Path(model_path), cap=MAX_MODEL_BYTES)
++        model_actual = wire.sha256_hex(root_bytes)
+         model_recorded = str(index["model"]["sha256"])
+         if model_recorded != model_actual:
+-            return (
+-                3,
+-                (
+-                    f"the bundle index records model sha256 {model_recorded} but "
+-                    f"the model bytes hash to {model_actual}"
+-                ),
++            raise ExtractionBundleError(
++                f"the root model sha256 in the bundle is {model_recorded} but the bytes hash to {model_actual}"
+             )
+-        for rel in required_artifacts:
++
++        model = None
++        expected: dict[str, bytes] = {}
++        if "flattening" in index:
++            from gnd.model.flattening import flatten_model
++
++            names = _flattening_names(stem)
++            if index["flattening"] != names:
++                raise ExtractionBundleError("invalid flattening artifact names")
++            model = load_model(model_path)
++            if model._authored_sha256 != model_actual:
++                raise ExtractionBundleError("the root model does not match the resolved include snapshot")
++            flat = flatten_model(model)
++            expected = {names["flat_model"]: flat.model_bytes, names["record"]: flat.record_bytes}
++        else:
++            from gnd.model._includes import guard_bytes
++
++            guard_bytes(root_bytes, source=model_path, route="extraction bundle without a flattening binding")
++
++        digests = {}
++        for rel in (*expected, *required_artifacts):
+             artifact_path = root / rel
+-            if not artifact_path.is_file():
+-                return (
+-                    EXIT_NO_INPUT,
+-                    f"the indexed extraction artifact at {artifact_path} is missing",
++            if rel in expected:
++                label = "flat model" if rel.endswith(".flat.orm.json") else "flattening record"
++                try:
++                    raw, _ = wire.read_regular_bounded(root, rel, max_bytes=MAX_MODEL_BYTES)
++                    recorded = index["artifacts"][rel]["sha256"]
++                except (OSError, wire.ArtifactError, ValueError, KeyError, TypeError) as error:
++                    raise ExtractionBundleError(f"the {label} binding could not be read: {error}") from error
++                if raw != expected[rel]:
++                    raise ExtractionBundleError(f"the {label} does not match the resolved include snapshot")
++            else:
++                if not artifact_path.is_file():
++                    raise ExtractionBundleError(
++                        f"the indexed extraction artifact at {artifact_path} is missing", EXIT_NO_INPUT
++                    )
++                if model is None:
++                    raw = artifact_path.read_bytes()
++                else:
++                    raw, _ = wire.read_regular_bounded(root, rel, max_bytes=MAX_MODEL_BYTES)
++                recorded = str(index["artifacts"][rel]["sha256"])
++            actual = wire.sha256_hex(raw)
++            if actual != recorded:
++                raise ExtractionBundleError(
++                    f"the bundle index records {rel} sha256 {recorded} but the artifact bytes hash to {actual}"
+                 )
+-            recorded = str(index["artifacts"][rel]["sha256"])
+-            actual = _hashlib.sha256(artifact_path.read_bytes()).hexdigest()
+-            if recorded != actual:
+-                return (
+-                    3,
+-                    (
+-                        f"the bundle index records {rel} sha256 {recorded} but "
+-                        f"the artifact bytes hash to {actual}"
+-                    ),
+-                )
+-    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError) as error:
+-        return (3, f"the extraction bundle index is not verifiable ({error})")
++            digests[rel] = actual
++    except ExtractionBundleError:
++        raise
++    except (OSError, wire.ArtifactError, ValueError, KeyError, TypeError, RuntimeError,
++            ModelLoadError, ModelValidationError) as error:
++        raise ExtractionBundleError(f"the extraction bundle index is not verifiable ({error})") from error
++    return _VerifiedBundle(model, model_actual, digests)
++
++
++def _artifact_index_issue(
++    model_path: str,
++    artifacts_dir: str,
++    required_artifacts: tuple[str, ...],
++) -> tuple[int, str] | None:
++    """Validate the bundle index and every artifact this consumer will read."""
++    try:
++        _verify_artifact_index(model_path, artifacts_dir, required_artifacts)
++    except ExtractionBundleError as error:
++        return error.code, str(error)
+     return None
+ 
++
+ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> int:
+     """``gnd extract MODEL --out DIR`` — the per-model artifact bundle.
+ 
+@@ -108,12 +176,12 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) ->
+     from gnd.synth import paths as _paths
+ 
+     try:
+-        from gnd.model._includes import guard_path
+-        guard_path(model_path, "extract/service.py")
+-        model = load_model(model_path)
++        from gnd.model.flattening import flatten_model
+         from gnd.terms import require_non_temporal
+ 
++        model = load_model(model_path)
+         require_non_temporal(model, "extract")
++        flat = flatten_model(model) if model.includes else None
+     except ModelValidationError as error:
+         for warning in error.warnings:
+             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
+@@ -158,14 +226,31 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) ->
+     index_rel = f"{stem}.artifacts.json"
+     digests: dict[str, str] = {}
+     try:
+-        model_bytes = Path(model_path).read_bytes()
++        model_sha256 = (model._authored_sha256 if flat is not None
++                        else _hashlib.sha256(Path(model_path).read_bytes()).hexdigest())
++        artifact_bytes = {rel: text.encode("utf-8") for rel, text in artifacts.items()}
++        if flat is not None:
++            names = _flattening_names(stem)
++            artifact_bytes[names["flat_model"]] = flat.model_bytes
++            artifact_bytes[names["record"]] = flat.record_bytes
+         # Every write routes through the ONE traversal guard (cli.py's synth
+         # precedent): output paths come from argv only, never from model or
+         # response content (T-02.1-03).
+         destinations: dict[str, Path] = {}
+-        for rel in [*artifacts, index_rel]:
++        for rel in [*artifact_bytes, index_rel]:
+             destinations[rel] = _paths.safe_output_path(out_root, rel)
+-        artifact_bytes = {rel: text.encode("utf-8") for rel, text in artifacts.items()}
++        if flat is not None:
++            source = Path(model_path)
++            dependencies = [
++                source,
++                *(source.parent / entry.path for entry in model._included),
++                *(source.parent / entry["path"] for entry in model.reference_populations),
++            ]
++            for destination in destinations.values():
++                if destination.exists() and any(destination.samefile(dep) for dep in dependencies):
++                    raise install_module.InstallPathError(
++                        f"output {destination} overlaps a bound model input"
++                    )
+         digests = {rel: _hashlib.sha256(data).hexdigest() for rel, data in artifact_bytes.items()}
+ 
+         # PANEL-6 header ownership: `model`, `model_id`, `source` and `covers`
+@@ -178,11 +263,13 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) ->
+             "gnd_version": resolve_version(),
+             "model": {
+                 "path": Path(model_path).as_posix(),
+-                "sha256": _hashlib.sha256(model_bytes).hexdigest(),
++                "sha256": model_sha256,
+             },
+             "artifacts": {rel: {"sha256": digest} for rel, digest in digests.items()},
+             "header_template": header_template,
+         }
++        if flat is not None:
++            index_payload["flattening"] = names
+         bundle_bytes = {
+             **artifact_bytes,
+             index_rel: canonical(index_payload).encode("utf-8"),
+@@ -210,7 +297,7 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) ->
+                 os.close(staging_fd)
+ 
+             out_root.mkdir(parents=True, exist_ok=True)
+-            for rel in artifacts:
++            for rel in artifact_bytes:
+                 os.replace(staging / rel, destinations[rel])
+             os.replace(staging / index_rel, destinations[index_rel])
+             output_fd = os.open(out_root, os.O_RDONLY)
+diff --git a/src/gnd/model/_documents.py b/src/gnd/model/_documents.py
+index 64d78322..55ae7dbc 100644
+--- a/src/gnd/model/_documents.py
++++ b/src/gnd/model/_documents.py
+@@ -106,3 +106,26 @@ def json_document(document: Any, *, refuse: bool = True, encodable: bool = False
+         raise outside(path, type(value).__name__)
+ 
+     return walk(document, "")
++
++
++def model_wire(model):
++    """The authored-shape document of a loaded model, for re-entry into intake.
++
++    Start from ``model.model_dump(mode="json", exclude={"warnings"})``, which
++    already applies the Model hooks (no empty ``reference_populations``,
++    ``includes`` or ``fact_type_constraints``). Then remove the two loader
++    defaults that intake would otherwise refuse: ``model_id`` when it is None
++    (the meta-schema types it as a string at every version) and ``operations``
++    when it is empty (a present ``operations`` requires version 2 to 5).
++
++    This is deliberately not a change to ``Model``'s own serializer: the
++    legacy model identity (``gnd.values._model_digest``) hashes that dump, so
++    omitting ``model_id`` there would move every pinned identity of a model
++    that declares none.
++    """
++    document = model.model_dump(mode="json", exclude={"warnings"})
++    if document.get("model_id") is None:
++        document.pop("model_id", None)
++    if not document.get("operations"):
++        document.pop("operations", None)
++    return document
+diff --git a/src/gnd/model/_includes.py b/src/gnd/model/_includes.py
+index 0241656d..2827e81b 100644
+--- a/src/gnd/model/_includes.py
++++ b/src/gnd/model/_includes.py
+@@ -222,9 +222,11 @@ def compose(document: object, *, descriptor: int, source: str | Path, historical
+                  'rejected_proposals', 'fact_type_constraints')
+     for entry, doc in zip(declarations, included, strict=True):
+         source_doc = doc.get('source')
+-        if any(key in doc for key in forbidden) or (
+-                isinstance(source_doc, Mapping) and source_doc.get('mode') == 'unattended'):
+-            _refuse('forbidden-section', f'includes[{entry["id"]}]')
++        forbidden_key = next((key for key in forbidden if key in doc), None)
++        if forbidden_key is not None:
++            _refuse('forbidden-section', f'includes[{entry["id"]}]', forbidden_key)
++        if isinstance(source_doc, Mapping) and source_doc.get('mode') == 'unattended':
++            _refuse('forbidden-section', f'includes[{entry["id"]}]', 'unattended source')
+     for entry, doc in zip(declarations, included, strict=True):
+         included_issues = _structural(doc)
+         if not included_issues:
+diff --git a/src/gnd/model/flattening.py b/src/gnd/model/flattening.py
+new file mode 100644
+index 00000000..177b767c
+--- /dev/null
++++ b/src/gnd/model/flattening.py
+@@ -0,0 +1,56 @@
++"""Canonical re-entry bytes and provenance for a resolved model include root."""
++
++from __future__ import annotations
++
++from dataclasses import asdict, dataclass
++
++from gnd.artifacts import canonical_json_bytes, sha256_hex
++from gnd.documents import Model
++from gnd.model import load_model_bytes
++from gnd.model._documents import model_wire
++from gnd.model._validation import MAX_MODEL_BYTES
++
++
++class FlatteningError(ValueError):
++    """A resolved model cannot be represented within the flat wire contract."""
++
++
++@dataclass(frozen=True)
++class FlattenedModel:
++    model_bytes: bytes
++    record_bytes: bytes
++
++
++def flatten_model(model: Model) -> FlattenedModel:
++    """Serialize an include snapshot made by the model loader."""
++    includes = [
++        {"id": item.id, "path": item.path, "sha256": item.sha256}
++        for item in model._included
++    ]
++    if not includes or includes != model.includes or model._authored_sha256 is None:
++        raise FlatteningError("flattening requires a resolved include root")
++
++    wire = model_wire(model)
++    wire.pop("includes")
++    wire.pop("fact_type_constraints", None)
++    flat_bytes = canonical_json_bytes(wire)
++    if len(flat_bytes) > MAX_MODEL_BYTES:
++        raise FlatteningError("flattening: flat model exceeds the model byte limit")
++
++    reopened = load_model_bytes(flat_bytes, source="flat.orm.json")
++    original = model.model_dump(exclude={"warnings", "includes", "fact_type_constraints"})
++    if original != reopened.model_dump(exclude={"warnings"}):
++        raise FlatteningError("flattening would change model values on re-entry")
++
++    record = canonical_json_bytes({
++        "format": "gnd-flattening/1",
++        "root_sha256": model._authored_sha256,
++        "includes": includes,
++        "flat_model_sha256": sha256_hex(flat_bytes),
++        "origins": [asdict(origin) for origin in sorted(
++            model._provenance, key=lambda item: item.composed_address
++        )],
++    })
++    if len(record) > MAX_MODEL_BYTES:
++        raise FlatteningError("flattening: record exceeds the model byte limit")
++    return FlattenedModel(flat_bytes, record)
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index caff5620..baaba078 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -1899,13 +1899,49 @@ have their own nonzero refusal and direct callers to `gnd validate`.
+ 
+ Existing identity functions cover the loaded composition and its authored
+ include/attachment declarations, with their existing field exclusions.
+-Include paths therefore participate in identity. No private origin metadata
+-is serialized or hashed. Empty include/attachment fields are omitted from
++Include paths therefore participate in identity. The model dump and identity
++functions exclude private origin metadata. Empty include/attachment fields are omitted from
+ both model dump entry points, preserving include-free serializations.
+ A raw includer hash commits to the pinned bytes but cannot prove their
+ presence or validity: any positive freshness/publication claim additionally
+ requires verification of the included bytes in that same invocation.
+ 
++### Extraction flattening record
++
++Path-based `gnd extract` supports a resolved include-bearing root when the
++effective model is eligible for extraction. It publishes
++`<stem>.flat.orm.json` and `<stem>.flattening.json` alongside the ordinary
++bundle. The artifact index binds both file digests and names them in a
++`flattening` object with keys `flat_model` and `record`. The `model.sha256`
++field still identifies the authored root. Include-free bundles omit the
++two files and the `flattening` object. Bundle publication refuses output
++destinations that overlap the bound root, include or reference files.
++
++The flat model is canonical JSON accepted by unrooted model-byte intake.
++Resolved elements keep their order and identities, with project-owned
++attachments materialized as inline constraints. The wire omits the consumed
++include and attachment declarations, load-time warnings, and the usual
++empty or null re-entry defaults. Reference declarations retain their
++authored-root coordinate for later path-based binding. Each published
++flattening artifact has a 10 MiB limit.
++
++The canonical JSON record has `format: "gnd-flattening/1"`,
++`root_sha256`, an `includes` array of `{id, path, sha256}` entries in pin
++order, `flat_model_sha256`, and `origins`. Each origin has `origin`,
++`original_address`, `composed_address`, and nullable `element_id`.
++The source is `model` for root-owned elements and `includes[ID]` for an
++imported element. Origins are sorted by composed address. An anonymous
++constraint has a null ID. A root attachment retains its authored
++`fact_type_constraints` address and identifies its inline address in the
++flat model.
++
++For an extraction handoff, `gnd verify` checks the index against the root
++bytes, resolves and authenticates the include pins, then checks the flat
++model and record against re-derived bytes. The command uses that resolved
++model snapshot for verification. A missing binding, changed coordinate, or
++a pair of forged artifacts with mutually consistent digests refuses in input
++band 3. The root and its includes are required to establish current binding.
++
+ ## Ossie interchange
+ 
+ `gnd export ossie MODEL --out FILE` projects a standalone GND model to an
+diff --git a/src/gnd/witness/io.py b/src/gnd/witness/io.py
+index c946f37e..35b54eb4 100644
+--- a/src/gnd/witness/io.py
++++ b/src/gnd/witness/io.py
+@@ -16,6 +16,7 @@ from pathlib import Path
+ from gnd import input_policy as _rf7_input
+ from gnd.artifacts import canonical_json_bytes
+ from gnd.model import iter_derivation_clauses, load_model_bytes
++from gnd.model._documents import model_wire as model_wire  # noqa: PLC0414 -- historical import
+ from gnd.population import _build_population, _parse_document_bytes, load_population_bytes
+ from gnd.popvalidate import resolve_primitive
+ from gnd.references import (
+@@ -433,29 +434,6 @@ def support_closure(model, targets):
+     return supported, closure
+ 
+ 
+-def model_wire(model):
+-    """The authored-shape document of a loaded model, for re-entry into intake.
+-
+-    Start from ``model.model_dump(mode="json", exclude={"warnings"})``, which
+-    already applies the Model hooks (no empty ``reference_populations``,
+-    ``includes`` or ``fact_type_constraints``). Then remove the two loader
+-    defaults that intake would otherwise refuse: ``model_id`` when it is None
+-    (the meta-schema types it as a string at every version) and ``operations``
+-    when it is empty (a present ``operations`` requires version 2 to 5).
+-
+-    This is deliberately not a change to ``Model``'s own serializer: the
+-    legacy model identity (``gnd.values._model_digest``) hashes that dump, so
+-    omitting ``model_id`` there would move every pinned identity of a model
+-    that declares none.
+-    """
+-    document = model.model_dump(mode="json", exclude={"warnings"})
+-    if document.get("model_id") is None:
+-        document.pop("model_id", None)
+-    if not document.get("operations"):
+-        document.pop("operations", None)
+-    return document
+-
+-
+ def population_wire(pop):
+     metadata = {
+         k: getattr(pop, k)
+diff --git a/tests/fixtures/lx1-flattening/README.md b/tests/fixtures/lx1-flattening/README.md
+new file mode 100644
+index 00000000..e223ce5a
+--- /dev/null
++++ b/tests/fixtures/lx1-flattening/README.md
+@@ -0,0 +1,10 @@
++# LX1 extraction corpus
++
++The root pins a component vocabulary and a topic vocabulary. The component
++vocabulary has an anonymous nested constraint. The root adds two attachments
++to imported fact types. The source document and expected population have
++one uses edge and two ownership facts. The test constructs the handoff
++sidecar from the real produced artifact bytes.
++
++Expected origin addresses and refusal diagnostics are in the separate
++`expected.json` answer file.
+diff --git a/tests/fixtures/lx1-flattening/components.orm.json b/tests/fixtures/lx1-flattening/components.orm.json
+new file mode 100644
+index 00000000..7633be88
+--- /dev/null
++++ b/tests/fixtures/lx1-flattening/components.orm.json
+@@ -0,0 +1,71 @@
++{
++  "version": 2,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [
++    {
++      "id": "component",
++      "name": "Component",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "component_name"
++      }
++    },
++    {
++      "id": "component_name",
++      "name": "ComponentName",
++      "kind": "value",
++      "primitive": "String"
++    },
++    {
++      "id": "owner",
++      "name": "Owner",
++      "kind": "value",
++      "primitive": "String"
++    }
++  ],
++  "fact_types": [
++    {
++      "id": "component_uses_component",
++      "reading": "{Component} uses {Component}",
++      "roles": [
++        {
++          "role_name": "using",
++          "object_type": "component"
++        },
++        {
++          "role_name": "used",
++          "object_type": "component"
++        }
++      ],
++      "constraints": [
++        {
++          "type": "ring",
++          "variant": "irreflexive",
++          "modality": "deontic",
++          "source": "user-supplied",
++          "status": "confirmed",
++          "provenance": {
++            "user_quote": "Components should not use themselves."
++          }
++        }
++      ]
++    },
++    {
++      "id": "component_has_owner",
++      "reading": "{Component} has {Owner}",
++      "roles": [
++        {
++          "role_name": "component",
++          "object_type": "component"
++        },
++        {
++          "role_name": "owner",
++          "object_type": "owner"
++        }
++      ]
++    }
++  ]
++}
+diff --git a/tests/fixtures/lx1-flattening/document.txt b/tests/fixtures/lx1-flattening/document.txt
+new file mode 100644
+index 00000000..a323a2e5
+--- /dev/null
++++ b/tests/fixtures/lx1-flattening/document.txt
+@@ -0,0 +1 @@
++Component a uses component b. Both components have owner x.
+diff --git a/tests/fixtures/lx1-flattening/expected.json b/tests/fixtures/lx1-flattening/expected.json
+new file mode 100644
+index 00000000..19568ec3
+--- /dev/null
++++ b/tests/fixtures/lx1-flattening/expected.json
+@@ -0,0 +1,90 @@
++{
++  "origins": [
++    [
++      "includes[components]",
++      "$.object_types[0]",
++      "$.object_types[0]",
++      "component"
++    ],
++    [
++      "includes[components]",
++      "$.object_types[1]",
++      "$.object_types[1]",
++      "component_name"
++    ],
++    [
++      "includes[components]",
++      "$.object_types[2]",
++      "$.object_types[2]",
++      "owner"
++    ],
++    [
++      "includes[components]",
++      "$.fact_types[0]",
++      "$.fact_types[0]",
++      "component_uses_component"
++    ],
++    [
++      "includes[components]",
++      "$.fact_types[0].constraints[0]",
++      "$.fact_types[0].constraints[0]",
++      null
++    ],
++    [
++      "includes[components]",
++      "$.fact_types[1]",
++      "$.fact_types[1]",
++      "component_has_owner"
++    ],
++    [
++      "includes[topics]",
++      "$.object_types[0]",
++      "$.object_types[3]",
++      "topic"
++    ],
++    [
++      "model",
++      "$.fact_type_constraints[0].constraints[0]",
++      "$.fact_types[0].constraints[1]",
++      "project_no_loops"
++    ],
++    [
++      "model",
++      "$.fact_type_constraints[1].constraints[0]",
++      "$.fact_types[1].constraints[0]",
++      "project_owner_required"
++    ]
++  ],
++  "stale": {
++    "root": "root model",
++    "include": "include:hash-mismatch",
++    "flat": "flat model",
++    "record": "flattening record"
++  },
++  "include_refusals": {
++    "path": [
++      "include:path"
++    ],
++    "standalone": [
++      "include:invalid-included-model"
++    ],
++    "nested": [
++      "include:forbidden-section",
++      "includes"
++    ],
++    "references": [
++      "include:forbidden-section",
++      "reference_populations"
++    ],
++    "unattended": [
++      "include:forbidden-section",
++      "unattended"
++    ]
++  },
++  "legacy_bundle": {
++    "model.applicable.json": "64b97756a49a4647664e314fdddad70647f89051af93391da1a035507deb6626",
++    "model.artifacts.json": "b1ebd437486b32d0ad582f79e162f1827c766f8c906d7ba8d4aac1630a416ab2",
++    "model.projection.schema.json": "10b7e9710931fec4e1eabfbf8d7235b18659ceafb9743df3d140caff37232223",
++    "model.verbalization.txt": "28bc51751efb62cea4595da6d103cd67a8cd6478a8db9bc079653fc1a215a855"
++  }
++}
+diff --git a/tests/fixtures/lx1-flattening/facts.json b/tests/fixtures/lx1-flattening/facts.json
+new file mode 100644
+index 00000000..6d6241a6
+--- /dev/null
++++ b/tests/fixtures/lx1-flattening/facts.json
+@@ -0,0 +1,18 @@
++{
++  "component_uses_component": [
++    {
++      "using": "a",
++      "used": "b"
++    }
++  ],
++  "component_has_owner": [
++    {
++      "component": "a",
++      "owner": "x"
++    },
++    {
++      "component": "b",
++      "owner": "x"
++    }
++  ]
++}
+diff --git a/tests/fixtures/lx1-flattening/project.orm.json b/tests/fixtures/lx1-flattening/project.orm.json
+new file mode 100644
+index 00000000..b0e59f22
+--- /dev/null
++++ b/tests/fixtures/lx1-flattening/project.orm.json
+@@ -0,0 +1,53 @@
++{
++  "version": 5,
++  "source": {
++    "kind": "fixture"
++  },
++  "includes": [
++    {
++      "id": "components",
++      "path": "components.orm.json",
++      "sha256": "c1b7802153351c2aa2dc827a191f14a4870d59ec30fbcfcd8fa9f53eb2f67320"
++    },
++    {
++      "id": "topics",
++      "path": "topics.orm.json",
++      "sha256": "7f09b19990e17cf9b6f368150538eab65d22b21e534268711f8b0c4c10a51178"
++    }
++  ],
++  "fact_type_constraints": [
++    {
++      "fact_type": "component_uses_component",
++      "constraints": [
++        {
++          "id": "project_no_loops",
++          "type": "ring",
++          "variant": "acyclic",
++          "modality": "alethic",
++          "source": "user-supplied",
++          "status": "confirmed",
++          "remedy": "Break the use loop.",
++          "provenance": {
++            "user_quote": "No component may use itself indirectly."
++          }
++        }
++      ]
++    },
++    {
++      "fact_type": "component_has_owner",
++      "constraints": [
++        {
++          "id": "project_owner_required",
++          "type": "mandatory",
++          "role": "component",
++          "modality": "alethic",
++          "source": "user-supplied",
++          "status": "confirmed",
++          "provenance": {
++            "user_quote": "Every component must have an owner."
++          }
++        }
++      ]
++    }
++  ]
++}
+diff --git a/tests/fixtures/lx1-flattening/topics.orm.json b/tests/fixtures/lx1-flattening/topics.orm.json
+new file mode 100644
+index 00000000..9431d22d
+--- /dev/null
++++ b/tests/fixtures/lx1-flattening/topics.orm.json
+@@ -0,0 +1,15 @@
++{
++  "version": 2,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [
++    {
++      "id": "topic",
++      "name": "Topic",
++      "kind": "value",
++      "primitive": "String"
++    }
++  ],
++  "fact_types": []
++}
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index af9b0558..2bbc1c67 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -142,6 +142,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/support/rf9_ci_sources.py b/tests/support/rf9_ci_sources.py
+index ccebc1c9..5ba40912 100644
+--- a/tests/support/rf9_ci_sources.py
++++ b/tests/support/rf9_ci_sources.py
+@@ -13,6 +13,7 @@ PHASE_SUCCESSORS = (
+     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-workflows/evidence/GW2/source-successors.json',
+     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-authoring/evidence/GA1/source-successors.json',
+     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/source-successors.json',
++    EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json',
+ )
+ 
+ 
+diff --git a/tests/test_li0_witness_wire.py b/tests/test_li0_witness_wire.py
+index 1a4d90fa..682f6dc8 100644
+--- a/tests/test_li0_witness_wire.py
++++ b/tests/test_li0_witness_wire.py
+@@ -250,7 +250,12 @@ def test_no_direct_model_dump_in_witness_package():
+         for path in sorted((ROOT / "src" / "gnd" / "witness").rglob("*.py"))
+         if DUMP_CALL in path.read_text()
+     ]
+-    assert offenders == ["src/gnd/witness/io.py"], offenders
++    assert offenders == [], offenders
++    from gnd.model._documents import model_wire
++    from gnd.witness.io import model_wire as historical_model_wire
++
++    assert model_wire is historical_model_wire
++    assert DUMP_CALL in (ROOT / "src/gnd/model/_documents.py").read_text()
+ 
+ 
+ # --- T10: every optional section gated by the meta-schema is omitted when empty -------
+diff --git a/tests/test_lx1_flattening.py b/tests/test_lx1_flattening.py
+new file mode 100644
+index 00000000..176e760d
+--- /dev/null
++++ b/tests/test_lx1_flattening.py
+@@ -0,0 +1,288 @@
++"""LX1 corpus-first extraction and verification through the public CLI."""
++from __future__ import annotations
++
++import copy
++import hashlib
++import json
++import re
++import shutil
++from pathlib import Path
++
++import pytest
++
++from gnd.artifacts import canonical_json_bytes
++from gnd.cli import main
++from gnd.extract.projection import project
++from gnd.extract.refscheme import applicable_set
++from gnd.extract.vocabulary import render_verbalization
++from gnd.model import load_model, load_model_bytes
++
++FIXTURE = Path(__file__).resolve().parent / "fixtures" / "lx1-flattening"
++EXPECTED = json.loads((FIXTURE / "expected.json").read_bytes())
++FIELD_ORDER = ("origin", "original_address", "composed_address", "element_id")
++
++
++def sha(path: Path) -> str:
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def write_doc(path: Path, document: dict) -> None:
++    path.write_bytes(canonical_json_bytes(document))
++
++
++def at(document: dict, address: str) -> dict:
++    value = document
++    for name, index in re.findall(r"\.([a-z_]+)\[(\d+)\]", address):
++        value = value[name][int(index)]
++    return value
++
++
++@pytest.fixture
++def inputs(tmp_path: Path) -> tuple[Path, Path]:
++    source = tmp_path.resolve() / "source"
++    shutil.copytree(FIXTURE, source)
++    return source / "project.orm.json", tmp_path.resolve() / "bundle"
++
++
++def extract(model: Path, bundle: Path) -> int:
++    return main(["extract", str(model), "--out", str(bundle)])
++
++
++@pytest.fixture
++def handoff(inputs: tuple[Path, Path]) -> tuple[Path, Path, Path]:
++    model, bundle = inputs
++    assert extract(model, bundle) == 0
++    index = json.loads((bundle / "project.orm.artifacts.json").read_bytes())
++    population = model.parent / "pop.json"
++    write_doc(population, {
++        "population": index["header_template"],
++        "facts": json.loads((model.parent / "facts.json").read_bytes()),
++    })
++    document = model.parent / "document.txt"
++    write_doc(population.with_suffix(".extraction.json"), {
++        "schema_version": 1,
++        "model": model.name,
++        "model_sha256": sha(model),
++        "population": population.name,
++        "population_sha256": sha(population),
++        "document": document.name,
++        "document_sha256": sha(document),
++        "projection_sha256": sha(bundle / "project.orm.projection.schema.json"),
++        "skill": "gnd-extract",
++        "skill_version": "1",
++        "executing_model": "fixture",
++    })
++    return model, bundle, population
++
++
++def verify(handoff: tuple[Path, Path, Path]) -> int:
++    model, bundle, population = handoff
++    return main(["verify", str(model), str(population),
++                 "--artifacts", str(bundle), "--format", "json"])
++
++
++def test_public_extraction_and_origins(handoff: tuple[Path, Path, Path]) -> None:
++    model, bundle, _ = handoff
++    assert verify(handoff) == 0
++    index = json.loads((bundle / "project.orm.artifacts.json").read_bytes())
++    flat = bundle / "project.orm.flat.orm.json"
++    record = bundle / "project.orm.flattening.json"
++    assert index["flattening"] == {"flat_model": flat.name, "record": record.name}
++    assert index["model"]["sha256"] == sha(model)
++    assert index["artifacts"][flat.name]["sha256"] == sha(flat)
++    assert index["artifacts"][record.name]["sha256"] == sha(record)
++
++    authors = {"model": json.loads(model.read_bytes())}
++    for pin in authors["model"]["includes"]:
++        authors[f"includes[{pin['id']}]"] = json.loads(
++            (model.parent / pin["path"]).read_bytes()
++        )
++    payload = json.loads(record.read_bytes())
++    assert payload["format"] == "gnd-flattening/1"
++    assert payload["root_sha256"] == sha(model)
++    assert payload["flat_model_sha256"] == sha(flat)
++    assert payload["includes"] == authors["model"]["includes"]
++    rows = [[entry[field] for field in FIELD_ORDER] for entry in payload["origins"]]
++    assert rows == sorted(EXPECTED["origins"], key=lambda entry: entry[2])
++    flattened = json.loads(flat.read_bytes())
++    for origin, source, destination, id_ in rows:
++        left, right = at(authors[origin], source), at(flattened, destination)
++        if ".constraints[" not in destination and destination.startswith("$.fact_types"):
++            left = {k: v for k, v in left.items() if k != "constraints"}
++            right = {k: v for k, v in right.items() if k != "constraints"}
++        assert left == right
++        assert right.get("id") == id_
++    loaded, reopened = load_model(model), load_model_bytes(flat.read_bytes(), source=flat)
++    assert project(loaded) == project(reopened)
++    assert applicable_set(loaded) == applicable_set(reopened)
++    assert render_verbalization(loaded) == render_verbalization(reopened)
++    first = {p.name: p.read_bytes() for p in bundle.iterdir()}
++    assert extract(model, bundle) == 0
++    assert first == {p.name: p.read_bytes() for p in bundle.iterdir()}
++
++
++@pytest.mark.parametrize("which", EXPECTED["stale"])
++def test_stale_coordinates(handoff, capsys, which: str) -> None:
++    model, bundle, _ = handoff
++    paths = {
++        "root": model,
++        "include": model.parent / "components.orm.json",
++        "flat": bundle / "project.orm.flat.orm.json",
++        "record": bundle / "project.orm.flattening.json",
++    }
++    capsys.readouterr()
++    if which in {"root", "include"}:
++        # Pair a stale flat input with either higher-precedence defect.
++        paths["flat"].write_bytes(paths["flat"].read_bytes() + b" ")
++    path = paths[which]
++    path.write_bytes(path.read_bytes() + b" ")
++    assert verify(handoff) == 3
++    payload = json.loads(capsys.readouterr().out)
++    assert EXPECTED["stale"][which] in payload["extraction"]["reason"]
++
++
++@pytest.mark.parametrize("downgrade", [False, True])
++def test_index_cannot_authenticate_changed_projection(handoff, capsys, downgrade) -> None:
++    _, bundle, _ = handoff
++    index_path = bundle / "project.orm.artifacts.json"
++    index = json.loads(index_path.read_bytes())
++    flat = bundle / "project.orm.flat.orm.json"
++    record = bundle / "project.orm.flattening.json"
++    if downgrade:
++        index.pop("flattening")
++        index["artifacts"].pop(flat.name)
++        index["artifacts"].pop(record.name)
++    else:
++        changed = json.loads(flat.read_bytes())
++        changed["source"] = {"kind": "forged"}
++        write_doc(flat, changed)
++        binding = json.loads(record.read_bytes())
++        binding["flat_model_sha256"] = sha(flat)
++        write_doc(record, binding)
++        for path in (flat, record):
++            index["artifacts"][path.name]["sha256"] = sha(path)
++    write_doc(index_path, index)
++    capsys.readouterr()
++    assert verify(handoff) == 3
++    assert "extraction:binding-mismatch" in capsys.readouterr().out
++
++
++@pytest.mark.parametrize("which", EXPECTED["include_refusals"])
++def test_include_boundaries(inputs, capsys, which: str) -> None:
++    model, bundle = inputs
++    root = json.loads(model.read_bytes())
++    pin = root["includes"][0]
++    original = model.parent / pin["path"]
++    child = copy.deepcopy(json.loads(original.read_bytes()))
++    if which == "path":
++        pin["path"] = "../escape.orm.json"
++    elif which == "standalone":
++        child["fact_types"][0]["roles"][0]["object_type"] = "absent"
++    elif which == "nested":
++        child["includes"] = []
++    elif which == "references":
++        child["reference_populations"] = []
++    else:
++        child["source"]["mode"] = "unattended"
++    write_doc(original, child)
++    pin["sha256"] = sha(original)
++    write_doc(model, root)
++    assert extract(model, bundle) == 3
++    result = capsys.readouterr().out
++    assert all(fragment in result for fragment in EXPECTED["include_refusals"][which])
++    assert not bundle.exists()
++
++
++@pytest.mark.parametrize("bad", [b"[]", b'{"model":1}', b'{"model":{},"model":{}}',
++                                 b'{"model":NaN}', b"[" * 1024,
++                                 b" " * (1024 * 1024 + 1)],
++                         ids=["array", "scalar-model", "duplicate", "nan", "depth", "size"])
++def test_hostile_indexes_refuse(handoff, capsys, bad: bytes) -> None:
++    _, bundle, _ = handoff
++    (bundle / "project.orm.artifacts.json").write_bytes(bad)
++    capsys.readouterr()
++    assert verify(handoff) == 3
++    result = json.loads(capsys.readouterr().out)
++    assert result["issues"][0]["rule_id"] == "extraction:binding-mismatch"
++
++
++def test_legacy_bundle_bytes(tmp_path, monkeypatch) -> None:
++    from gnd.extract import service
++
++    monkeypatch.setattr(service, "resolve_version", lambda: "0.3.1")
++    monkeypatch.chdir(FIXTURE.parents[2])
++    bundle = tmp_path / "legacy"
++    assert main(["extract", "tests/fixtures/skeleton/model.orm.yaml",
++                 "--out", str(bundle)]) == 0
++    assert {p.name: sha(p) for p in bundle.iterdir()} == EXPECTED["legacy_bundle"]
++
++
++def test_projection_time_bound(inputs) -> None:
++    import subprocess
++    import sys
++
++    model, _ = inputs
++    root = json.loads(model.read_bytes())
++    extra = model.parent / root["includes"][1]["path"]
++    child = json.loads(extra.read_bytes())
++    child["object_types"] = [
++        {"id": f"topic{index}", "name": f"Topic{index}", "kind": "value",
++         "primitive": "String"}
++        for index in range(1000)
++    ]
++    write_doc(extra, child)
++    root["includes"][1]["sha256"] = sha(extra)
++    write_doc(model, root)
++    code = """
++import json
++import sys
++from gnd.model import load_model
++from gnd.model.flattening import flatten_model
++
++model = load_model(sys.argv[1])
++flat = flatten_model(model)
++record = json.loads(flat.record_bytes)
++assert len(record['origins']) == 1008
++"""
++    completed = subprocess.run(
++        [sys.executable, "-c", code, str(model)],
++        capture_output=True, text=True, timeout=5, check=False,
++    )
++    assert completed.returncode == 0, completed.stderr
++
++
++def test_flat_wire_size_refusal(inputs, monkeypatch, capsys) -> None:
++    from gnd.model import flattening
++
++    model, bundle = inputs
++    monkeypatch.setattr(flattening, "MAX_MODEL_BYTES", 100)
++    assert extract(model, bundle) == 3
++    assert "flattening" in capsys.readouterr().out
++    assert not bundle.exists()
++
++
++def test_temporal_extraction_refusal(tmp_path, capsys) -> None:
++    from test_mc1_model_includes import split_existing
++
++    temporal = FIXTURE.parent / "rc1-rule-ids" / "models" / "temporal.orm.yaml"
++    model, _, _ = split_existing(tmp_path.resolve(), temporal)
++    bundle = tmp_path / "bundle"
++    assert extract(model, bundle) == 3
++    assert "temporal" in capsys.readouterr().out
++    assert not bundle.exists()
++
++
++def test_output_cannot_replace_an_include(inputs, capsys) -> None:
++    model, _ = inputs
++    root = json.loads(model.read_bytes())
++    pin = root["includes"][0]
++    original = (model.parent / pin["path"]).read_bytes()
++    pin["path"] = "project.orm.flat.orm.json"
++    bound_input = model.parent / pin["path"]
++    bound_input.write_bytes(original)
++    write_doc(model, root)
++
++    assert extract(model, model.parent) == 74
++    assert "overlap" in capsys.readouterr().out
++    assert bound_input.read_bytes() == original
++    assert not (model.parent / "project.orm.artifacts.json").exists()
+diff --git a/tests/test_mc1_guards.py b/tests/test_mc1_guards.py
+index c5560dba..4ed2cc5d 100644
+--- a/tests/test_mc1_guards.py
++++ b/tests/test_mc1_guards.py
+@@ -31,14 +31,13 @@ def test_direct_refusals(tmp_path, module, name, args):
+     assert sorted(p.name for p in tmp_path.iterdir()) == ['project.orm.json', 'vocab.orm.json']
+ 
+ 
+-@pytest.mark.parametrize('route', ['codegen', 'extract', 'conformance', 'measure', 'pyrel'])
++@pytest.mark.parametrize('route', ['codegen', 'conformance', 'measure', 'pyrel'])
+ def test_cli_guards(tmp_path, route):
+     from support.cli_runner import run_main
+     path, _, _ = write_case(tmp_path)
+     out = tmp_path / 'out'
+     args = {
+         'codegen': ['codegen', str(path), '--out', str(out)],
+-        'extract': ['extract', str(path), '--out', str(out)],
+         'conformance': ['conformance', str(path), str(out), '--format', 'json'],
+         'measure': ['measure', str(path), '--populations', str(tmp_path), '--format', 'json'],
+         'pyrel': ['export', 'pyrel', str(path), '--out', str(out)],
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index ee195048..1487a04e 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -1054,6 +1054,9 @@
+     },
+     "gnd.model._paths": {
+       "layer": "model"
++    },
++    "gnd.model.flattening": {
++      "layer": "model"
+     }
+   },
+   "schema_version": 1

@@ -298,7 +298,7 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | `main(argv) -> int` | function | 585 | (no docstring) |
 
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
-Components: unassigned
+Components: examples.literature_revision
 Publish and replay the literature semantic revision example offline.
 
 | Symbol | Kind | Line | Summary |
@@ -309,7 +309,7 @@ Publish and replay the literature semantic revision example offline.
 | `main(argv) -> int` | function | 428 | (no docstring) |
 
 ## gnd.examples.literature.revision_manifest — `src/gnd/examples/literature/revision_manifest.py`
-Components: unassigned
+Components: examples.literature_revision
 Bind a release to an independently selected, bounded dependency policy.
 
 | Symbol | Kind | Line | Summary |

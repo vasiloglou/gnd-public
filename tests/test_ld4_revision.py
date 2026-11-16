@@ -68,8 +68,12 @@ def test_both_current_supports_are_individually_replayable(release):
     assert [row["source"] for row in report["supports"]] == EXPECTED["independent_support_sources"]
     assert len({row["review_sha256"] for row in report["supports"]}) == 2
     assert len({row["witness_sha256"] for row in report["supports"]}) == 2
-    assert len({row["occurrence"]["span"]["sha256"] for row in report["supports"]}) == 2
+    assert len({row["occurrence"]["document_sha256"] for row in report["supports"]}) == 2
     for row in report["supports"]:
+        occurrence = row["occurrence"]
+        span = occurrence["span"]
+        document = (out / f"after/sources/{row['source']}/document.txt").read_bytes()
+        assert hashlib.sha256(document[span["start"]:span["end"]]).hexdigest() == span["sha256"]
         assert revision.replay_support(out, row["source"]) == row
 
 

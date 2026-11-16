@@ -1757,7 +1757,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +71 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +72 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +70 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +71 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +24 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +25 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -3713,7 +3713,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/depth.py
 - uses: infra.artifacts, infra.bounded_process, model.anchors
-- used_by: examples.literature_reading
+- used_by: examples.literature_reading, examples.literature_revision
 - tests: tests/test_ld1_competency_examples.py
 
 ### examples.literature_reading
@@ -3724,5 +3724,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/reading.py
 - uses: examples.literature_depth, infra.artifacts
-- used_by: examples.literature_assurance
+- used_by: examples.literature_assurance, examples.literature_revision
 - tests: tests/test_ld3_reading_workflow.py
+
+### examples.literature_revision
+- does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.
+- verbs: semantic revision, release dependencies, sense migration, prior snapshot replay, stale coverage, predicate definition, support certificate
+- in: Replayable reading evidence, a separately pinned dependency policy, verified source bundles and saved occurrence reviews.
+- out: Before and after releases, changed occurrence and dependent artifact worklists, public proof and replay reports, and independent support bindings.
+- status: canonical
+- modules: src/gnd/examples/literature/revision.py, src/gnd/examples/literature/revision_manifest.py
+- uses: examples.literature_depth, examples.literature_reading, infra.artifacts, infra.errors, model.loading
+- used_by: (none)
+- tests: tests/test_ld4_revision.py

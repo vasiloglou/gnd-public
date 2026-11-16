@@ -11,7 +11,12 @@ from pathlib import Path
 import pytest
 from ruamel.yaml import YAML
 
-from gnd.anchors import recognised_ranges, recognition_index, vocabulary_digest
+from gnd.anchors import (
+    canonical_document_text,
+    recognised_ranges,
+    recognition_index,
+    vocabulary_digest,
+)
 from gnd.artifacts import canonical_json_bytes, sha256_hex
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,7 +42,8 @@ def example(tmp_path):
 
 def _anchors(folder, span, occurrence=0):
     document = (folder / "source.txt").read_bytes()
-    start = document.index(span.encode())
+    text = canonical_document_text(document)
+    start = text.index(span)
     end = start + len(span)
     population = (folder / "time.population.json").read_bytes()
     roles = json.loads(population)["facts"]["time_step"][0]
@@ -48,7 +54,7 @@ def _anchors(folder, span, occurrence=0):
         "anchors": [{
             "fact_key": {"fact_type": "time_step", "roles": roles}, "role": "coefficient",
             "span": {"start": start, "end": end}, "occurrence": occurrence,
-            "excerpt_sha256": sha256_hex(document[start:end]),
+            "excerpt_sha256": sha256_hex(text[start:end].encode()),
         }],
     }
     (folder / "time.anchors.json").write_bytes(canonical_json_bytes(sidecar))
@@ -73,6 +79,25 @@ def test_time_dimension_through_public_check(example, span, occurrence, expected
                                     "2 fs/s", "2 fs / s", "0.00200000000000000000000000000001 ps"])
 def test_time_quantity_refuses_malformed_or_out_of_range_tokens(source):
     assert recognition_index(source, {"time-fs"}) == {"time-fs": {}}
+
+
+@pytest.mark.parametrize("source", [
+    "The decay rate is 2 fs−1.",
+    "The decay rate is 2 fs⁻¹.",
+    "The rate is 2 fs⁻ ¹.",
+    "The time scale is 0.5x10^2 fs.",
+    "The time scale is 4/2 fs.",
+    "The time scale is 4 / 2 fs.",
+    "The time scale is 4/ 2 fs.",
+    "The time scale ranges from 1–2 fs.",
+])
+def test_time_anchor_refuses_rates_and_expression_fragments(example, source):
+    (example / "source.txt").write_text(source)
+    _anchors(example, "2 fs")
+    code, report = _check(example)
+    assert code == 1, report
+    assert any(row["constraint_type"] == "anchored" and row["verdict"] == "fail"
+               for row in report["verdicts"])
 
 
 def test_selector_requires_integer(example):
@@ -111,9 +136,14 @@ def test_exact_witness_tuple_replays(example):
     assert str(Decimal(coefficient).scaleb(-places)) == EXPECTED["exact_decimal"]
     proof = example / "proof.json"
     certificate = json.loads(proof.read_bytes())
-    certificate["nodes"][0]["tuple"][1]["value"] = 4
-    proof.write_bytes(canonical_json_bytes(certificate))
-    assert _cli(example, "replay", *files, "proof.json", "--raw")[0] != 0
+    for index, wrong in enumerate((3, 4, "fs")):
+        original = certificate["nodes"][0]["tuple"][index]["value"]
+        certificate["nodes"][0]["tuple"][index]["value"] = wrong
+        proof.write_bytes(canonical_json_bytes(certificate))
+        code, rejected = _cli(example, "replay", *files, "proof.json", "--raw")
+        assert code == 1, rejected
+        assert rejected["results"][0]["reason"] == "proof-invalid"
+        certificate["nodes"][0]["tuple"][index]["value"] = original
 
 
 @pytest.mark.parametrize(("field", "wrong"), [("unit", "fs"), ("places", 4)])

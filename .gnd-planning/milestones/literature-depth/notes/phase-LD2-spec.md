@@ -72,7 +72,7 @@ axes and avoid claiming measurement precision outside the fixture.
 
 ## Verification selection
 
-| Control in `tests/test_ld2_quantities.py` | Expected result |
+| Control | Expected result |
 |---|---|
 | T1 | Public check exits 0 for `2 fs`, `0.002 ps` and `0.000002 ns` independently, verifying whole-token spans and matching occurrences. |
 | T2 | A span covering `2 eV`, partial time span, wrong amount or sub-femtosecond value fails the anchored constraint at exit 1. Badly formed, adjacent and out-of-bound tokens fail recognition. Selector on a String role fails validate at exit 3. |
@@ -80,9 +80,9 @@ axes and avoid claiming measurement precision outside the fixture.
 | T4 | Float and fractional Number controls check successfully and witness exits 2 with `fragment-unsupported`. |
 | T5 | LD1 and existing anchor, witness and schema tests pass. |
 | T6 | The time scanner keeps the capped range prefix for each value and completes linearly on a bounded large input. |
-| T7 | Fresh installed wheel executes the same public check/witness/replay route over the packaged example. |
+| T7 | Separately run the packaged README commands over the installed wheel. Check, witness and replay exit 0 and the replayed tuple gives 0.002 ps. Retain the installed record. |
 
-Run the direct LD2 tests, LD1 example tests, anchor sidecar and public
+Run T1–T6 with the direct LD2 tests. Run the LD1 example tests, anchor sidecar and public
 semantic boundaries, schema sync, witness compatibility, LX1–LX4 affected
 gates, repository structural guards, whole-tree Ruff, and strict component
 verification. Broad historical, evidence and census lanes retain their
@@ -116,3 +116,18 @@ The RF6 guard rejected the additional scanned accesses in the new anchor
 helper. The exact inventory successor records its four occurrences
 across three counted rows with no removals. This changes the live
 inventory and leaves the query exception policy and predecessor bytes intact.
+
+### Independent-review repairs
+
+The original selector admitted inverse-unit suffixes and numeric fragments
+following formula or fraction operators. The time-only boundary now checks
+both sides of a complete quantity, including Unicode operator spellings.
+The public checker regressions reproduce the original false accepts, and
+the replay control now checks the failure band and reason for each tuple
+cell independently.
+
+The installed wheel was verified before review. T7 now explicitly locates
+that route outside the pytest file. The completion record binds the
+second installed run over the repaired bytes. The reviewer reproduced an
+unrelated historical byte-size test at the pre-phase base. That reserved
+test is outside the reduced local selection.

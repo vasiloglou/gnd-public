@@ -44,7 +44,10 @@ _DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
 _NUMERIC_TOKEN = re.compile(r"[+-]?(?:[0-9][0-9,.]*|\.[0-9]+)(?:\s*%)?")
 
 _TIME_UNIT = re.compile(r"[ \t]+(fs|ps|ns)")
-_COMPOUND_TIME_UNIT = re.compile(r"[ \t]*[/^*·]")
+_TIME_COMPOUND_OPERATORS = "/⁄∕÷^*·⋅×⁻⁺−"
+_TIME_SUFFIX_OPERATOR = re.compile(rf"[^\S\r\n]*[{_TIME_COMPOUND_OPERATORS}]")
+_TIME_PREFIX_OPERATORS = "+-–—" + _TIME_COMPOUND_OPERATORS
+_TIME_LEFT_DELIMITERS = frozenset("([{=\"'“‘")
 _TIME_SCALE = {"fs": 0, "ps": 3, "ns": 6}
 _TIME_MAGNITUDE_CAP = 40
 
@@ -373,6 +376,17 @@ def lexical_ranges(
     return result
 
 
+def _starts_time_quantity(source: str, start: int) -> bool:
+    if start == 0 or source[start - 1] in _TIME_LEFT_DELIMITERS:
+        return True
+    if not source[start - 1].isspace():
+        return False
+    # An operator separated by horizontal space still joins the two tokens.
+    while start and source[start - 1].isspace() and source[start - 1] not in "\r\n":
+        start -= 1
+    return start == 0 or source[start - 1] not in _TIME_PREFIX_OPERATORS
+
+
 def _time_quantity(source: str, end: int, token: str) -> tuple[Decimal, int] | None:
     """Return the exact whole-femtosecond value and complete source end."""
     unit = _TIME_UNIT.match(source, end)
@@ -381,7 +395,7 @@ def _time_quantity(source: str, end: int, token: str) -> tuple[Decimal, int] | N
     end = unit.end()
     if end < len(source) and (_word(source[end]) or source[end] in "+-"):
         return None
-    if _COMPOUND_TIME_UNIT.match(source, end):
+    if _TIME_SUFFIX_OPERATOR.match(source, end):
         return None
     sign, digits, exponent = Decimal(token.replace(",", "")).as_tuple()
     converted = Decimal((sign, digits, exponent + _TIME_SCALE[unit[1]]))
@@ -420,6 +434,8 @@ def recognition_index(
             token = match.group()
             try:
                 if kind == "time-fs":
+                    if not _starts_time_quantity(source, start):
+                        continue
                     quantity = _time_quantity(source, end, token)
                     if quantity is None:
                         continue

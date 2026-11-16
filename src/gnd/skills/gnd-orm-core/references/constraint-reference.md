@@ -53,9 +53,12 @@ whole femtoseconds. It accepts signed integer and decimal magnitudes
 followed by a space or tab and a complete case-sensitive unit token
 (`fs`, `ps`, or `ns`). The numeric token follows the decimal magnitude
 grammar, with a 40-character cap. The exact whole-femtosecond value
-must fit the anchor sidecar integer bound. Partial unit tokens,
-different dimensions, compound units and quantities that require
-rounding have no match. Anchor occurrence counts follow source order
+must fit the anchor sidecar integer bound. The selector admits a
+standalone token at the beginning of a source, after whitespace, or
+after a grouping, quotation or assignment delimiter. Nearby
+mathematical operators, including inverse-unit signs, cannot turn
+a fragment of a larger expression into a match. Partial unit tokens,
+other dimensions, and values that require rounding have no match. Anchor occurrence counts follow source order
 among expressions for the same converted value. The bound span
 includes the unit.
 

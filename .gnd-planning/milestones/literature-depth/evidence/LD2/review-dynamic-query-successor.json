@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reason": "LD2 review repairs account for the time-only expression-boundary reads.",
+  "predecessor": ".gnd-planning/milestones/literature-depth/evidence/LD2/dynamic-query-successor.json",
+  "predecessor_sha256": "37c0ef7f89e70b889484d59cf95e0d28d93454119663bd158a1f2c9e5ebe495d",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/anchors.py",
+      "_starts_time_quantity",
+      "source[start - 1]",
+      5
+    ]
+  ],
+  "result_distinct_rows": 7816,
+  "result_occurrences": 9715
+}

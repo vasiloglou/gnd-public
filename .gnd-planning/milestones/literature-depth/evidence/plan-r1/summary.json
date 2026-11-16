@@ -1,0 +1,146 @@
+{
+  "run_sha256": "9762dafb7531ef208c0bb7ec72b3f0028a863ac90b3875f61122987ad2faa103",
+  "request_sha256": "50a059ca1faffb418936e07c39383375255947ce24bcabd4d0d0b6708ce25fd1",
+  "source_commit": "99df41c9618adadf337043c6b3002b4f374d5a95",
+  "successful_reviewer_ids": [
+    "claude",
+    "codex",
+    "qwen",
+    "gemini",
+    "kimi",
+    "glm"
+  ],
+  "reviewed_artifacts_unchanged": true,
+  "reviewers": [
+    {
+      "reviewer_id": "claude",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 14,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 14,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 14,
+        "total_concerns": 14,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "codex",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 3,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 3,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 3,
+        "total_concerns": 3,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "gemini",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 0,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 0,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 0,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "approve"
+    },
+    {
+      "reviewer_id": "glm",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 3,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 3,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 3,
+        "unanchored_concern_ids": [
+          "ld-plan-r2-source-support-evidence-unbound",
+          "ld-plan-r2-ld2-conditionality-scope",
+          "ld-plan-r2-fidelity-recall-no-producer"
+        ]
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "kimi",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 3,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 3,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 3,
+        "total_concerns": 3,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "qwen",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 10,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 10,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 10,
+        "total_concerns": 10,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    }
+  ]
+}

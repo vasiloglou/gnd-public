@@ -1,9 +1,10 @@
 # Literature depth and revision
 
-[Plan r2](notes/literature-depth-plan.md) covers parts 6–8 of
+[Plan r3](notes/literature-depth-plan.md) covers parts 6–8 of
 [issue #193](https://github.com/vasiloglou/gnd-public/issues/193). The
-prerequisite identity and interoperability phases are merged. Plan review
-is pending. The owner kept part 10 deferred.
+prerequisite identity and interoperability phases are merged. The
+[r2 panel](001-panel.md) returned six valid responses. The
+[delegated plan gate](002-plan-gate.md) binds r3. The owner kept part 10 deferred.
 
 | Phase | Deliverable |
 |---|---|

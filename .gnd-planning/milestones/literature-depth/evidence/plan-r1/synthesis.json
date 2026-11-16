@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "run_sha256": "9762dafb7531ef208c0bb7ec72b3f0028a863ac90b3875f61122987ad2faa103",
+  "summary": "Six complete responses on literature-depth r2. Gemini approved. Claude, Codex, Qwen, Kimi and GLM requested revisions involving source support, trigger criteria, reading replay, release dependencies and verdict evidence.",
+  "agreed_concerns": [
+    {
+      "group_id": "source-support",
+      "title": "Authenticate source support",
+      "summary": "Local authored note and answer agreement can pass with an unsupported primary-source citation.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld1-source-support-unchecked"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD1-SOURCE-SUPPORT"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-source-support-evidence-unbound"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "replay-calls",
+      "title": "Prove replay bypasses a used producer",
+      "summary": "Both fresh and replay routes may trivially claim zero producer calls with saved inputs.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-zero-call-replay-vacuous"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-fresh-run-offline-contract"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "fidelity-recall",
+      "title": "Bind and grade the recall input",
+      "summary": "A recall metric needs an in-scope producer and an explicit qualifying threshold.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-absence-recall-floor"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD3-FIDELITY-CONDITION"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-fidelity-recall-no-producer"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "quantity-trigger",
+      "title": "Make quantity triggers observable per axis",
+      "summary": "Without predeclared axes and probes, the conditional phase can close on a generic trigger disposition.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld2-trigger-unfalsifiable"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lit-depth-r2-ld1-gap-dispositions-not-enumerated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-ld2-conditionality-scope"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "local-membership",
+      "title": "Keep local membership controls",
+      "summary": "Deferring aggregate certificates does not settle duplicate, omitted and empty local roster behavior.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "part10-dup-member-controls-needed-now"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "part10-boundary-vs-ld3-ld4-membership"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld4-roster-authority"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld4-per-input-mutation-missing"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld1-comparability-not-gated"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld4-whale-fixture-disjoint-from-coverage"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld3-ld4-affected-set-contract"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld2-artifacts-outside-ld4-roster"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld5-two-support-fixture-contract"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "li1-coverage-stage-unclaimed"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld3-stop-each-and-cost-unit"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "LD5-REVIEW-FRESHNESS"
+    },
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "lit-depth-r2-ld2-gate-no-reproduced-gap-branch"
+    },
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "lit-depth-r2-close-roster-unnamed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld4-roster-omits-ld3-coverage"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld5-resolution-edition-unproduced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld2-order-and-downstream-revalidation"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld5-gate-omits-per-binding-mutations"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "absence-claim-scope-input-untested"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld2-witness-anchor-prerequisites"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "source-redistribution-vs-committed-inputs"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "part9-disposition-unstated"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-1",
+      "rank": 1,
+      "title": "Bind reviewed primary evidence",
+      "action": "Freeze a scoped source-to-answer review and an independent swapped-citation control.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld1-source-support-unchecked"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD1-SOURCE-SUPPORT"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-source-support-evidence-unbound"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld1-source-support-unchecked",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD1-SOURCE-SUPPORT",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-source-support-evidence-unbound",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-2",
+      "rank": 2,
+      "title": "Pin release dependency authority",
+      "action": "Use a rules-owned roster outside the candidate manifest, require the LD3 artifacts, and mutate each bound kind.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld4-roster-authority"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld4-per-input-mutation-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld4-roster-omits-ld3-coverage"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld4-roster-authority",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld4-per-input-mutation-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld4-roster-omits-ld3-coverage",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-3",
+      "rank": 3,
+      "title": "Exercise the offline producer and replay",
+      "action": "Prove the saved-response adapter runs on fresh stages and is bypassed on a replay.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-zero-call-replay-vacuous"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-fresh-run-offline-contract"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-zero-call-replay-vacuous",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-fresh-run-offline-contract",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-4",
+      "rank": 4,
+      "title": "Measure a qualifying recall control",
+      "action": "Use a frozen local gold set with checked qualifying and failing recall and scope bindings.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-absence-recall-floor"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD3-FIDELITY-CONDITION"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-fidelity-recall-no-producer"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "absence-claim-scope-input-untested"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-absence-recall-floor",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD3-FIDELITY-CONDITION",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-fidelity-recall-no-producer",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "absence-claim-scope-input-untested",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-5",
+      "rank": 5,
+      "title": "Freeze quantity probes",
+      "action": "Exercise all three observational axes before deciding the conditional runtime scope.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld2-trigger-unfalsifiable"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lit-depth-r2-ld1-gap-dispositions-not-enumerated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-ld2-conditionality-scope"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld2-trigger-unfalsifiable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lit-depth-r2-ld1-gap-dispositions-not-enumerated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld-plan-r2-ld2-conditionality-scope",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-6",
+      "rank": 6,
+      "title": "Validate local roster membership",
+      "action": "Exercise omissions, duplicates and meaningful empty sets locally.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "part10-dup-member-controls-needed-now"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "part10-boundary-vs-ld3-ld4-membership"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "part10-dup-member-controls-needed-now",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "part10-boundary-vs-ld3-ld4-membership",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-7",
+      "rank": 7,
+      "title": "Bind derived verdicts to current support",
+      "action": "Derive the edition from LD4, authenticate support reviews, and exercise each independent mutation.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD5-REVIEW-FRESHNESS"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld5-two-support-fixture-contract"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld5-resolution-edition-unproduced"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld5-gate-omits-per-binding-mutations"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD5-REVIEW-FRESHNESS",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld5-two-support-fixture-contract",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld5-resolution-edition-unproduced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld5-gate-omits-per-binding-mutations",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    }
+  ]
+}

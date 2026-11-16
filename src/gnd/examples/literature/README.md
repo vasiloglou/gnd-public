@@ -342,3 +342,6 @@ Run three checked models covering physical dynamics, molecular sampling
 and randomized matrix decomposition. The report shows source evidence
 and gaps, as well as synthetic experiment comparisons and quantity
 probes. [Run the examples](depth_fixture/README.md).
+
+The [exact time-step example](quantity_fixture/README.md) shows
+dimension-aware anchors and a fixed-scale decimal witness.

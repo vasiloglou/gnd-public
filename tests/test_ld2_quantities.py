@@ -69,7 +69,8 @@ def test_time_dimension_through_public_check(example, span, occurrence, expected
 
 
 @pytest.mark.parametrize("source", ["2eV", "2 fs2", "2 ps_extra", "2.0.0 fs", "2 fs-1",
-                                    "2\nfs", "2% fs", "2,00 fs", "1e3 fs", "9999999999999999999 fs"])
+                                    "2\nfs", "2% fs", "2,00 fs", "1e3 fs", "9999999999999999999 fs",
+                                    "2 fs/s", "2 fs / s", "0.00200000000000000000000000000001 ps"])
 def test_time_quantity_refuses_malformed_or_out_of_range_tokens(source):
     assert recognition_index(source, {"time-fs"}) == {"time-fs": {}}
 

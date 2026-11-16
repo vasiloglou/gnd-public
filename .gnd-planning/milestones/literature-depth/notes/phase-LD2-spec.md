@@ -101,3 +101,13 @@ Corpus-first. The executable control and separate expected outcomes live
 under `tests/test_ld2_quantities.py` and `tests/fixtures/ld2-quantities/`.
 A red run must show the distinct unimplemented selector and scoped
 witness-route expectations before source changes.
+
+## Implementation findings
+
+The existing sidecar and occurrence index already carry the complete unit
+span. The recognizer can use a bounded decimal exponent shift, so schema
+admission and the recognizer implement the new semantics without a
+checker or certificate format change. The fixed-scale fact uses the
+existing anchored and value constraints. Witness and replay authenticate
+the coefficient, scale and unit as one tuple. The raw fractional Number
+and Float controls continue to check and then return the same refusal.

@@ -46,7 +46,19 @@ Every constraint may declare an `id`, unique across the model, and a `remedy`: a
 
 ## Source anchoring (v7.0)
 
-An inline `anchored` constraint asks whether each populated value in its covered role has a source witness. An optional `role` selects one declared role; without it every role of the fact type is covered. `source`, `status`, `modality`, and provenance follow the common constraint fields. `recognise` is an optional nonempty list on a selected role, with the exact values `integer`, `decimal`, `percent`, and `iso-8601-date`; its members must fit the role's primitive. An empty covered string is rejected during population validation.
+An inline `anchored` constraint asks whether each populated value in its covered role has a source witness. An optional `role` selects one declared role; without it every role of the fact type is covered. `source`, `status`, `modality`, and provenance follow the common constraint fields. `recognise` is an optional nonempty list on a selected role, with the exact values `integer`, `decimal`, `percent`, `iso-8601-date`, and `time-fs`; its members must fit the role's primitive. An empty covered string is rejected during population validation.
+
+The `time-fs` recognizer selects an Integer role whose value denotes
+whole femtoseconds. It accepts signed integer and decimal magnitudes
+followed by a space or tab and a complete case-sensitive unit token
+(`fs`, `ps`, or `ns`). The numeric token follows the decimal magnitude
+grammar, with a 40-character cap. The exact whole-femtosecond value
+must fit the anchor sidecar integer bound. Partial unit tokens,
+different dimensions, compound units and quantities that require
+rounding have no match. Anchor occurrence counts follow source order
+among expressions for the same converted value. The bound span
+includes the unit.
+
 
 The anchor sidecar is JSON at `<population>.anchors.json`, version 1 or 2; the parser is the authority and `gnd/anchor-sidecar.schema.json` describes the format. It contains raw-byte SHA-256 digests of the population and document, plus `vocabulary_digest`: canonical UTF-8 JSON of the model's `object_types` and `fact_types`, omitting each object type's `description` and each fact type's `derivation_rule`, `constraints`, `sample_population`, and `depends_on` (see [representation-format.md](representation-format.md)). Each anchor has a complete fact key, role, zero-based occurrence, half-open source span, and SHA-256 digest of the NFC document slice. The span counts NFC Unicode code points. A malformed sidecar or mismatch of any digest, span, or excerpt is an input refusal at exit 3. A present sidecar always binds before value matching. Version 1 allows one anchor per fact role. Version 2 allows several, identified by fact key, role, span and occurrence; the role passes only when every one of its anchors binds, and a failing fact is reported once per role.
 

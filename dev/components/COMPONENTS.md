@@ -1974,8 +1974,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.anchors
-- does: Bind digest-checked document anchors to population roles and find lexical or numeric source spans.
-- verbs: parse_anchor_sidecar, bind_anchors, write_anchor_sidecar, vocabulary_digest, lexical_ranges, recognition_index, recognised_ranges, document anchors, source spans, excerpt digest, numeric recognition, date recognition, sidecar validation, multiple occurrences, strict JSON
+- does: Bind digest-checked document anchors to population roles and find lexical, numeric, or exact time-quantity source spans.
+- verbs: parse_anchor_sidecar, bind_anchors, write_anchor_sidecar, vocabulary_digest, lexical_ranges, recognition_index, recognised_ranges, document anchors, source spans, excerpt digest, numeric recognition, date recognition, time-fs, time quantity, sidecar validation, multiple occurrences, strict JSON
 - in: sidecar JSON or AnchorSidecar; model and raw population/document bytes
 - out: validated sidecar; bound document text; occurrence span indexes
 - status: canonical

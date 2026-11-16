@@ -1,0 +1,79 @@
+{
+  "review_candidate": {
+    "runtime_commit": "07a2bb068837d604fe17e9a3b9116ebbe562171b",
+    "wheel_sha256": "a3ea56309e21e51c1a6c91c84e7e0ec7c4af540697f58c0441d063e0380624dd",
+    "files": {
+      "check.json": "7cb6c6ac7078970d40120a14728dcc51cc84d706bb5858485793154e326f310b",
+      "time.witness.json": "664f181fb3529b8f79852aeec3e64832dfd7b6ea7823de97f3f811901acfc9dd",
+      "replay.json": "eef73198eee3f54e06d4af7fede8baf470003eedd0269fb3d9e3902145550f0d",
+      "time.anchors.json": "589c428990de044d2af80246a3177f4698b9b791a03e75c907de30df8def391d",
+      "time.orm.yaml": "55f41279bae5ee1477d6f006690ac638c9b11dcc01825bdfa2e687967229bba8",
+      "time.population.json": "c2a4bda7fe82b422146ae9bdf3076d4432388db595e4ed7081316627af20b568",
+      "source.txt": "b6eb089cd29272137c65a57c40b76070c9e49e8ccd6bd423880c14f6c630db26",
+      "time.targets.json": "772629861f6408132d4b65f597d17d8f009fe0232a2892775ca718768adc1b16"
+    },
+    "exit_codes": {
+      "check": 0,
+      "witness": 0,
+      "replay": 0
+    },
+    "replayed_tuple": [
+      {
+        "primitive": "Integer",
+        "value": 2
+      },
+      {
+        "primitive": "Integer",
+        "value": 3
+      },
+      {
+        "primitive": "String",
+        "value": "ps"
+      }
+    ],
+    "replayed_exact_decimal": "0.002 ps",
+    "whole_tree_ruff": {
+      "exit": 1,
+      "inherited_diagnostics": 188,
+      "exact_diagnostics_match": true
+    },
+    "review_candidate": "e0bf8feb10c3504963f9e4e96090400025c07b9f",
+    "focus_summary": "292 passed in 370.04s (0:06:10)",
+    "structure_summary": "679 passed, 2 deselected in 280.15s (0:04:40)"
+  },
+  "repaired_candidate": {
+    "runtime_commit": "55ffa8ea24fbc57c21a5075606248082a1d472da",
+    "wheel_sha256": "c2cf429f133db5bf06f7a7da83c92645d8a3d181361c76c07d7f3a7fa4c6dcfd",
+    "files": {
+      "check.json": "7cb6c6ac7078970d40120a14728dcc51cc84d706bb5858485793154e326f310b",
+      "time.witness.json": "664f181fb3529b8f79852aeec3e64832dfd7b6ea7823de97f3f811901acfc9dd",
+      "replay.json": "eef73198eee3f54e06d4af7fede8baf470003eedd0269fb3d9e3902145550f0d",
+      "time.anchors.json": "589c428990de044d2af80246a3177f4698b9b791a03e75c907de30df8def391d",
+      "time.orm.yaml": "55f41279bae5ee1477d6f006690ac638c9b11dcc01825bdfa2e687967229bba8",
+      "time.population.json": "c2a4bda7fe82b422146ae9bdf3076d4432388db595e4ed7081316627af20b568",
+      "source.txt": "b6eb089cd29272137c65a57c40b76070c9e49e8ccd6bd423880c14f6c630db26",
+      "time.targets.json": "772629861f6408132d4b65f597d17d8f009fe0232a2892775ca718768adc1b16"
+    },
+    "exit_codes": {
+      "check": 0,
+      "witness": 0,
+      "replay": 0
+    },
+    "replayed_tuple": [
+      {
+        "primitive": "Integer",
+        "value": 2
+      },
+      {
+        "primitive": "Integer",
+        "value": 3
+      },
+      {
+        "primitive": "String",
+        "value": "ps"
+      }
+    ],
+    "replayed_exact_decimal": "0.002 ps"
+  },
+  "installed_proof_and_check_bytes_match_review_candidate": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "reason": "LX4 authenticates the rooted flattened extraction bundle before fidelity scoring.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_fidelity",
+      "home": "gnd.fidelity.service",
+      "reason": "Reuse the bounded bundle verifier while keeping the historical entry point and include-free path.",
+      "before": {
+        "algorithm_sha256": "633c89d5895601afd6d14ef9fd5e0506ec160c79112bf46f9b8a0823fd2a3b30"
+      },
+      "after": {
+        "algorithm_sha256": "a085ccb92b857cd21c3dfdbe788d5039fbbe37aea3599bccd2131a6b34515c1e",
+        "raw_sha256": "b829686c7714a34c3689af53eff70da85420f077019238bb0e48b709ef894045"
+      }
+    }
+  ]
+}

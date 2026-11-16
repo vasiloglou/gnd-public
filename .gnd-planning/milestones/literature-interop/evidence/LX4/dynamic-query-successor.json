@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "reason": "LX4 accounts for the authenticated fidelity bundle digest lookups.",
+  "predecessor": ".gnd-planning/milestones/literature-interop/evidence/LX3/review-dynamic-query-successor.json",
+  "predecessor_sha256": "36ee51ab7b585743b2a35628d2e051f0055b00d9a450b390fdfad8afedcd3c51",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/fidelity/service.py",
+      "_cmd_fidelity",
+      "bundle.artifact_digests[applicable_path.name]",
+      1
+    ],
+    [
+      "src/gnd/fidelity/service.py",
+      "_cmd_fidelity",
+      "bundle.artifact_digests[projection_path.name]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7812,
+  "result_occurrences": 9706
+}

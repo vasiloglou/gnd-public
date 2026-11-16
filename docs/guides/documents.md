@@ -105,3 +105,31 @@ synthetic receipts are not evidence that a provider ran now.
 See the [extraction contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-extract/references/extraction-contract.md)
 and [rendering contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-render-doc/references/rendering-contract.md)
 for exact sidecars, manifests, distractors, and failure semantics.
+
+## Separate extraction and checking models
+
+Pin the same shared vocabulary in an extraction root and a checking root.
+The extraction root projects the document shape. The checking root can add
+constraints that are only meant for the composed result, including guarded
+calendar comparisons. Keep the two authored roots independently identified
+even when their candidate vocabulary is identical.
+
+Run `gnd extract` on the extraction root and give the extractor its indexed
+bundle. For an include root, the bundle contains the flattened model and its
+origin record. Run `gnd verify` against the same authored root and bundle
+before transferring a population to the checking root. Fixed catalogs keep
+their model declarations and their raw-byte digests across the two roots.
+
+The [literature example](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/README.md#extraction-to-checking-interop)
+records the transfer in a `literature-rebind/1` record for each source. It
+binds both roots, the include and catalog digests, the extraction index,
+the document, the original extraction and its sidecars, and the checking
+population and anchors. The checking population updates the model header.
+The anchors bind the updated population bytes to the original source spans.
+The example re-derives the rebinds before composing the sources under the
+checking root. Check and replay use the composition record from that root.
+
+`gnd fidelity` can measure the original extraction against the same
+include root when it has the authenticated indexed bundle. In the example,
+the original document evidence and extraction handoff live alongside the
+checking-bound artifacts in each source directory.

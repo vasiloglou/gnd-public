@@ -31,7 +31,7 @@ Status: delegated approval (auto=true), 2026-11-15. See [010](../010-phase-LX4-s
 | Source rebind | Existing population wire, anchor binder and canonical JSON | Change header coordinates for the checking root. Rebind sidecar population digest to precisely those bytes. Require matching pinned vocabulary/catalog identity and equal shape-address vocabulary before allowing the transfer. |
 | Catalog and checking | `gnd compose`, `gnd check --composition --sources` | Candidate alias renames to a catalog identity. Exact re-derived candidate source evidence precedes checks. Temporal guarded date_add uses the current evaluator. |
 | Fidelity and artifact naming | `gnd fidelity`, `gnd.extract.service` | Let the fidelity route reuse the authenticated flattened bundle for this rooted input. Preserve the unsupported-route refusal when an authored include has no trusted indexed bundle. Preserve its existing matching and census. Use one shared per-document directory and materialize both required document names. |
-| Date policy | LI5 `lineage/path-policy.json` | Use the existing chainable and non-chaining relationship vocabulary. Sidecar edge rows name work IDs independently of method labels. The rejected candidate is present only in the proposals. | Delegated (auto=true) |
+| Date policy | LI5 `lineage/path-policy.json` | Use the existing chainable and non-chaining relationship vocabulary. Sidecar edge rows name work IDs independently of method labels. The rejected candidate is present only in the proposals. |
 | Finite proof | `gnd witness` and `gnd replay` | Prove an asserted candidate target and a catalog occurrence using the same checking-model record. LX3 already exercises a single derived proof joining both types. |
 
 The extraction root may declare plain Date roles. The checking root adds a
@@ -181,3 +181,47 @@ chainability policy without adding the rejected PINN edge to candidate facts.
 | Structure | `uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short` |
 | Lint and components | Whole-tree Ruff with the exact inherited diagnostic comparison, changed-file Ruff and the strict component check based on `d523c14d`. |
 | Cadence | Default filters apply. Broad and historical lanes follow their separate triggers. |
+
+## Candidate verification
+
+The packaged run exits 0 for extraction, both source verifies, composition,
+temporal check, witness, replay, fidelity and advisory report. The read-only
+verification reruns the source, checking, proof and fidelity boundaries.
+The added temporal rule passes. The larger allowance control exits 1 and
+reports a guarded failure. The supported extraction root can use plain Date
+roles. Extraction of the temporal checking root exits 3.
+
+The comparison without advice preserves composition, checking, witness and
+replay bytes. The advice contains two passes, one PINN advisory and five
+unresolved chainable proposals. The non-chainable proposal stays outside
+the census. Both fidelity cases ran. The layout has two additional document
+materializations and zero additional original extraction population or
+extraction-sidecar materializations. The checking rebind adds two populations
+and two anchor files. The provenance controls refuse forged rebinds, altered
+advice, an independently valid alternate witness target, and a catalog or
+input checksum change.
+
+A control initially accepted a failed fidelity case with a re-pinned
+report. The example now requires the census to include both scored sources.
+The expanded guard selection also exposed a predecessor null-model
+composition guard regression. The raw include guard runs again before
+composition verification for that case. The packaged include inventory
+adds exactly the two new roots and loads all named entries.
+
+```sh
+uv run pytest -q tests/test_lx4_literature_interop.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_lx3_catalog_composition.py tests/test_li5_lineage.py tests/test_public_temporal_canonical_counterexamples.py tests/test_composition_example.py tests/test_mc1_guards.py tests/test_mc2_consumers.py tests/test_extract_manifest.py tests/test_verify_cli.py tests/test_fidelity_payload.py tests/test_fidelity_stub_gate.py tests/test_public_fidelity_scope.py tests/test_packaged_skills.py --tb=short
+uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short
+```
+
+    346 passed in 63.67s (0:01:03)
+    679 passed, 2 deselected in 106.29s (0:01:46)
+
+The affected MC2 consumers join the focused command for the composition
+guard correction. Scoped Ruff and the strict component gate pass. Whole-tree
+Ruff retains the same 188 diagnostics by file, line, code and message.
+The offline wheel build contains all 18 interop modules, fixture files
+and the reused LI5 policy. The example and its read-only verification both
+exit 0 using the wheel installed into a separate environment with the
+existing locked dependency directory.
+
+Independent phase diff review is pending.

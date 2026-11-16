@@ -286,3 +286,50 @@ fixture is in the [resolution example](resolution/README.md).
 The committed rule model is generated from the path-policy table
 and the contextual assertion model by
 `python tools/build_literature_lineage_model.py`.
+
+## Extraction-to-checking interop
+
+```sh
+python -m gnd.examples.literature.interop run --out literature-run --dates
+python -m gnd.examples.literature.interop verify literature-run
+```
+
+The packaged fixture uses two saved document extractions and two shared
+vocabulary files. The example runs GND's extraction projection and validates
+the saved populations against the original evidence. It verifies the source
+rebinds, applies a candidate identity decision onto a fixed catalog method,
+then runs composition, temporal checking, witness, replay and fidelity. The
+manifest verifies the input and output bytes and the stage links. See the
+[documents guide](../../../../docs/guides/documents.md#separate-extraction-and-checking-models)
+for the model split and rebind contract.
+
+The two source directories each contain evidence for both readers. Fidelity
+reads `document.md`, while composition reads the same bytes at
+`document.txt`. This layout materializes one extra document file per source.
+The original extraction population and its extraction sidecar have one
+materialization each. The rebound populations and anchors carry the checking
+model's coordinates.
+
+### Publication-year advice
+
+Omit `--dates` to run the checking and proof stages on their own. Generate
+the same report later with:
+
+```sh
+python -m gnd.examples.literature.interop dates literature-run --out advice.json
+```
+
+The advisory input lists proposed work pairs and uses the public LI5
+[chainability policy](lineage/path-policy.json). The separate date table
+names the work, date role, declared precision and value. An edge passes when
+the descendant's publication year is at least the ancestor's year at the
+same precision. Unknown works, missing or conflicting publication dates and
+mixed precision remain unresolved. Alternative date roles supply no
+publication comparison. The report binds the edge, date and policy bytes.
+
+The fixture's incorrect PINN edge is a proposed edge from the 2019 PINNs paper
+to Bayesian PINNs, published in 2021. It produces one advisory. Its work IDs
+come from the two publications. The 2026 and equal-year edges are synthetic
+comparison controls. [Issue #193](https://github.com/vasiloglou/gnd-public/issues/193),
+[PINNs](https://doi.org/10.1016/j.jcp.2018.10.045),
+[Bayesian PINNs](https://doi.org/10.1016/j.jcp.2020.109913)

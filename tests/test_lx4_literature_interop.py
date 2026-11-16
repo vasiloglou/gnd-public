@@ -59,9 +59,13 @@ def test_public_integration_checks_every_stage(example):
     assert report["exit_code"] == 0
     assert any(row["constraint_type"] == "guarded" and row["verdict"] == "pass"
                for row in report["report"]["verdicts"])
-    assert read(run / "witness.json")["version"] == 4
+    proof = read(run / "witness.json")
+    assert proof["version"] == 4
+    assert {node["origin"]["kind"] for node in proof["nodes"] if node["kind"] == "base"} == {
+        "candidate", "reference",
+    }
     assert read(run / "replay.json")["exit_code"] == 0
-    assert read(run / "fidelity.json")["case_census"]["counts"]["ran"] == 2
+    assert read(run / "fidelity.json")["cases"]["ran"] == 2
     composition = read(run / "composition.json")
     assert composition["schema"] == "gnd-composition/2"
     assert all(row["decisions"] == [0] for row in composition["facts"]
@@ -136,6 +140,93 @@ def test_rebind_refuses_a_valid_root_with_different_pins(example, tmp_path):
     assert load_model(checking)._included
     with pytest.raises(ValueError, match="root vocabulary pins differ"):
         interop.rebind(bad, "survey")
+
+
+def test_rebind_is_rederived_before_check_or_advice(example, tmp_path, monkeypatch):
+    interop, good = example
+    bad = tmp_path.resolve() / "forged-rebind"
+    shutil.copytree(good, bad)
+    member = "sources/survey/rebind.json"
+    changed = read(bad / member)
+    changed["document_sha256"] = "0" * 64
+    write(bad / member, changed)
+    manifest = read(bad / "interop.json")
+    manifest["sha256"][member] = sha(bad / member)
+    write(bad / "interop.json", manifest)
+
+    def unreachable(*_args):
+        pytest.fail("semantic checking or advice ran before rebind validation")
+
+    monkeypatch.setattr(interop, "_check", unreachable)
+    monkeypatch.setattr(interop, "_advice", unreachable)
+    assert interop.main(["verify", str(bad)]) == 3
+
+
+def test_report_digest_cannot_replace_advice_rederivation(example, tmp_path):
+    interop, good = example
+    bad = tmp_path.resolve() / "forged-advice"
+    shutil.copytree(good, bad)
+    report = read(bad / "dates.json")
+    row = next(edge for edge in report["edges"] if edge["id"] == "pinn")
+    row["ancestor_date"] = 2019
+    write(bad / "dates.json", report)
+    manifest = read(bad / "interop.json")
+    manifest["sha256"]["dates.json"] = sha(bad / "dates.json")
+    write(bad / "interop.json", manifest)
+    assert interop.main(["verify", str(bad)]) == 3
+
+
+def test_fidelity_rechecks_re_pinned_flat_artifact(example, tmp_path, capsys):
+    _, good = example
+    bad = tmp_path.resolve() / "forged-fidelity-bundle"
+    shutil.copytree(good, bad)
+    index_path = bad / "artifacts/extraction.orm.artifacts.json"
+    index = read(index_path)
+    file_name = index["flattening"]["flat_model"]
+    flat = index_path.with_name(file_name)
+    flat.write_bytes(flat.read_bytes() + b" ")
+    index["artifacts"][file_name]["sha256"] = sha(flat)
+    write(index_path, index)
+    assert main(["fidelity", str(bad / "extraction.orm.json"), "--cases", str(bad / "sources"),
+                 "--artifacts", str(bad / "artifacts"), "--format", "json"]) == 3
+    assert "flat model does not match" in capsys.readouterr().out
+
+
+def test_fidelity_failure_cannot_be_pinned_as_a_verified_run(example, tmp_path):
+    interop, good = example
+    bad = tmp_path.resolve() / "unscored-case"
+    shutil.copytree(good, bad)
+    member = "sources/survey/document.manifest.json"
+    write(bad / member, {})
+    report = interop._stage(bad, "fidelity", "extraction.orm.json", "--cases", "sources",
+                            "--artifacts", "artifacts", "--format", "json")
+    assert json.loads(report)["cases"]["failed"] == 1
+    (bad / "fidelity.json").write_bytes(report)
+    manifest = read(bad / "interop.json")
+    for name in (member, "fidelity.json"):
+        manifest["sha256"][name] = sha(bad / name)
+    write(bad / "interop.json", manifest)
+    assert interop.main(["verify", str(bad)]) == 3
+
+
+def test_verified_proof_must_name_the_fixture_targets(example, tmp_path, capsys):
+    interop, good = example
+    bad = tmp_path.resolve() / "alternate-proof"
+    shutil.copytree(good, bad)
+    alternate = read(bad / "targets.json")
+    alternate["targets"].pop()
+    write(bad / "other-target.json", alternate)
+    (bad / "witness.json").unlink()
+    interop._stage(bad, "witness", "checking.orm.json", "composed.population.json",
+                   "--targets", "other-target.json", "--composition", "composition.json",
+                   "--raw", "--out", "witness.json")
+    (bad / "replay.json").write_bytes(interop._replay(bad))
+    recorded = read(bad / "interop.json")
+    for name in ("witness.json", "replay.json"):
+        recorded["sha256"][name] = sha(bad / name)
+    write(bad / "interop.json", recorded)
+    assert interop.main(["verify", str(bad)]) == 3
+    assert "witness targets differ" in capsys.readouterr().err
 
 
 def test_rebind_refuses_a_valid_root_with_a_different_catalog(example, tmp_path):

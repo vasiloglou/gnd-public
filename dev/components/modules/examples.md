@@ -224,6 +224,25 @@ Score the frozen synthetic diagnostic corpus using its predeclared sample.
 | `score(emissions, labels) -> dict` | function | 36 | Sample uniformly within each kind and report exact false-discovery counts. |
 | `main(argv) -> int` | function | 82 | (no docstring) |
 
+## gnd.examples.literature.interop — `src/gnd/examples/literature/interop.py`
+Components: examples.literature_interop
+Run and verify the packaged extraction-to-checking literature fixture.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `rebind(run, source) -> dict[str, bytes]` | function | 168 | Verify the extraction and derive checking-bound files from the original. |
+| `verify(run) -> dict` | function | 302 | (no docstring) |
+| `build(out, *, dates) -> None` | function | 342 | (no docstring) |
+| `main(argv) -> int` | function | 379 | (no docstring) |
+
+## gnd.examples.literature.interop_dates — `src/gnd/examples/literature/interop_dates.py`
+Components: examples.literature_interop
+Publication-year advisories over LI5's candidate lineage vocabulary.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `advise(edge_bytes, date_bytes, policy_bytes) -> dict` | function | 63 | Name the work pair and report their stated publication order. |
+
 ## gnd.examples.literature.lineage_run — `src/gnd/examples/literature/lineage_run.py`
 Components: examples.literature_lineage
 Assemble admitted contextual sources and score named lineage paths.

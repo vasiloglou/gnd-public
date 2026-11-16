@@ -162,7 +162,7 @@ def _composition_view(model, model_coordinate, population_coordinate, population
 
     model_raw = read(model_coordinate, "model", MAX_DOCUMENT_BYTES)
     from gnd.model._includes import guard_bytes
-    if model.includes or model.reference_populations:
+    if getattr(model, "includes", ()) or getattr(model, "reference_populations", ()):
         if hashlib.sha256(model_raw).hexdigest() != model._authored_sha256:
             raise CompositionError("the model changed after its input snapshot was loaded")
     else:

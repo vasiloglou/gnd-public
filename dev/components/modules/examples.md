@@ -307,7 +307,7 @@ Publish and replay the literature semantic revision example offline.
 | `replay(root, *, snapshot) -> dict` | function | 413 | Re-derive the release from authenticated retained inputs in private scratch. |
 | `replay_support(root, source) -> dict` | function | 433 | Check one certificate against the independent source and review inputs. |
 | `replay_renewed_support(root) -> dict` | function | 456 | Verify the selected replacement review and proof for the evolved predicate. |
-| `main(argv) -> int` | function | 478 | (no docstring) |
+| `main(argv) -> int` | function | 481 | (no docstring) |
 
 ## gnd.examples.literature.revision_manifest — `src/gnd/examples/literature/revision_manifest.py`
 Components: examples.literature_revision
@@ -330,10 +330,10 @@ Evaluate consumer-pinned verdicts on the literature fixture's derived claim.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `evaluate(root, case, *, edition, opinions, opinions_sha256) -> dict` | function | 140 | Check one independently pinned reading opinion set against the release. |
-| `run(root, out) -> dict[str, dict]` | function | 155 | Capture the reproducible worked verdicts in a new directory. |
-| `replay(root, out) -> dict[str, dict]` | function | 167 | Recompute a retained verdict report from the expected release evidence. |
-| `main(argv) -> int` | function | 181 | (no docstring) |
+| `evaluate(root, case, *, edition, opinions, opinions_sha256) -> dict` | function | 176 | Check one independently pinned reading opinion set against the release. |
+| `run(root, out) -> dict[str, dict]` | function | 197 | Capture the reproducible worked verdicts in a new directory. |
+| `replay(root, out) -> dict[str, dict]` | function | 209 | Recompute a retained verdict report from the expected release evidence. |
+| `main(argv) -> int` | function | 223 | (no docstring) |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

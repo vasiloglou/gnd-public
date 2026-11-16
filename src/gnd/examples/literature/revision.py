@@ -85,8 +85,8 @@ def _definition(root: Path, model: str = MODEL) -> dict:
     return {"predicate": FACT, "reading": asserted["reading"], "roles": asserted["roles"]}
 
 
-def _rule(root: Path) -> dict:
-    document = load_model(root / MODEL)
+def _rule(root: Path, model: str = MODEL) -> dict:
+    document = load_model(root / model)
     rule = next(row["derivation_rule"] for row in document.fact_types if row["id"] == ANCESTOR)
     return {"predicate": ANCESTOR, "derivation_rule": rule}
 
@@ -471,6 +471,9 @@ def replay_renewed_support(root: Path) -> dict:
         _copy(work, {path: files[path] for path in inputs})
         _transition(work, _review_inputs(work))
         require(all(_read(work, path) == files[path] for path in observed), "renewed evidence differs on replay")
+        pinned_rule = _read(work, "rule.json")
+        require(canonical_json_bytes(_rule(work)) == pinned_rule
+                and canonical_json_bytes(_rule(work, evolved)) == pinned_rule, "renewed support rule binding differs")
         review = _decode(_read(work, "evolution/reviews.json"))["renewed"]
         return _support(work, source, review, _editions(work), model=evolved)
 

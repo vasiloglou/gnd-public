@@ -10,11 +10,11 @@ from gnd.artifacts import ArtifactError, canonical_json_bytes, publish_directory
 from gnd.errors import ModelLoadError, ModelValidationError
 
 from . import revision
-from .depth import _decode, _read
-from .revision_manifest import _digest, require
+from .depth import ExampleError, _decode, _read
+from .revision_manifest import Policy, _digest, require
 
 OPINIONS = Path(__file__).with_name("verdict_fixture") / "opinions.json"
-OPINIONS_SHA256 = "096613fa54def036cdeb4c85d137ec84fcfa1fae7b500bd080e56b01824276f2"
+OPINIONS_SHA256 = "bf6a73926cbd3bd7ea296522a290308faad0b66399817ba57f7c2a44c6ca2625"
 EDITIONS = ("current", "revised")
 RENEWED_SOURCE = "whale-a"
 CASE_IDS = ("both-approved", "reject-whale-a", "reject-both", "renew-whale-a")
@@ -22,8 +22,9 @@ SHARED = {
     "claim": "claims.json",
     "decision": "decisions.json",
     "rule": "rule.json",
-    "resolution_edition": "decisions.json",
+    "resolution_edition": "claims.json",
     "definition": "definition.json",
+    "model": revision.MODEL,
     "interpretation": "interpretation.json",
 }
 SUPPORT_BINDINGS = {"occurrence_sha256", "review_sha256", "witness_sha256", "resolution_edition", "rule_edition"}
@@ -64,12 +65,35 @@ def _opinions(path: Path, expected_sha: str) -> tuple[dict, dict[str, dict]]:
     return claim, indexed
 
 
-def _stale_shared(root: Path, expected: dict, edition: str) -> list[str]:
+def _published_claims(claims: dict, target: dict) -> tuple[dict, dict[str, dict]]:
+    values = [cell["value"] for cell in target["tuple"]]
+    queries = claims.get("queries")
+    require(isinstance(queries, list) and len(queries) <= 128 and all(isinstance(row, list) and len(row) == 3
+            and all(isinstance(value, str) for value in row[:2]) and type(row[2]) is bool for row in queries),
+            "invalid published claim roster")
+    matched = [row[2] for row in queries if row[:2] == values]
+    digest = sha256_hex(canonical_json_bytes({"target": target, "proved": matched[0]})) if len(matched) == 1 else None
+    roster = claims.get("supports")
+    require(isinstance(roster, list) and len(roster) <= len(revision.SUPPORTS), "invalid published support roster")
+    supports = {}
+    for row in roster:
+        source = row.get("source") if isinstance(row, dict) else None
+        require(source in revision.SUPPORTS and source not in supports, "invalid published support roster")
+        supports[source] = row
+    return {"claim": digest, "resolution_edition": claims.get("resolution_edition")}, supports
+
+
+def _stale_shared(root: Path, expected: dict, edition: str, projected: dict) -> list[str]:
     paths = dict(SHARED)
     if edition == "revised":
         paths["definition"] = "evolution/definition.json"
+        paths["model"] = f"evolution/{revision.MODEL}"
     stale = []
     for key, path in paths.items():
+        if key in projected:
+            if projected[key] != expected[key]:
+                stale.append(key)
+            continue
         try:
             actual = sha256_hex(_read(root, path))
         except (ArtifactError, OSError):
@@ -92,7 +116,7 @@ def _support_change(support: dict, opinion: dict, claim: dict) -> str | None:
     return None
 
 
-def _observation(root: Path, edition: str, opinion: dict, claim: dict) -> dict:
+def _observation(root: Path, edition: str, opinion: dict, claim: dict, published: dict | None) -> dict:
     source = opinion["source"]
     try:
         if edition == "revised":
@@ -109,10 +133,12 @@ def _observation(root: Path, edition: str, opinion: dict, claim: dict) -> dict:
                     if sha256_hex(_read(after, f"{folder}/{key}.json")) != opinion[f"{key}_sha256"]:
                         change = key
                         break
+            if change is None and published != captured:
+                change = "published-support"
             if change is not None:
                 return {"source": source, "state": "stale", "reason": change}
             current = revision.replay_support(root, source)
-    except EVIDENCE_ERRORS:
+    except (ArtifactError, ModelLoadError, ModelValidationError, OSError, ExampleError):
         return {"source": source, "state": "stale", "reason": "evidence"}
     change = _support_change(current, opinion, claim)
     if change is not None:
@@ -123,7 +149,11 @@ def _observation(root: Path, edition: str, opinion: dict, claim: dict) -> dict:
 
 def _evaluate(root: Path, claim: dict, case: dict, edition: str) -> dict:
     require(edition in EDITIONS, "invalid observed verdict edition")
-    stale = _stale_shared(root / "after", case["binding"], edition)
+    after = root / "after"
+    Policy.load().inspect(after, "after")
+    # Updating one published support does not change the shared claim projection.
+    projected, published = _published_claims(_decode(_read(after, "claims.json")), claim)
+    stale = _stale_shared(after, case["binding"], edition, projected)
     if case["edition"] != edition and "definition" not in stale:
         stale.append("definition")
     opinions = case["source_opinions"]
@@ -131,8 +161,14 @@ def _evaluate(root: Path, claim: dict, case: dict, edition: str) -> dict:
         supports = [{"source": row["source"], "state": "stale", "reason": "shared-binding"} for row in opinions]
         decision = "revalidation-required"
     else:
-        supports = [_observation(root, edition, row, claim) for row in opinions]
-        decision = "supported" if any(row["state"] == "approved" for row in supports) else "unsupported"
+        supports = [_observation(root, edition, row, claim, published.get(row["source"])) for row in opinions]
+        states = {row["state"] for row in supports}
+        if "approved" in states:
+            decision = "supported"
+        elif "stale" in states:
+            decision = "revalidation-required"
+        else:
+            decision = "unsupported"
     return {"claim": claim, "edition": edition, "decision": decision, "stale_bindings": stale,
             "effective": [row["source"] for row in supports if row["state"] == "approved"], "supports": supports}
 
@@ -147,7 +183,13 @@ def evaluate(root: Path, case: str, *, edition: str | None = None, opinions: Pat
 
 def _demonstrate(root: Path) -> dict[str, dict]:
     claim, cases = _opinions(OPINIONS, OPINIONS_SHA256)
-    reports = {name: _evaluate(root, claim, case, case["edition"]) for name, case in cases.items()}
+    try:
+        reports = {name: _evaluate(root, claim, case, case["edition"]) for name, case in cases.items()}
+    except (ArtifactError, OSError, ExampleError) as error:
+        raise ExampleError("verdict demonstration requires a verified release") from error
+    require(reports["both-approved"]["effective"] == list(revision.SUPPORTS)
+            and reports["renew-whale-a"]["effective"] == [RENEWED_SOURCE],
+            "verdict demonstration requires a verified release with both original supports and its renewed support")
     reports["old-review-on-revised"] = _evaluate(root, claim, cases["both-approved"], "revised")
     return reports
 

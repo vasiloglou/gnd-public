@@ -13,7 +13,7 @@ before freezing the first answer corpus.
 - Separate the consumer's trusted verdict and its exact claim/support inputs
   from the candidate snapshot. The verifier validates both the supplied
   verdict bytes and the declared population, review and witness bindings.
-  A frozen synthetic verdict originates in the fixture and is signed by its
+  A frozen synthetic verdict originates in the fixture and is bound by its
   independently supplied raw digest. A fresh verifier computes only the
   effective support outcome. It does not grant a replacement opinion.
 - Bind global claim, decision, rule, resolution and definition identities
@@ -76,3 +76,17 @@ opinion documents. Run the ordinary affected literature and structural
 selections, strict component validation and an installed public example.
 One separately authorized independent diff review follows verification.
 Part 10 remains deferred.
+
+## Review corrections
+
+The [delegated amendment](phase-LD5-amendment.md) binds the revised opinion
+fixture. The claim pin covers the declared target and its published proof
+status. A separate identity covers the resolution edition carried by the
+release, while the decision pin still covers the exact decision artifact.
+The current and revised opinions each pin their model bytes. Updating the
+published support list consistently leaves the peer support independently
+eligible. Zero verified approvals with stale evidence requires revalidation.
+The unsupported exit requires that the verified opinions reject both
+supports. A missing manifest or incomplete demonstration refuses without
+publishing a result. The renewed verification recomputes the pinned rule
+from the original and revised models.

@@ -12,7 +12,8 @@ python -m gnd.examples.literature.verdict evaluate revision-run --case both-appr
 The fixture includes saved synthetic opinions on two separate supports for
 VampNet's ancestry from DMD. Each opinion binds the released claim, sense
 decisions, interpretation policy, rule and definition. It also binds the
-specific source occurrence, review and witness. The verifier checks the
+specific source occurrence, review and witness. The selected published query
+and the support list have separate identities. The verifier checks the
 independently pinned opinions before reading the release and replays each
 selected certificate with its own source evidence.
 
@@ -22,8 +23,9 @@ revised predicate invalidates the original opinions. A separately recorded
 review and replayed witness restore whale-a's support for the same source
 occurrence. The other support retains its original review.
 
-The single-case command exits 0 for a supported result, 2 when there are
-no effective supports, and 3 when shared bindings require revalidation or
-the inputs are invalid. Run and replay report all five fixture cases and
-exit 0 on a completed evaluation. Replay recomputes the report and checks
-its exact bytes against the retained copy.
+The single-case command exits 0 for a supported result and 2 when every
+verified opinion rejects its support. It exits 3 when the inputs are invalid
+or stale evidence leaves the claim requiring revalidation. Run and replay
+require the verified fixture release and both its original and renewed
+supports. They report all five fixture cases. Replay recomputes the report
+and checks its exact bytes against the retained copy.

@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "run_sha256": "d5ae0116ae368cf9f096d5da23110182c072fce68cfa567d018fda30e6ff1ef4",
+  "summary": "Five valid responses meet the four-reviewer close requirement. The retained concerns identify gaps in verification traceability, review scope, baseline evidence and fixture wording. Kimi's response had one transport preamble line and retained both declared concerns. Gemini's response did not validate.",
+  "agreed_concerns": [
+    {
+      "group_id": "review-coverage",
+      "title": "Independent review scope and repaired bytes",
+      "summary": "Four reviewers requested explicit disclosure of modified files and the limits of their phase review coverage.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-review-status-not-ok"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD-CLOSE-REPAIRED-REVIEW"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-summary-omits-failed-review-coverage"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ld-close-review-coverage-gap"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "route-evidence",
+      "title": "Exact installed route and selection evidence",
+      "summary": "The close packet should attach the tested revision, selection and observable command outputs for its integration claims.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-ld4-entry-points-not-revalidated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld4-public-route-unrecorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "unnamed-counts-no-revision"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "reference-baseline",
+      "title": "Measure the origin and present status of the reference test failures",
+      "summary": "Four reviewers wanted the exact failing nodes, starting commit and current reproduction bound to the residual.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "changed-reference-baseline-not-milestone-base"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "failing-tests-pre-existing-claim-unbaselined"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ld-close-inherited-failures-uncited"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "changed-reference-residual-state-at-head"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "reading-gates",
+      "title": "Record the LD3 stop reasons and question inventory",
+      "summary": "Two reviewers requested direct traceability for all stop reasons, question dispositions and the scope-evidence controls.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld3-exit-row-omits-gate-items"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-stop-reasons-question-inventory"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "reading-revisit",
+      "title": "Explain the scope of the LD3 revisit amendment",
+      "summary": "Two reviewers requested a direct reconciliation between the approved older-section criterion and the amended fixture.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld3-revisit-criterion-left-unreconciled"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-revisit-narrowing-absent-from-delta"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld5-claim-pin-amendment-unsurfaced"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ld2-reserved-measure-size-residual-dropped"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "phase-specs-differ-from-gate-approvals"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "synthetic-supports-framed-as-independent-sources"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "ld4-worklist-comparison-unevidenced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld5-binding-mutations-partial"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld1-swapped-citation-control"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "ld2-reverify-and-ld4-quantity-mutation"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "structure-run-deselection-unexplained"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "amendment-008-not-digest-bound"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "support-independence-shared-predicate"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "witness-triple-encoding-unstated"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-1",
+      "rank": 1,
+      "title": "Independent review scope and repaired bytes",
+      "action": "List the scope reconciliation result and retain the separation between original independently reviewed diffs and locally verified repairs.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-review-status-not-ok"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD-CLOSE-REPAIRED-REVIEW"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-summary-omits-failed-review-coverage"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ld-close-review-coverage-gap"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-review-status-not-ok",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "LD-CLOSE-REPAIRED-REVIEW",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-summary-omits-failed-review-coverage",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ld-close-review-coverage-gap",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-2",
+      "rank": 2,
+      "title": "Exact installed route and selection evidence",
+      "action": "Run the installed LD3 and LD4 paths at the final runtime, record the LD3 and LD4 worklists for the same change, and attach the exact focused and structural selection commands.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-ld4-entry-points-not-revalidated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld4-public-route-unrecorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "unnamed-counts-no-revision"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld4-worklist-comparison-unevidenced"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ld3-ld4-entry-points-not-revalidated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld4-public-route-unrecorded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "unnamed-counts-no-revision",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld4-worklist-comparison-unevidenced",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-3",
+      "rank": 3,
+      "title": "Measure the origin and present status of the reference test failures",
+      "action": "Reproduce the reference failures at the milestone base and close head, compare the exception type with the recorded LD4 base, and bind the evidence.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "changed-reference-baseline-not-milestone-base"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "failing-tests-pre-existing-claim-unbaselined"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ld-close-inherited-failures-uncited"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "changed-reference-residual-state-at-head"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "changed-reference-baseline-not-milestone-base",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "failing-tests-pre-existing-claim-unbaselined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ld-close-inherited-failures-uncited",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "changed-reference-residual-state-at-head",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-4",
+      "rank": 4,
+      "title": "Record the LD3 stop reasons and question inventory",
+      "action": "Cite the full, unavailable and budget controls, the exact roster refusals, and independently mutated scope inputs.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld3-exit-row-omits-gate-items"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-stop-reasons-question-inventory"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld3-exit-row-omits-gate-items",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-stop-reasons-question-inventory",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-5",
+      "rank": 5,
+      "title": "Explain the scope of the LD3 revisit amendment",
+      "action": "Bind the amendment and explain that earlier sections are those already inspected when the targeted vocabulary update is proposed.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld3-revisit-criterion-left-unreconciled"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-revisit-narrowing-absent-from-delta"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ld3-revisit-criterion-left-unreconciled",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ld3-revisit-narrowing-absent-from-delta",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    }
+  ]
+}

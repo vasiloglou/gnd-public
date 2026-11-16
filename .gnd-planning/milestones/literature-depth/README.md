@@ -13,3 +13,6 @@ prerequisite identity and interoperability phases are merged. The
 | [LD3](009-phase-LD3.md) | Multipass reading with explicit coverage |
 | [LD4](011-phase-LD4.md) | Semantic revision dependency manifest and migration recipe |
 | [LD5](013-phase-LD5.md) | Verdicts on derived claims |
+
+The [milestone close record](016-milestone-close.md) binds the fixture results,
+[standard close panel](015-panel.md) and delegated close ruling.

@@ -1,0 +1,720 @@
+{
+  "installed": {
+    "affected_coverage": {
+      "alternative": "stale"
+    },
+    "migration_worklist": [
+      "study-opening"
+    ],
+    "original_witness_sha256": "95dee755530fb12c6fb825f77916b01c96b3eec5f78891440bd064865eeb9400",
+    "reading_manifest_sha256": "4786f39f8de76db4b4b610dd1d5dd8cb533f35d92b2daafb546ec069860aa821",
+    "reading_replay_calls": {
+      "broad-extraction": 0,
+      "targeted-extraction": 0
+    },
+    "reading_run_calls": {
+      "broad-extraction": 3,
+      "targeted-extraction": 2
+    },
+    "reading_worklist": [
+      "study-opening"
+    ],
+    "revision_replay_equal": true,
+    "revision_status": "current",
+    "sha256": {
+      "close-reading-replay.json": "129887ba713af8a5c03db78a339d50bc9eeca502976865c5c3619db825352196",
+      "close-revision-prior.json": "e06bfa9a570eaa5834ad003701de0aa744b6b82ead09b79af1b4352b614780b4",
+      "close-revision-replay.json": "028c05949e541449e7459619f75137aab8f9a3673c6d23884efc70b3df8897f4",
+      "close-revision-status.json": "875b78494ac1a12499c293977305080322b78e956bc40cfc0b7a1af0fdd58947",
+      "reading.json": "92819462db6c001f76d99df93c3f44bd47c9a27dc877e901af79f7a546e3485c",
+      "release.json": "028c05949e541449e7459619f75137aab8f9a3673c6d23884efc70b3df8897f4"
+    },
+    "shared_worklist_key": "method-family",
+    "unrelated_coverage": {
+      "denial": "current"
+    }
+  },
+  "matched_packages": {
+    "src/gnd/examples/literature/reading.py": "9182a7430774416fd2bc727ec316fb89a445b735f8d3e906644418e6f8ac3dbc",
+    "src/gnd/examples/literature/reading_fixture/producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+    "src/gnd/examples/literature/reading_fixture/roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+    "src/gnd/examples/literature/revision.py": "989aa68f85e51040cd4d18b572b75ae63b4a5262fb64754440f0cc25affec443",
+    "src/gnd/examples/literature/revision_fixture/release-policy.json": "af44dfee16ca94f20c560c5e82bb00e59bb86f53c53c7219b30fb6da3ad8bc65",
+    "src/gnd/examples/literature/revision_manifest.py": "9ca7699f78a1886dfed25ce64fb3299b21d7889b2a2e668f3ea338f95d4c603a",
+    "src/gnd/examples/literature/verdict.py": "e315187ec48a3d8c92aca0467f43c863e638f816d06998fb44e3c1c494dc2d96",
+    "src/gnd/examples/literature/verdict_fixture/opinions.json": "bf6a73926cbd3bd7ea296522a290308faad0b66399817ba57f7c2a44c6ca2625"
+  },
+  "phase_specs": {
+    "LD1": {
+      "close_sha256": "96dcbfc91632d226c9f86897699e496155d9831b1ac7af9f1f7c8d20b469dee0",
+      "original_commit": "15276393ef086d66c3411bab4c1f7200cfe8c55d",
+      "original_sha256": "911da3e7312c5524e6165c16317e21d5bfd707a907838807e206822511b11d6a",
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md"
+    },
+    "LD2": {
+      "close_sha256": "2f2e8e9679dd1c0db9c1952e6fa0cf540fa74d24255501649837630d5f22cadf",
+      "original_commit": "4fba2ca35732c12604032089c1e7e3a5495aedf1",
+      "original_sha256": "86c54934ea6dbffb6e4804281177ce102625b12e217d9df9e4d3eaed73f45e9c",
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD2-spec.md"
+    },
+    "LD3": {
+      "close_sha256": "b8cc9faac8b28cc2b6bea9c63696e1261685cb7200ff36001c775a603ee3f8d2",
+      "original_commit": "a8e84ad4286b7aa99f2043f45667bdfb529c4daf",
+      "original_sha256": "4445e9f72c8b5632c7819aa21d944bd6621a92a0de59fc85ba12f975794bce64",
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md"
+    },
+    "LD4": {
+      "close_sha256": "9cd15da06777a3d5edf63302a9313249c07089159319fbbc7f7a5a9d21dfcf3b",
+      "original_commit": "334a6c377c3f9eb11e08ed2d7cf78e6d8c5a09c3",
+      "original_sha256": "b2a9f38c23b5acd3d1ea71a08d93181739b18aec589c0d66bf2aff90253fb638",
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD4-spec.md"
+    },
+    "LD5": {
+      "close_sha256": "a7d17a5ad2369f796c0261aa29ca9b315c9ac8119ef7ccc8b29326d5de7d6616",
+      "original_commit": "c2756e90bfe205197da1ad50c677ad3e9708bd64",
+      "original_sha256": "44022b8fa8cba692a5fabcad02dbdcc7a854bbb04cba21dbcc1894613db3d83c",
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md"
+    }
+  },
+  "reference_error_residual": {
+    "base": "e3431ba1f8d5da89e6ce395ef66ce5ae8f18a530",
+    "base_summary": "2 failed in 1.72s",
+    "expected_exception": "ReferenceInputError",
+    "head": "5efffe84999ac0eca1dfe5c15408af4913c7e07d",
+    "head_summary": "2 failed in 1.28s",
+    "nodes": [
+      "tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[replay/changed]",
+      "tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[witness/changed]"
+    ],
+    "observed_exception": "ReferenceHashMismatch"
+  },
+  "review_counts": {
+    "reviewed": 75,
+    "unreviewed": 31
+  },
+  "review_coverage": {
+    "coverage": [
+      {
+        "path": ".gnd-planning/milestones/literature-depth/004-phase-LD1.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/005-phase-LD2-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/006-phase-LD2.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/007-phase-LD3-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/009-phase-LD3.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/010-phase-LD4-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/011-phase-LD4.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/012-phase-LD5-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/evidence/LD2/dynamic-query-successor.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/evidence/LD4/installed-observation.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read f2e30cb3bc0a"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD2-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 95d352102ae8"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read e44f4a36bdd6"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD4-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read b2a9f38c23b5"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 44022b8fa8cb"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/COMPONENTS.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/graph.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/modules/_root.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 925239848a19"
+      },
+      {
+        "path": "dev/components/modules/examples.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read cdf290c0a100"
+      },
+      {
+        "path": "dev/components/modules/model.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/anchors.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 143bafe6c03f"
+      },
+      {
+        "path": "src/gnd/examples/literature/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/assurance_report.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 9dc14cdc728d"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 814a4c56ad35"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 88d6bed98efc"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/algorithms.facts.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/algorithms.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/algorithms.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/cases.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 3bc3426bf8f1"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/comparison.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 545182d38d0a"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/decimal.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 552867ad0f2d"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/decimal.population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/decimal.targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 4fcf989fd9ec"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/dynamics.facts.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/dynamics.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/dynamics.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/molecular.facts.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/molecular.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/molecular.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/support.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/vocabulary.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/source.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.anchors.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.orm.yaml",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read bbe5b3318dba"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 084da092cc4d"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/annex.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/calibration.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read fa8650ca52bc"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/closure.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/control.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/gold.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 115493bdb990"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/reading.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/responses.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/reviews.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/roster.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/scope.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/study.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/cases/W-flat/manifest.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/cases/W-resolved/manifest.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/cases/W-resolved/resolution.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/model.orm.yaml",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read d87d6c64e0b9"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read d58c7d7bd9b4"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/comparison/base.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/comparison/head.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/comparison/population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/corroboration/document.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/corroboration/population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/corroboration/population.json.anchors.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/interpretation.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/proposal.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/release-policy.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/review-inputs.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/support-targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_manifest.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read e4a654f9f275"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 6b19454adfc6"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict_fixture/opinions.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 096613fa54de"
+      },
+      {
+        "path": "src/gnd/model/_validation.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/schema/orm-meta.schema.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/skills/gnd-orm-core/references/constraint-reference.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 23b60f000b47"
+      },
+      {
+        "path": "src/gnd/skills/gnd-orm-core/references/orm-meta.schema.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld1-competency/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld2-quantities/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld2-quantities/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld3-reading/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld3-reading/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 7b12e90234e2"
+      },
+      {
+        "path": "tests/fixtures/ld4-revision/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld5-verdict/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/support/pyrel_application_successors.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read b6ecb642c24d"
+      },
+      {
+        "path": "tests/test_ld1_competency_examples.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 1eab5342b8fb"
+      },
+      {
+        "path": "tests/test_ld2_quantities.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 3cc8a21b8215"
+      },
+      {
+        "path": "tests/test_ld3_reading_workflow.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read a72205ae9226"
+      },
+      {
+        "path": "tests/test_ld4_revision.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/test_ld5_verdict.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read c309a8ce3cf4"
+      },
+      {
+        "path": "tests/test_li1_assurance_report.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      }
+    ],
+    "ok": false,
+    "rounds": [
+      {
+        "findings": 7,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 4,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 8,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 6,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 4,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "done",
+        "subject": "phase"
+      }
+    ]
+  },
+  "reviewed_head": "5efffe84999ac0eca1dfe5c15408af4913c7e07d",
+  "ruff": {
+    "diagnostics_sha256": "885acad0dea35818a0a7e369cb241203c05f96a627e2683dfe7c87a0cbd9186c",
+    "inherited_count": 188,
+    "same_diagnostics": true
+  },
+  "structure_deselections": [
+    "tests/test_rof4_accept_identities.py::test_t8_the_generated_plan_refuses_the_canonical_example (pyrel_oracle)",
+    "tests/test_development_scaffold.py::test_manifest_bytes_modes_and_sizes (evidence)"
+  ],
+  "verified_runtime": "729111ba697186d441b1da459ceb73c72064e1e8",
+  "wheel_sha256": "a9ae4b2b9d744f042d6f59287f474c7afcaf956f0cf21459b4ec3bb6b9ddbe63"
+}

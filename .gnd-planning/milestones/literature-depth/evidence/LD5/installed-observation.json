@@ -1,0 +1,431 @@
+{
+  "repair": {
+    "component_check": "0 to fix, 0 warning(s), 0 to reread",
+    "focus_command": "uv run --no-sync pytest -q tests/test_ld5_verdict.py tests/test_ld4_revision.py tests/test_li4_assertions.py tests/test_li5_lineage.py tests/test_witness_composition.py tests/test_rule_edition_comparison.py --tb=short",
+    "focused": "106 passed in 413.64s (0:06:53)",
+    "installed_exit_codes": {
+      "fresh": 0,
+      "no_release": 3,
+      "one_support": 0,
+      "prior_opinion": 3,
+      "replay": 0,
+      "zero_supports": 2
+    },
+    "installed_sha256": {
+      "fresh.json": "3f0acd7e813efe363a513d163c3857b3008201ea6c70bf07dcc641d211103c4f",
+      "no-release.json": "faef33efa5f7872f8ca6fcf73eca1c0f9958abd950b8db5df48d05f44ee69496",
+      "one-support.json": "e49bda818ed8347ec50047563147e202136ca152a9ab9c23e9ef45c97620a1f7",
+      "prior-opinion.json": "0fa319536abe574ac50f08cc569454e0184139552b2c61d7c6a650299de13ba3",
+      "replay.json": "3f0acd7e813efe363a513d163c3857b3008201ea6c70bf07dcc641d211103c4f",
+      "zero-supports.json": "dfdd6b7b191d6c6eca1e553426bdb1b483dc1cfb59fc8b0d42f3958f5d0c50d2"
+    },
+    "lint": "changed Python files pass; 188 exact inherited whole-tree diagnostics",
+    "opinions_sha256": "bf6a73926cbd3bd7ea296522a290308faad0b66399817ba57f7c2a44c6ca2625",
+    "outcomes": {
+      "both-approved": {
+        "decision": "supported",
+        "effective": [
+          "whale-a",
+          "corroboration"
+        ],
+        "states": [
+          "approved",
+          "approved"
+        ]
+      },
+      "old-review-on-revised": {
+        "decision": "revalidation-required",
+        "effective": [],
+        "states": [
+          "stale",
+          "stale"
+        ]
+      },
+      "reject-both": {
+        "decision": "unsupported",
+        "effective": [],
+        "states": [
+          "rejected",
+          "rejected"
+        ]
+      },
+      "reject-whale-a": {
+        "decision": "supported",
+        "effective": [
+          "corroboration"
+        ],
+        "states": [
+          "rejected",
+          "approved"
+        ]
+      },
+      "renew-whale-a": {
+        "decision": "supported",
+        "effective": [
+          "whale-a"
+        ],
+        "states": [
+          "approved",
+          "stale"
+        ]
+      }
+    },
+    "repair_commit": "729111ba697186d441b1da459ceb73c72064e1e8",
+    "structure": "679 passed, 2 deselected in 326.04s (0:05:26)",
+    "wheel_sha256": "a9ae4b2b9d744f042d6f59287f474c7afcaf956f0cf21459b4ec3bb6b9ddbe63"
+  },
+  "review_status": {
+    "coverage": [
+      {
+        "path": ".gnd-planning/milestones/literature-depth/011-phase-LD4.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/012-phase-LD5-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/evidence/LD4/installed-observation.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 44022b8fa8cb"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/COMPONENTS.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/graph.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/modules/examples.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read cdf290c0a100"
+      },
+      {
+        "path": "src/gnd/examples/literature/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read d87d6c64e0b9"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/release-policy.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/review-inputs.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_manifest.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read e4a654f9f275"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 6b19454adfc6"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict_fixture/opinions.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 096613fa54de"
+      },
+      {
+        "path": "tests/fixtures/ld5-verdict/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/test_ld4_revision.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/test_ld5_verdict.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read c309a8ce3cf4"
+      }
+    ],
+    "ok": false,
+    "rounds": [
+      {
+        "findings": 4,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "done",
+        "subject": "phase"
+      }
+    ]
+  },
+  "reviewed_candidate": {
+    "brief_sha256": "074986cbeb92b355594e7c5d4724cddfa83ec03495d9c6579104fc66f7dea9e5",
+    "candidate": "2e34530a1bf214efd2f989327a9751f68084976d",
+    "component_check": "0 to fix, 0 warning(s), 0 to reread",
+    "focused": "96 passed in 374.01s (0:06:14)",
+    "installed_reports": {
+      "fresh.json": "de8e8f877e5b24650ce7badecc113d302016dabebe44a288f4996566d26bf3a3",
+      "one-support.json": "e49bda818ed8347ec50047563147e202136ca152a9ab9c23e9ef45c97620a1f7",
+      "prior-opinion.json": "d3e485a105d68ecb457f9956fa89d5140b6a49322aaa8556cedea86617b6df36",
+      "replay.json": "de8e8f877e5b24650ce7badecc113d302016dabebe44a288f4996566d26bf3a3",
+      "zero-supports.json": "dfdd6b7b191d6c6eca1e553426bdb1b483dc1cfb59fc8b0d42f3958f5d0c50d2"
+    },
+    "lint": "changed Python files pass, 188 exact inherited whole-tree diagnostics",
+    "observed": {
+      "both-approved": {
+        "decision": "supported",
+        "effective": [
+          "whale-a",
+          "corroboration"
+        ],
+        "states": [
+          "approved",
+          "approved"
+        ]
+      },
+      "old-review-on-revised": {
+        "decision": "revalidation-required",
+        "effective": [],
+        "states": [
+          "stale",
+          "stale"
+        ]
+      },
+      "reject-both": {
+        "decision": "unsupported",
+        "effective": [],
+        "states": [
+          "rejected",
+          "rejected"
+        ]
+      },
+      "reject-whale-a": {
+        "decision": "supported",
+        "effective": [
+          "corroboration"
+        ],
+        "states": [
+          "rejected",
+          "approved"
+        ]
+      },
+      "renew-whale-a": {
+        "decision": "supported",
+        "effective": [
+          "whale-a"
+        ],
+        "states": [
+          "approved",
+          "stale"
+        ]
+      }
+    },
+    "report": {
+      "both-approved": {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "decision": "supported",
+        "edition": "current",
+        "effective": [
+          "whale-a",
+          "corroboration"
+        ],
+        "stale_bindings": [],
+        "supports": [
+          {
+            "reason": "saved-opinion",
+            "source": "whale-a",
+            "state": "approved"
+          },
+          {
+            "reason": "saved-opinion",
+            "source": "corroboration",
+            "state": "approved"
+          }
+        ]
+      },
+      "old-review-on-revised": {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "decision": "revalidation-required",
+        "edition": "revised",
+        "effective": [],
+        "stale_bindings": [
+          "definition"
+        ],
+        "supports": [
+          {
+            "reason": "shared-binding",
+            "source": "whale-a",
+            "state": "stale"
+          },
+          {
+            "reason": "shared-binding",
+            "source": "corroboration",
+            "state": "stale"
+          }
+        ]
+      },
+      "reject-both": {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "decision": "unsupported",
+        "edition": "current",
+        "effective": [],
+        "stale_bindings": [],
+        "supports": [
+          {
+            "reason": "saved-opinion",
+            "source": "whale-a",
+            "state": "rejected"
+          },
+          {
+            "reason": "saved-opinion",
+            "source": "corroboration",
+            "state": "rejected"
+          }
+        ]
+      },
+      "reject-whale-a": {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "decision": "supported",
+        "edition": "current",
+        "effective": [
+          "corroboration"
+        ],
+        "stale_bindings": [],
+        "supports": [
+          {
+            "reason": "saved-opinion",
+            "source": "whale-a",
+            "state": "rejected"
+          },
+          {
+            "reason": "saved-opinion",
+            "source": "corroboration",
+            "state": "approved"
+          }
+        ]
+      },
+      "renew-whale-a": {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "decision": "supported",
+        "edition": "revised",
+        "effective": [
+          "whale-a"
+        ],
+        "stale_bindings": [],
+        "supports": [
+          {
+            "reason": "saved-opinion",
+            "source": "whale-a",
+            "state": "approved"
+          },
+          {
+            "reason": "definition",
+            "source": "corroboration",
+            "state": "stale"
+          }
+        ]
+      }
+    },
+    "structure": "679 passed, 2 deselected in 308.69s (0:05:08)",
+    "wheel_sha256": "296ae7b70ef5e87642857cc3e06875c289511c6334bfbcdc5e3371c61edcf729"
+  }
+}

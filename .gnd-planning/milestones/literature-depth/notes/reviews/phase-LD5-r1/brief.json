@@ -1,0 +1,101 @@
+{
+  "base": "4e0b542f",
+  "claims": [
+    "The independently pinned saved opinion document is bounded and read before candidate evidence. A shared claim, sense decision, rule, definition or interpretation change requires revalidation.",
+    "A changed support occurrence, review, witness, rule or resolution edition invalidates that support independently. An independently valid peer remains available.",
+    "The verified fixture reports two approvals, one approval after rejection, zero approvals, stale previous opinions in the revised edition, and a re-reviewed proof for the same occurrence.",
+    "The replacement proof is independently replayed with exact authenticated LD4 evolution, model, review and edition inputs, and the retained report can be replayed without publishing a new opinion."
+  ],
+  "created": "2026-11-16T07:29:10.449431+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1/diff.patch",
+      "sha256": "baa6606b5d26a9f600f2d5ca597080a417fa020278459258b420672cb63dfa2b"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/012-phase-LD5-spec-gate.md",
+      "sha256": "8e990c62c07b7d31da976b40f06fbcb457070566cd4de5eeb7b9e9df72f9de03"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md",
+      "sha256": "44022b8fa8cba692a5fabcad02dbdcc7a854bbb04cba21dbcc1894613db3d83c"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "df3821abac6ed7b57bacfe83916df3226d5e6eec8285294652e4320008f25a77"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "2e8db5ce8f2fcfb7ce30dc33067301cb8b443bac0b274b1fa1391edc009c5601"
+    },
+    {
+      "path": "dev/components/modules/examples.md",
+      "sha256": "cdf290c0a100d68babfe7feaaed7151d8de129a4f1a31199877da1f20d98f1f6"
+    },
+    {
+      "path": "src/gnd/examples/literature/README.md",
+      "sha256": "7a9a25b51b441a2ab30f2211972f2be75898d19a71ad8054b81fe7310fe9f258"
+    },
+    {
+      "path": "src/gnd/examples/literature/revision.py",
+      "sha256": "d87d6c64e0b9c694831c8e8bd49433e14f10f03a044f2e834f989f1b558cb359"
+    },
+    {
+      "path": "src/gnd/examples/literature/verdict.py",
+      "sha256": "e4a654f9f2751a98e36b03b3438a1d59f394db817b62f6718ad0629119b2e246"
+    },
+    {
+      "path": "src/gnd/examples/literature/verdict_fixture/README.md",
+      "sha256": "6b19454adfc6d98a277c54cb67833d3ed81684ac0f0a287725c305a6a934fd1e"
+    },
+    {
+      "path": "src/gnd/examples/literature/verdict_fixture/opinions.json",
+      "sha256": "096613fa54def036cdeb4c85d137ec84fcfa1fae7b500bd080e56b01824276f2"
+    },
+    {
+      "path": "tests/fixtures/ld5-verdict/expected.json",
+      "sha256": "d7323c9cc5ffcea22768e984e434d683c0b79ab76e7118ce9801549dab8a314a"
+    },
+    {
+      "path": "tests/test_ld5_verdict.py",
+      "sha256": "c309a8ce3cf4110f7c9efbc95cd40ee3a04688672e719951bf2281b905fa72ea"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/011-phase-LD4.md",
+      "sha256": "e108270204a5e5817e98c14b720f9a9a5aa835816a33e6c365553c6bebe48a75"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md",
+      "sha256": "216c7af0576a65a5fcb785773d34449c0e6ce0ce05ab022a21a43e5607d20539"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/evidence/LD4/installed-observation.json",
+      "sha256": "06227fb624d738f2719b4d01c77f9b3a85c37b4ab910fc5e70e6265b27547b7a"
+    },
+    {
+      "path": "src/gnd/examples/literature/revision_manifest.py",
+      "sha256": "9ca7699f78a1886dfed25ce64fb3299b21d7889b2a2e668f3ea338f95d4c603a"
+    },
+    {
+      "path": "src/gnd/examples/literature/revision_fixture/release-policy.json",
+      "sha256": "af44dfee16ca94f20c560c5e82bb00e59bb86f53c53c7219b30fb6da3ad8bc65"
+    },
+    {
+      "path": "src/gnd/examples/literature/revision_fixture/review-inputs.json",
+      "sha256": "860de5eaab0da246bec9871ae0b8094ef8d1507ee487724f0d7d1e0b925b1a47"
+    },
+    {
+      "path": "tests/test_ld4_revision.py",
+      "sha256": "60061d3a9179c6baa4559714824c9d7a0d94690b86f22bf9536a359d35b128c3"
+    }
+  ],
+  "head": "2e34530a1bf214efd2f989327a9751f68084976d",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does LD5 enforce independent support verdicts on the published derived claim and require the right revalidation when evidence or its predicate changes?",
+  "subject": "phase",
+  "version": 1
+}

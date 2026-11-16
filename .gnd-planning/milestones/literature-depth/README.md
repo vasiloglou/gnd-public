@@ -12,4 +12,4 @@ prerequisite identity and interoperability phases are merged. The
 | [LD2](006-phase-LD2.md) | Time anchors and exact fixed-scale witness |
 | [LD3](009-phase-LD3.md) | Multipass reading with explicit coverage |
 | [LD4](011-phase-LD4.md) | Semantic revision dependency manifest and migration recipe |
-| LD5 | Verdicts on derived claims |
+| [LD5](013-phase-LD5.md) | Verdicts on derived claims |

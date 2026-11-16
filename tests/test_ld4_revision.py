@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 
+from gnd.artifacts import canonical_json_bytes
 from gnd.examples.literature import reading
 
 EXPECTED = json.loads((Path(__file__).parent / "fixtures/ld4-revision/expected.json").read_bytes())
@@ -77,20 +78,23 @@ def test_both_current_supports_are_individually_replayable(release):
         assert revision.replay_support(out, row["source"]) == row
 
 
-def test_another_missing_support_does_not_change_an_independent_certificate(release, tmp_path):
+@pytest.mark.parametrize(("removed", "surviving"), (("whale-a", "corroboration"), ("corroboration", "whale-a")))
+def test_another_missing_support_does_not_change_an_independent_certificate(release, tmp_path, removed, surviving):
     revision, out, report = release
     candidate = tmp_path / "release"
     shutil.copytree(out, candidate)
-    (candidate / "after/supports/corroboration/witness.json").unlink()
-    assert revision.replay_support(candidate, "whale-a") == report["supports"][0]
+    (candidate / f"after/sources/{removed}/document.txt").unlink()
+    expected = next(row for row in report["supports"] if row["source"] == surviving)
+    assert revision.replay_support(candidate, surviving) == expected
     with pytest.raises(ValueError, match="support evidence is stale"):
-        revision.replay_support(candidate, "corroboration")
+        revision.replay_support(candidate, removed)
 
 
 def test_every_required_kind_and_transitive_staleness(release, tmp_path):
     revision, out, _ = release
     candidate = tmp_path / "after"
     shutil.copytree(out / "after", candidate)
+    shutil.copytree(out / "before", tmp_path / "before")
     policy = revision.POLICY
     pin = _pin(policy)
     rows = _read(policy)["snapshots"]["after"]
@@ -196,3 +200,107 @@ def test_snapshot_identity_and_symlink_cannot_supply_required_artifact(release, 
     evidence.symlink_to(out / "after/reading/coverage.json")
     state = revision.status(candidate)
     assert "reading/coverage.json" in state["changed"] and "claims.json" in state["stale"]
+
+
+def test_dependencies_follow_actual_producers_and_prior_snapshot(release, tmp_path):
+    revision, out, _ = release
+    candidate = tmp_path / "release"
+    shutil.copytree(out, candidate)
+    after = candidate / "after"
+    cases = (
+        ("after/sources/resolution.json", {"decisions.json", "witness.json"}, {"sources/whale-a/document.txt"}),
+        ("after/decisions.json", {"reviews.json"}, {"sources/resolution.json", "witness.json"}),
+        ("after/evolution/proposal.json", {"evolution/model.orm.yaml", "evolution/reviews.json"}, {"witness.json"}),
+        ("before/composition.json", {"migration.json", "claims.json"}, {"supports/corroboration/support.json"}),
+    )
+    for path, stale, current in cases:
+        artifact = candidate / path
+        original = artifact.read_bytes()
+        artifact.write_bytes(original + b" ")
+        state = revision.status(after)
+        assert stale <= set(state["stale"]), path
+        assert current <= set(state["current"]), path
+        artifact.write_bytes(original)
+    shutil.rmtree(candidate / "before")
+    state = revision.status(after)
+    assert set(state["prior_stale"]) == {"before/composition.json", "before/population.json"}
+    assert "migration.json" in state["stale"]
+
+
+def test_prior_replay_uses_retained_reading_source(release, monkeypatch):
+    revision, out, report = release
+    original = reading._read
+
+    def retained_only(root, name):
+        if root == reading.FIXTURE and name == "study.txt":
+            raise FileNotFoundError("the packaged reader no longer has this source")
+        return original(root, name)
+
+    monkeypatch.setattr(reading, "_read", retained_only)
+    assert revision.replay(out, snapshot="before")["witness_sha256"] == report["before_witness_sha256"]
+
+
+def test_rehashed_interpretation_cannot_reuse_saved_source_approval(release, tmp_path):
+    revision, out, _ = release
+    candidate = tmp_path / "release"
+    shutil.copytree(out, candidate)
+    snapshot = candidate / "after"
+    policy_path = snapshot / "interpretation.json"
+    review_path = snapshot / "supports/whale-a/review.json"
+    support_path = snapshot / "supports/whale-a/support.json"
+    policy = {**_read(policy_path), "policy": "Require evidence that each source disputes the named ancestry."}
+    policy_path.write_bytes(canonical_json_bytes(policy))
+    review_path.write_bytes(canonical_json_bytes({**_read(review_path), "policy_sha256": _pin(policy_path)}))
+    support_path.write_bytes(canonical_json_bytes({**_read(support_path), "review_sha256": _pin(review_path)}))
+    manifest_path = snapshot / "manifest.json"
+    manifest = _read(manifest_path)
+    replacements = {path.relative_to(snapshot).as_posix(): _pin(path)
+                    for path in (policy_path, review_path, support_path)}
+    for row in manifest["artifacts"]:
+        if row["path"] in replacements:
+            row["sha256"] = replacements[row["path"]]
+    _write(manifest_path, manifest)
+    assert revision.status(snapshot)["status"] == "current"
+    with pytest.raises(ValueError, match="interpretation policy"):
+        revision.replay_support(candidate, "whale-a")
+
+
+def test_no_covered_occurrence_change_keeps_absence_current(release):
+    revision, out, _ = release
+    after = out / "after"
+    roster = _read(after / "reading/coverage.json")
+    prior = {"coverage": roster["rows"], "revisit": EXPECTED["coverage"]["revisit"]}
+    change = {"occurrence": ["other-source", "unrelated_fact", 0]}
+    result = revision._coverage_impact(after, prior, [change])
+    assert result == {"affected": {}, "revisit": [], "unrelated": {"denial": "current"}}
+
+
+def test_public_rule_comparison_refuses_changed_vocabulary(release, tmp_path):
+    revision, out, _ = release
+    shutil.copytree(out / "after/comparison", tmp_path / "comparison")
+    model_path = tmp_path / "comparison/head.orm.json"
+    model = _read(model_path)
+    model["object_types"].append({"id": "extra", "name": "Extra", "kind": "value", "primitive": "String"})
+    _write(model_path, model)
+    with pytest.raises(ValueError, match="check exited 3"):
+        revision._rule_comparison(tmp_path)
+
+
+def test_additive_refusal_must_identify_the_predicate_edit(release, tmp_path, monkeypatch):
+    revision, out, _ = release
+    after = tmp_path / "after"
+    shutil.copytree(out / "after", after)
+    command = revision._command
+
+    def unrelated_refusal(root, *arguments):
+        observed = command(root, *arguments)
+        if arguments[:2] == ("evolve", "preview") and "--policy" in arguments:
+            report = root / "additive.json"
+            body = _read(report)
+            body["policy_issues"][0]["operation_id"] = "different-edit"
+            _write(report, body)
+        return observed
+
+    monkeypatch.setattr(revision, "_command", unrelated_refusal)
+    with pytest.raises(ValueError, match="must reject the predicate edit"):
+        revision._transition(after, _read(after / "review-inputs.json"))

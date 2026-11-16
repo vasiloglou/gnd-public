@@ -11,7 +11,7 @@ from gnd.artifacts import ArtifactError, canonical_json_bytes, publish_directory
 from .depth import ExampleError, _decode, _read
 
 POLICY = Path(__file__).with_name("revision_fixture") / "release-policy.json"
-POLICY_SHA256 = "555e00b93fde50eae2dc7e9077c9f1a255e2ff169e9916c5b43ce38c0d194df9"
+POLICY_SHA256 = "af44dfee16ca94f20c560c5e82bb00e59bb86f53c53c7219b30fb6da3ad8bc65"
 MAX_ARTIFACTS = 96
 MAX_DEPENDENCIES = 32
 SNAPSHOTS = ("before", "after")
@@ -49,16 +49,19 @@ class Policy:
                 and isinstance(snapshots, dict) and set(snapshots) == set(SNAPSHOTS),
                 "invalid release policy")
         entries = {}
-        for snapshot, rows in snapshots.items():
+        for snapshot in SNAPSHOTS:
+            rows = snapshots[snapshot]
             require(isinstance(rows, list) and 0 < len(rows) <= MAX_ARTIFACTS, "invalid policy roster")
             indexed = {}
+            preceding = {f"before/{name}" for name in entries.get("before", {})}
             for row in rows:
                 require(isinstance(row, dict) and set(row) == {"path", "kind", "requires"},
                         "invalid release policy row")
                 name, kind, parents = row["path"], row["kind"], row["requires"]
-                require(_path(name) and name not in indexed and name != MARKER and _path(kind)
+                require(_path(name) and name not in indexed and name != MARKER and not name.startswith("before/")
+                        and _path(kind)
                         and isinstance(parents, list) and len(parents) <= MAX_DEPENDENCIES
-                        and all(_path(parent) and parent in indexed for parent in parents)
+                        and all(_path(parent) and (parent in indexed or parent in preceding) for parent in parents)
                         and len(set(parents)) == len(parents), "invalid release policy dependency or path")
                 indexed[name] = tuple(parents)
             entries[snapshot] = indexed
@@ -71,22 +74,28 @@ class Policy:
             "policy_sha256": self.sha256,
             "snapshot": snapshot,
             "artifacts": [{"path": name, "sha256": sha256_hex(raw)} for name, raw in files.items()],
+            "prior_artifacts": {name: sha256_hex(_read(root.parent, name))
+                                for name in sorted(self._primary_dependencies(snapshot))},
         })
         return files
 
+    def _primary_dependencies(self, snapshot: str) -> set[str]:
+        return {parent for parents in self.entries[snapshot].values() for parent in parents
+                if parent.startswith("before/")}
+
     def affected(self, snapshot: str, changed: set[str]) -> set[str]:
-        stale = set()
+        stale = set(changed)
         for name, parents in self.entries[snapshot].items():
             if name in changed or stale.intersection(parents):
                 stale.add(name)
-        return stale
+        return stale.intersection(self.entries[snapshot])
 
     def inspect(self, root: Path, snapshot: str) -> tuple[dict, dict[str, bytes]]:
         require(snapshot in SNAPSHOTS, "select the before or after release snapshot")
         raw = _read(root, MARKER)
         manifest = _decode(raw)
         rows = manifest.get("artifacts")
-        require(set(manifest) == {"format", "policy_sha256", "snapshot", "artifacts"}
+        require(set(manifest) == {"format", "policy_sha256", "snapshot", "artifacts", "prior_artifacts"}
                 and manifest["format"] == "literature-release/1"
                 and manifest["policy_sha256"] == self.sha256 and manifest["snapshot"] == snapshot,
                 "invalid release manifest identity")
@@ -99,6 +108,21 @@ class Policy:
             require(_path(name) and name in paths and name not in pins and _digest(digest),
                     "invalid release artifact roster")
             pins[name] = digest
+        prior = manifest["prior_artifacts"]
+        require(isinstance(prior, dict) and prior.keys() == self._primary_dependencies(snapshot)
+                and all(_digest(digest) for digest in prior.values()), "invalid prior artifact roster")
+        upstream_stale = set()
+        if prior:
+            try:
+                previous, prior_files = self.inspect(root.parent / "before", "before")
+            except (ArtifactError, ExampleError, OSError):
+                upstream_stale.update(prior)
+            else:
+                prior_current = set(previous["current"])
+                for name, digest in prior.items():
+                    relative = name.removeprefix("before/")
+                    if relative not in prior_current or sha256_hex(prior_files[relative]) != digest:
+                        upstream_stale.add(name)
         files, changed = {}, set()
         for name in paths:
             try:
@@ -110,9 +134,10 @@ class Policy:
                     files[name] = actual
                 else:
                     changed.add(name)
-        stale = self.affected(snapshot, changed)
+        stale = self.affected(snapshot, changed | upstream_stale)
         state = {"snapshot": snapshot, "status": "stale" if stale else "current",
-                 "changed": sorted(changed), "stale": sorted(stale), "current": sorted(paths.keys() - stale)}
+                 "changed": sorted(changed), "prior_stale": sorted(upstream_stale),
+                 "stale": sorted(stale), "current": sorted(paths.keys() - stale)}
         files[MARKER] = raw
         return state, files
 

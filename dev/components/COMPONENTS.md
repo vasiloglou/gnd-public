@@ -3726,6 +3726,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: examples.literature_depth, infra.artifacts
 - used_by: examples.literature_assurance, examples.literature_revision
 - tests: tests/test_ld3_reading_workflow.py
+- notes: Release replay can provide its retained reading fixture and rooted vocabulary together.
 
 ### examples.literature_revision
 - does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.

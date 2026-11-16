@@ -24,8 +24,11 @@ CANDIDATES = ("whale-a", "whale-b")
 SUPPORTS = ("whale-a", "corroboration")
 SOURCE_FILES = ("document.txt", "population.json", "population.json.anchors.json")
 READING_FILES = ("run.json", *reading.FILES)
-REVIEW_INPUTS_SHA256 = "426c65553c3f5de4049ee7f6eea0321957ad6eae939410c182ca9a46d45c4568"
+READING_INPUTS = (*reading.INPUTS, "annex.txt", "control.txt", "study.txt", "vocabulary.orm.json")
+READING_INPUTS_SHA256 = "e49c1448bbb2856db377d407b932ce06cd65612e4855869b832dfa7448e70a76"
+REVIEW_INPUTS_SHA256 = "860de5eaab0da246bec9871ae0b8094ef8d1507ee487724f0d7d1e0b925b1a47"
 APPROVED_PREVIEW_SHA256 = "efb39fd26996186729d444ca697cc54038b086a8569bbffee11997fbc4f48adf"
+REVIEWED_RESOLUTION_SHA256 = "8804cfeedffb014c792018ada339c1acf4067b8dda79ccf91494a6cf1eb7db60"
 RELEASE = "release.json"
 
 
@@ -37,7 +40,8 @@ def _copy(root: Path, files: dict[str, bytes]) -> None:
 
 
 def _input_names(snapshot: str) -> list[str]:
-    names = [MODEL, "targets.json", "interpretation.json", "reading-roster.json", "sources/manifest.json"]
+    names = [MODEL, "targets.json", "interpretation.json", "review-inputs.json", "sources/manifest.json"]
+    names.extend(f"reading-inputs/{name}" for name in READING_INPUTS)
     sources = (*CANDIDATES, "corroboration") if snapshot == "after" else CANDIDATES
     names.extend(f"sources/{source}/{name}" for source in sources for name in SOURCE_FILES)
     names.extend(f"reading/{name}" for name in READING_FILES)
@@ -54,7 +58,10 @@ def _fixture_inputs(snapshot: str, retained: dict[str, bytes]) -> dict[str, byte
         MODEL: _read(RESOLUTION, MODEL),
         "targets.json": _read(FIXTURE, "targets.json"),
         "interpretation.json": _read(FIXTURE, "interpretation.json"),
-        "reading-roster.json": _read(reading.FIXTURE, "roster.json"),
+        "review-inputs.json": _read(FIXTURE, "review-inputs.json"),
+        **{f"reading-inputs/{name}": _read(reading.FIXTURE, name)
+           for name in READING_INPUTS if name != "vocabulary.orm.json"},
+        "reading-inputs/vocabulary.orm.json": _read(reading.DEPTH_FIXTURE, "vocabulary.orm.json"),
         **retained,
     }
     for name in _input_names(snapshot):
@@ -84,14 +91,16 @@ def _rule(root: Path) -> dict:
     return {"predicate": ANCESTOR, "derivation_rule": rule}
 
 
-def _review_inputs() -> dict:
-    raw = _read(FIXTURE, "review-inputs.json")
+def _review_inputs(root: Path) -> dict:
+    raw = _read(root, "review-inputs.json")
     require(sha256_hex(raw) == REVIEW_INPUTS_SHA256, "fixture review inputs differ")
     return _decode(raw)
 
 
 def _review(root: Path, source: str, authored: dict, *, model: str = MODEL, expect_stale: bool = False) -> dict:
     evidence = f"sources/{source}"
+    policy_sha = sha256_hex(_read(root, "interpretation.json"))
+    require(authored.get("interpretation_sha256") == policy_sha, "saved review interpretation policy differs")
     with tempfile.TemporaryDirectory(prefix="gnd-revision-review-") as scratch:
         work = Path(scratch).resolve()
         _write(work, "policy.json", authored["policy"])
@@ -117,7 +126,7 @@ def _review(root: Path, source: str, authored: dict, *, model: str = MODEL, expe
         "targets": targets,
         "route": {"exit": result.return_code, "error": report["error"]},
         "definition_sha256": sha256_hex(canonical_json_bytes(_definition(root, model))),
-        "policy_sha256": sha256_hex(_read(root, "interpretation.json")),
+        "policy_sha256": policy_sha,
         "source": source,
     }
 
@@ -153,31 +162,39 @@ def _check_asserted_anchors(root: Path, population: str, *evidence: str) -> dict
             "derivation": "checked by separate witness"}
 
 
-def _reading(root: Path, interpretation: dict) -> tuple[dict, dict]:
+def _reading(root: Path) -> tuple[dict, dict]:
     retained = root / "reading"
-    report = reading.replay(retained)
-    roster = _read(root, "reading-roster.json")
-    require(roster == _read(reading.FIXTURE, "roster.json") and report["absence"]["status"] == "qualified",
-            "release needs the exact qualified reading scope")
-    sections = {row["id"]: row for row in _decode(roster)["sections"]}
-    opened = _decode(_read(retained, "payload-1.json"))["attempts"]
-    earlier = {row["section"]: sections[row["section"]] for row in opened}
-    key = {interpretation["coverage_key"]}
-    revisit = reading.affected_sections(earlier, key)
-    require(revisit == report["revisit"], "migration and reading revisit disagree")
-    affected = reading.affected_sections(sections, key)
-    rows = {row["question"]: row for row in report["coverage"]}
-    related, unrelated = interpretation["related_question"], interpretation["unrelated_question"]
-    require(rows[related]["section"] in affected and rows[unrelated]["section"] not in affected,
-            "covered and unaffected question selection differs")
-    coverage = {"revisit": revisit, "affected": {related: "stale"}, "unrelated": {unrelated: "current"}}
+    inputs = root / "reading-inputs"
+    pins = {name: sha256_hex(_read(inputs, name)) for name in READING_INPUTS}
+    require(sha256_hex(canonical_json_bytes(pins)) == READING_INPUTS_SHA256, "retained reading inputs differ")
+    report = reading.replay(retained, fixture=inputs, vocabulary_fixture=inputs)
+    require(report["absence"]["status"] == "qualified", "release needs the exact qualified reading scope")
     absence = {
         "status": "qualified",
         "reading_sha256": report["evidence_sha256"],
         "dependencies": {name: sha256_hex(_read(retained, name)) for name in
                          ("coverage.json", "scope.json", "closure.json", "fidelity-high.json")},
     }
-    return absence, coverage
+    return absence, report
+
+
+def _coverage_impact(root: Path, report: dict, changed_occurrences: list[dict]) -> dict:
+    interpretation = _decode(_read(root, "interpretation.json"))
+    roster = _decode(_read(root, "reading-inputs/roster.json"))
+    sections = {row["id"]: row for row in roster["sections"]}
+    opened = _decode(_read(root, "reading/payload-1.json"))["attempts"]
+    earlier = {row["section"]: sections[row["section"]] for row in opened}
+    # The fixture's method-family key covers the asserted ancestry predicate.
+    keys = {interpretation["coverage_key"]} if any(row["occurrence"][1] == FACT for row in changed_occurrences) else set()
+    revisit = reading.affected_sections(earlier, keys)
+    require(not keys or revisit == report["revisit"], "migration and reading revisit disagree")
+    affected = set(reading.affected_sections(sections, keys))
+    rows = {row["question"]: row for row in report["coverage"]}
+    scoped = _decode(_read(root, "reading/scope.json"))["questions"]
+    changed = {question: "stale" for question in scoped if rows[question]["section"] in affected}
+    unrelated = interpretation["unrelated_question"]
+    require(rows[unrelated]["section"] not in affected, "the unrelated coverage is affected")
+    return {"revisit": revisit, "affected": changed, "unrelated": {unrelated: "current"}}
 
 
 def _compose(root: Path, snapshot: str) -> dict:
@@ -198,14 +215,12 @@ def _snapshot(root: Path, snapshot: str, reviews: dict) -> tuple[dict, dict, dic
     checked = {source: _review(root, source, reviews[source]) for source in CANDIDATES}
     require(all(review["admitted"] for review in checked.values()), "a saved source review is stale")
     _write(root, "reviews.json", checked)
-    absence, coverage = _reading(root, _decode(_read(root, "interpretation.json")))
-    if snapshot == "after":
-        absence = {**absence, "status": "stale", "prior_status": absence["status"]}
+    absence, reading_report = _reading(root)
     _write(root, "scoped-absence.json", absence)
     claims = _proof(root, "", "population.json", "targets.json", composition="composition.json")
     claims["assertion_check"] = check
     claims["scoped_absence"] = absence
-    return claims, coverage, checked
+    return claims, reading_report, checked
 
 
 def _coordinates(record: dict) -> dict[tuple[str, str, int], int]:
@@ -218,7 +233,7 @@ def _coordinates(record: dict) -> dict[tuple[str, str, int], int]:
     return coordinates
 
 
-def _migration(before: Path, after: Path, coverage: dict, policy: Policy) -> dict:
+def _migration(before: Path, after: Path, reading_report: dict, policy: Policy) -> dict:
     old = _coordinates(_decode(_read(before, "composition.json")))
     new = _coordinates(_decode(_read(after, "composition.json")))
     require(old.keys() == new.keys(), "source occurrence inventory differs")
@@ -226,18 +241,22 @@ def _migration(before: Path, after: Path, coverage: dict, policy: Policy) -> dic
     before_facts = _decode(_read(before, "population.json"))["facts"]
     after_facts = _decode(_read(after, "population.json"))["facts"]
     changed = []
+    label = _decode(_read(after, "interpretation.json"))["unqualified_mention"]
+    candidates = set()
     for coordinate in sorted(old):
         _, fact_type, _ = coordinate
         original = before_facts[fact_type][old[coordinate]]
         revised = after_facts[fact_type][new[coordinate]]
+        candidates.update(revised[role] for role, value in original.items() if value == label)
         if original != revised:
             changed.append({"occurrence": list(coordinate), "before": original, "after": revised})
-    label = _decode(_read(after, "interpretation.json"))["unqualified_mention"]
-    manifest = _decode(_read(after, "sources/manifest.json"))
-    candidates = sorted({label, *(row["to"] for row in manifest["renamings"] if row["from"] == label)})
     require(len(candidates) > 1, "rereading control has no competing senses")
-    ambiguity = {"mention": label, "candidates": candidates}
-    affected = policy.affected("after", {"sources/resolution.json", "scoped-absence.json"})
+    ambiguity = {"mention": label, "candidates": sorted(candidates)}
+    coverage = _coverage_impact(after, reading_report, changed)
+    changed_inputs = {"sources/resolution.json"}
+    if coverage["affected"]:
+        changed_inputs.add("scoped-absence.json")
+    affected = policy.affected("after", changed_inputs)
     return {"occurrences": occurrences, "changed_occurrences": changed, "ambiguous": ambiguity,
             "coverage": coverage, "reread": [*coverage["revisit"], ambiguity],
             "affected_artifacts": sorted(affected)}
@@ -251,7 +270,11 @@ def _transition(root: Path, authored: dict) -> dict:
         scope = ("--workspace", ".", "--records", "records", "--format", "json")
         additive = _command(work, "evolve", "preview", MODEL, "proposal.json", *scope,
                             "--out", "additive.json", "--policy", "additive")
-        require(additive.return_code == 3 and _decode(_read(work, "additive.json"))["policy_issues"],
+        issues = _decode(_read(work, "additive.json"))["policy_issues"]
+        require(additive.return_code == 3 and any(
+            issue["operation_id"] == "change-reading" and issue["cell"] == "fact_types.modify"
+            and issue["reference"] == f"fact_types[{FACT}]" for issue in issues
+        ),
                 "the additive control must reject the predicate edit")
         _success(work, "evolve", "preview", MODEL, "proposal.json", *scope, "--out", "preview.json")
         preview = _decode(_read(work, "preview.json"))
@@ -319,24 +342,31 @@ def _support(root: Path, source: str, reviewed: dict, editions: dict) -> dict:
 
 
 def _editions(root: Path) -> dict:
-    record = _decode(_read(root, "composition.json"))
-    resolution = {"decision_sha256": sha256_hex(_read(root, "decisions.json")),
-                  "verified_resolution_sha256": record["resolution_sha256"],
-                  "composition_manifest_sha256": record["manifest_sha256"]}
-    return {"resolution_edition": sha256_hex(canonical_json_bytes(resolution)),
+    resolution = _read(root, "sources/resolution.json")
+    decisions = _read(root, "decisions.json")
+    require(sha256_hex(resolution) == REVIEWED_RESOLUTION_SHA256
+            and canonical_json_bytes(_decode(resolution)) == decisions,
+            "support resolution differs from the reviewed edition")
+    return {"resolution_edition": sha256_hex(decisions),
             "rule_edition": sha256_hex(_read(root, "rule.json"))}
 
 
 def _evaluate(work: Path, snapshot: str | None, policy: Policy) -> dict:
     before = work / "before"
-    reviews = _review_inputs()
-    prior, _, _ = _snapshot(before, "before", reviews)
+    prior, _, _ = _snapshot(before, "before", _review_inputs(before))
     _write(before, "claims.json", prior)
     if snapshot == "before":
         return prior
     after = work / "after"
-    current, coverage, reviewed = _snapshot(after, "after", reviews)
-    migration = _migration(before, after, coverage, policy)
+    reviews = _review_inputs(after)
+    current, reading_report, reviewed = _snapshot(after, "after", reviews)
+    require(prior["scoped_absence"]["reading_sha256"] == current["scoped_absence"]["reading_sha256"],
+            "migration reading run differs between snapshots")
+    migration = _migration(before, after, reading_report, policy)
+    if migration["coverage"]["affected"]:
+        absence = current["scoped_absence"]
+        current["scoped_absence"] = {**absence, "status": "stale", "prior_status": absence["status"]}
+        _write(after, "scoped-absence.json", current["scoped_absence"])
     _write(after, "migration.json", migration)
     transition = _transition(after, reviews)
     comparison = _rule_comparison(after)
@@ -408,16 +438,13 @@ def replay_support(root: Path, source: str) -> dict:
     require(folder + "support.json" in state["current"], "support evidence is stale")
     with tempfile.TemporaryDirectory(prefix="gnd-revision-support-") as temporary:
         work = Path(temporary).resolve()
-        needed = (MODEL, "interpretation.json", "sources/manifest.json", "sources/resolution.json",
-                  *(f"sources/{key}/{name}" for key in {*CANDIDATES, source} for name in SOURCE_FILES),
+        needed = (MODEL, "interpretation.json", "review-inputs.json", "decisions.json", "sources/resolution.json",
+                  *(f"sources/{source}/{name}" for name in SOURCE_FILES),
                   folder + "targets.json")
         _copy(work, {path: files[path] for path in needed})
-        _compose(work, "after")
         _write(work, "rule.json", _rule(work))
-        require(all(_read(work, name) == files[name] for name in
-                    ("population.json", "composition.json", "decisions.json", "rule.json")),
-                "support rule or resolution binding differs")
-        reviewed = _review(work, source, _review_inputs()[source])
+        require(_read(work, "rule.json") == files["rule.json"], "support rule binding differs")
+        reviewed = _review(work, source, _review_inputs(work)[source])
         computed = _support(work, source, reviewed, _editions(work))
         require(_read(work, folder + "witness.json") == files[folder + "witness.json"] and
                 _read(work, folder + "review.json") == files[folder + "review.json"] and

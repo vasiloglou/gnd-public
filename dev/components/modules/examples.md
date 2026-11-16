@@ -285,17 +285,17 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `ReadingInputs` | class | 67 | Read and validate the declared source, section and question inventories. |
-| `ReadingInputs.selection(self, kind) -> list[str]` | method | 137 | (no docstring) |
-| `ReadingInputs.source_range(self, section) -> bytes` | method | 140 | (no docstring) |
-| `ReadingInputs.pins(self) -> dict` | method | 144 | (no docstring) |
-| `SavedProducer` | class | 148 | Local saved-response adapter with observed invocation counts. |
-| `SavedProducer.produce(self, stage, section) -> dict` | method | 155 | (no docstring) |
-| `affected_sections(sections, changed_keys) -> list[str]` | function | 160 | Return available earlier section IDs sharing a changed dependency key. |
-| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 343 | Read a run's optional coverage artifact using its external digest. |
-| `absence_status(artifacts, pins)` | function | 356 | Qualify the declared fixture claim from four independently bound inputs. |
-| `run(out, *, budget, scenario, fixture) -> dict` | function | 561 | Run the saved-response workflow and retain its complete evidence. |
-| `replay(folder, *, fixture) -> dict` | function | 573 | Re-derive the reading result from retained evidence without invoking producers. |
-| `main(argv) -> int` | function | 585 | (no docstring) |
+| `ReadingInputs.selection(self, kind) -> list[str]` | method | 138 | (no docstring) |
+| `ReadingInputs.source_range(self, section) -> bytes` | method | 141 | (no docstring) |
+| `ReadingInputs.pins(self) -> dict` | method | 145 | (no docstring) |
+| `SavedProducer` | class | 149 | Local saved-response adapter with observed invocation counts. |
+| `SavedProducer.produce(self, stage, section) -> dict` | method | 156 | (no docstring) |
+| `affected_sections(sections, changed_keys) -> list[str]` | function | 161 | Return available earlier section IDs sharing a changed dependency key. |
+| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 344 | Read a run's optional coverage artifact using its external digest. |
+| `absence_status(artifacts, pins)` | function | 357 | Qualify the declared fixture claim from four independently bound inputs. |
+| `run(out, *, budget, scenario, fixture) -> dict` | function | 562 | Run the saved-response workflow and retain its complete evidence. |
+| `replay(folder, *, fixture, vocabulary_fixture) -> dict` | function | 574 | Re-derive the reading result from retained evidence without invoking producers. |
+| `main(argv) -> int` | function | 587 | (no docstring) |
 
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
 Components: examples.literature_revision
@@ -303,10 +303,10 @@ Publish and replay the literature semantic revision example offline.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `run(reading_run, out) -> dict` | function | 361 | Recheck captured evidence and publish both snapshots under a new root. |
-| `replay(root, *, snapshot) -> dict` | function | 382 | Re-derive the release from authenticated retained inputs in private scratch. |
-| `replay_support(root, source) -> dict` | function | 402 | Check one certificate against the independent source and review inputs. |
-| `main(argv) -> int` | function | 428 | (no docstring) |
+| `run(reading_run, out) -> dict` | function | 391 | Recheck captured evidence and publish both snapshots under a new root. |
+| `replay(root, *, snapshot) -> dict` | function | 412 | Re-derive the release from authenticated retained inputs in private scratch. |
+| `replay_support(root, source) -> dict` | function | 432 | Check one certificate against the independent source and review inputs. |
+| `main(argv) -> int` | function | 455 | (no docstring) |
 
 ## gnd.examples.literature.revision_manifest — `src/gnd/examples/literature/revision_manifest.py`
 Components: examples.literature_revision
@@ -317,11 +317,11 @@ Bind a release to an independently selected, bounded dependency policy.
 | `require(condition, reason) -> None` | function | 23 | (no docstring) |
 | `Policy` | class | 37 | (no docstring) |
 | `Policy.load(cls, path, pin) -> Policy` | method | 42 | (no docstring) |
-| `Policy.capture(self, root, snapshot) -> dict[str, bytes]` | method | 67 | (no docstring) |
-| `Policy.affected(self, snapshot, changed) -> set[str]` | method | 77 | (no docstring) |
-| `Policy.inspect(self, root, snapshot) -> tuple[dict, dict[str, bytes]]` | method | 84 | (no docstring) |
-| `status(root, *, policy, policy_sha256) -> dict` | function | 120 | Check a candidate against the consumer's exact policy and propagate staleness. |
-| `publish(root, files) -> None` | function | 129 | (no docstring) |
+| `Policy.capture(self, root, snapshot) -> dict[str, bytes]` | method | 70 | (no docstring) |
+| `Policy.affected(self, snapshot, changed) -> set[str]` | method | 86 | (no docstring) |
+| `Policy.inspect(self, root, snapshot) -> tuple[dict, dict[str, bytes]]` | method | 93 | (no docstring) |
+| `status(root, *, policy, policy_sha256) -> dict` | function | 145 | Check a candidate against the consumer's exact policy and propagate staleness. |
+| `publish(root, files) -> None` | function | 154 | (no docstring) |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

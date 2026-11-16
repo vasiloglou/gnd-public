@@ -58,3 +58,20 @@ population returned one head-only violation. LD3 already exposes its bounded
 replay and shared section selection. A second authored same-fact source is
 admissible as an ordinary independent source bundle. These probes inform the
 frozen corpus and carry no review or release authority.
+
+## Review corrections
+
+The after manifest records raw pins for the prior composition and population.
+The policy graph follows the actual producers from source resolution to
+canonical decisions and from evolution proposal to evolved model. The two
+single-source certificates share the verified resolution edition and exact
+rule without depending on each other's source files. The migration computes
+coverage invalidation from actual changed occurrences and uses the existing
+LD3 section-selection rule for the affected key.
+
+The workflow retains the old reading sources, model inputs and saved review
+inputs in both snapshots. Their trusted pins allow prior replay after the
+packaged source is unavailable. A scope review also pins its interpretation
+policy, so a new candidate manifest cannot transfer old consent. The public
+rule-edition comparator rejects a changed vocabulary. The additive preview
+control identifies the exact predicate-reading operation.

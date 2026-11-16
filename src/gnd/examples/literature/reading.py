@@ -67,7 +67,8 @@ def _rows_by_id(rows: list) -> dict:
 class ReadingInputs:
     """Read and validate the declared source, section and question inventories."""
 
-    def __init__(self, root: Path, *, retained_responses: bytes | None = None) -> None:
+    def __init__(self, root: Path, *, retained_responses: bytes | None = None,
+                 vocabulary_fixture: Path = DEPTH_FIXTURE) -> None:
         self.raw = {name: _read(root, name) for name in INPUTS}
         responses = _read(root, "responses.json") if retained_responses is None else retained_responses
         producer_pin = _decode(self.raw["producer-pin.json"])
@@ -131,7 +132,7 @@ class ReadingInputs:
         keys = roster.get("revisit_keys")
         _need(isinstance(keys, list) and all(isinstance(key, str) for key in keys), "invalid revisit keys")
         self.revisit_keys = set(keys)
-        self.raw["vocabulary.orm.json"] = _read(DEPTH_FIXTURE, "vocabulary.orm.json")
+        self.raw["vocabulary.orm.json"] = _read(vocabulary_fixture, "vocabulary.orm.json")
         self.input_pins = {name: sha256_hex(raw) for name, raw in self.raw.items()}
 
     def selection(self, kind: str) -> list[str]:
@@ -570,10 +571,11 @@ def run(out: Path, *, budget=DEFAULT_BUDGET, scenario="full", fixture: Path = FI
     return report
 
 
-def replay(folder: Path, *, fixture: Path = FIXTURE) -> dict:
+def replay(folder: Path, *, fixture: Path = FIXTURE, vocabulary_fixture: Path = DEPTH_FIXTURE) -> dict:
     """Re-derive the reading result from retained evidence without invoking producers."""
     manifest, artifacts, retained = _read_retained(folder)
-    inputs = ReadingInputs(fixture, retained_responses=artifacts["producer-output-table.json"])
+    inputs = ReadingInputs(fixture, retained_responses=artifacts["producer-output-table.json"],
+                           vocabulary_fixture=vocabulary_fixture)
     _need(manifest.get("inputs") == inputs.pins(), "stale reading input")
     observed, actual, report = _evaluate(inputs, manifest.get("budget_bytes"),
                                          manifest.get("scenario"), retained=retained,

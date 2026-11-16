@@ -1,0 +1,26 @@
+{
+  "record_schema": "gnd-composition/2",
+  "certificate_version": 4,
+  "catalog": "catalog",
+  "catalog_fact": "dispatch_catalog_allows",
+  "sources": [
+    "first",
+    "second"
+  ],
+  "candidate_warehouse": "WH-A",
+  "proof_invalid": [
+    1,
+    "proof-invalid"
+  ],
+  "binding_stale": [
+    3,
+    "binding-stale"
+  ],
+  "catalog_key_conflict": "reference catalog key conflict",
+  "catalog_candidate_dependency": "reference catalog depends on candidate rows",
+  "catalog_stale": "reference raw hash does not match declared sha256",
+  "record_catalog_stale": "reference roster differs from the record",
+  "missing_resolution": "composition:invalid: keys at hom-a method_builds_on_method#0.method and hom-b method_builds_on_method#0.method (object type method) are joined without a same decision",
+  "legacy_population_sha256": "8ed0607cfa76537c3eb556daa221a84c3d968af31449dc22c7c9b13129a963f7",
+  "legacy_record_sha256": "764eca4fb4f44d7095b8e8e73e7effc39e5c5c3da46af2d482b8299e976deefb"
+}

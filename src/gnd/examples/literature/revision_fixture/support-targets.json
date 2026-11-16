@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "fact_type": "method_has_ancestor_method",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "VampNet"
+        },
+        {
+          "primitive": "String",
+          "value": "DMD"
+        }
+      ]
+    }
+  ]
+}

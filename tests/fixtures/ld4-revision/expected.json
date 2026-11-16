@@ -1,0 +1,24 @@
+{
+  "queries": [
+    ["OpenCap Monocular", "VampNet", true, false],
+    ["OpenCap Monocular", "DMD", true, false],
+    ["WHAM", "DMD", true, false],
+    ["OpenCap Monocular", "WHAM", true, true],
+    ["VampNet", "DMD", true, true]
+  ],
+  "occurrences": [
+    ["whale-a", "method_builds_on_method", 0, 0, 0],
+    ["whale-a", "method_builds_on_method", 1, 1, 1],
+    ["whale-b", "method_builds_on_method", 0, 2, 2]
+  ],
+  "ambiguous": {"mention": "WHAM", "candidates": ["WHAM", "WhAM [whale]"]},
+  "coverage": {
+    "revisit": ["study-opening"],
+    "affected": {"alternative": "stale"},
+    "unrelated": {"denial": "current"}
+  },
+  "evolution": {"additive_preview": 3, "preview": 0, "apply": 0, "old_review": "stale", "new_review": "current"},
+  "rule_comparison": {"exit": 0, "base_only": 0, "head_only": 1},
+  "independent_support_sources": ["whale-a", "corroboration"],
+  "required_kinds": ["assertion-review", "claim", "closure", "composition-manifest", "composition-record", "coverage", "decision", "definition", "extraction", "fidelity", "interpretation-policy", "model", "population", "query", "reading-record", "rule", "scope", "source", "witness"]
+}

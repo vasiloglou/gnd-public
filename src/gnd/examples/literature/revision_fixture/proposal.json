@@ -1,0 +1,104 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "fixture-author",
+    "origin": "LD4 feasibility test",
+    "requested_at": "2026-11-16T00:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "f75147e46454951c5dded5f10d63e30fcf5adc8ad03e41b6ebfde076730b9aa0",
+    "text": "{\"version\":2,\"model_id\":\"urn:gnd-example:literature-resolution@1\",\"source\":{\"kind\":\"text-conversation\",\"confidence\":\"standard\",\"mode\":\"one-shot\"},\"object_types\":[{\"id\":\"method\",\"name\":\"Method\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"mention\",\"name\":\"Mention\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"surface\",\"name\":\"Surface\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"sense\",\"name\":\"Sense\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"method_builds_on_method\",\"reading\":\"{Method} reports methodological ancestry from {Method}\",\"roles\":[{\"object_type\":\"method\",\"role_name\":\"method\"},{\"object_type\":\"method\",\"role_name\":\"base_method\"}],\"constraints\":[{\"type\":\"anchored\",\"role\":\"method\",\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Both ends of a builds-on statement are named in its passage.\"}},{\"type\":\"anchored\",\"role\":\"base_method\",\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Both ends of a builds-on statement are named in its passage.\"}}]},{\"id\":\"method_has_ancestor_method\",\"reading\":\"{Method} has ancestor {Method}\",\"roles\":[{\"object_type\":\"method\",\"role_name\":\"method\"},{\"object_type\":\"method\",\"role_name\":\"ancestor\"}],\"derivation\":\"derived\",\"derivation_rule\":{\"clauses\":[{\"body\":[{\"fact_type\":\"method_builds_on_method\",\"bind\":{\"method\":\"$m\",\"base_method\":\"$a\"}}],\"head\":{\"method\":\"$m\",\"ancestor\":\"$a\"}},{\"body\":[{\"fact_type\":\"method_builds_on_method\",\"bind\":{\"method\":\"$m\",\"base_method\":\"$x\"}},{\"fact_type\":\"method_has_ancestor_method\",\"bind\":{\"method\":\"$x\",\"ancestor\":\"$a\"}}],\"head\":{\"method\":\"$m\",\"ancestor\":\"$a\"}}]}},{\"id\":\"mention_has_surface_text\",\"reading\":\"{Mention} has surface text {Surface}\",\"roles\":[{\"object_type\":\"mention\",\"role_name\":\"mention\"},{\"object_type\":\"surface\",\"role_name\":\"surface\"}],\"constraints\":[{\"type\":\"anchored\",\"role\":\"surface\",\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"A mention's surface text is the text at its span.\"}},{\"type\":\"uniqueness\",\"roles\":[\"mention\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"A mention has one surface text.\"}}]},{\"id\":\"mention_denotes_sense\",\"reading\":\"{Mention} denotes {Sense}\",\"roles\":[{\"object_type\":\"mention\",\"role_name\":\"mention\"},{\"object_type\":\"sense\",\"role_name\":\"sense\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"mention\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"A reviewed mention denotes one sense.\"}}]}],\"constraints\":[]}\n"
+  },
+  "expected_model_sha256": "b5120440ad128f3853109f247ab928434e59d7ef74cce55edd935f886348f5a4",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "constraints": [
+          {
+            "modality": "alethic",
+            "provenance": {
+              "user_quote": "Both ends of a builds-on statement are named in its passage."
+            },
+            "role": "method",
+            "source": "explicit",
+            "status": "confirmed",
+            "type": "anchored"
+          },
+          {
+            "modality": "alethic",
+            "provenance": {
+              "user_quote": "Both ends of a builds-on statement are named in its passage."
+            },
+            "role": "base_method",
+            "source": "explicit",
+            "status": "confirmed",
+            "type": "anchored"
+          }
+        ],
+        "id": "method_builds_on_method",
+        "reading": "{Method} reports methodological ancestry from {Method}",
+        "roles": [
+          {
+            "object_type": "method",
+            "role_name": "method"
+          },
+          {
+            "object_type": "method",
+            "role_name": "base_method"
+          }
+        ]
+      },
+      "after_sha256": "2ba8a75ab8f1b5bbba302c79c576b87cead79716fbc9196a3d72cc9ce792a263",
+      "before": {
+        "constraints": [
+          {
+            "modality": "alethic",
+            "provenance": {
+              "user_quote": "Both ends of a builds-on statement are named in its passage."
+            },
+            "role": "method",
+            "source": "explicit",
+            "status": "confirmed",
+            "type": "anchored"
+          },
+          {
+            "modality": "alethic",
+            "provenance": {
+              "user_quote": "Both ends of a builds-on statement are named in its passage."
+            },
+            "role": "base_method",
+            "source": "explicit",
+            "status": "confirmed",
+            "type": "anchored"
+          }
+        ],
+        "id": "method_builds_on_method",
+        "reading": "{Method} builds on {Method}",
+        "roles": [
+          {
+            "object_type": "method",
+            "role_name": "method"
+          },
+          {
+            "object_type": "method",
+            "role_name": "base_method"
+          }
+        ]
+      },
+      "before_sha256": "4966209fd63f0e964e468d43c21b0fe7a1fb104b8e76e7508e187597995618a6",
+      "kind": "modify",
+      "locator": {
+        "collection": "fact_types",
+        "element_id": "method_builds_on_method",
+        "locator_kind": "element"
+      },
+      "operation_id": "change-reading"
+    }
+  ],
+  "proposal_id": "ld4-f75147e46454951c",
+  "rationale": "gnd discover: 1 candidate constraints observed in",
+  "schema_version": 3
+}

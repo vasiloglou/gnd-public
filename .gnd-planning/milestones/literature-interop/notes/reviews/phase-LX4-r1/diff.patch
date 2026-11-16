@@ -1,0 +1,1864 @@
+diff --git a/.gnd-planning/milestones/literature-interop/010-phase-LX4-spec-gate.md b/.gnd-planning/milestones/literature-interop/010-phase-LX4-spec-gate.md
+new file mode 100644
+index 00000000..e67bf8ec
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/010-phase-LX4-spec-gate.md
+@@ -0,0 +1,58 @@
++---
++milestone: literature-interop
++station: phase-LX4-spec-gate
++skill: "n/a -- repository development under process-phase"
++scope: phase-LX4-spec-gate
++date: 2026-11-15
++gates:
++  - command: "ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-interop/notes/phase-LX4-spec.md sha256 73172d93049c4dd6eb2f5f262e081df6b31473a53f810882f82f8b16e989c8bc"
++    exit: "n/a -- ruling"
++  - command: "uv run pytest -q tests/test_lx4_literature_interop.py --tb=short"
++    exit: 1
++    output: "23 errors in 0.27s"
++evidence:
++  - path: .gnd-planning/milestones/literature-interop/notes/phase-LX4-spec.md
++    sha256: 73172d93049c4dd6eb2f5f262e081df6b31473a53f810882f82f8b16e989c8bc
++  - path: tests/test_lx4_literature_interop.py
++    sha256: 523434d357185f59ee061f24b33d02c5bd239f90782b4e4b9e78ef1b1c0dc9c9
++  - path: tests/fixtures/lx4-literature-interop/expected.json
++    sha256: 9cd0b3812e42d2ac548e766ca04732f6eae5b4107a714c4c91ef436df4a31378
++  - path: tests/fixtures/lx4-literature-interop/README.md
++    sha256: 5d4eced9650329f7913b493fb65a35a6df87f4ac8ed3d84575ac89ddf37375f7
++---
++
++# Claim
++
++The owner authorized delegated rulings with
++`process-milestone literature-interop auto`. The ruling approves decisions
++D1–D5 and the exact public corpus expectations above. The phase has a separate
++independent diff review requirement.
++
++## Implementability
++
++The probe loaded roots with different model IDs and equal shared vocabulary
++digests. Extraction passed on the extraction root and refused the checking
++root. Composed check, witness v4 and replay passed with the checking root,
++and a larger temporal allowance changed check to exit 1 with one violation.
++The existing LI2 evidence route stamped the same decision on both source
++occurrences with the catalog present. Original-root verify accepted the
++document-bound extraction and original anchors. Fidelity's existing kernel
++accepted this evidence when the include admission guard was bypassed in a
++scratch probe. LX4 routes it through authenticated bundle verification.
++
++## Gate output
++
++    23 errors in 0.27s
++
++All test setups fail on the missing integrated example module at the
++LX3 completion commit. The corpus pins expected run artifacts and refusal
++controls to make the runtime changes measurable.
++
++## Boundary
++
++This gate authorizes implementation within the stated spec. Product execution
++and independent review remain subsequent evidence.
++
++## Open questions
++
++- None at the spec gate.
+diff --git a/.gnd-planning/milestones/literature-interop/evidence/LX4/dynamic-query-successor.json b/.gnd-planning/milestones/literature-interop/evidence/LX4/dynamic-query-successor.json
+new file mode 100644
+index 00000000..3e846603
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/evidence/LX4/dynamic-query-successor.json
+@@ -0,0 +1,23 @@
++{
++  "schema_version": 1,
++  "reason": "LX4 accounts for the authenticated fidelity bundle digest lookups.",
++  "predecessor": ".gnd-planning/milestones/literature-interop/evidence/LX3/review-dynamic-query-successor.json",
++  "predecessor_sha256": "36ee51ab7b585743b2a35628d2e051f0055b00d9a450b390fdfad8afedcd3c51",
++  "removed": [],
++  "added": [
++    [
++      "src/gnd/fidelity/service.py",
++      "_cmd_fidelity",
++      "bundle.artifact_digests[applicable_path.name]",
++      1
++    ],
++    [
++      "src/gnd/fidelity/service.py",
++      "_cmd_fidelity",
++      "bundle.artifact_digests[projection_path.name]",
++      1
++    ]
++  ],
++  "result_distinct_rows": 7812,
++  "result_occurrences": 9706
++}
+diff --git a/.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json b/.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json
+new file mode 100644
+index 00000000..8332f546
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json
+@@ -0,0 +1,22 @@
++{
++  "schema_version": 1,
++  "reason": "LX4 authenticates the rooted flattened extraction bundle before fidelity scoring.",
++  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
++  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
++  "successors": [
++    {
++      "kind": "RF5",
++      "old": "gnd.cli",
++      "name": "_cmd_fidelity",
++      "home": "gnd.fidelity.service",
++      "reason": "Reuse the bounded bundle verifier while keeping the historical entry point and include-free path.",
++      "before": {
++        "algorithm_sha256": "633c89d5895601afd6d14ef9fd5e0506ec160c79112bf46f9b8a0823fd2a3b30"
++      },
++      "after": {
++        "algorithm_sha256": "a085ccb92b857cd21c3dfdbe788d5039fbbe37aea3599bccd2131a6b34515c1e",
++        "raw_sha256": "b829686c7714a34c3689af53eff70da85420f077019238bb0e48b709ef894045"
++      }
++    }
++  ]
++}
+diff --git a/.gnd-planning/milestones/literature-interop/notes/phase-LX4-spec.md b/.gnd-planning/milestones/literature-interop/notes/phase-LX4-spec.md
+new file mode 100644
+index 00000000..cc2b45ce
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/notes/phase-LX4-spec.md
+@@ -0,0 +1,227 @@
++# LX4 · extraction and checking roots for literature evidence
++
++Status: delegated approval (auto=true), 2026-11-15. See [010](../010-phase-LX4-spec-gate.md). The prerequisite is the [LX3 result](../009-phase-LX3.md).
++
++## Obligations
++
++| Source | Requirement | Evidence |
++|---|---|---|
++| LX4.a | Two separately identified roots pin the same two vocabulary files and catalog. Extraction verification precedes source rebinding. The checking root evaluates an added temporal clause. | T1, T2, T4 |
++| LX4.b | Run optional publication-order advice using the LI5 path policy and a separate table of work dates. Include 2026 to 2019, equality and the rejected PINNs to Bayesian PINNs candidate. Preserve check and proof results when advice is omitted. | T6, T7 |
++| LX4.c, plan links | One example chains actual extraction, authenticated rebind, catalog-assisted resolution, composition, check, witness and replay. The manifest verifier independently checks links. Apply the plan's unsupported-combination table. | T1, T3–T5, T8 |
++| LI1 carryover | Run fidelity over the very same extracted populations, extraction sidecars and document bytes. Measure additional materialized copies by artifact kind. | T9 |
++| LI5 | Use its public lineage relation policy and fixtures only. Claim neither a new semantic admission nor a reserve measurement. | T6 |
++| Plan §§0, 5, 7, 9, 10 | Apply the recorded rule set, document the model split and the advisory route, retain isolated exit bands, run the selected tests, decide X2 and X4. | Design, decisions and gates |
++
++## Standing rules
++
++- **Totality.** Bound example JSON and subprocess work with existing cap and timeout helpers. Strictly parse closed records and fail with input exit 3 on bad or changed evidence before publishing a verified integration manifest.
++- **Input-bounded work.** Read a bounded snapshot per manifest coordinate. Use indexed work IDs for date resolution and one source pass for rebind verification.
++- **Validation order.** Validate input shape and expected bindings, authenticate both roots and extraction index, verify source evidence and rebinds, then rederive composition before checking or running the advisory report. Parse certificate shape before catalog and proof claims in the product replay route. Test an invalid rebind together with a control that would fail the temporal clause.
++- **One policy walk.** The resolver, artifact-index verifier, source-anchor binder, LI2 route and replay kernel own their existing checks. The example walks one rebind definition and uses LI5's path policy at the advisory boundary.
++- **One normative home.** Document the model split and rebind in the documents guide, and the optional date contract in the example. Cross-link to the existing composition, fidelity, proof and pathway contracts.
++- **Measure representation.** Test actual bytes and surfaced exit codes. The shared evidence layout reports physical materialization and path aliases separately.
++
++## Design trajectory
++
++| Capability | Existing home | Use |
++|---|---|---|
++| Pinned model concepts and root snapshot | Model includes and LX1 projection | Two standalone vocabulary files shared by two authored roots. Root identities are independently bound. Include resolver validates each pin. |
++| Source extraction and header provenance | `gnd extract`, `gnd verify`, the extraction artifact-index verifier | Execute the installed public routes. The fixture provides deterministic saved fact responses for actual source documents. Generate the population header from the extraction artifact index. Bind the extraction sidecar and source spans. |
++| Source rebind | Existing population wire, anchor binder and canonical JSON | Change header coordinates for the checking root. Rebind sidecar population digest to precisely those bytes. Require matching pinned vocabulary/catalog identity and equal shape-address vocabulary before allowing the transfer. |
++| Catalog and checking | `gnd compose`, `gnd check --composition --sources` | Candidate alias renames to a catalog identity. Exact re-derived candidate source evidence precedes checks. Temporal guarded date_add uses the current evaluator. |
++| Fidelity and artifact naming | `gnd fidelity`, `gnd.extract.service` | Let the fidelity route reuse the authenticated flattened bundle for this rooted input. Preserve the unsupported-route refusal when an authored include has no trusted indexed bundle. Preserve its existing matching and census. Use one shared per-document directory and materialize both required document names. |
++| Date policy | LI5 `lineage/path-policy.json` | Use the existing chainable and non-chaining relationship vocabulary. Sidecar edge rows name work IDs independently of method labels. The rejected candidate is present only in the proposals. |
++| Finite proof | `gnd witness` and `gnd replay` | Prove an asserted candidate target and a catalog occurrence using the same checking-model record. LX3 already exercises a single derived proof joining both types. |
++
++The extraction root may declare plain Date roles. The checking root adds a
++guarded ordering clause comparing submitted date plus one day to published
++date. It also adds a catalog membership rule if the source alias needs
++resolution before it can be evaluated. The static model-ID, shape and catalog
++checks precede rebind. Use a catalog population with no model_id so the exact
++file is valid for both pinned roots.
++
++## Public fixture and wire
++
++- `python -m gnd.examples.literature.interop run --out RUN [--dates]`
++  runs the integrated fixture with a bounded local CLI. Use a stable run-relative
++  coordinate for each output that includes a path. An atomic run directory
++  makes partial work recognizable. Both original authored roots, pinned
++  reference files, vocabulary files, and input fixture evidence remain
++  identifiable.
++- `python -m gnd.examples.literature.interop verify RUN`
++  re-authenticates the exact input/output digests, recomputes rebinds,
++  re-derives composition, reruns check and replays the retained witness.
++  All rebind validation precedes semantic checking or advice.
++- `python -m gnd.examples.literature.interop dates RUN [--out REPORT]`
++  checks the run binding and emits a separate result. When run includes
++  `--dates`, the integration manifest binds that same result and inputs.
++
++Rebind record, canonical JSON `literature-rebind/1`: `schema`, `source`,
++`extraction_root_sha256`, `checking_root_sha256`, `includes` (id, sha256),
++`references` (id, raw_sha256), `artifact_index_sha256`, `document_sha256`,
++`extraction_population_sha256`, `extraction_sidecar_sha256`,
++`extraction_anchors_sha256`, `rebound_population_sha256`,
++`rebound_anchors_sha256`. Digest fields use the unprefixed raw SHA-256.
++One verifier recomputes the canonical record and both artifacts from
++the authenticated extraction and the checking root.
++
++Integration record, canonical JSON `literature-interop/1`: root and
++artifact index digests, per-source rebind digests, resolution/manifest digest
++as applicable, composed population and record digests, check, proof, replay
++and fidelity digests, verified layout counts, and optional advice inputs and
++report digest. Re-derive each dynamic binding before accepting the result.
++The semantic check carries the composition record digest and catalog roster.
++
++Advisory uses `literature-publication-dates/1` rows
++`{work, role, precision, value}` and a `literature-candidate-edges/1` set of
++`{id, relation, descendant_work, ancestor_work}`. The eligible predicates
++come directly from LI5's public path policy. In `literature-date-advice/1`,
++each row names both works, roles/status and known dates; rows have `pass`,
++`advisory` or `unresolved` and explicit reason where needed. Exact matching
++year precision is in scope. Equal years at like precision pass; missing
++work links, missing/alternative-role dates, conflicting dates and mixed
++precision are unresolved. Duplicate identical dates do not introduce
++conflict. Non-chainable data is outside the denominator. The report binds
++raw edge, date and policy digests. Use PINNs work `doi:10.1016/j.jcp.2018.10.045`
++and Bayesian PINNs work `doi:10.1016/j.jcp.2020.109913`, publishing years
++2019 and 2021 as specified by issue #193. Synthetic 2026 and same-year
++controls have clearly synthetic identifiers. Dates are evidence for this
++advisory only.
++
++The fidelity case uses `document.md`, `source.population.json`,
++`document.manifest.json`, `extracted.population.json` and
++`extracted.population.extraction.json`. Composition reads the same document bytes at its required per-source `document.txt` name. Its `population.json` and
++`population.json.anchors.json` carry the checking coordinates and therefore
++have distinct bytes. Count the additional inodes by route across the fixed
++source roster and verify both readers access the same document bytes.
++Use independent saved expected facts for the fidelity source populations.
++
++## Decisions to record
++
++| ID | Decision | Ruling |
++|---|---|---|
++| D1 | Rooted example with two checking-bound digest-verified sources. The concrete temporal guard is separate from the example’s publication-order advice. | Delegated (auto=true) |
++| D2 | Root and rebind record fields above bind the example and have no production publication semantics. | Delegated (auto=true) |
++| D3 | Publication-year comparison uses LI5 chainable predicates and saved proposed work IDs. Report statuses do not enter check or replay. | Delegated (auto=true) |
++| D4 | Reuse the authenticated-flat bundle for fidelity and count actual physical copies. Preserve legacy fidelity inputs. | Delegated (auto=true) |
++| D5 | Corpus-first with a separate expected wire and exit file. Phase diff has its separate independent review gate. | Delegated (auto=true) |
++
++## Corpus
++
++| ID | Expected |
++|---|---|
++| T1 | Installed routes extract, verify every source, rebind, compose, check, witness, replay and fidelity exit 0. Each source lineage remains candidate only. |
++| T2 | A positive check has its added temporal verdict pass. A separately valid checking root with a larger allowance over the same dates yields temporal failure exit 1. Extract against checking root exits 3 with `temporal:consumer-unsupported`. |
++| T3 | Rebind carries the same include/file and catalog ID/hash sets. Both resolved roots have independently bound authored hashes and distinguishable population header identities. |
++| T4 | Mutate each rebind component independently. Exit 3 for a stale record, either root, include pin, extraction index, document, old population, extraction or anchor sidecar or rebound source. Pair it with a temporal-failure input to establish refusal before evaluation. Separately valid roots with different pins or catalog refuse fresh rebind. |
++| T5 | Fresh check plus replay accept stored output. Stale population, resolution evidence, record or witness, and falsified manifest with repinned report, refuse at the corresponding boundary. |
++| T6 | 2026 to 2019 plus equal year pass, 2019 to 2021 is the single advisory, unrelated unresolved/conflict/missing/mixed/alternative cases are named. The non-chainable control does not enter the census. |
++| T7 | Compare with dates omitted using exact check signature, violation totals and witness/replay. Forge the report's dates input under fixed bindings and refuse. |
++| T8 | Validate include forbidden nesting/reference/unattended, direct unrooted witness and explicit overrides by reusing LX1–LX3 public controls. Keep catalog outside candidate-only extraction data. |
++| T9 | Fidelity runs both cases and scores expected rows against the original extract. Check shared layout identities and added file census. A forged flattened bundle or index fails fidelity. |
++
++Initial direct/focused selection: LX4, LX1–LX3, LI5 lineage, public temporal
++counterexamples, composition example, applicable fidelity and model include
++guards, replay/proof and schema consumers. Project structure, scoped and
++whole-tree Ruff, strict component check and installed package data controls.
++Full and historical lanes follow their documented selection.
++
++## Implementability seen
++
++A scratch version of the two roots used the same Date vocabulary and catalog,
++but different model IDs. Vocabulary digests were equal. Extraction passed on
++the first and refused on the temporal root. On the checking root, compose,
++check, witness v4 and replay each passed. Increasing only the guarded allowance
++made check fail with one temporal violation. The saved LI1 layout currently
++copies raw documents into a fidelity directory. Fidelity itself already checks
++both sides of the digest chain but its current command has an include guard
++before the indexed bundle reader. Rooted fidelity must re-enter through that
++same authenticated bundle.
++
++An exact LI2 same decision over two candidate anchor spans also composed with
++the pinned LX3 catalog. Both candidate lineage entries stamped decision 0.
++Use the corresponding alias and catalog key in the literature fixture.
++Source coordinates and input digests come from the rebound stage. Its
++identity decision comes from the separately authored fixture.
++
++The fidelity implementability probe ran original-root extraction and verify
++with real source-anchor files successfully. The predecessor fidelity
++guard refused the include root. Running the existing matcher after letting
++observation continue past that guard returned 0 on the original extraction
++and document files. Rooted fidelity should get these inputs only through
++the existing authenticated indexed bundle; the probe patched the guard
++only in memory.
++
++Use the issue's specific PINNs and Bayesian PINNs works with published-volume
++years (2019 and 2021). Source the edge from issue #193 and the two work IDs
++from https://doi.org/10.1016/j.jcp.2018.10.045 and
++https://doi.org/10.1016/j.jcp.2020.109913. Keep the fictional 2026 control
++separately identified.
++
++Using the existing publisher, co-locate fidelity and
++composition in the same source folder. The publisher preserves file bytes
++but materializes both filename leaves, so this option adds one document
++copy per source. Count it directly. The original extraction population and
++extraction sidecar are shared by extraction verification and fidelity.
++The checking population and source anchors are separate rebind outputs.
++The example verifies both readers and measures the copying cost.
++
++The fixture includes a digest-bound LI2 same decision connecting the two
++candidate name variants. It uses the asserted candidate and a fixed-catalog
++base target at the integrated proof boundary. LX3 separately exercises a
++derived proof joining those origin kinds. The rebind materializes candidate
++headers only. Temporal checking uses a grounded date_add clause and a
++mutated allowance control. The optional date route uses the public LI5
++chainability policy without adding the rejected PINN edge to candidate facts.
++
++| Gate | Command |
++|---|---|
++| Direct and focused | `uv run pytest -q tests/test_lx4_literature_interop.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_lx3_catalog_composition.py tests/test_li5_lineage.py tests/test_public_temporal_canonical_counterexamples.py tests/test_composition_example.py tests/test_mc1_guards.py tests/test_extract_manifest.py tests/test_verify_cli.py tests/test_fidelity_payload.py tests/test_fidelity_stub_gate.py tests/test_public_fidelity_scope.py tests/test_packaged_skills.py --tb=short` |
++| Structure | `uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short` |
++| Lint and components | Whole-tree Ruff with the exact inherited diagnostic comparison, changed-file Ruff and the strict component check based on `d523c14d`. |
++| Cadence | Default filters apply. Broad and historical lanes follow their separate triggers. |
++
++## Candidate verification
++
++The packaged run exits 0 for extraction, both source verifies, composition,
++temporal check, witness, replay, fidelity and advisory report. The read-only
++verification reruns the source, checking, proof and fidelity boundaries.
++The added temporal rule passes. The larger allowance control exits 1 and
++reports a guarded failure. The supported extraction root can use plain Date
++roles. Extraction of the temporal checking root exits 3.
++
++The comparison without advice preserves composition, checking, witness and
++replay bytes. The advice contains two passes, one PINN advisory and five
++unresolved chainable proposals. The non-chainable proposal stays outside
++the census. Both fidelity cases ran. The layout has two additional document
++materializations and zero additional original extraction population or
++extraction-sidecar materializations. The checking rebind adds two populations
++and two anchor files. The provenance controls refuse forged rebinds, altered
++advice, an independently valid alternate witness target, and a catalog or
++input checksum change.
++
++A control initially accepted a failed fidelity case with a re-pinned
++report. The example now requires the census to include both scored sources.
++The expanded guard selection also exposed a predecessor null-model
++composition guard regression. The raw include guard runs again before
++composition verification for that case. The packaged include inventory
++adds exactly the two new roots and loads all named entries.
++
++```sh
++uv run pytest -q tests/test_lx4_literature_interop.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_lx3_catalog_composition.py tests/test_li5_lineage.py tests/test_public_temporal_canonical_counterexamples.py tests/test_composition_example.py tests/test_mc1_guards.py tests/test_mc2_consumers.py tests/test_extract_manifest.py tests/test_verify_cli.py tests/test_fidelity_payload.py tests/test_fidelity_stub_gate.py tests/test_public_fidelity_scope.py tests/test_packaged_skills.py --tb=short
++uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short
++```
++
++    346 passed in 63.67s (0:01:03)
++    679 passed, 2 deselected in 106.29s (0:01:46)
++
++The affected MC2 consumers join the focused command for the composition
++guard correction. Scoped Ruff and the strict component gate pass. Whole-tree
++Ruff retains the same 188 diagnostics by file, line, code and message.
++The offline wheel build contains all 18 interop modules, fixture files
++and the reused LI5 policy. The example and its read-only verification both
++exit 0 using the wheel installed into a separate environment with the
++existing locked dependency directory.
++
++Independent phase diff review is pending.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index c2bdc10f..db737997 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -383,7 +383,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/extract/bundle.py
+ - uses: model.extraction_scope, synth.paths
+-- used_by: codegen.emit, conformance.structural, extract.service
++- used_by: codegen.emit, conformance.structural, examples.literature_interop, extract.service
+ - part_of: subsystem.extract
+ - tests: tests/test_codegen_manifest.py, tests/test_v51_phase2_extraction_scope.py, tests/test_v70_phase1_surfaces.py
+ 
+@@ -436,7 +436,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/extract/__init__.py, src/gnd/extract/service.py
+ - uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.document, model.loading, model.scalar_terms, model.validation, synth.paths
+-- used_by: cli.dispatch, cli.extract_command, export.verification, fidelity.doccheck, fidelity.service
++- used_by: cli.dispatch, cli.extract_command, examples.literature_interop, export.verification, fidelity.doccheck, fidelity.service
+ - part_of: subsystem.extract
+ - tests: tests/test_extract_guidelines.py, tests/test_extract_projection.py, tests/test_lx1_flattening.py
+ - notes: The command derives artifacts for an extracting agent; the actual language extraction is performed outside this service.
+@@ -902,13 +902,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### fidelity.service
+-- does: Validate case artifact bindings and orchestrate offline extraction fidelity matching and schema checked reporting [_cmd_fidelity].
++- does: Authenticate extraction bundles including rooted projections and orchestrate offline fidelity matching and schema checked reporting [_cmd_fidelity].
+ - verbs: extractor fidelity, case directories, digest binding, extraction handoff, skip marker, failed extraction, mixed models, applicable set, projection digest, _cmd_fidelity, offline metrics, report schema
+ - in: model, case corpus, extraction bundle and output options
+ - out: fidelity report plus command exit code
+ - status: canonical
+ - modules: src/gnd/fidelity/service.py, src/gnd/fidelity/__init__.py
+-- uses: extract.manifest, extract.reference_schemes, extract.service, fidelity.match, fidelity.report, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.loading, model.population_loading, synth.paths
++- uses: extract.manifest, extract.reference_schemes, extract.service, fidelity.match, fidelity.report, infra.artifacts, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.loading, model.population_loading, synth.paths
+ - used_by: cli.dispatch, cli.fidelity_command
+ - part_of: subsystem.extract
+ - tests: tests/test_fidelity_payload.py, tests/test_measure_offline.py
+@@ -1757,7 +1757,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +70 more (graph.md)
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +71 more (graph.md)
+ - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
+ - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
+ - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +66 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +68 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+ - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
+@@ -1981,7 +1981,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/anchors.py
+ - uses: infra.artifacts, infra.input_policy, model.anchor_identity
+-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, … +1 more (graph.md)
++- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, … +2 more (graph.md)
+ - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
+ - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
+ 
+@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/errors.py
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, … +23 more (graph.md)
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +24 more (graph.md)
+ - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
+ - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
+ 
+@@ -2312,7 +2312,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/disclosure.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, exp.service, export.service, review.adapters, witness.service
++- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
+ - tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
+ - notes: Customer mode wins over internal mode from either source; forward propagates only the restrictive customer setting.
+ 
+@@ -2431,7 +2431,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/population.py
+ - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
+-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.plan_apps, … +31 more (graph.md)
++- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, … +32 more (graph.md)
+ - part_of: subsystem.check
+ - tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
+ - in: Population path or bytes; optional loaded Model.
+@@ -2550,7 +2550,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/process.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
++- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+ - tests: tests/test_agent_cli.py, tests/test_rf4_peripheral.py
+ - in: Trusted argv, real cwd, explicit environment, ProcessLimits and optional stdin bytes.
+ - out: BoundedProcessResult with closed metadata and out-of-band byte streams.
+@@ -3088,7 +3088,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/witness/io.py, src/gnd/witness/types.py
+ - uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+-- used_by: export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
++- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+ - part_of: subsystem.witness
+ - tests: tests/test_v71_phase3_successors.py, tests/test_public_why_not.py, tests/test_witness_composition.py
+ - notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Model wire is re-exported from model.json_document. Limits may only be lowered from the fixed ceilings.
+@@ -3691,3 +3691,15 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - work budget: discover.service, synth.guarded, witness.why_not
+ <!-- verbs:end -->
+ 
++
++
++### examples.literature_interop
++- does: Run and verify a shared literature extraction and checking vocabulary, fixed catalog composition, witness replay, fidelity and optional date advice.
++- verbs: literature interoperability, extraction model, checking model, rebind, fixed catalog, publication dates, advisory, integrated manifest
++- in: Packaged two-source fixture, existing lineage relation policy and an output or verified run path.
++- out: Authenticated extraction bundle, rebound sources, composition, check, witness, replay, fidelity and optional advisory report.
++- status: canonical
++- modules: src/gnd/examples/literature/interop.py, src/gnd/examples/literature/interop_dates.py
++- uses: extract.bundle, extract.service, infra.artifacts, infra.bounded_process, infra.disclosure, infra.errors, model.anchors, model.loading, model.population_loading, witness.schema
++- used_by: (none)
++- tests: tests/test_lx4_literature_interop.py
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index acfcf74f..b5a613b4 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1890,6 +1890,42 @@ Generated by `scripts/components_index.py`.
+ - uses: (none)
+ - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
+ 
++### examples.literature_interop
++- uses: extract.bundle, extract.service, infra.artifacts, infra.bounded_process, infra.disclosure, infra.errors, model.anchors, model.loading, model.population_loading, witness.schema
++- used_by: (none)
++
++#### examples.literature_interop -> extract.bundle
++- `src/gnd/examples/literature/interop.py -> src/gnd/extract/bundle.py`
++
++#### examples.literature_interop -> extract.service
++- `src/gnd/examples/literature/interop.py -> src/gnd/extract/service.py`
++
++#### examples.literature_interop -> infra.artifacts
++- `src/gnd/examples/literature/interop.py -> src/gnd/artifacts.py`
++- `src/gnd/examples/literature/interop_dates.py -> src/gnd/artifacts.py`
++
++#### examples.literature_interop -> infra.bounded_process
++- `src/gnd/examples/literature/interop.py -> src/gnd/process.py`
++
++#### examples.literature_interop -> infra.disclosure
++- `src/gnd/examples/literature/interop.py -> src/gnd/disclosure.py`
++
++#### examples.literature_interop -> infra.errors
++- `src/gnd/examples/literature/interop.py -> src/gnd/errors.py`
++
++#### examples.literature_interop -> model.anchors
++- `src/gnd/examples/literature/interop.py -> src/gnd/anchors.py`
++- `src/gnd/examples/literature/interop_dates.py -> src/gnd/anchors.py`
++
++#### examples.literature_interop -> model.loading
++- `src/gnd/examples/literature/interop.py -> src/gnd/model/__init__.py`
++
++#### examples.literature_interop -> model.population_loading
++- `src/gnd/examples/literature/interop.py -> src/gnd/population.py`
++
++#### examples.literature_interop -> witness.schema
++- `src/gnd/examples/literature/interop.py -> src/gnd/witness/io.py`
++
+ ### examples.literature_lineage
+ - uses: cli.api, examples.literature_assertion_admission, examples.literature_assurance, infra.artifacts, model.anchors, model.composition, model.loading, semantics.saved_judgments
+ - used_by: (none)
+@@ -3012,7 +3048,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### extract.bundle
+ - uses: model.extraction_scope, synth.paths
+-- used_by: codegen.emit, conformance.structural, extract.service
++- used_by: codegen.emit, conformance.structural, examples.literature_interop, extract.service
+ 
+ #### extract.bundle -> model.extraction_scope
+ - `src/gnd/extract/bundle.py -> src/gnd/extraction_scope.py`
+@@ -3078,7 +3114,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### extract.service
+ - uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.document, model.loading, model.scalar_terms, model.validation, synth.paths
+-- used_by: cli.dispatch, cli.extract_command, export.verification, fidelity.doccheck, fidelity.service
++- used_by: cli.dispatch, cli.extract_command, examples.literature_interop, export.verification, fidelity.doccheck, fidelity.service
+ 
+ #### extract.service -> extract.bundle
+ - `src/gnd/extract/service.py -> src/gnd/extract/bundle.py`
+@@ -3221,7 +3257,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/fidelity/report.py -> src/gnd/model_identity.py`
+ 
+ ### fidelity.service
+-- uses: extract.manifest, extract.reference_schemes, extract.service, fidelity.match, fidelity.report, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.loading, model.population_loading, synth.paths
++- uses: extract.manifest, extract.reference_schemes, extract.service, fidelity.match, fidelity.report, infra.artifacts, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.loading, model.population_loading, synth.paths
+ - used_by: cli.dispatch, cli.fidelity_command
+ 
+ #### fidelity.service -> extract.manifest
+@@ -3239,6 +3275,9 @@ Generated by `scripts/components_index.py`.
+ #### fidelity.service -> fidelity.report
+ - `src/gnd/fidelity/service.py -> src/gnd/fidelity/report.py`
+ 
++#### fidelity.service -> infra.artifacts
++- `src/gnd/fidelity/service.py -> src/gnd/artifacts.py`
++
+ #### fidelity.service -> infra.exit_codes
+ - `src/gnd/fidelity/service.py -> src/gnd/exits.py`
+ 
+@@ -3269,7 +3308,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+@@ -3280,15 +3319,15 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.bounded_process
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
++- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+ 
+ ### infra.disclosure
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, exp.service, export.service, review.adapters, witness.service
++- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
+ 
+ ### infra.errors
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.service
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.service
+ 
+ ### infra.exit_codes
+ - uses: (none)
+@@ -3682,7 +3721,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.anchors
+ - uses: infra.artifacts, infra.input_policy, model.anchor_identity
+-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
++- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
+ 
+ #### model.anchors -> infra.artifacts
+ - `src/gnd/anchors.py -> src/gnd/artifacts.py`
+@@ -3822,7 +3861,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.loading
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.service, evolve.command, evolve.schema, evolve.service, examples.literature_lineage, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.service, evolve.command, evolve.schema, evolve.service, examples.literature_interop, examples.literature_lineage, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ #### model.loading -> infra.artifacts
+ - `src/gnd/model/__init__.py -> src/gnd/artifacts.py`
+@@ -3896,7 +3935,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.population_loading
+ - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
+-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.plan_apps, exp.session_judgments, exp.session_replay, exp.session_runtime, export.ilp_service, export.souffle_lowering, export.verification, fidelity.doccheck, fidelity.service, measure.labels, measure.service, model.composition, model.diff, model.loading, model.population_sentences, model.validation, semantics.extensions, semantics.phase1_slice, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.frontier, synth.mutations, synth.provenance, synth.service, witness.produce, witness.replay, witness.schema, witness.service
++- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, examples.plan_apps, exp.session_judgments, exp.session_replay, exp.session_runtime, export.ilp_service, export.souffle_lowering, export.verification, fidelity.doccheck, fidelity.service, measure.labels, measure.service, model.composition, model.diff, model.loading, model.population_sentences, model.validation, semantics.extensions, semantics.phase1_slice, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.frontier, synth.mutations, synth.provenance, synth.service, witness.produce, witness.replay, witness.schema, witness.service
+ 
+ #### model.population_loading -> check.population_structure
+ - `src/gnd/population.py -> src/gnd/popvalidate.py`
+@@ -5097,7 +5136,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### witness.schema
+ - uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+-- used_by: export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
++- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+ 
+ #### witness.schema -> check.population_structure
+ - `src/gnd/witness/io.py -> src/gnd/popvalidate.py`
+diff --git a/dev/components/modules/examples.md b/dev/components/modules/examples.md
+index f8d15781..838ca285 100644
+--- a/dev/components/modules/examples.md
++++ b/dev/components/modules/examples.md
+@@ -224,6 +224,25 @@ Score the frozen synthetic diagnostic corpus using its predeclared sample.
+ | `score(emissions, labels) -> dict` | function | 36 | Sample uniformly within each kind and report exact false-discovery counts. |
+ | `main(argv) -> int` | function | 82 | (no docstring) |
+ 
++## gnd.examples.literature.interop — `src/gnd/examples/literature/interop.py`
++Components: examples.literature_interop
++Run and verify the packaged extraction-to-checking literature fixture.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `rebind(run, source) -> dict[str, bytes]` | function | 168 | Verify the extraction and derive checking-bound files from the original. |
++| `verify(run) -> dict` | function | 302 | (no docstring) |
++| `build(out, *, dates) -> None` | function | 342 | (no docstring) |
++| `main(argv) -> int` | function | 379 | (no docstring) |
++
++## gnd.examples.literature.interop_dates — `src/gnd/examples/literature/interop_dates.py`
++Components: examples.literature_interop
++Publication-year advisories over LI5's candidate lineage vocabulary.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `advise(edge_bytes, date_bytes, policy_bytes) -> dict` | function | 63 | Name the work pair and report their stated publication order. |
++
+ ## gnd.examples.literature.lineage_run — `src/gnd/examples/literature/lineage_run.py`
+ Components: examples.literature_lineage
+ Assemble admitted contextual sources and score named lineage paths.
+diff --git a/docs/guides/documents.md b/docs/guides/documents.md
+index 917edb6c..9f3b3983 100644
+--- a/docs/guides/documents.md
++++ b/docs/guides/documents.md
+@@ -105,3 +105,31 @@ synthetic receipts are not evidence that a provider ran now.
+ See the [extraction contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-extract/references/extraction-contract.md)
+ and [rendering contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-render-doc/references/rendering-contract.md)
+ for exact sidecars, manifests, distractors, and failure semantics.
++
++## Separate extraction and checking models
++
++Pin the same shared vocabulary in an extraction root and a checking root.
++The extraction root projects the document shape. The checking root can add
++constraints that are only meant for the composed result, including guarded
++calendar comparisons. Keep the two authored roots independently identified
++even when their candidate vocabulary is identical.
++
++Run `gnd extract` on the extraction root and give the extractor its indexed
++bundle. For an include root, the bundle contains the flattened model and its
++origin record. Run `gnd verify` against the same authored root and bundle
++before transferring a population to the checking root. Fixed catalogs keep
++their model declarations and their raw-byte digests across the two roots.
++
++The [literature example](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/README.md#extraction-to-checking-interop)
++records the transfer in a `literature-rebind/1` record for each source. It
++binds both roots, the include and catalog digests, the extraction index,
++the document, the original extraction and its sidecars, and the checking
++population and anchors. The checking population updates the model header.
++The anchors bind the updated population bytes to the original source spans.
++The example re-derives the rebinds before composing the sources under the
++checking root. Check and replay use the composition record from that root.
++
++`gnd fidelity` can measure the original extraction against the same
++include root when it has the authenticated indexed bundle. In the example,
++the original document evidence and extraction handoff live alongside the
++checking-bound artifacts in each source directory.
+diff --git a/src/gnd/checking_service.py b/src/gnd/checking_service.py
+index 705923bf..18f67ac5 100644
+--- a/src/gnd/checking_service.py
++++ b/src/gnd/checking_service.py
+@@ -162,7 +162,7 @@ def _composition_view(model, model_coordinate, population_coordinate, population
+ 
+     model_raw = read(model_coordinate, "model", MAX_DOCUMENT_BYTES)
+     from gnd.model._includes import guard_bytes
+-    if model.includes or model.reference_populations:
++    if getattr(model, "includes", ()) or getattr(model, "reference_populations", ()):
+         if hashlib.sha256(model_raw).hexdigest() != model._authored_sha256:
+             raise CompositionError("the model changed after its input snapshot was loaded")
+     else:
+diff --git a/src/gnd/examples/literature/README.md b/src/gnd/examples/literature/README.md
+index 158a7be4..41d164a8 100644
+--- a/src/gnd/examples/literature/README.md
++++ b/src/gnd/examples/literature/README.md
+@@ -286,3 +286,50 @@ fixture is in the [resolution example](resolution/README.md).
+ The committed rule model is generated from the path-policy table
+ and the contextual assertion model by
+ `python tools/build_literature_lineage_model.py`.
++
++## Extraction-to-checking interop
++
++```sh
++python -m gnd.examples.literature.interop run --out literature-run --dates
++python -m gnd.examples.literature.interop verify literature-run
++```
++
++The packaged fixture uses two saved document extractions and two shared
++vocabulary files. The example runs GND's extraction projection and validates
++the saved populations against the original evidence. It verifies the source
++rebinds, applies a candidate identity decision onto a fixed catalog method,
++then runs composition, temporal checking, witness, replay and fidelity. The
++manifest verifies the input and output bytes and the stage links. See the
++[documents guide](../../../../docs/guides/documents.md#separate-extraction-and-checking-models)
++for the model split and rebind contract.
++
++The two source directories each contain evidence for both readers. Fidelity
++reads `document.md`, while composition reads the same bytes at
++`document.txt`. This layout materializes one extra document file per source.
++The original extraction population and its extraction sidecar have one
++materialization each. The rebound populations and anchors carry the checking
++model's coordinates.
++
++### Publication-year advice
++
++Omit `--dates` to run the checking and proof stages on their own. Generate
++the same report later with:
++
++```sh
++python -m gnd.examples.literature.interop dates literature-run --out advice.json
++```
++
++The advisory input lists proposed work pairs and uses the public LI5
++[chainability policy](lineage/path-policy.json). The separate date table
++names the work, date role, declared precision and value. An edge passes when
++the descendant's publication year is at least the ancestor's year at the
++same precision. Unknown works, missing or conflicting publication dates and
++mixed precision remain unresolved. Alternative date roles supply no
++publication comparison. The report binds the edge, date and policy bytes.
++
++The fixture's incorrect PINN edge is a proposed edge from the 2019 PINNs paper
++to Bayesian PINNs, published in 2021. It produces one advisory. Its work IDs
++come from the two publications. The 2026 and equal-year edges are synthetic
++comparison controls. [Issue #193](https://github.com/vasiloglou/gnd-public/issues/193),
++[PINNs](https://doi.org/10.1016/j.jcp.2018.10.045),
++[Bayesian PINNs](https://doi.org/10.1016/j.jcp.2020.109913)
+diff --git a/src/gnd/examples/literature/interop.py b/src/gnd/examples/literature/interop.py
+new file mode 100644
+index 00000000..e33f82d1
+--- /dev/null
++++ b/src/gnd/examples/literature/interop.py
+@@ -0,0 +1,411 @@
++"""Run and verify the packaged extraction-to-checking literature fixture."""
++
++from __future__ import annotations
++
++import argparse
++import asyncio
++import os
++import sys
++import tempfile
++from pathlib import Path
++
++from jsonschema import Draft202012Validator
++
++from gnd.anchors import bind_anchors, parse_anchor_sidecar, strict_json, vocabulary_digest
++from gnd.artifacts import (
++    ArtifactError,
++    canonical_json_bytes,
++    publish_directory_once,
++    read_regular_file_bytes,
++    sha256_hex,
++)
++from gnd.disclosure import ENVIRONMENT as DISCLOSURE_ENV
++from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
++from gnd.extract.bundle import bundle_stem
++from gnd.extract.service import _verify_artifact_index
++from gnd.model import load_model
++from gnd.population import load_population_bytes
++from gnd.process import ProcessLimits, run_bounded_process
++
++from .interop_dates import advise
++
++FIXTURE = Path(__file__).resolve().with_name("interop_fixture")
++POLICY = FIXTURE.parent / "lineage/path-policy.json"
++EXTRACTION = "extraction.orm.json"
++CHECKING = "checking.orm.json"
++CATALOG = "reference/catalog.json"
++ARTIFACTS = "artifacts"
++SOURCES = "sources"
++SUMMARY = "interop.json"
++POPULATION = "composed.population.json"
++COMPOSITION = "composition.json"
++EXTRACTED = "extracted.population.json"
++EXTRACTION_SIDECAR = "extracted.population.extraction.json"
++ORIGINAL_ANCHORS = "extracted.population.json.anchors.json"
++REBOUND = "population.json"
++REBOUND_ANCHORS = "population.json.anchors.json"
++DATES = "publication-dates.json"
++EDGES = "candidate-edges.json"
++DATE_REPORT = "dates.json"
++VOCABULARY = ("vocabulary/literature.orm.json", "vocabulary/chronology.orm.json")
++INPUTS = (EXTRACTION, CHECKING, *VOCABULARY, CATALOG, "targets.json", DATES, EDGES)
++CAP = 10 << 20
++LIMITS = ProcessLimits(
++    timeout_seconds=30, terminate_grace_seconds=1, stdin_limit_bytes=0,
++    stdout_limit_bytes=CAP, stderr_limit_bytes=128 << 10, total_output_limit_bytes=CAP,
++)
++
++
++def _read(root: Path, name: str) -> bytes:
++    return read_regular_file_bytes(root, name, label=name, max_bytes=CAP)
++
++
++def _write(root: Path, name: str, payload: dict) -> None:
++    (root / name).write_bytes(canonical_json_bytes(payload))
++
++
++def _json(raw: bytes):
++    return strict_json(raw, max_bytes=CAP, too_large="integration JSON exceeds its byte ceiling")
++
++
++def _digest(root: Path, name: str) -> str:
++    return sha256_hex(_read(root, name))
++
++
++def _require(ok: bool, reason: str) -> None:
++    if not ok:
++        raise ValueError(reason)
++
++
++def _stage(root: Path, *args: str) -> bytes:
++    env = {name: os.environ[name] for name in (DISCLOSURE_ENV,) if name in os.environ}
++    result = asyncio.run(run_bounded_process(
++        (sys.executable, "-m", "gnd", *args), cwd=root, env=env, limits=LIMITS,
++        disclosed_names=frozenset(env),
++    ))
++    if result.status != "succeeded" or result.stdout_truncated or result.stderr_truncated:
++        detail = (result.stderr or result.stdout).decode(errors="replace").strip()[-400:]
++        raise ValueError(f"{args[0]} exited {result.return_code}: {detail}")
++    return result.stdout
++
++
++def _source_plan() -> dict:
++    return _json(_read(FIXTURE, "sources.json"))
++
++
++def _index_names() -> tuple[str, str, str]:
++    stem = bundle_stem(EXTRACTION)
++    return (f"{stem}.artifacts.json", f"{stem}.projection.schema.json", f"{stem}.applicable.json")
++
++
++def _roots(run: Path):
++    extraction = load_model(run / EXTRACTION)
++    checking = load_model(run / CHECKING)
++    pins = [[{"id": entry.id, "sha256": entry.sha256} for entry in model._included]
++            for model in (extraction, checking)]
++    _require(bool(pins[0]) and extraction._references is not None and checking._references is not None,
++             "both roots must bind vocabulary and catalog inputs")
++    catalogs = [
++        [{"id": origin.id, "raw_sha256": origin.raw_sha256} for origin, _, _ in model._references._snapshots]
++        for model in (extraction, checking)
++    ]
++    _require(pins[0] == pins[1] and vocabulary_digest(extraction) == vocabulary_digest(checking),
++             "root vocabulary pins differ")
++    _require(catalogs[0] == catalogs[1] and extraction._references._owners == checking._references._owners,
++             "root catalog bindings differ")
++    _require(extraction.model_id != checking.model_id, "the model roots must have distinct identities")
++    return extraction, checking, pins[0], catalogs[0]
++
++
++def _anchor_rows(facts, document):
++    anchors = []
++    for fact_type, rows in facts.items():
++        for row in rows:
++            for role, value in row.items():
++                offset = document.index(value)
++                anchors.append({
++                    "fact_key": {"fact_type": fact_type, "roles": row}, "role": role,
++                    "span": {"start": offset, "end": offset + len(value)},
++                    "occurrence": 0, "excerpt_sha256": sha256_hex(value.encode()),
++                })
++    return anchors
++
++
++def _extract_source(run: Path, name: str, model, index, projection, applicable) -> None:
++    directory = run / SOURCES / name
++    directory.mkdir(parents=True)
++    document = _read(FIXTURE, f"{name}.md")
++    facts = _json(_read(FIXTURE, f"{name}.facts.json"))
++    gold = _json(_read(FIXTURE, f"{name}.gold.json"))
++    (directory / "document.md").write_bytes(document)
++    extracted = {"population": index["header_template"], "facts": facts}
++    _require(Draft202012Validator(projection).is_valid(extracted), "saved extraction violates its schema")
++    _write(directory, EXTRACTED, extracted)
++    _write(directory, "source.population.json", {"population": index["header_template"], "facts": gold})
++    _write(directory, EXTRACTION_SIDECAR, {
++        "schema_version": 1, "model": EXTRACTION, "model_sha256": index["model"]["sha256"],
++        "population": EXTRACTED, "population_sha256": _digest(directory, EXTRACTED),
++        "document": "document.md", "document_sha256": sha256_hex(document),
++        "projection_sha256": index["artifacts"][_index_names()[1]]["sha256"],
++        "skill": "gnd-extract", "skill_version": "1", "executing_model": "saved-public-fixture",
++    })
++    _write(directory, "document.manifest.json", {
++        "schema_version": 1, "model": EXTRACTION, "model_sha256": index["model"]["sha256"],
++        "source_population": "source.population.json",
++        "source_population_sha256": _digest(directory, "source.population.json"),
++        "document": "document.md", "document_sha256": sha256_hex(document),
++        "applicable_sha256": applicable, "renderer_skill": "gnd-render-doc",
++        "renderer_skill_version": "1", "executing_model": "authored-public-fixture",
++        "distractors": [],
++    })
++    _write(directory, ORIGINAL_ANCHORS, {
++        "schema_version": 2, "population_sha256": _digest(directory, EXTRACTED),
++        "document_sha256": sha256_hex(document), "vocabulary_digest": vocabulary_digest(model),
++        "anchors": _anchor_rows(facts, document.decode()),
++    })
++
++
++def rebind(run: Path, source: str) -> dict[str, bytes]:
++    """Verify the extraction and derive checking-bound files from the original."""
++    _require(source in _source_plan()["sources"], "unknown example source")
++    return _rebind(run, source, _roots(run))
++
++
++def _rebind(run: Path, source: str, roots) -> dict[str, bytes]:
++    extraction, checking, pins, catalogs = roots
++    directory = run / SOURCES / source
++    index_name, projection_name, applicable_name = _index_names()
++    index_path = f"{ARTIFACTS}/{index_name}"
++    inputs = {
++        "extraction_root_sha256": extraction._authored_sha256,
++        "checking_root_sha256": checking._authored_sha256,
++        "artifact_index_sha256": _digest(run, index_path),
++        "document_sha256": _digest(directory, "document.md"),
++        "extraction_population_sha256": _digest(directory, EXTRACTED),
++        "extraction_sidecar_sha256": _digest(directory, EXTRACTION_SIDECAR),
++        "extraction_anchors_sha256": _digest(directory, ORIGINAL_ANCHORS),
++    }
++    bundle = _verify_artifact_index(str(run / EXTRACTION), str(run / ARTIFACTS), (projection_name, applicable_name))
++    _require(bundle.root_sha256 == inputs["extraction_root_sha256"], "the extraction root changed")
++    _stage(run, "verify", EXTRACTION, f"{SOURCES}/{source}/{EXTRACTED}", "--artifacts", ARTIFACTS,
++           "--format", "json")
++    original = _read(directory, EXTRACTED)
++    original_anchors = _read(directory, ORIGINAL_ANCHORS)
++    document = _read(directory, "document.md")
++    expected_snapshots = {
++        "extraction_population_sha256": original, "extraction_anchors_sha256": original_anchors,
++        "document_sha256": document, "extraction_sidecar_sha256": _read(directory, EXTRACTION_SIDECAR),
++        "artifact_index_sha256": _read(run, index_path),
++    }
++    _require(all(sha256_hex(raw) == inputs[key] for key, raw in expected_snapshots.items()),
++             "extraction evidence changed during verification")
++    _require((_digest(run, EXTRACTION), _digest(run, CHECKING)) ==
++             (inputs["extraction_root_sha256"], inputs["checking_root_sha256"]), "a root changed during rebind")
++    population = _json(original)
++    population["population"].update(model=CHECKING, model_id=checking.model_id)
++    rebound = canonical_json_bytes(population)
++    anchors = _json(original_anchors)
++    anchors.update(population_sha256=sha256_hex(rebound), vocabulary_digest=vocabulary_digest(checking))
++    anchor_bytes = canonical_json_bytes(anchors)
++    validated = load_population_bytes(rebound, source=REBOUND, model=checking)
++    bind_anchors(parse_anchor_sidecar(anchor_bytes), checking, rebound, document, validated)
++    record = canonical_json_bytes({
++        "schema": "literature-rebind/1", "source": source, **inputs, "includes": pins, "references": catalogs,
++        "rebound_population_sha256": sha256_hex(rebound), "rebound_anchors_sha256": sha256_hex(anchor_bytes),
++    })
++    return {REBOUND: rebound, REBOUND_ANCHORS: anchor_bytes, "document.txt": document, "rebind.json": record}
++
++
++def _resolution(run: Path, plan: dict) -> tuple[bytes, bytes]:
++    sources = plan["sources"]
++    decision = plan["resolution"]
++    role, relation, object_type = (decision[key] for key in ("role", "fact_type", "object_type"))
++    keys, evidence, digests = [], [], {}
++    for index, name in enumerate(sources):
++        base = run / SOURCES / name
++        candidate_raw = _read(base, REBOUND)
++        rows = _json(candidate_raw)["facts"][relation]
++        _require(len(rows) == 1, "each fixture source needs one catalog alias")
++        fact = rows[0]
++        sidecar = parse_anchor_sidecar(_read(base, REBOUND_ANCHORS))
++        anchor = next(a for a in sidecar.anchors
++                      if a["fact_key"] == {"fact_type": relation, "roles": fact} and a["role"] == role)
++        keys.append({"source": name, "object_type": object_type, "value": fact[role]})
++        evidence.append({"source": name, "key": index, "fact_type": relation, "role": role,
++                         "fact_index": 0, "span": anchor["span"]})
++        digests[name] = sha256_hex(candidate_raw)
++    preferred = next(key["value"] for key in keys if key["source"] == decision["preferred"])
++    resolution = canonical_json_bytes({
++        "schema": "gnd-resolution/1", "object_types": [object_type],
++        "decisions": [{"decision": "same", "keys": keys, "evidence": evidence, "input_sha256": digests,
++                       "placeholders": None, "producer": {"id": "corpus-author", "kind": "reviewer"}}],
++    })
++    manifest = canonical_json_bytes({
++        "schema": "gnd-composition-manifest/1", "sources": sources, "scope_tags": [],
++        "deduplications": "identical-rows", "renamings": [
++            {"source": key["source"], "fact_type": relation, "role": role, "from": key["value"],
++             "to": preferred, "decision": 0}
++            for key in keys if key["value"] != preferred
++        ],
++        "resolution": {"path": "resolution.json", "sha256": sha256_hex(resolution)},
++    })
++    return resolution, manifest
++
++
++def _check(run: Path) -> bytes:
++    return _stage(run, "check", CHECKING, POPULATION, "--composition", COMPOSITION,
++                  "--sources", SOURCES, "--format", "json")
++
++
++def _replay(run: Path) -> bytes:
++    return _stage(run, "replay", CHECKING, POPULATION, "witness.json", "--composition",
++                  COMPOSITION, "--raw")
++
++
++def _fidelity(run: Path) -> bytes:
++    report = _stage(run, "fidelity", EXTRACTION, "--cases", SOURCES, "--artifacts", ARTIFACTS,
++                    "--format", "json")
++    cases = _json(report)["cases"]
++    _require(cases["ran"] == len(_source_plan()["sources"]) and cases["failed"] == cases["skipped"] == 0,
++             "fidelity did not score both original extractions")
++    return report
++
++
++def _advice(run: Path) -> dict:
++    return advise(_read(run, EDGES), _read(run, DATES), _read(POLICY.parent, POLICY.name))
++
++
++def _manifest(run: Path, names: list[str], *, dates: bool) -> dict:
++    stage_files = (f"{ARTIFACTS}/{_index_names()[0]}", f"{SOURCES}/resolution.json",
++                   f"{SOURCES}/manifest.json", POPULATION, COMPOSITION, "check.json",
++                   "witness.json", "replay.json", "fidelity.json")
++    file_names = [*INPUTS, *stage_files]
++    file_names.extend(
++        f"{SOURCES}/{name}/{leaf}" for name in names
++        for leaf in ("rebind.json", "source.population.json", "document.manifest.json")
++    )
++    if dates:
++        file_names.append(DATE_REPORT)
++    documents = sum(
++        not (run / SOURCES / name / "document.md").samefile(run / SOURCES / name / "document.txt")
++        for name in names
++    )
++    return {
++        "schema": "literature-interop/1", "source_order": names, "with_dates": dates,
++        "sha256": {name: _digest(run, name) for name in file_names},
++        "layout": {"additional_copies": {
++            "document": documents, "extraction_population": 0, "extraction_sidecar": 0,
++        }, "rebound_population_files": len(names), "rebound_anchor_files": len(names)},
++    }
++
++
++def verify(run: Path) -> dict:
++    raw = _read(run, SUMMARY)
++    recorded = _json(raw)
++    plan = _source_plan()
++    names = plan["sources"]
++    _require(isinstance(recorded, dict) and type(recorded.get("with_dates")) is bool
++             and isinstance(recorded.get("sha256"), dict), "invalid integration manifest")
++    dates = recorded["with_dates"]
++    expected = _manifest(run, names, dates=dates)
++    for path, digest in expected["sha256"].items():
++        _require(recorded["sha256"].get(path) == digest, f"stale integration evidence at {path}")
++    _require(raw == canonical_json_bytes(expected), "integration manifest differs from verified files")
++    for name in INPUTS:
++        _require(_read(run, name) == _read(FIXTURE, name), f"fixture input differs at {name}")
++    roots = _roots(run)
++    for name in names:
++        directory = run / SOURCES / name
++        _require(_read(directory, "document.md") == _read(FIXTURE, f"{name}.md"),
++                 f"fixture document differs at {name}")
++        for leaf, expected_facts in ((EXTRACTED, "facts"), ("source.population.json", "gold")):
++            observed = _json(_read(directory, leaf))["facts"]
++            _require(observed == _json(_read(FIXTURE, f"{name}.{expected_facts}.json")),
++                     f"fixture facts differ at {name}/{leaf}")
++        for leaf, content in _rebind(run, name, roots).items():
++            _require(_read(directory, leaf) == content, f"rebind differs at {name}/{leaf}")
++    resolution, manifest = _resolution(run, plan)
++    _require(_read(run / SOURCES, "resolution.json") == resolution
++             and _read(run / SOURCES, "manifest.json") == manifest, "source resolution differs from the fixture")
++    from gnd.witness.io import load_certificate
++
++    certificate = load_certificate(run / "witness.json")
++    _require([result["target"] for result in certificate["results"]] ==
++             _json(_read(run, "targets.json"))["targets"], "witness targets differ from the fixture")
++    for leaf, operation in (("check.json", _check), ("replay.json", _replay), ("fidelity.json", _fidelity)):
++        _require(_read(run, leaf) == operation(run), f"stage report differs at {leaf}")
++    if dates:
++        _require(_read(run, DATE_REPORT) == canonical_json_bytes(_advice(run)), "date advisory differs")
++    return expected
++
++
++def build(out: Path, *, dates: bool = False) -> None:
++    plan = _source_plan()
++    names = plan["sources"]
++    with tempfile.TemporaryDirectory(prefix="gnd-literature-interop-") as scratch:
++        run = Path(scratch).resolve()
++        for name in INPUTS:
++            target = run / name
++            target.parent.mkdir(parents=True, exist_ok=True)
++            target.write_bytes(_read(FIXTURE, name))
++        _stage(run, "extract", EXTRACTION, "--out", ARTIFACTS)
++        index_name, projection_name, applicable_name = _index_names()
++        artifacts = run / ARTIFACTS
++        index = _json(_read(artifacts, index_name))
++        projection = _json(_read(artifacts, projection_name))
++        applicable = _digest(artifacts, applicable_name)
++        roots = _roots(run)
++        for name in names:
++            _extract_source(run, name, roots[0], index, projection, applicable)
++            for leaf, raw in _rebind(run, name, roots).items():
++                (run / SOURCES / name / leaf).write_bytes(raw)
++        resolution, manifest = _resolution(run, plan)
++        (run / SOURCES / "resolution.json").write_bytes(resolution)
++        (run / SOURCES / "manifest.json").write_bytes(manifest)
++        _stage(run, "compose", CHECKING, SOURCES, "--out", POPULATION, "--record", COMPOSITION)
++        (run / "check.json").write_bytes(_check(run))
++        if dates:
++            _write(run, DATE_REPORT, _advice(run))
++        _stage(run, "witness", CHECKING, POPULATION, "--targets", "targets.json",
++               "--composition", COMPOSITION, "--raw", "--out", "witness.json")
++        (run / "replay.json").write_bytes(_replay(run))
++        (run / "fidelity.json").write_bytes(_fidelity(run))
++        _write(run, SUMMARY, _manifest(run, names, dates=dates))
++        files = {path.relative_to(run).as_posix(): _read(run, path.relative_to(run).as_posix())
++                 for path in run.rglob("*") if path.is_file()}
++        publish_directory_once(out.parent, out.name, files, manifest_name=SUMMARY, max_file_bytes=CAP)
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    commands = parser.add_subparsers(dest="action", required=True)
++    run = commands.add_parser("run", help="build the packaged interoperable example")
++    run.add_argument("--out", required=True, type=Path)
++    run.add_argument("--dates", action="store_true")
++    commands.add_parser("verify", help="re-derive the evidence chain").add_argument("run", type=Path)
++    dates = commands.add_parser("dates", help="report publication-order advice")
++    dates.add_argument("run", type=Path)
++    dates.add_argument("--out", type=Path)
++    args = parser.parse_args(argv)
++    try:
++        if args.action == "run":
++            build(args.out.absolute(), dates=args.dates)
++        else:
++            path = args.run.resolve(strict=True)
++            verify(path)
++            if args.action == "dates":
++                raw = canonical_json_bytes(_advice(path))
++                if args.out is None:
++                    sys.stdout.write(raw.decode())
++                else:
++                    with args.out.open("xb") as destination:
++                        destination.write(raw)
++        return 0
++    except (ArtifactError, OSError, ValueError, TypeError, KeyError, RecursionError, StopIteration,
++            ModelLoadError, ModelValidationError, PopulationLoadError) as error:
++        print(f"literature-interop: {error}", file=sys.stderr)
++        return 3
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/src/gnd/examples/literature/interop_dates.py b/src/gnd/examples/literature/interop_dates.py
+new file mode 100644
+index 00000000..b4dab6bb
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_dates.py
+@@ -0,0 +1,117 @@
++"""Publication-year advisories over LI5's candidate lineage vocabulary."""
++
++from datetime import date
++
++from gnd.anchors import strict_json
++from gnd.artifacts import sha256_hex
++
++CAP = 1 << 20
++PUBLICATION = "publication"
++
++
++def _record(value, fields):
++    if not isinstance(value, dict) or set(value) != fields:
++        raise ValueError("invalid publication advisory record")
++    return value
++
++
++def _text(value):
++    return isinstance(value, str) and 0 < len(value) <= 256
++
++
++def _date_index(data):
++    _record(data, {"schema", "works", "dates"})
++    if (data["schema"] != "literature-publication-dates/1"
++            or not isinstance(data["works"], list) or not isinstance(data["dates"], list)
++            or not all(_text(work) for work in data["works"])):
++        raise ValueError("invalid publication dates input")
++    works = {work: {} for work in data["works"]}
++    if len(works) != len(data["works"]):
++        raise ValueError("duplicate advisory work id")
++    for entry in data["dates"]:
++        _record(entry, {"work", "role", "precision", "value"})
++        work, role, precision, value = (entry[k] for k in ("work", "role", "precision", "value"))
++        if not _text(work) or work not in works or not _text(role):
++            raise ValueError("invalid work or role for advisory date")
++        if precision == "year" and type(value) is int and 1 <= value <= 9999:
++            year = value
++        elif precision == "day" and isinstance(value, str):
++            day = date.fromisoformat(value)
++            if value != day.isoformat():
++                raise ValueError("day precision requires a calendar date")
++            year = day.year
++        else:
++            raise ValueError("invalid declared precision or date value")
++        works[work].setdefault(role, set()).add((precision, value, year))
++    return works
++
++
++def _publication(works, work):
++    if work not in works:
++        return None, "unknown-work"
++    dates = works[work]
++    if not dates:
++        return None, "missing-date"
++    candidates = dates.get(PUBLICATION, ())
++    if not candidates:
++        return None, "publication-date-missing"
++    if len(candidates) != 1:
++        return None, "conflicting-date"
++    return next(iter(candidates)), None
++
++
++def advise(edge_bytes: bytes, date_bytes: bytes, policy_bytes: bytes) -> dict:
++    """Name the work pair and report their stated publication order."""
++    edges, dates, policy = (
++        strict_json(raw, max_bytes=CAP, too_large="advisory JSON exceeds its byte ceiling")
++        for raw in (edge_bytes, date_bytes, policy_bytes)
++    )
++    _record(edges, {"schema", "edges"})
++    _record(policy, {"schema", "chainable", "non_chaining", "transfer", "absence_words"})
++    if (edges["schema"] != "literature-candidate-edges/1" or not isinstance(edges["edges"], list)
++            or policy["schema"] != "literature-lineage-policy/1"
++            or not isinstance(policy["chainable"], list) or not isinstance(policy["non_chaining"], list)
++            or not all(_text(rel) for rel in policy["chainable"] + policy["non_chaining"])):
++        raise ValueError("invalid candidate edges or lineage policy")
++    chainable = set(policy["chainable"])
++    excluded = set(policy["non_chaining"])
++    works = _date_index(dates)
++    report = []
++    seen = set()
++    counts = dict.fromkeys(("pass", "advisory", "unresolved"), 0)
++    for edge in edges["edges"]:
++        _record(edge, {"id", "relation", "descendant_work", "ancestor_work"})
++        if not all(_text(item) for item in edge.values()) or edge["id"] in seen:
++            raise ValueError("invalid or duplicate candidate edge")
++        seen.add(edge["id"])
++        if edge["relation"] in excluded:
++            continue
++        if edge["relation"] not in chainable:
++            raise ValueError("candidate edge uses an unknown lineage relation")
++        descendant, descendant_reason = _publication(works, edge["descendant_work"])
++        ancestor, ancestor_reason = _publication(works, edge["ancestor_work"])
++        reason = descendant_reason or ancestor_reason
++        if reason is None and descendant[0] != ancestor[0]:
++            reason = "mixed-precision"
++        if reason is not None:
++            outcome = "unresolved"
++        else:
++            outcome = "pass" if descendant[2] >= ancestor[2] else "advisory"
++            if outcome == "advisory":
++                reason = "parent-published-later"
++        report.append({
++            **edge, "role": PUBLICATION, "outcome": outcome, "reason": reason,
++            "descendant_date": descendant[1] if descendant else None,
++            "ancestor_date": ancestor[1] if ancestor else None,
++            "descendant_precision": descendant[0] if descendant else None,
++            "ancestor_precision": ancestor[0] if ancestor else None,
++        })
++        counts[outcome] += 1
++    return {
++        "schema": "literature-date-advice/1", "edges": report, "counts": counts,
++        "bindings": {
++            "candidate_edges_sha256": sha256_hex(edge_bytes),
++            "publication_dates_sha256": sha256_hex(date_bytes),
++            "lineage_policy_sha256": sha256_hex(policy_bytes),
++        },
++    }
+diff --git a/src/gnd/examples/literature/interop_fixture/candidate-edges.json b/src/gnd/examples/literature/interop_fixture/candidate-edges.json
+new file mode 100644
+index 00000000..71246e0c
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/candidate-edges.json
+@@ -0,0 +1 @@
++{"edges":[{"ancestor_work":"doi:10.1016/j.jcp.2018.10.045","descendant_work":"example:survey-2026","id":"new-to-old","relation":"extends"},{"ancestor_work":"doi:10.1016/j.jcp.2018.10.045","descendant_work":"example:replication-2019","id":"same-year","relation":"extends"},{"ancestor_work":"doi:10.1016/j.jcp.2020.109913","descendant_work":"doi:10.1016/j.jcp.2018.10.045","id":"pinn","relation":"extends"},{"ancestor_work":"example:absent","descendant_work":"doi:10.1016/j.jcp.2018.10.045","id":"unknown","relation":"extends"},{"ancestor_work":"doi:10.1016/j.jcp.2018.10.045","descendant_work":"example:conflict","id":"conflict","relation":"extends"},{"ancestor_work":"doi:10.1016/j.jcp.2018.10.045","descendant_work":"example:missing","id":"missing","relation":"extends"},{"ancestor_work":"doi:10.1016/j.jcp.2018.10.045","descendant_work":"example:day","id":"mixed","relation":"extends"},{"ancestor_work":"doi:10.1016/j.jcp.2018.10.045","descendant_work":"example:preprint","id":"preprint","relation":"extends"},{"ancestor_work":"doi:10.1016/j.jcp.2020.109913","descendant_work":"doi:10.1016/j.jcp.2018.10.045","id":"non-chaining","relation":"evaluated-as"}],"schema":"literature-candidate-edges/1"}
+diff --git a/src/gnd/examples/literature/interop_fixture/checking.orm.json b/src/gnd/examples/literature/interop_fixture/checking.orm.json
+new file mode 100644
+index 00000000..e8b174cb
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/checking.orm.json
+@@ -0,0 +1 @@
++{"constraints":[{"id":"parent_in_catalog","modality":"alethic","provenance":{"user_quote":"Use the named parent method and the stated submission and publication dates."},"source":"explicit","status":"confirmed","subset_role_seq":[{"fact_type":"paper_names_parent_method","role":"method"}],"superset_role_seq":[{"fact_type":"catalog_method","role":"method"}],"type":"subset"},{"antecedent":[{"bind":{"submitted":"$submitted","work":"$work"},"fact_type":"paper_submitted_on"},{"bind":{"published":"$published","work":"$work"},"fact_type":"paper_published_on"}],"consequent":{"comparison":{"left":{"args":["$submitted",{"duration_days":1}],"fn":"date_add"},"operator":"<=","right":"$published"}},"id":"publication_not_before_submission","modality":"alethic","provenance":{"user_quote":"Use the named parent method and the stated submission and publication dates."},"source":"explicit","status":"confirmed","type":"guarded"}],"fact_types":[],"includes":[{"id":"literature","path":"vocabulary/literature.orm.json","sha256":"5c570342a35ac6f0fe032fb30502b1bfa508966e6bb5ff63b443d4c85fb9fdd1"},{"id":"chronology","path":"vocabulary/chronology.orm.json","sha256":"2a1970fa79ef85e669f439bedb4643ccf265608c1d21cbd257e75868546c7e9e"}],"model_id":"urn:gnd:literature:interop-checking@1","object_types":[],"reference_populations":[{"fact_types":["catalog_method"],"id":"method-catalog","path":"reference/catalog.json","sha256":"4d25b7b4b5526c449d3c12581d0f317d3eee24c5c3016c8bb4da0eb19d86b6fe"}],"source":{"confidence":"standard","kind":"text-conversation","mode":"one-shot"},"version":5}
+diff --git a/src/gnd/examples/literature/interop_fixture/extraction.orm.json b/src/gnd/examples/literature/interop_fixture/extraction.orm.json
+new file mode 100644
+index 00000000..b1a5fb4a
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/extraction.orm.json
+@@ -0,0 +1 @@
++{"fact_types":[],"includes":[{"id":"literature","path":"vocabulary/literature.orm.json","sha256":"5c570342a35ac6f0fe032fb30502b1bfa508966e6bb5ff63b443d4c85fb9fdd1"},{"id":"chronology","path":"vocabulary/chronology.orm.json","sha256":"2a1970fa79ef85e669f439bedb4643ccf265608c1d21cbd257e75868546c7e9e"}],"model_id":"urn:gnd:literature:interop-extraction@1","object_types":[],"reference_populations":[{"fact_types":["catalog_method"],"id":"method-catalog","path":"reference/catalog.json","sha256":"4d25b7b4b5526c449d3c12581d0f317d3eee24c5c3016c8bb4da0eb19d86b6fe"}],"source":{"confidence":"standard","kind":"text-conversation","mode":"one-shot"},"version":5}
+diff --git a/src/gnd/examples/literature/interop_fixture/publication-dates.json b/src/gnd/examples/literature/interop_fixture/publication-dates.json
+new file mode 100644
+index 00000000..848409d3
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/publication-dates.json
+@@ -0,0 +1 @@
++{"dates":[{"precision":"year","role":"publication","value":2019,"work":"doi:10.1016/j.jcp.2018.10.045"},{"precision":"year","role":"publication","value":2021,"work":"doi:10.1016/j.jcp.2020.109913"},{"precision":"year","role":"publication","value":2026,"work":"example:survey-2026"},{"precision":"year","role":"publication","value":2019,"work":"example:replication-2019"},{"precision":"year","role":"publication","value":2019,"work":"example:conflict"},{"precision":"year","role":"publication","value":2020,"work":"example:conflict"},{"precision":"day","role":"publication","value":"2019-03-04","work":"example:day"},{"precision":"year","role":"preprint","value":2018,"work":"example:preprint"}],"schema":"literature-publication-dates/1","works":["doi:10.1016/j.jcp.2018.10.045","doi:10.1016/j.jcp.2020.109913","example:conflict","example:day","example:missing","example:preprint","example:replication-2019","example:survey-2026"]}
+diff --git a/src/gnd/examples/literature/interop_fixture/reference/catalog.json b/src/gnd/examples/literature/interop_fixture/reference/catalog.json
+new file mode 100644
+index 00000000..24843bf3
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/reference/catalog.json
+@@ -0,0 +1 @@
++{"facts":{"catalog_method":[{"method":"PINNs"}]},"population":{"covers":["catalog_method"],"model":"catalog","source":"fixture"}}
+diff --git a/src/gnd/examples/literature/interop_fixture/replication.facts.json b/src/gnd/examples/literature/interop_fixture/replication.facts.json
+new file mode 100644
+index 00000000..c90c8813
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/replication.facts.json
+@@ -0,0 +1 @@
++{"paper_names_parent_method":[{"method":"PINNs","work":"example:replication-2019"}],"paper_published_on":[{"published":"2019-06-08","work":"example:replication-2019"}],"paper_submitted_on":[{"submitted":"2019-04-12","work":"example:replication-2019"}]}
+diff --git a/src/gnd/examples/literature/interop_fixture/replication.gold.json b/src/gnd/examples/literature/interop_fixture/replication.gold.json
+new file mode 100644
+index 00000000..c90c8813
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/replication.gold.json
+@@ -0,0 +1 @@
++{"paper_names_parent_method":[{"method":"PINNs","work":"example:replication-2019"}],"paper_published_on":[{"published":"2019-06-08","work":"example:replication-2019"}],"paper_submitted_on":[{"submitted":"2019-04-12","work":"example:replication-2019"}]}
+diff --git a/src/gnd/examples/literature/interop_fixture/replication.md b/src/gnd/examples/literature/interop_fixture/replication.md
+new file mode 100644
+index 00000000..9464aec0
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/replication.md
+@@ -0,0 +1 @@
++example:replication-2019 names PINNs as a parent method. It was submitted on 2019-04-12 and published on 2019-06-08.
+diff --git a/src/gnd/examples/literature/interop_fixture/sources.json b/src/gnd/examples/literature/interop_fixture/sources.json
+new file mode 100644
+index 00000000..66b3fb21
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/sources.json
+@@ -0,0 +1 @@
++{"resolution":{"fact_type":"paper_names_parent_method","object_type":"method","preferred":"replication","role":"method"},"schema":"literature-interop-sources/1","sources":["survey","replication"]}
+diff --git a/src/gnd/examples/literature/interop_fixture/survey.facts.json b/src/gnd/examples/literature/interop_fixture/survey.facts.json
+new file mode 100644
+index 00000000..c0b92fb7
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/survey.facts.json
+@@ -0,0 +1 @@
++{"paper_names_parent_method":[{"method":"P.I.N.N.s","work":"example:survey-2026"}],"paper_published_on":[{"published":"2026-03-03","work":"example:survey-2026"}],"paper_submitted_on":[{"submitted":"2026-01-05","work":"example:survey-2026"}]}
+diff --git a/src/gnd/examples/literature/interop_fixture/survey.gold.json b/src/gnd/examples/literature/interop_fixture/survey.gold.json
+new file mode 100644
+index 00000000..c0b92fb7
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/survey.gold.json
+@@ -0,0 +1 @@
++{"paper_names_parent_method":[{"method":"P.I.N.N.s","work":"example:survey-2026"}],"paper_published_on":[{"published":"2026-03-03","work":"example:survey-2026"}],"paper_submitted_on":[{"submitted":"2026-01-05","work":"example:survey-2026"}]}
+diff --git a/src/gnd/examples/literature/interop_fixture/survey.md b/src/gnd/examples/literature/interop_fixture/survey.md
+new file mode 100644
+index 00000000..cac61574
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/survey.md
+@@ -0,0 +1 @@
++example:survey-2026 names P.I.N.N.s as a parent method. It was submitted on 2026-01-05 and published on 2026-03-03.
+diff --git a/src/gnd/examples/literature/interop_fixture/targets.json b/src/gnd/examples/literature/interop_fixture/targets.json
+new file mode 100644
+index 00000000..ccf5fbb8
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/targets.json
+@@ -0,0 +1 @@
++{"targets":[{"fact_type":"paper_names_parent_method","tuple":[{"primitive":"String","value":"example:survey-2026"},{"primitive":"String","value":"PINNs"}]},{"fact_type":"catalog_method","tuple":[{"primitive":"String","value":"PINNs"}]}],"version":1}
+diff --git a/src/gnd/examples/literature/interop_fixture/vocabulary/chronology.orm.json b/src/gnd/examples/literature/interop_fixture/vocabulary/chronology.orm.json
+new file mode 100644
+index 00000000..276fca1c
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/vocabulary/chronology.orm.json
+@@ -0,0 +1 @@
++{"fact_types":[{"id":"paper_submitted_on","reading":"{DatedWork} was submitted on {PublicationDay}","roles":[{"object_type":"dated_work","role_name":"work"},{"object_type":"publication_day","role_name":"submitted"}]},{"id":"paper_published_on","reading":"{DatedWork} was published on {PublicationDay}","roles":[{"object_type":"dated_work","role_name":"work"},{"object_type":"publication_day","role_name":"published"}]}],"object_types":[{"id":"dated_work","kind":"value","name":"DatedWork","primitive":"String"},{"id":"publication_day","kind":"value","name":"PublicationDay","primitive":"Date"}],"source":{"confidence":"standard","kind":"text-conversation","mode":"one-shot"},"version":2}
+diff --git a/src/gnd/examples/literature/interop_fixture/vocabulary/literature.orm.json b/src/gnd/examples/literature/interop_fixture/vocabulary/literature.orm.json
+new file mode 100644
+index 00000000..329ff6e2
+--- /dev/null
++++ b/src/gnd/examples/literature/interop_fixture/vocabulary/literature.orm.json
+@@ -0,0 +1 @@
++{"fact_types":[{"constraints":[{"modality":"alethic","provenance":{"user_quote":"Use the named parent method and the stated submission and publication dates."},"role":"method","source":"explicit","status":"confirmed","type":"anchored"}],"id":"paper_names_parent_method","reading":"{Work} names {Method} as a parent","roles":[{"object_type":"work","role_name":"work"},{"object_type":"method","role_name":"method"}]},{"id":"catalog_method","reading":"{Method} appears in the fixed catalog","roles":[{"object_type":"method","role_name":"method"}]}],"object_types":[{"id":"work","kind":"value","name":"Work","primitive":"String"},{"id":"method","kind":"value","name":"Method","primitive":"String"}],"source":{"confidence":"standard","kind":"text-conversation","mode":"one-shot"},"version":2}
+diff --git a/src/gnd/fidelity/service.py b/src/gnd/fidelity/service.py
+index 45f2203e..a6d43614 100644
+--- a/src/gnd/fidelity/service.py
++++ b/src/gnd/fidelity/service.py
+@@ -7,9 +7,15 @@ from typing import Any
+ from gnd import input_policy as _rf7_input
+ from gnd import resolve_version, verbalize
+ from gnd import safefs as install_module
++from gnd.artifacts import ArtifactError, read_regular_file_bytes
+ from gnd.exits import EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_USAGE
+-from gnd.extract.service import _artifact_index_issue, _extract_stem
+-from gnd.model import ModelValidationError, load_model
++from gnd.extract.service import (
++    ExtractionBundleError,
++    _artifact_index_issue,
++    _extract_stem,
++    _verify_artifact_index,
++)
++from gnd.model import MAX_MODEL_BYTES, ModelValidationError, load_model
+ from gnd.output import _print_issues
+ from gnd.population import PopulationValidationError, load_population
+ 
+@@ -81,10 +87,27 @@ def _cmd_fidelity(
+     )
+     from gnd.synth import paths as _paths
+ 
++    stem = _extract_stem(model_path)
++    artifacts_root = Path(artifacts_dir)
++    applicable_path = artifacts_root / f"{stem}.applicable.json"
++    projection_path = artifacts_root / f"{stem}.projection.schema.json"
++    required = (applicable_path.name, projection_path.name)
++    bundle = None
+     try:
+-        from gnd.model._includes import guard_path
+-        guard_path(model_path, "fidelity/service.py")
+-        model = load_model(model_path)
++        from gnd.model._includes import guard_path, include_reason
++        try:
++            guard_path(model_path, "fidelity/service.py")
++        except ModelValidationError as error:
++            if (include_reason(error) != "include:unsupported-route"
++                    or not (artifacts_root / f"{stem}.artifacts.json").is_file()):
++                raise
++            bundle = _verify_artifact_index(model_path, artifacts_dir, required)
++        model = bundle.model if bundle is not None else load_model(model_path)
++        if model is None:
++            raise ExtractionBundleError("the include root lacks an authenticated projection")
++    except ExtractionBundleError as error:
++        print(f"VIOLATION artifact-index: {verbalize.line_text(str(error))}")
++        return error.code
+     except ModelValidationError as error:
+         for warning in error.warnings:
+             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
+@@ -94,16 +117,7 @@ def _cmd_fidelity(
+         print(f"ERROR: {error}")
+         return 3
+ 
+-    stem = _extract_stem(model_path)
+-    artifacts_root = Path(artifacts_dir)
+-    applicable_path = artifacts_root / f"{stem}.applicable.json"
+-    projection_path = artifacts_root / f"{stem}.projection.schema.json"
+-
+-    bundle_issue = _artifact_index_issue(
+-        model_path,
+-        artifacts_dir,
+-        (f"{stem}.applicable.json", f"{stem}.projection.schema.json"),
+-    )
++    bundle_issue = _artifact_index_issue(model_path, artifacts_dir, required) if bundle is None else None
+     if bundle_issue is not None:
+         code, message = bundle_issue
+         print(f"VIOLATION artifact-index: {verbalize.line_text(message)}")
+@@ -126,7 +140,12 @@ def _cmd_fidelity(
+             return EXIT_NO_INPUT
+ 
+     try:
+-        applicable_bytes = applicable_path.read_bytes()
++        if bundle is None:
++            applicable_bytes = applicable_path.read_bytes()
++        else:
++            applicable_bytes = read_regular_file_bytes(
++                artifacts_root, applicable_path.name, label="applicable set", max_bytes=MAX_MODEL_BYTES,
++            )
+         applicable = _rf7_input.loads(applicable_bytes.decode("utf-8"))
+         if applicable != applicable_set(model):
+             print(
+@@ -136,9 +155,15 @@ def _cmd_fidelity(
+             return 3
+         declared_fact_types = {str(row["id"]) for row in applicable["fact_types"]}
+         applicable_sha256 = _hashlib.sha256(applicable_bytes).hexdigest()
+-        projection_sha256 = _hashlib.sha256(projection_path.read_bytes()).hexdigest()
+-        model_sha256 = _hashlib.sha256(Path(model_path).read_bytes()).hexdigest()
+-    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError) as error:
++        if bundle is None:
++            projection_sha256 = _hashlib.sha256(projection_path.read_bytes()).hexdigest()
++            model_sha256 = _hashlib.sha256(Path(model_path).read_bytes()).hexdigest()
++        else:
++            if applicable_sha256 != bundle.artifact_digests[applicable_path.name]:
++                raise ExtractionBundleError("the applicable-set bytes changed after bundle verification")
++            projection_sha256 = bundle.artifact_digests[projection_path.name]
++            model_sha256 = bundle.root_sha256
++    except (ArtifactError, OSError, UnicodeDecodeError, ValueError, KeyError, TypeError) as error:
+         print(f"ERROR: the extraction artifacts are not readable ({error})")
+         return 3
+ 
+diff --git a/tests/fixtures/lx4-literature-interop/README.md b/tests/fixtures/lx4-literature-interop/README.md
+new file mode 100644
+index 00000000..12f9d36e
+--- /dev/null
++++ b/tests/fixtures/lx4-literature-interop/README.md
+@@ -0,0 +1,8 @@
++# Literature interop integration corpus
++
++The tests run the packaged example as the public fixture. The answer file
++records the output versions, candidate source order, optional advice census,
++publication IDs for the rejected PINN edge and the shared-layout copy counts.
++Mutations identify each independent input binding. The temporal control
++changes an otherwise valid checking model and rebuilds its composition before
++checking the added date rule.
+diff --git a/tests/fixtures/lx4-literature-interop/expected.json b/tests/fixtures/lx4-literature-interop/expected.json
+new file mode 100644
+index 00000000..fc391734
+--- /dev/null
++++ b/tests/fixtures/lx4-literature-interop/expected.json
+@@ -0,0 +1,9 @@
++{
++  "manifest_schema": "literature-interop/1",
++  "rebind_schema": "literature-rebind/1",
++  "dates_schema": "literature-date-advice/1",
++  "sources": ["survey", "replication"],
++  "pinn": ["doi:10.1016/j.jcp.2018.10.045", "doi:10.1016/j.jcp.2020.109913"],
++  "counts": {"pass": 2, "advisory": 1, "unresolved": 5},
++  "extra_copies": {"document": 2, "extraction_population": 0, "extraction_sidecar": 0}
++}
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index f8161adf..fe1c754a 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -146,6 +146,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX3/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX3/review-dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX4/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/support/rf9_ci_sources.py b/tests/support/rf9_ci_sources.py
+index 5ba40912..20b0e958 100644
+--- a/tests/support/rf9_ci_sources.py
++++ b/tests/support/rf9_ci_sources.py
+@@ -14,6 +14,7 @@ PHASE_SUCCESSORS = (
+     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-authoring/evidence/GA1/source-successors.json',
+     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/source-successors.json',
+     EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json',
++    EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json',
+ )
+ 
+ 
+diff --git a/tests/test_lx4_literature_interop.py b/tests/test_lx4_literature_interop.py
+new file mode 100644
+index 00000000..1789dc5e
+--- /dev/null
++++ b/tests/test_lx4_literature_interop.py
+@@ -0,0 +1,270 @@
++"""LX4 integrated extraction, rebind, checking, fidelity and optional advice."""
++
++import hashlib
++import json
++import shutil
++from pathlib import Path
++
++import pytest
++
++from gnd.artifacts import canonical_json_bytes
++from gnd.cli import main
++
++EXPECTED = json.loads((Path(__file__).parent / "fixtures/lx4-literature-interop/expected.json").read_bytes())
++
++
++def read(path):
++    return json.loads(path.read_bytes())
++
++
++def sha(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def write(path, value):
++    path.write_bytes(canonical_json_bytes(value))
++
++
++@pytest.fixture(scope="module")
++def example(tmp_path_factory):
++    try:
++        from gnd.examples.literature import interop
++    except ImportError:
++        pytest.fail("the integrated literature example must expose its public run and verify commands")
++    directory = tmp_path_factory.mktemp("lx4").resolve() / "run"
++    assert interop.main(["run", "--out", str(directory), "--dates"]) == 0
++    return interop, directory
++
++
++def test_public_integration_checks_every_stage(example):
++    interop, run = example
++    assert interop.main(["verify", str(run)]) == 0
++    manifest = read(run / "interop.json")
++    assert manifest["schema"] == EXPECTED["manifest_schema"]
++    assert manifest["layout"]["additional_copies"] == EXPECTED["extra_copies"]
++    assert list(manifest["source_order"]) == EXPECTED["sources"]
++    for name in EXPECTED["sources"]:
++        folder = run / "sources" / name
++        rebind = read(folder / "rebind.json")
++        assert rebind["schema"] == EXPECTED["rebind_schema"]
++        assert len(rebind["includes"]) == 2
++        assert len(rebind["references"]) == 1
++        assert rebind["extraction_root_sha256"] != rebind["checking_root_sha256"]
++        assert rebind["document_sha256"] == sha(folder / "document.md") == sha(folder / "document.txt")
++        assert read(folder / "extracted.population.json")["population"]["model_id"] != (
++            read(folder / "population.json")["population"]["model_id"]
++        )
++        assert rebind["rebound_population_sha256"] == sha(folder / "population.json")
++    report = read(run / "check.json")
++    assert report["exit_code"] == 0
++    assert any(row["constraint_type"] == "guarded" and row["verdict"] == "pass"
++               for row in report["report"]["verdicts"])
++    proof = read(run / "witness.json")
++    assert proof["version"] == 4
++    assert {node["origin"]["kind"] for node in proof["nodes"] if node["kind"] == "base"} == {
++        "candidate", "reference",
++    }
++    assert read(run / "replay.json")["exit_code"] == 0
++    assert read(run / "fidelity.json")["cases"]["ran"] == 2
++    composition = read(run / "composition.json")
++    assert composition["schema"] == "gnd-composition/2"
++    assert all(row["decisions"] == [0] for row in composition["facts"]
++               if row["fact_type"] == "paper_names_parent_method")
++
++
++def test_advisory_is_optional_and_pinn_stays_a_candidate(example, tmp_path):
++    interop, run = example
++    report = read(run / "dates.json")
++    assert report["schema"] == EXPECTED["dates_schema"]
++    assert report["counts"] == EXPECTED["counts"]
++    row = next(row for row in report["edges"] if row["outcome"] == "advisory")
++    assert [row["descendant_work"], row["ancestor_work"]] == EXPECTED["pinn"]
++    assert [row["descendant_date"], row["ancestor_date"], row["role"]] == [2019, 2021, "publication"]
++    unresolved = {row["reason"] for row in report["edges"] if row["outcome"] == "unresolved"}
++    assert unresolved == {"unknown-work", "conflicting-date", "missing-date", "mixed-precision", "publication-date-missing"}
++    assert "non-chaining" not in {row["id"] for row in report["edges"]}
++    composed = json.dumps(read(run / "composed.population.json"))
++    assert "Bayesian PINNs" not in composed
++    plain = tmp_path.resolve() / "plain"
++    assert interop.main(["run", "--out", str(plain)]) == 0
++    assert not (plain / "dates.json").exists()
++    for name in ("composition.json", "check.json", "witness.json", "replay.json"):
++        assert (plain / name).read_bytes() == (run / name).read_bytes()
++    out = tmp_path / "same-advice.json"
++    assert interop.main(["dates", str(plain), "--out", str(out)]) == 0
++    assert out.read_bytes() == (run / "dates.json").read_bytes()
++
++
++@pytest.mark.parametrize("filename", [
++    "sources/survey/rebind.json",
++    "extraction.orm.json",
++    "checking.orm.json",
++    "vocabulary/literature.orm.json",
++    "artifacts/extraction.orm.artifacts.json",
++    "sources/survey/document.md",
++    "sources/survey/extracted.population.json",
++    "sources/survey/extracted.population.extraction.json",
++    "sources/survey/extracted.population.json.anchors.json",
++    "sources/survey/population.json",
++    "sources/survey/population.json.anchors.json",
++    "reference/catalog.json",
++    "sources/resolution.json",
++    "composition.json",
++    "composed.population.json",
++    "witness.json",
++    "candidate-edges.json",
++    "publication-dates.json",
++])
++def test_stale_stage_evidence_refuses(example, tmp_path, filename):
++    interop, good = example
++    bad = tmp_path.resolve() / "stale"
++    shutil.copytree(good, bad)
++    path = bad / filename
++    path.write_bytes(path.read_bytes() + b" ")
++    assert interop.main(["verify", str(bad)]) == 3
++
++
++def test_rebind_refuses_a_valid_root_with_different_pins(example, tmp_path):
++    interop, good = example
++    bad = tmp_path.resolve() / "alternate"
++    shutil.copytree(good, bad)
++    checking = bad / "checking.orm.json"
++    root = read(checking)
++    vocab = bad / "vocabulary/literature.orm.json"
++    alternate = vocab.with_name("alternate.orm.json")
++    alternate.write_bytes(vocab.read_bytes() + b" ")
++    root["includes"][0].update(path="vocabulary/alternate.orm.json", sha256=sha(alternate))
++    write(checking, root)
++    from gnd.model import load_model
++
++    assert load_model(checking)._included
++    with pytest.raises(ValueError, match="root vocabulary pins differ"):
++        interop.rebind(bad, "survey")
++
++
++def test_rebind_is_rederived_before_check_or_advice(example, tmp_path, monkeypatch):
++    interop, good = example
++    bad = tmp_path.resolve() / "forged-rebind"
++    shutil.copytree(good, bad)
++    member = "sources/survey/rebind.json"
++    changed = read(bad / member)
++    changed["document_sha256"] = "0" * 64
++    write(bad / member, changed)
++    manifest = read(bad / "interop.json")
++    manifest["sha256"][member] = sha(bad / member)
++    write(bad / "interop.json", manifest)
++
++    def unreachable(*_args):
++        pytest.fail("semantic checking or advice ran before rebind validation")
++
++    monkeypatch.setattr(interop, "_check", unreachable)
++    monkeypatch.setattr(interop, "_advice", unreachable)
++    assert interop.main(["verify", str(bad)]) == 3
++
++
++def test_report_digest_cannot_replace_advice_rederivation(example, tmp_path):
++    interop, good = example
++    bad = tmp_path.resolve() / "forged-advice"
++    shutil.copytree(good, bad)
++    report = read(bad / "dates.json")
++    row = next(edge for edge in report["edges"] if edge["id"] == "pinn")
++    row["ancestor_date"] = 2019
++    write(bad / "dates.json", report)
++    manifest = read(bad / "interop.json")
++    manifest["sha256"]["dates.json"] = sha(bad / "dates.json")
++    write(bad / "interop.json", manifest)
++    assert interop.main(["verify", str(bad)]) == 3
++
++
++def test_fidelity_rechecks_re_pinned_flat_artifact(example, tmp_path, capsys):
++    _, good = example
++    bad = tmp_path.resolve() / "forged-fidelity-bundle"
++    shutil.copytree(good, bad)
++    index_path = bad / "artifacts/extraction.orm.artifacts.json"
++    index = read(index_path)
++    file_name = index["flattening"]["flat_model"]
++    flat = index_path.with_name(file_name)
++    flat.write_bytes(flat.read_bytes() + b" ")
++    index["artifacts"][file_name]["sha256"] = sha(flat)
++    write(index_path, index)
++    assert main(["fidelity", str(bad / "extraction.orm.json"), "--cases", str(bad / "sources"),
++                 "--artifacts", str(bad / "artifacts"), "--format", "json"]) == 3
++    assert "flat model does not match" in capsys.readouterr().out
++
++
++def test_fidelity_failure_cannot_be_pinned_as_a_verified_run(example, tmp_path):
++    interop, good = example
++    bad = tmp_path.resolve() / "unscored-case"
++    shutil.copytree(good, bad)
++    member = "sources/survey/document.manifest.json"
++    write(bad / member, {})
++    report = interop._stage(bad, "fidelity", "extraction.orm.json", "--cases", "sources",
++                            "--artifacts", "artifacts", "--format", "json")
++    assert json.loads(report)["cases"]["failed"] == 1
++    (bad / "fidelity.json").write_bytes(report)
++    manifest = read(bad / "interop.json")
++    for name in (member, "fidelity.json"):
++        manifest["sha256"][name] = sha(bad / name)
++    write(bad / "interop.json", manifest)
++    assert interop.main(["verify", str(bad)]) == 3
++
++
++def test_verified_proof_must_name_the_fixture_targets(example, tmp_path, capsys):
++    interop, good = example
++    bad = tmp_path.resolve() / "alternate-proof"
++    shutil.copytree(good, bad)
++    alternate = read(bad / "targets.json")
++    alternate["targets"].pop()
++    write(bad / "other-target.json", alternate)
++    (bad / "witness.json").unlink()
++    interop._stage(bad, "witness", "checking.orm.json", "composed.population.json",
++                   "--targets", "other-target.json", "--composition", "composition.json",
++                   "--raw", "--out", "witness.json")
++    (bad / "replay.json").write_bytes(interop._replay(bad))
++    recorded = read(bad / "interop.json")
++    for name in ("witness.json", "replay.json"):
++        recorded["sha256"][name] = sha(bad / name)
++    write(bad / "interop.json", recorded)
++    assert interop.main(["verify", str(bad)]) == 3
++    assert "witness targets differ" in capsys.readouterr().err
++
++
++def test_rebind_refuses_a_valid_root_with_a_different_catalog(example, tmp_path):
++    interop, good = example
++    bad = tmp_path.resolve() / "alternate"
++    shutil.copytree(good, bad)
++    checking = bad / "checking.orm.json"
++    root = read(checking)
++    catalog = bad / "reference/catalog.json"
++    alternate = catalog.with_name("alternate.json")
++    alternate.write_bytes(catalog.read_bytes() + b" ")
++    root["reference_populations"][0].update(path="reference/alternate.json", sha256=sha(alternate))
++    write(checking, root)
++    from gnd.model import load_model
++
++    assert load_model(checking)._references
++    with pytest.raises(ValueError, match="root catalog bindings differ"):
++        interop.rebind(bad, "survey")
++
++
++def test_temporal_constraint_distinguishes_checking_model(example, tmp_path, capsys):
++    _, good = example
++    checking = good / "checking.orm.json"
++    assert main(["extract", str(checking), "--out", str(tmp_path / "refused")]) == 3
++    assert "temporal:consumer-unsupported" in capsys.readouterr().out
++    bad = tmp_path.resolve() / "chronology"
++    shutil.copytree(good, bad)
++    model = bad / checking.name
++    root = read(model)
++    temporal = next(c for c in root["constraints"] if c["type"] == "guarded")
++    temporal["consequent"]["comparison"]["left"]["args"][1]["duration_days"] = 3650
++    write(model, root)
++    out, record = bad / "control.population.json", bad / "control.record.json"
++    assert main(["compose", str(model), str(bad / "sources"), "--out", str(out), "--record", str(record)]) == 0
++    capsys.readouterr()
++    assert main(["check", str(model), str(out), "--composition", str(record),
++                 "--sources", str(bad / "sources"), "--format", "json"]) == 1
++    verdicts = json.loads(capsys.readouterr().out)["report"]["verdicts"]
++    assert any(row["constraint_type"] == "guarded" and row["verdict"] == "fail" for row in verdicts)
++    assert main(["verify", str(model), str(bad / "sources/survey/extracted.population.json"),
++                 "--artifacts", str(bad / "artifacts")]) == 3
+diff --git a/tests/test_mc1_guards.py b/tests/test_mc1_guards.py
+index 4ed2cc5d..ed3d3217 100644
+--- a/tests/test_mc1_guards.py
++++ b/tests/test_mc1_guards.py
+@@ -331,7 +331,7 @@ def test_R27_recovery_before_copy(tmp_path, monkeypatch):
+     assert 'include:unsupported-route' in str(result)
+ 
+ 
+-def test_R30_examples_do_not_declare_includes():
++def test_R30_packaged_include_roots_resolve():
+     from gnd.model import load_model, parse_model_document
+     from gnd.model._includes import declares_includes
+     examples = Path(__file__).resolve().parents[1] / 'src/gnd/examples'
+@@ -340,7 +340,9 @@ def test_R30_examples_do_not_declare_includes():
+     included = {path.relative_to(examples).as_posix() for path in paths
+                 if declares_includes(parse_model_document(path.read_bytes(), source=path))}
+     expected = {'expense/teams/engineering.orm.json', 'expense/teams/sales.orm.json',
+-                'expense/teams/sales-v2.orm.json'}
++                'expense/teams/sales-v2.orm.json',
++                'literature/interop_fixture/checking.orm.json',
++                'literature/interop_fixture/extraction.orm.json'}
+     assert included == expected
+     for relative in included:
+         assert load_model(examples / relative)._included

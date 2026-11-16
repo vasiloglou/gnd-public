@@ -975,6 +975,10 @@
       "lane": "witness",
       "layer": "lanes"
     },
+    "gnd.witness.flattening": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
     "gnd.witness.io": {
       "lane": "witness",
       "layer": "lanes"
@@ -1053,6 +1057,9 @@
       "layer": "model"
     },
     "gnd.model._paths": {
+      "layer": "model"
+    },
+    "gnd.model.flattening": {
       "layer": "model"
     }
   },

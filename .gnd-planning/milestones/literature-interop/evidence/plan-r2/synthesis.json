@@ -1,0 +1,652 @@
+{
+  "schema_version": 1,
+  "run_sha256": "ca4b5fb4d18894ff76c2aa8389b3e0d588b481393b545e8d43883bc8a82ade02",
+  "summary": "Six valid responses on plan r3. Resolve the rebind and composition sequence and retain all six opinions. The two-round review budget is exhausted.",
+  "agreed_concerns": [
+    {
+      "group_id": "rebind",
+      "severity": "high",
+      "title": "Pin the rebind, composition and witness sequence",
+      "summary": "Rebind candidate sources before composing on the checking root. Check, witness and replay use that root and its matching composition record. Independently verify the fixture evidence chain.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-rebind-composed-catalog-population"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-rebind-drops-catalog-binding"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-rebound-population-witness-link-missing"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "lx4-rebind-drops-composition"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "dates",
+      "severity": "high",
+      "title": "Bind publication dates to evidenced work IDs",
+      "summary": "Define a dated-work fixture input, map candidate edges to work IDs, and bind both inputs to a separate advisory report.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-date-source-absent"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-lineage-dates-unbound-in-chain"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "dates-on-lineage-edges"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "guards",
+      "severity": "medium",
+      "title": "Assert retained direct-route refusals",
+      "summary": "Exercise direct include-byte witness/replay refusals and retained explicit-anchor/reference refusal.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unsupported-matrix-omits-retained-guards"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx2-direct-byte-guard-no-acceptance-control"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "advisory",
+      "severity": "high",
+      "title": "Name and sequence the optional advisory invocation",
+      "summary": "Call a separate example step after composition and verify equivalent check and witness results when that step is omitted.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-advisory-stage-has-no-runtime-surface"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "advisory-check-beside-extraction"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx3-check-consumer-drops-catalog-rows"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx4-builds-on-edge-selection"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx4-vocabulary-mismatch-control"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx3b-catalog-mutation-nondiscriminating"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx3c-origin-kind-ambiguous"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lx4-equal-date-classification"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "lx2-flat-model-unverified-at-witness"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "absent-binding-serialization-unpinned"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "lx2-no-two-axis-provenance-control"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "binding-stale-token-unsourced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "r2-snapshot-not-digest-pinned"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "lx4-temporal-constraint-phase"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "composition-document-evidence"
+    },
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "lit-interop-r3-catalog-replay-binding"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "lx4-rebind-extraction-side-mutation-omitted"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "rebind",
+      "rank": 1,
+      "title": "Pin the rebind, composition and witness sequence",
+      "action": "Rebind candidate sources before composing on the checking root. Check, witness and replay use that root and its matching composition record. Independently verify the fixture evidence chain.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-rebind-composed-catalog-population"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-rebind-drops-catalog-binding"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-rebound-population-witness-link-missing"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "lx4-rebind-drops-composition"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-rebind-composed-catalog-population",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-rebind-drops-catalog-binding",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-rebound-population-witness-link-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "lx4-rebind-drops-composition",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "dates",
+      "rank": 2,
+      "title": "Bind publication dates to evidenced work IDs",
+      "action": "Define a dated-work fixture input, map candidate edges to work IDs, and bind both inputs to a separate advisory report.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-date-source-absent"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-lineage-dates-unbound-in-chain"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "dates-on-lineage-edges"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-date-source-absent",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-lineage-dates-unbound-in-chain",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "dates-on-lineage-edges",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "check",
+      "rank": 3,
+      "title": "Prove check evaluates catalog rows",
+      "action": "Use a constraint with a distinguishing outcome when the composed check includes its bound catalog rows.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx3-check-consumer-drops-catalog-rows"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx3-check-consumer-drops-catalog-rows",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "edge",
+      "rank": 4,
+      "title": "Define candidate edge selection",
+      "action": "Select builds-on/chainable relation cases accepted as inputs to the advisory example and define the mapping to works.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-builds-on-edge-selection"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-builds-on-edge-selection",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "vocabulary",
+      "rank": 5,
+      "title": "Refuse a valid but different vocabulary",
+      "action": "Test a separately valid checking model with different include pins, including a new internally consistent rebind record.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-vocabulary-mismatch-control"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-vocabulary-mismatch-control",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "catalog",
+      "rank": 6,
+      "title": "Separate root-declaration and record binding checks",
+      "action": "Test a tampered composition record and incompatible valid catalog declarations, keeping candidate bytes fixed.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx3b-catalog-mutation-nondiscriminating"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx3b-catalog-mutation-nondiscriminating",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "origins",
+      "rank": 7,
+      "title": "Separate fact and model origin forgeries",
+      "action": "Give each swap and forged digest or model origin an independent replay control.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx3c-origin-kind-ambiguous"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx3c-origin-kind-ambiguous",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "equal",
+      "rank": 8,
+      "title": "Define equal and coarse publication dates",
+      "action": "Compare equally precise known dates and explicitly resolve the equal and uncertain cases.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-equal-date-classification"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-equal-date-classification",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "guards",
+      "rank": 9,
+      "title": "Assert retained direct-route refusals",
+      "action": "Exercise direct include-byte witness/replay refusals and retained explicit-anchor/reference refusal.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unsupported-matrix-omits-retained-guards"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx2-direct-byte-guard-no-acceptance-control"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unsupported-matrix-omits-retained-guards",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx2-direct-byte-guard-no-acceptance-control",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "flat",
+      "rank": 10,
+      "title": "Test the flat-model handoff to witness and replay",
+      "action": "Keep the root, includes and record fixed while substituting different flat bytes.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-flat-model-unverified-at-witness"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-flat-model-unverified-at-witness",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "advisory",
+      "rank": 11,
+      "title": "Name and sequence the optional advisory invocation",
+      "action": "Call a separate example step after composition and verify equivalent check and witness results when that step is omitted.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-advisory-stage-has-no-runtime-surface"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "advisory-check-beside-extraction"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4-advisory-stage-has-no-runtime-surface",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "advisory-check-beside-extraction",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "absence",
+      "rank": 12,
+      "title": "Omit inapplicable wire fields",
+      "action": "Pin absent fields for include-free extraction and reference-free composition.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "absent-binding-serialization-unpinned"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "absent-binding-serialization-unpinned",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "axes",
+      "rank": 13,
+      "title": "Vary model origin and fact provenance independently",
+      "action": "Run two LX2 controls that keep the other provenance axis fixed.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-no-two-axis-provenance-control"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-no-two-axis-provenance-control",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "token",
+      "rank": 14,
+      "title": "Ground the existing binding-stale token",
+      "action": "Cite the replay kernel and retain the prior replay outcome on eligible legacy certificates.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "binding-stale-token-unsourced"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "binding-stale-token-unsourced",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "history",
+      "rank": 15,
+      "title": "Pin predecessor plan bytes",
+      "action": "Cite both reviewed snapshots by digest and identify each changed section.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "r2-snapshot-not-digest-pinned"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "r2-snapshot-not-digest-pinned",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "temporal",
+      "rank": 16,
+      "title": "Retain temporal refusal from LX1",
+      "action": "Test the extraction boundary in LX1 and exercise it again in the end-to-end fixture.",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "lx4-temporal-constraint-phase"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "lx4-temporal-constraint-phase",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "document",
+      "rank": 17,
+      "title": "Keep the existing composition source evidence contract",
+      "action": "Retain required anchor sidecar and document bindings. State that these provenance inputs are not catalog or candidate facts.",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "composition-document-evidence"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "composition-document-evidence",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "replay",
+      "rank": 18,
+      "title": "Name replay as a catalog verifier",
+      "action": "Align the LX3 contract with its replay criterion.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lit-interop-r3-catalog-replay-binding"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lit-interop-r3-catalog-replay-binding",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "kimi"
+      ]
+    },
+    {
+      "fix_id": "extraction",
+      "rank": 19,
+      "title": "Mutate extraction-side rebind inputs",
+      "action": "Keep the published rebind record fixed while mutating the root, pin and bundle independently.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx4-rebind-extraction-side-mutation-omitted"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "lx4-rebind-extraction-side-mutation-omitted",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "glm"
+      ]
+    }
+  ]
+}

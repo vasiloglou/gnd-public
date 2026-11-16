@@ -1,0 +1,70 @@
+[
+  {
+    "amended_files": [
+      ".gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md",
+      "src/gnd/extract/service.py",
+      "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "tests/test_lx1_flattening.py"
+    ],
+    "local_regressions": "schema re-derivation when index and sidecar are re-pinned",
+    "phase": "LX1",
+    "phase_snapshot": "ac157120d6ad188b77c6fc6671a4173059d38b7a",
+    "reviewed_commit": "e2ce2ade32e1c68f040493507c4f0d36abc9fdfb",
+    "unchanged_reviewed_count": 28,
+    "verdict": "APPROVE"
+  },
+  {
+    "amended_files": [
+      "dev/components/modules/witness.md",
+      "src/gnd/witness/flattening.py",
+      "src/gnd/witness/service.py",
+      "tests/test_lx2_witness_flattening.py"
+    ],
+    "local_regressions": "streamed models, stale diagnostics, symlinked parents and target precedence",
+    "phase": "LX2",
+    "phase_snapshot": "6d2ecece1781a6e8a2d249116107ff3c7f0c342e",
+    "reviewed_commit": "1274776436b62a666f7d72e94e0547b5ae9bc8b3",
+    "unchanged_reviewed_count": 22,
+    "verdict": "CHANGES_REQUESTED"
+  },
+  {
+    "amended_files": [
+      ".gnd-planning/milestones/literature-interop/notes/phase-LX3-spec.md",
+      "dev/components/COMPONENTS.md",
+      "dev/components/graph.md",
+      "dev/components/modules/_root.md",
+      "dev/components/modules/model.md",
+      "dev/components/modules/witness.md",
+      "docs/reference/composition.md",
+      "src/gnd/api.py",
+      "src/gnd/composition.py",
+      "src/gnd/model/__init__.py",
+      "src/gnd/skills/gnd-export/references/witness-contract.md",
+      "src/gnd/witness/service.py",
+      "tests/support/pyrel_application_successors.py",
+      "tests/test_lx3_catalog_composition.py"
+    ],
+    "local_regressions": "equality dependence, pinned invalid catalog and exact candidate coordinates",
+    "phase": "LX3",
+    "phase_snapshot": "d523c14d40dd3fe318c2059e4bde2cbea91c0fda",
+    "reviewed_commit": "28dc21b75c4285e059839f1761eead3df02c8a42",
+    "unchanged_reviewed_count": 18,
+    "verdict": "CHANGES_REQUESTED"
+  },
+  {
+    "amended_files": [
+      ".gnd-planning/milestones/literature-interop/notes/phase-LX4-spec.md",
+      "dev/components/modules/examples.md",
+      "src/gnd/examples/literature/README.md",
+      "src/gnd/examples/literature/interop.py",
+      "src/gnd/examples/literature/interop_dates.py",
+      "tests/test_lx4_literature_interop.py"
+    ],
+    "local_regressions": "source provenance, full extraction bundle, advice presence, copy census and temporal order",
+    "phase": "LX4",
+    "phase_snapshot": "bcf5146a6f8189d80d37812baa822e10b3c72427",
+    "reviewed_commit": "8e98afc1b33039e626d30bd54e4694152c8f46e1",
+    "unchanged_reviewed_count": 30,
+    "verdict": "CHANGES_REQUESTED"
+  }
+]

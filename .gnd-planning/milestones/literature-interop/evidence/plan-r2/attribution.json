@@ -1,0 +1,132 @@
+[
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx4-date-source-absent",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx4-rebind-composed-catalog-population",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx3-check-consumer-drops-catalog-rows",
+    "r3_repair": false
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx4-builds-on-edge-selection",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx4-vocabulary-mismatch-control",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx3b-catalog-mutation-nondiscriminating",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx3c-origin-kind-ambiguous",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "lx4-equal-date-classification",
+    "r3_repair": false
+  },
+  {
+    "reviewer_id": "claude",
+    "concern_id": "unsupported-matrix-omits-retained-guards",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "lx2-flat-model-unverified-at-witness",
+    "r3_repair": false
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "lx4-rebind-drops-catalog-binding",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "lx4-advisory-stage-has-no-runtime-surface",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "lx4-lineage-dates-unbound-in-chain",
+    "r3_repair": false
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "lx4-rebound-population-witness-link-missing",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "absent-binding-serialization-unpinned",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "lx2-no-two-axis-provenance-control",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "binding-stale-token-unsourced",
+    "r3_repair": false
+  },
+  {
+    "reviewer_id": "qwen",
+    "concern_id": "r2-snapshot-not-digest-pinned",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "gemini",
+    "concern_id": "lx4-temporal-constraint-phase",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "gemini",
+    "concern_id": "composition-document-evidence",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "gemini",
+    "concern_id": "advisory-check-beside-extraction",
+    "r3_repair": false
+  },
+  {
+    "reviewer_id": "gemini",
+    "concern_id": "lx4-rebind-drops-composition",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "gemini",
+    "concern_id": "dates-on-lineage-edges",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "kimi",
+    "concern_id": "lit-interop-r3-catalog-replay-binding",
+    "r3_repair": false
+  },
+  {
+    "reviewer_id": "glm",
+    "concern_id": "lx4-rebind-extraction-side-mutation-omitted",
+    "r3_repair": true
+  },
+  {
+    "reviewer_id": "glm",
+    "concern_id": "lx2-direct-byte-guard-no-acceptance-control",
+    "r3_repair": true
+  }
+]

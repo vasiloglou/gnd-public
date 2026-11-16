@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [
+    {
+      "id": "topic",
+      "name": "Topic",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": []
+}

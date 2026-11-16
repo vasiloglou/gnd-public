@@ -1,0 +1,9 @@
+{
+  "manifest_schema": "literature-interop/1",
+  "rebind_schema": "literature-rebind/1",
+  "dates_schema": "literature-date-advice/1",
+  "sources": ["survey", "replication"],
+  "pinn": ["doi:10.1016/j.jcp.2018.10.045", "doi:10.1016/j.jcp.2020.109913"],
+  "counts": {"pass": 2, "advisory": 1, "unresolved": 5},
+  "extra_copies": {"document": 2, "extraction_population": 0, "extraction_sidecar": 0}
+}

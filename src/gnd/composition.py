@@ -36,7 +36,7 @@ from gnd.composition_resolution import exact_fields as _keys
 from gnd.composition_resolution import read_json as _json
 from gnd.composition_resolution import row_key as _row_key
 from gnd.composition_resolution import scalar as _scalar
-from gnd.model import MAX_ENTRIES, Model
+from gnd.model import MAX_ENTRIES, Model, ReferenceInputError, resolve_context
 from gnd.model_index import ModelIndex
 from gnd.population import (
     MAX_POPULATION_BYTES,
@@ -44,9 +44,11 @@ from gnd.population import (
     PopulationLoadError,
     load_population_bytes,
 )
+from gnd.values import identity_key
 
 MANIFEST_SCHEMA = "gnd-composition-manifest/1"
 RECORD_SCHEMA = "gnd-composition/1"
+CATALOG_RECORD_SCHEMA = "gnd-composition/2"
 MAX_MANIFEST_BYTES = 1 << 20
 MAX_RECORD_BYTES = 16 << 20
 _ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
@@ -157,14 +159,19 @@ def parse_record(raw: bytes) -> dict[str, Any]:
     has_resolution = isinstance(data, dict) and "resolution_sha256" in data
     if has_resolution:
         digests.append("resolution_sha256")
-    _keys(data, {"schema", "sources", "scope_tags", "facts"} | set(digests), "record")
-    if data["schema"] != RECORD_SCHEMA:
+    catalog = isinstance(data, dict) and data.get("schema") == CATALOG_RECORD_SCHEMA
+    fields = {"schema", "sources", "scope_tags", "facts"} | set(digests)
+    _keys(data, fields | {"references"} if catalog else fields, "record")
+    if not catalog and data["schema"] != RECORD_SCHEMA:
         raise CompositionError("record schema is not gnd-composition/1")
+    if catalog:
+        _parse_catalog_roster(data["references"])
     for key in digests:
         if not isinstance(data[key], str) or not _HEX.fullmatch(data[key]):
             raise CompositionError(f"record {key} is not a SHA-256 digest")
     if not isinstance(data["sources"], list) or not data["sources"]:
         raise CompositionError("record sources must be a non-empty list")
+    source_ids = set()
     for index, source in enumerate(data["sources"]):
         _keys(source, {"id", "population_sha256", "sidecar_sha256", "document_sha256"}, f"record source {index}")
         if not isinstance(source["id"], str) or not _ID.fullmatch(source["id"]):
@@ -172,6 +179,11 @@ def parse_record(raw: bytes) -> dict[str, Any]:
         if not all(isinstance(source[key], str) and _HEX.fullmatch(source[key])
                    for key in ("population_sha256", "sidecar_sha256", "document_sha256")):
             raise CompositionError(f"record source {index} has an invalid digest")
+        if catalog:
+            identifier = source["id"]
+            if identifier in source_ids:
+                raise CompositionError("record candidate source ids must be distinct")
+            source_ids.add(identifier)
     if not isinstance(data["scope_tags"], list):
         raise CompositionError("record scope_tags must be a list")
     for index, tag in enumerate(data["scope_tags"]):
@@ -183,6 +195,7 @@ def parse_record(raw: bytes) -> dict[str, Any]:
     fields = {"fact_type", "index", "sources", "renamings"}
     if has_resolution:
         fields.add("decisions")
+    fact_coordinates = set()
     for index, fact in enumerate(data["facts"]):
         _keys(fact, fields, f"record fact {index}")
         if has_resolution:
@@ -192,10 +205,17 @@ def parse_record(raw: bytes) -> dict[str, Any]:
                 raise CompositionError(f"record fact {index} decisions must be sorted distinct indexes")
         if not isinstance(fact["fact_type"], str) or type(fact["index"]) is not int or fact["index"] < 0:
             raise CompositionError(f"record fact {index} is invalid")
+        if catalog:
+            coordinate = fact["fact_type"], fact["index"]
+            if coordinate in fact_coordinates:
+                raise CompositionError(f"record fact {index} duplicates a candidate coordinate")
+            fact_coordinates.add(coordinate)
         if not isinstance(fact["sources"], list) or not fact["sources"]:
             raise CompositionError(f"record fact {index} needs at least one source fact")
         for position, entry in enumerate(fact["sources"]):
             _lineage_entry(entry, f"record fact {index} source {position}")
+            if catalog and entry["source"] not in source_ids:
+                raise CompositionError(f"record fact {index} names an unknown candidate source")
         if not isinstance(fact["renamings"], list) or not all(type(item) is int and item >= 0 for item in fact["renamings"]):
             raise CompositionError(f"record fact {index} renamings must be manifest indexes")
     # One record, one identity (close review): the check reports the canonical
@@ -203,6 +223,54 @@ def parse_record(raw: bytes) -> dict[str, Any]:
     if raw != canonical_json_bytes(data):
         raise CompositionError("record is not in the canonical form gnd compose writes")
     return data
+
+
+def _parse_catalog_roster(roster: object) -> None:
+    if not isinstance(roster, list) or not 1 <= len(roster) <= 32:
+        raise CompositionError("record references needs 1 to 32 entries")
+    ids = []
+    for entry in roster:
+        _keys(entry, {"id", "raw_sha256"}, "record reference")
+        identifier, digest = entry["id"], entry["raw_sha256"]
+        if not isinstance(identifier, str) or not 1 <= len(identifier) <= 128:
+            raise CompositionError("record reference id must be 1 to 128 characters")
+        if not isinstance(digest, str) or not _HEX.fullmatch(digest):
+            raise CompositionError("record reference digest is invalid")
+        ids.append(identifier)
+    if any(left >= right for left, right in pairwise(ids)):
+        raise CompositionError("record reference ids must be sorted and distinct")
+
+
+def catalog_roster(model: Model, *, references=None) -> list[dict[str, str]]:
+    """Validate fixed catalog keys and admission before using candidate evidence."""
+    if not model.reference_populations:
+        return []
+    try:
+        context = resolve_context(model, references)
+    except ReferenceInputError as error:
+        raise CompositionError("reference populations require a current bound catalog context") from error
+    owners = dict(context._owners)
+    rows = {fact_type: facts for pop in context._populations for fact_type, facts in pop.facts.items()}
+    directions = {
+        "subset": (("subset_role_seq", "superset_role_seq"),),
+        "equality": (("role_seq_a", "role_seq_b"), ("role_seq_b", "role_seq_a")),
+    }
+    for _, constraint, fact_type in ModelIndex.for_model(model).iter_constraints_shared():
+        if constraint.get("status") != "confirmed" or constraint.get("modality", "alethic") != "alethic":
+            continue
+        if (constraint.get("type") == "uniqueness" and fact_type is not None
+                and constraint.get("scope", "internal") == "internal"):
+            fact_id = fact_type.get("id")
+            roles = ModelIndex.constraint_roles(constraint)
+            facts = rows.get(fact_id, ())
+            if facts and len({tuple(identity_key(row[role]) for role in roles) for row in facts}) != len(facts):
+                raise CompositionError(f"reference catalog key conflict for {fact_id}")
+        for antecedent, consequent in directions.get(constraint.get("type"), ()):
+            left = {role.get("fact_type") for role in constraint.get(antecedent, ())}
+            right = {role.get("fact_type") for role in constraint.get(consequent, ())}
+            if left and all(rows.get(fact_id) for fact_id in left) and right.difference(owners):
+                raise CompositionError("reference catalog depends on candidate rows")
+    return [{"id": origin.id, "raw_sha256": origin.raw_sha256} for origin, _, _ in context._snapshots]
 
 
 def _read(path: Path, *, label: str, max_bytes: int) -> bytes:
@@ -222,6 +290,8 @@ def _load_source(model: Model, directory: Path, source_id: str) -> Source:
     except PopulationLoadError as error:
         # Population messages can quote values; the refusal names the source only.
         raise CompositionError(f"source {source_id} population does not validate against the model") from error
+    if model.reference_populations and any(ft in population.facts for ft, _ in model._references._owners):
+        raise CompositionError(f"source {source_id} mentions a reference-owned fact type")
     try:
         sidecar = parse_anchor_sidecar(sidecar_raw)
         bind_anchors(sidecar, model, population_raw, document_raw, population)
@@ -236,9 +306,11 @@ def _load_source(model: Model, directory: Path, source_id: str) -> Source:
 
 def compose(model: Model, model_raw: bytes, directory: str | Path) -> Composition:
     """Compose the sources a manifest names; refuse instead of guessing."""
+    return _compose(model, model_raw, directory, catalog_roster(model))
+
+
+def _compose(model, model_raw, directory, references):
     directory = Path(directory)
-    if model.reference_populations:
-        raise CompositionError("composition with reference populations is unsupported")
     manifest_raw = _read(directory / "manifest.json", label="composition manifest", max_bytes=MAX_MANIFEST_BYTES)
     manifest = parse_manifest(manifest_raw)
     index_ = ModelIndex.for_model(model)
@@ -376,6 +448,8 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
             for fact_type in sorted(facts) for position in range(len(facts[fact_type]))
         ],
     }
+    if references:
+        record.update(schema=CATALOG_RECORD_SCHEMA, references=references)
     if evidence is not None:
         keys = evidence.collect_keys(instance_renamings)
         check_coverage(list(keys.values()), evidence.resolution.decisions,
@@ -392,11 +466,14 @@ def verify_composition(
     model: Model, model_raw: bytes, population_raw: bytes, record: dict[str, Any], directory: str | Path,
 ) -> Composition:
     """Re-derive a composition from its inputs and compare it with the record."""
+    references = catalog_roster(model)
+    if record.get("references", []) != references:
+        raise CompositionError("reference roster differs from the record")
     if record["model_sha256"] != _sha(model_raw):
         raise CompositionError("the model differs from the record's model digest")
     if record["population_sha256"] != _sha(population_raw):
         raise CompositionError("the composed population differs from the record's digest")
-    derived = compose(model, model_raw, directory)
+    derived = _compose(model, model_raw, directory, references)
     for key in ("manifest_sha256", "sources", "scope_tags", "resolution_sha256", "facts"):
         if derived.record.get(key) != record.get(key):
             raise CompositionError(f"re-derived composition differs from the record at {key}")

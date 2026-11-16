@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "reason": "LX2 adds counted certificate and origin lookups and preserves the model-query policy.",
+  "predecessor": ".gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json",
+  "predecessor_sha256": "6309a0664fb9dc6411e2c8a71881e717cf26dba63c5d795baa70d1515e316d94",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/witness/flattening.py",
+      "WitnessProjection",
+      "dict[str, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/flattening.py",
+      "binding",
+      "dict[str, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/flattening.py",
+      "binding",
+      "tuple[str, dict[str, dict]]",
+      1
+    ],
+    [
+      "src/gnd/witness/flattening.py",
+      "node_model_origin",
+      "dict[str, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/flattening.py",
+      "node_model_origin",
+      "origins[fact_type]",
+      1
+    ],
+    [
+      "src/gnd/witness/io.py",
+      "certificate_shape",
+      "model_origin[field]",
+      1
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "replay_witness",
+      "tuple[str, dict]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7800,
+  "result_occurrences": 9694
+}

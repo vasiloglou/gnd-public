@@ -162,9 +162,9 @@ def _composition_view(model, model_coordinate, population_coordinate, population
 
     model_raw = read(model_coordinate, "model", MAX_DOCUMENT_BYTES)
     from gnd.model._includes import guard_bytes
-    if getattr(model, 'includes', ()):
+    if getattr(model, "includes", ()) or getattr(model, "reference_populations", ()):
         if hashlib.sha256(model_raw).hexdigest() != model._authored_sha256:
-            raise CompositionError("the model changed after its include snapshot was loaded")
+            raise CompositionError("the model changed after its input snapshot was loaded")
     else:
         guard_bytes(model_raw, source=model_coordinate, route="check.composition")
     population_raw = population_bytes if population_bytes is not None else read(
@@ -191,6 +191,7 @@ def _composition_block(composed, population, checked) -> dict[str, Any]:
         }
         for fact_type, rows in population.facts.items()
     }
+    catalog_types = set(positions).difference(fact_type for fact_type, _ in lineage) if derived.record.get("references") else set()
     named = set()
     for verdict in checked.verdicts:
         # A fact-type constraint offends rows of its own fact type only; a
@@ -210,9 +211,12 @@ def _composition_block(composed, population, checked) -> dict[str, Any]:
             else:
                 candidates, row = ([owner] if owner is not None else list(positions)), fact
             key = tuple((name, type(value).__name__, repr(value)) for name, value in sorted(row.items()))
+            if owner is None and len(candidates) > 1 and any(key in positions[ft] for ft in catalog_types):
+                # A value-only verdict cannot establish candidate lineage for an ambiguous match.
+                continue
             for fact_type in candidates:
                 index = positions.get(fact_type, {}).get(key)
-                if index is not None:
+                if index is not None and (fact_type, index) in lineage:
                     named.add((fact_type, index))
     return {
         "record_sha256": hashlib.sha256(derived.record_bytes).hexdigest(),
@@ -383,7 +387,7 @@ def _run_check_raw(
             context = resolve_context(model, references)
             model._references = context
         population, _ = _resolve_population(population_input, model=model, name="population")
-        if model.reference_populations:
+        if model.reference_populations and composition is None:
             if anchors is not None:
                 raise ValueError("reference sidecar combinations are unsupported")
             population = bind_population(model, population, references=context).combined
@@ -434,6 +438,7 @@ def _run_check_raw(
     composed = None
     if composition is not None:
         from gnd.composition import CompositionError, verify_composition
+        from gnd.references import ReferenceInputError
 
         try:
             composed = _composition_view(
@@ -444,7 +449,9 @@ def _run_check_raw(
             population = load_population_bytes(
                 composed[0].population_bytes, source="composed.population.json", model=model,
             )
-        except (CompositionError, ModelValidationError) as error:
+            if model.reference_populations:
+                population = bind_population(model, population, references=context).combined
+        except (CompositionError, ModelValidationError, ReferenceInputError) as error:
             return _finalize(
                 build(3, issues=getattr(error, "issues", None), error=error),
                 exit_code=3,
@@ -505,6 +512,8 @@ def _run_check_raw(
                 if composed is not None:
                     checked = checker_module.check_with_composed_anchors(
                         model, population, sources=composed[0].sources, lineage=composed[1],
+                        **({"reference_fact_types": frozenset(ft for ft, _ in context._owners)}
+                           if model.reference_populations else {}),
                     )
                 elif selected_anchors is not None or any(
                     c.get("type") == "anchored"

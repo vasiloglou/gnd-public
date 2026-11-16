@@ -1778,7 +1778,7 @@ model content plus sorted declarations, including path, ownership and expected
 raw hash. `model_id` remains a separate opaque identifier. Versions 1–3 reject
 this field; a feature-free version 4 retains the ordinary wire and behavior.
 
-Check, batch, transition and diff consume bound references. Synth, codegen and
+Check, composition, witness, batch, transition and diff consume bound references. Synth, codegen and
 older session contracts refuse reference-bearing inputs before publishing
 artifacts or invoking an adapter. Conformance can report changed model identity;
 it never regenerates code. Extraction projects candidate-owned fact types only.
@@ -1899,12 +1899,49 @@ have their own nonzero refusal and direct callers to `gnd validate`.
 
 Existing identity functions cover the loaded composition and its authored
 include/attachment declarations, with their existing field exclusions.
-Include paths therefore participate in identity. No private origin metadata
-is serialized or hashed. Empty include/attachment fields are omitted from
+Include paths therefore participate in identity. The model dump and identity
+functions exclude private origin metadata. Empty include/attachment fields are omitted from
 both model dump entry points, preserving include-free serializations.
 A raw includer hash commits to the pinned bytes but cannot prove their
 presence or validity: any positive freshness/publication claim additionally
 requires verification of the included bytes in that same invocation.
+
+### Extraction flattening record
+
+Path-based `gnd extract` supports a resolved include-bearing root when the
+effective model is eligible for extraction. It publishes
+`<stem>.flat.orm.json` and `<stem>.flattening.json` alongside the ordinary
+bundle. The artifact index binds both file digests and names them in a
+`flattening` object with keys `flat_model` and `record`. The `model.sha256`
+field still identifies the authored root. Include-free bundles omit the
+two files and the `flattening` object. Bundle publication refuses output
+destinations that overlap the bound root, include or reference files.
+
+The flat model is canonical JSON accepted by unrooted model-byte intake.
+Resolved elements keep their order and identities, with project-owned
+attachments materialized as inline constraints. The wire omits the consumed
+include and attachment declarations, load-time warnings, and the usual
+empty or null re-entry defaults. Reference declarations retain their
+authored-root coordinate for later path-based binding. Each published
+flattening artifact has a 10 MiB limit.
+
+The canonical JSON record has `format: "gnd-flattening/1"`,
+`root_sha256`, an `includes` array of `{id, path, sha256}` entries in pin
+order, `flat_model_sha256`, and `origins`. Each origin has `origin`,
+`original_address`, `composed_address`, and nullable `element_id`.
+The source is `model` for root-owned elements and `includes[ID]` for an
+imported element. Origins are sorted by the composed address string in Unicode code-point order. An anonymous
+constraint has a null ID. A root attachment retains its authored
+`fact_type_constraints` address and identifies its inline address in the
+flat model.
+
+For an extraction handoff, `gnd verify` checks the index against the root
+bytes, resolves and authenticates the include pins, then checks the flat
+model and record against re-derived bytes. It also re-derives the shape-only
+projection schema and compares its JSON content before accepting the
+sidecar. The command uses the resolved model snapshot for verification. A missing binding, changed coordinate, or
+a pair of forged artifacts with mutually consistent digests refuses in input
+band 3. The root and its includes are required to establish current binding.
 
 ## Ossie interchange
 

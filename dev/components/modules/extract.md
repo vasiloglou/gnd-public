@@ -80,6 +80,7 @@ Components: extract.service
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
+| `ExtractionBundleError` | class(ValueError) | 48 | An indexed extraction input could not be authenticated. |
 
 ## gnd.extract.vocabulary — `src/gnd/extract/vocabulary.py`
 Components: extract.vocabulary

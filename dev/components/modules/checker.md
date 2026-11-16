@@ -15,7 +15,7 @@ CT2 composed-anchor checking (composition-and-type-induction milestone).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `check_with_composed_anchors(model, population, *, sources, lineage) -> CheckReport` | function | 20 | Check a composed population, each anchored value against its own source (CT2). |
+| `check_with_composed_anchors(model, population, *, sources, lineage, reference_fact_types) -> CheckR…` | function | 20 | Check a composed population, each anchored value against its own source (CT2). |
 
 ## gnd.checker._core — `src/gnd/checker/_core.py`
 Components: checker.evaluate

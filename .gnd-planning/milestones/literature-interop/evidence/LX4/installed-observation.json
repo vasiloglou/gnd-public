@@ -1,0 +1,250 @@
+{
+  "byte_equal_without_advice": {
+    "check.json": true,
+    "composition.json": true,
+    "replay.json": true,
+    "witness.json": true
+  },
+  "check": {
+    "fail": 0,
+    "pass": 3,
+    "unchecked": 0,
+    "vacuous": 0,
+    "warning": 0
+  },
+  "copy_census": {
+    "additional_copies": {
+      "document": 2,
+      "extraction_population": 0,
+      "extraction_sidecar": 0
+    },
+    "rebound_anchor_files": 2,
+    "rebound_population_files": 2
+  },
+  "date_advice": {
+    "bindings": {
+      "candidate_edges_sha256": "b1589b7badd3a5ba35a7b7c3b547be543051df5c47a19d50a58d9007c59a555a",
+      "lineage_policy_sha256": "cc27412b17b7cc1ca4f6d5da940b74b80528e45d2aa9d5a78dbee4986274c0b7",
+      "publication_dates_sha256": "bef53c15d88912bf91ff5bd816afad829c9a4a901442e2609a094169e025321e"
+    },
+    "counts": {
+      "advisory": 1,
+      "pass": 2,
+      "unresolved": 5
+    },
+    "edges": [
+      {
+        "ancestor_date": 2019,
+        "ancestor_precision": "year",
+        "ancestor_work": "doi:10.1016/j.jcp.2018.10.045",
+        "descendant_date": 2026,
+        "descendant_precision": "year",
+        "descendant_work": "example:survey-2026",
+        "id": "new-to-old",
+        "outcome": "pass",
+        "reason": null,
+        "relation": "extends",
+        "role": "publication"
+      },
+      {
+        "ancestor_date": 2019,
+        "ancestor_precision": "year",
+        "ancestor_work": "doi:10.1016/j.jcp.2018.10.045",
+        "descendant_date": 2019,
+        "descendant_precision": "year",
+        "descendant_work": "example:replication-2019",
+        "id": "same-year",
+        "outcome": "pass",
+        "reason": null,
+        "relation": "extends",
+        "role": "publication"
+      },
+      {
+        "ancestor_date": 2021,
+        "ancestor_precision": "year",
+        "ancestor_work": "doi:10.1016/j.jcp.2020.109913",
+        "descendant_date": 2019,
+        "descendant_precision": "year",
+        "descendant_work": "doi:10.1016/j.jcp.2018.10.045",
+        "id": "pinn",
+        "outcome": "advisory",
+        "reason": "parent-published-later",
+        "relation": "extends",
+        "role": "publication"
+      },
+      {
+        "ancestor_date": null,
+        "ancestor_precision": null,
+        "ancestor_work": "example:absent",
+        "descendant_date": 2019,
+        "descendant_precision": "year",
+        "descendant_work": "doi:10.1016/j.jcp.2018.10.045",
+        "id": "unknown",
+        "outcome": "unresolved",
+        "reason": "unknown-work",
+        "relation": "extends",
+        "role": "publication"
+      },
+      {
+        "ancestor_date": 2019,
+        "ancestor_precision": "year",
+        "ancestor_work": "doi:10.1016/j.jcp.2018.10.045",
+        "descendant_date": null,
+        "descendant_precision": null,
+        "descendant_work": "example:conflict",
+        "id": "conflict",
+        "outcome": "unresolved",
+        "reason": "conflicting-date",
+        "relation": "extends",
+        "role": "publication"
+      },
+      {
+        "ancestor_date": 2019,
+        "ancestor_precision": "year",
+        "ancestor_work": "doi:10.1016/j.jcp.2018.10.045",
+        "descendant_date": null,
+        "descendant_precision": null,
+        "descendant_work": "example:missing",
+        "id": "missing",
+        "outcome": "unresolved",
+        "reason": "missing-date",
+        "relation": "extends",
+        "role": "publication"
+      },
+      {
+        "ancestor_date": 2019,
+        "ancestor_precision": "year",
+        "ancestor_work": "doi:10.1016/j.jcp.2018.10.045",
+        "descendant_date": "2019-03-04",
+        "descendant_precision": "day",
+        "descendant_work": "example:day",
+        "id": "mixed",
+        "outcome": "unresolved",
+        "reason": "mixed-precision",
+        "relation": "extends",
+        "role": "publication"
+      },
+      {
+        "ancestor_date": 2019,
+        "ancestor_precision": "year",
+        "ancestor_work": "doi:10.1016/j.jcp.2018.10.045",
+        "descendant_date": null,
+        "descendant_precision": null,
+        "descendant_work": "example:preprint",
+        "id": "preprint",
+        "outcome": "unresolved",
+        "reason": "publication-date-missing",
+        "relation": "extends",
+        "role": "publication"
+      }
+    ],
+    "schema": "literature-date-advice/1"
+  },
+  "fidelity_cases": {
+    "failed": 0,
+    "ran": 2,
+    "reasons": [],
+    "skipped": 0
+  },
+  "plain_manifest_sha256": "98cd468f23cbee7080cfecf2b7698018773654bb8a4b08df106300cc375bc988",
+  "proof_origin_kinds": [
+    "candidate",
+    "reference"
+  ],
+  "proof_version": 4,
+  "rebinds": {
+    "replication": {
+      "record": {
+        "artifact_index_sha256": "16f7ef601e4b714003763b310a0cd09d297a9cb78c37edcea93466f692b47a1f",
+        "checking_root_sha256": "e7f68730e594b7677fcf2a894809f673d0b6eebdc9bc7c98f4fc13f38a6830eb",
+        "document_sha256": "66095a0b00078107144a12054163a4d58044517a271774b7995adc53b48810de",
+        "extraction_anchors_sha256": "33bbb94de31a184319d0ad9f980d1ea6494577871199ea37c4d1ba26760eebfd",
+        "extraction_population_sha256": "affc9aa114ab82ad50824d644825aa0515a6a24c5c6f50b86a5c3ec1500cb743",
+        "extraction_root_sha256": "598bd3b22b8ab69ca709a32e9f498441e3623010e087d9a5ecea3445101957d9",
+        "extraction_sidecar_sha256": "eabc745a0c66072c4bec52a6833176f391a2138a6bea13b5347375ff212ea056",
+        "includes": [
+          {
+            "id": "literature",
+            "sha256": "5c570342a35ac6f0fe032fb30502b1bfa508966e6bb5ff63b443d4c85fb9fdd1"
+          },
+          {
+            "id": "chronology",
+            "sha256": "2a1970fa79ef85e669f439bedb4643ccf265608c1d21cbd257e75868546c7e9e"
+          }
+        ],
+        "rebound_anchors_sha256": "849f7c5c22f08521f4ba3f3f5077ed635ab612cb97418b1bd69b64d8e65c8092",
+        "rebound_population_sha256": "ff4f91df2584df32e65954804c0e6adc230a8359d33e7e7e8b00166db52581eb",
+        "references": [
+          {
+            "id": "method-catalog",
+            "raw_sha256": "4d25b7b4b5526c449d3c12581d0f317d3eee24c5c3016c8bb4da0eb19d86b6fe"
+          }
+        ],
+        "schema": "literature-rebind/1",
+        "source": "replication"
+      },
+      "sha256": "923b114beb5fee531db0cd49d92e52a4ae2cac334561ec212783a403082500a9"
+    },
+    "survey": {
+      "record": {
+        "artifact_index_sha256": "16f7ef601e4b714003763b310a0cd09d297a9cb78c37edcea93466f692b47a1f",
+        "checking_root_sha256": "e7f68730e594b7677fcf2a894809f673d0b6eebdc9bc7c98f4fc13f38a6830eb",
+        "document_sha256": "4c4b13098f75e45397b4bf50e8555c1bf23830393e40f0b2b0d11148c141e8e1",
+        "extraction_anchors_sha256": "1e83c4d72dbd8414a13869b445f18cf21acd433552fdd929d71ed15a99748d5b",
+        "extraction_population_sha256": "b4a8f13b2c37a659cee47ac655b40c705750a21f61ec0966630c1f02689697c1",
+        "extraction_root_sha256": "598bd3b22b8ab69ca709a32e9f498441e3623010e087d9a5ecea3445101957d9",
+        "extraction_sidecar_sha256": "d5ed406b5c58eb428f1eb239de010597794fde05c129bff784e20300f11e29e2",
+        "includes": [
+          {
+            "id": "literature",
+            "sha256": "5c570342a35ac6f0fe032fb30502b1bfa508966e6bb5ff63b443d4c85fb9fdd1"
+          },
+          {
+            "id": "chronology",
+            "sha256": "2a1970fa79ef85e669f439bedb4643ccf265608c1d21cbd257e75868546c7e9e"
+          }
+        ],
+        "rebound_anchors_sha256": "dc17d2f1b40c8ac24c43e197fb368b6023e7d0e9485d457bc5e12995378c52ff",
+        "rebound_population_sha256": "024b3d1b4c92331631f15e3e7aaa5ad0dad4985e05dc5c17175b76e8f95ddf9f",
+        "references": [
+          {
+            "id": "method-catalog",
+            "raw_sha256": "4d25b7b4b5526c449d3c12581d0f317d3eee24c5c3016c8bb4da0eb19d86b6fe"
+          }
+        ],
+        "schema": "literature-rebind/1",
+        "source": "survey"
+      },
+      "sha256": "561ba10e9be6fe61b0acf24ac725120608240d6db7e01c1420e35a077b825d2c"
+    }
+  },
+  "run_manifest_sha256": "4be860fb4c429ff00a048dbaf64724b4d8c771aaa55a64066ecfa47bbdf0eae9",
+  "schema": "literature-interop-close-observation/1",
+  "stage_digests": {
+    "artifacts/extraction.orm.artifacts.json": "16f7ef601e4b714003763b310a0cd09d297a9cb78c37edcea93466f692b47a1f",
+    "candidate-edges.json": "b1589b7badd3a5ba35a7b7c3b547be543051df5c47a19d50a58d9007c59a555a",
+    "check.json": "e2ffa4c488951956745a4a9a89aff35279e38b2967d2a03d56ce9cea5699f3c6",
+    "checking.orm.json": "e7f68730e594b7677fcf2a894809f673d0b6eebdc9bc7c98f4fc13f38a6830eb",
+    "composed.population.json": "b6c5b5b110f577f03a0909d6faaca27c8f0f13fff3b04091932f3f5be19df223",
+    "composition.json": "17a2fcf0bddbe1b87f7aad34232eb8bbb966ce99cf8690af92a0621fe533b76a",
+    "dates.json": "a70439209d8c49f6ce6c88e99f66a47c99aa13cc03cc7910a01ebe251fcf1ac1",
+    "extraction.orm.json": "598bd3b22b8ab69ca709a32e9f498441e3623010e087d9a5ecea3445101957d9",
+    "fidelity.json": "cb9aa39ddc6bb6277d4f62e929e65cdbb34107b95df3dda6313d242b7b82259c",
+    "publication-dates.json": "bef53c15d88912bf91ff5bd816afad829c9a4a901442e2609a094169e025321e",
+    "reference/catalog.json": "4d25b7b4b5526c449d3c12581d0f317d3eee24c5c3016c8bb4da0eb19d86b6fe",
+    "replay.json": "5872b621147c80ab2f985dc73ca86c1a0d8336b9646876203384e11e660e37e4",
+    "sources/manifest.json": "a723d7be13b22e6f30784b24d263ef89ee9edfe2a437d5b5fdee6a2d08731ff9",
+    "sources/replication/document.manifest.json": "cf79e7c3f92abb37e25295c1d457a92f5f1cf6cc9ebdb2fcac375919ae1f7f5e",
+    "sources/replication/rebind.json": "923b114beb5fee531db0cd49d92e52a4ae2cac334561ec212783a403082500a9",
+    "sources/replication/source.population.json": "928ace9e49d40cfafcb4611f9092aa4e1a8b74c6de7baa7bf1feaaa2573466fd",
+    "sources/resolution.json": "c110318b4e46c06d50cc384cc0a7f19ec1195e970b69ee7fbf6b98157394aac0",
+    "sources/survey/document.manifest.json": "4eee7e714f8a8043ecba44df5059480fc0a021e04d6af4a09b3ef275c92811ab",
+    "sources/survey/rebind.json": "561ba10e9be6fe61b0acf24ac725120608240d6db7e01c1420e35a077b825d2c",
+    "sources/survey/source.population.json": "1faf556d596afef68cf4c4cb6425f3dc9e3ba850afda8fc58cb43265b1ebacc3",
+    "targets.json": "f5cf47c1ce6cc90406c3cb1cca34ae0c18e652c2a7ed222becb94ff59f118c0a",
+    "vocabulary/chronology.orm.json": "2a1970fa79ef85e669f439bedb4643ccf265608c1d21cbd257e75868546c7e9e",
+    "vocabulary/literature.orm.json": "5c570342a35ac6f0fe032fb30502b1bfa508966e6bb5ff63b443d4c85fb9fdd1",
+    "witness.json": "8f14f9d0b9a15ba5f1f7a35657d8849f06b7985daba89ba3002d9f70bbf15ef0"
+  },
+  "wheel_sha256": "0a74387174fc67cba3a1f1cc5a9348d0ac67ac1a77ad879b7e3bc6e5d932efb5"
+}

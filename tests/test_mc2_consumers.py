@@ -36,7 +36,9 @@ def test_composed_witness_validation_refusal_compatibility(corpus, adapter, incl
     binding.write_bytes(canonical_json_bytes(record))
     certificate = ROOT / 'tests/fixtures/v71/phase3/dispatch/direct.witness.json'
     result = getattr(service, adapter)(model, population, certificate, composition=binding)
-    reason = 'include:unsupported-route' if included else 'input-invalid'
+    # LX2 authenticates the root. The v1 certificate cannot bind that rooted
+    # composition, and it still is not a valid witness targets document.
+    reason = 'binding-stale' if included and adapter == 'composed_replay_result' else 'input-invalid'
     assert result == WitnessResult(3, reason=reason).model_dump(mode='json')
 
 
@@ -340,7 +342,7 @@ def test_plain_snapshot_cannot_pair_with_new_include(corpus, monkeypatch):
     assert result['exit_code'] == 3 and 'include:unsupported-route' in json.dumps(result)
 
 
-def test_reference_composition_remains_refused(tmp_path):
+def test_reference_composition_still_requires_a_manifest(tmp_path):
     from test_mc1_model_includes import split_existing
 
     source = ROOT / 'tests/fixtures/reference-corpus/dispatch'
@@ -349,7 +351,7 @@ def test_reference_composition_remains_refused(tmp_path):
     assert load_model(path).reference_populations
     result = api.compose(path, tmp_path / 'absent-composition')
     assert result['exit_code'] == 3
-    assert result['error']['message'] == 'composition:invalid: composition with reference populations is unsupported'
+    assert result['error']['message'] == 'composition:invalid: composition manifest could not be read safely'
     assert result['error'] == api.compose(source / 'model.orm.yaml', tmp_path / 'absent-composition')['error']
 
 

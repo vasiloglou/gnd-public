@@ -31,14 +31,13 @@ def test_direct_refusals(tmp_path, module, name, args):
     assert sorted(p.name for p in tmp_path.iterdir()) == ['project.orm.json', 'vocab.orm.json']
 
 
-@pytest.mark.parametrize('route', ['codegen', 'extract', 'conformance', 'measure', 'pyrel'])
+@pytest.mark.parametrize('route', ['codegen', 'conformance', 'measure', 'pyrel'])
 def test_cli_guards(tmp_path, route):
     from support.cli_runner import run_main
     path, _, _ = write_case(tmp_path)
     out = tmp_path / 'out'
     args = {
         'codegen': ['codegen', str(path), '--out', str(out)],
-        'extract': ['extract', str(path), '--out', str(out)],
         'conformance': ['conformance', str(path), str(out), '--format', 'json'],
         'measure': ['measure', str(path), '--populations', str(tmp_path), '--format', 'json'],
         'pyrel': ['export', 'pyrel', str(path), '--out', str(out)],
@@ -332,7 +331,7 @@ def test_R27_recovery_before_copy(tmp_path, monkeypatch):
     assert 'include:unsupported-route' in str(result)
 
 
-def test_R30_examples_do_not_declare_includes():
+def test_R30_packaged_include_roots_resolve():
     from gnd.model import load_model, parse_model_document
     from gnd.model._includes import declares_includes
     examples = Path(__file__).resolve().parents[1] / 'src/gnd/examples'
@@ -341,7 +340,9 @@ def test_R30_examples_do_not_declare_includes():
     included = {path.relative_to(examples).as_posix() for path in paths
                 if declares_includes(parse_model_document(path.read_bytes(), source=path))}
     expected = {'expense/teams/engineering.orm.json', 'expense/teams/sales.orm.json',
-                'expense/teams/sales-v2.orm.json'}
+                'expense/teams/sales-v2.orm.json',
+                'literature/interop_fixture/checking.orm.json',
+                'literature/interop_fixture/extraction.orm.json'}
     assert included == expected
     for relative in included:
         assert load_model(examples / relative)._included

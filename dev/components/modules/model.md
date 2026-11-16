@@ -9,21 +9,21 @@ Model loading with two-layer validation.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `load_model_bytes(data, *, source) -> Model` | function | 287 | Validate one immutable bounded buffer; source is diagnostic metadata. |
-| `load_model_bytes_composed(data, *, source, root) -> Model` | function | 357 | Resolve the authored model and bind references under one retained root. |
-| `load_model(path) -> Model` | function | 410 | Read model and reference bytes beneath a single retained directory. |
-| `ReferenceOrigin` | class | 469 | (no docstring) |
-| `OccurrenceOrigin` | class | 475 | (no docstring) |
-| `BoundReferenceContext` | class | 481 | (no docstring) |
-| `BoundPopulationView` | class | 491 | (no docstring) |
-| `validate_reference_structure(document) -> None` | function | 498 | (no docstring) |
-| `validate_declarations(model) -> dict[str, str]` | function | 513 | (no docstring) |
-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 620 | (no docstring) |
-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 626 | Bind a model's declared reference populations at ``root``, or return None |
-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 641 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
-| `resolve_context(model, references) -> BoundReferenceContext` | function | 650 | (no docstring) |
-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 682 | (no docstring) |
-| `candidate_fact_count(view) -> int` | function | 758 | (no docstring) |
-| `is_bound_population(model, population, context) -> bool` | function | 762 | Recognize only a current combined population created by this binder. |
+| `load_model_bytes_composed(data, *, source, root) -> Model` | function | 359 | Resolve the authored model and bind references under one retained root. |
+| `load_model(path) -> Model` | function | 416 | Read model and reference bytes beneath a single retained directory. |
+| `ReferenceOrigin` | class | 476 | (no docstring) |
+| `OccurrenceOrigin` | class | 482 | (no docstring) |
+| `BoundReferenceContext` | class | 488 | (no docstring) |
+| `BoundPopulationView` | class | 498 | (no docstring) |
+| `validate_reference_structure(document) -> None` | function | 505 | (no docstring) |
+| `validate_declarations(model) -> dict[str, str]` | function | 520 | (no docstring) |
+| `bind_references(model, *, root) -> BoundReferenceContext` | function | 627 | (no docstring) |
+| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 633 | Bind a model's declared reference populations at ``root``, or return None |
+| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 648 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+| `resolve_context(model, references) -> BoundReferenceContext` | function | 657 | (no docstring) |
+| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 689 | (no docstring) |
+| `candidate_fact_count(view) -> int` | function | 765 | (no docstring) |
+| `is_bound_population(model, population, context) -> bool` | function | 769 | Recognize only a current combined population created by this binder. |
 
 ## gnd.model._documents — `src/gnd/model/_documents.py`
 Components: model.json_document
@@ -33,6 +33,7 @@ Model documents as plain JSON values (evolve-loading follow-up, IK4-Q3, IKE-Q2).
 | --- | --- | --- | --- |
 | `ModelValueError` | class(ValueError) | 13 | A model value outside the JSON data model, named by path and kind. |
 | `json_document(document, *, refuse, encodable) -> dict[str, Any]` | function | 27 | The parsed model document as plain Python, in one walk over every value. |
+| `model_wire(model)` | function | 111 | The authored-shape document of a loaded model, for re-entry into intake. |
 
 ## gnd.model._includes — `src/gnd/model/_includes.py`
 Components: model.loading
@@ -47,11 +48,11 @@ One resolver and admission guards for pinned version-5 model includes.
 | `parse_included(raw, *, include_id, path) -> dict` | function | 91 | (no docstring) |
 | `include_reason(error) -> str \| None` | function | 116 | (no docstring) |
 | `compose(document, *, descriptor, source, historical, issues)` | function | 181 | (no docstring) |
-| `remap_issues(issues, origins)` | function | 242 | (no docstring) |
-| `refuse_unsupported(route) -> NoReturn` | function | 273 | (no docstring) |
-| `guard_document(document, route)` | function | 277 | (no docstring) |
-| `guard_bytes(raw, *, source, route)` | function | 282 | (no docstring) |
-| `guard_path(path, route)` | function | 292 | (no docstring) |
+| `remap_issues(issues, origins)` | function | 244 | (no docstring) |
+| `refuse_unsupported(route) -> NoReturn` | function | 275 | (no docstring) |
+| `guard_document(document, route)` | function | 279 | (no docstring) |
+| `guard_bytes(raw, *, source, route)` | function | 284 | (no docstring) |
+| `guard_path(path, route)` | function | 294 | (no docstring) |
 
 ## gnd.model._induction — `src/gnd/model/_induction.py`
 Components: model.validation
@@ -111,3 +112,13 @@ Model loading with two-layer validation.
 | `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3989 | SCC-condensed, dependency-first deterministic structured strata. |
 | `semantic_validate(doc) -> list[ValidationIssue]` | function | 5104 | Run every layer-2 semantic rule over a parsed model document. |
 | `parse_model_document(data, *, source) -> Any` | function | 5312 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+
+## gnd.model.flattening — `src/gnd/model/flattening.py`
+Components: model.loading
+Canonical re-entry bytes and provenance for a resolved model include root.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `FlatteningError` | class(ValueError) | 14 | A resolved model cannot be represented within the flat wire contract. |
+| `FlattenedModel` | class | 19 | (no docstring) |
+| `flatten_model(model) -> FlattenedModel` | function | 24 | Serialize an include snapshot made by the model loader. |

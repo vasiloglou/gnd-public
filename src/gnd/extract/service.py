@@ -1,14 +1,19 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from gnd import artifacts as wire
 from gnd import input_policy as _rf7_input
 from gnd import resolve_version
 from gnd import safefs as install_module
+from gnd.documents import Model
+from gnd.errors import ModelLoadError
 from gnd.exits import EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT
 from gnd.model import ModelValidationError, load_model
+from gnd.model._validation import MAX_MODEL_BYTES
 from gnd.output import _print_issues
 
 
@@ -36,55 +41,126 @@ def _extraction_header_template(model_path: str, model: Any) -> dict[str, Any]:
 
     return header_template(model_path, model)
 
+def _flattening_names(stem: str) -> dict[str, str]:
+    return {"flat_model": f"{stem}.flat.orm.json", "record": f"{stem}.flattening.json"}
+
+
+class ExtractionBundleError(ValueError):
+    """An indexed extraction input could not be authenticated."""
+
+    def __init__(self, message: str, code: int = 3) -> None:
+        super().__init__(message)
+        self.code = code
+
+
+@dataclass(frozen=True)
+class _VerifiedBundle:
+    model: Model | None
+    root_sha256: str
+    artifact_digests: dict[str, str]
+
+
+def _bounded_bytes(path: Path, *, cap: int) -> bytes:
+    resolved = path.resolve(strict=True)
+    return wire.read_regular_file_bytes(resolved.parent, resolved.name, label=str(path), max_bytes=cap)
+
+
+def _verify_artifact_index(
+    model_path: str,
+    artifacts_dir: str,
+    required_artifacts: tuple[str, ...],
+) -> _VerifiedBundle:
+    """Authenticate required bundle bytes and retain a resolved include snapshot."""
+    root = Path(artifacts_dir)
+    stem = _extract_stem(model_path)
+    index_path = root / f"{stem}.artifacts.json"
+    if not index_path.is_file():
+        raise ExtractionBundleError(f"the extraction bundle index at {index_path} does not exist", EXIT_NO_INPUT)
+
+    try:
+        index = _rf7_input.loads(_bounded_bytes(index_path, cap=1024 * 1024))
+        root_bytes = _bounded_bytes(Path(model_path), cap=MAX_MODEL_BYTES)
+        model_actual = wire.sha256_hex(root_bytes)
+        model_recorded = str(index["model"]["sha256"])
+        if model_recorded != model_actual:
+            raise ExtractionBundleError(
+                f"the root model sha256 in the bundle is {model_recorded} but the bytes hash to {model_actual}"
+            )
+
+        model = None
+        expected: dict[str, bytes] = {}
+        if "flattening" in index:
+            from gnd.model.flattening import flatten_model
+
+            names = _flattening_names(stem)
+            if index["flattening"] != names:
+                raise ExtractionBundleError("invalid flattening artifact names")
+            model = load_model(model_path)
+            if model._authored_sha256 != model_actual:
+                raise ExtractionBundleError("the root model does not match the resolved include snapshot")
+            flat = flatten_model(model)
+            expected = {names["flat_model"]: flat.model_bytes, names["record"]: flat.record_bytes}
+        else:
+            from gnd.model._includes import guard_bytes
+
+            guard_bytes(root_bytes, source=model_path, route="extraction bundle without a flattening binding")
+
+        digests = {}
+        for rel in (*expected, *required_artifacts):
+            artifact_path = root / rel
+            if rel in expected:
+                label = "flat model" if rel.endswith(".flat.orm.json") else "flattening record"
+                try:
+                    raw, _ = wire.read_regular_bounded(root, rel, max_bytes=MAX_MODEL_BYTES)
+                    recorded = index["artifacts"][rel]["sha256"]
+                except (OSError, wire.ArtifactError, ValueError, KeyError, TypeError) as error:
+                    raise ExtractionBundleError(f"the {label} binding could not be read: {error}") from error
+                if raw != expected[rel]:
+                    raise ExtractionBundleError(f"the {label} does not match the resolved include snapshot")
+            else:
+                if not artifact_path.is_file():
+                    raise ExtractionBundleError(
+                        f"the indexed extraction artifact at {artifact_path} is missing", EXIT_NO_INPUT
+                    )
+                if model is None:
+                    raw = artifact_path.read_bytes()
+                else:
+                    raw, _ = wire.read_regular_bounded(root, rel, max_bytes=MAX_MODEL_BYTES)
+                recorded = str(index["artifacts"][rel]["sha256"])
+            actual = wire.sha256_hex(raw)
+            if actual != recorded:
+                raise ExtractionBundleError(
+                    f"the bundle index records {rel} sha256 {recorded} but the artifact bytes hash to {actual}"
+                )
+            if model is not None and rel == f"{stem}.projection.schema.json":
+                from gnd.extract.projection import project
+
+                actual_schema = wire.canonical_json_bytes(_rf7_input.loads(raw))
+                if actual_schema != wire.canonical_json_bytes(project(model)):
+                    raise ExtractionBundleError(
+                        "the projection schema does not match the resolved include snapshot"
+                    )
+            digests[rel] = actual
+    except ExtractionBundleError:
+        raise
+    except (OSError, wire.ArtifactError, ValueError, KeyError, TypeError, RuntimeError,
+            ModelLoadError, ModelValidationError) as error:
+        raise ExtractionBundleError(f"the extraction bundle index is not verifiable ({error})") from error
+    return _VerifiedBundle(model, model_actual, digests)
+
+
 def _artifact_index_issue(
     model_path: str,
     artifacts_dir: str,
     required_artifacts: tuple[str, ...],
 ) -> tuple[int, str] | None:
     """Validate the bundle index and every artifact this consumer will read."""
-    import hashlib as _hashlib
-
-    root = Path(artifacts_dir)
-    index_path = root / f"{_extract_stem(model_path)}.artifacts.json"
-    if not index_path.is_file():
-        return (
-            EXIT_NO_INPUT,
-            f"the extraction bundle index at {index_path} does not exist",
-        )
     try:
-        if index_path.stat().st_size > 1024 * 1024:
-            return (3, f"the extraction bundle index at {index_path} exceeds 1 MiB")
-        index = _rf7_input.loads(index_path.read_text(encoding="utf-8"))
-        model_actual = _hashlib.sha256(Path(model_path).read_bytes()).hexdigest()
-        model_recorded = str(index["model"]["sha256"])
-        if model_recorded != model_actual:
-            return (
-                3,
-                (
-                    f"the bundle index records model sha256 {model_recorded} but "
-                    f"the model bytes hash to {model_actual}"
-                ),
-            )
-        for rel in required_artifacts:
-            artifact_path = root / rel
-            if not artifact_path.is_file():
-                return (
-                    EXIT_NO_INPUT,
-                    f"the indexed extraction artifact at {artifact_path} is missing",
-                )
-            recorded = str(index["artifacts"][rel]["sha256"])
-            actual = _hashlib.sha256(artifact_path.read_bytes()).hexdigest()
-            if recorded != actual:
-                return (
-                    3,
-                    (
-                        f"the bundle index records {rel} sha256 {recorded} but "
-                        f"the artifact bytes hash to {actual}"
-                    ),
-                )
-    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError) as error:
-        return (3, f"the extraction bundle index is not verifiable ({error})")
+        _verify_artifact_index(model_path, artifacts_dir, required_artifacts)
+    except ExtractionBundleError as error:
+        return error.code, str(error)
     return None
+
 
 def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> int:
     """``gnd extract MODEL --out DIR`` — the per-model artifact bundle.
@@ -108,12 +184,12 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> 
     from gnd.synth import paths as _paths
 
     try:
-        from gnd.model._includes import guard_path
-        guard_path(model_path, "extract/service.py")
-        model = load_model(model_path)
+        from gnd.model.flattening import flatten_model
         from gnd.terms import require_non_temporal
 
+        model = load_model(model_path)
         require_non_temporal(model, "extract")
+        flat = flatten_model(model) if model.includes else None
     except ModelValidationError as error:
         for warning in error.warnings:
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
@@ -158,14 +234,31 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> 
     index_rel = f"{stem}.artifacts.json"
     digests: dict[str, str] = {}
     try:
-        model_bytes = Path(model_path).read_bytes()
+        model_sha256 = (model._authored_sha256 if flat is not None
+                        else _hashlib.sha256(Path(model_path).read_bytes()).hexdigest())
+        artifact_bytes = {rel: text.encode("utf-8") for rel, text in artifacts.items()}
+        if flat is not None:
+            names = _flattening_names(stem)
+            artifact_bytes[names["flat_model"]] = flat.model_bytes
+            artifact_bytes[names["record"]] = flat.record_bytes
         # Every write routes through the ONE traversal guard (cli.py's synth
         # precedent): output paths come from argv only, never from model or
         # response content (T-02.1-03).
         destinations: dict[str, Path] = {}
-        for rel in [*artifacts, index_rel]:
+        for rel in [*artifact_bytes, index_rel]:
             destinations[rel] = _paths.safe_output_path(out_root, rel)
-        artifact_bytes = {rel: text.encode("utf-8") for rel, text in artifacts.items()}
+        if flat is not None:
+            source = Path(model_path)
+            dependencies = [
+                source,
+                *(source.parent / entry.path for entry in model._included),
+                *(source.parent / entry["path"] for entry in model.reference_populations),
+            ]
+            for destination in destinations.values():
+                if destination.exists() and any(destination.samefile(dep) for dep in dependencies):
+                    raise install_module.InstallPathError(
+                        f"output {destination} overlaps a bound model input"
+                    )
         digests = {rel: _hashlib.sha256(data).hexdigest() for rel, data in artifact_bytes.items()}
 
         # PANEL-6 header ownership: `model`, `model_id`, `source` and `covers`
@@ -178,11 +271,13 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> 
             "gnd_version": resolve_version(),
             "model": {
                 "path": Path(model_path).as_posix(),
-                "sha256": _hashlib.sha256(model_bytes).hexdigest(),
+                "sha256": model_sha256,
             },
             "artifacts": {rel: {"sha256": digest} for rel, digest in digests.items()},
             "header_template": header_template,
         }
+        if flat is not None:
+            index_payload["flattening"] = names
         bundle_bytes = {
             **artifact_bytes,
             index_rel: canonical(index_payload).encode("utf-8"),
@@ -210,7 +305,7 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> 
                 os.close(staging_fd)
 
             out_root.mkdir(parents=True, exist_ok=True)
-            for rel in artifacts:
+            for rel in artifact_bytes:
                 os.replace(staging / rel, destinations[rel])
             os.replace(staging / index_rel, destinations[index_rel])
             output_fd = os.open(out_root, os.O_RDONLY)

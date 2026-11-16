@@ -1,0 +1,2700 @@
+diff --git a/.gnd-planning/milestones/literature-interop/008-phase-LX3-spec-gate.md b/.gnd-planning/milestones/literature-interop/008-phase-LX3-spec-gate.md
+new file mode 100644
+index 00000000..6ffafd9b
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/008-phase-LX3-spec-gate.md
+@@ -0,0 +1,55 @@
++---
++milestone: literature-interop
++station: phase-LX3-spec-gate
++skill: "n/a -- repository development under process-phase"
++scope: phase-LX3-spec-gate
++date: 2026-11-15
++gates:
++  - command: "ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-interop/notes/phase-LX3-spec.md sha256 48984c60c2309663304d9c2dd28a0e9aa45eb275b77344cac6f31fdf00c98e12"
++    exit: "n/a -- ruling"
++  - command: "uv run pytest -q tests/test_lx3_catalog_composition.py --tb=short"
++    exit: 1
++    output: "17 failed, 1 passed in 6.07s"
++evidence:
++  - path: .gnd-planning/milestones/literature-interop/notes/phase-LX3-spec.md
++    sha256: 48984c60c2309663304d9c2dd28a0e9aa45eb275b77344cac6f31fdf00c98e12
++  - path: tests/test_lx3_catalog_composition.py
++    sha256: 8b145b1cc15ea1d71f5c67c3b8e963ba6a140a347a4b50dbed1c75dbc1e13c57
++  - path: tests/fixtures/lx3-catalog-composition/expected.json
++    sha256: c75609385917971e76a6833a7653221f21c8a70f3feb1fd4912cfd4a48445b8e
++  - path: tests/fixtures/lx3-catalog-composition/README.md
++    sha256: 2da0ca163798174cd1babd9c956d6dea11b96fd485f897811b0495ee881b2d83
++---
++
++# Claim
++
++The owner delegated milestone and phase rulings with
++`process-milestone literature-interop auto`. Approve LX3 decisions D1–D4
++and the corpus at the exact digests above. The independent phase diff
++review has its own gate.
++
++## Implementability
++
++Rooted dispatch check distinguished the pinned catalog from the same
++candidate without it. The rooted proof verified candidate and catalog
++base facts using the existing evaluator. Both fixture roots load and
++authenticate their catalogs. The reference-free route at `6d2ecece`
++produced the two hashes in the expected file. The catalog fixture obtains
++its source anchors from the original asserted spellings. The LI2 control
++retains the original resolution and candidate identities.
++
++## Gate output
++
++    17 failed, 1 passed in 6.07s
++
++The catalog route is refused by the phase-base implementation. The
++reference-free wire control passes.
++
++## Boundary
++
++The corpus records expected results and selected consumers. The LX3
++phase record owns implementation verification.
++
++## Open questions
++
++- None at the spec gate.
+diff --git a/.gnd-planning/milestones/literature-interop/evidence/LX3/dynamic-query-successor.json b/.gnd-planning/milestones/literature-interop/evidence/LX3/dynamic-query-successor.json
+new file mode 100644
+index 00000000..9ac3b07b
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/evidence/LX3/dynamic-query-successor.json
+@@ -0,0 +1,354 @@
++{
++  "schema_version": 1,
++  "reason": "LX3 records the moved composition merge walk and the new catalog, source and proof lookup sites.",
++  "predecessor": ".gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json",
++  "predecessor_sha256": "e14ff83d7e3f527dd5a390b5e871720457d0775c146328bcba2e13d40d8e48e7",
++  "removed": [
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[str, Any]",
++      4
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[str, dict[tuple[Any, ...], int]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[str, dict[tuple[str, str], Any]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[str, list[dict[str, Any]]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[tuple[Any, ...], int]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[tuple[Any, ...], tuple[int, Any]]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[tuple[Any, ...], tuple[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[tuple[str, int], dict[str, Any]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "dict[tuple[str, str], Any]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "facts[fact_type]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "index.get(key)",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "instance_renamings.get(instance_key)",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "kept[entity]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "lineage[fact_type, position]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "list[dict[str, Any]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "list[str]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "positions.get(fact_type)",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "renamings.get((source.id, fact_type, role, type(value).__name__, repr(value)))",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "roles.get(renaming['fact_type'], set())",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "set[int]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "tuple[Any, ...]",
++      5
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "tuple[int, Any]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "tuple[str, int]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "compose",
++      "tuple[str, str]",
++      2
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "replay_witness",
++      "lineage.get((node['fact_type'], node['origin']['fact_index']))",
++      1
++    ]
++  ],
++  "added": [
++    [
++      "src/gnd/checker/_composed.py",
++      "check_with_composed_anchors",
++      "frozenset[str]",
++      1
++    ],
++    [
++      "src/gnd/checking_service.py",
++      "_composition_block",
++      "positions[ft]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[str, Any]",
++      4
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[str, dict[tuple[Any, ...], int]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[str, dict[tuple[str, str], Any]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[str, list[dict[str, Any]]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[tuple[Any, ...], int]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[tuple[Any, ...], tuple[int, Any]]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[tuple[Any, ...], tuple[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[tuple[str, int], dict[str, Any]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "dict[tuple[str, str], Any]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "facts[fact_type]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "index.get(key)",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "instance_renamings.get(instance_key)",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "kept[entity]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "lineage[fact_type, position]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "list[dict[str, Any]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "list[str]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "positions.get(fact_type)",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "renamings.get((source.id, fact_type, role, type(value).__name__, repr(value)))",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "roles.get(renaming['fact_type'], set())",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "set[int]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "tuple[Any, ...]",
++      5
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "tuple[int, Any]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "tuple[str, int]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "_compose",
++      "tuple[str, str]",
++      2
++    ],
++    [
++      "src/gnd/composition.py",
++      "catalog_roster",
++      "dict[str, str]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "catalog_roster",
++      "list[dict[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "catalog_roster",
++      "row[role]",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "catalog_roster",
++      "rows.get(fact_id)",
++      1
++    ],
++    [
++      "src/gnd/composition.py",
++      "catalog_roster",
++      "rows.get(fact_id, ())",
++      1
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "replay_witness",
++      "lineage.get((node['fact_type'], origin['fact_index']))",
++      1
++    ]
++  ],
++  "result_distinct_rows": 7807,
++  "result_occurrences": 9701
++}
+diff --git a/.gnd-planning/milestones/literature-interop/notes/phase-LX3-spec.md b/.gnd-planning/milestones/literature-interop/notes/phase-LX3-spec.md
+new file mode 100644
+index 00000000..4f928262
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-interop/notes/phase-LX3-spec.md
+@@ -0,0 +1,215 @@
++# LX3 · fixed catalogs in composition
++
++Status: delegated approval (auto=true), 2026-11-15. See [008](../008-phase-LX3-spec-gate.md).
++
++## Provenance
++
++The [r4 milestone plan](literature-interop-plan.md) and its
++[plan gate](../003-plan-gate.md) assign LX3 the catalog and composed fact
++provenance work. LX1 establishes resolver-bound model origins. The [LX2 result](../007-phase-LX2.md) supplies
++the rooted witness origin axis and repaired path compatibility. The [LI2 result](../../literature-identity/010-phase-LI2.md)
++supplies the existing cross-source resolution contract.
++
++## Obligations
++
++| Source | Obligation | Evidence |
++|---|---|---|
++| LX3.a | Compose two sources with a declared catalog, including a rename onto a materialized catalog key. Keep catalog rows outside candidate output and lineage. Discriminate catalog-aware check from candidate-only check. | T1–T3 |
++| LX3.b | Refuse conflicting and candidate-dependent catalog inputs. Bind catalog and candidate evidence independently in the routes that consume them. Preserve LI2 and override refusal. | T4–T7 |
++| LX3.c | Replay a proof containing both origin kinds with independent model, fact and catalog controls. | T8 |
++| Plan §§0, 2 and 5 | Reuse bounded reference, source and identity implementations, give the new record one contract home. | Design, T9 |
++| Plan §9 | Direct and affected check, composition, reference, witness and resolution gates. | Verification ledger |
++
++## Rules
++
++- **Totality.** The composition record reader bounds the whole read and
++  validates the closed catalog roster. Hostile schema, recursion,
++  non-finite and wrong-type controls distinguish malformed from stale.
++- **Input-bounded work.** Compare existing catalog snapshots in their
++  canonical ID order. Use one combined population build per composed
++  check and one row provenance lookup per proof occurrence.
++- **Validation order.** Pin reference input binding before candidate
++  source admission. A syntactically valid composition record must match
++  its model, candidate population and catalog snapshot before support is
++  examined. The spec corpus has two-defect controls.
++- **One policy walk.** The bound context owns catalog populations,
++  declarations and row identity. Source merge and resolution continue
++  to consume candidate rows only.
++- **One home.** The composition reference owns its catalog roster and
++  input ordering. The witness contract owns the mixed proof envelope.
++- **Measure representation.** An existing rooted dispatch fixture
++  with a subset from candidate warehouse to catalog warehouse passed
++  with its pinned catalog and failed on the same candidate without it.
++  A rooted standalone proof over the same reference vocabulary
++  independently produced, referenced and replayed both fact origin
++  kinds. Turn these probes into an actual composition corpus.
++
++## Goal
++
++`gnd compose ROOT SOURCES --out POP --record RECORD` exits 0 with two
++candidate sources and a fixed catalog. `gnd check ROOT POP --composition
++RECORD --sources SOURCES` evaluates those candidates with the bound
++catalog. A witness and replay over the same rooted record exit 0. Stale
++catalog evidence and forged fact provenance are separately observable.
++
++## Design
++
++| Capability | Existing home | Proposed reuse |
++|---|---|---|
++| Resolve catalog ownership and digests | `model.loading`, `model.reference_binding` | Use retained-root model and reference binder plus its bound snapshot. |
++| Combine and evaluate facts | `model.reference_binding`, `check.service`, `checker.evaluate` | Bind once after exact composition verification and let the existing checker evaluate the combined view. |
++| Derive candidate facts and resolution | `model.composition`, `model.anchors` | Preserve source admission, rename and LI2 checks. Catalogs are a separate named input with an exact digested roster. |
++| Name proof origins | `witness.service`, `witness.replay`, `witness.schema` | Reuse LX2's exact model origins and the existing candidate/reference occurrence shape. Composition adds candidate source coordinates only. |
++
++### Coordinate and boundary decisions
++
++The authored root owns the declaration and path of each reference file.
++The candidate source directories remain the sole source of renamed and
++deduplicated rows and the source spans that attest them. Keep the catalog
++fixed when a manifest explicitly renames a candidate alias onto an
++admitted catalog value. Existing LI2 resolution evidence still governs
++candidate cross-source joins.
++
++Use the reference binder's independent structural validation and unique
++declared ownership before candidate admission. Before the manifest, reject duplicate values of confirmed alethic internal
++uniqueness keys among distinct rows of a catalog fact type. A confirmed
++alethic subset with populated reference-owned left relations cannot require
++a candidate-owned relation on the right. The corpus authors a reverse
++membership constraint to test this dependency. The forward membership
++constraint remains part of the later combined check. The binder also
++retains its structural, ownership and declared-digest checks.
++
++The proposed reference-bearing composition record uses
++`"schema": "gnd-composition/2"` and requires a nonempty, lexically sorted
++`references` roster of `{"id":"catalog","raw_sha256":"<sha256>"}`.
++The reference-free record keeps exactly version 1 and its current
++resolution variant. Verify record roster equality with the resolver's
++current bound catalog snapshot. Sources and facts remain candidate only.
++Both check and composition writers retain existing source/model output
++collision policy and extend its input exemptions to pinned catalogs.
++
++The composed check reconstructs the exact candidate first, then combines
++it once with the verified catalog for rule evaluation. Source anchor
++verification still observes antecedent spellings before renaming. A
++catalog-owned row has independent reference provenance and cannot acquire
++a candidate source span. Explicit caller-supplied anchor or reference
++overrides retain their existing refusal when composition supplies its
++own context.
++
++Proposed witness v4 is catalog-backed composition. It requires a
++composition digest and nonempty exact reference bindings. It carries
++flattening and model origins whenever the root declares includes, using
++LX2 fields. Candidate base nodes have nonempty `sources`. Reference base
++nodes have empty `sources` and retain their reference ID and index.
++Verify each against the appropriate population and binding before accepting
++inference. Include-free catalogs can use the same mixed proof envelope.
++Unchanged v1–v3 routes preserve their own fields and bytes.
++
++## Decisions
++
++| ID | Decision | Ruling |
++|---|---|---|
++| D1 | Version 2 composition records for the catalog roster, preserving reference-free bytes. | Delegated (auto=true) |
++| D2 | Catalog-backed composition certificate v4 with independent model and fact origin fields. | Delegated (auto=true) |
++| D3 | Check evaluates the verified candidate in the model's authenticated catalog context. Preserve override guards. | Delegated (auto=true) |
++| D4 | Use pinned dispatch vocabulary and two source documents for the core corpus. Prove key ownership, row validity, and catalog-aware rule evaluation separately. | Delegated (auto=true) |
++
++## Test ledger
++
++- T1 authentic two-source compose with a manifest renaming an alias to the
++  catalog warehouse. Output rows and record lineage contain candidate
++  occurrences only. Reference-free artifact bytes match a captured control.
++- T2 composed check exits 0 and the pinned subset verdict passes. Removing
++  catalog rows from the test comparison produces a failing subset.
++- T3 source anchor attribution uses candidate source spelling and indices.
++  Catalog occurrences have reference origins.
++- T4 an internal uniqueness conflict, a directed candidate dependency, and a stale pin
++  each exit 3 before candidate input even if a source is malformed too.
++- T5 independent catalog, source and record mutations, including a forged
++  record roster with valid model pin and unchanged candidate output.
++- T6 existing LI2 tests plus a composed catalog case where an unjustified
++  candidate cross-source join still refuses. Catalog IDs cannot be forged
++  into candidate lineage.
++- T7 preserve named explicit override refusal at the API or CLI boundary.
++- T8 mixed candidate/reference proof with included and root model origins,
++  then separate model-origin, catalog-binding and two fact-origin swap
++  mutations. Replay is independent of production trace.
++- T9 closed-schema and size controls, measured at the added roster and
++  provenance layer. Include-free v1/v2 and rooted reference-free v3
++  controls retain their exact payloads.
++
++## Phase boundary
++
++LX4 owns checking-model rebind, the integrated evidence manifest and the
++advisory date report. LX3 establishes the product composition, check and
++witness routes they need.
++
++## Approval instrument
++
++Corpus-first. Planned entry `tests/fixtures/lx3-catalog-composition/README.md`
++with the expected wire and exits in `expected.json`. The directed subset
++and mixed proof were prototyped through rooted check and witness. The
++approved source documents and candidate occurrences provide separate
++origin coordinates. The legacy artifact pair is captured at LX2 close.
++
++## Refusal precedence and verification
++
++1. Compose binds the model and catalog, validates catalog keys and independence,
++   then reads the manifest and preserves the LI2 resolution order. A stale pin
++   names its raw-hash mismatch. Check and compose use exit 3 for invalid inputs.
++2. Check verifies the catalog roster, candidate bytes and original sources,
++   then checks rules over one bound candidate-plus-reference view. It presents
++   the fixed input roster through the current reference result wrapper.
++3. Replay reads certificate shape first, resolves includes and catalog, then
++   compares the supplied record's model, candidate and catalog binding. Both
++   witness consumers use exit 3 `binding-stale` on changed catalog inputs or
++   a valid-shaped stale catalog roster. Structurally valid false provenance
++   returns exit 1 `proof-invalid`. Check retains exit 3 and names the mismatch.
++   Witness uses the given record. Check re-derives that record from the source
++   directory. The existing witness contract has no sources-directory input.
++
++| Gate | Command |
++|---|---|
++| Direct and affected routes | `uv run pytest -q tests/test_lx3_catalog_composition.py tests/test_composition.py tests/test_composition_example.py tests/test_witness_composition.py tests/test_li2_resolution.py tests/test_reference_population_corpus.py tests/test_lx2_witness_flattening.py tests/test_mc2_consumers.py tests/test_public_semantic_composition.py --tb=short` |
++| Structure | `uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short` |
++| Lint and components | Whole-tree Ruff, changed-file Ruff and `python3 scripts/components_index.py changed --base 6d2ecece --strict`. Compare known full lint diagnostics using the LX2 baseline. |
++| Cadence | Default marker filters. Full and historical lanes follow their separate triggers. |
++
++## Candidate verification
++
++The focused gate added the byte-identical schema-copy controls. The
++catalog-bound subset passes on the same candidate whose subset fails
++without the catalog. The accepting fixture supplies both claimed derived
++rows so the checker can verify their extension as well as the subset.
++The instrumented check observed one combined-population bind. The
++positive reference report validates against the current report schema.
++
++The refused explicit-anchor combination retains CLI usage exit 64. The
++explicit API reference override raises the existing ValueError. The old
++MC2 catalog-refusal control now proves that the accepted model still
++needs a valid source manifest. The unbound model-copy control continues
++to refuse. The LX3 catalog authority does not change LI2's candidate
++resolution decisions.
++
++```sh
++uv run pytest -q tests/test_lx3_catalog_composition.py tests/test_composition.py tests/test_composition_example.py tests/test_witness_composition.py tests/test_li2_resolution.py tests/test_reference_population_corpus.py tests/test_lx2_witness_flattening.py tests/test_mc2_consumers.py tests/test_public_semantic_composition.py tests/test_schema_sync.py --tb=short
++uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short
++```
++
++    744 passed, 3 deselected in 155.35s (0:02:35)
++    679 passed, 2 deselected in 150.43s (0:02:30)
++
++Scoped Ruff passes. Whole-tree Ruff exits 1 with exact equality against the
++188 inherited diagnostics by file, line, code and message. The strict
++component gate exits 0. The RF6 literal model-query inventory is unchanged.
++The successor counts the moved composition walk and new dynamic
++lookups. Schema validation checks structural conditions. The reader also
++verifies strictly sorted reference IDs and candidate source membership.
++
++The affected replay-admission and architecture extension of the focused gate
++ran with host process inspection for the admission harness.
++
++    uv run pytest -q tests/test_public_replay_admission.py tests/test_gnd_arch.py --tb=short
++    54 passed in 7.90s
++
++Independent diff review is pending.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 93b59dd8..92599601 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -2066,7 +2066,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### check.service
+ - does: Orchestrate population checks, anchor binding, admission, assurance, projected reports and version-15 rule-id, baseline and vacuous-acceptance runs [run_check].
+-- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, guarded diagnostics report, same-population rule edition comparison
++- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, composed catalog checking, guarded diagnostics report, same-population rule edition comparison
+ - in: model and population paths or loaded objects; check options
+ - out: RunResult holding report payload, JSON, band and execution context
+ - status: canonical
+@@ -2122,13 +2122,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### model.composition
+-- does: Compose anchored source populations using explicit renamings and optional resolution decisions, with replayable lineage.
+-- verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding
+-- in: model bytes and source directory with manifest, populations, documents and sidecars
++- does: Compose anchored candidate sources with explicit renamings and resolution decisions, and bind fixed catalog digests separately from candidate lineage.
++- verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding, fixed reference catalog, catalog roster
++- in: model bytes, bound catalog and source directory with manifest, populations, documents and sidecars
+ - out: composed population bytes and canonical value-free lineage record
+ - status: canonical
+ - modules: src/gnd/composition.py
+-- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index
++- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index, model.scalar_identity
+ - used_by: check.service, cli.api, examples.literature_lineage, witness.service
+ - tests: tests/test_composition.py
+ 
+@@ -2750,7 +2750,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/values.py
+ - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
+-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.ossie_import, … +8 more (graph.md)
++- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, … +9 more (graph.md)
+ - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
+ - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
+ 
+@@ -3081,7 +3081,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### witness.schema
+-- does: Validate bounded witness requests, certificates, typed targets, input identities and model-origin claims before production or replay.
++- does: Validate bounded witness requests, certificates, typed targets, input identities and model-origin claims and mixed catalog provenance before production or replay.
+ - verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire, model wire, version-1 model intake, model without model_id
+ - in: JSON requests or certificates, model and population documents, reference bytes, fixed or lowered WitnessLimits.
+ - out: Validated documents, loaded model/populations, population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
+@@ -3095,7 +3095,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### witness.service
+-- does: Orchestrate path-based witness production, replay and why-not requests with composition lineage, disclosure modes and preserved include-free input refusals.
++- does: Orchestrate path-based witness production, replay and why-not requests, including independently bound model origins, catalog occurrences and candidate source lineage.
+ - verbs: rooted witness projection, flattening binding, model origins, produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
+ - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
+ - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 677f123f..8a8741d5 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -3702,7 +3702,7 @@ Generated by `scripts/components_index.py`.
+ - used_by: check.baseline, check.universe, checker.evaluate, discover.joined, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter, synth.guarded
+ 
+ ### model.composition
+-- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index
++- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index, model.scalar_identity
+ - used_by: check.service, cli.api, examples.literature_lineage, witness.service
+ 
+ #### model.composition -> infra.artifacts
+@@ -3723,6 +3723,9 @@ Generated by `scripts/components_index.py`.
+ #### model.composition -> model.query_index
+ - `src/gnd/composition.py -> src/gnd/model_index.py`
+ 
++#### model.composition -> model.scalar_identity
++- `src/gnd/composition.py -> src/gnd/values.py`
++
+ ### model.composition_resolution
+ - uses: model.anchors, model.query_index
+ - used_by: model.composition
+@@ -4025,7 +4028,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.scalar_identity
+ - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
+-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.reference_binding, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, witness.replay
++- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.reference_binding, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, witness.replay
+ 
+ #### model.scalar_identity -> infra.artifacts
+ - `src/gnd/values.py -> src/gnd/artifacts.py`
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index e249fd19..18e67ead 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -119,19 +119,19 @@ Stable in-process access to GND validation and checking reports.
+ | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
+ | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
+ | `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
+-| `verbalize_model(model) -> str` | function | 1015 | Render the caller's complete model for review, including authored samples. |
+-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1024 | Render derived fact types' rules in GND's controlled language. |
+-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1067 | Audit a declared post, or compute it when ``post`` is omitted. |
+-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1096 | Evaluate saved opinions without obtaining any external judgment. |
+-| `EvaluationSession` | class | 1204 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1228 | (no docstring) |
+-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1243 | (no docstring) |
+-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1251 | (no docstring) |
+-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1261 | Validate whole ordered relation replacements between evaluations. |
+-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1270 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+-| `EvaluationSession.reset(self) -> None` | method | 1282 | (no docstring) |
+-| `EvaluationSession.close(self) -> None` | method | 1285 | (no docstring) |
+-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1288 | (no docstring) |
++| `verbalize_model(model) -> str` | function | 1022 | Render the caller's complete model for review, including authored samples. |
++| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1031 | Render derived fact types' rules in GND's controlled language. |
++| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1074 | Audit a declared post, or compute it when ``post`` is omitted. |
++| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1103 | Evaluate saved opinions without obtaining any external judgment. |
++| `EvaluationSession` | class | 1211 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
++| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1235 | (no docstring) |
++| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1250 | (no docstring) |
++| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1258 | (no docstring) |
++| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1268 | Validate whole ordered relation replacements between evaluations. |
++| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1277 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
++| `EvaluationSession.reset(self) -> None` | method | 1289 | (no docstring) |
++| `EvaluationSession.close(self) -> None` | method | 1292 | (no docstring) |
++| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1295 | (no docstring) |
+ 
+ ## gnd.applicability — `src/gnd/applicability.py`
+ Components: check.applicability
+@@ -302,7 +302,7 @@ Shared checking, admission and report orchestration below entry points.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `compare_rule_editions(head_path, population_path, base_path) -> tuple[int, dict[str, Any]]` | function | 966 | Evaluate one captured population under two editions and compare rule findings. |
++| `compare_rule_editions(head_path, population_path, base_path) -> tuple[int, dict[str, Any]]` | function | 975 | Evaluate one captured population under two editions and compare rule findings. |
+ 
+ ## gnd.cli — `src/gnd/cli.py`
+ Components: cli.dispatch
+@@ -331,14 +331,15 @@ Compose several anchored populations into one population with lineage (CT2).
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `Manifest` | class | 59 | (no docstring) |
+-| `Source` | class | 67 | (no docstring) |
+-| `Composition` | class | 76 | (no docstring) |
+-| `parse_manifest(raw) -> Manifest` | function | 87 | (no docstring) |
+-| `parse_record(raw) -> dict[str, Any]` | function | 154 | (no docstring) |
+-| `compose(model, model_raw, directory) -> Composition` | function | 237 | Compose the sources a manifest names; refuse instead of guessing. |
+-| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 391 | Re-derive a composition from its inputs and compare it with the record. |
+-| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 408 | (no docstring) |
++| `Manifest` | class | 61 | (no docstring) |
++| `Source` | class | 69 | (no docstring) |
++| `Composition` | class | 78 | (no docstring) |
++| `parse_manifest(raw) -> Manifest` | function | 89 | (no docstring) |
++| `parse_record(raw) -> dict[str, Any]` | function | 156 | (no docstring) |
++| `catalog_roster(model, *, references) -> list[dict[str, str]]` | function | 238 | Validate fixed catalog keys and admission before using candidate evidence. |
++| `compose(model, model_raw, directory) -> Composition` | function | 297 | Compose the sources a manifest names; refuse instead of guessing. |
++| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 455 | Re-derive a composition from its inputs and compare it with the record. |
++| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 475 | (no docstring) |
+ 
+ ## gnd.composition_resolution — `src/gnd/composition_resolution.py`
+ Components: model.composition_resolution
+diff --git a/dev/components/modules/checker.md b/dev/components/modules/checker.md
+index 34e2e3e7..6869ebdd 100644
+--- a/dev/components/modules/checker.md
++++ b/dev/components/modules/checker.md
+@@ -15,7 +15,7 @@ CT2 composed-anchor checking (composition-and-type-induction milestone).
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `check_with_composed_anchors(model, population, *, sources, lineage) -> CheckReport` | function | 20 | Check a composed population, each anchored value against its own source (CT2). |
++| `check_with_composed_anchors(model, population, *, sources, lineage, reference_fact_types) -> CheckR…` | function | 20 | Check a composed population, each anchored value against its own source (CT2). |
+ 
+ ## gnd.checker._core — `src/gnd/checker/_core.py`
+ Components: checker.evaluate
+diff --git a/dev/components/modules/model.md b/dev/components/modules/model.md
+index 22372bf0..9914e8c9 100644
+--- a/dev/components/modules/model.md
++++ b/dev/components/modules/model.md
+@@ -9,21 +9,21 @@ Model loading with two-layer validation.
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ | `load_model_bytes(data, *, source) -> Model` | function | 287 | Validate one immutable bounded buffer; source is diagnostic metadata. |
+-| `load_model_bytes_composed(data, *, source, root) -> Model` | function | 357 | Resolve the authored model and bind references under one retained root. |
+-| `load_model(path) -> Model` | function | 410 | Read model and reference bytes beneath a single retained directory. |
+-| `ReferenceOrigin` | class | 469 | (no docstring) |
+-| `OccurrenceOrigin` | class | 475 | (no docstring) |
+-| `BoundReferenceContext` | class | 481 | (no docstring) |
+-| `BoundPopulationView` | class | 491 | (no docstring) |
+-| `validate_reference_structure(document) -> None` | function | 498 | (no docstring) |
+-| `validate_declarations(model) -> dict[str, str]` | function | 513 | (no docstring) |
+-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 620 | (no docstring) |
+-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 626 | Bind a model's declared reference populations at ``root``, or return None |
+-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 641 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+-| `resolve_context(model, references) -> BoundReferenceContext` | function | 650 | (no docstring) |
+-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 682 | (no docstring) |
+-| `candidate_fact_count(view) -> int` | function | 758 | (no docstring) |
+-| `is_bound_population(model, population, context) -> bool` | function | 762 | Recognize only a current combined population created by this binder. |
++| `load_model_bytes_composed(data, *, source, root) -> Model` | function | 359 | Resolve the authored model and bind references under one retained root. |
++| `load_model(path) -> Model` | function | 412 | Read model and reference bytes beneath a single retained directory. |
++| `ReferenceOrigin` | class | 471 | (no docstring) |
++| `OccurrenceOrigin` | class | 477 | (no docstring) |
++| `BoundReferenceContext` | class | 483 | (no docstring) |
++| `BoundPopulationView` | class | 493 | (no docstring) |
++| `validate_reference_structure(document) -> None` | function | 500 | (no docstring) |
++| `validate_declarations(model) -> dict[str, str]` | function | 515 | (no docstring) |
++| `bind_references(model, *, root) -> BoundReferenceContext` | function | 622 | (no docstring) |
++| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 628 | Bind a model's declared reference populations at ``root``, or return None |
++| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 643 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
++| `resolve_context(model, references) -> BoundReferenceContext` | function | 652 | (no docstring) |
++| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 684 | (no docstring) |
++| `candidate_fact_count(view) -> int` | function | 760 | (no docstring) |
++| `is_bound_population(model, population, context) -> bool` | function | 764 | Recognize only a current combined population created by this binder. |
+ 
+ ## gnd.model._documents — `src/gnd/model/_documents.py`
+ Components: model.json_document
+diff --git a/dev/components/modules/witness.md b/dev/components/modules/witness.md
+index 64908c52..fdd1d2e9 100644
+--- a/dev/components/modules/witness.md
++++ b/dev/components/modules/witness.md
+@@ -31,7 +31,7 @@ Rooted include bindings for path-based witness production and replay.
+ | `resolved_projection(model_path, flat_model, flattening_record, *, raw)` | function | 36 | Return the authenticated projection when the authored root declares includes. |
+ | `node_model_origin(node, origins) -> dict` | function | 76 | (no docstring) |
+ | `stamp_projection(result, projection) -> dict` | function | 81 | (no docstring) |
+-| `load_flat_model(projection)` | function | 102 | (no docstring) |
++| `load_flat_model(projection)` | function | 103 | (no docstring) |
+ 
+ ## gnd.witness.io — `src/gnd/witness/io.py`
+ Components: witness.schema
+@@ -48,15 +48,15 @@ Bounded wire intake, structural validation and byte-bound input identities.
+ | `target_shape(t)` | function | 139 | (no docstring) |
+ | `load_targets(path, *, limits)` | function | 147 | (no docstring) |
+ | `certificate_shape(doc, *, limits)` | function | 159 | (no docstring) |
+-| `load_certificate(path, *, limits)` | function | 285 | (no docstring) |
+-| `witness_input_identity(model, candidate, *, references)` | function | 291 | (no docstring) |
+-| `identity(model, candidate, refs)` | function | 296 | (no docstring) |
+-| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 308 | (no docstring) |
+-| `roster(model)` | function | 361 | (no docstring) |
+-| `validate_targets(targets, model)` | function | 370 | (no docstring) |
+-| `support_closure(model, targets)` | function | 396 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+-| `population_wire(pop)` | function | 452 | (no docstring) |
+-| `classify_targets(model, targets, populations)` | function | 466 | Classify each request independently, caching only within this call. |
++| `load_certificate(path, *, limits)` | function | 290 | (no docstring) |
++| `witness_input_identity(model, candidate, *, references)` | function | 296 | (no docstring) |
++| `identity(model, candidate, refs)` | function | 301 | (no docstring) |
++| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 313 | (no docstring) |
++| `roster(model)` | function | 366 | (no docstring) |
++| `validate_targets(targets, model)` | function | 375 | (no docstring) |
++| `support_closure(model, targets)` | function | 401 | Conservative syntactic classifier; no tuple or comparison evaluation. |
++| `population_wire(pop)` | function | 457 | (no docstring) |
++| `classify_targets(model, targets, populations)` | function | 471 | Classify each request independently, caching only within this call. |
+ 
+ ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
+ Components: witness.replay
+@@ -91,16 +91,16 @@ Bounded witness/replay input orchestration.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 152 | Produce finite witnesses, authenticating model origins for a rooted include model. |
+-| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 182 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+-| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 213 | Replay a finite proof with an independent local inference kernel. |
+-| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 241 | Replay a finite proof with an independent local inference kernel. |
+-| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 278 | Produce a composed witness whose base nodes name their source facts. |
+-| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 306 | Replay a witness against the composition record it binds. |
+-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 373 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 427 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 441 | Replay a finite proof with an independent local inference kernel. |
+-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 455 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 163 | Produce finite witnesses, authenticating model origins for a rooted include model. |
++| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 193 | Produce finite witnesses; exit zero requires every requested tuple proved. |
++| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 224 | Replay a finite proof with an independent local inference kernel. |
++| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 252 | Replay a finite proof with an independent local inference kernel. |
++| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 289 | Produce a composed witness whose base nodes name their source facts. |
++| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 326 | Replay a witness against the composition record it binds. |
++| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 404 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 458 | Produce finite witnesses; exit zero requires every requested tuple proved. |
++| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 472 | Replay a finite proof with an independent local inference kernel. |
++| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 486 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+ 
+ ## gnd.witness.types — `src/gnd/witness/types.py`
+ Components: witness.schema
+diff --git a/docs/reference/composition.md b/docs/reference/composition.md
+index 5fa5fe64..b9f7f286 100644
+--- a/docs/reference/composition.md
++++ b/docs/reference/composition.md
+@@ -173,6 +173,34 @@ check and a witness's `composition_sha256` always name the same bytes.
+ [`composition.schema.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/composition.schema.json)
+ describes it.
+ 
++## Fixed reference catalogs
++
++The authored model may declare fixed reference populations. Composition
++authenticates the declarations and loads the catalog before reading the source
++manifest. A populated catalog cannot depend on candidate rows through a
++confirmed alethic subset. Distinct catalog rows must agree with the relation's
++confirmed alethic internal uniqueness keys. These checks and a stale declared
++catalog digest give input refusal (3).
++
++Candidate rows can name catalog entities, including through explicit manifest
++renamings. Renaming, deduplication, identity resolution and source lineage
++operate on the candidate sources. A catalog entity supplies no candidate
++identity decision or source span. Candidate source populations cannot assert
++catalog-owned fact types.
++
++Catalog-backed records use `gnd-composition/2`. They add a nonempty
++`references` array, sorted by case-sensitive reference ID. Each entry contains
++`id` and `raw_sha256`, the digest of the catalog file. Without declared
++catalogs, composition writes the unchanged `gnd-composition/1` record.
++
++`gnd check MODEL COMPOSED --composition RECORD --sources DIR` verifies the
++record's catalog roster against the authenticated inputs and re-derives the
++candidate population. It evaluates the verified candidate and the fixed catalog
++in one combined population. The reference report wrapper lists the distinct
++occurrence origins, and the embedded report lists candidate lineage for
++offending candidate facts. The command keeps source anchors from the composed
++sources and refuses explicit anchor or reference overrides.
++
+ ## Check a composed population
+ 
+ ```sh
+diff --git a/src/gnd/api.py b/src/gnd/api.py
+index 2cb5a58b..8727d662 100644
+--- a/src/gnd/api.py
++++ b/src/gnd/api.py
+@@ -994,12 +994,19 @@ def _compose_with_inputs(model, directory):
+             selected = model_module.load_model_bytes_composed(raw, source=model, root=Path(model).parent)
+         else:
+             selected = model_module.load_model_bytes(raw, source=model)
++            model_module.bind_declared_references(selected, root=Path(model).parent, attach=True)
+     except ModelValidationError as error:
+         return {"schema": "gnd-compose/1", "exit_code": 3,
+                 "error": {"kind": "input", "message": include_reason(error) or "invalid model"}}, ()
++    except model_module.ReferenceInputError as error:
++        stale = "reference raw hash does not match declared sha256"
++        detail = stale if str(error) == stale else "reference catalog could not be bound"
++        return {"schema": "gnd-compose/1", "exit_code": 3,
++                "error": {"kind": "input", "message": str(CompositionError(detail))}}, ()
+     except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model
+         return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}, ()
+-    inputs = tuple(Path(model).parent / entry['path'] for entry in selected.includes)
++    inputs = tuple(Path(model).parent / entry['path']
++                   for entry in (*selected.includes, *selected.reference_populations))
+     try:
+         composed = compose_sources(selected, raw, directory)
+     except CompositionError as error:
+diff --git a/src/gnd/checker/_composed.py b/src/gnd/checker/_composed.py
+index 28f6790c..04318c2f 100644
+--- a/src/gnd/checker/_composed.py
++++ b/src/gnd/checker/_composed.py
+@@ -23,6 +23,7 @@ def check_with_composed_anchors(
+     *,
+     sources: Any,
+     lineage: dict[Any, Any],
++    reference_fact_types: frozenset[str] = frozenset(),
+ ) -> CheckReport:
+     """Check a composed population, each anchored value against its own source (CT2).
+ 
+@@ -46,6 +47,8 @@ def check_with_composed_anchors(
+     ]
+     for fact_type, index, constraint in obligations:
+         fact_id = str(fact_type["id"])
++        if fact_id in reference_fact_types:
++            continue
+         reference = positional_constraint_ref(fact_id, index)
+         variant = "role" if constraint.get("role") is not None else "all"
+         failing = {
+diff --git a/src/gnd/checking_service.py b/src/gnd/checking_service.py
+index 5a8d46cc..705923bf 100644
+--- a/src/gnd/checking_service.py
++++ b/src/gnd/checking_service.py
+@@ -162,9 +162,9 @@ def _composition_view(model, model_coordinate, population_coordinate, population
+ 
+     model_raw = read(model_coordinate, "model", MAX_DOCUMENT_BYTES)
+     from gnd.model._includes import guard_bytes
+-    if getattr(model, 'includes', ()):
++    if model.includes or model.reference_populations:
+         if hashlib.sha256(model_raw).hexdigest() != model._authored_sha256:
+-            raise CompositionError("the model changed after its include snapshot was loaded")
++            raise CompositionError("the model changed after its input snapshot was loaded")
+     else:
+         guard_bytes(model_raw, source=model_coordinate, route="check.composition")
+     population_raw = population_bytes if population_bytes is not None else read(
+@@ -191,6 +191,7 @@ def _composition_block(composed, population, checked) -> dict[str, Any]:
+         }
+         for fact_type, rows in population.facts.items()
+     }
++    catalog_types = set(positions).difference(fact_type for fact_type, _ in lineage) if derived.record.get("references") else set()
+     named = set()
+     for verdict in checked.verdicts:
+         # A fact-type constraint offends rows of its own fact type only; a
+@@ -210,9 +211,12 @@ def _composition_block(composed, population, checked) -> dict[str, Any]:
+             else:
+                 candidates, row = ([owner] if owner is not None else list(positions)), fact
+             key = tuple((name, type(value).__name__, repr(value)) for name, value in sorted(row.items()))
++            if owner is None and len(candidates) > 1 and any(key in positions[ft] for ft in catalog_types):
++                # A value-only verdict cannot establish candidate lineage for an ambiguous match.
++                continue
+             for fact_type in candidates:
+                 index = positions.get(fact_type, {}).get(key)
+-                if index is not None:
++                if index is not None and (fact_type, index) in lineage:
+                     named.add((fact_type, index))
+     return {
+         "record_sha256": hashlib.sha256(derived.record_bytes).hexdigest(),
+@@ -383,7 +387,7 @@ def _run_check_raw(
+             context = resolve_context(model, references)
+             model._references = context
+         population, _ = _resolve_population(population_input, model=model, name="population")
+-        if model.reference_populations:
++        if model.reference_populations and composition is None:
+             if anchors is not None:
+                 raise ValueError("reference sidecar combinations are unsupported")
+             population = bind_population(model, population, references=context).combined
+@@ -434,6 +438,7 @@ def _run_check_raw(
+     composed = None
+     if composition is not None:
+         from gnd.composition import CompositionError, verify_composition
++        from gnd.references import ReferenceInputError
+ 
+         try:
+             composed = _composition_view(
+@@ -444,7 +449,9 @@ def _run_check_raw(
+             population = load_population_bytes(
+                 composed[0].population_bytes, source="composed.population.json", model=model,
+             )
+-        except (CompositionError, ModelValidationError) as error:
++            if model.reference_populations:
++                population = bind_population(model, population, references=context).combined
++        except (CompositionError, ModelValidationError, ReferenceInputError) as error:
+             return _finalize(
+                 build(3, issues=getattr(error, "issues", None), error=error),
+                 exit_code=3,
+@@ -505,6 +512,8 @@ def _run_check_raw(
+                 if composed is not None:
+                     checked = checker_module.check_with_composed_anchors(
+                         model, population, sources=composed[0].sources, lineage=composed[1],
++                        **({"reference_fact_types": frozenset(ft for ft, _ in context._owners)}
++                           if model.reference_populations else {}),
+                     )
+                 elif selected_anchors is not None or any(
+                     c.get("type") == "anchored"
+diff --git a/src/gnd/composition.py b/src/gnd/composition.py
+index d394911d..6e746d62 100644
+--- a/src/gnd/composition.py
++++ b/src/gnd/composition.py
+@@ -36,7 +36,7 @@ from gnd.composition_resolution import exact_fields as _keys
+ from gnd.composition_resolution import read_json as _json
+ from gnd.composition_resolution import row_key as _row_key
+ from gnd.composition_resolution import scalar as _scalar
+-from gnd.model import MAX_ENTRIES, Model
++from gnd.model import MAX_ENTRIES, Model, ReferenceInputError, resolve_context
+ from gnd.model_index import ModelIndex
+ from gnd.population import (
+     MAX_POPULATION_BYTES,
+@@ -44,9 +44,11 @@ from gnd.population import (
+     PopulationLoadError,
+     load_population_bytes,
+ )
++from gnd.values import identity_key
+ 
+ MANIFEST_SCHEMA = "gnd-composition-manifest/1"
+ RECORD_SCHEMA = "gnd-composition/1"
++CATALOG_RECORD_SCHEMA = "gnd-composition/2"
+ MAX_MANIFEST_BYTES = 1 << 20
+ MAX_RECORD_BYTES = 16 << 20
+ _ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
+@@ -157,14 +159,19 @@ def parse_record(raw: bytes) -> dict[str, Any]:
+     has_resolution = isinstance(data, dict) and "resolution_sha256" in data
+     if has_resolution:
+         digests.append("resolution_sha256")
+-    _keys(data, {"schema", "sources", "scope_tags", "facts"} | set(digests), "record")
+-    if data["schema"] != RECORD_SCHEMA:
++    catalog = isinstance(data, dict) and data.get("schema") == CATALOG_RECORD_SCHEMA
++    fields = {"schema", "sources", "scope_tags", "facts"} | set(digests)
++    _keys(data, fields | {"references"} if catalog else fields, "record")
++    if not catalog and data["schema"] != RECORD_SCHEMA:
+         raise CompositionError("record schema is not gnd-composition/1")
++    if catalog:
++        _parse_catalog_roster(data["references"])
+     for key in digests:
+         if not isinstance(data[key], str) or not _HEX.fullmatch(data[key]):
+             raise CompositionError(f"record {key} is not a SHA-256 digest")
+     if not isinstance(data["sources"], list) or not data["sources"]:
+         raise CompositionError("record sources must be a non-empty list")
++    source_ids = set()
+     for index, source in enumerate(data["sources"]):
+         _keys(source, {"id", "population_sha256", "sidecar_sha256", "document_sha256"}, f"record source {index}")
+         if not isinstance(source["id"], str) or not _ID.fullmatch(source["id"]):
+@@ -172,6 +179,11 @@ def parse_record(raw: bytes) -> dict[str, Any]:
+         if not all(isinstance(source[key], str) and _HEX.fullmatch(source[key])
+                    for key in ("population_sha256", "sidecar_sha256", "document_sha256")):
+             raise CompositionError(f"record source {index} has an invalid digest")
++        if catalog:
++            identifier = source["id"]
++            if identifier in source_ids:
++                raise CompositionError("record candidate source ids must be distinct")
++            source_ids.add(identifier)
+     if not isinstance(data["scope_tags"], list):
+         raise CompositionError("record scope_tags must be a list")
+     for index, tag in enumerate(data["scope_tags"]):
+@@ -196,6 +208,8 @@ def parse_record(raw: bytes) -> dict[str, Any]:
+             raise CompositionError(f"record fact {index} needs at least one source fact")
+         for position, entry in enumerate(fact["sources"]):
+             _lineage_entry(entry, f"record fact {index} source {position}")
++            if catalog and entry["source"] not in source_ids:
++                raise CompositionError(f"record fact {index} names an unknown candidate source")
+         if not isinstance(fact["renamings"], list) or not all(type(item) is int and item >= 0 for item in fact["renamings"]):
+             raise CompositionError(f"record fact {index} renamings must be manifest indexes")
+     # One record, one identity (close review): the check reports the canonical
+@@ -205,6 +219,50 @@ def parse_record(raw: bytes) -> dict[str, Any]:
+     return data
+ 
+ 
++def _parse_catalog_roster(roster: object) -> None:
++    if not isinstance(roster, list) or not 1 <= len(roster) <= 32:
++        raise CompositionError("record references needs 1 to 32 entries")
++    ids = []
++    for entry in roster:
++        _keys(entry, {"id", "raw_sha256"}, "record reference")
++        identifier, digest = entry["id"], entry["raw_sha256"]
++        if not isinstance(identifier, str) or not 1 <= len(identifier) <= 128:
++            raise CompositionError("record reference id must be 1 to 128 characters")
++        if not isinstance(digest, str) or not _HEX.fullmatch(digest):
++            raise CompositionError("record reference digest is invalid")
++        ids.append(identifier)
++    if any(left >= right for left, right in pairwise(ids)):
++        raise CompositionError("record reference ids must be sorted and distinct")
++
++
++def catalog_roster(model: Model, *, references=None) -> list[dict[str, str]]:
++    """Validate fixed catalog keys and admission before using candidate evidence."""
++    if not model.reference_populations:
++        return []
++    try:
++        context = resolve_context(model, references)
++    except ReferenceInputError as error:
++        raise CompositionError("reference populations require a current bound catalog context") from error
++    owners = dict(context._owners)
++    rows = {fact_type: facts for pop in context._populations for fact_type, facts in pop.facts.items()}
++    for _, constraint, fact_type in ModelIndex.for_model(model).iter_constraints_shared():
++        if constraint.get("status") != "confirmed" or constraint.get("modality", "alethic") != "alethic":
++            continue
++        if (constraint.get("type") == "uniqueness" and fact_type is not None
++                and constraint.get("scope", "internal") == "internal"):
++            fact_id = fact_type.get("id")
++            roles = ModelIndex.constraint_roles(constraint)
++            facts = rows.get(fact_id, ())
++            if facts and len({tuple(identity_key(row[role]) for role in roles) for row in facts}) != len(facts):
++                raise CompositionError(f"reference catalog key conflict for {fact_id}")
++        if constraint.get("type") == "subset":
++            left = {role.get("fact_type") for role in constraint.get("subset_role_seq", ())}
++            right = {role.get("fact_type") for role in constraint.get("superset_role_seq", ())}
++            if left and all(rows.get(fact_id) for fact_id in left) and right.difference(owners):
++                raise CompositionError("reference catalog depends on candidate rows")
++    return [{"id": origin.id, "raw_sha256": origin.raw_sha256} for origin, _, _ in context._snapshots]
++
++
+ def _read(path: Path, *, label: str, max_bytes: int) -> bytes:
+     try:
+         return read_regular_path(path, label=label, max_bytes=max_bytes)
+@@ -222,6 +280,8 @@ def _load_source(model: Model, directory: Path, source_id: str) -> Source:
+     except PopulationLoadError as error:
+         # Population messages can quote values; the refusal names the source only.
+         raise CompositionError(f"source {source_id} population does not validate against the model") from error
++    if model.reference_populations and any(ft in population.facts for ft, _ in model._references._owners):
++        raise CompositionError(f"source {source_id} mentions a reference-owned fact type")
+     try:
+         sidecar = parse_anchor_sidecar(sidecar_raw)
+         bind_anchors(sidecar, model, population_raw, document_raw, population)
+@@ -236,9 +296,11 @@ def _load_source(model: Model, directory: Path, source_id: str) -> Source:
+ 
+ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Composition:
+     """Compose the sources a manifest names; refuse instead of guessing."""
++    return _compose(model, model_raw, directory, catalog_roster(model))
++
++
++def _compose(model, model_raw, directory, references):
+     directory = Path(directory)
+-    if model.reference_populations:
+-        raise CompositionError("composition with reference populations is unsupported")
+     manifest_raw = _read(directory / "manifest.json", label="composition manifest", max_bytes=MAX_MANIFEST_BYTES)
+     manifest = parse_manifest(manifest_raw)
+     index_ = ModelIndex.for_model(model)
+@@ -376,6 +438,8 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
+             for fact_type in sorted(facts) for position in range(len(facts[fact_type]))
+         ],
+     }
++    if references:
++        record.update(schema=CATALOG_RECORD_SCHEMA, references=references)
+     if evidence is not None:
+         keys = evidence.collect_keys(instance_renamings)
+         check_coverage(list(keys.values()), evidence.resolution.decisions,
+@@ -392,11 +456,14 @@ def verify_composition(
+     model: Model, model_raw: bytes, population_raw: bytes, record: dict[str, Any], directory: str | Path,
+ ) -> Composition:
+     """Re-derive a composition from its inputs and compare it with the record."""
++    references = catalog_roster(model)
++    if record.get("references", []) != references:
++        raise CompositionError("reference roster differs from the record")
+     if record["model_sha256"] != _sha(model_raw):
+         raise CompositionError("the model differs from the record's model digest")
+     if record["population_sha256"] != _sha(population_raw):
+         raise CompositionError("the composed population differs from the record's digest")
+-    derived = compose(model, model_raw, directory)
++    derived = _compose(model, model_raw, directory, references)
+     for key in ("manifest_sha256", "sources", "scope_tags", "resolution_sha256", "facts"):
+         if derived.record.get(key) != record.get(key):
+             raise CompositionError(f"re-derived composition differs from the record at {key}")
+diff --git a/src/gnd/composition.schema.json b/src/gnd/composition.schema.json
+index ad2419b2..e967b49a 100644
+--- a/src/gnd/composition.schema.json
++++ b/src/gnd/composition.schema.json
+@@ -16,7 +16,10 @@
+   ],
+   "properties": {
+     "schema": {
+-      "const": "gnd-composition/1"
++      "enum": [
++        "gnd-composition/1",
++        "gnd-composition/2"
++      ]
+     },
+     "model_sha256": {
+       "type": "string",
+@@ -158,6 +161,33 @@
+     "resolution_sha256": {
+       "type": "string",
+       "pattern": "^[0-9a-f]{64}$"
++    },
++    "references": {
++      "type": "array",
++      "minItems": 1,
++      "maxItems": 32,
++      "uniqueItems": true,
++      "items": {
++        "type": "object",
++        "additionalProperties": false,
++        "required": [
++          "id",
++          "raw_sha256"
++        ],
++        "properties": {
++          "id": {
++            "type": "string",
++            "minLength": 1,
++            "maxLength": 128
++          },
++          "raw_sha256": {
++            "type": "string",
++            "minLength": 64,
++            "maxLength": 64,
++            "pattern": "^[0-9a-f]{64}$"
++          }
++        }
++      }
+     }
+   },
+   "if": {
+@@ -188,5 +218,28 @@
+         }
+       }
+     }
+-  }
++  },
++  "allOf": [
++    {
++      "if": {
++        "properties": {
++          "schema": {
++            "const": "gnd-composition/2"
++          }
++        }
++      },
++      "then": {
++        "required": [
++          "references"
++        ]
++      },
++      "else": {
++        "not": {
++          "required": [
++            "references"
++          ]
++        }
++      }
++    }
++  ]
+ }
+diff --git a/src/gnd/model/__init__.py b/src/gnd/model/__init__.py
+index ca657eed..91ae504b 100644
+--- a/src/gnd/model/__init__.py
++++ b/src/gnd/model/__init__.py
+@@ -351,6 +351,8 @@ def _load_model_at(data, *, source, descriptor, historical=None, analysis=False)
+     if historical is not None:
+         _refuse('declaration')
+     model = load_model_bytes(data, source=source)
++    if model.reference_populations:
++        model._authored_sha256 = hashlib.sha256(data).hexdigest()
+     return CompositionView(doc, (), (), (), model) if analysis else model
+ 
+ 
+diff --git a/src/gnd/schema/witness-result.schema.json b/src/gnd/schema/witness-result.schema.json
+index b42096d5..86fb9683 100644
+--- a/src/gnd/schema/witness-result.schema.json
++++ b/src/gnd/schema/witness-result.schema.json
+@@ -350,7 +350,6 @@
+         },
+         "sources": {
+           "type": "array",
+-          "minItems": 1,
+           "items": {
+             "type": "object",
+             "properties": {
+@@ -491,7 +490,8 @@
+           "enum": [
+             1,
+             2,
+-            3
++            3,
++            4
+           ]
+         },
+         "kind": {
+@@ -584,7 +584,10 @@
+               {
+                 "properties": {
+                   "version": {
+-                    "const": 2
++                    "enum": [
++                      2,
++                      4
++                    ]
+                   }
+                 },
+                 "required": [
+@@ -682,13 +685,33 @@
+         },
+         {
+           "if": {
+-            "properties": {
+-              "version": {
+-                "const": 3
++            "anyOf": [
++              {
++                "properties": {
++                  "version": {
++                    "const": 3
++                  }
++                },
++                "required": [
++                  "version"
++                ]
++              },
++              {
++                "properties": {
++                  "version": {
++                    "const": 4
++                  },
++                  "binding": {
++                    "required": [
++                      "flattening_sha256"
++                    ]
++                  }
++                },
++                "required": [
++                  "version",
++                  "binding"
++                ]
+               }
+-            },
+-            "required": [
+-              "version"
+             ]
+           },
+           "then": {
+@@ -727,6 +750,98 @@
+               }
+             }
+           }
++        },
++        {
++          "if": {
++            "properties": {
++              "version": {
++                "const": 4
++              }
++            },
++            "required": [
++              "version"
++            ]
++          },
++          "then": {
++            "properties": {
++              "binding": {
++                "properties": {
++                  "references": {
++                    "minItems": 1,
++                    "maxItems": 32,
++                    "items": {
++                      "properties": {
++                        "id": {
++                          "minLength": 1,
++                          "maxLength": 128
++                        }
++                      }
++                    }
++                  }
++                }
++              },
++              "nodes": {
++                "items": {
++                  "if": {
++                    "properties": {
++                      "kind": {
++                        "const": "base"
++                      }
++                    },
++                    "required": [
++                      "kind"
++                    ]
++                  },
++                  "then": {
++                    "if": {
++                      "properties": {
++                        "origin": {
++                          "properties": {
++                            "kind": {
++                              "const": "reference"
++                            }
++                          },
++                          "required": [
++                            "kind"
++                          ]
++                        }
++                      },
++                      "required": [
++                        "origin"
++                      ]
++                    },
++                    "then": {
++                      "properties": {
++                        "sources": {
++                          "maxItems": 0
++                        }
++                      }
++                    },
++                    "else": {
++                      "properties": {
++                        "sources": {
++                          "minItems": 1
++                        }
++                      }
++                    }
++                  }
++                }
++              }
++            }
++          },
++          "else": {
++            "properties": {
++              "nodes": {
++                "items": {
++                  "properties": {
++                    "sources": {
++                      "minItems": 1
++                    }
++                  }
++                }
++              }
++            }
++          }
+         }
+       ]
+     },
+diff --git a/src/gnd/schema/witness.schema.json b/src/gnd/schema/witness.schema.json
+index 0f30871a..143549f4 100644
+--- a/src/gnd/schema/witness.schema.json
++++ b/src/gnd/schema/witness.schema.json
+@@ -7,7 +7,8 @@
+       "enum": [
+         1,
+         2,
+-        3
++        3,
++        4
+       ]
+     },
+     "kind": {
+@@ -190,7 +191,6 @@
+         },
+         "sources": {
+           "type": "array",
+-          "minItems": 1,
+           "items": {
+             "type": "object",
+             "properties": {
+@@ -564,7 +564,10 @@
+           {
+             "properties": {
+               "version": {
+-                "const": 2
++                "enum": [
++                  2,
++                  4
++                ]
+               }
+             },
+             "required": [
+@@ -662,13 +665,33 @@
+     },
+     {
+       "if": {
+-        "properties": {
+-          "version": {
+-            "const": 3
++        "anyOf": [
++          {
++            "properties": {
++              "version": {
++                "const": 3
++              }
++            },
++            "required": [
++              "version"
++            ]
++          },
++          {
++            "properties": {
++              "version": {
++                "const": 4
++              },
++              "binding": {
++                "required": [
++                  "flattening_sha256"
++                ]
++              }
++            },
++            "required": [
++              "version",
++              "binding"
++            ]
+           }
+-        },
+-        "required": [
+-          "version"
+         ]
+       },
+       "then": {
+@@ -707,6 +730,98 @@
+           }
+         }
+       }
++    },
++    {
++      "if": {
++        "properties": {
++          "version": {
++            "const": 4
++          }
++        },
++        "required": [
++          "version"
++        ]
++      },
++      "then": {
++        "properties": {
++          "binding": {
++            "properties": {
++              "references": {
++                "minItems": 1,
++                "maxItems": 32,
++                "items": {
++                  "properties": {
++                    "id": {
++                      "minLength": 1,
++                      "maxLength": 128
++                    }
++                  }
++                }
++              }
++            }
++          },
++          "nodes": {
++            "items": {
++              "if": {
++                "properties": {
++                  "kind": {
++                    "const": "base"
++                  }
++                },
++                "required": [
++                  "kind"
++                ]
++              },
++              "then": {
++                "if": {
++                  "properties": {
++                    "origin": {
++                      "properties": {
++                        "kind": {
++                          "const": "reference"
++                        }
++                      },
++                      "required": [
++                        "kind"
++                      ]
++                    }
++                  },
++                  "required": [
++                    "origin"
++                  ]
++                },
++                "then": {
++                  "properties": {
++                    "sources": {
++                      "maxItems": 0
++                    }
++                  }
++                },
++                "else": {
++                  "properties": {
++                    "sources": {
++                      "minItems": 1
++                    }
++                  }
++                }
++              }
++            }
++          }
++        }
++      },
++      "else": {
++        "properties": {
++          "nodes": {
++            "items": {
++              "properties": {
++                "sources": {
++                  "minItems": 1
++                }
++              }
++            }
++          }
++        }
++      }
+     }
+   ]
+ }
+diff --git a/src/gnd/skills/gnd-export/references/witness-contract.md b/src/gnd/skills/gnd-export/references/witness-contract.md
+index 42aaa1ff..91d8720e 100644
+--- a/src/gnd/skills/gnd-export/references/witness-contract.md
++++ b/src/gnd/skills/gnd-export/references/witness-contract.md
+@@ -1,4 +1,4 @@
+-# Certificate versions 1, 2 and 3
++# Certificate versions 1 through 4
+ 
+ See the [closed wire schema](witness.schema.json) and [workflow](../SKILL.md).
+ Bindings include the existing model identity, SHA-256 of canonical candidate
+@@ -53,8 +53,8 @@ with it is `binding-stale` (3); a record that does not bind the model and
+ population, or an unreadable record, is `input-invalid` (3). Replay checks
+ that the witness agrees with the record; it does not re-derive the record
+ from the sources, which `gnd check --composition --sources` does. Witness views list `sources` as ids and
+-indexes. `--composition` excludes `--reference-root` (64): composition refuses
+-reference populations. Version 1 is unchanged.
++indexes. `--composition` excludes `--reference-root` (64). Version 2 binds
++a reference-free composition record.
+ 
+ 
+ ## Version 3: rooted model origins
+@@ -67,8 +67,8 @@ match the rooted, re-derived bytes from the
+ [flattening contract](../../gnd-orm-core/references/representation-format.md#extraction-flattening-record).
+ Without the options, the commands derive the same projection in memory.
+ The binding uses the raw SHA-256 of the canonical flattening record in
+-`flattening_sha256`. A valid include-free root continues to produce versions
+-1 or 2.
++`flattening_sha256`. The version 1 and 2 rules apply to include-free inputs
++outside catalog-backed composition.
+ 
+ Each node carries `model_origin` with `origin`, `original_address`,
+ `composed_address` and `element_id`. These are the origin entry for the
+@@ -84,3 +84,21 @@ bound digest is `binding-stale` (3). A structurally valid but forged model
+ origin or fact occurrence is `proof-invalid` (1). The unrooted model-byte
+ intake cannot resolve authored includes. An incomplete option pair exits 64.
+ The same witness byte and work ceilings govern the stamped output.
++
++## Version 4 for catalog-backed composition
++
++Supplying a catalog-backed composition record produces version 4. Witness
++and replay authenticate the model's pinned reference files and compare
++their sorted raw-byte SHA-256 roster with the composition record.
++`composition_sha256` binds the exact record bytes and `references` binds
++the fixed inputs separately. The reference roster must contain 1 to 32
++entries. Include roots also require the version-3 flattening digest and
++per-node model origins.
++
++Candidate base nodes carry the nonempty `sources` list from the record.
++Reference base nodes carry the reference ID and fact index in `origin` and
++an empty `sources` list. Replay verifies each occurrence in its named input
++before accepting a proof. Changed catalog bytes or a mismatching roster give
++`binding-stale` (3). A structurally valid forged occurrence or model origin
++gives `proof-invalid` (1). Check with the source directory independently
++re-derives candidate lineage.
+diff --git a/src/gnd/skills/gnd-export/references/witness.schema.json b/src/gnd/skills/gnd-export/references/witness.schema.json
+index 0f30871a..143549f4 100644
+--- a/src/gnd/skills/gnd-export/references/witness.schema.json
++++ b/src/gnd/skills/gnd-export/references/witness.schema.json
+@@ -7,7 +7,8 @@
+       "enum": [
+         1,
+         2,
+-        3
++        3,
++        4
+       ]
+     },
+     "kind": {
+@@ -190,7 +191,6 @@
+         },
+         "sources": {
+           "type": "array",
+-          "minItems": 1,
+           "items": {
+             "type": "object",
+             "properties": {
+@@ -564,7 +564,10 @@
+           {
+             "properties": {
+               "version": {
+-                "const": 2
++                "enum": [
++                  2,
++                  4
++                ]
+               }
+             },
+             "required": [
+@@ -662,13 +665,33 @@
+     },
+     {
+       "if": {
+-        "properties": {
+-          "version": {
+-            "const": 3
++        "anyOf": [
++          {
++            "properties": {
++              "version": {
++                "const": 3
++              }
++            },
++            "required": [
++              "version"
++            ]
++          },
++          {
++            "properties": {
++              "version": {
++                "const": 4
++              },
++              "binding": {
++                "required": [
++                  "flattening_sha256"
++                ]
++              }
++            },
++            "required": [
++              "version",
++              "binding"
++            ]
+           }
+-        },
+-        "required": [
+-          "version"
+         ]
+       },
+       "then": {
+@@ -707,6 +730,98 @@
+           }
+         }
+       }
++    },
++    {
++      "if": {
++        "properties": {
++          "version": {
++            "const": 4
++          }
++        },
++        "required": [
++          "version"
++        ]
++      },
++      "then": {
++        "properties": {
++          "binding": {
++            "properties": {
++              "references": {
++                "minItems": 1,
++                "maxItems": 32,
++                "items": {
++                  "properties": {
++                    "id": {
++                      "minLength": 1,
++                      "maxLength": 128
++                    }
++                  }
++                }
++              }
++            }
++          },
++          "nodes": {
++            "items": {
++              "if": {
++                "properties": {
++                  "kind": {
++                    "const": "base"
++                  }
++                },
++                "required": [
++                  "kind"
++                ]
++              },
++              "then": {
++                "if": {
++                  "properties": {
++                    "origin": {
++                      "properties": {
++                        "kind": {
++                          "const": "reference"
++                        }
++                      },
++                      "required": [
++                        "kind"
++                      ]
++                    }
++                  },
++                  "required": [
++                    "origin"
++                  ]
++                },
++                "then": {
++                  "properties": {
++                    "sources": {
++                      "maxItems": 0
++                    }
++                  }
++                },
++                "else": {
++                  "properties": {
++                    "sources": {
++                      "minItems": 1
++                    }
++                  }
++                }
++              }
++            }
++          }
++        }
++      },
++      "else": {
++        "properties": {
++          "nodes": {
++            "items": {
++              "properties": {
++                "sources": {
++                  "minItems": 1
++                }
++              }
++            }
++          }
++        }
++      }
+     }
+   ]
+ }
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index 6cf762fc..b2b36e2f 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -1778,7 +1778,7 @@ model content plus sorted declarations, including path, ownership and expected
+ raw hash. `model_id` remains a separate opaque identifier. Versions 1–3 reject
+ this field; a feature-free version 4 retains the ordinary wire and behavior.
+ 
+-Check, batch, transition and diff consume bound references. Synth, codegen and
++Check, composition, witness, batch, transition and diff consume bound references. Synth, codegen and
+ older session contracts refuse reference-bearing inputs before publishing
+ artifacts or invoking an adapter. Conformance can report changed model identity;
+ it never regenerates code. Extraction projects candidate-owned fact types only.
+diff --git a/src/gnd/witness/flattening.py b/src/gnd/witness/flattening.py
+index 5f5bd323..fbfb69db 100644
+--- a/src/gnd/witness/flattening.py
++++ b/src/gnd/witness/flattening.py
+@@ -82,7 +82,8 @@ def stamp_projection(result: dict, projection: WitnessProjection) -> dict:
+     certificate = result["certificate"]
+     if certificate is None:
+         return result
+-    certificate["version"] = 3
++    if certificate["version"] != 4:
++        certificate["version"] = 3
+     digest, origins = projection.binding
+     certificate["binding"]["flattening_sha256"] = digest
+     for node in certificate["nodes"]:
+diff --git a/src/gnd/witness/io.py b/src/gnd/witness/io.py
+index 93f19a07..8904f92c 100644
+--- a/src/gnd/witness/io.py
++++ b/src/gnd/witness/io.py
+@@ -161,15 +161,16 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
+     record(doc, "version kind binding results nodes")
+     if (
+         type(doc["version"]) is not int
+-        or doc["version"] not in (1, 2, 3)
++        or doc["version"] not in (1, 2, 3, 4)
+         or doc["kind"] != "derivation-witness"
+     ):
+         raise WitnessInputError("unknown certificate kind/version")
+     # Version 2 is a witness over a composed population (CT3): the binding
+     # names the composition record and each base node its source facts.
+-    projected = doc["version"] == 3
+     b = doc["binding"]
+-    composed = doc["version"] == 2 or (projected and type(b) is dict and "composition_sha256" in b)
++    catalog = doc["version"] == 4
++    projected = doc["version"] == 3 or (catalog and type(b) is dict and "flattening_sha256" in b)
++    composed = doc["version"] in (2, 4) or (projected and type(b) is dict and "composition_sha256" in b)
+     keys = "model_digest candidate_digest references"
+     if composed:
+         keys += " composition_sha256"
+@@ -187,11 +188,14 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
+             raise WitnessInputError("invalid digest")
+     if type(b["references"]) is not list:
+         raise WitnessInputError("invalid reference identity roster")
++    if catalog and not 1 <= len(b["references"]) <= 32:
++        raise WitnessInputError("catalog reference roster exceeds its bounds")
+     ids = []
+     for ref in b["references"]:
+         record(ref, "id raw_sha256")
+         if (
+             type(ref["id"]) is not str
++            or (catalog and not 1 <= len(ref["id"]) <= 128)
+             or type(ref["raw_sha256"]) is not str
+             or not re.fullmatch(r"[0-9a-f]{64}", ref["raw_sha256"])
+         ):
+@@ -255,7 +259,8 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
+             ):
+                 raise WitnessInputError("invalid base origin")
+             if composed:
+-                if type(n["sources"]) is not list or not n["sources"]:
++                needs_sources = not catalog or origin["kind"] == "candidate"
++                if type(n["sources"]) is not list or bool(n["sources"]) != needs_sources:
+                     raise WitnessInputError("invalid base sources")
+                 for entry in n["sources"]:
+                     record(entry, "source fact_type fact_index")
+diff --git a/src/gnd/witness/kernel.py b/src/gnd/witness/kernel.py
+index 9c79f502..96afdfbd 100644
+--- a/src/gnd/witness/kernel.py
++++ b/src/gnd/witness/kernel.py
+@@ -306,8 +306,9 @@ def replay_witness(
+             model_document, candidate_document, reference_inputs, limits=limits
+         )
+         binding = dict(certificate["binding"])
+-        projected = certificate["version"] == 3
++        projected = "flattening_sha256" in binding
+         composed = "composition_sha256" in binding
++        catalog = certificate["version"] == 4
+         if projected != (flattening is not None):
+             return WitnessResult(3, reason="binding-stale")
+         if flattening is not None and binding.pop("flattening_sha256") != flattening[0]:
+@@ -316,6 +317,8 @@ def replay_witness(
+             return WitnessResult(3, reason="composition-required")
+         if not composed and composition is not None:
+             return WitnessResult(3, reason="binding-stale")
++        if composed and catalog != bool(reference_inputs):
++            return WitnessResult(3, reason="binding-stale")
+         if composed and binding.pop("composition_sha256") != composition[0]:
+             return WitnessResult(3, reason="binding-stale")
+         # Whole-binding equality, key set included; only model_digest may name
+@@ -344,9 +347,13 @@ def replay_witness(
+         if composed:
+             lineage = composition[1]
+             for node in certificate["nodes"]:
+-                if node["kind"] == "base" and node["sources"] != lineage.get(
+-                    (node["fact_type"], node["origin"]["fact_index"])
+-                ):
++                if node["kind"] != "base":
++                    continue
++                origin = node["origin"]
++                expected_sources = [] if catalog and origin["kind"] == "reference" else lineage.get(
++                    (node["fact_type"], origin["fact_index"])
++                )
++                if node["sources"] != expected_sources:
+                     raise InvalidProof("base node sources differ from the composition record")
+         validate_targets(targets, model)
+         flags, _, _ = classify_targets(model, targets, (candidate, *refs.values()))
+diff --git a/src/gnd/witness/service.py b/src/gnd/witness/service.py
+index 7343542e..5b775c5d 100644
+--- a/src/gnd/witness/service.py
++++ b/src/gnd/witness/service.py
+@@ -52,7 +52,7 @@ def _witness_inputs(model_path, population_path, reference_root, *, model_raw=No
+     return model, candidate, context, md, pd
+ 
+ 
+-def _composition_lineage(composition, model_path, population_path, *, digests=None):
++def _composition_lineage(composition, model_path, population_path, *, digests=None, catalog=None):
+     """Read a composition record bound to these model and population bytes (CT3)."""
+     import hashlib
+ 
+@@ -64,6 +64,8 @@ def _composition_lineage(composition, model_path, population_path, *, digests=No
+         guard_path(model_path, "witness.composition")
+     raw = read_regular_path(composition, label="composition record", max_bytes=MAX_RECORD_BYTES)
+     record = parse_record(raw)
++    if record.get("references", []) != (catalog or []):
++        raise StaleWitnessBinding("reference roster differs from the record")
+     fields = ("model_sha256", "population_sha256")
+     if digests is None:
+         for path, key in zip((model_path, population_path), fields, strict=True):
+@@ -75,8 +77,8 @@ def _composition_lineage(composition, model_path, population_path, *, digests=No
+     return hashlib.sha256(raw).hexdigest(), lineage_index(record)
+ 
+ 
+-def _stamp_composition(result, composition):
+-    """Make a produced certificate a version-2 witness over a composed population."""
++def _stamp_composition(result, composition, *, catalog=False):
++    """Bind a produced certificate to a composition record and candidate lineage."""
+     from gnd.artifacts import canonical_json_bytes
+     from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, WitnessResult, result_rows
+ 
+@@ -84,10 +86,13 @@ def _stamp_composition(result, composition):
+     if certificate is None:
+         return result
+     digest, lineage = composition
+-    certificate["version"] = 2
++    certificate["version"] = 4 if catalog else 2
+     certificate["binding"]["composition_sha256"] = digest
+     for node in certificate["nodes"]:
+         if node["kind"] == "base":
++            if catalog and node["origin"]["kind"] == "reference":
++                node["sources"] = []
++                continue
+             sources = lineage.get((node["fact_type"], node["origin"]["fact_index"]))
+             if node["origin"]["kind"] != "candidate" or not sources:
+                 raise WitnessInputError("the composition record has no lineage for a base fact")
+@@ -100,26 +105,32 @@ def _stamp_composition(result, composition):
+ 
+ 
+ def _projected_inputs(projection, model_path, population_path, *, reference_root=None, composition=None):
++    return _bound_witness_inputs(
++        load_flat_model(projection), model_path, population_path, projection.root_sha256,
++        reference_root=reference_root, composition=composition,
++    )
++
++
++def _bound_witness_inputs(model, model_path, population_path, model_sha256, *, reference_root=None,
++                          composition=None):
+     from pathlib import Path
+ 
+     from gnd.artifacts import sha256_hex
++    from gnd.composition import catalog_roster
+     from gnd.model import bind_declared_references
+     from gnd.population import _parse_document_bytes, load_population_bytes
+-    from gnd.witness.types import WitnessInputError
+ 
+-    model = load_flat_model(projection)
++    context = bind_declared_references(
++        model, root=reference_root if reference_root is not None else Path(model_path).parent
++    )
+     raw = read_projected_path(population_path, label="candidate population")
+     lineage = None
+     if composition is not None:
+-        if model.reference_populations:
+-            raise WitnessInputError("composition with reference populations is unsupported")
+         lineage = _composition_lineage(
+-            composition, model_path, population_path, digests=(projection.root_sha256, sha256_hex(raw))
++            composition, model_path, population_path,
++            digests=(model_sha256, sha256_hex(raw)), catalog=catalog_roster(model, references=context),
+         )
+     candidate = load_population_bytes(raw, source=population_path, model=model)
+-    context = bind_declared_references(
+-        model, root=reference_root if reference_root is not None else Path(model_path).parent
+-    )
+     document = _parse_document_bytes(raw, suffix=Path(population_path).suffix, source=str(population_path))
+     return model, candidate, context, document, lineage
+ 
+@@ -132,7 +143,7 @@ def _produce_projected(projection, model_path, population_path, targets, **optio
+     )
+     result = produce_witness(model, candidate, targets, references=references).model_dump(mode="json")
+     if lineage is not None:
+-        result = _stamp_composition(result, lineage)
++        result = _stamp_composition(result, lineage, catalog=references is not None)
+     return stamp_projection(result, projection)
+ 
+ 
+@@ -280,20 +291,29 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
+     """Produce a composed witness whose base nodes name their source facts."""
+     from ruamel.yaml.error import YAMLError
+ 
++    from gnd.artifacts import sha256_hex
+     from gnd.witness.io import load_targets
++    from gnd.witness.producer import produce_witness
+     from gnd.witness.types import WitnessResult
+ 
+     try:
+-        projection = resolved_projection(model_path, flat_model, flattening_record)
++        raw = read_projected_path(model_path, label="authored model")
++        projection = resolved_projection(model_path, flat_model, flattening_record, raw=raw)
+         if projection is not None:
+             return _produce_projected(
+                 projection, model_path, population_path, load_targets(targets_path), composition=composition
+             )
++        model = model_module.load_model_bytes(raw, source=model_path)
++        if model.reference_populations:
++            targets = load_targets(targets_path)
++            _, candidate, context, _, lineage = _bound_witness_inputs(
++                model, model_path, population_path, sha256_hex(raw), composition=composition,
++            )
++            result = produce_witness(model, candidate, targets, references=context).model_dump(mode="json")
++            return _stamp_composition(result, lineage, catalog=True)
+         lineage = _composition_lineage(composition, model_path, population_path)
+-        if model_module.load_model(model_path).reference_populations:
+-            raise ValueError("a composed population has no reference populations")
+         return _stamp_composition(witness_result(model_path, population_path, targets_path), lineage)
+-    except StaleWitnessBinding:
++    except (StaleWitnessBinding, model_module.ReferenceInputError):
+         return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
+     except ModelValidationError as error:
+         from gnd.witness.types import WitnessResult
+@@ -308,21 +328,32 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
+     """Replay a witness against the composition record it binds."""
+     from ruamel.yaml.error import YAMLError
+ 
++    from gnd.artifacts import sha256_hex
++    from gnd.model import parse_model_document
+     from gnd.witness.io import load_certificate
+     from gnd.witness.kernel import replay_witness
+     from gnd.witness.types import WitnessResult
+ 
+     try:
+         certificate = load_certificate(certificate_path)
+-        projection = resolved_projection(model_path, flat_model, flattening_record)
++        raw = read_projected_path(model_path, label="authored model")
++        projection = resolved_projection(model_path, flat_model, flattening_record, raw=raw)
+         if projection is not None:
+             return _replay_projected(
+                 projection, model_path, population_path, certificate, composition=composition
+             )
++        md = parse_model_document(raw, source=model_path)
++        if md.get("reference_populations"):
++            model = model_module.load_model_bytes(raw, source=model_path)
++            _, _, context, pd, lineage = _bound_witness_inputs(
++                model, model_path, population_path, sha256_hex(raw), composition=composition,
++            )
++            refs = tuple((origin.id, snapshot) for origin, _, snapshot in context._snapshots)
++            return replay_witness(md, pd, certificate, composition=lineage, reference_inputs=refs).model_dump(mode="json")
+         lineage = _composition_lineage(composition, model_path, population_path)
+         _, _, _, md, pd = _witness_inputs(model_path, population_path, None)
+         return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
+-    except StaleWitnessBinding:
++    except (StaleWitnessBinding, model_module.ReferenceInputError):
+         return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
+     except ModelValidationError as error:
+         from gnd.witness.types import WitnessResult
+diff --git a/tests/fixtures/lx3-catalog-composition/README.md b/tests/fixtures/lx3-catalog-composition/README.md
+new file mode 100644
+index 00000000..3959eed3
+--- /dev/null
++++ b/tests/fixtures/lx3-catalog-composition/README.md
+@@ -0,0 +1,12 @@
++# Catalog-backed composition corpus
++
++The test builds a rooted successor of the existing dispatch reference corpus.
++The first source says `A Depot` and the manifest renames it to catalog identity
++`WH-A`. Each source has its own population, document and digest-bound anchors.
++The root adds a catalog-dependent subset check and a proof target joining a
++candidate shipment with the catalog product.
++
++`expected.json` records observable outcomes. The two frozen reference-free
++digests were captured at the LX2 completion commit. The LI2 case retains its
++original asserted candidate identities and proposed resolution and adds a
++separate reference relation.
+diff --git a/tests/fixtures/lx3-catalog-composition/expected.json b/tests/fixtures/lx3-catalog-composition/expected.json
+new file mode 100644
+index 00000000..5c08aa6e
+--- /dev/null
++++ b/tests/fixtures/lx3-catalog-composition/expected.json
+@@ -0,0 +1,26 @@
++{
++  "record_schema": "gnd-composition/2",
++  "certificate_version": 4,
++  "catalog": "catalog",
++  "catalog_fact": "dispatch_catalog_allows",
++  "sources": [
++    "first",
++    "second"
++  ],
++  "candidate_warehouse": "WH-A",
++  "proof_invalid": [
++    1,
++    "proof-invalid"
++  ],
++  "binding_stale": [
++    3,
++    "binding-stale"
++  ],
++  "catalog_key_conflict": "reference catalog key conflict",
++  "catalog_candidate_dependency": "reference catalog depends on candidate rows",
++  "catalog_stale": "reference raw hash does not match declared sha256",
++  "record_catalog_stale": "reference roster differs from the record",
++  "missing_resolution": "composition:invalid: keys at hom-a method_builds_on_method#0.method and hom-b method_builds_on_method#0.method (object type method) are joined without a same decision",
++  "legacy_population_sha256": "8ed0607cfa76537c3eb556daa221a84c3d968af31449dc22c7c9b13129a963f7",
++  "legacy_record_sha256": "764eca4fb4f44d7095b8e8e73e7effc39e5c5c3da46af2d482b8299e976deefb"
++}
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index e650f211..96c83365 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -144,6 +144,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX1/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX3/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_lx3_catalog_composition.py b/tests/test_lx3_catalog_composition.py
+new file mode 100644
+index 00000000..7ba8915b
+--- /dev/null
++++ b/tests/test_lx3_catalog_composition.py
+@@ -0,0 +1,412 @@
++"""Catalog-backed composition, checking and independent witness replay."""
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++from pathlib import Path
++
++import jsonschema
++import pytest
++
++from gnd import api
++from gnd.anchors import vocabulary_digest
++from gnd.artifacts import canonical_json_bytes
++from gnd.cli import main
++from gnd.composition import CompositionError, parse_record
++from gnd.model import load_model, parse_model_document
++from gnd.witness.io import certificate_shape
++
++ROOT = Path(__file__).resolve().parent.parent
++DISPATCH = ROOT / "tests/fixtures/reference-corpus/dispatch"
++EXPECTED = json.loads((ROOT / "tests/fixtures/lx3-catalog-composition/expected.json").read_bytes())
++CATALOG = EXPECTED["catalog_fact"]
++SUBJECT = "dispatch_subject_warehouse"
++ELIGIBLE = "dispatch_eligible_product"
++PROVENANCE = {
++    "source": "explicit", "status": "confirmed", "modality": "alethic",
++    "provenance": {"user_quote": "Use the fixed warehouse catalog."},
++}
++
++
++def write(path, obj):
++    path.write_bytes(canonical_json_bytes(obj))
++
++
++def read(path):
++    return json.loads(path.read_bytes())
++
++
++def digest(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def role(fact_type, name):
++    return {"fact_type": fact_type, "role": name}
++
++
++def source(directory, model, name, facts, document):
++    folder = directory / name
++    folder.mkdir(parents=True)
++    doc = folder / "document.txt"
++    doc.write_bytes(document.encode("utf-8"))
++    pop = folder / "population.json"
++    write(pop, {"population": {"model": "model.orm.json", "model_id": model.model_id,
++                               "source": "fixture", "covers": sorted(facts)},
++                "instances": {}, "facts": facts})
++    anchors = []
++    for fact_type, rows in facts.items():
++        for row in rows:
++            for role_name, value in row.items():
++                start = document.index(value)
++                anchors.append({
++                    "fact_key": {"fact_type": fact_type, "roles": row}, "role": role_name,
++                    "span": {"start": start, "end": start + len(value)}, "occurrence": 0,
++                    "excerpt_sha256": hashlib.sha256(value.encode("utf-8")).hexdigest(),
++                })
++    write(folder / "population.json.anchors.json", {
++        "schema_version": 2, "population_sha256": digest(pop),
++        "vocabulary_digest": vocabulary_digest(model), "document_sha256": digest(doc), "anchors": anchors,
++    })
++
++
++def setup(tmp_path, *, includes=True, dependency=False, claims=False):
++    top = tmp_path.resolve()
++    dispatch = DISPATCH / "model.orm.yaml"
++    standalone = parse_model_document(dispatch.read_bytes(), source=dispatch)
++    catalog = top / "catalog.json"
++    shutil.copyfile(DISPATCH / "references/catalog.pop.json", catalog)
++    data = read(catalog)
++    data["population"]["model"] = "model.orm.json"
++    write(catalog, data)
++    vocabulary = {"version": 2, "source": standalone["source"], "object_types": standalone["object_types"],
++                  "fact_types": standalone["fact_types"], "constraints": []}
++    for fact in vocabulary["fact_types"]:
++        if fact["id"] == CATALOG:
++            fact["constraints"] = [{"type": "uniqueness", "roles": ["warehouse"], **PROVENANCE}]
++        if fact["id"] == SUBJECT:
++            fact["constraints"] = [{"type": "anchored", "role": "warehouse", **PROVENANCE}]
++    vocabulary_path = top / "vocabulary.orm.json"
++    write(vocabulary_path, vocabulary)
++    model = top / "model.orm.json"
++    left, right = (CATALOG, SUBJECT) if dependency else (SUBJECT, CATALOG)
++    subset = {"id": "dispatch_catalog_membership", "type": "subset",
++              "subset_role_seq": [role(left, "warehouse")], "superset_role_seq": [role(right, "warehouse")],
++              **PROVENANCE}
++    derived = {
++        "id": ELIGIBLE, "reading": "{Shipment} is eligible for {Product}",
++        "roles": [{"role_name": "shipment", "object_type": "dispatch_shipment"},
++                  {"role_name": "product", "object_type": "dispatch_product"}],
++        "derivation": "derived", "derivation_rule": {
++            "body": [{"fact_type": SUBJECT, "bind": {"shipment": "$s", "warehouse": "$w"}},
++                     {"fact_type": CATALOG, "bind": {"warehouse": "$w", "product": "$p"}}],
++            "head": {"shipment": "$s", "product": "$p"},
++        },
++    }
++    root = {
++        **vocabulary, "version": 5 if includes else 4, "constraints": [subset],
++        "model_id": standalone["model_id"],
++        "fact_types": [derived] if includes else [*vocabulary["fact_types"], derived],
++        "reference_populations": [{"id": "catalog", "path": catalog.name, "sha256": digest(catalog),
++                                  "fact_types": [CATALOG]}],
++    }
++    if includes:
++        root["object_types"] = []
++        root["includes"] = [{"id": "dispatch", "path": vocabulary_path.name, "sha256": digest(vocabulary_path)}]
++    write(model, root)
++    selected = load_model(model)
++    sources = top / "sources"
++    for name, shipment, warehouse in (("first", "SHIP-17", "A Depot"), ("second", "SHIP-18", "WH-A")):
++        facts = {SUBJECT: [{"shipment": shipment, "warehouse": warehouse}]}
++        document = f"{shipment} is assigned to {warehouse}."
++        if claims:
++            facts[ELIGIBLE] = [{"shipment": shipment, "product": "GEAR-2"}]
++            document += " The approved product is GEAR-2."
++        source(sources, selected, name, facts, document)
++    write(sources / "manifest.json", {
++        "schema": "gnd-composition-manifest/1", "sources": EXPECTED["sources"],
++        "renamings": [{"source": "first", "fact_type": SUBJECT, "role": "warehouse",
++                       "from": "A Depot", "to": "WH-A"}],
++        "deduplications": "identical-rows", "scope_tags": [],
++    })
++    targets = top / "targets.json"
++    write(targets, {"version": 1, "targets": [{"fact_type": ELIGIBLE, "tuple": [
++        {"primitive": "String", "value": value} for value in ("SHIP-17", "GEAR-2")
++    ]}]})
++    return model, sources, catalog, targets
++
++
++def run(capsys, *args):
++    capsys.readouterr()
++    try:
++        code = main(list(map(str, args)))
++    except SystemExit as error:
++        code = error.code
++    output = capsys.readouterr()
++    return code, output.out, output.err
++
++
++def composition(tmp_path, capsys, *, includes=True):
++    model, sources, catalog, targets = setup(tmp_path, includes=includes, claims=True)
++    population, record = model.with_name("population.json"), model.with_name("record.json")
++    code, output, error = run(capsys, "compose", model, sources, "--out", population, "--record", record)
++    assert code == 0, output + error
++    return model, sources, catalog, targets, population, record
++
++
++def check(capsys, model, sources, population, record, *extra):
++    return run(capsys, "check", model, population, "--composition", record, "--sources", sources,
++               "--format", "json", *extra)
++
++
++def witness(capsys, model, population, record, targets, *extra):
++    return run(capsys, "witness", model, population, "--targets", targets, "--composition", record,
++               "--raw", *extra)
++
++
++def replay(capsys, model, population, record, certificate):
++    code, output, error = run(capsys, "replay", model, population, certificate, "--composition", record, "--raw")
++    assert output, error
++    result = json.loads(output)
++    return [code, result["reason"] or (result["results"][0]["reason"] if code else None)]
++
++
++def test_composed_check_binds_catalog_and_candidate_sources(tmp_path, capsys, monkeypatch):
++    from gnd import references
++
++    model, sources, catalog, _, population, record = composition(tmp_path, capsys)
++    assert read(population)["facts"][SUBJECT] == [
++        {"shipment": "SHIP-17", "warehouse": EXPECTED["candidate_warehouse"]},
++        {"shipment": "SHIP-18", "warehouse": EXPECTED["candidate_warehouse"]},
++    ]
++    lineage = read(record)
++    assert lineage["schema"] == EXPECTED["record_schema"]
++    assert lineage["references"] == [{"id": EXPECTED["catalog"], "raw_sha256": digest(catalog)}]
++    assert [row["id"] for row in lineage["sources"]] == EXPECTED["sources"]
++    asserted = [row for row in lineage["facts"] if row["fact_type"] == SUBJECT]
++    assert [row["sources"][0]["source"] for row in asserted] == EXPECTED["sources"]
++    assert [row["renamings"] for row in asserted] == [[0], []]
++    assert set(read(population)["facts"]) == {SUBJECT, ELIGIBLE}
++    assert {row["fact_type"] for row in lineage["facts"]} == {SUBJECT, ELIGIBLE}
++    assert parse_record(record.read_bytes()) == lineage
++    jsonschema.validate(lineage, read(ROOT / "src/gnd/composition.schema.json"))
++    bind = references.bind_population
++    combined = []
++
++    def record_binding(model, candidate, *, references):
++        view = bind(model, candidate, references=references)
++        combined.append(view)
++        return view
++
++    monkeypatch.setattr(references, "bind_population", record_binding)
++    code, output, error = check(capsys, model, sources, population, record)
++    assert code == 0, output + error
++    assert len(combined) == 1
++    report = json.loads(output)
++    jsonschema.validate(report, read(ROOT / "src/gnd/report.schema.json"))
++    assert report["report"]["composition"]["record_sha256"] == digest(record)
++    assert report["report"]["counts"]["pass"] == 4
++    assert {row["origin"]["kind"] for row in report["occurrence_origins"]} == {"candidate", "reference"}
++    # With the same candidate bytes and no catalog, the subset must fail.
++    root = read(model)
++    root.pop("reference_populations")
++    write(model, root)
++    code, output, _ = run(capsys, "check", model, population, "--format", "json")
++    assert code == 1
++    assert any(row["constraint_type"] == "subset" and row["verdict"] == "fail"
++               for row in json.loads(output)["verdicts"])
++
++
++@pytest.mark.parametrize("defect", ["dependency", "key", "stale"])
++def test_catalog_is_refused_before_invalid_manifest(tmp_path, defect):
++    model, sources, catalog, _ = setup(tmp_path, dependency=defect == "dependency")
++    if defect == "key":
++        doc = read(catalog)
++        doc["facts"][CATALOG].append({"warehouse": "WH-A", "product": "OTHER"})
++        write(catalog, doc)
++        root = read(model)
++        root["reference_populations"][0]["sha256"] = digest(catalog)
++        write(model, root)
++    elif defect == "stale":
++        catalog.write_bytes(catalog.read_bytes() + b" ")
++    (sources / "manifest.json").write_text("{}")
++    result = api.compose(model, sources)
++    assert result["exit_code"] == 3
++    key = {"dependency": "catalog_candidate_dependency", "key": "catalog_key_conflict", "stale": "catalog_stale"}[defect]
++    assert EXPECTED[key] in result["error"]["message"]
++
++
++@pytest.mark.parametrize("axis", ["catalog", "source", "record-roster", "record-bytes"])
++def test_consumers_refuse_independent_stale_bindings(tmp_path, capsys, axis):
++    model, sources, catalog, targets, population, record = composition(tmp_path, capsys)
++    certificate = model.with_name("witness.json")
++    assert witness(capsys, model, population, record, targets, "--out", certificate)[0] == 0
++    preserved = digest(population)
++    if axis == "catalog":
++        catalog.write_bytes(catalog.read_bytes() + b" ")
++    elif axis == "source":
++        doc = sources / "first/document.txt"
++        doc.write_bytes(doc.read_bytes() + b" ")
++    elif axis == "record-roster":
++        stale = read(record)
++        stale["references"][0]["raw_sha256"] = "0" * 64
++        write(record, stale)
++    else:
++        changed = read(record)
++        changed["scope_tags"].append({"source": "first", "tag": "stale"})
++        write(record, changed)
++    code, output, error = check(capsys, model, sources, population, record)
++    assert code == 3, output + error
++    message = {"catalog": EXPECTED["catalog_stale"], "source": "anchor:", "record-roster": EXPECTED["record_catalog_stale"],
++               "record-bytes": "scope_tags"}[axis]
++    assert message in output + error
++    if axis in {"catalog", "record-roster"}:
++        code, output, _ = witness(capsys, model, population, record, targets)
++        assert [code, json.loads(output)["reason"]] == EXPECTED["binding_stale"]
++    if axis != "source":
++        assert replay(capsys, model, population, record, certificate) == EXPECTED["binding_stale"]
++    assert digest(population) == preserved
++
++
++@pytest.mark.parametrize("axis", ["authentic", "candidate-to-catalog", "catalog-to-candidate", "model", "catalog-pin"])
++def test_mixed_proof_origin_axes(tmp_path, capsys, axis):
++    model, _, _, targets, population, record = composition(tmp_path, capsys)
++    certificate = model.with_name("witness.json")
++    code, output, error = witness(capsys, model, population, record, targets, "--out", certificate)
++    assert code == 0, output + error
++    proof = read(certificate)
++    assert proof["version"] == EXPECTED["certificate_version"]
++    assert proof["binding"]["composition_sha256"] == digest(record)
++    candidates = [n for n in proof["nodes"] if n["kind"] == "base" and n["origin"]["kind"] == "candidate"]
++    refs = [n for n in proof["nodes"] if n["kind"] == "base" and n["origin"]["kind"] == "reference"]
++    assert len(candidates) == len(refs) == 1
++    candidate, reference = candidates[0], refs[0]
++    assert candidate["sources"] == [{"source": "first", "fact_type": SUBJECT, "fact_index": 0}]
++    assert reference["origin"] == {"kind": "reference", "reference_id": "catalog", "fact_index": 0}
++    assert reference["sources"] == []
++    assert {n["model_origin"]["origin"] for n in proof["nodes"]} == {"model", "includes[dispatch]"}
++    for schema in ("src/gnd/schema/witness.schema.json", "src/gnd/skills/gnd-export/references/witness.schema.json"):
++        jsonschema.validate(proof, read(ROOT / schema))
++    jsonschema.validate(json.loads(output), read(ROOT / "src/gnd/schema/witness-result.schema.json"))
++    if axis == "authentic":
++        assert replay(capsys, model, population, record, certificate) == [0, None]
++        return
++    if axis == "candidate-to-catalog":
++        candidate["origin"] = dict(reference["origin"])
++        candidate["sources"] = []
++    elif axis == "catalog-to-candidate":
++        reference["origin"] = dict(candidate["origin"])
++        reference["sources"] = candidate["sources"]
++    elif axis == "model":
++        reference["model_origin"]["origin"] = "model"
++    else:
++        proof["binding"]["references"][0]["raw_sha256"] = "0" * 64
++    certificate_shape(proof)
++    write(certificate, proof)
++    assert replay(capsys, model, population, record, certificate) == EXPECTED[
++        "binding_stale" if axis == "catalog-pin" else "proof_invalid"
++    ]
++
++
++def test_include_free_catalog_witness_has_no_flattening_binding(tmp_path, capsys):
++    model, _, _, targets, population, record = composition(tmp_path, capsys, includes=False)
++    certificate = model.with_name("witness.json")
++    assert witness(capsys, model, population, record, targets, "--out", certificate)[0] == 0
++    proof = read(certificate)
++    assert proof["version"] == EXPECTED["certificate_version"]
++    assert "flattening_sha256" not in proof["binding"]
++    assert all("model_origin" not in node for node in proof["nodes"])
++    assert replay(capsys, model, population, record, certificate) == [0, None]
++
++
++def test_composition_override_and_catalog_write_collisions(tmp_path, capsys):
++    model, sources, catalog, targets = setup(tmp_path)
++    population, record = model.with_name("population.json"), model.with_name("record.json")
++    original = catalog.read_bytes()
++    assert run(capsys, "compose", model, sources, "--out", catalog, "--record", record)[0] == 64
++    assert catalog.read_bytes() == original
++    assert run(capsys, "compose", model, sources, "--out", population, "--record", record)[0] == 0
++    code, output, error = check(capsys, model, sources, population, record, "--anchors",
++                                sources / "first/population.json.anchors.json")
++    assert code == 64
++    assert "excludes --anchors" in output + error
++    with pytest.raises(ValueError, match="composition cannot be combined with anchors, document, references"):
++        api.check(model, population, composition=record, sources=sources,
++                  references=load_model(model)._references)
++    assert witness(capsys, model, population, record, targets, "--reference-root", sources)[0] == 64
++
++
++def test_catalog_roster_is_closed_and_capped(tmp_path, capsys):
++    _, _, _, _, _, record = composition(tmp_path, capsys)
++    data = read(record)
++    data["references"] *= 33
++    with pytest.raises(CompositionError):
++        parse_record(canonical_json_bytes(data))
++    data = read(record)
++    data["facts"][0]["sources"][0]["source"] = "catalog"
++    with pytest.raises(CompositionError, match="unknown candidate source"):
++        parse_record(canonical_json_bytes(data))
++    data["references"] = [{"id": "catalog", "raw_sha256": "0" * 64, "owner": "input"}]
++    with pytest.raises(CompositionError):
++        parse_record(canonical_json_bytes(data))
++
++
++def test_reference_free_artifact_bytes_match_predecessor(tmp_path, capsys):
++    model, sources, _, _ = setup(tmp_path)
++    root = read(model)
++    del root["reference_populations"]
++    write(model, root)
++    population, record = model.with_name("population.json"), model.with_name("record.json")
++    assert run(capsys, "compose", model, sources, "--out", population, "--record", record)[0] == 0
++    assert digest(population) == EXPECTED["legacy_population_sha256"]
++    assert digest(record) == EXPECTED["legacy_record_sha256"]
++
++
++@pytest.mark.parametrize("defect", ["empty-roster", "reference-sources", "candidate-sources"])
++def test_mixed_wire_rejects_malformed_cert_before_stale_catalog(tmp_path, capsys, defect):
++    model, _, catalog, targets, population, record = composition(tmp_path, capsys)
++    certificate = model.with_name("witness.json")
++    assert witness(capsys, model, population, record, targets, "--out", certificate)[0] == 0
++    proof = read(certificate)
++    if defect == "empty-roster":
++        proof["binding"]["references"] = []
++    else:
++        bases = {n["origin"]["kind"]: n for n in proof["nodes"] if n["kind"] == "base"}
++        if defect == "reference-sources":
++            bases["reference"]["sources"] = bases["candidate"]["sources"]
++        else:
++            bases["candidate"]["sources"] = []
++    for path in ("src/gnd/schema/witness.schema.json", "src/gnd/skills/gnd-export/references/witness.schema.json"):
++        with pytest.raises(jsonschema.ValidationError):
++            jsonschema.validate(proof, read(ROOT / path))
++    write(certificate, proof)
++    catalog.write_bytes(catalog.read_bytes() + b" ")
++    assert replay(capsys, model, population, record, certificate) == [3, "input-invalid"]
++
++
++def test_catalog_does_not_discharge_candidate_resolution(tmp_path):
++    base = ROOT / "src/gnd/examples/literature/resolution"
++    original = base / "model.orm.yaml"
++    model = tmp_path / "model.orm.json"
++    root = parse_model_document(original.read_bytes(), source=original)
++    root["version"] = 4
++    root["fact_types"].append({
++        "id": "catalog_method", "reading": "{Method} is catalogued",
++        "roles": [{"role_name": "method", "object_type": "method"}],
++    })
++    catalog = tmp_path / "catalog.json"
++    write(catalog, {"population": {"model": model.name, "model_id": root["model_id"], "source": "fixture"},
++                    "facts": {"catalog_method": [{"method": "TRACE"}]}})
++    root["reference_populations"] = [{"id": "catalog", "path": catalog.name, "sha256": digest(catalog),
++                                      "fact_types": ["catalog_method"]}]
++    write(model, root)
++    directory = tmp_path / "case"
++    shutil.copytree(base / "cases/H-no-decision", directory)
++    vocab = vocabulary_digest(load_model(model))
++    for path in directory.glob("*/population.json.anchors.json"):
++        sidecar = read(path)
++        sidecar["vocabulary_digest"] = vocab
++        write(path, sidecar)
++    result = api.compose(model, directory)
++    assert result["exit_code"] == 3
++    assert result["error"]["message"] == EXPECTED["missing_resolution"]
+diff --git a/tests/test_mc2_consumers.py b/tests/test_mc2_consumers.py
+index c9503717..b6da1bd7 100644
+--- a/tests/test_mc2_consumers.py
++++ b/tests/test_mc2_consumers.py
+@@ -342,7 +342,7 @@ def test_plain_snapshot_cannot_pair_with_new_include(corpus, monkeypatch):
+     assert result['exit_code'] == 3 and 'include:unsupported-route' in json.dumps(result)
+ 
+ 
+-def test_reference_composition_remains_refused(tmp_path):
++def test_reference_composition_still_requires_a_manifest(tmp_path):
+     from test_mc1_model_includes import split_existing
+ 
+     source = ROOT / 'tests/fixtures/reference-corpus/dispatch'
+@@ -351,7 +351,7 @@ def test_reference_composition_remains_refused(tmp_path):
+     assert load_model(path).reference_populations
+     result = api.compose(path, tmp_path / 'absent-composition')
+     assert result['exit_code'] == 3
+-    assert result['error']['message'] == 'composition:invalid: composition with reference populations is unsupported'
++    assert result['error']['message'] == 'composition:invalid: composition manifest could not be read safely'
+     assert result['error'] == api.compose(source / 'model.orm.yaml', tmp_path / 'absent-composition')['error']
+ 
+ 

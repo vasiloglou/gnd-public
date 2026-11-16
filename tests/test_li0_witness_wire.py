@@ -141,7 +141,7 @@ def test_model_wire_round_trips_every_fixture_model():
 # --- T6: include-bearing models keep their reason -------------------------------------
 
 
-def test_include_bearing_model_keeps_its_include_reason(tmp_path):
+def test_why_not_keeps_its_include_refusal(tmp_path):
     vocabulary = tmp_path / "vocab.orm.yaml"
     vocabulary.write_text((LI0 / "grandparent-v2.orm.yaml").read_text())
     digest = hashlib.sha256(vocabulary.read_bytes()).hexdigest()
@@ -151,10 +151,10 @@ def test_include_bearing_model_keeps_its_include_reason(tmp_path):
         f"includes:\n  - {{id: vocab, path: vocab.orm.yaml, sha256: {digest}}}\n"
         "constraints: []\n"
     )
-    run = gnd("witness", includer, LI0 / "population.json", "--targets", LI0 / "targets.json")
+    run = gnd("why-not", includer, LI0 / "population.json", "--fact-type", "grandparent")
     payload = _json(run)
     assert payload["exit_code"] == 3
-    assert payload["reason"].startswith("include:")
+    assert payload["reason"] == "include:unsupported-route"
 
 
 # --- T7, T11: golden certificate bytes and model identities ---------------------------
@@ -250,7 +250,12 @@ def test_no_direct_model_dump_in_witness_package():
         for path in sorted((ROOT / "src" / "gnd" / "witness").rglob("*.py"))
         if DUMP_CALL in path.read_text()
     ]
-    assert offenders == ["src/gnd/witness/io.py"], offenders
+    assert offenders == [], offenders
+    from gnd.model._documents import model_wire
+    from gnd.witness.io import model_wire as historical_model_wire
+
+    assert model_wire is historical_model_wire
+    assert DUMP_CALL in (ROOT / "src/gnd/model/_documents.py").read_text()
 
 
 # --- T10: every optional section gated by the meta-schema is omitted when empty -------

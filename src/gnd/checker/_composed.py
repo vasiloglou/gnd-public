@@ -23,6 +23,7 @@ def check_with_composed_anchors(
     *,
     sources: Any,
     lineage: dict[Any, Any],
+    reference_fact_types: frozenset[str] = frozenset(),
 ) -> CheckReport:
     """Check a composed population, each anchored value against its own source (CT2).
 
@@ -46,6 +47,8 @@ def check_with_composed_anchors(
     ]
     for fact_type, index, constraint in obligations:
         fact_id = str(fact_type["id"])
+        if fact_id in reference_fact_types:
+            continue
         reference = positional_constraint_ref(fact_id, index)
         variant = "role" if constraint.get("role") is not None else "all"
         failing = {

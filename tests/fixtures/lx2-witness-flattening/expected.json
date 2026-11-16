@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "origin_sources": [
+    "includes[components]",
+    "model"
+  ],
+  "stale": [
+    3,
+    "binding-stale"
+  ],
+  "forged": [
+    1,
+    "proof-invalid"
+  ],
+  "invalid": [
+    3,
+    "input-invalid"
+  ],
+  "legacy_composed_sha256": "93776b765d3aefe04d5fdcc0916d0f363f7ce5b2ba266b04a7f3e541152291a7"
+}

@@ -1,0 +1,148 @@
+{
+  "base": "6d2ecece",
+  "claims": [
+    "LX3.a: Compose renames a candidate alias onto a fixed catalog key, keeps catalog rows outside candidate artifacts and source lineage, and composed checking evaluates the authenticated catalog with the candidate once. Reference-free composition bytes stay compatible.",
+    "LX3.b: Catalog key conflict, candidate dependence, expired pins, forged catalog roster and modified candidate evidence refuse in the specified order and exit bands. LI2 checks candidate cross-source joins and explicit overrides remain refused.",
+    "LX3.c: The replay kernel checks model origin, candidate lineage, catalog binding and candidate/reference occurrence origin independently. The closed schemas and version fences admit only the matching certificate shape."
+  ],
+  "created": "2026-11-16T01:51:57.496855+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/reviews/phase-LX3-r1/diff.patch",
+      "sha256": "075a371d811ba60ee5e58f8fbfbdb9dd6cb27ab473c41bbd08d63d561bda6e89"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/008-phase-LX3-spec-gate.md",
+      "sha256": "aeaad3e30f5625a5d7e4d9cb71cd07ed76abfd31e96809abe39fa2bc59295bfe"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/evidence/LX3/dynamic-query-successor.json",
+      "sha256": "0c6ae733681b978f8f7206e3edc032f4203a90886e979acf2ad62cbaf6888330"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/phase-LX3-spec.md",
+      "sha256": "21ca75acc3ab70f65d7eb6a20b69aa1dd817194e3b046f1cfcc84f87790c12a3"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "346fa94477e525683aabd5ad06c151e80d3b5d0ef1f124f25804a4fd00e75ac1"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "3a9e5c0b48fc20a1a79baa792260874e03bc2f9e983469d6529c299a808b6613"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "68cd4b61b5691dc6269cb43df133af1c9f539b13854b0afbc82f3213dc12e1a1"
+    },
+    {
+      "path": "dev/components/modules/checker.md",
+      "sha256": "fe2c315ef7a78520861fde130d2af654646d38c98558501815e8122b9f6d90f2"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "86aa34208e67379527aa06b6de18d2ef8b66600b663adf5eff8bfd378e6c08a3"
+    },
+    {
+      "path": "dev/components/modules/witness.md",
+      "sha256": "6da5af6b9b9918c1c91ec7d837a9e077f9e36fef5f882684c3cfdb5416c44ad5"
+    },
+    {
+      "path": "docs/reference/composition.md",
+      "sha256": "7e1ac3b1c89aea4bf9a8381a00ad87891e63499d4bede5f0d8734cfda7227c3b"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "e9da7643c7f1e2c99a078efd814221c3660ef2778c2b5aade225fecca5c1eae4"
+    },
+    {
+      "path": "src/gnd/checker/_composed.py",
+      "sha256": "27e7c227b66931980bced06b51b7d98ae8fbfb9ecf492d79d48f1572d1ba7d43"
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "sha256": "8b0a4a56d5aea378d1b7f2f5a39086fa184dfd8baac2d3c16af704b99bbf9da4"
+    },
+    {
+      "path": "src/gnd/composition.py",
+      "sha256": "2979da66e4df165ddb4f1f023aba360cd4259470996e8424555b0acfacaf37dd"
+    },
+    {
+      "path": "src/gnd/composition.schema.json",
+      "sha256": "8036cc612b7ea106cd9b4f9f91de0add5863ff020621a4ebd08b65c4bf90eb2e"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "b209785df0bf3f4c6dafd131cc383c49ef39992247cc9b8f011f97125293894d"
+    },
+    {
+      "path": "src/gnd/schema/witness-result.schema.json",
+      "sha256": "c3f8cfd922b239a9914bee1aafc61caa0bbec176fe95a21884cce361d399d018"
+    },
+    {
+      "path": "src/gnd/schema/witness.schema.json",
+      "sha256": "4e5ee050eec431d8eb2c7fb9e2f4f6a150da6a0559bddbf4912e1cd390ec9409"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/references/witness-contract.md",
+      "sha256": "b7652c86396318e57c84bd369a8ff1248718d36b102430e4108e40d6351db5d1"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/references/witness.schema.json",
+      "sha256": "4e5ee050eec431d8eb2c7fb9e2f4f6a150da6a0559bddbf4912e1cd390ec9409"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "62dade00b1b63cda679f0a432eea40cc64533eb8c8bdb61809128f37f5777db5"
+    },
+    {
+      "path": "src/gnd/witness/flattening.py",
+      "sha256": "c04a881e4dfda700d31e3671e52e33b82c0bd81bf03281dfe75ef7523c961d9e"
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "sha256": "daf40df3e737eb283cf369b85a590de11685dc573da0420d2a30a0ce694e2716"
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "sha256": "17dcb159bbdc0a201ba8afe9b1ff423a8c9c62d7a8b11e6e8ed3e3b34d12b4e6"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "sha256": "ad69d59ee6384f696422e6231f50cd09e0f2fb96505184993a1f5d8b8b5a81c9"
+    },
+    {
+      "path": "tests/fixtures/lx3-catalog-composition/README.md",
+      "sha256": "2da0ca163798174cd1babd9c956d6dea11b96fd485f897811b0495ee881b2d83"
+    },
+    {
+      "path": "tests/fixtures/lx3-catalog-composition/expected.json",
+      "sha256": "c75609385917971e76a6833a7653221f21c8a70f3feb1fd4912cfd4a48445b8e"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "2eea10f7a94328c0d792108732a7ab7226b69fb960d9b50facf9922896268616"
+    },
+    {
+      "path": "tests/test_lx3_catalog_composition.py",
+      "sha256": "31571b9d80a69d8748545041b965fc0eec9e12572e6b3f4d1403dd18c48bff5e"
+    },
+    {
+      "path": "tests/test_mc2_consumers.py",
+      "sha256": "7e34a83e258df2937a340a95a3097c5c6643f6b817e16188c3e6f7f0bd407652"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/literature-interop-plan.md",
+      "sha256": "0b0b8be165233078e7048948eef45266f007165df557fbdd3c629cd106ae5454"
+    }
+  ],
+  "head": "28dc21b75c4285e059839f1761eead3df02c8a42",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Where can catalog-backed composition or replay accept stale evidence, misattribute a proof occurrence or source coordinate, compute a candidate-only result, or break a prior wire contract?",
+  "subject": "phase",
+  "version": 1
+}

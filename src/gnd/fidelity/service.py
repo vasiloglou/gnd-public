@@ -7,9 +7,15 @@ from typing import Any
 from gnd import input_policy as _rf7_input
 from gnd import resolve_version, verbalize
 from gnd import safefs as install_module
+from gnd.artifacts import ArtifactError, read_regular_file_bytes
 from gnd.exits import EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_USAGE
-from gnd.extract.service import _artifact_index_issue, _extract_stem
-from gnd.model import ModelValidationError, load_model
+from gnd.extract.service import (
+    ExtractionBundleError,
+    _artifact_index_issue,
+    _extract_stem,
+    _verify_artifact_index,
+)
+from gnd.model import MAX_MODEL_BYTES, ModelValidationError, load_model
 from gnd.output import _print_issues
 from gnd.population import PopulationValidationError, load_population
 
@@ -81,10 +87,27 @@ def _cmd_fidelity(
     )
     from gnd.synth import paths as _paths
 
+    stem = _extract_stem(model_path)
+    artifacts_root = Path(artifacts_dir)
+    applicable_path = artifacts_root / f"{stem}.applicable.json"
+    projection_path = artifacts_root / f"{stem}.projection.schema.json"
+    required = (applicable_path.name, projection_path.name)
+    bundle = None
     try:
-        from gnd.model._includes import guard_path
-        guard_path(model_path, "fidelity/service.py")
-        model = load_model(model_path)
+        from gnd.model._includes import guard_path, include_reason
+        try:
+            guard_path(model_path, "fidelity/service.py")
+        except ModelValidationError as error:
+            if (include_reason(error) != "include:unsupported-route"
+                    or not (artifacts_root / f"{stem}.artifacts.json").is_file()):
+                raise
+            bundle = _verify_artifact_index(model_path, artifacts_dir, required)
+        model = bundle.model if bundle is not None else load_model(model_path)
+        if model is None:
+            raise ExtractionBundleError("the include root lacks an authenticated projection")
+    except ExtractionBundleError as error:
+        print(f"VIOLATION artifact-index: {verbalize.line_text(str(error))}")
+        return error.code
     except ModelValidationError as error:
         for warning in error.warnings:
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
@@ -94,16 +117,7 @@ def _cmd_fidelity(
         print(f"ERROR: {error}")
         return 3
 
-    stem = _extract_stem(model_path)
-    artifacts_root = Path(artifacts_dir)
-    applicable_path = artifacts_root / f"{stem}.applicable.json"
-    projection_path = artifacts_root / f"{stem}.projection.schema.json"
-
-    bundle_issue = _artifact_index_issue(
-        model_path,
-        artifacts_dir,
-        (f"{stem}.applicable.json", f"{stem}.projection.schema.json"),
-    )
+    bundle_issue = _artifact_index_issue(model_path, artifacts_dir, required) if bundle is None else None
     if bundle_issue is not None:
         code, message = bundle_issue
         print(f"VIOLATION artifact-index: {verbalize.line_text(message)}")
@@ -126,7 +140,12 @@ def _cmd_fidelity(
             return EXIT_NO_INPUT
 
     try:
-        applicable_bytes = applicable_path.read_bytes()
+        if bundle is None:
+            applicable_bytes = applicable_path.read_bytes()
+        else:
+            applicable_bytes = read_regular_file_bytes(
+                artifacts_root, applicable_path.name, label="applicable set", max_bytes=MAX_MODEL_BYTES,
+            )
         applicable = _rf7_input.loads(applicable_bytes.decode("utf-8"))
         if applicable != applicable_set(model):
             print(
@@ -136,9 +155,15 @@ def _cmd_fidelity(
             return 3
         declared_fact_types = {str(row["id"]) for row in applicable["fact_types"]}
         applicable_sha256 = _hashlib.sha256(applicable_bytes).hexdigest()
-        projection_sha256 = _hashlib.sha256(projection_path.read_bytes()).hexdigest()
-        model_sha256 = _hashlib.sha256(Path(model_path).read_bytes()).hexdigest()
-    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError) as error:
+        if bundle is None:
+            projection_sha256 = _hashlib.sha256(projection_path.read_bytes()).hexdigest()
+            model_sha256 = _hashlib.sha256(Path(model_path).read_bytes()).hexdigest()
+        else:
+            if applicable_sha256 != bundle.artifact_digests[applicable_path.name]:
+                raise ExtractionBundleError("the applicable-set bytes changed after bundle verification")
+            projection_sha256 = bundle.artifact_digests[projection_path.name]
+            model_sha256 = bundle.root_sha256
+    except (ArtifactError, OSError, UnicodeDecodeError, ValueError, KeyError, TypeError) as error:
         print(f"ERROR: the extraction artifacts are not readable ({error})")
         return 3
 

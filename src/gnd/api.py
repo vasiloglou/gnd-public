@@ -976,6 +976,7 @@ def _compose_with_inputs(model, directory):
     from gnd.anchors import MAX_DOCUMENT_BYTES, read_regular_path
     from gnd.composition import CompositionError
     from gnd.composition import compose as compose_sources
+    from gnd.errors import ReferenceHashMismatch
 
     if not isinstance(model, (str, os.PathLike)) or not isinstance(directory, (str, os.PathLike)):
         raise TypeError("compose takes a model path and a directory path")
@@ -994,12 +995,18 @@ def _compose_with_inputs(model, directory):
             selected = model_module.load_model_bytes_composed(raw, source=model, root=Path(model).parent)
         else:
             selected = model_module.load_model_bytes(raw, source=model)
+            model_module.bind_declared_references(selected, root=Path(model).parent, attach=True)
     except ModelValidationError as error:
         return {"schema": "gnd-compose/1", "exit_code": 3,
                 "error": {"kind": "input", "message": include_reason(error) or "invalid model"}}, ()
+    except model_module.ReferenceInputError as error:
+        detail = str(error) if isinstance(error, ReferenceHashMismatch) else "reference catalog could not be bound"
+        return {"schema": "gnd-compose/1", "exit_code": 3,
+                "error": {"kind": "input", "message": str(CompositionError(detail))}}, ()
     except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model
         return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}, ()
-    inputs = tuple(Path(model).parent / entry['path'] for entry in selected.includes)
+    inputs = tuple(Path(model).parent / entry['path']
+                   for entry in (*selected.includes, *selected.reference_populations))
     try:
         composed = compose_sources(selected, raw, directory)
     except CompositionError as error:

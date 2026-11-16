@@ -1,0 +1,164 @@
+{
+  "base": "d523c14d",
+  "claims": [
+    "LX4.a: Valid roots share two include pins and fixed catalog bindings. Verified source rebinds precede composition and semantic evaluation. Invalid or stale source bindings and independently valid roots with changed pins or catalogs refuse. The larger guarded allowance flips the real checking outcome.",
+    "LX4.b: Advice uses the public LI5 relation policy and separate qualifying date evidence. It reports the one false PINN edge and the stated unresolved outcomes. Omitting advice preserves the check and proof bytes.",
+    "LX4.c: The installed example binds each cross-stage artifact and checks it independently, including witness targets and the fidelity census. Both readers use the same original document evidence with the measured layout. Named unsupported combinations and inherited guard findings stay covered."
+  ],
+  "created": "2026-11-16T02:16:48.202593+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/reviews/phase-LX4-r1/diff.patch",
+      "sha256": "fbabacf4104966bd75adc0d5c3e2168f94ce69624b1d08c024c782cbd6c8eaa6"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/010-phase-LX4-spec-gate.md",
+      "sha256": "b7ab838eb21b5588c9f0721c8c0605285b76a2e519031eb3667752e8abddc32a"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/evidence/LX4/dynamic-query-successor.json",
+      "sha256": "3c97f142da96fbd1502f1951e342b526f4ff80fc0b93696a30d4c9a1eee4a482"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json",
+      "sha256": "479adfa12b2da8f75946361eca68d1db5a975fe2db6afd00e70314fd3ea6eb21"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/phase-LX4-spec.md",
+      "sha256": "e35ef4f66655b7cf1b49078e8a06f630aba40690080ae8ab6aca43191356a14c"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "845c1137cbe638d5d6b395eea49410f05ac4d9100eedcb16e1b48ed35ac8998c"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "244caf69825a5348c3516e72441cae6f3b2453dcbda4856508f0886f51df1f9d"
+    },
+    {
+      "path": "dev/components/modules/examples.md",
+      "sha256": "5b86ce9db437da5b540e64118b873703545040f44e47d4ef8e7f5967b5d8d1e0"
+    },
+    {
+      "path": "docs/guides/documents.md",
+      "sha256": "c47f5da1016347b8665c48481915741e8ffebf656743ccf8b94261675ce696ee"
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "sha256": "331516d2bab4b1d1b38797ab12f4265d583c7793cb03a8f92679d5b5ca327da2"
+    },
+    {
+      "path": "src/gnd/examples/literature/README.md",
+      "sha256": "911b3da036068aff79028d5ea83fdbf3808683cf114ac3cbe75bb022bd65a89b"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop.py",
+      "sha256": "d7d77d866ea72c99c8817ebde1678a7462b04a03ca49970fe1a138a73800c8e8"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_dates.py",
+      "sha256": "53959b45e7cf368318372ed95c28ce4bd9889109138e211b11191e0f67103b76"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/candidate-edges.json",
+      "sha256": "b1589b7badd3a5ba35a7b7c3b547be543051df5c47a19d50a58d9007c59a555a"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/checking.orm.json",
+      "sha256": "e7f68730e594b7677fcf2a894809f673d0b6eebdc9bc7c98f4fc13f38a6830eb"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/extraction.orm.json",
+      "sha256": "598bd3b22b8ab69ca709a32e9f498441e3623010e087d9a5ecea3445101957d9"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/publication-dates.json",
+      "sha256": "bef53c15d88912bf91ff5bd816afad829c9a4a901442e2609a094169e025321e"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/reference/catalog.json",
+      "sha256": "4d25b7b4b5526c449d3c12581d0f317d3eee24c5c3016c8bb4da0eb19d86b6fe"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/replication.facts.json",
+      "sha256": "e5a4e6ac57da05f4cfa8f66301b1b842df592257b0836dc768a2f7291d9959d8"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/replication.gold.json",
+      "sha256": "e5a4e6ac57da05f4cfa8f66301b1b842df592257b0836dc768a2f7291d9959d8"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/replication.md",
+      "sha256": "66095a0b00078107144a12054163a4d58044517a271774b7995adc53b48810de"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/sources.json",
+      "sha256": "8f2293eea933df1dfbcc416b349fa3fd093038ec12571d4021449520b192bae9"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/survey.facts.json",
+      "sha256": "c9b5b09637b55dcb9f940747f8bb80d6a310909137e65320c8773d74a5432338"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/survey.gold.json",
+      "sha256": "c9b5b09637b55dcb9f940747f8bb80d6a310909137e65320c8773d74a5432338"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/survey.md",
+      "sha256": "4c4b13098f75e45397b4bf50e8555c1bf23830393e40f0b2b0d11148c141e8e1"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/targets.json",
+      "sha256": "f5cf47c1ce6cc90406c3cb1cca34ae0c18e652c2a7ed222becb94ff59f118c0a"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/vocabulary/chronology.orm.json",
+      "sha256": "2a1970fa79ef85e669f439bedb4643ccf265608c1d21cbd257e75868546c7e9e"
+    },
+    {
+      "path": "src/gnd/examples/literature/interop_fixture/vocabulary/literature.orm.json",
+      "sha256": "5c570342a35ac6f0fe032fb30502b1bfa508966e6bb5ff63b443d4c85fb9fdd1"
+    },
+    {
+      "path": "src/gnd/fidelity/service.py",
+      "sha256": "4b80a18a24fe9afdfe0f54cc4a8bf9b27b1b9094e1072346d797980afe8f3d6d"
+    },
+    {
+      "path": "tests/fixtures/lx4-literature-interop/README.md",
+      "sha256": "5d4eced9650329f7913b493fb65a35a6df87f4ac8ed3d84575ac89ddf37375f7"
+    },
+    {
+      "path": "tests/fixtures/lx4-literature-interop/expected.json",
+      "sha256": "9cd0b3812e42d2ac548e766ca04732f6eae5b4107a714c4c91ef436df4a31378"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "f893fc26beb35dbfd3e1948e2d020f71e3d237749e0e9ee5b35e1cf6b17438bd"
+    },
+    {
+      "path": "tests/support/rf9_ci_sources.py",
+      "sha256": "9dacf8f5c9cbce3c800b0868dcadebe551f3532f26f21e38cc13642806d52293"
+    },
+    {
+      "path": "tests/test_lx4_literature_interop.py",
+      "sha256": "6fecb76e6dacfc436d9d93463d4ab389922fa8adab53637b39affdd4967657e2"
+    },
+    {
+      "path": "tests/test_mc1_guards.py",
+      "sha256": "408bfeb4be01c491712ba694dd757664a05a1efb67c85945c1b9c0b420a06aa6"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-interop/notes/literature-interop-plan.md",
+      "sha256": "0b0b8be165233078e7048948eef45266f007165df557fbdd3c629cd106ae5454"
+    }
+  ],
+  "head": "8e98afc1b33039e626d30bd54e4694152c8f46e1",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Where can the documented two-root example verify forged evidence, change product outcomes when date advice is selected, fail to exercise the temporal clause or fidelity census, or regress an adjacent include guard?",
+  "subject": "phase",
+  "version": 1
+}

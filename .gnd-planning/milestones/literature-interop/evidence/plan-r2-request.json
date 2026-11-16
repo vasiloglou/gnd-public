@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/literature-interop/notes/literature-interop-plan.md",
+    "sha256": "0d7b4b18ea96f8f942dbafdaae144d5cc6490a17efcd4e39bcb869f3ddbb915e",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "literature-interop plan r3 repair review",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Check whether the repaired criteria address round 1 without introducing contradictory model roots, artifact bindings, phase dependencies or unsupported inputs. Read 001-panel.md for the dispositions.",
+      "Focus on concrete implementation and test blockers in LX2 and LX3 mixed provenance, and LX4 rebinding, lineage date diagnostics and digest continuity. State an observable failure for each concern.",
+      "For each retained concern indicate whether it attacks text introduced in the r3 repair or a requirement already present in r2 so the driver can compute the convergence ratio."
+    ]
+  }
+}

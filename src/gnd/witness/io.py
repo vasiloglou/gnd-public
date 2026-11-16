@@ -16,6 +16,7 @@ from pathlib import Path
 from gnd import input_policy as _rf7_input
 from gnd.artifacts import canonical_json_bytes
 from gnd.model import iter_derivation_clauses, load_model_bytes
+from gnd.model._documents import model_wire as model_wire  # noqa: PLC0414 -- historical import
 from gnd.population import _build_population, _parse_document_bytes, load_population_bytes
 from gnd.popvalidate import resolve_primitive
 from gnd.references import (
@@ -160,15 +161,25 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
     record(doc, "version kind binding results nodes")
     if (
         type(doc["version"]) is not int
-        or doc["version"] not in (1, 2)
+        or doc["version"] not in (1, 2, 3, 4)
         or doc["kind"] != "derivation-witness"
     ):
         raise WitnessInputError("unknown certificate kind/version")
     # Version 2 is a witness over a composed population (CT3): the binding
     # names the composition record and each base node its source facts.
-    composed = doc["version"] == 2
     b = doc["binding"]
-    record(b, "model_digest candidate_digest references" + (" composition_sha256" if composed else ""))
+    catalog = doc["version"] == 4
+    projected = doc["version"] == 3 or (catalog and type(b) is dict and "flattening_sha256" in b)
+    composed = doc["version"] in (2, 4) or (projected and type(b) is dict and "composition_sha256" in b)
+    keys = "model_digest candidate_digest references"
+    if composed:
+        keys += " composition_sha256"
+    if projected:
+        keys += " flattening_sha256"
+    record(b, keys)
+    if projected and (type(b["flattening_sha256"]) is not str
+                      or not re.fullmatch(r"[0-9a-f]{64}", b["flattening_sha256"])):
+        raise WitnessInputError("invalid flattening digest")
     if composed and (type(b["composition_sha256"]) is not str
                      or not re.fullmatch(r"[0-9a-f]{64}", b["composition_sha256"])):
         raise WitnessInputError("invalid composition digest")
@@ -177,11 +188,14 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
             raise WitnessInputError("invalid digest")
     if type(b["references"]) is not list:
         raise WitnessInputError("invalid reference identity roster")
+    if catalog and not 1 <= len(b["references"]) <= 32:
+        raise WitnessInputError("catalog reference roster exceeds its bounds")
     ids = []
     for ref in b["references"]:
         record(ref, "id raw_sha256")
         if (
             type(ref["id"]) is not str
+            or (catalog and not 1 <= len(ref["id"]) <= 128)
             or type(ref["raw_sha256"]) is not str
             or not re.fullmatch(r"[0-9a-f]{64}", ref["raw_sha256"])
         ):
@@ -222,7 +236,13 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
         }
         if kind not in keys:
             raise WitnessInputError("unknown node kind")
-        record(n, keys[kind])
+        record(n, keys[kind] + (" model_origin" if projected else ""))
+        if projected:
+            model_origin = n["model_origin"]
+            fields = "origin original_address composed_address element_id"
+            record(model_origin, fields)
+            if any(type(model_origin[field]) is not str for field in fields.split()):
+                raise WitnessInputError("invalid model origin")
         integer(n["id"])
         if n["id"] != i:
             raise WitnessInputError("node ids must be consecutive")
@@ -239,7 +259,8 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
             ):
                 raise WitnessInputError("invalid base origin")
             if composed:
-                if type(n["sources"]) is not list or not n["sources"]:
+                needs_sources = not catalog or origin["kind"] == "candidate"
+                if type(n["sources"]) is not list or bool(n["sources"]) != needs_sources:
                     raise WitnessInputError("invalid base sources")
                 for entry in n["sources"]:
                     record(entry, "source fact_type fact_index")
@@ -431,29 +452,6 @@ def support_closure(model, targets):
                 ):
                     supported = False
     return supported, closure
-
-
-def model_wire(model):
-    """The authored-shape document of a loaded model, for re-entry into intake.
-
-    Start from ``model.model_dump(mode="json", exclude={"warnings"})``, which
-    already applies the Model hooks (no empty ``reference_populations``,
-    ``includes`` or ``fact_type_constraints``). Then remove the two loader
-    defaults that intake would otherwise refuse: ``model_id`` when it is None
-    (the meta-schema types it as a string at every version) and ``operations``
-    when it is empty (a present ``operations`` requires version 2 to 5).
-
-    This is deliberately not a change to ``Model``'s own serializer: the
-    legacy model identity (``gnd.values._model_digest``) hashes that dump, so
-    omitting ``model_id`` there would move every pinned identity of a model
-    that declares none.
-    """
-    document = model.model_dump(mode="json", exclude={"warnings"})
-    if document.get("model_id") is None:
-        document.pop("model_id", None)
-    if not document.get("operations"):
-        document.pop("operations", None)
-    return document
 
 
 def population_wire(pop):

@@ -16,7 +16,22 @@ CLI boundary for explicit finite-witness export and read-only replay.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `add_parsers(subparsers)` | function | 13 | (no docstring) |
-| `run(args)` | function | 46 | (no docstring) |
+| `run(args)` | function | 50 | (no docstring) |
+
+## gnd.witness.flattening — `src/gnd/witness/flattening.py`
+Components: witness.service
+Rooted include bindings for path-based witness production and replay.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `StaleWitnessBinding` | class(WitnessInputError) | 16 | The current inputs differ from a rooted witness binding. |
+| `WitnessProjection` | class | 21 | (no docstring) |
+| `WitnessProjection.binding(self) -> tuple[str, dict[str, dict]]` | method | 27 | (no docstring) |
+| `read_projected_path(path, *, label)` | function | 31 | Open an explicit caller path with bounded regular-file checks. |
+| `resolved_projection(model_path, flat_model, flattening_record, *, raw)` | function | 36 | Return the authenticated projection when the authored root declares includes. |
+| `node_model_origin(node, origins) -> dict` | function | 76 | (no docstring) |
+| `stamp_projection(result, projection) -> dict` | function | 81 | (no docstring) |
+| `load_flat_model(projection)` | function | 103 | (no docstring) |
 
 ## gnd.witness.io — `src/gnd/witness/io.py`
 Components: witness.schema
@@ -24,25 +39,24 @@ Bounded wire intake, structural validation and byte-bound input identities.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `validate_witness_structure(document, *, limits) -> int` | function | 34 | (no docstring) |
-| `parse_wire(raw, *, limits)` | function | 96 | (no docstring) |
-| `read_wire(path, *, limits)` | function | 112 | (no docstring) |
-| `record(value, keys)` | function | 118 | (no docstring) |
-| `integer(value)` | function | 123 | (no docstring) |
-| `typed(value)` | function | 128 | (no docstring) |
-| `target_shape(t)` | function | 138 | (no docstring) |
-| `load_targets(path, *, limits)` | function | 146 | (no docstring) |
-| `certificate_shape(doc, *, limits)` | function | 158 | (no docstring) |
-| `load_certificate(path, *, limits)` | function | 269 | (no docstring) |
-| `witness_input_identity(model, candidate, *, references)` | function | 275 | (no docstring) |
-| `identity(model, candidate, refs)` | function | 280 | (no docstring) |
-| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 292 | (no docstring) |
-| `roster(model)` | function | 345 | (no docstring) |
-| `validate_targets(targets, model)` | function | 354 | (no docstring) |
-| `support_closure(model, targets)` | function | 380 | Conservative syntactic classifier; no tuple or comparison evaluation. |
-| `model_wire(model)` | function | 436 | The authored-shape document of a loaded model, for re-entry into intake. |
-| `population_wire(pop)` | function | 459 | (no docstring) |
-| `classify_targets(model, targets, populations)` | function | 473 | Classify each request independently, caching only within this call. |
+| `validate_witness_structure(document, *, limits) -> int` | function | 35 | (no docstring) |
+| `parse_wire(raw, *, limits)` | function | 97 | (no docstring) |
+| `read_wire(path, *, limits)` | function | 113 | (no docstring) |
+| `record(value, keys)` | function | 119 | (no docstring) |
+| `integer(value)` | function | 124 | (no docstring) |
+| `typed(value)` | function | 129 | (no docstring) |
+| `target_shape(t)` | function | 139 | (no docstring) |
+| `load_targets(path, *, limits)` | function | 147 | (no docstring) |
+| `certificate_shape(doc, *, limits)` | function | 159 | (no docstring) |
+| `load_certificate(path, *, limits)` | function | 290 | (no docstring) |
+| `witness_input_identity(model, candidate, *, references)` | function | 296 | (no docstring) |
+| `identity(model, candidate, refs)` | function | 301 | (no docstring) |
+| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 313 | (no docstring) |
+| `roster(model)` | function | 366 | (no docstring) |
+| `validate_targets(targets, model)` | function | 375 | (no docstring) |
+| `support_closure(model, targets)` | function | 401 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+| `population_wire(pop)` | function | 457 | (no docstring) |
+| `classify_targets(model, targets, populations)` | function | 471 | Classify each request independently, caching only within this call. |
 
 ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
 Components: witness.replay
@@ -77,14 +91,16 @@ Bounded witness/replay input orchestration.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 86 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 117 | Replay a finite proof with an independent local inference kernel. |
-| `composed_witness_result(model_path, population_path, targets_path, *, composition)` | function | 153 | A version-2 witness over a composed population: each base node names its source facts (CT3). |
-| `composed_replay_result(model_path, population_path, certificate_path, *, composition)` | function | 170 | Replay a version-2 witness against the composition record it binds (CT3). |
-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 229 | Explain why a derived fact type, or one claimed row of it, is not derived. |
-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 283 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 297 | Replay a finite proof with an independent local inference kernel. |
-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 311 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 171 | Produce finite witnesses, authenticating model origins for a rooted include model. |
+| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 201 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 232 | Replay a finite proof with an independent local inference kernel. |
+| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 260 | Replay a finite proof with an independent local inference kernel. |
+| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 297 | Produce a composed witness whose base nodes name their source facts. |
+| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 334 | Replay a witness against the composition record it binds. |
+| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 412 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 466 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 480 | Replay a finite proof with an independent local inference kernel. |
+| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 494 | Explain why a derived fact type, or one claimed row of it, is not derived. |
 
 ## gnd.witness.types — `src/gnd/witness/types.py`
 Components: witness.schema

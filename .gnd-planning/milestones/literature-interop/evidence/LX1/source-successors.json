@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "reason": "LX1 changes three guarded CLI bodies behind the existing defining modules and aliases.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_artifact_index_issue",
+      "home": "gnd.extract.service",
+      "reason": "Delegate indexed validation to the shared snapshot verifier while preserving the historical tuple API.",
+      "before": {
+        "algorithm_sha256": "e0d3cd34bc6e6a672ecb2d2758688d53e7486e4cfa73682c90dbc83fd3747b9e",
+        "raw_sha256": "57750ffe87359bb499aec4f3d8dcfecd657dc7cb4876b6f56180a4ee73915b92"
+      },
+      "after": {
+        "algorithm_sha256": "407190d4c4e03c16553dc7c54d30e96ad5a2416f7f0650faf6c884ab8f755051",
+        "raw_sha256": "26b86bcf7d154e4a0dd30593f61e1da704323b8dbb0393124d7705f6d1ad209a"
+      }
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_extract",
+      "home": "gnd.extract.service",
+      "reason": "Publish the bounded flat model and its origin record for resolved include roots.",
+      "before": {
+        "algorithm_sha256": "f4174258b8d0fc439a1ff64d07eb2e41883e2828beebba78e5003ba7004b79c1",
+        "raw_sha256": "a6352d4972608a9652aba32db7c55131e143a263f90909366f76b8499c026d9f"
+      },
+      "after": {
+        "algorithm_sha256": "8c66b155876e01f85a77b927cb6a7df766cfacb04d4c4c96d4419fb0d981ced7",
+        "raw_sha256": "24cbbd9e6eacc479178ff0b68cd6291aea9ed36a5f2ff0dc51da959a2f922c20"
+      }
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_verify",
+      "home": "gnd.export.verification_service",
+      "reason": "Consume and retain the authenticated include snapshot and its digests for the extraction handoff.",
+      "before": {
+        "raw_sha256": "2d82002ae964cd900789466f0c86f90944f27ca5e71dcc344fdec4ab9b231ca8",
+        "algorithm_sha256": "3731062e32175fc226a07f59263d69ff87d610cdcb572e672905252168c989a4"
+      },
+      "after": {
+        "algorithm_sha256": "01029413a8f2e19ac207d9755919e09be2fda8ee090cf60f59268408abb9e8be",
+        "raw_sha256": "35836319252325918c66eca7a3b5a4365af32c0f318fe701b61e9a066a4f45d0"
+      }
+    }
+  ]
+}

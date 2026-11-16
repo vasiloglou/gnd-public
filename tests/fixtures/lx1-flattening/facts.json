@@ -1,0 +1,18 @@
+{
+  "component_uses_component": [
+    {
+      "using": "a",
+      "used": "b"
+    }
+  ],
+  "component_has_owner": [
+    {
+      "component": "a",
+      "owner": "x"
+    },
+    {
+      "component": "b",
+      "owner": "x"
+    }
+  ]
+}

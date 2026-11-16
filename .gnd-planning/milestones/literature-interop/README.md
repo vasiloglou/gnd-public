@@ -1,15 +1,18 @@
 # Literature interoperability
 
-Outline r1, 2026-11-14, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193)
-part 5 and the dates step of part 4. Not reviewed and not approved.
+Plan r4, 2026-11-15, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193)
+part 5 and the dates step of part 4. [Round 1](001-panel.md) reviewed r2 and [round 2](002-panel.md) reviewed r3.
+[Delegated plan gate](003-plan-gate.md) approves r4. All four phases are complete.
+The [milestone close](014-milestone-close.md) records the delegated ruling.
+The [close panel](013-panel.md) reviewed the [candidate](012-close-candidate.md).
 
 | Phase | Deliverable |
 |---|---|
-| LX1 | Extraction from a flattened projection of an include-bearing model |
-| LX2 | Witnesses and replay over the flattened model |
-| LX3 | Composition with reference populations as fixed inputs |
-| LX4 | Split between the checking model and the extraction model, an advisory date check, and an end-to-end fixture |
+| [LX1](005-phase-LX1.md) | Extraction from a flattened projection of an include-bearing model |
+| [LX2](007-phase-LX2.md) | Witnesses and replay over the flattened model |
+| [LX3](009-phase-LX3.md) | Composition with reference populations as fixed inputs |
+| [LX4](011-phase-LX4.md) | Split between the checking model and the extraction model, an advisory date check, and an end-to-end fixture |
 
-[Plan outline](notes/literature-interop-plan.md). It starts after
-literature-identity LI0. Whether it runs alongside LI1–LI5 is owner decision D6
-in the [literature-identity plan](../literature-identity/notes/literature-identity-plan.md).
+[Plan and readiness ledger](notes/literature-interop-plan.md).
+The [literature-identity close](../literature-identity/035-milestone-close.md)
+records the merged prerequisites.

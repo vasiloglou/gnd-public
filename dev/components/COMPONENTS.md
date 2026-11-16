@@ -50,7 +50,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd extract, extraction schema, shape only projection, extraction guidelines, gnd fidelity, gnd doccheck, document manifest
 - status: canonical
 - components: cli.extract_command, extract.service, extract.bundle, extract.projection, extract.guidelines, extract.manifest, cli.fidelity_command, fidelity.service, fidelity.match, fidelity.report, cli.doccheck_command, fidelity.doccheck
-- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +9 more (graph.md)
+- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +10 more (graph.md)
 - notes: Three entry points share the manifest and bundle helpers: extract writes artifacts, fidelity matches extracted facts to source facts, doccheck validates rendered documents.
 
 ### subsystem.measure
@@ -92,7 +92,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
 - status: canonical
 - components: cli.witness_command, witness.command, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, … +1 more (graph.md)
+- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, … +2 more (graph.md)
 - notes: Production evaluates through the checker; replay does not search for a fixpoint.
 
 ### subsystem.review_panel
@@ -383,7 +383,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/extract/bundle.py
 - uses: model.extraction_scope, synth.paths
-- used_by: codegen.emit, conformance.structural, extract.service
+- used_by: codegen.emit, conformance.structural, examples.literature_interop, extract.service
 - part_of: subsystem.extract
 - tests: tests/test_codegen_manifest.py, tests/test_v51_phase2_extraction_scope.py, tests/test_v70_phase1_surfaces.py
 
@@ -429,16 +429,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### extract.service
-- does: Write the offline extraction artifact bundle and verify consumer-required artifact digests [_cmd_extract].
-- verbs: extract command, _cmd_extract, artifact bundle, _artifact_index_issue, projection schema, verbalization artifact, applicable set, digest index, header template, guidelines option, staged bundle, index last
+- does: Write offline extraction bundles and verify indexed artifacts and include-backed model provenance [_cmd_extract].
+- verbs: extract command, _cmd_extract, artifact bundle, _artifact_index_issue, projection schema, verbalization artifact, applicable set, digest index, header template, guidelines option, staged bundle, index last, flattening record, bundle currency
 - in: Model path, output directory and optional guidelines flag
 - out: Extraction files, artifact index, command exit or consumer index issue
 - status: canonical
 - modules: src/gnd/extract/__init__.py, src/gnd/extract/service.py
-- uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.loading, model.scalar_terms, synth.paths
-- used_by: cli.dispatch, cli.extract_command, export.verification, fidelity.doccheck, fidelity.service
+- uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.document, model.loading, model.scalar_terms, model.validation, synth.paths
+- used_by: cli.dispatch, cli.extract_command, examples.literature_interop, export.verification, fidelity.doccheck, fidelity.service
 - part_of: subsystem.extract
-- tests: tests/test_extract_guidelines.py, tests/test_extract_projection.py
+- tests: tests/test_extract_guidelines.py, tests/test_extract_projection.py, tests/test_lx1_flattening.py
 - notes: The command derives artifacts for an extracting agent; the actual language extraction is performed outside this service.
 
 
@@ -902,13 +902,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### fidelity.service
-- does: Validate case artifact bindings and orchestrate offline extraction fidelity matching and schema checked reporting [_cmd_fidelity].
+- does: Authenticate extraction bundles including rooted projections and orchestrate offline fidelity matching and schema checked reporting [_cmd_fidelity].
 - verbs: extractor fidelity, case directories, digest binding, extraction handoff, skip marker, failed extraction, mixed models, applicable set, projection digest, _cmd_fidelity, offline metrics, report schema
 - in: model, case corpus, extraction bundle and output options
 - out: fidelity report plus command exit code
 - status: canonical
 - modules: src/gnd/fidelity/service.py, src/gnd/fidelity/__init__.py
-- uses: extract.manifest, extract.reference_schemes, extract.service, fidelity.match, fidelity.report, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.loading, model.population_loading, synth.paths
+- uses: extract.manifest, extract.reference_schemes, extract.service, fidelity.match, fidelity.report, infra.artifacts, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, model.loading, model.population_loading, synth.paths
 - used_by: cli.dispatch, cli.fidelity_command
 - part_of: subsystem.extract
 - tests: tests/test_fidelity_payload.py, tests/test_measure_offline.py
@@ -1737,7 +1737,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.verification
-- does: Verify extraction sidecar bindings before population checking, preserving extraction state and redacted provenance [_cmd_verify].
+- does: Verify extraction sidecar and include-backed bundle bindings before population checking, preserving extraction state and redacted provenance [_cmd_verify].
 - verbs: verify population, extraction handoff, sidecar binding, projection digest, document digest, population validation, anchor binding, checker composition, extraction state, no extraction, header ownership, assurance receipt, redacted report, _cmd_verify
 - in: Model and pre-extracted population paths, optional sidecar/artifact/output paths and extraction/disclosure options.
 - out: Verify report and exit band with extraction ran/skipped/failed metadata, checker evidence and assurance receipt.
@@ -1750,14 +1750,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.loading
-- does: Load bounded YAML or JSON models, compose pinned vocabularies and bind immutable reference populations [load_model, bind_population].
-- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance
+- does: Load bounded models, compose pinned vocabularies, record flattened origins and bind reference populations [load_model, flatten_model, bind_population].
+- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance, flatten includes, projected model bytes
 - in: Model path or immutable bytes; optional composition/reference root, declared content hashes and validated candidate population.
 - out: Validated Model with warnings, include provenance/private authored-byte binding and compiled side table; bound reference context or combined population.
 - status: canonical
-- modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
+- modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +70 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +71 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1771,23 +1771,23 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: model.loading, model.operation_obligations, semantics.extensions
+- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
 - checked: partial
 - notes: The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
 
 
 ### model.json_document
-- does: Convert parsed model values into plain JSON data with path-specific refusals [json_document].
-- verbs: json_document, plain document, JSON values, YAML conversion, canonical input, nonfinite float, string keys, tagged scalar, timestamp refusal, binary refusal, encodable document, model value error, normalize collections, preserve YAML values
+- does: Normalize parsed model values and serialize validated models for byte intake [json_document, model_wire].
+- verbs: model wire, model re-entry serialization, json_document, plain document, JSON values, YAML conversion, canonical input, nonfinite float, string keys, tagged scalar, timestamp refusal, binary refusal, encodable document, model value error, normalize collections, preserve YAML values
 - in: Parsed model document; refusal and JSON-encodable compatibility switches.
 - out: Plain Python document or ModelValueError naming the offending path and value kind.
 - status: canonical
 - modules: src/gnd/model/_documents.py
 - uses: (none)
-- used_by: export.ossie, model.loading, model.ossie_import
+- used_by: export.ossie, model.loading, model.ossie_import, witness.schema
 - tests: tests/test_evolve_loading.py
-- notes: Strict JSON-domain conversion, permissive YAML preservation and JSON-encoder compatibility share one recursive walk with explicit switches. gnd.model re-exports this capability.
+- notes: Strict JSON-domain conversion, permissive YAML preservation and JSON-encoder compatibility share one recursive walk with explicit switches. gnd.model re-exports json_document. model_wire omits loader-only defaults for re-entry and preserves the historical witness import.
 
 
 ### model.operation_obligations
@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +65 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +68 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -1981,7 +1981,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, … +1 more (graph.md)
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, … +2 more (graph.md)
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -2066,7 +2066,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.service
 - does: Orchestrate population checks, anchor binding, admission, assurance, projected reports and version-15 rule-id, baseline and vacuous-acceptance runs [run_check].
-- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, guarded diagnostics report, same-population rule edition comparison
+- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, composed catalog checking, guarded diagnostics report, same-population rule edition comparison
 - in: model and population paths or loaded objects; check options
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
@@ -2086,7 +2086,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
 - status: canonical
 - modules: src/gnd/api.py
-- uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
+- uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
 - used_by: cli.checking_command, cli.dispatch, cli.judgments_command, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
 - part_of: subsystem.check
 - tests: tests/test_v61_phase2_api.py, tests/test_tp3_check_receipts.py, tests/test_incremental_sessions.py, tests/test_composition.py
@@ -2122,13 +2122,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.composition
-- does: Compose anchored source populations using explicit renamings and optional resolution decisions, with replayable lineage.
-- verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding
-- in: model bytes and source directory with manifest, populations, documents and sidecars
+- does: Compose anchored candidate sources with explicit renamings and resolution decisions, and bind fixed catalog digests separately from candidate lineage.
+- verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding, fixed reference catalog, catalog roster
+- in: model bytes, bound catalog and source directory with manifest, populations, documents and sidecars
 - out: composed population bytes and canonical value-free lineage record
 - status: canonical
 - modules: src/gnd/composition.py
-- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index
+- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index, model.scalar_identity
 - used_by: check.service, cli.api, examples.literature_lineage, witness.service
 - tests: tests/test_composition.py
 
@@ -2206,7 +2206,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/documents.py
 - uses: infra.errors
-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +15 more (graph.md)
+- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +16 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
 - notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
 
@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +21 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +24 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2312,7 +2312,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/disclosure.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, exp.service, export.service, review.adapters, witness.service
+- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
 - tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
 - notes: Customer mode wins over internal mode from either source; forward propagates only the restrictive customer setting.
 
@@ -2431,7 +2431,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.plan_apps, … +31 more (graph.md)
+- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, … +32 more (graph.md)
 - part_of: subsystem.check
 - tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
 - in: Population path or bytes; optional loaded Model.
@@ -2550,7 +2550,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/process.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
 - tests: tests/test_agent_cli.py, tests/test_rf4_peripheral.py
 - in: Trusted argv, real cwd, explicit environment, ProcessLimits and optional stdin bytes.
 - out: BoundedProcessResult with closed metadata and out-of-band byte streams.
@@ -2750,7 +2750,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/values.py
 - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.ossie_import, … +8 more (graph.md)
+- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, … +9 more (graph.md)
 - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
 - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 
@@ -3081,28 +3081,28 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### witness.schema
-- does: Validate bounded witness requests, certificates, typed targets and input identities before production or replay.
+- does: Validate bounded witness requests, certificates, typed targets, input identities and model-origin claims and mixed catalog provenance before production or replay.
 - verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire, model wire, version-1 model intake, model without model_id
 - in: JSON requests or certificates, model and population documents, reference bytes, fixed or lowered WitnessLimits.
-- out: Validated documents, loaded model/populations, authored-shape model and population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
+- out: Validated documents, loaded model/populations, population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
 - status: canonical
 - modules: src/gnd/witness/io.py, src/gnd/witness/types.py
-- uses: check.population_structure, infra.artifacts, infra.input_policy, model.loading, model.population_loading, model.reference_binding
-- used_by: export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+- uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_public_why_not.py, tests/test_witness_composition.py
-- notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Limits may only be lowered from the fixed ceilings.
+- notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Model wire is re-exported from model.json_document. Limits may only be lowered from the fixed ceilings.
 
 
 ### witness.service
-- does: Orchestrate path-based witness production, replay and why-not requests with composition lineage, disclosure modes and preserved include-free input refusals.
-- verbs: produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
+- does: Orchestrate path-based witness production, replay and why-not requests, including independently bound model origins, catalog occurrences and candidate source lineage.
+- verbs: rooted witness projection, flattening binding, model origins, produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
 - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
 - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
 - status: canonical
-- modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py
+- modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py, src/gnd/witness/flattening.py
 - uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
-- used_by: cli.api, witness.command
+- used_by: cli.api, witness.command, witness.replay
 - part_of: subsystem.witness
 - tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py
 - notes: The package marker is documentation only; gnd.api exposes the service functions through compatibility aliases. Composition certificates bind the record digest and each base fact's source lineage.
@@ -3143,7 +3143,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: WitnessResult with independently checked per-target statuses and graph work counts.
 - status: canonical
 - modules: src/gnd/witness/kernel.py
-- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema
+- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema, witness.service
 - used_by: export.souffle_runtime, witness.service
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_witness_composition.py
@@ -3547,6 +3547,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - model digest: codegen.manifest, measure.labels, model.scalar_identity, synth.provenance
 - model id: check.population_structure, extract.bundle
 - model identifier: export.ilp_prompt, model.labels
+- model wire: model.json_document, witness.schema
 - native query: examples.book_recommendations, examples.expense_application, export.applications
 - near misses: discover.service, witness.why_not
 - no extraction: cli.verify_command, export.verification
@@ -3690,3 +3691,15 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - work budget: discover.service, synth.guarded, witness.why_not
 <!-- verbs:end -->
 
+
+
+### examples.literature_interop
+- does: Run and verify a shared literature extraction and checking vocabulary, fixed catalog composition, witness replay, fidelity and optional date advice.
+- verbs: literature interoperability, extraction model, checking model, rebind, fixed catalog, publication dates, advisory, integrated manifest
+- in: Packaged two-source fixture, existing lineage relation policy and an output or verified run path.
+- out: Authenticated extraction bundle, rebound sources, composition, check, witness, replay, fidelity and optional advisory report.
+- status: canonical
+- modules: src/gnd/examples/literature/interop.py, src/gnd/examples/literature/interop_dates.py
+- uses: extract.bundle, extract.service, infra.artifacts, infra.bounded_process, infra.disclosure, infra.errors, model.anchors, model.loading, model.population_loading, witness.schema
+- used_by: (none)
+- tests: tests/test_lx4_literature_interop.py

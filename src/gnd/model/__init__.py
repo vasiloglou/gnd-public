@@ -351,6 +351,8 @@ def _load_model_at(data, *, source, descriptor, historical=None, analysis=False)
     if historical is not None:
         _refuse('declaration')
     model = load_model_bytes(data, source=source)
+    if model.reference_populations:
+        model._authored_sha256 = hashlib.sha256(data).hexdigest()
     return CompositionView(doc, (), (), (), model) if analysis else model
 
 
@@ -369,6 +371,8 @@ def _composed_view(data, *, source, root, historical=None, analysis=False):
         if model.reference_populations:
             try:
                 model._references = _bind_at(model, descriptor)
+            except ReferenceHashMismatch:
+                raise
             except Exception as error:
                 raise ReferenceInputError(str(error), model=model) from error
         return result
@@ -402,6 +406,8 @@ def _load_model_no_follow(path: Path) -> Model:
         if model.reference_populations:
             try:
                 model._references = _bind_at(model, descriptor)
+            except ReferenceHashMismatch:
+                raise
             except Exception as error:
                 raise ReferenceInputError(str(error), model=model) from error
         return model
@@ -462,6 +468,7 @@ _BOUND = weakref.WeakValueDictionary()
 _COMBINED = weakref.WeakValueDictionary()
 
 
+from gnd.errors import ReferenceHashMismatch
 from gnd.errors import ReferenceInputError as ReferenceInputError
 
 
@@ -579,7 +586,7 @@ def _bind_at(model: Model, descriptor: int) -> BoundReferenceContext:
             raise ReferenceInputError("reference set exceeds 32 MiB")
         digest = hashlib.sha256(raw).hexdigest()
         if digest != d["sha256"]:
-            raise ReferenceInputError("reference raw hash does not match declared sha256")
+            raise ReferenceHashMismatch("reference raw hash does not match declared sha256", model=model)
         doc = _parse_document_bytes(raw, suffix=Path(d["path"]).suffix, source=d["path"])
         validate_reference_structure(doc)
         if isinstance(doc, dict):

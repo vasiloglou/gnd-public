@@ -1,0 +1,29 @@
+{
+  "identical_git_objects": {
+    "pyproject.toml": "de88a7168981931fd2c10a1c3d7dd8f70a7a96a0",
+    "src": "de8a5015221af4839bd4979cc61fbbf90d9794b7",
+    "tests": "3f35c9bcf0c23d8e2efd8fa1a1b28a0a1d3ef041",
+    "tools": "33e2b368e9b5898c25a80c4b30707c6d138cf7c1",
+    "uv.lock": "89ed1e6714b58c6123a08f7ff1965b844aa48775"
+  },
+  "reviewed_close_commit": "14fdc81f484a52beb9630ff2cd5f4987af5aa3fd",
+  "ruff": {
+    "baseline_commit": "8cee22f8bed523575a4284de9c6b7bf2e0e87a37",
+    "baseline_findings": 188,
+    "baseline_normalized_sha256": "f43214003831de91d488a3f39a81d28d1935c3f61aa7d098e8c27b44c68e700a",
+    "candidate_findings": 188,
+    "candidate_normalized_sha256": "f43214003831de91d488a3f39a81d28d1935c3f61aa7d098e8c27b44c68e700a",
+    "command": "uv run ruff check --output-format=json",
+    "exact_diagnostics_match": true,
+    "exit_code": 1,
+    "normalization": [
+      "repository-relative file",
+      "line",
+      "column",
+      "code",
+      "message"
+    ]
+  },
+  "schema": "literature-interop-close-verification-scope/1",
+  "tested_runtime_commit": "a34636275e5a6810cf4db953d996a3eb52708573"
+}

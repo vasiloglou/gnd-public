@@ -1,0 +1,53 @@
+{
+  "version": 5,
+  "source": {
+    "kind": "fixture"
+  },
+  "includes": [
+    {
+      "id": "components",
+      "path": "components.orm.json",
+      "sha256": "c1b7802153351c2aa2dc827a191f14a4870d59ec30fbcfcd8fa9f53eb2f67320"
+    },
+    {
+      "id": "topics",
+      "path": "topics.orm.json",
+      "sha256": "7f09b19990e17cf9b6f368150538eab65d22b21e534268711f8b0c4c10a51178"
+    }
+  ],
+  "fact_type_constraints": [
+    {
+      "fact_type": "component_uses_component",
+      "constraints": [
+        {
+          "id": "project_no_loops",
+          "type": "ring",
+          "variant": "acyclic",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "remedy": "Break the use loop.",
+          "provenance": {
+            "user_quote": "No component may use itself indirectly."
+          }
+        }
+      ]
+    },
+    {
+      "fact_type": "component_has_owner",
+      "constraints": [
+        {
+          "id": "project_owner_required",
+          "type": "mandatory",
+          "role": "component",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "user_quote": "Every component must have an owner."
+          }
+        }
+      ]
+    }
+  ]
+}

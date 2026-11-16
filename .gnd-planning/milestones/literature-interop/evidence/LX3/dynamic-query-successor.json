@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "reason": "LX3 records the moved composition merge walk and the new catalog, source and proof lookup sites.",
+  "predecessor": ".gnd-planning/milestones/literature-interop/evidence/LX2/dynamic-query-successor.json",
+  "predecessor_sha256": "e14ff83d7e3f527dd5a390b5e871720457d0775c146328bcba2e13d40d8e48e7",
+  "removed": [
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[str, Any]",
+      4
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[str, dict[tuple[Any, ...], int]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[str, dict[tuple[str, str], Any]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[str, list[dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[tuple[Any, ...], int]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[tuple[Any, ...], tuple[int, Any]]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[tuple[Any, ...], tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[tuple[str, int], dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "dict[tuple[str, str], Any]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "facts[fact_type]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "index.get(key)",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "instance_renamings.get(instance_key)",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "kept[entity]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "lineage[fact_type, position]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "positions.get(fact_type)",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "renamings.get((source.id, fact_type, role, type(value).__name__, repr(value)))",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "roles.get(renaming['fact_type'], set())",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "set[int]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "tuple[Any, ...]",
+      5
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "tuple[int, Any]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "tuple[str, int]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "compose",
+      "tuple[str, str]",
+      2
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "replay_witness",
+      "lineage.get((node['fact_type'], node['origin']['fact_index']))",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/checker/_composed.py",
+      "check_with_composed_anchors",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_composition_block",
+      "positions[ft]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[str, Any]",
+      4
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[str, dict[tuple[Any, ...], int]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[str, dict[tuple[str, str], Any]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[str, list[dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[tuple[Any, ...], int]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[tuple[Any, ...], tuple[int, Any]]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[tuple[Any, ...], tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[tuple[str, int], dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "dict[tuple[str, str], Any]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "facts[fact_type]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "index.get(key)",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "instance_renamings.get(instance_key)",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "kept[entity]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "lineage[fact_type, position]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "positions.get(fact_type)",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "renamings.get((source.id, fact_type, role, type(value).__name__, repr(value)))",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "roles.get(renaming['fact_type'], set())",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "set[int]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "tuple[Any, ...]",
+      5
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "tuple[int, Any]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "tuple[str, int]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "_compose",
+      "tuple[str, str]",
+      2
+    ],
+    [
+      "src/gnd/composition.py",
+      "catalog_roster",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "catalog_roster",
+      "list[dict[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "catalog_roster",
+      "row[role]",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "catalog_roster",
+      "rows.get(fact_id)",
+      1
+    ],
+    [
+      "src/gnd/composition.py",
+      "catalog_roster",
+      "rows.get(fact_id, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "replay_witness",
+      "lineage.get((node['fact_type'], origin['fact_index']))",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7807,
+  "result_occurrences": 9701
+}

@@ -9,7 +9,12 @@ from gnd import safefs as install_module
 from gnd import transition
 from gnd.checker import CheckReport, check, check_with_anchors
 from gnd.exits import EXIT_INTERNAL, EXIT_IO
-from gnd.extract.service import _artifact_index_issue, _extract_stem, _extraction_header_template
+from gnd.extract.service import (
+    ExtractionBundleError,
+    _extract_stem,
+    _extraction_header_template,
+    _verify_artifact_index,
+)
 from gnd.model import ModelValidationError, ValidationIssue, load_model, structured_derivation_ids
 from gnd.output import (
     _band,
@@ -85,6 +90,7 @@ def _cmd_verify(
         "skill_version": None,
         "executing_model": None,
     }
+    verified_bundle = None
     verified_population_bytes: bytes | None = None
     verified_document_bytes: bytes | None = None
     verified_population_source: Path | None = None
@@ -270,15 +276,15 @@ def _cmd_verify(
             return emit(3, issues=[issue])
 
         projection_rel = f"{_extract_stem(model_path)}.projection.schema.json"
-        bundle_issue = _artifact_index_issue(model_path, artifacts_dir, (projection_rel,))
-        if bundle_issue is not None:
-            _code, message = bundle_issue
+        try:
+            verified_bundle = _verify_artifact_index(model_path, artifacts_dir, (projection_rel,))
+        except ExtractionBundleError as error:
             issue = ValidationIssue(
                 path="projection_sha256",
-                message=message,
+                message=str(error),
                 rule_id="extraction:binding-mismatch",
             )
-            extraction["reason"] = message
+            extraction["reason"] = issue.message
             if output_format != "json" and not active_redaction():
                 _print_issues([issue])
             return emit(3, issues=[issue])
@@ -344,23 +350,27 @@ def _cmd_verify(
         # every digest the sidecar publishes against the actual bytes on disk.
         binding_issues: list[ValidationIssue] = []
         digests: dict[str, str] = {}
-        for field, path in (
-            ("model_sha256", Path(model_path)),
-            ("projection_sha256", projection_path),
-        ):
-            try:
-                digests[field] = _hashlib.sha256(path.read_bytes()).hexdigest()
-            except OSError as error:
-                binding_issues.append(
-                    ValidationIssue(
-                        path=field,
-                        message=(
-                            f"the sidecar's {field} cannot be verified: {path} "
-                            f"could not be read ({error})"
-                        ),
-                        rule_id="extraction:binding-mismatch",
+        if verified_bundle.model is not None:
+            digests["model_sha256"] = verified_bundle.root_sha256
+            digests["projection_sha256"] = verified_bundle.artifact_digests[projection_rel]
+        else:
+            for field, path in (
+                ("model_sha256", Path(model_path)),
+                ("projection_sha256", projection_path),
+            ):
+                try:
+                    digests[field] = _hashlib.sha256(path.read_bytes()).hexdigest()
+                except OSError as error:
+                    binding_issues.append(
+                        ValidationIssue(
+                            path=field,
+                            message=(
+                                f"the sidecar's {field} cannot be verified: {path} "
+                                f"could not be read ({error})"
+                            ),
+                            rule_id="extraction:binding-mismatch",
+                        )
                     )
-                )
         assert verified_population_bytes is not None
         digests["population_sha256"] = _hashlib.sha256(verified_population_bytes).hexdigest()
         digests["document_sha256"] = document_digest.hexdigest()
@@ -407,7 +417,9 @@ def _cmd_verify(
 
     # --- the existing composition: popvalidate → check → band (R-03″) ---
     try:
-        model = load_model(model_path)
+        model = verified_bundle.model if verified_bundle is not None else None
+        if model is None:
+            model = load_model(model_path)
     except ModelValidationError as error:
         if output_format != "json" and not active_redaction():
             for warning in error.warnings:
@@ -418,6 +430,17 @@ def _cmd_verify(
         if output_format != "json" and not active_redaction():
             print(f"ERROR: {error}")
         return emit(3, error=error)
+
+    if model.includes and verified_bundle is not None and verified_bundle.model is None:
+        issue = ValidationIssue(
+            path="projection_sha256",
+            message="the include-bearing root requires a verified flattening binding",
+            rule_id="extraction:binding-mismatch",
+        )
+        extraction.update(state="failed", reason=issue.message)
+        if output_format != "json" and not active_redaction():
+            _print_issues([issue])
+        return emit(3, issues=[issue])
 
     structured = bool(structured_derivation_ids(model))
     model_digest = transition.transition_model_identity(model)

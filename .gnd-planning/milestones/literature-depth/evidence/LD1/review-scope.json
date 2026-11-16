@@ -1,0 +1,35 @@
+{
+  "reviewed_commit": "da41bc075eea1c2a60346cf0746d29cfd711a274",
+  "repaired_commit": "11493f4532c019f072ecf61c3c6ba138fdcef158",
+  "review_verdict": "CHANGES_REQUESTED",
+  "same_bytes": [
+    ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1/diff.patch",
+    "dev/components/COMPONENTS.md",
+    "dev/components/graph.md",
+    "src/gnd/examples/literature/README.md",
+    "src/gnd/examples/literature/depth_fixture/algorithms.facts.json",
+    "src/gnd/examples/literature/depth_fixture/algorithms.orm.json",
+    "src/gnd/examples/literature/depth_fixture/algorithms.txt",
+    "src/gnd/examples/literature/depth_fixture/decimal.population.json",
+    "src/gnd/examples/literature/depth_fixture/dynamics.facts.json",
+    "src/gnd/examples/literature/depth_fixture/dynamics.orm.json",
+    "src/gnd/examples/literature/depth_fixture/dynamics.txt",
+    "src/gnd/examples/literature/depth_fixture/molecular.facts.json",
+    "src/gnd/examples/literature/depth_fixture/molecular.orm.json",
+    "src/gnd/examples/literature/depth_fixture/molecular.txt",
+    "src/gnd/examples/literature/depth_fixture/support.json",
+    "src/gnd/examples/literature/depth_fixture/vocabulary.orm.json",
+    "tests/fixtures/ld1-competency/expected.json"
+  ],
+  "amended_bytes": [
+    ".gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md",
+    "dev/components/modules/examples.md",
+    "src/gnd/examples/literature/depth.py",
+    "src/gnd/examples/literature/depth_fixture/README.md",
+    "src/gnd/examples/literature/depth_fixture/cases.json",
+    "src/gnd/examples/literature/depth_fixture/comparison.json",
+    "src/gnd/examples/literature/depth_fixture/decimal.orm.json",
+    "src/gnd/examples/literature/depth_fixture/decimal.targets.json",
+    "tests/test_ld1_competency_examples.py"
+  ]
+}

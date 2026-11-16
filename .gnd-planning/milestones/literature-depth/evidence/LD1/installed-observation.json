@@ -1,0 +1,142 @@
+{
+  "runtime_commit": "11493f4532c019f072ecf61c3c6ba138fdcef158",
+  "built_wheel_sha256": "1c1d697493a18180531dec086a14d329c20998527ca8ffd7d0a9618ab0ed50b8",
+  "report_sha256": "1fa2eda4d4b83e806342f6638ec330c036a16ceeec7cbd1698c1bc58c844cb0f",
+  "installed_reports_byte_identical": true,
+  "cases": {
+    "algorithms": {
+      "question_count": 4,
+      "supported": 3,
+      "bindings": {
+        "bundle_index_sha256": "fc2f4f35f2d74178621f63fbd799eabd701a878adb067274bffbbbf84caf2323",
+        "check": "accepted",
+        "extraction_sha256": "698a0721c8e60a4ae1aa65379e130af38c9592a8bee0d6e2a80a9dcbeea17abd",
+        "model_sha256": "12c50787b75f3a4e32bb0d0d10e62378fb351416f1efd5d023c8ec632fae0830",
+        "population_sha256": "af68cfe52c1da499d195837a07ae71be2eeffd21e6826b67d068813fcd0f9441",
+        "verification": "accepted"
+      }
+    },
+    "dynamics": {
+      "question_count": 4,
+      "supported": 3,
+      "bindings": {
+        "bundle_index_sha256": "763d048863a9c5673d0fc8a056530725710ad5847669b7602293f677fb2c2031",
+        "check": "accepted",
+        "extraction_sha256": "ec925915f92dcd5c87f3666d07b778f298cceee3d14054dcfd2e3fd9f6e4fd89",
+        "model_sha256": "18e54e6d2877d499a4933b89e78ba200be2411fc8b32dfa0569a59e3aeb83fab",
+        "population_sha256": "edfc19373be6bb15c7f4ccd5db6d88789fab60fa1e475736f258c793269bc176",
+        "verification": "accepted"
+      }
+    },
+    "molecular": {
+      "question_count": 4,
+      "supported": 3,
+      "bindings": {
+        "bundle_index_sha256": "c0adffde030fc0f6f1847a975a57670aa1ae7772445c11b54384c57f649bb459",
+        "check": "accepted",
+        "extraction_sha256": "9eb2404dc774d91a254c484c5b0f7d7cd10fddc06f6f507e0baa041951bfb808",
+        "model_sha256": "0e521ab2d8c4a7eac1e0d61cb977acc0798450b14f775077c19ef7dac44cbf9a",
+        "population_sha256": "873b64339baabaa9a4955ef8fd5d781af52311dcd641451b09b72e76e1e5ce88",
+        "verification": "accepted"
+      }
+    }
+  },
+  "comparisons": {
+    "same-context": {
+      "status": "comparable",
+      "fields": []
+    },
+    "dataset-changed": {
+      "status": "incompatible",
+      "fields": [
+        "dataset_version"
+      ]
+    },
+    "split-changed": {
+      "status": "incompatible",
+      "fields": [
+        "split"
+      ]
+    },
+    "metric-changed": {
+      "status": "incompatible",
+      "fields": [
+        "metric"
+      ]
+    },
+    "units-changed": {
+      "status": "incompatible",
+      "fields": [
+        "units"
+      ]
+    },
+    "conditions-changed": {
+      "status": "incompatible",
+      "fields": [
+        "conditions"
+      ]
+    },
+    "missing-conditions": {
+      "status": "unknown",
+      "fields": [
+        "conditions"
+      ]
+    },
+    "metric-changed-and-missing-conditions": {
+      "status": "incompatible",
+      "fields": [
+        "metric"
+      ]
+    },
+    "missing-score": {
+      "status": "unknown",
+      "fields": [
+        "score"
+      ]
+    }
+  },
+  "quantity_trigger_probe": [
+    {
+      "axis": "dimensions",
+      "observed": {
+        "energy": "2 eV",
+        "energy_matches_checked_magnitude": true,
+        "equivalent_matches_checked_magnitude": false,
+        "equivalent_recognized_as_decimal": true,
+        "reported_matches_checked_magnitude": true,
+        "time": {
+          "equivalent": "0.002 ps",
+          "reported": "2 fs"
+        }
+      },
+      "opens_ld2": true,
+      "requirement": "Accept an equivalent time step and refuse the same magnitude in energy units."
+    },
+    {
+      "axis": "percent-versus-points",
+      "observed": {
+        "absolute_change_points": "5",
+        "points_recognized_as_percent": false,
+        "recognized_percentages": [
+          40,
+          45,
+          12.5
+        ],
+        "relative_change_percent": "12.5"
+      },
+      "opens_ld2": false,
+      "requirement": "Keep the absolute change in percentage points separate from the relative percent change."
+    },
+    {
+      "axis": "exact-decimal-witness",
+      "observed": {
+        "checked_value": "0.002",
+        "exit": 2,
+        "primitive": "Number",
+        "reason": "fragment-unsupported"
+      },
+      "opens_ld2": true,
+      "requirement": "Reproduce the checked decimal time step in a witness."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "kind": "plan",
+  "plan": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/aggregate-count-certificates/notes/aggregate-count-certificates-plan.md",
+    "sha256": "df920d619bc4791f97a6b15729d723d5861671070bfcd8d4dff71368d4b32f83"
+  },
+  "rubric": {
+    "criteria": [
+      "Refute membership completeness if producer or replay can admit an incomplete, duplicate or substituted contribution.",
+      "Check empty-group assurance against declared input coverage and unchanged legacy aggregate rows.",
+      "Check artifact binding, replay independence, legacy witnesses and bounded work. Cite concrete missing acceptance controls."
+    ],
+    "name": "bounded COUNT certificate plan"
+  },
+  "schema_version": 1
+}

@@ -81,6 +81,7 @@ class ReadingInputs:
                   "invalid reading source location")
             document = _read(root, source["path"])
             _need(sha256_hex(document) == source.get("sha256"), "stale reading source")
+            document.decode("utf-8")
             self.documents[name] = document
             self.raw[source["path"]] = document
         last_end: dict[str, int] = {}
@@ -97,6 +98,7 @@ class ReadingInputs:
                 _need(isinstance(span, list) and len(span) == 2 and all(type(x) is int for x in span)
                       and last_end.get(source, 0) <= span[0] < span[1] <= len(self.documents[source])
                       and selection in ("opening", "targeted"), "invalid reading span")
+                self.documents[source][span[0]:span[1]].decode("utf-8")
                 last_end[source] = span[1]
                 response_sections.add(section["id"])
             keys = section.get("keys")
@@ -141,13 +143,13 @@ class ReadingInputs:
 class SavedProducer:
     """Local saved-response adapter with observed invocation counts."""
 
-    def __init__(self, inputs: ReadingInputs) -> None:
-        self.inputs = inputs
+    def __init__(self, responses: dict) -> None:
+        self.responses = responses
         self.calls = dict.fromkeys((STAGES[1], STAGES[3]), 0)
 
     def produce(self, stage: str, section: str) -> dict:
         self.calls[stage] += 1
-        return self.inputs.responses[section]
+        return self.responses[section]
 
 
 def affected_sections(sections: dict, changed_keys: set[str]) -> list[str]:
@@ -387,12 +389,30 @@ def _public_results(inputs, broad, targeted):
 
 
 def _read_retained(run):
-    manifest = _decode(_read(run, "run.json"))
+    raw_manifest = _read(run, "run.json")
+    manifest = _decode(raw_manifest)
+    _need(raw_manifest == canonical_json_bytes(manifest), "noncanonical reading manifest")
     roster = manifest.get("artifacts")
     _need(manifest.get("format") == "literature-reading-run/1"
           and isinstance(roster, dict) and set(roster) == set(FILES), "incomplete stage roster")
-    artifacts = {name: _read(run, name) for name in FILES}
-    _need(all(sha256_hex(raw) == roster[name] for name, raw in artifacts.items()), "stale retained reading output")
+    artifacts = {}
+    predecessor = None
+    for index, stage in enumerate(STAGES):
+        name = f"stage-{index}.json"
+        raw = _read(run, name)
+        stage_record = _decode(raw)
+        _need(sha256_hex(raw) == roster[name] and stage_record.get("stage") == stage
+              and stage_record.get("predecessor_sha256") == predecessor
+              and stage_record.get("payload_sha256") == roster[f"payload-{index}.json"],
+              "stale retained reading stage")
+        artifacts[name] = raw
+        predecessor = sha256_hex(raw)
+    for name in FILES:
+        if name in artifacts:
+            continue
+        raw = _read(run, name)
+        _need(sha256_hex(raw) == roster[name], "stale retained reading output")
+        artifacts[name] = raw
     retained = {}
     for stage_index in (1, 3):
         payload = _decode(artifacts[f"payload-{stage_index}.json"])
@@ -503,7 +523,7 @@ def run(out: Path, *, budget=DEFAULT_BUDGET, scenario="full", fixture: Path = FI
     """Run the saved-response workflow and retain its complete evidence."""
     _need(not out.exists() and not out.is_symlink(), "reading output already exists")
     inputs = ReadingInputs(fixture)
-    manifest, artifacts, report = _evaluate(inputs, budget, scenario, producer=SavedProducer(inputs))
+    manifest, artifacts, report = _evaluate(inputs, budget, scenario, producer=SavedProducer(inputs.responses))
     out.mkdir()
     for name, raw in artifacts.items():
         (out / name).write_bytes(raw)

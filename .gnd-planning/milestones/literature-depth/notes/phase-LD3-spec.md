@@ -200,3 +200,9 @@ is distinct from all workflow inputs.
 - The implementation has a 548-line reader plus the assurance coverage
   adapter. The main differences from the estimate are the separate scope
   and calibration bindings and the semantic receipt checks.
+
+Before the review candidate, the replay preflight was tightened to
+authenticate the exact manifest bytes and check the ordered stage
+chain before opening retained payloads. The saved producer receives
+only the response table. The held-back gold remains a scoring input.
+Source admission validates UTF-8, including each selected byte range.

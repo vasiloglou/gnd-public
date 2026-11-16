@@ -154,7 +154,7 @@ def test_repeated_inspections_charge_both_actual_reads():
     from gnd.examples.literature import reading
 
     inputs = reading.ReadingInputs(reading.FIXTURE)
-    producer = reading.SavedProducer(inputs)
+    producer = reading.SavedProducer(inputs.responses)
     selected = "study-opening"
     size = len(inputs.source_range(inputs.sections[selected]))
     payload, remaining = reading._inspect(
@@ -212,3 +212,46 @@ def test_maximum_question_roster_is_bounded(tmp_path):
     started = time.monotonic()
     assert len(reading.ReadingInputs(fixture).questions) == reading.ROSTER_LIMIT
     assert time.monotonic() - started < 5
+
+
+def test_stage_order_refuses_before_payload_reads(fresh, tmp_path, monkeypatch):
+    import shutil
+
+    from gnd.artifacts import canonical_json_bytes, sha256_hex
+    from gnd.examples.literature import reading
+
+    original, _ = fresh
+    run = tmp_path / "copied"
+    shutil.copytree(original, run)
+    stage = run / "stage-0.json"
+    value = json.loads(stage.read_bytes())
+    value["stage"] = "recheck"
+    raw = canonical_json_bytes(value)
+    stage.write_bytes(raw)
+    manifest = run / "run.json"
+    index = json.loads(manifest.read_bytes())
+    index["artifacts"][stage.name] = sha256_hex(raw)
+    manifest.write_bytes(canonical_json_bytes(index))
+    original_read = reading._read
+
+    def restricted_read(folder, name):
+        assert name in {"run.json", "stage-0.json"}
+        return original_read(folder, name)
+
+    monkeypatch.setattr(reading, "_read", restricted_read)
+    with pytest.raises(reading.ExampleError, match="stale retained reading stage"):
+        reading.replay(run)
+
+
+def test_manifest_digest_cannot_describe_different_file_bytes(fresh, tmp_path):
+    import shutil
+
+    from gnd.examples.literature import reading
+
+    original, _ = fresh
+    run = tmp_path / "copied"
+    shutil.copytree(original, run)
+    manifest = run / "run.json"
+    manifest.write_bytes(manifest.read_bytes() + b" ")
+    with pytest.raises(reading.ExampleError, match="noncanonical reading manifest"):
+        reading.replay(run)

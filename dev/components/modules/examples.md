@@ -284,17 +284,17 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `ReadingInputs` | class | 66 | Read and validate the declared source, section and question inventories. |
-| `ReadingInputs.selection(self, kind) -> list[str]` | method | 130 | (no docstring) |
-| `ReadingInputs.source_range(self, section) -> bytes` | method | 133 | (no docstring) |
-| `ReadingInputs.pins(self) -> dict` | method | 137 | (no docstring) |
-| `SavedProducer` | class | 141 | Local saved-response adapter with observed invocation counts. |
-| `SavedProducer.produce(self, stage, section) -> dict` | method | 148 | (no docstring) |
-| `affected_sections(sections, changed_keys) -> list[str]` | function | 153 | Return available earlier section IDs sharing a changed dependency key. |
-| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 326 | Read a run's optional coverage artifact using its external digest. |
-| `absence_status(artifacts, pins)` | function | 339 | Qualify the declared fixture claim from four independently bound inputs. |
-| `run(out, *, budget, scenario, fixture) -> dict` | function | 502 | Run the saved-response workflow and retain its complete evidence. |
-| `replay(folder, *, fixture) -> dict` | function | 514 | Re-derive the reading result from retained evidence without invoking producers. |
-| `main(argv) -> int` | function | 525 | (no docstring) |
+| `ReadingInputs.selection(self, kind) -> list[str]` | method | 132 | (no docstring) |
+| `ReadingInputs.source_range(self, section) -> bytes` | method | 135 | (no docstring) |
+| `ReadingInputs.pins(self) -> dict` | method | 139 | (no docstring) |
+| `SavedProducer` | class | 143 | Local saved-response adapter with observed invocation counts. |
+| `SavedProducer.produce(self, stage, section) -> dict` | method | 150 | (no docstring) |
+| `affected_sections(sections, changed_keys) -> list[str]` | function | 155 | Return available earlier section IDs sharing a changed dependency key. |
+| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 328 | Read a run's optional coverage artifact using its external digest. |
+| `absence_status(artifacts, pins)` | function | 341 | Qualify the declared fixture claim from four independently bound inputs. |
+| `run(out, *, budget, scenario, fixture) -> dict` | function | 522 | Run the saved-response workflow and retain its complete evidence. |
+| `replay(folder, *, fixture) -> dict` | function | 534 | Re-derive the reading result from retained evidence without invoking producers. |
+| `main(argv) -> int` | function | 545 | (no docstring) |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

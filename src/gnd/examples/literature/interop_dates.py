@@ -47,6 +47,8 @@ def _date_index(data):
 
 
 def _publication(works, work):
+    if work is None:
+        return None, "missing-work-link"
     if work not in works:
         return None, "unknown-work"
     dates = works[work]
@@ -81,7 +83,9 @@ def advise(edge_bytes: bytes, date_bytes: bytes, policy_bytes: bytes) -> dict:
     counts = dict.fromkeys(("pass", "advisory", "unresolved"), 0)
     for edge in edges["edges"]:
         _record(edge, {"id", "relation", "descendant_work", "ancestor_work"})
-        if not all(_text(item) for item in edge.values()) or edge["id"] in seen:
+        links = (edge["descendant_work"], edge["ancestor_work"])
+        if (not _text(edge["id"]) or not _text(edge["relation"]) or edge["id"] in seen
+                or any(link is not None and not _text(link) for link in links)):
             raise ValueError("invalid or duplicate candidate edge")
         seen.add(edge["id"])
         if edge["relation"] in excluded:

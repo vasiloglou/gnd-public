@@ -225,3 +225,26 @@ exit 0 using the wheel installed into a separate environment with the
 existing locked dependency directory.
 
 Independent phase diff review is pending.
+
+## Post-review controls
+
+The independent reviewer read the exact `8e98afc1` diff. The repaired
+verifier reproduces the extraction bundle with the public command, then
+compares every expected file. One fixture producer derives the exact
+original handoff bytes for both the build and verification paths. This
+includes producer metadata, the fidelity source population and the original
+anchors. The date report's presence must agree with the manifest.
+
+The copy census groups byte-identical files by physical identity in each
+bounded source directory. The authored fidelity source uses a fixture
+header. It remains distinct from the saved extraction. Extra physical
+copies of the extraction population and sidecar move the measured census.
+Both rebound counts also use physical identities.
+
+T2 now obtains fresh source rebinds for the separately valid temporal
+failure root before composing. T4 runs the example verifier with that root
+and a deliberately stale source record. It refuses at rebind verification
+before either semantic checking or advice. T2 also pins the extraction
+bundle mismatch when the original extraction is presented to the checking
+root. A separate unresolved control admits an explicit null work link.
+The public fixture's advisory counts stay the same.

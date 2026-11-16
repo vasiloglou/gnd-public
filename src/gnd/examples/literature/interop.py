@@ -7,6 +7,7 @@ import asyncio
 import os
 import sys
 import tempfile
+from itertools import islice
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -131,38 +132,43 @@ def _anchor_rows(facts, document):
     return anchors
 
 
-def _extract_source(run: Path, name: str, model, index, projection, applicable) -> None:
-    directory = run / SOURCES / name
-    directory.mkdir(parents=True)
+def _source_evidence(name: str, model, index, projection, applicable) -> dict[str, bytes]:
     document = _read(FIXTURE, f"{name}.md")
     facts = _json(_read(FIXTURE, f"{name}.facts.json"))
     gold = _json(_read(FIXTURE, f"{name}.gold.json"))
-    (directory / "document.md").write_bytes(document)
     extracted = {"population": index["header_template"], "facts": facts}
     _require(Draft202012Validator(projection).is_valid(extracted), "saved extraction violates its schema")
-    _write(directory, EXTRACTED, extracted)
-    _write(directory, "source.population.json", {"population": index["header_template"], "facts": gold})
-    _write(directory, EXTRACTION_SIDECAR, {
+    candidate = canonical_json_bytes(extracted)
+    source = canonical_json_bytes({"population": {**index["header_template"], "source": "fixture"}, "facts": gold})
+    document_sha = sha256_hex(document)
+    candidate_sha = sha256_hex(candidate)
+    extraction_sidecar = {
         "schema_version": 1, "model": EXTRACTION, "model_sha256": index["model"]["sha256"],
-        "population": EXTRACTED, "population_sha256": _digest(directory, EXTRACTED),
-        "document": "document.md", "document_sha256": sha256_hex(document),
+        "population": EXTRACTED, "population_sha256": candidate_sha,
+        "document": "document.md", "document_sha256": document_sha,
         "projection_sha256": index["artifacts"][_index_names()[1]]["sha256"],
         "skill": "gnd-extract", "skill_version": "1", "executing_model": "saved-public-fixture",
-    })
-    _write(directory, "document.manifest.json", {
+    }
+    document_manifest = {
         "schema_version": 1, "model": EXTRACTION, "model_sha256": index["model"]["sha256"],
         "source_population": "source.population.json",
-        "source_population_sha256": _digest(directory, "source.population.json"),
-        "document": "document.md", "document_sha256": sha256_hex(document),
+        "source_population_sha256": sha256_hex(source),
+        "document": "document.md", "document_sha256": document_sha,
         "applicable_sha256": applicable, "renderer_skill": "gnd-render-doc",
         "renderer_skill_version": "1", "executing_model": "authored-public-fixture",
         "distractors": [],
-    })
-    _write(directory, ORIGINAL_ANCHORS, {
-        "schema_version": 2, "population_sha256": _digest(directory, EXTRACTED),
-        "document_sha256": sha256_hex(document), "vocabulary_digest": vocabulary_digest(model),
+    }
+    anchors = {
+        "schema_version": 2, "population_sha256": candidate_sha,
+        "document_sha256": document_sha, "vocabulary_digest": vocabulary_digest(model),
         "anchors": _anchor_rows(facts, document.decode()),
-    })
+    }
+    return {
+        "document.md": document, EXTRACTED: candidate, "source.population.json": source,
+        EXTRACTION_SIDECAR: canonical_json_bytes(extraction_sidecar),
+        "document.manifest.json": canonical_json_bytes(document_manifest),
+        ORIGINAL_ANCHORS: canonical_json_bytes(anchors),
+    }
 
 
 def rebind(run: Path, source: str) -> dict[str, bytes]:
@@ -275,6 +281,56 @@ def _advice(run: Path) -> dict:
     return advise(_read(run, EDGES), _read(run, DATES), _read(POLICY.parent, POLICY.name))
 
 
+def _source_layout(run: Path, names: list[str]) -> dict:
+    originals = {"document": "document.md", "extraction_population": EXTRACTED,
+                 "extraction_sidecar": EXTRACTION_SIDECAR}
+    copies = dict.fromkeys(originals, 0)
+    rebound_files, anchor_files = set(), set()
+    for name in names:
+        directory = run / SOURCES / name
+        members = list(islice(directory.iterdir(), 65))
+        _require(len(members) <= 64, "source evidence exceeds the member ceiling")
+        by_digest = {}
+        identities = {}
+        digests = {}
+        for member in members:
+            digest = _digest(directory, member.name)
+            info = member.stat()
+            identity = info.st_dev, info.st_ino
+            by_digest.setdefault(digest, set()).add(identity)
+            identities[member.name] = identity
+            digests[member.name] = digest
+        for kind, leaf in originals.items():
+            copies[kind] += len(by_digest[digests[leaf]]) - 1
+        rebound_files.add(identities[REBOUND])
+        anchor_files.add(identities[REBOUND_ANCHORS])
+    return {"additional_copies": copies, "rebound_population_files": len(rebound_files),
+            "rebound_anchor_files": len(anchor_files)}
+
+
+def _copy_model_inputs(run: Path, names) -> None:
+    for name in names:
+        target = run / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(_read(FIXTURE, name))
+
+
+def _bundle_inputs(run: Path):
+    index, projection, applicable = _index_names()
+    artifacts = run / ARTIFACTS
+    return _json(_read(artifacts, index)), _json(_read(artifacts, projection)), _digest(artifacts, applicable)
+
+
+def _verify_bundle(run: Path) -> None:
+    with tempfile.TemporaryDirectory(prefix="gnd-literature-extraction-") as scratch:
+        fresh = Path(scratch).resolve()
+        _copy_model_inputs(fresh, (EXTRACTION, *VOCABULARY, CATALOG))
+        _stage(fresh, "extract", EXTRACTION, "--out", ARTIFACTS)
+        for path in (fresh / ARTIFACTS).iterdir():
+            _require(_read(run / ARTIFACTS, path.name) == path.read_bytes(),
+                     f"extraction artifact differs at {path.name}")
+
+
 def _manifest(run: Path, names: list[str], *, dates: bool) -> dict:
     stage_files = (f"{ARTIFACTS}/{_index_names()[0]}", f"{SOURCES}/resolution.json",
                    f"{SOURCES}/manifest.json", POPULATION, COMPOSITION, "check.json",
@@ -286,16 +342,10 @@ def _manifest(run: Path, names: list[str], *, dates: bool) -> dict:
     )
     if dates:
         file_names.append(DATE_REPORT)
-    documents = sum(
-        not (run / SOURCES / name / "document.md").samefile(run / SOURCES / name / "document.txt")
-        for name in names
-    )
     return {
         "schema": "literature-interop/1", "source_order": names, "with_dates": dates,
         "sha256": {name: _digest(run, name) for name in file_names},
-        "layout": {"additional_copies": {
-            "document": documents, "extraction_population": 0, "extraction_sidecar": 0,
-        }, "rebound_population_files": len(names), "rebound_anchor_files": len(names)},
+        "layout": _source_layout(run, names),
     }
 
 
@@ -307,6 +357,7 @@ def verify(run: Path) -> dict:
     _require(isinstance(recorded, dict) and type(recorded.get("with_dates")) is bool
              and isinstance(recorded.get("sha256"), dict), "invalid integration manifest")
     dates = recorded["with_dates"]
+    _require(dates == os.path.lexists(run / DATE_REPORT), "date report presence differs from the run manifest")
     expected = _manifest(run, names, dates=dates)
     for path, digest in expected["sha256"].items():
         _require(recorded["sha256"].get(path) == digest, f"stale integration evidence at {path}")
@@ -314,14 +365,12 @@ def verify(run: Path) -> dict:
     for name in INPUTS:
         _require(_read(run, name) == _read(FIXTURE, name), f"fixture input differs at {name}")
     roots = _roots(run)
+    _verify_bundle(run)
+    bundle = _bundle_inputs(run)
     for name in names:
         directory = run / SOURCES / name
-        _require(_read(directory, "document.md") == _read(FIXTURE, f"{name}.md"),
-                 f"fixture document differs at {name}")
-        for leaf, expected_facts in ((EXTRACTED, "facts"), ("source.population.json", "gold")):
-            observed = _json(_read(directory, leaf))["facts"]
-            _require(observed == _json(_read(FIXTURE, f"{name}.{expected_facts}.json")),
-                     f"fixture facts differ at {name}/{leaf}")
+        for leaf, original in _source_evidence(name, roots[0], *bundle).items():
+            _require(_read(directory, leaf) == original, f"fixture source evidence differs at {name}/{leaf}")
         for leaf, content in _rebind(run, name, roots).items():
             _require(_read(directory, leaf) == content, f"rebind differs at {name}/{leaf}")
     resolution, manifest = _resolution(run, plan)
@@ -344,21 +393,17 @@ def build(out: Path, *, dates: bool = False) -> None:
     names = plan["sources"]
     with tempfile.TemporaryDirectory(prefix="gnd-literature-interop-") as scratch:
         run = Path(scratch).resolve()
-        for name in INPUTS:
-            target = run / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(_read(FIXTURE, name))
+        _copy_model_inputs(run, INPUTS)
         _stage(run, "extract", EXTRACTION, "--out", ARTIFACTS)
-        index_name, projection_name, applicable_name = _index_names()
-        artifacts = run / ARTIFACTS
-        index = _json(_read(artifacts, index_name))
-        projection = _json(_read(artifacts, projection_name))
-        applicable = _digest(artifacts, applicable_name)
+        bundle = _bundle_inputs(run)
         roots = _roots(run)
         for name in names:
-            _extract_source(run, name, roots[0], index, projection, applicable)
+            directory = run / SOURCES / name
+            directory.mkdir(parents=True)
+            for leaf, raw in _source_evidence(name, roots[0], *bundle).items():
+                (directory / leaf).write_bytes(raw)
             for leaf, raw in _rebind(run, name, roots).items():
-                (run / SOURCES / name / leaf).write_bytes(raw)
+                (directory / leaf).write_bytes(raw)
         resolution, manifest = _resolution(run, plan)
         (run / SOURCES / "resolution.json").write_bytes(resolution)
         (run / SOURCES / "manifest.json").write_bytes(manifest)

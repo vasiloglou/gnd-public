@@ -247,8 +247,8 @@ def test_rebind_refuses_a_valid_root_with_a_different_catalog(example, tmp_path)
         interop.rebind(bad, "survey")
 
 
-def test_temporal_constraint_distinguishes_checking_model(example, tmp_path, capsys):
-    _, good = example
+def test_temporal_constraint_distinguishes_checking_model(example, tmp_path, capsys, monkeypatch):
+    interop, good = example
     checking = good / "checking.orm.json"
     assert main(["extract", str(checking), "--out", str(tmp_path / "refused")]) == 3
     assert "temporal:consumer-unsupported" in capsys.readouterr().out
@@ -259,6 +259,10 @@ def test_temporal_constraint_distinguishes_checking_model(example, tmp_path, cap
     temporal = next(c for c in root["constraints"] if c["type"] == "guarded")
     temporal["consequent"]["comparison"]["left"]["args"][1]["duration_days"] = 3650
     write(model, root)
+    for name in EXPECTED["sources"]:
+        for leaf, content in interop.rebind(bad, name).items():
+            (bad / "sources" / name / leaf).write_bytes(content)
+        assert read(bad / "sources" / name / "rebind.json")["checking_root_sha256"] == sha(model)
     out, record = bad / "control.population.json", bad / "control.record.json"
     assert main(["compose", str(model), str(bad / "sources"), "--out", str(out), "--record", str(record)]) == 0
     capsys.readouterr()
@@ -267,4 +271,85 @@ def test_temporal_constraint_distinguishes_checking_model(example, tmp_path, cap
     verdicts = json.loads(capsys.readouterr().out)["report"]["verdicts"]
     assert any(row["constraint_type"] == "guarded" and row["verdict"] == "fail" for row in verdicts)
     assert main(["verify", str(model), str(bad / "sources/survey/extracted.population.json"),
-                 "--artifacts", str(bad / "artifacts")]) == 3
+                 "--artifacts", str(bad / "artifacts"), "--format", "json"]) == 3
+    wrong_root = json.loads(capsys.readouterr().out)
+    assert wrong_root["issues"][0]["rule_id"] == "extraction:binding-mismatch"
+    assert "checking.orm.artifacts.json" in wrong_root["extraction"]["reason"]
+
+    # Exercise the example verifier with this independently valid test fixture,
+    # so its exact fixture-root check passes and the stale source is decisive.
+    fixture = tmp_path / "fixture"
+    shutil.copytree(interop.FIXTURE, fixture)
+    shutil.copyfile(model, fixture / model.name)
+    monkeypatch.setattr(interop, "FIXTURE", fixture)
+    member = "sources/survey/rebind.json"
+    rebind = read(bad / member)
+    rebind["checking_root_sha256"] = sha(checking)
+    write(bad / member, rebind)
+    write(bad / "interop.json", interop._manifest(bad, EXPECTED["sources"], dates=True))
+
+    def unreachable(*_args):
+        pytest.fail("check or advice ran with a stale temporal rebind")
+
+    monkeypatch.setattr(interop, "_check", unreachable)
+    monkeypatch.setattr(interop, "_advice", unreachable)
+    assert interop.main(["verify", str(bad)]) == 3
+    assert "rebind differs at survey/rebind.json" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("kind", ["extraction", "rendering", "verbalization", "unexpected-report"])
+def test_repinning_cannot_make_forged_handoff_evidence_valid(example, tmp_path, kind):
+    interop, good = example
+    bad = tmp_path.resolve() / "forged-handoff"
+    shutil.copytree(good, bad)
+    sources = bad / "sources" / "survey"
+    if kind == "extraction":
+        path = sources / "extracted.population.extraction.json"
+        value = read(path)
+        value.update(executing_model="forged", skill_version="99")
+        write(path, value)
+        (sources / "rebind.json").write_bytes(interop.rebind(bad, "survey")["rebind.json"])
+    elif kind == "rendering":
+        path = sources / "document.manifest.json"
+        value = read(path)
+        value.update(executing_model="forged", renderer_skill_version="99")
+        write(path, value)
+    elif kind == "verbalization":
+        path = bad / "artifacts/extraction.orm.verbalization.txt"
+        path.write_text("Forged extraction instructions.\n")
+    else:
+        path = bad / "dates.json"
+        value = read(path)
+        value["counts"]["advisory"] = 0
+        write(path, value)
+    write(bad / "interop.json", interop._manifest(bad, EXPECTED["sources"], dates=kind != "unexpected-report"))
+    assert interop.main(["verify", str(bad)]) == 3
+
+
+def test_layout_measures_copies_of_all_original_artifacts(example, tmp_path):
+    interop, good = example
+    copied = tmp_path.resolve() / "copied"
+    shutil.copytree(good, copied)
+    survey = copied / "sources" / "survey"
+    shutil.copyfile(survey / "extracted.population.json", survey / "extra-population.json")
+    shutil.copyfile(survey / "extracted.population.extraction.json", survey / "extra-sidecar.json")
+    layout = interop._manifest(copied, EXPECTED["sources"], dates=True)["layout"]
+    assert layout["additional_copies"] == {"document": 2, "extraction_population": 1, "extraction_sidecar": 1}
+
+
+def test_missing_work_link_is_unresolved():
+    from gnd.examples.literature import interop
+
+    candidate = {
+        "schema": "literature-candidate-edges/1", "edges": [{
+            "id": "unlinked", "relation": "extends",
+            "descendant_work": None, "ancestor_work": EXPECTED["pinn"][0],
+        }],
+    }
+    report = interop.advise(canonical_json_bytes(candidate),
+                            (interop.FIXTURE / "publication-dates.json").read_bytes(),
+                            interop.POLICY.read_bytes())
+    edge = report["edges"][0]
+    assert edge["outcome"] == "unresolved"
+    assert edge["reason"] == "missing-work-link"
+    assert edge["descendant_work"] is None

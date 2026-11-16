@@ -326,6 +326,8 @@ the descendant's publication year is at least the ancestor's year at the
 same precision. Unknown works, missing or conflicting publication dates and
 mixed precision remain unresolved. Alternative date roles supply no
 publication comparison. The report binds the edge, date and policy bytes.
+A proposed edge can use `null` for a missing work link. The report retains
+the available endpoint and marks the edge unresolved.
 
 The fixture's incorrect PINN edge is a proposed edge from the 2019 PINNs paper
 to Bayesian PINNs, published in 2021. It produces one advisory. Its work IDs

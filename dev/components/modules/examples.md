@@ -230,10 +230,10 @@ Run and verify the packaged extraction-to-checking literature fixture.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `rebind(run, source) -> dict[str, bytes]` | function | 168 | Verify the extraction and derive checking-bound files from the original. |
-| `verify(run) -> dict` | function | 302 | (no docstring) |
-| `build(out, *, dates) -> None` | function | 342 | (no docstring) |
-| `main(argv) -> int` | function | 379 | (no docstring) |
+| `rebind(run, source) -> dict[str, bytes]` | function | 174 | Verify the extraction and derive checking-bound files from the original. |
+| `verify(run) -> dict` | function | 352 | (no docstring) |
+| `build(out, *, dates) -> None` | function | 391 | (no docstring) |
+| `main(argv) -> int` | function | 424 | (no docstring) |
 
 ## gnd.examples.literature.interop_dates — `src/gnd/examples/literature/interop_dates.py`
 Components: examples.literature_interop
@@ -241,7 +241,7 @@ Publication-year advisories over LI5's candidate lineage vocabulary.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `advise(edge_bytes, date_bytes, policy_bytes) -> dict` | function | 63 | Name the work pair and report their stated publication order. |
+| `advise(edge_bytes, date_bytes, policy_bytes) -> dict` | function | 65 | Name the work pair and report their stated publication order. |
 
 ## gnd.examples.literature.lineage_run — `src/gnd/examples/literature/lineage_run.py`
 Components: examples.literature_lineage

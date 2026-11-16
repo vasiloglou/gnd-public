@@ -13,6 +13,7 @@ PHASE_SUCCESSORS = (
     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-workflows/evidence/GW2/source-successors.json',
     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-authoring/evidence/GA1/source-successors.json',
     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/source-successors.json',
+    EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json',
 )
 
 

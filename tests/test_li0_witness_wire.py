@@ -250,7 +250,12 @@ def test_no_direct_model_dump_in_witness_package():
         for path in sorted((ROOT / "src" / "gnd" / "witness").rglob("*.py"))
         if DUMP_CALL in path.read_text()
     ]
-    assert offenders == ["src/gnd/witness/io.py"], offenders
+    assert offenders == [], offenders
+    from gnd.model._documents import model_wire
+    from gnd.witness.io import model_wire as historical_model_wire
+
+    assert model_wire is historical_model_wire
+    assert DUMP_CALL in (ROOT / "src/gnd/model/_documents.py").read_text()
 
 
 # --- T10: every optional section gated by the meta-schema is omitted when empty -------

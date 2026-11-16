@@ -33,6 +33,7 @@ Model documents as plain JSON values (evolve-loading follow-up, IK4-Q3, IKE-Q2).
 | --- | --- | --- | --- |
 | `ModelValueError` | class(ValueError) | 13 | A model value outside the JSON data model, named by path and kind. |
 | `json_document(document, *, refuse, encodable) -> dict[str, Any]` | function | 27 | The parsed model document as plain Python, in one walk over every value. |
+| `model_wire(model)` | function | 111 | The authored-shape document of a loaded model, for re-entry into intake. |
 
 ## gnd.model._includes — `src/gnd/model/_includes.py`
 Components: model.loading
@@ -47,11 +48,11 @@ One resolver and admission guards for pinned version-5 model includes.
 | `parse_included(raw, *, include_id, path) -> dict` | function | 91 | (no docstring) |
 | `include_reason(error) -> str \| None` | function | 116 | (no docstring) |
 | `compose(document, *, descriptor, source, historical, issues)` | function | 181 | (no docstring) |
-| `remap_issues(issues, origins)` | function | 242 | (no docstring) |
-| `refuse_unsupported(route) -> NoReturn` | function | 273 | (no docstring) |
-| `guard_document(document, route)` | function | 277 | (no docstring) |
-| `guard_bytes(raw, *, source, route)` | function | 282 | (no docstring) |
-| `guard_path(path, route)` | function | 292 | (no docstring) |
+| `remap_issues(issues, origins)` | function | 244 | (no docstring) |
+| `refuse_unsupported(route) -> NoReturn` | function | 275 | (no docstring) |
+| `guard_document(document, route)` | function | 279 | (no docstring) |
+| `guard_bytes(raw, *, source, route)` | function | 284 | (no docstring) |
+| `guard_path(path, route)` | function | 294 | (no docstring) |
 
 ## gnd.model._induction — `src/gnd/model/_induction.py`
 Components: model.validation
@@ -111,3 +112,13 @@ Model loading with two-layer validation.
 | `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3989 | SCC-condensed, dependency-first deterministic structured strata. |
 | `semantic_validate(doc) -> list[ValidationIssue]` | function | 5104 | Run every layer-2 semantic rule over a parsed model document. |
 | `parse_model_document(data, *, source) -> Any` | function | 5312 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+
+## gnd.model.flattening — `src/gnd/model/flattening.py`
+Components: model.loading
+Canonical re-entry bytes and provenance for a resolved model include root.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `FlatteningError` | class(ValueError) | 14 | A resolved model cannot be represented within the flat wire contract. |
+| `FlattenedModel` | class | 19 | (no docstring) |
+| `flatten_model(model) -> FlattenedModel` | function | 24 | Serialize an include snapshot made by the model loader. |

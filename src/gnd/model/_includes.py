@@ -222,9 +222,11 @@ def compose(document: object, *, descriptor: int, source: str | Path, historical
                  'rejected_proposals', 'fact_type_constraints')
     for entry, doc in zip(declarations, included, strict=True):
         source_doc = doc.get('source')
-        if any(key in doc for key in forbidden) or (
-                isinstance(source_doc, Mapping) and source_doc.get('mode') == 'unattended'):
-            _refuse('forbidden-section', f'includes[{entry["id"]}]')
+        forbidden_key = next((key for key in forbidden if key in doc), None)
+        if forbidden_key is not None:
+            _refuse('forbidden-section', f'includes[{entry["id"]}]', forbidden_key)
+        if isinstance(source_doc, Mapping) and source_doc.get('mode') == 'unattended':
+            _refuse('forbidden-section', f'includes[{entry["id"]}]', 'unattended source')
     for entry, doc in zip(declarations, included, strict=True):
         included_issues = _structural(doc)
         if not included_issues:

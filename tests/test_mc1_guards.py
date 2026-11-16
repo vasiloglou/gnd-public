@@ -31,14 +31,13 @@ def test_direct_refusals(tmp_path, module, name, args):
     assert sorted(p.name for p in tmp_path.iterdir()) == ['project.orm.json', 'vocab.orm.json']
 
 
-@pytest.mark.parametrize('route', ['codegen', 'extract', 'conformance', 'measure', 'pyrel'])
+@pytest.mark.parametrize('route', ['codegen', 'conformance', 'measure', 'pyrel'])
 def test_cli_guards(tmp_path, route):
     from support.cli_runner import run_main
     path, _, _ = write_case(tmp_path)
     out = tmp_path / 'out'
     args = {
         'codegen': ['codegen', str(path), '--out', str(out)],
-        'extract': ['extract', str(path), '--out', str(out)],
         'conformance': ['conformance', str(path), str(out), '--format', 'json'],
         'measure': ['measure', str(path), '--populations', str(tmp_path), '--format', 'json'],
         'pyrel': ['export', 'pyrel', str(path), '--out', str(out)],

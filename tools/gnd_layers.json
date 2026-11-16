@@ -1054,6 +1054,9 @@
     },
     "gnd.model._paths": {
       "layer": "model"
+    },
+    "gnd.model.flattening": {
+      "layer": "model"
     }
   },
   "schema_version": 1

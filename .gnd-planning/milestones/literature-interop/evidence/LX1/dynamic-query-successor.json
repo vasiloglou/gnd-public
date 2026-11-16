@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "reason": "LX1 moves bundle-index lookups to the shared verifier and adds exact artifact and digest indexing. These syntax candidates are not model structure queries.",
+  "predecessor": ".gnd-planning/milestones/literature-identity/evidence/main-integration/dynamic-query-successor.json",
+  "predecessor_sha256": "49a355fa0718c5ee66d7be235f69bb2f58a7bc558929686371ddde1af0070b52",
+  "removed": [
+    [
+      "src/gnd/extract/service.py",
+      "_artifact_index_issue",
+      "index['artifacts'][rel]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/export/verification_service.py",
+      "_cmd_verify",
+      "verified_bundle.artifact_digests[projection_rel]",
+      1
+    ],
+    [
+      "src/gnd/extract/service.py",
+      "_VerifiedBundle",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/extract/service.py",
+      "_flattening_names",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/extract/service.py",
+      "_verify_artifact_index",
+      "dict[str, bytes]",
+      1
+    ],
+    [
+      "src/gnd/extract/service.py",
+      "_verify_artifact_index",
+      "expected[rel]",
+      1
+    ],
+    [
+      "src/gnd/extract/service.py",
+      "_verify_artifact_index",
+      "index['artifacts'][rel]",
+      2
+    ],
+    [
+      "src/gnd/extract/service.py",
+      "_verify_artifact_index",
+      "tuple[str, ...]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7794,
+  "result_occurrences": 9687
+}

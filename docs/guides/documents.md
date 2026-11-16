@@ -35,6 +35,13 @@ uniqueness, mandatory, or other domain rules. If a document describes an
 invalid application state, the extraction should preserve that state so the
 checker can reveal it.
 
+For a version-5 model with pinned includes, use the authored root in both
+`gnd extract` and `gnd verify`. Keep the flat model and flattening record
+with the bundle for verification. Give the extraction agent the shape-only
+schema and verbalization as usual. Verification checks the bundle against the
+root and its pinned files. See the [flattening record contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#extraction-flattening-record)
+for the two additional files.
+
 ## Ask an agent to extract, then verify its output
 
 In an agent session with the GND skills installed, explicitly select the

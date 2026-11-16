@@ -24,25 +24,24 @@ Bounded wire intake, structural validation and byte-bound input identities.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `validate_witness_structure(document, *, limits) -> int` | function | 34 | (no docstring) |
-| `parse_wire(raw, *, limits)` | function | 96 | (no docstring) |
-| `read_wire(path, *, limits)` | function | 112 | (no docstring) |
-| `record(value, keys)` | function | 118 | (no docstring) |
-| `integer(value)` | function | 123 | (no docstring) |
-| `typed(value)` | function | 128 | (no docstring) |
-| `target_shape(t)` | function | 138 | (no docstring) |
-| `load_targets(path, *, limits)` | function | 146 | (no docstring) |
-| `certificate_shape(doc, *, limits)` | function | 158 | (no docstring) |
-| `load_certificate(path, *, limits)` | function | 269 | (no docstring) |
-| `witness_input_identity(model, candidate, *, references)` | function | 275 | (no docstring) |
-| `identity(model, candidate, refs)` | function | 280 | (no docstring) |
-| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 292 | (no docstring) |
-| `roster(model)` | function | 345 | (no docstring) |
-| `validate_targets(targets, model)` | function | 354 | (no docstring) |
-| `support_closure(model, targets)` | function | 380 | Conservative syntactic classifier; no tuple or comparison evaluation. |
-| `model_wire(model)` | function | 436 | The authored-shape document of a loaded model, for re-entry into intake. |
-| `population_wire(pop)` | function | 459 | (no docstring) |
-| `classify_targets(model, targets, populations)` | function | 473 | Classify each request independently, caching only within this call. |
+| `validate_witness_structure(document, *, limits) -> int` | function | 35 | (no docstring) |
+| `parse_wire(raw, *, limits)` | function | 97 | (no docstring) |
+| `read_wire(path, *, limits)` | function | 113 | (no docstring) |
+| `record(value, keys)` | function | 119 | (no docstring) |
+| `integer(value)` | function | 124 | (no docstring) |
+| `typed(value)` | function | 129 | (no docstring) |
+| `target_shape(t)` | function | 139 | (no docstring) |
+| `load_targets(path, *, limits)` | function | 147 | (no docstring) |
+| `certificate_shape(doc, *, limits)` | function | 159 | (no docstring) |
+| `load_certificate(path, *, limits)` | function | 270 | (no docstring) |
+| `witness_input_identity(model, candidate, *, references)` | function | 276 | (no docstring) |
+| `identity(model, candidate, refs)` | function | 281 | (no docstring) |
+| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 293 | (no docstring) |
+| `roster(model)` | function | 346 | (no docstring) |
+| `validate_targets(targets, model)` | function | 355 | (no docstring) |
+| `support_closure(model, targets)` | function | 381 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+| `population_wire(pop)` | function | 437 | (no docstring) |
+| `classify_targets(model, targets, populations)` | function | 451 | Classify each request independently, caching only within this call. |
 
 ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
 Components: witness.replay

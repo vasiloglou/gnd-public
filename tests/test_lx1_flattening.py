@@ -52,7 +52,7 @@ def extract(model: Path, bundle: Path) -> int:
 def handoff(inputs: tuple[Path, Path]) -> tuple[Path, Path, Path]:
     model, bundle = inputs
     assert extract(model, bundle) == 0
-    index = json.loads((bundle / "project.artifacts.json").read_bytes())
+    index = json.loads((bundle / "project.orm.artifacts.json").read_bytes())
     population = model.parent / "pop.json"
     write_doc(population, {
         "population": index["header_template"],
@@ -67,7 +67,7 @@ def handoff(inputs: tuple[Path, Path]) -> tuple[Path, Path, Path]:
         "population_sha256": sha(population),
         "document": document.name,
         "document_sha256": sha(document),
-        "projection_sha256": sha(bundle / "project.projection.schema.json"),
+        "projection_sha256": sha(bundle / "project.orm.projection.schema.json"),
         "skill": "gnd-extract",
         "skill_version": "1",
         "executing_model": "fixture",
@@ -84,9 +84,9 @@ def verify(handoff: tuple[Path, Path, Path]) -> int:
 def test_public_extraction_and_origins(handoff: tuple[Path, Path, Path]) -> None:
     model, bundle, _ = handoff
     assert verify(handoff) == 0
-    index = json.loads((bundle / "project.artifacts.json").read_bytes())
-    flat = bundle / "project.flat.orm.json"
-    record = bundle / "project.flattening.json"
+    index = json.loads((bundle / "project.orm.artifacts.json").read_bytes())
+    flat = bundle / "project.orm.flat.orm.json"
+    record = bundle / "project.orm.flattening.json"
     assert index["flattening"] == {"flat_model": flat.name, "record": record.name}
     assert index["model"]["sha256"] == sha(model)
     assert index["artifacts"][flat.name]["sha256"] == sha(flat)
@@ -127,8 +127,8 @@ def test_stale_coordinates(handoff, capsys, which: str) -> None:
     paths = {
         "root": model,
         "include": model.parent / "components.orm.json",
-        "flat": bundle / "project.flat.orm.json",
-        "record": bundle / "project.flattening.json",
+        "flat": bundle / "project.orm.flat.orm.json",
+        "record": bundle / "project.orm.flattening.json",
     }
     capsys.readouterr()
     if which in {"root", "include"}:
@@ -144,10 +144,10 @@ def test_stale_coordinates(handoff, capsys, which: str) -> None:
 @pytest.mark.parametrize("downgrade", [False, True])
 def test_index_cannot_authenticate_changed_projection(handoff, capsys, downgrade) -> None:
     _, bundle, _ = handoff
-    index_path = bundle / "project.artifacts.json"
+    index_path = bundle / "project.orm.artifacts.json"
     index = json.loads(index_path.read_bytes())
-    flat = bundle / "project.flat.orm.json"
-    record = bundle / "project.flattening.json"
+    flat = bundle / "project.orm.flat.orm.json"
+    record = bundle / "project.orm.flattening.json"
     if downgrade:
         index.pop("flattening")
         index["artifacts"].pop(flat.name)
@@ -199,7 +199,7 @@ def test_include_boundaries(inputs, capsys, which: str) -> None:
                          ids=["array", "scalar-model", "duplicate", "nan", "depth", "size"])
 def test_hostile_indexes_refuse(handoff, capsys, bad: bytes) -> None:
     _, bundle, _ = handoff
-    (bundle / "project.artifacts.json").write_bytes(bad)
+    (bundle / "project.orm.artifacts.json").write_bytes(bad)
     capsys.readouterr()
     assert verify(handoff) == 3
     result = json.loads(capsys.readouterr().out)
@@ -270,3 +270,19 @@ def test_temporal_extraction_refusal(tmp_path, capsys) -> None:
     assert extract(model, bundle) == 3
     assert "temporal" in capsys.readouterr().out
     assert not bundle.exists()
+
+
+def test_output_cannot_replace_an_include(inputs, capsys) -> None:
+    model, _ = inputs
+    root = json.loads(model.read_bytes())
+    pin = root["includes"][0]
+    original = (model.parent / pin["path"]).read_bytes()
+    pin["path"] = "project.orm.flat.orm.json"
+    bound_input = model.parent / pin["path"]
+    bound_input.write_bytes(original)
+    write_doc(model, root)
+
+    assert extract(model, model.parent) == 74
+    assert "overlap" in capsys.readouterr().out
+    assert bound_input.read_bytes() == original
+    assert not (model.parent / "project.orm.artifacts.json").exists()

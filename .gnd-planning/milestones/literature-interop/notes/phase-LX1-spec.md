@@ -208,3 +208,58 @@ Corpus-first. Planned fixture root `tests/fixtures/lx1-flattening/` with
 `README.md` as the entry point and separate `expected.json` for wire and
 exit expectations. Commit the red controls after the exact-byte spec and
 corpus rulings. The phase starts implementation after the delegated spec and corpus rulings.
+
+## Implementation findings
+
+- The red harness initially spelled output paths using a `project` stem.
+  The existing extraction stem strips `.json` and retains `.orm` for
+  `project.orm.json`. The fixture harness now names `project.orm` artifacts.
+  The expected wire, origin and exit outcomes in the approved answer file
+  are unchanged.
+- A pinned include can have the same name as a new output artifact if a
+  caller selects its model directory as `--out`. The direct overlap
+  regression reproduced exit 0 with the include replaced before the fix.
+  Refuse overlap at publication preflight with exit 74, before staging.
+- The phase changed three source-pinned historical CLI functions. Preserve
+  the identity aliases and add an authenticated RF5 successor for each.
+  The RF6 syntax scan gained eight artifact/digest subscriptions and
+  annotations and lost one moved index subscription. Record that exact
+  delta against the current inventory. The actual model-query policy
+  retains its existing budget.
+- The shared interpreter's installed version 0.2.0 failed two package
+  guards on the untouched baseline and the candidate. The worktree now
+  uses its own locked CPython 3.11 environment and its GND 0.3.1 install.
+
+### Lint gate amendment
+
+Delegated approval (auto=true), 2026-11-15. The original verification row
+expected exit 0 from whole-tree `uv run ruff check`. The full command still
+runs and its actual exit is recorded. The predecessor `8cee22f8` and the
+candidate each report the same 188 diagnostics under locked Ruff, compared
+by file, code, line and message. Require that equality and exit 0 on the
+changed Python files. The workflow-skill diagnostics from the predecessor
+remain visible in the full gate.
+
+The component check requested rereads of the shared-loader subsystems and
+the extraction and witness subsystems. Their existing flow descriptions
+remain accurate. The entries for extraction, verification, model loading,
+JSON document handling and witness wire ownership describe the changed
+module responsibilities.
+
+### Candidate verification
+
+The locked worktree environment reports GND 0.3.1. The final direct and
+affected set in the verification ledger ran with `tests/test_extract_guidelines.py`
+also selected because it consumes the extraction index. It exited 0:
+
+    289 passed in 153.46s (0:02:33)
+
+The project structure guard command ran under the default lane filter and
+exited 0:
+
+    679 passed, 2 deselected in 290.77s (0:04:50)
+
+The changed-file Ruff check exited 0. Whole-tree Ruff exited 1 with the
+188 predecessor diagnostics above. The strict component check and
+`git diff --check` exited 0. LX1 awaits its independent diff review and
+phase completion record.

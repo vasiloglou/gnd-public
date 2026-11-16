@@ -3,6 +3,8 @@
 import hashlib
 import json
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -353,3 +355,61 @@ def test_missing_work_link_is_unresolved():
     assert edge["outcome"] == "unresolved"
     assert edge["reason"] == "missing-work-link"
     assert edge["descendant_work"] is None
+
+
+@pytest.mark.parametrize(("filename", "diagnostic"), [
+    ("extraction.orm.json", "fixture input differs at extraction.orm.json"),
+    ("checking.orm.json", "fixture input differs at checking.orm.json"),
+    ("vocabulary/literature.orm.json", "fixture input differs at vocabulary/literature.orm.json"),
+    ("reference/catalog.json", "fixture input differs at reference/catalog.json"),
+    ("publication-dates.json", "fixture input differs at publication-dates.json"),
+    ("artifacts/extraction.orm.artifacts.json", "extraction artifact differs at extraction.orm.artifacts.json"),
+])
+def test_repinned_input_still_refuses_before_semantic_stages(
+    example, tmp_path, capsys, monkeypatch, filename, diagnostic,
+):
+    interop, good = example
+    bad = tmp_path.resolve() / "repinned-input"
+    shutil.copytree(good, bad)
+    path = bad / filename
+    if filename == "publication-dates.json":
+        dates = read(path)
+        dates["dates"][0]["role"] = "preprint"
+        write(path, dates)
+    else:
+        path.write_bytes(path.read_bytes() + b" ")
+    write(bad / "interop.json", interop._manifest(bad, EXPECTED["sources"], dates=True))
+
+    def unreachable(*_args):
+        pytest.fail("semantic work started on a re-pinned input")
+
+    monkeypatch.setattr(interop, "_check", unreachable)
+    monkeypatch.setattr(interop, "_advice", unreachable)
+    assert interop.main(["verify", str(bad)]) == 3
+    assert diagnostic in capsys.readouterr().err
+
+
+def test_repinned_composition_cannot_replace_source_rederivation(example, tmp_path, capsys, monkeypatch):
+    interop, good = example
+    bad = tmp_path.resolve() / "repinned-composition"
+    shutil.copytree(good, bad)
+    path = bad / "composition.json"
+    record = read(path)
+    record["facts"][0]["sources"][0]["fact_index"] += 1
+    write(path, record)
+    write(bad / "interop.json", interop._manifest(bad, EXPECTED["sources"], dates=True))
+
+    def unreachable(*_args):
+        pytest.fail("proof replay started before composition verification")
+
+    monkeypatch.setattr(interop, "_replay", unreachable)
+    monkeypatch.setattr(interop, "_advice", unreachable)
+    assert interop.main(["verify", str(bad)]) == 3
+    assert "check exited 3" in capsys.readouterr().err
+    direct = subprocess.run(
+        [sys.executable, "-m", "gnd", "check", "checking.orm.json", "composed.population.json",
+         "--composition", "composition.json", "--sources", "sources", "--format", "json"],
+        cwd=bad, capture_output=True, text=True, check=False, timeout=30,
+    )
+    assert direct.returncode == 3
+    assert "re-derived composition differs from the record at facts" in direct.stdout

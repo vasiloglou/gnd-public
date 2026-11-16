@@ -193,6 +193,29 @@ def test_include_boundaries(inputs, capsys, which: str) -> None:
     assert not bundle.exists()
 
 
+def test_relabelled_unattended_metadata_refuses_extraction(tmp_path, capsys) -> None:
+    from test_mc1_model_includes import write_case
+    from test_unattended_mode import EVOLVE_BASE, _doc, _span
+
+    child = _doc(EVOLVE_BASE)
+    child.pop("rejected_proposals", None)
+    child["source"]["mode"] = "one-shot"
+    model, root, original = write_case(tmp_path.resolve(), child)
+    assert extract(model, tmp_path / "attended") == 0
+    capsys.readouterr()
+    induced = next(row for row in child["constraints"] if row["source"] == "induced")
+    induced["provenance"]["spans"] = [_span("customers")]
+    write_doc(original, child)
+    root["includes"][0]["sha256"] = sha(original)
+    write_doc(model, root)
+    bundle = tmp_path / "relabelled"
+    assert extract(model, bundle) == 3
+    output = capsys.readouterr().out
+    assert "include:invalid-included-model" in output
+    assert "semantic:unattended-u7" in output
+    assert not bundle.exists()
+
+
 @pytest.mark.parametrize("bad", [b"[]", b'{"model":1}', b'{"model":{},"model":{}}',
                                  b'{"model":NaN}', b"[" * 1024,
                                  b" " * (1024 * 1024 + 1)],

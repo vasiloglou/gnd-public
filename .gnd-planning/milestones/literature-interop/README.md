@@ -3,7 +3,8 @@
 Plan r4, 2026-11-15, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193)
 part 5 and the dates step of part 4. [Round 1](001-panel.md) reviewed r2 and [round 2](002-panel.md) reviewed r3.
 [Delegated plan gate](003-plan-gate.md) approves r4. All four phases are complete.
-The [close candidate](012-close-candidate.md) awaits the required panel.
+The [milestone close](014-milestone-close.md) records the delegated ruling.
+The [close panel](013-panel.md) reviewed the [candidate](012-close-candidate.md).
 
 | Phase | Deliverable |
 |---|---|

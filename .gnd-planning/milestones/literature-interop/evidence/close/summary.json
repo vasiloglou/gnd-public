@@ -1,0 +1,147 @@
+{
+  "run_sha256": "ca46b395010fe0e8bc6ccc2897d2453a78c30a84dc5f5635426fd5fc8fe9e930",
+  "request_sha256": "c10aa5dc593c31bf5cbd444ebfc867e10e656dca783373df849b772b9875b650",
+  "source_commit": "14fdc81f484a52beb9630ff2cd5f4987af5aa3fd",
+  "successful_reviewer_ids": [
+    "claude",
+    "codex",
+    "qwen",
+    "gemini",
+    "kimi",
+    "glm"
+  ],
+  "reviewed_artifacts_unchanged": true,
+  "reviewers": [
+    {
+      "reviewer_id": "claude",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 4,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 4,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 4,
+        "total_concerns": 4,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "codex",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 0,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 0,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 0,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "approve"
+    },
+    {
+      "reviewer_id": "qwen",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 11,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 11,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 11,
+        "total_concerns": 11,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "gemini",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 4,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 4,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 4,
+        "unanchored_concern_ids": [
+          "unsupported-routes-missing",
+          "rebind-mismatch-controls-missing",
+          "substituted-flat-document-refusal-missing",
+          "lx1-anonymous-constraint-missing"
+        ]
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "kimi",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 0,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 0,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 0,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "approve"
+    },
+    {
+      "reviewer_id": "glm",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 0,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 0,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 0,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "approve"
+    }
+  ]
+}

@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "run_sha256": "ca46b395010fe0e8bc6ccc2897d2453a78c30a84dc5f5635426fd5fc8fe9e930",
+  "summary": "All six responses are valid and complete. Three approve and three request revisions. The revisions ask for traceable close evidence and stronger re-pinning controls.",
+  "agreed_concerns": [
+    {
+      "group_id": "rebind-chain",
+      "severity": "high",
+      "title": "Trace independently verified LX4 input bindings",
+      "summary": "Show which re-pinned fixture, rebind and composition substitutions fail before the downstream stages.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-mutations-stop-at-manifest-digest"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4a-rebind-mutation-sweep-not-recorded"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rebind-mismatch-controls-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "unsupported-combinations",
+      "severity": "high",
+      "title": "Map the unsupported combinations to executable controls",
+      "summary": "Expose the exact disposition of each \u00a77 route and the named refusal.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "s7-refusal-matrix-not-asserted"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unsupported-routes-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "legacy-and-flat-witness",
+      "severity": "medium",
+      "title": "Name the selected witness compatibility controls",
+      "summary": "Identify the reference-free composition proof, substituted flat input and legacy producer and replay results.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-legacy-and-flat-substitution-controls-unspecified"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "substituted-flat-document-refusal-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "phase-review-coverage",
+      "severity": "medium",
+      "title": "Identify the reviewed candidates and repaired files",
+      "summary": "List the original phase verdicts and scope and show the executable evidence for repairs.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "phase-review-verdicts-not-distinguished"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "review-ledger-updated-entries-vs-byte-exact-claim"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "shared-layout",
+      "severity": "medium",
+      "title": "Record the shared layout choice and per-route copy counts",
+      "summary": "Name the reader filenames, the accepted copying cost and the distinct rebound outputs.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-layout-disposition-lacks-owner"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-layout-disposition-not-stated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "lint-baseline-and-cadence-unevidenced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "advisory-report-mutation-and-denominator-unrecorded"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "refusal-precedence-two-defect-control-absent"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "runtime-results-bound-to-earlier-candidate"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-delta-unbound-and-uncited"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "plan-s11-absent-field-rule-not-in-s2"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "lx1c-row-names-no-artifacts-or-control"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "lx1-anonymous-constraint-missing"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "bind-chain",
+      "rank": 1,
+      "title": "Exercise independently re-pinned inputs",
+      "action": "Add coordinated re-pinning controls and map every link to the actual consumer and diagnostic.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-mutations-stop-at-manifest-digest"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4a-rebind-mutation-sweep-not-recorded"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rebind-mismatch-controls-missing"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lx4-mutations-stop-at-manifest-digest",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx4a-rebind-mutation-sweep-not-recorded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rebind-mismatch-controls-missing",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "refusals",
+      "rank": 2,
+      "title": "Record scope and precedence",
+      "action": "Map the unsupported combinations and two-defect inputs to observed exits and direct controls.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "s7-refusal-matrix-not-asserted"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unsupported-routes-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "refusal-precedence-two-defect-control-absent"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "s7-refusal-matrix-not-asserted",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unsupported-routes-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "refusal-precedence-two-defect-control-absent",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "legacy-and-origins",
+      "rank": 3,
+      "title": "Trace legacy and model-origin controls",
+      "action": "Name the original artifacts, pin the relevant checks and clarify the absent-field pointer.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-legacy-and-flat-substitution-controls-unspecified"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "substituted-flat-document-refusal-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-s11-absent-field-rule-not-in-s2"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx1c-row-names-no-artifacts-or-control"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "lx1-anonymous-constraint-missing"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx2-legacy-and-flat-substitution-controls-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "substituted-flat-document-refusal-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-s11-absent-field-rule-not-in-s2",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lx1c-row-names-no-artifacts-or-control",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "lx1-anonymous-constraint-missing",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "review-and-runtime",
+      "rank": 4,
+      "title": "Bind exact reviewed and executed bytes",
+      "action": "Record verdicts, updated files and executable evidence. Trace unchanged runtime paths and report lint and test cadence.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "phase-review-verdicts-not-distinguished"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "review-ledger-updated-entries-vs-byte-exact-claim"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lint-baseline-and-cadence-unevidenced"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "runtime-results-bound-to-earlier-candidate"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-delta-unbound-and-uncited"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "phase-review-verdicts-not-distinguished",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "review-ledger-updated-entries-vs-byte-exact-claim",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lint-baseline-and-cadence-unevidenced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "runtime-results-bound-to-earlier-candidate",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-delta-unbound-and-uncited",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "layout-and-dates",
+      "rank": 5,
+      "title": "Record observed layout and advisory results",
+      "action": "Show per-route copies, the complete proposed-edge census and the independent advice input and report mutations.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-layout-disposition-lacks-owner"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-layout-disposition-not-stated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "advisory-report-mutation-and-denominator-unrecorded"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-layout-disposition-lacks-owner",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-layout-disposition-not-stated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "advisory-report-mutation-and-denominator-unrecorded",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ]
+}

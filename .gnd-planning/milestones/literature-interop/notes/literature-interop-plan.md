@@ -60,6 +60,10 @@ Apply the [literature-identity plan §0](../../literature-identity/notes/literat
 
 ## 2. Contracts
 
+Readers accept the legacy artifact, record and certificate versions with
+their existing field sets. Flattening and catalog-composition fields are
+required where the version's contract calls for them.
+
 - **LX1.** Reuse the path-aware include resolver and its element origins. The
   proposed `gnd-flattening/1` record binds root bytes, include IDs and bytes, and
   the canonical projected model. Origin addresses cover imported elements,
@@ -254,3 +258,11 @@ root from composition through replay. Temporal extraction refusal is exercised
 at LX1 and again in the integrated fixture. The date report uses fixture-side
 work dates and runs separately from product checking. The [review record](../002-panel.md)
 records the remaining review boundaries and the convergence arithmetic.
+
+## 12. Close clarification
+
+The close review identified that §11's “absent-field compatibility rule
+recorded in §2” referred to the legacy field omissions alone. The added
+§2 text states the existing reader rule explicitly. The reviewed plan
+bytes remain at `14fdc81f`. The compatibility and re-pinning controls
+are indexed in the [close dispositions](../evidence/close/dispositions.md).

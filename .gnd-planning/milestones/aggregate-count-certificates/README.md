@@ -8,3 +8,7 @@ including empty membership for a named group.
 Six valid [panel responses](evidence/plan-r1/PANEL-REVIEW.md) informed the
 [delegated plan ruling](001-plan-gate.md). [AC1's corpus gate](002-phase-AC1-spec-gate.md)
 records the red baseline.
+
+[AC1](003-phase-AC1.md) records the independent review, the YAML depth
+repair and verification over the repaired candidate. The
+[close packet](004-close-candidate.md) is ready for the milestone panel.

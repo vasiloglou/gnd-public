@@ -1,0 +1,27 @@
+{
+  "delta": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/aggregate-count-certificates/notes/close-delta.md",
+    "sha256": "becf6cf270e101bb9d05beeca4f4d3fb475136d787776f2702e3804a8119fb36"
+  },
+  "kind": "spec-results-delta",
+  "results": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/aggregate-count-certificates/004-close-candidate.md",
+    "sha256": "3901be9ba36b68204c45b6da6ad0314dc6830c00b5f33adfae594692f9cd7afe"
+  },
+  "rubric": {
+    "criteria": [
+      "Check the five Part 10 acceptance criteria, the exact independent phase review scope and any repairs against the pinned focused and installed results.",
+      "Try to refute membership completeness, representative occurrence positions, the replay trust boundary, and work/refusal ordering.",
+      "Check that the empty-group proof is consistent with existing checker row semantics. Evaluate the question sweep and the boundary of the requested close ruling."
+    ],
+    "name": "aggregate-count-certificates standard close review"
+  },
+  "schema_version": 1,
+  "spec": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/aggregate-count-certificates/notes/aggregate-count-certificates-plan.md",
+    "sha256": "cd4f3b24b3c1427ce4b214fee08b81111bc832da0ca51f9c94189c905cd74a0c"
+  }
+}

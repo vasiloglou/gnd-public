@@ -1,0 +1,90 @@
+{
+  "origins": [
+    [
+      "includes[components]",
+      "$.object_types[0]",
+      "$.object_types[0]",
+      "component"
+    ],
+    [
+      "includes[components]",
+      "$.object_types[1]",
+      "$.object_types[1]",
+      "component_name"
+    ],
+    [
+      "includes[components]",
+      "$.object_types[2]",
+      "$.object_types[2]",
+      "owner"
+    ],
+    [
+      "includes[components]",
+      "$.fact_types[0]",
+      "$.fact_types[0]",
+      "component_uses_component"
+    ],
+    [
+      "includes[components]",
+      "$.fact_types[0].constraints[0]",
+      "$.fact_types[0].constraints[0]",
+      null
+    ],
+    [
+      "includes[components]",
+      "$.fact_types[1]",
+      "$.fact_types[1]",
+      "component_has_owner"
+    ],
+    [
+      "includes[topics]",
+      "$.object_types[0]",
+      "$.object_types[3]",
+      "topic"
+    ],
+    [
+      "model",
+      "$.fact_type_constraints[0].constraints[0]",
+      "$.fact_types[0].constraints[1]",
+      "project_no_loops"
+    ],
+    [
+      "model",
+      "$.fact_type_constraints[1].constraints[0]",
+      "$.fact_types[1].constraints[0]",
+      "project_owner_required"
+    ]
+  ],
+  "stale": {
+    "root": "root model",
+    "include": "include:hash-mismatch",
+    "flat": "flat model",
+    "record": "flattening record"
+  },
+  "include_refusals": {
+    "path": [
+      "include:path"
+    ],
+    "standalone": [
+      "include:invalid-included-model"
+    ],
+    "nested": [
+      "include:forbidden-section",
+      "includes"
+    ],
+    "references": [
+      "include:forbidden-section",
+      "reference_populations"
+    ],
+    "unattended": [
+      "include:forbidden-section",
+      "unattended"
+    ]
+  },
+  "legacy_bundle": {
+    "model.applicable.json": "64b97756a49a4647664e314fdddad70647f89051af93391da1a035507deb6626",
+    "model.artifacts.json": "b1ebd437486b32d0ad582f79e162f1827c766f8c906d7ba8d4aac1630a416ab2",
+    "model.projection.schema.json": "10b7e9710931fec4e1eabfbf8d7235b18659ceafb9743df3d140caff37232223",
+    "model.verbalization.txt": "28bc51751efb62cea4595da6d103cd67a8cd6478a8db9bc079653fc1a215a855"
+  }
+}

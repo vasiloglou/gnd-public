@@ -11,5 +11,5 @@ prerequisite identity and interoperability phases are merged. The
 | [LD1](004-phase-LD1.md) | Physics and algorithm examples driven by competency questions |
 | [LD2](006-phase-LD2.md) | Time anchors and exact fixed-scale witness |
 | [LD3](009-phase-LD3.md) | Multipass reading with explicit coverage |
-| LD4 | Semantic revision dependency manifest and migration recipe |
+| [LD4](011-phase-LD4.md) | Semantic revision dependency manifest and migration recipe |
 | LD5 | Verdicts on derived claims |

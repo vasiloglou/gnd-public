@@ -1,0 +1,28 @@
+{
+  "delta": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-interop/notes/close-delta.md",
+    "sha256": "cc5de49c174eda35d70f0b74a8a63c3ec8761ce7d52fba995e8d67bef38cfc71"
+  },
+  "kind": "spec-results-delta",
+  "results": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-interop/012-close-candidate.md",
+    "sha256": "93af88731d3a97184f3d6470600b04044a4161334b804c75f07dbdaedb92484b"
+  },
+  "rubric": {
+    "criteria": [
+      "Evaluate each plan acceptance predicate against its specific phase evidence. Prioritize reproducible failures and state their consequence.",
+      "Check that the source rebind, fixed catalog, composition, check, replay and advisory claims identify independent verification rather than matching two supplied digests. Check the temporal control and the shared evidence layout measurement.",
+      "Compare the fixture and wire claims to the plan. Check unsupported routes, selected legacy compatibility, independent model and fact origin controls, and the optional date report's product-stage byte comparison.",
+      "Distinguish the original phase review scopes and repaired verification bytes. Assess the question sweep, known lint baseline, cadence and close boundary. Cite named artifacts and directly relevant committed evidence."
+    ],
+    "name": "literature-interop standard close review"
+  },
+  "schema_version": 1,
+  "spec": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-interop/notes/literature-interop-plan.md",
+    "sha256": "0b0b8be165233078e7048948eef45266f007165df557fbdd3c629cd106ae5454"
+  }
+}

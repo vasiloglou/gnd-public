@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "fact_type": "reported_decimal",
+      "tuple": [
+        {
+          "primitive": "Float",
+          "value": 0.002
+        }
+      ]
+    }
+  ]
+}

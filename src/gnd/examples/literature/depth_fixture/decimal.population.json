@@ -1,0 +1,13 @@
+{
+  "population": {
+    "source": "fixture",
+    "model": "decimal.orm.json"
+  },
+  "facts": {
+    "reported_decimal": [
+      {
+        "value": 0.002
+      }
+    ]
+  }
+}

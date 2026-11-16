@@ -335,3 +335,10 @@ come from the two publications. The 2026 and equal-year edges are synthetic
 comparison controls. [Issue #193](https://github.com/vasiloglou/gnd-public/issues/193),
 [PINNs](https://doi.org/10.1016/j.jcp.2018.10.045),
 [Bayesian PINNs](https://doi.org/10.1016/j.jcp.2020.109913)
+
+## Scientific competency examples
+
+Run three checked models covering physical dynamics, molecular sampling
+and randomized matrix decomposition. The report shows source evidence
+and gaps, as well as synthetic experiment comparisons and quantity
+probes. [Run the examples](depth_fixture/README.md).

@@ -1,0 +1,86 @@
+{
+  "version": 5,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [],
+  "fact_types": [
+    {
+      "id": "equation",
+      "reading": "{Subject} has equation {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "regime",
+      "reading": "{Subject} has regime {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "boundaries",
+      "reading": "{Subject} has boundaries {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "discretization",
+      "reading": "{Subject} has discretization {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "conservation",
+      "reading": "{Subject} has conservation {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    }
+  ],
+  "includes": [
+    {
+      "id": "scientific-vocabulary",
+      "path": "vocabulary.orm.json",
+      "sha256": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "dynamics": {
+    "subject": "dam-break",
+    "questions": [
+      {
+        "id": "equation-and-regime",
+        "requires": [
+          "equation",
+          "regime"
+        ],
+        "claim_kind": "reported-equation"
+      },
+      {
+        "id": "boundaries",
+        "requires": [
+          "boundaries"
+        ],
+        "claim_kind": "reported-configuration"
+      },
+      {
+        "id": "discretization",
+        "requires": [
+          "discretization"
+        ],
+        "claim_kind": "reported-configuration"
+      },
+      {
+        "id": "conservation-residual",
+        "requires": [
+          "conservation"
+        ],
+        "claim_kind": "reported-result"
+      }
+    ]
+  },
+  "molecular": {
+    "subject": "alanine-in-vacuum",
+    "questions": [
+      {
+        "id": "system-and-energy",
+        "requires": [
+          "system",
+          "energy_model"
+        ],
+        "claim_kind": "reported-configuration"
+      },
+      {
+        "id": "sampling",
+        "requires": [
+          "objective"
+        ],
+        "claim_kind": "reported-objective"
+      },
+      {
+        "id": "approximation",
+        "requires": [
+          "approximation"
+        ],
+        "claim_kind": "reported-configuration"
+      },
+      {
+        "id": "transfer-validity",
+        "requires": [
+          "validity"
+        ],
+        "claim_kind": "reported-result"
+      }
+    ]
+  },
+  "algorithms": {
+    "subject": "randomized-svd",
+    "questions": [
+      {
+        "id": "operator-and-objective",
+        "requires": [
+          "operator",
+          "objective"
+        ],
+        "claim_kind": "reported-objective"
+      },
+      {
+        "id": "components",
+        "requires": [
+          "subject_has_component"
+        ],
+        "claim_kind": "reported-method"
+      },
+      {
+        "id": "qualified-complexity",
+        "requires": [
+          "result",
+          "assumptions",
+          "cost_model"
+        ],
+        "claim_kind": "reported-bound"
+      },
+      {
+        "id": "device-runtime",
+        "requires": [
+          "runtime"
+        ],
+        "claim_kind": "reported-result"
+      }
+    ]
+  }
+}

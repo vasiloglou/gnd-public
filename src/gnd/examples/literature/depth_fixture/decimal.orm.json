@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [
+    {
+      "id": "decimal_value",
+      "name": "DecimalValue",
+      "kind": "value",
+      "primitive": "Float"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "reported_decimal",
+      "reading": "The reported decimal is {DecimalValue}",
+      "roles": [
+        {
+          "role_name": "value",
+          "object_type": "decimal_value"
+        }
+      ]
+    }
+  ]
+}

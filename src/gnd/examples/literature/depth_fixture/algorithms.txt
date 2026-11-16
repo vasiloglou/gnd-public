@@ -1,0 +1,7 @@
+The example starts from an m by n matrix and seeks a low-rank approximation to its dominant singular structure.
+
+A randomized range finder locates a low-dimensional subspace before deterministic factorization of the reduced matrix.
+
+For the dense-input model problem, the authors report O(mn log(k)) floating-point operations for the described randomized approach. The bound is expressed in arithmetic operations, rather than seconds or data passes.
+
+The selected evidence does not provide a run time for an NVIDIA H100 accelerator under a specified benchmark protocol.

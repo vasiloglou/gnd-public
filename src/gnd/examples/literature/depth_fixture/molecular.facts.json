@@ -1,0 +1,32 @@
+{
+  "subject_label": [
+    {
+      "subject": "alanine-in-vacuum",
+      "label": "OPES-eABF alanine example"
+    }
+  ],
+  "system": [
+    {
+      "subject": "alanine-in-vacuum",
+      "value": "alanine dipeptide in vacuum"
+    }
+  ],
+  "energy_model": [
+    {
+      "subject": "alanine-in-vacuum",
+      "value": "AMBER ff14SB"
+    }
+  ],
+  "objective": [
+    {
+      "subject": "alanine-in-vacuum",
+      "value": "free-energy estimation using backbone dihedral collective variables"
+    }
+  ],
+  "approximation": [
+    {
+      "subject": "alanine-in-vacuum",
+      "value": "Langevin at 300 K with 2 fs steps and hydrogen bond-distance constraints"
+    }
+  ]
+}

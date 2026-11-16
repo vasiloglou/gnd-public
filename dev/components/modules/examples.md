@@ -215,6 +215,17 @@ The staged assurance report over the literature corpus (phase LI1).
 | `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 810 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
 | `main(argv) -> int` | function | 863 | (no docstring) |
 
+## gnd.examples.literature.depth — `src/gnd/examples/literature/depth.py`
+Components: examples.literature_depth
+Run the three source-scoped literature competency examples offline.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `ExampleError` | class(ValueError) | 50 | The worked example cannot establish the requested output. |
+| `compare_scores(left, right) -> tuple[str, list[str]]` | function | 183 | Compare scores by the declared evidence context. |
+| `build(out, *, fixture) -> dict` | function | 264 | Materialize a fresh packaged run and return its competency report. |
+| `main(argv) -> int` | function | 310 | (no docstring) |
+
 ## gnd.examples.literature.diagnostic_measurement — `src/gnd/examples/literature/diagnostic_measurement.py`
 Components: examples.literature_name_diagnostics
 Score the frozen synthetic diagnostic corpus using its predeclared sample.

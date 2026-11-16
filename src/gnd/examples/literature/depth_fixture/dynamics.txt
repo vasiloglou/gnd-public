@@ -1,0 +1,7 @@
+The reported one-dimensional model evolves depth h and momentum hu. The equations are h_t + (hu)_x = 0 and (hu)_t + (hu^2 + g h^2/2)_x = 0. The gallery applies the model to a dam-break Riemann problem.
+
+The setup uses extrapolation at the lower and upper endpoints.
+
+The classic branch uses the van Leer limiter on a 500-cell one-dimensional grid.
+
+The selected setup and plots give no measured conservation residual for that run.

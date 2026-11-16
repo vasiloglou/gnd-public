@@ -177,3 +177,26 @@ Corpus-first using `tests/fixtures/ld1-competency/` with its own entry
 README and separate expected file. Commit the expected acceptance corpus
 red before product implementation. The phase ruling is delegated under the
 owner's named milestone invocation and applies to this spec.
+
+## Implementation findings
+
+- The synthetic comparison initially produced a vacuous one-label
+  constraint because its population had score facts and zero labels.
+  The synthetic control now includes one labeled subject and the documented
+  influence relation. The check then exited 0.
+- GND's canonical JSON orders keys lexically. The frozen question key
+  retains predicate membership and the test compares those members as a set.
+- The existing integer anchor recognizer returns both the time and energy
+  spans with magnitude 2. The percent recognizer returns 40 and 45 and
+  excludes the percentage-point phrase. The example expresses score units
+  and percentage-point uncertainty as distinct fields.
+- The decimal Float population passes the checker. With the versioned
+  target document and model-bound population, witness exits 2 and reports
+  `fragment-unsupported`. A producer refusal with a malformed target or
+  missing population binding would have measured input plumbing instead.
+  These observations support opening dimension-aware anchors and exact
+  decimal witness probes in LD2 after the LD1 review. They do not require a
+  new percent recognizer for the present example.
+- The output runner uses the existing capped process runner and shared JSON
+  parser. The malformed comparison case exercises admission before the
+  product invocations.

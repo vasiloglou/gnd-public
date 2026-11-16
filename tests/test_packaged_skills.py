@@ -91,6 +91,12 @@ def test_the_packaged_tree_holds_exactly_the_named_skills() -> None:
     assert names == EXPECTED_SKILL_NAMES, f'packaged skills are {sorted(names)}, expected {sorted(EXPECTED_SKILL_NAMES)}.\n  missing: {sorted(EXPECTED_SKILL_NAMES - names)}\n  extra:   {sorted(names - EXPECTED_SKILL_NAMES)}'
     assert len(EXPECTED_SKILL_NAMES) == 18, 'the packaged surface is exactly the named skills; another is a decision with a plan behind it, not an edit to this literal (the latest: gnd-model-multivalued, type-induction-skills TS4)'
 
+LX2_FLATTENING_EDGE = (
+    'gnd-export/references/witness-contract.md',
+    '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record',
+)
+
+
 def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
     root = _skills_root()
     assert root.is_dir(), 'gnd/skills resource directory is absent (see the sibling test)'
@@ -116,10 +122,12 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
             if resolved not in entries and resolved not in directories:
                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
-    missing = sorted(GC4_RELATIVE_LINKS - edges)
-    extra = sorted(edges - GC4_RELATIVE_LINKS)
+    expected = GC4_RELATIVE_LINKS | {LX2_FLATTENING_EDGE}
+    missing = sorted(expected - edges)
+    extra = sorted(edges - expected)
     assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
-    assert checked == GC4_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {GC4_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+    expected_count = GC4_RELATIVE_LINK_COUNT + 1
+    assert checked == expected_count, f'checked {checked} relative links, expected {expected_count}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
 
 def test_pep723_validator_sibling_schema_ships() -> None:
     root = _skills_root()

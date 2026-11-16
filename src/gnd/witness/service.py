@@ -7,6 +7,12 @@ from gnd import input_policy as _rf7_input
 from gnd import model as model_module
 from gnd.disclosure import resolve
 from gnd.errors import ModelValidationError, PopulationLoadError
+from gnd.witness.flattening import (
+    StaleWitnessBinding,
+    load_flat_model,
+    resolved_projection,
+    stamp_projection,
+)
 from gnd.witness.view import result_view, why_not_view
 
 
@@ -41,7 +47,7 @@ def _witness_inputs(model_path, population_path, reference_root):
     return model, candidate, context, md, pd
 
 
-def _composition_lineage(composition, model_path, population_path):
+def _composition_lineage(composition, model_path, population_path, *, digests=None):
     """Read a composition record bound to these model and population bytes (CT3)."""
     import hashlib
 
@@ -49,13 +55,18 @@ def _composition_lineage(composition, model_path, population_path):
     from gnd.composition import MAX_RECORD_BYTES, lineage_index, parse_record
     from gnd.model._includes import guard_path
     from gnd.witness.types import WitnessInputError
-    guard_path(model_path, "witness.composition")
+    if digests is None:
+        guard_path(model_path, "witness.composition")
     raw = read_regular_path(composition, label="composition record", max_bytes=MAX_RECORD_BYTES)
     record = parse_record(raw)
-    for path, key in ((model_path, "model_sha256"), (population_path, "population_sha256")):
-        digest = hashlib.sha256(read_regular_path(path, label="witness input", max_bytes=MAX_DOCUMENT_BYTES)).hexdigest()
-        if digest != record[key]:
-            raise WitnessInputError("composition record does not bind these inputs")
+    fields = ("model_sha256", "population_sha256")
+    if digests is None:
+        for path, key in zip((model_path, population_path), fields, strict=True):
+            digest = hashlib.sha256(read_regular_path(path, label="witness input", max_bytes=MAX_DOCUMENT_BYTES)).hexdigest()
+            if digest != record[key]:
+                raise WitnessInputError("composition record does not bind these inputs")
+    elif digests != (record["model_sha256"], record["population_sha256"]):
+        raise StaleWitnessBinding("composition record does not bind the projected inputs")
     return hashlib.sha256(raw).hexdigest(), lineage_index(record)
 
 
@@ -81,6 +92,82 @@ def _stamp_composition(result, composition):
         targets = tuple(r["target"] for r in certificate["results"])
         return WitnessResult(4, result_rows(targets, "resource-refused"), reason="work-limit").model_dump(mode="json")
     return result
+
+
+def _projected_inputs(projection, model_path, population_path, *, reference_root=None, composition=None):
+    from pathlib import Path
+
+    from gnd.anchors import read_regular_path
+    from gnd.artifacts import sha256_hex
+    from gnd.model import bind_declared_references
+    from gnd.population import _parse_document_bytes, load_population_bytes
+    from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError
+
+    model = load_flat_model(projection)
+    raw = read_regular_path(population_path, label="candidate population", max_bytes=DEFAULT_LIMITS.bytes)
+    lineage = None
+    if composition is not None:
+        if model.reference_populations:
+            raise WitnessInputError("composition with reference populations is unsupported")
+        lineage = _composition_lineage(
+            composition, model_path, population_path, digests=(projection.root_sha256, sha256_hex(raw))
+        )
+    candidate = load_population_bytes(raw, source=population_path, model=model)
+    context = bind_declared_references(
+        model, root=reference_root if reference_root is not None else Path(model_path).parent
+    )
+    document = _parse_document_bytes(raw, suffix=Path(population_path).suffix, source=str(population_path))
+    return model, candidate, context, document, lineage
+
+
+def _produce_projected(projection, model_path, population_path, targets_path, **options):
+    from gnd.witness.io import load_targets
+    from gnd.witness.producer import produce_witness
+
+    targets = load_targets(targets_path)
+    model, candidate, references, _, lineage = _projected_inputs(
+        projection, model_path, population_path, **options
+    )
+    result = produce_witness(model, candidate, targets, references=references).model_dump(mode="json")
+    if lineage is not None:
+        result = _stamp_composition(result, lineage)
+    return stamp_projection(result, projection)
+
+
+def _replay_projected(projection, model_path, population_path, certificate, **options):
+    from gnd.witness.kernel import replay_witness
+
+    _, _, references, document, lineage = _projected_inputs(
+        projection, model_path, population_path, **options
+    )
+    refs = tuple((origin.id, raw) for origin, _, raw in references._snapshots) if references else ()
+    return replay_witness(
+        _rf7_input.loads(projection.flat.model_bytes), document, certificate,
+        reference_inputs=refs, composition=lineage, flattening=projection.binding,
+    ).model_dump(mode="json")
+
+
+def rooted_witness_result(model_path, population_path, targets_path, *, reference_root=None,
+                          flat_model=None, flattening_record=None):
+    """Produce finite witnesses, authenticating model origins for a rooted include model."""
+    from ruamel.yaml.error import YAMLError
+
+    from gnd.witness.types import WitnessResult
+
+    try:
+        projection = resolved_projection(model_path, flat_model, flattening_record)
+        if projection is not None:
+            return _produce_projected(
+                projection, model_path, population_path, targets_path, reference_root=reference_root
+            )
+        return witness_result(
+            model_path, population_path, targets_path, reference_root=reference_root
+        )
+    except ModelValidationError as error:
+        reason = next((issue.rule_id for issue in error.issues if issue.rule_id.startswith("include:")), "input-invalid")
+        return WitnessResult(3, reason=reason).model_dump(mode="json")
+    except (*_input_errors(), RuntimeError, YAMLError):
+        return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
 def witness_result(model_path, population_path, targets_path, *, reference_root=None):
@@ -142,6 +229,33 @@ def replay_result(model_path, population_path, certificate_path, *, reference_ro
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
+def rooted_replay_result(model_path, population_path, certificate_path, *, reference_root=None,
+                         flat_model=None, flattening_record=None):
+    """Replay a finite proof with an independent local inference kernel."""
+    from ruamel.yaml.error import YAMLError
+
+    from gnd.witness.io import load_certificate
+    from gnd.witness.types import WitnessResult
+
+    try:
+        certificate = load_certificate(certificate_path)
+        projection = resolved_projection(model_path, flat_model, flattening_record)
+        if projection is not None:
+            return _replay_projected(
+                projection, model_path, population_path, certificate, reference_root=reference_root
+            )
+        return replay_result(
+            model_path, population_path, certificate_path, reference_root=reference_root
+        )
+    except StaleWitnessBinding:
+        return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
+    except ModelValidationError as error:
+        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+        return WitnessResult(3, reason=reason).model_dump(mode="json")
+    except (*_input_errors(), RuntimeError, YAMLError):
+        return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
+
+
 def _input_errors():
     from gnd.artifacts import ArtifactError
 
@@ -150,11 +264,19 @@ def _input_errors():
             model_module.ModelLoadError, PopulationLoadError, ArtifactError)
 
 
-def composed_witness_result(model_path, population_path, targets_path, *, composition):
-    """A version-2 witness over a composed population: each base node names its source facts (CT3)."""
+def composed_witness_result(model_path, population_path, targets_path, *, composition,
+                            flat_model=None, flattening_record=None):
+    """Produce a composed witness whose base nodes name their source facts."""
+    from ruamel.yaml.error import YAMLError
+
     from gnd.witness.types import WitnessResult
 
     try:
+        projection = resolved_projection(model_path, flat_model, flattening_record)
+        if projection is not None:
+            return _produce_projected(
+                projection, model_path, population_path, targets_path, composition=composition
+            )
         lineage = _composition_lineage(composition, model_path, population_path)
         if model_module.load_model(model_path).reference_populations:
             raise ValueError("a composed population has no reference populations")
@@ -163,12 +285,13 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
         from gnd.witness.types import WitnessResult
         reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
         return WitnessResult(3, reason=reason).model_dump(mode="json")
-    except _input_errors():
+    except (*_input_errors(), RuntimeError, YAMLError):
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
-def composed_replay_result(model_path, population_path, certificate_path, *, composition):
-    """Replay a version-2 witness against the composition record it binds (CT3)."""
+def composed_replay_result(model_path, population_path, certificate_path, *, composition,
+                           flat_model=None, flattening_record=None):
+    """Replay a witness against the composition record it binds."""
     from ruamel.yaml.error import YAMLError
 
     from gnd.witness.io import load_certificate
@@ -177,14 +300,21 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
 
     try:
         certificate = load_certificate(certificate_path)
+        projection = resolved_projection(model_path, flat_model, flattening_record)
+        if projection is not None:
+            return _replay_projected(
+                projection, model_path, population_path, certificate, composition=composition
+            )
         lineage = _composition_lineage(composition, model_path, population_path)
         _, _, _, md, pd = _witness_inputs(model_path, population_path, None)
         return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
+    except StaleWitnessBinding:
+        return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult
         reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
         return WitnessResult(3, reason=reason).model_dump(mode="json")
-    except (*_input_errors(), YAMLError):
+    except (*_input_errors(), RuntimeError, YAMLError):
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
@@ -287,7 +417,7 @@ def witness(model_path, population_path, targets_path, *, reference_root=None, c
     if composition is not None and reference_root is not None:
         raise ValueError("composition cannot be combined with reference_root")
     result = (
-        witness_result(model_path, population_path, targets_path, reference_root=reference_root)
+        rooted_witness_result(model_path, population_path, targets_path, reference_root=reference_root)
         if composition is None
         else composed_witness_result(model_path, population_path, targets_path, composition=composition)
     )
@@ -301,7 +431,7 @@ def replay(model_path, population_path, certificate_path, *, reference_root=None
     if composition is not None and reference_root is not None:
         raise ValueError("composition cannot be combined with reference_root")
     result = (
-        replay_result(model_path, population_path, certificate_path, reference_root=reference_root)
+        rooted_replay_result(model_path, population_path, certificate_path, reference_root=reference_root)
         if composition is None
         else composed_replay_result(model_path, population_path, certificate_path, composition=composition)
     )

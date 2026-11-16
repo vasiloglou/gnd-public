@@ -83,7 +83,10 @@ def replay(paths, capsys, *options):
     code = main(["replay", str(model), str(population), str(certificate),
                  "--raw", *map(str, options)])
     result = json.loads(capsys.readouterr().out)
-    return [code, result["reason"]]
+    reason = result["reason"]
+    if reason is None and code:
+        reason = result["results"][0]["reason"]
+    return [code, reason]
 
 
 def test_public_extract_witness_and_replay(tmp_path, capsys):
@@ -101,7 +104,7 @@ def test_public_extract_witness_and_replay(tmp_path, capsys):
         jsonschema.validate(cert, json.loads((ROOT / name).read_bytes()))
 
 
-@pytest.mark.parametrize("axis", ["model", "fact", "binding", "schema"])
+@pytest.mark.parametrize("axis", ["model", "fact", "owner", "binding", "schema"])
 def test_each_origin_axis(tmp_path, capsys, axis):
     paths = dirs(tmp_path, derived=True)
     assert witness(paths) == 0
@@ -113,6 +116,8 @@ def test_each_origin_axis(tmp_path, capsys, axis):
         node["model_origin"]["origin"] = "model"
     elif axis == "fact":
         node["origin"]["fact_index"] += 1
+    elif axis == "owner":
+        node["fact_type"] = "absent_fact_type"
     elif axis == "binding":
         cert["binding"]["flattening_sha256"] = "0" * 64
     else:
@@ -120,7 +125,7 @@ def test_each_origin_axis(tmp_path, capsys, axis):
         with pytest.raises(ValueError):
             certificate_shape(cert)
     write(paths[3], cert)
-    name = {"model": "forged", "fact": "forged", "binding": "stale", "schema": "invalid"}[axis]
+    name = {"model": "forged", "fact": "forged", "owner": "forged", "binding": "stale", "schema": "invalid"}[axis]
     assert replay(paths, capsys) == EXPECTED[name]
 
 
@@ -183,6 +188,10 @@ def test_reference_free_composition_proof(tmp_path, capsys):
     base["sources"][0]["fact_index"] = 1
     write(certificate, cert)
     assert replay(paths, capsys, "--composition", record) == EXPECTED["forged"]
+    stale = json.loads(record.read_bytes())
+    stale["model_sha256"] = "0" * 64
+    write(record, stale)
+    assert replay(paths, capsys, "--composition", record) == EXPECTED["stale"]
 
 
 def test_unpaired_paths_refuse_at_cli(tmp_path, capsys):
@@ -207,3 +216,91 @@ def test_flat_inputs_are_bounded(tmp_path, capsys):
     with record.open("wb") as stream:
         stream.truncate(10 * 1024 * 1024 + 1)
     assert replay(paths, capsys, "--flat-model", flat, "--flattening-record", record) == EXPECTED["invalid"]
+
+
+def test_comparison_origin_uses_its_rule_fact_type(tmp_path, capsys):
+    paths = dirs(tmp_path, derived=True)
+    root = json.loads(paths[0].read_bytes())
+    root["fact_types"][0]["derivation_rule"]["where"] = [
+        {"left": "$a", "operator": "!=", "right": "$b"},
+    ]
+    write(paths[0], root)
+    assert witness(paths) == 0
+    cert = json.loads(paths[3].read_bytes())
+    comparisons = [node for node in cert["nodes"] if node["kind"] == "comparison"]
+    assert len(comparisons) == 1
+    assert comparisons[0]["model_origin"]["origin"] == "model"
+    assert comparisons[0]["model_origin"]["element_id"] == "root_uses_component"
+    assert replay(paths, capsys) == [0, None]
+
+
+def test_projected_certificate_stamping_respects_wire_limit(tmp_path, capsys, monkeypatch):
+    from dataclasses import replace
+
+    from gnd.witness import flattening
+
+    paths = dirs(tmp_path)
+    flat, _ = make_artifacts(paths[0], tmp_path, capsys)
+    result = api.witness(flat, paths[1], paths[2])
+    projection = flattening.resolved_projection(paths[0])
+    cap = len(canonical_json_bytes(result["certificate"])) + 1
+    monkeypatch.setattr(flattening, "DEFAULT_LIMITS", replace(flattening.DEFAULT_LIMITS, bytes=cap))
+    refused = flattening.stamp_projection(result, projection)
+    assert (refused["exit_code"], refused["reason"], refused["certificate"]) == (4, "work-limit", None)
+
+
+def test_projected_certificate_stamping_is_time_bounded(tmp_path, capsys):
+    import subprocess
+    import sys
+
+    paths = dirs(tmp_path)
+    flat, _ = make_artifacts(paths[0], tmp_path, capsys)
+    source = tmp_path.resolve() / "legacy-result.json"
+    write(source, api.witness(flat, paths[1], paths[2]))
+    program = """
+import json
+import sys
+from copy import deepcopy
+from pathlib import Path
+from gnd.witness.flattening import resolved_projection, stamp_projection
+
+projection = resolved_projection(sys.argv[1])
+result = json.loads(Path(sys.argv[2]).read_bytes())
+certificate = result["certificate"]
+first = certificate["nodes"][0]
+nodes = []
+for index in range(1000):
+    node = deepcopy(first)
+    node["id"] = index
+    nodes.append(node)
+certificate["nodes"] = nodes
+certificate["results"][0]["root"] = 999
+output = stamp_projection(result, projection)["certificate"]
+assert len(output["nodes"]) == 1000
+assert all(node["model_origin"]["element_id"] == "component_uses_component"
+           for node in output["nodes"])
+"""
+    result = subprocess.run(
+        [sys.executable, "-c", program, str(paths[0]), str(source)],
+        capture_output=True, text=True, check=False, timeout=5,
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_malformed_certificate_precedes_a_stale_include(tmp_path, capsys):
+    paths = dirs(tmp_path)
+    assert witness(paths) == 0
+    include = paths[0].parent / "components.orm.json"
+    include.write_bytes(include.read_bytes() + b" ")
+    paths[3].write_bytes(b"[" * 1024)
+    assert replay(paths, capsys) == EXPECTED["invalid"]
+
+
+def test_projected_certificate_raw_view(tmp_path, capsys):
+    paths = dirs(tmp_path)
+    assert witness(paths) == 0
+    capsys.readouterr()
+    assert main(["witness-view", str(paths[3]), "--raw"]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["replayable"] is True
+    assert result["certificate"] == json.loads(paths[3].read_bytes())

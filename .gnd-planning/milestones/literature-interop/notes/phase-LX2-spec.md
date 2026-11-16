@@ -162,3 +162,46 @@ Corpus-first. Planned entry point `tests/fixtures/lx2-witness-flattening/README.
 with expected outputs in a separate answer file. Commit the named red tests
 and corpus before runtime changes. Independent phase-diff review is a
 separate gate.
+
+## Implementation findings
+
+- The rooted API and CLI routes produce v3 without changing the public Python
+  signatures. The raw standalone helpers retain their exact RF4/MC1 bodies.
+  The LI0 Why-not refusal and direct witness byte guard are still tested.
+- RF1 observes the literal parser change through a successor reconstructed
+  from the frozen parser. It adds only the paired flags and their composition
+  help descriptions. The packaged cross-reference gains one exact inventory
+  edge. The RF6 scan accounts for seven additional witness dictionary or type
+  subscriptions without changing the model-query budget.
+- A structurally valid node claiming an unknown fact type first returned
+  input-invalid. The extra regression proved the wrong exit before the fix;
+  the current kernel reports proof-invalid. A separately valid stale
+  composition record now wins over a forged fact provenance coordinate on the
+  rooted route, with binding-stale. Legacy composition refusals retain their
+  old contract.
+- The unchanged v2 producer reproduced the captured digest and replayed
+  before and after LX2. The v1 fixture goldens, model identities, raw-view
+  checks and byte-identical schema-copy check run with the candidate.
+- The full Ruff diagnostics equal the untouched predecessor's 188 findings.
+  The changed-file lint passes. The phase carries forward LX1's exact
+  known-red comparison rule for whole-tree lint under delegated approval.
+  The strict component check passes. Its witness command, replay and
+  subsystem flow descriptions remain accurate alongside the changed
+  service and wire entries.
+
+### Candidate verification
+
+The focused stage in the locked GND 0.3.1 environment exited 0. Alongside the
+spec list it ran the witness disclosure and envelope consumers, the MC2
+composed refusal control and the MC1 raw-body mutation guard. Existing
+replay-admission tests used process inspection as their harness requires.
+
+    285 passed in 50.06s
+
+The structural guard command exited 0 under the default lane filter:
+
+    679 passed, 2 deselected in 112.95s (0:01:52)
+
+Changed-file Ruff and the strict component check exit 0. Whole-tree Ruff
+returns the same 188 diagnostics bound to the LX1 predecessor. The
+independent LX2 review and phase completion record are pending.

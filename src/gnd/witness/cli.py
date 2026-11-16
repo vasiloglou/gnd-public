@@ -18,13 +18,17 @@ def add_parsers(subparsers):
     p.add_argument("--reference-root")
     p.add_argument("--raw", action="store_true", help="explicitly expose replayable raw values")
     p.add_argument("--out", help="create a new raw certificate; requires --raw")
-    p.add_argument("--composition", help="composition record of a composed population: writes a version-2 witness")
+    p.add_argument("--composition", help="composition record for a composed population")
+    p.add_argument("--flat-model", help="bound flat model from an include-root extraction")
+    p.add_argument("--flattening-record", help="origin record paired with --flat-model")
     p = subparsers.add_parser("replay", help="independently replay a finite derivation witness")
     p.add_argument("model")
     p.add_argument("population")
     p.add_argument("certificate")
     p.add_argument("--reference-root")
-    p.add_argument("--composition", help="composition record a version-2 witness binds")
+    p.add_argument("--composition", help="composition record bound by the witness")
+    p.add_argument("--flat-model", help="bound flat model from an include-root extraction")
+    p.add_argument("--flattening-record", help="origin record paired with --flat-model")
     p.add_argument("--json", action="store_true")
     p.add_argument("--raw", action="store_true", help="explicitly expose target values")
     p = subparsers.add_parser("witness-view", help="view a witness with default value redaction")
@@ -58,15 +62,22 @@ def run(args):
             }
             print(json.dumps(view, ensure_ascii=False, sort_keys=True))
             return result["exit_code"]
+        projected_paths = {}
+        if args.command in {"witness", "replay"}:
+            if (args.flat_model is None) != (args.flattening_record is None):
+                print("gnd: error: --flat-model requires --flattening-record and vice versa", file=sys.stderr)
+                return 64
+            if args.flat_model is not None:
+                projected_paths = {"flat_model": args.flat_model, "flattening_record": args.flattening_record}
         if args.command in {"witness", "replay"} and args.composition is not None and args.reference_root is not None:
             print("gnd: error: --composition cannot be combined with --reference-root", file=sys.stderr)
             return 64
         if args.command == "replay":
             result = (
-                api.replay_result(args.model, args.population, args.certificate, reference_root=args.reference_root)
+                api.rooted_replay_result(args.model, args.population, args.certificate, reference_root=args.reference_root, **projected_paths)
                 if args.composition is None
                 else api.composed_replay_result(
-                    args.model, args.population, args.certificate, composition=args.composition)
+                    args.model, args.population, args.certificate, composition=args.composition, **projected_paths)
             )
         elif args.command == "witness-view":
             result = witness_view(
@@ -76,10 +87,10 @@ def run(args):
             if args.out and not args.raw:
                 raise ValueError("--out requires --raw")
             result = (
-                api.witness_result(args.model, args.population, args.targets, reference_root=args.reference_root)
+                api.rooted_witness_result(args.model, args.population, args.targets, reference_root=args.reference_root, **projected_paths)
                 if args.composition is None
                 else api.composed_witness_result(
-                    args.model, args.population, args.targets, composition=args.composition)
+                    args.model, args.population, args.targets, composition=args.composition, **projected_paths)
             )
             certificate = result["certificate"]
             if args.out and certificate is not None:

@@ -161,15 +161,24 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
     record(doc, "version kind binding results nodes")
     if (
         type(doc["version"]) is not int
-        or doc["version"] not in (1, 2)
+        or doc["version"] not in (1, 2, 3)
         or doc["kind"] != "derivation-witness"
     ):
         raise WitnessInputError("unknown certificate kind/version")
     # Version 2 is a witness over a composed population (CT3): the binding
     # names the composition record and each base node its source facts.
-    composed = doc["version"] == 2
+    projected = doc["version"] == 3
     b = doc["binding"]
-    record(b, "model_digest candidate_digest references" + (" composition_sha256" if composed else ""))
+    composed = doc["version"] == 2 or (projected and type(b) is dict and "composition_sha256" in b)
+    keys = "model_digest candidate_digest references"
+    if composed:
+        keys += " composition_sha256"
+    if projected:
+        keys += " flattening_sha256"
+    record(b, keys)
+    if projected and (type(b["flattening_sha256"]) is not str
+                      or not re.fullmatch(r"[0-9a-f]{64}", b["flattening_sha256"])):
+        raise WitnessInputError("invalid flattening digest")
     if composed and (type(b["composition_sha256"]) is not str
                      or not re.fullmatch(r"[0-9a-f]{64}", b["composition_sha256"])):
         raise WitnessInputError("invalid composition digest")
@@ -223,7 +232,13 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
         }
         if kind not in keys:
             raise WitnessInputError("unknown node kind")
-        record(n, keys[kind])
+        record(n, keys[kind] + (" model_origin" if projected else ""))
+        if projected:
+            model_origin = n["model_origin"]
+            fields = "origin original_address composed_address element_id"
+            record(model_origin, fields)
+            if any(type(model_origin[field]) is not str for field in fields.split()):
+                raise WitnessInputError("invalid model origin")
         integer(n["id"])
         if n["id"] != i:
             raise WitnessInputError("node ids must be consecutive")

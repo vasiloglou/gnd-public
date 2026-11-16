@@ -36,7 +36,9 @@ def test_composed_witness_validation_refusal_compatibility(corpus, adapter, incl
     binding.write_bytes(canonical_json_bytes(record))
     certificate = ROOT / 'tests/fixtures/v71/phase3/dispatch/direct.witness.json'
     result = getattr(service, adapter)(model, population, certificate, composition=binding)
-    reason = 'include:unsupported-route' if included else 'input-invalid'
+    # LX2 authenticates the root. The v1 certificate cannot bind that rooted
+    # composition, and it still is not a valid witness targets document.
+    reason = 'binding-stale' if included and adapter == 'composed_replay_result' else 'input-invalid'
     assert result == WitnessResult(3, reason=reason).model_dump(mode='json')
 
 

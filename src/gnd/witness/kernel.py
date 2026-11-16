@@ -295,6 +295,7 @@ def replay_witness(
     reference_inputs: tuple[tuple[str, bytes], ...] = (),
     limits=DEFAULT_LIMITS,
     composition: tuple[str, dict] | None = None,
+    flattening: tuple[str, dict] | None = None,
 ):
     targets = ()
     try:
@@ -305,7 +306,12 @@ def replay_witness(
             model_document, candidate_document, reference_inputs, limits=limits
         )
         binding = dict(certificate["binding"])
-        composed = certificate["version"] == 2
+        projected = certificate["version"] == 3
+        composed = "composition_sha256" in binding
+        if projected != (flattening is not None):
+            return WitnessResult(3, reason="binding-stale")
+        if flattening is not None and binding.pop("flattening_sha256") != flattening[0]:
+            return WitnessResult(3, reason="binding-stale")
         if composed and composition is None:
             return WitnessResult(3, reason="composition-required")
         if not composed and composition is not None:
@@ -325,6 +331,16 @@ def replay_witness(
             )
         ):
             return WitnessResult(3, reason="binding-stale")
+        if flattening is not None:
+            from gnd.witness.flattening import node_model_origin
+
+            for node in certificate["nodes"]:
+                try:
+                    origin = node_model_origin(node, flattening[1])
+                except KeyError as error:
+                    raise InvalidProof("model origin has no resolved fact type") from error
+                if node["model_origin"] != origin:
+                    raise InvalidProof("model origin differs from the resolved model")
         if composed:
             lineage = composition[1]
             for node in certificate["nodes"]:

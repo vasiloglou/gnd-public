@@ -196,6 +196,36 @@ def _restore_frozen(parser, node, *, types=None):
     return children
 
 
+def _witness_projection_successor(command):
+    """Add the two rooted projection options to the frozen witness parser."""
+    base = json.loads(golden_path("cli", "tree").read_text())["subcommands"][command]
+    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    _restore_frozen(parser, base)
+    inherited = _walk(parser, ("gnd", command), {})
+    inherited["listed_help"] = base["listed_help"]
+    assert canonical(inherited) == canonical(base)
+    composition = next(action for action in parser._actions if action.dest == "composition")
+    composition.help = {
+        "witness": "composition record for a composed population",
+        "replay": "composition record bound by the witness",
+    }[command]
+    # The rooted flags are declared before the existing replay presentation flags.
+    position = parser._actions.index(composition) + 1
+    flags = [
+        parser.add_argument("--flat-model", help="bound flat model from an include-root extraction"),
+        parser.add_argument("--flattening-record", help="origin record paired with --flat-model"),
+    ]
+    for offset, flag in enumerate(flags):
+        parser._actions.remove(flag)
+        parser._actions.insert(position + offset, flag)
+        group = parser._optionals._group_actions
+        group.remove(flag)
+        group.insert(group.index(composition) + 1 + offset, flag)
+    after = _walk(parser, ("gnd", command), {})
+    after["listed_help"] = base["listed_help"]
+    return after, parser
+
+
 def _model_review_successor():
     """Decode the frozen grammar independently, then add only MC2's literal leaf."""
     base = json.loads(golden_path('cli', 'tree').read_text())['subcommands']['verbalize']
@@ -406,11 +436,18 @@ def test_cli_tree(tree):
     expected['subcommands']['verbalize'] = _model_review_successor()['tree']
     for command in ("export", "import"):
         expected["subcommands"][command] = _ossie_successor(command)["tree"]
+    for command in ("witness", "replay"):
+        expected["subcommands"][command] = _witness_projection_successor(command)[0]
     _assert_successor("cli", "tree", tree[0], expected)
 
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path in {"gnd witness", "gnd replay"}:
+        parser = _witness_projection_successor(path.split()[1])[1]
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": parser.format_help()})
+        return
     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
                           {"path": path, "help": _ossie_successor(path.split()[1])["help"][path]})
@@ -452,6 +489,14 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path in {"gnd witness", "gnd replay"}:
+        observed = {
+            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
+        }
+        parser = _witness_projection_successor(path.split()[1])[1]
+        _assert_successor("cli-exit", path, observed, _guarded_successor_probe(parser))
+        return
     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},

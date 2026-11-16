@@ -3081,7 +3081,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### witness.schema
-- does: Validate bounded witness requests, certificates, typed targets and input identities before production or replay.
+- does: Validate bounded witness requests, certificates, typed targets, input identities and model-origin claims before production or replay.
 - verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire, model wire, version-1 model intake, model without model_id
 - in: JSON requests or certificates, model and population documents, reference bytes, fixed or lowered WitnessLimits.
 - out: Validated documents, loaded model/populations, population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
@@ -3096,13 +3096,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### witness.service
 - does: Orchestrate path-based witness production, replay and why-not requests with composition lineage, disclosure modes and preserved include-free input refusals.
-- verbs: produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
+- verbs: rooted witness projection, flattening binding, model origins, produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
 - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
 - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
 - status: canonical
-- modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py
+- modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py, src/gnd/witness/flattening.py
 - uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
-- used_by: cli.api, witness.command
+- used_by: cli.api, witness.command, witness.replay
 - part_of: subsystem.witness
 - tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py
 - notes: The package marker is documentation only; gnd.api exposes the service functions through compatibility aliases. Composition certificates bind the record digest and each base fact's source lineage.
@@ -3143,7 +3143,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: WitnessResult with independently checked per-target statuses and graph work counts.
 - status: canonical
 - modules: src/gnd/witness/kernel.py
-- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema
+- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema, witness.service
 - used_by: export.souffle_runtime, witness.service
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_witness_composition.py

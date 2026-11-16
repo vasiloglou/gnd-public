@@ -1,4 +1,4 @@
-# Certificate versions 1 and 2
+# Certificate versions 1, 2 and 3
 
 See the [closed wire schema](witness.schema.json) and [workflow](../SKILL.md).
 Bindings include the existing model identity, SHA-256 of canonical candidate
@@ -55,3 +55,32 @@ that the witness agrees with the record; it does not re-derive the record
 from the sources, which `gnd check --composition --sources` does. Witness views list `sources` as ids and
 indexes. `--composition` excludes `--reference-root` (64): composition refuses
 reference populations. Version 1 is unchanged.
+
+
+## Version 3: rooted model origins
+
+`gnd witness ROOT POP --targets T --raw --out CERT` resolves the authored
+include root and emits version 3. `gnd replay ROOT POP CERT` resolves the same
+root before examining any model-origin claim. Either command accepts
+`--flat-model FILE --flattening-record FILE` as a pair. Supplied files must
+match the rooted, re-derived bytes from the
+[flattening contract](../../gnd-orm-core/references/representation-format.md#extraction-flattening-record).
+Without the options, the commands derive the same projection in memory.
+The binding uses the raw SHA-256 of the canonical flattening record in
+`flattening_sha256`. A valid include-free root continues to produce versions
+1 or 2.
+
+Each node carries `model_origin` with `origin`, `original_address`,
+`composed_address` and `element_id`. These are the origin entry for the
+node's fact type, or the declaring rule fact type for a comparison node.
+The element ID is a string. A base node's `origin` still identifies the
+candidate or reference fact occurrence. Version 3 additionally uses
+`composition_sha256` and the base nodes' `sources` when a reference-free
+composition record is supplied.
+
+Replay parses the certificate, authenticates the rooted model and its
+provided artifacts, then binds the composition if supplied. A changed
+bound digest is `binding-stale` (3). A structurally valid but forged model
+origin or fact occurrence is `proof-invalid` (1). The unrooted model-byte
+intake cannot resolve authored includes. An incomplete option pair exits 64.
+The same witness byte and work ceilings govern the stamped output.

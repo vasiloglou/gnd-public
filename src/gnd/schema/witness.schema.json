@@ -6,7 +6,8 @@
     "version": {
       "enum": [
         1,
-        2
+        2,
+        3
       ]
     },
     "kind": {
@@ -44,6 +45,10 @@
           }
         },
         "composition_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "flattening_sha256": {
           "type": "string",
           "pattern": "^[0-9a-f]{64}$"
         }
@@ -208,6 +213,9 @@
             ],
             "additionalProperties": false
           }
+        },
+        "model_origin": {
+          "$ref": "#/$defs/modelOrigin"
         }
       },
       "required": [
@@ -254,6 +262,9 @@
             "type": "integer",
             "minimum": 0
           }
+        },
+        "model_origin": {
+          "$ref": "#/$defs/modelOrigin"
         }
       },
       "required": [
@@ -297,6 +308,9 @@
         "premises": {
           "type": "array",
           "maxItems": 0
+        },
+        "model_origin": {
+          "$ref": "#/$defs/modelOrigin"
         }
       },
       "required": [
@@ -517,18 +531,72 @@
           "additionalProperties": false
         }
       ]
+    },
+    "modelOrigin": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string"
+        },
+        "original_address": {
+          "type": "string"
+        },
+        "composed_address": {
+          "type": "string"
+        },
+        "element_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "origin",
+        "original_address",
+        "composed_address",
+        "element_id"
+      ],
+      "additionalProperties": false
     }
   },
   "allOf": [
     {
       "if": {
-        "properties": {
-          "version": {
-            "const": 2
+        "anyOf": [
+          {
+            "properties": {
+              "version": {
+                "const": 2
+              }
+            },
+            "required": [
+              "version"
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "properties": {
+                  "version": {
+                    "const": 3
+                  }
+                },
+                "required": [
+                  "version"
+                ]
+              },
+              {
+                "properties": {
+                  "binding": {
+                    "required": [
+                      "composition_sha256"
+                    ]
+                  }
+                },
+                "required": [
+                  "binding"
+                ]
+              }
+            ]
           }
-        },
-        "required": [
-          "version"
         ]
       },
       "then": {
@@ -586,6 +654,54 @@
                     "sources"
                   ]
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "version": {
+            "const": 3
+          }
+        },
+        "required": [
+          "version"
+        ]
+      },
+      "then": {
+        "properties": {
+          "binding": {
+            "required": [
+              "flattening_sha256"
+            ]
+          },
+          "nodes": {
+            "items": {
+              "required": [
+                "model_origin"
+              ]
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "binding": {
+            "not": {
+              "required": [
+                "flattening_sha256"
+              ]
+            }
+          },
+          "nodes": {
+            "items": {
+              "not": {
+                "required": [
+                  "model_origin"
+                ]
               }
             }
           }

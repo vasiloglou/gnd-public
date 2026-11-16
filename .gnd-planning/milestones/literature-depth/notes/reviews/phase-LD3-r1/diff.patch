@@ -1,0 +1,2013 @@
+diff --git a/.gnd-planning/milestones/literature-depth/007-phase-LD3-spec-gate.md b/.gnd-planning/milestones/literature-depth/007-phase-LD3-spec-gate.md
+new file mode 100644
+index 00000000..7097753a
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-depth/007-phase-LD3-spec-gate.md
+@@ -0,0 +1,48 @@
++---
++milestone: literature-depth
++station: phase-LD3-spec-gate
++skill: "n/a -- repository development under process-phase"
++scope: phase-LD3-spec-gate
++date: 2026-11-16
++gates:
++  - command: "uv run --no-sync pytest -q tests/test_ld3_reading_workflow.py --tb=short"
++    exit: 1
++    output: "2 failed, 3 errors in 0.56s; the public reading module is absent"
++  - command: "ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md sha256 4445e9f72c8b5632c7819aa21d944bd6621a92a0de59fc85ba12f975794bce64"
++    exit: "n/a -- ruling"
++evidence:
++  - path: .gnd-planning/milestones/literature-depth/006-phase-LD2.md
++    sha256: 58004fd9ba0a6f4f1d220cb67f48f49e694c5cb6a58d5eb2fede3a7b092b1308
++  - path: .gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md
++    sha256: 4445e9f72c8b5632c7819aa21d944bd6621a92a0de59fc85ba12f975794bce64
++  - path: tests/test_ld3_reading_workflow.py
++    sha256: 74891314c9aaa09280c86b59ba193c1d67e4b5b4f68ee8897650682648e52da1
++  - path: tests/fixtures/ld3-reading/expected.json
++    sha256: 7b12e90234e2c364f900c10ebfa50b454095b8ede4149498ddf26235fb234964
++---
++
++# LD3 spec and corpus gate
++
++ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md sha256 4445e9f72c8b5632c7819aa21d944bd6621a92a0de59fc85ba12f975794bce64
++
++Delegated approval under the owner's `process-milestone literature-depth
++auto` invocation. Corpus-first applies. The answer key fixes the
++six stages, per-stage call counts, coverage outcomes, stop reasons,
++worklist and exact fidelity counts independently of implementation.
++The expected red run stopped at the absent public module. Optional spec
++review was omitted.
++
++## Implementability sweep
++
++The rooted molecular vocabulary can contain both the broad and
++methods-only assertions. An additional controlled negative assertion
++can use a local fact type. A saved extractor adapter supports an actual
++call count, and the output verifier can rederive each stage from retained
++bytes without that callback. The GND fidelity case shape accepts a
++separate gold population and two extraction variants. Two source-backed
++gold facts make the qualifying and below-floor cases discriminating.
++LI1's coverage scoring can reuse its exact-fraction report format, with
++separate expected rows. Source availability and budget exhaustion affect
++the same declared workload and can be tested independently.
++
++Part 10 remains deferred.
+diff --git a/.gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md b/.gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md
+new file mode 100644
+index 00000000..0b1cf17a
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md
+@@ -0,0 +1,208 @@
++# LD3 · Replayable reading and coverage
++
++Status: delegated approval recorded in the LD3 spec gate.
++
++## Provenance
++
++[Plan r3](literature-depth-plan.md) assigns LD3 the part 7 workflow and its
++stronger absence evidence. [LD1](../004-phase-LD1.md) supplies the rooted
++molecular model, immutable source excerpts and saved extraction practice.
++[LD2](../006-phase-LD2.md) records the time-anchor selector and exact decimal
++worked fixture. The reviewed part 7 plan is bound by the
++[plan gate](../002-plan-gate.md). The LD2 numeric workflow is a separate existing
++consumer. The reading example uses the existing text predicates needed to
++establish the methods recovery.
++
++## Obligations
++
++| Source | Obligation | Control |
++|---|---|---|
++| #193 part 7 and plan §4 LD3 | Six ordered stages, exact evidence and provider-free replay | T1, T2 |
++| #193 part 7 criteria 2, 3, 7 | Recover the methods-only assertion, record absent methods, and preserve a reported violation | T3, T4 |
++| §0 and §4 | Evidence binding, bounded rooted parser, digest-checked roster and independent question coverage | T1, T5, T8 |
++| §4 | Carry changes to the vocabulary worklist, retain missing, refused and empty observations, and count all attempted inspected bytes | T3, T5, T6 |
++| §4 and §9 | Required coverage, exhausted evidence and exhausted budget are distinct terminal states | T6 |
++| §2 and §4 | Stronger absence uses typed scope coverage and adequate independent measured fidelity | T7 |
++| §4 and predecessor LI1 | Activate its optional coverage view with frozen exact floors | T9 |
++| Plan §5–§7 | Document, ship and independently verify the installed host workflow; preserve part 10 deferral | T10 |
++
++## Standing rules
++
++- **Meaning and provenance.** A reported constraint violation remains an
++  observed fact population and has failed check status. A coverage row states
++  what was inspected or unavailable. It carries no implied scientific support.
++- **Totality and input cost.** Read bounded UTF-8 and strict JSON from
++  fixed fixture and run roots. Cap declared file/row counts. Index
++  source ranges and question IDs once per run. Test duplicate IDs, invalid
++  spans, unlisted paths and oversized retained evidence. The time-bound
++  workload probes stage artifact validation with a bounded roster.
++- **Validation order.** Check trusted manifest and source bytes first.
++  Check step ordering and exact roster before reading retained outputs.
++  Verify each output and coverage relation before reporting replay success.
++  A missing or stale output carries incomplete status.
++- **Shared walk.** Derive the applicable review, coverage and revisit outputs
++  with the same ordered stage evaluator on fresh and replay paths. A replay
++  implementation supplies its retained results through the replay input seam.
++- **One normative home.** The packaged README owns the stage evidence layout
++  and modes. The existing command contract owns extraction and fidelity.
++- **Measure the contested route.** A counting producer receives both broad
++  and targeted requests on fresh runs. Replay has zero calls. Tests consult
++  both outcomes, a real GND check and a measured positive fidelity denominator.
++
++## Design
++
++| Capability | Catalog searches | Reuse decision |
++|---|---|---|
++| Saved extraction | `extract verify saved responses fidelity cases`, `rooted extraction include projection` | Use the public extract, verify and check routes with the existing bundle and population shapes. |
++| Evidence | `assurance reading coverage passage denominators`, `work passages evidence receipt` | Reuse bounded artifact readers, canonical JSON and exact coverage metric reporting. New workflow record stays in the example. |
++| Fidelity | `saved responses held-back source populations`, `extract verify saved responses fidelity cases` | Use public fidelity over separate held-back source and candidate responses. |
++| Worklist | `targeted reading scope vocabulary revisit`, `assurance reading coverage passage denominators` | The reading workflow needs source ranges associated with declared dependency keys. LD4 consumes the rule's artifact identities later. |
++
++`gnd.examples.literature.reading` exposes fresh and replay through
++`main(argv: list[str] | None = None) -> int`. Modes are
++`run --out DIR [--budget-bytes N] [--scenario full|unavailable]` and
++`replay RUN`. Exit 0 means the selected run ended with one of the
++declared reasons and supplied its report. An invalid or stale stage is
++incomplete at exit 3. A valid incomplete evidence scope still has its
++declared reason and rows; it cannot issue the stronger absence claim.
++
++The fixture is rooted beside the packaged examples. The input roster
++declares source IDs, versions, relative local source paths and SHA-256
++hashes. Sections use `{id, source, kind, span, keys}` with sorted
++nonoverlapping byte ranges; the available kinds are section, equation
++and table. An unavailable section has null span and a reason. Only
++present source scopes are read. Compare each source digest before spans
++can acquire evidence. Source and section IDs are unique. Questions use
++`{id, section, key, required, superseded_by}`; the last field is
++nullable and names a different declared question. Validate a
++supersession graph for unknown targets, self-loops and cycles before
++using a question. Keep not-applicable evidence and explicit denial
++distinct from a negative result of scanning.
++
++The six records appear in this order: `inventory`,
++`broad-extraction`, `selection`, `targeted-extraction`, `review`,
++`recheck`. Each has `{stage, purpose, inputs, predecessor_sha256,
++payload_sha256, inspected, questions}`. Hash all emitted records and
++outputs using canonical JSON and actual input bytes. The run manifest
++pins the exact stage roster plus companion coverage, gold fidelity,
++closure and scope artifacts. Replay validates the complete stage roster
++and claimed file pins against its supplied case and independently
++rederives the states using saved stage payloads. If anything relied on
++by a stage changes or is missing, replay reports incomplete. Producer
++adapters never run on replay, including a stale replay path.
++
++The broad producer reads the available opening ranges; targeted
++selection uses unresolved keys and available ranges. Each recorded
++inspection carries source/version, section ID, start/end, bytes and
++producer outcome. The adapter's returned extraction evidence is bound
++to those exact bytes. A fresh run uses both producer steps and records
++actual calls by stage. A report's read cost sums each attempt's inspected
++bytes, including repeated ranges and attempted empty or refused extraction.
++Uninspected omitted or unavailable ranges count in the roster and contribute
++zero bytes. The reading report identifies the supported fact gain and
++newly resolved questions alongside the cost and retained denominators.
++
++The required method assertion uses the molecular model's `approximation`
++predicate. It is absent from the broad result and appears in targeted
++verify/check. The synthetic source control returns both conflicting label
++facts; its retained verification and check both fail without changing
++the population. The not-found, unavailable, not-applicable and explicit
++denial states use different source or applicability evidence. Each
++question ends resolved, retained with reason or superseded with a valid
++target. Required adjudications control stop reason. The order is
++completed required coverage, budget prevented an available read, or
++available evidence exhausted. The full, unavailable-method and budget
++runs exercise each reason independently.
++
++Coverage rows carry `{source, section, state, inspected}`, where state
++distinguishes `supported`, `inspected-not-found`, `unavailable`,
++`not-applicable`, `explicitly-denied` and `omitted`. A declared
++vocabulary key reopens an earlier matching section by a deterministic
++source/section lookup. The run report retains this list and its inputs
++for LD4. The assurance report's new opt-in coverage stanza binds a
++run-scoped coverage record by digest and compares its exact roster against
++independent expected rows from the answer key. Precision and recall floors
++are both 1/1 with a positive denominator. If both sides omit this stanza,
++the legacy coverage stage stays dormant.
++
++The stronger absence gate needs four authenticated inputs: closure, scope,
++coverage and measured fidelity. Scope names the exact relevant source
++and section keys. Closure fixes that roster and the question's predicate;
++coverage must show that all scoped ranges were examined. The controlled
++claim asks whether a named alternate setting is reported in the declared
++small source scope. The held-back fidelity denominator is two positive
++facts. Score both a 2/2 and a 1/2 response over the same in-scope held-back
++material using `gnd fidelity`. The qualifying recall floor is 2/2. An
++independent validation of each input must fail on omission or stale bytes.
++The issued result describes the finite fixture scope only.
++
++## Decisions
++
++| ID | Delegated disposition |
++|---|---|
++| D1 | Fresh run consumes local saved responses through an observable producer; replay consumes retained evidence. |
++| D2 | Keep the recorded reported conflict and its real public check results. Preserve all states and denominators independently of check admission. |
++| D3 | Charge read-byte lengths per attempted producer range; full, unavailable and budget cases freeze stop outcomes. |
++| D4 | Require two checked fidelity reference facts and a 2/2 recall floor for the stronger absence control. A 1/2 measurement must refuse that claim. |
++| D5 | Activate the assurance coverage stage when both new inputs are present. Require separate roster evidence. Corpus-first gate, no optional spec panel. |
++
++## End-to-end tests
++
++| Test family | Expected observations |
++|---|---|
++| T1 | Six exact stage records and public route results. Fresh summary names the actual positive producer counts; fresh and replay stage bytes agree. |
++| T2 | Replay invokes zero producers. A missing stage, corrupted output or independently re-pinned wrong semantics is incomplete, exit 3. |
++| T3 | A methods fact enters targeted extract/verify/check, each exit 0. Broken source bindings fail; unavailable and negative evidence remain distinct. |
++| T4 | Reported conflict is retained; public verify and check exit 1 and the row stays visible. |
++| T5 | Each question has one disposition. Omitted, duplicate, empty or invalidly superseded roster refuses exit 3. A relevant old source is revisited and unrelated content is excluded. |
++| T6 | Each stop reason is reachable. Report exact repeated/empty/refused/omitted attempt counts and read cost, including budget-zero control. |
++| T7 | Real 2/2 qualifies. Real 1/2, missing closure, missing scope, missing coverage and missing fidelity each refuse a scoped absence claim. |
++| T8 | Invalid or oversized input and malicious relative paths fail closed. Bounded stress verifies the roster pass. |
++| T9 | Optional LI1 coverage stage passes exact rows, fails incomplete/mismatching rows and retains the legacy absence behavior. |
++| T10 | Installed fresh and replay operate over the same packaged fixture and preserve report identity. |
++
++The focused gate includes direct LD3 tests, LI1 assurance, LD1–LD2,
++rooted extraction and fidelity consumers. Run the structural guard list,
++whole-tree Ruff and strict component checks when code changes. Record
++the separately invoked installed commands. Existing broad cadence applies.
++
++## Boundary and size
++
++The example evaluates a bounded public authored fixture with saved
++responses. The release freshness consumer and dependency recipe belong
++to LD4. Part 10 remains deferred. Estimate 350–500 implementation lines,
++120–220 test lines and the input corpus.
++
++## Approval instrument
++
++Commit the public red corpus under `tests/test_ld3_reading_workflow.py`
++and `tests/fixtures/ld3-reading/expected.json`. The expected output file
++is distinct from all workflow inputs.
++
++## Implementation findings
++
++- Replay can recompute the check and fidelity branches from the retained
++  response evidence and independently authored case inputs. Fresh counts
++  and saved attempt counts are cross-checked. Replay reports zero producer
++  calls and re-derives the original record identities.
++- Opening excerpts and the targeted methods and limitations ranges use
++  different saved responses. The accepted response facts, source range and
++  independent source judgment agree before they can resolve a question.
++  The vocabulary proposal comes from the targeted attempt. Its key selects
++  the two earlier, relevant study sections.
++- A separate synthetic conflict exercises actual verify and check exit 1.
++  Positive reading populations require both routes to exit 0. This keeps a
++  failed positive population from supplying semantic coverage.
++- LI1's retained report goldens identify the original emitter. The live
++  legacy-route test derives the current emitter hash and still compares
++  every observable result. The optional coverage route checks its own
++  bounded artifact and independent expected passage roster.
++- The implementation has a 548-line reader plus the assurance coverage
++  adapter. The main differences from the estimate are the separate scope
++  and calibration bindings and the semantic receipt checks.
++
++Before the review candidate, the replay preflight was tightened to
++authenticate the exact manifest bytes and check the ordered stage
++chain before opening retained payloads. The saved producer receives
++only the response table. The held-back gold remains a scoring input.
++Source admission validates UTF-8, including each selected byte range.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index ec0c6f59..0f08a9a2 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +69 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +70 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+ - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
+@@ -3257,13 +3257,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### examples.literature_assurance
+-- does: Example: score a literature pipeline run against an answer key in seven separate stages, with exact-fraction floors and value-free refusals [score, stage_status].
++- does: Example: score a literature pipeline run against an answer key in seven separate stages, including opt-in reading coverage, with exact-fraction floors and value-free refusals [score, stage_status].
+ - verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, identity decisions, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages
+ - in: The literature example root (corpus/corpus.json, model, documents, extract artifacts), a literature-answer-key/1 file with gold/ and render/ beside it, and a literature-run/1 directory.
+ - out: A literature-assurance-report/1 payload and exit 0, 1 or 3. The routes are gnd check (plain, --anchors, --composition) and gnd fidelity, run as subprocesses.
+ - status: canonical
+ - modules: src/gnd/examples/literature/assurance_report.py
+-- uses: (none)
++- uses: examples.literature_reading
+ - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
+ - tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
+ - notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
+@@ -3468,6 +3468,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - constraint provenance: model.verbalization, recovery.verify
+ - content digest: assurance.identity, model.population_loading
+ - corpus manifest: assurance.claim_graph, synth.corpus
++- coverage evidence: cli.checking_command, examples.literature_reading
+ - coverage omission: synth.frontier, synth.mutations
+ - declared adapter: agent.declared_adapter, exp.session_profile, exp.session_runtime
+ - derived relations: export.pyrel_rules, semantics.extensions
+@@ -3712,5 +3713,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/examples/literature/depth.py
+ - uses: infra.artifacts, infra.bounded_process, model.anchors
+-- used_by: (none)
++- used_by: examples.literature_reading
+ - tests: tests/test_ld1_competency_examples.py
++
++### examples.literature_reading
++- does: Run and replay bounded literature reading with saved producer outputs, typed coverage, custody and fidelity.
++- verbs: reading workflow, multipass reading, methods extraction, coverage evidence, scope, absence, fidelity, revisit, question disposition
++- in: Packaged public source inventory, section and question roster, saved responses, held-back fidelity labels and source scope.
++- out: Six bound pass records, producer call counts, typed coverage, read cost, checked populations and fidelity reports.
++- status: canonical
++- modules: src/gnd/examples/literature/reading.py
++- uses: examples.literature_depth, infra.artifacts
++- used_by: examples.literature_assurance
++- tests: tests/test_ld3_reading_workflow.py
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 20a1570d..fc858eb9 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1887,12 +1887,15 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/examples/literature/assertion_admission.py -> src/gnd/anchors.py`
+ 
+ ### examples.literature_assurance
+-- uses: (none)
++- uses: examples.literature_reading
+ - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
+ 
++#### examples.literature_assurance -> examples.literature_reading
++- `src/gnd/examples/literature/assurance_report.py -> src/gnd/examples/literature/reading.py`
++
+ ### examples.literature_depth
+ - uses: infra.artifacts, infra.bounded_process, model.anchors
+-- used_by: (none)
++- used_by: examples.literature_reading
+ 
+ #### examples.literature_depth -> infra.artifacts
+ - `src/gnd/examples/literature/depth.py -> src/gnd/artifacts.py`
+@@ -1981,6 +1984,16 @@ Generated by `scripts/components_index.py`.
+ #### examples.literature_name_diagnostics -> model.anchors
+ - `src/gnd/examples/literature/name_diagnostics.py -> src/gnd/anchors.py`
+ 
++### examples.literature_reading
++- uses: examples.literature_depth, infra.artifacts
++- used_by: examples.literature_assurance
++
++#### examples.literature_reading -> examples.literature_depth
++- `src/gnd/examples/literature/reading.py -> src/gnd/examples/literature/depth.py`
++
++#### examples.literature_reading -> infra.artifacts
++- `src/gnd/examples/literature/reading.py -> src/gnd/artifacts.py`
++
+ ### examples.plan_apps
+ - uses: cli.api, export.pyrel_rules, model.loading, model.population_loading, model.query_index, semantics.extensions, semantics.transitions
+ - used_by: (none)
+@@ -3321,7 +3334,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+diff --git a/dev/components/modules/examples.md b/dev/components/modules/examples.md
+index b117ce87..e68cad37 100644
+--- a/dev/components/modules/examples.md
++++ b/dev/components/modules/examples.md
+@@ -211,9 +211,9 @@ The staged assurance report over the literature corpus (phase LI1).
+ | `run_route(gnd, route, paths, shown) -> dict` | function | 300 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
+ | `Inputs` | class | 342 | Everything validated in steps 1-4, with the run's files located. |
+ | `Inputs.source_dir(self, source) -> Path` | method | 400 | (no docstring) |
+-| `refused_report(reason) -> dict` | function | 743 | (no docstring) |
+-| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 810 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+-| `main(argv) -> int` | function | 863 | (no docstring) |
++| `refused_report(reason) -> dict` | function | 783 | (no docstring) |
++| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 850 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
++| `main(argv) -> int` | function | 903 | (no docstring) |
+ 
+ ## gnd.examples.literature.depth — `src/gnd/examples/literature/depth.py`
+ Components: examples.literature_depth
+@@ -277,6 +277,25 @@ Generate reviewable name candidates from original literature occurrences.
+ | `read_diagnostic_input(path) -> tuple[object, str]` | function | 222 | Read one regular local input and bind its exact bytes. |
+ | `main(argv) -> int` | function | 232 | Read a capped input and print one diagnostic report. |
+ 
++## gnd.examples.literature.reading — `src/gnd/examples/literature/reading.py`
++Components: examples.literature_reading
++Replay a bounded literature reading run with typed coverage and fidelity.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `ReadingInputs` | class | 66 | Read and validate the declared source, section and question inventories. |
++| `ReadingInputs.selection(self, kind) -> list[str]` | method | 132 | (no docstring) |
++| `ReadingInputs.source_range(self, section) -> bytes` | method | 135 | (no docstring) |
++| `ReadingInputs.pins(self) -> dict` | method | 139 | (no docstring) |
++| `SavedProducer` | class | 143 | Local saved-response adapter with observed invocation counts. |
++| `SavedProducer.produce(self, stage, section) -> dict` | method | 150 | (no docstring) |
++| `affected_sections(sections, changed_keys) -> list[str]` | function | 155 | Return available earlier section IDs sharing a changed dependency key. |
++| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 328 | Read a run's optional coverage artifact using its external digest. |
++| `absence_status(artifacts, pins)` | function | 341 | Qualify the declared fixture claim from four independently bound inputs. |
++| `run(out, *, budget, scenario, fixture) -> dict` | function | 522 | Run the saved-response workflow and retain its complete evidence. |
++| `replay(folder, *, fixture) -> dict` | function | 534 | Re-derive the reading result from retained evidence without invoking producers. |
++| `main(argv) -> int` | function | 545 | (no docstring) |
++
+ ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
+ Components: examples.plan_apps
+ The access desk: ask the bot for an access plan, check it with GND or PyRel, execute it.
+diff --git a/src/gnd/examples/literature/README.md b/src/gnd/examples/literature/README.md
+index 22d17037..c446acbe 100644
+--- a/src/gnd/examples/literature/README.md
++++ b/src/gnd/examples/literature/README.md
+@@ -345,3 +345,9 @@ probes. [Run the examples](depth_fixture/README.md).
+ 
+ The [exact time-step example](quantity_fixture/README.md) shows
+ dimension-aware anchors and a fixed-scale decimal witness.
++
++## Replayable reading
++
++The [multipass reading example](reading_fixture/README.md) shows how a
++targeted pass recovers a methods fact, records source coverage and
++replays completed stages without calling its producer.
+diff --git a/src/gnd/examples/literature/assurance_report.py b/src/gnd/examples/literature/assurance_report.py
+index 33e1db63..f5823918 100644
+--- a/src/gnd/examples/literature/assurance_report.py
++++ b/src/gnd/examples/literature/assurance_report.py
+@@ -719,6 +719,46 @@ def _record_fresh(inputs: Inputs, record: dict) -> bool:
+     return True
+ 
+ 
++def _coverage(inputs: Inputs) -> dict:
++    """Score the opt-in reading coverage evidence against an independent roster."""
++    if "coverage" not in inputs.run and "coverage" not in inputs.key:
++        return _dormant("coverage")
++
++    from .reading import COVERAGE_STATES, read_coverage_rows
++
++    floors = {"precision": (1, 1), "recall": (1, 1)}
++
++    def units(rows):
++        _need(isinstance(rows, list) and 0 < len(rows) <= 128)
++        question_ids = set()
++        result = set()
++        for row in rows:
++            _need(isinstance(row, dict) and set(row) == {"question", "source", "section", "state", "inspected"})
++            qid, source, section, state, inspected = (
++                row[field] for field in ("question", "source", "section", "state", "inspected")
++            )
++            _need(all(_is_str(value) for value in (qid, source, section, state))
++                  and qid not in question_ids and source in inputs.sources
++                  and section in inputs.passages and inputs.passages[section]["document"] == source
++                  and state in COVERAGE_STATES and type(inspected) is bool)
++            _need(inspected == (state not in ("unavailable", "not-applicable", "omitted")))
++            question_ids.add(qid)
++            result.add((qid, source, section, state, inspected))
++        return result
++
++    try:
++        declaration = inputs.run.get("coverage")
++        _need(isinstance(declaration, dict) and set(declaration) == {"sha256"})
++        expected = units(inputs.key.get("coverage"))
++        observed = units(read_coverage_rows(inputs.run_dir, declaration["sha256"]))
++    except (OSError, Refusal, ValueError):
++        return _stage("coverage", metrics={}, floors=floors, route_present=True, route_refused=True)
++    matched = len(expected & observed)
++    return _stage("coverage", metrics={"precision": (matched, len(observed)), "recall": (matched, len(expected))},
++                  floors=floors, route_present=True, sample_size=len(expected),
++                  disagreements={"count": len(expected ^ observed), "units": sorted({row[0] for row in expected ^ observed})})
++
++
+ def _dormant(name: str) -> dict:
+     return {"stage": name, "active": False, "owner": DORMANT[name], "status": "not-measured",
+             "failed_floors": [], "unit": UNITS[name], "sample_size": 0}
+@@ -831,7 +871,7 @@ def score(corpus_root: Path, answers: Path, run_dir: Path, *,
+             "semantic-support": _semantic(inputs, r3, _per_domain(inputs, results)),
+             "identity-decisions": _identity_decisions(inputs, r4),
+             "derivation": _derivation(inputs, r4),
+-            "coverage": _dormant("coverage"),
++            "coverage": _coverage(inputs),
+             "freshness": _freshness(inputs, r2, r3, r4),
+         }
+     except Exception:  # noqa: BLE001 -- totality
+diff --git a/src/gnd/examples/literature/reading.py b/src/gnd/examples/literature/reading.py
+new file mode 100644
+index 00000000..489a22b3
+--- /dev/null
++++ b/src/gnd/examples/literature/reading.py
+@@ -0,0 +1,568 @@
++"""Replay a bounded literature reading run with typed coverage and fidelity."""
++from __future__ import annotations
++
++import argparse
++import re
++import sys
++import tempfile
++from pathlib import Path
++
++from gnd.artifacts import ArtifactError, canonical_json_bytes, sha256_hex
++
++from .depth import FIXTURE as DEPTH_FIXTURE
++from .depth import ExampleError, _command, _decode, _read
++
++FIXTURE = Path(__file__).parent / "reading_fixture"
++STAGES = (
++    "inventory", "broad-extraction", "selection", "targeted-extraction", "review", "recheck",
++)
++PURPOSES = (
++    "Identify available source versions and sections",
++    "Read opening material and retain unanswered questions",
++    "Select available ranges for unresolved questions",
++    "Recover targeted facts and identify earlier material to revisit",
++    "Resolve source coverage and review reported assertions",
++    "Check affected facts and measure held-back fidelity",
++)
++INPUTS = (
++    "roster.json", "responses.json", "reviews.json", "gold.json", "calibration.json",
++    "scope.json", "closure.json", "reading.orm.json",
++)
++EVIDENCE = (
++    "coverage.json", "scope.json", "closure.json", "fidelity-high.json", "fidelity-low.json",
++    "reported-conflict.population.json", "broad.population.json", "targeted.population.json",
++)
++FILES = (*EVIDENCE, *(f"stage-{i}.json" for i in range(6)), *(f"payload-{i}.json" for i in range(6)))
++IDENTIFIER = re.compile(r"[a-z][a-z0-9-]{0,63}\Z")
++SCENARIOS = ("full", "unavailable")
++DEFAULT_BUDGET = 4096
++MAX_BUDGET = 1 << 20
++ROSTER_LIMIT = 128
++CALIBRATION_FACTS = frozenset({"system", "approximation"})
++COVERAGE_STATES = (
++    "supported", "explicitly-denied", "inspected-not-found", "unavailable",
++    "not-applicable", "omitted", "producer-refused", "empty-extraction",
++)
++SUBJECT = "alanine-in-vacuum"
++LABEL = {"subject": SUBJECT, "label": "Alanine dipeptide observation"}
++
++
++def _need(condition: bool, reason: str) -> None:
++    if not condition:
++        raise ExampleError(reason)
++
++
++def _rows_by_id(rows: list) -> dict:
++    _need(isinstance(rows, list) and 0 < len(rows) <= ROSTER_LIMIT, "invalid reading roster size")
++    indexed = {}
++    for row in rows:
++        id_ = row.get("id") if isinstance(row, dict) else None
++        _need(isinstance(id_, str) and IDENTIFIER.fullmatch(id_) is not None and id_ not in indexed,
++              "invalid or duplicate reading roster ID")
++        indexed[id_] = row
++    return indexed
++
++
++class ReadingInputs:
++    """Read and validate the declared source, section and question inventories."""
++
++    def __init__(self, root: Path) -> None:
++        self.raw = {name: _read(root, name) for name in INPUTS}
++        roster = _decode(self.raw["roster.json"])
++        _need(roster.get("format") == "literature-reading-roster/1", "invalid reading roster format")
++        self.sources = _rows_by_id(roster.get("sources"))
++        self.sections = _rows_by_id(roster.get("sections"))
++        self.questions = _rows_by_id(roster.get("questions"))
++        self.responses = _decode(self.raw["responses.json"])
++        self.reviews = _decode(self.raw["reviews.json"])
++        self.documents = {}
++        for name, source in self.sources.items():
++            _need(source.get("path") == f"{name}.txt" and isinstance(source.get("version"), str),
++                  "invalid reading source location")
++            document = _read(root, source["path"])
++            _need(sha256_hex(document) == source.get("sha256"), "stale reading source")
++            document.decode("utf-8")
++            self.documents[name] = document
++            self.raw[source["path"]] = document
++        last_end: dict[str, int] = {}
++        response_sections = set()
++        for section in self.sections.values():
++            source, span, selection = section.get("source"), section.get("span"), section.get("selection")
++            _need(isinstance(source, str) and source in self.documents
++                  and section.get("kind") in ("section", "equation", "table"),
++                  "invalid source section")
++            if span is None:
++                _need(selection is None and section.get("reason") in ("unavailable", "not-applicable"),
++                      "invalid unavailable section")
++            else:
++                _need(isinstance(span, list) and len(span) == 2 and all(type(x) is int for x in span)
++                      and last_end.get(source, 0) <= span[0] < span[1] <= len(self.documents[source])
++                      and selection in ("opening", "targeted"), "invalid reading span")
++                self.documents[source][span[0]:span[1]].decode("utf-8")
++                last_end[source] = span[1]
++                response_sections.add(section["id"])
++            keys = section.get("keys")
++            _need(isinstance(keys, list) and all(isinstance(key, str) for key in keys),
++                  "invalid section dependency keys")
++        _need(set(self.responses) == response_sections, "saved response roster differs")
++        for question in self.questions.values():
++            section = question.get("section")
++            successor = question.get("superseded_by")
++            _need(isinstance(section, str) and section in self.sections
++                  and isinstance(question.get("fact"), str) and type(question.get("required")) is bool
++                  and type(question.get("denial")) is bool,
++                  "invalid question evidence selector")
++            _need(successor is None or isinstance(successor, str) and successor in self.questions,
++                  "unknown superseding question")
++        settled = set()
++        for question in self.questions:
++            seen = set()
++            successor = question
++            while successor is not None and successor not in settled:
++                _need(successor not in seen, "cyclic question supersession")
++                seen.add(successor)
++                successor = self.questions[successor]["superseded_by"]
++            settled.update(seen)
++        keys = roster.get("revisit_keys")
++        _need(isinstance(keys, list) and all(isinstance(key, str) for key in keys), "invalid revisit keys")
++        self.revisit_keys = set(keys)
++        self.raw["vocabulary.orm.json"] = _read(DEPTH_FIXTURE, "vocabulary.orm.json")
++        self.input_pins = {name: sha256_hex(raw) for name, raw in self.raw.items()}
++
++    def selection(self, kind: str) -> list[str]:
++        return [name for name, section in self.sections.items() if section["selection"] == kind]
++
++    def source_range(self, section: dict) -> bytes:
++        first, last = section["span"]
++        return self.documents[section["source"]][first:last]
++
++    def pins(self) -> dict:
++        return dict(self.input_pins)
++
++
++class SavedProducer:
++    """Local saved-response adapter with observed invocation counts."""
++
++    def __init__(self, responses: dict) -> None:
++        self.responses = responses
++        self.calls = dict.fromkeys((STAGES[1], STAGES[3]), 0)
++
++    def produce(self, stage: str, section: str) -> dict:
++        self.calls[stage] += 1
++        return self.responses[section]
++
++
++def affected_sections(sections: dict, changed_keys: set[str]) -> list[str]:
++    """Return available earlier section IDs sharing a changed dependency key."""
++    return [name for name, row in sections.items()
++            if row["span"] is not None and changed_keys.intersection(row["keys"])]
++
++
++def _inspect(inputs, stage, selected, remaining, producer, retained):
++    attempts, omitted = [], []
++    for name in selected:
++        row = inputs.sections[name]
++        excerpt = inputs.source_range(row)
++        if len(excerpt) > remaining:
++            omitted.append(name)
++            continue
++        if producer is not None:
++            response = producer.produce(stage, name)
++        else:
++            response = retained.get(name)
++            _need(response == inputs.responses[name], "retained producer response differs")
++        outcome = response.get("outcome") if isinstance(response, dict) else None
++        facts = response.get("facts") if isinstance(response, dict) else None
++        proposed = response.get("proposal_keys") if isinstance(response, dict) else None
++        _need(isinstance(proposed, list) and all(isinstance(key, str) and key in inputs.revisit_keys for key in proposed),
++              "invalid vocabulary proposal")
++        _need(outcome in ("accepted", "empty", "refused") and isinstance(facts, dict)
++              and bool(facts) == (outcome == "accepted"), "invalid saved producer response")
++        first, last = row["span"]
++        attempts.append({
++            "section": name, "source": row["source"], "start": first, "end": last,
++            "source_version": inputs.sources[row["source"]]["version"],
++            "excerpt_sha256": sha256_hex(excerpt), "response_sha256": sha256_hex(canonical_json_bytes(response)),
++            "outcome": outcome, "response": response,
++        })
++        remaining -= len(excerpt)
++    return {"attempts": attempts, "omitted": omitted, "original_producer_calls": len(attempts)}, remaining
++
++
++def _review_attempts(inputs, attempts):
++    verified = []
++    for row in attempts:
++        if row["outcome"] != "accepted":
++            continue
++        name = row["section"]
++        receipt = inputs.reviews.get(name)
++        _need(isinstance(receipt, dict) and receipt.get("decision") == "supported"
++              and receipt.get("excerpt_sha256") == row["excerpt_sha256"]
++              and receipt.get("facts_sha256") == sha256_hex(canonical_json_bytes(row["response"]["facts"]))
++              and isinstance(receipt.get("basis"), str) and bool(receipt["basis"]),
++              "stale semantic reading review")
++        verified.append({"section": name, **receipt})
++    return verified
++
++
++def _outcomes(inputs, attempted, unavailable):
++    coverage, questions = [], []
++    for name, question in inputs.questions.items():
++        successor = question["superseded_by"]
++        if successor is not None:
++            questions.append({"id": name, "outcome": "superseded", "target": successor})
++            continue
++        section = question["section"]
++        observation = attempted.get(section)
++        facts = observation["response"]["facts"] if observation else {}
++        if section in unavailable:
++            state = "unavailable"
++        elif inputs.sections[section]["span"] is None:
++            state = inputs.sections[section]["reason"]
++        elif observation is None:
++            state = "omitted"
++        elif observation["outcome"] == "refused":
++            state = "producer-refused"
++        elif observation["outcome"] == "empty":
++            state = "empty-extraction"
++        elif question["fact"] in facts:
++            state = "explicitly-denied" if question["denial"] else "supported"
++        else:
++            state = "inspected-not-found"
++        inspected = observation is not None
++        coverage.append({"question": name, "source": inputs.sections[section]["source"],
++                         "section": section, "state": state, "inspected": inspected})
++        resolved = state in ("explicitly-denied", "supported")
++        questions.append({"id": name, "outcome": "resolved" if resolved else "retained", "reason": state})
++    return coverage, questions
++
++
++def _combined(attempts):
++    facts = {"subject_label": [LABEL]}
++    for row in attempts:
++        for name, assertions in row["response"]["facts"].items():
++            facts.setdefault(name, []).extend(assertions)
++    return facts
++
++
++def _population(header, facts):
++    return canonical_json_bytes({"population": header, "facts": facts})
++
++
++def _extraction_sidecar(header, index, document, raw, document_name, population_name):
++    return {
++        "schema_version": 1, "model": header["model"], "model_sha256": index["model"]["sha256"],
++        "population": population_name, "population_sha256": sha256_hex(raw),
++        "document": document_name, "document_sha256": sha256_hex(document),
++        "projection_sha256": index["artifacts"]["reading.orm.projection.schema.json"]["sha256"],
++        "skill": "gnd-extract", "skill_version": "1", "executing_model": "saved-public-fixture",
++    }
++
++
++def _route(folder, *arguments, exits=(0,)):
++    result = _command(folder, *arguments)
++    _need(result.return_code in exits, f"{arguments[0]} exited {result.return_code}")
++    return result
++
++
++def _checked(folder, stem, header, index, document, facts):
++    raw = _population(header, facts)
++    document_name = stem + ".txt"
++    name = stem + ".population.json"
++    (folder / name).write_bytes(raw)
++    (folder / document_name).write_bytes(document)
++    (folder / (stem + ".population.extraction.json")).write_bytes(canonical_json_bytes(
++        _extraction_sidecar(header, index, document, raw, document_name, name)
++    ))
++    verify = _route(folder, "verify", header["model"], name, "--artifacts", "bundle",
++                    "--format", "json", exits=(0, 1))
++    check = _route(folder, "check", header["model"], name, "--format", "json", exits=(0, 1))
++    return raw, {"verify": verify.return_code, "check": check.return_code}
++
++
++def _calibrate(folder, inputs, header, index):
++    calibration = _decode(inputs.raw["calibration.json"])
++    gold = _decode(inputs.raw["gold.json"])
++    _need(set(gold) == CALIBRATION_FACTS, "invalid held-back gold roster")
++    measured = {}
++    for kind in ("high", "low"):
++        case_root = folder / kind / "calibration"
++        case_root.mkdir(parents=True)
++        document = inputs.documents["study"]
++        source = _population({**header, "source": "fixture"}, gold)
++        candidate = _population(header, calibration[kind])
++        sidecar = _extraction_sidecar(header, index, document, candidate, "document.md", "extracted.population.json")
++        document_manifest = {
++            "schema_version": 1, "model": header["model"], "model_sha256": index["model"]["sha256"],
++            "source_population": "source.population.json", "source_population_sha256": sha256_hex(source),
++            "document": "document.md", "document_sha256": sha256_hex(document),
++            "applicable_sha256": index["artifacts"]["reading.orm.applicable.json"]["sha256"],
++            "renderer_skill": "gnd-render-doc", "renderer_skill_version": "1",
++            "executing_model": "authored-public-fixture", "distractors": [],
++        }
++        for name, raw in (
++            ("document.md", document), ("source.population.json", source),
++            ("extracted.population.json", candidate),
++            ("extracted.population.extraction.json", canonical_json_bytes(sidecar)),
++            ("document.manifest.json", canonical_json_bytes(document_manifest)),
++        ):
++            (case_root / name).write_bytes(raw)
++        report = _route(folder, "fidelity", header["model"], "--cases", kind,
++                        "--artifacts", "bundle", "--format", "json").stdout
++        measured[kind] = report, _recall(report)
++    return measured
++
++
++def _recall(raw):
++    value = _decode(raw)
++    rows = [row for row in value["per_fact_type"] if row["id"] in CALIBRATION_FACTS]
++    _need(value["cases"]["ran"] == 1 and value["cases"]["failed"] == value["cases"]["skipped"] == 0
++          and len(rows) == len(CALIBRATION_FACTS) and {row["id"] for row in rows} == CALIBRATION_FACTS,
++          "invalid fidelity census")
++    counts = [sum(row["recall"][key] for row in rows) for key in ("numerator", "denominator")]
++    _need(all(type(count) is int for count in counts) and 0 <= counts[0] <= counts[1],
++          "invalid fidelity denominator")
++    return counts
++
++
++def read_coverage_rows(folder: Path, expected_sha256: str) -> list[dict]:
++    """Read a run's optional coverage artifact using its external digest."""
++    try:
++        raw = _read(folder, "coverage.json")
++    except (ArtifactError, OSError) as error:
++        raise ExampleError("unreadable coverage evidence") from error
++    _need(sha256_hex(raw) == expected_sha256, "stale coverage evidence")
++    document = _decode(raw)
++    _need(document.get("format") == "literature-reading-coverage/1"
++          and isinstance(document.get("rows"), list), "invalid coverage evidence")
++    return document["rows"]
++
++
++def absence_status(artifacts, pins):
++    """Qualify the declared fixture claim from four independently bound inputs."""
++    names = ("scope.json", "closure.json", "coverage.json", "fidelity.json")
++    if any(name not in artifacts or name not in pins or sha256_hex(artifacts[name]) != pins[name]
++           for name in names):
++        return "unavailable"
++    try:
++        scope, closure, coverage = (_decode(artifacts[name]) for name in names[:3])
++        observed = {(row["question"], row["section"]) for row in coverage["rows"]
++                    if row["state"] == "inspected-not-found" and row["inspected"] is True}
++        scoped = set(zip(scope["questions"], scope["sections"], strict=True))
++        ready = (
++            scope["format"] == "literature-reading-scope/1"
++            and closure["format"] == "literature-reading-closure/1"
++            and coverage["format"] == "literature-reading-coverage/1"
++            and bool(scoped) and scoped <= observed and _recall(artifacts["fidelity.json"]) == [2, 2]
++            and scope["predicate"] == "alternative_integrator"
++            and closure["scope_sha256"] == pins["scope.json"] and closure["sections"] == scope["sections"]
++        )
++    except (ValueError, KeyError, TypeError):
++        return "unavailable"
++    return "qualified" if ready else "unavailable"
++
++
++def _public_results(inputs, broad, targeted):
++    with tempfile.TemporaryDirectory(prefix="gnd-reading-") as temporary:
++        folder = Path(temporary).resolve()
++        for name in ("reading.orm.json", "vocabulary.orm.json"):
++            (folder / name).write_bytes(inputs.raw[name])
++        _route(folder, "extract", "reading.orm.json", "--out", "bundle")
++        index = _decode(_read(folder, "bundle/reading.orm.artifacts.json"))
++        header = index["header_template"]
++        results, artifacts = {}, {}
++        for name, attempts in (("broad", broad), ("targeted", targeted)):
++            document = b"\n".join(inputs.source_range(inputs.sections[row["section"]]) for row in attempts)
++            raw, results[name] = _checked(folder, name, header, index, document, _combined(attempts))
++            _need(results[name] == {"verify": 0, "check": 0}, f"{name} extraction is unverified")
++            artifacts[name + ".population.json"] = raw
++        # This synthetic source explicitly reports a label conflict; keep both facts.
++        conflict = {"subject_label": [LABEL, {**LABEL, "label": "Conflicting reported label"}]}
++        document = b"For the same identifier the record reports two different labels.\n"
++        raw, results["reported-conflict"] = _checked(folder, "reported-conflict", header, index,
++                                                     document, conflict)
++        _need(results["reported-conflict"] == {"verify": 1, "check": 1},
++              "the reported conflict was not preserved")
++        artifacts["reported-conflict.population.json"] = raw
++        fidelity = _calibrate(folder, inputs, header, index)
++        return results, artifacts, fidelity
++
++
++def _read_retained(run):
++    raw_manifest = _read(run, "run.json")
++    manifest = _decode(raw_manifest)
++    _need(raw_manifest == canonical_json_bytes(manifest), "noncanonical reading manifest")
++    roster = manifest.get("artifacts")
++    _need(manifest.get("format") == "literature-reading-run/1"
++          and isinstance(roster, dict) and set(roster) == set(FILES), "incomplete stage roster")
++    artifacts = {}
++    predecessor = None
++    for index, stage in enumerate(STAGES):
++        name = f"stage-{index}.json"
++        raw = _read(run, name)
++        stage_record = _decode(raw)
++        _need(sha256_hex(raw) == roster[name] and stage_record.get("stage") == stage
++              and stage_record.get("predecessor_sha256") == predecessor
++              and stage_record.get("payload_sha256") == roster[f"payload-{index}.json"],
++              "stale retained reading stage")
++        artifacts[name] = raw
++        predecessor = sha256_hex(raw)
++    for name in FILES:
++        if name in artifacts:
++            continue
++        raw = _read(run, name)
++        _need(sha256_hex(raw) == roster[name], "stale retained reading output")
++        artifacts[name] = raw
++    retained = {}
++    for stage_index in (1, 3):
++        payload = _decode(artifacts[f"payload-{stage_index}.json"])
++        retained.update({row["section"]: row["response"] for row in payload["attempts"]})
++    return manifest, artifacts, retained
++
++
++def _evaluate(inputs, budget, scenario, *, producer=None, retained=None):
++    _need(type(budget) is int and 0 <= budget <= MAX_BUDGET and scenario in SCENARIOS, "invalid reading settings")
++    retained = retained or {}
++    unavailable = {"study-methods"} if scenario == "unavailable" else set()
++    broad, left = _inspect(inputs, STAGES[1], inputs.selection("opening"), budget, producer, retained)
++    opened = {row["section"]: row for row in broad["attempts"]}
++    needed = {row["section"] for row in inputs.questions.values() if row["superseded_by"] is None
++              and row["fact"] not in opened.get(row["section"], {}).get("response", {}).get("facts", {})}
++    planned_targeted = [name for name in inputs.selection("targeted") if name in needed]
++    selected = [name for name in planned_targeted if name not in unavailable]
++    targeted, left = _inspect(inputs, STAGES[3], selected, left, producer, retained)
++    recorded_calls = {STAGES[1]: broad["original_producer_calls"], STAGES[3]: targeted["original_producer_calls"]}
++    _need(producer is None or producer.calls == recorded_calls, "producer call counts disagree with captured attempts")
++    attempts = [*broad["attempts"], *targeted["attempts"]]
++    attempted = {row["section"]: row for row in attempts}
++    judgments = _review_attempts(inputs, attempts)
++    coverage, questions = _outcomes(inputs, attempted, unavailable)
++    resolved = {row["id"] for row in questions if row["outcome"] == "resolved"}
++    required = {key for key, value in inputs.questions.items() if value["required"]}
++    if required <= resolved:
++        stop = "required-coverage-completed"
++    elif broad["omitted"] or targeted["omitted"]:
++        stop = "budget-exhausted"
++    else:
++        stop = "available-evidence-exhausted"
++    proposed_keys = {key for row in targeted["attempts"] for key in row["response"]["proposal_keys"]}
++    revisit = affected_sections(inputs.sections, proposed_keys)
++    routes, artifacts, fidelity = _public_results(inputs, broad["attempts"], attempts)
++    coverage_doc = {"format": "literature-reading-coverage/1", "rows": coverage}
++    artifacts.update({
++        "coverage.json": canonical_json_bytes(coverage_doc),
++        "scope.json": inputs.raw["scope.json"], "closure.json": inputs.raw["closure.json"],
++        **{f"fidelity-{name}.json": result[0] for name, result in fidelity.items()},
++    })
++    absence = {}
++    for kind, (raw, _counts) in fidelity.items():
++        scoped = {name: artifacts[name] for name in ("scope.json", "closure.json", "coverage.json")}
++        scoped["fidelity.json"] = raw
++        absence[kind] = absence_status(scoped, {name: sha256_hex(data) for name, data in scoped.items()})
++    payloads = (
++        {"sources": list(inputs.sources.values()), "sections": list(inputs.sections.values()), "unavailable": sorted(unavailable)},
++        broad, {"selected": selected, "unresolved": sorted(needed)}, targeted,
++        {"coverage": coverage, "questions": questions, "semantic_reviews": judgments,
++         "vocabulary_proposals": sorted(proposed_keys), "revisit": revisit},
++        {"public_routes": routes, "fidelity": {name: val[1] for name, val in fidelity.items()}, "absence": absence},
++    )
++    stages = []
++    predecessor = None
++    for i, (stage, purpose, payload) in enumerate(zip(STAGES, PURPOSES, payloads, strict=True)):
++        payload_name = f"payload-{i}.json"
++        artifacts[payload_name] = raw = canonical_json_bytes(payload)
++        record = {
++            "stage": stage, "purpose": purpose, "inputs": inputs.pins(),
++            "predecessor_sha256": predecessor, "payload_sha256": sha256_hex(raw),
++            "inspected": [row["section"] for row in payload.get("attempts", [])],
++            "questions": list(inputs.questions),
++        }
++        stages.append(record)
++        artifacts[f"stage-{i}.json"] = raw = canonical_json_bytes(record)
++        predecessor = sha256_hex(raw)
++    manifest = {"format": "literature-reading-run/1", "scenario": scenario, "budget_bytes": budget,
++                "inputs": inputs.pins(), "artifacts": {name: sha256_hex(raw) for name, raw in artifacts.items()}}
++    broad_facts, final_facts = _combined(broad["attempts"]), _combined(attempts)
++    report = {
++        "format": "literature-reading-report/1", "stop": stop, "stages": stages,
++        "producer_calls": producer.calls if producer is not None else dict.fromkeys((STAGES[1], STAGES[3]), 0),
++        "coverage": coverage, "questions": questions, "revisit": revisit,
++        "inspections": [{key: value for key, value in row.items() if key != "response"} for row in attempts],
++        "reading_bytes": budget - left, "attempt_counts": {kind: sum(row["outcome"] == kind for row in attempts)
++                                                            for kind in ("accepted", "empty", "refused")},
++        "omitted": broad["omitted"] + targeted["omitted"],
++        "read_denominator": {
++            "scheduled": len(inputs.selection("opening")) + len(planned_targeted),
++            "attempted": len(attempts),
++            "omitted": len(broad["omitted"]) + len(targeted["omitted"]),
++            "unavailable": len(planned_targeted) - len(selected),
++        },
++        "broad_fact_types": sorted(broad_facts),
++        "targeted_fact_types": sorted(final_facts),
++        "public_routes": routes, "fidelity": payloads[-1]["fidelity"],
++        "absence": {"status": absence["high"], "below_floor_status": absence["low"]},
++        "evidence_sha256": sha256_hex(canonical_json_bytes(manifest)),
++    }
++    report["supported_fact_gain"] = sum(
++        len({canonical_json_bytes(row) for row in rows}
++            - {canonical_json_bytes(row) for row in broad_facts.get(fact, [])})
++        for fact, rows in final_facts.items()
++    )
++    report["newly_answered"] = sum(
++        row["outcome"] == "resolved" and inputs.questions[row["id"]]["section"] not in opened
++        for row in questions
++    )
++    report["productivity"] = {
++        "new_facts_per_byte": {"numerator": report["supported_fact_gain"], "denominator": budget - left},
++        "new_answers_per_byte": {"numerator": report["newly_answered"], "denominator": budget - left},
++    }
++    return manifest, artifacts, report
++
++
++def run(out: Path, *, budget=DEFAULT_BUDGET, scenario="full", fixture: Path = FIXTURE) -> dict:
++    """Run the saved-response workflow and retain its complete evidence."""
++    _need(not out.exists() and not out.is_symlink(), "reading output already exists")
++    inputs = ReadingInputs(fixture)
++    manifest, artifacts, report = _evaluate(inputs, budget, scenario, producer=SavedProducer(inputs.responses))
++    out.mkdir()
++    for name, raw in artifacts.items():
++        (out / name).write_bytes(raw)
++    (out / "run.json").write_bytes(canonical_json_bytes(manifest))
++    return report
++
++
++def replay(folder: Path, *, fixture: Path = FIXTURE) -> dict:
++    """Re-derive the reading result from retained evidence without invoking producers."""
++    manifest, artifacts, retained = _read_retained(folder)
++    inputs = ReadingInputs(fixture)
++    _need(manifest.get("inputs") == inputs.pins(), "stale reading input")
++    observed, actual, report = _evaluate(inputs, manifest.get("budget_bytes"),
++                                         manifest.get("scenario"), retained=retained)
++    _need(manifest == observed and artifacts == actual, "re-derived reading evidence differs")
++    return report
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    commands = parser.add_subparsers(dest="command", required=True)
++    fresh = commands.add_parser("run")
++    fresh.add_argument("--out", type=Path, required=True)
++    fresh.add_argument("--budget-bytes", type=int, default=DEFAULT_BUDGET)
++    fresh.add_argument("--scenario", choices=SCENARIOS, default="full")
++    repeat = commands.add_parser("replay")
++    repeat.add_argument("folder", type=Path)
++    args = parser.parse_args(argv)
++    try:
++        if args.command == "run":
++            result = run(args.out, budget=args.budget_bytes, scenario=args.scenario)
++        else:
++            result = replay(args.folder.resolve())
++    except (ArtifactError, OSError, ValueError, KeyError, TypeError, AttributeError, IndexError) as error:
++        sys.stdout.buffer.write(canonical_json_bytes({"status": "incomplete", "reason": str(error)}))
++        return 3
++    sys.stdout.buffer.write(canonical_json_bytes(result))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/src/gnd/examples/literature/reading_fixture/README.md b/src/gnd/examples/literature/reading_fixture/README.md
+new file mode 100644
+index 00000000..72c85a59
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/README.md
+@@ -0,0 +1,64 @@
++# Multipass reading and coverage
++
++Run the packaged workflow offline, then replay its retained outputs.
++
++```sh
++python -m gnd.examples.literature.reading run --out ./reading-run
++python -m gnd.examples.literature.reading replay ./reading-run
++```
++
++The example uses locally authored source notes and saved extractor responses.
++A fresh run records actual adapter calls. Replay checks each artifact digest,
++validates the stage roster and re-derives the report using retained responses.
++The replay path invokes the local GND verifiers and performs zero producer
++calls. It exits 3 with incomplete status if a required artifact is stale,
++missing or differs on re-derivation.
++
++## Stage files
++
++The independent input roster names source versions, document digests,
++section identifiers and byte spans. Available section, table and equation
++entries can be inventoried. The stage files occur in this order.
++
++1. Inventory
++2. Broad extraction
++3. Targeted selection
++4. Targeted extraction
++5. Review
++6. Affected recheck
++
++Each `stage-N.json` binds the exact input digests, predecessor record and
++corresponding `payload-N.json`. The saved attempt rows bind the selected
++source range and producer response. The review payload binds its separate
++source judgments and the targeted vocabulary proposal that produces a revisit
++list. The run manifest binds all stage and companion artifacts. A targeted pass recovers a fact from the methods note.
++A separate synthetic reported conflict retains both labels and shows the
++real public verify and check failures.
++
++## Coverage and cost
++
++The report gives each question one disposition. Inspected-but-unfound source
++material, unavailable material, inapplicable material and explicit statements
++of denial remain distinguishable. Refused and empty extractor responses also
++have distinct outcomes. Omitted and unavailable ranges contribute zero
++inspected bytes, while attempted empty or refused ranges contribute their
++actual length. Repeated attempts each contribute their inspected length.
++The report includes the number of scheduled, attempted, omitted and
++unavailable reads, plus fact and question gains per byte read. Run with
++`--scenario unavailable` to exercise exhausted evidence or
++`--budget-bytes 0` to exercise budget exhaustion.
++
++A scoped absence claim binds four inputs: a closure, its declared scope, the
++typed coverage rows, and an actual held-back fidelity report. The fixture's
++positive recall floor is two of two. One of two leaves the absence status
++unavailable for the same scope.
++
++## Assurance coverage
++
++The existing assurance scorer can compare a new run's coverage rows against
++an independent expected roster. Put the rows in `coverage.json`, set the run
++metadata's `coverage` field to `{"sha256": "<digest>"}`, and supply the
++expected rows in the answer key's `coverage` field. Each row has a question
++ID, the source ID, the corresponding corpus passage ID in `section`, a state
++and an `inspected` boolean. The scorer compares the exact tuples at a
++precision and recall floor of one. Both inputs are needed to measure this stage.
+diff --git a/src/gnd/examples/literature/reading_fixture/annex.txt b/src/gnd/examples/literature/reading_fixture/annex.txt
+new file mode 100644
+index 00000000..be9518ad
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/annex.txt
+@@ -0,0 +1 @@
++The annex lists its record identifier only.
+diff --git a/src/gnd/examples/literature/reading_fixture/calibration.json b/src/gnd/examples/literature/reading_fixture/calibration.json
+new file mode 100644
+index 00000000..afdb8d06
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/calibration.json
+@@ -0,0 +1,24 @@
++{
++  "high": {
++    "system": [
++      {
++        "subject": "alanine-in-vacuum",
++        "value": "alanine dipeptide in vacuum"
++      }
++    ],
++    "approximation": [
++      {
++        "subject": "alanine-in-vacuum",
++        "value": "Langevin integration at 300 K with 2 fs steps"
++      }
++    ]
++  },
++  "low": {
++    "system": [
++      {
++        "subject": "alanine-in-vacuum",
++        "value": "alanine dipeptide in vacuum"
++      }
++    ]
++  }
++}
+diff --git a/src/gnd/examples/literature/reading_fixture/closure.json b/src/gnd/examples/literature/reading_fixture/closure.json
+new file mode 100644
+index 00000000..08eda0cb
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/closure.json
+@@ -0,0 +1,7 @@
++{
++  "format": "literature-reading-closure/1",
++  "scope_sha256": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
++  "sections": [
++    "study-methods"
++  ]
++}
+diff --git a/src/gnd/examples/literature/reading_fixture/control.txt b/src/gnd/examples/literature/reading_fixture/control.txt
+new file mode 100644
+index 00000000..c863bd6e
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/control.txt
+@@ -0,0 +1 @@
++Table of synthetic identifiers withheld by the producer.
+diff --git a/src/gnd/examples/literature/reading_fixture/gold.json b/src/gnd/examples/literature/reading_fixture/gold.json
+new file mode 100644
+index 00000000..3760c1cf
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/gold.json
+@@ -0,0 +1,14 @@
++{
++  "system": [
++    {
++      "subject": "alanine-in-vacuum",
++      "value": "alanine dipeptide in vacuum"
++    }
++  ],
++  "approximation": [
++    {
++      "subject": "alanine-in-vacuum",
++      "value": "Langevin integration at 300 K with 2 fs steps"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/reading_fixture/reading.orm.json b/src/gnd/examples/literature/reading_fixture/reading.orm.json
+new file mode 100644
+index 00000000..19132e6b
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/reading.orm.json
+@@ -0,0 +1,142 @@
++{
++  "version": 5,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [],
++  "fact_types": [
++    {
++      "id": "system",
++      "reading": "{Subject} has system {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "energy_model",
++      "reading": "{Subject} has energy model {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "objective",
++      "reading": "{Subject} has objective {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "approximation",
++      "reading": "{Subject} has approximation {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "ensemble",
++      "reading": "{Subject} has ensemble {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "validity",
++      "reading": "{Subject} has validity {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "explicit_denial",
++      "reading": "{Subject} reports {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "alternative_integrator",
++      "reading": "{Subject} reports {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "equation",
++      "reading": "{Subject} reports {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    }
++  ],
++  "includes": [
++    {
++      "id": "scientific-vocabulary",
++      "path": "vocabulary.orm.json",
++      "sha256": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/reading_fixture/responses.json b/src/gnd/examples/literature/reading_fixture/responses.json
+new file mode 100644
+index 00000000..e19d0312
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/responses.json
+@@ -0,0 +1,55 @@
++{
++  "study-opening": {
++    "outcome": "accepted",
++    "facts": {
++      "system": [
++        {
++          "subject": "alanine-in-vacuum",
++          "value": "alanine dipeptide in vacuum"
++        }
++      ]
++    },
++    "proposal_keys": []
++  },
++  "study-methods": {
++    "outcome": "accepted",
++    "facts": {
++      "approximation": [
++        {
++          "subject": "alanine-in-vacuum",
++          "value": "Langevin integration at 300 K with 2 fs steps"
++        }
++      ]
++    },
++    "proposal_keys": [
++      "method-family"
++    ]
++  },
++  "study-limits": {
++    "outcome": "accepted",
++    "facts": {
++      "explicit_denial": [
++        {
++          "subject": "alanine-in-vacuum",
++          "value": "no barostat"
++        }
++      ]
++    },
++    "proposal_keys": []
++  },
++  "annex-opening": {
++    "outcome": "empty",
++    "facts": {},
++    "proposal_keys": []
++  },
++  "control-table": {
++    "outcome": "refused",
++    "facts": {},
++    "proposal_keys": []
++  },
++  "study-equation": {
++    "outcome": "empty",
++    "facts": {},
++    "proposal_keys": []
++  }
++}
+diff --git a/src/gnd/examples/literature/reading_fixture/reviews.json b/src/gnd/examples/literature/reading_fixture/reviews.json
+new file mode 100644
+index 00000000..f0e8e74f
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/reviews.json
+@@ -0,0 +1 @@
++{"study-limits":{"basis":"The note expressly denies use of a barostat.","decision":"supported","excerpt_sha256":"31973c282788a8768b5346eaef9054aee0cd5522878c0e7c12772893f20f2d69","facts_sha256":"45e122d0b1a183228d40269f929fcb980bbfaf7fc56561d8d24c99598881a106"},"study-methods":{"basis":"The methods note identifies the integrator, temperature and step.","decision":"supported","excerpt_sha256":"e7901bc7466b42501b99734d44e188751cf5352e12b1cc2260c28a8d9ab3a61d","facts_sha256":"004c9498385a2367312670d0da7af76e3c3efe41fc922f1ab1659d81751367ed"},"study-opening":{"basis":"The note names the molecular system and vacuum environment.","decision":"supported","excerpt_sha256":"6f933ec6ab5bd08bf476c5a9fc8db30f2ffa404699d730c3e7d9754e4a97befe","facts_sha256":"d9efb5efd5986e61f8f8f03da1a480af9923fe1fb2b0428432673ec7c3daad34"}}
+diff --git a/src/gnd/examples/literature/reading_fixture/roster.json b/src/gnd/examples/literature/reading_fixture/roster.json
+new file mode 100644
+index 00000000..427a8079
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/roster.json
+@@ -0,0 +1,190 @@
++{
++  "format": "literature-reading-roster/1",
++  "sources": [
++    {
++      "id": "study",
++      "version": "authored-note-1",
++      "path": "study.txt",
++      "sha256": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843"
++    },
++    {
++      "id": "annex",
++      "version": "authored-note-1",
++      "path": "annex.txt",
++      "sha256": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136"
++    },
++    {
++      "id": "control",
++      "version": "authored-note-1",
++      "path": "control.txt",
++      "sha256": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a"
++    }
++  ],
++  "sections": [
++    {
++      "id": "study-opening",
++      "source": "study",
++      "kind": "section",
++      "selection": "opening",
++      "keys": [
++        "method-family"
++      ],
++      "span": [
++        0,
++        40
++      ],
++      "reason": null
++    },
++    {
++      "id": "study-methods",
++      "source": "study",
++      "kind": "section",
++      "selection": "targeted",
++      "keys": [
++        "method-family"
++      ],
++      "span": [
++        41,
++        93
++      ],
++      "reason": null
++    },
++    {
++      "id": "study-limits",
++      "source": "study",
++      "kind": "section",
++      "selection": "targeted",
++      "keys": [
++        "sampling-limit"
++      ],
++      "span": [
++        94,
++        137
++      ],
++      "reason": null
++    },
++    {
++      "id": "annex-opening",
++      "source": "annex",
++      "kind": "section",
++      "selection": "opening",
++      "keys": [
++        "annex"
++      ],
++      "span": [
++        0,
++        43
++      ],
++      "reason": null
++    },
++    {
++      "id": "control-table",
++      "source": "control",
++      "kind": "table",
++      "selection": "opening",
++      "keys": [
++        "control"
++      ],
++      "span": [
++        0,
++        56
++      ],
++      "reason": null
++    },
++    {
++      "id": "annex-methods",
++      "source": "annex",
++      "kind": "section",
++      "selection": null,
++      "keys": [
++        "annex"
++      ],
++      "span": null,
++      "reason": "unavailable"
++    },
++    {
++      "id": "control-equation",
++      "source": "control",
++      "kind": "equation",
++      "selection": null,
++      "keys": [
++        "control"
++      ],
++      "span": null,
++      "reason": "not-applicable"
++    },
++    {
++      "id": "study-equation",
++      "source": "study",
++      "kind": "equation",
++      "selection": "targeted",
++      "keys": [],
++      "span": [
++        138,
++        204
++      ],
++      "reason": null
++    }
++  ],
++  "questions": [
++    {
++      "id": "system",
++      "section": "study-opening",
++      "fact": "system",
++      "required": true,
++      "superseded_by": null,
++      "denial": false
++    },
++    {
++      "id": "method",
++      "section": "study-methods",
++      "fact": "approximation",
++      "required": true,
++      "superseded_by": null,
++      "denial": false
++    },
++    {
++      "id": "denial",
++      "section": "study-limits",
++      "fact": "explicit_denial",
++      "required": true,
++      "superseded_by": null,
++      "denial": true
++    },
++    {
++      "id": "alternative",
++      "section": "study-methods",
++      "fact": "alternative_integrator",
++      "required": false,
++      "superseded_by": null,
++      "denial": false
++    },
++    {
++      "id": "annex-method",
++      "section": "annex-methods",
++      "fact": "approximation",
++      "required": false,
++      "superseded_by": null,
++      "denial": false
++    },
++    {
++      "id": "equation",
++      "section": "control-equation",
++      "fact": "equation",
++      "required": false,
++      "superseded_by": null,
++      "denial": false
++    },
++    {
++      "id": "old-method",
++      "section": "study-methods",
++      "fact": "approximation",
++      "required": false,
++      "superseded_by": "method",
++      "denial": false
++    }
++  ],
++  "revisit_keys": [
++    "method-family"
++  ]
++}
+diff --git a/src/gnd/examples/literature/reading_fixture/scope.json b/src/gnd/examples/literature/reading_fixture/scope.json
+new file mode 100644
+index 00000000..017b2391
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/scope.json
+@@ -0,0 +1,10 @@
++{
++  "format": "literature-reading-scope/1",
++  "questions": [
++    "alternative"
++  ],
++  "sections": [
++    "study-methods"
++  ],
++  "predicate": "alternative_integrator"
++}
+diff --git a/src/gnd/examples/literature/reading_fixture/study.txt b/src/gnd/examples/literature/reading_fixture/study.txt
+new file mode 100644
+index 00000000..109fb43f
+--- /dev/null
++++ b/src/gnd/examples/literature/reading_fixture/study.txt
+@@ -0,0 +1,4 @@
++Alanine dipeptide was studied in vacuum.
++Langevin integration at 300 K used a 2 fs time step.
++The worked run explicitly used no barostat.
++The time-step count is represented as n = 10 for the illustration.
+diff --git a/tests/fixtures/ld3-reading/README.md b/tests/fixtures/ld3-reading/README.md
+new file mode 100644
+index 00000000..5e9790cc
+--- /dev/null
++++ b/tests/fixtures/ld3-reading/README.md
+@@ -0,0 +1,5 @@
++# LD3 reading acceptance expectations
++
++The [expected results](expected.json) are separate from the packaged
++workflow's inputs. Run the public-route checks with
++`uv run pytest -q tests/test_ld3_reading_workflow.py`.
+diff --git a/tests/fixtures/ld3-reading/expected.json b/tests/fixtures/ld3-reading/expected.json
+new file mode 100644
+index 00000000..a4ffb622
+--- /dev/null
++++ b/tests/fixtures/ld3-reading/expected.json
+@@ -0,0 +1,30 @@
++{
++  "stages": ["inventory", "broad-extraction", "selection", "targeted-extraction", "review", "recheck"],
++  "stop": {
++    "full": "required-coverage-completed",
++    "unavailable": "available-evidence-exhausted",
++    "budget": "budget-exhausted"
++  },
++  "full_calls": {"broad-extraction": 3, "targeted-extraction": 2},
++  "replay_calls": {"broad-extraction": 0, "targeted-extraction": 0},
++  "coverage": {
++    "system": "supported",
++    "method": "supported",
++    "denial": "explicitly-denied",
++    "alternative": "inspected-not-found",
++    "annex-method": "unavailable",
++    "equation": "not-applicable"
++  },
++  "question_outcomes": {
++    "system": "resolved",
++    "method": "resolved",
++    "denial": "resolved",
++    "alternative": "retained",
++    "annex-method": "retained",
++    "equation": "retained",
++    "old-method": "superseded"
++  },
++  "revisit": ["study-opening", "study-methods"],
++  "fidelity": {"high": [2, 2], "low": [1, 2]},
++  "violation_exits": {"verify": 1, "check": 1}
++}
+diff --git a/tests/test_ld3_reading_workflow.py b/tests/test_ld3_reading_workflow.py
+new file mode 100644
+index 00000000..6d60af32
+--- /dev/null
++++ b/tests/test_ld3_reading_workflow.py
+@@ -0,0 +1,257 @@
++"""Test the reading workflow through its ordinary entry points."""
++from __future__ import annotations
++
++import json
++import subprocess
++import sys
++from pathlib import Path
++
++import pytest
++
++EXPECTED = json.loads((Path(__file__).parent / "fixtures/ld3-reading/expected.json").read_bytes())
++
++
++def _cli(*args):
++    proc = subprocess.run(
++        [sys.executable, "-m", "gnd.examples.literature.reading", *map(str, args)],
++        capture_output=True, check=False, timeout=90,
++    )
++    assert proc.stdout, proc.stderr.decode()
++    return proc.returncode, json.loads(proc.stdout)
++
++
++@pytest.fixture(scope="module")
++def fresh(tmp_path_factory):
++    path = tmp_path_factory.mktemp("reading") / "run"
++    code, report = _cli("run", "--out", path)
++    assert code == 0, report
++    return path, report
++
++
++def test_six_stages_and_no_call_replay(fresh):
++    path, report = fresh
++    assert [row["stage"] for row in report["stages"]] == EXPECTED["stages"]
++    assert report["producer_calls"] == EXPECTED["full_calls"]
++    for index in (1, 3):
++        payload = json.loads((path / f"payload-{index}.json").read_bytes())
++        assert payload["original_producer_calls"] == EXPECTED["full_calls"][EXPECTED["stages"][index]]
++    before = (path / "run.json").read_bytes()
++    code, replay = _cli("replay", path)
++    assert code == 0, replay
++    assert replay["producer_calls"] == EXPECTED["replay_calls"]
++    assert replay["evidence_sha256"] == report["evidence_sha256"]
++    assert (path / "run.json").read_bytes() == before
++
++
++def test_reading_outcomes_and_actual_checks(fresh):
++    _, report = fresh
++    assert report["stop"] == EXPECTED["stop"]["full"]
++    assert {row["question"]: row["state"] for row in report["coverage"]} == EXPECTED["coverage"]
++    assert {row["id"]: row["outcome"] for row in report["questions"]} == EXPECTED["question_outcomes"]
++    assert report["revisit"] == EXPECTED["revisit"]
++    assert "approximation" not in report["broad_fact_types"]
++    assert "approximation" in report["targeted_fact_types"]
++    assert report["public_routes"]["targeted"] == {"verify": 0, "check": 0}
++    assert report["public_routes"]["reported-conflict"] == EXPECTED["violation_exits"]
++    assert report["attempt_counts"] == {"accepted": 3, "empty": 1, "refused": 1}
++    assert report["reading_bytes"] == sum(row["end"] - row["start"] for row in report["inspections"])
++
++
++@pytest.mark.parametrize(("scenario", "args"), [
++    ("unavailable", ["--scenario", "unavailable"]), ("budget", ["--budget-bytes", "0"]),
++])
++def test_other_stop_reasons(tmp_path, scenario, args):
++    code, report = _cli("run", "--out", tmp_path / "run", *args)
++    assert code == 0
++    assert report["stop"] == EXPECTED["stop"][scenario]
++    assert report["absence"]["status"] == "unavailable"
++    if scenario == "budget":
++        assert report["revisit"] == []
++        assert report["read_denominator"] == {"scheduled": 5, "attempted": 0, "omitted": 5, "unavailable": 0}
++    else:
++        assert report["read_denominator"] == {"scheduled": 5, "attempted": 4, "omitted": 0, "unavailable": 1}
++
++
++def test_fidelity_recall_cases(fresh):
++    _, report = fresh
++    assert report["fidelity"] == EXPECTED["fidelity"]
++    assert report["absence"]["status"] == "qualified"
++    assert report["absence"]["below_floor_status"] == "unavailable"
++
++
++def test_replay_validates_coverage_after_a_coordinated_repin(fresh, tmp_path, monkeypatch):
++    import shutil
++
++    from gnd.artifacts import canonical_json_bytes, sha256_hex
++    from gnd.examples.literature import reading
++
++    original, _ = fresh
++    run = tmp_path / "copied"
++    shutil.copytree(original, run)
++    monkeypatch.setattr(reading.SavedProducer, "produce", lambda *_: pytest.fail("replay invoked producer"))
++    assert reading.replay(run)["producer_calls"] == EXPECTED["replay_calls"]
++    coverage = run / "coverage.json"
++    manifest = run / "run.json"
++    value = json.loads(coverage.read_bytes())
++    value["rows"].pop()
++    raw = canonical_json_bytes(value)
++    coverage.write_bytes(raw)
++    index = json.loads(manifest.read_bytes())
++    index["artifacts"][coverage.name] = sha256_hex(raw)
++    manifest.write_bytes(canonical_json_bytes(index))
++    with pytest.raises(reading.ExampleError, match="re-derived reading evidence differs"):
++        reading.replay(run)
++    coverage.unlink()
++    code, report = _cli("replay", run)
++    assert code == 3 and report["status"] == "incomplete"
++
++
++@pytest.mark.parametrize("defect", ["empty", "duplicate", "unknown-target", "cycle", "path", "oversized"])
++def test_input_roster_refuses_before_a_producer_runs(tmp_path, monkeypatch, defect):
++    import shutil
++
++    from gnd.examples.literature import reading
++
++    fixture = tmp_path / "fixture"
++    shutil.copytree(reading.FIXTURE, fixture)
++    path = fixture / "roster.json"
++    roster = json.loads(path.read_bytes())
++    if defect == "empty":
++        roster["questions"] = []
++    elif defect == "duplicate":
++        roster["questions"].append(roster["questions"][0])
++    elif defect == "unknown-target":
++        roster["questions"][0]["superseded_by"] = "absent"
++    elif defect == "cycle":
++        roster["questions"][0]["superseded_by"] = "system"
++    elif defect == "path":
++        roster["sources"][0]["path"] = "../study.txt"
++    path.write_text(" " * (128 * 1024 + 1) if defect == "oversized" else json.dumps(roster))
++    monkeypatch.setattr(reading.SavedProducer, "produce", lambda *_: pytest.fail("admitted invalid roster"))
++    with pytest.raises((reading.ArtifactError, reading.ExampleError)):
++        reading.run(tmp_path / "out", fixture=fixture)
++
++
++def test_absence_requires_all_four_exact_inputs_and_rejects_low_recall(fresh):
++    from gnd.artifacts import sha256_hex
++    from gnd.examples.literature import reading
++
++    run, _ = fresh
++    bound = {name: (run / name).read_bytes() for name in ("scope.json", "closure.json", "coverage.json")}
++    bound["fidelity.json"] = (run / "fidelity-high.json").read_bytes()
++    pins = {name: sha256_hex(raw) for name, raw in bound.items()}
++    assert reading.absence_status(bound, pins) == "qualified"
++    for name, raw in bound.items():
++        reduced = {key: value for key, value in bound.items() if key != name}
++        assert reading.absence_status(reduced, pins) == "unavailable"
++        assert reading.absence_status({**bound, name: raw + b" "}, pins) == "unavailable"
++    low = (run / "fidelity-low.json").read_bytes()
++    assert reading.absence_status({**bound, "fidelity.json": low},
++                                  {**pins, "fidelity.json": sha256_hex(low)}) == "unavailable"
++
++
++def test_repeated_inspections_charge_both_actual_reads():
++    from gnd.examples.literature import reading
++
++    inputs = reading.ReadingInputs(reading.FIXTURE)
++    producer = reading.SavedProducer(inputs.responses)
++    selected = "study-opening"
++    size = len(inputs.source_range(inputs.sections[selected]))
++    payload, remaining = reading._inspect(
++        inputs, "broad-extraction", [selected, selected], size * 2, producer, {},
++    )
++    assert len(payload["attempts"]) == 2
++    assert producer.calls["broad-extraction"] == 2
++    assert remaining == 0
++
++
++def test_reported_violation_round_trip_is_available(fresh):
++    run, report = fresh
++    retained = json.loads((run / "reported-conflict.population.json").read_bytes())
++    labels = retained["facts"]["subject_label"]
++    assert len(labels) == 2 and labels[0]["subject"] == labels[1]["subject"]
++    assert labels[0]["label"] != labels[1]["label"]
++    assert report["public_routes"]["reported-conflict"] == EXPECTED["violation_exits"]
++    assert report["read_denominator"] == {"scheduled": 5, "attempted": 5, "omitted": 0, "unavailable": 0}
++    assert report["productivity"]["new_facts_per_byte"] == {
++        "numerator": 2, "denominator": report["reading_bytes"],
++    }
++
++
++def test_source_review_refuses_changed_semantics_before_check(tmp_path, monkeypatch):
++    import shutil
++
++    from gnd.examples.literature import reading
++
++    fixture = tmp_path / "fixture"
++    shutil.copytree(reading.FIXTURE, fixture)
++    saved = fixture / "responses.json"
++    doc = json.loads(saved.read_bytes())
++    doc["study-methods"]["facts"]["approximation"][0]["value"] = "An unreviewed integrator"
++    saved.write_text(json.dumps(doc))
++    monkeypatch.setattr(reading, "_public_results", lambda *_: pytest.fail("admitted stale semantic review"))
++    with pytest.raises(reading.ExampleError, match="stale semantic reading review"):
++        reading.run(tmp_path / "out", fixture=fixture)
++
++
++def test_maximum_question_roster_is_bounded(tmp_path):
++    import shutil
++    import time
++
++    from gnd.examples.literature import reading
++
++    fixture = tmp_path / "fixture"
++    shutil.copytree(reading.FIXTURE, fixture)
++    path = fixture / "roster.json"
++    roster = json.loads(path.read_bytes())
++    for index in range(reading.ROSTER_LIMIT - len(roster["questions"])):
++        roster["questions"].append({
++            **roster["questions"][0], "id": f"bounded-{index}", "required": False,
++        })
++    path.write_text(json.dumps(roster))
++    started = time.monotonic()
++    assert len(reading.ReadingInputs(fixture).questions) == reading.ROSTER_LIMIT
++    assert time.monotonic() - started < 5
++
++
++def test_stage_order_refuses_before_payload_reads(fresh, tmp_path, monkeypatch):
++    import shutil
++
++    from gnd.artifacts import canonical_json_bytes, sha256_hex
++    from gnd.examples.literature import reading
++
++    original, _ = fresh
++    run = tmp_path / "copied"
++    shutil.copytree(original, run)
++    stage = run / "stage-0.json"
++    value = json.loads(stage.read_bytes())
++    value["stage"] = "recheck"
++    raw = canonical_json_bytes(value)
++    stage.write_bytes(raw)
++    manifest = run / "run.json"
++    index = json.loads(manifest.read_bytes())
++    index["artifacts"][stage.name] = sha256_hex(raw)
++    manifest.write_bytes(canonical_json_bytes(index))
++    original_read = reading._read
++
++    def restricted_read(folder, name):
++        assert name in {"run.json", "stage-0.json"}
++        return original_read(folder, name)
++
++    monkeypatch.setattr(reading, "_read", restricted_read)
++    with pytest.raises(reading.ExampleError, match="stale retained reading stage"):
++        reading.replay(run)
++
++
++def test_manifest_digest_cannot_describe_different_file_bytes(fresh, tmp_path):
++    import shutil
++
++    from gnd.examples.literature import reading
++
++    original, _ = fresh
++    run = tmp_path / "copied"
++    shutil.copytree(original, run)
++    manifest = run / "run.json"
++    manifest.write_bytes(manifest.read_bytes() + b" ")
++    with pytest.raises(reading.ExampleError, match="noncanonical reading manifest"):
++        reading.replay(run)
+diff --git a/tests/test_li1_assurance_report.py b/tests/test_li1_assurance_report.py
+index 71475058..8a13411e 100644
+--- a/tests/test_li1_assurance_report.py
++++ b/tests/test_li1_assurance_report.py
+@@ -456,7 +456,13 @@ def _report_for(name: str, tmp: Path) -> dict:
+ @pytest.mark.parametrize("name", GOLDEN_CASES)
+ def test_report_golden(name, tmp_path):
+     golden = json.loads((EXPECTED / f"{name}.report.json").read_text(encoding="utf-8"))
+-    assert _report_for(name, tmp_path) == golden
++    actual = _report_for(name, tmp_path)
++    # The frozen report identifies the emitter at the LI1 snapshot. The
++    # live score must identify its own implementation and preserve its results.
++    assert golden["inputs"]["harness_sha256"] == "b3dc219528f3d2131357ce6a4cd5fb55a25dad37a5fbd5b4d1ea43663ac481e4"
++    current_sha = hashlib.sha256((EXAMPLE / "assurance_report.py").read_bytes()).hexdigest()
++    golden["inputs"]["harness_sha256"] = current_sha
++    assert actual == golden
+     assert_matches_expectation(golden, name)
+ 
+ 
+@@ -504,3 +510,36 @@ def test_identity_scoring_refuses_resolution_replaced_after_route(tmp_path, monk
+     assert stage["route_refused"] is True
+     assert report["exit_code"] == 1
+     assert any(item["kind"] == "identity_pairs" for item in report["unscored_labels"])
++
++
++def test_opt_in_coverage_checks_bound_rows_without_changing_legacy(tmp_path):
++    corpus, answers, run = _copy_inputs(tmp_path)
++    plan_path = run / "run.json"
++    plan = json.loads(plan_path.read_bytes())
++    corpus_doc = json.loads((corpus / "corpus/corpus.json").read_bytes())
++    passage = next(row for row in corpus_doc["passages"] if row["document"] in plan["sources"])
++    row = {"question": "new-question", "source": passage["document"], "section": passage["id"],
++           "state": "inspected-not-found", "inspected": True}
++    key = json.loads(answers.read_bytes())
++    key["coverage"] = [row]
++    answers.write_text(json.dumps(key))
++    coverage_path = run / "coverage.json"
++
++    def bound_report(rows):
++        raw = json.dumps({"format": "literature-reading-coverage/1", "rows": rows}).encode()
++        coverage_path.write_bytes(raw)
++        plan["coverage"] = {"sha256": hashlib.sha256(raw).hexdigest()}
++        plan_path.write_text(json.dumps(plan))
++        report = _score(run, answers, corpus)
++        return report, next(stage for stage in report["stages"] if stage["stage"] == "coverage")
++
++    report, coverage = bound_report([row])
++    assert report["exit_code"] == 0
++    assert coverage["status"] == "pass" and coverage["recall"]["numerator"] == 1
++    report, coverage = bound_report([{**row, "state": "omitted", "inspected": False}])
++    assert report["exit_code"] == 1 and coverage["status"] == "fail"
++    report, coverage = bound_report([row, row])
++    assert report["exit_code"] == 1 and coverage["route_refused"] is True
++    coverage_path.unlink()
++    report = _score(run, answers, corpus)
++    assert report["exit_code"] == 1 and "coverage" in report["failed_stages"]

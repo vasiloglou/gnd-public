@@ -1,0 +1,849 @@
+{
+  "candidate": "a589b5b3",
+  "evidence_sha256": "4786f39f8de76db4b4b610dd1d5dd8cb533f35d92b2daafb546ec069860aa821",
+  "fresh": {
+    "absence": {
+      "below_floor_status": "unavailable",
+      "status": "qualified"
+    },
+    "attempt_counts": {
+      "accepted": 3,
+      "empty": 1,
+      "refused": 1
+    },
+    "broad_fact_types": [
+      "subject_label",
+      "system"
+    ],
+    "coverage": [
+      {
+        "inspected": true,
+        "question": "system",
+        "section": "study-opening",
+        "source": "study",
+        "state": "supported"
+      },
+      {
+        "inspected": true,
+        "question": "method",
+        "section": "study-methods",
+        "source": "study",
+        "state": "supported"
+      },
+      {
+        "inspected": true,
+        "question": "denial",
+        "section": "study-limits",
+        "source": "study",
+        "state": "explicitly-denied"
+      },
+      {
+        "inspected": true,
+        "question": "alternative",
+        "section": "study-methods",
+        "source": "study",
+        "state": "inspected-not-found"
+      },
+      {
+        "inspected": false,
+        "question": "annex-method",
+        "section": "annex-methods",
+        "source": "annex",
+        "state": "unavailable"
+      },
+      {
+        "inspected": false,
+        "question": "equation",
+        "section": "control-equation",
+        "source": "control",
+        "state": "not-applicable"
+      }
+    ],
+    "evidence_sha256": "4786f39f8de76db4b4b610dd1d5dd8cb533f35d92b2daafb546ec069860aa821",
+    "fidelity": {
+      "high": [
+        2,
+        2
+      ],
+      "low": [
+        1,
+        2
+      ]
+    },
+    "format": "literature-reading-report/1",
+    "inspections": [
+      {
+        "end": 40,
+        "excerpt_sha256": "6f933ec6ab5bd08bf476c5a9fc8db30f2ffa404699d730c3e7d9754e4a97befe",
+        "outcome": "accepted",
+        "response_sha256": "a2328d1acceee7d31ba2e278e4c2745d1a56e977a5388b2444e64dbce27c8040",
+        "section": "study-opening",
+        "source": "study",
+        "source_version": "authored-note-1",
+        "start": 0
+      },
+      {
+        "end": 43,
+        "excerpt_sha256": "3b466a0b42bcacbd5aa23e4c3f01d7b51b12fc34b6345c7312221bec9128e13b",
+        "outcome": "empty",
+        "response_sha256": "3da5ac2ed4dfe6f09f74f416ab04ef58e5fcfb54664084ee3332d5142afd23f2",
+        "section": "annex-opening",
+        "source": "annex",
+        "source_version": "authored-note-1",
+        "start": 0
+      },
+      {
+        "end": 56,
+        "excerpt_sha256": "2f426186f3e29619880cf9887c84574a826646e6acca0c01d47341193c104b2a",
+        "outcome": "refused",
+        "response_sha256": "fe65033cd1b95d8990d691a5490b06e618d2c1dac3a99aa6f85c9a37ac139ed6",
+        "section": "control-table",
+        "source": "control",
+        "source_version": "authored-note-1",
+        "start": 0
+      },
+      {
+        "end": 93,
+        "excerpt_sha256": "e7901bc7466b42501b99734d44e188751cf5352e12b1cc2260c28a8d9ab3a61d",
+        "outcome": "accepted",
+        "response_sha256": "7e708a195d9d4e2dee9d1c223549fa1b60cfa5d7afdc5bfeac42d341746e19eb",
+        "section": "study-methods",
+        "source": "study",
+        "source_version": "authored-note-1",
+        "start": 41
+      },
+      {
+        "end": 137,
+        "excerpt_sha256": "31973c282788a8768b5346eaef9054aee0cd5522878c0e7c12772893f20f2d69",
+        "outcome": "accepted",
+        "response_sha256": "63f2bf7f5b523f7c5a81a3be7dd78c7652028aa91bf6ee151a59d0025ae35af4",
+        "section": "study-limits",
+        "source": "study",
+        "source_version": "authored-note-1",
+        "start": 94
+      }
+    ],
+    "newly_answered": 2,
+    "omitted": [],
+    "producer_calls": {
+      "broad-extraction": 3,
+      "targeted-extraction": 2
+    },
+    "productivity": {
+      "new_answers_per_byte": {
+        "denominator": 234,
+        "numerator": 2
+      },
+      "new_facts_per_byte": {
+        "denominator": 234,
+        "numerator": 2
+      }
+    },
+    "public_routes": {
+      "broad": {
+        "check": 0,
+        "verify": 0
+      },
+      "reported-conflict": {
+        "check": 1,
+        "verify": 1
+      },
+      "targeted": {
+        "check": 0,
+        "verify": 0
+      }
+    },
+    "questions": [
+      {
+        "id": "system",
+        "outcome": "resolved",
+        "reason": "supported"
+      },
+      {
+        "id": "method",
+        "outcome": "resolved",
+        "reason": "supported"
+      },
+      {
+        "id": "denial",
+        "outcome": "resolved",
+        "reason": "explicitly-denied"
+      },
+      {
+        "id": "alternative",
+        "outcome": "retained",
+        "reason": "inspected-not-found"
+      },
+      {
+        "id": "annex-method",
+        "outcome": "retained",
+        "reason": "unavailable"
+      },
+      {
+        "id": "equation",
+        "outcome": "retained",
+        "reason": "not-applicable"
+      },
+      {
+        "id": "old-method",
+        "outcome": "superseded",
+        "target": "method"
+      }
+    ],
+    "read_denominator": {
+      "attempted": 5,
+      "omitted": 0,
+      "scheduled": 6,
+      "unavailable": 1
+    },
+    "reading_bytes": 234,
+    "revisit": [
+      "study-opening"
+    ],
+    "stages": [
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "e684efbe4e366b79f700ca02f227718c6a2100febf14f285225db1cac048e946",
+        "predecessor_sha256": null,
+        "purpose": "Identify available source versions and sections",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "inventory"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [
+          "study-opening",
+          "annex-opening",
+          "control-table"
+        ],
+        "payload_sha256": "ce0f27a816eff4a6753a6652c96d9a65bfcd13490e11859b4abe306a38944ab7",
+        "predecessor_sha256": "dce643fc27bb94b5960630be954cf022ed02a6c49aa71b13e9354ac2079d41ce",
+        "purpose": "Read opening material and retain unanswered questions",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "broad-extraction"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "b1f504d025eb36c0cf8887e1d4e4943ae6318bbf27c3162735856577f2185fd6",
+        "predecessor_sha256": "3cae76e228e1bb7fde0a1c2a615b26ad3b164912eb86ec32d0a5161035ff6706",
+        "purpose": "Select available ranges for unresolved questions",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "selection"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [
+          "study-methods",
+          "study-limits"
+        ],
+        "payload_sha256": "3efd7116a83a2d3a09983e5d96205c5dc18c00c26129851592a6fafa520514ac",
+        "predecessor_sha256": "4202b4afb849764c8e6f8f6facd3fa62fcfe0e7bb9b3699b541e3d846356fd36",
+        "purpose": "Recover targeted facts and identify earlier material to revisit",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "targeted-extraction"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "88f413a7470e71d3a29f58840e0446d8b35c4813bceeae3a9c9828796b84e833",
+        "predecessor_sha256": "0236f84f996e57e7923fee3b7b3189522b06c9dca9d153a5e065ad0d0bc98b21",
+        "purpose": "Resolve source coverage and review reported assertions",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "review"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "91dfa4b495b6d4756f368426863c7f8763ef7f5a2d3c4f13eb14623eaeba57f0",
+        "predecessor_sha256": "423e5cf5c867747bff4e7fbbf8124a417c8589936c85f2ec73d1074914e47438",
+        "purpose": "Check affected facts and measure held-back fidelity",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "recheck"
+      }
+    ],
+    "stop": "required-coverage-completed",
+    "supported_fact_gain": 2,
+    "targeted_fact_types": [
+      "approximation",
+      "explicit_denial",
+      "subject_label",
+      "system"
+    ]
+  },
+  "fresh_report_sha256": "92819462db6c001f76d99df93c3f44bd47c9a27dc877e901af79f7a546e3485c",
+  "replay": {
+    "absence": {
+      "below_floor_status": "unavailable",
+      "status": "qualified"
+    },
+    "attempt_counts": {
+      "accepted": 3,
+      "empty": 1,
+      "refused": 1
+    },
+    "broad_fact_types": [
+      "subject_label",
+      "system"
+    ],
+    "coverage": [
+      {
+        "inspected": true,
+        "question": "system",
+        "section": "study-opening",
+        "source": "study",
+        "state": "supported"
+      },
+      {
+        "inspected": true,
+        "question": "method",
+        "section": "study-methods",
+        "source": "study",
+        "state": "supported"
+      },
+      {
+        "inspected": true,
+        "question": "denial",
+        "section": "study-limits",
+        "source": "study",
+        "state": "explicitly-denied"
+      },
+      {
+        "inspected": true,
+        "question": "alternative",
+        "section": "study-methods",
+        "source": "study",
+        "state": "inspected-not-found"
+      },
+      {
+        "inspected": false,
+        "question": "annex-method",
+        "section": "annex-methods",
+        "source": "annex",
+        "state": "unavailable"
+      },
+      {
+        "inspected": false,
+        "question": "equation",
+        "section": "control-equation",
+        "source": "control",
+        "state": "not-applicable"
+      }
+    ],
+    "evidence_sha256": "4786f39f8de76db4b4b610dd1d5dd8cb533f35d92b2daafb546ec069860aa821",
+    "fidelity": {
+      "high": [
+        2,
+        2
+      ],
+      "low": [
+        1,
+        2
+      ]
+    },
+    "format": "literature-reading-report/1",
+    "inspections": [
+      {
+        "end": 40,
+        "excerpt_sha256": "6f933ec6ab5bd08bf476c5a9fc8db30f2ffa404699d730c3e7d9754e4a97befe",
+        "outcome": "accepted",
+        "response_sha256": "a2328d1acceee7d31ba2e278e4c2745d1a56e977a5388b2444e64dbce27c8040",
+        "section": "study-opening",
+        "source": "study",
+        "source_version": "authored-note-1",
+        "start": 0
+      },
+      {
+        "end": 43,
+        "excerpt_sha256": "3b466a0b42bcacbd5aa23e4c3f01d7b51b12fc34b6345c7312221bec9128e13b",
+        "outcome": "empty",
+        "response_sha256": "3da5ac2ed4dfe6f09f74f416ab04ef58e5fcfb54664084ee3332d5142afd23f2",
+        "section": "annex-opening",
+        "source": "annex",
+        "source_version": "authored-note-1",
+        "start": 0
+      },
+      {
+        "end": 56,
+        "excerpt_sha256": "2f426186f3e29619880cf9887c84574a826646e6acca0c01d47341193c104b2a",
+        "outcome": "refused",
+        "response_sha256": "fe65033cd1b95d8990d691a5490b06e618d2c1dac3a99aa6f85c9a37ac139ed6",
+        "section": "control-table",
+        "source": "control",
+        "source_version": "authored-note-1",
+        "start": 0
+      },
+      {
+        "end": 93,
+        "excerpt_sha256": "e7901bc7466b42501b99734d44e188751cf5352e12b1cc2260c28a8d9ab3a61d",
+        "outcome": "accepted",
+        "response_sha256": "7e708a195d9d4e2dee9d1c223549fa1b60cfa5d7afdc5bfeac42d341746e19eb",
+        "section": "study-methods",
+        "source": "study",
+        "source_version": "authored-note-1",
+        "start": 41
+      },
+      {
+        "end": 137,
+        "excerpt_sha256": "31973c282788a8768b5346eaef9054aee0cd5522878c0e7c12772893f20f2d69",
+        "outcome": "accepted",
+        "response_sha256": "63f2bf7f5b523f7c5a81a3be7dd78c7652028aa91bf6ee151a59d0025ae35af4",
+        "section": "study-limits",
+        "source": "study",
+        "source_version": "authored-note-1",
+        "start": 94
+      }
+    ],
+    "newly_answered": 2,
+    "omitted": [],
+    "producer_calls": {
+      "broad-extraction": 0,
+      "targeted-extraction": 0
+    },
+    "productivity": {
+      "new_answers_per_byte": {
+        "denominator": 234,
+        "numerator": 2
+      },
+      "new_facts_per_byte": {
+        "denominator": 234,
+        "numerator": 2
+      }
+    },
+    "public_routes": {
+      "broad": {
+        "check": 0,
+        "verify": 0
+      },
+      "reported-conflict": {
+        "check": 1,
+        "verify": 1
+      },
+      "targeted": {
+        "check": 0,
+        "verify": 0
+      }
+    },
+    "questions": [
+      {
+        "id": "system",
+        "outcome": "resolved",
+        "reason": "supported"
+      },
+      {
+        "id": "method",
+        "outcome": "resolved",
+        "reason": "supported"
+      },
+      {
+        "id": "denial",
+        "outcome": "resolved",
+        "reason": "explicitly-denied"
+      },
+      {
+        "id": "alternative",
+        "outcome": "retained",
+        "reason": "inspected-not-found"
+      },
+      {
+        "id": "annex-method",
+        "outcome": "retained",
+        "reason": "unavailable"
+      },
+      {
+        "id": "equation",
+        "outcome": "retained",
+        "reason": "not-applicable"
+      },
+      {
+        "id": "old-method",
+        "outcome": "superseded",
+        "target": "method"
+      }
+    ],
+    "read_denominator": {
+      "attempted": 5,
+      "omitted": 0,
+      "scheduled": 6,
+      "unavailable": 1
+    },
+    "reading_bytes": 234,
+    "revisit": [
+      "study-opening"
+    ],
+    "stages": [
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "e684efbe4e366b79f700ca02f227718c6a2100febf14f285225db1cac048e946",
+        "predecessor_sha256": null,
+        "purpose": "Identify available source versions and sections",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "inventory"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [
+          "study-opening",
+          "annex-opening",
+          "control-table"
+        ],
+        "payload_sha256": "ce0f27a816eff4a6753a6652c96d9a65bfcd13490e11859b4abe306a38944ab7",
+        "predecessor_sha256": "dce643fc27bb94b5960630be954cf022ed02a6c49aa71b13e9354ac2079d41ce",
+        "purpose": "Read opening material and retain unanswered questions",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "broad-extraction"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "b1f504d025eb36c0cf8887e1d4e4943ae6318bbf27c3162735856577f2185fd6",
+        "predecessor_sha256": "3cae76e228e1bb7fde0a1c2a615b26ad3b164912eb86ec32d0a5161035ff6706",
+        "purpose": "Select available ranges for unresolved questions",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "selection"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [
+          "study-methods",
+          "study-limits"
+        ],
+        "payload_sha256": "3efd7116a83a2d3a09983e5d96205c5dc18c00c26129851592a6fafa520514ac",
+        "predecessor_sha256": "4202b4afb849764c8e6f8f6facd3fa62fcfe0e7bb9b3699b541e3d846356fd36",
+        "purpose": "Recover targeted facts and identify earlier material to revisit",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "targeted-extraction"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "88f413a7470e71d3a29f58840e0446d8b35c4813bceeae3a9c9828796b84e833",
+        "predecessor_sha256": "0236f84f996e57e7923fee3b7b3189522b06c9dca9d153a5e065ad0d0bc98b21",
+        "purpose": "Resolve source coverage and review reported assertions",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "review"
+      },
+      {
+        "inputs": {
+          "annex.txt": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136",
+          "calibration.json": "94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7",
+          "calibration.txt": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+          "closure.json": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a",
+          "conflict.json": "b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14",
+          "conflict.txt": "ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f",
+          "control.txt": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a",
+          "gold.json": "b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62",
+          "producer-pin.json": "cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b",
+          "reading.orm.json": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739",
+          "responses.json": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10",
+          "reviews.json": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07",
+          "roster.json": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418",
+          "scope.json": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c",
+          "study.txt": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843",
+          "vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+        },
+        "inspected": [],
+        "payload_sha256": "91dfa4b495b6d4756f368426863c7f8763ef7f5a2d3c4f13eb14623eaeba57f0",
+        "predecessor_sha256": "423e5cf5c867747bff4e7fbbf8124a417c8589936c85f2ec73d1074914e47438",
+        "purpose": "Check affected facts and measure held-back fidelity",
+        "questions": [
+          "system",
+          "method",
+          "denial",
+          "alternative",
+          "annex-method",
+          "equation",
+          "old-method"
+        ],
+        "stage": "recheck"
+      }
+    ],
+    "stop": "required-coverage-completed",
+    "supported_fact_gain": 2,
+    "targeted_fact_types": [
+      "approximation",
+      "explicit_denial",
+      "subject_label",
+      "system"
+    ]
+  },
+  "replay_report_sha256": "129887ba713af8a5c03db78a339d50bc9eeca502976865c5c3619db825352196",
+  "wheel_sha256": "053e5a5d006a7ab291fac2d1c6f111734f639edf390be43fa9e473cf6daac7fb"
+}

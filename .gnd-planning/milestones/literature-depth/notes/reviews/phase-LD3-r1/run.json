@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "claude",
+    "-p",
+    "--model",
+    "opus",
+    "--permission-mode",
+    "plan",
+    "--add-dir",
+    "{dir}",
+    "--",
+    "Read {dir}/BRIEF.md and follow it."
+  ],
+  "brief_sha256": "60ce4022bffabaa818769738d69454d70dfd33f74a4d33da22fa549ca3132dce",
+  "effort": "",
+  "exit": 0,
+  "finished": "2026-11-16T06:35:34+00:00",
+  "model": "opus",
+  "pid": 97948,
+  "review_sha256": "99716e7ddb21081936ad5fcc56edcc0f2b4fe32f6240c183b22d778dd975c327",
+  "reviewer": "claude",
+  "started": "2026-11-16T06:25:12+00:00",
+  "state": "done",
+  "stdout": "review.md",
+  "timeout_minutes": 60
+}

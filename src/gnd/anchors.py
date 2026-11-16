@@ -43,6 +43,15 @@ _DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
 _NUMERIC_TOKEN = re.compile(r"[+-]?(?:[0-9][0-9,.]*|\.[0-9]+)(?:\s*%)?")
 
+_TIME_UNIT = re.compile(r"[ \t]+(fs|ps|ns)")
+_TIME_COMPOUND_OPERATORS = "/⁄∕÷^*·⋅×⁻⁺−"
+_TIME_SUFFIX_OPERATOR = re.compile(rf"[^\S\r\n]*[{_TIME_COMPOUND_OPERATORS}]")
+_TIME_PREFIX_OPERATORS = "+-–—" + _TIME_COMPOUND_OPERATORS
+_TIME_LEFT_DELIMITERS = frozenset("([{=\"'“‘")
+_TIME_SCALE = {"fs": 0, "ps": 3, "ns": 6}
+_TIME_MAGNITUDE_CAP = 40
+
+
 
 class AnchorError(ValueError):
     """A bounded, named layer-three anchor refusal."""
@@ -367,6 +376,34 @@ def lexical_ranges(
     return result
 
 
+def _starts_time_quantity(source: str, start: int) -> bool:
+    if start == 0 or source[start - 1] in _TIME_LEFT_DELIMITERS:
+        return True
+    if not source[start - 1].isspace():
+        return False
+    # An operator separated by horizontal space still joins the two tokens.
+    while start and source[start - 1].isspace() and source[start - 1] not in "\r\n":
+        start -= 1
+    return start == 0 or source[start - 1] not in _TIME_PREFIX_OPERATORS
+
+
+def _time_quantity(source: str, end: int, token: str) -> tuple[Decimal, int] | None:
+    """Return the exact whole-femtosecond value and complete source end."""
+    unit = _TIME_UNIT.match(source, end)
+    if unit is None or len(token) > _TIME_MAGNITUDE_CAP or _NUMBER.fullmatch(token) is None:
+        return None
+    end = unit.end()
+    if end < len(source) and (_word(source[end]) or source[end] in "+-"):
+        return None
+    if _TIME_SUFFIX_OPERATOR.match(source, end):
+        return None
+    sign, digits, exponent = Decimal(token.replace(",", "")).as_tuple()
+    converted = Decimal((sign, digits, exponent + _TIME_SCALE[unit[1]]))
+    if converted != converted.to_integral_value() or len(str(int(converted))) > 18:
+        return None
+    return converted, end
+
+
 def recognition_target(kind: str, expected: Any) -> Any:
     """Canonical comparison key for one admitted recogniser value."""
     return date.fromisoformat(str(expected)) if kind == "iso-8601-date" else Decimal(str(expected))
@@ -395,16 +432,25 @@ def recognition_index(
             if forbidden_before or forbidden_after:
                 continue
             token = match.group()
-            if kind != "iso-8601-date":
-                percent = token.endswith("%")
-                numeric = token.rstrip("%").rstrip()
-                if kind == "percent":
-                    if not percent or _NUMBER.fullmatch(numeric) is None:
-                        continue
-                elif percent or (kind == "integer" and _INTEGER.fullmatch(numeric) is None) or (kind == "decimal" and _DECIMAL.fullmatch(numeric) is None):
-                    continue
             try:
-                found = date.fromisoformat(token) if kind == "iso-8601-date" else Decimal(numeric.replace(",", ""))
+                if kind == "time-fs":
+                    if not _starts_time_quantity(source, start):
+                        continue
+                    quantity = _time_quantity(source, end, token)
+                    if quantity is None:
+                        continue
+                    found, end = quantity
+                elif kind == "iso-8601-date":
+                    found = date.fromisoformat(token)
+                else:
+                    percent = token.endswith("%")
+                    numeric = token.rstrip("%").rstrip()
+                    if kind == "percent":
+                        if not percent or _NUMBER.fullmatch(numeric) is None:
+                            continue
+                    elif percent or (kind == "integer" and _INTEGER.fullmatch(numeric) is None) or (kind == "decimal" and _DECIMAL.fullmatch(numeric) is None):
+                        continue
+                    found = Decimal(numeric.replace(",", ""))
             except (ValueError, InvalidOperation):
                 continue
             if requested is not None and found not in requested:

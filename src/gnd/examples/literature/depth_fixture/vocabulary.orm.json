@@ -1,0 +1,237 @@
+{
+  "version": 2,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [
+    {
+      "id": "identifier",
+      "name": "Identifier",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "text",
+      "name": "Text",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "subject",
+      "name": "Subject",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "identifier"
+      }
+    },
+    {
+      "id": "experiment",
+      "name": "Experiment",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "identifier"
+      }
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "subject_label",
+      "reading": "{Subject} has display label {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "label",
+          "object_type": "text"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "subject_has_one_label",
+          "type": "uniqueness",
+          "roles": [
+            "subject"
+          ],
+          "source": "user-supplied",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "A subject identifier has at most one display label in each snapshot."
+          }
+        }
+      ]
+    },
+    {
+      "id": "subject_specializes",
+      "reading": "{Subject} specializes {Subject}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "related",
+          "object_type": "subject"
+        }
+      ]
+    },
+    {
+      "id": "subject_has_component",
+      "reading": "{Subject} has component {Subject}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "related",
+          "object_type": "subject"
+        }
+      ]
+    },
+    {
+      "id": "subject_influenced_by",
+      "reading": "{Subject} was influenced by {Subject}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "related",
+          "object_type": "subject"
+        }
+      ]
+    },
+    {
+      "id": "experiment_dataset",
+      "reading": "{Experiment} has dataset version {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "dataset_version",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_split",
+      "reading": "{Experiment} has split {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "split",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_metric",
+      "reading": "{Experiment} has metric {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "metric",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_units",
+      "reading": "{Experiment} has units {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "units",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_conditions",
+      "reading": "{Experiment} has conditions {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "conditions",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_score",
+      "reading": "{Experiment} has score {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "score",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_baseline",
+      "reading": "{Experiment} has baseline {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "baseline",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_configuration",
+      "reading": "{Experiment} has configuration {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "configuration",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "experiment_uncertainty",
+      "reading": "{Experiment} has uncertainty {Text}",
+      "roles": [
+        {
+          "role_name": "experiment",
+          "object_type": "experiment"
+        },
+        {
+          "role_name": "uncertainty",
+          "object_type": "text"
+        }
+      ]
+    }
+  ]
+}

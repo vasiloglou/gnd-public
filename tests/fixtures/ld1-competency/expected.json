@@ -1,0 +1,33 @@
+{
+  "questions": {
+    "dynamics": [
+      ["equation-and-regime", "supported", ["equation", "regime"]],
+      ["boundaries", "supported", ["boundaries"]],
+      ["discretization", "supported", ["discretization"]],
+      ["conservation-residual", "unknown", []]
+    ],
+    "molecular": [
+      ["system-and-energy", "supported", ["system", "energy_model"]],
+      ["sampling", "supported", ["objective"]],
+      ["approximation", "supported", ["approximation"]],
+      ["transfer-validity", "unknown", []]
+    ],
+    "algorithms": [
+      ["operator-and-objective", "supported", ["operator", "objective"]],
+      ["components", "supported", ["subject_has_component"]],
+      ["qualified-complexity", "supported", ["result", "assumptions", "cost_model"]],
+      ["device-runtime", "unknown", []]
+    ]
+  },
+  "comparison": {
+    "same-context": ["comparable", []],
+    "dataset-changed": ["incompatible", ["dataset_version"]],
+    "split-changed": ["incompatible", ["split"]],
+    "metric-changed": ["incompatible", ["metric"]],
+    "units-changed": ["incompatible", ["units"]],
+    "conditions-changed": ["incompatible", ["conditions"]],
+    "missing-conditions": ["unknown", ["conditions"]],
+    "metric-changed-and-missing-conditions": ["incompatible", ["metric"]]
+  },
+  "quantities": ["dimensions", "percent-versus-points", "exact-decimal-witness"]
+}

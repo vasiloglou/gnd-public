@@ -1,0 +1,142 @@
+{
+  "version": 5,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [],
+  "fact_types": [
+    {
+      "id": "system",
+      "reading": "{Subject} has system {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "energy_model",
+      "reading": "{Subject} has energy model {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "objective",
+      "reading": "{Subject} has objective {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "approximation",
+      "reading": "{Subject} has approximation {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "ensemble",
+      "reading": "{Subject} has ensemble {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "validity",
+      "reading": "{Subject} has validity {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "explicit_denial",
+      "reading": "{Subject} reports {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "alternative_integrator",
+      "reading": "{Subject} reports {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    },
+    {
+      "id": "equation",
+      "reading": "{Subject} reports {Text}",
+      "roles": [
+        {
+          "role_name": "subject",
+          "object_type": "subject"
+        },
+        {
+          "role_name": "value",
+          "object_type": "text"
+        }
+      ]
+    }
+  ],
+  "includes": [
+    {
+      "id": "scientific-vocabulary",
+      "path": "vocabulary.orm.json",
+      "sha256": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
+    }
+  ]
+}

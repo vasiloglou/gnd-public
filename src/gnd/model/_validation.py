@@ -1326,6 +1326,7 @@ def _rule_anchored_role_and_recogniser(doc: dict[str, Any]) -> list[ValidationIs
         "decimal": {"Float", "Number"},
         "percent": {"Integer", "Float", "Number"},
         "iso-8601-date": {"Date"},
+        "time-fs": {"Integer"},
     }
     for fact_type in doc.get("fact_types") or []:
         if not isinstance(fact_type, dict):

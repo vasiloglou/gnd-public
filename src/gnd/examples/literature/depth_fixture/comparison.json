@@ -1,0 +1,430 @@
+{
+  "origin": "synthetic",
+  "facts": {
+    "experiment_dataset": [
+      {
+        "experiment": "reference",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "same-context",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "dataset-changed",
+        "dataset_version": "benchmark-v2"
+      },
+      {
+        "experiment": "split-changed",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "metric-changed",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "units-changed",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "conditions-changed",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "missing-conditions",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "missing-score",
+        "dataset_version": "benchmark-v1"
+      }
+    ],
+    "experiment_split": [
+      {
+        "experiment": "reference",
+        "split": "test"
+      },
+      {
+        "experiment": "same-context",
+        "split": "test"
+      },
+      {
+        "experiment": "dataset-changed",
+        "split": "test"
+      },
+      {
+        "experiment": "split-changed",
+        "split": "validation"
+      },
+      {
+        "experiment": "metric-changed",
+        "split": "test"
+      },
+      {
+        "experiment": "units-changed",
+        "split": "test"
+      },
+      {
+        "experiment": "conditions-changed",
+        "split": "test"
+      },
+      {
+        "experiment": "missing-conditions",
+        "split": "test"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "split": "test"
+      },
+      {
+        "experiment": "missing-score",
+        "split": "test"
+      }
+    ],
+    "experiment_metric": [
+      {
+        "experiment": "reference",
+        "metric": "balanced-accuracy"
+      },
+      {
+        "experiment": "same-context",
+        "metric": "balanced-accuracy"
+      },
+      {
+        "experiment": "dataset-changed",
+        "metric": "balanced-accuracy"
+      },
+      {
+        "experiment": "split-changed",
+        "metric": "balanced-accuracy"
+      },
+      {
+        "experiment": "metric-changed",
+        "metric": "precision"
+      },
+      {
+        "experiment": "units-changed",
+        "metric": "balanced-accuracy"
+      },
+      {
+        "experiment": "conditions-changed",
+        "metric": "balanced-accuracy"
+      },
+      {
+        "experiment": "missing-conditions",
+        "metric": "balanced-accuracy"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "metric": "precision"
+      },
+      {
+        "experiment": "missing-score",
+        "metric": "balanced-accuracy"
+      }
+    ],
+    "experiment_units": [
+      {
+        "experiment": "reference",
+        "units": "percent"
+      },
+      {
+        "experiment": "same-context",
+        "units": "percent"
+      },
+      {
+        "experiment": "dataset-changed",
+        "units": "percent"
+      },
+      {
+        "experiment": "split-changed",
+        "units": "percent"
+      },
+      {
+        "experiment": "metric-changed",
+        "units": "percent"
+      },
+      {
+        "experiment": "units-changed",
+        "units": "fraction"
+      },
+      {
+        "experiment": "conditions-changed",
+        "units": "percent"
+      },
+      {
+        "experiment": "missing-conditions",
+        "units": "percent"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "units": "percent"
+      },
+      {
+        "experiment": "missing-score",
+        "units": "percent"
+      }
+    ],
+    "experiment_conditions": [
+      {
+        "experiment": "reference",
+        "conditions": "fixed-input-window"
+      },
+      {
+        "experiment": "same-context",
+        "conditions": "fixed-input-window"
+      },
+      {
+        "experiment": "dataset-changed",
+        "conditions": "fixed-input-window"
+      },
+      {
+        "experiment": "split-changed",
+        "conditions": "fixed-input-window"
+      },
+      {
+        "experiment": "metric-changed",
+        "conditions": "fixed-input-window"
+      },
+      {
+        "experiment": "units-changed",
+        "conditions": "fixed-input-window"
+      },
+      {
+        "experiment": "conditions-changed",
+        "conditions": "different-input-window"
+      },
+      {
+        "experiment": "missing-score",
+        "conditions": "fixed-input-window"
+      }
+    ],
+    "experiment_score": [
+      {
+        "experiment": "reference",
+        "score": "40"
+      },
+      {
+        "experiment": "same-context",
+        "score": "45"
+      },
+      {
+        "experiment": "dataset-changed",
+        "score": "40"
+      },
+      {
+        "experiment": "split-changed",
+        "score": "40"
+      },
+      {
+        "experiment": "metric-changed",
+        "score": "40"
+      },
+      {
+        "experiment": "units-changed",
+        "score": "40"
+      },
+      {
+        "experiment": "conditions-changed",
+        "score": "40"
+      },
+      {
+        "experiment": "missing-conditions",
+        "score": "40"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "score": "40"
+      }
+    ],
+    "experiment_baseline": [
+      {
+        "experiment": "reference",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "same-context",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "dataset-changed",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "split-changed",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "metric-changed",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "units-changed",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "conditions-changed",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "missing-conditions",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "baseline": "reference configuration"
+      },
+      {
+        "experiment": "missing-score",
+        "baseline": "reference configuration"
+      }
+    ],
+    "experiment_configuration": [
+      {
+        "experiment": "reference",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "same-context",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "dataset-changed",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "split-changed",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "metric-changed",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "units-changed",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "conditions-changed",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "missing-conditions",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "configuration": "seed 2"
+      },
+      {
+        "experiment": "missing-score",
+        "configuration": "seed 2"
+      }
+    ],
+    "experiment_uncertainty": [
+      {
+        "experiment": "reference",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "same-context",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "dataset-changed",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "split-changed",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "metric-changed",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "units-changed",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "conditions-changed",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "missing-conditions",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "metric-changed-and-missing-conditions",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "missing-score",
+        "uncertainty": "2 points"
+      }
+    ],
+    "subject_label": [
+      {
+        "subject": "synthetic-method",
+        "label": "Synthetic method"
+      }
+    ],
+    "subject_influenced_by": [
+      {
+        "subject": "synthetic-method",
+        "related": "synthetic-precursor"
+      }
+    ]
+  },
+  "pairs": [
+    {
+      "id": "same-context",
+      "left": "reference",
+      "right": "same-context"
+    },
+    {
+      "id": "dataset-changed",
+      "left": "reference",
+      "right": "dataset-changed"
+    },
+    {
+      "id": "split-changed",
+      "left": "reference",
+      "right": "split-changed"
+    },
+    {
+      "id": "metric-changed",
+      "left": "reference",
+      "right": "metric-changed"
+    },
+    {
+      "id": "units-changed",
+      "left": "reference",
+      "right": "units-changed"
+    },
+    {
+      "id": "conditions-changed",
+      "left": "reference",
+      "right": "conditions-changed"
+    },
+    {
+      "id": "missing-conditions",
+      "left": "reference",
+      "right": "missing-conditions"
+    },
+    {
+      "id": "metric-changed-and-missing-conditions",
+      "left": "reference",
+      "right": "metric-changed-and-missing-conditions"
+    },
+    {
+      "id": "missing-score",
+      "left": "reference",
+      "right": "missing-score"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+The reported molecular system is alanine dipeptide in vacuum with the AMBER ff14SB force field.
+
+The example explores the free-energy landscape using alanine backbone dihedrals as collective variables.
+
+The molecular dynamics uses Langevin integration at 300 K with a 2 fs step and constrained bond distances involving hydrogen. The methods report the integration setup separately from the sampling objective.
+
+The cited case supplies vacuum conditions and does not establish validity for a different solvent environment. The case does not assign an ensemble by inferring it from the integrator alone.

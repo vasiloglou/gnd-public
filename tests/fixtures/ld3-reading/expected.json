@@ -1,0 +1,30 @@
+{
+  "stages": ["inventory", "broad-extraction", "selection", "targeted-extraction", "review", "recheck"],
+  "stop": {
+    "full": "required-coverage-completed",
+    "unavailable": "available-evidence-exhausted",
+    "budget": "budget-exhausted"
+  },
+  "full_calls": {"broad-extraction": 3, "targeted-extraction": 2},
+  "replay_calls": {"broad-extraction": 0, "targeted-extraction": 0},
+  "coverage": {
+    "system": "supported",
+    "method": "supported",
+    "denial": "explicitly-denied",
+    "alternative": "inspected-not-found",
+    "annex-method": "unavailable",
+    "equation": "not-applicable"
+  },
+  "question_outcomes": {
+    "system": "resolved",
+    "method": "resolved",
+    "denial": "resolved",
+    "alternative": "retained",
+    "annex-method": "retained",
+    "equation": "retained",
+    "old-method": "superseded"
+  },
+  "revisit": ["study-opening"],
+  "fidelity": {"high": [2, 2], "low": [1, 2]},
+  "violation_exits": {"verify": 1, "check": 1}
+}

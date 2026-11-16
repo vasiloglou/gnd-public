@@ -1,0 +1,4 @@
+The reported time step is 2 fs.
+The same step is 0.002 ps or 0.000002 ns.
+The disturbance energy is 2 eV and a smaller duration is 0.0001 ps.
+A separate step is 3 fs.

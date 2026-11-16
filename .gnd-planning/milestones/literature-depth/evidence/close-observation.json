@@ -1,0 +1,1182 @@
+{
+  "code_and_phase_records": "c16b77c1589c0038668417adcc4476da105c8bce",
+  "earlier_phase_focused": "149 passed in 162.96s (0:02:42)",
+  "exact_time_tuple": [
+    2,
+    3,
+    "ps"
+  ],
+  "ld5_installed": {
+    "component_check": "0 to fix, 0 warning(s), 0 to reread",
+    "focus_command": "uv run --no-sync pytest -q tests/test_ld5_verdict.py tests/test_ld4_revision.py tests/test_li4_assertions.py tests/test_li5_lineage.py tests/test_witness_composition.py tests/test_rule_edition_comparison.py --tb=short",
+    "focused": "106 passed in 413.64s (0:06:53)",
+    "installed_exit_codes": {
+      "fresh": 0,
+      "no_release": 3,
+      "one_support": 0,
+      "prior_opinion": 3,
+      "replay": 0,
+      "zero_supports": 2
+    },
+    "installed_sha256": {
+      "fresh.json": "3f0acd7e813efe363a513d163c3857b3008201ea6c70bf07dcc641d211103c4f",
+      "no-release.json": "faef33efa5f7872f8ca6fcf73eca1c0f9958abd950b8db5df48d05f44ee69496",
+      "one-support.json": "e49bda818ed8347ec50047563147e202136ca152a9ab9c23e9ef45c97620a1f7",
+      "prior-opinion.json": "0fa319536abe574ac50f08cc569454e0184139552b2c61d7c6a650299de13ba3",
+      "replay.json": "3f0acd7e813efe363a513d163c3857b3008201ea6c70bf07dcc641d211103c4f",
+      "zero-supports.json": "dfdd6b7b191d6c6eca1e553426bdb1b483dc1cfb59fc8b0d42f3958f5d0c50d2"
+    },
+    "lint": "changed Python files pass; 188 exact inherited whole-tree diagnostics",
+    "opinions_sha256": "bf6a73926cbd3bd7ea296522a290308faad0b66399817ba57f7c2a44c6ca2625",
+    "outcomes": {
+      "both-approved": {
+        "decision": "supported",
+        "effective": [
+          "whale-a",
+          "corroboration"
+        ],
+        "states": [
+          "approved",
+          "approved"
+        ]
+      },
+      "old-review-on-revised": {
+        "decision": "revalidation-required",
+        "effective": [],
+        "states": [
+          "stale",
+          "stale"
+        ]
+      },
+      "reject-both": {
+        "decision": "unsupported",
+        "effective": [],
+        "states": [
+          "rejected",
+          "rejected"
+        ]
+      },
+      "reject-whale-a": {
+        "decision": "supported",
+        "effective": [
+          "corroboration"
+        ],
+        "states": [
+          "rejected",
+          "approved"
+        ]
+      },
+      "renew-whale-a": {
+        "decision": "supported",
+        "effective": [
+          "whale-a"
+        ],
+        "states": [
+          "approved",
+          "stale"
+        ]
+      }
+    },
+    "repair_commit": "729111ba697186d441b1da459ceb73c72064e1e8",
+    "structure": "679 passed, 2 deselected in 326.04s (0:05:26)",
+    "wheel_sha256": "a9ae4b2b9d744f042d6f59287f474c7afcaf956f0cf21459b4ec3bb6b9ddbe63"
+  },
+  "review_rounds": {
+    "coverage": [
+      {
+        "path": ".gnd-planning/milestones/literature-depth/004-phase-LD1.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/005-phase-LD2-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/006-phase-LD2.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/007-phase-LD3-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/009-phase-LD3.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/010-phase-LD4-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/011-phase-LD4.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/012-phase-LD5-spec-gate.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/evidence/LD2/dynamic-query-successor.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/evidence/LD4/installed-observation.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read f2e30cb3bc0a"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD2-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 95d352102ae8"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read e44f4a36bdd6"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD4-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read b2a9f38c23b5"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 44022b8fa8cb"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1/diff.patch",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/COMPONENTS.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/graph.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "dev/components/modules/_root.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 925239848a19"
+      },
+      {
+        "path": "dev/components/modules/examples.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read cdf290c0a100"
+      },
+      {
+        "path": "dev/components/modules/model.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/anchors.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 143bafe6c03f"
+      },
+      {
+        "path": "src/gnd/examples/literature/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/assurance_report.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 9dc14cdc728d"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 814a4c56ad35"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 88d6bed98efc"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/algorithms.facts.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/algorithms.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/algorithms.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/cases.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 3bc3426bf8f1"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/comparison.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 545182d38d0a"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/decimal.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 552867ad0f2d"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/decimal.population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/decimal.targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 4fcf989fd9ec"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/dynamics.facts.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/dynamics.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/dynamics.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/molecular.facts.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/molecular.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/molecular.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/support.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/depth_fixture/vocabulary.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/source.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.anchors.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.orm.yaml",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/quantity_fixture/time.targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read bbe5b3318dba"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 084da092cc4d"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/annex.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/calibration.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read fa8650ca52bc"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/closure.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/control.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/gold.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 115493bdb990"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/reading.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/responses.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/reviews.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/roster.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/scope.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/reading_fixture/study.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/cases/W-flat/manifest.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/cases/W-resolved/manifest.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/cases/W-resolved/resolution.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/resolution/model.orm.yaml",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read d87d6c64e0b9"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read d58c7d7bd9b4"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/comparison/base.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/comparison/head.orm.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/comparison/population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/corroboration/document.txt",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/corroboration/population.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/corroboration/population.json.anchors.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/interpretation.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/proposal.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/release-policy.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/review-inputs.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/support-targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_fixture/targets.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/revision_manifest.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read e4a654f9f275"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict_fixture/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 6b19454adfc6"
+      },
+      {
+        "path": "src/gnd/examples/literature/verdict_fixture/opinions.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read 096613fa54de"
+      },
+      {
+        "path": "src/gnd/model/_validation.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/schema/orm-meta.schema.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "src/gnd/skills/gnd-orm-core/references/constraint-reference.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 23b60f000b47"
+      },
+      {
+        "path": "src/gnd/skills/gnd-orm-core/references/orm-meta.schema.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld1-competency/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld2-quantities/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld2-quantities/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld3-reading/README.md",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld3-reading/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read 7b12e90234e2"
+      },
+      {
+        "path": "tests/fixtures/ld4-revision/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/fixtures/ld5-verdict/expected.json",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/support/pyrel_application_successors.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read b6ecb642c24d"
+      },
+      {
+        "path": "tests/test_ld1_competency_examples.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1 read 1eab5342b8fb"
+      },
+      {
+        "path": "tests/test_ld2_quantities.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1 read 3cc8a21b8215"
+      },
+      {
+        "path": "tests/test_ld3_reading_workflow.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1 read a72205ae9226"
+      },
+      {
+        "path": "tests/test_ld4_revision.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "reviewed"
+      },
+      {
+        "path": "tests/test_ld5_verdict.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "unreviewed",
+        "why": "changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1 read c309a8ce3cf4"
+      },
+      {
+        "path": "tests/test_li1_assurance_report.py",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "reviewed"
+      }
+    ],
+    "ok": false,
+    "rounds": [
+      {
+        "findings": 7,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD1-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 4,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 8,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 6,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1",
+        "state": "done",
+        "subject": "phase"
+      },
+      {
+        "findings": 4,
+        "model": "opus",
+        "problems": [],
+        "reviewer": "claude",
+        "round": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD5-r1",
+        "state": "done",
+        "subject": "phase"
+      }
+    ]
+  },
+  "science_cases": {
+    "algorithms": {
+      "binding": {
+        "bundle_index_sha256": "fc2f4f35f2d74178621f63fbd799eabd701a878adb067274bffbbbf84caf2323",
+        "check": "accepted",
+        "extraction_sha256": "698a0721c8e60a4ae1aa65379e130af38c9592a8bee0d6e2a80a9dcbeea17abd",
+        "model_sha256": "12c50787b75f3a4e32bb0d0d10e62378fb351416f1efd5d023c8ec632fae0830",
+        "population_sha256": "af68cfe52c1da499d195837a07ae71be2eeffd21e6826b67d068813fcd0f9441",
+        "verification": "accepted"
+      },
+      "labels": [
+        {
+          "label": "Randomized SVD",
+          "subject": "randomized-svd"
+        }
+      ],
+      "questions": [
+        {
+          "claim_kind": "reported-objective",
+          "evidence": {
+            "document_sha256": "0ad3f94f8a152da3263d1cf1ea42b460b952dc1088240f60034db27924304ebb",
+            "evidence_form": "authored source description",
+            "excerpt": "The example starts from an m by n matrix and seeks a low-rank approximation to its dominant singular structure.",
+            "review": "supported",
+            "section": "arXiv:0909.4061, abstract and introduction, dominant singular components",
+            "span": [
+              0,
+              111
+            ],
+            "span_sha256": "fc1d10189859817e3ff07451620dadb7d9eb50efe69f0d0fb0f6ac489c7ca8b3",
+            "url": "https://arxiv.org/html/0909.4061v2",
+            "version": "arXiv:0909.4061v2 (2010-12-14)"
+          },
+          "facts": {
+            "objective": [
+              {
+                "subject": "randomized-svd",
+                "value": "approximate the dominant singular subspace"
+              }
+            ],
+            "operator": [
+              {
+                "subject": "randomized-svd",
+                "value": "input matrix of size m by n"
+              }
+            ]
+          },
+          "id": "operator-and-objective",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-method",
+          "evidence": {
+            "document_sha256": "0ad3f94f8a152da3263d1cf1ea42b460b952dc1088240f60034db27924304ebb",
+            "evidence_form": "authored source description",
+            "excerpt": "A randomized range finder locates a low-dimensional subspace before deterministic factorization of the reduced matrix.",
+            "review": "supported",
+            "section": "arXiv:0909.4061, abstract and introductory framework, stages A and B",
+            "span": [
+              113,
+              231
+            ],
+            "span_sha256": "e861dc4a6bbdbccc85e1c9e2237489a8c24558fc81309e6af49a48220b546754",
+            "url": "https://arxiv.org/html/0909.4061v2",
+            "version": "arXiv:0909.4061v2 (2010-12-14)"
+          },
+          "facts": {
+            "subject_has_component": [
+              {
+                "related": "randomized-range-finder",
+                "subject": "randomized-svd"
+              },
+              {
+                "related": "reduced-deterministic-factorization",
+                "subject": "randomized-svd"
+              }
+            ]
+          },
+          "id": "components",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-bound",
+          "evidence": {
+            "document_sha256": "0ad3f94f8a152da3263d1cf1ea42b460b952dc1088240f60034db27924304ebb",
+            "evidence_form": "authored source description",
+            "excerpt": "For the dense-input model problem, the authors report O(mn log(k)) floating-point operations for the described randomized approach. The bound is expressed in arithmetic operations, rather than seconds or data passes.",
+            "review": "supported",
+            "section": "arXiv:0909.4061, abstract, dense-input case; SIAM Review 53(2), DOI 10.1137/090771806",
+            "span": [
+              233,
+              449
+            ],
+            "span_sha256": "d58046066eecdafdd82a540018fc874300c2c0fe2c9a4d672e81cefdae32d6d8",
+            "url": "https://arxiv.org/html/0909.4061v2",
+            "version": "arXiv:0909.4061v2 (2010-12-14)"
+          },
+          "facts": {
+            "assumptions": [
+              {
+                "subject": "randomized-svd",
+                "value": "dense input and k dominant singular components"
+              }
+            ],
+            "cost_model": [
+              {
+                "subject": "randomized-svd",
+                "value": "floating-point operations"
+              }
+            ],
+            "result": [
+              {
+                "subject": "randomized-svd",
+                "value": "O(mn log(k))"
+              }
+            ]
+          },
+          "id": "qualified-complexity",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-result",
+          "evidence": {
+            "document_sha256": "0ad3f94f8a152da3263d1cf1ea42b460b952dc1088240f60034db27924304ebb",
+            "evidence_form": "authored source description",
+            "excerpt": "The selected evidence does not provide a run time for an NVIDIA H100 accelerator under a specified benchmark protocol.",
+            "review": "scope-limitation",
+            "section": "arXiv:0909.4061, abstract and \u00a77 numerical examples",
+            "span": [
+              451,
+              569
+            ],
+            "span_sha256": "c35fa467d50b2a85afb2d6524168ce50fa9ffd4dfc63616e89480af736f2f804",
+            "url": "https://arxiv.org/html/0909.4061v2",
+            "version": "arXiv:0909.4061v2 (2010-12-14)"
+          },
+          "facts": {},
+          "id": "device-runtime",
+          "missing": [
+            "runtime"
+          ],
+          "status": "unknown"
+        }
+      ],
+      "relationships": {
+        "subject_has_component": [
+          {
+            "related": "randomized-range-finder",
+            "subject": "randomized-svd"
+          },
+          {
+            "related": "reduced-deterministic-factorization",
+            "subject": "randomized-svd"
+          }
+        ]
+      },
+      "subject": "randomized-svd",
+      "subject_occurrence": {
+        "fact_index": 0,
+        "fact_type": "subject_label",
+        "role": "subject"
+      }
+    },
+    "dynamics": {
+      "binding": {
+        "bundle_index_sha256": "763d048863a9c5673d0fc8a056530725710ad5847669b7602293f677fb2c2031",
+        "check": "accepted",
+        "extraction_sha256": "ec925915f92dcd5c87f3666d07b778f298cceee3d14054dcfd2e3fd9f6e4fd89",
+        "model_sha256": "18e54e6d2877d499a4933b89e78ba200be2411fc8b32dfa0569a59e3aeb83fab",
+        "population_sha256": "edfc19373be6bb15c7f4ccd5db6d88789fab60fa1e475736f258c793269bc176",
+        "verification": "accepted"
+      },
+      "labels": [
+        {
+          "label": "Shallow-water dam break",
+          "subject": "dam-break"
+        }
+      ],
+      "questions": [
+        {
+          "claim_kind": "reported-equation",
+          "evidence": {
+            "additional_url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+            "document_sha256": "e0e1ed49ea2c0f820187f9c4161c582947185587d4b8f021694555556252513f",
+            "evidence_form": "authored source description",
+            "excerpt": "The reported one-dimensional model evolves depth h and momentum hu. The equations are h_t + (hu)_x = 0 and (hu)_t + (hu^2 + g h^2/2)_x = 0. The gallery applies the model to a dam-break Riemann problem.",
+            "review": "supported",
+            "section": "Riemann Book, Approximate solvers for the shallow water equations, opening equations; Clawpack 5.10.x dam_break setup",
+            "span": [
+              0,
+              201
+            ],
+            "span_sha256": "8a42c975328a62ac1f5556060b9a37b88a88b341605c551cfdffa4de2477a114",
+            "url": "https://www.clawpack.org/riemann_book/html/Shallow_water_approximate.html",
+            "version": "Riemann Problems and Jupyter Solutions (2020)"
+          },
+          "facts": {
+            "equation": [
+              {
+                "subject": "dam-break",
+                "value": "h_t + (hu)_x = 0; (hu)_t + (hu^2 + g h^2/2)_x = 0"
+              }
+            ],
+            "regime": [
+              {
+                "subject": "dam-break",
+                "value": "dam-break Riemann problem"
+              }
+            ]
+          },
+          "id": "equation-and-regime",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-configuration",
+          "evidence": {
+            "document_sha256": "e0e1ed49ea2c0f820187f9c4161c582947185587d4b8f021694555556252513f",
+            "evidence_form": "authored source description",
+            "excerpt": "The setup uses extrapolation at the lower and upper endpoints.",
+            "review": "supported",
+            "section": "Clawpack 5.10.x gallery, setup, boundary conditions",
+            "span": [
+              203,
+              265
+            ],
+            "span_sha256": "f8a4f29d2872c7fad87b4dfd3b807198d8c381dc84db93bed993f0ac1213064d",
+            "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+            "version": "Clawpack 5.10.x"
+          },
+          "facts": {
+            "boundaries": [
+              {
+                "subject": "dam-break",
+                "value": "extrapolation at both endpoints"
+              }
+            ]
+          },
+          "id": "boundaries",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-configuration",
+          "evidence": {
+            "document_sha256": "e0e1ed49ea2c0f820187f9c4161c582947185587d4b8f021694555556252513f",
+            "evidence_form": "authored source description",
+            "excerpt": "The classic branch uses the van Leer limiter on a 500-cell one-dimensional grid.",
+            "review": "supported",
+            "section": "Clawpack 5.10.x gallery, setup, classic solver and grid",
+            "span": [
+              267,
+              347
+            ],
+            "span_sha256": "798c48207603375b0170c23dfe8a8ead3d942d0244499b0b2dfa21305bbd1cdf",
+            "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+            "version": "Clawpack 5.10.x"
+          },
+          "facts": {
+            "discretization": [
+              {
+                "subject": "dam-break",
+                "value": "classic PyClaw with van Leer limiter on 500 cells"
+              }
+            ]
+          },
+          "id": "discretization",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-result",
+          "evidence": {
+            "document_sha256": "e0e1ed49ea2c0f820187f9c4161c582947185587d4b8f021694555556252513f",
+            "evidence_form": "authored source description",
+            "excerpt": "The selected setup and plots give no measured conservation residual for that run.",
+            "review": "scope-limitation",
+            "section": "Clawpack 5.10.x gallery, setup and output plot",
+            "span": [
+              349,
+              430
+            ],
+            "span_sha256": "7341aec6492ac8fcd5ab73858c5e6eeadd0f7a4e15f3a1e51feed55570878de4",
+            "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+            "version": "Clawpack 5.10.x"
+          },
+          "facts": {},
+          "id": "conservation-residual",
+          "missing": [
+            "conservation"
+          ],
+          "status": "unknown"
+        }
+      ],
+      "relationships": {
+        "subject_specializes": [
+          {
+            "related": "shallow-water-test-case",
+            "subject": "dam-break"
+          }
+        ]
+      },
+      "subject": "dam-break",
+      "subject_occurrence": {
+        "fact_index": 0,
+        "fact_type": "subject_label",
+        "role": "subject"
+      }
+    },
+    "molecular": {
+      "binding": {
+        "bundle_index_sha256": "c0adffde030fc0f6f1847a975a57670aa1ae7772445c11b54384c57f649bb459",
+        "check": "accepted",
+        "extraction_sha256": "9eb2404dc774d91a254c484c5b0f7d7cd10fddc06f6f507e0baa041951bfb808",
+        "model_sha256": "0e521ab2d8c4a7eac1e0d61cb977acc0798450b14f775077c19ef7dac44cbf9a",
+        "population_sha256": "873b64339baabaa9a4955ef8fd5d781af52311dcd641451b09b72e76e1e5ce88",
+        "verification": "accepted"
+      },
+      "labels": [
+        {
+          "label": "OPES-eABF alanine example",
+          "subject": "alanine-in-vacuum"
+        }
+      ],
+      "questions": [
+        {
+          "claim_kind": "reported-configuration",
+          "evidence": {
+            "document_sha256": "1ee50c933858ee2235d611b599186247659f34c26a88864e0e10fdcd72bd878c",
+            "evidence_form": "authored source description",
+            "excerpt": "The reported molecular system is alanine dipeptide in vacuum with the AMBER ff14SB force field.",
+            "review": "supported",
+            "section": "PMC12243082, Methods, Alanine Dipeptide",
+            "span": [
+              0,
+              95
+            ],
+            "span_sha256": "2316148720d7b651808d4ccf88db580aa5fb2769dee697e0e83bcf15aa78944c",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+            "version": "PMC12243082 published article (2025)"
+          },
+          "facts": {
+            "energy_model": [
+              {
+                "subject": "alanine-in-vacuum",
+                "value": "AMBER ff14SB"
+              }
+            ],
+            "system": [
+              {
+                "subject": "alanine-in-vacuum",
+                "value": "alanine dipeptide in vacuum"
+              }
+            ]
+          },
+          "id": "system-and-energy",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-objective",
+          "evidence": {
+            "document_sha256": "1ee50c933858ee2235d611b599186247659f34c26a88864e0e10fdcd72bd878c",
+            "evidence_form": "authored source description",
+            "excerpt": "The example explores the free-energy landscape using alanine backbone dihedrals as collective variables.",
+            "review": "supported",
+            "section": "PMC12243082, Results, Alanine Dipeptide; Methods on collective variables",
+            "span": [
+              97,
+              201
+            ],
+            "span_sha256": "ed26fca4aefb82495d33e98c99138debdd1888818aaf07c75b5df090584c2f6f",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+            "version": "PMC12243082 published article (2025)"
+          },
+          "facts": {
+            "objective": [
+              {
+                "subject": "alanine-in-vacuum",
+                "value": "free-energy estimation using backbone dihedral collective variables"
+              }
+            ]
+          },
+          "id": "sampling",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-configuration",
+          "evidence": {
+            "document_sha256": "1ee50c933858ee2235d611b599186247659f34c26a88864e0e10fdcd72bd878c",
+            "evidence_form": "authored source description",
+            "excerpt": "The molecular dynamics uses Langevin integration at 300 K with a 2 fs step and constrained bond distances involving hydrogen. The methods report the integration setup separately from the sampling objective.",
+            "review": "supported",
+            "section": "PMC12243082, Methods, Alanine Dipeptide",
+            "span": [
+              203,
+              409
+            ],
+            "span_sha256": "0eabb39600e0917f49a97d8028657e791b61dec8dfaa228fd7efc5d87e2af63d",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+            "version": "PMC12243082 published article (2025)"
+          },
+          "facts": {
+            "approximation": [
+              {
+                "subject": "alanine-in-vacuum",
+                "value": "Langevin at 300 K with 2 fs steps and hydrogen bond-distance constraints"
+              }
+            ]
+          },
+          "id": "approximation",
+          "missing": [],
+          "status": "supported"
+        },
+        {
+          "claim_kind": "reported-result",
+          "evidence": {
+            "document_sha256": "1ee50c933858ee2235d611b599186247659f34c26a88864e0e10fdcd72bd878c",
+            "evidence_form": "authored source description",
+            "excerpt": "The cited case supplies vacuum conditions and does not establish validity for a different solvent environment. The case does not assign an ensemble by inferring it from the integrator alone.",
+            "review": "scope-limitation",
+            "section": "PMC12243082, Methods and Results, Alanine Dipeptide",
+            "span": [
+              411,
+              601
+            ],
+            "span_sha256": "380ad4b95e731fff86a057d1d01906d7a1b593e18e7184627b629e8657df9df2",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+            "version": "PMC12243082 published article (2025)"
+          },
+          "facts": {},
+          "id": "transfer-validity",
+          "missing": [
+            "validity"
+          ],
+          "status": "unknown"
+        }
+      ],
+      "relationships": {},
+      "subject": "alanine-in-vacuum",
+      "subject_occurrence": {
+        "fact_index": 0,
+        "fact_type": "subject_label",
+        "role": "subject"
+      }
+    }
+  },
+  "science_observations_sha256": {
+    "depth/report.json": "1fa2eda4d4b83e806342f6638ec330c036a16ceeec7cbd1698c1bc58c844cb0f",
+    "time/check.json": "7cb6c6ac7078970d40120a14728dcc51cc84d706bb5858485793154e326f310b",
+    "time/replay.json": "eef73198eee3f54e06d4af7fede8baf470003eedd0269fb3d9e3902145550f0d",
+    "time/witness.json": "e3fc964f0fe0b3ed81defd1f762882cac261d2cfb9bffe396e836bbdcb07086a"
+  },
+  "science_wheel_checked_entries": {
+    "src/gnd/anchors.py": "add36fba98dfc94870e8249be5ef75f198a8657c94017dc6f96855bb5f282866",
+    "src/gnd/examples/literature/depth.py": "160adee1b92da7cff144eee7639c794ce1e1c910513a323072e790dac6a6ff12",
+    "src/gnd/examples/literature/depth_fixture/README.md": "a009f6eba79c46b7ab72ac9d3712552729ebd00ec6491fdf5908769078eb6ff0",
+    "src/gnd/examples/literature/depth_fixture/algorithms.facts.json": "b4c54de6372d477ecd80284fb4f46556dc0a388753d5656fed63b1980747d497",
+    "src/gnd/examples/literature/depth_fixture/algorithms.orm.json": "12c50787b75f3a4e32bb0d0d10e62378fb351416f1efd5d023c8ec632fae0830",
+    "src/gnd/examples/literature/depth_fixture/algorithms.txt": "0ad3f94f8a152da3263d1cf1ea42b460b952dc1088240f60034db27924304ebb",
+    "src/gnd/examples/literature/depth_fixture/cases.json": "366dee9620694a6037496f51247248e8f937feae04939778b0cfce0d99327d70",
+    "src/gnd/examples/literature/depth_fixture/comparison.json": "5ea9ab5318506fb99fbc292f6f2809a4e5de48d1b507ffb981d0aca956c6174e",
+    "src/gnd/examples/literature/depth_fixture/decimal.orm.json": "cb8c7f432d1a57de8e8f263effab7d9af5ee83c35f674cb18f8b4b9174cb4909",
+    "src/gnd/examples/literature/depth_fixture/decimal.population.json": "0a6ed4999842fc83dd1118b51a236a56b99d3fc0b4da564748f1429c5de2f3b4",
+    "src/gnd/examples/literature/depth_fixture/decimal.targets.json": "50670c75be3617ef1b43a3b75215c54d6806dc0d0ef0f68e84376c571d3c7b28",
+    "src/gnd/examples/literature/depth_fixture/dynamics.facts.json": "33fab64e227cc228bff0633e290c9fd1a009eb6ca164bbdc426c438b64df8afc",
+    "src/gnd/examples/literature/depth_fixture/dynamics.orm.json": "18e54e6d2877d499a4933b89e78ba200be2411fc8b32dfa0569a59e3aeb83fab",
+    "src/gnd/examples/literature/depth_fixture/dynamics.txt": "e0e1ed49ea2c0f820187f9c4161c582947185587d4b8f021694555556252513f",
+    "src/gnd/examples/literature/depth_fixture/molecular.facts.json": "c3fa8d67b4798c47291449cf440f28cb2313242698681d40863f1ea9149be334",
+    "src/gnd/examples/literature/depth_fixture/molecular.orm.json": "0e521ab2d8c4a7eac1e0d61cb977acc0798450b14f775077c19ef7dac44cbf9a",
+    "src/gnd/examples/literature/depth_fixture/molecular.txt": "1ee50c933858ee2235d611b599186247659f34c26a88864e0e10fdcd72bd878c",
+    "src/gnd/examples/literature/depth_fixture/support.json": "8d697a5a169d6dfa27a0dacb498df9e86bd78f1ffbd5365ea82f38264333ed59",
+    "src/gnd/examples/literature/depth_fixture/vocabulary.orm.json": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796",
+    "src/gnd/examples/literature/quantity_fixture/README.md": "1ee7c035138158e40b0c3e2c347cbe119e5e13b1c721387a3ce54d2529150aed",
+    "src/gnd/examples/literature/quantity_fixture/source.txt": "b6eb089cd29272137c65a57c40b76070c9e49e8ccd6bd423880c14f6c630db26",
+    "src/gnd/examples/literature/quantity_fixture/time.anchors.json": "589c428990de044d2af80246a3177f4698b9b791a03e75c907de30df8def391d",
+    "src/gnd/examples/literature/quantity_fixture/time.orm.yaml": "55f41279bae5ee1477d6f006690ac638c9b11dcc01825bdfa2e687967229bba8",
+    "src/gnd/examples/literature/quantity_fixture/time.population.json": "c2a4bda7fe82b422146ae9bdf3076d4432388db595e4ed7081316627af20b568",
+    "src/gnd/examples/literature/quantity_fixture/time.targets.json": "772629861f6408132d4b65f597d17d8f009fe0232a2892775ca718768adc1b16"
+  },
+  "science_wheel_sha256": "296ae7b70ef5e87642857cc3e06875c289511c6334bfbcdc5e3371c61edcf729"
+}

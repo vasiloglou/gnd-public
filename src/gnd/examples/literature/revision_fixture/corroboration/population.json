@@ -1,0 +1,19 @@
+{
+  "facts": {
+    "method_builds_on_method": [
+      {
+        "base_method": "DMD",
+        "method": "VampNet"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "method_builds_on_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-resolution@1",
+    "source": "agent-output"
+  }
+}

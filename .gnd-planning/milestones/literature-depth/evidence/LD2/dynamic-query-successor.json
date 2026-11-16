@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "reason": "LD2 accounts for the exact time-unit multiplier table and any recognition dispatch movement.",
+  "predecessor": ".gnd-planning/milestones/literature-interop/evidence/LX4/dynamic-query-successor.json",
+  "predecessor_sha256": "3c97f142da96fbd1502f1951e342b526f4ff80fc0b93696a30d4c9a1eee4a482",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/anchors.py",
+      "_time_quantity",
+      "_TIME_SCALE[unit[1]]",
+      1
+    ],
+    [
+      "src/gnd/anchors.py",
+      "_time_quantity",
+      "source[end]",
+      2
+    ],
+    [
+      "src/gnd/anchors.py",
+      "_time_quantity",
+      "tuple[Decimal, int]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7815,
+  "result_occurrences": 9710
+}

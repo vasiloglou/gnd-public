@@ -1,0 +1,2 @@
+# Independent synthetic corroboration
+This note independently reports that VampNet builds on DMD.

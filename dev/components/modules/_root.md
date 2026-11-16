@@ -89,21 +89,21 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `AnchorError` | class(ValueError) | 47 | A bounded, named layer-three anchor refusal. |
-| `AnchorSidecar` | class | 52 | (no docstring) |
-| `strict_json(raw, *, max_bytes, too_large) -> Any` | function | 77 | Parse caller JSON refusing duplicate keys, constants, deep nesting and huge integers. |
-| `parse_anchor_sidecar(raw) -> AnchorSidecar` | function | 113 | (no docstring) |
-| `read_anchor_sidecar(path) -> AnchorSidecar` | function | 153 | (no docstring) |
-| `read_regular_path(path, *, label, max_bytes) -> bytes` | function | 161 | Read a caller path from a trusted root, refusing symlinks at every step. |
-| `validate_anchor_sidecar(sidecar) -> AnchorSidecar` | function | 173 | Apply the same strict wire validation to an in-memory sidecar. |
-| `vocabulary_digest(model) -> str` | function | 204 | (no docstring) |
-| `canonical_document_text(raw) -> str` | function | 220 | (no docstring) |
-| `bind_anchors(sidecar, model, population_bytes, document_bytes, population) -> str` | function | 229 | (no docstring) |
-| `write_anchor_sidecar(sidecar, population_path) -> Path` | function | 265 | Atomically publish an adjacent sidecar and read it back. |
-| `lexical_ranges(source, values, *, wanted_occurrences) -> dict[str, Any]` | function | 295 | Index requested values with one trie walk over the projected document. |
-| `recognition_target(kind, expected) -> Any` | function | 370 | Canonical comparison key for one admitted recogniser value. |
-| `recognition_index(source, kinds, *, limits) -> dict[str, dict[Any, list[tuple[int, int]]]]` | function | 375 | Scan each declared numeric/date grammar once, independent of fact count. |
-| `recognised_ranges(index, kind, expected) -> list[tuple[int, int]]` | function | 419 | (no docstring) |
+| `AnchorError` | class(ValueError) | 56 | A bounded, named layer-three anchor refusal. |
+| `AnchorSidecar` | class | 61 | (no docstring) |
+| `strict_json(raw, *, max_bytes, too_large) -> Any` | function | 86 | Parse caller JSON refusing duplicate keys, constants, deep nesting and huge integers. |
+| `parse_anchor_sidecar(raw) -> AnchorSidecar` | function | 122 | (no docstring) |
+| `read_anchor_sidecar(path) -> AnchorSidecar` | function | 162 | (no docstring) |
+| `read_regular_path(path, *, label, max_bytes) -> bytes` | function | 170 | Read a caller path from a trusted root, refusing symlinks at every step. |
+| `validate_anchor_sidecar(sidecar) -> AnchorSidecar` | function | 182 | Apply the same strict wire validation to an in-memory sidecar. |
+| `vocabulary_digest(model) -> str` | function | 213 | (no docstring) |
+| `canonical_document_text(raw) -> str` | function | 229 | (no docstring) |
+| `bind_anchors(sidecar, model, population_bytes, document_bytes, population) -> str` | function | 238 | (no docstring) |
+| `write_anchor_sidecar(sidecar, population_path) -> Path` | function | 274 | Atomically publish an adjacent sidecar and read it back. |
+| `lexical_ranges(source, values, *, wanted_occurrences) -> dict[str, Any]` | function | 304 | Index requested values with one trie walk over the projected document. |
+| `recognition_target(kind, expected) -> Any` | function | 407 | Canonical comparison key for one admitted recogniser value. |
+| `recognition_index(source, kinds, *, limits) -> dict[str, dict[Any, list[tuple[int, int]]]]` | function | 412 | Scan each declared numeric/date grammar once, independent of fact count. |
+| `recognised_ranges(index, kind, expected) -> list[tuple[int, int]]` | function | 465 | (no docstring) |
 
 ## gnd.api — `src/gnd/api.py`
 Components: cli.api

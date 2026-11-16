@@ -1,0 +1,48 @@
+{
+  "subject_label": [
+    {
+      "subject": "randomized-svd",
+      "label": "Randomized SVD"
+    }
+  ],
+  "operator": [
+    {
+      "subject": "randomized-svd",
+      "value": "input matrix of size m by n"
+    }
+  ],
+  "objective": [
+    {
+      "subject": "randomized-svd",
+      "value": "approximate the dominant singular subspace"
+    }
+  ],
+  "result": [
+    {
+      "subject": "randomized-svd",
+      "value": "O(mn log(k))"
+    }
+  ],
+  "assumptions": [
+    {
+      "subject": "randomized-svd",
+      "value": "dense input and k dominant singular components"
+    }
+  ],
+  "cost_model": [
+    {
+      "subject": "randomized-svd",
+      "value": "floating-point operations"
+    }
+  ],
+  "subject_has_component": [
+    {
+      "subject": "randomized-svd",
+      "related": "randomized-range-finder"
+    },
+    {
+      "subject": "randomized-svd",
+      "related": "reduced-deterministic-factorization"
+    }
+  ]
+}

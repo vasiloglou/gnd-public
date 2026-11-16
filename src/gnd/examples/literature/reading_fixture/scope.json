@@ -1,0 +1,10 @@
+{
+  "format": "literature-reading-scope/1",
+  "questions": [
+    "alternative"
+  ],
+  "sections": [
+    "study-methods"
+  ],
+  "predicate": "alternative_integrator"
+}

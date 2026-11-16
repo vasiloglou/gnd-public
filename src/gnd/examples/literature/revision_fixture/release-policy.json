@@ -1,0 +1,1075 @@
+{
+  "format": "literature-release-policy/1",
+  "snapshots": {
+    "after": [
+      {
+        "kind": "model",
+        "path": "model.orm.yaml",
+        "requires": []
+      },
+      {
+        "kind": "definition",
+        "path": "definition.json",
+        "requires": [
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "interpretation-policy",
+        "path": "interpretation.json",
+        "requires": []
+      },
+      {
+        "kind": "rule",
+        "path": "rule.json",
+        "requires": [
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "query",
+        "path": "targets.json",
+        "requires": [
+          "definition.json"
+        ]
+      },
+      {
+        "kind": "source",
+        "path": "sources/whale-a/document.txt",
+        "requires": []
+      },
+      {
+        "kind": "population",
+        "path": "sources/whale-a/population.json",
+        "requires": [
+          "sources/whale-a/document.txt"
+        ]
+      },
+      {
+        "kind": "extraction",
+        "path": "sources/whale-a/population.json.anchors.json",
+        "requires": [
+          "sources/whale-a/document.txt",
+          "sources/whale-a/population.json",
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "source",
+        "path": "sources/whale-b/document.txt",
+        "requires": []
+      },
+      {
+        "kind": "population",
+        "path": "sources/whale-b/population.json",
+        "requires": [
+          "sources/whale-b/document.txt"
+        ]
+      },
+      {
+        "kind": "extraction",
+        "path": "sources/whale-b/population.json.anchors.json",
+        "requires": [
+          "sources/whale-b/document.txt",
+          "sources/whale-b/population.json",
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "source",
+        "path": "sources/corroboration/document.txt",
+        "requires": []
+      },
+      {
+        "kind": "population",
+        "path": "sources/corroboration/population.json",
+        "requires": [
+          "sources/corroboration/document.txt"
+        ]
+      },
+      {
+        "kind": "extraction",
+        "path": "sources/corroboration/population.json.anchors.json",
+        "requires": [
+          "sources/corroboration/document.txt",
+          "sources/corroboration/population.json",
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "decision",
+        "path": "sources/resolution.json",
+        "requires": []
+      },
+      {
+        "kind": "decision",
+        "path": "decisions.json",
+        "requires": [
+          "sources/resolution.json"
+        ]
+      },
+      {
+        "kind": "composition-manifest",
+        "path": "sources/manifest.json",
+        "requires": [
+          "model.orm.yaml",
+          "sources/resolution.json",
+          "sources/whale-a/document.txt",
+          "sources/whale-a/population.json",
+          "sources/whale-a/population.json.anchors.json",
+          "sources/whale-b/document.txt",
+          "sources/whale-b/population.json",
+          "sources/whale-b/population.json.anchors.json"
+        ]
+      },
+      {
+        "kind": "population",
+        "path": "population.json",
+        "requires": [
+          "sources/manifest.json"
+        ]
+      },
+      {
+        "kind": "composition-record",
+        "path": "composition.json",
+        "requires": [
+          "sources/manifest.json",
+          "population.json"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "review-inputs.json",
+        "requires": [
+          "interpretation.json"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "reviews.json",
+        "requires": [
+          "definition.json",
+          "interpretation.json",
+          "decisions.json",
+          "composition.json",
+          "review-inputs.json"
+        ]
+      },
+      {
+        "kind": "witness",
+        "path": "witness.json",
+        "requires": [
+          "composition.json",
+          "targets.json",
+          "rule.json"
+        ]
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/annex.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/calibration.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/calibration.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/closure.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/conflict.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/conflict.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/control.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/gold.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/producer-pin.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/reading.orm.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/reviews.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/scope.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/study.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/vocabulary.orm.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/roster.json",
+        "requires": []
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-0.json",
+        "requires": [
+          "reading-inputs/roster.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-0.json",
+        "requires": [
+          "reading/payload-0.json",
+          "reading-inputs/roster.json",
+          "reading-inputs/annex.txt",
+          "reading-inputs/calibration.json",
+          "reading-inputs/calibration.txt",
+          "reading-inputs/closure.json",
+          "reading-inputs/conflict.json",
+          "reading-inputs/conflict.txt",
+          "reading-inputs/control.txt",
+          "reading-inputs/gold.json",
+          "reading-inputs/producer-pin.json",
+          "reading-inputs/reading.orm.json",
+          "reading-inputs/reviews.json",
+          "reading-inputs/scope.json",
+          "reading-inputs/study.txt",
+          "reading-inputs/vocabulary.orm.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-1.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-0.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-1.json",
+        "requires": [
+          "reading/payload-1.json",
+          "reading-inputs/roster.json",
+          "reading/stage-0.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-2.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-1.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-2.json",
+        "requires": [
+          "reading/payload-2.json",
+          "reading-inputs/roster.json",
+          "reading/stage-1.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-3.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-2.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-3.json",
+        "requires": [
+          "reading/payload-3.json",
+          "reading-inputs/roster.json",
+          "reading/stage-2.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-4.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-3.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-4.json",
+        "requires": [
+          "reading/payload-4.json",
+          "reading-inputs/roster.json",
+          "reading/stage-3.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-5.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-4.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-5.json",
+        "requires": [
+          "reading/payload-5.json",
+          "reading-inputs/roster.json",
+          "reading/stage-4.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/producer-output-table.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/broad.population.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/targeted.population.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/reported-conflict.population.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/reported-conflict.source.txt",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/fidelity-low.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "coverage",
+        "path": "reading/coverage.json",
+        "requires": [
+          "reading/stage-5.json",
+          "reading-inputs/roster.json"
+        ]
+      },
+      {
+        "kind": "scope",
+        "path": "reading/scope.json",
+        "requires": [
+          "reading-inputs/roster.json"
+        ]
+      },
+      {
+        "kind": "closure",
+        "path": "reading/closure.json",
+        "requires": [
+          "reading/scope.json"
+        ]
+      },
+      {
+        "kind": "fidelity",
+        "path": "reading/fidelity-high.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/run.json",
+        "requires": [
+          "reading/stage-0.json",
+          "reading/stage-1.json",
+          "reading/stage-2.json",
+          "reading/stage-3.json",
+          "reading/stage-4.json",
+          "reading/stage-5.json",
+          "reading/producer-output-table.json",
+          "reading/broad.population.json",
+          "reading/targeted.population.json",
+          "reading/reported-conflict.population.json",
+          "reading/reported-conflict.source.txt",
+          "reading/fidelity-low.json",
+          "reading/coverage.json",
+          "reading/scope.json",
+          "reading/closure.json",
+          "reading/fidelity-high.json"
+        ]
+      },
+      {
+        "kind": "claim",
+        "path": "scoped-absence.json",
+        "requires": [
+          "reading/run.json",
+          "reading/coverage.json",
+          "reading/scope.json",
+          "reading/closure.json",
+          "reading/fidelity-high.json",
+          "decisions.json",
+          "composition.json",
+          "before/composition.json",
+          "before/population.json"
+        ]
+      },
+      {
+        "kind": "decision",
+        "path": "migration.json",
+        "requires": [
+          "decisions.json",
+          "composition.json",
+          "reading/run.json",
+          "definition.json",
+          "before/composition.json",
+          "before/population.json"
+        ]
+      },
+      {
+        "kind": "definition",
+        "path": "evolution/proposal.json",
+        "requires": [
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "model",
+        "path": "evolution/model.orm.yaml",
+        "requires": [
+          "model.orm.yaml",
+          "evolution/proposal.json"
+        ]
+      },
+      {
+        "kind": "definition",
+        "path": "evolution/definition.json",
+        "requires": [
+          "evolution/model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "evolution/reviews.json",
+        "requires": [
+          "evolution/definition.json",
+          "interpretation.json",
+          "sources/whale-a/document.txt",
+          "sources/whale-a/population.json",
+          "sources/whale-a/population.json.anchors.json",
+          "review-inputs.json"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "evolution/transition.json",
+        "requires": [
+          "evolution/proposal.json",
+          "reviews.json",
+          "evolution/reviews.json",
+          "review-inputs.json"
+        ]
+      },
+      {
+        "kind": "model",
+        "path": "comparison/base.orm.json",
+        "requires": []
+      },
+      {
+        "kind": "model",
+        "path": "comparison/head.orm.json",
+        "requires": []
+      },
+      {
+        "kind": "population",
+        "path": "comparison/population.json",
+        "requires": []
+      },
+      {
+        "kind": "rule",
+        "path": "comparison/result.json",
+        "requires": [
+          "comparison/base.orm.json",
+          "comparison/head.orm.json",
+          "comparison/population.json"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "supports/whale-a/review.json",
+        "requires": [
+          "definition.json",
+          "interpretation.json",
+          "sources/whale-a/document.txt",
+          "sources/whale-a/population.json",
+          "sources/whale-a/population.json.anchors.json",
+          "review-inputs.json"
+        ]
+      },
+      {
+        "kind": "query",
+        "path": "supports/whale-a/targets.json",
+        "requires": [
+          "targets.json"
+        ]
+      },
+      {
+        "kind": "witness",
+        "path": "supports/whale-a/witness.json",
+        "requires": [
+          "supports/whale-a/review.json",
+          "rule.json",
+          "supports/whale-a/targets.json"
+        ]
+      },
+      {
+        "kind": "claim",
+        "path": "supports/whale-a/support.json",
+        "requires": [
+          "supports/whale-a/witness.json",
+          "decisions.json",
+          "rule.json"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "supports/corroboration/review.json",
+        "requires": [
+          "definition.json",
+          "interpretation.json",
+          "sources/corroboration/document.txt",
+          "sources/corroboration/population.json",
+          "sources/corroboration/population.json.anchors.json",
+          "review-inputs.json"
+        ]
+      },
+      {
+        "kind": "query",
+        "path": "supports/corroboration/targets.json",
+        "requires": [
+          "targets.json"
+        ]
+      },
+      {
+        "kind": "witness",
+        "path": "supports/corroboration/witness.json",
+        "requires": [
+          "supports/corroboration/review.json",
+          "rule.json",
+          "supports/corroboration/targets.json"
+        ]
+      },
+      {
+        "kind": "claim",
+        "path": "supports/corroboration/support.json",
+        "requires": [
+          "supports/corroboration/witness.json",
+          "decisions.json",
+          "rule.json"
+        ]
+      },
+      {
+        "kind": "claim",
+        "path": "claims.json",
+        "requires": [
+          "witness.json",
+          "reviews.json",
+          "scoped-absence.json",
+          "migration.json",
+          "evolution/transition.json",
+          "comparison/result.json",
+          "supports/whale-a/support.json",
+          "supports/corroboration/support.json"
+        ]
+      }
+    ],
+    "before": [
+      {
+        "kind": "model",
+        "path": "model.orm.yaml",
+        "requires": []
+      },
+      {
+        "kind": "definition",
+        "path": "definition.json",
+        "requires": [
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "interpretation-policy",
+        "path": "interpretation.json",
+        "requires": []
+      },
+      {
+        "kind": "rule",
+        "path": "rule.json",
+        "requires": [
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "query",
+        "path": "targets.json",
+        "requires": [
+          "definition.json"
+        ]
+      },
+      {
+        "kind": "source",
+        "path": "sources/whale-a/document.txt",
+        "requires": []
+      },
+      {
+        "kind": "population",
+        "path": "sources/whale-a/population.json",
+        "requires": [
+          "sources/whale-a/document.txt"
+        ]
+      },
+      {
+        "kind": "extraction",
+        "path": "sources/whale-a/population.json.anchors.json",
+        "requires": [
+          "sources/whale-a/document.txt",
+          "sources/whale-a/population.json",
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "source",
+        "path": "sources/whale-b/document.txt",
+        "requires": []
+      },
+      {
+        "kind": "population",
+        "path": "sources/whale-b/population.json",
+        "requires": [
+          "sources/whale-b/document.txt"
+        ]
+      },
+      {
+        "kind": "extraction",
+        "path": "sources/whale-b/population.json.anchors.json",
+        "requires": [
+          "sources/whale-b/document.txt",
+          "sources/whale-b/population.json",
+          "model.orm.yaml"
+        ]
+      },
+      {
+        "kind": "decision",
+        "path": "decisions.json",
+        "requires": [
+          "sources/whale-a/population.json.anchors.json",
+          "sources/whale-b/population.json.anchors.json",
+          "interpretation.json"
+        ]
+      },
+      {
+        "kind": "composition-manifest",
+        "path": "sources/manifest.json",
+        "requires": [
+          "model.orm.yaml",
+          "sources/whale-a/document.txt",
+          "sources/whale-a/population.json",
+          "sources/whale-a/population.json.anchors.json",
+          "sources/whale-b/document.txt",
+          "sources/whale-b/population.json",
+          "sources/whale-b/population.json.anchors.json"
+        ]
+      },
+      {
+        "kind": "population",
+        "path": "population.json",
+        "requires": [
+          "sources/manifest.json"
+        ]
+      },
+      {
+        "kind": "composition-record",
+        "path": "composition.json",
+        "requires": [
+          "sources/manifest.json",
+          "population.json"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "review-inputs.json",
+        "requires": [
+          "interpretation.json"
+        ]
+      },
+      {
+        "kind": "assertion-review",
+        "path": "reviews.json",
+        "requires": [
+          "definition.json",
+          "interpretation.json",
+          "decisions.json",
+          "composition.json",
+          "review-inputs.json"
+        ]
+      },
+      {
+        "kind": "witness",
+        "path": "witness.json",
+        "requires": [
+          "composition.json",
+          "targets.json",
+          "rule.json"
+        ]
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/annex.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/calibration.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/calibration.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/closure.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/conflict.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/conflict.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/control.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/gold.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/producer-pin.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/reading.orm.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/reviews.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/scope.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/study.txt",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/vocabulary.orm.json",
+        "requires": []
+      },
+      {
+        "kind": "source",
+        "path": "reading-inputs/roster.json",
+        "requires": []
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-0.json",
+        "requires": [
+          "reading-inputs/roster.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-0.json",
+        "requires": [
+          "reading/payload-0.json",
+          "reading-inputs/roster.json",
+          "reading-inputs/annex.txt",
+          "reading-inputs/calibration.json",
+          "reading-inputs/calibration.txt",
+          "reading-inputs/closure.json",
+          "reading-inputs/conflict.json",
+          "reading-inputs/conflict.txt",
+          "reading-inputs/control.txt",
+          "reading-inputs/gold.json",
+          "reading-inputs/producer-pin.json",
+          "reading-inputs/reading.orm.json",
+          "reading-inputs/reviews.json",
+          "reading-inputs/scope.json",
+          "reading-inputs/study.txt",
+          "reading-inputs/vocabulary.orm.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-1.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-0.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-1.json",
+        "requires": [
+          "reading/payload-1.json",
+          "reading-inputs/roster.json",
+          "reading/stage-0.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-2.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-1.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-2.json",
+        "requires": [
+          "reading/payload-2.json",
+          "reading-inputs/roster.json",
+          "reading/stage-1.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-3.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-2.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-3.json",
+        "requires": [
+          "reading/payload-3.json",
+          "reading-inputs/roster.json",
+          "reading/stage-2.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-4.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-3.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-4.json",
+        "requires": [
+          "reading/payload-4.json",
+          "reading-inputs/roster.json",
+          "reading/stage-3.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/payload-5.json",
+        "requires": [
+          "reading-inputs/roster.json",
+          "reading/stage-4.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/stage-5.json",
+        "requires": [
+          "reading/payload-5.json",
+          "reading-inputs/roster.json",
+          "reading/stage-4.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/producer-output-table.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/broad.population.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/targeted.population.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/reported-conflict.population.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/reported-conflict.source.txt",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/fidelity-low.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "coverage",
+        "path": "reading/coverage.json",
+        "requires": [
+          "reading/stage-5.json",
+          "reading-inputs/roster.json"
+        ]
+      },
+      {
+        "kind": "scope",
+        "path": "reading/scope.json",
+        "requires": [
+          "reading-inputs/roster.json"
+        ]
+      },
+      {
+        "kind": "closure",
+        "path": "reading/closure.json",
+        "requires": [
+          "reading/scope.json"
+        ]
+      },
+      {
+        "kind": "fidelity",
+        "path": "reading/fidelity-high.json",
+        "requires": [
+          "reading/stage-5.json"
+        ]
+      },
+      {
+        "kind": "reading-record",
+        "path": "reading/run.json",
+        "requires": [
+          "reading/stage-0.json",
+          "reading/stage-1.json",
+          "reading/stage-2.json",
+          "reading/stage-3.json",
+          "reading/stage-4.json",
+          "reading/stage-5.json",
+          "reading/producer-output-table.json",
+          "reading/broad.population.json",
+          "reading/targeted.population.json",
+          "reading/reported-conflict.population.json",
+          "reading/reported-conflict.source.txt",
+          "reading/fidelity-low.json",
+          "reading/coverage.json",
+          "reading/scope.json",
+          "reading/closure.json",
+          "reading/fidelity-high.json"
+        ]
+      },
+      {
+        "kind": "claim",
+        "path": "scoped-absence.json",
+        "requires": [
+          "reading/run.json",
+          "reading/coverage.json",
+          "reading/scope.json",
+          "reading/closure.json",
+          "reading/fidelity-high.json"
+        ]
+      },
+      {
+        "kind": "claim",
+        "path": "claims.json",
+        "requires": [
+          "witness.json",
+          "reviews.json",
+          "scoped-absence.json"
+        ]
+      }
+    ]
+  }
+}

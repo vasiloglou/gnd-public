@@ -1,0 +1,116 @@
+{
+  "base": "cdb6b48b",
+  "claims": [
+    "Time checking admits equivalent fs, ps and ns mentions and refuses wrong dimensions, partial unit spans, malformed quantities, and sub-femtosecond values.",
+    "Witness and independent replay bind the coefficient, scale and unit for 0.002 ps. Float and fractional Number retain their independent named refusal.",
+    "Selector model admission, scan work, occurrence ordering, anchors, and the exact RF6 inventory are exercised; predecessor compatibility stays under the existing guards."
+  ],
+  "created": "2026-11-16T05:26:14.616386+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1/diff.patch",
+      "sha256": "0e4af7f96ea448a68404c31b9c180a1d78917d5d9752a21fb228c9561131e827"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/005-phase-LD2-spec-gate.md",
+      "sha256": "031defa17d15d6cf45aa1a442ea1127af13e90d3d9fbbfa85f607ccfb5cbc55e"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/evidence/LD2/dynamic-query-successor.json",
+      "sha256": "37c0ef7f89e70b889484d59cf95e0d28d93454119663bd158a1f2c9e5ebe495d"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD2-spec.md",
+      "sha256": "95d352102ae8caad863e7189c47ac3f79bcd3496d9e4d5f9cde0c9e2ecfca350"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "120f65a9139b834eaad2cfb0bb7aa501ff0f16bfc960619d5154df52e57fc04c"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "925239848a19e4dce1f7ffb15784af7bab4dc1a0478308244f7e6aac5a4dd23b"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "151cd3d0658fbbc1f8ae22b24d3b2188c417f5a727e15a3ecd31a2acbbdb72ad"
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "sha256": "143bafe6c03f12f7e35c144adb57ea3ae1571d522fa97f28826980c12120b734"
+    },
+    {
+      "path": "src/gnd/examples/literature/README.md",
+      "sha256": "8fbb090c2032acae059c2241eb5be711f02f39f4bbcf57ef769b7699cad3a842"
+    },
+    {
+      "path": "src/gnd/examples/literature/quantity_fixture/README.md",
+      "sha256": "1ee7c035138158e40b0c3e2c347cbe119e5e13b1c721387a3ce54d2529150aed"
+    },
+    {
+      "path": "src/gnd/examples/literature/quantity_fixture/source.txt",
+      "sha256": "b6eb089cd29272137c65a57c40b76070c9e49e8ccd6bd423880c14f6c630db26"
+    },
+    {
+      "path": "src/gnd/examples/literature/quantity_fixture/time.anchors.json",
+      "sha256": "589c428990de044d2af80246a3177f4698b9b791a03e75c907de30df8def391d"
+    },
+    {
+      "path": "src/gnd/examples/literature/quantity_fixture/time.orm.yaml",
+      "sha256": "55f41279bae5ee1477d6f006690ac638c9b11dcc01825bdfa2e687967229bba8"
+    },
+    {
+      "path": "src/gnd/examples/literature/quantity_fixture/time.population.json",
+      "sha256": "c2a4bda7fe82b422146ae9bdf3076d4432388db595e4ed7081316627af20b568"
+    },
+    {
+      "path": "src/gnd/examples/literature/quantity_fixture/time.targets.json",
+      "sha256": "772629861f6408132d4b65f597d17d8f009fe0232a2892775ca718768adc1b16"
+    },
+    {
+      "path": "src/gnd/model/_validation.py",
+      "sha256": "43ca2fce79b694e6b5388145165a08c740d891bbe031316bb43a9838adc98901"
+    },
+    {
+      "path": "src/gnd/schema/orm-meta.schema.json",
+      "sha256": "0cab9e99afbc048afe328d57009062bb46932d8790688f3e4a8f27e75ef0cc62"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/constraint-reference.md",
+      "sha256": "23b60f000b478b99e48b03bd1739e64a06582868c882917462f1b1f8e8dde615"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/orm-meta.schema.json",
+      "sha256": "0cab9e99afbc048afe328d57009062bb46932d8790688f3e4a8f27e75ef0cc62"
+    },
+    {
+      "path": "tests/fixtures/ld2-quantities/README.md",
+      "sha256": "0142470e66f2f9e759963855be3b6fb8ddea41d7b404647ad4461317e7329757"
+    },
+    {
+      "path": "tests/fixtures/ld2-quantities/expected.json",
+      "sha256": "e9d244adf0a8d550ce29ad4ca0d636fda59d356ddefb92ad05bf68b3fd2b4e75"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "b6ecb642c24dd106760cc61330a8105c1ae8da73e01c469142ef214d650fa254"
+    },
+    {
+      "path": "tests/test_ld2_quantities.py",
+      "sha256": "3cc8a21b8215fbb8826a6bf3c10cccc3fac08ac3be3babccf7a42b6bfd52f1f1"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/004-phase-LD1.md",
+      "sha256": "5a226ac70ee45cdd4893d6cc4d1ea505aeb9b76a04049dbc1b61382f71bafc69"
+    }
+  ],
+  "head": "e0bf8feb10c3504963f9e4e96090400025c07b9f",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Do the LD2 selector, fixed-scale witness and tests establish the two triggered quantity requirements without changing unrelated anchor or witness contracts?",
+  "subject": "phase",
+  "version": 1
+}

@@ -1,0 +1,7 @@
+{
+  "both-approved": {"decision": "supported", "effective": ["whale-a", "corroboration"], "states": ["approved", "approved"]},
+  "reject-whale-a": {"decision": "supported", "effective": ["corroboration"], "states": ["rejected", "approved"]},
+  "reject-both": {"decision": "unsupported", "effective": [], "states": ["rejected", "rejected"]},
+  "old-review-on-revised": {"decision": "revalidation-required", "effective": [], "states": ["stale", "stale"]},
+  "renew-whale-a": {"decision": "supported", "effective": ["whale-a"], "states": ["approved", "stale"]}
+}

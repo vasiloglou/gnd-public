@@ -1,0 +1,768 @@
+diff --git a/.gnd-planning/milestones/literature-depth/012-phase-LD5-spec-gate.md b/.gnd-planning/milestones/literature-depth/012-phase-LD5-spec-gate.md
+new file mode 100644
+index 00000000..936981bc
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-depth/012-phase-LD5-spec-gate.md
+@@ -0,0 +1,34 @@
++---
++milestone: literature-depth
++station: phase-LD5-spec-gate
++skill: "n/a -- repository development under process-phase"
++scope: phase-LD5-spec-gate
++date: 2026-11-16
++gates:
++  - command: "uv run --no-sync pytest -q tests/test_ld5_verdict.py --tb=short"
++    exit: 1
++    output: "9 errors in 0.15s"
++  - command: "ruling: delegated (auto=true) approved .gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md sha256 44022b8fa8cba692a5fabcad02dbdcc7a854bbb04cba21dbcc1894613db3d83c"
++    exit: "n/a -- ruling"
++evidence:
++  - path: .gnd-planning/milestones/literature-depth/011-phase-LD4.md
++    sha256: e108270204a5e5817e98c14b720f9a9a5aa835816a33e6c365553c6bebe48a75
++  - path: .gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md
++    sha256: 44022b8fa8cba692a5fabcad02dbdcc7a854bbb04cba21dbcc1894613db3d83c
++  - path: tests/test_ld5_verdict.py
++    sha256: bf40858311810fb6431fe2af0a6f103bdee805314889013a52d0f527dd208c1d
++  - path: tests/fixtures/ld5-verdict/expected.json
++    sha256: d7323c9cc5ffcea22768e984e434d683c0b79ab76e7118ce9801549dab8a314a
++  - path: src/gnd/examples/literature/verdict_fixture/opinions.json
++    sha256: 096613fa54def036cdeb4c85d137ec84fcfa1fae7b500bd080e56b01824276f2
++---
++
++# LD5 spec and corpus gate
++
++The owner's `process-milestone literature-depth auto` invocation delegates
++approval of the part 8 verdict fixture. The frozen corpus reached the expected
++red at the absent example module. The inputs contain separate synthetic
++source opinions pinned to observed release and revised-edition evidence.
++The answer roster covers two, one, zero and renewed supports and independent
++mutations of the shared and source bindings. No optional spec panel is
++selected. The later independent diff review retains separate authorization.
+diff --git a/.gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md b/.gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md
+new file mode 100644
+index 00000000..59cc2a38
+--- /dev/null
++++ b/.gnd-planning/milestones/literature-depth/notes/phase-LD5-spec.md
+@@ -0,0 +1,78 @@
++# LD5 · Verdicts on derived claims
++
++The approved literature-depth plan assigns the final part 8 deliverable.
++The prior phase supplies the release, two independently replayable source
++supports, the authored occurrence reviews, an observed predicate transition,
++and both edition identities. Verify all of these against LD4's final bytes
++before freezing the first answer corpus.
++
++## Spec decisions for the implementability sweep
++
++- Reuse the example-level release and public witness/check routes. The core
++  judgment wire format continues to address source assertion occurrences.
++- Separate the consumer's trusted verdict and its exact claim/support inputs
++  from the candidate snapshot. The verifier validates both the supplied
++  verdict bytes and the declared population, review and witness bindings.
++  A frozen synthetic verdict originates in the fixture and is signed by its
++  independently supplied raw digest. A fresh verifier computes only the
++  effective support outcome. It does not grant a replacement opinion.
++- Bind global claim, decision, rule, resolution and definition identities
++  outside any particular support. A changed global dependency requires
++  revalidation of all affected supports. Bind individual source occurrence,
++  scoped review and witness byte identity to each vote. Verify each support
++  independently through LD4, avoiding a whole-release live gate that would
++  throw out the still-valid support when its peer goes stale.
++- Use the before/after semantic transition verified by LD4. The changed
++  definition preserves the asserted occurrence and role values. The original
++  receipt and witness both fail against the revised model. A replacement
++  pinned receipt and new independently replayed witness restore only the
++  reviewed support. Resolution decisions and rules are unchanged in this
++  transition. Do not categorize a changed semantic definition as a rule-only
++  comparison.
++- The current fixture supplies two explicit approvals for one derived
++  ancestor target, a package-owned rejection of one exact support, and a
++  double rejection. An explicit no-support terminal outcome explains why
++  each support was rejected, stale or unavailable. Positive outcomes include
++  exactly the still-valid supporting receipts.
++
++## Corpus-first controls
++
++Establish exact supported, one valid, zero valid, and re-reviewed outcomes.
++Mutate claim, occurrence, decision bytes, rule, resolution edition and
++review freshness separately. Verify definition-change invalidation even
++with the same role tuple. Rehash captured data with the replacement claimed
++only by the submitting artifact and refuse when it disagrees with the
++consumer's independent decision pin. Test duplicate or empty expected
++support lists, malformed deeply nested and oversized bounded documents,
++bad ordering and untrusted artifact paths. Compare the installed fresh
++and replayed example outcomes against the frozen answer corpus.
++
++## Entry points and evidence
++
++Run `gnd.examples.literature.verdict` against the completed LD4 release.
++`run RELEASE --out DIR` verifies the five fixture scenarios and captures their
++report. `replay RELEASE DIR` recomputes it from the same independently pinned
++source opinions. `evaluate RELEASE --case ID [--edition current|revised]`
++returns the selected decision and its source-level explanations. The report
++distinguishes a supported claim, a completed evaluation with zero support
++and a shared binding that requires revalidation. Malformed inputs refuse at
++exit 3. The runner and replay return exit 0 for a complete valid demonstration.
++
++Read consumer-pinned opinion bytes before payload selection, with an exact
++bounded case and source roster. Bind released claim bytes and actual rule,
++decisions, resolution edition, definition and interpretation artifacts locally.
++Bind exact occurrence, review and witness identities per source. A stale local
++proof leaves the other independently replayed support available. Shared
++staleness invalidates all selected opinions for that edition.
++The installed LD4 renewed witness showed public witness and replay exit 0
++under the revised definition, with the old witness refusing at exit 3.
++The separately captured renewed opinion binds those exact bytes. The other
++support retains its previous review and is stale in the revised edition.
++
++## Verification
++
++Verify frozen outcomes, mutated bindings, retained replay and hostile
++opinion documents. Run the ordinary affected literature and structural
++selections, strict component validation and an installed public example.
++One separately authorized independent diff review follows verification.
++Part 10 remains deferred.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index bc74f8a5..09ba5d2e 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +71 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +72 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+ - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
+@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/errors.py
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +25 more (graph.md)
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +26 more (graph.md)
+ - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
+ - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
+ 
+@@ -3650,6 +3650,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - source digest: conformance.currency, fidelity.doccheck, model.rai_import
+ - source lineage: model.composition, witness.presentation
+ - source spans: extract.source_anchors, model.anchors
++- source support: examples.literature_depth, examples.literature_verdict
+ - stagnation: exp.service, exp.session_runtime
+ - stale evidence: exp.acceptance, semantics.proof_currency
+ - station timeout: agent.solve, cli.solve_command
+@@ -3713,7 +3714,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/examples/literature/depth.py
+ - uses: infra.artifacts, infra.bounded_process, model.anchors
+-- used_by: examples.literature_reading, examples.literature_revision
++- used_by: examples.literature_reading, examples.literature_revision, examples.literature_verdict
+ - tests: tests/test_ld1_competency_examples.py
+ 
+ ### examples.literature_reading
+@@ -3736,5 +3737,17 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/examples/literature/revision.py, src/gnd/examples/literature/revision_manifest.py
+ - uses: examples.literature_depth, examples.literature_reading, infra.artifacts, infra.errors, model.loading
+-- used_by: (none)
++- used_by: examples.literature_verdict
+ - tests: tests/test_ld4_revision.py
++- notes: Independently replays both original and renewed source support certificates.
++
++### examples.literature_verdict
++- does: Recheck consumer-pinned source opinions on a derived literature claim and report which support certificates remain effective.
++- verbs: derived verdict, source support, independent support, reviewed definition, resolution edition, claim bindings, revalidation
++- in: Completed revision release and synthetic source opinions pinned to exact evidence.
++- out: Supported, unsupported and revalidation-required decisions with source-level reasons and a replayable report.
++- status: canonical
++- modules: src/gnd/examples/literature/verdict.py
++- uses: examples.literature_depth, examples.literature_revision, infra.artifacts, infra.errors
++- used_by: (none)
++- tests: tests/test_ld5_verdict.py
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 71ed2565..a26317c7 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1895,7 +1895,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### examples.literature_depth
+ - uses: infra.artifacts, infra.bounded_process, model.anchors
+-- used_by: examples.literature_reading, examples.literature_revision
++- used_by: examples.literature_reading, examples.literature_revision, examples.literature_verdict
+ 
+ #### examples.literature_depth -> infra.artifacts
+ - `src/gnd/examples/literature/depth.py -> src/gnd/artifacts.py`
+@@ -1996,7 +1996,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### examples.literature_revision
+ - uses: examples.literature_depth, examples.literature_reading, infra.artifacts, infra.errors, model.loading
+-- used_by: (none)
++- used_by: examples.literature_verdict
+ 
+ #### examples.literature_revision -> examples.literature_depth
+ - `src/gnd/examples/literature/revision.py -> src/gnd/examples/literature/depth.py`
+@@ -2015,6 +2015,23 @@ Generated by `scripts/components_index.py`.
+ #### examples.literature_revision -> model.loading
+ - `src/gnd/examples/literature/revision.py -> src/gnd/model/__init__.py`
+ 
++### examples.literature_verdict
++- uses: examples.literature_depth, examples.literature_revision, infra.artifacts, infra.errors
++- used_by: (none)
++
++#### examples.literature_verdict -> examples.literature_depth
++- `src/gnd/examples/literature/verdict.py -> src/gnd/examples/literature/depth.py`
++
++#### examples.literature_verdict -> examples.literature_revision
++- `src/gnd/examples/literature/verdict.py -> src/gnd/examples/literature/revision.py`
++- `src/gnd/examples/literature/verdict.py -> src/gnd/examples/literature/revision_manifest.py`
++
++#### examples.literature_verdict -> infra.artifacts
++- `src/gnd/examples/literature/verdict.py -> src/gnd/artifacts.py`
++
++#### examples.literature_verdict -> infra.errors
++- `src/gnd/examples/literature/verdict.py -> src/gnd/errors.py`
++
+ ### examples.plan_apps
+ - uses: cli.api, export.pyrel_rules, model.loading, model.population_loading, model.query_index, semantics.extensions, semantics.transitions
+ - used_by: (none)
+@@ -3355,7 +3372,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_revision, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_revision, examples.literature_verdict, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+@@ -3374,7 +3391,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.errors
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.service
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, examples.literature_verdict, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.service
+ 
+ ### infra.exit_codes
+ - uses: (none)
+diff --git a/dev/components/modules/examples.md b/dev/components/modules/examples.md
+index d113ad86..24bc0b78 100644
+--- a/dev/components/modules/examples.md
++++ b/dev/components/modules/examples.md
+@@ -303,10 +303,11 @@ Publish and replay the literature semantic revision example offline.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `run(reading_run, out) -> dict` | function | 391 | Recheck captured evidence and publish both snapshots under a new root. |
+-| `replay(root, *, snapshot) -> dict` | function | 412 | Re-derive the release from authenticated retained inputs in private scratch. |
+-| `replay_support(root, source) -> dict` | function | 432 | Check one certificate against the independent source and review inputs. |
+-| `main(argv) -> int` | function | 455 | (no docstring) |
++| `run(reading_run, out) -> dict` | function | 392 | Recheck captured evidence and publish both snapshots under a new root. |
++| `replay(root, *, snapshot) -> dict` | function | 413 | Re-derive the release from authenticated retained inputs in private scratch. |
++| `replay_support(root, source) -> dict` | function | 433 | Check one certificate against the independent source and review inputs. |
++| `replay_renewed_support(root) -> dict` | function | 456 | Verify the selected replacement review and proof for the evolved predicate. |
++| `main(argv) -> int` | function | 478 | (no docstring) |
+ 
+ ## gnd.examples.literature.revision_manifest — `src/gnd/examples/literature/revision_manifest.py`
+ Components: examples.literature_revision
+@@ -323,6 +324,17 @@ Bind a release to an independently selected, bounded dependency policy.
+ | `status(root, *, policy, policy_sha256) -> dict` | function | 145 | Check a candidate against the consumer's exact policy and propagate staleness. |
+ | `publish(root, files) -> None` | function | 154 | (no docstring) |
+ 
++## gnd.examples.literature.verdict — `src/gnd/examples/literature/verdict.py`
++Components: examples.literature_verdict
++Evaluate consumer-pinned verdicts on the literature fixture's derived claim.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `evaluate(root, case, *, edition, opinions, opinions_sha256) -> dict` | function | 140 | Check one independently pinned reading opinion set against the release. |
++| `run(root, out) -> dict[str, dict]` | function | 155 | Capture the reproducible worked verdicts in a new directory. |
++| `replay(root, out) -> dict[str, dict]` | function | 167 | Recompute a retained verdict report from the expected release evidence. |
++| `main(argv) -> int` | function | 181 | (no docstring) |
++
+ ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
+ Components: examples.plan_apps
+ The access desk: ask the bot for an access plan, check it with GND or PyRel, execute it.
+diff --git a/src/gnd/examples/literature/README.md b/src/gnd/examples/literature/README.md
+index b5fd18e8..b909b38d 100644
+--- a/src/gnd/examples/literature/README.md
++++ b/src/gnd/examples/literature/README.md
+@@ -357,3 +357,7 @@ replays completed stages without calling its producer.
+ The [release migration example](revision_fixture/README.md) traces a whale
+ identity split through assertions, reviews, coverage and lineage witnesses.
+ It retains the original snapshot for independent replay.
++
++The [derived verdict example](verdict_fixture/README.md) applies saved source
++opinions to the released claim. It checks which supports survive rejection
++or a change to their evidence.
+diff --git a/src/gnd/examples/literature/revision.py b/src/gnd/examples/literature/revision.py
+index 5096b0e7..115e3c40 100644
+--- a/src/gnd/examples/literature/revision.py
++++ b/src/gnd/examples/literature/revision.py
+@@ -131,12 +131,13 @@ def _review(root: Path, source: str, authored: dict, *, model: str = MODEL, expe
+     }
+ 
+ 
+-def _proof(root: Path, folder: str, population: str, target: str, *, composition: str | None = None) -> dict:
++def _proof(root: Path, folder: str, population: str, target: str, *, composition: str | None = None,
++           model: str = MODEL) -> dict:
+     witness = f"{folder}witness.json"
+     composed = ("--composition", composition) if composition else ()
+-    proof = _command(root, "witness", MODEL, population, "--targets", target,
++    proof = _command(root, "witness", model, population, "--targets", target,
+                      *composed, "--raw", "--out", witness)
+-    repeated = _command(root, "replay", MODEL, population, witness, *composed, "--raw")
++    repeated = _command(root, "replay", model, population, witness, *composed, "--raw")
+     require(proof.return_code == repeated.return_code and proof.return_code in (0, 2),
+             "witness and replay did not agree")
+     emitted, replayed = _decode(proof.stdout), _decode(repeated.stdout)
+@@ -319,13 +320,13 @@ def _rule_comparison(root: Path) -> dict:
+     return result
+ 
+ 
+-def _support(root: Path, source: str, reviewed: dict, editions: dict) -> dict:
++def _support(root: Path, source: str, reviewed: dict, editions: dict, *, model: str = MODEL) -> dict:
+     evidence, folder = f"sources/{source}", f"supports/{source}/"
+     _check_asserted_anchors(root, f"{evidence}/population.json", "--document", f"{evidence}/document.txt",
+                             "--anchors", f"{evidence}/population.json.anchors.json")
+     require(reviewed["admitted"], "support review is stale")
+     review_raw = _write(root, folder + "review.json", reviewed)
+-    proof = _proof(root, folder, f"{evidence}/population.json", folder + "targets.json")
++    proof = _proof(root, folder, f"{evidence}/population.json", folder + "targets.json", model=model)
+     require(len(proof["queries"]) == 1 and proof["queries"][0][-1], "support did not prove the selected claim")
+     target = _decode(_read(root, folder + "targets.json"))["targets"][0]
+     roles = dict(zip(("method", "base_method"), (part["value"] for part in target["tuple"]), strict=True))
+@@ -452,6 +453,28 @@ def replay_support(root: Path, source: str) -> dict:
+     return computed
+ 
+ 
++def replay_renewed_support(root: Path) -> dict:
++    """Verify the selected replacement review and proof for the evolved predicate."""
++    policy = Policy.load()
++    state, files = policy.inspect(root / "after", "after")
++    source = "whale-a"
++    evolved = f"evolution/{MODEL}"
++    observed = (evolved, "evolution/definition.json", "evolution/reviews.json", "evolution/transition.json")
++    inputs = (
++        MODEL, "interpretation.json", "review-inputs.json", "evolution/proposal.json",
++        "rule.json", "decisions.json", "sources/resolution.json", f"supports/{source}/targets.json",
++        *(f"sources/{source}/{name}" for name in SOURCE_FILES),
++    )
++    require({*observed, *inputs} <= set(state["current"]), "renewed support evidence is stale")
++    with tempfile.TemporaryDirectory(prefix="gnd-revision-renewed-") as temporary:
++        work = Path(temporary).resolve()
++        _copy(work, {path: files[path] for path in inputs})
++        _transition(work, _review_inputs(work))
++        require(all(_read(work, path) == files[path] for path in observed), "renewed evidence differs on replay")
++        review = _decode(_read(work, "evolution/reviews.json"))["renewed"]
++        return _support(work, source, review, _editions(work), model=evolved)
++
++
+ def main(argv: list[str] | None = None) -> int:
+     parser = argparse.ArgumentParser(description=__doc__)
+     commands = parser.add_subparsers(dest="command", required=True)
+diff --git a/src/gnd/examples/literature/verdict.py b/src/gnd/examples/literature/verdict.py
+new file mode 100644
+index 00000000..b5867e35
+--- /dev/null
++++ b/src/gnd/examples/literature/verdict.py
+@@ -0,0 +1,210 @@
++"""Evaluate consumer-pinned verdicts on the literature fixture's derived claim."""
++
++from __future__ import annotations
++
++import argparse
++import sys
++from pathlib import Path
++
++from gnd.artifacts import ArtifactError, canonical_json_bytes, publish_directory_once, sha256_hex
++from gnd.errors import ModelLoadError, ModelValidationError
++
++from . import revision
++from .depth import _decode, _read
++from .revision_manifest import _digest, require
++
++OPINIONS = Path(__file__).with_name("verdict_fixture") / "opinions.json"
++OPINIONS_SHA256 = "096613fa54def036cdeb4c85d137ec84fcfa1fae7b500bd080e56b01824276f2"
++EDITIONS = ("current", "revised")
++RENEWED_SOURCE = "whale-a"
++CASE_IDS = ("both-approved", "reject-whale-a", "reject-both", "renew-whale-a")
++SHARED = {
++    "claim": "claims.json",
++    "decision": "decisions.json",
++    "rule": "rule.json",
++    "resolution_edition": "decisions.json",
++    "definition": "definition.json",
++    "interpretation": "interpretation.json",
++}
++SUPPORT_BINDINGS = {"occurrence_sha256", "review_sha256", "witness_sha256", "resolution_edition", "rule_edition"}
++EVIDENCE_ERRORS = (ArtifactError, ModelLoadError, ModelValidationError, OSError, ValueError,
++                   KeyError, TypeError, IndexError, AttributeError, StopIteration)
++
++
++def _opinions(path: Path, expected_sha: str) -> tuple[dict, dict[str, dict]]:
++    raw = _read(path.parent, path.name)
++    require(_digest(expected_sha) and sha256_hex(raw) == expected_sha, "saved verdict digest differs")
++    doc = _decode(raw)
++    require(set(doc) == {"format", "claim", "authorship", "cases"}
++            and doc["format"] == "literature-derived-verdicts/1"
++            and doc["authorship"] == "synthetic corpus opinions", "invalid saved verdicts")
++    claim = doc["claim"]
++    require(isinstance(claim, dict) and set(claim) == {"fact_type", "tuple"}
++            and claim["fact_type"] == revision.ANCESTOR and isinstance(claim["tuple"], list)
++            and len(claim["tuple"]) == 2
++            and all(isinstance(cell, dict) and set(cell) == {"primitive", "value"} and cell["primitive"] == "String"
++                    and isinstance(cell["value"], str) and bool(cell["value"]) for cell in claim["tuple"]),
++            "invalid derived claim")
++    cases = doc["cases"]
++    require(isinstance(cases, list) and len(cases) == len(CASE_IDS), "invalid verdict case roster")
++    indexed = {}
++    for case, identifier in zip(cases, CASE_IDS, strict=True):
++        require(isinstance(case, dict) and set(case) == {"id", "edition", "binding", "source_opinions"}
++                and case["id"] == identifier and case["edition"] in EDITIONS, "invalid verdict case")
++        binding = case["binding"]
++        require(isinstance(binding, dict) and set(binding) == set(SHARED)
++                and all(_digest(digest) for digest in binding.values()), "invalid shared verdict binding")
++        supports = case["source_opinions"]
++        require(isinstance(supports, list) and len(supports) == len(revision.SUPPORTS), "invalid support roster")
++        for opinion, source in zip(supports, revision.SUPPORTS, strict=True):
++            require(isinstance(opinion, dict) and set(opinion) == SUPPORT_BINDINGS | {"source", "verdict"}
++                    and opinion["source"] == source and opinion["verdict"] in ("approve", "reject")
++                    and all(_digest(opinion[field]) for field in SUPPORT_BINDINGS), "invalid saved support opinion")
++        indexed[identifier] = case
++    return claim, indexed
++
++
++def _stale_shared(root: Path, expected: dict, edition: str) -> list[str]:
++    paths = dict(SHARED)
++    if edition == "revised":
++        paths["definition"] = "evolution/definition.json"
++    stale = []
++    for key, path in paths.items():
++        try:
++            actual = sha256_hex(_read(root, path))
++        except (ArtifactError, OSError):
++            stale.append(key)
++        else:
++            if actual != expected[key]:
++                stale.append(key)
++    return stale
++
++
++def _support_change(support: dict, opinion: dict, claim: dict) -> str | None:
++    if support.get("claim") != claim or support.get("source") != opinion["source"]:
++        return "claim"
++    if sha256_hex(canonical_json_bytes(support.get("occurrence"))) != opinion["occurrence_sha256"]:
++        return "occurrence"
++    for name, key in (("resolution_edition", "resolution_edition"), ("rule_edition", "rule_edition"),
++                      ("review", "review_sha256"), ("witness", "witness_sha256")):
++        if support.get(key) != opinion[key]:
++            return name
++    return None
++
++
++def _observation(root: Path, edition: str, opinion: dict, claim: dict) -> dict:
++    source = opinion["source"]
++    try:
++        if edition == "revised":
++            if source != RENEWED_SOURCE:
++                return {"source": source, "state": "stale", "reason": "definition"}
++            current = revision.replay_renewed_support(root)
++        else:
++            after = root / "after"
++            folder = f"supports/{source}"
++            captured = _decode(_read(after, f"{folder}/support.json"))
++            change = _support_change(captured, opinion, claim)
++            if change is None:
++                for key in ("review", "witness"):
++                    if sha256_hex(_read(after, f"{folder}/{key}.json")) != opinion[f"{key}_sha256"]:
++                        change = key
++                        break
++            if change is not None:
++                return {"source": source, "state": "stale", "reason": change}
++            current = revision.replay_support(root, source)
++    except EVIDENCE_ERRORS:
++        return {"source": source, "state": "stale", "reason": "evidence"}
++    change = _support_change(current, opinion, claim)
++    if change is not None:
++        return {"source": source, "state": "stale", "reason": change}
++    outcome = "approved" if opinion["verdict"] == "approve" else "rejected"
++    return {"source": source, "state": outcome, "reason": "saved-opinion"}
++
++
++def _evaluate(root: Path, claim: dict, case: dict, edition: str) -> dict:
++    require(edition in EDITIONS, "invalid observed verdict edition")
++    stale = _stale_shared(root / "after", case["binding"], edition)
++    if case["edition"] != edition and "definition" not in stale:
++        stale.append("definition")
++    opinions = case["source_opinions"]
++    if stale:
++        supports = [{"source": row["source"], "state": "stale", "reason": "shared-binding"} for row in opinions]
++        decision = "revalidation-required"
++    else:
++        supports = [_observation(root, edition, row, claim) for row in opinions]
++        decision = "supported" if any(row["state"] == "approved" for row in supports) else "unsupported"
++    return {"claim": claim, "edition": edition, "decision": decision, "stale_bindings": stale,
++            "effective": [row["source"] for row in supports if row["state"] == "approved"], "supports": supports}
++
++
++def evaluate(root: Path, case: str, *, edition: str | None = None, opinions: Path = OPINIONS,
++             opinions_sha256: str = OPINIONS_SHA256) -> dict:
++    """Check one independently pinned reading opinion set against the release."""
++    claim, cases = _opinions(opinions, opinions_sha256)
++    require(isinstance(case, str) and case in cases, "unknown verdict case")
++    return _evaluate(root, claim, cases[case], cases[case]["edition"] if edition is None else edition)
++
++
++def _demonstrate(root: Path) -> dict[str, dict]:
++    claim, cases = _opinions(OPINIONS, OPINIONS_SHA256)
++    reports = {name: _evaluate(root, claim, case, case["edition"]) for name, case in cases.items()}
++    reports["old-review-on-revised"] = _evaluate(root, claim, cases["both-approved"], "revised")
++    return reports
++
++
++def run(root: Path, out: Path) -> dict[str, dict]:
++    """Capture the reproducible worked verdicts in a new directory."""
++    report = _demonstrate(root)
++    raw = canonical_json_bytes(report)
++    marker = canonical_json_bytes({"format": "literature-derived-verdict-run/1", "opinions_sha256": OPINIONS_SHA256,
++                                   "report_sha256": sha256_hex(raw)})
++    destination = out.absolute()
++    publish_directory_once(destination.parent, destination.name, {"report.json": raw, "run.json": marker},
++                           manifest_name="run.json")
++    return report
++
++
++def replay(root: Path, out: Path) -> dict[str, dict]:
++    """Recompute a retained verdict report from the expected release evidence."""
++    marker = _decode(_read(out, "run.json"))
++    require(set(marker) == {"format", "opinions_sha256", "report_sha256"}
++            and marker["format"] == "literature-derived-verdict-run/1"
++            and marker["opinions_sha256"] == OPINIONS_SHA256 and _digest(marker["report_sha256"]),
++            "invalid retained verdict run")
++    raw = _read(out, "report.json")
++    require(sha256_hex(raw) == marker["report_sha256"], "stale retained verdict report")
++    report = _demonstrate(root)
++    require(raw == canonical_json_bytes(report), "verdict replay differs")
++    return report
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    routes = parser.add_subparsers(dest="command", required=True)
++    fresh = routes.add_parser("run")
++    fresh.add_argument("root", type=Path)
++    fresh.add_argument("--out", type=Path, required=True)
++    repeat = routes.add_parser("replay")
++    repeat.add_argument("root", type=Path)
++    repeat.add_argument("out", type=Path)
++    single = routes.add_parser("evaluate")
++    single.add_argument("root", type=Path)
++    single.add_argument("--case", choices=CASE_IDS, required=True)
++    single.add_argument("--edition", choices=EDITIONS)
++    args = parser.parse_args(argv)
++    try:
++        if args.command == "run":
++            report = run(args.root, args.out)
++        elif args.command == "replay":
++            report = replay(args.root, args.out)
++        else:
++            report = evaluate(args.root, args.case, edition=args.edition)
++    except EVIDENCE_ERRORS as error:
++        sys.stdout.buffer.write(canonical_json_bytes({"status": "incomplete", "reason": str(error)}))
++        return 3
++    sys.stdout.buffer.write(canonical_json_bytes(report))
++    return {"unsupported": 2, "revalidation-required": 3}.get(report.get("decision"), 0)
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/src/gnd/examples/literature/verdict_fixture/README.md b/src/gnd/examples/literature/verdict_fixture/README.md
+new file mode 100644
+index 00000000..fb25bf4c
+--- /dev/null
++++ b/src/gnd/examples/literature/verdict_fixture/README.md
+@@ -0,0 +1,29 @@
++# Verdicts on a derived claim
++
++Run the verdict example on the [semantic revision release](../revision_fixture/README.md).
++
++```sh
++python -m gnd.examples.literature.verdict run revision-run --out verdict-run
++python -m gnd.examples.literature.verdict replay revision-run verdict-run
++python -m gnd.examples.literature.verdict evaluate revision-run --case reject-whale-a
++python -m gnd.examples.literature.verdict evaluate revision-run --case both-approved --edition revised
++```
++
++The fixture includes saved synthetic opinions on two separate supports for
++VampNet's ancestry from DMD. Each opinion binds the released claim, sense
++decisions, interpretation policy, rule and definition. It also binds the
++specific source occurrence, review and witness. The verifier checks the
++independently pinned opinions before reading the release and replays each
++selected certificate with its own source evidence.
++
++Two approved supports back the claim. Rejecting whale-a leaves the other
++support. When both are rejected the claim has no effective support. The
++revised predicate invalidates the original opinions. A separately recorded
++review and replayed witness restore whale-a's support for the same source
++occurrence. The other support retains its original review.
++
++The single-case command exits 0 for a supported result, 2 when there are
++no effective supports, and 3 when shared bindings require revalidation or
++the inputs are invalid. Run and replay report all five fixture cases and
++exit 0 on a completed evaluation. Replay recomputes the report and checks
++its exact bytes against the retained copy.
+diff --git a/src/gnd/examples/literature/verdict_fixture/opinions.json b/src/gnd/examples/literature/verdict_fixture/opinions.json
+new file mode 100644
+index 00000000..7f356290
+--- /dev/null
++++ b/src/gnd/examples/literature/verdict_fixture/opinions.json
+@@ -0,0 +1 @@
++{"authorship":"synthetic corpus opinions","cases":[{"binding":{"claim":"6bb43b2f92cf1709f03e4b49e08521156f6b92f0979af56a67c948e6a07fb6c1","decision":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","definition":"55a9d47d703af871a6f68aebfe5be8c10a4981da23eee73f6f56704189bf9b53","interpretation":"d2e1dd6af05fa046be827eb2ab314bb1049c546f33c9c12a4db4199598630a59","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","rule":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a"},"edition":"current","id":"both-approved","source_opinions":[{"occurrence_sha256":"48a60e37df2df9466c94bf5d59ff3239ff021cfa618cdcee3ef595efe8cfebf8","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"687f769fcf2902a507d91c07307a8bad0873711fa69579b619f0c87734c5234b","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"whale-a","verdict":"approve","witness_sha256":"a6798e6332f3b2aafddb16595a7514971038c712e6c5454838fbb540187277c8"},{"occurrence_sha256":"a61c9181e2c9fd685d6747125799aec394b75ff93e8bb8f40b21beb9d723e3e6","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"aa06f5c9d6e1166c726b9b8d5b6c31fb2c25bd9c4ad20de91a240f1691ae01ab","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"corroboration","verdict":"approve","witness_sha256":"13333959e934ac89e01e9a2c41ea08837dab43dfeb9b353475d61c48605f45c0"}]},{"binding":{"claim":"6bb43b2f92cf1709f03e4b49e08521156f6b92f0979af56a67c948e6a07fb6c1","decision":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","definition":"55a9d47d703af871a6f68aebfe5be8c10a4981da23eee73f6f56704189bf9b53","interpretation":"d2e1dd6af05fa046be827eb2ab314bb1049c546f33c9c12a4db4199598630a59","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","rule":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a"},"edition":"current","id":"reject-whale-a","source_opinions":[{"occurrence_sha256":"48a60e37df2df9466c94bf5d59ff3239ff021cfa618cdcee3ef595efe8cfebf8","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"687f769fcf2902a507d91c07307a8bad0873711fa69579b619f0c87734c5234b","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"whale-a","verdict":"reject","witness_sha256":"a6798e6332f3b2aafddb16595a7514971038c712e6c5454838fbb540187277c8"},{"occurrence_sha256":"a61c9181e2c9fd685d6747125799aec394b75ff93e8bb8f40b21beb9d723e3e6","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"aa06f5c9d6e1166c726b9b8d5b6c31fb2c25bd9c4ad20de91a240f1691ae01ab","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"corroboration","verdict":"approve","witness_sha256":"13333959e934ac89e01e9a2c41ea08837dab43dfeb9b353475d61c48605f45c0"}]},{"binding":{"claim":"6bb43b2f92cf1709f03e4b49e08521156f6b92f0979af56a67c948e6a07fb6c1","decision":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","definition":"55a9d47d703af871a6f68aebfe5be8c10a4981da23eee73f6f56704189bf9b53","interpretation":"d2e1dd6af05fa046be827eb2ab314bb1049c546f33c9c12a4db4199598630a59","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","rule":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a"},"edition":"current","id":"reject-both","source_opinions":[{"occurrence_sha256":"48a60e37df2df9466c94bf5d59ff3239ff021cfa618cdcee3ef595efe8cfebf8","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"687f769fcf2902a507d91c07307a8bad0873711fa69579b619f0c87734c5234b","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"whale-a","verdict":"reject","witness_sha256":"a6798e6332f3b2aafddb16595a7514971038c712e6c5454838fbb540187277c8"},{"occurrence_sha256":"a61c9181e2c9fd685d6747125799aec394b75ff93e8bb8f40b21beb9d723e3e6","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"aa06f5c9d6e1166c726b9b8d5b6c31fb2c25bd9c4ad20de91a240f1691ae01ab","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"corroboration","verdict":"reject","witness_sha256":"13333959e934ac89e01e9a2c41ea08837dab43dfeb9b353475d61c48605f45c0"}]},{"binding":{"claim":"6bb43b2f92cf1709f03e4b49e08521156f6b92f0979af56a67c948e6a07fb6c1","decision":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","definition":"9fdf61b43a292cb019cd70bd0b94a205c21f58fd7525a487783b259efefd1090","interpretation":"d2e1dd6af05fa046be827eb2ab314bb1049c546f33c9c12a4db4199598630a59","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","rule":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a"},"edition":"revised","id":"renew-whale-a","source_opinions":[{"occurrence_sha256":"48a60e37df2df9466c94bf5d59ff3239ff021cfa618cdcee3ef595efe8cfebf8","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"170c83d1704d8e8edf723d921adb9a1857fb4d9126783f1e9fa7f830fdf7d5a0","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"whale-a","verdict":"approve","witness_sha256":"a656ded69cf58225f4f1a4d9ad8b06d635f24f98ec95a27008d136026670fb7a"},{"occurrence_sha256":"a61c9181e2c9fd685d6747125799aec394b75ff93e8bb8f40b21beb9d723e3e6","resolution_edition":"114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad","review_sha256":"aa06f5c9d6e1166c726b9b8d5b6c31fb2c25bd9c4ad20de91a240f1691ae01ab","rule_edition":"d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a","source":"corroboration","verdict":"approve","witness_sha256":"13333959e934ac89e01e9a2c41ea08837dab43dfeb9b353475d61c48605f45c0"}]}],"claim":{"fact_type":"method_has_ancestor_method","tuple":[{"primitive":"String","value":"VampNet"},{"primitive":"String","value":"DMD"}]},"format":"literature-derived-verdicts/1"}
+diff --git a/tests/fixtures/ld5-verdict/expected.json b/tests/fixtures/ld5-verdict/expected.json
+new file mode 100644
+index 00000000..97ac516b
+--- /dev/null
++++ b/tests/fixtures/ld5-verdict/expected.json
+@@ -0,0 +1,7 @@
++{
++  "both-approved": {"decision": "supported", "effective": ["whale-a", "corroboration"], "states": ["approved", "approved"]},
++  "reject-whale-a": {"decision": "supported", "effective": ["corroboration"], "states": ["rejected", "approved"]},
++  "reject-both": {"decision": "unsupported", "effective": [], "states": ["rejected", "rejected"]},
++  "old-review-on-revised": {"decision": "revalidation-required", "effective": [], "states": ["stale", "stale"]},
++  "renew-whale-a": {"decision": "supported", "effective": ["whale-a"], "states": ["approved", "stale"]}
++}
+diff --git a/tests/test_ld5_verdict.py b/tests/test_ld5_verdict.py
+new file mode 100644
+index 00000000..52213762
+--- /dev/null
++++ b/tests/test_ld5_verdict.py
+@@ -0,0 +1,129 @@
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++from pathlib import Path
++
++import pytest
++
++from gnd.artifacts import canonical_json_bytes
++from gnd.examples.literature import reading, revision
++
++EXPECTED = json.loads((Path(__file__).parent / "fixtures/ld5-verdict/expected.json").read_bytes())
++
++
++@pytest.fixture(scope="module")
++def release(tmp_path_factory):
++    from gnd.examples.literature import verdict
++
++    root = tmp_path_factory.mktemp("ld5")
++    read_run = root / "reading"
++    reading.run(read_run)
++    out = root / "release"
++    revision.run(read_run, out)
++    return verdict, out
++
++
++def _read(path):
++    return json.loads(path.read_bytes())
++
++
++def _digest(raw):
++    return hashlib.sha256(raw).hexdigest()
++
++
++def _rebind(root, paths):
++    manifest = root / "after/manifest.json"
++    value = _read(manifest)
++    replacements = {name: _digest((root / "after" / name).read_bytes()) for name in paths}
++    for row in value["artifacts"]:
++        if row["path"] in replacements:
++            row["sha256"] = replacements[row["path"]]
++    manifest.write_bytes(canonical_json_bytes(value))
++
++
++def _result(report):
++    return {"decision": report["decision"], "effective": report["effective"],
++            "states": [item["state"] for item in report["supports"]]}
++
++
++def test_fixture_replays_both_then_one_then_zero_supports_and_explicit_review_renewal(release, tmp_path):
++    verdict, root = release
++    report = verdict.run(root, tmp_path / "verdict-run")
++    assert {key: _result(value) for key, value in report.items()} == EXPECTED
++    assert verdict.replay(root, tmp_path / "verdict-run") == report
++
++
++@pytest.mark.parametrize(("path", "key"), (
++    ("claims.json", "claim"),
++    ("decisions.json", "decision"),
++    ("rule.json", "rule"),
++    ("definition.json", "definition"),
++))
++def test_rehashed_global_semantic_artifact_requires_revalidation(release, tmp_path, path, key):
++    verdict, root = release
++    candidate = tmp_path / "release"
++    shutil.copytree(root, candidate)
++    artifact = candidate / "after" / path
++    value = _read(artifact)
++    value["change-control"] = "proposed by the snapshot"
++    artifact.write_bytes(canonical_json_bytes(value))
++    _rebind(candidate, [path])
++    observed = verdict.evaluate(candidate, "both-approved")
++    assert observed["decision"] == "revalidation-required" and observed["effective"] == []
++    assert key in observed["stale_bindings"]
++
++
++@pytest.mark.parametrize(("leaf", "field", "reason"), (
++    ("support.json", "occurrence", "occurrence"),
++    ("support.json", "resolution_edition", "resolution_edition"),
++    ("review.json", "policy_sha256", "review"),
++))
++def test_rehashed_one_support_keeps_the_other_certificate(release, tmp_path, leaf, field, reason):
++    verdict, root = release
++    candidate = tmp_path / "release"
++    shutil.copytree(root, candidate)
++    path = f"supports/whale-a/{leaf}"
++    artifact = candidate / "after" / path
++    value = _read(artifact)
++    if field == "occurrence":
++        value[field] = {**value[field], "index": 99}
++    else:
++        value[field] = "0" * 64
++    artifact.write_bytes(canonical_json_bytes(value))
++    _rebind(candidate, [path])
++    observed = verdict.evaluate(candidate, "both-approved")
++    assert observed["effective"] == ["corroboration"]
++    assert observed["supports"][0] == {"source": "whale-a", "state": "stale", "reason": reason}
++
++
++def test_a_candidate_cannot_repin_its_own_opinions(release, tmp_path):
++    verdict, root = release
++    altered = tmp_path / "verdicts.json"
++    doc = _read(verdict.OPINIONS)
++    first = doc["cases"][0]["source_opinions"][0]
++    first["verdict"] = "reject"
++    altered.write_bytes(canonical_json_bytes(doc))
++    with pytest.raises(ValueError, match="verdict digest"):
++        verdict.evaluate(root, "both-approved", opinions=altered, opinions_sha256=verdict.OPINIONS_SHA256)
++
++
++def test_invalid_pinned_opinion_shapes_fail_before_release_reads(tmp_path):
++    from time import monotonic
++
++    from gnd.examples.literature import verdict
++
++    fixture = tmp_path / "opinions.json"
++    release = tmp_path / "missing-release"
++    document = _read(verdict.OPINIONS)
++    first = document["cases"][0]
++    empty = {**document, "cases": [{**first, "source_opinions": []}, *document["cases"][1:]]}
++    duplicate = {**document, "cases": [first] * len(document["cases"])}
++    started = monotonic()
++    for raw in (b" " * (1 << 20), b"[" * 3000 + b"]" * 3000, b'{"value":NaN}',
++                canonical_json_bytes(empty), canonical_json_bytes(duplicate)):
++        fixture.write_bytes(raw)
++        with pytest.raises((ValueError, verdict.ArtifactError)):
++            verdict.evaluate(release, "both-approved", opinions=fixture, opinions_sha256=_digest(raw))
++    assert monotonic() - started < 3

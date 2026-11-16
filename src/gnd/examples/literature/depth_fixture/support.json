@@ -1,0 +1,307 @@
+{
+  "dynamics": {
+    "document_sha256": "e0e1ed49ea2c0f820187f9c4161c582947185587d4b8f021694555556252513f",
+    "rows": [
+      {
+        "id": "equation-and-regime",
+        "decision": "supported",
+        "primary": {
+          "url": "https://www.clawpack.org/riemann_book/html/Shallow_water_approximate.html",
+          "version": "Riemann Problems and Jupyter Solutions (2020)",
+          "section": "Riemann Book, Approximate solvers for the shallow water equations, opening equations; Clawpack 5.10.x dam_break setup",
+          "evidence_form": "authored source description",
+          "additional_url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html"
+        },
+        "span": [
+          0,
+          201
+        ],
+        "span_sha256": "8a42c975328a62ac1f5556060b9a37b88a88b341605c551cfdffa4de2477a114",
+        "facts": {
+          "equation": [
+            {
+              "subject": "dam-break",
+              "value": "h_t + (hu)_x = 0; (hu)_t + (hu^2 + g h^2/2)_x = 0"
+            }
+          ],
+          "regime": [
+            {
+              "subject": "dam-break",
+              "value": "dam-break Riemann problem"
+            }
+          ]
+        }
+      },
+      {
+        "id": "boundaries",
+        "decision": "supported",
+        "primary": {
+          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+          "version": "Clawpack 5.10.x",
+          "section": "Clawpack 5.10.x gallery, setup, boundary conditions",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          203,
+          265
+        ],
+        "span_sha256": "f8a4f29d2872c7fad87b4dfd3b807198d8c381dc84db93bed993f0ac1213064d",
+        "facts": {
+          "boundaries": [
+            {
+              "subject": "dam-break",
+              "value": "extrapolation at both endpoints"
+            }
+          ]
+        }
+      },
+      {
+        "id": "discretization",
+        "decision": "supported",
+        "primary": {
+          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+          "version": "Clawpack 5.10.x",
+          "section": "Clawpack 5.10.x gallery, setup, classic solver and grid",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          267,
+          347
+        ],
+        "span_sha256": "798c48207603375b0170c23dfe8a8ead3d942d0244499b0b2dfa21305bbd1cdf",
+        "facts": {
+          "discretization": [
+            {
+              "subject": "dam-break",
+              "value": "classic PyClaw with van Leer limiter on 500 cells"
+            }
+          ]
+        }
+      },
+      {
+        "id": "conservation-residual",
+        "decision": "scope-limitation",
+        "primary": {
+          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+          "version": "Clawpack 5.10.x",
+          "section": "Clawpack 5.10.x gallery, setup and output plot",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          349,
+          430
+        ],
+        "span_sha256": "7341aec6492ac8fcd5ab73858c5e6eeadd0f7a4e15f3a1e51feed55570878de4",
+        "facts": {}
+      }
+    ]
+  },
+  "molecular": {
+    "document_sha256": "1ee50c933858ee2235d611b599186247659f34c26a88864e0e10fdcd72bd878c",
+    "rows": [
+      {
+        "id": "system-and-energy",
+        "decision": "supported",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Methods, Alanine Dipeptide",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          0,
+          95
+        ],
+        "span_sha256": "2316148720d7b651808d4ccf88db580aa5fb2769dee697e0e83bcf15aa78944c",
+        "facts": {
+          "system": [
+            {
+              "subject": "alanine-in-vacuum",
+              "value": "alanine dipeptide in vacuum"
+            }
+          ],
+          "energy_model": [
+            {
+              "subject": "alanine-in-vacuum",
+              "value": "AMBER ff14SB"
+            }
+          ]
+        }
+      },
+      {
+        "id": "sampling",
+        "decision": "supported",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Results, Alanine Dipeptide; Methods on collective variables",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          97,
+          201
+        ],
+        "span_sha256": "ed26fca4aefb82495d33e98c99138debdd1888818aaf07c75b5df090584c2f6f",
+        "facts": {
+          "objective": [
+            {
+              "subject": "alanine-in-vacuum",
+              "value": "free-energy estimation using backbone dihedral collective variables"
+            }
+          ]
+        }
+      },
+      {
+        "id": "approximation",
+        "decision": "supported",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Methods, Alanine Dipeptide",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          203,
+          409
+        ],
+        "span_sha256": "0eabb39600e0917f49a97d8028657e791b61dec8dfaa228fd7efc5d87e2af63d",
+        "facts": {
+          "approximation": [
+            {
+              "subject": "alanine-in-vacuum",
+              "value": "Langevin at 300 K with 2 fs steps and hydrogen bond-distance constraints"
+            }
+          ]
+        }
+      },
+      {
+        "id": "transfer-validity",
+        "decision": "scope-limitation",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Methods and Results, Alanine Dipeptide",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          411,
+          601
+        ],
+        "span_sha256": "380ad4b95e731fff86a057d1d01906d7a1b593e18e7184627b629e8657df9df2",
+        "facts": {}
+      }
+    ]
+  },
+  "algorithms": {
+    "document_sha256": "0ad3f94f8a152da3263d1cf1ea42b460b952dc1088240f60034db27924304ebb",
+    "rows": [
+      {
+        "id": "operator-and-objective",
+        "decision": "supported",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract and introduction, dominant singular components",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          0,
+          111
+        ],
+        "span_sha256": "fc1d10189859817e3ff07451620dadb7d9eb50efe69f0d0fb0f6ac489c7ca8b3",
+        "facts": {
+          "operator": [
+            {
+              "subject": "randomized-svd",
+              "value": "input matrix of size m by n"
+            }
+          ],
+          "objective": [
+            {
+              "subject": "randomized-svd",
+              "value": "approximate the dominant singular subspace"
+            }
+          ]
+        }
+      },
+      {
+        "id": "components",
+        "decision": "supported",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract and introductory framework, stages A and B",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          113,
+          231
+        ],
+        "span_sha256": "e861dc4a6bbdbccc85e1c9e2237489a8c24558fc81309e6af49a48220b546754",
+        "facts": {
+          "subject_has_component": [
+            {
+              "subject": "randomized-svd",
+              "related": "randomized-range-finder"
+            },
+            {
+              "subject": "randomized-svd",
+              "related": "reduced-deterministic-factorization"
+            }
+          ]
+        }
+      },
+      {
+        "id": "qualified-complexity",
+        "decision": "supported",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract, dense-input case; SIAM Review 53(2), DOI 10.1137/090771806",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          233,
+          449
+        ],
+        "span_sha256": "d58046066eecdafdd82a540018fc874300c2c0fe2c9a4d672e81cefdae32d6d8",
+        "facts": {
+          "result": [
+            {
+              "subject": "randomized-svd",
+              "value": "O(mn log(k))"
+            }
+          ],
+          "assumptions": [
+            {
+              "subject": "randomized-svd",
+              "value": "dense input and k dominant singular components"
+            }
+          ],
+          "cost_model": [
+            {
+              "subject": "randomized-svd",
+              "value": "floating-point operations"
+            }
+          ]
+        }
+      },
+      {
+        "id": "device-runtime",
+        "decision": "scope-limitation",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract and §7 numerical examples",
+          "evidence_form": "authored source description"
+        },
+        "span": [
+          451,
+          569
+        ],
+        "span_sha256": "c35fa467d50b2a85afb2d6524168ce50fa9ffd4dfc63616e89480af736f2f804",
+        "facts": {}
+      }
+    ]
+  }
+}

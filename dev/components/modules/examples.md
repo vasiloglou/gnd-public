@@ -211,9 +211,21 @@ The staged assurance report over the literature corpus (phase LI1).
 | `run_route(gnd, route, paths, shown) -> dict` | function | 300 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
 | `Inputs` | class | 342 | Everything validated in steps 1-4, with the run's files located. |
 | `Inputs.source_dir(self, source) -> Path` | method | 400 | (no docstring) |
-| `refused_report(reason) -> dict` | function | 743 | (no docstring) |
-| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 810 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
-| `main(argv) -> int` | function | 863 | (no docstring) |
+| `score_reading_coverage(run_dir, expected_rows) -> dict` | function | 755 | Score exact replayable reading rows against a caller-owned answer roster. |
+| `refused_report(reason) -> dict` | function | 808 | (no docstring) |
+| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 875 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+| `main(argv) -> int` | function | 928 | (no docstring) |
+
+## gnd.examples.literature.depth — `src/gnd/examples/literature/depth.py`
+Components: examples.literature_depth
+Run the three source-scoped literature competency examples offline.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `ExampleError` | class(ValueError) | 51 | The worked example cannot establish the requested output. |
+| `compare_scores(left, right) -> tuple[str, list[str]]` | function | 188 | Compare scores by the declared evidence context. |
+| `build(out, *, fixture) -> dict` | function | 325 | Materialize a fresh packaged run and return its competency report. |
+| `main(argv) -> int` | function | 376 | (no docstring) |
 
 ## gnd.examples.literature.diagnostic_measurement — `src/gnd/examples/literature/diagnostic_measurement.py`
 Components: examples.literature_name_diagnostics
@@ -265,6 +277,63 @@ Generate reviewable name candidates from original literature occurrences.
 | `diagnose(data) -> list[dict]` | function | 186 | Return candidate kinds and unresolved proposals in occurrence order. |
 | `read_diagnostic_input(path) -> tuple[object, str]` | function | 222 | Read one regular local input and bind its exact bytes. |
 | `main(argv) -> int` | function | 232 | Read a capped input and print one diagnostic report. |
+
+## gnd.examples.literature.reading — `src/gnd/examples/literature/reading.py`
+Components: examples.literature_reading
+Replay a bounded literature reading run with typed coverage and fidelity.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `ReadingInputs` | class | 67 | Read and validate the declared source, section and question inventories. |
+| `ReadingInputs.selection(self, kind) -> list[str]` | method | 138 | (no docstring) |
+| `ReadingInputs.source_range(self, section) -> bytes` | method | 141 | (no docstring) |
+| `ReadingInputs.pins(self) -> dict` | method | 145 | (no docstring) |
+| `SavedProducer` | class | 149 | Local saved-response adapter with observed invocation counts. |
+| `SavedProducer.produce(self, stage, section) -> dict` | method | 156 | (no docstring) |
+| `affected_sections(sections, changed_keys) -> list[str]` | function | 161 | Return available earlier section IDs sharing a changed dependency key. |
+| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 344 | Read a run's optional coverage artifact using its external digest. |
+| `absence_status(artifacts, pins)` | function | 357 | Qualify the declared fixture claim from four independently bound inputs. |
+| `run(out, *, budget, scenario, fixture) -> dict` | function | 562 | Run the saved-response workflow and retain its complete evidence. |
+| `replay(folder, *, fixture, vocabulary_fixture) -> dict` | function | 574 | Re-derive the reading result from retained evidence without invoking producers. |
+| `main(argv) -> int` | function | 587 | (no docstring) |
+
+## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
+Components: examples.literature_revision
+Publish and replay the literature semantic revision example offline.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `run(reading_run, out) -> dict` | function | 392 | Recheck captured evidence and publish both snapshots under a new root. |
+| `replay(root, *, snapshot) -> dict` | function | 413 | Re-derive the release from authenticated retained inputs in private scratch. |
+| `replay_support(root, source) -> dict` | function | 433 | Check one certificate against the independent source and review inputs. |
+| `replay_renewed_support(root) -> dict` | function | 456 | Verify the selected replacement review and proof for the evolved predicate. |
+| `main(argv) -> int` | function | 481 | (no docstring) |
+
+## gnd.examples.literature.revision_manifest — `src/gnd/examples/literature/revision_manifest.py`
+Components: examples.literature_revision
+Bind a release to an independently selected, bounded dependency policy.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `require(condition, reason) -> None` | function | 23 | (no docstring) |
+| `Policy` | class | 37 | (no docstring) |
+| `Policy.load(cls, path, pin) -> Policy` | method | 42 | (no docstring) |
+| `Policy.capture(self, root, snapshot) -> dict[str, bytes]` | method | 70 | (no docstring) |
+| `Policy.affected(self, snapshot, changed) -> set[str]` | method | 86 | (no docstring) |
+| `Policy.inspect(self, root, snapshot) -> tuple[dict, dict[str, bytes]]` | method | 93 | (no docstring) |
+| `status(root, *, policy, policy_sha256) -> dict` | function | 145 | Check a candidate against the consumer's exact policy and propagate staleness. |
+| `publish(root, files) -> None` | function | 154 | (no docstring) |
+
+## gnd.examples.literature.verdict — `src/gnd/examples/literature/verdict.py`
+Components: examples.literature_verdict
+Evaluate consumer-pinned verdicts on the literature fixture's derived claim.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `evaluate(root, case, *, edition, opinions, opinions_sha256) -> dict` | function | 176 | Check one independently pinned reading opinion set against the release. |
+| `run(root, out) -> dict[str, dict]` | function | 197 | Capture the reproducible worked verdicts in a new directory. |
+| `replay(root, out) -> dict[str, dict]` | function | 209 | Recompute a retained verdict report from the expected release evidence. |
+| `main(argv) -> int` | function | 223 | (no docstring) |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

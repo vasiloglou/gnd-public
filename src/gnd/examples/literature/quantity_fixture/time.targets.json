@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "targets": [{
+    "fact_type": "time_step",
+    "tuple": [
+      {"primitive": "Integer", "value": 2},
+      {"primitive": "Integer", "value": 3},
+      {"primitive": "String", "value": "ps"}
+    ]
+  }]
+}

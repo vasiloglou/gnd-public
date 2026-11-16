@@ -1,0 +1,602 @@
+{
+  "manifest_sha256": {
+    "after": "52bcc1bdb197b02554622dcaa8d49796360694ccaf29246be2e4684a0ca57dfa",
+    "before": "78ecb4d18972829f5ae41a471f7a2e474aaad7e7e6f26765dec3e6c4e2025137"
+  },
+  "repair_candidate": "238e8ce8",
+  "repair_installed_observation_sha256": {
+    "before-replay.json": "e06bfa9a570eaa5834ad003701de0aa744b6b82ead09b79af1b4352b614780b4",
+    "fresh.json": "028c05949e541449e7459619f75137aab8f9a3673c6d23884efc70b3df8897f4",
+    "replay.json": "028c05949e541449e7459619f75137aab8f9a3673c6d23884efc70b3df8897f4",
+    "status.json": "875b78494ac1a12499c293977305080322b78e956bc40cfc0b7a1af0fdd58947"
+  },
+  "repair_observation": {
+    "affected_artifacts": [
+      "claims.json",
+      "composition.json",
+      "decisions.json",
+      "evolution/transition.json",
+      "migration.json",
+      "population.json",
+      "reviews.json",
+      "scoped-absence.json",
+      "sources/manifest.json",
+      "sources/resolution.json",
+      "supports/corroboration/support.json",
+      "supports/whale-a/support.json",
+      "witness.json"
+    ],
+    "after_witness_sha256": "710ebe696bff4d7cdb289cbd7d4e84df101b44c71b66d1e6d9d711a5450fe6ed",
+    "ambiguous": {
+      "candidates": [
+        "WHAM",
+        "WhAM [whale]"
+      ],
+      "mention": "WHAM"
+    },
+    "before_witness_sha256": "95dee755530fb12c6fb825f77916b01c96b3eec5f78891440bd064865eeb9400",
+    "changed_occurrences": [
+      {
+        "after": {
+          "base_method": "VampNet [music]",
+          "method": "WhAM [whale]"
+        },
+        "before": {
+          "base_method": "VampNet",
+          "method": "WHAM"
+        },
+        "occurrence": [
+          "whale-b",
+          "method_builds_on_method",
+          0
+        ]
+      }
+    ],
+    "coverage": {
+      "affected": {
+        "alternative": "stale"
+      },
+      "revisit": [
+        "study-opening"
+      ],
+      "unrelated": {
+        "denial": "current"
+      }
+    },
+    "evolution": {
+      "additive_preview": 3,
+      "apply": 0,
+      "new_review": "current",
+      "old_review": "stale",
+      "preview": 0
+    },
+    "occurrences": [
+      [
+        "whale-a",
+        "method_builds_on_method",
+        0,
+        0,
+        0
+      ],
+      [
+        "whale-a",
+        "method_builds_on_method",
+        1,
+        1,
+        1
+      ],
+      [
+        "whale-b",
+        "method_builds_on_method",
+        0,
+        2,
+        2
+      ]
+    ],
+    "queries": [
+      [
+        "OpenCap Monocular",
+        "VampNet",
+        true,
+        false
+      ],
+      [
+        "OpenCap Monocular",
+        "DMD",
+        true,
+        false
+      ],
+      [
+        "WHAM",
+        "DMD",
+        true,
+        false
+      ],
+      [
+        "OpenCap Monocular",
+        "WHAM",
+        true,
+        true
+      ],
+      [
+        "VampNet",
+        "DMD",
+        true,
+        true
+      ]
+    ],
+    "reread": [
+      "study-opening",
+      {
+        "candidates": [
+          "WHAM",
+          "WhAM [whale]"
+        ],
+        "mention": "WHAM"
+      }
+    ],
+    "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+    "rule_comparison": {
+      "base_only": 0,
+      "exit": 0,
+      "head_only": 1
+    },
+    "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+    "supports": [
+      {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "occurrence": {
+          "document_sha256": "f2162704059f422d4220fb135876a8adf54ccf892fded35d12564ea7896475f6",
+          "fact_type": "method_builds_on_method",
+          "index": 0,
+          "population_sha256": "df09c4d3fb08f7ccd0441823facfd972e83c86e6468e2ae0942cfef0853f1e05",
+          "source": "whale-a",
+          "span": {
+            "end": 87,
+            "sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+            "start": 65
+          }
+        },
+        "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+        "review_sha256": "687f769fcf2902a507d91c07307a8bad0873711fa69579b619f0c87734c5234b",
+        "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+        "source": "whale-a",
+        "witness_sha256": "a6798e6332f3b2aafddb16595a7514971038c712e6c5454838fbb540187277c8"
+      },
+      {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "occurrence": {
+          "document_sha256": "7e3da2ebdbb88d3905d1da82fb5623e4ed7b02b0f1fb8abc80bb4583db95a9ee",
+          "fact_type": "method_builds_on_method",
+          "index": 0,
+          "population_sha256": "83b0ef3d28f7f49df0c4fd0b65ccea850ce63764c18cf9ea6fe461178243c151",
+          "source": "corroboration",
+          "span": {
+            "end": 97,
+            "sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+            "start": 75
+          }
+        },
+        "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+        "review_sha256": "aa06f5c9d6e1166c726b9b8d5b6c31fb2c25bd9c4ad20de91a240f1691ae01ab",
+        "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+        "source": "corroboration",
+        "witness_sha256": "13333959e934ac89e01e9a2c41ea08837dab43dfeb9b353475d61c48605f45c0"
+      }
+    ]
+  },
+  "repair_wheel_sha256": "7952f1839722de330a49995acd55cb2f98923331cbbd75d99c3d7b3c016493ea",
+  "review_scope": [
+    ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1: phase review by claude (opus), done, 6 finding(s) in the ledger",
+    "reviewed: .gnd-planning/milestones/literature-depth/009-phase-LD3.md (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: .gnd-planning/milestones/literature-depth/010-phase-LD4-spec-gate.md (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: .gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: .gnd-planning/milestones/literature-depth/notes/phase-LD4-spec.md (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read b2a9f38c23b5)",
+    "reviewed: .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1/diff.patch (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: dev/components/COMPONENTS.md (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read 942bce784723)",
+    "reviewed: dev/components/graph.md (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: dev/components/modules/examples.md (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read 9017adfaa596)",
+    "reviewed: src/gnd/examples/literature/README.md (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: src/gnd/examples/literature/reading.py (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read bbe5b3318dba)",
+    "reviewed: src/gnd/examples/literature/reading_fixture/roster.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/resolution/cases/W-flat/manifest.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/resolution/cases/W-resolved/manifest.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/resolution/cases/W-resolved/resolution.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/resolution/model.orm.yaml (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: src/gnd/examples/literature/revision.py (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read b838b9eff1be)",
+    "unreviewed: src/gnd/examples/literature/revision_fixture/README.md (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read d58c7d7bd9b4)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/comparison/base.orm.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/comparison/head.orm.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/comparison/population.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/corroboration/document.txt (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/corroboration/population.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/corroboration/population.json.anchors.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/interpretation.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/proposal.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: src/gnd/examples/literature/revision_fixture/release-policy.json (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read 555e00b93fde)",
+    "unreviewed: src/gnd/examples/literature/revision_fixture/review-inputs.json (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read 426c65553c3f)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/support-targets.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "reviewed: src/gnd/examples/literature/revision_fixture/targets.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: src/gnd/examples/literature/revision_manifest.py (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read c2fbde3c1ad7)",
+    "reviewed: tests/fixtures/ld4-revision/expected.json (.gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1)",
+    "unreviewed: tests/test_ld4_revision.py (changed since .gnd-planning/milestones/literature-depth/notes/reviews/phase-LD4-r1 read e20ef3851b2c)"
+  ],
+  "reviewed_candidate": {
+    "affected": "2 failed, 315 passed in 316.79s (0:05:16)",
+    "after_manifest_sha256": "3632869937e4f4ab950801413e9a65afba356bb252138da4f1a4f4b1b159bd6f",
+    "base": "0d35a0b0",
+    "baseline_failed_nodes": [
+      "tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[replay/changed]",
+      "tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[witness/changed]"
+    ],
+    "baseline_result": "ReferenceHashMismatch versus ReferenceInputError on both changed-reference cases at 0d35a0b0",
+    "before_manifest_sha256": "728af1b620f0407874b4a1a63c2d101e16278a592b913a0b6dd3f8456b3dbe9d",
+    "brief_sha256": "030412bb3d90eea3a4efb338cfa64bf4722a9a3fdfb8d52bf7394a89fb676fea",
+    "candidate": "05546dc0c60593a1d4e4bb88793500eb4eccb700",
+    "components": "0 to fix, 0 warning(s), 0 to reread",
+    "direct": "9 passed in 129.33s (0:02:09)",
+    "lint": "changed Python passes; 188 identical inherited whole-tree diagnostics",
+    "observation_hashes": {
+      "before-replay.json": "e06bfa9a570eaa5834ad003701de0aa744b6b82ead09b79af1b4352b614780b4",
+      "fresh.json": "934b90d7e809610a164abf63d7025f609847652b81e6d750aead6a7d092185de",
+      "replay.json": "934b90d7e809610a164abf63d7025f609847652b81e6d750aead6a7d092185de",
+      "status.json": "436b6dd1f011920a84f2c87928fc66493886a3d500b24449c59e93c81b4cb83f",
+      "support-replay.json": "0369c2fb32ba9817a9334e8cd501dcf52ec0317fcc02ea8596026c0777e7d2cc"
+    },
+    "observed": {
+      "affected_artifacts": [
+        "claims.json",
+        "composition.json",
+        "evolution/transition.json",
+        "migration.json",
+        "population.json",
+        "reviews.json",
+        "scoped-absence.json",
+        "sources/manifest.json",
+        "sources/resolution.json",
+        "supports/corroboration/review.json",
+        "supports/corroboration/support.json",
+        "supports/corroboration/witness.json",
+        "supports/whale-a/review.json",
+        "supports/whale-a/support.json",
+        "supports/whale-a/witness.json",
+        "witness.json"
+      ],
+      "after_witness_sha256": "710ebe696bff4d7cdb289cbd7d4e84df101b44c71b66d1e6d9d711a5450fe6ed",
+      "ambiguous": {
+        "candidates": [
+          "WHAM",
+          "WhAM [whale]"
+        ],
+        "mention": "WHAM"
+      },
+      "before_witness_sha256": "95dee755530fb12c6fb825f77916b01c96b3eec5f78891440bd064865eeb9400",
+      "changed_occurrences": [
+        {
+          "after": {
+            "base_method": "VampNet [music]",
+            "method": "WhAM [whale]"
+          },
+          "before": {
+            "base_method": "VampNet",
+            "method": "WHAM"
+          },
+          "occurrence": [
+            "whale-b",
+            "method_builds_on_method",
+            0
+          ]
+        }
+      ],
+      "coverage": {
+        "affected": {
+          "alternative": "stale"
+        },
+        "revisit": [
+          "study-opening"
+        ],
+        "unrelated": {
+          "denial": "current"
+        }
+      },
+      "evolution": {
+        "additive_preview": 3,
+        "apply": 0,
+        "new_review": "current",
+        "old_review": "stale",
+        "preview": 0
+      },
+      "occurrences": [
+        [
+          "whale-a",
+          "method_builds_on_method",
+          0,
+          0,
+          0
+        ],
+        [
+          "whale-a",
+          "method_builds_on_method",
+          1,
+          1,
+          1
+        ],
+        [
+          "whale-b",
+          "method_builds_on_method",
+          0,
+          2,
+          2
+        ]
+      ],
+      "queries": [
+        [
+          "OpenCap Monocular",
+          "VampNet",
+          true,
+          false
+        ],
+        [
+          "OpenCap Monocular",
+          "DMD",
+          true,
+          false
+        ],
+        [
+          "WHAM",
+          "DMD",
+          true,
+          false
+        ],
+        [
+          "OpenCap Monocular",
+          "WHAM",
+          true,
+          true
+        ],
+        [
+          "VampNet",
+          "DMD",
+          true,
+          true
+        ]
+      ],
+      "reread": [
+        "study-opening",
+        {
+          "candidates": [
+            "WHAM",
+            "WhAM [whale]"
+          ],
+          "mention": "WHAM"
+        }
+      ],
+      "resolution_edition": "fd6a53e618d95dbc6faec958eb8c25ff83b47b0b92b31c88261a0c512bfdea11",
+      "rule_comparison": {
+        "base_only": 0,
+        "exit": 0,
+        "head_only": 1
+      },
+      "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+      "supports": [
+        {
+          "claim": {
+            "fact_type": "method_has_ancestor_method",
+            "tuple": [
+              {
+                "primitive": "String",
+                "value": "VampNet"
+              },
+              {
+                "primitive": "String",
+                "value": "DMD"
+              }
+            ]
+          },
+          "occurrence": {
+            "document_sha256": "f2162704059f422d4220fb135876a8adf54ccf892fded35d12564ea7896475f6",
+            "fact_type": "method_builds_on_method",
+            "index": 0,
+            "population_sha256": "df09c4d3fb08f7ccd0441823facfd972e83c86e6468e2ae0942cfef0853f1e05",
+            "source": "whale-a",
+            "span": {
+              "end": 87,
+              "sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+              "start": 65
+            }
+          },
+          "resolution_edition": "fd6a53e618d95dbc6faec958eb8c25ff83b47b0b92b31c88261a0c512bfdea11",
+          "review_sha256": "ac355ac2f792a0e69582f9ce389c4b32acfa05ae855496e2614c07da2e9f6911",
+          "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+          "source": "whale-a",
+          "witness_sha256": "a6798e6332f3b2aafddb16595a7514971038c712e6c5454838fbb540187277c8"
+        },
+        {
+          "claim": {
+            "fact_type": "method_has_ancestor_method",
+            "tuple": [
+              {
+                "primitive": "String",
+                "value": "VampNet"
+              },
+              {
+                "primitive": "String",
+                "value": "DMD"
+              }
+            ]
+          },
+          "occurrence": {
+            "document_sha256": "7e3da2ebdbb88d3905d1da82fb5623e4ed7b02b0f1fb8abc80bb4583db95a9ee",
+            "fact_type": "method_builds_on_method",
+            "index": 0,
+            "population_sha256": "83b0ef3d28f7f49df0c4fd0b65ccea850ce63764c18cf9ea6fe461178243c151",
+            "source": "corroboration",
+            "span": {
+              "end": 97,
+              "sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+              "start": 75
+            }
+          },
+          "resolution_edition": "fd6a53e618d95dbc6faec958eb8c25ff83b47b0b92b31c88261a0c512bfdea11",
+          "review_sha256": "5313c41e3f5f18fcaba4edfeae4b3cac297031b0a2d7e39d9109683727440e7c",
+          "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+          "source": "corroboration",
+          "witness_sha256": "13333959e934ac89e01e9a2c41ea08837dab43dfeb9b353475d61c48605f45c0"
+        }
+      ]
+    },
+    "structure": "679 passed, 2 deselected in 370.63s (0:06:10)",
+    "wheel_sha256": "622b9b84f9fe3d28c98e5e22f67de347bfa9bb299715edb8c4411392e848d51d"
+  },
+  "verified_LD5_transition_observation": {
+    "claim": {
+      "fact_type": "method_has_ancestor_method",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "VampNet"
+        },
+        {
+          "primitive": "String",
+          "value": "DMD"
+        }
+      ]
+    },
+    "current_supports": [
+      {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "occurrence": {
+          "document_sha256": "f2162704059f422d4220fb135876a8adf54ccf892fded35d12564ea7896475f6",
+          "fact_type": "method_builds_on_method",
+          "index": 0,
+          "population_sha256": "df09c4d3fb08f7ccd0441823facfd972e83c86e6468e2ae0942cfef0853f1e05",
+          "source": "whale-a",
+          "span": {
+            "end": 87,
+            "sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+            "start": 65
+          }
+        },
+        "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+        "review_sha256": "687f769fcf2902a507d91c07307a8bad0873711fa69579b619f0c87734c5234b",
+        "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+        "source": "whale-a",
+        "witness_sha256": "a6798e6332f3b2aafddb16595a7514971038c712e6c5454838fbb540187277c8"
+      },
+      {
+        "claim": {
+          "fact_type": "method_has_ancestor_method",
+          "tuple": [
+            {
+              "primitive": "String",
+              "value": "VampNet"
+            },
+            {
+              "primitive": "String",
+              "value": "DMD"
+            }
+          ]
+        },
+        "occurrence": {
+          "document_sha256": "7e3da2ebdbb88d3905d1da82fb5623e4ed7b02b0f1fb8abc80bb4583db95a9ee",
+          "fact_type": "method_builds_on_method",
+          "index": 0,
+          "population_sha256": "83b0ef3d28f7f49df0c4fd0b65ccea850ce63764c18cf9ea6fe461178243c151",
+          "source": "corroboration",
+          "span": {
+            "end": 97,
+            "sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+            "start": 75
+          }
+        },
+        "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+        "review_sha256": "aa06f5c9d6e1166c726b9b8d5b6c31fb2c25bd9c4ad20de91a240f1691ae01ab",
+        "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+        "source": "corroboration",
+        "witness_sha256": "13333959e934ac89e01e9a2c41ea08837dab43dfeb9b353475d61c48605f45c0"
+      }
+    ],
+    "renewed": {
+      "claim": {
+        "fact_type": "method_has_ancestor_method",
+        "tuple": [
+          {
+            "primitive": "String",
+            "value": "VampNet"
+          },
+          {
+            "primitive": "String",
+            "value": "DMD"
+          }
+        ]
+      },
+      "occurrence": {
+        "document_sha256": "f2162704059f422d4220fb135876a8adf54ccf892fded35d12564ea7896475f6",
+        "fact_type": "method_builds_on_method",
+        "index": 0,
+        "population_sha256": "df09c4d3fb08f7ccd0441823facfd972e83c86e6468e2ae0942cfef0853f1e05",
+        "source": "whale-a",
+        "span": {
+          "end": 87,
+          "sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+          "start": 65
+        }
+      },
+      "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+      "review_sha256": "170c83d1704d8e8edf723d921adb9a1857fb4d9126783f1e9fa7f830fdf7d5a0",
+      "rule_edition": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a",
+      "source": "whale-a",
+      "witness_sha256": "a656ded69cf58225f4f1a4d9ad8b06d635f24f98ec95a27008d136026670fb7a"
+    },
+    "revised": {
+      "claim": "6bb43b2f92cf1709f03e4b49e08521156f6b92f0979af56a67c948e6a07fb6c1",
+      "decision": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+      "definition": "9fdf61b43a292cb019cd70bd0b94a205c21f58fd7525a487783b259efefd1090",
+      "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+      "rule": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a"
+    },
+    "shared": {
+      "claim": "6bb43b2f92cf1709f03e4b49e08521156f6b92f0979af56a67c948e6a07fb6c1",
+      "decision": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+      "definition": "55a9d47d703af871a6f68aebfe5be8c10a4981da23eee73f6f56704189bf9b53",
+      "resolution_edition": "114bcb3b69e79157dea722f2f5a092948e9575189ceb356ec93fa322369b57ad",
+      "rule": "d070ef06d0efa555ac45cb6b41da1e4f49206d28dd9e1c1cb9499bdfe268e27a"
+    }
+  }
+}

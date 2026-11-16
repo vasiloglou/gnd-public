@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "DMD",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 97,
+        "start": 75
+      }
+    },
+    {
+      "excerpt_sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "DMD",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 97,
+        "start": 75
+      }
+    }
+  ],
+  "document_sha256": "7e3da2ebdbb88d3905d1da82fb5623e4ed7b02b0f1fb8abc80bb4583db95a9ee",
+  "population_sha256": "83b0ef3d28f7f49df0c4fd0b65ccea850ce63764c18cf9ea6fe461178243c151",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

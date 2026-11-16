@@ -1,0 +1,4 @@
+Alanine dipeptide was studied in vacuum.
+Langevin integration at 300 K used a 2 fs time step.
+The worked run explicitly used no barostat.
+The time-step count is represented as n = 10 for the illustration.

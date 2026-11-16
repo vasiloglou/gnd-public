@@ -1,0 +1,28 @@
+{
+  "delta": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-depth/notes/close-delta.md",
+    "sha256": "9808af22be382daeac3e06ca3fc9d59e4e4afb778288038cb690ebf1b9eceb18"
+  },
+  "kind": "spec-results-delta",
+  "results": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-depth/014-close-candidate.md",
+    "sha256": "f18a4fb1d4ea9b5d1ff39e0d9e4fd9305992d3d0e3724200faeb0db46978a2dc"
+  },
+  "rubric": {
+    "criteria": [
+      "Assess each acceptance predicate of the approved plan against the recorded public route and exact verification scope. Cite reproducible failures and their consequence.",
+      "Check claimed source semantics, quantitative witnesses, coverage and fidelity boundaries, retained snapshot evidence, and the genuine independence of source supports.",
+      "Compare the changed claim and semantic bindings to the verdict and re-review controls. Keep fixture observations and any broader research claims distinct.",
+      "Assess the question sweep and inherited residuals, original versus repaired review bytes, case-based authority, part 10 deferral and the boundary of the close ruling."
+    ],
+    "name": "literature-depth standard close review"
+  },
+  "schema_version": 1,
+  "spec": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md",
+    "sha256": "216c7af0576a65a5fcb785773d34449c0e6ce0ce05ab022a21a43e5607d20539"
+  }
+}

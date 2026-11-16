@@ -1,0 +1,128 @@
+{
+  "base": "13f05a5a",
+  "claims": [
+    "Replay validates canonical evidence and the stage chain before payloads, then consumes authenticated retained responses without producer calls.",
+    "Methods recovery, coverage and stops, question completeness, revisit targeting, reading cost and the actual reported conflict are observable.",
+    "The stronger absence gate checks closure, scope, coverage and qualifying actual fidelity, while the opt-in assurance adapter keeps legacy scoring results."
+  ],
+  "created": "2026-11-16T06:14:38.024513+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD3-r1/diff.patch",
+      "sha256": "5dcd6f56c777a49506985b53c208e2ed6d1a7711ff7ff5d7e354ebc36cce492c"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/007-phase-LD3-spec-gate.md",
+      "sha256": "30fbe5dfc0391a3c07375c53f7ce56dfc7b217d0b87ba67f773b5364ec52a3db"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/phase-LD3-spec.md",
+      "sha256": "e44f4a36bdd608911d75312b8948961c1aae3e361b2833a6974fc99df5ef741a"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "e533993f02e7adc5a57aaf1d47b5c5262fa6ba48ebf72feabf57f18f4d8dde1d"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "92224fe7abdc45d4f31882e49401eb3f2cccd412a76e125e2d81967406bdf8ed"
+    },
+    {
+      "path": "dev/components/modules/examples.md",
+      "sha256": "c817b7e407d9d87116a7e29445dcb8a278665e809eec1e462e4ef7cc26e2520a"
+    },
+    {
+      "path": "src/gnd/examples/literature/README.md",
+      "sha256": "61efb4314926f5e08f092133c1474963b956872979d741d32f4e97007309539e"
+    },
+    {
+      "path": "src/gnd/examples/literature/assurance_report.py",
+      "sha256": "9dc14cdc728d027410c0bfdc1583ddf4ac77022bd1167b09241d4ab26e1cadbf"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading.py",
+      "sha256": "d36355f9083d1dcdc4175a893ae24d218eb68611cf263cc18ed08780043f477b"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/README.md",
+      "sha256": "084da092cc4dca1054fc6bfe2af40849c2766e792a35a85733e0e507454a1909"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/annex.txt",
+      "sha256": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/calibration.json",
+      "sha256": "fa8650ca52bc088bcf4557d05d0f02c31ba263649c7615092258a09c2d495e42"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/closure.json",
+      "sha256": "bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/control.txt",
+      "sha256": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/gold.json",
+      "sha256": "115493bdb990c9cfff7f67d08c43fe0ad9d90b45a5ee123ca562c2e865670394"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/reading.orm.json",
+      "sha256": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/responses.json",
+      "sha256": "f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/reviews.json",
+      "sha256": "f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/roster.json",
+      "sha256": "0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/scope.json",
+      "sha256": "d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/study.txt",
+      "sha256": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843"
+    },
+    {
+      "path": "tests/fixtures/ld3-reading/README.md",
+      "sha256": "bdffe9d3bf910e0d69cdc0f9fb6f11cd2659fbfe890d348f8d7f346fefd12128"
+    },
+    {
+      "path": "tests/fixtures/ld3-reading/expected.json",
+      "sha256": "7b12e90234e2c364f900c10ebfa50b454095b8ede4149498ddf26235fb234964"
+    },
+    {
+      "path": "tests/test_ld3_reading_workflow.py",
+      "sha256": "a72205ae9226a9ecf24b5ac57804ac019c67774f77c62260728fc71b794f911e"
+    },
+    {
+      "path": "tests/test_li1_assurance_report.py",
+      "sha256": "7b6643b6440198be8f0b19c23c8488f5fcdeeb0dd985b31978b0aeb1ee717611"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/006-phase-LD2.md",
+      "sha256": "58004fd9ba0a6f4f1d220cb67f48f49e694c5cb6a58d5eb2fede3a7b092b1308"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md",
+      "sha256": "216c7af0576a65a5fcb785773d34449c0e6ce0ce05ab022a21a43e5607d20539"
+    }
+  ],
+  "head": "92086a00f0a25fd9e467e6cd737cf2715fb64379",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does LD3 correctly bind its six-stage reader, scoped coverage, exact replay, retained conflicts, and fidelity gate to observable controls?",
+  "subject": "phase",
+  "version": 1
+}

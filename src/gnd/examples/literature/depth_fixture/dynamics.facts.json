@@ -1,0 +1,38 @@
+{
+  "subject_label": [
+    {
+      "subject": "dam-break",
+      "label": "Shallow-water dam break"
+    }
+  ],
+  "equation": [
+    {
+      "subject": "dam-break",
+      "value": "h_t + (hu)_x = 0; (hu)_t + (hu^2 + g h^2/2)_x = 0"
+    }
+  ],
+  "regime": [
+    {
+      "subject": "dam-break",
+      "value": "dam-break Riemann problem"
+    }
+  ],
+  "boundaries": [
+    {
+      "subject": "dam-break",
+      "value": "extrapolation at both endpoints"
+    }
+  ],
+  "discretization": [
+    {
+      "subject": "dam-break",
+      "value": "classic PyClaw with van Leer limiter on 500 cells"
+    }
+  ],
+  "subject_specializes": [
+    {
+      "subject": "dam-break",
+      "related": "shallow-water-test-case"
+    }
+  ]
+}

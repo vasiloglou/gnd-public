@@ -1,0 +1,133 @@
+{
+  "run_sha256": "d5ae0116ae368cf9f096d5da23110182c072fce68cfa567d018fda30e6ff1ef4",
+  "request_sha256": "10ea01d7c5b461fdcaf1bdaa4bbf5600cb966e54b475edeff9844b7a22f7af00",
+  "source_commit": "5efffe84999ac0eca1dfe5c15408af4913c7e07d",
+  "successful_reviewer_ids": [
+    "claude",
+    "codex",
+    "qwen",
+    "kimi",
+    "glm"
+  ],
+  "reviewed_artifacts_unchanged": true,
+  "reviewers": [
+    {
+      "reviewer_id": "claude",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 7,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 7,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 7,
+        "total_concerns": 7,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "codex",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 1,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 1,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 1,
+        "total_concerns": 1,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "gemini",
+      "status": "malformed",
+      "issues": [
+        {
+          "code": "malformed",
+          "location": null,
+          "message": "reviewer response failed closed validation: invalid reviewer response: output contains no JSON object"
+        }
+      ],
+      "response_salvage": null,
+      "evidence_resolution": null
+    },
+    {
+      "reviewer_id": "glm",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 5,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 5,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 5,
+        "total_concerns": 5,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "kimi",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": false,
+        "declared_concern_count": 2,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 1,
+        "retained_concern_count": 2,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 2,
+        "total_concerns": 2,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "qwen",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 12,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 12,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 12,
+        "total_concerns": 12,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    }
+  ]
+}

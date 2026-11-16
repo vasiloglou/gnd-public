@@ -1,0 +1,190 @@
+{
+  "format": "literature-reading-roster/1",
+  "sources": [
+    {
+      "id": "study",
+      "version": "authored-note-1",
+      "path": "study.txt",
+      "sha256": "d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843"
+    },
+    {
+      "id": "annex",
+      "version": "authored-note-1",
+      "path": "annex.txt",
+      "sha256": "0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136"
+    },
+    {
+      "id": "control",
+      "version": "authored-note-1",
+      "path": "control.txt",
+      "sha256": "e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a"
+    }
+  ],
+  "sections": [
+    {
+      "id": "study-opening",
+      "source": "study",
+      "kind": "section",
+      "selection": "opening",
+      "keys": [
+        "method-family"
+      ],
+      "span": [
+        0,
+        40
+      ],
+      "reason": null
+    },
+    {
+      "id": "study-methods",
+      "source": "study",
+      "kind": "section",
+      "selection": "targeted",
+      "keys": [
+        "method-family"
+      ],
+      "span": [
+        41,
+        93
+      ],
+      "reason": null
+    },
+    {
+      "id": "study-limits",
+      "source": "study",
+      "kind": "section",
+      "selection": "targeted",
+      "keys": [
+        "sampling-limit"
+      ],
+      "span": [
+        94,
+        137
+      ],
+      "reason": null
+    },
+    {
+      "id": "annex-opening",
+      "source": "annex",
+      "kind": "section",
+      "selection": "opening",
+      "keys": [
+        "annex"
+      ],
+      "span": [
+        0,
+        43
+      ],
+      "reason": null
+    },
+    {
+      "id": "control-table",
+      "source": "control",
+      "kind": "table",
+      "selection": "opening",
+      "keys": [
+        "control"
+      ],
+      "span": [
+        0,
+        56
+      ],
+      "reason": null
+    },
+    {
+      "id": "annex-methods",
+      "source": "annex",
+      "kind": "section",
+      "selection": null,
+      "keys": [
+        "annex"
+      ],
+      "span": null,
+      "reason": "unavailable"
+    },
+    {
+      "id": "control-equation",
+      "source": "control",
+      "kind": "equation",
+      "selection": null,
+      "keys": [
+        "control"
+      ],
+      "span": null,
+      "reason": "not-applicable"
+    },
+    {
+      "id": "study-equation",
+      "source": "study",
+      "kind": "equation",
+      "selection": "targeted",
+      "keys": [],
+      "span": [
+        138,
+        204
+      ],
+      "reason": null
+    }
+  ],
+  "questions": [
+    {
+      "id": "system",
+      "section": "study-opening",
+      "fact": "system",
+      "required": true,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "method",
+      "section": "study-methods",
+      "fact": "approximation",
+      "required": true,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "denial",
+      "section": "study-limits",
+      "fact": "explicit_denial",
+      "required": true,
+      "superseded_by": null,
+      "denial": true
+    },
+    {
+      "id": "alternative",
+      "section": "study-methods",
+      "fact": "alternative_integrator",
+      "required": false,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "annex-method",
+      "section": "annex-methods",
+      "fact": "approximation",
+      "required": false,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "equation",
+      "section": "control-equation",
+      "fact": "equation",
+      "required": false,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "old-method",
+      "section": "study-methods",
+      "fact": "approximation",
+      "required": false,
+      "superseded_by": "method",
+      "denial": false
+    }
+  ],
+  "revisit_keys": [
+    "method-family"
+  ]
+}

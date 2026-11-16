@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/literature-depth/notes/literature-depth-plan.md",
+    "sha256": "fe8c416223ef1b93392ff376853f381ff8db510e8b005ff2607cb4afe1d4570f",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "literature-depth plan r2 implementability",
+    "criteria": [
+      "Check parts 6\u20138 and the deferred part 10 against concrete phase predicates. Identify an observable failure for each concern.",
+      "Trace LD1 source support and comparability, LD2 conditional dependencies, and LD3 replay, coverage and stopping controls.",
+      "Trace LD4 independently checked semantic revision dependencies and LD5 claim support flows. Identify any missing or circular contract between phases.",
+      "Prioritize blockers to implementation or verification. Distinguish hardening and future completeness. An empty concern list is valid if the checked paths are named."
+    ]
+  }
+}

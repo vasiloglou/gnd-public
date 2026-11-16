@@ -1,0 +1,33 @@
+{
+  "reviewed_commit": "e0bf8feb10c3504963f9e4e96090400025c07b9f",
+  "repaired_commit": "55ffa8ea24fbc57c21a5075606248082a1d472da",
+  "review_verdict": "CHANGES_REQUESTED",
+  "same_bytes": [
+    ".gnd-planning/milestones/literature-depth/notes/reviews/phase-LD2-r1/diff.patch",
+    ".gnd-planning/milestones/literature-depth/005-phase-LD2-spec-gate.md",
+    ".gnd-planning/milestones/literature-depth/evidence/LD2/dynamic-query-successor.json",
+    "dev/components/COMPONENTS.md",
+    "dev/components/modules/model.md",
+    "src/gnd/examples/literature/README.md",
+    "src/gnd/examples/literature/quantity_fixture/README.md",
+    "src/gnd/examples/literature/quantity_fixture/source.txt",
+    "src/gnd/examples/literature/quantity_fixture/time.anchors.json",
+    "src/gnd/examples/literature/quantity_fixture/time.orm.yaml",
+    "src/gnd/examples/literature/quantity_fixture/time.population.json",
+    "src/gnd/examples/literature/quantity_fixture/time.targets.json",
+    "src/gnd/model/_validation.py",
+    "src/gnd/schema/orm-meta.schema.json",
+    "src/gnd/skills/gnd-orm-core/references/orm-meta.schema.json",
+    "tests/fixtures/ld2-quantities/README.md",
+    "tests/fixtures/ld2-quantities/expected.json",
+    ".gnd-planning/milestones/literature-depth/004-phase-LD1.md"
+  ],
+  "amended_bytes": [
+    ".gnd-planning/milestones/literature-depth/notes/phase-LD2-spec.md",
+    "dev/components/modules/_root.md",
+    "src/gnd/anchors.py",
+    "src/gnd/skills/gnd-orm-core/references/constraint-reference.md",
+    "tests/support/pyrel_application_successors.py",
+    "tests/test_ld2_quantities.py"
+  ]
+}

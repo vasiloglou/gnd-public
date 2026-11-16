@@ -1757,7 +1757,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +71 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +72 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +68 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +72 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -1974,14 +1974,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.anchors
-- does: Bind digest-checked document anchors to population roles and find lexical or numeric source spans.
-- verbs: parse_anchor_sidecar, bind_anchors, write_anchor_sidecar, vocabulary_digest, lexical_ranges, recognition_index, recognised_ranges, document anchors, source spans, excerpt digest, numeric recognition, date recognition, sidecar validation, multiple occurrences, strict JSON
+- does: Bind digest-checked document anchors to population roles and find lexical, numeric, or exact time-quantity source spans.
+- verbs: parse_anchor_sidecar, bind_anchors, write_anchor_sidecar, vocabulary_digest, lexical_ranges, recognition_index, recognised_ranges, document anchors, source spans, excerpt digest, numeric recognition, date recognition, time-fs, time quantity, sidecar validation, multiple occurrences, strict JSON
 - in: sidecar JSON or AnchorSidecar; model and raw population/document bytes
 - out: validated sidecar; bound document text; occurrence span indexes
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, … +2 more (graph.md)
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, … +3 more (graph.md)
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +24 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +26 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2550,7 +2550,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/process.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
 - tests: tests/test_agent_cli.py, tests/test_rf4_peripheral.py
 - in: Trusted argv, real cwd, explicit environment, ProcessLimits and optional stdin bytes.
 - out: BoundedProcessResult with closed metadata and out-of-band byte streams.
@@ -3257,13 +3257,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### examples.literature_assurance
-- does: Example: score a literature pipeline run against an answer key in seven separate stages, with exact-fraction floors and value-free refusals [score, stage_status].
+- does: Example: score a literature pipeline run against an answer key in seven separate stages, including opt-in reading coverage, with exact-fraction floors and value-free refusals [score, stage_status].
 - verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, identity decisions, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages
 - in: The literature example root (corpus/corpus.json, model, documents, extract artifacts), a literature-answer-key/1 file with gold/ and render/ beside it, and a literature-run/1 directory.
 - out: A literature-assurance-report/1 payload and exit 0, 1 or 3. The routes are gnd check (plain, --anchors, --composition) and gnd fidelity, run as subprocesses.
 - status: canonical
 - modules: src/gnd/examples/literature/assurance_report.py
-- uses: (none)
+- uses: examples.literature_reading
 - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
 - tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
 - notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
@@ -3468,6 +3468,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - constraint provenance: model.verbalization, recovery.verify
 - content digest: assurance.identity, model.population_loading
 - corpus manifest: assurance.claim_graph, synth.corpus
+- coverage evidence: cli.checking_command, examples.literature_reading
 - coverage omission: synth.frontier, synth.mutations
 - declared adapter: agent.declared_adapter, exp.session_profile, exp.session_runtime
 - derived relations: export.pyrel_rules, semantics.extensions
@@ -3649,6 +3650,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - source digest: conformance.currency, fidelity.doccheck, model.rai_import
 - source lineage: model.composition, witness.presentation
 - source spans: extract.source_anchors, model.anchors
+- source support: examples.literature_depth, examples.literature_verdict
 - stagnation: exp.service, exp.session_runtime
 - stale evidence: exp.acceptance, semantics.proof_currency
 - station timeout: agent.solve, cli.solve_command
@@ -3703,3 +3705,49 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: extract.bundle, extract.service, infra.artifacts, infra.bounded_process, infra.disclosure, infra.errors, model.anchors, model.loading, model.population_loading, witness.schema
 - used_by: (none)
 - tests: tests/test_lx4_literature_interop.py
+
+### examples.literature_depth
+- does: Run source-bound science competency questions, experiment comparisons and quantity probes over rooted literature models.
+- verbs: literature depth, competency questions, source support, experiment comparison, dataset split, quantity probe
+- in: Packaged scientific source notes, reviewed source bindings, shared model vocabulary and synthetic comparisons.
+- out: Checked population and extraction bindings, source-scoped answers and comparison dispositions.
+- status: canonical
+- modules: src/gnd/examples/literature/depth.py
+- uses: infra.artifacts, infra.bounded_process, model.anchors
+- used_by: examples.literature_reading, examples.literature_revision, examples.literature_verdict
+- tests: tests/test_ld1_competency_examples.py
+
+### examples.literature_reading
+- does: Run and replay bounded literature reading with saved producer outputs, typed coverage, custody and fidelity.
+- verbs: reading workflow, multipass reading, methods extraction, coverage evidence, scope, absence, fidelity, revisit, question disposition
+- in: Packaged public source inventory, section and question roster, saved responses, held-back fidelity labels and source scope.
+- out: Six bound pass records, producer call counts, typed coverage, read cost, checked populations and fidelity reports.
+- status: canonical
+- modules: src/gnd/examples/literature/reading.py
+- uses: examples.literature_depth, infra.artifacts
+- used_by: examples.literature_assurance, examples.literature_revision
+- tests: tests/test_ld3_reading_workflow.py
+- notes: Release replay can provide its retained reading fixture and rooted vocabulary together.
+
+### examples.literature_revision
+- does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.
+- verbs: semantic revision, release dependencies, sense migration, prior snapshot replay, stale coverage, predicate definition, support certificate
+- in: Replayable reading evidence, a separately pinned dependency policy, verified source bundles and saved occurrence reviews.
+- out: Before and after releases, changed occurrence and dependent artifact worklists, public proof and replay reports, and independent support bindings.
+- status: canonical
+- modules: src/gnd/examples/literature/revision.py, src/gnd/examples/literature/revision_manifest.py
+- uses: examples.literature_depth, examples.literature_reading, infra.artifacts, infra.errors, model.loading
+- used_by: examples.literature_verdict
+- tests: tests/test_ld4_revision.py
+- notes: Independently replays both original and renewed source support certificates.
+
+### examples.literature_verdict
+- does: Recheck consumer-pinned source opinions on a derived literature claim and report which support certificates remain effective.
+- verbs: derived verdict, source support, independent support, reviewed definition, resolution edition, claim bindings, revalidation
+- in: Completed revision release and synthetic source opinions pinned to exact evidence.
+- out: Supported, unsupported and revalidation-required decisions with source-level reasons and a replayable report.
+- status: canonical
+- modules: src/gnd/examples/literature/verdict.py
+- uses: examples.literature_depth, examples.literature_revision, infra.artifacts, infra.errors
+- used_by: (none)
+- tests: tests/test_ld5_verdict.py

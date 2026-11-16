@@ -335,3 +335,29 @@ come from the two publications. The 2026 and equal-year edges are synthetic
 comparison controls. [Issue #193](https://github.com/vasiloglou/gnd-public/issues/193),
 [PINNs](https://doi.org/10.1016/j.jcp.2018.10.045),
 [Bayesian PINNs](https://doi.org/10.1016/j.jcp.2020.109913)
+
+## Scientific competency examples
+
+Run three checked models covering physical dynamics, molecular sampling
+and randomized matrix decomposition. The report shows source evidence
+and gaps, as well as synthetic experiment comparisons and quantity
+probes. [Run the examples](depth_fixture/README.md).
+
+The [exact time-step example](quantity_fixture/README.md) shows
+dimension-aware anchors and a fixed-scale decimal witness.
+
+## Replayable reading
+
+The [multipass reading example](reading_fixture/README.md) shows how a
+targeted pass recovers a methods fact, records source coverage and
+replays completed stages without calling its producer.
+
+## Semantic revision
+
+The [release migration example](revision_fixture/README.md) traces a whale
+identity split through assertions, reviews, coverage and lineage witnesses.
+It retains the original snapshot for independent replay.
+
+The [derived verdict example](verdict_fixture/README.md) applies saved source
+opinions to the released claim. It checks which supports survive rejection
+or a change to their evidence.

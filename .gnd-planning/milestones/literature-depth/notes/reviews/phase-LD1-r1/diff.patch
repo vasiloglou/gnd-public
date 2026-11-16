@@ -1,0 +1,2356 @@
+diff --git a/.gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md b/.gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md
+index 827058ea..93b28122 100644
+--- a/.gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md
++++ b/.gnd-planning/milestones/literature-depth/notes/phase-LD1-spec.md
+@@ -177,3 +177,26 @@ Corpus-first using `tests/fixtures/ld1-competency/` with its own entry
+ README and separate expected file. Commit the expected acceptance corpus
+ red before product implementation. The phase ruling is delegated under the
+ owner's named milestone invocation and applies to this spec.
++
++## Implementation findings
++
++- The synthetic comparison initially produced a vacuous one-label
++  constraint because its population had score facts and zero labels.
++  The synthetic control now includes one labeled subject and the documented
++  influence relation. The check then exited 0.
++- GND's canonical JSON orders keys lexically. The frozen question key
++  retains predicate membership and the test compares those members as a set.
++- The existing integer anchor recognizer returns both the time and energy
++  spans with magnitude 2. The percent recognizer returns 40 and 45 and
++  excludes the percentage-point phrase. The example expresses score units
++  and percentage-point uncertainty as distinct fields.
++- The decimal Float population passes the checker. With the versioned
++  target document and model-bound population, witness exits 2 and reports
++  `fragment-unsupported`. A producer refusal with a malformed target or
++  missing population binding would have measured input plumbing instead.
++  These observations support opening dimension-aware anchors and exact
++  decimal witness probes in LD2 after the LD1 review. They do not require a
++  new percent recognizer for the present example.
++- The output runner uses the existing capped process runner and shared JSON
++  parser. The malformed comparison case exercises admission before the
++  product invocations.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index db737997..43474399 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +68 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +69 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+ - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
+@@ -1981,7 +1981,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/anchors.py
+ - uses: infra.artifacts, infra.input_policy, model.anchor_identity
+-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, … +2 more (graph.md)
++- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, … +3 more (graph.md)
+ - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
+ - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
+ 
+@@ -2550,7 +2550,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/process.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
++- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+ - tests: tests/test_agent_cli.py, tests/test_rf4_peripheral.py
+ - in: Trusted argv, real cwd, explicit environment, ProcessLimits and optional stdin bytes.
+ - out: BoundedProcessResult with closed metadata and out-of-band byte streams.
+@@ -3703,3 +3703,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - uses: extract.bundle, extract.service, infra.artifacts, infra.bounded_process, infra.disclosure, infra.errors, model.anchors, model.loading, model.population_loading, witness.schema
+ - used_by: (none)
+ - tests: tests/test_lx4_literature_interop.py
++
++### examples.literature_depth
++- does: Run source-bound science competency questions, experiment comparisons and quantity probes over rooted literature models.
++- verbs: literature depth, competency questions, source support, experiment comparison, dataset split, quantity probe
++- in: Packaged scientific source notes, reviewed source bindings, shared model vocabulary and synthetic comparisons.
++- out: Checked population and extraction bindings, source-scoped answers and comparison dispositions.
++- status: canonical
++- modules: src/gnd/examples/literature/depth.py
++- uses: infra.artifacts, infra.bounded_process, model.anchors
++- used_by: (none)
++- tests: tests/test_ld1_competency_examples.py
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index b5a613b4..20a1570d 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1890,6 +1890,19 @@ Generated by `scripts/components_index.py`.
+ - uses: (none)
+ - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
+ 
++### examples.literature_depth
++- uses: infra.artifacts, infra.bounded_process, model.anchors
++- used_by: (none)
++
++#### examples.literature_depth -> infra.artifacts
++- `src/gnd/examples/literature/depth.py -> src/gnd/artifacts.py`
++
++#### examples.literature_depth -> infra.bounded_process
++- `src/gnd/examples/literature/depth.py -> src/gnd/process.py`
++
++#### examples.literature_depth -> model.anchors
++- `src/gnd/examples/literature/depth.py -> src/gnd/anchors.py`
++
+ ### examples.literature_interop
+ - uses: extract.bundle, extract.service, infra.artifacts, infra.bounded_process, infra.disclosure, infra.errors, model.anchors, model.loading, model.population_loading, witness.schema
+ - used_by: (none)
+@@ -3308,7 +3321,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+@@ -3319,7 +3332,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.bounded_process
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
++- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+ 
+ ### infra.disclosure
+ - uses: (none)
+@@ -3721,7 +3734,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.anchors
+ - uses: infra.artifacts, infra.input_policy, model.anchor_identity
+-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
++- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
+ 
+ #### model.anchors -> infra.artifacts
+ - `src/gnd/anchors.py -> src/gnd/artifacts.py`
+diff --git a/dev/components/modules/examples.md b/dev/components/modules/examples.md
+index 2ea4a7cb..44c38290 100644
+--- a/dev/components/modules/examples.md
++++ b/dev/components/modules/examples.md
+@@ -215,6 +215,17 @@ The staged assurance report over the literature corpus (phase LI1).
+ | `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 810 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+ | `main(argv) -> int` | function | 863 | (no docstring) |
+ 
++## gnd.examples.literature.depth — `src/gnd/examples/literature/depth.py`
++Components: examples.literature_depth
++Run the three source-scoped literature competency examples offline.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `ExampleError` | class(ValueError) | 50 | The worked example cannot establish the requested output. |
++| `compare_scores(left, right) -> tuple[str, list[str]]` | function | 183 | Compare scores by the declared evidence context. |
++| `build(out, *, fixture) -> dict` | function | 264 | Materialize a fresh packaged run and return its competency report. |
++| `main(argv) -> int` | function | 310 | (no docstring) |
++
+ ## gnd.examples.literature.diagnostic_measurement — `src/gnd/examples/literature/diagnostic_measurement.py`
+ Components: examples.literature_name_diagnostics
+ Score the frozen synthetic diagnostic corpus using its predeclared sample.
+diff --git a/src/gnd/examples/literature/README.md b/src/gnd/examples/literature/README.md
+index 7d07c371..569e8118 100644
+--- a/src/gnd/examples/literature/README.md
++++ b/src/gnd/examples/literature/README.md
+@@ -335,3 +335,10 @@ come from the two publications. The 2026 and equal-year edges are synthetic
+ comparison controls. [Issue #193](https://github.com/vasiloglou/gnd-public/issues/193),
+ [PINNs](https://doi.org/10.1016/j.jcp.2018.10.045),
+ [Bayesian PINNs](https://doi.org/10.1016/j.jcp.2020.109913)
++
++## Scientific competency examples
++
++Run three checked models covering physical dynamics, molecular sampling
++and randomized matrix decomposition. The report shows source evidence
++and gaps, as well as synthetic experiment comparisons and quantity
++probes. [Run the examples](depth_fixture/README.md).
+diff --git a/src/gnd/examples/literature/depth.py b/src/gnd/examples/literature/depth.py
+new file mode 100644
+index 00000000..083b45da
+--- /dev/null
++++ b/src/gnd/examples/literature/depth.py
+@@ -0,0 +1,323 @@
++"""Run the three source-scoped literature competency examples offline."""
++from __future__ import annotations
++
++import argparse
++import asyncio
++import sys
++from pathlib import Path
++from typing import Any
++
++from gnd.anchors import recognised_ranges, recognition_index, strict_json
++from gnd.artifacts import (
++    ArtifactError,
++    canonical_json_bytes,
++    read_regular_bounded,
++    sha256_hex,
++)
++from gnd.process import BoundedProcessResult, ProcessLimits, run_bounded_process
++
++FIXTURE = Path(__file__).parent / "depth_fixture"
++INPUT_LIMIT = 128 * 1024
++PROCESS_LIMIT = 1 << 20
++PROCESS_LIMITS = ProcessLimits(
++    timeout_seconds=30,
++    terminate_grace_seconds=1,
++    stdin_limit_bytes=0,
++    stdout_limit_bytes=PROCESS_LIMIT,
++    stderr_limit_bytes=INPUT_LIMIT,
++    total_output_limit_bytes=PROCESS_LIMIT,
++)
++CASES = ("dynamics", "molecular", "algorithms")
++CASES_SHA = "3bc3426bf8f1f005d73a0eec93c4d53566a60c6521c243b64e7cea91343e2cec"
++SUPPORT_SHA = "8d697a5a169d6dfa27a0dacb498df9e86bd78f1ffbd5365ea82f38264333ed59"
++CONTEXT = {
++    "dataset_version": "experiment_dataset",
++    "split": "experiment_split",
++    "metric": "experiment_metric",
++    "units": "experiment_units",
++    "conditions": "experiment_conditions",
++}
++RELATIONS = ("subject_specializes", "subject_has_component", "subject_influenced_by")
++EXPERIMENT_FIELDS = {
++    **CONTEXT,
++    "score": "experiment_score",
++    "baseline": "experiment_baseline",
++    "configuration": "experiment_configuration",
++    "uncertainty": "experiment_uncertainty",
++}
++
++
++class ExampleError(ValueError):
++    """The worked example cannot establish the requested output."""
++
++
++def _read(root: Path, name: str) -> bytes:
++    return read_regular_bounded(root, name, max_bytes=INPUT_LIMIT)[0]
++
++
++def _decode(data: bytes) -> dict:
++    try:
++        value = strict_json(data, max_bytes=PROCESS_LIMIT, too_large="example JSON exceeds its cap")
++    except (ValueError, RecursionError) as error:
++        raise ExampleError("invalid example JSON") from error
++    if not isinstance(value, dict):
++        raise ExampleError("expected an example JSON object")
++    return value
++
++
++def _write(out: Path, name: str, data: Any) -> bytes:
++    raw = canonical_json_bytes(data)
++    (out / name).write_bytes(raw)
++    return raw
++
++
++def _command(out: Path, *args: str) -> BoundedProcessResult:
++    result = asyncio.run(run_bounded_process(
++        (sys.executable, "-m", "gnd", *args), cwd=out, env={}, limits=PROCESS_LIMITS,
++    ))
++    if (result.status not in {"succeeded", "failed"} or result.stdout_truncated
++            or result.stderr_truncated or not result.process_group_cleaned):
++        raise ExampleError(f"{args[0]} failed to finish its bounded run")
++    return result
++
++
++def _success(out: Path, *args: str) -> bytes:
++    result = _command(out, *args)
++    if result.return_code != 0:
++        raise ExampleError(f"{args[0]} exited {result.return_code}")
++    return result.stdout
++
++
++def _load_reviewed(fixture: Path, name: str, expected_sha: str) -> dict:
++    raw = _read(fixture, name)
++    document = _decode(raw)
++    if sha256_hex(raw) != expected_sha:
++        raise ExampleError(f"reviewed {name} binding differs")
++    return document
++
++
++def _fact_rows(facts: dict) -> None:
++    if not all(
++        isinstance(rows, list) and all(
++            isinstance(row, dict) and all(isinstance(value, str) for value in row.values())
++            for row in rows
++        ) for rows in facts.values()
++    ):
++        raise ExampleError("invalid example fact rows")
++
++
++def _question_rows(case: dict, support: dict, document: bytes, facts: dict) -> list[dict]:
++    if sha256_hex(document) != support["document_sha256"]:
++        raise ExampleError("reviewed source document binding differs")
++    text = document.decode("utf-8")
++    _fact_rows(facts)
++    by_fact = {
++        fact: [row for row in rows if row.get("subject") == case["subject"]]
++        for fact, rows in facts.items()
++    }
++    answers = []
++    for question, evidence in zip(case["questions"], support["rows"], strict=True):
++        if question["id"] != evidence["id"]:
++            raise ExampleError("reviewed question roster differs")
++        start, end = evidence["span"]
++        excerpt = text[start:end]
++        if not (0 <= start < end <= len(text)) or sha256_hex(excerpt.encode()) != evidence["span_sha256"]:
++            raise ExampleError("reviewed source span differs")
++        selected = {fact: by_fact.get(fact, []) for fact in question["requires"]}
++        reviewed = evidence["facts"]
++        for fact, rows in selected.items():
++            if rows and rows != reviewed.get(fact):
++                raise ExampleError(f"unreviewed facts for {question['id']}")
++        supported = all(selected.values()) and evidence["decision"] == "supported"
++        answers.append({
++            "id": question["id"],
++            "status": "supported" if supported else "unknown",
++            "claim_kind": question["claim_kind"],
++            "facts": selected if supported else {},
++            "missing": [fact for fact, rows in selected.items() if not rows],
++            "evidence": {
++                **evidence["primary"],
++                "review": evidence["decision"],
++                "document_sha256": support["document_sha256"],
++                "span": evidence["span"],
++                "span_sha256": evidence["span_sha256"],
++                "excerpt": excerpt,
++            },
++        })
++    return answers
++
++
++def _check_case(out: Path, model: str, document: bytes, facts: dict) -> dict:
++    (out / "document.txt").write_bytes(document)
++    _success(out, "extract", model, "--out", "bundle")
++    stem = model.removesuffix(".json")
++    index_raw = _read(out, f"bundle/{stem}.artifacts.json")
++    index = _decode(index_raw)
++    population = "population.json"
++    raw = _write(out, population, {"population": index["header_template"], "facts": facts})
++    sidecar = _write(out, "population.extraction.json", {
++        "schema_version": 1,
++        "model": model,
++        "model_sha256": index["model"]["sha256"],
++        "population": population,
++        "population_sha256": sha256_hex(raw),
++        "document": "document.txt",
++        "document_sha256": sha256_hex(document),
++        "projection_sha256": index["artifacts"][f"{stem}.projection.schema.json"]["sha256"],
++        "skill": "gnd-extract",
++        "skill_version": "1",
++        "executing_model": "saved-public-fixture",
++    })
++    verified = _success(out, "verify", model, population, "--artifacts", "bundle", "--format", "json")
++    checked = _success(out, "check", model, population, "--format", "json")
++    return {
++        "model_sha256": index["model"]["sha256"],
++        "population_sha256": sha256_hex(raw),
++        "extraction_sha256": sha256_hex(sidecar),
++        "bundle_index_sha256": sha256_hex(index_raw),
++        "verification": _decode(verified)["outcome"],
++        "check": _decode(checked)["outcome"],
++    }
++
++
++def compare_scores(left: dict[str, str], right: dict[str, str]) -> tuple[str, list[str]]:
++    """Compare scores by the declared evidence context."""
++    mismatches = [name for name in CONTEXT if name in left and name in right and left[name] != right[name]]
++    if mismatches:
++        return "incompatible", mismatches
++    missing = [name for name in (*CONTEXT, "score") if name not in left or name not in right]
++    return ("unknown", missing) if missing else ("comparable", [])
++
++
++def _comparison_inputs(raw: bytes) -> tuple[dict, list[dict], dict[str, dict[str, str]]]:
++    fixture = _decode(raw)
++    if (fixture.get("origin") != "synthetic" or not isinstance(fixture.get("facts"), dict)
++            or not isinstance(fixture.get("pairs"), list)):
++        raise ExampleError("invalid synthetic comparison corpus")
++    facts, pairs = fixture["facts"], fixture["pairs"]
++    _fact_rows(facts)
++    by_experiment: dict[str, dict[str, str]] = {}
++    for field, fact in EXPERIMENT_FIELDS.items():
++        for row in facts.get(fact, []):
++            if set(row) != {"experiment", field}:
++                raise ExampleError(f"invalid synthetic experiment field {field}")
++            record = by_experiment.setdefault(row["experiment"], {})
++            if field in record:
++                raise ExampleError(f"ambiguous synthetic experiment field {field}")
++            record[field] = row[field]
++    ids = set()
++    for pair in pairs:
++        if (not isinstance(pair, dict) or set(pair) != {"id", "left", "right"}
++                or any(not isinstance(value, str) for value in pair.values())
++                or pair["id"] in ids or pair["left"] not in by_experiment or pair["right"] not in by_experiment):
++            raise ExampleError("invalid synthetic comparison pair")
++        ids.add(pair["id"])
++    return facts, pairs, by_experiment
++
++
++def _checked_comparisons(out: Path, facts: dict, pairs: list[dict],
++                         experiments: dict[str, dict[str, str]]) -> tuple[list[dict], str]:
++    population = _write(out, "comparison.population.json", {
++        "population": {"model": "vocabulary.orm.json", "source": "fixture"},
++        "facts": facts,
++    })
++    _success(out, "check", "vocabulary.orm.json", "comparison.population.json", "--format", "json")
++    rows = []
++    for pair in pairs:
++        status, fields = compare_scores(experiments[pair["left"]], experiments[pair["right"]])
++        rows.append({**pair, "origin": "synthetic", "status": status, "fields": fields})
++    return rows, sha256_hex(population)
++
++
++def _quantity_observations(out: Path) -> list[dict]:
++    text = "The step is 2 fs. The energy is 2 eV. The score changes from 40% to 45%, or 5 percentage points."
++    index = recognition_index(text, {"integer", "percent"})
++    primitive_spans = recognised_ranges(index, "integer", 2)
++    unit_phrases = [text[start : end + 3] for start, end in primitive_spans]
++    percentages = [value for value in (40, 45, 5) if recognised_ranges(index, "percent", value)]
++    _success(out, "check", "decimal.orm.json", "decimal.population.json", "--format", "json")
++    args = ("decimal.orm.json", "decimal.population.json")
++    witness = _command(out, "witness", *args, "--targets", "decimal.targets.json", "--raw", "--out", "decimal.witness.json")
++    result = _decode(witness.stdout)
++    results = result.get("results")
++    if witness.return_code == 2 and results and results[0]["reason"] == "fragment-unsupported":
++        native_exact = False
++        observed = {"exit": 2, "reason": "fragment-unsupported", "checked_value": "0.002"}
++    elif witness.return_code == 0:
++        _success(out, "replay", *args, "decimal.witness.json", "--raw")
++        native_exact = True
++        observed = {"exit": 0, "replay": "accepted", "checked_value": "0.002"}
++    else:
++        raise ExampleError("unexpected decimal witness probe outcome")
++    return [
++        {"axis": "dimensions", "observed": {"matching_integer_spans": unit_phrases},
++         "opens_ld2": set(unit_phrases) == {"2 fs", "2 eV"},
++         "requirement": "Validate a time-step anchor without accepting the same magnitude in energy units."},
++        {"axis": "percent-versus-points", "observed": {"recognized_percentages": percentages},
++         "opens_ld2": False,
++         "requirement": "The fixture uses a percent score unit and distinct percentage-point uncertainty."},
++        {"axis": "exact-decimal-witness", "observed": observed,
++         "opens_ld2": not native_exact, "requirement": "Reproduce the checked decimal time step in a witness."},
++    ]
++
++
++def build(out: Path, *, fixture: Path = FIXTURE) -> dict:
++    """Materialize a fresh packaged run and return its competency report."""
++    cases = _load_reviewed(fixture, "cases.json", CASES_SHA)
++    evidence = _load_reviewed(fixture, "support.json", SUPPORT_SHA)
++    inputs = {
++        case: (_read(fixture, f"{case}.txt"), _decode(_read(fixture, f"{case}.facts.json")))
++        for case in CASES
++    }
++    answers = {
++        case: _question_rows(cases[case], evidence[case], *inputs[case]) for case in CASES
++    }
++    comparison_facts, pairs, experiments = _comparison_inputs(_read(fixture, "comparison.json"))
++    out.mkdir()
++    vocabulary = _read(fixture, "vocabulary.orm.json")
++    (out / "vocabulary.orm.json").write_bytes(vocabulary)
++    case_outputs = {}
++    for case, (document, facts) in inputs.items():
++        folder = out / case
++        folder.mkdir()
++        (folder / "vocabulary.orm.json").write_bytes(vocabulary)
++        (folder / "root.orm.json").write_bytes(_read(fixture, f"{case}.orm.json"))
++        binding = _check_case(folder, "root.orm.json", document, facts)
++        case_outputs[case] = {
++            "subject": cases[case]["subject"],
++            "labels": facts.get("subject_label", []),
++            "relationships": {relation: facts[relation] for relation in RELATIONS if relation in facts},
++            "questions": answers[case],
++            "binding": binding,
++        }
++    comparisons, comparison_sha = _checked_comparisons(out, comparison_facts, pairs, experiments)
++    for suffix in ("orm", "population", "targets"):
++        name = f"decimal.{suffix}.json"
++        (out / name).write_bytes(_read(fixture, name))
++    report = {
++        "format": "literature-depth/1",
++        "cases": case_outputs,
++        "comparisons": comparisons,
++        "synthetic_experiments": experiments,
++        "quantities": _quantity_observations(out),
++        "bindings": {"case_sha256": CASES_SHA, "support_sha256": SUPPORT_SHA,
++                     "comparison_population_sha256": comparison_sha},
++    }
++    _write(out, "report.json", report)
++    return report
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--out", type=Path, required=True)
++    args = parser.parse_args(argv)
++    try:
++        build(args.out)
++    except (ArtifactError, OSError, ExampleError, UnicodeError) as error:
++        print(f"literature-depth: {error}", file=sys.stderr)
++        return 3
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/src/gnd/examples/literature/depth_fixture/README.md b/src/gnd/examples/literature/depth_fixture/README.md
+new file mode 100644
+index 00000000..4721c3f7
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/README.md
+@@ -0,0 +1,62 @@
++# Scientific competency examples
++
++Run the three worked examples from an installed GND environment.
++
++```sh
++python -m gnd.examples.literature.depth --out ./depth-run
++```
++
++Read `depth-run/report.json` for the supported answers, explicit unknowns,
++and comparison results. The case directories contain the authored root,
++the shared vocabulary, the extraction bundle, the population and the
++extraction sidecar. The run uses saved extractor responses. GND generates
++the bundle and runs verification and checking on all three populations.
++The report includes raw digests for these handoffs.
++
++## Questions and evidence
++
++Each question names the predicates it needs. Every supported answer cites
++one reviewed span tying its facts to a source version and locator.
++An answer whose required facts are absent is unknown within the cited
++scope. Some answers have additional limitations described in the source
++note, such as the unreported ensemble of the particular molecular run.
++The fixture uses original descriptions of the source material, with
++local character offsets into those descriptions. The frozen support roster
++records the author's source-to-fact review. GND verification establishes
++evidence binding and model checking establishes the declared structural
++constraints. The reported equation is a representation of a source claim.
++
++- **Physical dynamics.** Equation and regime, boundary treatment,
++  discretization, and whether the selected setup reports a measured
++  conservation residual. [Clawpack dam-break example](https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html) and [shallow-water solver derivation](https://www.clawpack.org/riemann_book/html/Shallow_water_approximate.html)
++- **Molecular and statistical physics.** System and force field,
++  sampling objective, numerical conditions, and whether the result
++  transfers to a different solvent environment. [OPES-eABF study](https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/)
++- **Algorithms.** Operator and objective, algorithm components, qualified
++  complexity, and whether a requested device benchmark is available.
++  [Randomized matrix decompositions, revised preprint](https://arxiv.org/abs/0909.4061v2)
++
++Subject IDs are separate from display labels. The uniqueness constraint
++gives each ID at most one display label within a snapshot. The fault
++fixture assigns a second label and exercises the checker. Scientific
++specialization, component membership and methodological influence are
++represented by separate predicates.
++
++## Experiment comparisons
++
++The comparisons use a separate synthetic population. They first report
++known differences in dataset version, split, metric, units or effective
++experiment conditions. With no known differences, an absent context
++field or score makes the comparison unknown. Comparable scores require
++all these fields. Baseline, configuration and uncertainty are optional
++facts. Record configuration differences that matter to a comparison as
++conditions.
++
++## Quantity probes
++
++The example measures what the existing numeric anchors and witness
++route do on small controls. The dimension probe uses the same magnitude
++in time and energy units. The percentage-point control keeps score
++units and absolute-change wording separate. A decimal value that passes
++checking is also submitted as an exact witness target. The report
++records the actual outcome of each probe.
+diff --git a/src/gnd/examples/literature/depth_fixture/algorithms.facts.json b/src/gnd/examples/literature/depth_fixture/algorithms.facts.json
+new file mode 100644
+index 00000000..a0494d71
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/algorithms.facts.json
+@@ -0,0 +1,48 @@
++{
++  "subject_label": [
++    {
++      "subject": "randomized-svd",
++      "label": "Randomized SVD"
++    }
++  ],
++  "operator": [
++    {
++      "subject": "randomized-svd",
++      "value": "input matrix of size m by n"
++    }
++  ],
++  "objective": [
++    {
++      "subject": "randomized-svd",
++      "value": "approximate the dominant singular subspace"
++    }
++  ],
++  "result": [
++    {
++      "subject": "randomized-svd",
++      "value": "O(mn log(k))"
++    }
++  ],
++  "assumptions": [
++    {
++      "subject": "randomized-svd",
++      "value": "dense input and k dominant singular components"
++    }
++  ],
++  "cost_model": [
++    {
++      "subject": "randomized-svd",
++      "value": "floating-point operations"
++    }
++  ],
++  "subject_has_component": [
++    {
++      "subject": "randomized-svd",
++      "related": "randomized-range-finder"
++    },
++    {
++      "subject": "randomized-svd",
++      "related": "reduced-deterministic-factorization"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/algorithms.orm.json b/src/gnd/examples/literature/depth_fixture/algorithms.orm.json
+new file mode 100644
+index 00000000..1af2f208
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/algorithms.orm.json
+@@ -0,0 +1,100 @@
++{
++  "version": 5,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [],
++  "fact_types": [
++    {
++      "id": "operator",
++      "reading": "{Subject} has operator {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "objective",
++      "reading": "{Subject} has objective {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "result",
++      "reading": "{Subject} has result {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "assumptions",
++      "reading": "{Subject} has assumptions {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "cost_model",
++      "reading": "{Subject} has cost model {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "runtime",
++      "reading": "{Subject} has runtime {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    }
++  ],
++  "includes": [
++    {
++      "id": "scientific-vocabulary",
++      "path": "vocabulary.orm.json",
++      "sha256": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/algorithms.txt b/src/gnd/examples/literature/depth_fixture/algorithms.txt
+new file mode 100644
+index 00000000..f907d412
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/algorithms.txt
+@@ -0,0 +1,7 @@
++The example starts from an m by n matrix and seeks a low-rank approximation to its dominant singular structure.
++
++A randomized range finder locates a low-dimensional subspace before deterministic factorization of the reduced matrix.
++
++For the dense-input model problem, the authors report O(mn log(k)) floating-point operations for the described randomized approach. The bound is expressed in arithmetic operations, rather than seconds or data passes.
++
++The selected evidence does not provide a run time for an NVIDIA H100 accelerator under a specified benchmark protocol.
+diff --git a/src/gnd/examples/literature/depth_fixture/cases.json b/src/gnd/examples/literature/depth_fixture/cases.json
+new file mode 100644
+index 00000000..3fea4114
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/cases.json
+@@ -0,0 +1,106 @@
++{
++  "dynamics": {
++    "subject": "dam-break",
++    "questions": [
++      {
++        "id": "equation-and-regime",
++        "requires": [
++          "equation",
++          "regime"
++        ],
++        "claim_kind": "reported-equation"
++      },
++      {
++        "id": "boundaries",
++        "requires": [
++          "boundaries"
++        ],
++        "claim_kind": "reported-configuration"
++      },
++      {
++        "id": "discretization",
++        "requires": [
++          "discretization"
++        ],
++        "claim_kind": "reported-configuration"
++      },
++      {
++        "id": "conservation-residual",
++        "requires": [
++          "conservation"
++        ],
++        "claim_kind": "reported-result"
++      }
++    ]
++  },
++  "molecular": {
++    "subject": "alanine-in-vacuum",
++    "questions": [
++      {
++        "id": "system-and-energy",
++        "requires": [
++          "system",
++          "energy_model"
++        ],
++        "claim_kind": "reported-configuration"
++      },
++      {
++        "id": "sampling",
++        "requires": [
++          "objective"
++        ],
++        "claim_kind": "reported-objective"
++      },
++      {
++        "id": "approximation",
++        "requires": [
++          "approximation"
++        ],
++        "claim_kind": "reported-configuration"
++      },
++      {
++        "id": "transfer-validity",
++        "requires": [
++          "validity"
++        ],
++        "claim_kind": "reported-result"
++      }
++    ]
++  },
++  "algorithms": {
++    "subject": "randomized-svd",
++    "questions": [
++      {
++        "id": "operator-and-objective",
++        "requires": [
++          "operator",
++          "objective"
++        ],
++        "claim_kind": "reported-objective"
++      },
++      {
++        "id": "components",
++        "requires": [
++          "subject_has_component"
++        ],
++        "claim_kind": "reported-method"
++      },
++      {
++        "id": "qualified-complexity",
++        "requires": [
++          "result",
++          "assumptions",
++          "cost_model"
++        ],
++        "claim_kind": "reported-bound"
++      },
++      {
++        "id": "device-runtime",
++        "requires": [
++          "runtime"
++        ],
++        "claim_kind": "reported-result"
++      }
++    ]
++  }
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/comparison.json b/src/gnd/examples/literature/depth_fixture/comparison.json
+new file mode 100644
+index 00000000..aa90dc13
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/comparison.json
+@@ -0,0 +1,393 @@
++{
++  "origin": "synthetic",
++  "facts": {
++    "experiment_dataset": [
++      {
++        "experiment": "reference",
++        "dataset_version": "benchmark-v1"
++      },
++      {
++        "experiment": "same-context",
++        "dataset_version": "benchmark-v1"
++      },
++      {
++        "experiment": "dataset-changed",
++        "dataset_version": "benchmark-v2"
++      },
++      {
++        "experiment": "split-changed",
++        "dataset_version": "benchmark-v1"
++      },
++      {
++        "experiment": "metric-changed",
++        "dataset_version": "benchmark-v1"
++      },
++      {
++        "experiment": "units-changed",
++        "dataset_version": "benchmark-v1"
++      },
++      {
++        "experiment": "conditions-changed",
++        "dataset_version": "benchmark-v1"
++      },
++      {
++        "experiment": "missing-conditions",
++        "dataset_version": "benchmark-v1"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "dataset_version": "benchmark-v1"
++      }
++    ],
++    "experiment_split": [
++      {
++        "experiment": "reference",
++        "split": "test"
++      },
++      {
++        "experiment": "same-context",
++        "split": "test"
++      },
++      {
++        "experiment": "dataset-changed",
++        "split": "test"
++      },
++      {
++        "experiment": "split-changed",
++        "split": "validation"
++      },
++      {
++        "experiment": "metric-changed",
++        "split": "test"
++      },
++      {
++        "experiment": "units-changed",
++        "split": "test"
++      },
++      {
++        "experiment": "conditions-changed",
++        "split": "test"
++      },
++      {
++        "experiment": "missing-conditions",
++        "split": "test"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "split": "test"
++      }
++    ],
++    "experiment_metric": [
++      {
++        "experiment": "reference",
++        "metric": "balanced-accuracy"
++      },
++      {
++        "experiment": "same-context",
++        "metric": "balanced-accuracy"
++      },
++      {
++        "experiment": "dataset-changed",
++        "metric": "balanced-accuracy"
++      },
++      {
++        "experiment": "split-changed",
++        "metric": "balanced-accuracy"
++      },
++      {
++        "experiment": "metric-changed",
++        "metric": "precision"
++      },
++      {
++        "experiment": "units-changed",
++        "metric": "balanced-accuracy"
++      },
++      {
++        "experiment": "conditions-changed",
++        "metric": "balanced-accuracy"
++      },
++      {
++        "experiment": "missing-conditions",
++        "metric": "balanced-accuracy"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "metric": "precision"
++      }
++    ],
++    "experiment_units": [
++      {
++        "experiment": "reference",
++        "units": "percent"
++      },
++      {
++        "experiment": "same-context",
++        "units": "percent"
++      },
++      {
++        "experiment": "dataset-changed",
++        "units": "percent"
++      },
++      {
++        "experiment": "split-changed",
++        "units": "percent"
++      },
++      {
++        "experiment": "metric-changed",
++        "units": "percent"
++      },
++      {
++        "experiment": "units-changed",
++        "units": "fraction"
++      },
++      {
++        "experiment": "conditions-changed",
++        "units": "percent"
++      },
++      {
++        "experiment": "missing-conditions",
++        "units": "percent"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "units": "percent"
++      }
++    ],
++    "experiment_conditions": [
++      {
++        "experiment": "reference",
++        "conditions": "fixed-input-window"
++      },
++      {
++        "experiment": "same-context",
++        "conditions": "fixed-input-window"
++      },
++      {
++        "experiment": "dataset-changed",
++        "conditions": "fixed-input-window"
++      },
++      {
++        "experiment": "split-changed",
++        "conditions": "fixed-input-window"
++      },
++      {
++        "experiment": "metric-changed",
++        "conditions": "fixed-input-window"
++      },
++      {
++        "experiment": "units-changed",
++        "conditions": "fixed-input-window"
++      },
++      {
++        "experiment": "conditions-changed",
++        "conditions": "different-input-window"
++      }
++    ],
++    "experiment_score": [
++      {
++        "experiment": "reference",
++        "score": "40"
++      },
++      {
++        "experiment": "same-context",
++        "score": "45"
++      },
++      {
++        "experiment": "dataset-changed",
++        "score": "40"
++      },
++      {
++        "experiment": "split-changed",
++        "score": "40"
++      },
++      {
++        "experiment": "metric-changed",
++        "score": "40"
++      },
++      {
++        "experiment": "units-changed",
++        "score": "40"
++      },
++      {
++        "experiment": "conditions-changed",
++        "score": "40"
++      },
++      {
++        "experiment": "missing-conditions",
++        "score": "40"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "score": "40"
++      }
++    ],
++    "experiment_baseline": [
++      {
++        "experiment": "reference",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "same-context",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "dataset-changed",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "split-changed",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "metric-changed",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "units-changed",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "conditions-changed",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "missing-conditions",
++        "baseline": "reference configuration"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "baseline": "reference configuration"
++      }
++    ],
++    "experiment_configuration": [
++      {
++        "experiment": "reference",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "same-context",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "dataset-changed",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "split-changed",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "metric-changed",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "units-changed",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "conditions-changed",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "missing-conditions",
++        "configuration": "seed 2"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "configuration": "seed 2"
++      }
++    ],
++    "experiment_uncertainty": [
++      {
++        "experiment": "reference",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "same-context",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "dataset-changed",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "split-changed",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "metric-changed",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "units-changed",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "conditions-changed",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "missing-conditions",
++        "uncertainty": "2 points"
++      },
++      {
++        "experiment": "metric-changed-and-missing-conditions",
++        "uncertainty": "2 points"
++      }
++    ],
++    "subject_label": [
++      {
++        "subject": "synthetic-method",
++        "label": "Synthetic method"
++      }
++    ],
++    "subject_influenced_by": [
++      {
++        "subject": "synthetic-method",
++        "related": "synthetic-precursor"
++      }
++    ]
++  },
++  "pairs": [
++    {
++      "id": "same-context",
++      "left": "reference",
++      "right": "same-context"
++    },
++    {
++      "id": "dataset-changed",
++      "left": "reference",
++      "right": "dataset-changed"
++    },
++    {
++      "id": "split-changed",
++      "left": "reference",
++      "right": "split-changed"
++    },
++    {
++      "id": "metric-changed",
++      "left": "reference",
++      "right": "metric-changed"
++    },
++    {
++      "id": "units-changed",
++      "left": "reference",
++      "right": "units-changed"
++    },
++    {
++      "id": "conditions-changed",
++      "left": "reference",
++      "right": "conditions-changed"
++    },
++    {
++      "id": "missing-conditions",
++      "left": "reference",
++      "right": "missing-conditions"
++    },
++    {
++      "id": "metric-changed-and-missing-conditions",
++      "left": "reference",
++      "right": "metric-changed-and-missing-conditions"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/decimal.orm.json b/src/gnd/examples/literature/depth_fixture/decimal.orm.json
+new file mode 100644
+index 00000000..9475b7d9
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/decimal.orm.json
+@@ -0,0 +1,26 @@
++{
++  "version": 2,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [
++    {
++      "id": "decimal_value",
++      "name": "DecimalValue",
++      "kind": "value",
++      "primitive": "Float"
++    }
++  ],
++  "fact_types": [
++    {
++      "id": "reported_decimal",
++      "reading": "The reported decimal is {DecimalValue}",
++      "roles": [
++        {
++          "role_name": "value",
++          "object_type": "decimal_value"
++        }
++      ]
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/decimal.population.json b/src/gnd/examples/literature/depth_fixture/decimal.population.json
+new file mode 100644
+index 00000000..2fb21025
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/decimal.population.json
+@@ -0,0 +1,13 @@
++{
++  "population": {
++    "source": "fixture",
++    "model": "decimal.orm.json"
++  },
++  "facts": {
++    "reported_decimal": [
++      {
++        "value": 0.002
++      }
++    ]
++  }
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/decimal.targets.json b/src/gnd/examples/literature/depth_fixture/decimal.targets.json
+new file mode 100644
+index 00000000..6c3695a5
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/decimal.targets.json
+@@ -0,0 +1,14 @@
++{
++  "version": 1,
++  "targets": [
++    {
++      "fact_type": "reported_decimal",
++      "tuple": [
++        {
++          "primitive": "Float",
++          "value": 0.002
++        }
++      ]
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/dynamics.facts.json b/src/gnd/examples/literature/depth_fixture/dynamics.facts.json
+new file mode 100644
+index 00000000..08af2cf8
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/dynamics.facts.json
+@@ -0,0 +1,38 @@
++{
++  "subject_label": [
++    {
++      "subject": "dam-break",
++      "label": "Shallow-water dam break"
++    }
++  ],
++  "equation": [
++    {
++      "subject": "dam-break",
++      "value": "h_t + (hu)_x = 0; (hu)_t + (hu^2 + g h^2/2)_x = 0"
++    }
++  ],
++  "regime": [
++    {
++      "subject": "dam-break",
++      "value": "dam-break Riemann problem"
++    }
++  ],
++  "boundaries": [
++    {
++      "subject": "dam-break",
++      "value": "extrapolation at both endpoints"
++    }
++  ],
++  "discretization": [
++    {
++      "subject": "dam-break",
++      "value": "classic PyClaw with van Leer limiter on 500 cells"
++    }
++  ],
++  "subject_specializes": [
++    {
++      "subject": "dam-break",
++      "related": "shallow-water-test-case"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/dynamics.orm.json b/src/gnd/examples/literature/depth_fixture/dynamics.orm.json
+new file mode 100644
+index 00000000..b406e71c
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/dynamics.orm.json
+@@ -0,0 +1,86 @@
++{
++  "version": 5,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [],
++  "fact_types": [
++    {
++      "id": "equation",
++      "reading": "{Subject} has equation {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "regime",
++      "reading": "{Subject} has regime {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "boundaries",
++      "reading": "{Subject} has boundaries {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "discretization",
++      "reading": "{Subject} has discretization {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "conservation",
++      "reading": "{Subject} has conservation {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    }
++  ],
++  "includes": [
++    {
++      "id": "scientific-vocabulary",
++      "path": "vocabulary.orm.json",
++      "sha256": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/dynamics.txt b/src/gnd/examples/literature/depth_fixture/dynamics.txt
+new file mode 100644
+index 00000000..db29bd63
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/dynamics.txt
+@@ -0,0 +1,7 @@
++The reported one-dimensional model evolves depth h and momentum hu. The equations are h_t + (hu)_x = 0 and (hu)_t + (hu^2 + g h^2/2)_x = 0. The gallery applies the model to a dam-break Riemann problem.
++
++The setup uses extrapolation at the lower and upper endpoints.
++
++The classic branch uses the van Leer limiter on a 500-cell one-dimensional grid.
++
++The selected setup and plots give no measured conservation residual for that run.
+diff --git a/src/gnd/examples/literature/depth_fixture/molecular.facts.json b/src/gnd/examples/literature/depth_fixture/molecular.facts.json
+new file mode 100644
+index 00000000..72bf037a
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/molecular.facts.json
+@@ -0,0 +1,32 @@
++{
++  "subject_label": [
++    {
++      "subject": "alanine-in-vacuum",
++      "label": "OPES-eABF alanine example"
++    }
++  ],
++  "system": [
++    {
++      "subject": "alanine-in-vacuum",
++      "value": "alanine dipeptide in vacuum"
++    }
++  ],
++  "energy_model": [
++    {
++      "subject": "alanine-in-vacuum",
++      "value": "AMBER ff14SB"
++    }
++  ],
++  "objective": [
++    {
++      "subject": "alanine-in-vacuum",
++      "value": "free-energy estimation using backbone dihedral collective variables"
++    }
++  ],
++  "approximation": [
++    {
++      "subject": "alanine-in-vacuum",
++      "value": "Langevin at 300 K with 2 fs steps and hydrogen bond-distance constraints"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/molecular.orm.json b/src/gnd/examples/literature/depth_fixture/molecular.orm.json
+new file mode 100644
+index 00000000..44eec131
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/molecular.orm.json
+@@ -0,0 +1,100 @@
++{
++  "version": 5,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [],
++  "fact_types": [
++    {
++      "id": "system",
++      "reading": "{Subject} has system {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "energy_model",
++      "reading": "{Subject} has energy model {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "objective",
++      "reading": "{Subject} has objective {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "approximation",
++      "reading": "{Subject} has approximation {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "ensemble",
++      "reading": "{Subject} has ensemble {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "validity",
++      "reading": "{Subject} has validity {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "value",
++          "object_type": "text"
++        }
++      ]
++    }
++  ],
++  "includes": [
++    {
++      "id": "scientific-vocabulary",
++      "path": "vocabulary.orm.json",
++      "sha256": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"
++    }
++  ]
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/molecular.txt b/src/gnd/examples/literature/depth_fixture/molecular.txt
+new file mode 100644
+index 00000000..e0f231fd
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/molecular.txt
+@@ -0,0 +1,7 @@
++The reported molecular system is alanine dipeptide in vacuum with the AMBER ff14SB force field.
++
++The example explores the free-energy landscape using alanine backbone dihedrals as collective variables.
++
++The molecular dynamics uses Langevin integration at 300 K with a 2 fs step and constrained bond distances involving hydrogen. The methods report the integration setup separately from the sampling objective.
++
++The cited case supplies vacuum conditions and does not establish validity for a different solvent environment. The case does not assign an ensemble by inferring it from the integrator alone.
+diff --git a/src/gnd/examples/literature/depth_fixture/support.json b/src/gnd/examples/literature/depth_fixture/support.json
+new file mode 100644
+index 00000000..38fe0893
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/support.json
+@@ -0,0 +1,307 @@
++{
++  "dynamics": {
++    "document_sha256": "e0e1ed49ea2c0f820187f9c4161c582947185587d4b8f021694555556252513f",
++    "rows": [
++      {
++        "id": "equation-and-regime",
++        "decision": "supported",
++        "primary": {
++          "url": "https://www.clawpack.org/riemann_book/html/Shallow_water_approximate.html",
++          "version": "Riemann Problems and Jupyter Solutions (2020)",
++          "section": "Riemann Book, Approximate solvers for the shallow water equations, opening equations; Clawpack 5.10.x dam_break setup",
++          "evidence_form": "authored source description",
++          "additional_url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html"
++        },
++        "span": [
++          0,
++          201
++        ],
++        "span_sha256": "8a42c975328a62ac1f5556060b9a37b88a88b341605c551cfdffa4de2477a114",
++        "facts": {
++          "equation": [
++            {
++              "subject": "dam-break",
++              "value": "h_t + (hu)_x = 0; (hu)_t + (hu^2 + g h^2/2)_x = 0"
++            }
++          ],
++          "regime": [
++            {
++              "subject": "dam-break",
++              "value": "dam-break Riemann problem"
++            }
++          ]
++        }
++      },
++      {
++        "id": "boundaries",
++        "decision": "supported",
++        "primary": {
++          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
++          "version": "Clawpack 5.10.x",
++          "section": "Clawpack 5.10.x gallery, setup, boundary conditions",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          203,
++          265
++        ],
++        "span_sha256": "f8a4f29d2872c7fad87b4dfd3b807198d8c381dc84db93bed993f0ac1213064d",
++        "facts": {
++          "boundaries": [
++            {
++              "subject": "dam-break",
++              "value": "extrapolation at both endpoints"
++            }
++          ]
++        }
++      },
++      {
++        "id": "discretization",
++        "decision": "supported",
++        "primary": {
++          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
++          "version": "Clawpack 5.10.x",
++          "section": "Clawpack 5.10.x gallery, setup, classic solver and grid",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          267,
++          347
++        ],
++        "span_sha256": "798c48207603375b0170c23dfe8a8ead3d942d0244499b0b2dfa21305bbd1cdf",
++        "facts": {
++          "discretization": [
++            {
++              "subject": "dam-break",
++              "value": "classic PyClaw with van Leer limiter on 500 cells"
++            }
++          ]
++        }
++      },
++      {
++        "id": "conservation-residual",
++        "decision": "scope-limitation",
++        "primary": {
++          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
++          "version": "Clawpack 5.10.x",
++          "section": "Clawpack 5.10.x gallery, setup and output plot",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          349,
++          430
++        ],
++        "span_sha256": "7341aec6492ac8fcd5ab73858c5e6eeadd0f7a4e15f3a1e51feed55570878de4",
++        "facts": {}
++      }
++    ]
++  },
++  "molecular": {
++    "document_sha256": "1ee50c933858ee2235d611b599186247659f34c26a88864e0e10fdcd72bd878c",
++    "rows": [
++      {
++        "id": "system-and-energy",
++        "decision": "supported",
++        "primary": {
++          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
++          "version": "PMC12243082 published article (2025)",
++          "section": "PMC12243082, Methods, Alanine Dipeptide",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          0,
++          95
++        ],
++        "span_sha256": "2316148720d7b651808d4ccf88db580aa5fb2769dee697e0e83bcf15aa78944c",
++        "facts": {
++          "system": [
++            {
++              "subject": "alanine-in-vacuum",
++              "value": "alanine dipeptide in vacuum"
++            }
++          ],
++          "energy_model": [
++            {
++              "subject": "alanine-in-vacuum",
++              "value": "AMBER ff14SB"
++            }
++          ]
++        }
++      },
++      {
++        "id": "sampling",
++        "decision": "supported",
++        "primary": {
++          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
++          "version": "PMC12243082 published article (2025)",
++          "section": "PMC12243082, Results, Alanine Dipeptide; Methods on collective variables",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          97,
++          201
++        ],
++        "span_sha256": "ed26fca4aefb82495d33e98c99138debdd1888818aaf07c75b5df090584c2f6f",
++        "facts": {
++          "objective": [
++            {
++              "subject": "alanine-in-vacuum",
++              "value": "free-energy estimation using backbone dihedral collective variables"
++            }
++          ]
++        }
++      },
++      {
++        "id": "approximation",
++        "decision": "supported",
++        "primary": {
++          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
++          "version": "PMC12243082 published article (2025)",
++          "section": "PMC12243082, Methods, Alanine Dipeptide",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          203,
++          409
++        ],
++        "span_sha256": "0eabb39600e0917f49a97d8028657e791b61dec8dfaa228fd7efc5d87e2af63d",
++        "facts": {
++          "approximation": [
++            {
++              "subject": "alanine-in-vacuum",
++              "value": "Langevin at 300 K with 2 fs steps and hydrogen bond-distance constraints"
++            }
++          ]
++        }
++      },
++      {
++        "id": "transfer-validity",
++        "decision": "scope-limitation",
++        "primary": {
++          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
++          "version": "PMC12243082 published article (2025)",
++          "section": "PMC12243082, Methods and Results, Alanine Dipeptide",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          411,
++          601
++        ],
++        "span_sha256": "380ad4b95e731fff86a057d1d01906d7a1b593e18e7184627b629e8657df9df2",
++        "facts": {}
++      }
++    ]
++  },
++  "algorithms": {
++    "document_sha256": "0ad3f94f8a152da3263d1cf1ea42b460b952dc1088240f60034db27924304ebb",
++    "rows": [
++      {
++        "id": "operator-and-objective",
++        "decision": "supported",
++        "primary": {
++          "url": "https://arxiv.org/html/0909.4061v2",
++          "version": "arXiv:0909.4061v2 (2010-12-14)",
++          "section": "arXiv:0909.4061, abstract and introduction, dominant singular components",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          0,
++          111
++        ],
++        "span_sha256": "fc1d10189859817e3ff07451620dadb7d9eb50efe69f0d0fb0f6ac489c7ca8b3",
++        "facts": {
++          "operator": [
++            {
++              "subject": "randomized-svd",
++              "value": "input matrix of size m by n"
++            }
++          ],
++          "objective": [
++            {
++              "subject": "randomized-svd",
++              "value": "approximate the dominant singular subspace"
++            }
++          ]
++        }
++      },
++      {
++        "id": "components",
++        "decision": "supported",
++        "primary": {
++          "url": "https://arxiv.org/html/0909.4061v2",
++          "version": "arXiv:0909.4061v2 (2010-12-14)",
++          "section": "arXiv:0909.4061, abstract and introductory framework, stages A and B",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          113,
++          231
++        ],
++        "span_sha256": "e861dc4a6bbdbccc85e1c9e2237489a8c24558fc81309e6af49a48220b546754",
++        "facts": {
++          "subject_has_component": [
++            {
++              "subject": "randomized-svd",
++              "related": "randomized-range-finder"
++            },
++            {
++              "subject": "randomized-svd",
++              "related": "reduced-deterministic-factorization"
++            }
++          ]
++        }
++      },
++      {
++        "id": "qualified-complexity",
++        "decision": "supported",
++        "primary": {
++          "url": "https://arxiv.org/html/0909.4061v2",
++          "version": "arXiv:0909.4061v2 (2010-12-14)",
++          "section": "arXiv:0909.4061, abstract, dense-input case; SIAM Review 53(2), DOI 10.1137/090771806",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          233,
++          449
++        ],
++        "span_sha256": "d58046066eecdafdd82a540018fc874300c2c0fe2c9a4d672e81cefdae32d6d8",
++        "facts": {
++          "result": [
++            {
++              "subject": "randomized-svd",
++              "value": "O(mn log(k))"
++            }
++          ],
++          "assumptions": [
++            {
++              "subject": "randomized-svd",
++              "value": "dense input and k dominant singular components"
++            }
++          ],
++          "cost_model": [
++            {
++              "subject": "randomized-svd",
++              "value": "floating-point operations"
++            }
++          ]
++        }
++      },
++      {
++        "id": "device-runtime",
++        "decision": "scope-limitation",
++        "primary": {
++          "url": "https://arxiv.org/html/0909.4061v2",
++          "version": "arXiv:0909.4061v2 (2010-12-14)",
++          "section": "arXiv:0909.4061, abstract and §7 numerical examples",
++          "evidence_form": "authored source description"
++        },
++        "span": [
++          451,
++          569
++        ],
++        "span_sha256": "c35fa467d50b2a85afb2d6524168ce50fa9ffd4dfc63616e89480af736f2f804",
++        "facts": {}
++      }
++    ]
++  }
++}
+diff --git a/src/gnd/examples/literature/depth_fixture/vocabulary.orm.json b/src/gnd/examples/literature/depth_fixture/vocabulary.orm.json
+new file mode 100644
+index 00000000..96ba9083
+--- /dev/null
++++ b/src/gnd/examples/literature/depth_fixture/vocabulary.orm.json
+@@ -0,0 +1,237 @@
++{
++  "version": 2,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [
++    {
++      "id": "identifier",
++      "name": "Identifier",
++      "kind": "value",
++      "primitive": "String"
++    },
++    {
++      "id": "text",
++      "name": "Text",
++      "kind": "value",
++      "primitive": "String"
++    },
++    {
++      "id": "subject",
++      "name": "Subject",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "identifier"
++      }
++    },
++    {
++      "id": "experiment",
++      "name": "Experiment",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "identifier"
++      }
++    }
++  ],
++  "fact_types": [
++    {
++      "id": "subject_label",
++      "reading": "{Subject} has display label {Text}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "label",
++          "object_type": "text"
++        }
++      ],
++      "constraints": [
++        {
++          "id": "subject_has_one_label",
++          "type": "uniqueness",
++          "roles": [
++            "subject"
++          ],
++          "source": "user-supplied",
++          "status": "confirmed",
++          "modality": "alethic",
++          "provenance": {
++            "user_quote": "A subject identifier has at most one display label in each snapshot."
++          }
++        }
++      ]
++    },
++    {
++      "id": "subject_specializes",
++      "reading": "{Subject} specializes {Subject}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "related",
++          "object_type": "subject"
++        }
++      ]
++    },
++    {
++      "id": "subject_has_component",
++      "reading": "{Subject} has component {Subject}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "related",
++          "object_type": "subject"
++        }
++      ]
++    },
++    {
++      "id": "subject_influenced_by",
++      "reading": "{Subject} was influenced by {Subject}",
++      "roles": [
++        {
++          "role_name": "subject",
++          "object_type": "subject"
++        },
++        {
++          "role_name": "related",
++          "object_type": "subject"
++        }
++      ]
++    },
++    {
++      "id": "experiment_dataset",
++      "reading": "{Experiment} has dataset version {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "dataset_version",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_split",
++      "reading": "{Experiment} has split {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "split",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_metric",
++      "reading": "{Experiment} has metric {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "metric",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_units",
++      "reading": "{Experiment} has units {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "units",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_conditions",
++      "reading": "{Experiment} has conditions {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "conditions",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_score",
++      "reading": "{Experiment} has score {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "score",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_baseline",
++      "reading": "{Experiment} has baseline {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "baseline",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_configuration",
++      "reading": "{Experiment} has configuration {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "configuration",
++          "object_type": "text"
++        }
++      ]
++    },
++    {
++      "id": "experiment_uncertainty",
++      "reading": "{Experiment} has uncertainty {Text}",
++      "roles": [
++        {
++          "role_name": "experiment",
++          "object_type": "experiment"
++        },
++        {
++          "role_name": "uncertainty",
++          "object_type": "text"
++        }
++      ]
++    }
++  ]
++}
+diff --git a/tests/test_ld1_competency_examples.py b/tests/test_ld1_competency_examples.py
+index 8734784b..d454b721 100644
+--- a/tests/test_ld1_competency_examples.py
++++ b/tests/test_ld1_competency_examples.py
+@@ -31,7 +31,11 @@ def report(tmp_path_factory):
+ def test_competency_questions(report, case):
+     assert report["format"] == "literature-depth/1"
+     observed = report["cases"][case]["questions"]
+-    assert [[row["id"], row["status"], list(row["facts"])] for row in observed] == EXPECTED["questions"][case]
++    assert [
++        (row["id"], row["status"], set(row["facts"])) for row in observed
++    ] == [
++        (question, status, set(facts)) for question, status, facts in EXPECTED["questions"][case]
++    ]
+     assert all(row["evidence"] for row in observed)
+     if case == "dynamics":
+         assert observed[0]["claim_kind"] == "reported-equation"
+@@ -44,3 +48,159 @@ def test_experiment_comparisons(report):
+ def test_three_quantity_probes_are_reported(report):
+     assert [row["axis"] for row in report["quantities"]] == EXPECTED["quantities"]
+     assert all(row["observed"] and type(row["opens_ld2"]) is bool for row in report["quantities"])
++
++
++def test_synthetic_context_is_separate_and_optional(report):
++    experiments = report["synthetic_experiments"]
++    assert experiments["reference"]["baseline"] == "reference configuration"
++    assert experiments["reference"]["uncertainty"] == "2 points"
++    assert "conditions" not in experiments["missing-conditions"]
++    assert all(row["origin"] == "synthetic" for row in report["comparisons"])
++    assert report["cases"]["algorithms"]["relationships"]["subject_has_component"]
++    assert report["cases"]["dynamics"]["relationships"]["subject_specializes"]
++    assert all(case["binding"]["verification"] == case["binding"]["check"] == "accepted"
++               for case in report["cases"].values())
++
++
++@pytest.fixture
++def case_inputs(tmp_path):
++    import shutil
++
++    from gnd.examples.literature.depth import FIXTURE
++
++    path = tmp_path / "inputs"
++    shutil.copytree(FIXTURE, path)
++    return path, tmp_path / "out"
++
++
++@pytest.mark.parametrize("mutation", ["citation", "span", "source", "fabricated-answer"])
++def test_source_support_binding_refuses_tampering(case_inputs, monkeypatch, mutation):
++    from gnd.examples.literature import depth
++
++    inputs, output = case_inputs
++    if mutation in {"citation", "span"}:
++        path = inputs / "support.json"
++        support = json.loads(path.read_bytes())
++        row = support["dynamics"]["rows"][0]
++        if mutation == "citation":
++            row["primary"]["url"] = support["molecular"]["rows"][0]["primary"]["url"]
++        else:
++            row["span"][1] -= 1
++            raw = json.dumps(support).encode()
++            monkeypatch.setattr(depth, "SUPPORT_SHA", depth.sha256_hex(raw))
++        path.write_text(json.dumps(support))
++    elif mutation == "source":
++        path = inputs / "dynamics.txt"
++        path.write_text(path.read_text() + "\nUnreviewed source text.\n")
++    else:
++        path = inputs / "dynamics.facts.json"
++        facts = json.loads(path.read_bytes())
++        facts["equation"][0]["value"] = "Unreviewed replacement equation"
++        path.write_text(json.dumps(facts))
++    with pytest.raises(depth.ExampleError, match={
++        "citation": "reviewed support.json binding differs",
++        "span": "reviewed source span differs",
++        "source": "reviewed source document binding differs",
++        "fabricated-answer": "unreviewed facts",
++    }[mutation]):
++        depth.build(output, fixture=inputs)
++    assert not output.exists()
++
++
++@pytest.mark.parametrize("removed", ["assumptions", "cost_model"])
++def test_bound_is_suppressed_without_each_qualification(case_inputs, removed):
++    from gnd.examples.literature import depth
++
++    inputs, _ = case_inputs
++    cases = json.loads((inputs / "cases.json").read_bytes())
++    support = json.loads((inputs / "support.json").read_bytes())
++    facts = json.loads((inputs / "algorithms.facts.json").read_bytes())
++    del facts[removed]
++    rows = depth._question_rows(cases["algorithms"], support["algorithms"],
++                                (inputs / "algorithms.txt").read_bytes(), facts)
++    guarded = next(row for row in rows if row["id"] == "qualified-complexity")
++    assert (guarded["status"], guarded["facts"], guarded["missing"]) == ("unknown", {}, [removed])
++
++
++def test_label_change_preserves_identity_and_conflict_fails(case_inputs, report):
++    from gnd.examples.literature import depth
++
++    inputs, output = case_inputs
++    source = inputs / "dynamics.facts.json"
++    facts = json.loads(source.read_bytes())
++    old = report["cases"]["dynamics"]
++    facts["subject_label"][0]["label"] = "New public label"
++    source.write_text(json.dumps(facts))
++    changed = depth.build(output, fixture=inputs)["cases"]["dynamics"]
++    assert changed["subject"] == old["subject"]
++    assert changed["questions"] == old["questions"]
++    assert changed["labels"][0]["label"] != old["labels"][0]["label"]
++    population = output / "dynamics" / "population.json"
++    payload = json.loads(population.read_bytes())
++    payload["facts"]["subject_label"].append(old["labels"][0])
++    population.write_text(json.dumps(payload))
++    result = subprocess.run(
++        [sys.executable, "-m", "gnd", "check", "root.orm.json", "population.json", "--format", "json"],
++        cwd=population.parent, capture_output=True, check=False, timeout=20,
++    )
++    assert result.returncode == 1, result.stderr
++    verdicts = json.loads(result.stdout)["verdicts"]
++    assert any(row["constraint_type"] == "uniqueness" and row["verdict"] == "fail" for row in verdicts)
++
++
++@pytest.mark.parametrize("raw", [b"[]", b'{"x": 1, "x": 2}', b'{"x": NaN}', b" " * (128 * 1024 + 1)])
++def test_invalid_input_refuses_before_product_calls(case_inputs, monkeypatch, raw):
++    from gnd.examples.literature import depth
++
++    inputs, output = case_inputs
++    (inputs / "cases.json").write_bytes(raw)
++    output.mkdir()
++    def unexpected(*_args):
++        pytest.fail("the worked example called GND before authenticating inputs")
++
++    monkeypatch.setattr(depth, "_command", unexpected)
++    with pytest.raises((depth.ExampleError, depth.ArtifactError)):
++        depth.build(output, fixture=inputs)
++    assert list(output.iterdir()) == []
++
++
++def test_quantity_observations_are_discriminating(report):
++    by_axis = {row["axis"]: row for row in report["quantities"]}
++    assert by_axis["dimensions"]["observed"]["matching_integer_spans"] == ["2 fs", "2 eV"]
++    assert by_axis["dimensions"]["opens_ld2"]
++    assert by_axis["percent-versus-points"]["observed"]["recognized_percentages"] == [40, 45]
++    assert not by_axis["percent-versus-points"]["opens_ld2"]
++    assert by_axis["exact-decimal-witness"]["observed"] == {
++        "exit": 2, "reason": "fragment-unsupported", "checked_value": "0.002",
++    }
++    assert by_axis["exact-decimal-witness"]["opens_ld2"]
++
++
++def test_fresh_run_is_deterministic_and_existing_output_is_preserved(tmp_path, report):
++    from gnd.examples.literature import depth
++
++    output = tmp_path / "independent"
++    depth.build(output)
++    report_path = output / "report.json"
++    before = report_path.read_bytes()
++    assert json.loads(before) == report
++    assert depth.main(["--out", str(output)]) == 3
++    assert report_path.read_bytes() == before
++
++
++def test_comparison_shape_refuses_before_product_calls(case_inputs, monkeypatch):
++    from gnd.examples.literature import depth
++
++    inputs, output = case_inputs
++    path = inputs / "comparison.json"
++    fixture = json.loads(path.read_bytes())
++    fixture["facts"]["experiment_score"][0].pop("score")
++    path.write_text(json.dumps(fixture))
++
++    def unexpected(*_args):
++        pytest.fail("the worked example called GND before validating comparison inputs")
++
++    monkeypatch.setattr(depth, "_command", unexpected)
++    with pytest.raises(depth.ExampleError, match="invalid synthetic experiment field score"):
++        depth.build(output, fixture=inputs)
++    assert not output.exists()

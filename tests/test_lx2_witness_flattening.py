@@ -4,6 +4,8 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 import jsonschema
@@ -142,6 +144,48 @@ def test_stale_projection_inputs(tmp_path, capsys, coordinate):
     write(paths[3], cert)
     path.write_bytes(path.read_bytes() + b" ")
     assert replay(paths, capsys, *args) == EXPECTED["stale"]
+    if coordinate != "root":
+        assert witness(paths, *args) == 3
+        assert json.loads(capsys.readouterr().out.splitlines()[-1])["reason"] == "binding-stale"
+
+
+def test_include_free_model_stream_is_consumed_once(tmp_path, capsys):
+    model, population, target, certificate = dirs(tmp_path)
+    flat, _ = make_artifacts(model, tmp_path, capsys)
+    pop = json.loads(population.read_bytes())
+    pop["population"]["model"] = "0"
+    write(population, pop)
+    for args in (
+        ["witness", "/dev/fd/0", population, "--targets", target, "--out", certificate],
+        ["replay", "/dev/fd/0", population, certificate],
+    ):
+        result = subprocess.run(
+            [sys.executable, "-c", "from gnd.cli import main; raise SystemExit(main())",
+             *map(str, args), "--raw"],
+            input=flat.read_bytes(), capture_output=True, timeout=10, check=False,
+        )
+        assert result.returncode == 0, (result.stdout, result.stderr)
+    assert json.loads(certificate.read_bytes())["version"] == 1
+
+
+def test_explicit_projected_paths_accept_symlinked_parent(tmp_path, capsys):
+    model, population, target, certificate = dirs(tmp_path)
+    flat, record = make_artifacts(model, tmp_path, capsys)
+    alias = tmp_path / "alias"
+    alias.symlink_to(tmp_path.resolve(), target_is_directory=True)
+    paths = model, alias / population.name, target, certificate
+    args = ("--flat-model", alias / flat.parent.name / flat.name,
+            "--flattening-record", alias / record.parent.name / record.name)
+    assert witness(paths, *args) == 0
+    assert replay(paths, capsys, *args) == [0, None]
+
+
+def test_projected_witness_checks_targets_before_resolving_includes(tmp_path, capsys):
+    paths = dirs(tmp_path)
+    (paths[0].parent / "components.orm.json").unlink()
+    paths[2].write_text("{}")
+    assert witness(paths) == 3
+    assert json.loads(capsys.readouterr().out)["reason"] == "input-invalid"
 
 
 def test_reference_free_composition_proof(tmp_path, capsys):

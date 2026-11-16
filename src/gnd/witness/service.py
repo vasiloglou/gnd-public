@@ -10,28 +10,33 @@ from gnd.errors import ModelValidationError, PopulationLoadError
 from gnd.witness.flattening import (
     StaleWitnessBinding,
     load_flat_model,
+    read_projected_path,
     resolved_projection,
     stamp_projection,
 )
 from gnd.witness.view import result_view, why_not_view
 
 
-def _witness_inputs(model_path, population_path, reference_root):
+def _read_witness_input(path):
+    from pathlib import Path
+
+    from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError
+
+    with Path(path).open("rb") as stream:
+        raw = stream.read(DEFAULT_LIMITS.bytes + 1)
+    if len(raw) > DEFAULT_LIMITS.bytes:
+        raise WitnessInputError("input byte ceiling")
+    return raw
+
+
+def _witness_inputs(model_path, population_path, reference_root, *, model_raw=None):
     """Load witness inputs without introducing a new checking claim."""
     from pathlib import Path
 
     from gnd.model import bind_declared_references, load_model_bytes
     from gnd.population import _parse_document_bytes, load_population_bytes
-    from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError
-
-    def read(path):
-        with Path(path).open("rb") as stream:
-            raw = stream.read(DEFAULT_LIMITS.bytes + 1)
-        if len(raw) > DEFAULT_LIMITS.bytes:
-            raise WitnessInputError("input byte ceiling")
-        return raw
-
-    mr, pr = read(model_path), read(population_path)
+    mr = _read_witness_input(model_path) if model_raw is None else model_raw
+    pr = _read_witness_input(population_path)
     from gnd.model._includes import guard_bytes
     guard_bytes(mr, source=model_path, route='service:29')
     model = load_model_bytes(mr, source=model_path)
@@ -97,14 +102,13 @@ def _stamp_composition(result, composition):
 def _projected_inputs(projection, model_path, population_path, *, reference_root=None, composition=None):
     from pathlib import Path
 
-    from gnd.anchors import read_regular_path
     from gnd.artifacts import sha256_hex
     from gnd.model import bind_declared_references
     from gnd.population import _parse_document_bytes, load_population_bytes
-    from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError
+    from gnd.witness.types import WitnessInputError
 
     model = load_flat_model(projection)
-    raw = read_regular_path(population_path, label="candidate population", max_bytes=DEFAULT_LIMITS.bytes)
+    raw = read_projected_path(population_path, label="candidate population")
     lineage = None
     if composition is not None:
         if model.reference_populations:
@@ -120,11 +124,9 @@ def _projected_inputs(projection, model_path, population_path, *, reference_root
     return model, candidate, context, document, lineage
 
 
-def _produce_projected(projection, model_path, population_path, targets_path, **options):
-    from gnd.witness.io import load_targets
+def _produce_projected(projection, model_path, population_path, targets, **options):
     from gnd.witness.producer import produce_witness
 
-    targets = load_targets(targets_path)
     model, candidate, references, _, lineage = _projected_inputs(
         projection, model_path, population_path, **options
     )
@@ -152,17 +154,24 @@ def rooted_witness_result(model_path, population_path, targets_path, *, referenc
     """Produce finite witnesses, authenticating model origins for a rooted include model."""
     from ruamel.yaml.error import YAMLError
 
+    from gnd.witness.io import load_targets
+    from gnd.witness.producer import produce_witness
     from gnd.witness.types import WitnessResult
 
     try:
-        projection = resolved_projection(model_path, flat_model, flattening_record)
+        targets = load_targets(targets_path)
+        raw = _read_witness_input(model_path)
+        projection = resolved_projection(model_path, flat_model, flattening_record, raw=raw)
         if projection is not None:
             return _produce_projected(
-                projection, model_path, population_path, targets_path, reference_root=reference_root
+                projection, model_path, population_path, targets, reference_root=reference_root
             )
-        return witness_result(
-            model_path, population_path, targets_path, reference_root=reference_root
+        model, candidate, context, _, _ = _witness_inputs(
+            model_path, population_path, reference_root, model_raw=raw
         )
+        return produce_witness(model, candidate, targets, references=context).model_dump(mode="json")
+    except StaleWitnessBinding:
+        return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
         reason = next((issue.rule_id for issue in error.issues if issue.rule_id.startswith("include:")), "input-invalid")
         return WitnessResult(3, reason=reason).model_dump(mode="json")
@@ -235,18 +244,20 @@ def rooted_replay_result(model_path, population_path, certificate_path, *, refer
     from ruamel.yaml.error import YAMLError
 
     from gnd.witness.io import load_certificate
+    from gnd.witness.kernel import replay_witness
     from gnd.witness.types import WitnessResult
 
     try:
         certificate = load_certificate(certificate_path)
-        projection = resolved_projection(model_path, flat_model, flattening_record)
+        raw = _read_witness_input(model_path)
+        projection = resolved_projection(model_path, flat_model, flattening_record, raw=raw)
         if projection is not None:
             return _replay_projected(
                 projection, model_path, population_path, certificate, reference_root=reference_root
             )
-        return replay_result(
-            model_path, population_path, certificate_path, reference_root=reference_root
-        )
+        _, _, context, md, pd = _witness_inputs(model_path, population_path, reference_root, model_raw=raw)
+        refs = tuple((origin.id, raw) for origin, _, raw in context._snapshots) if context else ()
+        return replay_witness(md, pd, certificate, reference_inputs=refs).model_dump(mode="json")
     except StaleWitnessBinding:
         return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
@@ -269,18 +280,21 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
     """Produce a composed witness whose base nodes name their source facts."""
     from ruamel.yaml.error import YAMLError
 
+    from gnd.witness.io import load_targets
     from gnd.witness.types import WitnessResult
 
     try:
         projection = resolved_projection(model_path, flat_model, flattening_record)
         if projection is not None:
             return _produce_projected(
-                projection, model_path, population_path, targets_path, composition=composition
+                projection, model_path, population_path, load_targets(targets_path), composition=composition
             )
         lineage = _composition_lineage(composition, model_path, population_path)
         if model_module.load_model(model_path).reference_populations:
             raise ValueError("a composed population has no reference populations")
         return _stamp_composition(witness_result(model_path, population_path, targets_path), lineage)
+    except StaleWitnessBinding:
+        return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult
         reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")

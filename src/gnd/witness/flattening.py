@@ -28,11 +28,15 @@ class WitnessProjection:
         return sha256_hex(self.flat.record_bytes), self.fact_origins
 
 
-def resolved_projection(model_path, flat_model=None, flattening_record=None):
+def read_projected_path(path, *, label):
+    """Open an explicit caller path with bounded regular-file checks."""
+    return read_regular_path(Path(path).resolve(strict=True), label=label, max_bytes=DEFAULT_LIMITS.bytes)
+
+
+def resolved_projection(model_path, flat_model=None, flattening_record=None, *, raw=None):
     """Return the authenticated projection when the authored root declares includes."""
-    raw = read_regular_path(
-        Path(model_path).resolve(strict=True), label="authored model", max_bytes=DEFAULT_LIMITS.bytes
-    )
+    if raw is None:
+        raw = read_projected_path(model_path, label="authored model")
     try:
         guard_bytes(raw, source=model_path, route="rooted witness")
     except ModelValidationError as error:
@@ -59,7 +63,7 @@ def resolved_projection(model_path, flat_model=None, flattening_record=None):
         (flat_model, flat.model_bytes, "flat model"),
         (flattening_record, flat.record_bytes, "flattening record"),
     ):
-        if path is not None and read_regular_path(path, label=label, max_bytes=DEFAULT_LIMITS.bytes) != expected:
+        if path is not None and read_projected_path(path, label=label) != expected:
             raise StaleWitnessBinding(f"{label} differs from the resolved model")
     origins = {
         origin.element_id: asdict(origin)

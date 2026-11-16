@@ -27,10 +27,11 @@ Rooted include bindings for path-based witness production and replay.
 | `StaleWitnessBinding` | class(WitnessInputError) | 16 | The current inputs differ from a rooted witness binding. |
 | `WitnessProjection` | class | 21 | (no docstring) |
 | `WitnessProjection.binding(self) -> tuple[str, dict[str, dict]]` | method | 27 | (no docstring) |
-| `resolved_projection(model_path, flat_model, flattening_record)` | function | 31 | Return the authenticated projection when the authored root declares includes. |
-| `node_model_origin(node, origins) -> dict` | function | 72 | (no docstring) |
-| `stamp_projection(result, projection) -> dict` | function | 77 | (no docstring) |
-| `load_flat_model(projection)` | function | 98 | (no docstring) |
+| `read_projected_path(path, *, label)` | function | 31 | Open an explicit caller path with bounded regular-file checks. |
+| `resolved_projection(model_path, flat_model, flattening_record, *, raw)` | function | 36 | Return the authenticated projection when the authored root declares includes. |
+| `node_model_origin(node, origins) -> dict` | function | 76 | (no docstring) |
+| `stamp_projection(result, projection) -> dict` | function | 81 | (no docstring) |
+| `load_flat_model(projection)` | function | 102 | (no docstring) |
 
 ## gnd.witness.io — `src/gnd/witness/io.py`
 Components: witness.schema
@@ -90,16 +91,16 @@ Bounded witness/replay input orchestration.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 150 | Produce finite witnesses, authenticating model origins for a rooted include model. |
-| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 173 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 204 | Replay a finite proof with an independent local inference kernel. |
-| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 232 | Replay a finite proof with an independent local inference kernel. |
-| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 267 | Produce a composed witness whose base nodes name their source facts. |
-| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 292 | Replay a witness against the composition record it binds. |
-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 359 | Explain why a derived fact type, or one claimed row of it, is not derived. |
-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 413 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 427 | Replay a finite proof with an independent local inference kernel. |
-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 441 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 152 | Produce finite witnesses, authenticating model origins for a rooted include model. |
+| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 182 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 213 | Replay a finite proof with an independent local inference kernel. |
+| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 241 | Replay a finite proof with an independent local inference kernel. |
+| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 278 | Produce a composed witness whose base nodes name their source facts. |
+| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 306 | Replay a witness against the composition record it binds. |
+| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 373 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 427 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 441 | Replay a finite proof with an independent local inference kernel. |
+| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 455 | Explain why a derived fact type, or one claimed row of it, is not derived. |
 
 ## gnd.witness.types — `src/gnd/witness/types.py`
 Components: witness.schema

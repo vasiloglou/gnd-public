@@ -351,3 +351,9 @@ dimension-aware anchors and a fixed-scale decimal witness.
 The [multipass reading example](reading_fixture/README.md) shows how a
 targeted pass recovers a methods fact, records source coverage and
 replays completed stages without calling its producer.
+
+## Semantic revision
+
+The [release migration example](revision_fixture/README.md) traces a whale
+identity split through assertions, reviews, coverage and lineage witnesses.
+It retains the original snapshot for independent replay.

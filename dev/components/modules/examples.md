@@ -297,6 +297,32 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | `replay(folder, *, fixture) -> dict` | function | 573 | Re-derive the reading result from retained evidence without invoking producers. |
 | `main(argv) -> int` | function | 585 | (no docstring) |
 
+## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
+Components: unassigned
+Publish and replay the literature semantic revision example offline.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `run(reading_run, out) -> dict` | function | 361 | Recheck captured evidence and publish both snapshots under a new root. |
+| `replay(root, *, snapshot) -> dict` | function | 382 | Re-derive the release from authenticated retained inputs in private scratch. |
+| `replay_support(root, source) -> dict` | function | 402 | Check one certificate against the independent source and review inputs. |
+| `main(argv) -> int` | function | 428 | (no docstring) |
+
+## gnd.examples.literature.revision_manifest — `src/gnd/examples/literature/revision_manifest.py`
+Components: unassigned
+Bind a release to an independently selected, bounded dependency policy.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `require(condition, reason) -> None` | function | 23 | (no docstring) |
+| `Policy` | class | 37 | (no docstring) |
+| `Policy.load(cls, path, pin) -> Policy` | method | 42 | (no docstring) |
+| `Policy.capture(self, root, snapshot) -> dict[str, bytes]` | method | 67 | (no docstring) |
+| `Policy.affected(self, snapshot, changed) -> set[str]` | method | 77 | (no docstring) |
+| `Policy.inspect(self, root, snapshot) -> tuple[dict, dict[str, bytes]]` | method | 84 | (no docstring) |
+| `status(root, *, policy, policy_sha256) -> dict` | function | 120 | Check a candidate against the consumer's exact policy and propagate staleness. |
+| `publish(root, files) -> None` | function | 129 | (no docstring) |
+
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps
 The access desk: ask the bot for an access plan, check it with GND or PyRel, execute it.

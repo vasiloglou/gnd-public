@@ -40,6 +40,15 @@ def test_release_replays_prior_and_current_relations(release):
     revision, out, report = release
     assert report["queries"] == EXPECTED["queries"]
     assert report["occurrences"] == EXPECTED["occurrences"]
+    assert report["changed_occurrences"] == [{
+        "occurrence": ["whale-b", "method_builds_on_method", 0],
+        "before": {"method": "WHAM", "base_method": "VampNet"},
+        "after": {"method": "WhAM [whale]", "base_method": "VampNet [music]"},
+    }]
+    assert {"population.json", "reviews.json", "witness.json", "scoped-absence.json", "claims.json"} <= set(
+        report["affected_artifacts"],
+    )
+    assert "reading/coverage.json" not in report["affected_artifacts"]
     assert report["ambiguous"] == EXPECTED["ambiguous"]
     assert report["coverage"] == EXPECTED["coverage"]
     assert report["evolution"] == EXPECTED["evolution"]
@@ -59,8 +68,19 @@ def test_both_current_supports_are_individually_replayable(release):
     assert [row["source"] for row in report["supports"]] == EXPECTED["independent_support_sources"]
     assert len({row["review_sha256"] for row in report["supports"]}) == 2
     assert len({row["witness_sha256"] for row in report["supports"]}) == 2
+    assert len({row["occurrence"]["span"]["sha256"] for row in report["supports"]}) == 2
     for row in report["supports"]:
         assert revision.replay_support(out, row["source"]) == row
+
+
+def test_another_missing_support_does_not_change_an_independent_certificate(release, tmp_path):
+    revision, out, report = release
+    candidate = tmp_path / "release"
+    shutil.copytree(out, candidate)
+    (candidate / "after/supports/corroboration/witness.json").unlink()
+    assert revision.replay_support(candidate, "whale-a") == report["supports"][0]
+    with pytest.raises(ValueError, match="support evidence is stale"):
+        revision.replay_support(candidate, "corroboration")
 
 
 def test_every_required_kind_and_transitive_staleness(release, tmp_path):
@@ -70,6 +90,7 @@ def test_every_required_kind_and_transitive_staleness(release, tmp_path):
     policy = revision.POLICY
     pin = _pin(policy)
     rows = _read(policy)["snapshots"]["after"]
+    all_paths = {row["path"] for row in rows}
     assert set(EXPECTED["required_kinds"]) <= {row["kind"] for row in rows}
     for kind in EXPECTED["required_kinds"]:
         row = next(row for row in rows if row["kind"] == kind)
@@ -79,8 +100,15 @@ def test_every_required_kind_and_transitive_staleness(release, tmp_path):
         artifact.write_bytes(raw + b" ")
         try:
             state = revision.status(candidate, policy=policy, policy_sha256=pin)
-            assert path in state["changed"], kind
-            assert path in state["stale"], kind
+            expected_stale = {path}
+            while True:
+                expanded = {row["path"] for row in rows if expected_stale.intersection(row["requires"])}
+                if expanded <= expected_stale:
+                    break
+                expected_stale |= expanded
+            assert state["changed"] == [path], kind
+            assert set(state["stale"]) == expected_stale, kind
+            assert set(state["current"]) == all_paths - expected_stale, kind
             if path in {"reading/coverage.json", "definition.json"}:
                 assert "claims.json" in state["stale"]
                 assert "sources/whale-a/document.txt" in state["current"]
@@ -139,3 +167,28 @@ def test_bounded_candidate_roster_refuses_before_payload_read(release, tmp_path)
         with pytest.raises(ValueError):
             revision.status(candidate)
     assert time.monotonic() - started < 3
+
+
+def test_policy_rejects_escape_and_forward_dependencies_before_candidate_read(release, tmp_path):
+    revision, _, _ = release
+    policy = tmp_path / "policy.json"
+    for changed in ({"path": "../outside.json"}, {"path": "x" * 121}, {"requires": ["claims.json"]}):
+        document = _read(revision.POLICY)
+        document["snapshots"]["after"][0].update(changed)
+        _write(policy, document)
+        with pytest.raises(ValueError, match="invalid release policy dependency or path"):
+            revision.status(tmp_path / "after", policy=policy, policy_sha256=_pin(policy))
+
+
+def test_snapshot_identity_and_symlink_cannot_supply_required_artifact(release, tmp_path):
+    revision, out, _ = release
+    candidate = tmp_path / "after"
+    shutil.copytree(out / "before", candidate)
+    with pytest.raises(ValueError, match="release manifest identity"):
+        revision.status(candidate)
+    shutil.copytree(out / "after", candidate, dirs_exist_ok=True)
+    evidence = candidate / "reading/coverage.json"
+    evidence.unlink()
+    evidence.symlink_to(out / "after/reading/coverage.json")
+    state = revision.status(candidate)
+    assert "reading/coverage.json" in state["changed"] and "claims.json" in state["stale"]

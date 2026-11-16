@@ -25,12 +25,13 @@ PURPOSES = (
     "Check affected facts and measure held-back fidelity",
 )
 INPUTS = (
-    "roster.json", "responses.json", "reviews.json", "gold.json", "calibration.json",
-    "scope.json", "closure.json", "reading.orm.json",
+    "roster.json", "producer-pin.json", "reviews.json", "gold.json", "calibration.json",
+    "calibration.txt", "conflict.json", "conflict.txt", "scope.json", "closure.json", "reading.orm.json",
 )
 EVIDENCE = (
     "coverage.json", "scope.json", "closure.json", "fidelity-high.json", "fidelity-low.json",
-    "reported-conflict.population.json", "broad.population.json", "targeted.population.json",
+    "reported-conflict.population.json", "reported-conflict.source.txt", "broad.population.json",
+    "targeted.population.json", "producer-output-table.json",
 )
 FILES = (*EVIDENCE, *(f"stage-{i}.json" for i in range(6)), *(f"payload-{i}.json" for i in range(6)))
 IDENTIFIER = re.compile(r"[a-z][a-z0-9-]{0,63}\Z")
@@ -38,7 +39,7 @@ SCENARIOS = ("full", "unavailable")
 DEFAULT_BUDGET = 4096
 MAX_BUDGET = 1 << 20
 ROSTER_LIMIT = 128
-CALIBRATION_FACTS = frozenset({"system", "approximation"})
+CALIBRATION_FACTS = frozenset({"approximation", "alternative_integrator"})
 COVERAGE_STATES = (
     "supported", "explicitly-denied", "inspected-not-found", "unavailable",
     "not-applicable", "omitted", "producer-refused", "empty-extraction",
@@ -66,8 +67,12 @@ def _rows_by_id(rows: list) -> dict:
 class ReadingInputs:
     """Read and validate the declared source, section and question inventories."""
 
-    def __init__(self, root: Path) -> None:
+    def __init__(self, root: Path, *, retained_responses: bytes | None = None) -> None:
         self.raw = {name: _read(root, name) for name in INPUTS}
+        responses = _read(root, "responses.json") if retained_responses is None else retained_responses
+        producer_pin = _decode(self.raw["producer-pin.json"])
+        _need(producer_pin == {"sha256": sha256_hex(responses)}, "saved producer table differs from its pin")
+        self.raw["responses.json"] = responses
         roster = _decode(self.raw["roster.json"])
         _need(roster.get("format") == "literature-reading-roster/1", "invalid reading roster format")
         self.sources = _rows_by_id(roster.get("sources"))
@@ -280,33 +285,43 @@ def _checked(folder, stem, header, index, document, facts):
     return raw, {"verify": verify.return_code, "check": check.return_code}
 
 
-def _calibrate(folder, inputs, header, index):
+def _write_fidelity_case(case_root, header, index, document, gold, facts):
+    case_root.mkdir(parents=True)
+    source = _population({**header, "source": "fixture"}, gold)
+    candidate = _population(header, facts)
+    sidecar = _extraction_sidecar(header, index, document, candidate, "document.md", "extracted.population.json")
+    document_manifest = {
+        "schema_version": 1, "model": header["model"], "model_sha256": index["model"]["sha256"],
+        "source_population": "source.population.json", "source_population_sha256": sha256_hex(source),
+        "document": "document.md", "document_sha256": sha256_hex(document),
+        "applicable_sha256": index["artifacts"]["reading.orm.applicable.json"]["sha256"],
+        "renderer_skill": "gnd-render-doc", "renderer_skill_version": "1",
+        "executing_model": "authored-public-fixture", "distractors": [],
+    }
+    for name, raw in (
+        ("document.md", document), ("source.population.json", source),
+        ("extracted.population.json", candidate),
+        ("extracted.population.extraction.json", canonical_json_bytes(sidecar)),
+        ("document.manifest.json", canonical_json_bytes(document_manifest)),
+    ):
+        (case_root / name).write_bytes(raw)
+
+
+def _calibrate(folder, inputs, header, index, targeted):
     calibration = _decode(inputs.raw["calibration.json"])
     gold = _decode(inputs.raw["gold.json"])
     _need(set(gold) == CALIBRATION_FACTS, "invalid held-back gold roster")
+    methods = next((row for row in targeted if row["section"] == "study-methods"), None)
+    facts = methods["response"]["facts"] if methods is not None else {}
+    observed = {name: facts[name] for name in ("approximation",) if name in facts}
     measured = {}
     for kind in ("high", "low"):
-        case_root = folder / kind / "calibration"
-        case_root.mkdir(parents=True)
-        document = inputs.documents["study"]
-        source = _population({**header, "source": "fixture"}, gold)
-        candidate = _population(header, calibration[kind])
-        sidecar = _extraction_sidecar(header, index, document, candidate, "document.md", "extracted.population.json")
-        document_manifest = {
-            "schema_version": 1, "model": header["model"], "model_sha256": index["model"]["sha256"],
-            "source_population": "source.population.json", "source_population_sha256": sha256_hex(source),
-            "document": "document.md", "document_sha256": sha256_hex(document),
-            "applicable_sha256": index["artifacts"]["reading.orm.applicable.json"]["sha256"],
-            "renderer_skill": "gnd-render-doc", "renderer_skill_version": "1",
-            "executing_model": "authored-public-fixture", "distractors": [],
-        }
-        for name, raw in (
-            ("document.md", document), ("source.population.json", source),
-            ("extracted.population.json", candidate),
-            ("extracted.population.extraction.json", canonical_json_bytes(sidecar)),
-            ("document.manifest.json", canonical_json_bytes(document_manifest)),
-        ):
-            (case_root / name).write_bytes(raw)
+        _write_fidelity_case(folder / kind / "run-methods", header, index,
+                             inputs.source_range(inputs.sections["study-methods"]),
+                             {"approximation": gold["approximation"]}, observed)
+        _write_fidelity_case(folder / kind / "held-back-predicate", header, index,
+                             inputs.raw["calibration.txt"], {"alternative_integrator": gold["alternative_integrator"]},
+                             calibration[kind])
         report = _route(folder, "fidelity", header["model"], "--cases", kind,
                         "--artifacts", "bundle", "--format", "json").stdout
         measured[kind] = report, _recall(report)
@@ -316,7 +331,7 @@ def _calibrate(folder, inputs, header, index):
 def _recall(raw):
     value = _decode(raw)
     rows = [row for row in value["per_fact_type"] if row["id"] in CALIBRATION_FACTS]
-    _need(value["cases"]["ran"] == 1 and value["cases"]["failed"] == value["cases"]["skipped"] == 0
+    _need(value["cases"]["ran"] == 2 and value["cases"]["failed"] == value["cases"]["skipped"] == 0
           and len(rows) == len(CALIBRATION_FACTS) and {row["id"] for row in rows} == CALIBRATION_FACTS,
           "invalid fidelity census")
     counts = [sum(row["recall"][key] for row in rows) for key in ("numerator", "denominator")]
@@ -376,15 +391,21 @@ def _public_results(inputs, broad, targeted):
             raw, results[name] = _checked(folder, name, header, index, document, _combined(attempts))
             _need(results[name] == {"verify": 0, "check": 0}, f"{name} extraction is unverified")
             artifacts[name + ".population.json"] = raw
-        # This synthetic source explicitly reports a label conflict; keep both facts.
-        conflict = {"subject_label": [LABEL, {**LABEL, "label": "Conflicting reported label"}]}
-        document = b"For the same identifier the record reports two different labels.\n"
-        raw, results["reported-conflict"] = _checked(folder, "reported-conflict", header, index,
-                                                     document, conflict)
+        document = inputs.raw["conflict.txt"]
+        conflict = _decode(inputs.raw["conflict.json"])
+        facts = conflict["facts"]
+        labels = facts.get("subject_label")
+        _need(conflict.get("document_sha256") == sha256_hex(document)
+              and isinstance(labels, list) and len(labels) == 2
+              and all(isinstance(row, dict) and isinstance(row.get("label"), str)
+                      and row["label"].encode() in document for row in labels),
+              "stale reported conflict extraction")
+        raw, results["reported-conflict"] = _checked(folder, "reported-conflict", header, index, document, facts)
         _need(results["reported-conflict"] == {"verify": 1, "check": 1},
               "the reported conflict was not preserved")
         artifacts["reported-conflict.population.json"] = raw
-        fidelity = _calibrate(folder, inputs, header, index)
+        artifacts["reported-conflict.source.txt"] = document
+        fidelity = _calibrate(folder, inputs, header, index, targeted)
         return results, artifacts, fidelity
 
 
@@ -420,7 +441,7 @@ def _read_retained(run):
     return manifest, artifacts, retained
 
 
-def _evaluate(inputs, budget, scenario, *, producer=None, retained=None):
+def _evaluate(inputs, budget, scenario, *, producer=None, retained=None, retained_pins=None):
     _need(type(budget) is int and 0 <= budget <= MAX_BUDGET and scenario in SCENARIOS, "invalid reading settings")
     retained = retained or {}
     unavailable = {"study-methods"} if scenario == "unavailable" else set()
@@ -438,7 +459,16 @@ def _evaluate(inputs, budget, scenario, *, producer=None, retained=None):
     judgments = _review_attempts(inputs, attempts)
     coverage, questions = _outcomes(inputs, attempted, unavailable)
     resolved = {row["id"] for row in questions if row["outcome"] == "resolved"}
-    required = {key for key, value in inputs.questions.items() if value["required"]}
+    required = set()
+    for key, question in inputs.questions.items():
+        if not question["required"]:
+            continue
+        while inputs.questions[key]["superseded_by"] is not None:
+            key = inputs.questions[key]["superseded_by"]
+        required.add(key)
+    unavailable_reads = unavailable | {
+        row["section"] for row in coverage if row["state"] == "unavailable"
+    }
     if required <= resolved:
         stop = "required-coverage-completed"
     elif broad["omitted"] or targeted["omitted"]:
@@ -446,19 +476,28 @@ def _evaluate(inputs, budget, scenario, *, producer=None, retained=None):
     else:
         stop = "available-evidence-exhausted"
     proposed_keys = {key for row in targeted["attempts"] for key in row["response"]["proposal_keys"]}
-    revisit = affected_sections(inputs.sections, proposed_keys)
+    earlier = {name: row for name, row in inputs.sections.items() if name in opened}
+    revisit = affected_sections(earlier, proposed_keys)
     routes, artifacts, fidelity = _public_results(inputs, broad["attempts"], attempts)
     coverage_doc = {"format": "literature-reading-coverage/1", "rows": coverage}
     artifacts.update({
         "coverage.json": canonical_json_bytes(coverage_doc),
         "scope.json": inputs.raw["scope.json"], "closure.json": inputs.raw["closure.json"],
+        "producer-output-table.json": inputs.raw["responses.json"],
         **{f"fidelity-{name}.json": result[0] for name, result in fidelity.items()},
     })
     absence = {}
     for kind, (raw, _counts) in fidelity.items():
         scoped = {name: artifacts[name] for name in ("scope.json", "closure.json", "coverage.json")}
         scoped["fidelity.json"] = raw
-        absence[kind] = absence_status(scoped, {name: sha256_hex(data) for name, data in scoped.items()})
+        source_pins = inputs.pins()
+        pins = {"scope.json": source_pins["scope.json"], "closure.json": source_pins["closure.json"]}
+        if retained_pins is None:
+            pins.update({"coverage.json": sha256_hex(artifacts["coverage.json"]), "fidelity.json": sha256_hex(raw)})
+        else:
+            pins.update({"coverage.json": retained_pins["coverage.json"],
+                         "fidelity.json": retained_pins[f"fidelity-{kind}.json"]})
+        absence[kind] = absence_status(scoped, pins)
     payloads = (
         {"sources": list(inputs.sources.values()), "sections": list(inputs.sections.values()), "unavailable": sorted(unavailable)},
         broad, {"selected": selected, "unresolved": sorted(needed)}, targeted,
@@ -492,10 +531,10 @@ def _evaluate(inputs, budget, scenario, *, producer=None, retained=None):
                                                             for kind in ("accepted", "empty", "refused")},
         "omitted": broad["omitted"] + targeted["omitted"],
         "read_denominator": {
-            "scheduled": len(inputs.selection("opening")) + len(planned_targeted),
+            "scheduled": len(inputs.selection("opening")) + len(selected) + len(unavailable_reads),
             "attempted": len(attempts),
             "omitted": len(broad["omitted"]) + len(targeted["omitted"]),
-            "unavailable": len(planned_targeted) - len(selected),
+            "unavailable": len(unavailable_reads),
         },
         "broad_fact_types": sorted(broad_facts),
         "targeted_fact_types": sorted(final_facts),
@@ -534,10 +573,11 @@ def run(out: Path, *, budget=DEFAULT_BUDGET, scenario="full", fixture: Path = FI
 def replay(folder: Path, *, fixture: Path = FIXTURE) -> dict:
     """Re-derive the reading result from retained evidence without invoking producers."""
     manifest, artifacts, retained = _read_retained(folder)
-    inputs = ReadingInputs(fixture)
+    inputs = ReadingInputs(fixture, retained_responses=artifacts["producer-output-table.json"])
     _need(manifest.get("inputs") == inputs.pins(), "stale reading input")
     observed, actual, report = _evaluate(inputs, manifest.get("budget_bytes"),
-                                         manifest.get("scenario"), retained=retained)
+                                         manifest.get("scenario"), retained=retained,
+                                         retained_pins=manifest["artifacts"])
     _need(manifest == observed and artifacts == actual, "re-derived reading evidence differs")
     return report
 

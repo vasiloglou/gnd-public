@@ -67,9 +67,9 @@ def test_other_stop_reasons(tmp_path, scenario, args):
     assert report["absence"]["status"] == "unavailable"
     if scenario == "budget":
         assert report["revisit"] == []
-        assert report["read_denominator"] == {"scheduled": 5, "attempted": 0, "omitted": 5, "unavailable": 0}
+        assert report["read_denominator"] == {"scheduled": 6, "attempted": 0, "omitted": 5, "unavailable": 1}
     else:
-        assert report["read_denominator"] == {"scheduled": 5, "attempted": 4, "omitted": 0, "unavailable": 1}
+        assert report["read_denominator"] == {"scheduled": 6, "attempted": 4, "omitted": 0, "unavailable": 2}
 
 
 def test_fidelity_recall_cases(fresh):
@@ -172,7 +172,7 @@ def test_reported_violation_round_trip_is_available(fresh):
     assert len(labels) == 2 and labels[0]["subject"] == labels[1]["subject"]
     assert labels[0]["label"] != labels[1]["label"]
     assert report["public_routes"]["reported-conflict"] == EXPECTED["violation_exits"]
-    assert report["read_denominator"] == {"scheduled": 5, "attempted": 5, "omitted": 0, "unavailable": 0}
+    assert report["read_denominator"] == {"scheduled": 6, "attempted": 5, "omitted": 0, "unavailable": 1}
     assert report["productivity"]["new_facts_per_byte"] == {
         "numerator": 2, "denominator": report["reading_bytes"],
     }
@@ -181,6 +181,7 @@ def test_reported_violation_round_trip_is_available(fresh):
 def test_source_review_refuses_changed_semantics_before_check(tmp_path, monkeypatch):
     import shutil
 
+    from gnd.artifacts import canonical_json_bytes, sha256_hex
     from gnd.examples.literature import reading
 
     fixture = tmp_path / "fixture"
@@ -188,7 +189,9 @@ def test_source_review_refuses_changed_semantics_before_check(tmp_path, monkeypa
     saved = fixture / "responses.json"
     doc = json.loads(saved.read_bytes())
     doc["study-methods"]["facts"]["approximation"][0]["value"] = "An unreviewed integrator"
-    saved.write_text(json.dumps(doc))
+    raw = canonical_json_bytes(doc)
+    saved.write_bytes(raw)
+    (fixture / "producer-pin.json").write_bytes(canonical_json_bytes({"sha256": sha256_hex(raw)}))
     monkeypatch.setattr(reading, "_public_results", lambda *_: pytest.fail("admitted stale semantic review"))
     with pytest.raises(reading.ExampleError, match="stale semantic reading review"):
         reading.run(tmp_path / "out", fixture=fixture)
@@ -255,3 +258,95 @@ def test_manifest_digest_cannot_describe_different_file_bytes(fresh, tmp_path):
     manifest.write_bytes(manifest.read_bytes() + b" ")
     with pytest.raises(reading.ExampleError, match="noncanonical reading manifest"):
         reading.replay(run)
+
+
+def _copy_reading_fixture(tmp_path):
+    import shutil
+
+    from gnd.examples.literature import reading
+
+    path = tmp_path / "fixture"
+    shutil.copytree(reading.FIXTURE, path)
+    return path
+
+
+def test_actual_changed_methods_fact_reduces_fidelity(tmp_path):
+    from gnd.artifacts import canonical_json_bytes, sha256_hex
+    from gnd.examples.literature import reading
+
+    fixture = _copy_reading_fixture(tmp_path)
+    response_path = fixture / "responses.json"
+    responses = json.loads(response_path.read_bytes())
+    facts = responses["study-methods"]["facts"]
+    facts["approximation"][0]["value"] = "Velocity Verlet at 10 K with 5 fs steps"
+    response_raw = canonical_json_bytes(responses)
+    response_path.write_bytes(response_raw)
+    pin_path = fixture / "producer-pin.json"
+    pin_path.write_bytes(canonical_json_bytes({"sha256": sha256_hex(response_raw)}))
+    reviews = fixture / "reviews.json"
+    saved_reviews = json.loads(reviews.read_bytes())
+    saved_reviews["study-methods"]["facts_sha256"] = sha256_hex(canonical_json_bytes(facts))
+    reviews.write_bytes(canonical_json_bytes(saved_reviews))
+    report = reading.run(tmp_path / "out", fixture=fixture)
+    assert report["public_routes"]["targeted"] == {"verify": 0, "check": 0}
+    assert report["fidelity"]["high"] == [1, 2]
+    assert report["absence"]["status"] == "unavailable"
+
+
+def test_replay_reads_the_retained_producer_table(fresh, tmp_path, monkeypatch):
+    from gnd.examples.literature import reading
+
+    fixture = _copy_reading_fixture(tmp_path)
+    (fixture / "responses.json").unlink()
+    monkeypatch.setattr(reading.SavedProducer, "produce", lambda *_: pytest.fail("replay invoked producer"))
+    report = reading.replay(fresh[0], fixture=fixture)
+    assert report["producer_calls"] == EXPECTED["replay_calls"]
+
+
+def test_required_successor_and_revisit_scope(tmp_path):
+    from gnd.examples.literature import reading
+
+    fixture = _copy_reading_fixture(tmp_path)
+    roster_path = fixture / "roster.json"
+    roster = json.loads(roster_path.read_bytes())
+    next(row for row in roster["questions"] if row["id"] == "old-method")["required"] = True
+    next(row for row in roster["sections"] if row["id"] == "study-equation")["keys"] = ["method-family"]
+    roster_path.write_text(json.dumps(roster))
+    result = reading.run(tmp_path / "out", fixture=fixture)
+    assert result["stop"] == EXPECTED["stop"]["full"]
+    assert result["revisit"] == ["study-opening"]
+
+
+def test_conflict_population_is_bound_to_the_reported_source(fresh, tmp_path):
+    from gnd.examples.literature import reading
+
+    run, _ = fresh
+    source = (run / "reported-conflict.source.txt").read_text()
+    facts = json.loads((run / "reported-conflict.population.json").read_bytes())["facts"]
+    assert all(row["label"] in source for row in facts["subject_label"])
+    fixture = _copy_reading_fixture(tmp_path)
+    path = fixture / "conflict.txt"
+    path.write_text(path.read_text().replace(facts["subject_label"][1]["label"], "Different text"))
+    with pytest.raises(reading.ExampleError, match="reported conflict"):
+        reading.run(tmp_path / "out", fixture=fixture)
+
+
+def test_real_reading_run_can_feed_assurance_coverage(fresh):
+    from gnd.examples.literature.assurance_report import score_reading_coverage
+
+    run, _ = fresh
+    sections = {
+        "system": ("study", "study-opening"),
+        "method": ("study", "study-methods"),
+        "denial": ("study", "study-limits"),
+        "alternative": ("study", "study-methods"),
+        "annex-method": ("annex", "annex-methods"),
+        "equation": ("control", "control-equation"),
+    }
+    expected = [
+        {"question": key, "source": sections[key][0], "section": sections[key][1],
+         "state": state, "inspected": state not in ("unavailable", "not-applicable")}
+        for key, state in EXPECTED["coverage"].items()
+    ]
+    score = score_reading_coverage(run, expected)
+    assert score["status"] == "pass" and score["recall"]["numerator"] == len(expected)

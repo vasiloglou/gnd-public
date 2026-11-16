@@ -1,14 +1,1 @@
-{
-  "system": [
-    {
-      "subject": "alanine-in-vacuum",
-      "value": "alanine dipeptide in vacuum"
-    }
-  ],
-  "approximation": [
-    {
-      "subject": "alanine-in-vacuum",
-      "value": "Langevin integration at 300 K with 2 fs steps"
-    }
-  ]
-}
+{"alternative_integrator":[{"subject":"calibration-control","value":"Velocity Verlet"}],"approximation":[{"subject":"alanine-in-vacuum","value":"Langevin integration at 300 K with 2 fs steps"}]}

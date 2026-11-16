@@ -9,7 +9,8 @@ python -m gnd.examples.literature.reading replay ./reading-run
 
 The example uses locally authored source notes and saved extractor responses.
 A fresh run records actual adapter calls. Replay checks each artifact digest,
-validates the stage roster and re-derives the report using retained responses.
+validates the stage roster and re-derives the report using its retained
+response table and the independent producer pin.
 The replay path invokes the local GND verifiers and performs zero producer
 calls. It exits 3 with incomplete status if a required artifact is stale,
 missing or differs on re-derivation.
@@ -31,9 +32,11 @@ Each `stage-N.json` binds the exact input digests, predecessor record and
 corresponding `payload-N.json`. The saved attempt rows bind the selected
 source range and producer response. The review payload binds its separate
 source judgments and the targeted vocabulary proposal that produces a revisit
-list. The run manifest binds all stage and companion artifacts. A targeted pass recovers a fact from the methods note.
-A separate synthetic reported conflict retains both labels and shows the
-real public verify and check failures.
+list of previously inspected sections. The run manifest binds all stage and
+companion artifacts. A targeted pass recovers a fact from the methods note.
+A separate synthetic source excerpt reports both conflicting labels. The
+saved candidate binds those labels to the excerpt and fails public verify
+and check.
 
 ## Coverage and cost
 
@@ -48,15 +51,18 @@ unavailable reads, plus fact and question gains per byte read. Run with
 `--scenario unavailable` to exercise exhausted evidence or
 `--budget-bytes 0` to exercise budget exhaustion.
 
-A scoped absence claim binds four inputs: a closure, its declared scope, the
-typed coverage rows, and an actual held-back fidelity report. The fixture's
+A scoped absence claim binds the closure, its declared scope, typed coverage
+rows, and a public fidelity report. The report scores the actual methods
+extraction and a separate held-back case against independent gold. The
 positive recall floor is two of two. One of two leaves the absence status
 unavailable for the same scope.
 
 ## Assurance coverage
 
-The existing assurance scorer can compare a new run's coverage rows against
-an independent expected roster. Put the rows in `coverage.json`, set the run
+The assurance scorer can compare a replayed reading run against an independent
+expected roster with `score_reading_coverage(run_dir, expected_rows)`. The
+existing LI1 assurance entry point uses the same scoring rule. Put the rows
+in `coverage.json`, set the run
 metadata's `coverage` field to `{"sha256": "<digest>"}`, and supply the
 expected rows in the answer key's `coverage` field. Each row has a question
 ID, the source ID, the corresponding corpus passage ID in `section`, a state

@@ -24,7 +24,7 @@
     "equation": "retained",
     "old-method": "superseded"
   },
-  "revisit": ["study-opening", "study-methods"],
+  "revisit": ["study-opening"],
   "fidelity": {"high": [2, 2], "low": [1, 2]},
   "violation_exits": {"verify": 1, "check": 1}
 }

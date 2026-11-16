@@ -211,9 +211,10 @@ The staged assurance report over the literature corpus (phase LI1).
 | `run_route(gnd, route, paths, shown) -> dict` | function | 300 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
 | `Inputs` | class | 342 | Everything validated in steps 1-4, with the run's files located. |
 | `Inputs.source_dir(self, source) -> Path` | method | 400 | (no docstring) |
-| `refused_report(reason) -> dict` | function | 783 | (no docstring) |
-| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 850 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
-| `main(argv) -> int` | function | 903 | (no docstring) |
+| `score_reading_coverage(run_dir, expected_rows) -> dict` | function | 755 | Score exact replayable reading rows against a caller-owned answer roster. |
+| `refused_report(reason) -> dict` | function | 808 | (no docstring) |
+| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 875 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+| `main(argv) -> int` | function | 928 | (no docstring) |
 
 ## gnd.examples.literature.depth — `src/gnd/examples/literature/depth.py`
 Components: examples.literature_depth
@@ -283,18 +284,18 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ReadingInputs` | class | 66 | Read and validate the declared source, section and question inventories. |
-| `ReadingInputs.selection(self, kind) -> list[str]` | method | 132 | (no docstring) |
-| `ReadingInputs.source_range(self, section) -> bytes` | method | 135 | (no docstring) |
-| `ReadingInputs.pins(self) -> dict` | method | 139 | (no docstring) |
-| `SavedProducer` | class | 143 | Local saved-response adapter with observed invocation counts. |
-| `SavedProducer.produce(self, stage, section) -> dict` | method | 150 | (no docstring) |
-| `affected_sections(sections, changed_keys) -> list[str]` | function | 155 | Return available earlier section IDs sharing a changed dependency key. |
-| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 328 | Read a run's optional coverage artifact using its external digest. |
-| `absence_status(artifacts, pins)` | function | 341 | Qualify the declared fixture claim from four independently bound inputs. |
-| `run(out, *, budget, scenario, fixture) -> dict` | function | 522 | Run the saved-response workflow and retain its complete evidence. |
-| `replay(folder, *, fixture) -> dict` | function | 534 | Re-derive the reading result from retained evidence without invoking producers. |
-| `main(argv) -> int` | function | 545 | (no docstring) |
+| `ReadingInputs` | class | 67 | Read and validate the declared source, section and question inventories. |
+| `ReadingInputs.selection(self, kind) -> list[str]` | method | 137 | (no docstring) |
+| `ReadingInputs.source_range(self, section) -> bytes` | method | 140 | (no docstring) |
+| `ReadingInputs.pins(self) -> dict` | method | 144 | (no docstring) |
+| `SavedProducer` | class | 148 | Local saved-response adapter with observed invocation counts. |
+| `SavedProducer.produce(self, stage, section) -> dict` | method | 155 | (no docstring) |
+| `affected_sections(sections, changed_keys) -> list[str]` | function | 160 | Return available earlier section IDs sharing a changed dependency key. |
+| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 343 | Read a run's optional coverage artifact using its external digest. |
+| `absence_status(artifacts, pins)` | function | 356 | Qualify the declared fixture claim from four independently bound inputs. |
+| `run(out, *, budget, scenario, fixture) -> dict` | function | 561 | Run the saved-response workflow and retain its complete evidence. |
+| `replay(folder, *, fixture) -> dict` | function | 573 | Re-derive the reading result from retained evidence without invoking producers. |
+| `main(argv) -> int` | function | 585 | (no docstring) |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

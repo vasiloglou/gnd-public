@@ -206,3 +206,18 @@ authenticate the exact manifest bytes and check the ordered stage
 chain before opening retained payloads. The saved producer receives
 only the response table. The held-back gold remains a scoring input.
 Source admission validates UTF-8, including each selected byte range.
+
+### Review corrections
+
+The [revisit amendment](../008-phase-LD3-amendment.md) supersedes the
+earlier two-section observation. The worklist contains `study-opening`.
+The targeted methods range and the unopened equation are excluded.
+Required superseded questions inherit the outcome of their terminal successor.
+The full read denominator is six scheduled, five attempted, zero omitted and
+one unavailable. A separate source excerpt and its pinned population capture
+both reported labels before public verify and check reject the conflict.
+Replay uses the retained producer table and an independent table pin.
+Fidelity scores the actual targeted methods result together with a held-back
+control, both against independent gold. The absence gate consumes the
+authenticated coverage and fidelity identities on replay. The same assurance
+coverage scorer accepts an independently keyed real reading run.

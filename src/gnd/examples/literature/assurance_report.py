@@ -719,44 +719,69 @@ def _record_fresh(inputs: Inputs, record: dict) -> bool:
     return True
 
 
-def _coverage(inputs: Inputs) -> dict:
-    """Score the opt-in reading coverage evidence against an independent roster."""
-    if "coverage" not in inputs.run and "coverage" not in inputs.key:
-        return _dormant("coverage")
+def _coverage_units(rows, sections):
+    from .reading import COVERAGE_STATES
 
-    from .reading import COVERAGE_STATES, read_coverage_rows
+    _need(isinstance(rows, list) and 0 < len(rows) <= 128)
+    question_ids = set()
+    result = set()
+    for row in rows:
+        _need(isinstance(row, dict) and set(row) == {"question", "source", "section", "state", "inspected"})
+        qid, source, section, state, inspected = (
+            row[field] for field in ("question", "source", "section", "state", "inspected")
+        )
+        _need(all(_is_str(value) for value in (qid, source, section, state))
+              and qid not in question_ids and sections.get(section) == source
+              and state in COVERAGE_STATES and type(inspected) is bool)
+        _need(inspected == (state not in ("unavailable", "not-applicable", "omitted")))
+        question_ids.add(qid)
+        result.add((qid, source, section, state, inspected))
+    return result
 
+
+def _coverage_result(expected_rows, observed_rows, sections):
     floors = {"precision": (1, 1), "recall": (1, 1)}
-
-    def units(rows):
-        _need(isinstance(rows, list) and 0 < len(rows) <= 128)
-        question_ids = set()
-        result = set()
-        for row in rows:
-            _need(isinstance(row, dict) and set(row) == {"question", "source", "section", "state", "inspected"})
-            qid, source, section, state, inspected = (
-                row[field] for field in ("question", "source", "section", "state", "inspected")
-            )
-            _need(all(_is_str(value) for value in (qid, source, section, state))
-                  and qid not in question_ids and source in inputs.sources
-                  and section in inputs.passages and inputs.passages[section]["document"] == source
-                  and state in COVERAGE_STATES and type(inspected) is bool)
-            _need(inspected == (state not in ("unavailable", "not-applicable", "omitted")))
-            question_ids.add(qid)
-            result.add((qid, source, section, state, inspected))
-        return result
-
     try:
-        declaration = inputs.run.get("coverage")
-        _need(isinstance(declaration, dict) and set(declaration) == {"sha256"})
-        expected = units(inputs.key.get("coverage"))
-        observed = units(read_coverage_rows(inputs.run_dir, declaration["sha256"]))
-    except (OSError, Refusal, ValueError):
+        expected = _coverage_units(expected_rows, sections)
+        observed = _coverage_units(observed_rows, sections)
+    except Refusal:
         return _stage("coverage", metrics={}, floors=floors, route_present=True, route_refused=True)
     matched = len(expected & observed)
     return _stage("coverage", metrics={"precision": (matched, len(observed)), "recall": (matched, len(expected))},
                   floors=floors, route_present=True, sample_size=len(expected),
                   disagreements={"count": len(expected ^ observed), "units": sorted({row[0] for row in expected ^ observed})})
+
+
+def score_reading_coverage(run_dir: Path, expected_rows: list[dict]) -> dict:
+    """Score exact replayable reading rows against a caller-owned answer roster."""
+    from .reading import ArtifactError, replay
+
+    try:
+        report = replay(run_dir)
+    except (OSError, ArtifactError, ValueError, KeyError, TypeError, AttributeError, IndexError):
+        return _coverage_result(expected_rows, None, {})
+    rows = report["coverage"]
+    sections = {row["section"]: row["source"] for row in rows}
+    return _coverage_result(expected_rows, rows, sections)
+
+
+def _coverage(inputs: Inputs) -> dict:
+    """Score the opt-in reading coverage evidence against an independent roster."""
+    if "coverage" not in inputs.run and "coverage" not in inputs.key:
+        return _dormant("coverage")
+
+    from .reading import read_coverage_rows
+
+    declaration = inputs.run.get("coverage")
+    expected = inputs.key.get("coverage")
+    try:
+        _need(isinstance(declaration, dict) and set(declaration) == {"sha256"})
+        observed = read_coverage_rows(inputs.run_dir, declaration["sha256"])
+    except (OSError, Refusal, ValueError):
+        observed = None
+    sources = set(inputs.sources)
+    sections = {key: row["document"] for key, row in inputs.passages.items() if row["document"] in sources}
+    return _coverage_result(expected, observed, sections)
 
 
 def _dormant(name: str) -> dict:

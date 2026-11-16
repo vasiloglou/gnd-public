@@ -5,4 +5,6 @@ in auto mode. The [plan](notes/aggregate-count-certificates-plan.md) and
 [first phase spec](notes/phase-AC1-spec.md) define a bounded COUNT certificate,
 including empty membership for a named group.
 
-AC1 awaits the required plan panel and delegated plan ruling.
+Six valid [panel responses](evidence/plan-r1/PANEL-REVIEW.md) informed the
+[delegated plan ruling](001-plan-gate.md). [AC1's corpus gate](002-phase-AC1-spec-gate.md)
+records the red baseline.

@@ -54,7 +54,7 @@ their current outputs.
 
 The proposed command interface is
 `gnd witness-count MODEL POPULATION --request REQUEST --raw --out CERTIFICATE`
-and `gnd replay-count MODEL POPULATION CERTIFICATE [--raw]`.
+and `gnd replay-count MODEL POPULATION CERTIFICATE --request REQUEST [--raw]`.
 The first scope admits reference-free, include-free, single-clause derived
 COUNT rules with one asserted relation in the body. Each group key, `over`
 cell and the `of` cell must unambiguously correspond to a body variable.
@@ -118,3 +118,36 @@ Use a red corpus under `tests/fixtures/count-certificates/` with the
 executable example inputs and independent expected membership and exit data.
 The spec gate will bind the exact fixture and answer bytes after the plan
 panel. The phase diff has its own independent review.
+
+## R1 panel outcome applied to this draft
+
+The plan's §11 governs the precise scope, independent request and refusal
+precedence. The bounded direct scan requires a positive, named group
+projection. Use exact typed JSON identities for the admitted primitives,
+with differential tests against the existing evaluator's contribution
+identity. A snapshot can contain repeated contributions at distinct source
+positions. Canonicalize them to the lowest representative row index.
+Against unchanged authenticated inputs, the replay verdict checks the
+entire reconstructed membership, including declared type and position.
+
+The wire top-level kind is `count-membership`. The binding fields are
+`model_sha256`, `population_sha256` and `request_sha256`, each a raw
+lowercase hex digest. The model fact-type selector and ordered group
+positions define the target. Replay accepts the externally supplied request
+only when its digest and parsed content match the embedded request. A
+wrong certificate version, missing or extra key, wrong typed selector and
+oversized certificate input are rejected before semantic evaluation.
+
+Place the common scan in `witness/count_membership.py` and the initiated
+producer and replay in separate modules. The common package may use
+witness JSON and raw intake, ModelIndex, model/population loaders and
+canonical JSON. The producer creates the artifact from the scan. Replay
+checks the binding and compares the scan's projected membership with the
+submitted members without importing the producer or general extensions
+evaluator. Add each module to the witness lane and component index.
+
+The red corpus includes a populated covered relation with an absent group,
+a truly empty covered relation, multiple groups, equal contribution values
+with different keys, duplicate proof positions, and member-witness
+verification. It verifies byte-identical ordinary checker output across the
+new routes and current ordinary aggregate witness refusal.

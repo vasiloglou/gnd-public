@@ -1,6 +1,6 @@
 # Aggregate COUNT certificates
 
-Status — draft r1, awaiting the standard GND plan panel. The owner selected
+Status — r2 approved by the delegated plan ruling. The owner selected
 `auto=true` for this new milestone on 2026-11-16.
 
 ## Goal and completion predicates
@@ -150,3 +150,52 @@ uv run pytest -q tests/test_count_certificates.py tests/test_v62_phase4_aggregat
 | D3 | Separate explicit commands and versioned payload to preserve ordinary witness readers. |
 | D4 | Use deterministic canonical members with representative positions. Offer individual positive witnesses through ordinary `gnd witness`. |
 | D5 | Prove bounded scan work as well as bounded certificate size. |
+
+## 11. Plan panel amendments
+
+The six valid r1 opinions are retained with their individual concerns.
+The following decisions govern AC1 and supersede ambiguity in the draft.
+
+- Coverage applies to every claim, including a nonempty group. The caller
+  selects the expected model, population and request paths. Bind their raw
+  SHA-256 values. Coverage is the entire declared relation in that bound
+  population. AC1 admits no certificate-supplied coverage or subset selector.
+  A previously certified snapshot cannot be replayed from a truncated one.
+  This is snapshot completeness and makes no assertion about outside data.
+- Require the external request file at replay. The v1 wire is closed.
+  The bound group and fact type match the caller's independently read request.
+  Model, population and request mutations stale the certificate before
+  semantic inference. A malformed certificate is rejected before other
+  input reads. A raw model/population byte limit takes precedence over
+  staleness because a complete digest is unavailable.
+- Require one COUNT clause over one asserted fact type and direct distinct
+  variables in the body. Constants, repeated body variables, ungrouped
+  heads, multiple clauses, joins, negation, recursion, post-aggregate
+  filters, and arithmetic are outside AC1. Existing model validation still
+  decides whether a model is well-formed.
+- Compare the exact produced roster to an independently authored answer.
+  The roster sorts the canonical typed contribution key lexicographically.
+  Choose the lowest population row position for each member. Duplicate
+  members, omissions with corrected count, false-empty certificates,
+  padding, cross-group substitution, mistyped cells, order, count mismatch,
+  wrong occurrence and alternate valid occurrence have explicit controls.
+- Reuse bounded wire validation. Oversized serialized request/certificate
+  input is malformed at 3. Excess raw model/population bytes, row visits,
+  distinct-member work or producer output bytes refuse at 4. Replay checks
+  the same result bounds. Limits are local policy and are absent from the
+  certificate.
+- The replay implementation uses a shared lower bounded input scan and
+  canonical typed identity helpers. It imports neither the producer nor
+  the general aggregate evaluator. An import-blocking replay test verifies
+  that property.
+- Run checker before and after both public routes on the same snapshot.
+  Verify all present counts, an absent named group with a populated covered
+  body relation and unchanged ordinary witness refusal. Request one member's
+  ordinary positive witness on the certified position. An empty group has
+  no member position.
+
+The direct and compatibility suites, strict component check
+`python3 scripts/components_index.py changed --base a7785ffb --strict`,
+and repository-wide `uv run ruff check --output-format=json` are required.
+The structural selection is the exact command in the project hook. Compare
+Ruff diagnostics to the base if whole-tree Ruff is nonzero.

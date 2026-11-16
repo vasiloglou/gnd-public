@@ -8,28 +8,49 @@
           "equation",
           "regime"
         ],
-        "claim_kind": "reported-equation"
+        "claim_kind": "reported-equation",
+        "primary": {
+          "url": "https://www.clawpack.org/riemann_book/html/Shallow_water_approximate.html",
+          "version": "Riemann Problems and Jupyter Solutions (2020)",
+          "section": "Riemann Book, Approximate solvers for the shallow water equations, opening equations; Clawpack 5.10.x dam_break setup",
+          "additional_url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html"
+        }
       },
       {
         "id": "boundaries",
         "requires": [
           "boundaries"
         ],
-        "claim_kind": "reported-configuration"
+        "claim_kind": "reported-configuration",
+        "primary": {
+          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+          "version": "Clawpack 5.10.x",
+          "section": "Clawpack 5.10.x gallery, setup, boundary conditions"
+        }
       },
       {
         "id": "discretization",
         "requires": [
           "discretization"
         ],
-        "claim_kind": "reported-configuration"
+        "claim_kind": "reported-configuration",
+        "primary": {
+          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+          "version": "Clawpack 5.10.x",
+          "section": "Clawpack 5.10.x gallery, setup, classic solver and grid"
+        }
       },
       {
         "id": "conservation-residual",
         "requires": [
           "conservation"
         ],
-        "claim_kind": "reported-result"
+        "claim_kind": "reported-result",
+        "primary": {
+          "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+          "version": "Clawpack 5.10.x",
+          "section": "Clawpack 5.10.x gallery, setup and output plot"
+        }
       }
     ]
   },
@@ -42,28 +63,48 @@
           "system",
           "energy_model"
         ],
-        "claim_kind": "reported-configuration"
+        "claim_kind": "reported-configuration",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Methods, Alanine Dipeptide"
+        }
       },
       {
         "id": "sampling",
         "requires": [
           "objective"
         ],
-        "claim_kind": "reported-objective"
+        "claim_kind": "reported-objective",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Results, Alanine Dipeptide; Methods on collective variables"
+        }
       },
       {
         "id": "approximation",
         "requires": [
           "approximation"
         ],
-        "claim_kind": "reported-configuration"
+        "claim_kind": "reported-configuration",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Methods, Alanine Dipeptide"
+        }
       },
       {
         "id": "transfer-validity",
         "requires": [
           "validity"
         ],
-        "claim_kind": "reported-result"
+        "claim_kind": "reported-result",
+        "primary": {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243082/",
+          "version": "PMC12243082 published article (2025)",
+          "section": "PMC12243082, Methods and Results, Alanine Dipeptide"
+        }
       }
     ]
   },
@@ -76,14 +117,24 @@
           "operator",
           "objective"
         ],
-        "claim_kind": "reported-objective"
+        "claim_kind": "reported-objective",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract and introduction, dominant singular components"
+        }
       },
       {
         "id": "components",
         "requires": [
           "subject_has_component"
         ],
-        "claim_kind": "reported-method"
+        "claim_kind": "reported-method",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract and introductory framework, stages A and B"
+        }
       },
       {
         "id": "qualified-complexity",
@@ -92,14 +143,24 @@
           "assumptions",
           "cost_model"
         ],
-        "claim_kind": "reported-bound"
+        "claim_kind": "reported-bound",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract, dense-input case; SIAM Review 53(2), DOI 10.1137/090771806"
+        }
       },
       {
         "id": "device-runtime",
         "requires": [
           "runtime"
         ],
-        "claim_kind": "reported-result"
+        "claim_kind": "reported-result",
+        "primary": {
+          "url": "https://arxiv.org/html/0909.4061v2",
+          "version": "arXiv:0909.4061v2 (2010-12-14)",
+          "section": "arXiv:0909.4061, abstract and §7 numerical examples"
+        }
       }
     ]
   }

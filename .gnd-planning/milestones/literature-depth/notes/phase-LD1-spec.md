@@ -200,3 +200,25 @@ owner's named milestone invocation and applies to this spec.
 - The output runner uses the existing capped process runner and shared JSON
   parser. The malformed comparison case exercises admission before the
   product invocations.
+
+## Independent-review repairs
+
+The one authorized review of `da41bc07` reproduced that the initial
+Float control measured a blanket primitive refusal. A checked fractional
+Number is the LD2 trigger observation. The integral Number probe produces
+and replays a witness on the same route. The report derives the value from
+the checked population and checks the target's value against it.
+
+The dimension observation also inspects an equivalent ps span. It
+recognizes the decimal token yet does not normalize it on the integer
+route. The energy span still matches the integer magnitude. The percentage
+observation now exercises an explicit absolute and relative change and
+derives its disposition from the recognizer's results. A false point
+recognition changes the trigger. The approved quantity scope follows these
+corrected observations.
+
+The question inventory's independent primary locators catch a retagged
+citation even with a refreshed support digest. The checked population
+supplies the subject occurrence coordinate. The added controls trace
+the coordinate, move a component out of its predicate, and exercise
+missing score independently of missing comparison context.

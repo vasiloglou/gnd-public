@@ -22,7 +22,9 @@ scope. Some answers have additional limitations described in the source
 note, such as the unreported ensemble of the particular molecular run.
 The fixture uses original descriptions of the source material, with
 local character offsets into those descriptions. The frozen support roster
-records the author's source-to-fact review. GND verification establishes
+records the author's source-to-fact review. The question inventory
+independently fixes the primary locator and version used by each review.
+The report identifies the checked subject occurrence separately from its label. GND verification establishes
 evidence binding and model checking establishes the declared structural
 constraints. The reported equation is a representation of a source claim.
 
@@ -55,8 +57,9 @@ conditions.
 ## Quantity probes
 
 The example measures what the existing numeric anchors and witness
-route do on small controls. The dimension probe uses the same magnitude
-in time and energy units. The percentage-point control keeps score
-units and absolute-change wording separate. A decimal value that passes
-checking is also submitted as an exact witness target. The report
-records the actual outcome of each probe.
+route do on small controls. The dimension probe compares the reported step with equivalent time
+units and with an energy span of the same magnitude. The percentage
+probe measures the absolute change in points and the relative percent
+change, and checks what the percent recognizer actually sees. A fractional
+Number that passes checking is submitted as a witness target. The
+report records the value actually checked and the outcome of each probe.

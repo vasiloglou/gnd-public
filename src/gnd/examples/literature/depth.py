@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import sys
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
@@ -28,7 +29,7 @@ PROCESS_LIMITS = ProcessLimits(
     total_output_limit_bytes=PROCESS_LIMIT,
 )
 CASES = ("dynamics", "molecular", "algorithms")
-CASES_SHA = "3bc3426bf8f1f005d73a0eec93c4d53566a60c6521c243b64e7cea91343e2cec"
+CASES_SHA = "366dee9620694a6037496f51247248e8f937feae04939778b0cfce0d99327d70"
 SUPPORT_SHA = "8d697a5a169d6dfa27a0dacb498df9e86bd78f1ffbd5365ea82f38264333ed59"
 CONTEXT = {
     "dataset_version": "experiment_dataset",
@@ -119,6 +120,10 @@ def _question_rows(case: dict, support: dict, document: bytes, facts: dict) -> l
     for question, evidence in zip(case["questions"], support["rows"], strict=True):
         if question["id"] != evidence["id"]:
             raise ExampleError("reviewed question roster differs")
+        primary = evidence["primary"]
+        claimed_locator = {key: value for key, value in primary.items() if key != "evidence_form"}
+        if claimed_locator != question["primary"]:
+            raise ExampleError(f"reviewed primary locator differs for {question['id']}")
         start, end = evidence["span"]
         excerpt = text[start:end]
         if not (0 <= start < end <= len(text)) or sha256_hex(excerpt.encode()) != evidence["span_sha256"]:
@@ -136,7 +141,7 @@ def _question_rows(case: dict, support: dict, document: bytes, facts: dict) -> l
             "facts": selected if supported else {},
             "missing": [fact for fact, rows in selected.items() if not rows],
             "evidence": {
-                **evidence["primary"],
+                **primary,
                 "review": evidence["decision"],
                 "document_sha256": support["document_sha256"],
                 "span": evidence["span"],
@@ -229,36 +234,92 @@ def _checked_comparisons(out: Path, facts: dict, pairs: list[dict],
     return rows, sha256_hex(population)
 
 
-def _quantity_observations(out: Path) -> list[dict]:
-    text = "The step is 2 fs. The energy is 2 eV. The score changes from 40% to 45%, or 5 percentage points."
-    index = recognition_index(text, {"integer", "percent"})
-    primitive_spans = recognised_ranges(index, "integer", 2)
-    unit_phrases = [text[start : end + 3] for start, end in primitive_spans]
-    percentages = [value for value in (40, 45, 5) if recognised_ranges(index, "percent", value)]
-    _success(out, "check", "decimal.orm.json", "decimal.population.json", "--format", "json")
+def _dimension_probe() -> dict:
+    reported, equivalent, energy = "2 fs", "0.002 ps", "2 eV"
+    text = f"{reported}\n{equivalent}\n{energy}"
+    index = recognition_index(text, {"integer", "decimal"})
+    magnitude = int(reported.split()[0])
+    integer_ranges = recognised_ranges(index, "integer", magnitude)
+    equivalent_start = len(reported) + 1
+    energy_start = equivalent_start + len(equivalent) + 1
+    equivalent_magnitude = Decimal(equivalent.split()[0])
+    equivalent_range = (equivalent_start, equivalent_start + len(str(equivalent_magnitude)))
+    recognized_equivalent = equivalent_range in recognised_ranges(index, "decimal", equivalent_magnitude)
+    normalized_equivalent = equivalent_range in integer_ranges
+    energy_matches = (energy_start, energy_start + len(str(magnitude))) in integer_ranges
+    return {
+        "axis": "dimensions",
+        "observed": {
+            "time": {"reported": reported, "equivalent": equivalent},
+            "energy": energy,
+            "reported_matches_checked_magnitude": (0, len(str(magnitude))) in integer_ranges,
+            "equivalent_recognized_as_decimal": recognized_equivalent,
+            "equivalent_matches_checked_magnitude": normalized_equivalent,
+            "energy_matches_checked_magnitude": energy_matches,
+        },
+        "opens_ld2": not normalized_equivalent or energy_matches,
+        "requirement": "Accept an equivalent time step and refuse the same magnitude in energy units.",
+    }
+
+
+def _percentage_probe() -> dict:
+    before, after = Decimal(40), Decimal(45)
+    absolute = after - before
+    relative = (absolute / before * 100).normalize()
+    values = (before, after, relative)
+    text = f"From {before}% to {after}%: {absolute} percentage points, or a relative change of {relative}%."
+    index = recognition_index(text, {"percent"})
+    recognized = [value for value in values if recognised_ranges(index, "percent", value)]
+    points_as_percent = bool(recognised_ranges(index, "percent", absolute))
+    return {
+        "axis": "percent-versus-points",
+        "observed": {
+            "recognized_percentages": [float(value) if value % 1 else int(value) for value in recognized],
+            "absolute_change_points": str(absolute),
+            "relative_change_percent": str(relative),
+            "points_recognized_as_percent": points_as_percent,
+        },
+        "opens_ld2": recognized != list(values) or points_as_percent,
+        "requirement": "Keep the absolute change in percentage points separate from the relative percent change.",
+    }
+
+
+def _decimal_probe(out: Path) -> dict:
     args = ("decimal.orm.json", "decimal.population.json")
+    _success(out, "check", *args, "--format", "json")
+    population = _decode(_read(out, args[1]))
+    target = _decode(_read(out, "decimal.targets.json"))["targets"][0]
+    checked_value = population["facts"]["reported_decimal"][0]["value"]
+    cell = target["tuple"][0]
+    if cell["value"] != checked_value:
+        raise ExampleError("decimal witness target differs from the checked value")
     witness = _command(out, "witness", *args, "--targets", "decimal.targets.json", "--raw", "--out", "decimal.witness.json")
     result = _decode(witness.stdout)
     results = result.get("results")
+    observed = {"primitive": cell["primitive"], "checked_value": str(checked_value)}
     if witness.return_code == 2 and results and results[0]["reason"] == "fragment-unsupported":
         native_exact = False
-        observed = {"exit": 2, "reason": "fragment-unsupported", "checked_value": "0.002"}
+        observed.update(exit=2, reason="fragment-unsupported")
     elif witness.return_code == 0:
         _success(out, "replay", *args, "decimal.witness.json", "--raw")
         native_exact = True
-        observed = {"exit": 0, "replay": "accepted", "checked_value": "0.002"}
+        observed.update(exit=0, replay="accepted")
     else:
         raise ExampleError("unexpected decimal witness probe outcome")
-    return [
-        {"axis": "dimensions", "observed": {"matching_integer_spans": unit_phrases},
-         "opens_ld2": set(unit_phrases) == {"2 fs", "2 eV"},
-         "requirement": "Validate a time-step anchor without accepting the same magnitude in energy units."},
-        {"axis": "percent-versus-points", "observed": {"recognized_percentages": percentages},
-         "opens_ld2": False,
-         "requirement": "The fixture uses a percent score unit and distinct percentage-point uncertainty."},
-        {"axis": "exact-decimal-witness", "observed": observed,
-         "opens_ld2": not native_exact, "requirement": "Reproduce the checked decimal time step in a witness."},
-    ]
+    return {
+        "axis": "exact-decimal-witness",
+        "observed": observed,
+        "opens_ld2": not native_exact,
+        "requirement": "Reproduce the checked decimal time step in a witness.",
+    }
+
+
+def _subject_occurrence(facts: dict, subject: str) -> tuple[str, dict]:
+    labels = facts.get("subject_label", [])
+    for index, row in enumerate(labels):
+        if row["subject"] == subject:
+            return row["subject"], {"fact_type": "subject_label", "fact_index": index, "role": "subject"}
+    raise ExampleError(f"case subject {subject} has no checked label occurrence")
 
 
 def build(out: Path, *, fixture: Path = FIXTURE) -> dict:
@@ -283,8 +344,10 @@ def build(out: Path, *, fixture: Path = FIXTURE) -> dict:
         (folder / "vocabulary.orm.json").write_bytes(vocabulary)
         (folder / "root.orm.json").write_bytes(_read(fixture, f"{case}.orm.json"))
         binding = _check_case(folder, "root.orm.json", document, facts)
+        subject, occurrence = _subject_occurrence(facts, cases[case]["subject"])
         case_outputs[case] = {
-            "subject": cases[case]["subject"],
+            "subject": subject,
+            "subject_occurrence": occurrence,
             "labels": facts.get("subject_label", []),
             "relationships": {relation: facts[relation] for relation in RELATIONS if relation in facts},
             "questions": answers[case],
@@ -299,7 +362,10 @@ def build(out: Path, *, fixture: Path = FIXTURE) -> dict:
         "cases": case_outputs,
         "comparisons": comparisons,
         "synthetic_experiments": experiments,
-        "quantities": _quantity_observations(out),
+        "synthetic_relationships": {
+            relation: comparison_facts[relation] for relation in RELATIONS if relation in comparison_facts
+        },
+        "quantities": [_dimension_probe(), _percentage_probe(), _decimal_probe(out)],
         "bindings": {"case_sha256": CASES_SHA, "support_sha256": SUPPORT_SHA,
                      "comparison_population_sha256": comparison_sha},
     }

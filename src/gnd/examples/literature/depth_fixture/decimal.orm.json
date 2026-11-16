@@ -8,7 +8,7 @@
       "id": "decimal_value",
       "name": "DecimalValue",
       "kind": "value",
-      "primitive": "Float"
+      "primitive": "Number"
     }
   ],
   "fact_types": [

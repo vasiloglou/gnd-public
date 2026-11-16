@@ -42,7 +42,7 @@ def test_competency_questions(report, case):
 
 
 def test_experiment_comparisons(report):
-    assert {row["id"]: [row["status"], row["fields"]] for row in report["comparisons"]} == EXPECTED["comparison"]
+    assert {row["id"]: [row["status"], row["fields"]] for row in report["comparisons"]} == EXPECTED["comparison"] | {"missing-score": ["unknown", ["score"]]}
 
 
 def test_three_quantity_probes_are_reported(report):
@@ -56,8 +56,9 @@ def test_synthetic_context_is_separate_and_optional(report):
     assert experiments["reference"]["uncertainty"] == "2 points"
     assert "conditions" not in experiments["missing-conditions"]
     assert all(row["origin"] == "synthetic" for row in report["comparisons"])
-    assert report["cases"]["algorithms"]["relationships"]["subject_has_component"]
-    assert report["cases"]["dynamics"]["relationships"]["subject_specializes"]
+    assert set(report["cases"]["algorithms"]["relationships"]) == {"subject_has_component"}
+    assert set(report["cases"]["dynamics"]["relationships"]) == {"subject_specializes"}
+    assert set(report["synthetic_relationships"]) == {"subject_influenced_by"}
     assert all(case["binding"]["verification"] == case["binding"]["check"] == "accepted"
                for case in report["cases"].values())
 
@@ -86,9 +87,9 @@ def test_source_support_binding_refuses_tampering(case_inputs, monkeypatch, muta
             row["primary"]["url"] = support["molecular"]["rows"][0]["primary"]["url"]
         else:
             row["span"][1] -= 1
-            raw = json.dumps(support).encode()
-            monkeypatch.setattr(depth, "SUPPORT_SHA", depth.sha256_hex(raw))
-        path.write_text(json.dumps(support))
+        raw = json.dumps(support).encode()
+        monkeypatch.setattr(depth, "SUPPORT_SHA", depth.sha256_hex(raw))
+        path.write_bytes(raw)
     elif mutation == "source":
         path = inputs / "dynamics.txt"
         path.write_text(path.read_text() + "\nUnreviewed source text.\n")
@@ -98,7 +99,7 @@ def test_source_support_binding_refuses_tampering(case_inputs, monkeypatch, muta
         facts["equation"][0]["value"] = "Unreviewed replacement equation"
         path.write_text(json.dumps(facts))
     with pytest.raises(depth.ExampleError, match={
-        "citation": "reviewed support.json binding differs",
+        "citation": "reviewed primary locator differs",
         "span": "reviewed source span differs",
         "source": "reviewed source document binding differs",
         "fabricated-answer": "unreviewed facts",
@@ -132,11 +133,14 @@ def test_label_change_preserves_identity_and_conflict_fails(case_inputs, report)
     facts["subject_label"][0]["label"] = "New public label"
     source.write_text(json.dumps(facts))
     changed = depth.build(output, fixture=inputs)["cases"]["dynamics"]
+    coordinate = changed["subject_occurrence"]
+    assert coordinate == old["subject_occurrence"] == {"fact_type": "subject_label", "fact_index": 0, "role": "subject"}
     assert changed["subject"] == old["subject"]
     assert changed["questions"] == old["questions"]
     assert changed["labels"][0]["label"] != old["labels"][0]["label"]
     population = output / "dynamics" / "population.json"
     payload = json.loads(population.read_bytes())
+    assert payload["facts"][coordinate["fact_type"]][coordinate["fact_index"]][coordinate["role"]] == changed["subject"]
     payload["facts"]["subject_label"].append(old["labels"][0])
     population.write_text(json.dumps(payload))
     result = subprocess.run(
@@ -166,14 +170,63 @@ def test_invalid_input_refuses_before_product_calls(case_inputs, monkeypatch, ra
 
 def test_quantity_observations_are_discriminating(report):
     by_axis = {row["axis"]: row for row in report["quantities"]}
-    assert by_axis["dimensions"]["observed"]["matching_integer_spans"] == ["2 fs", "2 eV"]
+    dimensions = by_axis["dimensions"]["observed"]
+    assert dimensions["time"] == {"reported": "2 fs", "equivalent": "0.002 ps"}
+    assert dimensions["reported_matches_checked_magnitude"] is True
+    assert dimensions["equivalent_recognized_as_decimal"] is True
+    assert dimensions["equivalent_matches_checked_magnitude"] is False
+    assert dimensions["energy_matches_checked_magnitude"] is True
     assert by_axis["dimensions"]["opens_ld2"]
-    assert by_axis["percent-versus-points"]["observed"]["recognized_percentages"] == [40, 45]
+    percentage = by_axis["percent-versus-points"]["observed"]
+    assert percentage["recognized_percentages"] == [40, 45, 12.5]
+    assert (percentage["absolute_change_points"], percentage["relative_change_percent"]) == ("5", "12.5")
     assert not by_axis["percent-versus-points"]["opens_ld2"]
     assert by_axis["exact-decimal-witness"]["observed"] == {
-        "exit": 2, "reason": "fragment-unsupported", "checked_value": "0.002",
+        "primitive": "Number", "exit": 2, "reason": "fragment-unsupported", "checked_value": "0.002",
     }
     assert by_axis["exact-decimal-witness"]["opens_ld2"]
+
+
+def test_percent_trigger_detects_a_point_recognized_as_percent(monkeypatch):
+    from gnd.examples.literature import depth
+
+    original = depth.recognised_ranges
+
+    def includes_points(index, kind, value):
+        if kind == "percent" and str(value) == "5":
+            return [(0, 1)]
+        return original(index, kind, value)
+
+    monkeypatch.setattr(depth, "recognised_ranges", includes_points)
+    assert depth._percentage_probe()["opens_ld2"]
+
+
+@pytest.mark.parametrize(("value", "expected_exit"), [("0.003", 2), ("2", 0)])
+def test_decimal_observation_tracks_the_checked_value(case_inputs, value, expected_exit):
+    from gnd.examples.literature import depth
+
+    inputs, output = case_inputs
+    output.mkdir()
+    for path in inputs.glob("decimal.*.json"):
+        (output / path.name).write_text(path.read_text().replace("0.002", value))
+    observation = depth._decimal_probe(output)
+    assert observation["observed"]["checked_value"] == value
+    assert observation["observed"]["exit"] == expected_exit
+    assert observation["opens_ld2"] is (expected_exit == 2)
+
+
+def test_relation_move_changes_the_competency_observation(case_inputs):
+    from gnd.examples.literature import depth
+
+    inputs, _ = case_inputs
+    cases = json.loads((inputs / "cases.json").read_bytes())
+    support = json.loads((inputs / "support.json").read_bytes())
+    facts = json.loads((inputs / "algorithms.facts.json").read_bytes())
+    facts["subject_specializes"] = facts.pop("subject_has_component")
+    rows = depth._question_rows(cases["algorithms"], support["algorithms"],
+                                (inputs / "algorithms.txt").read_bytes(), facts)
+    assert next(row for row in rows if row["id"] == "components")["status"] == "unknown"
+    assert "subject_influenced_by" in depth.RELATIONS
 
 
 def test_fresh_run_is_deterministic_and_existing_output_is_preserved(tmp_path, report):

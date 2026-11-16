@@ -221,10 +221,10 @@ Run the three source-scoped literature competency examples offline.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ExampleError` | class(ValueError) | 50 | The worked example cannot establish the requested output. |
-| `compare_scores(left, right) -> tuple[str, list[str]]` | function | 183 | Compare scores by the declared evidence context. |
-| `build(out, *, fixture) -> dict` | function | 264 | Materialize a fresh packaged run and return its competency report. |
-| `main(argv) -> int` | function | 310 | (no docstring) |
+| `ExampleError` | class(ValueError) | 51 | The worked example cannot establish the requested output. |
+| `compare_scores(left, right) -> tuple[str, list[str]]` | function | 188 | Compare scores by the declared evidence context. |
+| `build(out, *, fixture) -> dict` | function | 325 | Materialize a fresh packaged run and return its competency report. |
+| `main(argv) -> int` | function | 376 | (no docstring) |
 
 ## gnd.examples.literature.diagnostic_measurement — `src/gnd/examples/literature/diagnostic_measurement.py`
 Components: examples.literature_name_diagnostics

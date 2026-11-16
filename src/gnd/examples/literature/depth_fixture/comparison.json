@@ -37,6 +37,10 @@
       {
         "experiment": "metric-changed-and-missing-conditions",
         "dataset_version": "benchmark-v1"
+      },
+      {
+        "experiment": "missing-score",
+        "dataset_version": "benchmark-v1"
       }
     ],
     "experiment_split": [
@@ -74,6 +78,10 @@
       },
       {
         "experiment": "metric-changed-and-missing-conditions",
+        "split": "test"
+      },
+      {
+        "experiment": "missing-score",
         "split": "test"
       }
     ],
@@ -113,6 +121,10 @@
       {
         "experiment": "metric-changed-and-missing-conditions",
         "metric": "precision"
+      },
+      {
+        "experiment": "missing-score",
+        "metric": "balanced-accuracy"
       }
     ],
     "experiment_units": [
@@ -151,6 +163,10 @@
       {
         "experiment": "metric-changed-and-missing-conditions",
         "units": "percent"
+      },
+      {
+        "experiment": "missing-score",
+        "units": "percent"
       }
     ],
     "experiment_conditions": [
@@ -181,6 +197,10 @@
       {
         "experiment": "conditions-changed",
         "conditions": "different-input-window"
+      },
+      {
+        "experiment": "missing-score",
+        "conditions": "fixed-input-window"
       }
     ],
     "experiment_score": [
@@ -257,6 +277,10 @@
       {
         "experiment": "metric-changed-and-missing-conditions",
         "baseline": "reference configuration"
+      },
+      {
+        "experiment": "missing-score",
+        "baseline": "reference configuration"
       }
     ],
     "experiment_configuration": [
@@ -295,6 +319,10 @@
       {
         "experiment": "metric-changed-and-missing-conditions",
         "configuration": "seed 2"
+      },
+      {
+        "experiment": "missing-score",
+        "configuration": "seed 2"
       }
     ],
     "experiment_uncertainty": [
@@ -332,6 +360,10 @@
       },
       {
         "experiment": "metric-changed-and-missing-conditions",
+        "uncertainty": "2 points"
+      },
+      {
+        "experiment": "missing-score",
         "uncertainty": "2 points"
       }
     ],
@@ -388,6 +420,11 @@
       "id": "metric-changed-and-missing-conditions",
       "left": "reference",
       "right": "metric-changed-and-missing-conditions"
+    },
+    {
+      "id": "missing-score",
+      "left": "reference",
+      "right": "missing-score"
     }
   ]
 }

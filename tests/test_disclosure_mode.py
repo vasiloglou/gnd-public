@@ -176,9 +176,9 @@ def test_t11_every_raw_request_is_refused_under_customer(monkeypatch):
             assert (result.returncode, result.stdout) == (3, b""), (path, option, result.stderr)
             assert result.stderr.decode().strip() == refusal(option), path
     assert calls == []
-    # 7 leaves with --unredacted and 8 with --raw (spec, implementability sweep).
+    # AC1 adds two COUNT membership leaves with --raw.
     assert sorted(o for _, o in found).count("--unredacted") == 7
-    assert sorted(o for _, o in found).count("--raw") == 8
+    assert sorted(o for _, o in found).count("--raw") == 10
 
 
 def test_t12_the_cli_mode_does_not_leak_after_main(monkeypatch):
@@ -215,7 +215,7 @@ def assert_table(surfaces, keys):
 def test_t13_the_table_is_total_and_live(monkeypatch):
     from gnd.disclosure import SURFACES
     keys = table_keys(monkeypatch)
-    assert sum(k.startswith("gnd ") for k in keys) == 52  # MC2 model-review leaf; RN0: gnd export ossie and gnd import ossie
+    assert sum(k.startswith("gnd ") for k in keys) == 54
     assert_table(SURFACES, keys)
 
 
@@ -296,7 +296,7 @@ def test_t16_the_cli_walk_sets_every_value_dest(monkeypatch):
         _, customer = captured_namespaces(monkeypatch, argv, env="customer")
         for dest in dests:
             assert (unset[0][dest], internal[0][dest], customer[0][dest]) == (False, True, False), path
-    assert sites == 15
+    assert sites == 17
 
 
 def _emails(payload):
@@ -497,7 +497,7 @@ def test_t26_every_mode_and_value_free_leaves_see_no_mode(monkeypatch):
             assert {k: v for k, v in other[0].items() if k != "disclosure"} == \
                    {k: v for k, v in unset[0].items() if k != "disclosure"}, path
         checked += 1
-    assert checked == 52 - 16 - 4   # minus the site leaves and the spawners
+    assert checked == 54 - 18 - 4   # minus the site leaves and the spawners
 
 
 # -- T28-T34b: child processes -------------------------------------------------------------

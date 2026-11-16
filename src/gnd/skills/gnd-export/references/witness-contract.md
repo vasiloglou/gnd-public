@@ -1,6 +1,7 @@
 # Certificate versions 1 through 4
 
 See the [closed wire schema](witness.schema.json) and [workflow](../SKILL.md).
+For a bounded COUNT group, see the separate [membership certificate contract](count-witness-contract.md).
 Bindings include the existing model identity, SHA-256 of canonical candidate
 model_dump JSON and each fixed reference's raw-byte SHA-256. Changed bound input
 is stale before inference is attempted. Metadata participates in candidate

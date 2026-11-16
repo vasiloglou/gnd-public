@@ -18,6 +18,49 @@ CLI boundary for explicit finite-witness export and read-only replay.
 | `add_parsers(subparsers)` | function | 13 | (no docstring) |
 | `run(args)` | function | 50 | (no docstring) |
 
+## gnd.witness.count_cli — `src/gnd/witness/count_cli.py`
+Components: witness.count_membership
+Public commands for bounded COUNT membership evidence.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `add_parsers(subparsers)` | function | 9 | (no docstring) |
+| `run(args)` | function | 26 | (no docstring) |
+
+## gnd.witness.count_membership — `src/gnd/witness/count_membership.py`
+Components: witness.count_membership
+Bounded intake and exact source enumeration for a selected COUNT group.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `CountRefusal` | class(ValueError) | 25 | (no docstring) |
+| `refused(error) -> dict` | function | 32 | (no docstring) |
+| `request_shape(doc)` | function | 50 | (no docstring) |
+| `certificate_shape(doc, limits)` | function | 59 | (no docstring) |
+| `read_bytes(path, limits, *, snapshot)` | function | 83 | (no docstring) |
+| `read_request(path, limits)` | function | 91 | (no docstring) |
+| `read_snapshot(model, population, request_digest, limits)` | function | 98 | (no docstring) |
+| `members_from_snapshot(model_path, population_path, snapshot, request, limits)` | function | 169 | (no docstring) |
+| `make_document(binding, request, members)` | function | 212 | (no docstring) |
+| `check_result_bound(document, limits)` | function | 217 | (no docstring) |
+| `success(document, *, include_certificate)` | function | 226 | (no docstring) |
+
+## gnd.witness.count_producer — `src/gnd/witness/count_producer.py`
+Components: witness.count_membership
+Produce a snapshot-bound COUNT membership certificate.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `produce_count(model, population, request_path, *, limits)` | function | 16 | (no docstring) |
+
+## gnd.witness.count_replay — `src/gnd/witness/count_replay.py`
+Components: witness.count_membership
+Verify COUNT membership against caller-selected inputs independently.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `replay_count(model, population, certificate_path, request_path, *, limits)` | function | 20 | (no docstring) |
+
 ## gnd.witness.flattening — `src/gnd/witness/flattening.py`
 Components: witness.service
 Rooted include bindings for path-based witness production and replay.

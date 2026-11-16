@@ -26,13 +26,14 @@ behaves as it did before the mode existed.
 
 **`internal`** acts as if every value option were passed: `--unredacted` on
 the check family, `--raw` on `witness`, `witness-view`, `replay`,
-`why-not` and the Lean and Soufflé exports, and the matching Python keywords.
+`why-not`, `witness-count`, `replay-count` and the Lean and Soufflé exports,
+and the matching Python keywords.
 
 **`customer`** withholds two kinds of value:
 
 - in check-family reports, the roles your model declares sensitive with
   `redact: true` (see [declare what is sensitive](#declare-what-is-sensitive));
-- in witness, replay, why-not, Lean and Soufflé outputs, every population
+- in witness, replay, why-not, COUNT membership, Lean and Soufflé outputs, every population
   value. The Python functions return what the CLI prints by default:
   `api.why_not` returns the redacted view, and `api.witness` and
   `api.replay` return the default view with no raw certificate.
@@ -100,7 +101,7 @@ a redacted answer for the raw one.
 | Request under `customer` | Command line | Python |
 |---|---|---|
 | `--unredacted` on a check-family command; `unredacted=True` | exit 3 | `DisclosureRefused` |
-| `--raw` on `witness`, `witness-view`, `replay`, `why-not`, `export lean`, `export souffle*`; `raw=True` | exit 3 | `DisclosureRefused` |
+| `--raw` on witness, replay, why-not, COUNT membership and the Lean and Soufflé exports, or `raw=True` | exit 3 | `DisclosureRefused` |
 | `gnd --disclosure internal …` with `GND_DISCLOSURE=customer` | exit 3 | — |
 | a malformed `GND_DISCLOSURE` | exit 3 | `DisclosureRefused` |
 
@@ -209,7 +210,7 @@ exactly one row. A test keeps this table equal to the code.
 | Command: `gnd check`, `gnd validate`, `gnd diff`, `gnd verbalize population`, `gnd measure`, `gnd verify`, `gnd judgments check` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
 | `gnd.api`: `validate`, `check`, `diff`, `verbalize`, `transition`, `check_with_receipt`, `judgments`, `EvaluationSession.check`, `EvaluationSession.check_with_receipt`, `EvaluationSession.transition` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
 | Output kind: `validate`, `check`, `admission`, `verify`, `transition`, `plan`, `batch`, `measure`, `population-verbalization`, `diff` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
-| Command: `gnd witness`, `gnd witness-view`, `gnd replay`, `gnd why-not`, `gnd export lean`, `gnd export souffle`, `gnd export souffle-run`, `gnd export souffle-witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
+| Command: `gnd witness`, `gnd witness-view`, `gnd replay`, `gnd why-not`, `gnd witness-count`, `gnd replay-count`, `gnd export lean`, `gnd export souffle`, `gnd export souffle-run`, `gnd export souffle-witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
 | `gnd.api`: `witness`, `replay`, `why_not`, `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
 | `gnd.export.service`: `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
 | Command: `gnd discover` | one named value option, `gnd discover --show-values`: values under `internal`, as requested when unset, the option refused under `customer`; every other output the same in every mode |

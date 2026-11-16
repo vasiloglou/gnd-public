@@ -205,12 +205,12 @@ Bounded, no-follow artifact reads and publication primitives.
 | `read_regular_bounded(root, relative, *, max_bytes, expected, expected_root) -> tuple[bytes, LeafSna…` | function | 899 | Read one contained regular leaf through no-follow descriptors. |
 | `inventory_tree(root, *, max_files, max_file_bytes, max_total_bytes, max_depth, expected_root) -> Tr…` | function | 1069 | Inventory every regular leaf beneath ``root`` in stable POSIX order. |
 | `remove_regular_if_unchanged(root, relative, *, expected, expected_root) -> None` | function | 1280 | Remove one regular leaf only while it has the identity already read. |
-| `publish_leaf_atomic(root, relative, data, *, expected, expected_root) -> LeafSnapshot` | function | 1385 | Publish one complete leaf, requiring absence or an exact prior identity. |
-| `publish_directory_once(root, relative, files, *, manifest_name, max_files, max_file_bytes, max_tota…` | function | 1515 | Publish one descriptor-bound directory, writing its manifest leaf last. |
-| `canonical_report_text(payload) -> str` | function | 1727 | The payload as canonical JSON: sorted keys, no NaN, stable separators. |
-| `reject_json_constant(token) -> None` | function | 1738 | (no docstring) |
-| `reject_json_duplicate_pairs(pairs) -> dict[str, Any]` | function | 1742 | (no docstring) |
-| `reject_json_duplicate_pairs_result(pairs) -> dict[str, Any]` | function | 1751 | (no docstring) |
+| `publish_leaf_atomic(root, relative, data, *, expected, expected_root, mode) -> LeafSnapshot` | function | 1385 | Publish one complete leaf, requiring absence or an exact prior identity. |
+| `publish_directory_once(root, relative, files, *, manifest_name, max_files, max_file_bytes, max_tota…` | function | 1516 | Publish one descriptor-bound directory, writing its manifest leaf last. |
+| `canonical_report_text(payload) -> str` | function | 1728 | The payload as canonical JSON: sorted keys, no NaN, stable separators. |
+| `reject_json_constant(token) -> None` | function | 1739 | (no docstring) |
+| `reject_json_duplicate_pairs(pairs) -> dict[str, Any]` | function | 1743 | (no docstring) |
+| `reject_json_duplicate_pairs_result(pairs) -> dict[str, Any]` | function | 1752 | (no docstring) |
 
 ## gnd.assurance_claims — `src/gnd/assurance_claims.py`
 Components: assurance.claims

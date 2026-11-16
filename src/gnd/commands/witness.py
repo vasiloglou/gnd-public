@@ -3,8 +3,10 @@ from __future__ import annotations
 
 def _register_witness(subparsers):
     from gnd.witness.cli import add_parsers as add_witness_parsers
+    from gnd.witness.count_cli import add_parsers as add_count_parsers
 
     add_witness_parsers(subparsers)
+    add_count_parsers(subparsers)
 
     return {name: subparsers.choices[name] for name in ('witness', 'replay', 'witness-view', 'why-not')}
 

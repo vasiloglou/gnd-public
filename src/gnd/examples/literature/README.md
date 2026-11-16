@@ -345,3 +345,9 @@ probes. [Run the examples](depth_fixture/README.md).
 
 The [exact time-step example](quantity_fixture/README.md) shows
 dimension-aware anchors and a fixed-scale decimal witness.
+
+## Replayable reading
+
+The [multipass reading example](reading_fixture/README.md) shows how a
+targeted pass recovers a methods fact, records source coverage and
+replays completed stages without calling its producer.

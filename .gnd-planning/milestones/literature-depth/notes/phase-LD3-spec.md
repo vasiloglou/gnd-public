@@ -178,3 +178,25 @@ to LD4. Part 10 remains deferred. Estimate 350–500 implementation lines,
 Commit the public red corpus under `tests/test_ld3_reading_workflow.py`
 and `tests/fixtures/ld3-reading/expected.json`. The expected output file
 is distinct from all workflow inputs.
+
+## Implementation findings
+
+- Replay can recompute the check and fidelity branches from the retained
+  response evidence and independently authored case inputs. Fresh counts
+  and saved attempt counts are cross-checked. Replay reports zero producer
+  calls and re-derives the original record identities.
+- Opening excerpts and the targeted methods and limitations ranges use
+  different saved responses. The accepted response facts, source range and
+  independent source judgment agree before they can resolve a question.
+  The vocabulary proposal comes from the targeted attempt. Its key selects
+  the two earlier, relevant study sections.
+- A separate synthetic conflict exercises actual verify and check exit 1.
+  Positive reading populations require both routes to exit 0. This keeps a
+  failed positive population from supplying semantic coverage.
+- LI1's retained report goldens identify the original emitter. The live
+  legacy-route test derives the current emitter hash and still compares
+  every observable result. The optional coverage route checks its own
+  bounded artifact and independent expected passage roster.
+- The implementation has a 548-line reader plus the assurance coverage
+  adapter. The main differences from the estimate are the separate scope
+  and calibration bindings and the semantic receipt checks.

@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +69 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +70 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -3257,13 +3257,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### examples.literature_assurance
-- does: Example: score a literature pipeline run against an answer key in seven separate stages, with exact-fraction floors and value-free refusals [score, stage_status].
+- does: Example: score a literature pipeline run against an answer key in seven separate stages, including opt-in reading coverage, with exact-fraction floors and value-free refusals [score, stage_status].
 - verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, identity decisions, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages
 - in: The literature example root (corpus/corpus.json, model, documents, extract artifacts), a literature-answer-key/1 file with gold/ and render/ beside it, and a literature-run/1 directory.
 - out: A literature-assurance-report/1 payload and exit 0, 1 or 3. The routes are gnd check (plain, --anchors, --composition) and gnd fidelity, run as subprocesses.
 - status: canonical
 - modules: src/gnd/examples/literature/assurance_report.py
-- uses: (none)
+- uses: examples.literature_reading
 - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
 - tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
 - notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
@@ -3468,6 +3468,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - constraint provenance: model.verbalization, recovery.verify
 - content digest: assurance.identity, model.population_loading
 - corpus manifest: assurance.claim_graph, synth.corpus
+- coverage evidence: cli.checking_command, examples.literature_reading
 - coverage omission: synth.frontier, synth.mutations
 - declared adapter: agent.declared_adapter, exp.session_profile, exp.session_runtime
 - derived relations: export.pyrel_rules, semantics.extensions
@@ -3712,5 +3713,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/depth.py
 - uses: infra.artifacts, infra.bounded_process, model.anchors
-- used_by: (none)
+- used_by: examples.literature_reading
 - tests: tests/test_ld1_competency_examples.py
+
+### examples.literature_reading
+- does: Run and replay bounded literature reading with saved producer outputs, typed coverage, custody and fidelity.
+- verbs: reading workflow, multipass reading, methods extraction, coverage evidence, scope, absence, fidelity, revisit, question disposition
+- in: Packaged public source inventory, section and question roster, saved responses, held-back fidelity labels and source scope.
+- out: Six bound pass records, producer call counts, typed coverage, read cost, checked populations and fidelity reports.
+- status: canonical
+- modules: src/gnd/examples/literature/reading.py
+- uses: examples.literature_depth, infra.artifacts
+- used_by: examples.literature_assurance
+- tests: tests/test_ld3_reading_workflow.py

@@ -719,6 +719,46 @@ def _record_fresh(inputs: Inputs, record: dict) -> bool:
     return True
 
 
+def _coverage(inputs: Inputs) -> dict:
+    """Score the opt-in reading coverage evidence against an independent roster."""
+    if "coverage" not in inputs.run and "coverage" not in inputs.key:
+        return _dormant("coverage")
+
+    from .reading import COVERAGE_STATES, read_coverage_rows
+
+    floors = {"precision": (1, 1), "recall": (1, 1)}
+
+    def units(rows):
+        _need(isinstance(rows, list) and 0 < len(rows) <= 128)
+        question_ids = set()
+        result = set()
+        for row in rows:
+            _need(isinstance(row, dict) and set(row) == {"question", "source", "section", "state", "inspected"})
+            qid, source, section, state, inspected = (
+                row[field] for field in ("question", "source", "section", "state", "inspected")
+            )
+            _need(all(_is_str(value) for value in (qid, source, section, state))
+                  and qid not in question_ids and source in inputs.sources
+                  and section in inputs.passages and inputs.passages[section]["document"] == source
+                  and state in COVERAGE_STATES and type(inspected) is bool)
+            _need(inspected == (state not in ("unavailable", "not-applicable", "omitted")))
+            question_ids.add(qid)
+            result.add((qid, source, section, state, inspected))
+        return result
+
+    try:
+        declaration = inputs.run.get("coverage")
+        _need(isinstance(declaration, dict) and set(declaration) == {"sha256"})
+        expected = units(inputs.key.get("coverage"))
+        observed = units(read_coverage_rows(inputs.run_dir, declaration["sha256"]))
+    except (OSError, Refusal, ValueError):
+        return _stage("coverage", metrics={}, floors=floors, route_present=True, route_refused=True)
+    matched = len(expected & observed)
+    return _stage("coverage", metrics={"precision": (matched, len(observed)), "recall": (matched, len(expected))},
+                  floors=floors, route_present=True, sample_size=len(expected),
+                  disagreements={"count": len(expected ^ observed), "units": sorted({row[0] for row in expected ^ observed})})
+
+
 def _dormant(name: str) -> dict:
     return {"stage": name, "active": False, "owner": DORMANT[name], "status": "not-measured",
             "failed_floors": [], "unit": UNITS[name], "sample_size": 0}
@@ -831,7 +871,7 @@ def score(corpus_root: Path, answers: Path, run_dir: Path, *,
             "semantic-support": _semantic(inputs, r3, _per_domain(inputs, results)),
             "identity-decisions": _identity_decisions(inputs, r4),
             "derivation": _derivation(inputs, r4),
-            "coverage": _dormant("coverage"),
+            "coverage": _coverage(inputs),
             "freshness": _freshness(inputs, r2, r3, r4),
         }
     except Exception:  # noqa: BLE001 -- totality

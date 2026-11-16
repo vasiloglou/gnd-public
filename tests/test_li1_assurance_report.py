@@ -456,7 +456,13 @@ def _report_for(name: str, tmp: Path) -> dict:
 @pytest.mark.parametrize("name", GOLDEN_CASES)
 def test_report_golden(name, tmp_path):
     golden = json.loads((EXPECTED / f"{name}.report.json").read_text(encoding="utf-8"))
-    assert _report_for(name, tmp_path) == golden
+    actual = _report_for(name, tmp_path)
+    # The frozen report identifies the emitter at the LI1 snapshot. The
+    # live score must identify its own implementation and preserve its results.
+    assert golden["inputs"]["harness_sha256"] == "b3dc219528f3d2131357ce6a4cd5fb55a25dad37a5fbd5b4d1ea43663ac481e4"
+    current_sha = hashlib.sha256((EXAMPLE / "assurance_report.py").read_bytes()).hexdigest()
+    golden["inputs"]["harness_sha256"] = current_sha
+    assert actual == golden
     assert_matches_expectation(golden, name)
 
 
@@ -504,3 +510,36 @@ def test_identity_scoring_refuses_resolution_replaced_after_route(tmp_path, monk
     assert stage["route_refused"] is True
     assert report["exit_code"] == 1
     assert any(item["kind"] == "identity_pairs" for item in report["unscored_labels"])
+
+
+def test_opt_in_coverage_checks_bound_rows_without_changing_legacy(tmp_path):
+    corpus, answers, run = _copy_inputs(tmp_path)
+    plan_path = run / "run.json"
+    plan = json.loads(plan_path.read_bytes())
+    corpus_doc = json.loads((corpus / "corpus/corpus.json").read_bytes())
+    passage = next(row for row in corpus_doc["passages"] if row["document"] in plan["sources"])
+    row = {"question": "new-question", "source": passage["document"], "section": passage["id"],
+           "state": "inspected-not-found", "inspected": True}
+    key = json.loads(answers.read_bytes())
+    key["coverage"] = [row]
+    answers.write_text(json.dumps(key))
+    coverage_path = run / "coverage.json"
+
+    def bound_report(rows):
+        raw = json.dumps({"format": "literature-reading-coverage/1", "rows": rows}).encode()
+        coverage_path.write_bytes(raw)
+        plan["coverage"] = {"sha256": hashlib.sha256(raw).hexdigest()}
+        plan_path.write_text(json.dumps(plan))
+        report = _score(run, answers, corpus)
+        return report, next(stage for stage in report["stages"] if stage["stage"] == "coverage")
+
+    report, coverage = bound_report([row])
+    assert report["exit_code"] == 0
+    assert coverage["status"] == "pass" and coverage["recall"]["numerator"] == 1
+    report, coverage = bound_report([{**row, "state": "omitted", "inspected": False}])
+    assert report["exit_code"] == 1 and coverage["status"] == "fail"
+    report, coverage = bound_report([row, row])
+    assert report["exit_code"] == 1 and coverage["route_refused"] is True
+    coverage_path.unlink()
+    report = _score(run, answers, corpus)
+    assert report["exit_code"] == 1 and "coverage" in report["failed_stages"]

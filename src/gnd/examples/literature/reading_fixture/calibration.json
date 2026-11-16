@@ -1,0 +1,24 @@
+{
+  "high": {
+    "system": [
+      {
+        "subject": "alanine-in-vacuum",
+        "value": "alanine dipeptide in vacuum"
+      }
+    ],
+    "approximation": [
+      {
+        "subject": "alanine-in-vacuum",
+        "value": "Langevin integration at 300 K with 2 fs steps"
+      }
+    ]
+  },
+  "low": {
+    "system": [
+      {
+        "subject": "alanine-in-vacuum",
+        "value": "alanine dipeptide in vacuum"
+      }
+    ]
+  }
+}

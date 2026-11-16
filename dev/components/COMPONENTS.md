@@ -2066,7 +2066,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.service
 - does: Orchestrate population checks, anchor binding, admission, assurance, projected reports and version-15 rule-id, baseline and vacuous-acceptance runs [run_check].
-- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, guarded diagnostics report, same-population rule edition comparison
+- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, composed catalog checking, guarded diagnostics report, same-population rule edition comparison
 - in: model and population paths or loaded objects; check options
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
@@ -2122,13 +2122,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.composition
-- does: Compose anchored source populations using explicit renamings and optional resolution decisions, with replayable lineage.
-- verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding
-- in: model bytes and source directory with manifest, populations, documents and sidecars
+- does: Compose anchored candidate sources with explicit renamings and resolution decisions, and bind fixed catalog digests separately from candidate lineage.
+- verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding, fixed reference catalog, catalog roster
+- in: model bytes, bound catalog and source directory with manifest, populations, documents and sidecars
 - out: composed population bytes and canonical value-free lineage record
 - status: canonical
 - modules: src/gnd/composition.py
-- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index
+- uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index, model.scalar_identity
 - used_by: check.service, cli.api, examples.literature_lineage, witness.service
 - tests: tests/test_composition.py
 
@@ -2750,7 +2750,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/values.py
 - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.ossie_import, … +8 more (graph.md)
+- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, … +9 more (graph.md)
 - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
 - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 
@@ -3081,7 +3081,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### witness.schema
-- does: Validate bounded witness requests, certificates, typed targets, input identities and model-origin claims before production or replay.
+- does: Validate bounded witness requests, certificates, typed targets, input identities and model-origin claims and mixed catalog provenance before production or replay.
 - verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire, model wire, version-1 model intake, model without model_id
 - in: JSON requests or certificates, model and population documents, reference bytes, fixed or lowered WitnessLimits.
 - out: Validated documents, loaded model/populations, population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
@@ -3095,7 +3095,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### witness.service
-- does: Orchestrate path-based witness production, replay and why-not requests with composition lineage, disclosure modes and preserved include-free input refusals.
+- does: Orchestrate path-based witness production, replay and why-not requests, including independently bound model origins, catalog occurrences and candidate source lineage.
 - verbs: rooted witness projection, flattening binding, model origins, produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
 - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
 - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.

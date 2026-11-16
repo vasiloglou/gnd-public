@@ -7,7 +7,8 @@
       "enum": [
         1,
         2,
-        3
+        3,
+        4
       ]
     },
     "kind": {
@@ -190,7 +191,6 @@
         },
         "sources": {
           "type": "array",
-          "minItems": 1,
           "items": {
             "type": "object",
             "properties": {
@@ -564,7 +564,10 @@
           {
             "properties": {
               "version": {
-                "const": 2
+                "enum": [
+                  2,
+                  4
+                ]
               }
             },
             "required": [
@@ -662,13 +665,33 @@
     },
     {
       "if": {
-        "properties": {
-          "version": {
-            "const": 3
+        "anyOf": [
+          {
+            "properties": {
+              "version": {
+                "const": 3
+              }
+            },
+            "required": [
+              "version"
+            ]
+          },
+          {
+            "properties": {
+              "version": {
+                "const": 4
+              },
+              "binding": {
+                "required": [
+                  "flattening_sha256"
+                ]
+              }
+            },
+            "required": [
+              "version",
+              "binding"
+            ]
           }
-        },
-        "required": [
-          "version"
         ]
       },
       "then": {
@@ -702,6 +725,98 @@
                 "required": [
                   "model_origin"
                 ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "version": {
+            "const": 4
+          }
+        },
+        "required": [
+          "version"
+        ]
+      },
+      "then": {
+        "properties": {
+          "binding": {
+            "properties": {
+              "references": {
+                "minItems": 1,
+                "maxItems": 32,
+                "items": {
+                  "properties": {
+                    "id": {
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "nodes": {
+            "items": {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "base"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "then": {
+                "if": {
+                  "properties": {
+                    "origin": {
+                      "properties": {
+                        "kind": {
+                          "const": "reference"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "origin"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "sources": {
+                      "maxItems": 0
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "sources": {
+                      "minItems": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "sources": {
+                  "minItems": 1
+                }
               }
             }
           }

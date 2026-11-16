@@ -82,7 +82,8 @@ def stamp_projection(result: dict, projection: WitnessProjection) -> dict:
     certificate = result["certificate"]
     if certificate is None:
         return result
-    certificate["version"] = 3
+    if certificate["version"] != 4:
+        certificate["version"] = 3
     digest, origins = projection.binding
     certificate["binding"]["flattening_sha256"] = digest
     for node in certificate["nodes"]:

@@ -16,7 +16,10 @@
   ],
   "properties": {
     "schema": {
-      "const": "gnd-composition/1"
+      "enum": [
+        "gnd-composition/1",
+        "gnd-composition/2"
+      ]
     },
     "model_sha256": {
       "type": "string",
@@ -158,6 +161,33 @@
     "resolution_sha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "raw_sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "raw_sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
     }
   },
   "if": {
@@ -188,5 +218,28 @@
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema": {
+            "const": "gnd-composition/2"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "references"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "references"
+          ]
+        }
+      }
+    }
+  ]
 }

@@ -342,7 +342,7 @@ def test_plain_snapshot_cannot_pair_with_new_include(corpus, monkeypatch):
     assert result['exit_code'] == 3 and 'include:unsupported-route' in json.dumps(result)
 
 
-def test_reference_composition_remains_refused(tmp_path):
+def test_reference_composition_still_requires_a_manifest(tmp_path):
     from test_mc1_model_includes import split_existing
 
     source = ROOT / 'tests/fixtures/reference-corpus/dispatch'
@@ -351,7 +351,7 @@ def test_reference_composition_remains_refused(tmp_path):
     assert load_model(path).reference_populations
     result = api.compose(path, tmp_path / 'absent-composition')
     assert result['exit_code'] == 3
-    assert result['error']['message'] == 'composition:invalid: composition with reference populations is unsupported'
+    assert result['error']['message'] == 'composition:invalid: composition manifest could not be read safely'
     assert result['error'] == api.compose(source / 'model.orm.yaml', tmp_path / 'absent-composition')['error']
 
 

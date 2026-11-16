@@ -994,12 +994,19 @@ def _compose_with_inputs(model, directory):
             selected = model_module.load_model_bytes_composed(raw, source=model, root=Path(model).parent)
         else:
             selected = model_module.load_model_bytes(raw, source=model)
+            model_module.bind_declared_references(selected, root=Path(model).parent, attach=True)
     except ModelValidationError as error:
         return {"schema": "gnd-compose/1", "exit_code": 3,
                 "error": {"kind": "input", "message": include_reason(error) or "invalid model"}}, ()
+    except model_module.ReferenceInputError as error:
+        stale = "reference raw hash does not match declared sha256"
+        detail = stale if str(error) == stale else "reference catalog could not be bound"
+        return {"schema": "gnd-compose/1", "exit_code": 3,
+                "error": {"kind": "input", "message": str(CompositionError(detail))}}, ()
     except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model
         return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}, ()
-    inputs = tuple(Path(model).parent / entry['path'] for entry in selected.includes)
+    inputs = tuple(Path(model).parent / entry['path']
+                   for entry in (*selected.includes, *selected.reference_populations))
     try:
         composed = compose_sources(selected, raw, directory)
     except CompositionError as error:

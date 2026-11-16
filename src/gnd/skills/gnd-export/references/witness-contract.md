@@ -1,4 +1,4 @@
-# Certificate versions 1, 2 and 3
+# Certificate versions 1 through 4
 
 See the [closed wire schema](witness.schema.json) and [workflow](../SKILL.md).
 Bindings include the existing model identity, SHA-256 of canonical candidate
@@ -53,8 +53,8 @@ with it is `binding-stale` (3); a record that does not bind the model and
 population, or an unreadable record, is `input-invalid` (3). Replay checks
 that the witness agrees with the record; it does not re-derive the record
 from the sources, which `gnd check --composition --sources` does. Witness views list `sources` as ids and
-indexes. `--composition` excludes `--reference-root` (64): composition refuses
-reference populations. Version 1 is unchanged.
+indexes. `--composition` excludes `--reference-root` (64). Version 2 binds
+a reference-free composition record.
 
 
 ## Version 3: rooted model origins
@@ -67,8 +67,8 @@ match the rooted, re-derived bytes from the
 [flattening contract](../../gnd-orm-core/references/representation-format.md#extraction-flattening-record).
 Without the options, the commands derive the same projection in memory.
 The binding uses the raw SHA-256 of the canonical flattening record in
-`flattening_sha256`. A valid include-free root continues to produce versions
-1 or 2.
+`flattening_sha256`. The version 1 and 2 rules apply to include-free inputs
+outside catalog-backed composition.
 
 Each node carries `model_origin` with `origin`, `original_address`,
 `composed_address` and `element_id`. These are the origin entry for the
@@ -84,3 +84,21 @@ bound digest is `binding-stale` (3). A structurally valid but forged model
 origin or fact occurrence is `proof-invalid` (1). The unrooted model-byte
 intake cannot resolve authored includes. An incomplete option pair exits 64.
 The same witness byte and work ceilings govern the stamped output.
+
+## Version 4 for catalog-backed composition
+
+Supplying a catalog-backed composition record produces version 4. Witness
+and replay authenticate the model's pinned reference files and compare
+their sorted raw-byte SHA-256 roster with the composition record.
+`composition_sha256` binds the exact record bytes and `references` binds
+the fixed inputs separately. The reference roster must contain 1 to 32
+entries. Include roots also require the version-3 flattening digest and
+per-node model origins.
+
+Candidate base nodes carry the nonempty `sources` list from the record.
+Reference base nodes carry the reference ID and fact index in `origin` and
+an empty `sources` list. Replay verifies each occurrence in its named input
+before accepting a proof. Changed catalog bytes or a mismatching roster give
+`binding-stale` (3). A structurally valid forged occurrence or model origin
+gives `proof-invalid` (1). Check with the source directory independently
+re-derives candidate lineage.

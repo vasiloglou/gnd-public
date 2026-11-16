@@ -351,6 +351,8 @@ def _load_model_at(data, *, source, descriptor, historical=None, analysis=False)
     if historical is not None:
         _refuse('declaration')
     model = load_model_bytes(data, source=source)
+    if model.reference_populations:
+        model._authored_sha256 = hashlib.sha256(data).hexdigest()
     return CompositionView(doc, (), (), (), model) if analysis else model
 
 

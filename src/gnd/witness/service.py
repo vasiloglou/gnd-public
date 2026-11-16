@@ -52,7 +52,7 @@ def _witness_inputs(model_path, population_path, reference_root, *, model_raw=No
     return model, candidate, context, md, pd
 
 
-def _composition_lineage(composition, model_path, population_path, *, digests=None):
+def _composition_lineage(composition, model_path, population_path, *, digests=None, catalog=None):
     """Read a composition record bound to these model and population bytes (CT3)."""
     import hashlib
 
@@ -64,6 +64,8 @@ def _composition_lineage(composition, model_path, population_path, *, digests=No
         guard_path(model_path, "witness.composition")
     raw = read_regular_path(composition, label="composition record", max_bytes=MAX_RECORD_BYTES)
     record = parse_record(raw)
+    if record.get("references", []) != (catalog or []):
+        raise StaleWitnessBinding("reference roster differs from the record")
     fields = ("model_sha256", "population_sha256")
     if digests is None:
         for path, key in zip((model_path, population_path), fields, strict=True):
@@ -75,8 +77,8 @@ def _composition_lineage(composition, model_path, population_path, *, digests=No
     return hashlib.sha256(raw).hexdigest(), lineage_index(record)
 
 
-def _stamp_composition(result, composition):
-    """Make a produced certificate a version-2 witness over a composed population."""
+def _stamp_composition(result, composition, *, catalog=False):
+    """Bind a produced certificate to a composition record and candidate lineage."""
     from gnd.artifacts import canonical_json_bytes
     from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, WitnessResult, result_rows
 
@@ -84,10 +86,13 @@ def _stamp_composition(result, composition):
     if certificate is None:
         return result
     digest, lineage = composition
-    certificate["version"] = 2
+    certificate["version"] = 4 if catalog else 2
     certificate["binding"]["composition_sha256"] = digest
     for node in certificate["nodes"]:
         if node["kind"] == "base":
+            if catalog and node["origin"]["kind"] == "reference":
+                node["sources"] = []
+                continue
             sources = lineage.get((node["fact_type"], node["origin"]["fact_index"]))
             if node["origin"]["kind"] != "candidate" or not sources:
                 raise WitnessInputError("the composition record has no lineage for a base fact")
@@ -100,26 +105,32 @@ def _stamp_composition(result, composition):
 
 
 def _projected_inputs(projection, model_path, population_path, *, reference_root=None, composition=None):
+    return _bound_witness_inputs(
+        load_flat_model(projection), model_path, population_path, projection.root_sha256,
+        reference_root=reference_root, composition=composition,
+    )
+
+
+def _bound_witness_inputs(model, model_path, population_path, model_sha256, *, reference_root=None,
+                          composition=None):
     from pathlib import Path
 
     from gnd.artifacts import sha256_hex
+    from gnd.composition import catalog_roster
     from gnd.model import bind_declared_references
     from gnd.population import _parse_document_bytes, load_population_bytes
-    from gnd.witness.types import WitnessInputError
 
-    model = load_flat_model(projection)
-    raw = read_projected_path(population_path, label="candidate population")
-    lineage = None
-    if composition is not None:
-        if model.reference_populations:
-            raise WitnessInputError("composition with reference populations is unsupported")
-        lineage = _composition_lineage(
-            composition, model_path, population_path, digests=(projection.root_sha256, sha256_hex(raw))
-        )
-    candidate = load_population_bytes(raw, source=population_path, model=model)
     context = bind_declared_references(
         model, root=reference_root if reference_root is not None else Path(model_path).parent
     )
+    raw = read_projected_path(population_path, label="candidate population")
+    lineage = None
+    if composition is not None:
+        lineage = _composition_lineage(
+            composition, model_path, population_path,
+            digests=(model_sha256, sha256_hex(raw)), catalog=catalog_roster(model, references=context),
+        )
+    candidate = load_population_bytes(raw, source=population_path, model=model)
     document = _parse_document_bytes(raw, suffix=Path(population_path).suffix, source=str(population_path))
     return model, candidate, context, document, lineage
 
@@ -132,7 +143,7 @@ def _produce_projected(projection, model_path, population_path, targets, **optio
     )
     result = produce_witness(model, candidate, targets, references=references).model_dump(mode="json")
     if lineage is not None:
-        result = _stamp_composition(result, lineage)
+        result = _stamp_composition(result, lineage, catalog=references is not None)
     return stamp_projection(result, projection)
 
 
@@ -280,20 +291,29 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
     """Produce a composed witness whose base nodes name their source facts."""
     from ruamel.yaml.error import YAMLError
 
+    from gnd.artifacts import sha256_hex
     from gnd.witness.io import load_targets
+    from gnd.witness.producer import produce_witness
     from gnd.witness.types import WitnessResult
 
     try:
-        projection = resolved_projection(model_path, flat_model, flattening_record)
+        raw = read_projected_path(model_path, label="authored model")
+        projection = resolved_projection(model_path, flat_model, flattening_record, raw=raw)
         if projection is not None:
             return _produce_projected(
                 projection, model_path, population_path, load_targets(targets_path), composition=composition
             )
+        model = model_module.load_model_bytes(raw, source=model_path)
+        if model.reference_populations:
+            targets = load_targets(targets_path)
+            _, candidate, context, _, lineage = _bound_witness_inputs(
+                model, model_path, population_path, sha256_hex(raw), composition=composition,
+            )
+            result = produce_witness(model, candidate, targets, references=context).model_dump(mode="json")
+            return _stamp_composition(result, lineage, catalog=True)
         lineage = _composition_lineage(composition, model_path, population_path)
-        if model_module.load_model(model_path).reference_populations:
-            raise ValueError("a composed population has no reference populations")
         return _stamp_composition(witness_result(model_path, population_path, targets_path), lineage)
-    except StaleWitnessBinding:
+    except (StaleWitnessBinding, model_module.ReferenceInputError):
         return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult
@@ -308,21 +328,32 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
     """Replay a witness against the composition record it binds."""
     from ruamel.yaml.error import YAMLError
 
+    from gnd.artifacts import sha256_hex
+    from gnd.model import parse_model_document
     from gnd.witness.io import load_certificate
     from gnd.witness.kernel import replay_witness
     from gnd.witness.types import WitnessResult
 
     try:
         certificate = load_certificate(certificate_path)
-        projection = resolved_projection(model_path, flat_model, flattening_record)
+        raw = read_projected_path(model_path, label="authored model")
+        projection = resolved_projection(model_path, flat_model, flattening_record, raw=raw)
         if projection is not None:
             return _replay_projected(
                 projection, model_path, population_path, certificate, composition=composition
             )
+        md = parse_model_document(raw, source=model_path)
+        if md.get("reference_populations"):
+            model = model_module.load_model_bytes(raw, source=model_path)
+            _, _, context, pd, lineage = _bound_witness_inputs(
+                model, model_path, population_path, sha256_hex(raw), composition=composition,
+            )
+            refs = tuple((origin.id, snapshot) for origin, _, snapshot in context._snapshots)
+            return replay_witness(md, pd, certificate, composition=lineage, reference_inputs=refs).model_dump(mode="json")
         lineage = _composition_lineage(composition, model_path, population_path)
         _, _, _, md, pd = _witness_inputs(model_path, population_path, None)
         return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
-    except StaleWitnessBinding:
+    except (StaleWitnessBinding, model_module.ReferenceInputError):
         return WitnessResult(3, reason="binding-stale").model_dump(mode="json")
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult

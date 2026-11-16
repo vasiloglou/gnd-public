@@ -174,3 +174,42 @@ origin coordinates. The legacy artifact pair is captured at LX2 close.
 | Structure | `uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short` |
 | Lint and components | Whole-tree Ruff, changed-file Ruff and `python3 scripts/components_index.py changed --base 6d2ecece --strict`. Compare known full lint diagnostics using the LX2 baseline. |
 | Cadence | Default marker filters. Full and historical lanes follow their separate triggers. |
+
+## Candidate verification
+
+The focused gate added the byte-identical schema-copy controls. The
+catalog-bound subset passes on the same candidate whose subset fails
+without the catalog. The accepting fixture supplies both claimed derived
+rows so the checker can verify their extension as well as the subset.
+The instrumented check observed one combined-population bind. The
+positive reference report validates against the current report schema.
+
+The refused explicit-anchor combination retains CLI usage exit 64. The
+explicit API reference override raises the existing ValueError. The old
+MC2 catalog-refusal control now proves that the accepted model still
+needs a valid source manifest. The unbound model-copy control continues
+to refuse. The LX3 catalog authority does not change LI2's candidate
+resolution decisions.
+
+```sh
+uv run pytest -q tests/test_lx3_catalog_composition.py tests/test_composition.py tests/test_composition_example.py tests/test_witness_composition.py tests/test_li2_resolution.py tests/test_reference_population_corpus.py tests/test_lx2_witness_flattening.py tests/test_mc2_consumers.py tests/test_public_semantic_composition.py tests/test_schema_sync.py --tb=short
+uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short
+```
+
+    744 passed, 3 deselected in 155.35s (0:02:35)
+    679 passed, 2 deselected in 150.43s (0:02:30)
+
+Scoped Ruff passes. Whole-tree Ruff exits 1 with exact equality against the
+188 inherited diagnostics by file, line, code and message. The strict
+component gate exits 0. The RF6 literal model-query inventory is unchanged.
+The successor counts the moved composition walk and new dynamic
+lookups. Schema validation checks structural conditions. The reader also
+verifies strictly sorted reference IDs and candidate source membership.
+
+The affected replay-admission and architecture extension of the focused gate
+ran with host process inspection for the admission harness.
+
+    uv run pytest -q tests/test_public_replay_admission.py tests/test_gnd_arch.py --tb=short
+    54 passed in 7.90s
+
+Independent diff review is pending.

@@ -173,6 +173,34 @@ check and a witness's `composition_sha256` always name the same bytes.
 [`composition.schema.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/composition.schema.json)
 describes it.
 
+## Fixed reference catalogs
+
+The authored model may declare fixed reference populations. Composition
+authenticates the declarations and loads the catalog before reading the source
+manifest. A populated catalog cannot depend on candidate rows through a
+confirmed alethic subset. Distinct catalog rows must agree with the relation's
+confirmed alethic internal uniqueness keys. These checks and a stale declared
+catalog digest give input refusal (3).
+
+Candidate rows can name catalog entities, including through explicit manifest
+renamings. Renaming, deduplication, identity resolution and source lineage
+operate on the candidate sources. A catalog entity supplies no candidate
+identity decision or source span. Candidate source populations cannot assert
+catalog-owned fact types.
+
+Catalog-backed records use `gnd-composition/2`. They add a nonempty
+`references` array, sorted by case-sensitive reference ID. Each entry contains
+`id` and `raw_sha256`, the digest of the catalog file. Without declared
+catalogs, composition writes the unchanged `gnd-composition/1` record.
+
+`gnd check MODEL COMPOSED --composition RECORD --sources DIR` verifies the
+record's catalog roster against the authenticated inputs and re-derives the
+candidate population. It evaluates the verified candidate and the fixed catalog
+in one combined population. The reference report wrapper lists the distinct
+occurrence origins, and the embedded report lists candidate lineage for
+offending candidate facts. The command keeps source anchors from the composed
+sources and refuses explicit anchor or reference overrides.
+
 ## Check a composed population
 
 ```sh

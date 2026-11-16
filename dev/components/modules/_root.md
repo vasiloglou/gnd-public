@@ -119,19 +119,19 @@ Stable in-process access to GND validation and checking reports.
 | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
 | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
 | `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_model(model) -> str` | function | 1015 | Render the caller's complete model for review, including authored samples. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1024 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1067 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1096 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1204 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1228 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1243 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1251 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1261 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1270 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1282 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1285 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1288 | (no docstring) |
+| `verbalize_model(model) -> str` | function | 1022 | Render the caller's complete model for review, including authored samples. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1031 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1074 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1103 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1211 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1235 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1250 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1258 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1268 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1277 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1289 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1292 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1295 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -302,7 +302,7 @@ Shared checking, admission and report orchestration below entry points.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `compare_rule_editions(head_path, population_path, base_path) -> tuple[int, dict[str, Any]]` | function | 966 | Evaluate one captured population under two editions and compare rule findings. |
+| `compare_rule_editions(head_path, population_path, base_path) -> tuple[int, dict[str, Any]]` | function | 975 | Evaluate one captured population under two editions and compare rule findings. |
 
 ## gnd.cli — `src/gnd/cli.py`
 Components: cli.dispatch
@@ -331,14 +331,15 @@ Compose several anchored populations into one population with lineage (CT2).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Manifest` | class | 59 | (no docstring) |
-| `Source` | class | 67 | (no docstring) |
-| `Composition` | class | 76 | (no docstring) |
-| `parse_manifest(raw) -> Manifest` | function | 87 | (no docstring) |
-| `parse_record(raw) -> dict[str, Any]` | function | 154 | (no docstring) |
-| `compose(model, model_raw, directory) -> Composition` | function | 237 | Compose the sources a manifest names; refuse instead of guessing. |
-| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 391 | Re-derive a composition from its inputs and compare it with the record. |
-| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 408 | (no docstring) |
+| `Manifest` | class | 61 | (no docstring) |
+| `Source` | class | 69 | (no docstring) |
+| `Composition` | class | 78 | (no docstring) |
+| `parse_manifest(raw) -> Manifest` | function | 89 | (no docstring) |
+| `parse_record(raw) -> dict[str, Any]` | function | 156 | (no docstring) |
+| `catalog_roster(model, *, references) -> list[dict[str, str]]` | function | 238 | Validate fixed catalog keys and admission before using candidate evidence. |
+| `compose(model, model_raw, directory) -> Composition` | function | 297 | Compose the sources a manifest names; refuse instead of guessing. |
+| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 455 | Re-derive a composition from its inputs and compare it with the record. |
+| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 475 | (no docstring) |
 
 ## gnd.composition_resolution — `src/gnd/composition_resolution.py`
 Components: model.composition_resolution

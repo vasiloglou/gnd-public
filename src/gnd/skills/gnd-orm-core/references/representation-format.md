@@ -1778,7 +1778,7 @@ model content plus sorted declarations, including path, ownership and expected
 raw hash. `model_id` remains a separate opaque identifier. Versions 1–3 reject
 this field; a feature-free version 4 retains the ordinary wire and behavior.
 
-Check, batch, transition and diff consume bound references. Synth, codegen and
+Check, composition, witness, batch, transition and diff consume bound references. Synth, codegen and
 older session contracts refuse reference-bearing inputs before publishing
 artifacts or invoking an adapter. Conformance can report changed model identity;
 it never regenerates code. Extraction projects candidate-owned fact types only.

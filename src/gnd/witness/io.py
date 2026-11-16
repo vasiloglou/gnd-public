@@ -161,15 +161,16 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
     record(doc, "version kind binding results nodes")
     if (
         type(doc["version"]) is not int
-        or doc["version"] not in (1, 2, 3)
+        or doc["version"] not in (1, 2, 3, 4)
         or doc["kind"] != "derivation-witness"
     ):
         raise WitnessInputError("unknown certificate kind/version")
     # Version 2 is a witness over a composed population (CT3): the binding
     # names the composition record and each base node its source facts.
-    projected = doc["version"] == 3
     b = doc["binding"]
-    composed = doc["version"] == 2 or (projected and type(b) is dict and "composition_sha256" in b)
+    catalog = doc["version"] == 4
+    projected = doc["version"] == 3 or (catalog and type(b) is dict and "flattening_sha256" in b)
+    composed = doc["version"] in (2, 4) or (projected and type(b) is dict and "composition_sha256" in b)
     keys = "model_digest candidate_digest references"
     if composed:
         keys += " composition_sha256"
@@ -187,11 +188,14 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
             raise WitnessInputError("invalid digest")
     if type(b["references"]) is not list:
         raise WitnessInputError("invalid reference identity roster")
+    if catalog and not 1 <= len(b["references"]) <= 32:
+        raise WitnessInputError("catalog reference roster exceeds its bounds")
     ids = []
     for ref in b["references"]:
         record(ref, "id raw_sha256")
         if (
             type(ref["id"]) is not str
+            or (catalog and not 1 <= len(ref["id"]) <= 128)
             or type(ref["raw_sha256"]) is not str
             or not re.fullmatch(r"[0-9a-f]{64}", ref["raw_sha256"])
         ):
@@ -255,7 +259,8 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
             ):
                 raise WitnessInputError("invalid base origin")
             if composed:
-                if type(n["sources"]) is not list or not n["sources"]:
+                needs_sources = not catalog or origin["kind"] == "candidate"
+                if type(n["sources"]) is not list or bool(n["sources"]) != needs_sources:
                     raise WitnessInputError("invalid base sources")
                 for entry in n["sources"]:
                     record(entry, "source fact_type fact_index")

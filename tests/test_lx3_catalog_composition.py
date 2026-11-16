@@ -70,7 +70,7 @@ def source(directory, model, name, facts, document):
     })
 
 
-def setup(tmp_path, *, includes=True, dependency=False):
+def setup(tmp_path, *, includes=True, dependency=False, claims=False):
     top = tmp_path.resolve()
     dispatch = DISPATCH / "model.orm.yaml"
     standalone = parse_model_document(dispatch.read_bytes(), source=dispatch)
@@ -116,10 +116,13 @@ def setup(tmp_path, *, includes=True, dependency=False):
     write(model, root)
     selected = load_model(model)
     sources = top / "sources"
-    source(sources, selected, "first", {SUBJECT: [{"shipment": "SHIP-17", "warehouse": "A Depot"}]},
-           "SHIP-17 is assigned to A Depot.")
-    source(sources, selected, "second", {SUBJECT: [{"shipment": "SHIP-18", "warehouse": "WH-A"}]},
-           "SHIP-18 is assigned to WH-A.")
+    for name, shipment, warehouse in (("first", "SHIP-17", "A Depot"), ("second", "SHIP-18", "WH-A")):
+        facts = {SUBJECT: [{"shipment": shipment, "warehouse": warehouse}]}
+        document = f"{shipment} is assigned to {warehouse}."
+        if claims:
+            facts[ELIGIBLE] = [{"shipment": shipment, "product": "GEAR-2"}]
+            document += " The approved product is GEAR-2."
+        source(sources, selected, name, facts, document)
     write(sources / "manifest.json", {
         "schema": "gnd-composition-manifest/1", "sources": EXPECTED["sources"],
         "renamings": [{"source": "first", "fact_type": SUBJECT, "role": "warehouse",
@@ -135,13 +138,16 @@ def setup(tmp_path, *, includes=True, dependency=False):
 
 def run(capsys, *args):
     capsys.readouterr()
-    code = main(list(map(str, args)))
+    try:
+        code = main(list(map(str, args)))
+    except SystemExit as error:
+        code = error.code
     output = capsys.readouterr()
     return code, output.out, output.err
 
 
 def composition(tmp_path, capsys, *, includes=True):
-    model, sources, catalog, targets = setup(tmp_path, includes=includes)
+    model, sources, catalog, targets = setup(tmp_path, includes=includes, claims=True)
     population, record = model.with_name("population.json"), model.with_name("record.json")
     code, output, error = run(capsys, "compose", model, sources, "--out", population, "--record", record)
     assert code == 0, output + error
@@ -165,26 +171,41 @@ def replay(capsys, model, population, record, certificate):
     return [code, result["reason"] or (result["results"][0]["reason"] if code else None)]
 
 
-def test_composed_check_binds_catalog_and_candidate_sources(tmp_path, capsys):
+def test_composed_check_binds_catalog_and_candidate_sources(tmp_path, capsys, monkeypatch):
+    from gnd import references
+
     model, sources, catalog, _, population, record = composition(tmp_path, capsys)
-    assert read(population)["facts"] == {SUBJECT: [
+    assert read(population)["facts"][SUBJECT] == [
         {"shipment": "SHIP-17", "warehouse": EXPECTED["candidate_warehouse"]},
         {"shipment": "SHIP-18", "warehouse": EXPECTED["candidate_warehouse"]},
-    ]}
+    ]
     lineage = read(record)
     assert lineage["schema"] == EXPECTED["record_schema"]
     assert lineage["references"] == [{"id": EXPECTED["catalog"], "raw_sha256": digest(catalog)}]
     assert [row["id"] for row in lineage["sources"]] == EXPECTED["sources"]
-    assert [row["sources"][0]["source"] for row in lineage["facts"]] == EXPECTED["sources"]
-    assert [row["renamings"] for row in lineage["facts"]] == [[0], []]
-    assert {row["fact_type"] for row in lineage["facts"]} == {SUBJECT}
+    asserted = [row for row in lineage["facts"] if row["fact_type"] == SUBJECT]
+    assert [row["sources"][0]["source"] for row in asserted] == EXPECTED["sources"]
+    assert [row["renamings"] for row in asserted] == [[0], []]
+    assert set(read(population)["facts"]) == {SUBJECT, ELIGIBLE}
+    assert {row["fact_type"] for row in lineage["facts"]} == {SUBJECT, ELIGIBLE}
     assert parse_record(record.read_bytes()) == lineage
     jsonschema.validate(lineage, read(ROOT / "src/gnd/composition.schema.json"))
+    bind = references.bind_population
+    combined = []
+
+    def record_binding(model, candidate, *, references):
+        view = bind(model, candidate, references=references)
+        combined.append(view)
+        return view
+
+    monkeypatch.setattr(references, "bind_population", record_binding)
     code, output, error = check(capsys, model, sources, population, record)
     assert code == 0, output + error
+    assert len(combined) == 1
     report = json.loads(output)
+    jsonschema.validate(report, read(ROOT / "src/gnd/report.schema.json"))
     assert report["report"]["composition"]["record_sha256"] == digest(record)
-    assert report["report"]["counts"]["pass"] == 3
+    assert report["report"]["counts"]["pass"] == 4
     assert {row["origin"]["kind"] for row in report["occurrence_origins"]} == {"candidate", "reference"}
     # With the same candidate bytes and no catalog, the subset must fail.
     root = read(model)
@@ -192,7 +213,8 @@ def test_composed_check_binds_catalog_and_candidate_sources(tmp_path, capsys):
     write(model, root)
     code, output, _ = run(capsys, "check", model, population, "--format", "json")
     assert code == 1
-    assert json.loads(output)["counts"]["fail"] == 1
+    assert any(row["constraint_type"] == "subset" and row["verdict"] == "fail"
+               for row in json.loads(output)["verdicts"])
 
 
 @pytest.mark.parametrize("defect", ["dependency", "key", "stale"])
@@ -306,8 +328,11 @@ def test_composition_override_and_catalog_write_collisions(tmp_path, capsys):
     assert run(capsys, "compose", model, sources, "--out", population, "--record", record)[0] == 0
     code, output, error = check(capsys, model, sources, population, record, "--anchors",
                                 sources / "first/population.json.anchors.json")
-    assert code == 3
-    assert "composition cannot be combined with anchors" in output + error
+    assert code == 64
+    assert "excludes --anchors" in output + error
+    with pytest.raises(ValueError, match="composition cannot be combined with anchors, document, references"):
+        api.check(model, population, composition=record, sources=sources,
+                  references=load_model(model)._references)
     assert witness(capsys, model, population, record, targets, "--reference-root", sources)[0] == 64
 
 
@@ -316,6 +341,10 @@ def test_catalog_roster_is_closed_and_capped(tmp_path, capsys):
     data = read(record)
     data["references"] *= 33
     with pytest.raises(CompositionError):
+        parse_record(canonical_json_bytes(data))
+    data = read(record)
+    data["facts"][0]["sources"][0]["source"] = "catalog"
+    with pytest.raises(CompositionError, match="unknown candidate source"):
         parse_record(canonical_json_bytes(data))
     data["references"] = [{"id": "catalog", "raw_sha256": "0" * 64, "owner": "input"}]
     with pytest.raises(CompositionError):
@@ -331,6 +360,28 @@ def test_reference_free_artifact_bytes_match_predecessor(tmp_path, capsys):
     assert run(capsys, "compose", model, sources, "--out", population, "--record", record)[0] == 0
     assert digest(population) == EXPECTED["legacy_population_sha256"]
     assert digest(record) == EXPECTED["legacy_record_sha256"]
+
+
+@pytest.mark.parametrize("defect", ["empty-roster", "reference-sources", "candidate-sources"])
+def test_mixed_wire_rejects_malformed_cert_before_stale_catalog(tmp_path, capsys, defect):
+    model, _, catalog, targets, population, record = composition(tmp_path, capsys)
+    certificate = model.with_name("witness.json")
+    assert witness(capsys, model, population, record, targets, "--out", certificate)[0] == 0
+    proof = read(certificate)
+    if defect == "empty-roster":
+        proof["binding"]["references"] = []
+    else:
+        bases = {n["origin"]["kind"]: n for n in proof["nodes"] if n["kind"] == "base"}
+        if defect == "reference-sources":
+            bases["reference"]["sources"] = bases["candidate"]["sources"]
+        else:
+            bases["candidate"]["sources"] = []
+    for path in ("src/gnd/schema/witness.schema.json", "src/gnd/skills/gnd-export/references/witness.schema.json"):
+        with pytest.raises(jsonschema.ValidationError):
+            jsonschema.validate(proof, read(ROOT / path))
+    write(certificate, proof)
+    catalog.write_bytes(catalog.read_bytes() + b" ")
+    assert replay(capsys, model, population, record, certificate) == [3, "input-invalid"]
 
 
 def test_catalog_does_not_discharge_candidate_resolution(tmp_path):

@@ -306,8 +306,9 @@ def replay_witness(
             model_document, candidate_document, reference_inputs, limits=limits
         )
         binding = dict(certificate["binding"])
-        projected = certificate["version"] == 3
+        projected = "flattening_sha256" in binding
         composed = "composition_sha256" in binding
+        catalog = certificate["version"] == 4
         if projected != (flattening is not None):
             return WitnessResult(3, reason="binding-stale")
         if flattening is not None and binding.pop("flattening_sha256") != flattening[0]:
@@ -315,6 +316,8 @@ def replay_witness(
         if composed and composition is None:
             return WitnessResult(3, reason="composition-required")
         if not composed and composition is not None:
+            return WitnessResult(3, reason="binding-stale")
+        if composed and catalog != bool(reference_inputs):
             return WitnessResult(3, reason="binding-stale")
         if composed and binding.pop("composition_sha256") != composition[0]:
             return WitnessResult(3, reason="binding-stale")
@@ -344,9 +347,13 @@ def replay_witness(
         if composed:
             lineage = composition[1]
             for node in certificate["nodes"]:
-                if node["kind"] == "base" and node["sources"] != lineage.get(
-                    (node["fact_type"], node["origin"]["fact_index"])
-                ):
+                if node["kind"] != "base":
+                    continue
+                origin = node["origin"]
+                expected_sources = [] if catalog and origin["kind"] == "reference" else lineage.get(
+                    (node["fact_type"], origin["fact_index"])
+                )
+                if node["sources"] != expected_sources:
                     raise InvalidProof("base node sources differ from the composition record")
         validate_targets(targets, model)
         flags, _, _ = classify_targets(model, targets, (candidate, *refs.values()))

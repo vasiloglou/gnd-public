@@ -1,9 +1,8 @@
 # Release 0.4.0
 
-r1, 2026-11-16. **Draft. Not reviewed and not approved.** No plan review has
-run: §8 proposes the instrument and RV-D0 asks the owner to choose it. No phase
-has an approved spec, and no code is written. `auto=false`. Milestone:
-`release-0.4.0`. Phase prefix `RV`.
+r2, 2026-11-17. Milestone `release-0.4.0`, phase prefix `RV`.
+The standard GND panel reviewed r1. Section 11 amends the r1 clauses below.
+The plan gate records the review and the distinct delegated ruling.
 
 Source: the owner's request of 2026-11-16 ("ok now can you create gnd version
 0.4.0"), made right after the main CI repair (PR 207) left main's default lane
@@ -348,3 +347,75 @@ runs the plan reads as unreviewed.
 
 Open question carried: whether the GitHub release attaches the wheel, the
 sdist and `SHA256SUMS.txt`, as v0.3.0's did.
+
+
+## 11. Amendments after the standard panel, 2026-11-17
+
+These rulings replace the corresponding r1 language above. The previous
+wording is retained at commit `9458c0a1`. The [panel report](../evidence/plan-r1/PANEL-REVIEW.md)
+accounts for every retained concern.
+
+- **§8 and RV-D0.** The owner's `process-milestone release-0.4.0 auto`
+  delegates milestone approval rulings. The owner selected the standard GND
+  panel for the plan and the eventual close. The per-phase diff uses an
+  independent reviewer in a different tool. Merge and each publication act
+  retain separate owner authorization.
+- **Predicate 2, §0 rules 3 and 6, and RV1-C2.** Install instructions pin a
+  published runtime. The source version, plugin manifests and prepared-state
+  pages may describe 0.4.0. The first RV1 spec ruling approves the scratch E1
+  protocol. Append the results, classify each inventory entry as historical,
+  retained install pin, recorded output or stale, and rule on the measured
+  handling in a second digest-bound spec ruling before candidate edits.
+  Include the version-bound distribution test as an RV2 carryover outside E1.
+- **Predicate 3 and RV1-C3.** Reconcile the candidate's changes against
+  `v0.3.1` and check the `v0.3.0..v0.3.1` range against the existing 0.3.1
+  notes. Put any missing user-visible carryover in the 0.4.0 section and
+  preserve the tagged section. Record both reconciliations.
+- **§2, predicates 4–5, RV2-C4 and RV-D6.** Retain the four proposed probes
+  and add an installed expense-receipts probe. The catalog happy path must
+  create a witness and verify it through replay on the unchanged catalog.
+  The mutant must exercise the typed catalog mismatch. Compare the
+  literature report against its committed reference, using the existing
+  recorded-version helper for version-bearing output. Run the receipts
+  walkthrough from installed resources, compare findings against the
+  reference page, and verify the documented missing-decision refusal.
+  Each availability control asserts the feature-specific exit and diagnostic
+  or verifies the installed resource is absent. Guarded rules are absent in
+  0.3.0, so candidate mutations distinguish the new clause semantics.
+  Keep prior positive probes as regressions, migrate the 0.3.0 candidate
+  version guard and retire the 0.2.0 availability control. Obtain full 0.3.0
+  hashes from RN2's retained checksum file and verify the wheel served by
+  PyPI. Record the overridden default exclusions alongside the
+  acceptance-only command. The distribution test is excluded by the default
+  filter, so its selected run supplies the acceptance evidence.
+- **§3, §4 and §9, RV2-C0 through C3 and R9.** Land the acceptance probes on
+  main through an owner-merged PR before freezing. Build and run from the
+  same named main commit containing those probes. Before the first build,
+  run the six-shard default lane at the freeze commit and compare against
+  V13. Route missing sibling notes through an RV2 preparation PR and rerun
+  RV1-C5 before freezing. For acceptance, reuse RN2's beast-3 pinned uv
+  binary setup, record the actual Python and uv versions, and verify
+  `SOURCE_COMMIT` and `SHA256SUMS` at the receiving host immediately before
+  running against the copied files. The default-lane baseline uses its
+  separate observed uv profile.
+- **Predicates 7–8, RV3 and the publication stage.** Preserve dated
+  read-only snapshots at baseline, hand-over before publication, and close.
+  Record all prior tag targets, including the lightweight v0.1.0 commit.
+  Expect the authorized 0.4.0 tag, release and two matching PyPI files.
+  Expect zero preparation workflow changes, publisher environments or
+  release workflow runs attributable to this milestone. Document unrelated
+  activity independently. Snapshots show remote state. Dated authorization
+  and execution receipts establish when the publication acts occurred.
+  Tag the exact accepted `SOURCE_COMMIT` and verify the peeled remote target.
+  RV-D10 selects the retained wheel, sdist and checksum file as release
+  attachments and verifies their identities. RV3 inventories every
+  prepared-state marker in the notes, compatibility, support and plugin pages
+  and checks the scratch edit. A numbered publication record binds the
+  served-file and index-install evidence, final page PR and publication
+  receipts. The milestone close panel reviews that evidence.
+- **Remaining decisions.** RV-D2 through D4 and D7 through D9 follow the
+  proposed readings, subject to the controls above. RV-D5 selects the PyPI
+  route and keeps the milestone open through publication. A tag-only route
+  would require an amendment to the completion predicates. PR 204, if
+  merged at the freeze, receives a note. The RV3 dossier names any resulting
+  count-certificate feature that lacked installed coverage.

@@ -1,0 +1,6 @@
+Hotel Lumière, 12 rue des Lilas, Paris
+Folio 7781, guest A. Martin, 2026-03-02 to 2026-03-05
+R1 Hotel Lumière: room, 3 nights, 612.00 EUR
+R2 Spa Lumière: massage, charged to room, 95.00 EUR
+R3 Café Central (lobby café): breakfast, charged to room, 18.50 EUR
+R4 Taxi booked by the concierge, paid by card: 42.00 EUR

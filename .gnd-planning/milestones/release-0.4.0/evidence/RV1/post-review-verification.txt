@@ -1,0 +1,31 @@
+Post-review default lane on beast-3. Edited to replace scratch and home paths.
+The runner exited 0 after collecting all six shard exits.
+
+RV1 scratch directory: <scratch>
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+Candidate patch SHA-256: 29196b6f871436999a0842ff584f19519a9a53931ed38539980c4ad519d0ce48
+Candidate Git tree: 3b6ccce4603f0967999622172792f3367667ba98
+Python 3.13.18
+
+Shard 0 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+2489 passed, 118 deselected, 2 errors in 440.79s (0:07:20)
+
+Shard 1 exit 0
+3941 passed, 102 deselected in 393.08s (0:06:33)
+
+Shard 2 exit 0
+2796 passed, 13 skipped, 184 deselected in 491.83s (0:08:11)
+
+Shard 3 exit 0
+3538 passed, 123 deselected in 624.61s (0:10:24)
+
+Shard 4 exit 0
+3888 passed, 71 deselected in 707.33s (0:11:47)
+
+Shard 5 exit 0
+3047 passed, 255 deselected, 1 warning in 755.36s (0:12:35)

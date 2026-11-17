@@ -17,9 +17,12 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from support.recorded_version import tree_as_recorded
+
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLE = ROOT / "src/gnd/examples/literature"
 BUILD = ROOT / "tools/build_literature_example.py"
+RECORDED_AT = "0.3.1"
 CORPUS = EXAMPLE / "corpus/corpus.json"
 KEY = EXAMPLE / "answers/answer-key.json"
 ASSERTION_TYPE = "method_builds_on_method"
@@ -190,5 +193,6 @@ def test_rebuild_is_byte_identical(tmp_path: Path):
     shutil.copy2(EXAMPLE / "answers/heldout.sha256", tmp_path / "answers/heldout.sha256")
     subprocess.run([sys.executable, str(BUILD), str(tmp_path)], check=True, capture_output=True)
     assert _generated(tmp_path) == _generated(EXAMPLE)
-    for name in _generated(EXAMPLE):
-        assert (tmp_path / name).read_bytes() == (EXAMPLE / name).read_bytes(), name
+    generated = {name: (tmp_path / name).read_bytes() for name in _generated(tmp_path)}
+    for name, data in tree_as_recorded(generated, RECORDED_AT).items():
+        assert data == (EXAMPLE / name).read_bytes(), name

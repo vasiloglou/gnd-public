@@ -13,9 +13,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+from support.recorded_version import tree_as_recorded
+
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLE = ROOT / "src/gnd/examples/expense/receipts"
 BUILD = ROOT / "tools/build_expense_receipts_example.py"
+RECORDED_AT = "0.3.1"
 PAGE = ROOT / "docs/expense/05-receipts.md"
 
 
@@ -43,8 +46,9 @@ def _offenders(directory: str, tmp_path: Path) -> dict[str, list]:
 def test_rebuilds_byte_identically(tmp_path: Path) -> None:
     subprocess.run([sys.executable, str(BUILD), str(tmp_path)], check=True)
     assert _files(tmp_path) == _files(EXAMPLE)
-    for name in _files(EXAMPLE):
-        assert (tmp_path / name).read_bytes() == (EXAMPLE / name).read_bytes(), name
+    generated = {name: (tmp_path / name).read_bytes() for name in _files(tmp_path)}
+    for name, data in tree_as_recorded(generated, RECORDED_AT).items():
+        assert data == (EXAMPLE / name).read_bytes(), name
 
 
 def test_reviewed_decisions_flag_the_right_lines(tmp_path: Path) -> None:

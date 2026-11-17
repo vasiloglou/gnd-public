@@ -6,9 +6,9 @@ marketplace commands below. Python 3.11 or newer is required.
 See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
 for the pip virtual-environment alternative.
 
-The command below installs the published runtime. If your plugin comes from a
-`main` that has unreleased changes, install the runtime from a checkout of the
-same commit instead, as [Updates](#updates) shows.
+The command below installs the published runtime. The plugin on `main` is
+version 0.4.0, which is prepared and not published. To use that plugin,
+install the runtime from the same commit as shown in [Updates](#updates).
 
 ```sh
 uv tool install get-nick-done==0.3.0

@@ -1,0 +1,92 @@
+{
+  "base": "67f2c0ae",
+  "claims": [
+    "Version, lock, manifests, prepared pages and retained publication pins agree.",
+    "Recorded example byte comparisons stay exact outside the named version and existing harness hash bindings.",
+    "The publication tests still exercise the expected stale-page controls and the notes cover both tag ranges."
+  ],
+  "created": "2026-11-17T13:02:16.634690+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/notes/reviews/phase-RV1-r1/diff.patch",
+      "sha256": "9ededa2ee6266b8439a02eb444ce134015199932493c18633d6cf6733680ceab"
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "sha256": "a6afa7ab1ca9c719f9bf01e0661769a1d33bf21f4d00bb73854b8e70659924b9"
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "761aa27c3ec42d52a38de9327bd552650ceff0ae6fc053e5af30e707d7ca9873"
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "sha256": "d7139825790389ea946d9dd92c7c4cb4cf1da8efc33f2b08f98a1f7f047ce2d7"
+    },
+    {
+      "path": "docs/compatibility.md",
+      "sha256": "a95355246f43ffa81da3edbf8ad2018e4ab5942b54c247efc32939f2b802bd03"
+    },
+    {
+      "path": "docs/marketplace-plugins.md",
+      "sha256": "237b5b14487dbc0242fe465bb36d042a83c9315c15cc89597e4dbcd8fee75519"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "823fed9616b3cb6f6562a88bc28a1c09547430540b88f498fb39200b41616928"
+    },
+    {
+      "path": "docs/support.md",
+      "sha256": "04965c5b9a70c9c1dd84a22360c85f5cd0bfae8cd1be4a123f23de0ef32dec1d"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "9e89d2fd7f4eb1e1c9ca2691ab341c5a357d38a109465021e9c611bf5878113f"
+    },
+    {
+      "path": "tests/test_expense_receipts_example.py",
+      "sha256": "640e89f61e03f98429453fcee7449fb633e30182ea0dc9194e517dff594059c1"
+    },
+    {
+      "path": "tests/test_li1_assurance_report.py",
+      "sha256": "edcca4ed768dbdc55e07c7ce7ada03611ac71090ad477eecacecfa144c08f19d"
+    },
+    {
+      "path": "tests/test_li1_literature_corpus.py",
+      "sha256": "0ddb1df764042861caa8ff8a88a60a0692246654e2474361d054f15f8f098f71"
+    },
+    {
+      "path": "tests/test_release_text.py",
+      "sha256": "9f2a5bb6c667a62abdc0f08a244debf5dd9996d0c75948a8e167085185392d93"
+    },
+    {
+      "path": "tests/test_release_version.py",
+      "sha256": "ca526b11a1ea4a3e14ffa79f30f64a8f70114b2ab21302fb0e69168ff4996438"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "6587a325699ee5711ab287be1e4fc932463a0d957c102f5c0e25fa5e7f0910a1"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/notes/phase-RV1-spec.md",
+      "sha256": "05ea75eb23cd937bea22ba861c4c03178e3cb52b1096cddf274f7a871bad3049"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/004-RV1-verification.md",
+      "sha256": "a2ed98501a186a920907ec93a5be632fe2d5f390ac8b4d1a318d62e4ed56d9b3"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV1/notes-reconciliation.md",
+      "sha256": "c2c58ddd08f76e2b9193280727eba7cd05ef132044027b5a8b8ad94679068fe5"
+    }
+  ],
+  "head": "67f2c0aee200f9f4529f5bf6235f37c551cf6786",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Where does the RV1 implementation fail to satisfy the approved and measured criteria?",
+  "subject": "phase",
+  "version": 1
+}

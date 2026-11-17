@@ -21,6 +21,7 @@ import time
 from pathlib import Path
 
 import pytest
+from support.recorded_version import as_recorded, live_version
 
 from gnd.anchors import canonical_document_text
 
@@ -447,6 +448,7 @@ def test_time_bound():
 # --- T24 (implementation successor, amendment A5): full report goldens -----------------
 
 GOLDEN_CASES = ("reference", *sorted(MUTATIONS))
+RECORDED_AT = "0.3.1"
 
 
 def _report_for(name: str, tmp: Path) -> dict:
@@ -462,7 +464,9 @@ def test_report_golden(name, tmp_path):
     assert golden["inputs"]["harness_sha256"] == "b3dc219528f3d2131357ce6a4cd5fb55a25dad37a5fbd5b4d1ea43663ac481e4"
     current_sha = hashlib.sha256((EXAMPLE / "assurance_report.py").read_bytes()).hexdigest()
     golden["inputs"]["harness_sha256"] = current_sha
-    assert actual == golden
+    assert actual["inputs"]["gnd_version"] == live_version()
+    normalized = as_recorded(json.dumps(actual, ensure_ascii=False).encode("utf-8"), RECORDED_AT)
+    assert json.loads(normalized) == golden
     assert_matches_expectation(golden, name)
 
 

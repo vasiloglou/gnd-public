@@ -2,9 +2,58 @@
 
 Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and 0.1.0
 came before it. Version 0.3.1 is a GitHub tag only and is not published on the
-package index. Releases follow the [release procedure](releasing.md). Changes on
+package index. Version 0.4.0 is prepared for PyPI. Releases follow the [release procedure](releasing.md). Changes on
 `main` after a release are listed in an `Unreleased:` section until the next
 one.
+
+## 0.4.0 (prepared, not published)
+
+If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)
+also describe changes in this release. The 0.3.1 tag also adds an explicit
+diagnostic when guarded-case synthesis needs the optional `synth` extra.
+
+### Literature: identity, composition and depth
+
+The [literature lineage walkthrough](literature/01-lineage.md) follows reviewed
+claims back to their sources and checks which lineage paths those claims support.
+
+- **Identity and lineage.** Witness and why-not commands accept version 1 models
+  and models without an explicit identifier. The packaged literature corpus
+  includes a staged assurance report. Composition binds reviewed identity
+  decisions to its record. Name diagnostics suggest unresolved candidates for
+  review. Saved judgments support contextual assertions and checked lineage paths.
+- **Model includes and reference catalogs.** Extract and check with separately
+  rooted models, and verify witness and replay against the flattened model.
+  A [fixed reference catalog](reference/composition.md) can participate in
+  composition, checking, witness and replay. Replay refuses a catalog whose
+  bytes differ from the recorded input.
+- **Scientific evidence and revisions.** The packaged examples cover
+  source-scoped claims, time dimensions, exact decimal replay and multipass
+  reading with explicit coverage. Semantic migration records bind a revision
+  to its inputs and support replay of earlier snapshots. Support-scoped
+  verdicts show which derived claims survive a revision.
+
+### Guarded-rule clauses
+
+Guarded and derivation comparisons support typed literal lists with `in`.
+Guarded antecedents support `negate` and `where` filters, with coverage-aware
+verdicts. Guarded consequents support `any_of`, with diagnostics for failed
+alternatives. Supported clause shapes lower into exporters, with installed
+retail examples exercising the behavior. See the
+[rule-check report reference](reference/rule-check-report.md).
+
+### Other changes
+
+- The [expense receipts walkthrough](expense/05-receipts.md) combines three
+  documents using reviewed vendor identities. It shows how an omitted
+  decision stops composition and how different decisions change findings.
+- BookRec now has runnable chapters for
+  [guarded rules](bookrec/08-guarded-rules.md),
+  [suggested rules](bookrec/09-suggested-rules.md) and
+  [claims from reviews](bookrec/10-what-reviews-say.md).
+- The representation format names five additional rule IDs. Synthesis and
+  assurance preserve the scope of their existing bounded coverage measures
+  as the new guarded clauses become available.
 
 ## 0.3.1 (tagged 2026-11-11, not published on PyPI)
 

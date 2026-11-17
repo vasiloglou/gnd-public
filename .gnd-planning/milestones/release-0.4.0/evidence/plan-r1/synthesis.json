@@ -1,0 +1,543 @@
+{
+  "schema_version": 1,
+  "run_sha256": "820f4ea576145074c49ada1a286cb42d95cf5abd0c61438d8a2847e9b7fa3fcc",
+  "summary": "Six independent reviewer responses validated. Known release blockers concern the 0.3.0 guard, candidate freeze and publication identity, positive reference-catalog behavior, and promised example coverage. Qwen's response lost one invalid concern line.",
+  "agreed_concerns": [
+    {
+      "group_id": "receipts",
+      "severity": "high",
+      "title": "Exercise packaged expense receipts",
+      "summary": "Run the receipts walkthrough from the installed candidate with a behavior mutant and assert the resource is absent in the pinned 0.3.0 wheel.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "receipts-example-unprobed"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-RECEIPTS-PACKAGE"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-expense-receipts-probe"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rv2-receipts-example-unprobed"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rv1-receipts-example-unprobed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "receipts-example-has-no-installed-probe"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "acceptance-version",
+      "severity": "high",
+      "title": "Migrate the 0.3.0 acceptance guard",
+      "summary": "Keep prior positive checks as regressions while migrating the version-bound assertion and replacing the 0.2.0 availability control.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "acceptance-file-0-3-0-guard"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-ACCEPTANCE-030"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "tag-source",
+      "severity": "high",
+      "title": "Bind the release tag to the candidate",
+      "summary": "Tag the recorded SOURCE_COMMIT and verify the remote peeled commit and release attachments.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "tag-target-unspecified"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-TAG-SOURCE"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "freeze-lane",
+      "severity": "high",
+      "title": "Run the default lane at the freeze",
+      "summary": "Put the pre-build default-lane check in RV2-C0 and the verification ledger.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "r9-control-not-a-criterion"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rv2c0-r9-freeze-lane-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "publication-audit",
+      "severity": "medium",
+      "title": "Capture the preparation and publication boundaries",
+      "summary": "Record baseline, pre-publication and close snapshots with dated action evidence and expected remote changes.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate7-close-delta"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-REMOTE-AUDIT"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "pinned-uv",
+      "severity": "high",
+      "title": "Document the pinned acceptance executable",
+      "summary": "Reuse RN2's pinned uv binary isolation on beast-3 and record both execution profiles.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "beast3-uv-version-pinning"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "beast3-uv-version-contradiction"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "probe3-no-positive-outcome"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "candidate-commit-lacks-own-probes"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "availability-control-any-refusal"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "probe4-expected-source"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "pr204-no-probe-if-merged"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "predicate8-vs-rv-d5-publication-fork"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "e1-measurement-vs-spec-approval-order"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "notes-boundary-v031-vs-030-upgraders"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "rule3-vs-rv1-manifest-and-plugin-page-bump"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "candidate-copy-to-beast3-no-hash-check"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "predicate2-classification-omits-retained-pins"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "sibling-change-detection-has-no-remediation-owner"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "publication-stage-evidence-has-no-record-or-reviewer"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "addopts-override-weakens-predicate5-evidence"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "prepared-not-published-markers-have-no-exit"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "v010-peeled-commit-missing-from-baseline"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "v4-control-digests-elided"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "attachment-open-question-unregistered"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-receipts",
+      "rank": 1,
+      "title": "Exercise packaged expense receipts",
+      "action": "Run the receipts walkthrough from the installed candidate with a behavior mutant and assert the resource is absent in the pinned 0.3.0 wheel.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "receipts-example-unprobed"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-RECEIPTS-PACKAGE"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-expense-receipts-probe"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rv2-receipts-example-unprobed"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rv1-receipts-example-unprobed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "receipts-example-has-no-installed-probe"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "receipts-example-unprobed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-RECEIPTS-PACKAGE",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-expense-receipts-probe",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rv2-receipts-example-unprobed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rv1-receipts-example-unprobed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "receipts-example-has-no-installed-probe",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-acceptance-version",
+      "rank": 2,
+      "title": "Migrate the 0.3.0 acceptance guard",
+      "action": "Keep prior positive checks as regressions while migrating the version-bound assertion and replacing the 0.2.0 availability control.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "acceptance-file-0-3-0-guard"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-ACCEPTANCE-030"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "acceptance-file-0-3-0-guard",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-ACCEPTANCE-030",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-tag-source",
+      "rank": 3,
+      "title": "Bind the release tag to the candidate",
+      "action": "Tag the recorded SOURCE_COMMIT and verify the remote peeled commit and release attachments.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "tag-target-unspecified"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-TAG-SOURCE"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "tag-target-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-TAG-SOURCE",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-freeze-lane",
+      "rank": 4,
+      "title": "Run the default lane at the freeze",
+      "action": "Put the pre-build default-lane check in RV2-C0 and the verification ledger.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "r9-control-not-a-criterion"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rv2c0-r9-freeze-lane-missing"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "r9-control-not-a-criterion",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rv2c0-r9-freeze-lane-missing",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-publication-audit",
+      "rank": 5,
+      "title": "Capture the preparation and publication boundaries",
+      "action": "Record baseline, pre-publication and close snapshots with dated action evidence and expected remote changes.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate7-close-delta"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-REMOTE-AUDIT"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate7-close-delta",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RV-REMOTE-AUDIT",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-pinned-uv",
+      "rank": 6,
+      "title": "Document the pinned acceptance executable",
+      "action": "Reuse RN2's pinned uv binary isolation on beast-3 and record both execution profiles.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "beast3-uv-version-pinning"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "beast3-uv-version-contradiction"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "beast3-uv-version-pinning",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "beast3-uv-version-contradiction",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-catalog-positive",
+      "rank": 7,
+      "title": "Measure successful catalog replay",
+      "action": "Require success on unchanged catalog input and a typed refusal for the changed-catalog mutant.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "probe3-no-positive-outcome"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "probe3-no-positive-outcome",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-freeze-order",
+      "rank": 8,
+      "title": "Land acceptance probes before candidate freeze",
+      "action": "Require the candidate source and acceptance checkout to contain the same merged probes.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "candidate-commit-lacks-own-probes"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "candidate-commit-lacks-own-probes",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-rv1-sequence",
+      "rank": 9,
+      "title": "Record E1 before ruling on version drift",
+      "action": "Approve the diagnostic measurement first and then bind the measured inventory and handling in an amended RV1 spec before edits.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "e1-measurement-vs-spec-approval-order"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "e1-measurement-vs-spec-approval-order",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-upgrade-notes",
+      "rank": 10,
+      "title": "Verify both version ranges in release notes",
+      "action": "Check the tagged notes against the preceding range while keeping that section historical.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "notes-boundary-v031-vs-030-upgraders"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "notes-boundary-v031-vs-030-upgraders",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    }
+  ]
+}

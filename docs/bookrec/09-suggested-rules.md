@@ -428,7 +428,7 @@ the expense context where one exists.
 | GR-D4 (issue 95) | shared definitions, project-owned policies | [Two-team expense tutorial](../tutorials/shared-expense-policies.md) and [its commands](../how-to/shared-expense-policies-commands.md) |
 | GR-D5 (issue 96) | accept rules with nothing to judge | [`--allow-vacuous` on the series export](#a-series-export); [Adopt rules with a baseline](../how-to/adopt-rules-with-a-baseline.md#accept-a-rule-that-has-nothing-to-judge-yet) |
 | GR-D6 (issue 97) | label facts a program produced | [`source: tool-output` and `producer` on the series export](#a-series-export) |
-| GR-D7 (issue 118) | a release that carries the rule checks | [Release notes, 0.2.0](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules) |
+| GR-D7 (issue 118) | a release that carries the rule checks | [Release notes](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules) |
 | GR-D8 (issue 179) | a failing and an active passing case per guarded rule | [Chapter 8: generate a failing and a passing case](08-guarded-rules.md#generate-failing-and-active-passing-cases) |
 | GR-D9 (issue 180) | two rule editions on one population | [Chapter 8: compare two editions](08-guarded-rules.md#compare-two-editions-on-the-same-output) |
 | GR-D10 (issue 181) | guarded rules from joined facts | [Ask the data for joined rules](#ask-the-data-for-joined-rules) |

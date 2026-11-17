@@ -1769,7 +1769,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
-- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
+- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
 - used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
@@ -1842,7 +1842,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: assurance.identity, check.branches, check.snapshot_decision, checker.evaluate, infra.artifacts, model.loading, semantics.snapshot_spec, semantics.transitions
 - used_by: assurance.transport, check.service, cli.api, exp.acceptance, infra.report_payloads
 - tests: tests/test_v6_phase6_execution.py
-- notes: The package initializer is a pure compatibility re-export surface assigned to its policy owner, including CorrespondenceDigests from assurance.identity. Certification separates semantic acceptance from evidence coverage and requires proved infrastructure, matching production identity and a valid extraction route.
+- notes: The package initializer is a pure compatibility re-export surface assigned to its policy owner, including CorrespondenceDigests from assurance.identity. Certification separates semantic acceptance from evidence coverage and requires proved infrastructure, matching production identity and a valid extraction route. The legacy Phase 3 denominator excludes the later guarded exists, filter and disjunction rows.
 
 
 ### assurance.identity
@@ -3049,7 +3049,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: check.branches, checker.evaluate, model.loading, model.population_loading, model.query_index, synth.assemble, synth.boundary, synth.mutations
 - used_by: measure.coverage, measure.report, synth.service
 - tests: tests/test_measure_coverage.py, tests/test_measure_derivation.py, tests/test_synth_boundary.py
-- notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists and opt-in compiled-subset routes from the predecessor frontier contract.
+- notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists, guarded-filter, guarded-disjunction and opt-in compiled-subset routes from the predecessor frontier contract.
 
 
 ### synth.corpus

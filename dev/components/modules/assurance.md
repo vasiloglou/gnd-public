@@ -41,17 +41,17 @@ Internal v6 snapshot correspondence coverage and assurance decisions.
 | `CorrespondenceEvidence` | class | 40 | Authenticated evidence capability produced only by the repository reader. |
 | `ValidatedScopeWalk` | class | 70 | (no docstring) |
 | `AssuranceBlock` | class | 80 | (no docstring) |
-| `phase3_scope_ids() -> tuple[str, ...]` | function | 152 | The owner-approved 230-row correspondence denominator. |
-| `walk_snapshot_scope(adapted, decision, evidence) -> ValidatedScopeWalk` | function | 157 | Validate exact applicable/current sets; reject forged registry rows. |
-| `certify_snapshot(decision, *, scope, extraction_route) -> AssuranceBlock` | function | 207 | Compute internal assurance by delegating to the proved policy helpers. |
-| `assurance_prerequisites(surface, consumer) -> tuple[str, ...]` | function | 255 | Derive every prerequisite before choosing an assurance outcome. |
-| `AssuranceBlockV1` | class | 306 | Wire projection; only certification may confer evidence authority. |
-| `AssuranceBlockV1.as_dict(self) -> dict[str, object]` | method | 350 | (no docstring) |
-| `semantic_decision_for_band(band) -> SemanticDecision \| None` | function | 359 | (no docstring) |
-| `AuthenticatedExecution` | class | 372 | (no docstring) |
-| `AssuranceScope` | class | 387 | (no docstring) |
-| `derive_assurance_scope(execution, *, consumer) -> AssuranceScope` | function | 519 | (no docstring) |
-| `certify_result(execution, *, scope, evidence) -> AssuranceBlockV1` | function | 550 | (no docstring) |
+| `phase3_scope_ids() -> tuple[str, ...]` | function | 155 | The owner-approved 230-row correspondence denominator. |
+| `walk_snapshot_scope(adapted, decision, evidence) -> ValidatedScopeWalk` | function | 160 | Validate exact applicable/current sets; reject forged registry rows. |
+| `certify_snapshot(decision, *, scope, extraction_route) -> AssuranceBlock` | function | 210 | Compute internal assurance by delegating to the proved policy helpers. |
+| `assurance_prerequisites(surface, consumer) -> tuple[str, ...]` | function | 258 | Derive every prerequisite before choosing an assurance outcome. |
+| `AssuranceBlockV1` | class | 309 | Wire projection; only certification may confer evidence authority. |
+| `AssuranceBlockV1.as_dict(self) -> dict[str, object]` | method | 353 | (no docstring) |
+| `semantic_decision_for_band(band) -> SemanticDecision \| None` | function | 362 | (no docstring) |
+| `AuthenticatedExecution` | class | 375 | (no docstring) |
+| `AssuranceScope` | class | 390 | (no docstring) |
+| `derive_assurance_scope(execution, *, consumer) -> AssuranceScope` | function | 522 | (no docstring) |
+| `certify_result(execution, *, scope, evidence) -> AssuranceBlockV1` | function | 553 | (no docstring) |
 
 ## gnd.assurance.evidence — `src/gnd/assurance/evidence.py`
 Components: assurance.evidence

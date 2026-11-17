@@ -135,9 +135,10 @@ def test_shared_variables_use_typed_identity(tmp_path: Path) -> None:
         ),
         (
             "P2-152",
-            "guarded_result",
-            "else comparison_pair_state(left, right, constraint.operator)",
-            "else 1",
+            # GC2 (b4e84af4) moved the comparison into guarded_pair_state.
+            "guarded_pair_state",
+            "return -1 if right is None else comparison_pair_state(left, right, operator)",
+            "return -1 if right is None else 1",
         ),
         ("P2-155", "guarded_atom_state", "return 0", "return 1"),
         (

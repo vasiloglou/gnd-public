@@ -1,0 +1,313 @@
+{
+ "schema_version": 1,
+ "reason": "Main CI repair 2026-11-16: bodies changed by the guarded-rule and literature milestones without a recorded successor; each row names its phases.",
+ "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+ "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+ "successors": [
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_anchored_role_and_recogniser",
+   "home": "gnd.model._validation",
+   "before": "5bffb927ddd6efee6d6e481e592c6ca7b829aaebd0a9cb166d58163eee606ea1",
+   "after": "ae066590cbc2471dd5234cd053344bb901c1a88b2915532ca87a82997c38e09f",
+   "reason": "Body changed by LD2 (07a2bb06) time dimensions and exact decimal replay."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_iter_guarded_atoms",
+   "home": "gnd.model._validation",
+   "before": "37f5cdc681bff923a85919bf80218ecbff74e23999ae93334b12d04037a9aac1",
+   "after": "079179651708f6cde66743784fa6935db90d47ed03757ed0b3f1c531788c121a",
+   "reason": "Body changed by GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_iter_guarded_consequent_terms",
+   "home": "gnd.model._validation",
+   "before": "89c190d0b4594cd0e8b2c49c444c7ba6642e6d4603dd9fbe270dcd4bfcbe08af",
+   "after": "d1fc37fa7e366f4d6fdd106780b3f830837c7cce51fa6f00b80c149ff4eb508c",
+   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_guarded_consequent_ground",
+   "home": "gnd.model._validation",
+   "before": "bccecba41feb72d2c0107faa042927c39acda8f62a91655c1ca837f6f19f858c",
+   "after": "32dc5db5d27767a1b821eaca2c926755152662ff94f71a3e34343a377eb9e0cd",
+   "reason": "Body changed by GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_guarded_exists_range",
+   "home": "gnd.model._validation",
+   "before": "e7181017e8a24b28aa5e9759551bbd7a7c8c973bd482a19037380187827a9a52",
+   "after": "84506e55a9abc54c16f78bc53c385f120b7811091e7aaea1cb47d000fe262c75",
+   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_guarded_exists_where_bound",
+   "home": "gnd.model._validation",
+   "before": "666f74c676527d09752d1efda4d8696ea218493851c2fad8e8bd05d7b50f4034",
+   "after": "8979473ec6834356c5c645700abf78b32a820d2f867a6aa3da689a82d770792d",
+   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_guarded_comparison_type",
+   "home": "gnd.model._validation",
+   "before": "73dfb3fff3fe7f78cfdf43f5bb23299ef1ca3f45a1f1027272c4b2047de98e21",
+   "after": "b38278a5900208a900a4d1a47c421bb69654fd08d67c2db2b7b215717333450c",
+   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_guarded_exists_where_type",
+   "home": "gnd.model._validation",
+   "before": "356c82f7919f43f7167f67c2002d227eb971dd997de54f79a764f750090320c0",
+   "after": "36c9b450d61bbd72ff62e2ee89b6c862c77cf0b750f99bb6a585da806b6f5293",
+   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_derivation_variable_primitives",
+   "home": "gnd.model._validation",
+   "before": "245ea28f60b98aabb2e025d0c904e705fd00bdf15da4f47f75486bdba61fe080",
+   "after": "b50629819497ee6a348ba4a8c6936e247e8bc1a78035036a9dc0630f8af6e58f",
+   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_derivation_head_term_issues",
+   "home": "gnd.model._validation",
+   "before": "4546a929e72f3a169951a90d40a5846dc893bf8efb320bef05424f56133fa2d5",
+   "after": "7e1a0f169427260d710dacf63f77ebbb129d71b64147d74330f483aed3d996f3",
+   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_term_non_finite_number",
+   "home": "gnd.model._validation",
+   "before": "40863440e8ccb22ec1fe229c1624ba34c07e37ff7d2fcf28a20583270ab0e141",
+   "after": "4cfa003012dd4955483192f1191d5caf2e0deaaed05ed5f206af199c2bb15d82",
+   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_bind_at",
+   "home": "gnd.model",
+   "before": "f8dd186f2421a7bd0db780140ae211ba840ea83b2e3de04cf6fabfb3b1060571",
+   "after": "d1b4288429f91a348f4dccab7b04371767458bb9153c021152fdcdee7a85d0e8",
+   "reason": "Body changed by LX3 review (9e1c1d29) catalog validation and mixed witness intake."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.checker",
+   "name": "ConstraintVerdict",
+   "home": "gnd.checker._reports",
+   "before": "5f57d756fdc9205a8a4e6d68054001dd442f0a31713a256324e070907f626f84",
+   "after": "45d98dcf9d4183036b8d2d94f2096ae6e33071a2aa9735fdea44b7b30a343348",
+   "reason": "Body changed by GW0 (24c72d86) guarded antecedent and literal domain reports; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.checker",
+   "name": "check_legacy",
+   "home": "gnd.checker._core",
+   "before": "351bc07424c30c90265e4b44287ed92b68e1b6e22f3e3ae583b2b8c66b93c42a",
+   "after": "234b70d556b2e9ae9b8ec7074977e7cc0919fd069752383f7e9d55df21f67b59",
+   "reason": "Body changed by GW0 (24c72d86) guarded antecedent and literal domain reports; GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.checker",
+   "name": "_correspondence_message",
+   "home": "gnd.checker._core",
+   "before": "e79933ec6b7dc23a0ca0c7a974b2215c085df95f93a1fb2b059031da3b4f03af",
+   "after": "74e66de4bb3c6dd2f82c484ca030f3b8500f0c25486d4898996a2cf1901bdc03",
+   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.checker",
+   "name": "_family_message_guarded",
+   "home": "gnd.checker._core",
+   "before": "3ab324ee716cf1dc22654bce2d4c18e113fb7b6746c9e89039f7606caf27aa60",
+   "after": "127410c2e323aabe7cf6d620fab9be9984364018fa2e19c8cb23bbf037f72d45",
+   "reason": "Body changed by GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF4",
+   "old": "gnd.api",
+   "name": "_witness_inputs",
+   "home": "gnd.witness.service",
+   "before": {
+    "algorithm_sha256": "fee59503ebf5d68349dc8172b34f753fc2a0fc1ce4060b7179ef8d7cb493667a",
+    "imports": [
+     "DEFAULT_LIMITS",
+     "Path",
+     "WitnessInputError",
+     "_parse_document_bytes",
+     "bind_declared_references",
+     "guard_bytes",
+     "load_model_bytes",
+     "load_population_bytes"
+    ],
+    "raw_sha256": "a1e6e15a1d9b3ea7be24fea1d79b9a6ae874ea4de8841e8c1dfdcc94688262f8"
+   },
+   "after": {
+    "algorithm_sha256": "75b882a4aa0a10e4a5f3bef0642c44d53c7569e118db2bbfa1d75e3834920120",
+    "imports": [
+     "Path",
+     "_parse_document_bytes",
+     "bind_declared_references",
+     "guard_bytes",
+     "load_model_bytes",
+     "load_population_bytes"
+    ],
+    "raw_sha256": "3f6dc94d73395ad52d973c77578c0e130574c2ce2ec2b45604fcd5f0f4c0a6e2"
+   },
+   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
+  },
+  {
+   "kind": "RF4",
+   "old": "gnd.api",
+   "name": "witness",
+   "home": "gnd.witness.service",
+   "before": {
+    "raw_sha256": "d80dd38c50c84bedafae3f0e6745a6f8a341ff846ccc3c9e15cdf239f35aa2b4",
+    "algorithm_sha256": "74c6c0a0e626d822bdc0a918aa9ce919567a5f96171e4394e1b219a01c40176d",
+    "imports": []
+   },
+   "after": {
+    "algorithm_sha256": "617a4be6f6aea01b1782b2899f284e0392b156cdf8122b3d15b408a891ac8cd9",
+    "imports": [],
+    "raw_sha256": "a6aa13f8eb254a2f233534df2dc3468a89222070b16ce21080e009a1dc8c5947"
+   },
+   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
+  },
+  {
+   "kind": "RF4",
+   "old": "gnd.api",
+   "name": "replay",
+   "home": "gnd.witness.service",
+   "before": {
+    "raw_sha256": "940f2777f6a073df07dcd9439b73d61029d403cbe9209000c31bf31621065ff3",
+    "algorithm_sha256": "150f7d03935b7ec9add7e5cb207b06a3d5185b4055055a9b28606655931603bb",
+    "imports": []
+   },
+   "after": {
+    "algorithm_sha256": "5b2bbf59e00897890365cca178bb723ddd2bf029a7c7ad035f9a8cadf61b4970",
+    "imports": [],
+    "raw_sha256": "cfa6e62d84c867e16722aaec40257d80aace438b44d25472493aaf115562fbce"
+   },
+   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
+  },
+  {
+   "kind": "RF4",
+   "old": "gnd.assurance",
+   "name": "_phase3_target",
+   "home": "gnd.assurance.core",
+   "before": {
+    "raw_sha256": "916209f11a7283346e5c9c3eaf1f2406caf473888591a188328f614c9214cc66",
+    "algorithm_sha256": "ceee6e9f5060af3720af21829a1b3b8277815fb9a329097717536b6addd0db2e",
+    "imports": []
+   },
+   "after": {
+    "algorithm_sha256": "879056b79e6d9dd19080c61d2076dc7df58c91e22b999832794b69e80522bf7b",
+    "imports": [],
+    "raw_sha256": "049b5d5b8bdd40de1b8e8f705fc9b7d43e74ad58d22485897278511b3d611f1f"
+   },
+   "reason": "This repair excludes GC2 filtered and GC3 any_of guarded rows from the frozen Phase 3 denominator, as Phase 6 excluded guarded exists."
+  },
+  {
+   "kind": "RF4",
+   "old": "gnd.api",
+   "name": "_run_check_raw",
+   "home": "gnd.checking_service",
+   "before": {
+    "algorithm_sha256": "21493c7deeda8412c5c013e8a9cbad967de075bf2d8ce6b4071ba85abfcac65e",
+    "imports": [
+     "AnchorError",
+     "AnchorSidecar",
+     "CompositionError",
+     "MAX_DOCUMENT_BYTES",
+     "acyclic_extents",
+     "acyclic_extents",
+     "bind_anchors",
+     "bind_population",
+     "calculation_scope",
+     "compare",
+     "compose",
+     "read_anchor_sidecar",
+     "read_regular_path",
+     "refuse_unsupported",
+     "resolve_context",
+     "validate_anchor_sidecar",
+     "verify_composition"
+    ],
+    "raw_sha256": "db7a6e988164b9e691569bf8afa9d6f3f109194e48fb22b7f7119920501f85ee"
+   },
+   "after": {
+    "algorithm_sha256": "e0c33a59a6e8d1d997fc261cc5adb682a6fd536da4ed1b7008d8e75cb7077837",
+    "imports": [
+     "AnchorError",
+     "AnchorSidecar",
+     "CompositionError",
+     "MAX_DOCUMENT_BYTES",
+     "ReferenceInputError",
+     "acyclic_extents",
+     "acyclic_extents",
+     "bind_anchors",
+     "bind_population",
+     "calculation_scope",
+     "compare",
+     "compose",
+     "read_anchor_sidecar",
+     "read_regular_path",
+     "refuse_unsupported",
+     "resolve_context",
+     "validate_anchor_sidecar",
+     "verify_composition"
+    ],
+    "raw_sha256": "ad05dba206e56afa2000ea26cd1e57fdd449fb1efbbc22af163f7ad465fdaf5f"
+   },
+   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
+  },
+  {
+   "kind": "RF4",
+   "old": "gnd.api",
+   "name": "_run_check",
+   "home": "gnd.checking_service",
+   "before": {
+    "raw_sha256": "7d158ab405d7c483a3413011173144084de980208bdd07495c55c452e50f1db8",
+    "algorithm_sha256": "6df10f44b770a3362cad9f101d0abcefc9be457dd0383f4baa2dbd2df1def50d",
+    "imports": [
+     "build_admission",
+     "wire_verdicts"
+    ]
+   },
+   "after": {
+    "algorithm_sha256": "098300c5ef021a9c99938b2d0469c320745bd3ec7811d6709749b7ea01020e49",
+    "imports": [
+     "build_admission",
+     "wire_verdicts"
+    ],
+    "raw_sha256": "322efa15704043b4ee14f7150548937a0dc1aceed983bcf780492f427c81039e"
+   },
+   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
+  }
+ ]
+}

@@ -15,6 +15,8 @@ PHASE_SUCCESSORS = (
     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/source-successors.json',
     EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json',
     EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json',
+    # Main CI repair (2026-11-16): guarded-rule and literature bodies recorded after the fact.
+    EVIDENCE.parents[4] / '.gnd-planning/maintenance/2026-11-16-main-ci-repair/source-successors.json',
 )
 
 

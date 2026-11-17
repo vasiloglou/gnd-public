@@ -84,15 +84,22 @@ def mc1_definition(module, name):
     matches = [r for r in rows if (r['module'], r['name']) == (module, name)]
     assert len(matches) <= 1
     selected = matches[0] if matches else None
-    successor_path = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json'
-    successor = json.loads(successor_path.read_text())
-    assert successor['predecessor'] == path.relative_to(ROOT).as_posix()
-    assert successor['predecessor_sha256'] == hashlib.sha256(path.read_bytes()).hexdigest()
-    for row in successor['successors']:
-        if (row['module'], row['name']) == (module, name):
-            assert selected is not None and row['home'] == selected['home'] and row['before'] == selected['after']
-            assert row['reason']
-            selected = {**selected, 'after': row['after'], 'reason': row['reason']}
+    # Each successor file names its predecessor by path and digest; the main CI
+    # repair (2026-11-16) chains after MC3.
+    chain = ('.gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json',
+             '.gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json')
+    predecessor = path
+    for successor_name in chain:
+        successor_path = ROOT / successor_name
+        successor = json.loads(successor_path.read_text())
+        assert successor['predecessor'] == predecessor.relative_to(ROOT).as_posix()
+        assert successor['predecessor_sha256'] == hashlib.sha256(predecessor.read_bytes()).hexdigest()
+        for row in successor['successors']:
+            if (row['module'], row['name']) == (module, name):
+                assert selected is not None and row['home'] == selected['home'] and row['before'] == selected['after']
+                assert row['reason']
+                selected = {**selected, 'after': row['after'], 'reason': row['reason']}
+        predecessor = successor_path
     return selected
 
 
@@ -156,6 +163,11 @@ def split_homes():
         'model/_documents.py',
         # CI repair (2026-11-06): the MG5 unattended-source rules, split out at the size ceiling.
         'model/_unattended.py',
+        # LX1 (2026-11-15): flat re-entry bytes for a resolved include root.
+        'model/flattening.py',
+        # CI repair (2026-11-16): the GW/GC guarded validation additions and the
+        # bounded model-document parser, split out at the size ceiling.
+        'model/_guarded.py', 'model/_parsing.py',
         'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py',
         # CI repair (2026-11-06): the CT2 composed-anchor check, split out at the size ceiling.
         'checker/_composed.py')}
@@ -186,9 +198,31 @@ def test_package_size_targets_and_over_ceiling_negative():
         check({**model_sizes, '_validation.py': 5001}, checker_sizes)
 
 
+#: Package homes no gnd.model import reaches: LX1's flattening is imported
+#: lazily by extraction and witness only, so the measure and generation
+#: closures never read it. The extraction lane and the tree-wide provider scan do.
+LEAF_HOMES = {ROOT / 'src/gnd/model/flattening.py'}
+
+
 def test_actual_source_observers_cover_all_package_homes():
     from test_rf6_moves import assert_scanned
-    assert_scanned(split_homes())
+    assert_scanned(split_homes() - LEAF_HOMES)
+
+
+def test_leaf_package_homes_are_read_by_the_extraction_and_provider_scans():
+    import test_measure_offline as scans
+    visited = set()
+    original = Path.read_text
+    def observe(path, *args, **kwargs):
+        visited.add(path)
+        return original(path, *args, **kwargs)
+    from unittest.mock import patch
+    with patch.object(Path, 'read_text', observe):
+        for run in (scans.test_no_network_library_is_reachable_from_the_extraction_lane,
+                    scans.test_no_provider_client_anywhere_in_the_package):
+            visited.clear()
+            run()
+            assert LEAF_HOMES <= visited, sorted(LEAF_HOMES - visited)
 
 
 def test_source_observer_package_omission_is_red(monkeypatch):

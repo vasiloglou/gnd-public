@@ -21,7 +21,7 @@ Each step answers one question about a guarded rule:
     `--guarded-diagnostics`, `--baseline-model` and `--guarded-cases` are on
     `main` after 0.3.0 and are not in a published package yet. Install GND
     from a checkout of the repository to run this chapter. `--rule-ids`,
-    `--baseline` and `--allow-vacuous` have shipped since 0.2.0, as the
+    `--baseline` and `--allow-vacuous` are in published releases, as the
     [release notes](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules)
     record.
 

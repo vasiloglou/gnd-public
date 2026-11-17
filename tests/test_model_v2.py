@@ -502,8 +502,9 @@ def test_every_error_rule_added_by_this_phase_has_a_rejecting_case() -> None:
     registered = {}
     for rule in model_module._SEMANTIC_RULES:
         source = inspect.getsource(rule)
-        rule_id = re.findall('rule_id="([^"]+)"', source).pop()
-        registered[rule_id] = 'severity="warning"' in source
+        # A rule may name several ids, or name them in a loop (GC1 membership).
+        for rule_id in re.findall('"(semantic:[^"]+)"', source):
+            registered[rule_id] = 'severity="warning"' in source
     v2_error_rules = {rule_id for rule_id, is_warning in registered.items() if not is_warning and rule_id.startswith(('semantic:op-', 'semantic:imported-'))}
     assert v2_error_rules <= covered, f'no rejecting case for {sorted(v2_error_rules - covered)}'
 

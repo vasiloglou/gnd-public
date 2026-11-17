@@ -11,4 +11,6 @@ records the red baseline.
 
 [AC1](003-phase-AC1.md) records the independent review, the YAML depth
 repair and verification over the repaired candidate. The
-[close packet](004-close-candidate.md) is ready for the milestone panel.
+[close packet](004-close-candidate.md) received four valid panel responses.
+The [delegated close ruling](006-milestone-close.md) records the accepted
+scope and verified evidence.

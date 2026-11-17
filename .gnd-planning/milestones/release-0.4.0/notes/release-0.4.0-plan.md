@@ -1,6 +1,6 @@
 # Release 0.4.0
 
-r2, 2026-11-17. Milestone `release-0.4.0`, phase prefix `RV`.
+r2 plus the §12 close amendment, 2026-11-17. Milestone `release-0.4.0`, phase prefix `RV`.
 The standard GND panel reviewed r1. Section 11 amends the r1 clauses below.
 The plan gate records the review and the distinct delegated ruling.
 

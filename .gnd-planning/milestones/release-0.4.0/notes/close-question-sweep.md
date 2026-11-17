@@ -46,3 +46,25 @@ for the delegated close ruling.
 | Package long description | Inherited close | Closed before this milestone. PYPI.md is declared in package metadata and the published wheel carries it. |
 | Announcements | Plan §7 and inherited close | Retired for this scope. No announcement work selected. |
 | Refactoring debt exposed by phases | 005, 008, 010 | No deferred product refactor. Test helpers and release receipts reuse existing homes. Shared-tool lint and checker coverage retain named owners above. |
+
+
+## Durable carryover register
+
+These IDs are the destination records for the carried rows above. Future
+maintenance should cite this committed register and append its disposition.
+
+| ID | Assigned owner | Trigger and remaining work |
+|---|---|---|
+| RC-01 | dev-tools source owner | Repair the 188 inherited Ruff findings in the source-owned component and review helper, then deliver through the normal sync. |
+| RC-02 | optional-test tooling owner | Align the public optional-wheel fixture with uv 0.13.7 or keep a selected compatible executable. The two baseline setup errors remain visible. |
+| RC-03 | release tooling maintainer | When next changing the publication helper, add a negative control for the receipts phrase and broader prepared-install guidance. |
+| RC-04 | model-query policy maintainer | Before adding runtime model queries, review the live counted budgets. This release introduced no runtime query. |
+| RC-05 | disclosure maintainer | Assess the inherited Ossie export/redact issue within the existing public behavior and separately scope any semantic change. |
+| RC-06 | release procedure maintainer | Update the historical token-route sentence to include 0.4.0 when the procedure is next edited. |
+| RC-07 | repository and PyPI account owner | Before a later publication, perform account-ownership and independent content/history checks. This close retains the explicit unrecorded boundary. |
+
+The old 0.3.0 availability control uses a recorded whole-file hash and the
+public PyPI download. Re-running it depends on continued public availability
+and compatible dependency resolution. The observed 23-case acceptance result
+is retained by the RV2 record. This close neither requires nor claims
+permanent external availability.

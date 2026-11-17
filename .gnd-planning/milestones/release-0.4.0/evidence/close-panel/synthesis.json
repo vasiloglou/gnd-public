@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "run_sha256": "9652b42691e3c11970be9d9d2a2a90f4c8819a69104e9bdce49e35e7950e673e",
+  "summary": "Four of six standard seats returned complete schema-valid opinions. Codex and GLM approved. Claude and Qwen identified traceability and residual-documentation concerns. Gemini and Kimi returned no JSON object and have no retained opinions. All 17 retained concerns are accounted for.",
+  "agreed_concerns": [
+    {
+      "group_id": "source-audit",
+      "severity": "high",
+      "title": "Retain the exact source and workflow audit commands",
+      "summary": "Record the git diff path sets and exit semantics, retain an executable audit, and bind both snapshots.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-audit-commands-unretained"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-source-identity-unattributed"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "fixture-evidence",
+      "severity": "medium",
+      "title": "Clarify preserved fixture bytes and their evidence",
+      "summary": "Cite the pre-code moved-output inventory and verify exact committed example equality over the release range.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate2-fixture-wording"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-fixture-history-claim"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "close-focused-ruff-text-receipts"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "baseline-snapshot-unbound"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "plan-revision-label"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "residual-carry-destinations"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-shard-exit-unattributed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-pypi-account-unrecorded"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-owner-authorization-provenance"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-plan-panel-artifacts-undigested"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-helper-scratch-only-ambiguous"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-predicate-9-prospective"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-lane-environment-divergence"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-availability-control-durability"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-012-predicate-evidence-mapping"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-source-audit",
+      "rank": 1,
+      "title": "Retain the exact source and workflow audit commands",
+      "action": "Record the git diff path sets and exit semantics, retain an executable audit, and bind both snapshots.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-audit-commands-unretained"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-source-identity-unattributed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-audit-commands-unretained",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-source-identity-unattributed",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-fixture-evidence",
+      "rank": 2,
+      "title": "Clarify preserved fixture bytes and their evidence",
+      "action": "Cite the pre-code moved-output inventory and verify exact committed example equality over the release range.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate2-fixture-wording"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-fixture-history-claim"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate2-fixture-wording",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-fixture-history-claim",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-3",
+      "rank": 3,
+      "title": "Retain exact focused command receipts",
+      "action": "Write the current checkout identity, exact commands, exits and focused/lint output.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-focused-ruff-text-receipts"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-focused-ruff-text-receipts",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-4",
+      "rank": 4,
+      "title": "Bind baseline snapshot",
+      "action": "Cite the baseline and hand-over snapshots directly by path and digest.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "baseline-snapshot-unbound"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "baseline-snapshot-unbound",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-5",
+      "rank": 5,
+      "title": "Label the plan amendment",
+      "action": "Use a distinct close-amendment label and bind both original and amended plan digests in the ruling.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-revision-label"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-revision-label",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-6",
+      "rank": 6,
+      "title": "Provide durable carryover destinations",
+      "action": "Give each carried item a stable ID in the committed close sweep with its named owner.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "residual-carry-destinations"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "residual-carry-destinations",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-7",
+      "rank": 7,
+      "title": "Cite publication authority",
+      "action": "Point to the publication record's per-act authorization table and distinguish its transcript provenance from measured command outputs.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-owner-authorization-provenance"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-owner-authorization-provenance",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-8",
+      "rank": 8,
+      "title": "Complete the final gate chain",
+      "action": "Bind the finalized close report and delegated ruling in the eventual close record.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-predicate-9-prospective"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-predicate-9-prospective",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-9",
+      "rank": 9,
+      "title": "State public control availability",
+      "action": "Retain the old wheel hash and report, and describe continued public download as a rerun dependency.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-availability-control-durability"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-012-availability-control-durability",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    }
+  ]
+}

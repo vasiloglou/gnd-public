@@ -1,0 +1,67 @@
+{
+  "base": "6f949db4",
+  "claims": [
+    "The accepted source, profile, attached artifact hashes and owner checks match RV2.",
+    "The scratch patch addresses the residual and receipts warnings, with no publication action."
+  ],
+  "created": "2026-11-17T14:57:33.063223+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/notes/reviews/phase-RV3-r1/diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV3/contributor-realpaths.txt",
+      "sha256": "b08c3140bfc6316a5666864697c95e33c6744ee5b7b2b3bd17ceca046136f5c3"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV3/dossier.md",
+      "sha256": "8441eef249398db6577c51a443e484bcbfc841442031d0ea6c79913f6d4d86fb"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV3/github-release-notes.md",
+      "sha256": "e564c35bebdd4a4dbc5620baa565487003c069c4585b471c7b0f9c9f88800adf"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV3/post-publication-supplement.patch",
+      "sha256": "e9b4f82ff62d6b3f1ee0a072d9be3cb16ce341fd8148bc60ba664f8cc4b8ae1d"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV3/pre-publication-state.txt",
+      "sha256": "be7ffc8860575ee073171fe76314155a75a9d79b8131a8911460d9baf162fedd"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV3/scratch-verification.txt",
+      "sha256": "a4ef390a3d263dc3ded35e81328339ddf731f284986093d3c5736e34428b8a2a"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/evidence/RV3/tool-only-preview.txt",
+      "sha256": "1bce92039f9f2a1e5d84d959410548d7c9939a6547b541fe07d2451aa6cc47d0"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/notes/phase-RV3-spec.md",
+      "sha256": "476fdfb125d805fb9e47102c9a1e4db2a32e9cd1f62995b2a16b2002397fdb51"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.4.0/008-phase-RV2.md",
+      "sha256": "361ccfce855668c338f667dcf6206a8b9a73b879bf3c1514b77c25ae12a6cc04"
+    }
+  ],
+  "head": "6f949db4f4cb749b2d9c79baf77118bf32e80db8",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/release-0.4.0/evidence/RV3/contributor-realpaths.txt (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/release-0.4.0/evidence/RV3/dossier.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/release-0.4.0/evidence/RV3/github-release-notes.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/release-0.4.0/evidence/RV3/post-publication-supplement.patch (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/release-0.4.0/evidence/RV3/pre-publication-state.txt (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/release-0.4.0/evidence/RV3/scratch-verification.txt (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/release-0.4.0/evidence/RV3/tool-only-preview.txt (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Can the owner publish exactly the accepted 0.4.0 artifacts and reproduce the prepared documentation update using this dossier? Find any missing or unsafe steps and compare the retained evidence. This is a read-only review; do not execute the publication snippets.",
+  "subject": "phase",
+  "version": 1
+}

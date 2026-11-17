@@ -1,0 +1,243 @@
+{
+  "$defs": {
+    "scalar": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "facts": {
+      "additionalProperties": false,
+      "properties": {
+        "expense_claimed_for_trip": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "expense": {
+                "$ref": "#/$defs/scalar"
+              },
+              "trip": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "expense",
+              "trip"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "expense_has_amount": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "amount": {
+                "$ref": "#/$defs/scalar"
+              },
+              "expense": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "expense",
+              "amount"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "expense_incurred_on": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "day": {
+                "$ref": "#/$defs/scalar"
+              },
+              "expense": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "expense",
+              "day"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "expense_paid_to_vendor": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "expense": {
+                "$ref": "#/$defs/scalar"
+              },
+              "vendor": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "expense",
+              "vendor"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "receipt_issued_by_vendor": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "receipt": {
+                "$ref": "#/$defs/scalar"
+              },
+              "vendor": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "receipt",
+              "vendor"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "trip_ends_on": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "day": {
+                "$ref": "#/$defs/scalar"
+              },
+              "trip": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "trip",
+              "day"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "trip_starts_on": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "day": {
+                "$ref": "#/$defs/scalar"
+              },
+              "trip": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "trip",
+              "day"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "instances": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "day": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "expense": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "receipt": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "trip": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "vendor": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "population": {
+      "additionalProperties": false,
+      "properties": {
+        "covers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "label": {
+          "enum": [
+            "conforming",
+            "boundary",
+            "violating"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "model_id": {
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "agent-output",
+            "synthetic",
+            "fixture"
+          ]
+        }
+      },
+      "required": [
+        "model",
+        "source"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "population",
+    "facts"
+  ],
+  "type": "object"
+}

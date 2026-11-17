@@ -1,0 +1,46 @@
+=== Header ===
+Derived mechanically from the ORM model by `gnd extract` (R-08").
+Constraint-blind by specification: object types, reference schemes,
+fact-type readings and primitive shapes only — no constraint
+sentences, no modality, no provenance. Hand-authoring this file is
+banned; regenerate it with `gnd extract MODEL --out DIR`.
+
+=== Object Types ===
+Expense is a value of type String.
+Receipt is a value of type String.
+Vendor is a value of type String.
+Trip is a value of type String.
+Amount is a value of type Integer.
+Day is a value of type Date.
+
+=== Fact Types ===
+Expense was paid to Vendor
+  - expense: Expense (String)
+  - vendor: Vendor (String)
+
+Expense costs Amount euros
+  - expense: Expense (String)
+  - amount: Amount (Integer)
+
+Expense was incurred on Day
+  - expense: Expense (String)
+  - day: Day (Date)
+
+Expense is claimed for Trip
+  - expense: Expense (String)
+  - trip: Trip (String)
+
+Receipt was issued by Vendor
+  - receipt: Receipt (String)
+  - vendor: Vendor (String)
+
+Trip starts on Day
+  - trip: Trip (String)
+  - day: Day (Date)
+
+Trip ends on Day
+  - trip: Trip (String)
+  - day: Day (Date)
+
+Vendor is on the approved vendor list
+  - vendor: Vendor (String)

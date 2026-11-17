@@ -165,6 +165,44 @@ recommendation.
 
 *Runnable version:* the [derived verdict example](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/verdict_fixture/README.md).
 
+## Run the literature version of the verdicts
+
+Section 6 has a runnable counterpart in the literature example. There, the
+claim is that the music model VampNet descends from DMD, and two
+independent sources support it. The block below reads the example's
+sources, releases them, and asks for the verdict under each set of saved
+opinions. It runs from a checkout of the repository, needs no model account
+or network connection, and takes under a minute:
+
+<!-- gnd-run expect=0 output=stdout -->
+```python
+import json
+import subprocess
+import sys
+
+def run(*args):
+    return subprocess.run([sys.executable, "-m", *args], capture_output=True, text=True)
+
+run("gnd.examples.literature.reading", "run", "--out", "reading-run")
+run("gnd.examples.literature.revision", "run", "reading-run", "--out", "revision-run")
+for case, edition in [("both-approved", "current"), ("reject-whale-a", "current"),
+                      ("reject-both", "current"), ("both-approved", "revised")]:
+    result = run("gnd.examples.literature.verdict", "evaluate", "revision-run",
+                 "--case", case, "--edition", edition)
+    verdict = json.loads(result.stdout)
+    print(f"{case} ({edition} definition): {verdict['decision']}, exit {result.returncode}")
+```
+
+```text
+both-approved (current definition): supported, exit 0
+reject-whale-a (current definition): supported, exit 0
+reject-both (current definition): unsupported, exit 2
+both-approved (revised definition): revalidation-required, exit 3
+```
+
+The four lines are the four rows of the verdict table: both approved,
+one rejected, both rejected, and a definition changed after the reviews.
+
 ## What you have now
 
 | Before | Now |

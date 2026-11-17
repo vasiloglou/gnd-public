@@ -2,9 +2,8 @@
 
 ## 1. Status
 
-**r2, diagnostic protocol.** The first delegated ruling covers only the
-scratch version-only measurement defined below. Candidate edits follow the
-second ruling over the measured inventory and handling.
+**r3, measured implementation scope.** The first ruling approved E1.
+The second ruling binds the implementation changes below.
 
 ## 2. Provenance
 
@@ -227,3 +226,39 @@ run uses the same partition and defaults at the recorded RV1 tree.
   prose for this version synchronization, which adds no serialized format
   or exit contract. Optional spec panel omitted. The candidate diff still
   requires an independent reviewer.
+
+
+## 12. E1 results and measured implementation amendments
+
+E1 showed 19,662 passed, 13 skipped, 37 failures and the two known optional
+wheel setup errors, against V13's 19,699 passed, 13 skipped and the same
+errors. The 37 failures account for the entire pass-count difference. The
+[shard summary](../evidence/RV1/e1-summary.txt) lists each affected ID. The
+[prior-version inventory](../evidence/RV1/version-inventory.txt) classifies
+the exact tracked literals. The [notes reconciliation](../evidence/RV1/notes-reconciliation.md)
+covers both tag ranges, including LI3–LI5 and LD4–LD5.
+
+| Failure set | Disposition |
+|---|---|
+| Five release version checks | Add the prepared heading and pages and the literature headline check. |
+| Ten literature report goldens | Require the emitted live version, then use the existing version normalizer before full equality, preserving the harness hash check and detailed report expectations. |
+| Two example rebuild checks | Compare each generated tree after moving only the recorded-version fields and any bound file references via the existing helper. The file sets and every other byte must agree. |
+| Twenty publication text tests | Use an explicit historical tagged fixture for synthetic publication and mutation checks. Preserve the live page check and the ten stale-page negative controls. Verify actual checkout check output for its current state. |
+
+[The byte measurement](../evidence/RV1/e1-moved-bytes.txt) lists all 12
+version-bearing outputs that moved in scratch. Keep their committed bytes.
+The two rebuilds were matched across their complete file sets after applying
+the existing normalizer. The report comparisons retain all fields except the
+version translation and the existing harness hash successor.
+
+M5 therefore covers `tests/test_li1_assurance_report.py`,
+`tests/test_li1_literature_corpus.py`, `tests/test_expense_receipts_example.py`
+and `tests/test_release_text.py`. Add all four to the direct test selection.
+All release-text edits are test-only. Keep the distribution acceptance case
+bound to RV2 and leave the 0.3.0 install pins. Strict documentation verification
+uses `uv run --group docs zensical build --strict` followed by
+`uv run python tools/check_docs.py site`.
+
+The revised estimate is 150 implementation lines, with a 225-line stop
+threshold. This increases the estimate for the synthetic fixture and measured
+test consumer changes. The initial estimate and ruling remain in history.

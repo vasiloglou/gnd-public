@@ -1,0 +1,124 @@
+{
+  "run_sha256": "fbc071a59fe576ef3a35b0c4129b18d8943d68cbd45d2a5a87b9e74bd06e5e87",
+  "request_sha256": "001278bfc6091e2b508dcc4482e378c97b8678f9cb15833ad2977926b6de094b",
+  "source_commit": "400920e6b431ba55139b204ab5ad6fb58d75ac63",
+  "successful_reviewer_ids": [
+    "claude",
+    "codex",
+    "qwen",
+    "glm"
+  ],
+  "reviewed_artifacts_unchanged": true,
+  "reviewers": [
+    {
+      "reviewer_id": "claude",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 3,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 3,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 3,
+        "total_concerns": 3,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "codex",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 1,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 1,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 1,
+        "total_concerns": 1,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "gemini",
+      "status": "malformed",
+      "issues": [
+        {
+          "code": "malformed",
+          "location": null,
+          "message": "reviewer response failed closed validation: invalid reviewer response: output contains no JSON object"
+        }
+      ],
+      "response_salvage": null,
+      "evidence_resolution": null
+    },
+    {
+      "reviewer_id": "glm",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 2,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 2,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 2,
+        "total_concerns": 2,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    },
+    {
+      "reviewer_id": "kimi",
+      "status": "malformed",
+      "issues": [
+        {
+          "code": "malformed",
+          "location": null,
+          "message": "reviewer response failed closed validation: invalid reviewer response: malformed JSON precedes the response head"
+        }
+      ],
+      "response_salvage": null,
+      "evidence_resolution": null
+    },
+    {
+      "reviewer_id": "qwen",
+      "status": "success",
+      "issues": [],
+      "response_salvage": {
+        "complete": true,
+        "declared_concern_count": 10,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 10,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "evidence_resolution": {
+        "anchored_concerns": 10,
+        "total_concerns": 10,
+        "unanchored_concern_ids": []
+      },
+      "disposition": "revise"
+    }
+  ]
+}

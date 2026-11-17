@@ -15,9 +15,8 @@ preview and apply it, as in [chapter 6](06-evolution.md).
 
 !!! note "Where these commands ship"
 
-    The `guarded-join` family and constants in mined rules are on `main` after
-    0.3.0 and are not in a published package yet. Install GND from a checkout
-    of the repository to run this chapter.
+    GND 0.4.0 includes guarded-join discovery and constants in mined rules.
+    See the [installation guide](../installation.md) for the published runtime.
 
 Continue in the directory of chapter 8; this chapter starts from its
 `bookrec-rules/rules.orm.yaml`. No miner, model account or network connection
@@ -435,8 +434,7 @@ the expense context where one exists.
 | GR-D11 (issue 182) | typed constants in mined rules | [Import a mined rule that names a genre](#import-a-mined-rule-that-names-a-genre) |
 | GR-D12 (issue 183) | say when a guarded rule matched nothing; warn on an out-of-domain literal | [Chapter 8: binding counts](08-guarded-rules.md#ask-each-guard-how-many-bindings-it-had) and [the validation warning](08-guarded-rules.md#let-validation-catch-the-typo) |
 
-GR-D1 to GR-D7 are in published releases. GR-D8 to GR-D12 are on `main` after
-0.3.0.
+GND 0.4.0 includes GR-D1 through GR-D12.
 
 ### Earlier requests, shipped
 

@@ -1,0 +1,8 @@
+2026-11-17T15:09:32+00:00 PyPI simple index clear; version endpoint HTTP 404; retained release digests verified.
+Uploading distributions to https://upload.pypi.org/legacy/
+Uploading get_nick_done-0.4.0-py3-none-any.whl
+Uploading get_nick_done-0.4.0.tar.gz
+
+View at:
+https://pypi.org/project/get-nick-done/0.4.0/
+2026-11-17T15:09:38+00:00 Twine exit 0

@@ -1,0 +1,6 @@
+version = "0.4.0"
+To https://github.com/vasiloglou/gnd-public.git
+ * [new tag]           v0.4.0 -> v0.4.0
+a6ad5b534bc5c668079fa309bc74f69a67c22852	refs/tags/v0.4.0
+648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a	refs/tags/v0.4.0^{}
+2026-11-17T15:21:15Z

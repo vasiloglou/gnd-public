@@ -1,0 +1,5 @@
+changed 8 files: README.md, docs/installation.md, docs/index.md, docs/marketplace-plugins.md, docs/release-notes.md, docs/compatibility.md, docs/support.md, tests/test_release_version.py
+stale: docs/bookrec/08-guarded-rules.md: `main` after 0.3.0 and are not in a published package yet. Install GND
+stale: docs/bookrec/09-suggested-rules.md: 0.3.0 and are not in a published package yet. Install GND from a checkout
+stale: docs/bookrec/09-suggested-rules.md: 0.3.0.
+stale: docs/marketplace-plugins.md: version 0.4.0, which is prepared and not published. To use that plugin,

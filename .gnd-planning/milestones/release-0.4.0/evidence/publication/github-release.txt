@@ -1,0 +1,10 @@
+release/get_nick_done-0.4.0-py3-none-any.whl: OK
+release/get_nick_done-0.4.0.tar.gz: OK
+comparison/get_nick_done-0.4.0-py3-none-any.whl: OK
+2026-11-17T15:23:53Z
+https://github.com/vasiloglou/gnd-public/releases/tag/v0.4.0
+{"assets":[{"name":"get_nick_done-0.4.0-py3-none-any.whl","size":3421324},{"name":"get_nick_done-0.4.0.tar.gz","size":2551056},{"name":"SHA256SUMS.txt","size":196}],"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-17T15:23:59Z","tagName":"v0.4.0","url":"https://github.com/vasiloglou/gnd-public/releases/tag/v0.4.0"}
+get_nick_done-0.4.0-py3-none-any.whl: OK
+get_nick_done-0.4.0.tar.gz: OK
+All three GitHub release attachments match the originals.
+2026-11-17T15:24:06Z

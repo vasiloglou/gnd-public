@@ -1,14 +1,18 @@
 # release-0.4.0
 
-Opened 2026-11-16 to prepare GND 0.4.0. The
-[plan gate](001-plan-gate.md) records the standard panel review of r1 and the
-delegated approval of the [amended plan](notes/release-0.4.0-plan.md).
+Closed under delegated approval on 2026-11-17. The
+[close record](014-milestone-close.md) binds three completed phases, the
+[standard close panel](013-close-panel.md), the question sweep and the
+owner-authorized publication.
 
-1. RV1 candidate content is locally complete. See the [RV1 record](005-phase-RV1.md).
-   RV2 starts after the owner merges the RV1 pull request.
-2. RV2 froze and verified the candidate. See the [RV2 record](008-phase-RV2.md).
-3. RV3 prepared the [publication hand-over](evidence/RV3/dossier.md). See its
-   [phase record](010-phase-RV3.md).
-4. The [publication record](011-publication.md) binds PyPI, the tag, the GitHub
-   release and the documentation update. The milestone close follows the
-   owner-authorized documentation merge.
+GND 0.4.0 is available on [PyPI](https://pypi.org/project/get-nick-done/0.4.0/)
+and as the [GitHub release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.4.0).
+The release files and annotated tag bind source `648cc6e0`. PR 211 merged
+the published pages into main at `9371d8e3`.
+
+- [Plan and close amendments](notes/release-0.4.0-plan.md)
+- [RV1 candidate content](005-phase-RV1.md)
+- [RV2 installed acceptance](008-phase-RV2.md)
+- [RV3 publication hand-over](010-phase-RV3.md)
+- [Publication receipts](011-publication.md)
+- [Question sweep and durable carryovers](notes/close-question-sweep.md)

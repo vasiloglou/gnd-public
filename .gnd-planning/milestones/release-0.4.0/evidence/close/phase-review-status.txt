@@ -1,0 +1,14 @@
+Review status exit 1. Three completed phase reviews with no ledger problems.
+Paths changed after their respective original review and excluded from its current-byte opinion:
+.gnd-planning/milestones/release-0.4.0/evidence/RV1/notes-reconciliation.md
+.gnd-planning/milestones/release-0.4.0/evidence/RV3/dossier.md
+.gnd-planning/milestones/release-0.4.0/evidence/RV3/github-release-notes.md
+.gnd-planning/milestones/release-0.4.0/evidence/RV3/pre-publication-state.txt
+.gnd-planning/milestones/release-0.4.0/evidence/RV3/scratch-verification.txt
+.gnd-planning/milestones/release-0.4.0/evidence/RV3/tool-only-preview.txt
+docs/compatibility.md
+docs/marketplace-plugins.md
+docs/release-notes.md
+docs/support.md
+tests/test_release_acceptance.py
+tests/test_release_version.py

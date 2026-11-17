@@ -1,0 +1,19 @@
+Post-panel focused receipt. Publication source state 9371d8e3; close branch working tree:
+5294cef5213b30dd7217767c62a9d999671db798
+ M .gnd-planning/milestones/release-0.4.0/notes/close-question-sweep.md
+ M .gnd-planning/milestones/release-0.4.0/notes/release-0.4.0-plan.md
+?? .gnd-planning/milestones/release-0.4.0/evidence/close-panel/
+?? .gnd-planning/milestones/release-0.4.0/evidence/close/command-audit.txt
+?? .gnd-planning/milestones/release-0.4.0/evidence/close/verify-close.py
+$ uv run --no-sync python tools/release_text.py check
+no page describes the state before 0.4.0 was published
+exit 0
+$ uv run --no-sync pytest -q tests/test_release_version.py tests/test_release_text.py tests/test_development_scaffold.py --tb=short
+........................................................................ [ 45%]
+........................................................................ [ 90%]
+...............                                                          [100%]
+159 passed, 1 deselected in 34.51s
+exit 0
+$ uv run --no-sync ruff check --output-format json
+exit 1
+188 exact baseline diagnostics; comparison exit 0.

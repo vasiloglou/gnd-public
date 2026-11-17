@@ -1,0 +1,13 @@
+$ git diff --exit-code cc4c8bf05ae8720b1ec5814b3709bfadb8643b16 9371d8e39e661d4953a228670a36411063f2aa74 -- .github
+exit 0
+$ git diff --exit-code 648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a 9371d8e39e661d4953a228670a36411063f2aa74 -- src pyproject.toml uv.lock LICENSE NOTICE
+exit 0
+$ git diff --exit-code cc4c8bf05ae8720b1ec5814b3709bfadb8643b16 9371d8e39e661d4953a228670a36411063f2aa74 -- src/gnd/examples
+exit 0
+005-phase-RV1.md: 7 cited evidence digests match.
+008-phase-RV2.md: 10 cited evidence digests match.
+010-phase-RV3.md: 13 cited evidence digests match.
+011-publication.md: 9 cited evidence digests match.
+Shard 0 exit 1 is accounted for by the two named baseline setup errors.
+Other five shards exit 0; no FAILED IDs in the retained summaries.
+Publication tree .claude-plugin/plugin.json version 0.4.0 verified.

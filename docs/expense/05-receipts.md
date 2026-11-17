@@ -215,25 +215,74 @@ vendor. GND writes nothing until they do.
 | Reference data was mixed into the facts | the approved vendor list is a fixed, fingerprinted input owned by Finance |
 | One model did everything | a reading model for documents, a checking model for the claim, both on one shared vocabulary |
 
-??? note "Under the hood: the gnd commands behind each step"
+## Run it yourself
 
-    Run these inside `src/gnd/examples/expense/receipts` of a checkout.
-    `claim-flat/` holds the readings with no decisions, and `claim-missing/`
-    holds the readings without the Café Central decision.
+The requests above are suggestions. The blocks below run the real commands
+behind steps 4 and 5 on the shipped example, from a checkout of the
+repository. The site's tests run them too, and check that the output still
+matches this page. Start with a copy of the example:
 
-    ```sh
-    gnd extract reading.orm.json --out artifacts
-    gnd verify reading.orm.json extracted/card/population.json --artifacts artifacts
-    gnd compose checking.orm.json claim-flat --out flat.population.json --record flat.composition.json
-    gnd check checking.orm.json flat.population.json --composition flat.composition.json --sources claim-flat
-    gnd compose checking.orm.json claim --out claim.population.json --record claim.composition.json
-    gnd check checking.orm.json claim.population.json --composition claim.composition.json --sources claim
-    gnd compose checking.orm.json claim-missing --out missing.population.json --record missing.composition.json
-    ```
+<!-- gnd-run expect=0 output=stdout -->
+```python
+from importlib.resources import files
+import shutil
 
-    `tools/build_expense_receipts_example.py` rebuilds every input, and
-    `tests/test_expense_receipts_example.py` checks that the commands give the
-    results on this page.
+shutil.copytree(str(files("gnd").joinpath("examples", "expense", "receipts")), "receipts-demo")
+print("Copied the receipts example to receipts-demo/")
+```
+
+```text
+Copied the receipts example to receipts-demo/
+```
+
+Combine the readings using the reviewer's decisions in `claim/`, then check
+the claim. The checking model lists the rules in the order of the policy
+table, so `constraints[0]` is the receipt rule, `constraints[1]` the approved
+vendor rule and `constraints[3]` the not-after-the-trip rule. Exit 1 means a
+blocking rule failed:
+
+<!-- gnd-run expect=1 output=stdout -->
+```sh
+cd receipts-demo
+gnd compose checking.orm.json claim --out claim.population.json --record claim.composition.json
+gnd check checking.orm.json claim.population.json --composition claim.composition.json --sources claim
+```
+
+```text
+Composed 22 fact(s) from 3 source(s).
+BLOCKING (alethic)
+  [fail] constraints[0]: If a tuple appears in (expense_paid_to_vendor.vendor), then it also appears in (receipt_issued_by_vendor.vendor) — violated by: 'Café Central, Vienna', 'TAXI G7 (unresolved)'.
+  [fail] constraints[1]: If a tuple appears in (expense_paid_to_vendor.vendor), then it also appears in (approved_vendor.vendor) — violated by: 'Café Central, Vienna', 'Spa Lumière', 'TAXI G7 (unresolved)'.
+  [fail] constraints[3]: Guarded comparison consequent evaluated over bindings=4 — violated by bindings: {'$e': 'C4', '$t': 'T-114', '$d': '2026-03-09', '$b': '2026-03-06'}.
+ADVISORY (deontic)
+  (none)
+pass=3 fail=3 warning=0 unchecked=0 vacuous=0
+COVERAGE
+  expense_paid_to_vendor: declared, facts=4
+  expense_has_amount: declared, facts=4
+  expense_incurred_on: declared, facts=4
+  expense_claimed_for_trip: declared, facts=4
+  receipt_issued_by_vendor: declared, facts=4
+  trip_starts_on: declared, facts=1
+  trip_ends_on: declared, facts=1
+  approved_vendor: declared, facts=3
+```
+
+`claim-missing/` holds the same readings without the Café Central decision.
+Exit 3 means GND refused the input and wrote nothing:
+
+<!-- gnd-run expect=3 output=stderr -->
+```sh
+cd receipts-demo
+gnd compose checking.orm.json claim-missing --out missing.population.json --record missing.composition.json
+```
+
+```text
+ERROR: composition:invalid: keys at card expense_paid_to_vendor#3.vendor and folio receipt_issued_by_vendor#2.vendor (object type vendor) are joined without a same decision
+```
+
+`claim-flat/` holds the readings with no decisions, for step 2.
+`tools/build_expense_receipts_example.py` rebuilds every input.
 
 To see the same machinery on a harder domain, where two research papers name
 the same method differently and identical names mean different methods, read

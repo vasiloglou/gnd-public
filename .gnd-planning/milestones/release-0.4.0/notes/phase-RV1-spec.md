@@ -2,14 +2,13 @@
 
 ## 1. Status
 
-**Draft r1, awaiting the plan gate and then its own owner gate.** It can be
-implemented once the owner approves the plan and this spec. E1 (§6) runs only
-after that approval. No code is written.
+**r2, diagnostic protocol.** The first delegated ruling covers only the
+scratch version-only measurement defined below. Candidate edits follow the
+second ruling over the measured inventory and handling.
 
 ## 2. Provenance
 
-This spec derives from [the plan](release-0.4.0-plan.md) r1 (draft, not
-reviewed) and from the predecessor phase
+This spec derives from [the plan](release-0.4.0-plan.md) r2 and its plan-gate record and from the predecessor phase
 [RN1](../../release-0.3.0/003-phase-RN1.md), whose method it repeats. Two
 parts of that method are left out:
 
@@ -17,7 +16,7 @@ parts of that method are left out:
   `tests/support/recorded_version.py`;
 - the main-repair modules, because PR 207 left the base lane clean.
 
-The baseline is main `cc4c8bf0`. These bytes have had no review.
+The baseline is main `cc4c8bf0`. Plan r2 §11 governs this phase.
 
 ## 3. Obligations (step 0 harvest)
 
@@ -199,5 +198,32 @@ uv run python tools/release_text.py check
 uv run ruff check
 ```
 
-The structure-guard command is the one in `project.md`. The beast-3 lane uses
-the six-shard script from this session's CI runs, pointed at the RV1 commit.
+The structure-guard command is the one in `project.md`. The E1 diagnostic runs [e1-shards.sh](../evidence/RV1/e1-shards.sh) via SSH
+on beast-3. It clones exact base `cc4c8bf0`, changes only the five version
+fields, and uses six round-robin shards over C-sorted `tests/test_*.py` with
+the default pytest marker filter and recorded Python 3.13.18. Compare the
+collected outcomes to V13, separately naming the two known optional wheel
+errors. A runner/setup failure supplies no E1 result. The later verification
+run uses the same partition and defaults at the recorded RV1 tree.
+
+### Implementability and verification selection
+
+- Version synchronization checks the editable lock, the three manifests,
+  the current notes heading, prepared-state pages and published install pins.
+  The existing headline map supports the 0.4.0 literature heading and link.
+- The E1 script checks its source and changes exactly the synchronized
+  release fields before locked setup. Its liveness test is a red notes-heading
+  case. An unexpected change to a recorded result requires measurement and
+  separate diagnosis before the second ruling.
+- The RV1 record reconciles both tag ranges under plan r2 §11. The inventory
+  lists historical entries, retained pins, recorded outputs and stale text.
+  Record the version-bound distribution test as a carryover to RV2.
+- Run all direct and affected tests named in §8, repo-wide lint, the exact
+  structural guard block and the strict docs build. Leave the default marker
+  filter active for the E1 and RV1 lanes. Distribution acceptance is RV2's
+  separate selected gate. Historical, census and other opt-in lanes are
+  excluded.
+- The diagnostic and later candidate diff have separate gates. Use spec
+  prose for this version synchronization, which adds no serialized format
+  or exit contract. Optional spec panel omitted. The candidate diff still
+  requires an independent reviewer.

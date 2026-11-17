@@ -1,0 +1,3 @@
+Build started
+Build finished in 0.64s
+18347 local links/assets/anchors checked

@@ -1,12 +1,11 @@
 # Release notes and milestones
 
-Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and 0.1.0
-came before it. Version 0.3.1 is a GitHub tag only and is not published on the
-package index. Version 0.4.0 is prepared for PyPI. Releases follow the [release procedure](releasing.md). Changes on
-`main` after a release are listed in an `Unreleased:` section until the next
-one.
+Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
+0.1.0 came before it. Releases follow the [release procedure](releasing.md).
+Changes on `main` after a release are listed in an `Unreleased:` section until
+the next one.
 
-## 0.4.0 (prepared, not published)
+## 0.4.0 (2026-11-17)
 
 If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)
 also describe changes in this release. The 0.3.1 tag also adds an explicit

@@ -9,4 +9,6 @@ delegated approval of the [amended plan](notes/release-0.4.0-plan.md).
 2. RV2 froze and verified the candidate. See the [RV2 record](008-phase-RV2.md).
 3. RV3 prepared the [publication hand-over](evidence/RV3/dossier.md). See its
    [phase record](010-phase-RV3.md).
-4. Owner-authorized publication precedes the milestone close.
+4. The [publication record](011-publication.md) binds PyPI, the tag, the GitHub
+   release and the documentation update. The milestone close follows the
+   owner-authorized documentation merge.

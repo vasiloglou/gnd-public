@@ -18,9 +18,9 @@ an agent conversation.*
 
 !!! note "Where this ships"
 
-    Identity decisions, fixed reference lists and separate reading and checking
-    models are on `main` after 0.3.1. They are not in a published package yet.
-    Install GND from a checkout of the repository to run this chapter.
+    GND 0.4.0 includes identity decisions, fixed reference lists, and separate
+    reading and checking models. See the [installation guide](../installation.md)
+    for the published runtime.
 
 !!! info "Files on GitHub"
 

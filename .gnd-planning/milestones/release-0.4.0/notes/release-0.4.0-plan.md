@@ -419,3 +419,38 @@ accounts for every retained concern.
   would require an amendment to the completion predicates. PR 204, if
   merged at the freeze, receives a note. The RV3 dossier names any resulting
   count-certificate feature that lacked installed coverage.
+
+
+## 12. Close repairs, 2026-11-17
+
+The closing record binds this amendment. The prior plan bytes remain at
+SHA-256 `e9828d47fcf6429f85a9869e29972d75e8efb706dd5d2e0d0f0fb6062b3be7ed`
+in the history preceding the close branch.
+
+- V10 and the RV1 prediction that version-aware comparisons would all remain
+  green were refuted by E1. The [measured gate](../003-RV1-implementation-gate.md)
+  records 37 failures and twelve generated outputs that changed in scratch.
+  The [RV1 record](../005-phase-RV1.md) binds the comparison repairs. Committed
+  example artifacts retained their bytes.
+- RV1's draft outline named LI0–LI2 and LD1–LD3. The
+  [tag-range reconciliation](../evidence/RV1/notes-reconciliation.md) identified
+  LI3–LI5 and LD4–LD5 as part of the frozen source. The published notes cover
+  all of them. The version inventory now identifies the prepared-state
+  guidance carried through RV3 and changed in the publication PR.
+- The proposal's four probes became five under §11 and the RV2 spec. Four
+  parametrized test functions exercise them because composition and catalog
+  share one function. The final accepted suite has 23 cases across both
+  wheel origins and includes the wrong-source control added after review.
+- The publication text checker missed the receipts wording. RV1 carried the
+  observed defect to RV3. The [rehearsal](../evidence/RV3/scratch-verification.txt)
+  supplies a negative marker control and checks the supplemental patch.
+  PR 211 merged those exact publication edits after the served-file check.
+- The shared-tool lint baseline was 188 findings despite the project rule's
+  historical zero claim. The [RV1 checkpoint](../004-RV1-verification.md)
+  reproduced the exact findings on the base. This milestone preserved them.
+  The close sweep assigns maintenance to the dev-tools source owner.
+
+The owner separately authorized the publication actions and PR 211 merge,
+then requested this milestone close. The close standard panel supplies
+independent advisory evidence. Delegated acceptance retains the bounded
+platform profiles, baseline setup errors, and the explicitly excluded lanes.

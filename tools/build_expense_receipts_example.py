@@ -106,19 +106,23 @@ CHECKING_RULES = [
 
 DOCUMENTS = {
     "approval": (
-        "Travel approval TA-2026-031\n"
-        "Trip T-114: A. Martin to Paris for the client workshop.\n"
-        "Approved from 2026-03-02 to 2026-03-06.\n",
+        (
+            "Travel approval TA-2026-031\n"
+            "Trip T-114: A. Martin to Paris for the client workshop.\n"
+            "Approved from 2026-03-02 to 2026-03-06.\n"
+        ),
         {"trip_starts_on": [{"trip": "T-114", "day": "2026-03-02"}],
          "trip_ends_on": [{"trip": "T-114", "day": "2026-03-06"}]},
     ),
     "folio": (
-        "Hotel Lumière, 12 rue des Lilas, Paris\n"
-        "Folio 7781, guest A. Martin, 2026-03-02 to 2026-03-05\n"
-        "R1 Hotel Lumière: room, 3 nights, 612.00 EUR\n"
-        "R2 Spa Lumière: massage, charged to room, 95.00 EUR\n"
-        "R3 Café Central (lobby café): breakfast, charged to room, 18.50 EUR\n"
-        "R4 Taxi booked by the concierge, paid by card: 42.00 EUR\n",
+        (
+            "Hotel Lumière, 12 rue des Lilas, Paris\n"
+            "Folio 7781, guest A. Martin, 2026-03-02 to 2026-03-05\n"
+            "R1 Hotel Lumière: room, 3 nights, 612.00 EUR\n"
+            "R2 Spa Lumière: massage, charged to room, 95.00 EUR\n"
+            "R3 Café Central (lobby café): breakfast, charged to room, 18.50 EUR\n"
+            "R4 Taxi booked by the concierge, paid by card: 42.00 EUR\n"
+        ),
         {"receipt_issued_by_vendor": [
             {"receipt": "R1", "vendor": "Hotel Lumière"},
             {"receipt": "R2", "vendor": "Spa Lumière"},
@@ -127,11 +131,13 @@ DOCUMENTS = {
         ]},
     ),
     "card": (
-        "Corporate card statement, March 2026, lines claimed for trip T-114\n"
-        "C1 2026-03-05 HTL LUMIERE PARIS 612.00 EUR\n"
-        "C2 2026-03-04 SPA LUMIERE 95.00 EUR\n"
-        "C3 2026-03-05 TAXI G7 42.00 EUR\n"
-        "C4 2026-03-09 Café Central, Vienna 23.00 EUR\n",
+        (
+            "Corporate card statement, March 2026, lines claimed for trip T-114\n"
+            "C1 2026-03-05 HTL LUMIERE PARIS 612.00 EUR\n"
+            "C2 2026-03-04 SPA LUMIERE 95.00 EUR\n"
+            "C3 2026-03-05 TAXI G7 42.00 EUR\n"
+            "C4 2026-03-09 Café Central, Vienna 23.00 EUR\n"
+        ),
         {"expense_paid_to_vendor": [
             {"expense": "C1", "vendor": "HTL LUMIERE PARIS"},
             {"expense": "C2", "vendor": "SPA LUMIERE"},
@@ -163,7 +169,8 @@ def dump(path: Path, obj) -> bytes:
 
 
 def gnd(run: Path, *args, ok=(0,)):
-    proc = subprocess.run([sys.executable, "-m", "gnd", *args], cwd=run, capture_output=True, text=True)
+    proc = subprocess.run([sys.executable, "-m", "gnd", *args], cwd=run, capture_output=True, text=True,
+                          check=False)
     if proc.returncode not in ok:
         raise SystemExit(f"gnd {' '.join(args)} -> {proc.returncode}\n{proc.stdout}\n{proc.stderr}")
     return proc

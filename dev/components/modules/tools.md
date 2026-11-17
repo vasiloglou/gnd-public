@@ -24,6 +24,14 @@ Run a terminal agent with exactly one credential imported from an env file.
 | `read_key(env_file, name) -> str` | function | 22 | (no docstring) |
 | `main() -> int` | function | 42 | (no docstring) |
 
+## tools.build_ci_repair_successors — `tools/build_ci_repair_successors.py`
+Components: unassigned
+Write the 2026-11-16 main CI repair's chained successor rows from the current sources.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `main() -> int` | function | 75 | (no docstring) |
+
 ## tools.build_composition_example — `tools/build_composition_example.py`
 Components: unassigned
 Build the composition how-to's sources over src/gnd/examples/composition/model.orm.yaml.
@@ -34,6 +42,20 @@ Build the composition how-to's sources over src/gnd/examples/composition/model.o
 | `write_directory(directory, sources, vocabulary) -> None` | function | 122 | (no docstring) |
 | `conflict_sources() -> dict` | function | 130 | (no docstring) |
 | `main(directory) -> None` | function | 140 | (no docstring) |
+
+## tools.build_expense_receipts_example — `tools/build_expense_receipts_example.py`
+Components: unassigned
+Build the expense receipts example: three documents, one checked claim.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `prov(quote)` | function | 37 | (no docstring) |
+| `anchored(role, quote)` | function | 42 | (no docstring) |
+| `date_rule(rule_id, bound_fact, op, quote)` | function | 83 | (no docstring) |
+| `dump(path, obj) -> bytes` | function | 164 | (no docstring) |
+| `gnd(run, *args, ok)` | function | 171 | (no docstring) |
+| `anchors_for(facts, text)` | function | 179 | (no docstring) |
+| `main(out)` | function | 194 | (no docstring) |
 
 ## tools.build_growth_example — `tools/build_growth_example.py`
 Components: unassigned

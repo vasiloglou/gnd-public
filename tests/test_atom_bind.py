@@ -40,7 +40,12 @@ BIND_CONSUMERS = ("model/__init__.py", "model/_validation.py", "model/_operation
                   # The CT2 composed-anchor check, split out of checker/_core (it reads no bind).
                   "checker/_composed.py",
                   # LX1's flat re-entry bytes for a resolved include root (it reads no bind).
-                  "model/flattening.py")
+                  "model/flattening.py",
+                  # The GW/GC guarded validation additions (CI repair 2026-11-16);
+                  # they read bind only through atom_bind.
+                  "model/_guarded.py",
+                  # The bounded model-document parser (CI repair 2026-11-16; it reads no bind).
+                  "model/_parsing.py")
 
 #: `patterns.py` keeps the 28th raw read. It imports NOTHING from `gnd` -- a
 #: boundary two reviewers enforced against an earlier draft and
@@ -200,6 +205,8 @@ def test_every_consumer_reaches_the_binding_through_the_one_reader() -> None:
     stopped reading bindings altogether."""
     texts = {name: (REPO_ROOT / 'src/gnd' / name).read_text(encoding='utf-8') for name in BIND_CONSUMERS}
     active = {name for name, text in texts.items() if 'atom_bind(' in text}
-    assert active == {'model/_validation.py', 'model/_operations.py', 'checker/_core.py', 'model_verbalization.py'}
+    # model/_guarded.py holds guarded rules moved verbatim out of _validation (CI repair 2026-11-16).
+    assert active == {'model/_validation.py', 'model/_operations.py', 'checker/_core.py', 'model_verbalization.py',
+                      'model/_guarded.py'}
     for name in active:
         assert "from gnd.atoms import" in texts[name], name

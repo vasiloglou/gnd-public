@@ -35,6 +35,13 @@ Model documents as plain JSON values (evolve-loading follow-up, IK4-Q3, IKE-Q2).
 | `json_document(document, *, refuse, encodable) -> dict[str, Any]` | function | 27 | The parsed model document as plain Python, in one walk over every value. |
 | `model_wire(model)` | function | 111 | The authored-shape document of a loaded model, for re-entry into intake. |
 
+## gnd.model._guarded — `src/gnd/model/_guarded.py`
+Components: model.validation
+Guarded validation added by the guarded-rule milestones (GW0-GW1, GC1-GC3).
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+
 ## gnd.model._includes — `src/gnd/model/_includes.py`
 Components: model.loading
 One resolver and admission guards for pinned version-5 model includes.
@@ -69,6 +76,14 @@ Existing model operations section; historical facade retained.
 | --- | --- | --- | --- |
 | `compile_operation(operation, effects) -> list[dict[str, Any]]` | function | 63 | Standing obligations derivable from one operation's preconditions. |
 
+## gnd.model._parsing — `src/gnd/model/_parsing.py`
+Components: model.validation
+Bounded model-document parsing, shared by model loading and include resolution.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `parse_model_document(data, *, source) -> Any` | function | 25 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+
 ## gnd.model._paths — `src/gnd/model/_paths.py`
 Components: model.loading
 Historical confined reference paths and retained roots; shared by includes.
@@ -96,22 +111,21 @@ Model loading with two-layer validation.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `yaml_stream_guard_error(path) -> str \| None` | function | 105 | Pre-load guard for untrusted YAML input (T-01-02), or None when safe. |
-| `dynamic_subject_is_functional(subject, fact_types) -> bool \| None` | function | 2141 | Do the roles the SUBJECT BINDS determine at most one value? |
-| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 3196 | Present legacy sugar and every explicit clause without changing model bytes. |
-| `AggregateAnalysis` | class | 3358 | The one shared, total interpretation of a structured aggregate. |
-| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3372 | Analyze an aggregate without assuming schema-valid input. |
-| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3633 | Use the one aggregate policy walk with declared body-role primitives. |
-| `body_components(rule) -> list[frozenset[str]]` | function | 3648 | The connected components of a rule body's join graph, canonically ordered. |
-| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3708 | Fact type -> the fact types its rule reads. |
-| `DerivationEdge` | class | 3727 | (no docstring) |
-| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3735 | Keep every labelled atom edge, including duplicate and mixed edges. |
-| `DerivationClassification` | class | 3759 | One structured fact type's stability under the declared operations. |
-| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3772 | Return asserted leaves beneath one structured head, failing closed. |
-| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3863 | Classify every structured fact type against every operation touch. |
-| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3990 | SCC-condensed, dependency-first deterministic structured strata. |
-| `semantic_validate(doc) -> list[ValidationIssue]` | function | 5105 | Run every layer-2 semantic rule over a parsed model document. |
-| `parse_model_document(data, *, source) -> Any` | function | 5313 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+| `yaml_stream_guard_error(path) -> str \| None` | function | 119 | Pre-load guard for untrusted YAML input (T-01-02), or None when safe. |
+| `dynamic_subject_is_functional(subject, fact_types) -> bool \| None` | function | 2155 | Do the roles the SUBJECT BINDS determine at most one value? |
+| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 2872 | Present legacy sugar and every explicit clause without changing model bytes. |
+| `AggregateAnalysis` | class | 3034 | The one shared, total interpretation of a structured aggregate. |
+| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3048 | Analyze an aggregate without assuming schema-valid input. |
+| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3309 | Use the one aggregate policy walk with declared body-role primitives. |
+| `body_components(rule) -> list[frozenset[str]]` | function | 3324 | The connected components of a rule body's join graph, canonically ordered. |
+| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3384 | Fact type -> the fact types its rule reads. |
+| `DerivationEdge` | class | 3403 | (no docstring) |
+| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3411 | Keep every labelled atom edge, including duplicate and mixed edges. |
+| `DerivationClassification` | class | 3435 | One structured fact type's stability under the declared operations. |
+| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3448 | Return asserted leaves beneath one structured head, failing closed. |
+| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3539 | Classify every structured fact type against every operation touch. |
+| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3666 | SCC-condensed, dependency-first deterministic structured strata. |
+| `semantic_validate(doc) -> list[ValidationIssue]` | function | 4784 | Run every layer-2 semantic rule over a parsed model document. |
 
 ## gnd.model.flattening — `src/gnd/model/flattening.py`
 Components: model.loading

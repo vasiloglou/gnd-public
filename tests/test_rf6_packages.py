@@ -165,6 +165,9 @@ def split_homes():
         'model/_unattended.py',
         # LX1 (2026-11-15): flat re-entry bytes for a resolved include root.
         'model/flattening.py',
+        # CI repair (2026-11-16): the GW/GC guarded validation additions and the
+        # bounded model-document parser, split out at the size ceiling.
+        'model/_guarded.py', 'model/_parsing.py',
         'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py',
         # CI repair (2026-11-06): the CT2 composed-anchor check, split out at the size ceiling.
         'checker/_composed.py')}

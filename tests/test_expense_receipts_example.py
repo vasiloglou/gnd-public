@@ -25,7 +25,8 @@ def _files(root: Path) -> list[str]:
 
 
 def _gnd(*args: str) -> subprocess.CompletedProcess[str]:
-    return subprocess.run([sys.executable, "-m", "gnd", *args], cwd=EXAMPLE, capture_output=True, text=True)
+    return subprocess.run([sys.executable, "-m", "gnd", *args], cwd=EXAMPLE, capture_output=True, text=True,
+                          check=False)
 
 
 def _offenders(directory: str, tmp_path: Path) -> dict[str, list]:

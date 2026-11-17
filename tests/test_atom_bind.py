@@ -38,7 +38,9 @@ BIND_CONSUMERS = ("model/__init__.py", "model/_validation.py", "model/_operation
                   # The MG5 unattended-source rules, split out of _validation (it reads no bind).
                   "model/_unattended.py",
                   # The CT2 composed-anchor check, split out of checker/_core (it reads no bind).
-                  "checker/_composed.py")
+                  "checker/_composed.py",
+                  # LX1's flat re-entry bytes for a resolved include root (it reads no bind).
+                  "model/flattening.py")
 
 #: `patterns.py` keeps the 28th raw read. It imports NOTHING from `gnd` -- a
 #: boundary two reviewers enforced against an earlier draft and

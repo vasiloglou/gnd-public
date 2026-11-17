@@ -342,7 +342,18 @@ def test_R30_packaged_include_roots_resolve():
     expected = {'expense/teams/engineering.orm.json', 'expense/teams/sales.orm.json',
                 'expense/teams/sales-v2.orm.json',
                 'literature/interop_fixture/checking.orm.json',
-                'literature/interop_fixture/extraction.orm.json'}
+                'literature/interop_fixture/extraction.orm.json',
+                # LD1 competency examples and LD3 multipass reading (literature-depth).
+                'literature/depth_fixture/algorithms.orm.json',
+                'literature/depth_fixture/dynamics.orm.json',
+                'literature/depth_fixture/molecular.orm.json',
+                'literature/reading_fixture/reading.orm.json',
+                # The expense receipts chapter (PR 205): reading and checking roots.
+                'expense/receipts/checking.orm.json',
+                'expense/receipts/reading.orm.json'}
     assert included == expected
-    for relative in included:
+    # LD3's reading root pins the depth vocabulary, which reading.py places beside
+    # it in each run directory; it is not loadable where it is packaged.
+    staged = {'literature/reading_fixture/reading.orm.json'}
+    for relative in included - staged:
         assert load_model(examples / relative)._included

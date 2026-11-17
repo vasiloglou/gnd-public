@@ -82,6 +82,14 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
         },
         "_rule_depends_on": {"semantic:depends-on-ref"},
     }
+    # GC2's filter rule also reports two ids documented with their own rules.
+    shared = {
+        "_rule_guarded_filters": {"semantic:guarded-binding-type", "semantic:term-comparison-type"},
+    }
+    # GC1's membership rule names its two ids in a loop rather than as rule_id=.
+    indirect = {
+        "_rule_derivation_membership": ["semantic:membership-list", "semantic:membership-duplicate"],
+    }
     multi = {
         "_rule_derivation_unstratified": [
             "semantic:derivation-unstratified",
@@ -89,6 +97,11 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
         ],
         # MG5: one walk, eight named refusals, documented in rule order.
         "_rule_unattended": [f"semantic:unattended-u{n}" for n in range(1, 9)],
+        # GW1: the literal-domain walk's work limit and its domain finding.
+        "_rule_guarded_literal_domain": [
+            "semantic:guarded-literal-domain-work-limit",
+            "semantic:guarded-literal-outside-domain",
+        ],
     }
     assert [rule.__name__ for rule in model_module._SEMANTIC_RULES[:5]] == [
         "_rule_temporal_language", "_rule_id_unique", "_rule_role_ref",
@@ -97,7 +110,16 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
     seen_extra = set()
     seen_multi = set()
     for rule in model_module._SEMANTIC_RULES:
-        identifiers = list(dict.fromkeys(re.findall(r'rule_id="([^\"]+)"', inspect.getsource(rule))))
+        source = inspect.getsource(rule)
+        identifiers = list(dict.fromkeys(re.findall(r'rule_id="([^\"]+)"', source)))
+        if rule.__name__ in shared:
+            assert shared[rule.__name__] <= set(identifiers)
+            identifiers = [i for i in identifiers if i not in shared[rule.__name__]]
+        if rule.__name__ in indirect:
+            assert identifiers == [] and all(f'"{i}"' in source for i in indirect[rule.__name__])
+            identifiers = indirect[rule.__name__]
+            registered.extend(identifiers)
+            continue
         if rule.__name__ in extra:
             assert set(identifiers) == extra[rule.__name__]
             seen_extra.add(rule.__name__)

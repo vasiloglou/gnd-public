@@ -11,7 +11,8 @@ anything). It is the frontier of EVALUABILITY.
 which is what turns the undecided rate into a measurement of the frontier rather
 than a residual. The route set is derived from the production semantic
 registry's unchecked rows (:data:`BAND4_REASON_CODES`), with an explicit
-Phase-6 guarded-exists exclusion to preserve the predecessor report contract.
+Phase-6 guarded-exists exclusion, and the matching GC2 filter and GC3
+disjunction exclusions, to preserve the predecessor report contract.
 Other routes added later without a case still appear as missing cells.
 
 Neither kind needs a new population label. D-10's three values stay three and
@@ -112,6 +113,10 @@ def _constraint_band4_rows() -> tuple[Branch, ...]:
         # but they are outside the frozen predecessor BAND4 report contract.
         # Phase 6 does not claim synth/frontier coverage for this new lane.
         and not (row.family == "guarded" and row.variant == "exists")
+        # GC2's antecedent filters and GC3's disjunctive consequents add their
+        # own refusals on the same terms: new guarded lanes outside the frozen
+        # predecessor report contract, with no synth/frontier coverage claimed.
+        and not (row.family == "guarded" and row.variant in {"filtered", "any_of"})
         # Compiled standing obligations require explicit caller activation;
         # the predecessor synth/measure lane uses ordinary snapshot checking.
         and row.family != "compiled-subset"

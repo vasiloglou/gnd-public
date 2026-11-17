@@ -1623,6 +1623,7 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
 | `semantic:op-modality-policy` | warning | D-03 extended to operation obligations: llm-inferred/common-sense + proposed + alethic ⇒ warn |
 | `semantic:guarded-term-ref` | error | every guarded atom's `fact_type` resolves, and every `bind` key names a declared role of that fact type |
 | `semantic:guarded-role-claim` | error | every guarded atom binds exactly the roles declared by its fact type; missing roles are refused |
+| `semantic:guarded-filter-unbound` | error | every variable in a guarded antecedent filter (`where`) is positively bound |
 | `semantic:guarded-consequent-ground` | error | every `$`-variable in an atom, absence, or comparison consequent is introduced by an antecedent bind |
 | `semantic:guarded-comparison-type` | error | guarded comparison operands have compatible primitive types after variable-role and literal resolution |
 | `semantic:guarded-exists-range` | error | variables nested in exists.where exact functions are antecedent-bound or bound by a positive exists atom |
@@ -1655,6 +1656,8 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
 | `semantic:derivation-head-needs-round` | error | an exact-tier computed head is Integer-valued or wrapped in `round` |
 | `semantic:derivation-float-head-unquantized` | error | a float-tier computed head is `round`-wrapped, or is `floor`/`ceil` (always Integer-valued) |
 | `semantic:derivation-term-unbound` | error | every `where` variable is positively bound |
+| `semantic:membership-list` | error | the right side of a membership comparison is a non-empty, homogeneous list of literals compatible with the left term |
+| `semantic:membership-duplicate` | warning | a membership list contains no duplicate values |
 | `semantic:term-comparison-type` | error | both `where` operands have compatible types |
 | `semantic:derivation-head-unbound` | error | range restriction: every head variable is bound by a positive body atom |
 | `semantic:derivation-negate-unbound` | error | safety: every negated variable is bound by a positive body atom |
@@ -1677,6 +1680,8 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
 | `semantic:unattended-u6` | error | under `source.mode: unattended` only: every sample row cites a span ("Unattended source") |
 | `semantic:unattended-u7` | error | under `source.mode: unattended` only: every span is well formed and names a declared document ("Unattended source") |
 | `semantic:unattended-u8` | error | under `source.mode: unattended` only: no `alethic` constraint from `sample`, `llm-inferred`, `common-sense` or `induced` ("Unattended source") |
+| `semantic:guarded-literal-domain-work-limit` | warning | guarded literal domain validation finished within its work limit |
+| `semantic:guarded-literal-outside-domain` | warning | a guarded literal lies inside the value domain its compared role declares |
 
 Errors abort the load with a pointed message naming the offending element; warnings ride on the loaded model and are printed by `gnd validate` (exit 0 when only warnings exist).
 

@@ -39,7 +39,7 @@ from fixture, review and planning commits.
 |---|---|---|
 | Guarded diagnostics, edition comparison, guarded synthesis and guarded joins | PRs 184 and 190 | Existing 0.3.1 guarded-rules block |
 | Typed AMIE constants and bounded recount | `24851fbb` | Existing 0.3.1 guarded-rules block |
-| Guarded-case synthesis reports a missing optional dependency | `618141de` | 0.4.0 carryover if not already clear from the 0.3.1 linked synthesis guide |
+| Guarded-case synthesis reports a missing optional dependency | `618141de` | Explicit 0.3.1 carryover in the 0.4.0 opening for PyPI upgraders |
 | Ossie disclosure and import rule identifiers | `37df747e` | Existing 0.3.1 other changes |
 | Package long description and publication-day text tool | `4ca709e2` | Existing 0.3.1 other changes |
 | Unattended reply shape for derived fact types | `d8c0b2a3` | Existing 0.3.1 other changes |

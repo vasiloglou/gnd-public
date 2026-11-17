@@ -85,8 +85,8 @@ The literal grep does not inspect compressed payloads. The default-lane diagnost
 .gnd-planning/milestones/release-0.3.0/notes/phase-RN3-spec.md	historical reference, compatibility statement or fixed test input; retain
 .gnd-planning/milestones/release-0.3.0/notes/release-0.3.0-plan.md	historical reference, compatibility statement or fixed test input; retain
 README.md	retained install pin; change at publication
-docs/bookrec/08-guarded-rules.md	historical reference, compatibility statement or fixed test input; retain
-docs/bookrec/09-suggested-rules.md	historical reference, compatibility statement or fixed test input; retain
+docs/bookrec/08-guarded-rules.md	prepared-state instruction; update in the RV3 publication patch
+docs/bookrec/09-suggested-rules.md	prepared-state instruction; update in the RV3 publication patch
 docs/compatibility.md	historical release information; RV1 adds prepared state
 docs/explanation/ossie.md	historical reference, compatibility statement or fixed test input; retain
 docs/how-to/shared-expense-policies-commands.md	historical reference, compatibility statement or fixed test input; retain
@@ -164,7 +164,7 @@ tools/release_text.py	historical reference, compatibility statement or fixed tes
 .gnd-planning/milestones/literature-interop/notes/reviews/phase-LX2-r1/diff.patch	historical reference, compatibility statement or fixed test input; retain
 .gnd-planning/milestones/ossie-interchange/evidence/OS0/pins.json	historical reference, compatibility statement or fixed test input; retain
 docs/compatibility.md	historical release information; RV1 adds prepared state
-docs/expense/05-receipts.md	historical reference, compatibility statement or fixed test input; retain
+docs/expense/05-receipts.md	prepared-state instruction; update in the RV3 publication patch
 docs/release-notes.md	historical release information; RV1 adds prepared state
 docs/releasing.md	historical reference, compatibility statement or fixed test input; retain
 pyproject.toml	stale release field; bump to 0.4.0

@@ -2,7 +2,9 @@
 
 Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions
 0.1.0, 0.2.0 and 0.3.0 are published (0.3.0 on 2026-11-11). Version 0.3.1 is a
-GitHub tag only and is not published on the package index. For the next version,
+GitHub tag only and is not published on the package index. Version 0.4.0 is
+prepared and not published. The package index was checked on 2026-11-17.
+For the next version,
 confirm service ownership and that the version is still free before candidate
 freeze and again before any upload. Milestone numbers are not package versions.
 

@@ -289,10 +289,10 @@ witness: [2, 3, 'ps'] proved
 replay exit: 0
 ```
 
-## Act 3. Read in passes
+## Act 3. Read again, and find more each time
 
-Run the multipass reading example, then list what it says about each
-question.
+Run the multipass reading example. First, list what each pass read, what
+the agent returned, and which facts were kept after it:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```python
@@ -301,6 +301,50 @@ import json, subprocess, sys
 done = subprocess.run([sys.executable, "-m", "gnd.examples.literature.reading", "run", "--out", "reading-run"],
                       capture_output=True, text=True, check=True)
 report = json.loads(done.stdout)
+json.dump(report, open("reading-report.json", "w"))
+for stage, name in ((1, "broad"), (3, "targeted")):
+    payload = json.load(open(f"reading-run/payload-{stage}.json"))
+    print(f"{name} pass:")
+    for attempt in payload["attempts"]:
+        found = [f"{k}={r['value']}" for k, rows in attempt["response"]["facts"].items() for r in rows]
+        print(f"  {attempt['section']}: {attempt['outcome']} {found}")
+    facts = json.load(open(f"reading-run/{name}.population.json"))["facts"]
+    print(f"  facts kept: {sum(len(rows) for rows in facts.values())}")
+print("new vocabulary proposed:", sorted({k for a in json.load(open("reading-run/payload-3.json"))["attempts"]
+                                         for k in a["response"]["proposal_keys"]}))
+print("re-read:", report["revisit"])
+print("gain:", report["supported_fact_gain"], "facts,", report["newly_answered"], "questions,",
+      report["reading_bytes"], "bytes read")
+print("producer calls:", report["producer_calls"])
+print("conflicting labels, verify and check exits:", report["public_routes"]["reported-conflict"])
+print("absence:", report["absence"], "recall", report["fidelity"])
+```
+
+```text
+broad pass:
+  study-opening: accepted ['system=alanine dipeptide in vacuum']
+  annex-opening: empty []
+  control-table: refused []
+  facts kept: 2
+targeted pass:
+  study-methods: accepted ['approximation=Langevin integration at 300 K with 2 fs steps']
+  study-limits: accepted ['explicit_denial=no barostat']
+  facts kept: 4
+new vocabulary proposed: ['method-family']
+re-read: ['study-opening']
+gain: 2 facts, 2 questions, 234 bytes read
+producer calls: {'broad-extraction': 3, 'targeted-extraction': 2}
+conflicting labels, verify and check exits: {'check': 1, 'verify': 1}
+absence: {'below_floor_status': 'unavailable', 'status': 'qualified'} recall {'high': [2, 2], 'low': [1, 2]}
+```
+
+Then list what the run says about each question:
+
+<!-- gnd-run expect=0 output=stdout -->
+```python
+import json
+
+report = json.load(open("reading-report.json"))
 for row in report["coverage"]:
     print(f"{row['question']:13} {row['section']:16} inspected={str(row['inspected']).lower():5} {row['state']}")
 print("reads:", report["read_denominator"])

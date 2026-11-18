@@ -255,11 +255,46 @@ Numbers stay exact, too. One source gives the same time step as
 `0.0001 ps`. GND records the step as exactly `0.002 ps`, ties it to the
 second line, proves the value, and replays the proof.
 
-### Read in passes, and know what was not read
+### Read again, and find more each time
 
-A long paper is read in passes: a broad pass, then targeted passes on the
-sections that matter. GND records every pass, and gives each question one
-disposition:
+One quick read of a paper misses things. The method details sit in the
+methods section, and a limitation sits in a closing sentence. So the agent
+reads in passes. Each pass goes after the questions that are still open,
+and GND checks each pass before its facts are kept.
+
+The example is a molecular simulation study with seven questions: the
+system, the method, any stated denial, an alternative integrator, a method
+in the annex, an equation, and an older form of the method question.
+
+**You ask**
+
+```text
+Read the alanine study with /gnd:gnd-extract in passes. Start with a broad
+read of each source's opening. Then go back only to the sections that can
+answer the questions still open, and stop when every required question has
+an answer or a reason it has none.
+```
+
+**What each pass added**
+
+| Pass | Sections read | What the agent returned | Facts kept so far |
+|---|---|---|---|
+| 1. Broad | study opening, annex opening, a withheld table | 1 answer, 1 empty, 1 refusal | **2**: the subject's label and the system, *alanine dipeptide in vacuum* |
+| 2. Targeted | study methods, study limits | 2 answers | **4**: adds *Langevin integration at 300 K with 2 fs steps* and *no barostat* |
+| 3. Review | none | proposes a new vocabulary term, *method family* | 4, and the study opening goes back on the list to re-read under the new term |
+
+The targeted pass found two more facts and answered two more questions.
+It read 234 bytes in all, so the run reports its yield as 2 new facts per
+234 bytes read. The agent was called 3 times in the broad pass and 2 times
+in the targeted pass. A refused or empty answer is recorded as refused or
+empty, and never as "nothing there".
+
+A candidate can also be stopped before it is kept. A separate report gave the same molecule
+two different labels. GND's verify and check steps both rejected that
+candidate, so it never joined the kept facts.
+
+**Know what was not read.** When the run stops, each question has exactly
+one disposition:
 
 | Question | Section | Read? | Disposition |
 |---|---|---|---|
@@ -270,9 +305,15 @@ disposition:
 | annex method | annex methods | no | **unavailable** |
 | equation | control equation | no | **not applicable** |
 
-"Read, not found", "unavailable" and "denied" no longer look alike. The
-run is saved, so it can be replayed later without calling the reading
-agent again.
+"Read, not found", "unavailable" and "denied" no longer look alike.
+"Read, not found" is only allowed when the reading is good enough to
+trust. Scored against an independent answer, the extraction found 2 of 2
+facts, so the
+absence of an alternative integrator counts, scoped to the methods
+section. At 1 of 2, the same absence would be reported as unavailable.
+
+Every pass is saved with its inputs, so the whole run replays later
+without calling the reading agent again.
 
 ### Change the vocabulary, and see what goes stale
 

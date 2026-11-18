@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "run_sha256": "fbc071a59fe576ef3a35b0c4129b18d8943d68cbd45d2a5a87b9e74bd06e5e87",
+  "summary": "Four complete responses satisfy the milestone close review bar. The panel concentrated on the provenance of the repaired intake bytes, traceability of acceptance evidence and the boundary between a submitted roster and work to reconstruct it.",
+  "agreed_concerns": [
+    {
+      "group_id": "post-review-repair-scope",
+      "title": "Identify the exact independently reviewed and locally verified bytes",
+      "summary": "The original independent review read c56ce751. The six files changed by the YAML depth repair at 2f906af0 have local verification evidence.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "repair-bytes-outside-independent-review"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "final-repair-unreviewed"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ac1-close-repaired-membership-core-unreviewed"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "replay-shares-membership-semantics"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "replay-member-ceiling-exit-code"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "ac1-close-full-suite-gates-unattributed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-opaque-row-refusal-exit-and-control-unspecified"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-empty-group-populated-covered-relation-not-established"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-plan-mutation-controls-absent-from-exit-predicates"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-pinned-phase-and-installed-evidence-not-in-panel-packet"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-refusal-ordering-and-exit-code-mapping-collapsed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-replay-trust-boundary-not-surfaced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-plan-documentation-deliverables-unevidenced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-required-structural-and-lint-checks-unevidenced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-five-criteria-versus-six-evidence-rows"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "acc-close-delta-not-digest-pinned"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-1",
+      "rank": 1,
+      "title": "Bind test results and independent review to their exact commits",
+      "action": "Record the original review and repaired tests by commit, identify the six changed files, and rule explicitly on the remaining evidence boundary.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "repair-bytes-outside-independent-review"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "final-repair-unreviewed"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ac1-close-repaired-membership-core-unreviewed"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ac1-close-full-suite-gates-unattributed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "repair-bytes-outside-independent-review",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "final-repair-unreviewed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ac1-close-repaired-membership-core-unreviewed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ac1-close-full-suite-gates-unattributed",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-2",
+      "rank": 2,
+      "title": "Tie completeness and refusal cases to runnable controls",
+      "action": "Cross-reference the existing exact controls and independently exercise typed grouping, rebound opaque inputs, and output limits during replay.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "replay-shares-membership-semantics"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "replay-member-ceiling-exit-code"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-opaque-row-refusal-exit-and-control-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-empty-group-populated-covered-relation-not-established"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-plan-mutation-controls-absent-from-exit-predicates"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-refusal-ordering-and-exit-code-mapping-collapsed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-replay-trust-boundary-not-surfaced"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "replay-shares-membership-semantics",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "replay-member-ceiling-exit-code",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-opaque-row-refusal-exit-and-control-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-empty-group-populated-covered-relation-not-established",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-plan-mutation-controls-absent-from-exit-predicates",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-refusal-ordering-and-exit-code-mapping-collapsed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-replay-trust-boundary-not-surfaced",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-3",
+      "rank": 3,
+      "title": "Bind the close evidence map and supporting artifacts",
+      "action": "List the exact contract and registry paths, map the five issue controls and the member-witness proposal, and verify all supporting and delta hashes.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-pinned-phase-and-installed-evidence-not-in-panel-packet"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-plan-documentation-deliverables-unevidenced"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-required-structural-and-lint-checks-unevidenced"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-five-criteria-versus-six-evidence-rows"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-close-delta-not-digest-pinned"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-pinned-phase-and-installed-evidence-not-in-panel-packet",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-plan-documentation-deliverables-unevidenced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-required-structural-and-lint-checks-unevidenced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-five-criteria-versus-six-evidence-rows",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "acc-close-delta-not-digest-pinned",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    }
+  ]
+}

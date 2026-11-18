@@ -1,0 +1,15 @@
+{
+  "replay": {
+    "false_empty_exit": 1,
+    "opaque_populated_and_empty_exit": 2,
+    "reconstructed_roster_and_bytes_exit": 4,
+    "submitted_roster_and_bytes_exit": 3
+  },
+  "typed_differential": {
+    "absent_group_replay_count": 0,
+    "aggregate_counts": [
+      2,
+      1
+    ]
+  }
+}

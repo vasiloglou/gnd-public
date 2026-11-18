@@ -91,8 +91,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - does: Produce and independently replay grounded derivation witnesses and explain why a derived row is absent.
 - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
 - status: canonical
-- components: cli.witness_command, witness.command, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, … +2 more (graph.md)
+- components: cli.witness_command, witness.command, witness.count_membership, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
+- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, … +3 more (graph.md)
 - notes: Production evaluates through the checker; replay does not search for a fixpoint.
 
 ### subsystem.review_panel
@@ -753,13 +753,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.witness_command
-- does: Register witness, replay, witness view and why not commands through the witness CLI [add_parsers; handle].
+- does: Register witness, replay, witness view, why not and COUNT membership commands through the witness CLI [add_parsers; handle].
 - verbs: witness command, replay witness, witness view, why not, bounded witness, explanation command, witness dispatch, register parser, dispatch handler, parse flags
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/witness.py
-- uses: witness.command
+- uses: witness.command, witness.count_membership
 - used_by: cli.dispatch
 - part_of: subsystem.witness
 - tests: tests/test_rf5_commands.py
@@ -1757,7 +1757,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +72 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +73 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1918,10 +1918,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +72 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +73 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
-- notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
+- notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
 
 
 ### infra.version
@@ -2193,7 +2193,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +52 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +53 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +26 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +27 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2314,7 +2314,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: (none)
 - used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
 - tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
-- notes: Customer mode wins over internal mode from either source; forward propagates only the restrictive customer setting.
+- notes: Customer mode wins over internal mode from either source. The surface registry includes both COUNT membership commands. Forward propagates only the restrictive customer setting.
 
 
 ### check.evaluation_feedback
@@ -2431,7 +2431,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, … +32 more (graph.md)
+- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, … +33 more (graph.md)
 - part_of: subsystem.check
 - tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
 - in: Population path or bytes; optional loaded Model.
@@ -2445,7 +2445,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +38 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +39 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2538,7 +2538,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +16 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +17 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -3088,7 +3088,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/witness/io.py, src/gnd/witness/types.py
 - uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
-- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.count_membership, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_public_why_not.py, tests/test_witness_composition.py
 - notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Model wire is re-exported from model.json_document. Limits may only be lowered from the fixed ceilings.
@@ -3120,6 +3120,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_public_why_not.py, tests/test_witness_composition.py
 - notes: src/gnd/commands/witness.py is the external command-registration bridge; this component owns the lane's argument and execution boundary. Writing --out requires --raw.
+
+
+### witness.count_membership
+- does: Produce and independently replay the exact distinct contribution roster of one selected COUNT group over a covered candidate relation.
+- verbs: witness count, replay count, count membership, empty group, source occurrence, declared coverage, bounded source scan, raw snapshot binding
+- in: Reference-free model, candidate population, typed group request and an optional COUNT membership certificate.
+- out: Bound certificate with ordered representative occurrences or a replay verdict, including empty-group success.
+- status: canonical
+- modules: src/gnd/witness/count_cli.py, src/gnd/witness/count_membership.py, src/gnd/witness/count_producer.py, src/gnd/witness/count_replay.py
+- uses: infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.loading, model.population_loading, model.query_index, witness.schema
+- used_by: cli.witness_command
+- part_of: subsystem.witness
+- tests: tests/test_count_certificates.py
+- notes: Replay reconstructs the roster through the shared bounded scan. Ordinary witness and aggregate checker behavior is unchanged.
 
 
 ### witness.produce

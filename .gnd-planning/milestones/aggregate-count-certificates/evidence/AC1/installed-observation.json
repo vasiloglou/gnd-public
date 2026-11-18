@@ -1,0 +1,46 @@
+{
+  "artifacts": {
+    "after.json": "3bc98730e428d263f9e4e4d62c6200e72282bacdcd26fc1f4672fbff86b7aa9c",
+    "alpha-replayed.json": "ae833a36a57cdabc076d797ddff50aebc43f0695727904235026b54c8dfaa869",
+    "alpha.cert.json": "acd11f2fe73d7019b4208929f94478fc23f120403b9323b7e8fe2d4c63278102",
+    "before.json": "3bc98730e428d263f9e4e4d62c6200e72282bacdcd26fc1f4672fbff86b7aa9c",
+    "empty-group.json": "98460aa95a1e03526a5182563286084b56f1674652544154e5dc0f257c96045e",
+    "empty-replayed.json": "821bf6f678404df0b3e2c3272792092e1129e7ae39c7b9bce6c71b74f05469ec",
+    "empty.cert.json": "466aa05af78f192cfc231b4e15278f2bb365c447ce304838a636f7ff7738c3ca",
+    "flow-replayed.json": "2f81565b6e0672661e68a2af56bbb872fa21da53f7cbf980cc330cb3dcd58746",
+    "flow.cert.json": "e2edffdf6246db82fe617e7d0cef0323fec68b7bb30cbe41349e8d2255820b79",
+    "group.json": "ff174c391221d8f4320b40750e5039121e8a75819e57a19a36989a1daed4c807",
+    "member-targets.json": "3915303cdd0817c4f7adeca98e9f7706423bee040637723e58cd634e7b5cd6d8",
+    "model.orm.yaml": "abf5eaa487a2eafb379a30ba7a04278a9bbf9ba85e904aeddf07ad190bb569bb",
+    "population.json": "aeb688b5b147ceeebfca60672995ca51bddd09b5ae5547c5bc984228ddc3bf72"
+  },
+  "checker_before_after_identical": true,
+  "group_observations": [
+    {
+      "count": 2,
+      "group": "flow",
+      "indices": [
+        2,
+        0
+      ],
+      "replay_exit": 0,
+      "status": "complete"
+    },
+    {
+      "count": 0,
+      "group": "empty",
+      "indices": [],
+      "replay_exit": 0,
+      "status": "empty-group"
+    }
+  ],
+  "member_witness": {
+    "origin_index": 2,
+    "replay_exit": 0
+  },
+  "product_commit": "2f906af055386ca2e7dc0e83c0be039cdb7b9061",
+  "wheel": {
+    "name": "get_nick_done-0.3.1-py3-none-any.whl",
+    "sha256": "e0470b179077f8186b9b71ae11b32e9eb1613eaf1c935dbd3e6b55d8d217e7b5"
+  }
+}

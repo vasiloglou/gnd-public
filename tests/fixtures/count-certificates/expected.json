@@ -1,0 +1,8 @@
+{
+  "nonempty": {"status":"complete", "count":2, "origins":[2,0], "members":["alpha","beta"]},
+  "empty": {"status":"empty-group", "count":0, "origins":[], "members":[]},
+  "forged_exit": 1,
+  "unsupported_exit": 2,
+  "stale_exit": 3,
+  "work_exit": 4
+}

@@ -191,5 +191,5 @@ Components: cli.witness_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 12 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 26 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 14 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 28 | (no docstring) |

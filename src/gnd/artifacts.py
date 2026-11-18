@@ -1389,6 +1389,7 @@ def publish_leaf_atomic(
     *,
     expected: LeafSnapshot | None = None,
     expected_root: tuple[int, int] | None = None,
+    mode: int = FILE_MODE,
 ) -> LeafSnapshot:
     """Publish one complete leaf, requiring absence or an exact prior identity."""
 
@@ -1410,7 +1411,7 @@ def publish_leaf_atomic(
         descriptor = os.open(
             staging,
             os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0),
-            FILE_MODE,
+            mode,
             dir_fd=parent_fd,
         )
         with os.fdopen(descriptor, "wb") as stream:

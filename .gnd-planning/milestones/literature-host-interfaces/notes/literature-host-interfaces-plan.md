@@ -2,26 +2,36 @@
 
 **Status: outline draft, 2026-11-21. Not reviewed and not approved.** This
 plan covers [#216](https://github.com/vasiloglou/gnd-public/issues/216) and
-[#215](https://github.com/vasiloglou/gnd-public/issues/215). It also takes the
-"host-scale reading and extraction" carryover from the
-[literature-depth close](../../literature-depth/016-milestone-close.md).
-Phases are outlines; none has a spec yet. `start-milestone` turns this outline
-into the full plan and the LH1 draft spec, and the plan review runs then.
+[#215](https://github.com/vasiloglou/gnd-public/issues/215). It delivers the
+interface half of the "host-scale reading and extraction" carryover from the
+[literature-depth close](../../literature-depth/016-milestone-close.md); the
+run over a separately selected corpus and provider budget stays carried with
+the literature-identity follow-up, as that close assigned it. Phases are
+outlines; none has a spec yet. `start-milestone` turns this outline into the
+full plan and the LH1 draft spec, and the plan review runs then. Repaired after
+the PR 219 reviews (`.gnd-planning/reviews/pr-219-r2/` and `pr-219-panel/`).
 
 ## Goal and completion predicates
 
-A host with its own corpus and its own model calls the two literature examples
-as library functions instead of reimplementing them. The examples stay
-examples: neither is promoted to stable CLI (both issues say so).
+A host with its own corpus and its own vocabulary model calls the two
+literature examples as library functions instead of reimplementing them. The
+examples stay examples: neither is promoted to stable CLI (both issues say so).
 
 - **LH1.** `examples/literature/reading.py` exposes a public producer protocol:
   a call goes in, an outcome (`accepted`, `empty`, `refused`, and the existing
-  others) comes out. `run()` takes a producer, a stop rule per document as well
-  as the global one, the roster cap (today `ROSTER_LIMIT = 128`) and the byte
-  budget (today `MAX_BUDGET = 1 << 20`). `SavedProducer` is one implementation
-  of the protocol.
-- **LH2.** `replay()` takes a caller-given input root and replays a live run
-  with zero producer calls. The packaged fixture stays the default.
+  others) comes out. `SavedProducer` is one implementation of it. `run()`
+  takes a producer, a caller input root, a caller vocabulary model, a stop rule
+  per document as well as the global one, the roster cap (today
+  `ROSTER_LIMIT = 128`) and the byte budget (today `MAX_BUDGET = 1 << 20`).
+  With a live producer, the input root needs no saved `responses.json` or
+  producer pin: `ReadingInputs` today requires both (`reading.py:72-75`,
+  "saved producer table differs from its pin"), requires the saved responses
+  to cover every section (`:113`, "saved response roster differs"), and loads
+  the vocabulary from the packaged depth fixture unless told otherwise
+  (`:135`). The responses a live run produces are written to its run folder.
+- **LH2.** `replay()` already takes a folder (`reading.py:574`). LH2 makes it
+  replay a live LH1 run from that folder, with the captured responses and the
+  caller's vocabulary, with zero producer calls.
 - **LH3.** `examples/literature/assertion_admission.py` takes the assertion
   entity (objectified fact type or entity type) by name. Its identity is that
   model's preferred uniqueness, not (work, passage). Optional roles are
@@ -36,7 +46,8 @@ examples: neither is promoted to stable CLI (both issues say so).
 - **Formats stay.** The stage-file, coverage-row and rebind formats are
   unchanged; #216 says they work as they are.
 - **Fixture bytes stay.** The packaged runs and their recorded outputs are
-  byte-identical with the defaults.
+  byte-identical with the defaults. The saved-response pin and roster checks
+  stay in force for `SavedProducer`.
 - **Example status stays.** Public here means documented and tested as the
   example's library surface, not a stable CLI.
 
@@ -44,11 +55,25 @@ examples: neither is promoted to stable CLI (both issues say so).
 
 | Source | Obligation | Phase |
 |---|---|---|
-| #216 "Problem" | `reading.py:562` `run()` builds `SavedProducer(inputs.responses)` at `:566`; only private `_evaluate(..., producer=)` at `:445` takes another. Confirmed at `0f39c392` on 2026-11-21 | LH1 |
+| #216 "Problem" | `reading.py:562` `run()` builds `SavedProducer(inputs.responses)` at `:566`; only private `_evaluate(..., producer=)` at `:445` takes another. `ReadingInputs` binds the root to saved responses at `:72-75` and `:113`, and to the packaged vocabulary at `:135`. Confirmed at `0f39c392` on 2026-11-21 | LH1 |
 | #216 "Request" bullets 2–4 | Per-document stop rule; `ROSTER_LIMIT` `:41` and `MAX_BUDGET` `:40` as parameters; `replay()` at `:574` against a caller root | LH1, LH2 |
 | #215 "Problem" | `assertion_admission.py:100` `project()`; sentinels `:30`; policy `:122`; `MAX_TARGETS` `:29` | LH3, LH4 |
 | #215 measured shape | 98 % of claims share a passage; about half lack one actor and one object; 9 % have several conditions; 44 % carry a quantity | LH3 acceptance fixture |
-| literature-depth close | Host-scale reading and extraction carryover | LH1, LH2 |
+| literature-depth close, row "Host-scale reading and extraction" | Interface half only; the corpus and provider-budget run stays with the literature-identity follow-up | LH1, LH2 |
+
+### Issue requests and the phases that discharge them
+
+| Request | Phase |
+|---|---|
+| #216: a public producer protocol, live and replayable | LH1, LH2 |
+| #216: the stop rule per document as well as global | LH1 |
+| #216: the roster cap and the byte budget as parameters | LH1 |
+| #216: `replay()` against a caller-given input root | LH2 |
+| #215: caller-named assertion entity, identity from its preferred uniqueness | LH3 |
+| #215: every fact row of an admitted assertion kept | LH3 |
+| #215: optional roles are optional | LH3 |
+| #215: polarity / attribution policy as data, with a distinct disposition | LH4 |
+| #215: `MAX_TARGETS` as a parameter | LH4 |
 
 ## 2–3. Contract sketch and dependencies
 
@@ -57,15 +82,16 @@ examples: neither is promoted to stable CLI (both issues say so).
 - **LH3–LH4** adapt `assertion_admission.py`; `gnd judgments check` stays the
   admitting command. LH4 needs LH3.
 - The two pairs are independent and can run in parallel on separate branches.
-- Start condition: none. Running it after include-root-routes lets LH3's
-  fixture use an include root, which is the reporter's real setup.
+- Start condition: none. No other roadmap milestone uses these interfaces.
+  Running it after include-root-routes lets LH3's fixture use an include root,
+  which is the reporter's real setup.
 
 ## 4. Phases
 
 | Phase | Outline criteria |
 |---|---|
-| LH1 | A test producer drives all six stages through the public call. A per-document stop ends one document and not the others. A lowered cap and budget are honoured and recorded |
-| LH2 | A live run with a test producer replays from its own folder with zero calls, byte-identical. A tampered input refuses |
+| LH1 | A test producer drives all six stages over a caller corpus and a caller vocabulary model, both distinct from the packaged fixture, with no saved `responses.json` or pin. The captured responses land in the run folder. A per-document stop ends one document and not the others. A lowered cap and budget are honoured and recorded. The packaged `SavedProducer` run is byte-identical |
+| LH2 | That live run replays from its own folder with zero producer calls, byte-identical. A tampered captured response refuses |
 | LH3 | A model with a multi-participant, multi-condition, quantity-bearing assertion and a passage shared by two assertions admits with every row intact. The packaged example still admits as before |
 | LH4 | A policy file changes which rows admit. A supported row that fails the policy has a disposition distinct from an unsupported one |
 
@@ -80,8 +106,12 @@ examples: neither is promoted to stable CLI (both issues say so).
 
 - **Surfaces.** The literature examples page and the literature tutorial each
   gain a "drive it from your host" section.
-- **Risks.** A generic admission could admit rows the packaged example
-  refused. Control: the packaged fixture's admitted set is pinned.
+- **Risks.**
+  - A generic admission could admit rows the packaged example refused.
+    Control: the packaged fixture's admitted set is pinned.
+  - Dropping the saved-response pin for live runs could weaken the packaged
+    replay. Control: the pin and roster checks stay for `SavedProducer`, and
+    LH2 binds a live run's captured responses by digest.
 - **Protocol.** `process-milestone` with the project rules in
   `.codex/skills/process-phase/references/project.md`.
 - **Verification.** Each spec names its focused lane from

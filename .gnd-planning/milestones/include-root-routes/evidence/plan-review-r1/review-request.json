@@ -1,0 +1,21 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/milestones/include-root-routes/notes/include-root-routes-plan.md",
+  "sha256": "4079c650ad046dcec1087c7cb95b58a71f471743ec511ff670a7426d3027c39b",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "include-root-routes plan r2",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, a phase cannot be specified, implemented or tested as written, or the milestone would not do what its goal claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "Can each phase IR1, IR2 and IR3 be specified, implemented and tested as section 2 and section 4 write it, within the scope sections 1 and 7 state? Is any criterion in section 4 impossible or unfalsifiable?",
+   "Does each code location, line number and quoted message cited in the plan match the repository at this checkout? Read the cited lines in src/gnd and tests before reporting a mismatch.",
+   "Do the binding rules of section 0, the decisions of section 10 and the controls of section 6 agree with each other and with the criteria? In particular: is the receipt binding of D4 sufficient for 'receipts bind the root and every include', and does R0.6 hold for each changed route?",
+   "Are the order, dependencies and verification lanes of sections 3 and 9 consistent, acyclic and sufficient for each criterion?",
+   "The IR1 draft spec at .gnd-planning/milestones/include-root-routes/notes/phase-IR1-spec.md may be read for context; a concern about it must still cite the plan file and name the spec line in the observation.",
+   "Every concern's evidence must cite the plan file."
+  ]
+ }
+}

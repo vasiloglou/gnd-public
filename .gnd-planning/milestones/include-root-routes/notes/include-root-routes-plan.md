@@ -1,10 +1,13 @@
-# Include-root routes · plan r2
+# Include-root routes · plan r3
 
-**Status: r2, 2026-11-21. Full plan written by `start-milestone` from outline
-r1. Plan review: not yet run.** The owner selected the GND review panel light
-(`tools/run_gnd_review_panel.py --light`) for the plan review and the
-milestone close in this session on 2026-11-21. Until the plan-gate record
-exists, this plan carries no review opinion and no approval. `auto=true`
+**Status: r3, 2026-11-21. Plan review ran over r2; r3 applies its 13 fixes
+and carries no review opinion of its own.** The owner selected the GND review
+panel light (`tools/run_gnd_review_panel.py --light`) for the plan review and
+the milestone close in this session on 2026-11-21. The panel read r2 (sha256
+`4079c650ad046dcec1087c7cb95b58a71f471743ec511ff670a7426d3027c39b`, commit
+`185ccaca`): six of six seats succeeded at high effort; evidence and the
+disposition are in `evidence/plan-review-r1/`. Repairs are tagged `(p1)` at
+their site. Approval is recorded only in `001-plan-gate.md`. `auto=true`
 delegation for this milestone was given on 2026-11-21 (`process-milestone
 include-root-routes auto`).
 
@@ -18,7 +21,8 @@ Items 2–4 of #214 belong to
 commit `0cf94434`, merged in PR 219 as `260c4337`). Its phase IDs IR1–IR3 and
 decisions D1–D3 are kept. Its reviews, `.gnd-planning/reviews/pr-219-r2/` and
 `pr-219-panel/`, read the roadmap outline, not these bytes. Sentences new in
-r2 carry no review opinion. Every code citation was re-read at `260c4337` on
+r2 carry no review opinion. r3 repairs, tagged `(p1)`, carry none either.
+Every code citation was re-read at `260c4337` on
 2026-11-21; `src/` is unchanged since `0f39c392`, where the outline cited it.
 
 ## Goal and completion predicates
@@ -29,7 +33,9 @@ combination that stays unsupported refuses with a message naming it.
 
 - **IR1.** `gnd judgments check` accepts an include root, temporal or not, and
   judges the same composed model `gnd check` evaluates. Receipts bind the root
-  by its sha256, and the root's pins bind every include (decision D4).
+  by its sha256, and the root's pins bind every include (decision D4): every
+  include declaration must carry a 64-hex `sha256` or it is refused
+  `include:declaration` (`model/_includes.py:61-77`) `(p1)`.
 - **IR2.** Any include root, temporal or not, can be written out as a
   `*.flat.orm.json` plus its `gnd-flattening/1` record by `gnd flatten`, a
   command separate from `gnd extract` (D1).
@@ -67,7 +73,9 @@ close review.
   criterion says which mode it means.
 - **R0.6 A model without includes is untouched.** Every changed route gives
   byte-identical output for a model that declares no includes. The existing
-  tests of each route are the control.
+  tests of each route are the control; for `gnd extract` that includes the
+  temporal-refusal goldens in `tests/fixtures/rf1-pins/goldens/sem-extract/`
+  (run by `tests/test_rf1_semantic_pins.py`) `(p1)`.
 
 The project's six standing rules (`.codex/skills/process-phase/references/project.md`)
 bind every phase; each spec discharges them by name.
@@ -84,12 +92,12 @@ Harvested obligations. "Observed" means re-read or run on 2026-11-21 at
 | H3 | #217 "Request" | either route; the reporter measured that a non-temporal root with reference populations judges through the flat model | inherited | IR1, IR2 |
 | H4 | #214 row 5, "What would unblock it" item 1 | `pyrel_rules.py:2415` `guard_bytes(..., route='pyrel_rules:2267')`; default export refuses `include:unsupported-route: export.pyrel` (`emit.py:27-31`) | observed (exit 3 on both fixture roots, all three modes) | IR3 |
 | H5 | literature-interop LX1–LX2, closed | `gnd-flattening/1`, `model/flattening.py`, `witness/flattening.py` as shipped | observed | IR2, IR3 |
-| H6 | probe, 2026-11-21 | the judgments include refusal writes `error.reason: "include:unsupported-route"` (`api.py:1194-1197`), outside the closed enum of `judgment.schema.json` `$defs.report.error.reason` (`shape binding trust limit unsupported io`) | observed | IR1 |
+| H6 | probe, 2026-11-21 | the judgments include refusal writes `error.reason: "include:unsupported-route"` (`api.py:1195-1198`, corrected `(p1)`), outside the closed enum of `judgment.schema.json` `$defs.report.error.reason` (`shape binding trust limit unsupported io`) | observed | IR1 |
 | H7 | probe, 2026-11-21 | flattened fixture roots: `extraction.flat.orm.json` exports in the default mode, exit 0; `checking.flat.orm.json` refuses there with the temporal message, exit 3; under `--rules lqp` and `--rules duckdb` both stop at `paper_names_parent_method#0: family 'anchored'`, exit 3 | observed | IR3 |
 | H8 | `tests/test_mc1_guards.py` | `test_R4_judgments`, `test_R5_judgments_api`, `test_direct_refusals[R13-pyrel-rules]`, `test_cli_guards[pyrel]` pin today's refusals; `test_R10_session_judgments` and `test_R21_composition_verify` pin refusals that stay | observed | IR1, IR3 |
 | H9 | `tests/test_mc1_review_regressions.py` | `test_R7_guard_precedes_temporal_classification` pins that the include guard runs before temporal classification in the default export | observed | IR3 |
 | H10 | PROJECT.md roadmap after 0.4.0 | first milestone; RP5's include-root cases need IR3 merged; two milestones never write the same files at once | inherited | all |
-| H11 | `examples/literature/assertion_admission.py:142-165` | copies the model bytes alone into a temporary folder before `judgments check`; an include root would then fail its include read | observed by reading | IR1 (boundary only) |
+| H11 | `src/gnd/examples/literature/assertion_admission.py:142-165` (path corrected `(p1)`) | copies the model bytes alone into a temporary folder before `judgments check`; an include root would then fail its include read | observed by reading | IR1 (boundary only) |
 
 Out of scope: temporal models in the default PyRel export (`emit.py:36`;
 D3), detecting a stale exported program, the `gnd exp` session judgments
@@ -113,21 +121,30 @@ H4–H7.
 
 ### IR1 — `gnd judgments check` on an include root
 
-- `api.judgments` drops `guard_path` and `guard_bytes` and loads the model
-  with `load_model_bytes_composed(mr, source=model_path, root=model_path.parent)`,
-  the composition `gnd check` uses. References keep their binding through
-  `bind_declared_references(model, root=reference_root or model_path.parent)`.
-- `evaluate_judgments` drops its include guard. Its raw-subject check
-  (`judgments.py:506-515`) re-derives the model from `model_bytes`; for a root
-  that declares includes it does so with the composed loader under a new
-  keyword `model_root`. Without `model_root` an include root keeps refusing
-  `include:unsupported-route`, so a direct caller is never judged against a
-  partial model.
-- Receipt binding is unchanged: `subject.model_sha256` is the sha256 of the
-  root file's bytes (`judgments.py:569`). Because composition refuses an
+- `api.judgments` drops `guard_path` and `guard_bytes`. **Only a root that
+  declares includes** takes the composed route `(p1)`: its includes are
+  composed under the model's directory with the loader `gnd check` uses
+  (`_load_model_at` under `retained_root`, R0.3), without binding references
+  there. References are then bound exactly as today, by
+  `bind_declared_references(model, root=reference_root or model_path.parent)`,
+  so `--reference-root` keeps its meaning for include roots. A model without
+  includes keeps `load_model_bytes` and today's bytes (R0.6).
+- `evaluate_judgments` keeps its include guard for every caller that names no
+  root, and skips it when the new keyword `model_root` is given `(p1)`. Its
+  raw-subject check (`judgments.py:506-515`) re-derives the model from
+  `model_bytes`; for a root that declares includes and a given `model_root`
+  it composes the same way. A direct caller without `model_root` keeps
+  `include:unsupported-route` (`test_R4_judgments`), so it is never judged
+  against a partial model. The `gnd exp` session route calls it without a
+  root and keeps its own guard.
+- Two digests, by design `(p1)`: the stale-subject check compares each
+  receipt's `subject.model_sha256` with the sha256 of the root file's bytes
+  (`judgments.py:569`), unchanged. The mechanical report's `model_digest` is
+  the composed identity `gnd check` reports, which differs from the root's
+  bytes for an include root; for a model without includes it is today's
+  value, because that branch does not change. Because composition refuses an
   include whose bytes differ from its pin, the root digest binds every
-  include (D4). The mechanical report's `model_digest` is the composed
-  identity that `gnd check` reports.
+  include (D4).
 - Include refusals map to `error.reason: "binding"` with the include code as
   the message (D6), fixing H6. Outcome stays 3.
 
@@ -138,11 +155,15 @@ H4–H7.
   `<stem>.flattening.json` into `DIR` with the names `gnd extract` uses
   (`extract/service.py:_flattening_names`). It makes no temporal check.
 - Exit 0 when both files are written; exit 3 for an invalid model, a model
-  without includes, or any include refusal; the exit for an existing output
-  file is an IR2 spec decision. Output is published once, both files or
-  neither.
-- `gnd extract` on a temporal model keeps refusing, and its message names
-  `gnd flatten` as the route for a temporal include root.
+  without includes, or any include refusal (with its include code); exit 11
+  when either output file already exists, with nothing written `(p1)`.
+  Output is published once, both files or neither.
+- Registered as a top-level command in `src/gnd/cli.py`, where each command
+  group's `add_parsers` is called (`cli.py:650-676`), with its module listed
+  in `tools/gnd_entrypoints.json` and `tools/gnd_layers.json` `(p1)`.
+- `gnd extract` on a temporal **include root** keeps refusing, exit 3, and
+  its message adds that `gnd flatten` writes the flat model. A temporal model
+  without includes keeps today's message byte for byte (R0.6) `(p1)`.
 
 ### IR3 — PyRel export of an include root
 
@@ -150,6 +171,10 @@ H4–H7.
   with the composed loader, call `flatten_model`, and render the flat model's
   bytes in place of the root's. The temporal refusal of the default mode then
   applies to the flat model.
+- Every composition or flattening refusal (`ModelValidationError` with an
+  `include:` code, `FlatteningError`) is raised as `ExportInputError`, so
+  `commands/export.py` exits 3 with the include code, not `EXIT_INTERNAL`
+  (`commands/export.py:15-25`, `:45-55`) `(p1)`.
 - The program records the flattening: the default program adds two constants
   after `MODEL_NAME`, and the `--rules` program adds the same two lines to its
   header. Names and spelling are an IR3 spec decision; D5 proposes
@@ -161,9 +186,9 @@ H4–H7.
 
 | Phase | Needs | Homes it changes |
 |---|---|---|
-| IR1 | nothing | `src/gnd/api.py`, `src/gnd/judgments.py`, `tests/test_mc1_guards.py`, a new `tests/test_ir1_judgments_includes.py`, the includes route list and `docs/reference/cli.md` |
-| IR2 | nothing | a new `src/gnd/commands/flatten.py` and its registration (`tools/gnd_entrypoints.json`, `tools/gnd_layers.json`), `src/gnd/extract/service.py` (message only), a new `tests/test_ir2_flatten.py`, `docs/reference/cli.md`, the representation-format includes section |
-| IR3 | nothing in code; IR2 for the user to reproduce a recorded digest (D2) | `src/gnd/export/emit.py`, `src/gnd/export/pyrel_rules.py`, `tests/test_mc1_guards.py`, `tests/test_mc1_review_regressions.py`, a new `tests/test_ir3_pyrel_includes.py`, the PyRel export page (`docs/agents/export-and-review.md`) |
+| IR1 | nothing | `src/gnd/api.py`, `src/gnd/judgments.py`, `tests/test_mc1_guards.py`, a new `tests/test_ir1_judgments_includes.py`, the includes route list (created), `docs/reference/cli.md`, `docs/release-notes.md` `(p1)` |
+| IR2 | nothing | a new `src/gnd/commands/flatten.py`, its registration in `src/gnd/cli.py` `(p1)`, `tools/gnd_entrypoints.json`, `tools/gnd_layers.json`, `src/gnd/extract/service.py` (message for include roots only), a new `tests/test_ir2_flatten.py`, `docs/reference/cli.md`, the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)` |
+| IR3 | nothing in code; IR2 for the user to reproduce a recorded digest (D2) | `src/gnd/export/emit.py`, `src/gnd/export/pyrel_rules.py`, `tests/test_mc1_guards.py`, `tests/test_mc1_review_regressions.py`, a new `tests/test_ir3_pyrel_includes.py`, the PyRel export page (`docs/agents/export-and-review.md`), the route list row, `docs/release-notes.md` `(p1)` |
 
 Order: IR1, IR2, IR3, one at a time on the branch `claude/include-root-routes`.
 The graph is acyclic; no phase needs another's code. IR3 follows IR2 so the
@@ -172,20 +197,27 @@ writes `export/pyrel_rules.py` too (H10): IR3 does not start while an RP phase
 has unmerged changes to that file. Start condition: `main` at `260c4337`.
 
 The fixture for every phase is the interop example built by
-`python -m gnd.examples.literature.interop run --out DIR`: `checking.orm.json`
-(temporal, two includes, one reference population) and `extraction.orm.json`
-(non-temporal, the same includes). The small two-file case
+`python -m gnd.examples.literature.interop run --out DIR` (in tests,
+`gnd.examples.literature.interop.build(out)`): `checking.orm.json`
+(temporal, two includes, one reference population), `extraction.orm.json`
+(non-temporal, the same includes) and `composed.population.json` (written
+for the checking model). The small two-file case
 `tests/test_mc1_model_includes.py:write_case` serves the refusal tests.
+`(p1)` Inputs the example does not write are authored by each phase's
+tests: policies and receipts (consumer-pinned, bound to the model file the
+case judges), a copy of the population relabelled with the extraction
+root's `model_id` for IR1-C2, and flat models made in process by
+`flatten_model`, which LX1 shipped. No phase needs another phase's output.
 
 ## 4. Phases
 
 | Phase | Criteria | Inherited residuals |
 |---|---|---|
-| IR1 | **IR1-C1** `gnd judgments check checking.orm.json composed.population.json` with a policy and receipts bound to the root, exit 0 or 1 (never 3), `error` null. **IR1-C2** the same policy over `extraction.orm.json` directly and over its flat model (receipts rebound to each model's sha256) gives equal `judgment_policy.targets` and `admission`. **IR1-C3** an include edited without a new pin, exit 3, `error.message` `include:hash-mismatch`; an include edited and pinned again, exit 3, `error.message` "stale judgment subject". **IR1-C4** a nested include, exit 3, `include:forbidden-section`. **IR1-C5** every include refusal's report validates against `judgment.schema.json` (H6). **IR1-C6** `test_R5_judgments_api` changes to the new behaviour; `test_R4_judgments` stays as the pin of the refusal for a direct `evaluate_judgments` caller that passes no `model_root`; `test_R10_session_judgments` stays as it is. **IR1-C7** a model without includes gives the byte-identical report it gives today | H11 stays a boundary |
-| IR2 | **IR2-C1** `gnd flatten checking.orm.json --out DIR`, exit 0; the two files equal `flatten_model`'s bytes; the record names each element's origin and the flat model keeps `publication_not_before_submission`. **IR2-C2** the flat model's `gnd check` verdicts equal the root's on `composed.population.json`. **IR2-C3** a model without includes, exit 3; an include refusal, exit 3, with its include code. **IR2-C4** an existing output is never overwritten. **IR2-C5** `gnd extract` on a temporal model, exit 3, message names `gnd flatten` | none |
+| IR1 | **IR1-C1** `gnd judgments check checking.orm.json composed.population.json` with a policy and two approving receipts bound to the root, exit 0, `error` null, `admission` true. **IR1-C2** the same policy over `extraction.orm.json` directly and over its in-process flat model, on the relabelled population (receipts rebound to each model's sha256), gives equal `judgment_policy.targets` and `admission`. **IR1-C3** an include edited without a new pin, exit 3, `error.message` `include:hash-mismatch`; an include edited and pinned again, exit 3, `error.message` "stale judgment subject". **IR1-C4** a nested include, exit 3, `include:forbidden-section`. **IR1-C5** every include refusal's report validates against `judgment.schema.json` (H6). **IR1-C6** `test_R5_judgments_api` changes to the new behaviour; `test_R4_judgments` stays as the pin of the refusal for a direct `evaluate_judgments` caller that passes no `model_root`; `test_R10_session_judgments` stays as it is. **IR1-C7** a model without includes gives the byte-identical report it gives today, `model_digest` included. **IR1-C8** `(p1)` an include root whose reference file lives only under a separate `--reference-root` judges, exit 0 | H11 stays a boundary |
+| IR2 | **IR2-C1** `gnd flatten checking.orm.json --out DIR`, exit 0; the two files equal `flatten_model`'s bytes; the record names each element's origin and the flat model keeps `publication_not_before_submission`. **IR2-C2** `gnd check` verdicts over the written `checking.orm.flat.orm.json` equal those over `checking.orm.json` on `composed.population.json`; this is check parity for a temporal root, separate from R0.4's judgments parity `(p1)`. **IR2-C3** a model without includes, exit 3; an include refusal, exit 3, with its include code. **IR2-C4** either output file already present, exit 11, nothing written or changed. **IR2-C5** `gnd extract` on `checking.orm.json`, exit 3, message names `gnd flatten`; on an include-free temporal model the rf1 extract goldens stay green `(p1)` | none |
 | IR3, default mode | **IR3-C1** `gnd export pyrel extraction.orm.json`, exit 0, and the program equals the export of `extraction.flat.orm.json` except for the added constants and `MODEL_NAME`. **IR3-C2** `checking.orm.json` exits 3 with the temporal message, not an include refusal | none |
-| IR3, `--rules lqp` and `--rules duckdb` | **IR3-C3** both roots get past the include refusal. While pyrel-rules-coverage RP2 has not merged, each stops at `paper_names_parent_method#0: family 'anchored'`, exit 3, as its flat model does (H7). If RP2 merged first, both export, exit 0 | none |
-| IR3, all modes | **IR3-C4** the program records the flattening record's sha256 and each include's sha256; an include changed and pinned again changes the recorded digest. Tested in the default mode on `extraction.orm.json` and, for `--rules`, on a small include root with no anchored constraint. **IR3-C5** the refusals pinned for these routes (`test_direct_refusals[R13-pyrel-rules]`, `test_cli_guards[pyrel]`, `test_R7_guard_precedes_temporal_classification`) change to match. **IR3-C6** a model without includes exports byte-identically to today | none |
+| IR3, `--rules lqp` and `--rules duckdb` | **IR3-C3** both roots get past the include refusal and give the same exit and message as their flat models. `(p1)` The expected outcome is fixed at IR3's spec gate from the state of `main` then, with the commit read: at `260c4337` it is `paper_names_parent_method#0: family 'anchored'`, exit 3 (H7); the spec names one outcome, never two | none |
+| IR3, all modes | **IR3-C4** the program records the flattening record's sha256 and each include's sha256; an include changed and pinned again changes the recorded digest. Tested in the default mode on `extraction.orm.json` and, for `--rules`, on a small include root with no anchored constraint. **IR3-C5** the refusals pinned for these routes (`test_direct_refusals[R13-pyrel-rules]`, `test_cli_guards[pyrel]`, `test_R7_guard_precedes_temporal_classification`) change to match. **IR3-C6** a model without includes exports byte-identically to today. **IR3-C7** `(p1)` in each mode, an include edited without a new pin exits 3 with `include:hash-mismatch` and a nested include exits 3 with `include:forbidden-section`, never `EXIT_INTERNAL` | none |
 
 Each phase also runs the structure and inventory guards, `uv run ruff check`,
 an independent review of its diff, a refactoring review and its record.
@@ -238,6 +270,8 @@ session judgments; the assertion-admission example; any include rule change;
 - Plan review and close review: the GND panel light, owner-selected on
   2026-11-21. Convergence follows the bounded rules; one round is planned,
   a second only if the first blocks.
+  `(p1)` Round 1 over r2 blocked (5 blocking of 24). Round 2 runs over r3;
+  there is no round 3 (`evidence/plan-review-r1/disposition.md`).
 - The delegated plan gate (`auto=true`) is recorded in `001-plan-gate.md`
   after the review's findings are dispositioned.
 - Each phase: spec, delegated spec gate, code, focused gates, one independent
@@ -250,9 +284,9 @@ session judgments; the assertion-admission example; any include rule change;
 | Phase | Focused lane | Expected |
 |---|---|---|
 | IR1 | `uv run pytest -q tests/test_ir1_judgments_includes.py tests/test_mc1_guards.py tests/test_mc1_review_regressions.py tests/test_mc1_model_includes.py tests/test_public_v71_judgment_successor_guards.py tests/test_public_v71_full_judgments.py --tb=short` | exit 0 |
-| IR2 | `uv run pytest -q tests/test_ir2_flatten.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_extract_cli.py tests/test_public_extract_boundary.py tests/test_mc1_guards.py --tb=short` | exit 0 |
+| IR2 | `uv run pytest -q tests/test_ir2_flatten.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_extract_cli.py tests/test_public_extract_boundary.py tests/test_rf1_semantic_pins.py tests/test_mc1_guards.py --tb=short` `(p1)` | exit 0 |
 | IR3 | `uv run pytest -q tests/test_ir3_pyrel_includes.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_pyrel_rules.py tests/test_pyrel_rules_calendar.py tests/test_mc1_guards.py tests/test_mc1_review_regressions.py --tb=short` | exit 0 |
-| all | the structure and inventory guard block of `project.md`, and `uv run ruff check` | exit 0 |
+| all | the structure and inventory guard block of `project.md` (it includes `tests/test_rf5_commands.py` and `tests/test_rf7_structure.py`, the entry-point import guards §6 relies on), and `uv run ruff check` `(p1)` | exit 0 |
 
 Affected consumers named here are read at each spec and may be widened there.
 No broad lane (`-m "evidence or census"`) is selected.
@@ -269,4 +303,4 @@ All rows are proposals until the plan gate rules them.
 | D4 | IR1: what the receipts and the report bind for an include root | `model_sha256` stays the root's bytes; the pins bind the includes; no schema version change. Alternative: a new `model_binding` field and `schema_version` 16, which every consumer of the report would have to accept |
 | D5 | IR3: how the program records the flattening | constants `FLATTENING_RECORD_SHA256` and `MODEL_INCLUDES` in both program kinds, absent for a model without includes |
 | D6 | IR1: the `error.reason` of an include refusal (H6) | `binding`, with the include code in `message` |
-| D7 | Phase diff reviewer | one general-purpose subagent with shell access, as type-induction-skills used; one reviewer is one reviewer |
+| D7 | Phase diff reviewer | `(p1)` the review helper (`.claude/skills/process-phase/scripts/review_tool.py`, subject `phase`), which runs Codex read-only: `project.md` names that shared default, one reviewer in a different tool, for a phase diff. r2 proposed a Claude subagent, which is the same tool. One reviewer is one reviewer |

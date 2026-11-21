@@ -1,0 +1,573 @@
+{
+ "schema_version": 1,
+ "run_sha256": "5e84e32170a44f7e413396828e4ab467ee017b9b1a8b4a54020fe9443df45f40",
+ "summary": "Six of six seats succeeded at high effort. Gemini approved; Claude, Codex, Qwen, Kimi and GLM asked for revision. Six concerns reached two supporters: IR1's composed load is worded for every model and ignores --reference-root, IR3 has no include-refusal mapping, IR2-C5's extract message is unscoped, the evaluate_judgments guard wording contradicts IR1-C6, homes omit docs, and H11's path. Qwen raised 14 of the 24 concerns.",
+ "agreed_concerns": [
+  {
+   "group_id": "ir1-composed-load-scope",
+   "severity": "medium",
+   "title": "IR1's composed load is worded for every model and ignores --reference-root",
+   "summary": "Section 2 IR1 loads every model with load_model_bytes_composed, which binds references at the model directory: an include-free model changes output (R0.6, IR1-C7, model_digest) and an include root with a separate --reference-root cannot bind its references.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir1-composed-loader-ignores-reference-root"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "plan-ir1-composed-load-breaks-r06-for-reference-root"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1c7-model-digest-baseline"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "h11-path",
+   "severity": "low",
+   "title": "H11 cites the example without its src/gnd prefix",
+   "summary": "The assertion-admission example lives at src/gnd/examples/literature/assertion_admission.py, not examples/literature/.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h11-example-path-mismatch"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr2-path-h11-examples-prefix"
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "ir2-c5-extract-message-scope",
+   "severity": "high",
+   "title": "IR2-C5 changes the extract message for every temporal model, against R0.6 and section 2",
+   "summary": "Section 2 scopes the new extract message to temporal include roots; IR2-C5 is unconditional, so an include-free temporal model would change output, which R0.6 forbids.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ir2-c5-extract-message-scope"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r06-contradicts-ir2c5"
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "evaluate-guard-wording",
+   "severity": "medium",
+   "title": "Section 2 says evaluate_judgments drops its guard while IR1-C6 keeps it",
+   "summary": "Section 2 IR1 says the include guard in evaluate_judgments is dropped; IR1-C6 keeps test_R4_judgments as a pin of that guard for callers without model_root.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir1-guard-drop-contradicts-test-r4"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "test-r4-stays-versus-d6"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "group_id": "homes-omit-docs",
+   "severity": "low",
+   "title": "Section 3 homes omit docs section 5 assigns",
+   "summary": "Release notes and the route-list rows each phase adds are missing from the section 3 homes.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "homes-omit-release-notes-and-route-list"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "release-notes-absent-from-homes"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "group_id": "ir3-include-refusals",
+   "severity": "high",
+   "title": "IR3 has no mapping or criterion for include refusals in the exporters",
+   "summary": "Once the export include guard is replaced by the composed loader, a ModelValidationError from composition falls to EXIT_INTERNAL in commands/export.py; no IR3 criterion pins exit 3 with the include code.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir3-include-error-band"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir3-no-include-refusal-criterion"
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "qwen"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "h6-line-range-off-by-one"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "ir2-cli-registration"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "criteria-consume-unproduced-fixtures"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "d4-mandatory-pin-premise"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "guard-tests-absent-from-lanes"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ir1-two-model-digests"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ir1c2-flat-fixture-before-ir2"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ir2-existing-output-undecided"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ir2-homes-omit-extract-tests"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ir2c2-temporal-parity-scope"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ir3c3-disjunctive-expectation"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-ir3-refusals",
+   "rank": 1,
+   "title": "Map composition refusals to exit 3 in both exporters",
+   "action": "Require render_pyrel and pyrel_rules.render to translate composed-loader and flattening refusals into ExportInputError, and add an IR3 criterion: a stale pin and a nested include exit 3 with the include code in both modes.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir3-include-error-band"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir3-no-include-refusal-criterion"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir3-include-error-band",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir3-no-include-refusal-criterion",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-ir2-cli",
+   "rank": 2,
+   "title": "Register gnd flatten in src/gnd/cli.py",
+   "action": "Add src/gnd/cli.py to IR2's homes with its parser registration and dispatch.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir2-cli-registration"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir2-cli-registration",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-ir1-scope",
+   "rank": 3,
+   "title": "Compose only include roots; keep reference binding at --reference-root",
+   "action": "Say in section 2 that only a root declaring includes takes the composed route, compose without binding references, then bind them with bind_declared_references at reference_root or the model directory; add a criterion with a separate --reference-root.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir1-composed-loader-ignores-reference-root"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "plan-ir1-composed-load-breaks-r06-for-reference-root"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1c7-model-digest-baseline"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir1-composed-loader-ignores-reference-root",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "plan-ir1-composed-load-breaks-r06-for-reference-root",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1c7-model-digest-baseline",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-extract-scope",
+   "rank": 4,
+   "title": "Scope the extract message to include roots",
+   "action": "Narrow IR2-C5 to a temporal include root and add a control that an include-free temporal model keeps today's message (rf1 goldens).",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ir2-c5-extract-message-scope"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r06-contradicts-ir2c5"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ir2-c5-extract-message-scope",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r06-contradicts-ir2c5",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-digests",
+   "rank": 5,
+   "title": "Say which digest each check compares",
+   "action": "State that the stale-subject check compares the root file's sha256 and that the report's model_digest is the composed identity; the two differ by design.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1-two-model-digests"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1-two-model-digests",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-ir2-collision",
+   "rank": 6,
+   "title": "Decide the existing-output exit",
+   "action": "Fix in the plan that gnd flatten refuses an existing output file with exit 11 and writes nothing.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir2-existing-output-undecided"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir2-existing-output-undecided",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-ir3-c3",
+   "rank": 7,
+   "title": "Make IR3-C3 a single expected outcome",
+   "action": "Fix the expected outcome at IR3's spec gate from RP2's merge state, recorded with the commit read.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir3c3-disjunctive-expectation"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir3c3-disjunctive-expectation",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-guard-wording",
+   "rank": 8,
+   "title": "Reword the evaluate_judgments guard",
+   "action": "Section 2: the guard stays for callers without model_root and is skipped when model_root is named.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir1-guard-drop-contradicts-test-r4"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "test-r4-stays-versus-d6"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir1-guard-drop-contradicts-test-r4",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "test-r4-stays-versus-d6",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-homes",
+   "rank": 9,
+   "title": "Add docs to the homes",
+   "action": "Add docs/release-notes.md and the route-list row to each phase's homes.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "homes-omit-release-notes-and-route-list"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "release-notes-absent-from-homes"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "homes-omit-release-notes-and-route-list",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "release-notes-absent-from-homes",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-citations",
+   "rank": 10,
+   "title": "Correct the two citations",
+   "action": "H11 path under src/gnd/examples; H6 line range api.py:1195-1198.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h11-example-path-mismatch"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr2-path-h11-examples-prefix"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h6-line-range-off-by-one"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h11-example-path-mismatch",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr2-path-h11-examples-prefix",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h6-line-range-off-by-one",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-fixtures",
+   "rank": 11,
+   "title": "Say where each criterion's inputs come from",
+   "action": "State that tests author policies and receipts, flatten in process with flatten_model (LX1, shipped), and that IR2-C2 is gnd check parity over checking.orm.json, separate from R0.4.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1c2-flat-fixture-before-ir2"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "criteria-consume-unproduced-fixtures"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir2c2-temporal-parity-scope"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1c2-flat-fixture-before-ir2",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "criteria-consume-unproduced-fixtures",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir2c2-temporal-parity-scope",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-lanes",
+   "rank": 12,
+   "title": "Name the guard and extract tests in the lanes",
+   "action": "Name the extract golden tests in IR2's lane and point each lane at the guard block explicitly.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir2-homes-omit-extract-tests"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "guard-tests-absent-from-lanes"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir2-homes-omit-extract-tests",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "guard-tests-absent-from-lanes",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-d4-premise",
+   "rank": 13,
+   "title": "Cite the mandatory pin",
+   "action": "Cite model/_includes.py:61-77, which refuses an include without a 64-hex sha256.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "d4-mandatory-pin-premise"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "d4-mandatory-pin-premise",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  }
+ ]
+}

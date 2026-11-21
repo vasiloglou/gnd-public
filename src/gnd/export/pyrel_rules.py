@@ -153,7 +153,9 @@ class _Model:
                 self.reference_rosters.setdefault(reference, []).append(oid)
         self._players: dict[str, list[tuple[str, str]]] | None = None
         self.helpers: dict[str, dict[str, Any]] = {}
-        self.unchecked: list[dict[str, str]] = []   # textual rules: listed, never evaluated (as GND)
+        # rules listed as not checked, never evaluated, as GND reports them without an anchor sidecar:
+        # textual and anchored ones; each row carries the reason both programs print
+        self.unchecked: list[dict[str, str]] = []
         # structured derived heads, lower strata first; each gets <head>_derived (computed) and, when
         # semiderived, <head>_claimed (the claim), while <head> is what constraints read (GND's view)
         self.derived = _strata({f: fact for f, fact in self.facts.items() if isinstance(fact.get("derivation_rule"), dict)})
@@ -837,6 +839,10 @@ def _derivation(model: _Model, head: str) -> list[Requirement]:
     return found
 
 
+_ANCHORED_REASON = ("source anchor: gnd check decides it with --anchors and --document; "
+                    "the rules programs read no sidecar")
+
+
 def constraint_context(doc: dict[str, Any]) -> _Model:
     """Index the admitted source for lowerers that assign their own constraint IDs."""
     return _Model(doc, strict_ids=False)
@@ -861,6 +867,9 @@ def constraint_requirements(
             return _frequency(model, c, fact_id)
         if family == "ring":
             return _ring(model, c, fact_id)
+        if family == "anchored":   # GND leaves it unchecked unless gnd check is given a sidecar
+            model.unchecked.append({"id": c["id"], "modality": c["modality"], "reason": _ANCHORED_REASON})
+            return []
         raise ExportInputError(f"{c['id']}: family {family!r} is a later phase of the rules programs")
     if family == "guarded":
         return _guarded(model, c)
@@ -881,7 +890,8 @@ def constraint_requirements(
     if family in ("uniqueness", "frequency") and c.get("scope") == "external":
         raise ExportInputError(f"{c.get('id')}: external {family} is a later phase of the rules programs")
     if family == "textual":
-        model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"]})
+        model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"],
+                                "reason": f"textual rule: {c['expression']}"})
         return []
     raise ExportInputError(f"{c.get('id')}: family {family!r} is a later phase of the rules programs")
 
@@ -1645,7 +1655,7 @@ def state_lines(population, found, computed=None, derivations=True):
             print(f'{name}  {status}  {json.dumps(hit, sort_keys=True)}')
         violated = violated or (bool(hits) and status == 'violated')
     for rule in UNCHECKED:
-        print(f"{rule['id']}  not checked  (textual rule: {rule['expression']})")
+        print(f"{rule['id']}  not checked  ({rule['reason']})")
         unchecked = unchecked or rule['modality'] == 'alethic'
     return out, {'violated': violated, 'unchecked': unchecked, 'vacuous': vacuous}
 
@@ -2086,14 +2096,28 @@ def main(argv=None):
         print(f'PyRel execution failed: {type(error).__name__}: {error}', file=sys.stderr)
         return 70
     problems = [w for w in caught if 'Requirements not met' in str(w.message)]
+    return lqp_report(problems)
+
+
+def not_checked():
+    """Print each rule listed as not checked; True when a must-rule is among them."""
+    for rule in UNCHECKED:
+        print(f"{rule['id']}  not checked  ({rule['reason']})")
+    return any(rule['modality'] == 'alethic' for rule in UNCHECKED)
+
+
+def lqp_report(problems):
+    """The engine's violation reports, after the rules listed as not checked. Exit 1, 4 or 0, as GND bands them."""
+    must_unchecked = not_checked()
     for w in problems:
         print(f'violated  {w.message}')
     print(f'{len(problems)} requirement violation report(s) from the engine')
-    return 1 if problems else 0
+    return 1 if problems else 4 if must_unchecked else 0
 
 
 def compile_only():
     """Show how PyRel compiled each requirement. Uses PyRel's front-end compiler (internal API, pinned version)."""
+    not_checked()
     from relationalai.config import Config
     from relationalai.semantics.frontend.front_compiler import FrontCompiler
     from relationalai.semantics.metamodel.rewriter import Walker
@@ -2405,7 +2429,14 @@ def _bind_reference(loaded: Any, model_path: Path) -> dict[str, Any] | None:
             "facts": facts, "instances": instances, "covers": covers}
 
 
-def render(model_path: Path, target: str) -> str:
+def render_report(model_path: Path, target: str) -> tuple:
+    """The program, and the ids of the rules it lists as not checked."""
+    not_checked_ids: list = []
+    return render(model_path, target, not_checked_ids=not_checked_ids), not_checked_ids
+
+
+def render(model_path: Path, target: str, *, not_checked_ids: list | None = None) -> str:
+    """The rules program; `not_checked_ids`, when given, receives the ids of the rules it lists as not checked."""
     if target not in TARGETS:
         raise ExportInputError(f"target must be one of {TARGETS}")
     raw = Path(model_path).read_bytes()
@@ -2594,7 +2625,10 @@ def render(model_path: Path, target: str) -> str:
     for rule_id in spanning:
         out.append(f"    # {rule_id}: spanning uniqueness, broken only by a repeated fact; the input is refused instead")
     for rule in model.unchecked:
-        out.append(f"    # {rule['id']}: textual rule, not checked by GND or here: {rule['expression']!r}")
+        if "expression" in rule:
+            out.append(f"    # {rule['id']}: textual rule, not checked by GND or here: {rule['expression']!r}")
+        else:
+            out.append(f"    # {rule['id']}: not checked by GND without a sidecar, or here: {rule['reason']}")
     if names.step:
         out += plan_lines
     if target == "duckdb":
@@ -2617,4 +2651,6 @@ def render(model_path: Path, target: str) -> str:
             main = main.replace("\nif __name__ == '__main__':\n    raise SystemExit(main())\n", "\n")
         main = _PLAN_HELPERS + main + (_PLAN_MAIN if target == "duckdb" else "")
     out.append(main)
+    if not_checked_ids is not None:
+        not_checked_ids.extend(row.get("id") for row in model.unchecked)
     return "\n".join(out) + "\n"

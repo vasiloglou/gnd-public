@@ -1,0 +1,12 @@
+{
+ "population": {
+  "model": "anchored-only.orm.json",
+  "source": "fixture",
+  "covers": [
+   "time_step"
+  ]
+ },
+ "facts": {
+  "time_step": []
+ }
+}

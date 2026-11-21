@@ -153,7 +153,12 @@ becomes two requirements: every computed fact is in the input, and every fact
 the input states is computed. A derived fact type that is not in `covers` is
 reported as not checked, as GND reports it.
 
-Textual rules are listed as not checked, as GND lists them. External uniqueness
+Textual rules and anchored rules are listed as not checked, as GND lists them
+when it checks without a sidecar: each program prints the rule's id and the
+reason, and a must-rule listed this way gives exit 4. An anchored rule ties a
+value to a span of a source document; `gnd check --anchors SIDECAR --document
+DOC` decides it, and the programs read no sidecar. The export's success line
+says how many rules are listed. External uniqueness
 and frequency, exclusive-or over role sequences, subtypes, disconnected rule
 bodies, opaque derivation rules, `avg`, division, rounding, the other
 non-exact functions, arithmetic on Float values and times of day (`DateTime`)

@@ -66,7 +66,7 @@ def _findings(stdout):
         if rest == 'OK':
             continue
         status, _, witness = rest.partition('  ')
-        if status in ('vacuous', 'unknown'):
+        if status in ('vacuous', 'unknown', 'not checked'):   # a not-checked line carries its reason, not a witness
             found.add((rule, status, 'null'))
         else:
             found.add((rule, status, json.dumps(json.loads(witness), sort_keys=True)))
@@ -85,8 +85,8 @@ def _gnd(name, population):
         if verdict['verdict'] == 'pass':
             continue
         rule = names[verdict['constraint_ref']]
-        if verdict['verdict'] == 'vacuous':
-            found.add((rule, 'vacuous', 'null'))
+        if verdict['verdict'] in ('vacuous', 'unchecked'):
+            found.add((rule, 'vacuous' if verdict['verdict'] == 'vacuous' else 'not checked', 'null'))
             continue
         status = 'violated' if verdict['verdict'] == 'fail' else 'warning'
         if verdict['constraint_type'] == 'uniqueness':
@@ -100,6 +100,10 @@ def _gnd(name, population):
             witnesses = verdict['offending_facts']
         for w in witnesses:
             found.add((rule, status, json.dumps(w, sort_keys=True)))
+    for derivation in report.get('derivations') or []:   # failures are compared in test_pyrel_rules_derivations
+        if derivation['verdict'] in ('unchecked', 'vacuous'):
+            status = 'not checked' if derivation['verdict'] == 'unchecked' else 'vacuous'
+            found.add((derivation['derivation_ref'], status, 'null'))
     return report['exit_code'], found
 
 

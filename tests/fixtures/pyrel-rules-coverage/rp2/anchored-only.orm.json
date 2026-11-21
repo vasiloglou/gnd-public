@@ -1,0 +1,63 @@
+{
+ "version": 2,
+ "source": {
+  "kind": "fixture"
+ },
+ "object_types": [
+  {
+   "id": "coefficient",
+   "name": "Coefficient",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "decimal_places",
+   "name": "DecimalPlaces",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "time_unit",
+   "name": "TimeUnit",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "time_step",
+   "reading": "{Coefficient} denotes a time step with {DecimalPlaces} decimal places in {TimeUnit}",
+   "roles": [
+    {
+     "role_name": "coefficient",
+     "object_type": "coefficient"
+    },
+    {
+     "role_name": "places",
+     "object_type": "decimal_places"
+    },
+    {
+     "role_name": "unit",
+     "object_type": "time_unit"
+    }
+   ],
+   "constraints": [
+    {
+     "type": "anchored",
+     "role": "coefficient",
+     "recognise": [
+      "time-fs"
+     ],
+     "source": "user-supplied",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "The coefficient is the source time step in whole femtoseconds."
+     }
+    }
+   ]
+  }
+ ],
+ "model_id": "urn:gnd:test:rp2-anchored-only@1",
+ "constraints": []
+}

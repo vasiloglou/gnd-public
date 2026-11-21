@@ -246,11 +246,26 @@ def test_R4_judgments(tmp_path):
 
 
 def test_R5_judgments_api(tmp_path):
+    # include-root-routes IR1: the judgments API resolves include roots and
+    # refuses a stale pin; it no longer refuses the route itself.
+    import json
+
     from gnd.api import judgments
-    path, _, _ = write_case(tmp_path)
-    result = judgments(path, 'absent', 'absent', 'absent', trusted_root=tmp_path)
+    path, _, vocabulary_path = write_case(tmp_path)
+    vocabulary_path.write_bytes(vocabulary_path.read_bytes() + b' ')
+    policy = tmp_path / 'policy.json'
+    policy.write_text(json.dumps({
+        'admission': {'evidence_floor': None, 'minimum_approvals': 1}, 'judges': ['a'],
+        'policy_id': 'r5', 'repair': {'evidence_floor': None, 'minimum_rejections': 1},
+        'schema_version': 1, 'targets': [{'fact_type': 'component_imports_component', 'index': 0}],
+        'trust_mode': 'self-asserted', 'trusted_receipts': []}))
+    receipts = tmp_path / 'receipts.json'
+    receipts.write_text('{"schema_version": 1, "receipts": []}')
+    population = tmp_path / 'population.json'
+    population.write_text('{}')
+    result = judgments(path, population, policy, receipts, trusted_root=tmp_path)
     assert result['outcome'] == 3
-    assert 'include:unsupported-route' in str(result)
+    assert result['error'] == {'reason': 'binding', 'message': 'include:hash-mismatch'}
 
 
 def session_case(tmp_path):

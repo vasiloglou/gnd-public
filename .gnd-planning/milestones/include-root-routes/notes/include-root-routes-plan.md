@@ -1,8 +1,8 @@
-# Include-root routes · plan r5
+# Include-root routes · plan r6
 
-**Status: r5, 2026-11-21: r4 as approved in `001-plan-gate.md`, with the
-close amendments of §11, tagged `(c1)`, which carry no review opinion of
-their own. Plan review ran twice: round 1 over r2 (r3 applied
+**Status: r6, 2026-11-21: r4 as approved in `001-plan-gate.md`, with the
+close amendments of §11: `(c1)` applied before the close review (which read
+r5), `(c2)` applied after it. Neither carries a review opinion of its own. Plan review ran twice: round 1 over r2 (r3 applied
 its 13 fixes, tagged `(p1)`), round 2 over r3 (r4 applies its 4 fixes, tagged
 `(p2)`). r4 carries no review opinion of its own; the round budget is spent
 (§8).** The owner selected the GND review
@@ -55,8 +55,10 @@ combination that stays unsupported refuses with a message naming it.
 
 The milestone is closed when each phase has its record and the close record
 cites green focused gates for IR1–IR3, the structure and inventory guards and
-`uv run ruff check`, the replies drafted for #217 and #214, and the panel-light
-close review.
+`uv run ruff check src tests tools` `(c2)`, the replies drafted for #217 and
+#214, and the panel-light close review. `(c2)` The whole-repository
+`uv run ruff check` is recorded with its exit; its red in dev-tools-delivered
+scripts predates this milestone and is not a close gate (§11).
 
 ## 0. Binding design rules
 
@@ -208,7 +210,7 @@ H4–H7.
 | Phase | Needs | Homes it changes |
 |---|---|---|
 | IR1 | nothing | `src/gnd/api.py`, `src/gnd/judgments.py`, `tests/test_mc1_guards.py`, a new `tests/test_ir1_judgments_includes.py`, the includes route list (created), `docs/reference/cli.md`, `docs/release-notes.md` `(p1)` |
-| IR2 | nothing | a new `src/gnd/commands/flatten.py`, its registration in `src/gnd/cli.py` `(p1)`, `tools/gnd_entrypoints.json`, `tools/gnd_layers.json`, `src/gnd/extract/service.py` (message for include roots only), a new `tests/test_ir2_flatten.py`, `docs/reference/cli.md`, the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)`, and `(c1)` the command inventories: `tools/gnd_arch.py` `RF5_COMMAND_GROUPS`, `src/gnd/disclosure.py` and `docs/reference/disclosure.md`, the CLI successor in `tests/test_rf1_cli_pins.py`, and the count literals in `tests/test_rf5_commands.py` and `tests/test_disclosure_mode.py` |
+| IR2 | nothing | a new `src/gnd/commands/flatten.py`, its registration in `src/gnd/cli.py` `(p1)`, `tools/gnd_entrypoints.json`, `tools/gnd_layers.json`, `src/gnd/extract/service.py` (message for include roots only), a new `tests/test_ir2_flatten.py`, `docs/reference/cli.md`, the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)`, `(c2)` `src/gnd/extract/flatten_service.py`, and `(c1)` the command inventories: `tools/gnd_arch.py` `RF5_COMMAND_GROUPS`, `src/gnd/disclosure.py` and `docs/reference/disclosure.md`, the CLI successor in `tests/test_rf1_cli_pins.py`, and the count literals in `tests/test_rf5_commands.py` and `tests/test_disclosure_mode.py` |
 | IR3 | nothing in code; IR2 for the user to reproduce a recorded digest (D2) | `src/gnd/export/emit.py`, `src/gnd/export/pyrel_rules.py`, `tests/test_mc1_guards.py`, `tests/test_mc1_review_regressions.py`, a new `tests/test_ir3_pyrel_includes.py`, the PyRel export page (`docs/runtimes/pyrel.md` `(c1)`), the route list row, `docs/release-notes.md` `(p1)`, and `(c1)` a new `src/gnd/export/include_roots.py` with its `tools/gnd_layers.json` row |
 
 Order: IR1, IR2, IR3, one at a time on the branch `claude/include-root-routes`.
@@ -312,7 +314,7 @@ session judgments; the assertion-admission example; any include rule change;
 | IR1 | `uv run pytest -q tests/test_ir1_judgments_includes.py tests/test_mc1_guards.py tests/test_mc1_review_regressions.py tests/test_mc1_model_includes.py tests/test_public_v71_judgment_successor_guards.py tests/test_public_v71_full_judgments.py --tb=short` | exit 0 |
 | IR2 | `uv run pytest -q tests/test_ir2_flatten.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_extract_cli.py tests/test_public_extract_boundary.py tests/test_rf1_semantic_pins.py tests/test_rf1_cli_pins.py tests/test_mc1_guards.py --tb=short` `(p1)` `(c1)` | exit 0 |
 | IR3 | `uv run pytest -q tests/test_ir3_pyrel_includes.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_pyrel_rules.py tests/test_pyrel_rules_calendar.py tests/test_mc1_guards.py tests/test_mc1_review_regressions.py --tb=short` | exit 0 |
-| all | the structure and inventory guard block of `project.md` (it includes `tests/test_rf5_commands.py` and `tests/test_rf7_structure.py`, the entry-point import guards §6 relies on), and `uv run ruff check` `(p1)` | exit 0 |
+| all | the structure and inventory guard block of `project.md` (it includes `tests/test_rf5_commands.py` and `tests/test_rf7_structure.py`, the entry-point import guards §6 relies on), and `uv run ruff check src tests tools` `(p1)` `(c2)` | exit 0 |
 
 Affected consumers named here are read at each spec and may be widened there.
 No broad lane (`-m "evidence or census"`) is selected.
@@ -331,15 +333,21 @@ All rows are proposals until the plan gate rules them.
 | D6 | IR1: the `error.reason` of an include refusal (H6) | `binding`, with the include code in `message` |
 | D7 | Phase diff reviewer | `(p1)` the review helper (`.claude/skills/process-phase/scripts/review_tool.py`, subject `phase`), which runs Codex read-only: `project.md` names that shared default, one reviewer in a different tool, for a phase diff. r2 proposed a Claude subagent, which is the same tool. One reviewer is one reviewer |
 
-## 11. Close amendments `(c1)`, 2026-11-21
+## 11. Close amendments, 2026-11-21
 
-Applied at the milestone close from the phase records' refuted premises;
-recorded in the close record and ruled there. Prior wording kept here.
+Applied at the milestone close and ruled in the close record. `(c1)` rows
+came from the phase records' refuted premises and from `project.md`, before
+the close review, which read r5. `(c2)` rows came from that review
+(`evidence/close-review/disposition.md`). Prior wording is quoted from r4
+(sha256 `4cd41420…194a`, commit `1e419a88`).
 
-| Site | Prior wording (r4) | Amended to | Raised by |
-|---|---|---|---|
-| §9, IR2 lane | the lane without `tests/test_rf1_cli_pins.py` | adds `tests/test_rf1_cli_pins.py` | `003-phase-IR2.md`, Refuted premises |
-| §3, IR2 homes | "… the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)`" | adds the seven command inventories | `003-phase-IR2.md`; IR2 spec i1 |
-| §5, PyRel page | "page, `docs/agents/export-and-review.md`, says nothing about temporal models today; IR3 makes it the home of which export mode accepts them." | `docs/runtimes/pyrel.md` is that home | `004-phase-IR3.md`, Refuted premises; IR3 spec i2 |
-| §3, IR3 homes | "the PyRel export page (`docs/agents/export-and-review.md`)" | `docs/runtimes/pyrel.md`, and `src/gnd/export/include_roots.py` with its layer row | `004-phase-IR3.md`; IR3 spec i1, i3 |
-| §8 | no component-index step | the index check before the PR | `project.md`, found at IR3 |
+| Tag | Site | Prior wording (r4, verbatim) | Amended to | Raised by |
+|---|---|---|---|---|
+| c1 | §9, IR2 lane | "`uv run pytest -q tests/test_ir2_flatten.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_extract_cli.py tests/test_public_extract_boundary.py tests/test_rf1_semantic_pins.py tests/test_mc1_guards.py --tb=short`" | the same with `tests/test_rf1_cli_pins.py` | `003-phase-IR2.md`, Refuted premises |
+| c1 | §3, IR2 homes | "a new `src/gnd/commands/flatten.py`, its registration in `src/gnd/cli.py` `(p1)`, `tools/gnd_entrypoints.json`, `tools/gnd_layers.json`, `src/gnd/extract/service.py` (message for include roots only), a new `tests/test_ir2_flatten.py`, `docs/reference/cli.md`, the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)`" | adds six inventory paths: `tools/gnd_arch.py`, `src/gnd/disclosure.py`, `docs/reference/disclosure.md`, `tests/test_rf1_cli_pins.py`, `tests/test_rf5_commands.py`, `tests/test_disclosure_mode.py` | `003-phase-IR2.md`; IR2 spec i1 |
+| c2 | §3, IR2 homes | as the row above | adds `src/gnd/extract/flatten_service.py`, the service the command calls (IR2-D1) | close review, `flatten-module-home-not-reconciled` |
+| c1 | §5, PyRel page | "The PyRel export page, `docs/agents/export-and-review.md`, says nothing about temporal models today; IR3 makes it the home of which export mode accepts them." | `docs/runtimes/pyrel.md` is that home | `004-phase-IR3.md`, Refuted premises; IR3 spec i2 |
+| c1 | §3, IR3 homes | "the PyRel export page (`docs/agents/export-and-review.md`)" | `docs/runtimes/pyrel.md`, and `src/gnd/export/include_roots.py` with its layer row | `004-phase-IR3.md`; IR3 spec i1, i3 |
+| c1 | §8 | "- Pull request: one PR from `claude/include-root-routes` to `main`. Merge stays with the owner." (no index step) | adds the component-index check before the PR | `project.md`, "Component index", found at IR3, not a phase record |
+| c2 | Goal, closing paragraph | "cites green focused gates for IR1–IR3, the structure and inventory guards and `uv run ruff check`, the replies drafted for #217 and #214, and the panel-light close review." | `uv run ruff check src tests tools` is the gate; the whole-repository exit is recorded | close review, group `close-lint-gate` |
+| c2 | §9, "all" row | "and `uv run ruff check` `(p1)` | exit 0" | `uv run ruff check src tests tools` | close review, group `close-lint-gate` |

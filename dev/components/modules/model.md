@@ -55,12 +55,12 @@ One resolver and admission guards for pinned version-5 model includes.
 | `parse_included(raw, *, include_id, path) -> dict` | function | 91 | (no docstring) |
 | `include_reason(error) -> str \| None` | function | 116 | (no docstring) |
 | `compose(document, *, descriptor, source, historical, issues)` | function | 181 | (no docstring) |
-| `remap_issues(issues, origins)` | function | 244 | (no docstring) |
-| `refuse_unsupported(route) -> NoReturn` | function | 275 | (no docstring) |
-| `guard_document(document, route)` | function | 279 | (no docstring) |
-| `bytes_declare_includes(raw, *, source) -> bool` | function | 284 | True when RAW parses and declares includes or attachments. |
-| `guard_bytes(raw, *, source, route)` | function | 299 | (no docstring) |
-| `guard_path(path, route)` | function | 304 | (no docstring) |
+| `remap_issues(issues, origins)` | function | 245 | (no docstring) |
+| `refuse_unsupported(route) -> NoReturn` | function | 276 | (no docstring) |
+| `guard_document(document, route)` | function | 280 | (no docstring) |
+| `bytes_declare_includes(raw, *, source) -> bool` | function | 285 | True when RAW parses and declares includes or attachments. |
+| `guard_bytes(raw, *, source, route)` | function | 300 | (no docstring) |
+| `guard_path(path, route)` | function | 305 | (no docstring) |
 
 ## gnd.model._induction — `src/gnd/model/_induction.py`
 Components: model.validation

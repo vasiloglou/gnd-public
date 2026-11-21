@@ -44,6 +44,9 @@ r5 and `notes/close-results.md`.
   flat model gives.
 - No output changed for a model without includes or attachments: IR1 T11
   and IR3 T6 compare whole bytes with the base.
+- Added after the close review: an include path that cannot be encoded is
+  refused `include:path` on every route (`compose`), where 0.4.0 reported
+  the codec error (exit 3) and the PyRel export exited 70.
 
 ## Not delivered or not established
 

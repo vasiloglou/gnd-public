@@ -23,6 +23,9 @@ the next one.
   its flat model and records `FLATTENING_RECORD_SHA256` and `MODEL_INCLUDES`
   in the program. The default mode still refuses temporal models; the
   `--rules` programs accept them ([#214](https://github.com/vasiloglou/gnd-public/issues/214)).
+- **Unencodable include paths.** An include path that cannot be encoded as
+  UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
+  error itself, and the PyRel export exited 70.
 
 ## 0.4.0 (2026-11-17)
 

@@ -1914,6 +1914,9 @@ above):
 | `gnd export pyrel` (default, `--rules duckdb`, `--rules lqp`) | exports the flat model and records the flattening record's SHA-256 and each pin ([PyRel page](https://github.com/vasiloglou/gnd-public/blob/main/docs/runtimes/pyrel.md)); the default mode still refuses temporal models |
 | `gnd judgments check` | receipts bind the root file's sha256 (`subject.model_sha256`), which commits to every include's pin; references bind under `--reference-root` as for any model. An include refusal reports `reason: "binding"` with the include code as `message` |
 
+An include path that cannot be encoded as UTF-8 is refused `include:path`
+with the other path checks, on every route.
+
 `load_model_bytes_composed(..., bind_references=False)` composes and
 authenticates the includes without binding references, for a caller that
 binds them under another root.

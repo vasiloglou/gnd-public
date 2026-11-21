@@ -1,7 +1,9 @@
 # include-root-routes · close results
 
 Measured 2026-11-21 at `90ac280c` (branch `claude/include-root-routes`, base
-`main` at `260c4337`). These are the results the close review reads beside
+`main` at `260c4337`). **Superseded in part after the close review**: the
+close record `005-milestone-close.md` carries the final gates, the repairs
+and the final dispositions; the rows below are kept as the review read them. These are the results the close review reads beside
 plan r5 (`notes/include-root-routes-plan.md`) and the delta
 (`notes/close-delta.md`). This file is not the close record.
 

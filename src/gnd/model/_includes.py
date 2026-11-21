@@ -187,8 +187,9 @@ def compose(document: object, *, descriptor: int, source: str | Path, historical
         raise ModelValidationError(structural)
     for i, entry in enumerate(declarations):
         try:
+            entry['path'].encode('utf-8')  # a path the filesystem cannot name is a path refusal
             _relative(entry['path'])
-        except ReferenceInputError:
+        except (ReferenceInputError, UnicodeError):
             _refuse('path', f'$.includes[{i}]')
     buffers, total = [], 0
     for i, entry in enumerate(declarations):

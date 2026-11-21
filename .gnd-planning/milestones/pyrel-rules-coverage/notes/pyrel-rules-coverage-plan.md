@@ -21,7 +21,8 @@ the whole program unless the owner rules it must.
 - **RP3.** `primitive: Number` either compiles, or refuses with a message that
   names the supported Integer or scaled-Decimal pattern (owner decision D2).
 - **RP4.** The packaged flat literature model, `quantity_fixture/time.orm.yaml`
-  and, once IR3 has landed, the interop root export under `--rules lqp`. Each
+  and, once IR3 has landed, the interop fixture's non-temporal include root
+  (`extraction.orm.json`) export under `--rules lqp`. Each
   program runs on the existing PyRel test harness.
 
 ## 0. Binding design rules
@@ -62,7 +63,7 @@ the other or on rebased branches, never as two writers at once.
 | RP1 | `assertions/model.orm.yaml` exports under `--rules lqp`. A population with a duplicate (work, passage) pair fails the generated `require`; a population without one passes |
 | RP2 | The flat literature model exports. Every anchored constraint appears in the report by id, and none appears in the program |
 | RP3 | The #214 six-line model exports, or refuses with the D2 message. The quantity fixture's coefficient-and-scale pattern keeps exporting |
-| RP4 | All six #214 cases reach exit 0, apart from any construct the owner ruled must refuse, which refuses by name |
+| RP4 | Every #214 case reaches exit 0, apart from any construct the owner ruled must refuse, which refuses by name. The temporal `checking.orm.json` case keeps its temporal-model refusal (include-root-routes D3) |
 
 ## 5. Owner decisions and open questions
 

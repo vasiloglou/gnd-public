@@ -8,11 +8,12 @@ maintenance pass, not a milestone. Nothing is changed yet.
 `src/gnd/skills/gnd-model-from-text/references/unattended-growth.md` (lines 94
 and 289) tells a growth host to write a new constraint's source as `sample` for
 row evidence and `common-sense` for library evidence, always `proposed` and
-`deontic`. `gnd evolve` admits a new constraint only as `llm-inferred` /
-`proposed` / `deontic` or `user-supplied` / `confirmed` (rule D-12,
-`src/gnd/evolve/service.py`, the branch ending at the "new or changed
-constraints must be" refusal). A proposal written as the document says is
-refused. Confirmed at `0f39c392` on 2026-11-21.
+`deontic`. `gnd evolve` admits a new constraint as `llm-inferred` /
+`proposed` / `deontic`, `user-supplied` / `confirmed`, or `induced` /
+`proposed` / `deontic` (rule D-12, `_enforce_d12` in
+`src/gnd/evolve/service.py`), and refuses `sample` and `common-sense` at the
+"new or changed constraints must be" refusal. A proposal written as the
+document says is refused. Confirmed at `0f39c392` on 2026-11-21.
 
 ## Ruling needed before the fix
 

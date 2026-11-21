@@ -43,7 +43,7 @@ combination that stays unsupported refuses with a message naming it.
 | [literature-interop](../../literature-interop/README.md) LX1–LX2, closed | `gnd-flattening/1`, `model/flattening.py`, `witness/flattening.py` as shipped | IR2, IR3 |
 
 Out of scope: temporal models in PyRel export (`export/emit.py:36` refuses
-them) and anything #214 items 2–4 ask for.
+them; owner decision D3) and anything #214 items 2–4 ask for.
 
 ## 2–3. Contract sketch and dependencies
 
@@ -64,14 +64,15 @@ IR1 and IR3 are independent. Start condition: none; `main` at `0f39c392`.
 |---|---|
 | IR1 | The #217 temporal root with two includes judges, exit 0. A non-temporal root gives identical verdicts directly and through its flat model. A changed include is refused as stale. Nested includes keep their refusal |
 | IR2 | A temporal include root flattens; the record names each element's origin and the temporal rule survives. Extraction of a temporal model still refuses, with a message that names flattening as the route |
-| IR3 | The interop fixture root (`python -m gnd.examples.literature.interop run`) exports in both modes, exit 0 in default mode. Under `--rules lqp` it gets past the include refusal and stops only at a #214 item 2–4 construct, named |
+| IR3 | The interop fixture's non-temporal include root, `extraction.orm.json` from `python -m gnd.examples.literature.interop run` (version 5, two includes), exports in default mode, exit 0. Under `--rules lqp` it gets past the include refusal and stops only at a #214 item 2–4 construct, named. The fixture's `checking.orm.json` holds the temporal rule `publication_not_before_submission`: it gets past the include refusal and then refuses with the existing temporal-model message (D3) |
 
 ## 5. Owner decisions and open questions
 
 | ID | Question | Proposed |
 |---|---|---|
 | D1 | IR2: flattening through `gnd extract`, or a separate `gnd flatten` command | A separate command, so extraction keeps its non-temporal contract |
-| D2 | Is IR2 needed once IR1 lands, given #217 asks for one of the two | Keep it: IR3 and PyRel users need a flat model of a temporal root too |
+| D2 | Is IR2 needed once IR1 lands, given #217 asks for one of the two | Decide at the plan gate. IR1 alone answers #217, and PyRel export refuses temporal models (D3), so IR2 is needed only if a flat temporal model has another consumer |
+| D3 | #214 lists the interop `checking.orm.json`, which is temporal. Is temporal PyRel export in scope here | No. It stays out, as `export/emit.py:36` has it. IR3 makes that root fail on the temporal refusal instead of the include refusal, and the reply to #214 says so |
 
 ## 6–9. Surfaces, risks, protocol, verification
 

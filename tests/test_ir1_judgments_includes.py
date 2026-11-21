@@ -298,3 +298,17 @@ def test_T12_reference_root_is_honoured_for_include_roots(case, tmp_path):
     out = json.loads(result.stdout)
     assert result.returncode == 0, out
     assert out["judgment_policy"]["admission"] is True
+
+
+# --- T13: an orphan attachment takes the composed route and is refused -----
+
+
+def test_T13_orphan_fact_type_constraints_refuse_as_declaration(case):
+    doc = json.loads((case / "checking.orm.json").read_bytes())
+    del doc["includes"]
+    doc["fact_type_constraints"] = [{"fact_type": TARGET, "constraints": [{"kind": "mandatory"}]}]
+    (case / "checking.orm.json").write_text(json.dumps(doc))
+    bind(case, "checking.orm.json")
+    code, out = judge(case, "checking.orm.json")
+    assert code == 3
+    assert out["error"] == {"reason": "binding", "message": "include:declaration"}

@@ -2,9 +2,16 @@
 
 ## 1. Status
 
-Draft r2, 2026-11-21, awaiting its delegated spec gate (`auto=true`). Not
-implementable until the plan gate (`001-plan-gate.md`) and this spec's gate
-are recorded.
+**Delegated approval (auto=true), 2026-11-21**, over this spec r3 and the
+corpus `tests/test_ir1_judgments_includes.py` (sha256 `4db9c9d5186c7d2414545628e544d479d86b80e2da24ecfb5bb52f1c82aa819e`) with
+`tests/test_mc1_guards.py` (sha256 `f718bc402971e2b0dec74f5a6ff21571c257f619c1e46e8e4dbd7cc2b9240ab6`). Authorization: the owner's
+`/process-milestone include-root-routes auto` in this session, within the
+plan approved in `001-plan-gate.md`. Instrument: the corpus (§11). Budget:
+one Codex review round over the diff (plan D7). This is the driving agent's
+ruling, not the owner's reading. Implementable from this gate's commit.
+Prior status, kept: "Draft r3, 2026-11-21, awaiting its delegated spec gate
+(`auto=true`). Not implementable until the plan gate (`001-plan-gate.md`)
+and this spec's gate are recorded."
 
 ## 2. Provenance
 
@@ -14,6 +21,10 @@ are recorded.
   this spec offered as context only.
 - r2 of this spec, 2026-11-21 `(p1)`: follows plan r3's repair of the
   composed route (references bound at `--reference-root`, IR1-C8).
+- r3, 2026-11-21 `(p2)`: follows plan r4. Round 2 of the plan review read
+  this spec's r1 as context (commit `c1d7219b`) and its agreed concern, that
+  r1 bound references during composition, is the one r2 had already
+  repaired. r3 adds IR1-C9 (T13).
 - Code read at `260c4337` on 2026-11-21.
 - Feasibility measurement, 2026-11-21 (scratch, not committed): with the two
   include guards patched out and `load_model_bytes` patched to the composed
@@ -35,6 +46,7 @@ are recorded.
 | plan IR1-C5, H6, D6 | include refusals validate against `judgment.schema.json` | §6 mapping; §8 T6 |
 | plan IR1-C6, H8 | `test_R5_judgments_api` changes; `test_R4_judgments`, `test_R10_session_judgments` stay | §6; §8 T7, T10 |
 | plan IR1-C7, R0.6 | a model without includes gives today's report, `model_digest` included | §6 branch; §8 T11 |
+| plan IR1-C9 `(p2)` | an orphan `fact_type_constraints` document refuses `include:declaration` | §6 branch predicate `declares_includes`; §8 T13 |
 | plan IR1-C8 `(p1)` | an include root with its reference file only under `--reference-root` judges, exit 0 | §6 `bind_references=False`; §8 T12 |
 | plan R0.3 | one composition, the loader `gnd check` uses | §6 |
 | plan D4 | receipts bind the root's bytes; pins bind includes | §6; §8 T4 |
@@ -171,11 +183,11 @@ def evaluate_judgments(policy, receipts, *, model, candidate, mechanical_report,
 
 | ID | Question | Readings and cost | Proposed |
 |---|---|---|---|
-| IR1-D1 | Keep `test_R4_judgments` | (a) keep: `evaluate_judgments` without `model_root` still refuses, pinned; (b) change to accept: a direct caller without a root would need another way to compose. Same exit for the CLI either way | (a) |
-| IR1-D2 | Include check order in `api.judgments` | (a) at the model step, after policy and receipts (today's order for other models); (b) before policy, as `guard_path` did. Both exit 3; they differ in `reason` for an input that is wrong twice | (a), pinned by T8 |
-| IR1-D3 | `reason` for include refusals (plan D6) | (a) `binding` for all; (b) `unsupported` for `forbidden-section`. Same exit 3 | (a) |
-| IR1-D4 | Where the composed route applies | only when the root declares includes; a root without includes keeps `load_model_bytes` so reference binding is unchanged (R0.6) | as stated |
-| IR1-D5 `(p1)` | How references of an include root are bound | (a) compose without binding, then `bind_declared_references` at `--reference-root` or the model's folder, as for other models; (b) let the composed loader bind at the model's folder, which ignores `--reference-root`. (b) exits 3 where (a) exits 0 for a separate reference root | (a) |
+| IR1-D1 | Keep `test_R4_judgments` | (a) keep: `evaluate_judgments` without `model_root` still refuses, pinned; (b) change to accept: a direct caller without a root would need another way to compose. Same exit for the CLI either way | (a) → **ruled (a), delegated 2026-11-21** |
+| IR1-D2 | Include check order in `api.judgments` | (a) at the model step, after policy and receipts (today's order for other models); (b) before policy, as `guard_path` did. Both exit 3; they differ in `reason` for an input that is wrong twice | (a), pinned by T8 → **ruled (a), delegated 2026-11-21** |
+| IR1-D3 | `reason` for include refusals (plan D6) | (a) `binding` for all; (b) `unsupported` for `forbidden-section`. Same exit 3 | (a) → **ruled (a), delegated 2026-11-21** |
+| IR1-D4 | Where the composed route applies | only when the root declares includes; a root without includes keeps `load_model_bytes` so reference binding is unchanged (R0.6) | as stated → **ruled as stated, delegated 2026-11-21** |
+| IR1-D5 `(p1)` | How references of an include root are bound | (a) compose without binding, then `bind_declared_references` at `--reference-root` or the model's folder, as for other models; (b) let the composed loader bind at the model's folder, which ignores `--reference-root`. (b) exits 3 where (a) exits 0 for a separate reference root | (a) → **ruled (a), delegated 2026-11-21** |
 
 ## 8. Tests
 
@@ -197,6 +209,7 @@ approving receipts bound to a named model file, as the §2 measurement did.
 | T8 | malformed policy (`{}`) with a stale include | outcome 3, `reason` `shape` |
 | T9 | the checking root with 1,000 extra value object types in `chronology`, re-pinned and re-bound | outcome 0 or 1, under 20 s |
 | T10 | `tests/test_mc1_guards.py::test_R5_judgments_api` rewritten: `write_case` root with a stale pin and readable policy and receipts | outcome 3, `message` `include:hash-mismatch` (no longer `include:unsupported-route`) |
+| T13 `(p2)` | the checking root with `includes` removed and an orphan `fact_type_constraints` added | outcome 3, `message` `include:declaration` |
 | T12 `(p1)` | the checking root with `reference/catalog.json` moved to a separate folder passed as `--reference-root` | exit 0, `admission` true |
 | T11 | control: `tests/test_public_v71_full_judgments.py` and `tests/test_public_v71_judgment_successor_guards.py` unchanged | exit 0 |
 
@@ -226,11 +239,11 @@ Estimate: source 30 lines, tests 220 lines, docs 15 lines.
 
 Corpus-first: IR1 changes an exit-code and error-shape contract, for which
 `review-convergence.md` sets corpus-first as the default. The corpus is
-`tests/test_ir1_judgments_includes.py` (T1–T9, T12) and the rewritten
+`tests/test_ir1_judgments_includes.py` (T1–T9, T12, T13) and the rewritten
 `tests/test_mc1_guards.py::test_R5_judgments_api` (T10), authored before any
 implementation and committed red: with only these test bytes added to
-`c1d7219b`, 16 cases fail and the T6 negative control passes (measured
-2026-11-21; 15 before T12 was added `(p1)`). Each test's assertion is its expected answer; there is no
+`c1d7219b`, 17 cases fail and the T6 negative control passes (measured
+2026-11-21; 15 before T12 `(p1)` and 16 before T13 `(p2)` were added). Each test's assertion is its expected answer; there is no
 separate answer key, because the cases are expected exits and error objects,
 not a blind-reading corpus. The gate is a delegated approval under
 `auto=true` over this spec and those test bytes.

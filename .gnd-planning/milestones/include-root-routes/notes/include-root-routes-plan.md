@@ -1,13 +1,18 @@
-# Include-root routes · plan r3
+# Include-root routes · plan r4
 
-**Status: r3, 2026-11-21. Plan review ran over r2; r3 applies its 13 fixes
-and carries no review opinion of its own.** The owner selected the GND review
+**Status: r4, 2026-11-21. Plan review ran twice: round 1 over r2 (r3 applied
+its 13 fixes, tagged `(p1)`), round 2 over r3 (r4 applies its 4 fixes, tagged
+`(p2)`). r4 carries no review opinion of its own; the round budget is spent
+(§8).** The owner selected the GND review
 panel light (`tools/run_gnd_review_panel.py --light`) for the plan review and
 the milestone close in this session on 2026-11-21. The panel read r2 (sha256
 `4079c650ad046dcec1087c7cb95b58a71f471743ec511ff670a7426d3027c39b`, commit
 `185ccaca`): six of six seats succeeded at high effort; evidence and the
 disposition are in `evidence/plan-review-r1/`. Repairs are tagged `(p1)` at
-their site. Approval is recorded only in `001-plan-gate.md`. `auto=true`
+their site. Round 2 read r3 (sha256
+`bf150b5b7e40eb92230b5103b012bbb2533e2ce11f0e7b95b3e00b2e832ea45a`, commit
+`c1d7219b`): three of six seats succeeded; evidence in
+`evidence/plan-review-r2/`. Approval is recorded only in `001-plan-gate.md`. `auto=true`
 delegation for this milestone was given on 2026-11-21 (`process-milestone
 include-root-routes auto`).
 
@@ -72,7 +77,13 @@ close review.
   `date_add` / `date_sub` (`pyrel_rules.py:357`, `:409`, `:1654-1668`). Every
   criterion says which mode it means.
 - **R0.6 A model without includes is untouched.** Every changed route gives
-  byte-identical output for a model that declares no includes. The existing
+  byte-identical output for a model that declares no includes. `(p2)` "Declares
+  includes" means `declares_includes()` (`model/_includes.py:56-58`): an
+  `includes` key or a `fact_type_constraints` key. A version-5 document with
+  `fact_type_constraints` and no `includes` takes the composed route and is
+  refused `include:declaration` there, where 0.4.0 refused
+  `include:unsupported-route` on the routes this milestone opens; each phase
+  pins that change. The existing
   tests of each route are the control; for `gnd extract` that includes the
   temporal-refusal goldens in `tests/fixtures/rf1-pins/goldens/sem-extract/`
   (run by `tests/test_rf1_semantic_pins.py`) `(p1)`.
@@ -93,7 +104,7 @@ Harvested obligations. "Observed" means re-read or run on 2026-11-21 at
 | H4 | #214 row 5, "What would unblock it" item 1 | `pyrel_rules.py:2415` `guard_bytes(..., route='pyrel_rules:2267')`; default export refuses `include:unsupported-route: export.pyrel` (`emit.py:27-31`) | observed (exit 3 on both fixture roots, all three modes) | IR3 |
 | H5 | literature-interop LX1–LX2, closed | `gnd-flattening/1`, `model/flattening.py`, `witness/flattening.py` as shipped | observed | IR2, IR3 |
 | H6 | probe, 2026-11-21 | the judgments include refusal writes `error.reason: "include:unsupported-route"` (`api.py:1195-1198`, corrected `(p1)`), outside the closed enum of `judgment.schema.json` `$defs.report.error.reason` (`shape binding trust limit unsupported io`) | observed | IR1 |
-| H7 | probe, 2026-11-21 | flattened fixture roots: `extraction.flat.orm.json` exports in the default mode, exit 0; `checking.flat.orm.json` refuses there with the temporal message, exit 3; under `--rules lqp` and `--rules duckdb` both stop at `paper_names_parent_method#0: family 'anchored'`, exit 3 | observed | IR3 |
+| H7 | probe, 2026-11-21 | flattened fixture roots (probe-local names `(p2)`; `gnd flatten` writes `extraction.orm.flat.orm.json` and `checking.orm.flat.orm.json`): `extraction.flat.orm.json` exports in the default mode, exit 0; `checking.flat.orm.json` refuses there with the temporal message, exit 3; under `--rules lqp` and `--rules duckdb` both stop at `paper_names_parent_method#0: family 'anchored'`, exit 3 | observed | IR3 |
 | H8 | `tests/test_mc1_guards.py` | `test_R4_judgments`, `test_R5_judgments_api`, `test_direct_refusals[R13-pyrel-rules]`, `test_cli_guards[pyrel]` pin today's refusals; `test_R10_session_judgments` and `test_R21_composition_verify` pin refusals that stay | observed | IR1, IR3 |
 | H9 | `tests/test_mc1_review_regressions.py` | `test_R7_guard_precedes_temporal_classification` pins that the include guard runs before temporal classification in the default export | observed | IR3 |
 | H10 | PROJECT.md roadmap after 0.4.0 | first milestone; RP5's include-root cases need IR3 merged; two milestones never write the same files at once | inherited | all |
@@ -153,7 +164,15 @@ H4–H7.
 - `gnd flatten MODEL --out DIR` loads `MODEL` with `load_model`, calls
   `flatten_model`, and writes `<stem>.flat.orm.json` and
   `<stem>.flattening.json` into `DIR` with the names `gnd extract` uses
-  (`extract/service.py:_flattening_names`). It makes no temporal check.
+  (`extract/service.py:_flattening_names`; the stem strips one suffix, so
+  `checking.orm.json` gives `checking.orm.flat.orm.json` `(p2)`). It makes no
+  temporal check.
+- `(p2)` The flat model keeps the root's `reference_populations` paths,
+  relative to the authored root's directory (representation-format.md,
+  "Extraction flattening record"). A flat model written elsewhere binds its
+  references only where those relative paths resolve. The IR2 spec decides
+  whether `gnd flatten` refuses a `DIR` other than the root's directory for a
+  model that declares references.
 - Exit 0 when both files are written; exit 3 for an invalid model, a model
   without includes, or any include refusal (with its include code); exit 11
   when either output file already exists, with nothing written `(p1)`.
@@ -213,9 +232,9 @@ root's `model_id` for IR1-C2, and flat models made in process by
 
 | Phase | Criteria | Inherited residuals |
 |---|---|---|
-| IR1 | **IR1-C1** `gnd judgments check checking.orm.json composed.population.json` with a policy and two approving receipts bound to the root, exit 0, `error` null, `admission` true. **IR1-C2** the same policy over `extraction.orm.json` directly and over its in-process flat model, on the relabelled population (receipts rebound to each model's sha256), gives equal `judgment_policy.targets` and `admission`. **IR1-C3** an include edited without a new pin, exit 3, `error.message` `include:hash-mismatch`; an include edited and pinned again, exit 3, `error.message` "stale judgment subject". **IR1-C4** a nested include, exit 3, `include:forbidden-section`. **IR1-C5** every include refusal's report validates against `judgment.schema.json` (H6). **IR1-C6** `test_R5_judgments_api` changes to the new behaviour; `test_R4_judgments` stays as the pin of the refusal for a direct `evaluate_judgments` caller that passes no `model_root`; `test_R10_session_judgments` stays as it is. **IR1-C7** a model without includes gives the byte-identical report it gives today, `model_digest` included. **IR1-C8** `(p1)` an include root whose reference file lives only under a separate `--reference-root` judges, exit 0 | H11 stays a boundary |
-| IR2 | **IR2-C1** `gnd flatten checking.orm.json --out DIR`, exit 0; the two files equal `flatten_model`'s bytes; the record names each element's origin and the flat model keeps `publication_not_before_submission`. **IR2-C2** `gnd check` verdicts over the written `checking.orm.flat.orm.json` equal those over `checking.orm.json` on `composed.population.json`; this is check parity for a temporal root, separate from R0.4's judgments parity `(p1)`. **IR2-C3** a model without includes, exit 3; an include refusal, exit 3, with its include code. **IR2-C4** either output file already present, exit 11, nothing written or changed. **IR2-C5** `gnd extract` on `checking.orm.json`, exit 3, message names `gnd flatten`; on an include-free temporal model the rf1 extract goldens stay green `(p1)` | none |
-| IR3, default mode | **IR3-C1** `gnd export pyrel extraction.orm.json`, exit 0, and the program equals the export of `extraction.flat.orm.json` except for the added constants and `MODEL_NAME`. **IR3-C2** `checking.orm.json` exits 3 with the temporal message, not an include refusal | none |
+| IR1 | **IR1-C1** `gnd judgments check checking.orm.json composed.population.json` with a policy and two approving receipts bound to the root, exit 0, `error` null, `admission` true. **IR1-C2** the same policy over `extraction.orm.json` directly and over its in-process flat model, on the relabelled population (receipts rebound to each model's sha256), gives equal `judgment_policy.targets` and `admission`. **IR1-C3** an include edited without a new pin, exit 3, `error.message` `include:hash-mismatch`; an include edited and pinned again, exit 3, `error.message` "stale judgment subject". **IR1-C4** a nested include, exit 3, `include:forbidden-section`. **IR1-C5** every include refusal's report validates against `judgment.schema.json` (H6). **IR1-C6** `test_R5_judgments_api` changes to the new behaviour; `test_R4_judgments` stays as the pin of the refusal for a direct `evaluate_judgments` caller that passes no `model_root`; `test_R10_session_judgments` stays as it is. **IR1-C7** a model without includes gives the byte-identical report it gives today, `model_digest` included. **IR1-C8** `(p1)` an include root whose reference file lives only under a separate `--reference-root` judges, exit 0. **IR1-C9** `(p2)` a version-5 document with `fact_type_constraints` and no `includes`, exit 3, `error.message` `include:declaration` | H11 stays a boundary |
+| IR2 | **IR2-C1** `gnd flatten checking.orm.json --out DIR`, exit 0; the two files equal `flatten_model`'s bytes; the record names each element's origin and the flat model keeps `publication_not_before_submission`. **IR2-C2** `gnd check` verdicts over `checking.orm.flat.orm.json`, written into the root's own directory `(p2)`, equal those over `checking.orm.json` on `composed.population.json`; this is check parity for a temporal root, separate from R0.4's judgments parity `(p1)`. **IR2-C3** a model without includes, exit 3; an include refusal, exit 3, with its include code. **IR2-C4** either output file already present, exit 11, nothing written or changed. **IR2-C5** `gnd extract` on `checking.orm.json`, exit 3, message names `gnd flatten`; on an include-free temporal model the rf1 extract goldens stay green `(p1)` | none |
+| IR3, default mode | **IR3-C1** `gnd export pyrel extraction.orm.json`, exit 0, and the program equals the export of its flat model (`extraction.orm.flat.orm.json` `(p2)`) except for the added constants and `MODEL_NAME`. **IR3-C2** `checking.orm.json` exits 3 with the temporal message, not an include refusal | none |
 | IR3, `--rules lqp` and `--rules duckdb` | **IR3-C3** both roots get past the include refusal and give the same exit and message as their flat models. `(p1)` The expected outcome is fixed at IR3's spec gate from the state of `main` then, with the commit read: at `260c4337` it is `paper_names_parent_method#0: family 'anchored'`, exit 3 (H7); the spec names one outcome, never two | none |
 | IR3, all modes | **IR3-C4** the program records the flattening record's sha256 and each include's sha256; an include changed and pinned again changes the recorded digest. Tested in the default mode on `extraction.orm.json` and, for `--rules`, on a small include root with no anchored constraint. **IR3-C5** the refusals pinned for these routes (`test_direct_refusals[R13-pyrel-rules]`, `test_cli_guards[pyrel]`, `test_R7_guard_precedes_temporal_classification`) change to match. **IR3-C6** a model without includes exports byte-identically to today. **IR3-C7** `(p1)` in each mode, an include edited without a new pin exits 3 with `include:hash-mismatch` and a nested include exits 3 with `include:forbidden-section`, never `EXIT_INTERNAL` | none |
 
@@ -272,6 +291,9 @@ session judgments; the assertion-admission example; any include rule change;
   a second only if the first blocks.
   `(p1)` Round 1 over r2 blocked (5 blocking of 24). Round 2 runs over r3;
   there is no round 3 (`evidence/plan-review-r1/disposition.md`).
+  `(p2)` Round 2 over r3: 0 blocking of 5, self-inflicted 3 of 5; the budget
+  is spent and the stop rule fires. r4 goes to the plan gate unreviewed
+  (`evidence/plan-review-r2/disposition.md`).
 - The delegated plan gate (`auto=true`) is recorded in `001-plan-gate.md`
   after the review's findings are dispositioned.
 - Each phase: spec, delegated spec gate, code, focused gates, one independent

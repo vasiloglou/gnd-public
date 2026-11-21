@@ -1,0 +1,33 @@
+{
+  "base": null,
+  "claims": [
+    "Every code location, line number and quoted message cited in the four new planning files and the PROJECT.md roadmap section matches the code at 0f39c392.",
+    "Together the planned phases cover every request in issues #214, #215, #216, #217 and #218, and the partition of #214 between include-root-routes and pyrel-rules-coverage leaves no item unowned or owned twice.",
+    "Issue #179 was already delivered before this change, so closing it as completed is supported by the repository's records and code.",
+    "The synced skill files are byte-identical to dev-tools c9648dd for the paths .devtools.toml names, the .claude and .codex twins are identical, and .devtools-receipt.json describes them.",
+    "The test_doctor_uninstall.py change pins exactly the new tracked files and nothing that weakens its guard.",
+    "The order and dependencies stated between the milestones are consistent across PROJECT.md, the three READMEs and the three plan outlines."
+  ],
+  "created": "2026-11-21T18:01:30.762662+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/reviews/pr-219-r1/diff.patch",
+      "sha256": "8d802724e3e6a8e52d9fa1c96e56dfbb1e0015b3554f62b82c18ee052d949bec"
+    }
+  ],
+  "head": "73e0d16ff5c978cbba69af391dcd921f57d6b9f8",
+  "left_out": [],
+  "notes": [],
+  "pr": {
+    "base": "0f39c3929285876829e24a9aece33b3d3dd410da",
+    "head": "73e0d16ff5c978cbba69af391dcd921f57d6b9f8",
+    "number": 219,
+    "title": "Plan the open issues after 0.4.0, and sync dev-tools c9648dd",
+    "url": "https://github.com/vasiloglou/gnd-public/pull/219"
+  },
+  "question": "Is each change in this pull request correct and complete for what it sets out to do, and is anything in it wrong, unsupported by the code it cites, or missing?",
+  "subject": "pr",
+  "version": 1
+}

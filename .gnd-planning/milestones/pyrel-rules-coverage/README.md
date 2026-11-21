@@ -1,9 +1,9 @@
 # PyRel rules coverage
 
-Plan r3, 2026-11-21, written by `start-milestone` from the r1 outline of
+Plan r4, 2026-11-21, written by `start-milestone` from the r1 outline of
 items 2–4 of [issue #214](https://github.com/vasiloglou/gnd-public/issues/214).
-r2 reviewed once by the full GND panel; r3 not reviewed, not approved. Panel
-(owner-selected 2026-11-21). The `pyrel_oracle` lane is opted in for this
+Two full-panel rounds (over r2 and r3); r4 approved by delegated ruling,
+[plan gate](001-plan-gate.md). The `pyrel_oracle` lane is opted in for this
 milestone's gates.
 
 | Phase | Deliverable | State |
@@ -16,4 +16,4 @@ milestone's gates.
 
 [Plan](notes/pyrel-rules-coverage-plan.md). Second in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
-Next: plan review round 2 over r3, then the delegated plan gate.
+Next: phase RP2 (spec, delegated gate, code).

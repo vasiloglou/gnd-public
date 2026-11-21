@@ -6,7 +6,9 @@ Draft, 2026-11-21, written by `start-milestone`, amended for plan r3
 `(p1)`. Implementable once the plan gate is recorded **and RP2 has its
 record**: plan r3 runs RP2 first, because this phase lists disconnected and
 ambiguous joins as not checked through RP2's reason field. No
-implementation file exists.
+implementation file exists. `(p2)` Amended again for plan r4: measured
+GND behaviour corrected the join cases (T4, T14) and added T16–T17; the
+verification ledger now matches plan §9.
 
 ## 2. Provenance
 
@@ -26,8 +28,11 @@ citation was read at `8c909013`. The measurements in §6 were run on
 | plan §4 RP1-C3 | oracle agreement: packaged population (0), duplicate pair (1), empty join (2) | T5, T6, T7 |
 | plan §4 RP1-C4 | a non-string `assertion` value refused, exit 3, by name | T8 |
 | plan §4 RP1-C5 | `refuse-external-uniqueness.orm.json` renders; external frequency still refused | T3 |
-| plan §4 RP1-C6 `(p1)` | a disconnected join listed as not checked, agreeing with GND (exit 4) | T4 |
-| plan §4 RP1-C7 `(p1)` | an ambiguous join listed as not checked, agreeing with GND (exit 4) | T14 |
+| plan §4 RP1-C6 `(p2)` | a disconnected join: not checked with facts (exit 4), vacuous when every referenced list is empty (exit 2), agreeing with GND | T4 |
+| plan §4 RP1-C7 `(p2)` | an ambiguous join refused at export, exit 3, as `gnd check` refuses the model | T14 |
+| plan §4 RP1-C8 `(p2)` | numeric anchor agrees, or is refused by name | T15 |
+| plan §4 RP1-C9 `(p2)` | a three-fact-type join | T16 |
+| plan §3 `(p2)` | Ossie pin for external uniqueness and the `String` entity | T17 |
 | plan §2 RP1 `(p1)` | a numeric-anchor case measures anchor equality against GND's identity | T15 |
 | plan §2 RP1 | anchors matched by object type, not role name | T9 |
 | plan §10 D4 | `String` for an `external` entity, decided from the model | §6.2, T8 |
@@ -95,6 +100,11 @@ def _external_uniqueness(model: _Model, c: dict[str, Any]) -> list[Requirement]:
   `join-anchor-ambiguous`, rendered at `checker/_core.py:569-577`) and
   return no requirement. GND decides the same way at
   `semantic_spec.py:2665-2700`.
+  `(p2)` Corrected by measurement: only the disconnected case reaches this
+  code, and its row carries the referenced fact types so the report prints
+  vacuous when all of them are empty and not checked otherwise. An ambiguous
+  join is refused earlier, at model load (`semantic:join-anchor-ambiguous`,
+  exit 3).
 - Requirement `"uniqueness"`, part `""`: domain = copy one's atoms plus copy
   two's atoms; check `same` over the anchor pairs; witness = the referenced
   variables in `role_refs` order; `vacuous_when = ("any", ())` with the
@@ -154,7 +164,7 @@ New file `tests/test_rp1_external_uniqueness.py`; fixtures under
 | T1 | render `assertions/` and `lineage/`, both targets | default | no exception |
 | T2 | both programs carry `require_text` of the one `Requirement`; `#   rule:` count equals requirements | default | pass |
 | T3 | `refuse-external-uniqueness.orm.json` renders; `refuse-external-frequency.orm.json` still refuses `external frequency` | default | pass; the `:98` parametrize row moves |
-| T4 `(p1)` | `rp1/disconnected.orm.json`: rule in `UNCHECKED` with GND's reason, no requirement; source order: classification before atoms; oracle run agrees with GND | default + oracle | render; exit 4 both |
+| T4 `(p1)` `(p2)` | `rp1/disconnected.orm.json`: rule in `UNCHECKED` with GND's reason, no requirement; source order: classification before atoms; oracle runs with facts and with empty lists agree with GND | default + oracle | render; exit 4 both, exit 2 both |
 | T5 | DuckDB program on `assertions/raw.population.json` agrees with GND | oracle | exit 0 both |
 | T6 | `rp1/duplicate.population.json` | oracle | exit 1 both; `[["p01", "working-notes"]]` |
 | T7 | `rp1/empty-join.population.json` | oracle | exit 2 both; vacuous |
@@ -164,13 +174,15 @@ New file `tests/test_rp1_external_uniqueness.py`; fixtures under
 | T11 | runtime page no longer lists external uniqueness as refused, still lists external frequency | default | pass |
 | T12 | malformed `role_refs` shapes | default | `ExportInputError`, no traceback |
 | T13 | 200-fact-type chain render under 5 s | default | pass |
-| T14 `(p1)` | `rp1/ambiguous.orm.json` (one referenced fact type with two `assertion` anchor roles) | default + oracle | in `UNCHECKED`; exit 4 both |
+| T14 `(p2)` | `rp1/ambiguous.orm.json` (one referenced fact type with two anchor roles of one object type) | default | export exit 3 `invalid model`; `gnd check` exit 3 (both pinned) |
 | T15 `(p1)` | `rp1/numeric-anchor.orm.json`, anchors `1` and `1.0` with one repeated referenced tuple | oracle | the program agrees with GND; if it does not, the case is recorded as a finding and becomes a stated input refusal |
+| T16 `(p2)` | `rp1/three-way.orm.json`, a join over three fact types, with a duplicate | default + oracle | renders; exit 1 both |
+| T17 `(p2)` | `gnd export ossie` on `assertions/model.orm.yaml` and on `rp1/three-way.orm.json` gives its `8c909013` bytes | default | equal |
 
 Verification ledger:
 
-- Focused: `uv run pytest -q tests/test_rp1_external_uniqueness.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py --tb=short`, exit 0.
-- Oracle (opted in): `uv run pytest -q -m pyrel_oracle tests/test_rp1_external_uniqueness.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py`, exit 0; baseline 110 passed.
+- Focused `(p2)`: `uv run pytest -q tests/test_rp1_external_uniqueness.py tests/test_rp2_anchored.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py tests/test_pyrel_rules_derivations.py tests/test_rules_in_pyrel.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_ossie_formulas.py tests/test_ossie_export.py --tb=short`, exit 0.
+- Oracle (opted in): `uv run pytest -q -m pyrel_oracle tests/test_rp1_external_uniqueness.py tests/test_rp2_anchored.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py`, exit 0; baseline 110 passed.
 - Guards: the `project.md` guard block; `uv run ruff check`.
 - Broad lanes: not selected.
 

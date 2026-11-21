@@ -1,0 +1,10 @@
+<!-- Edited by review_tool.py sanitize: 1 absolute path(s) replaced with <repo> or <home>. The reviewer's words are otherwise unchanged; run.json holds the SHA-256 of the original. -->
+1. **F1 — Include encoding errors escape as exit 70 (medium).** [include_roots.py:50](<repo>/src/gnd/export/include_roots.py:50) does not catch `UnicodeEncodeError`.
+
+   Reproduce with a version-5 root containing one include whose `path` is `"bad\ud800"` and whose SHA-256 is 64 zeros. Export it in default, DuckDB, or LQP mode. All three return **70**, reporting `surrogates not allowed`, instead of an include refusal with exit **3**. The baseline default exporter returns 3 for the same input. I reproduced this using an in-memory root substitution and the actual filesystem reader. Validate these strings and map encoding failures to `ExportInputError` with an include code.
+
+2. **Checked and found true.** All 12 supplied hashes matched. Probes confirmed interop root/flat parity, temporal refusal, correct constants and repinning behavior in every mode, composition before temporal classification, and exit 3 for 11 other include-refusal variants per mode. All three T6 goldens matched both current output and `68e426ca`; 12 additional include-free model/mode comparisons matched the baseline. `pyrel_runtime.py` is unchanged. The 153 selected CLI, graph, and query-policy tests passed; focused Ruff checks passed. The 1,000-type probe took **0.277 seconds**.
+
+3. **Limits.** Fixture-writing suites were not run because the brief prohibits creating files; probes used in-memory inputs and suppressed publication. Prior-review logs were hash-verified and their conclusions inspected, but output truncation prevented full inspection of their nested transcripts. Additional component-index changes appeared during the review and were outside the supplied diff.
+
+VERDICT: CHANGES_REQUESTED

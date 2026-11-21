@@ -1,0 +1,193 @@
+diff --git a/.gnd-planning/milestones/include-root-routes/notes/phase-IR3-spec.md b/.gnd-planning/milestones/include-root-routes/notes/phase-IR3-spec.md
+index 30368ad2..5311965a 100644
+--- a/.gnd-planning/milestones/include-root-routes/notes/phase-IR3-spec.md
++++ b/.gnd-planning/milestones/include-root-routes/notes/phase-IR3-spec.md
+@@ -141,7 +141,7 @@ flat model's reference paths point.
+ | ID | Question | Readings and cost | Proposed |
+ |---|---|---|---|
+ | IR3-D1 | Constant spelling (plan D5) | `FLATTENING_RECORD_SHA256` (a str) and `MODEL_INCLUDES` (a tuple of three-tuples), absent for a model without includes | as stated → **ruled as stated, delegated 2026-11-21** |
+-| IR3-D2 | Where `flatten_for_export` lives | (a) `export/pyrel_runtime.py`, beside `ExportInputError` and `_read_text`, which both renderers import; (b) a new module, which adds a layer-map row | (a) → **ruled (a), delegated 2026-11-21** |
++| IR3-D2 | Where `flatten_for_export` lives | (a) `export/pyrel_runtime.py`, beside `ExportInputError` and `_read_text`, which both renderers import; (b) a new module, which adds a layer-map row | (a) → **ruled (a), delegated 2026-11-21**  **Amended (i1), delegated 2026-11-21:** `emit.py`, not `pyrel_runtime.py`. Reading (a)'s premise was refuted before any code: `render_pyrel` embeds `pyrel_runtime.py` verbatim into every default program (`emit.py`, `files("gnd.export").joinpath("pyrel_runtime.py")`), so a helper there would change every exported program (R0.6, T6) and ship loader imports in a standalone script. `emit.py` is not embedded and both renderers can import it; T8 and T9 import from there. Prior ruling kept above  **Amended again (i3), delegated 2026-11-21:** a new module `gnd.export.include_roots` (layer `lanes`, lane `export`), reading (b). `emit.py` lazily imports `pyrel_rules`, so `pyrel_rules` importing `emit` is a cycle that `tests/test_rf8_structure.py::test_graph_and_each_dirty_direction` refuses. The first amendment's wording, "`emit.py`, not `pyrel_runtime.py`", is kept above |
+ | IR3-D3 | What replaces `test_R7` | (a) rewrite it to pin the new order: a temporal include root reaches the temporal message, a stale temporal include root the include code; (b) delete it. (b) loses an order pin | (a) → **ruled (a), delegated 2026-11-21** |
+ | IR3-D4 | `test_cli_guards[pyrel]` | drop the `pyrel` parameter (the route no longer refuses) and add the positive CLI case to the new file | as stated → **ruled as stated, delegated 2026-11-21** |
+ | IR3-D5 | IR3-C3's expected outcome | fixed from `main` at `260c4337` (RP2 not merged): exit 3, `paper_names_parent_method#0: family 'anchored'` in both `--rules` modes, as the flat models give | as stated → **ruled as stated, delegated 2026-11-21** |
+@@ -185,3 +185,28 @@ the base. The goldens were produced by the base code at `68e426ca` in a
+ disposable worktree and equal the head's output byte for byte (measured
+ 2026-11-21). T6 uses `write_case`'s flat model for the two `--rules`
+ goldens and the extraction flat model for the default one.
++
++## Implementation findings, recorded as they were found
++
++**i1, 2026-11-21: `pyrel_runtime.py` is part of every exported program.**
++Before writing code: the default renderer reads `pyrel_runtime.py` and
++embeds it in the program source, so it cannot host `flatten_for_export`.
++IR3-D2 amended to `emit.py`; the corpus's two imports were changed
++accordingly (`tests/test_ir3_pyrel_includes.py`, T8 and T9), with no
++change to any expected value. The T6 goldens, which compare whole program
++bytes, would have turned red on the first reading.
++
++**i2, 2026-11-21: the PyRel page with the temporal sentence is
++`docs/runtimes/pyrel.md`.** It said "Temporal models are refused at
++export", true only of the default mode, and is the page that states the
++exporter's limits; `docs/agents/export-and-review.md` only links it. That
++page is the one home of which mode accepts temporal models and of the two
++constants; its sentence is corrected and a paragraph added. §6 named
++`export-and-review.md`; this records the change of page.
++
++**i3, 2026-11-21: `emit.py` would close an import cycle.** The guard
++block's first run had one failure:
++`tests/test_rf8_structure.py::test_graph_and_each_dirty_direction` reported
++the cycle `gnd.export.emit` ↔ `gnd.export.pyrel_rules`. The helper moved to
++`src/gnd/export/include_roots.py`, with its row in `tools/gnd_layers.json`;
++T8 and T9 import from there. No expected value changed.
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 259e09bc..5acf6c98 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -18,6 +18,11 @@ the next one.
+   `<stem>.flat.orm.json` and its `gnd-flattening/1` record, for temporal
+   roots too, which `gnd extract` refuses; extract's refusal for a temporal
+   include root now names it ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
++- **PyRel export of include roots.** `gnd export pyrel`, in the default mode
++  and with `--rules duckdb` or `--rules lqp`, exports an include root through
++  its flat model and records `FLATTENING_RECORD_SHA256` and `MODEL_INCLUDES`
++  in the program. The default mode still refuses temporal models; the
++  `--rules` programs accept them ([#214](https://github.com/vasiloglou/gnd-public/issues/214)).
+ 
+ ## 0.4.0 (2026-11-17)
+ 
+diff --git a/docs/runtimes/pyrel.md b/docs/runtimes/pyrel.md
+index 465f8461..1834b57c 100644
+--- a/docs/runtimes/pyrel.md
++++ b/docs/runtimes/pyrel.md
+@@ -295,7 +295,16 @@ print("Require mode is reserved; it did not check the policy.")
+ 
+ `require` is not an available enforcement backend here. Named remote connection
+ execution is also unavailable through this GND exporter. Unsupported results must
+-not become satisfied or violated verdicts. Temporal models are refused at export.
++not become satisfied or violated verdicts. The default program refuses temporal
++models at export; the `--rules duckdb` and `--rules lqp` programs accept them.
++
++A version-5 model with includes is exported through its flat model, the bytes
++`gnd flatten` writes. The program then carries two constants:
++`FLATTENING_RECORD_SHA256`, the SHA-256 of the `gnd-flattening/1` record, and
++`MODEL_INCLUDES`, each include's `(id, path, sha256)` pin. An include changed
++and pinned again gives a different record digest. A program that is already
++exported does not notice later changes to its includes.
++
+ This tutorial teaches the supported local exporter and separate native code, not
+ Snowflake deployment or every PyRel capability.
+ 
+diff --git a/src/gnd/export/emit.py b/src/gnd/export/emit.py
+index 7c6bc15a..c43ae13f 100644
+--- a/src/gnd/export/emit.py
++++ b/src/gnd/export/emit.py
+@@ -5,6 +5,7 @@ from __future__ import annotations
+ from importlib.resources import files
+ from pathlib import Path
+ 
++from .include_roots import flatten_for_export, flattening_constants
+ from .pyrel_runtime import _constraint_entries, _parse_document, _read_text, admit_model
+ 
+ SCRIPT_HEADER = (
+@@ -18,8 +19,16 @@ SCRIPT_HEADER = (
+ def render_pyrel(
+     model_path: Path, *, duckdb_path: str = ":memory:", connection: str | None = None
+ ) -> str:
+-    """Render from one bounded input read; no checker or foreign-runtime import."""
++    """Render from one bounded input read; no checker or foreign-runtime import.
++
++    That holds for a model without includes. An include root is first
++    composed and flattened (``flatten_for_export``) and its flat model is
++    rendered, with two constants recording the flattening.
++    """
+     text = _read_text(model_path)
++    flat = flatten_for_export(model_path, text.encode("utf-8"))
++    if flat is not None:
++        text = flat.model_bytes.decode("utf-8")
+     document = _parse_document(text)
+     from gnd.errors import ModelValidationError
+     from gnd.model._includes import guard_document
+@@ -51,7 +60,8 @@ def render_pyrel(
+     runtime = files("gnd.export").joinpath("pyrel_runtime.py").read_text(encoding="utf-8")
+     config = {"duckdb_path": duckdb_path, "connection": connection}
+     source = (SCRIPT_HEADER + runtime + f"\nMODEL_TEXT = {text!r}\n"
+-              f"MODEL_NAME = {str(model_path)!r}\nEXPORT_CONFIG = {config!r}\n"
++              f"MODEL_NAME = {str(model_path)!r}\n" + flattening_constants(flat)
++              + f"EXPORT_CONFIG = {config!r}\n"
+               '\nif __name__ == "__main__":\n    sys.exit(program_main())\n')
+     compile(source, "<pyrel-export>", "exec")
+     return source
+diff --git a/src/gnd/export/pyrel_rules.py b/src/gnd/export/pyrel_rules.py
+index 0335c44d..5a787466 100644
+--- a/src/gnd/export/pyrel_rules.py
++++ b/src/gnd/export/pyrel_rules.py
+@@ -2409,6 +2409,10 @@ def render(model_path: Path, target: str) -> str:
+     if target not in TARGETS:
+         raise ExportInputError(f"target must be one of {TARGETS}")
+     raw = Path(model_path).read_bytes()
++    from .include_roots import flatten_for_export, flattening_constants
++    flat = flatten_for_export(Path(model_path), raw)  # an include root exports its flat model
++    if flat is not None:
++        raw = flat.model_bytes
+     from gnd.model import ReferenceInputError
+     try:
+         from gnd.model._includes import guard_bytes
+@@ -2486,7 +2490,7 @@ def render(model_path: Path, target: str) -> str:
+         header.rstrip("\n").replace("Generated by", spanning_note + "Generated by", 1),
+         "from __future__ import annotations\n\nimport datetime\nimport json\nimport os\nimport re\nimport sys\nimport tempfile"
+         + ("\nfrom fractions import Fraction" if target == "duckdb" else ""),
+-        (f"\nSCHEMA = {schema!r}\nRULES = json.loads({_rules_table(reqs)!r})\n"
++        (f"\nSCHEMA = {schema!r}\n" + flattening_constants(flat) + f"RULES = json.loads({_rules_table(reqs)!r})\n"
+          f"SEMIDERIVED = {[h for h in model.derived if model.facts[h]['derivation'] == 'semiderived']!r}\n"
+          f"ROLES = {({f: [[r['role_name'], model.raw_role_type(f, r['role_name'])] for r in model.roles(f)] for f in model.facts})!r}\n"
+          f"ROSTERS = {_roster_types(model)!r}\n"
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index 3926e7e4..df8fc9d2 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -1911,6 +1911,7 @@ above):
+ | `gnd extract` (non-temporal models), `gnd verify` | the root's sha256 and each pin, through the extraction flattening record below |
+ | `gnd compose` | the composed model, with stale pins refused before population input |
+ | `gnd flatten` | writes the flat model and its flattening record (below) for any include root, temporal or not |
++| `gnd export pyrel` (default, `--rules duckdb`, `--rules lqp`) | exports the flat model and records the flattening record's SHA-256 and each pin ([PyRel page](https://github.com/vasiloglou/gnd-public/blob/main/docs/runtimes/pyrel.md)); the default mode still refuses temporal models |
+ | `gnd judgments check` | receipts bind the root file's sha256 (`subject.model_sha256`), which commits to every include's pin; references bind under `--reference-root` as for any model. An include refusal reports `reason: "binding"` with the include code as `message` |
+ 
+ `load_model_bytes_composed(..., bind_references=False)` composes and
+diff --git a/tests/test_ir3_pyrel_includes.py b/tests/test_ir3_pyrel_includes.py
+index e537726a..e4032c83 100644
+--- a/tests/test_ir3_pyrel_includes.py
++++ b/tests/test_ir3_pyrel_includes.py
+@@ -232,7 +232,7 @@ def test_T7_include_refusals_exit_3(tmp_path, mode, kind):
+ 
+ 
+ def test_T8_flatten_for_export_within_bound(case):
+-    from gnd.export.pyrel_runtime import flatten_for_export
++    from gnd.export.include_roots import flatten_for_export
+ 
+     doc = json.loads((case / CHRONOLOGY).read_bytes())
+     doc["object_types"].extend({"id": f"extra_{i}", "kind": "value", "name": f"Extra{i}",
+@@ -248,7 +248,7 @@ def test_T8_flatten_for_export_within_bound(case):
+ 
+ def test_T9_include_free_model_takes_the_one_read_path(case, monkeypatch):
+     import gnd.model
+-    from gnd.export.pyrel_runtime import flatten_for_export
++    from gnd.export.include_roots import flatten_for_export
+ 
+     flat_path, _ = write_flat(case, "extraction.orm.json")
+     monkeypatch.setattr(gnd.model, "load_model", lambda *a, **k: pytest.fail("loader called"))
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index 832329a0..9900890e 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -488,6 +488,10 @@
+       "lane": "export",
+       "layer": "lanes"
+     },
++    "gnd.export.include_roots": {
++      "lane": "export",
++      "layer": "lanes"
++    },
+     "gnd.export.lean": {
+       "lane": "export",
+       "layer": "lanes"

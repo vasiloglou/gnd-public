@@ -1,9 +1,10 @@
 # Include-root routes
 
-Plan r4, 2026-11-21, from [issue #217](https://github.com/vasiloglou/gnd-public/issues/217)
+Plan r6, 2026-11-21, from [issue #217](https://github.com/vasiloglou/gnd-public/issues/217)
 and item 1 of [issue #214](https://github.com/vasiloglou/gnd-public/issues/214).
 Plan reviewed twice by the GND panel light and approved by delegated ruling
-([plan gate](001-plan-gate.md)). Run with
+([plan gate](001-plan-gate.md)). **Closed locally** by delegated ruling after
+a panel-light close review ([close record](005-milestone-close.md)); not merged. Run with
 `process-milestone include-root-routes auto`.
 
 | Phase | Deliverable | State |
@@ -16,4 +17,5 @@ Plan reviewed twice by the GND panel light and approved by delegated ruling
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21):
 #217 has no workaround today.
 
-Next action: the milestone close and its panel-light review.
+Next action, the owner's: review and merge the pull request; post the
+[issue replies](notes/issue-replies.md); file the checker-scaling issue.

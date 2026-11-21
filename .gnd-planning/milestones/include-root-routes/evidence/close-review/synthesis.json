@@ -1,0 +1,422 @@
+{
+ "schema_version": 1,
+ "run_sha256": "f3218632ec79a4a22da5d9b96f3e61b6ddea79e12228422b93a5dd1ffff9a47b",
+ "summary": "Close review over plan r5, close-results and close-delta. Six of six seats succeeded at high effort; Gemini approved, the other five asked for revision. Five agreed groups: the whole-repo ruff close predicate (all five revising seats), the refusal predicate overstated by the compose encoding gap, carried questions without owners, the union lane count, and section 11's wording and counts. Four divergent views: judgments-versus-check parity, the export orphan-attachment case, the flatten_service home and two citation errors.",
+ "agreed_concerns": [
+  {
+   "group_id": "close-lint-gate",
+   "severity": "high",
+   "title": "The plan's close predicate requires a green whole-repository ruff, which exits 1",
+   "summary": "The whole-repo ruff red predates the branch (dev-tools scripts) but the plan's closure predicate and section 9 still require exit 0, with no amendment or ruling.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "close-ruff-predicate-unmet"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "close-ruff-gate"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "whole-repo-ruff-red-vs-close-condition"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr-ruff-gate-deviation"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-ruff-gate-unreconciled"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "qwen",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "refusal-predicate-overstated",
+   "severity": "high",
+   "title": "The refusal-naming predicate is marked met despite the compose encoding gap",
+   "summary": "An unencodable include path reaches compose and gives a codec message, not a refusal naming it, on the opened routes; the delta omits that behaviour.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "unsupported-refusal-predicate-counterexample"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "refusal-naming-goal-overstated"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "delta-omits-encoding-crash-behaviour-change"
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "carried-without-owner",
+   "severity": "medium",
+   "title": "Carried open questions name no owner or target",
+   "summary": "The lint red and the compose encoding gap are carried without an owner, an issue or a milestone.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "carried-questions-without-owner-or-target"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr-carried-question-no-owner"
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "union-lane-count",
+   "severity": "low",
+   "title": "The union lane's file count and command are not reconciled with section 9",
+   "summary": "19 files are cited where the three section 9 lanes union to 18, and the command is not recorded.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "union-lane-file-count"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "union-lane-file-count-mismatch"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "group_id": "inventory-count-and-wording",
+   "severity": "low",
+   "title": "Section 11 paraphrases prior wording and miscounts the IR2 inventories",
+   "summary": "Two prior-wording cells describe rather than quote r4, and 'seven command inventories' disagrees with the six paths listed in section 3.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "s11-prior-wording-paraphrased"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "c1-seven-command-inventories-count"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "export-orphan-attachments-unpinned"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "flatten-module-home-not-reconciled"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ir1-composed-model-parity-unevidenced"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "d2-d5-cited-to-wrong-record"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "section11-preamble-row5-raiser"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-refusal-gap",
+   "rank": 1,
+   "title": "Refuse an unencodable include path as include:path in compose",
+   "action": "Make compose refuse an include path that cannot be encoded with include:path on every route, pin it, and list the change in the delta.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "unsupported-refusal-predicate-counterexample"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "refusal-naming-goal-overstated"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "delta-omits-encoding-crash-behaviour-change"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "unsupported-refusal-predicate-counterexample",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "refusal-naming-goal-overstated",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "delta-omits-encoding-crash-behaviour-change",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-lint-predicate",
+   "rank": 2,
+   "title": "Amend the lint close predicate",
+   "action": "Amend the close predicate and section 9 to ruff over src, tests and tools, record the whole-repo red as pre-existing with an owner, and rule it in the close record.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "close-ruff-predicate-unmet"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "close-ruff-gate"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "whole-repo-ruff-red-vs-close-condition"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr-ruff-gate-deviation"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-ruff-gate-unreconciled"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "close-ruff-predicate-unmet",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "close-ruff-gate",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "whole-repo-ruff-red-vs-close-condition",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr-ruff-gate-deviation",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-ruff-gate-unreconciled",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "qwen",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-check-parity",
+   "rank": 3,
+   "title": "Pin judgments-versus-check parity",
+   "action": "Add an IR1 case that compares the judgments mechanical report with gnd check on the same include root.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1-composed-model-parity-unevidenced"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ir1-composed-model-parity-unevidenced",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-export-orphans",
+   "rank": 4,
+   "title": "Pin the orphan-attachment refusal in export",
+   "action": "Add an IR3 case: a fact_type_constraints-only document exits 3 with include:declaration in every mode.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "export-orphan-attachments-unpinned"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "export-orphan-attachments-unpinned",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-owners",
+   "rank": 5,
+   "title": "Name owners and targets for carried questions",
+   "action": "Give each carried question an owner and a target.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "carried-questions-without-owner-or-target"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr-carried-question-no-owner"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "carried-questions-without-owner-or-target",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "irr-carried-question-no-owner",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-section11",
+   "rank": 6,
+   "title": "Quote prior wording, fix counts and homes",
+   "action": "Quote r4 verbatim in section 11, count the inventories correctly, add the flatten_service home, and fix the preamble's raiser claim.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "s11-prior-wording-paraphrased"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "c1-seven-command-inventories-count"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "flatten-module-home-not-reconciled"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "section11-preamble-row5-raiser"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "s11-prior-wording-paraphrased",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "c1-seven-command-inventories-count",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "flatten-module-home-not-reconciled",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "section11-preamble-row5-raiser",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-union-and-citations",
+   "rank": 7,
+   "title": "Record the union command and cite the spec rulings",
+   "action": "Record the exact union command with its widening, and cite IR2-D2 and IR3-D5 to the spec files.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "union-lane-file-count"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "union-lane-file-count-mismatch"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "d2-d5-cited-to-wrong-record"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "union-lane-file-count",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "union-lane-file-count-mismatch",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "d2-d5-cited-to-wrong-record",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "glm"
+   ]
+  }
+ ]
+}

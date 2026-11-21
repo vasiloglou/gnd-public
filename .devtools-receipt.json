@@ -28,7 +28,42 @@
     ".claude/skills/components/scripts/rules_check.py": {
       "mode": "0o644",
       "origin": "skills/components/scripts/rules_check.py",
-      "sha256": "1fe307bdc75e1913b95dcd46357afa061cc3dcf5f6832e44c8ecbb3a3f2a446b"
+      "sha256": "69dd596107826bdf3fc551db810097ae8e292e61c257977cef6b5cde8dbb772b"
+    },
+    ".claude/skills/dev-handoff/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/SKILL.md",
+      "sha256": "2011e125fdcea295b0ec8ef2ef251f35a6fe00f6a7cf65af4425b0c116289f7b"
+    },
+    ".claude/skills/dev-handoff/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/agents/openai.yaml",
+      "sha256": "2208020f1342ad424d620b738e4384b4fb87c36e81d0a70da888e758190d2545"
+    },
+    ".claude/skills/dev-handoff/references/handoff.md": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/references/handoff.md",
+      "sha256": "fd4a0ee50d5bded553a17d1ba3320515a442c94390eca97f11b4caf0b9fa3327"
+    },
+    ".claude/skills/dev-handoff/scripts/handoff.py": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/scripts/handoff.py",
+      "sha256": "8cf8cb2bccc255a0318d1aa922ecc062bcdd89cd02a5bd6b772322ca27f2cc18"
+    },
+    ".claude/skills/dev-handoff/scripts/handoff.settings.json": {
+      "mode": "0o644",
+      "origin": "settings",
+      "sha256": "90e2bf50ea2ca189c36f90482144b7fdde2fad60cc93b93d9155ab97fbf82dc0"
+    },
+    ".claude/skills/dev-takeover/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/dev-takeover/SKILL.md",
+      "sha256": "bb195ce4f9c1a845217932d8cf267fba8623b2b8ecb179f1b53efe7efbacb9d9"
+    },
+    ".claude/skills/dev-takeover/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/dev-takeover/agents/openai.yaml",
+      "sha256": "8d61be01fc39c0d08941a0c5713707389b4e94feecb8a7d93173bdb8f872786b"
     },
     ".claude/skills/handle-issue/SKILL.md": {
       "mode": "0o644",
@@ -43,7 +78,7 @@
     ".claude/skills/process-milestone/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-milestone/SKILL.md",
-      "sha256": "176891516f606fe7c021305a061fff57398a72dfce8de2389b731059102aa7dc"
+      "sha256": "aa7301569bbb22294f5cb14ad154834c05fa246526b54049a14a185f6ed81cb3"
     },
     ".claude/skills/process-milestone/agents/openai.yaml": {
       "mode": "0o644",
@@ -103,7 +138,7 @@
     ".claude/skills/process-phase/scripts/review_tool.py": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/scripts/review_tool.py",
-      "sha256": "8d13ba77ec039c76a5e44e3ef377ab859071d9def0d74512c893432e42c39932"
+      "sha256": "12dc9800f55dc9f409dadf8466b39591c6b58f2210195478cb4ce39e985a38ff"
     },
     ".claude/skills/start-milestone/SKILL.md": {
       "mode": "0o644",
@@ -143,7 +178,42 @@
     ".codex/skills/components/scripts/rules_check.py": {
       "mode": "0o644",
       "origin": "skills/components/scripts/rules_check.py",
-      "sha256": "1fe307bdc75e1913b95dcd46357afa061cc3dcf5f6832e44c8ecbb3a3f2a446b"
+      "sha256": "69dd596107826bdf3fc551db810097ae8e292e61c257977cef6b5cde8dbb772b"
+    },
+    ".codex/skills/dev-handoff/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/SKILL.md",
+      "sha256": "2011e125fdcea295b0ec8ef2ef251f35a6fe00f6a7cf65af4425b0c116289f7b"
+    },
+    ".codex/skills/dev-handoff/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/agents/openai.yaml",
+      "sha256": "2208020f1342ad424d620b738e4384b4fb87c36e81d0a70da888e758190d2545"
+    },
+    ".codex/skills/dev-handoff/references/handoff.md": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/references/handoff.md",
+      "sha256": "fd4a0ee50d5bded553a17d1ba3320515a442c94390eca97f11b4caf0b9fa3327"
+    },
+    ".codex/skills/dev-handoff/scripts/handoff.py": {
+      "mode": "0o644",
+      "origin": "skills/dev-handoff/scripts/handoff.py",
+      "sha256": "8cf8cb2bccc255a0318d1aa922ecc062bcdd89cd02a5bd6b772322ca27f2cc18"
+    },
+    ".codex/skills/dev-handoff/scripts/handoff.settings.json": {
+      "mode": "0o644",
+      "origin": "settings",
+      "sha256": "90e2bf50ea2ca189c36f90482144b7fdde2fad60cc93b93d9155ab97fbf82dc0"
+    },
+    ".codex/skills/dev-takeover/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/dev-takeover/SKILL.md",
+      "sha256": "bb195ce4f9c1a845217932d8cf267fba8623b2b8ecb179f1b53efe7efbacb9d9"
+    },
+    ".codex/skills/dev-takeover/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/dev-takeover/agents/openai.yaml",
+      "sha256": "8d61be01fc39c0d08941a0c5713707389b4e94feecb8a7d93173bdb8f872786b"
     },
     ".codex/skills/handle-issue/SKILL.md": {
       "mode": "0o644",
@@ -158,7 +228,7 @@
     ".codex/skills/process-milestone/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-milestone/SKILL.md",
-      "sha256": "176891516f606fe7c021305a061fff57398a72dfce8de2389b731059102aa7dc"
+      "sha256": "aa7301569bbb22294f5cb14ad154834c05fa246526b54049a14a185f6ed81cb3"
     },
     ".codex/skills/process-milestone/agents/openai.yaml": {
       "mode": "0o644",
@@ -218,7 +288,7 @@
     ".codex/skills/process-phase/scripts/review_tool.py": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/scripts/review_tool.py",
-      "sha256": "8d13ba77ec039c76a5e44e3ef377ab859071d9def0d74512c893432e42c39932"
+      "sha256": "12dc9800f55dc9f409dadf8466b39591c6b58f2210195478cb4ce39e985a38ff"
     },
     ".codex/skills/start-milestone/SKILL.md": {
       "mode": "0o644",
@@ -233,7 +303,7 @@
     "scripts/components_index.py": {
       "mode": "0o644",
       "origin": "skills/components/scripts/components_index.py",
-      "sha256": "99c12cd5f1bdf62776d6d40e93e721f2d732bf134ad4defebeb6647c7ca58443"
+      "sha256": "13105bfbee8587baf491e757c47e2f6da7b1594bb99bb89b006773577fe95793"
     },
     "scripts/components_index.settings.json": {
       "mode": "0o644",
@@ -242,7 +312,7 @@
     }
   },
   "source": {
-    "commit": "18d1450360222dcf9fb02dd6086f00cf4474abc6",
+    "commit": "c9648dd177f40ed2100e0e63bee585be5c7a77d5",
     "dirty": false
   }
 }

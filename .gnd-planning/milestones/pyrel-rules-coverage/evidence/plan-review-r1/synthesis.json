@@ -1,0 +1,469 @@
+{
+ "schema_version": 1,
+ "run_sha256": "1016d3e1f30dd7f4fe2395bac765da8127522f06f7e61f0d52439f972cb76dad",
+ "summary": "Four of six seats returned schema-valid responses at xhigh effort (Qwen and Gemini malformed); all four asked for revision. Four concerns reached two or more supporters: an ambiguous shared-entity join that GND reports unchecked would be decided by RP1 (all four seats), the agreement comparator cannot represent not-checked rules, RP2-C4 contradicts the changed textual line, and section 2's file list is incomplete. Codex alone raised the same-verdict conflict of D4 and Float precision for Number; Claude alone raised Ossie's shared lowering, the gnd check anchors route, the disconnected-join description, D5's missing criterion and RP5's unnamed populations.",
+ "agreed_concerns": [
+  {
+   "group_id": "ambiguous-join",
+   "severity": "high",
+   "title": "RP1 lowers an ambiguous shared-entity join that GND reports unchecked",
+   "summary": "A referenced fact type with two non-referenced roles of one object type makes GND report join-anchor-ambiguous (unchecked); plan r2 would bind both roles to one variable and decide the rule.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ambiguous-anchor-join"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-ambiguous-anchors"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "pyrel-r2-rp1-ambiguous-anchors"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp1-external-join-ambiguity-unrefused"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "comparator-unchecked",
+   "severity": "high",
+   "title": "The named agreement comparator cannot represent not-checked rules",
+   "summary": "_findings json-decodes the text after the status and _gnd drops an unchecked verdict with no offending facts, so RP2-C3 and RP5-C2 cannot be tested as written.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "agreement-comparator-blind-to-unchecked"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "unchecked-oracle-comparator"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "textual-line",
+   "severity": "medium",
+   "title": "RP2-C4 keeps the textual line while sections 2 and 5 change it",
+   "summary": "Section 2 prints the row's reason and the textual reason is its bare expression, so the textual line would change, contradicting RP2-C4.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "textual-line-contradiction"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp2-c4-textual-line-contradiction"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "change-surface",
+   "severity": "low",
+   "title": "Section 2's changed-file list omits commands/export.py and docs",
+   "summary": "Section 2 says the phases change pyrel_rules.py only; section 3 and RP2-C5 also change commands/export.py and section 5 edits rules-as-pyrel.md.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "scope-file-list-inconsistent"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "change-surface-omits-export-py"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "disconnected-join-misdescribed"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "anchored-checked-by-gnd-check"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "ossie-shared-lowering"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "lqp-d5-untested"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "rp5-populations-unenumerated"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "d4-same-verdict-conflict"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "number-float-precision"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "rp1-identity-equal-repeat-passes-program"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "representation-format-path-unresolvable"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-ambiguous-disconnected",
+   "rank": 1,
+   "title": "List ambiguous and disconnected joins as not checked",
+   "action": "Classify the external join as GND does before lowering; list a disconnected or ambiguous join as not checked with GND's reason; correct section 1 (GND reports both unchecked); add RP1-C6 and RP1-C7 oracle cases; run RP2 before RP1.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ambiguous-anchor-join"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-ambiguous-anchors"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "pyrel-r2-rp1-ambiguous-anchors"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp1-external-join-ambiguity-unrefused"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "disconnected-join-misdescribed"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ambiguous-anchor-join",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ambiguous-anchor-join",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-ambiguous-anchors",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "pyrel-r2-rp1-ambiguous-anchors",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp1-external-join-ambiguity-unrefused",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "disconnected-join-misdescribed",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "disconnected-join-misdescribed",
+     "evidence_index": 1
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-comparator",
+   "rank": 2,
+   "title": "Teach the comparator not-checked rules",
+   "action": "Extend _findings and _gnd to (rule, 'not checked', null) in RP2 with a negative control (RP2-C6) before any criterion relies on it.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "agreement-comparator-blind-to-unchecked"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "unchecked-oracle-comparator"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "agreement-comparator-blind-to-unchecked",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "agreement-comparator-blind-to-unchecked",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "unchecked-oracle-comparator",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-same-verdict-inputs",
+   "rank": 3,
+   "title": "Scope same-verdict to accepted inputs; refuse unrepresentable ones",
+   "action": "Narrow section 0 to inputs the program accepts, make every unrepresentable input a by-name exit-3 refusal with a test pinning both exits (D4 non-string ids, D6 integers beyond 2**53 in Number and Float).",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d4-same-verdict-conflict"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "number-float-precision"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d4-same-verdict-conflict",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "number-float-precision",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-textual-line",
+   "rank": 4,
+   "title": "Keep the textual line byte-identical",
+   "action": "Make the textual reason 'textual rule: <expression>' so RP2-C4 holds, and correct section 5.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "textual-line-contradiction"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp2-c4-textual-line-contradiction"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "textual-line-contradiction",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "textual-line-contradiction",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp2-c4-textual-line-contradiction",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-anchored-reason",
+   "rank": 5,
+   "title": "Name gnd check --anchors as the deciding route",
+   "action": "Correct section 1 and the anchored reason; define agreement against gnd check without a sidecar.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "anchored-checked-by-gnd-check"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "anchored-checked-by-gnd-check",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-ossie",
+   "rank": 6,
+   "title": "Hold the Ossie export unchanged",
+   "action": "Add an Ossie-unchanged rule to section 0, name ossie_formulas.py as an affected consumer and run the Ossie tests in every lane.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ossie-shared-lowering"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ossie-shared-lowering",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ossie-shared-lowering",
+     "evidence_index": 1
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-lqp-d5",
+   "rank": 7,
+   "title": "Test D5 in the default lane",
+   "action": "Add RP2-C7: the LQP report function, with the engine stubbed, prints the not-checked lines and returns D5's exit; --compile prints them too.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lqp-d5-untested"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lqp-d5-untested",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-rp5-populations",
+   "rank": 8,
+   "title": "Enumerate RP5's populations",
+   "action": "Add a population table with each population file and GND's measured exit.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp5-populations-unenumerated"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp5-populations-unenumerated",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-numeric-anchor",
+   "rank": 9,
+   "title": "Measure anchor equality on a numeric anchor",
+   "action": "Add a numeric-anchor oracle case to the RP1 spec.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp1-identity-equal-repeat-passes-program"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp1-identity-equal-repeat-passes-program",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-paths-surface",
+   "rank": 10,
+   "title": "Fix the file list and a citation path",
+   "action": "Make section 2's file list match sections 3 and 5, and cite representation-format.md from the repository root.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "scope-file-list-inconsistent"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "change-surface-omits-export-py"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "representation-format-path-unresolvable"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "scope-file-list-inconsistent",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "change-surface-omits-export-py",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "representation-format-path-unresolvable",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ]
+}

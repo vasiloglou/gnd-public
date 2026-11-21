@@ -2,13 +2,18 @@
 
 ## 1. Status
 
-Draft, 2026-11-21, written by `start-milestone`. Awaiting the plan gate,
-then this spec's own delegated gate. No implementation file exists.
+Draft, 2026-11-21, written by `start-milestone`, amended for plan r3
+`(p1)`. Implementable once the plan gate is recorded **and RP2 has its
+record**: plan r3 runs RP2 first, because this phase lists disconnected and
+ambiguous joins as not checked through RP2's reason field. No
+implementation file exists.
 
 ## 2. Provenance
 
-Derived from plan r2 (`notes/pyrel-rules-coverage-plan.md`), §2 RP1, §4
-RP1-C1…C6, §9 row RP1 and §10 D4. No review has run over this spec. Every
+Derived from plan r3 (`notes/pyrel-rules-coverage-plan.md`), §2 RP1, §4
+RP1-C1…C7, §9 row RP1 and §10 D4. No review has run over this spec. The
+plan-review round 1 (over r2) found that GND reports disconnected and
+ambiguous joins as unchecked, not refused; `(p1)` marks the repairs here. Every
 citation was read at `8c909013`. The measurements in §6 were run on
 2026-11-21 against scratch copies of the packaged populations.
 
@@ -21,7 +26,9 @@ citation was read at `8c909013`. The measurements in §6 were run on
 | plan §4 RP1-C3 | oracle agreement: packaged population (0), duplicate pair (1), empty join (2) | T5, T6, T7 |
 | plan §4 RP1-C4 | a non-string `assertion` value refused, exit 3, by name | T8 |
 | plan §4 RP1-C5 | `refuse-external-uniqueness.orm.json` renders; external frequency still refused | T3 |
-| plan §4 RP1-C6 | a disconnected external join refused by name | T4 |
+| plan §4 RP1-C6 `(p1)` | a disconnected join listed as not checked, agreeing with GND (exit 4) | T4 |
+| plan §4 RP1-C7 `(p1)` | an ambiguous join listed as not checked, agreeing with GND (exit 4) | T14 |
+| plan §2 RP1 `(p1)` | a numeric-anchor case measures anchor equality against GND's identity | T15 |
 | plan §2 RP1 | anchors matched by object type, not role name | T9 |
 | plan §10 D4 | `String` for an `external` entity, decided from the model | §6.2, T8 |
 | plan §0 "Same verdict as GND" | vacuity is the join's emptiness | T7 |
@@ -44,8 +51,8 @@ citation was read at `8c909013`. The measurements in §6 were run on
 3. **Validation order.** Model-wide refusals (`_refuse_unsupported_model`)
    run first, then constraints in model order: fact-scoped, then top-level.
    Within one external uniqueness: shape (T12), then connectivity (T4), then
-   lowering. Pinned by T4's source-order assertion that the connectivity
-   check precedes the atom construction.
+   lowering. Pinned by T4's source-order assertion that join classification
+   precedes the atom construction.
 4. **One walk.** The external branch is reached only through
    `constraint_requirements`, which `requirements()` already walks once over
    every family (`pyrel_rules.py:845-908`). T10 asserts no second loop over
@@ -81,10 +88,13 @@ def _external_uniqueness(model: _Model, c: dict[str, Any]) -> list[Requirement]:
   role binds `$<object type>_1` in copy one and `$<object type>_2` in copy
   two, so two roles of the same object type in different fact types share a
   variable, which is GND's merge by object type.
-- Connectivity. Refuse with `ExportInputError(f"{cid}: the external
-  uniqueness join is disconnected; GND refuses it")` when the referenced fact
-  types do not form one component under shared anchor object types (the
-  rule of `_require_joinable`, `_core.py:1156`).
+- Join classification `(p1)`. When the referenced fact types do not form
+  one component under shared anchor object types, or one of them has two
+  non-referenced roles of one object type, append a not-checked row to
+  `model.unchecked` with GND's reason (`join-disconnected` /
+  `join-anchor-ambiguous`, rendered at `checker/_core.py:569-577`) and
+  return no requirement. GND decides the same way at
+  `semantic_spec.py:2665-2700`.
 - Requirement `"uniqueness"`, part `""`: domain = copy one's atoms plus copy
   two's atoms; check `same` over the anchor pairs; witness = the referenced
   variables in `role_refs` order; `vacuous_when = ("any", ())` with the
@@ -144,7 +154,7 @@ New file `tests/test_rp1_external_uniqueness.py`; fixtures under
 | T1 | render `assertions/` and `lineage/`, both targets | default | no exception |
 | T2 | both programs carry `require_text` of the one `Requirement`; `#   rule:` count equals requirements | default | pass |
 | T3 | `refuse-external-uniqueness.orm.json` renders; `refuse-external-frequency.orm.json` still refuses `external frequency` | default | pass; the `:98` parametrize row moves |
-| T4 | `rp1/disconnected.orm.json` refuses `disconnected`; source order: connectivity before atoms | default | `ExportInputError` |
+| T4 `(p1)` | `rp1/disconnected.orm.json`: rule in `UNCHECKED` with GND's reason, no requirement; source order: classification before atoms; oracle run agrees with GND | default + oracle | render; exit 4 both |
 | T5 | DuckDB program on `assertions/raw.population.json` agrees with GND | oracle | exit 0 both |
 | T6 | `rp1/duplicate.population.json` | oracle | exit 1 both; `[["p01", "working-notes"]]` |
 | T7 | `rp1/empty-join.population.json` | oracle | exit 2 both; vacuous |
@@ -154,6 +164,8 @@ New file `tests/test_rp1_external_uniqueness.py`; fixtures under
 | T11 | runtime page no longer lists external uniqueness as refused, still lists external frequency | default | pass |
 | T12 | malformed `role_refs` shapes | default | `ExportInputError`, no traceback |
 | T13 | 200-fact-type chain render under 5 s | default | pass |
+| T14 `(p1)` | `rp1/ambiguous.orm.json` (one referenced fact type with two `assertion` anchor roles) | default + oracle | in `UNCHECKED`; exit 4 both |
+| T15 `(p1)` | `rp1/numeric-anchor.orm.json`, anchors `1` and `1.0` with one repeated referenced tuple | oracle | the program agrees with GND; if it does not, the case is recorded as a finding and becomes a stated input refusal |
 
 Verification ledger:
 

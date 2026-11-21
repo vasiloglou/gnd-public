@@ -137,7 +137,7 @@ extract path keep today's bytes (rf1 goldens).
 | IR2-D1 | Service home | (a) `gnd.extract.flatten_service`, beside `_flattening_names` and `bundle_stem`; (b) `gnd.model.flattening`, which would import output-path code into the model layer | (a) → **ruled (a), delegated 2026-11-21** |
 | IR2-D2 | `--out` other than the model's directory when references are declared | (a) allow, with a stderr note; exit 0; (b) refuse, exit 3. They differ in exit. Extract already writes its flat model into another directory with the same coordinate rule | (a) → **ruled (a), delegated 2026-11-21** |
 | IR2-D3 | Exit for an existing output | 11 (`EXIT_COLLISION`), as plan IR2-C4 fixes | 11 → **ruled 11, delegated 2026-11-21** |
-| IR2-D4 | Where the extract hint lives | (a) an optional `hint` on `require_non_temporal`; (b) a second message in `extract/service.py` | (a) → **ruled (a), delegated 2026-11-21** |
+| IR2-D4 | Where the extract hint lives | (a) an optional `hint` on `require_non_temporal`; (b) a second message in `extract/service.py` | (a) → **ruled (a), delegated 2026-11-21** | **Amended (i1), delegated 2026-11-21:** the hint is added inside `require_non_temporal` whenever the model declares includes, with no new argument, because a change to `_cmd_extract`'s body breaks its RF5 relocation pin (`tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged`). Same exit, same message; every consumer that reaches it with a temporal include root names `gnd flatten`. Prior ruling kept above  **Amended again (r1 F2), delegated 2026-11-21:** the hint is added only when `consumer == "extract"`, so `gnd synth` and every other consumer keep the historical message for an include root too. The first amendment's wording, "every consumer that reaches it with a temporal include root names `gnd flatten`", is kept above |
 
 ## 8. Tests
 
@@ -184,3 +184,54 @@ run in the focused lane, not a case in the new file. The IR2-D2 measurement
 another folder makes `gnd check` exit 3 on its reference read, and written
 into the root's folder it gives the root's exit (4), so T11 and T2 expect
 those values.
+
+## Implementation findings, recorded as they were found
+
+**i1, 2026-11-21: a new top-level command joins seven existing inventories
+the spec did not list.** The first guard run after the corpus went green
+had 12 failures in the guard block and nine in `tests/test_rf1_cli_pins.py`,
+a file in no lane of plan §9. Each was a pin that a new command must join,
+following the RN0 precedent for `gnd export ossie`:
+
+| Inventory | Change |
+|---|---|
+| `tools/gnd_arch.py` `RF5_COMMAND_GROUPS` | adds `flatten` |
+| `tests/test_rf5_commands.py` | parser count 61 → 62, entry scope 20 → 21 |
+| `src/gnd/disclosure.py` `SURFACES` and `docs/reference/disclosure.md` | `gnd flatten` joins the value-free row beside `gnd extract`, whose flat model it writes |
+| `tests/test_disclosure_mode.py` | leaf count 52 → 53 (two literals) |
+| `tests/test_rf1_cli_pins.py` | `_flatten_successor()`: the `gnd flatten` leaf declared in the test, and the frozen `gnd` help, tree and the root usage printed by four exit probes (`gnd`, `gnd doctor`, `gnd install`, `gnd uninstall`) with one checked insertion of `flatten` after `extract`; `EXPECTED_PARSERS` 61 → 62. Negative control: changing the command's `--out` help turned three pins red |
+| `tests/test_rf6_query_policy.py` dynamic inventory | no row added: `flatten_service.py` was restructured to avoid computed subscripts and generic annotations |
+| RF5 relocation pin of `_cmd_extract` | no pin changed: IR2-D4 amended so `_cmd_extract` keeps its bytes |
+
+The listed help was shortened to "write an include root's flat model and
+its record" so the root listing stays one line and the successor does not
+depend on argparse wrapping. `tests/test_rf1_cli_pins.py` joins the IR2
+focused lane, and the consumers of `tests/support/rf5_sources.py` were run
+once (452 passed). Plan §9's IR2 lane is a refuted premise for the close:
+it did not name the CLI pin file.
+
+## Phase review r1 (Codex, read-only), 2026-11-21
+
+`notes/reviews/phase-IR2-r1/`: one reviewer is one reviewer. Three findings,
+each reproduced as a failing test on the reviewed bytes before its fix:
+
+| Finding | Class | Fix and regression test |
+|---|---|---|
+| F1: `--out` naming a regular file exited 11 (the `mkdir` `FileExistsError` was read as a collision) | blocking: wrong exit band | a non-directory output exits 74 before publication; only an `os.link` collision maps to 11; `test_F1_output_path_that_is_a_file_exits_74` |
+| F2: the flatten hint appeared on every consumer's temporal refusal for an include root (`gnd synth` reproduced) | hardening: changed output of a command outside the phase | hint scoped to `extract` (IR2-D4, amended again); `test_F2_other_consumers_keep_the_historical_temporal_message` |
+| F3: a NUL in `--out` raised an uncaught `ValueError` from `flatten_to` | hardening: the service's totality | `OSError` and `ValueError` from output-path checks exit 74; `test_F3_unrepresentable_output_path_exits_74` |
+
+Two cases were added for branches the corpus did not reach:
+`test_publication_rolls_back_when_the_second_link_fails` (exit 74, folder
+left empty) and `test_publication_race_collision_exits_11`. The reviewer
+confirmed by probe the other brief claims and measured 1,000 types at
+0.279 s; it ran no suite. The fixes carry no review opinion.
+
+## Size, measured
+
+Source: `flatten_service.py` 127 lines and `commands/flatten.py` 43 lines new;
+about 15 lines across `cli.py`, `terms.py`, `disclosure.py` and
+`tools/gnd_arch.py`; registry rows in two `tools/` JSON files (estimate 110
+in all). Tests: `tests/test_ir2_flatten.py` 245 lines, the CLI
+successor about 65 lines, four count literals (estimate 220). The inventory
+work of i1 was not in the estimate.

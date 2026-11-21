@@ -237,6 +237,9 @@
     "gnd.commands.fidelity": {
       "layer": "entry"
     },
+    "gnd.commands.flatten": {
+      "layer": "entry"
+    },
     "gnd.commands.judgments": {
       "layer": "entry"
     },
@@ -597,6 +600,10 @@
       "layer": "lanes"
     },
     "gnd.extract.bundle": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.flatten_service": {
       "lane": "extract",
       "layer": "lanes"
     },

@@ -190,3 +190,56 @@ def test_T15_help():
     result = run_main(["flatten", "--help"])
     assert result.returncode == 0
     assert b"--out" in result.stdout
+
+
+# --- Phase review r1 regressions ------------------------------------------
+
+
+def test_F1_output_path_that_is_a_file_exits_74(case, tmp_path):
+    blocker = tmp_path / "not-a-directory"
+    blocker.write_text("x")
+    code, text = flatten(case / "checking.orm.json", "--out", blocker)
+    assert code == 74, text
+
+
+def test_F2_other_consumers_keep_the_historical_temporal_message(case, tmp_path):
+    result = run_main(["synth", str(case / "checking.orm.json"), "--out", str(tmp_path / "s")])
+    assert result.returncode == 3
+    assert b"synth does not support temporal models in Phase 1" in result.stdout + result.stderr
+    assert b"gnd flatten" not in result.stdout + result.stderr
+
+
+def test_F3_unrepresentable_output_path_exits_74(case):
+    from gnd.extract.flatten_service import flatten_to
+
+    assert flatten_to(str(case / "checking.orm.json"), "bad\0output") == 74
+
+
+def test_publication_rolls_back_when_the_second_link_fails(case, tmp_path, monkeypatch):
+    import os
+
+    from gnd.extract import flatten_service
+
+    real_link, calls = os.link, []
+
+    def failing_second(src, dst):
+        calls.append(dst)
+        if len(calls) == 2:
+            raise OSError("disk full")
+        real_link(src, dst)
+
+    monkeypatch.setattr(flatten_service.os, "link", failing_second)
+    out = tmp_path / "out"
+    out.mkdir()
+    assert flatten_service.flatten_to(str(case / "checking.orm.json"), str(out)) == 74
+    assert list(out.iterdir()) == []  # neither file, and no staging folder left
+
+
+def test_publication_race_collision_exits_11(case, tmp_path, monkeypatch):
+    from gnd.extract import flatten_service
+
+    def taken(src, dst):
+        raise FileExistsError(dst)
+
+    monkeypatch.setattr(flatten_service.os, "link", taken)
+    assert flatten_service.flatten_to(str(case / "checking.orm.json"), str(tmp_path)) == 11

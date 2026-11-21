@@ -14,6 +14,10 @@ the next one.
   refusals now report `reason: "binding"` with the include code in
   `message`, which `judgment.schema.json` allows; 0.4.0 wrote the include
   code as the reason ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
+- **`gnd flatten`.** A new command writes an include root's
+  `<stem>.flat.orm.json` and its `gnd-flattening/1` record, for temporal
+  roots too, which `gnd extract` refuses; extract's refusal for a temporal
+  include root now names it ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
 
 ## 0.4.0 (2026-11-17)
 

@@ -295,7 +295,16 @@ print("Require mode is reserved; it did not check the policy.")
 
 `require` is not an available enforcement backend here. Named remote connection
 execution is also unavailable through this GND exporter. Unsupported results must
-not become satisfied or violated verdicts. Temporal models are refused at export.
+not become satisfied or violated verdicts. The default program refuses temporal
+models at export; the `--rules duckdb` and `--rules lqp` programs accept them.
+
+A version-5 model with includes is exported through its flat model, the bytes
+`gnd flatten` writes. The program then carries two constants:
+`FLATTENING_RECORD_SHA256`, the SHA-256 of the `gnd-flattening/1` record, and
+`MODEL_INCLUDES`, each include's `(id, path, sha256)` pin. An include changed
+and pinned again gives a different record digest. A program that is already
+exported does not notice later changes to its includes.
+
 This tutorial teaches the supported local exporter and separate native code, not
 Snowflake deployment or every PyRel capability.
 

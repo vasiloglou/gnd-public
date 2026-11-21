@@ -187,8 +187,9 @@ def compose(document: object, *, descriptor: int, source: str | Path, historical
         raise ModelValidationError(structural)
     for i, entry in enumerate(declarations):
         try:
+            entry['path'].encode('utf-8')  # a path the filesystem cannot name is a path refusal
             _relative(entry['path'])
-        except ReferenceInputError:
+        except (ReferenceInputError, UnicodeError):
             _refuse('path', f'$.includes[{i}]')
     buffers, total = [], 0
     for i, entry in enumerate(declarations):
@@ -281,14 +282,24 @@ def guard_document(document, route):
         refuse_unsupported(route)
 
 
-def guard_bytes(raw, *, source, route):
+def bytes_declare_includes(raw, *, source) -> bool:
+    """True when RAW parses and declares includes or attachments.
+
+    Bytes that do not parse are reported as declaring nothing, so the caller's
+    ordinary include-free loader keeps its malformed-input refusal.
+    """
     if not isinstance(raw, (bytes, bytearray)):
-        return
+        return False
     try:
         doc = parse_model_document(raw, source=source)
     except (ModelLoadError, UnicodeError, ValueError, TypeError, RecursionError, YAMLError):
-        return  # Original route retains its include-free malformed-input refusal.
-    guard_document(doc, route)
+        return False
+    return declares_includes(doc)
+
+
+def guard_bytes(raw, *, source, route):
+    if bytes_declare_includes(raw, source=source):
+        refuse_unsupported(route)
 
 
 def guard_path(path, route):

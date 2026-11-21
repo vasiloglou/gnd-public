@@ -1,0 +1,66 @@
+{
+  "base": "1e419a88",
+  "claims": [
+    "IR1-C1: the temporal interop root checking.orm.json judges with exit 0, error null, admission true",
+    "IR1-C2: extraction.orm.json judged directly and through its flat model gives equal targets and admission",
+    "IR1-C3: an unpinned include edit refuses include:hash-mismatch; an edited and re-pinned include makes receipts stale (stale judgment subject)",
+    "IR1-C4 and C9: a nested include refuses include:forbidden-section; an orphan fact_type_constraints document refuses include:declaration",
+    "IR1-C5: every include refusal report validates against judgment.schema.json (reason binding, code in message)",
+    "IR1-C6: test_R4_judgments and test_R10_session_judgments still pin the refusal for callers without model_root",
+    "IR1-C7: a model with neither includes nor fact_type_constraints gives a byte-identical judgments report to 1e419a88",
+    "IR1-C8: an include root whose reference file lives only under --reference-root judges with exit 0",
+    "Rule 2: T9 bounds the composition layer IR1 adds; the checker's superlinear cost is pre-existing and outside this diff"
+  ],
+  "created": "2026-11-21T20:19:08.705878+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR1-r1/diff.patch",
+      "sha256": "86ad785e79384425e88e8118166b6b866998cb100fd2bf0379f5c79721c6d309"
+    },
+    {
+      "path": ".gnd-planning/milestones/include-root-routes/notes/phase-IR1-spec.md",
+      "sha256": "c99b72b98e53b82b4dd9c0d0613f413e0ce5f8d404f356074e4927da5ff70e43"
+    },
+    {
+      "path": "docs/reference/cli.md",
+      "sha256": "fd799385b717972b1763924702d825105a07f266ff318ce27e8edb7b62f7b3bf"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "606c73ee6c8249c6df153331b63f3add83afac653f4c4d688d764710cbb38ad2"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "076cc0564777fe406dde066973e9b7b541ceef2c6707432eb7bb468a05ca226c"
+    },
+    {
+      "path": "src/gnd/judgments.py",
+      "sha256": "05940960e391335c055cb34cc55914aa60e5597189856eb557e40a711f52b2f9"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "f8a6c6f1bb24194efe17d2fd1f9f33662716581aa3245a9d006762c21883b90d"
+    },
+    {
+      "path": "src/gnd/model/_includes.py",
+      "sha256": "4d68c5f7cff284b3a9c60bb79d006bbe116f29163c29f340e8c008fc26b16122"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "7774abfd669b09fbc975dc734d305e724a081e1a1d3b433e59162de81dbe7d3a"
+    },
+    {
+      "path": "tests/test_ir1_judgments_includes.py",
+      "sha256": "57bf5c700f736140853986662ead467fd94abdf4715aaad9e2c6b44cc2a8f06b"
+    }
+  ],
+  "head": "1e419a881eb621fd57e978a9450d015745c48744",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the IR1 diff make gnd judgments check judge a version-5 include root as gnd check composes it, while leaving every model without includes or attachments byte-identical, and does each declared branch have a test that fails if the branch is wrong?",
+  "subject": "phase",
+  "version": 1
+}

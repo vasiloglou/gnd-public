@@ -20,7 +20,7 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 61  # OS1 and OS3 add one Ossie leaf each.
+EXPECTED_PARSERS = 62  # OS1 and OS3 add one Ossie leaf each; include-root-routes IR2 adds `gnd flatten`.
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )
@@ -302,6 +302,70 @@ def _ossie_successor(command):
     }
 
 
+FLATTEN_HELP = "write an include root's flat model and its record"
+FLATTEN_ROOT_PATHS = ("gnd", "gnd doctor", "gnd install", "gnd uninstall")
+
+
+def _with_flatten_choice(text):
+    """The frozen root text with `flatten` listed after `extract`, once per choice list."""
+    before = "extract,export"
+    assert before in text, "the frozen choice list moved"
+    return text.replace(before, "extract,flatten,export")
+
+
+def _flatten_successor():
+    """include-root-routes IR2: the declared `gnd flatten` leaf after `extract`.
+
+    The leaf is declared here, independently of `gnd.commands.flatten`; the
+    root help, tree and the root usage that four exit probes print are the
+    frozen goldens with that one choice inserted.
+    """
+    reference = cli._BandSafeParser(prog="gnd")
+    children = reference.add_subparsers(dest="command", required=True)
+    flatten = children.add_parser("flatten", help=FLATTEN_HELP, description=(
+        "Resolve a version-5 model's includes, as gnd check does, and write "
+        "<stem>.flat.orm.json and <stem>.flattening.json (gnd-flattening/1) "
+        "into --out, both files or neither. Temporal models are accepted. "
+        "Reference paths in the flat model stay relative to the root model's "
+        "directory. Exits 0 when both files are written, 3 when the model is "
+        "invalid, declares no includes or an include is refused, 11 when "
+        "either output file already exists (nothing is written), 64 on usage "
+        "errors, 66 when the model is missing, 74 when the output path is "
+        "refused or unwritable."))
+    flatten.add_argument("model", help="path to the include root")
+    flatten.add_argument("--out", required=True, help="output directory")
+    flatten.add_argument("--format", choices=("text", "json"), default="text")
+    leaf = _walk(flatten, ("gnd", "flatten"), {})
+    leaf["listed_help"] = FLATTEN_HELP
+
+    tree = json.loads(golden_path("cli", "tree").read_text())
+    action = next(a for a in tree["actions"] if a["class"] == "_SubParsersAction")
+    action["choices"].insert(action["choices"].index("extract") + 1, "flatten")
+    tree["subcommands"]["flatten"] = leaf
+
+    extract_line = "    extract             emit the per-model extraction artifact bundle (VER-01,\n                        DATA-02)\n"
+    root_help = json.loads(golden_path("cli-help", "gnd").read_text())["help"]
+    assert extract_line in root_help, "the frozen extract listing moved"
+    root_help = _with_flatten_choice(root_help).replace(
+        extract_line, extract_line + f"    flatten             {FLATTEN_HELP}\n")
+
+    def probe(argv):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), pytest.raises(SystemExit) as caught:
+            reference.parse_args(argv)
+        return {"exit": caught.value.code, "stdout": out.getvalue(), "stderr": err.getvalue()}
+
+    exit_probe = {"gnd flatten": {"help": probe(["flatten", "--help"]),
+                                  "unknown_flag": probe(["flatten", "--rf1-unknown-flag"])}}
+    for path in FLATTEN_ROOT_PATHS:
+        frozen = json.loads(golden_path("cli-exit", path).read_text())
+        frozen = {k: v for k, v in frozen.items() if k in ("help", "unknown_flag")}
+        exit_probe[path] = json.loads(_with_flatten_choice(json.dumps(frozen)))
+    exit_probe["gnd"]["help"]["stdout"] = root_help
+    return {"tree": tree, "help": {"gnd": root_help, "gnd flatten": flatten.format_help()},
+            "exit_probe": exit_probe}
+
+
 def _include_preview_successor():
     """Restore the frozen predecessor, then add MC3's one literal repeatable flag."""
     base = copy.deepcopy(json.loads(golden_path('cli', 'tree').read_text())['subcommands']['evolve']['subcommands']['preview'])
@@ -438,6 +502,9 @@ def test_cli_tree(tree):
         expected["subcommands"][command] = _ossie_successor(command)["tree"]
     for command in ("witness", "replay"):
         expected["subcommands"][command] = _witness_projection_successor(command)[0]
+    flattened = _flatten_successor()["tree"]
+    expected["actions"] = flattened["actions"]
+    expected["subcommands"]["flatten"] = flattened["subcommands"]["flatten"]
     _assert_successor("cli", "tree", tree[0], expected)
 
 
@@ -447,6 +514,10 @@ def test_cli_help(tree, path):
         parser = _witness_projection_successor(path.split()[1])[1]
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
                           {"path": path, "help": parser.format_help()})
+        return
+    if path in {"gnd", "gnd flatten"}:
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": _flatten_successor()["help"][path]})
         return
     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -496,6 +567,13 @@ def test_cli_exit_probe(path, monkeypatch):
         }
         parser = _witness_projection_successor(path.split()[1])[1]
         _assert_successor("cli-exit", path, observed, _guarded_successor_probe(parser))
+        return
+    if path in {"gnd flatten", *FLATTEN_ROOT_PATHS}:
+        observed = {
+            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
+        }
+        _assert_successor("cli-exit", path, observed, _flatten_successor()["exit_probe"][path])
         return
     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:
         observed = {

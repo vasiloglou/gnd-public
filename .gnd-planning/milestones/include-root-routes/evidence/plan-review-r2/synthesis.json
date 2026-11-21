@@ -1,0 +1,141 @@
+{
+ "schema_version": 1,
+ "run_sha256": "2ea9bb2cfd6617615597b8573f97d46a18b89506dee394c7341eb53c9c7fd6f5",
+ "summary": "Round 2 over plan r3. Three of six seats succeeded (Claude, Codex, GLM); Qwen timed out and Gemini and Kimi returned malformed output. All three asked for revision. One concern reached two supporters: the IR1 draft spec at the reviewed commit still bound references during composition, against r3's repaired design. Divergent views: flat-model reference paths and file names in IR2, and the orphan fact_type_constraints class under R0.6.",
+ "agreed_concerns": [
+  {
+   "group_id": "ir1-spec-composed-route",
+   "severity": "high",
+   "title": "The IR1 draft spec binds references during composition, against plan r3",
+   "summary": "Plan r3 composes include roots without binding references and binds them at --reference-root (IR1-C8); the IR1 spec at the reviewed commit still called load_model_bytes_composed, which binds under the model directory.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir1-draft-spec-reference-root"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ir1-spec-draft-contradicts-r3-composed-route"
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "ir2-flat-model-reference-paths"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "flat-file-name-inconsistent"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "r06-scope-orphan-fact-type-constraints"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-ir1-spec-composed",
+   "rank": 1,
+   "title": "Compose without binding references in the IR1 spec",
+   "action": "Rewrite the IR1 spec's api.judgments and raw-subject loads to compose without binding references, then bind at --reference-root, and add IR1-C8 to its tests.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir1-draft-spec-reference-root"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ir1-spec-draft-contradicts-r3-composed-route"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ir1-draft-spec-reference-root",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ir1-spec-draft-contradicts-r3-composed-route",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-ir2-reference-coordinates",
+   "rank": 2,
+   "title": "State what a flat model's relative reference paths mean",
+   "action": "Say in IR2 that reference paths stay relative to the authored root's directory, fix IR2-C2 to write into that directory, and let the IR2 spec decide whether another DIR is refused.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir2-flat-model-reference-paths"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir2-flat-model-reference-paths",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-orphan-attachments",
+   "rank": 3,
+   "title": "Define the composed-route predicate as declares_includes",
+   "action": "Scope R0.6 and IR1-C7 to documents with neither includes nor fact_type_constraints, and pin the orphan-attachment refusal moving from include:unsupported-route to include:declaration.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r06-scope-orphan-fact-type-constraints"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r06-scope-orphan-fact-type-constraints",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-flat-names",
+   "rank": 4,
+   "title": "Use the names gnd flatten writes",
+   "action": "Name the flat files by their stem-derived names, checking.orm.flat.orm.json and extraction.orm.flat.orm.json, or mark the H7 names probe-local.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "flat-file-name-inconsistent"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "flat-file-name-inconsistent",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  }
+ ]
+}

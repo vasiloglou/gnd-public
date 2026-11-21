@@ -5,6 +5,28 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: include roots on more routes
+
+- **Judgments on include roots.** `gnd judgments check` accepts a version-5
+  root with includes, temporal or not, and judges the model `gnd check`
+  composes. Receipts bind the root file's sha256, which commits to every
+  include's pin; `--reference-root` applies to include roots too. Include
+  refusals now report `reason: "binding"` with the include code in
+  `message`, which `judgment.schema.json` allows; 0.4.0 wrote the include
+  code as the reason ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
+- **`gnd flatten`.** A new command writes an include root's
+  `<stem>.flat.orm.json` and its `gnd-flattening/1` record, for temporal
+  roots too, which `gnd extract` refuses; extract's refusal for a temporal
+  include root now names it ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
+- **PyRel export of include roots.** `gnd export pyrel`, in the default mode
+  and with `--rules duckdb` or `--rules lqp`, exports an include root through
+  its flat model and records `FLATTENING_RECORD_SHA256` and `MODEL_INCLUDES`
+  in the program. The default mode still refuses temporal models; the
+  `--rules` programs accept them ([#214](https://github.com/vasiloglou/gnd-public/issues/214)).
+- **Unencodable include paths.** An include path that cannot be encoded as
+  UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
+  error itself, and the PyRel export exited 70.
+
 ## 0.4.0 (2026-11-17)
 
 If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)

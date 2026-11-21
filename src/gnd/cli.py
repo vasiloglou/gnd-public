@@ -177,6 +177,7 @@ from gnd.commands import exp as _group_exp
 from gnd.commands import export as _group_export
 from gnd.commands import extract as _group_extract
 from gnd.commands import fidelity as _group_fidelity
+from gnd.commands import flatten as _group_flatten
 from gnd.commands import judgments as _group_judgments
 from gnd.commands import lifecycle as _group_lifecycle
 from gnd.commands import measure as _group_measure
@@ -660,6 +661,7 @@ def main(argv: list[str] | None = None) -> int:
     _group_measure.add_parsers(subparsers, command='measure')
     _group_discover.add_parsers(subparsers, command='discover')
     _group_extract.add_parsers(subparsers, command='extract')
+    _group_flatten.add_parsers(subparsers, command='flatten')
     _group_export.add_parsers(subparsers, command='export')
     _group_codegen.add_parsers(subparsers, command='codegen')
     _group_conformance.add_parsers(subparsers, command='conformance')

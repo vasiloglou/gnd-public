@@ -1902,6 +1902,25 @@ digest only as refusal metadata after detection; it never evaluates or
 claims currency for that composition. Portable standalone skill scripts
 have their own nonzero refusal and direct callers to `gnd validate`.
 
+CLI routes that resolve an include root (every other route refuses it as
+above):
+
+| Route | What it binds |
+|---|---|
+| `gnd validate`, `gnd check` | the composed model; `model_digest` is its composed identity |
+| `gnd extract` (non-temporal models), `gnd verify` | the root's sha256 and each pin, through the extraction flattening record below |
+| `gnd compose` | the composed model, with stale pins refused before population input |
+| `gnd flatten` | writes the flat model and its flattening record (below) for any include root, temporal or not |
+| `gnd export pyrel` (default, `--rules duckdb`, `--rules lqp`) | exports the flat model and records the flattening record's SHA-256 and each pin ([PyRel page](https://github.com/vasiloglou/gnd-public/blob/main/docs/runtimes/pyrel.md)); the default mode still refuses temporal models |
+| `gnd judgments check` | receipts bind the root file's sha256 (`subject.model_sha256`), which commits to every include's pin; references bind under `--reference-root` as for any model. An include refusal reports `reason: "binding"` with the include code as `message` |
+
+An include path that cannot be encoded as UTF-8 is refused `include:path`
+with the other path checks, on every route.
+
+`load_model_bytes_composed(..., bind_references=False)` composes and
+authenticates the includes without binding references, for a caller that
+binds them under another root.
+
 Existing identity functions cover the loaded composition and its authored
 include/attachment declarations, with their existing field exclusions.
 Include paths therefore participate in identity. The model dump and identity
@@ -1929,6 +1948,15 @@ include and attachment declarations, load-time warnings, and the usual
 empty or null re-entry defaults. Reference declarations retain their
 authored-root coordinate for later path-based binding. Each published
 flattening artifact has a 10 MiB limit.
+
+`gnd flatten MODEL --out DIR` writes the same two files for any include
+root, temporal or not, without the bundle or its index: both files or
+neither, never over an existing file (exit 11). Reference paths in the flat
+model stay relative to the authored root's directory, so a flat model
+written into another directory binds its references only where those paths
+resolve; the command says so on standard error. `gnd extract` keeps
+refusing temporal models and, for a temporal include root, names this
+command.
 
 The canonical JSON record has `format: "gnd-flattening/1"`,
 `root_sha256`, an `includes` array of `{id, path, sha256}` entries in pin

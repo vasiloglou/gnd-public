@@ -107,16 +107,21 @@ def test_R7_guard_precedes_explicit_hash(tmp_path,monkeypatch,kind):
         else:session._copy_bound_model(case,tmp_path,tmp_path/'view')
 
 
-def test_R7_guard_precedes_temporal_classification(tmp_path,monkeypatch):
+def test_R7_composition_precedes_temporal_classification(tmp_path,monkeypatch):
+    # include-root-routes IR3: the default export composes an include root
+    # first; a stale pin reports its include code before temporal
+    # classification runs, and a valid temporal root reaches the temporal refusal.
     from gnd import terms
     from gnd.export.emit import render_pyrel
     from gnd.export.pyrel_runtime import ExportInputError
-    path,own,_=write_case(tmp_path)
+    path,own,vocab=write_case(tmp_path)
     own['object_types']=[{'id':'build_duration','name':'BuildDuration','kind':'value','primitive':'Duration'}]
     save(path,own);load_model(path)
-    def forbidden(*args):pytest.fail('temporal classification ran before include guard')
+    with pytest.raises(ExportInputError,match='temporal models'):render_pyrel(path)
+    vocab.write_bytes(vocab.read_bytes()+b' ')
+    def forbidden(*args):pytest.fail('temporal classification ran before composition')
     monkeypatch.setattr(terms,'uses_temporal',forbidden)
-    with pytest.raises(ExportInputError,match='include:unsupported-route'):render_pyrel(path)
+    with pytest.raises(ExportInputError,match='include:hash-mismatch'):render_pyrel(path)
 
 
 def test_R8_own_selector_is_preserved(tmp_path):

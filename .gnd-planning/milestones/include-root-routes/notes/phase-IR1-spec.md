@@ -64,9 +64,13 @@ and this spec's gate are recorded."
 2. **Cap bounds the algorithm.** The added work is a second composition in
    `evaluate_judgments`' raw-subject check. Composition is already capped
    (10 MiB per file, 32 MiB in total, `compose`); work is linear in bytes.
-   T9 times the judgments route over the checking root after 1,000 value
-   object types are added to an include (re-pinned) and requires it under
-   20 s on the test machine.
+   T9 times the composition layer, twice as one run composes it, over the
+   checking root after 1,000 value object types are added to an include
+   (re-pinned), and requires under 5 s. **Corrected (i1), 2026-11-21**, after
+   a reproduced implementation finding (below). Prior wording, kept: "T9 times
+   the judgments route over the checking root after 1,000 value object types
+   are added to an include (re-pinned) and requires it under 20 s on the test
+   machine."
 3. **Validation order.** Unchanged for models without includes: policy,
    receipts, model, population (`api.py:1158-1164`). For an include root the
    include checks now run at the model step, after the policy and receipts
@@ -207,7 +211,7 @@ approving receipts bound to a named model file, as the §2 measurement did.
 | T6 | parametrized: path `../escape.orm.json`, absent file, `includes` not a list, hash mismatch, nested include; and a negative control | each outcome 3 with the include code in `message`, and the report validates against `judgment.schema.json` with `report.schema.json` registered; the control (0.4.0's refusal shape) fails validation |
 | T7 | `evaluate_judgments(..., model_root=None)` on a root's bytes; the same call with `model_root` set and no policy | `include:unsupported-route`; then `JudgmentInputError` (the include refusal is skipped and the policy check refuses) |
 | T8 | malformed policy (`{}`) with a stale include | outcome 3, `reason` `shape` |
-| T9 | the checking root with 1,000 extra value object types in `chronology`, re-pinned and re-bound | outcome 0 or 1, under 20 s |
+| T9 | (i1) `bytes_declare_includes` and `load_model_bytes_composed(..., bind_references=False)`, twice, over the checking root with 1,000 extra value object types in `chronology`, re-pinned | composes more than 1,000 object types in under 5 s. Prior row, kept: "the checking root with 1,000 extra value object types in `chronology`, re-pinned and re-bound · outcome 0 or 1, under 20 s" |
 | T10 | `tests/test_mc1_guards.py::test_R5_judgments_api` rewritten: `write_case` root with a stale pin and readable policy and receipts | outcome 3, `message` `include:hash-mismatch` (no longer `include:unsupported-route`) |
 | T13 `(p2)` | the checking root with `includes` removed and an orphan `fact_type_constraints` added | outcome 3, `message` `include:declaration` |
 | T12 `(p1)` | the checking root with `reference/catalog.json` moved to a separate folder passed as `--reference-root` | exit 0, `admission` true |
@@ -247,3 +251,64 @@ implementation and committed red: with only these test bytes added to
 separate answer key, because the cases are expected exits and error objects,
 not a blind-reading corpus. The gate is a delegated approval under
 `auto=true` over this spec and those test bytes.
+
+## Implementation findings, recorded as they were found
+
+**i1, 2026-11-21: the checker is superlinear in the number of object types;
+T9 as first written measured it, not IR1's layer.** With the implementation
+in place, the route-level T9 ran 580.9 s (the bound was 20 s). Measured in
+scratch on the interop fixture with N extra value object types in one
+include:
+
+| N | `load_model` | `gnd check` on the include root | `gnd check` on its flat model |
+|---|---|---|---|
+| 100 | 0.05 s | 0.78 s | — |
+| 300 | 0.12 s | 7.77 s | 7.70 s |
+| 1,000 | 0.20 s | 265.74 s | — |
+
+Composition stays linear and fast. `gnd check` is slow by the same amount
+with or without includes, so the cost is in existing code that IR1 does not
+change. A profile of the 300-type flat model puts 35.3 of 36.0 s under
+`universe._denoting_types` (610 calls) → `resolve_reference_value_type`
+(184,830 calls) → `model_queries._supertype_parents` (184,866 calls, 14.3 s
+own time): one supertype walk per object type, inside a loop over object
+types, inside a loop over roles. `judgments check` runs the checker twice
+(redacted and unredacted reports), hence about 2 × 266 s.
+
+Disposition: T9 is corrected to time the layer IR1 adds (rule 2 as
+written: "a time-bound test over the layer it adds"). The checker scaling is
+an open question for the milestone close, carried to a separate fix outside
+this milestone: it affects `gnd check` on any model with many object types,
+not only include roots.
+
+**i2, 2026-11-21: the include-free branch needs the same parse-tolerance as
+`guard_bytes`.** `api.judgments` must not change the refusal of malformed
+include-free bytes, so the branch predicate reports unparseable bytes as
+declaring nothing and lets `load_model_bytes` refuse them as before. That
+logic already lived inside `guard_bytes`; it moved to one function,
+`bytes_declare_includes` (`model/_includes.py`), which `guard_bytes`, the
+API and `evaluate_judgments` now share.
+
+## Phase review r1 (Codex, read-only), 2026-11-21
+
+`notes/reviews/phase-IR1-r1/`: one reviewer is one reviewer. One finding,
+F1 (medium): IR1-C7's byte identity rested on suites that compare selected
+observations, not report bytes; the reviewer reproduced a `schema_version`
+change that those suites would not catch. Reproduced; class hardening, in
+this phase's own deliverable; fixed by T11: a report golden
+(`tests/fixtures/ir1/include-free-judgments-report.json`) produced by the
+base code at `1e419a88` and equal to the head output byte for byte, with a
+negative control that changes one field and must differ. The golden is a
+preservation pin, so it passes on the pre-fix code by design; its
+falsifiability is the negative control. The reviewer also confirmed by
+probe every claim in the brief and measured two compositions at 1,000 types
+in 0.283 s; it did not run the suites (read-only).
+
+## Size, measured
+
+Source: 69 lines added, 21 removed across five files (estimate 30). Tests:
+`tests/test_ir1_judgments_includes.py` 368 lines plus 19 changed in
+`tests/test_mc1_guards.py` (estimate 220). Docs: 25 lines (estimate 15).
+About 2.5 times the source estimate: the shared predicate (i2), the
+`bind_references` keyword and the error mapping were each larger than the
+one-line sketches in §6.

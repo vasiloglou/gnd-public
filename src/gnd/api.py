@@ -1153,14 +1153,20 @@ def judgments(
             ) from error
 
     try:
-        from gnd.model._includes import guard_path
-        guard_path(model_path, "api.judgments")
         policy = read_judgment_policy(read(policy_path, 1024 * 1024))
         receipts = read_judgment_receipts(read(receipts_path, 10 * 1024 * 1024))
         mr, pr = read(model_path, 10 * 1024 * 1024), read(population_path, 10 * 1024 * 1024)
-        from gnd.model._includes import guard_bytes
-        guard_bytes(mr, source=model_path, route='api:1123')
-        model = load_model_bytes(mr, source=model_path)
+        from gnd.model._includes import bytes_declare_includes
+        model_root = None
+        if bytes_declare_includes(mr, source=model_path):
+            # An include root composes as gnd check composes it; its references
+            # are bound below, under --reference-root, like any other model's.
+            from gnd.model import load_model_bytes_composed
+            model_root = Path(model_path).absolute().parent
+            model = load_model_bytes_composed(mr, source=model_path, root=model_root,
+                                              bind_references=False)
+        else:
+            model = load_model_bytes(mr, source=model_path)
         candidate = load_population_bytes(pr, source=population_path, model=model)
         refs = bind_declared_references(model, root=reference_root or Path(model_path).parent)
         raw_mechanical = _check_unresolved(model, candidate, admission=True, references=refs,
@@ -1184,6 +1190,7 @@ def judgments(
             population_bytes=pr,
             trusted_root=trusted_root,
             references=refs,
+            model_root=model_root,
         )
         result["outcome"] = 0 if decision["admission"] else 1
         result["judgment_policy"] = decision if unredacted else redact_policy(decision)
@@ -1193,9 +1200,11 @@ def judgments(
             error={"reason": error.reason, "message": str(error)},
         )
     except ModelValidationError as error:
-        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
-        result.update(error={"reason": reason or "binding",
-                             "message": reason or "invalid bound judgment input"})
+        # The report's reason is closed (judgment.schema.json); an include code
+        # travels in the message only.
+        code = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
+        result.update(error={"reason": "binding",
+                             "message": code or "invalid bound judgment input"})
     except (
         ValueError,
         TypeError,

@@ -466,9 +466,12 @@ def evaluate_judgments(
     population_bytes,
     trusted_root,
     references=None,
+    model_root=None,
 ):
-    from gnd.model._includes import guard_bytes
-    guard_bytes(model_bytes, source="model.orm.yaml", route="judgments")
+    from gnd.model._includes import bytes_declare_includes, guard_bytes
+    if model_root is None:
+        # A caller that names no root is never judged against a partial model.
+        guard_bytes(model_bytes, source="model.orm.yaml", route="judgments")
     started = time.monotonic()
     if (
         not isinstance(policy, JudgmentPolicy)
@@ -504,7 +507,12 @@ def evaluate_judgments(
     )
     p = policy.doc
     try:
-        loaded = load_model_bytes(model_bytes, source="model.orm.yaml")
+        if model_root is not None and bytes_declare_includes(model_bytes, source="model.orm.yaml"):
+            from gnd.model import load_model_bytes_composed
+            loaded = load_model_bytes_composed(model_bytes, source="model.orm.yaml",
+                                               root=model_root, bind_references=False)
+        else:
+            loaded = load_model_bytes(model_bytes, source="model.orm.yaml")
         supplied = load_population_bytes(population_bytes, source="candidate.pop.json", model=model)
         if (
             loaded.model_dump() != model.model_dump()

@@ -356,19 +356,27 @@ def _load_model_at(data, *, source, descriptor, historical=None, analysis=False)
     return CompositionView(doc, (), (), (), model) if analysis else model
 
 
-def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path) -> Model:
-    """Resolve the authored model and bind references under one retained root."""
-    return _composed_view(data, source=source, root=root)
+def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path,
+                              bind_references: bool = True) -> Model:
+    """Resolve the authored model and bind references under one retained root.
+
+    ``bind_references=False`` composes and authenticates the includes under
+    ``root`` but leaves declared reference populations unbound, for a caller
+    that binds them itself under another root (``gnd judgments check
+    --reference-root``). Composition and validation are the same either way.
+    """
+    return _composed_view(data, source=source, root=root, bind_references=bind_references)
 
 
-def _composed_view(data, *, source, root, historical=None, analysis=False):
+def _composed_view(data, *, source, root, historical=None, analysis=False,
+                   bind_references=True):
     with retained_root(root) as descriptor:
         result = _load_model_at(data, source=source, descriptor=descriptor,
                                 historical=historical, analysis=analysis)
         model = result.model if analysis else result
         if model is None:
             return result
-        if model.reference_populations:
+        if bind_references and model.reference_populations:
             try:
                 model._references = _bind_at(model, descriptor)
             except ReferenceHashMismatch:

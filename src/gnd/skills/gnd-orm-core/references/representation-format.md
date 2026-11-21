@@ -1902,6 +1902,20 @@ digest only as refusal metadata after detection; it never evaluates or
 claims currency for that composition. Portable standalone skill scripts
 have their own nonzero refusal and direct callers to `gnd validate`.
 
+CLI routes that resolve an include root (every other route refuses it as
+above):
+
+| Route | What it binds |
+|---|---|
+| `gnd validate`, `gnd check` | the composed model; `model_digest` is its composed identity |
+| `gnd extract` (non-temporal models), `gnd verify` | the root's sha256 and each pin, through the extraction flattening record below |
+| `gnd compose` | the composed model, with stale pins refused before population input |
+| `gnd judgments check` | receipts bind the root file's sha256 (`subject.model_sha256`), which commits to every include's pin; references bind under `--reference-root` as for any model. An include refusal reports `reason: "binding"` with the include code as `message` |
+
+`load_model_bytes_composed(..., bind_references=False)` composes and
+authenticates the includes without binding references, for a caller that
+binds them under another root.
+
 Existing identity functions cover the loaded composition and its authored
 include/attachment declarations, with their existing field exclusions.
 Include paths therefore participate in identity. The model dump and identity

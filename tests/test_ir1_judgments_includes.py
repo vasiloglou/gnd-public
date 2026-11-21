@@ -11,6 +11,7 @@ import json
 import shutil
 import time
 from importlib.resources import files
+from pathlib import Path
 
 import pytest
 from jsonschema import Draft202012Validator
@@ -269,17 +270,29 @@ def test_T8_policy_shape_precedes_include_integrity(case):
 
 
 # --- T9: time bound over the composition layer ----------------------------
+#
+# Corrected during implementation (spec section 4, rule 2): the first T9 timed
+# the whole judgments route and measured the existing checker, which is
+# superlinear in the number of object types (gnd check alone: 7.7 s at 300
+# extra types, 266 s at 1,000, with or without includes). IR1 adds the
+# composition, twice per run; this case times that layer.
 
 
-def test_T9_large_include_judges_within_bound(case):
+def test_T9_composition_layer_within_bound(case):
+    from gnd.model import load_model_bytes_composed
+    from gnd.model._includes import bytes_declare_includes
+
     edit_include(case, extra_types(1000))
     repin(case, "checking.orm.json", "chronology")
-    bind(case, "checking.orm.json")
+    raw = (case / "checking.orm.json").read_bytes()
     started = time.monotonic()
-    code, out = judge(case, "checking.orm.json")
+    for _ in range(2):  # api.judgments and the raw-subject check each compose once
+        assert bytes_declare_includes(raw, source="checking.orm.json")
+        model = load_model_bytes_composed(raw, source=case / "checking.orm.json", root=case,
+                                          bind_references=False)
     elapsed = time.monotonic() - started
-    assert code in (0, 1), out
-    assert elapsed < 20, elapsed
+    assert len(model.object_types) > 1000
+    assert elapsed < 5, elapsed
 
 
 # --- T12: references of an include root bind at --reference-root ----------
@@ -312,3 +325,44 @@ def test_T13_orphan_fact_type_constraints_refuse_as_declaration(case):
     code, out = judge(case, "checking.orm.json")
     assert code == 3
     assert out["error"] == {"reason": "binding", "message": "include:declaration"}
+
+
+# --- T11: a model without includes keeps its exact report bytes -------------
+#
+# Added after the phase review (finding F1): the golden was produced by the
+# base code at 1e419a88 over the flat (include-free) extraction model, with
+# the case folder replaced by "<case>".
+
+GOLDEN = Path(__file__).parent / "fixtures/ir1/include-free-judgments-report.json"
+
+
+def _include_free_report(case):
+    from gnd.model import load_model
+    from gnd.model.flattening import flatten_model
+
+    population = relabel_for_extraction(case)
+    flat = flatten_model(load_model(case / "extraction.orm.json")).model_bytes
+    (case / "extraction.flat.orm.json").write_bytes(flat)
+    bind(case, "extraction.flat.orm.json", population)
+    result = run_main(["judgments", "check", str(case / "extraction.flat.orm.json"),
+                       str(case / population), "--policy", str(case / "policy.json"),
+                       "--receipts", str(case / "receipts.json"),
+                       "--trusted-root", str(case), "--format", "json"])
+    assert result.returncode == 0, result.stdout
+    return result.stdout.replace(str(case).encode(), b"<case>")
+
+
+def test_T11_include_free_report_is_byte_identical(case):
+    assert _include_free_report(case) == GOLDEN.read_bytes()
+
+
+def test_T11_golden_negative_control(case):
+    """A one-field change to the report is caught by the byte comparison."""
+    report = json.loads(_include_free_report(case))
+
+    def rendered(value):  # the CLI prints canonical JSON and a newline
+        return canonical_json_bytes(value, exact_numbers=True) + b"\n"
+
+    assert rendered(report) == GOLDEN.read_bytes()
+    report["schema_version"] = 14
+    assert rendered(report) != GOLDEN.read_bytes()

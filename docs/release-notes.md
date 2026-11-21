@@ -5,6 +5,16 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: include roots on more routes
+
+- **Judgments on include roots.** `gnd judgments check` accepts a version-5
+  root with includes, temporal or not, and judges the model `gnd check`
+  composes. Receipts bind the root file's sha256, which commits to every
+  include's pin; `--reference-root` applies to include roots too. Include
+  refusals now report `reason: "binding"` with the include code in
+  `message`, which `judgment.schema.json` allows; 0.4.0 wrote the include
+  code as the reason ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
+
 ## 0.4.0 (2026-11-17)
 
 If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)

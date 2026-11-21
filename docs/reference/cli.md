@@ -87,7 +87,7 @@ automatic side effects of validation. See [evolution and recovery](../guides/evo
 | `gnd exp run EXPERIMENT --adapter codex` | A legacy-adapter session under the authored contract |
 | `gnd exp run EXPERIMENT --adapter-policy POLICY` | A declared-policy session under the authored contract |
 | `gnd exp close EXPERIMENT` | Completeness gate for questions/evidence and kind-specific obligations |
-| `gnd judgments check MODEL POPULATION --policy POLICY --receipts RECEIPTS --trusted-root ROOT --format json` | Evaluate saved external opinions and evidence floors |
+| `gnd judgments check MODEL POPULATION --policy POLICY --receipts RECEIPTS --trusted-root ROOT --format json` | Evaluate saved external opinions and evidence floors; an include root is resolved as `gnd check` resolves it ([include routes](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md)) |
 | `gnd review panel ...` / `gnd review panel-light ...` | Explicit advisory reviewer run; inspect help for the selected artifact kind |
 | `gnd review finalize ...` | Validate and render a supplied synthesis against retained reviewer evidence |
 | `gnd solve MODEL --workspace DIR ...` | Gated selected CLI station sequence and walk log |

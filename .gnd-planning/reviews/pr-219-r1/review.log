@@ -1,0 +1,18 @@
+Reading additional input from stdin...
+OpenAI Codex v0.163.0
+--------
+workdir: <repo>
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1ff45-5f58-7293-849d-e4ba7d0289a6
+--------
+user
+Read <repo>/.gnd-planning/reviews/pr-219-r1/BRIEF.md and follow it.
+warning: Configured service tier `priority` is not advertised as supported for model `gpt-6.2-astra` and will be omitted from requests.
+warning: Model metadata for `gpt-6.2-astra` not found. Defaulting to fallback metadata; this can degrade performance and cause issues.
+ERROR: {"type":"error","status":400,"error":{"type":"invalid_request_error","message":"The 'gpt-6.2-astra' model is not supported when using Codex with a ChatGPT account.","code":"model_not_found"}}
+ERROR: {"type":"error","status":400,"error":{"type":"invalid_request_error","message":"The 'gpt-6.2-astra' model is not supported when using Codex with a ChatGPT account.","code":"model_not_found"}}

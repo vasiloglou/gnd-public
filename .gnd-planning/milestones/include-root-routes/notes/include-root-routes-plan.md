@@ -1,6 +1,8 @@
-# Include-root routes · plan r4
+# Include-root routes · plan r5
 
-**Status: r4, 2026-11-21. Plan review ran twice: round 1 over r2 (r3 applied
+**Status: r5, 2026-11-21: r4 as approved in `001-plan-gate.md`, with the
+close amendments of §11, tagged `(c1)`, which carry no review opinion of
+their own. Plan review ran twice: round 1 over r2 (r3 applied
 its 13 fixes, tagged `(p1)`), round 2 over r3 (r4 applies its 4 fixes, tagged
 `(p2)`). r4 carries no review opinion of its own; the round budget is spent
 (§8).** The owner selected the GND review
@@ -206,8 +208,8 @@ H4–H7.
 | Phase | Needs | Homes it changes |
 |---|---|---|
 | IR1 | nothing | `src/gnd/api.py`, `src/gnd/judgments.py`, `tests/test_mc1_guards.py`, a new `tests/test_ir1_judgments_includes.py`, the includes route list (created), `docs/reference/cli.md`, `docs/release-notes.md` `(p1)` |
-| IR2 | nothing | a new `src/gnd/commands/flatten.py`, its registration in `src/gnd/cli.py` `(p1)`, `tools/gnd_entrypoints.json`, `tools/gnd_layers.json`, `src/gnd/extract/service.py` (message for include roots only), a new `tests/test_ir2_flatten.py`, `docs/reference/cli.md`, the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)` |
-| IR3 | nothing in code; IR2 for the user to reproduce a recorded digest (D2) | `src/gnd/export/emit.py`, `src/gnd/export/pyrel_rules.py`, `tests/test_mc1_guards.py`, `tests/test_mc1_review_regressions.py`, a new `tests/test_ir3_pyrel_includes.py`, the PyRel export page (`docs/agents/export-and-review.md`), the route list row, `docs/release-notes.md` `(p1)` |
+| IR2 | nothing | a new `src/gnd/commands/flatten.py`, its registration in `src/gnd/cli.py` `(p1)`, `tools/gnd_entrypoints.json`, `tools/gnd_layers.json`, `src/gnd/extract/service.py` (message for include roots only), a new `tests/test_ir2_flatten.py`, `docs/reference/cli.md`, the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)`, and `(c1)` the command inventories: `tools/gnd_arch.py` `RF5_COMMAND_GROUPS`, `src/gnd/disclosure.py` and `docs/reference/disclosure.md`, the CLI successor in `tests/test_rf1_cli_pins.py`, and the count literals in `tests/test_rf5_commands.py` and `tests/test_disclosure_mode.py` |
+| IR3 | nothing in code; IR2 for the user to reproduce a recorded digest (D2) | `src/gnd/export/emit.py`, `src/gnd/export/pyrel_rules.py`, `tests/test_mc1_guards.py`, `tests/test_mc1_review_regressions.py`, a new `tests/test_ir3_pyrel_includes.py`, the PyRel export page (`docs/runtimes/pyrel.md` `(c1)`), the route list row, `docs/release-notes.md` `(p1)`, and `(c1)` a new `src/gnd/export/include_roots.py` with its `tools/gnd_layers.json` row |
 
 Order: IR1, IR2, IR3, one at a time on the branch `claude/include-root-routes`.
 The graph is acyclic; no phase needs another's code. IR3 follows IR2 so the
@@ -252,8 +254,8 @@ an independent review of its diff, a refactoring review and its record.
   `gnd flatten` (IR2) is described in the same file's "Extraction flattening
   record" subsection, the home of `gnd-flattening/1`. `docs/reference/cli.md`
   gains one row per new command or route and cites the list. The PyRel export
-  page, `docs/agents/export-and-review.md`, says nothing about temporal
-  models today; IR3 makes it the home of which export mode accepts them.
+  page is `docs/runtimes/pyrel.md` `(c1)`; IR3 makes it the home of which
+  export mode accepts temporal models and of the two recorded constants.
 - **Release notes.** One entry per phase under the unreleased heading of
   `docs/release-notes.md`.
 - **Compatibility.** No schema version changes (D4, D6). Error reports of
@@ -300,13 +302,15 @@ session judgments; the assertion-admission example; any include rule change;
   reviewer over the diff (D7), refactoring review, record, commit.
 - Pull request: one PR from `claude/include-root-routes` to `main`. Merge
   stays with the owner.
+- `(c1)` Before the PR, `python3 scripts/components_index.py changed --base
+  origin/main --strict` exits 0 (`project.md`, "Component index").
 
 ## 9. Per-phase verification
 
 | Phase | Focused lane | Expected |
 |---|---|---|
 | IR1 | `uv run pytest -q tests/test_ir1_judgments_includes.py tests/test_mc1_guards.py tests/test_mc1_review_regressions.py tests/test_mc1_model_includes.py tests/test_public_v71_judgment_successor_guards.py tests/test_public_v71_full_judgments.py --tb=short` | exit 0 |
-| IR2 | `uv run pytest -q tests/test_ir2_flatten.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_extract_cli.py tests/test_public_extract_boundary.py tests/test_rf1_semantic_pins.py tests/test_mc1_guards.py --tb=short` `(p1)` | exit 0 |
+| IR2 | `uv run pytest -q tests/test_ir2_flatten.py tests/test_lx1_flattening.py tests/test_lx2_witness_flattening.py tests/test_extract_cli.py tests/test_public_extract_boundary.py tests/test_rf1_semantic_pins.py tests/test_rf1_cli_pins.py tests/test_mc1_guards.py --tb=short` `(p1)` `(c1)` | exit 0 |
 | IR3 | `uv run pytest -q tests/test_ir3_pyrel_includes.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_pyrel_rules.py tests/test_pyrel_rules_calendar.py tests/test_mc1_guards.py tests/test_mc1_review_regressions.py --tb=short` | exit 0 |
 | all | the structure and inventory guard block of `project.md` (it includes `tests/test_rf5_commands.py` and `tests/test_rf7_structure.py`, the entry-point import guards §6 relies on), and `uv run ruff check` `(p1)` | exit 0 |
 
@@ -326,3 +330,16 @@ All rows are proposals until the plan gate rules them.
 | D5 | IR3: how the program records the flattening | constants `FLATTENING_RECORD_SHA256` and `MODEL_INCLUDES` in both program kinds, absent for a model without includes |
 | D6 | IR1: the `error.reason` of an include refusal (H6) | `binding`, with the include code in `message` |
 | D7 | Phase diff reviewer | `(p1)` the review helper (`.claude/skills/process-phase/scripts/review_tool.py`, subject `phase`), which runs Codex read-only: `project.md` names that shared default, one reviewer in a different tool, for a phase diff. r2 proposed a Claude subagent, which is the same tool. One reviewer is one reviewer |
+
+## 11. Close amendments `(c1)`, 2026-11-21
+
+Applied at the milestone close from the phase records' refuted premises;
+recorded in the close record and ruled there. Prior wording kept here.
+
+| Site | Prior wording (r4) | Amended to | Raised by |
+|---|---|---|---|
+| §9, IR2 lane | the lane without `tests/test_rf1_cli_pins.py` | adds `tests/test_rf1_cli_pins.py` | `003-phase-IR2.md`, Refuted premises |
+| §3, IR2 homes | "… the representation-format includes section and its route list row, `docs/release-notes.md` `(p1)`" | adds the seven command inventories | `003-phase-IR2.md`; IR2 spec i1 |
+| §5, PyRel page | "page, `docs/agents/export-and-review.md`, says nothing about temporal models today; IR3 makes it the home of which export mode accepts them." | `docs/runtimes/pyrel.md` is that home | `004-phase-IR3.md`, Refuted premises; IR3 spec i2 |
+| §3, IR3 homes | "the PyRel export page (`docs/agents/export-and-review.md`)" | `docs/runtimes/pyrel.md`, and `src/gnd/export/include_roots.py` with its layer row | `004-phase-IR3.md`; IR3 spec i1, i3 |
+| §8 | no component-index step | the index check before the PR | `project.md`, found at IR3 |

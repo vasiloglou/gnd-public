@@ -16,8 +16,7 @@ from gnd.errors import ModelValidationError
     ('gnd.codegen.manifest', 'build_manifest', lambda p: (SimpleNamespace(), str(p))),
     ('gnd.conformance.currency', 'model_file_sha256', lambda p: (p,)),
     ('gnd.evolve.service', '_parse_model_text', lambda p: (p.read_text(),)),
-    ('gnd.export.pyrel_rules', 'render', lambda p: (p, 'duckdb')),
-], ids=['R22-emit', 'R22-manifest', 'R23-currency', 'R19-parse', 'R13-pyrel-rules'])
+], ids=['R22-emit', 'R22-manifest', 'R23-currency', 'R19-parse'])
 def test_direct_refusals(tmp_path, module, name, args):
     path, _, _ = write_case(tmp_path)
     function = getattr(importlib.import_module(module), name)
@@ -31,7 +30,7 @@ def test_direct_refusals(tmp_path, module, name, args):
     assert sorted(p.name for p in tmp_path.iterdir()) == ['project.orm.json', 'vocab.orm.json']
 
 
-@pytest.mark.parametrize('route', ['codegen', 'conformance', 'measure', 'pyrel'])
+@pytest.mark.parametrize('route', ['codegen', 'conformance', 'measure'])
 def test_cli_guards(tmp_path, route):
     from support.cli_runner import run_main
     path, _, _ = write_case(tmp_path)
@@ -40,12 +39,21 @@ def test_cli_guards(tmp_path, route):
         'codegen': ['codegen', str(path), '--out', str(out)],
         'conformance': ['conformance', str(path), str(out), '--format', 'json'],
         'measure': ['measure', str(path), '--populations', str(tmp_path), '--format', 'json'],
-        'pyrel': ['export', 'pyrel', str(path), '--out', str(out)],
     }[route]
     result = run_main(args)
     assert result.returncode == 3, (result.stdout, result.stderr)
     assert b'include:unsupported-route' in result.stdout + result.stderr
     assert not out.exists()
+
+
+def test_R13_pyrel_rules_renders_an_include_root(tmp_path):
+    # include-root-routes IR3: the rules export renders the root's flat model
+    # and records its flattening; it no longer refuses the route.
+    from gnd.export.pyrel_rules import render
+    path, _, _ = write_case(tmp_path)
+    program = render(path, 'duckdb')
+    assert 'FLATTENING_RECORD_SHA256 = ' in program and 'MODEL_INCLUDES = ' in program
+    assert sorted(p.name for p in tmp_path.iterdir()) == ['project.orm.json', 'vocab.orm.json']
 
 
 def test_R6_population_compose(tmp_path):

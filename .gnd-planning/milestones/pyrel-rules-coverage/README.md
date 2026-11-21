@@ -6,7 +6,7 @@ Not reviewed and not approved.
 
 | Phase | Deliverable |
 |---|---|
-| RP1 | External uniqueness in the `--rules` programs, both branches |
+| RP1 | External uniqueness in the `--rules` programs, and a type for the entity it identifies |
 | RP2 | Anchored constraints handled by a recorded projection, not a refusal of the whole program |
 | RP3 | `Number` values in the rules programs, or a documented refusal that names the supported pattern |
 | RP4 | Value constraints scoped to a role, which the #214 quantity fixture needs |

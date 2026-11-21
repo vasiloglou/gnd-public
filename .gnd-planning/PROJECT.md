@@ -240,7 +240,7 @@ outline's §1 maps every issue request to the phase that discharges it.
 are RP1–RP3.
 
 Why this order: #217 has no workaround; #214 blocks a downstream query layer
-but its default export works; #215 and #216 have working host-side
+but the default export of a flat model works; #215 and #216 have working host-side
 workarounds. The maintenance pass is independent: no milestone waits for its
 ruling, and it ships whenever the ruling is made.
 

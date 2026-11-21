@@ -29,8 +29,14 @@ examples stay examples: neither is promoted to stable CLI (both issues say so).
   to cover every section (`:113`, "saved response roster differs"), and loads
   the vocabulary from the packaged depth fixture unless told otherwise
   (`:135`). The responses a live run produces are written to its run folder.
-- **LH2.** `replay()` already takes a folder (`reading.py:574`). LH2 makes it
-  replay a live LH1 run from that folder, with the captured responses and the
+  The protocol's call carries the section's source bytes: today
+  `produce(stage, section)` gets two names only (`:156`), and the loop reads a
+  `calls` count from the producer (`:457`).
+  The stage loop is also tied to the packaged fixture in six places, listed in
+  §1. LH1 makes each one caller data or an optional step (owner decision D3).
+- **LH2.** `replay()` already takes a run folder and an input root
+  (`reading.py:574`, `fixture=`). LH2 makes it replay a live LH1 run from its
+  folder and the caller's input root, with the captured responses and the
   caller's vocabulary, with zero producer calls.
 - **LH3.** `examples/literature/assertion_admission.py` takes the assertion
   entity (objectified fact type or entity type) by name. Its identity is that
@@ -39,7 +45,11 @@ examples stay examples: neither is promoted to stable CLI (both issues say so).
   to an admitted assertion is kept.
 - **LH4.** Admissible polarity and attribution values are policy data, not the
   hard-coded `("asserts", "own-finding")`. A supported row that fails the
-  policy gets its own disposition. `MAX_TARGETS` (today 1024) is a parameter.
+  policy gets its own disposition. Today the record has two stages,
+  `semantic-support` and `positive-own-findings` (`:115-125`), and both mark a
+  row `fail`; a supported row that fails the policy passes the first and fails
+  the second with reason `negated` or its attribution value. `MAX_TARGETS`
+  (today 1024) is a parameter.
 
 ## 0. Binding design rules
 
@@ -56,6 +66,7 @@ examples stay examples: neither is promoted to stable CLI (both issues say so).
 | Source | Obligation | Phase |
 |---|---|---|
 | #216 "Problem" | `reading.py:562` `run()` builds `SavedProducer(inputs.responses)` at `:566`; only private `_evaluate(..., producer=)` at `:445` takes another. `ReadingInputs` binds the root to saved responses at `:72-75` and `:113`, and to the packaged vocabulary at `:135`. Confirmed at `0f39c392` on 2026-11-21 | LH1 |
+| `reading.py`, fixture bindings in the stage loop | The `unavailable` scenario names section `study-methods` (`:448`). `_calibrate` names that section and the two facts in `CALIBRATION_FACTS` (`:42`, `:311-327`). `_combined` adds the fixture's `LABEL` to every population (`:48`, `:247`). `_public_results` needs the fixture's `conflict.json` and `conflict.txt` and a conflict that fails `verify` and `check` (`:395-407`). `absence_status` needs predicate `alternative_integrator` (`:373`). `_review_attempts` needs a `reviews.json` receipt bound to the facts digest of each accepted response (`:198-209`), which cannot be written before a live producer has answered. Read at `0f39c392` on 2026-11-21 | LH1 |
 | #216 "Request" bullets 2–4 | Per-document stop rule; `ROSTER_LIMIT` `:41` and `MAX_BUDGET` `:40` as parameters; `replay()` at `:574` against a caller root | LH1, LH2 |
 | #215 "Problem" | `assertion_admission.py:100` `project()`; sentinels `:30`; policy `:122`; `MAX_TARGETS` `:29` | LH3, LH4 |
 | #215 measured shape | 98 % of claims share a passage; about half lack one actor and one object; 9 % have several conditions; 44 % carry a quantity | LH3 acceptance fixture |
@@ -78,29 +89,32 @@ examples stay examples: neither is promoted to stable CLI (both issues say so).
 ## 2–3. Contract sketch and dependencies
 
 - **LH1–LH2** adapt `reading.py` only; the stage loop already exists in
-  `_evaluate`. LH2 needs LH1.
+  `_evaluate`, with the fixture bindings §1 lists. LH2 needs LH1.
 - **LH3–LH4** adapt `assertion_admission.py`; `gnd judgments check` stays the
   admitting command. LH4 needs LH3.
 - The two pairs are independent and can run in parallel on separate branches.
 - Start condition: none. No other roadmap milestone uses these interfaces.
   Running it after include-root-routes lets LH3's fixture use an include root,
-  which is the reporter's real setup.
+  which is the reporter's real setup. That also needs the admission snapshot
+  to copy the includes: today it copies one model file (`:146-148`,
+  `:188-191`).
 
 ## 4. Phases
 
 | Phase | Outline criteria |
 |---|---|
-| LH1 | A test producer drives all six stages over a caller corpus and a caller vocabulary model, both distinct from the packaged fixture, with no saved `responses.json` or pin. The captured responses land in the run folder. A per-document stop ends one document and not the others. A lowered cap and budget are honoured and recorded. The packaged `SavedProducer` run is byte-identical |
-| LH2 | That live run replays from its own folder with zero producer calls, byte-identical. A tampered captured response refuses |
+| LH1 | A test producer drives all six stages over a caller corpus and a caller vocabulary model, both distinct from the packaged fixture, with no saved `responses.json` or pin, and with no section or fact named as the packaged fixture names them. Each fixture-only step runs on caller data or is recorded as skipped, as D3 rules. The captured responses land in the run folder. A per-document stop ends one document and not the others. A lowered cap and budget are honoured and recorded. The packaged `SavedProducer` run is byte-identical |
+| LH2 | That live run replays from its own folder and the caller's input root with zero producer calls, byte-identical. A tampered captured response refuses |
 | LH3 | A model with a multi-participant, multi-condition, quantity-bearing assertion and a passage shared by two assertions admits with every row intact. The packaged example still admits as before |
-| LH4 | A policy file changes which rows admit. A supported row that fails the policy has a disposition distinct from an unsupported one |
+| LH4 | A policy file changes which rows admit. A supported row that fails the policy has a status distinct from the `fail` of an unsupported one |
 
 ## 5. Owner decisions and open questions
 
 | ID | Question | Proposed |
 |---|---|---|
 | D1 | Where the producer protocol lives: in `reading.py`, or a small shared module other examples can use | In `reading.py` until a second user appears |
-| D2 | Name of the new LH4 disposition | `policy-refused`, beside the existing unsupported one |
+| D2 | Name of the new LH4 disposition | Status `policy-refused` in the policy stage, beside `pass` and `fail`; the packaged record keeps its bytes under the default policy |
+| D3 | LH1: for a caller run, which fixture-only steps become caller data and which become optional: the semantic review receipts, the held-back fidelity calibration, the reported-conflict check, the absence scope and the subject label | Review receipts come from a caller reviewer after the producer answers and are captured in the run folder, so replay checks them. Calibration, the conflict check and the absence scope are optional caller inputs; a run without one records that step as skipped. The label is caller data |
 
 ## 6–9. Surfaces, risks, protocol, verification
 

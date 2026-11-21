@@ -25,10 +25,10 @@ refused at the "new or changed constraints must be" refusal. Confirmed at
 | Choice | Effect |
 |---|---|
 | (a) Widen D-12 | `evolve` also admits `sample` and `common-sense` when `proposed` and `deontic`. The evidence basis stays in `source`, where `measure` and the provenance reports read it |
-| (b) Change the document | The document says to write `llm-inferred` and keep the basis in `provenance.rationale_world_fact`. No code change |
+| (b) Change the document | The document says to write `llm-inferred` and keep the basis in `provenance.rationale_world_fact`. No code change. A library-basis constraint then needs a span: unattended rule U5 exempts only `common-sense` and `induced` (`src/gnd/model/_unattended.py:56`, `:211-222`), so the document's "Library-basis constraints need no span (U5)" (line 95) changes too |
 
 Proposed: (a). The reporter's workaround is (b), and it hides the basis in
-free text.
+free text and takes the U5 exemption from library evidence.
 
 ## Done when
 
@@ -38,6 +38,8 @@ free text.
   refuses. The D-12 section of `provenance-and-modality.md` lists the new
   combinations, and the restatement in `evolution-contract.md` (lines 279-280)
   says the same.
+- For (b): the test's library-basis constraint carries a span, and the
+  document says so at lines 94-95 and 289.
 - The affected lane (`tests/test_evolve_*.py`, `tests/test_unattended_*.py`)
   and the structure and inventory guards pass. The issue gets a reply and is
   closed after the merge.

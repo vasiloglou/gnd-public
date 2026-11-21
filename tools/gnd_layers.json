@@ -488,6 +488,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.include_roots": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.lean": {
       "lane": "export",
       "layer": "lanes"

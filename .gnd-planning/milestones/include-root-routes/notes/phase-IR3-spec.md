@@ -141,7 +141,7 @@ flat model's reference paths point.
 | ID | Question | Readings and cost | Proposed |
 |---|---|---|---|
 | IR3-D1 | Constant spelling (plan D5) | `FLATTENING_RECORD_SHA256` (a str) and `MODEL_INCLUDES` (a tuple of three-tuples), absent for a model without includes | as stated → **ruled as stated, delegated 2026-11-21** |
-| IR3-D2 | Where `flatten_for_export` lives | (a) `export/pyrel_runtime.py`, beside `ExportInputError` and `_read_text`, which both renderers import; (b) a new module, which adds a layer-map row | (a) → **ruled (a), delegated 2026-11-21** |
+| IR3-D2 | Where `flatten_for_export` lives | (a) `export/pyrel_runtime.py`, beside `ExportInputError` and `_read_text`, which both renderers import; (b) a new module, which adds a layer-map row | (a) → **ruled (a), delegated 2026-11-21**  **Amended (i1), delegated 2026-11-21:** `emit.py`, not `pyrel_runtime.py`. Reading (a)'s premise was refuted before any code: `render_pyrel` embeds `pyrel_runtime.py` verbatim into every default program (`emit.py`, `files("gnd.export").joinpath("pyrel_runtime.py")`), so a helper there would change every exported program (R0.6, T6) and ship loader imports in a standalone script. `emit.py` is not embedded and both renderers can import it; T8 and T9 import from there. Prior ruling kept above  **Amended again (i3), delegated 2026-11-21:** a new module `gnd.export.include_roots` (layer `lanes`, lane `export`), reading (b). `emit.py` lazily imports `pyrel_rules`, so `pyrel_rules` importing `emit` is a cycle that `tests/test_rf8_structure.py::test_graph_and_each_dirty_direction` refuses. The first amendment's wording, "`emit.py`, not `pyrel_runtime.py`", is kept above |
 | IR3-D3 | What replaces `test_R7` | (a) rewrite it to pin the new order: a temporal include root reaches the temporal message, a stale temporal include root the include code; (b) delete it. (b) loses an order pin | (a) → **ruled (a), delegated 2026-11-21** |
 | IR3-D4 | `test_cli_guards[pyrel]` | drop the `pyrel` parameter (the route no longer refuses) and add the positive CLI case to the new file | as stated → **ruled as stated, delegated 2026-11-21** |
 | IR3-D5 | IR3-C3's expected outcome | fixed from `main` at `260c4337` (RP2 not merged): exit 3, `paper_names_parent_method#0: family 'anchored'` in both `--rules` modes, as the flat models give | as stated → **ruled as stated, delegated 2026-11-21** |
@@ -185,3 +185,54 @@ the base. The goldens were produced by the base code at `68e426ca` in a
 disposable worktree and equal the head's output byte for byte (measured
 2026-11-21). T6 uses `write_case`'s flat model for the two `--rules`
 goldens and the extraction flat model for the default one.
+
+## Implementation findings, recorded as they were found
+
+**i1, 2026-11-21: `pyrel_runtime.py` is part of every exported program.**
+Before writing code: the default renderer reads `pyrel_runtime.py` and
+embeds it in the program source, so it cannot host `flatten_for_export`.
+IR3-D2 amended to `emit.py`; the corpus's two imports were changed
+accordingly (`tests/test_ir3_pyrel_includes.py`, T8 and T9), with no
+change to any expected value. The T6 goldens, which compare whole program
+bytes, would have turned red on the first reading.
+
+**i2, 2026-11-21: the PyRel page with the temporal sentence is
+`docs/runtimes/pyrel.md`.** It said "Temporal models are refused at
+export", true only of the default mode, and is the page that states the
+exporter's limits; `docs/agents/export-and-review.md` only links it. That
+page is the one home of which mode accepts temporal models and of the two
+constants; its sentence is corrected and a paragraph added. §6 named
+`export-and-review.md`; this records the change of page.
+
+**i3, 2026-11-21: `emit.py` would close an import cycle.** The guard
+block's first run had one failure:
+`tests/test_rf8_structure.py::test_graph_and_each_dirty_direction` reported
+the cycle `gnd.export.emit` ↔ `gnd.export.pyrel_rules`. The helper moved to
+`src/gnd/export/include_roots.py`, with its row in `tools/gnd_layers.json`;
+T8 and T9 import from there. No expected value changed.
+
+## Phase review r1 (Codex, read-only), 2026-11-21
+
+`notes/reviews/phase-IR3-r1/`: one reviewer is one reviewer. One finding,
+F1 (medium): an include whose `path` cannot be encoded (a lone surrogate)
+made all three modes exit 70, where `gnd check`, `gnd validate` and
+`gnd flatten` refuse the same root with exit 3. Reproduced as
+`test_F1_unencodable_include_path_exits_3_not_70` (red in all three modes
+on the reviewed bytes); class blocking (wrong exit band); fixed by mapping
+`ValueError` to `ExportInputError`. While fixing it, a doubled prefix was
+found in the default mode ("invalid model: invalid model: …"); fixed, and
+`test_include_refusal_message_has_one_prefix` pins one prefix per mode.
+The deeper gap, that `compose` raises `UnicodeEncodeError` instead of
+`include:path` for such a path on every route, is outside this phase and is
+carried to the close. The reviewer confirmed the other claims by probe,
+including 12 extra include-free model and mode comparisons against
+`68e426ca`, and measured the added layer at 0.277 s.
+
+## Size, measured
+
+Source: `src/gnd/export/include_roots.py` 68 lines new; `emit.py` and
+`pyrel_rules.py` about 15 lines changed; one layer-map row (estimate 50).
+Tests: `tests/test_ir3_pyrel_includes.py` 279 lines, three goldens,
+three rewritten pins (estimate 250). Component index: three new entries
+(`cli.flatten_command`, `extract.flatten_service`, `export.include_roots`)
+and three edited ones, covering IR2 as well, which had skipped the index.

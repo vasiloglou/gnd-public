@@ -113,6 +113,15 @@ Components: cli.fidelity_command
 | `add_parsers(subparsers, *, command)` | function | 56 | (no docstring) |
 | `handle(args, parsers) -> int` | function | 67 | (no docstring) |
 
+## gnd.commands.flatten — `src/gnd/commands/flatten.py`
+Components: cli.flatten_command
+(no docstring)
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `add_parsers(subparsers, *, command)` | function | 26 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 38 | (no docstring) |
+
 ## gnd.commands.judgments — `src/gnd/commands/judgments.py`
 Components: cli.judgments_command
 (no docstring)

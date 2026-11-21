@@ -232,7 +232,7 @@ def test_T7_include_refusals_exit_3(tmp_path, mode, kind):
 
 
 def test_T8_flatten_for_export_within_bound(case):
-    from gnd.export.pyrel_runtime import flatten_for_export
+    from gnd.export.include_roots import flatten_for_export
 
     doc = json.loads((case / CHRONOLOGY).read_bytes())
     doc["object_types"].extend({"id": f"extra_{i}", "kind": "value", "name": f"Extra{i}",
@@ -248,8 +248,32 @@ def test_T8_flatten_for_export_within_bound(case):
 
 def test_T9_include_free_model_takes_the_one_read_path(case, monkeypatch):
     import gnd.model
-    from gnd.export.pyrel_runtime import flatten_for_export
+    from gnd.export.include_roots import flatten_for_export
 
     flat_path, _ = write_flat(case, "extraction.orm.json")
     monkeypatch.setattr(gnd.model, "load_model", lambda *a, **k: pytest.fail("loader called"))
     assert flatten_for_export(flat_path, flat_path.read_bytes()) is None
+
+
+# --- Phase review r1 regression ---------------------------------------------
+
+
+@pytest.mark.parametrize("mode", MODES)
+def test_F1_unencodable_include_path_exits_3_not_70(tmp_path, mode):
+    root = tmp_path / "root.orm.json"
+    root.write_text(json.dumps({"version": 5, "includes": [
+        {"id": "v", "path": "bad\ud800", "sha256": "0" * 64}]}))
+    code, text = export(root, tmp_path / "out.py", mode)
+    assert code == 3, text
+    assert not (tmp_path / "out.py").exists()
+
+
+@pytest.mark.parametrize("mode,prefix", [("default", "invalid model: "),
+                                         ("duckdb", "cannot write the rules program: "),
+                                         ("lqp", "cannot write the rules program: ")])
+def test_include_refusal_message_has_one_prefix(tmp_path, mode, prefix):
+    root = small_root(tmp_path)
+    _hostile(root.parent, "stale")
+    code, text = export(root, tmp_path / "out.py", mode)
+    assert code == 3
+    assert text.strip() == prefix + "include:hash-mismatch"

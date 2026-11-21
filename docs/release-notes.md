@@ -18,6 +18,11 @@ the next one.
   `<stem>.flat.orm.json` and its `gnd-flattening/1` record, for temporal
   roots too, which `gnd extract` refuses; extract's refusal for a temporal
   include root now names it ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
+- **PyRel export of include roots.** `gnd export pyrel`, in the default mode
+  and with `--rules duckdb` or `--rules lqp`, exports an include root through
+  its flat model and records `FLATTENING_RECORD_SHA256` and `MODEL_INCLUDES`
+  in the program. The default mode still refuses temporal models; the
+  `--rules` programs accept them ([#214](https://github.com/vasiloglou/gnd-public/issues/214)).
 
 ## 0.4.0 (2026-11-17)
 

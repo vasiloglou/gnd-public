@@ -123,15 +123,15 @@ Stable in-process access to GND validation and checking reports.
 | `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1031 | Render derived fact types' rules in GND's controlled language. |
 | `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1074 | Audit a declared post, or compute it when ``post`` is omitted. |
 | `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1103 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1211 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1235 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1250 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1258 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1268 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1277 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1289 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1292 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1295 | (no docstring) |
+| `EvaluationSession` | class | 1220 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1244 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1259 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1267 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1277 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1286 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1298 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1301 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1304 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -310,7 +310,7 @@ Components: cli.dispatch
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `main(argv) -> int` | function | 625 | (no docstring) |
+| `main(argv) -> int` | function | 626 | (no docstring) |
 
 ## gnd.compiled_obligations — `src/gnd/compiled_obligations.py`
 Components: check.compiled_obligations
@@ -671,7 +671,7 @@ Saved external opinions: byte binding and separate admission/repair policy.
 | `normalized(r, sources)` | function | 367 | (no docstring) |
 | `qualification(verdict, expected, floor_value, evidence)` | function | 437 | (no docstring) |
 | `evaluate_judgments(policy, receipts, *, model, candidate, mechanical_report, model_bytes, populatio…` | function | 458 | (no docstring) |
-| `redact_policy(result)` | function | 667 | (no docstring) |
+| `redact_policy(result)` | function | 675 | (no docstring) |
 
 ## gnd.manifest_paths — `src/gnd/manifest_paths.py`
 Components: infra.safe_filesystem
@@ -1217,25 +1217,25 @@ Closed exact scalar-term language shared by derivations and guarded rules.
 | `is_temporal_node(node) -> bool` | function | 90 | (no docstring) |
 | `uses_temporal(model) -> bool` | function | 96 | (no docstring) |
 | `require_non_temporal(model, consumer) -> None` | function | 113 | Refuse unsupported consumers before they publish artifacts or claims. |
-| `ExactTermLimits` | class | 130 | (no docstring) |
-| `TermAnalysis` | class | 140 | (no docstring) |
-| `ExactTermResult` | class | 149 | (no docstring) |
-| `ExactTermResult.available(self) -> bool` | method | 158 | (no docstring) |
-| `guarded_operand_evaluator(legacy, scalar_factory)` | function | 162 | Build the unpinned exact-term extension of the guarded operand seam. |
-| `variable_name(term) -> str \| None` | function | 248 | (no docstring) |
-| `is_function_term(term) -> bool` | function | 254 | (no docstring) |
-| `term_variables(term) -> tuple[str, ...]` | function | 258 | Return variables without an unbounded recursive walk. |
-| `analyze_term(term, variables, *, limits) -> TermAnalysis` | function | 295 | Infer one term's primitive and structural budget without evaluating it. |
-| `membership_domain(primitive) -> str \| None` | function | 395 | (no docstring) |
-| `compile_membership(terms) -> MembershipSet \| None` | function | 426 | Compile an authored literal list once for a guarded or derivation filter. |
-| `membership_verdict(operator, value, members, primitive) -> bool \| None` | function | 444 | Return the membership verdict or unavailable for an incompatible value. |
-| `where_uses_membership(where) -> bool` | function | 458 | (no docstring) |
-| `guard_uses_membership(consequent) -> bool` | function | 465 | (no docstring) |
-| `guarded_clause_refusal(constraint) -> str \| None` | function | 475 | Name the new clause shapes for profiles that cannot represent them. |
-| `prepare_comparisons(comparisons)` | function | 489 | Keep the existing filter rows while compiling any membership lists. |
-| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 502 | Evaluate exactly, returning a named unavailable result instead of raising. |
-| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 748 | (no docstring) |
-| `materialize_scalar(value) -> Any` | function | 855 | Return the existing wire scalar for a head value; fractions never escape. |
+| `ExactTermLimits` | class | 137 | (no docstring) |
+| `TermAnalysis` | class | 147 | (no docstring) |
+| `ExactTermResult` | class | 156 | (no docstring) |
+| `ExactTermResult.available(self) -> bool` | method | 165 | (no docstring) |
+| `guarded_operand_evaluator(legacy, scalar_factory)` | function | 169 | Build the unpinned exact-term extension of the guarded operand seam. |
+| `variable_name(term) -> str \| None` | function | 255 | (no docstring) |
+| `is_function_term(term) -> bool` | function | 261 | (no docstring) |
+| `term_variables(term) -> tuple[str, ...]` | function | 265 | Return variables without an unbounded recursive walk. |
+| `analyze_term(term, variables, *, limits) -> TermAnalysis` | function | 302 | Infer one term's primitive and structural budget without evaluating it. |
+| `membership_domain(primitive) -> str \| None` | function | 402 | (no docstring) |
+| `compile_membership(terms) -> MembershipSet \| None` | function | 433 | Compile an authored literal list once for a guarded or derivation filter. |
+| `membership_verdict(operator, value, members, primitive) -> bool \| None` | function | 451 | Return the membership verdict or unavailable for an incompatible value. |
+| `where_uses_membership(where) -> bool` | function | 465 | (no docstring) |
+| `guard_uses_membership(consequent) -> bool` | function | 472 | (no docstring) |
+| `guarded_clause_refusal(constraint) -> str \| None` | function | 482 | Name the new clause shapes for profiles that cannot represent them. |
+| `prepare_comparisons(comparisons)` | function | 496 | Keep the existing filter rows while compiling any membership lists. |
+| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 509 | Evaluate exactly, returning a named unavailable result instead of raising. |
+| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 755 | (no docstring) |
+| `materialize_scalar(value) -> Any` | function | 862 | Return the existing wire scalar for a head value; fractions never escape. |
 
 ## gnd.transition — `src/gnd/transition.py`
 Components: semantics.transitions

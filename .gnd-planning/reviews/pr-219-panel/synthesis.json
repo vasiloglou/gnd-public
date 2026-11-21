@@ -1,0 +1,415 @@
+{
+ "schema_version": 1,
+ "run_sha256": "f4c54e22117b22302b994336dc0a3ac0543421febcef902b0d2668aa46cb45db",
+ "summary": "Six of six seats succeeded. Gemini and GLM approved; Claude, Codex, Qwen and Kimi asked for revision. Four concerns reached two supporters: the temporal refusal is default-mode only, RP1 lacks an offline oracle, LH1-LH2 leave inputs bound to the packaged fixture, and D-12 is not anchored to its home. Qwen received only PROJECT.md inline and could not read the linked outlines.",
+ "agreed_concerns": [
+  {
+   "group_id": "d3-temporal-refusal-default-mode-only",
+   "severity": "high",
+   "title": "The temporal-model refusal exists only in the default PyRel export, not under --rules lqp",
+   "summary": "IR3, D3 and RP4 expect checking.orm.json to reach a temporal-model refusal in both modes. export/emit.py:36 refuses temporal models only in render_pyrel; the --rules lqp route has no such refusal and stops at the anchored constraint instead.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rules-route-has-no-temporal-refusal"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "roadmap-irr-d3-temporal-refusal-rules-mode"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "rp1-require-no-offline-oracle",
+   "severity": "high",
+   "title": "RP1's pass/fail require criterion has no offline enforcing oracle",
+   "summary": "RP1 requires a duplicate (work, passage) population to fail the generated require, but the lqp program is compile-only offline and local DuckDB does not enforce require, while live RelationalAI runs are opt-in.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp1-require-not-enforced-offline"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-require-enforcement"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "lh-inputs-bound-to-packaged-fixture",
+   "severity": "high",
+   "title": "LH1-LH2 do not lift the binding of reading inputs to the packaged saved responses",
+   "summary": "replay() already takes a folder; what blocks a host is ReadingInputs, which requires the saved responses.json and its pin and loads the packaged vocabulary. The LH criteria do not exercise a caller corpus and model with live responses.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh2-replay-root-already-exists"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh-live-inputs"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "d12-not-anchored-to-its-home",
+   "severity": "low",
+   "title": "D-12 is not tied to the document that defines it",
+   "summary": "The roadmap row and maintenance note gate the fix on D-12 without naming its one home, provenance-and-modality.md, or the evolution-contract restatement that option (a) must keep in step.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d12-one-home-not-updated"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-d12-identifier-unattributed"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "quantity-fixture-value-family"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "rp1-cites-wrong-refusal-site"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "ir3-staleness-untested"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "order-statement-mismatch"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "lh-carryover-not-discharged"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "roadmap-row0-overlaps-approved-mg-scope"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "roadmap-milestone3-independence-vs-rp4"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "roadmap-040-and-ga1-premises-unlinked"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "roadmap-order0-blocks-217-without-rationale"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "roadmap-partition-not-traceable-from-table"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-mode-specific-temporal",
+   "rank": 1,
+   "title": "Make D3 and the IR3/RP4 temporal criteria mode-specific",
+   "action": "State per export mode what checking.orm.json does: default mode reaches the emit.py:36 refusal; under --rules lqp either record that date arithmetic lowers and expect export once RP2 lands, or add a named temporal refusal by owner ruling. Re-argue D2 accordingly.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rules-route-has-no-temporal-refusal"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "roadmap-irr-d3-temporal-refusal-rules-mode"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rules-route-has-no-temporal-refusal",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "roadmap-irr-d3-temporal-refusal-rules-mode",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-quantity-fixture-value-constraints",
+   "rank": 2,
+   "title": "Bring fact-scoped value constraints into scope or drop the quantity fixture from RP4",
+   "action": "Add value-constraint support to the rules programs as a phase, or remove quantity_fixture/time.orm.yaml from RP4 and name the refusal it keeps; say which mode RP3's 'keeps exporting' means.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "quantity-fixture-value-family"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "quantity-fixture-value-family",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-rp1-oracle",
+   "rank": 3,
+   "title": "Give RP1 an executable oracle",
+   "action": "State RP1's population criterion against the duckdb program's denial rows offline, keep lqp as compile check plus a named opt-in live run, and cite :882 beside :855 with a top-level test.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp1-require-not-enforced-offline"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-require-enforcement"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp1-cites-wrong-refusal-site"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp1-require-not-enforced-offline",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-require-enforcement",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp1-cites-wrong-refusal-site",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-lh-input-binding",
+   "rank": 4,
+   "title": "Restate LH1-LH2 around the input binding",
+   "action": "Make LH1-LH2 remove the producer-pin and saved-roster coupling (reading.py:75, :113) and the packaged vocabulary load, and add a criterion with a caller corpus and model whose live responses are captured and replayed. Say the host-scale corpus and budget run stays carried with an owner.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh2-replay-root-already-exists"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh-live-inputs"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh-carryover-not-discharged"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh2-replay-root-already-exists",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh-live-inputs",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh-carryover-not-discharged",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-ir3-staleness",
+   "rank": 5,
+   "title": "Name what detects a stale include in IR3, or drop the predicate",
+   "action": "Add the mechanism and a criterion that changes one include and observes the refusal, or remove 'a changed include makes the export stale'.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir3-staleness-untested"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "ir3-staleness-untested",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-d12-home",
+   "rank": 6,
+   "title": "Anchor D-12 to its home",
+   "action": "Name provenance-and-modality.md (Evolve admission, D-12) as the statement option (a) updates, evolution-contract.md:279-280 as the restatement, and link it from the roadmap row.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d12-one-home-not-updated"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-d12-identifier-unattributed"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d12-one-home-not-updated",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-d12-identifier-unattributed",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-ordering-statements",
+   "rank": 7,
+   "title": "Make the ordering and dependency statements agree",
+   "action": "Use one overlap statement for milestones 1 and 2 in PROJECT.md and the pyrel outline, record IR3 as RP4's start condition, say RP4 does not use LH interfaces, and say whether row 0 runs in parallel with the milestones while its ruling is pending.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "order-statement-mismatch"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-milestone3-independence-vs-rp4"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-order0-blocks-217-without-rationale"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "order-statement-mismatch",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-milestone3-independence-vs-rp4",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-order0-blocks-217-without-rationale",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-roadmap-provenance",
+   "rank": 8,
+   "title": "Link the roadmap's premises and earlier planned work",
+   "action": "Link the release-0.4.0 close and the guarded-rule-authoring GA1 record, note that the roadmap supersedes the 0.1.0 current-status line, and state the status of earlier planned sections (model-growth-guardrails and the literature outlines) relative to row 0.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-040-and-ga1-premises-unlinked"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-row0-overlaps-approved-mg-scope"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-040-and-ga1-premises-unlinked",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-row0-overlaps-approved-mg-scope",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-partition-traceability",
+   "rank": 9,
+   "title": "Map phases to issue requests",
+   "action": "In each outline's scope section, map every phase to the issue request it discharges and state the four #214 items.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-partition-not-traceable-from-table"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "roadmap-partition-not-traceable-from-table",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  }
+ ]
+}

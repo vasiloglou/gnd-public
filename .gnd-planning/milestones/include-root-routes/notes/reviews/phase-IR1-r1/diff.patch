@@ -1,0 +1,317 @@
+diff --git a/.gnd-planning/milestones/include-root-routes/notes/phase-IR1-spec.md b/.gnd-planning/milestones/include-root-routes/notes/phase-IR1-spec.md
+index 4d1c7ee4..bb66698c 100644
+--- a/.gnd-planning/milestones/include-root-routes/notes/phase-IR1-spec.md
++++ b/.gnd-planning/milestones/include-root-routes/notes/phase-IR1-spec.md
+@@ -64,9 +64,13 @@ and this spec's gate are recorded."
+ 2. **Cap bounds the algorithm.** The added work is a second composition in
+    `evaluate_judgments`' raw-subject check. Composition is already capped
+    (10 MiB per file, 32 MiB in total, `compose`); work is linear in bytes.
+-   T9 times the judgments route over the checking root after 1,000 value
+-   object types are added to an include (re-pinned) and requires it under
+-   20 s on the test machine.
++   T9 times the composition layer, twice as one run composes it, over the
++   checking root after 1,000 value object types are added to an include
++   (re-pinned), and requires under 5 s. **Corrected (i1), 2026-11-21**, after
++   a reproduced implementation finding (below). Prior wording, kept: "T9 times
++   the judgments route over the checking root after 1,000 value object types
++   are added to an include (re-pinned) and requires it under 20 s on the test
++   machine." 
+ 3. **Validation order.** Unchanged for models without includes: policy,
+    receipts, model, population (`api.py:1158-1164`). For an include root the
+    include checks now run at the model step, after the policy and receipts
+@@ -207,7 +211,7 @@ approving receipts bound to a named model file, as the §2 measurement did.
+ | T6 | parametrized: path `../escape.orm.json`, absent file, `includes` not a list, hash mismatch, nested include; and a negative control | each outcome 3 with the include code in `message`, and the report validates against `judgment.schema.json` with `report.schema.json` registered; the control (0.4.0's refusal shape) fails validation |
+ | T7 | `evaluate_judgments(..., model_root=None)` on a root's bytes; the same call with `model_root` set and no policy | `include:unsupported-route`; then `JudgmentInputError` (the include refusal is skipped and the policy check refuses) |
+ | T8 | malformed policy (`{}`) with a stale include | outcome 3, `reason` `shape` |
+-| T9 | the checking root with 1,000 extra value object types in `chronology`, re-pinned and re-bound | outcome 0 or 1, under 20 s |
++| T9 | (i1) `bytes_declare_includes` and `load_model_bytes_composed(..., bind_references=False)`, twice, over the checking root with 1,000 extra value object types in `chronology`, re-pinned | composes more than 1,000 object types in under 5 s. Prior row, kept: "the checking root with 1,000 extra value object types in `chronology`, re-pinned and re-bound · outcome 0 or 1, under 20 s" |
+ | T10 | `tests/test_mc1_guards.py::test_R5_judgments_api` rewritten: `write_case` root with a stale pin and readable policy and receipts | outcome 3, `message` `include:hash-mismatch` (no longer `include:unsupported-route`) |
+ | T13 `(p2)` | the checking root with `includes` removed and an orphan `fact_type_constraints` added | outcome 3, `message` `include:declaration` |
+ | T12 `(p1)` | the checking root with `reference/catalog.json` moved to a separate folder passed as `--reference-root` | exit 0, `admission` true |
+@@ -247,3 +251,32 @@ implementation and committed red: with only these test bytes added to
+ separate answer key, because the cases are expected exits and error objects,
+ not a blind-reading corpus. The gate is a delegated approval under
+ `auto=true` over this spec and those test bytes.
++
++## Implementation findings, recorded as they were found
++
++**i1, 2026-11-21: the checker is superlinear in the number of object types;
++T9 as first written measured it, not IR1's layer.** With the implementation
++in place, the route-level T9 ran 580.9 s (the bound was 20 s). Measured in
++scratch on the interop fixture with N extra value object types in one
++include:
++
++| N | `load_model` | `gnd check` on the include root | `gnd check` on its flat model |
++|---|---|---|---|
++| 100 | 0.05 s | 0.78 s | — |
++| 300 | 0.12 s | 7.77 s | 7.70 s |
++| 1,000 | 0.20 s | 265.74 s | — |
++
++Composition stays linear and fast. `gnd check` is slow by the same amount
++with or without includes, so the cost is in existing code that IR1 does not
++change. A profile of the 300-type flat model puts 35.3 of 36.0 s under
++`universe._denoting_types` (610 calls) → `resolve_reference_value_type`
++(184,830 calls) → `model_queries._supertype_parents` (184,866 calls, 14.3 s
++own time): one supertype walk per object type, inside a loop over object
++types, inside a loop over roles. `judgments check` runs the checker twice
++(redacted and unredacted reports), hence about 2 × 266 s.
++
++Disposition: T9 is corrected to time the layer IR1 adds (rule 2 as
++written: "a time-bound test over the layer it adds"). The checker scaling is
++an open question for the milestone close, carried to a separate fix outside
++this milestone: it affects `gnd check` on any model with many object types,
++not only include roots.
+diff --git a/docs/reference/cli.md b/docs/reference/cli.md
+index 694f0d6d..a7e0dcdb 100644
+--- a/docs/reference/cli.md
++++ b/docs/reference/cli.md
+@@ -87,7 +87,7 @@ automatic side effects of validation. See [evolution and recovery](../guides/evo
+ | `gnd exp run EXPERIMENT --adapter codex` | A legacy-adapter session under the authored contract |
+ | `gnd exp run EXPERIMENT --adapter-policy POLICY` | A declared-policy session under the authored contract |
+ | `gnd exp close EXPERIMENT` | Completeness gate for questions/evidence and kind-specific obligations |
+-| `gnd judgments check MODEL POPULATION --policy POLICY --receipts RECEIPTS --trusted-root ROOT --format json` | Evaluate saved external opinions and evidence floors |
++| `gnd judgments check MODEL POPULATION --policy POLICY --receipts RECEIPTS --trusted-root ROOT --format json` | Evaluate saved external opinions and evidence floors; an include root is resolved as `gnd check` resolves it ([include routes](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md)) |
+ | `gnd review panel ...` / `gnd review panel-light ...` | Explicit advisory reviewer run; inspect help for the selected artifact kind |
+ | `gnd review finalize ...` | Validate and render a supplied synthesis against retained reviewer evidence |
+ | `gnd solve MODEL --workspace DIR ...` | Gated selected CLI station sequence and walk log |
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 70fa30ef..81b898a1 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -5,6 +5,16 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
+ Changes on `main` after a release are listed in an `Unreleased:` section until
+ the next one.
+ 
++## Unreleased: include roots on more routes
++
++- **Judgments on include roots.** `gnd judgments check` accepts a version-5
++  root with includes, temporal or not, and judges the model `gnd check`
++  composes. Receipts bind the root file's sha256, which commits to every
++  include's pin; `--reference-root` applies to include roots too. Include
++  refusals now report `reason: "binding"` with the include code in
++  `message`, which `judgment.schema.json` allows; 0.4.0 wrote the include
++  code as the reason ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
++
+ ## 0.4.0 (2026-11-17)
+ 
+ If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)
+diff --git a/src/gnd/api.py b/src/gnd/api.py
+index 15abd9b1..a112ca9d 100644
+--- a/src/gnd/api.py
++++ b/src/gnd/api.py
+@@ -1153,14 +1153,20 @@ def judgments(
+             ) from error
+ 
+     try:
+-        from gnd.model._includes import guard_path
+-        guard_path(model_path, "api.judgments")
+         policy = read_judgment_policy(read(policy_path, 1024 * 1024))
+         receipts = read_judgment_receipts(read(receipts_path, 10 * 1024 * 1024))
+         mr, pr = read(model_path, 10 * 1024 * 1024), read(population_path, 10 * 1024 * 1024)
+-        from gnd.model._includes import guard_bytes
+-        guard_bytes(mr, source=model_path, route='api:1123')
+-        model = load_model_bytes(mr, source=model_path)
++        from gnd.model._includes import bytes_declare_includes
++        model_root = None
++        if bytes_declare_includes(mr, source=model_path):
++            # An include root composes as gnd check composes it; its references
++            # are bound below, under --reference-root, like any other model's.
++            from gnd.model import load_model_bytes_composed
++            model_root = Path(model_path).absolute().parent
++            model = load_model_bytes_composed(mr, source=model_path, root=model_root,
++                                              bind_references=False)
++        else:
++            model = load_model_bytes(mr, source=model_path)
+         candidate = load_population_bytes(pr, source=population_path, model=model)
+         refs = bind_declared_references(model, root=reference_root or Path(model_path).parent)
+         raw_mechanical = _check_unresolved(model, candidate, admission=True, references=refs,
+@@ -1184,6 +1190,7 @@ def judgments(
+             population_bytes=pr,
+             trusted_root=trusted_root,
+             references=refs,
++            model_root=model_root,
+         )
+         result["outcome"] = 0 if decision["admission"] else 1
+         result["judgment_policy"] = decision if unredacted else redact_policy(decision)
+@@ -1193,9 +1200,11 @@ def judgments(
+             error={"reason": error.reason, "message": str(error)},
+         )
+     except ModelValidationError as error:
+-        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
+-        result.update(error={"reason": reason or "binding",
+-                             "message": reason or "invalid bound judgment input"})
++        # The report's reason is closed (judgment.schema.json); an include code
++        # travels in the message only.
++        code = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
++        result.update(error={"reason": "binding",
++                             "message": code or "invalid bound judgment input"})
+     except (
+         ValueError,
+         TypeError,
+diff --git a/src/gnd/judgments.py b/src/gnd/judgments.py
+index 3186d37a..d1bfe179 100644
+--- a/src/gnd/judgments.py
++++ b/src/gnd/judgments.py
+@@ -466,9 +466,12 @@ def evaluate_judgments(
+     population_bytes,
+     trusted_root,
+     references=None,
++    model_root=None,
+ ):
+-    from gnd.model._includes import guard_bytes
+-    guard_bytes(model_bytes, source="model.orm.yaml", route="judgments")
++    from gnd.model._includes import bytes_declare_includes, guard_bytes
++    if model_root is None:
++        # A caller that names no root is never judged against a partial model.
++        guard_bytes(model_bytes, source="model.orm.yaml", route="judgments")
+     started = time.monotonic()
+     if (
+         not isinstance(policy, JudgmentPolicy)
+@@ -504,7 +507,12 @@ def evaluate_judgments(
+     )
+     p = policy.doc
+     try:
+-        loaded = load_model_bytes(model_bytes, source="model.orm.yaml")
++        if model_root is not None and bytes_declare_includes(model_bytes, source="model.orm.yaml"):
++            from gnd.model import load_model_bytes_composed
++            loaded = load_model_bytes_composed(model_bytes, source="model.orm.yaml",
++                                               root=model_root, bind_references=False)
++        else:
++            loaded = load_model_bytes(model_bytes, source="model.orm.yaml")
+         supplied = load_population_bytes(population_bytes, source="candidate.pop.json", model=model)
+         if (
+             loaded.model_dump() != model.model_dump()
+diff --git a/src/gnd/model/__init__.py b/src/gnd/model/__init__.py
+index 2a61daf7..1685e86a 100644
+--- a/src/gnd/model/__init__.py
++++ b/src/gnd/model/__init__.py
+@@ -356,19 +356,27 @@ def _load_model_at(data, *, source, descriptor, historical=None, analysis=False)
+     return CompositionView(doc, (), (), (), model) if analysis else model
+ 
+ 
+-def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path) -> Model:
+-    """Resolve the authored model and bind references under one retained root."""
+-    return _composed_view(data, source=source, root=root)
++def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path,
++                              bind_references: bool = True) -> Model:
++    """Resolve the authored model and bind references under one retained root.
+ 
++    ``bind_references=False`` composes and authenticates the includes under
++    ``root`` but leaves declared reference populations unbound, for a caller
++    that binds them itself under another root (``gnd judgments check
++    --reference-root``). Composition and validation are the same either way.
++    """
++    return _composed_view(data, source=source, root=root, bind_references=bind_references)
+ 
+-def _composed_view(data, *, source, root, historical=None, analysis=False):
++
++def _composed_view(data, *, source, root, historical=None, analysis=False,
++                   bind_references=True):
+     with retained_root(root) as descriptor:
+         result = _load_model_at(data, source=source, descriptor=descriptor,
+                                 historical=historical, analysis=analysis)
+         model = result.model if analysis else result
+         if model is None:
+             return result
+-        if model.reference_populations:
++        if bind_references and model.reference_populations:
+             try:
+                 model._references = _bind_at(model, descriptor)
+             except ReferenceHashMismatch:
+diff --git a/src/gnd/model/_includes.py b/src/gnd/model/_includes.py
+index 2827e81b..f155a2e5 100644
+--- a/src/gnd/model/_includes.py
++++ b/src/gnd/model/_includes.py
+@@ -281,14 +281,24 @@ def guard_document(document, route):
+         refuse_unsupported(route)
+ 
+ 
+-def guard_bytes(raw, *, source, route):
++def bytes_declare_includes(raw, *, source) -> bool:
++    """True when RAW parses and declares includes or attachments.
++
++    Bytes that do not parse are reported as declaring nothing, so the caller's
++    ordinary include-free loader keeps its malformed-input refusal.
++    """
+     if not isinstance(raw, (bytes, bytearray)):
+-        return
++        return False
+     try:
+         doc = parse_model_document(raw, source=source)
+     except (ModelLoadError, UnicodeError, ValueError, TypeError, RecursionError, YAMLError):
+-        return  # Original route retains its include-free malformed-input refusal.
+-    guard_document(doc, route)
++        return False
++    return declares_includes(doc)
++
++
++def guard_bytes(raw, *, source, route):
++    if bytes_declare_includes(raw, source=source):
++        refuse_unsupported(route)
+ 
+ 
+ def guard_path(path, route):
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index a1412725..2f9ba942 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -1902,6 +1902,20 @@ digest only as refusal metadata after detection; it never evaluates or
+ claims currency for that composition. Portable standalone skill scripts
+ have their own nonzero refusal and direct callers to `gnd validate`.
+ 
++CLI routes that resolve an include root (every other route refuses it as
++above):
++
++| Route | What it binds |
++|---|---|
++| `gnd validate`, `gnd check` | the composed model; `model_digest` is its composed identity |
++| `gnd extract` (non-temporal models), `gnd verify` | the root's sha256 and each pin, through the extraction flattening record below |
++| `gnd compose` | the composed model, with stale pins refused before population input |
++| `gnd judgments check` | receipts bind the root file's sha256 (`subject.model_sha256`), which commits to every include's pin; references bind under `--reference-root` as for any model. An include refusal reports `reason: "binding"` with the include code as `message` |
++
++`load_model_bytes_composed(..., bind_references=False)` composes and
++authenticates the includes without binding references, for a caller that
++binds them under another root.
++
+ Existing identity functions cover the loaded composition and its authored
+ include/attachment declarations, with their existing field exclusions.
+ Include paths therefore participate in identity. The model dump and identity
+diff --git a/tests/test_ir1_judgments_includes.py b/tests/test_ir1_judgments_includes.py
+index 2853d145..f7157a10 100644
+--- a/tests/test_ir1_judgments_includes.py
++++ b/tests/test_ir1_judgments_includes.py
+@@ -269,17 +269,29 @@ def test_T8_policy_shape_precedes_include_integrity(case):
+ 
+ 
+ # --- T9: time bound over the composition layer ----------------------------
++#
++# Corrected during implementation (spec section 4, rule 2): the first T9 timed
++# the whole judgments route and measured the existing checker, which is
++# superlinear in the number of object types (gnd check alone: 7.7 s at 300
++# extra types, 266 s at 1,000, with or without includes). IR1 adds the
++# composition, twice per run; this case times that layer.
+ 
+ 
+-def test_T9_large_include_judges_within_bound(case):
++def test_T9_composition_layer_within_bound(case):
++    from gnd.model import load_model_bytes_composed
++    from gnd.model._includes import bytes_declare_includes
++
+     edit_include(case, extra_types(1000))
+     repin(case, "checking.orm.json", "chronology")
+-    bind(case, "checking.orm.json")
++    raw = (case / "checking.orm.json").read_bytes()
+     started = time.monotonic()
+-    code, out = judge(case, "checking.orm.json")
++    for _ in range(2):  # api.judgments and the raw-subject check each compose once
++        assert bytes_declare_includes(raw, source="checking.orm.json")
++        model = load_model_bytes_composed(raw, source=case / "checking.orm.json", root=case,
++                                          bind_references=False)
+     elapsed = time.monotonic() - started
+-    assert code in (0, 1), out
+-    assert elapsed < 20, elapsed
++    assert len(model.object_types) > 1000
++    assert elapsed < 5, elapsed
+ 
+ 
+ # --- T12: references of an include root bind at --reference-root ----------

@@ -206,3 +206,30 @@ The owner approved literature-identity plan r3 on 2026-11-15 ([plan gate](milest
 LI0–LI5 are implemented and merged. The [fresh independent reserve](milestones/literature-identity/031-phase-LI5-independent-reserve.md)
 met the L1 scoring threshold. Literature-identity [closed on 2026-11-15](milestones/literature-identity/035-milestone-close.md)
 after six valid responses in its renewed close review. The two successor outlines keep their own gates.
+
+## Roadmap after 0.4.0 — planned, 2026-11-21
+
+GND 0.4.0 is published and its milestone closed on 2026-11-17. Six issues were
+open on 2026-11-21. [#179](https://github.com/vasiloglou/gnd-public/issues/179)
+was already delivered by guarded-rule-authoring GA1 and shipped in 0.4.0; it
+is closed. The other five are planned below, in order. Each milestone is an
+outline r1: not reviewed and not approved. `start-milestone` writes its full
+plan and first spec, and the owner approves the plan before any code.
+
+| Order | Work | Issues | Phases |
+|---|---|---|---|
+| 0 | [Maintenance: evolve and the unattended-growth sources](maintenance/2026-11-21-evolve-constraint-sources/README.md) | [#218](https://github.com/vasiloglou/gnd-public/issues/218) | One fix, after the owner rules (a) widen D-12 or (b) change the document |
+| 1 | [include-root-routes](milestones/include-root-routes/README.md) | [#217](https://github.com/vasiloglou/gnd-public/issues/217), [#214](https://github.com/vasiloglou/gnd-public/issues/214) item 1 | IR1 judgments on include roots, IR2 temporal flattening, IR3 PyRel export of include roots |
+| 2 | [pyrel-rules-coverage](milestones/pyrel-rules-coverage/README.md) | [#214](https://github.com/vasiloglou/gnd-public/issues/214) items 2–4 | RP1 external uniqueness, RP2 anchored projection, RP3 `Number`, RP4 literature end to end |
+| 3 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) | [#216](https://github.com/vasiloglou/gnd-public/issues/216), [#215](https://github.com/vasiloglou/gnd-public/issues/215) | LH1 producer protocol, LH2 replay from a caller root, LH3 generic admission, LH4 admission policy |
+
+Why this order: #217 has no workaround; #214 blocks a downstream query layer
+but its default export works; #215 and #216 have working host-side
+workarounds. Milestones 1 and 2 both edit `export/pyrel_rules.py`, so they run
+one after the other, not as two writers at once. Milestone 3 is independent and
+may run alongside them. Milestones 1 and 2 widen accepted inputs and together
+suit a 0.5.0 release; the maintenance fix may ship earlier.
+
+Open owner decisions are listed in each plan's §5. Work handed to another
+assistant or machine carries a hand-off note in `.gnd-planning/handoffs/`,
+written with the dev-handoff skill and read with dev-takeover.

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "reason": "AC1 COUNT group, contribution and bounded wire lookups. These keys index explicit ModelIndex results, certificate data and validated candidate rows.",
+  "predecessor": ".gnd-planning/milestones/literature-depth/evidence/LD2/review-dynamic-query-successor.json",
+  "predecessor_sha256": "dc2b82af5e0adc8c4a5731f07f445274f5f4ef4567aca005963d078df9292d2d",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/witness/count_membership.py",
+      "_cell",
+      "PRIMITIVES.get(name)",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inputs[inverse[of]]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inputs[inverse[var]]",
+      2
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inverse[of]",
+      2
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inverse[var]",
+      4
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "role_players[body['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "role_players[request['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "selected[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "types[count_roles[0]]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "types[role]",
+      2
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "members_from_snapshot",
+      "members[key]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "members_from_snapshot",
+      "population.facts.get(source, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "members_from_snapshot",
+      "row[role]",
+      3
+    ]
+  ],
+  "result_distinct_rows": 7829,
+  "result_occurrences": 9736
+}

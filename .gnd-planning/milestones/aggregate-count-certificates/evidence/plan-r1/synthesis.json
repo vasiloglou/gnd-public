@@ -1,0 +1,466 @@
+{
+  "schema_version": 1,
+  "run_sha256": "7701d363d27905c14a3728247bbe87dd0e374e8d9f9bfd13554d9549e02fd8bc",
+  "summary": "Six valid opinions request plan revisions. The revised plan addresses the shared semantic and verification gaps while retaining the selected bounded snapshot scope.",
+  "agreed_concerns": [
+    {
+      "group_id": "forgeries",
+      "title": "Refuse self-consistent member substitutions",
+      "summary": "Use an authored oracle and explicit omission, substitution, duplication, wrong origin, order and count mutations.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "missing-duplicate-substitution-padding-controls"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "representative-occurrence-canonicality"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-missing-substitution-mutation"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-canonical-alias-duplicate-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "count-plan-substituted-occurrence-no-mutation-control"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "certified-occurrence-value-not-re-derived"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "canonical-member-sequence-undefined-and-duplicates-untested"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "input-binding",
+      "title": "Authenticate the expected snapshot and request",
+      "summary": "Require caller-selected model, population and request identities. Apply whole-relation declared coverage to empty and nonempty proofs.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "coverage-requirement-asymmetric-and-unbound"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "binding-controls-incomplete"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-coverage-declaration-unauthenticated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "count-plan-coverage-declaration-unverified-extent"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rule-fragment-and-coverage-not-in-binding"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "legacy-corridor",
+      "title": "Compare both routes on the same population",
+      "summary": "Verify named empty certificate, absence of a zero aggregate row, unchanged legacy bytes and the ordinary witness refusal.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "no-differential-control-against-legacy-evaluator"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-empty-group-legacy-row-corridor"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "empty-group-member-added-control-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "legacy-aggregate-row-not-measured-on-empty-group-snapshot"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "bounds",
+      "title": "Bound raw intake, scan and output work",
+      "summary": "Cap input reads, visits, unique members and encoded bytes. Test refusal precedence and each ceiling independently.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bounded-work-input-read-and-ordering"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "work-ceiling-owner-and-exit4-control-unstated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "independence",
+      "title": "Prove replay is independent of production",
+      "summary": "Use a shared narrow source-scan primitive with separate orchestration modules and test replay under an import blocker.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "replay-independence-not-structurally-enforced"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-replay-independence-uncontrolled"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "replay-independence-not-enforced"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "mistyped-selector-vacuous-empty"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "fragment-refusal-controls-missing"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "five-controls-not-enumerated"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "AC-ROSTER-MUTATIONS"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "AC-EMPTY-POPULATED"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "AC-TARGET-COVERAGE-BINDING"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "missing-dup-sub-controls"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "member-witness-linkage-untested"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "zero-arity-over-scope-ambiguous"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "verification-gates-not-named"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-1",
+      "rank": 1,
+      "title": "Refuse self-consistent member substitutions",
+      "action": "Use an authored oracle and explicit omission, substitution, duplication, wrong origin, order and count mutations.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "missing-duplicate-substitution-padding-controls"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "representative-occurrence-canonicality"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-missing-substitution-mutation"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-canonical-alias-duplicate-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "count-plan-substituted-occurrence-no-mutation-control"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "certified-occurrence-value-not-re-derived"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "canonical-member-sequence-undefined-and-duplicates-untested"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "missing-duplicate-substitution-padding-controls",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "representative-occurrence-canonicality",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-missing-substitution-mutation",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-canonical-alias-duplicate-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "count-plan-substituted-occurrence-no-mutation-control",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "certified-occurrence-value-not-re-derived",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "canonical-member-sequence-undefined-and-duplicates-untested",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-2",
+      "rank": 2,
+      "title": "Authenticate the expected snapshot and request",
+      "action": "Require caller-selected model, population and request identities. Apply whole-relation declared coverage to empty and nonempty proofs.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "coverage-requirement-asymmetric-and-unbound"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "binding-controls-incomplete"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-coverage-declaration-unauthenticated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "count-plan-coverage-declaration-unverified-extent"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rule-fragment-and-coverage-not-in-binding"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "coverage-requirement-asymmetric-and-unbound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "binding-controls-incomplete",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-coverage-declaration-unauthenticated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "count-plan-coverage-declaration-unverified-extent",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rule-fragment-and-coverage-not-in-binding",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-3",
+      "rank": 3,
+      "title": "Compare both routes on the same population",
+      "action": "Verify named empty certificate, absence of a zero aggregate row, unchanged legacy bytes and the ordinary witness refusal.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "no-differential-control-against-legacy-evaluator"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-empty-group-legacy-row-corridor"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "empty-group-member-added-control-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "legacy-aggregate-row-not-measured-on-empty-group-snapshot"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "no-differential-control-against-legacy-evaluator",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-empty-group-legacy-row-corridor",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "empty-group-member-added-control-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "legacy-aggregate-row-not-measured-on-empty-group-snapshot",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-4",
+      "rank": 4,
+      "title": "Bound raw intake, scan and output work",
+      "action": "Cap input reads, visits, unique members and encoded bytes. Test refusal precedence and each ceiling independently.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bounded-work-input-read-and-ordering"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "work-ceiling-owner-and-exit4-control-unstated"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bounded-work-input-read-and-ordering",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "work-ceiling-owner-and-exit4-control-unstated",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-5",
+      "rank": 5,
+      "title": "Prove replay is independent of production",
+      "action": "Use a shared narrow source-scan primitive with separate orchestration modules and test replay under an import blocker.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "replay-independence-not-structurally-enforced"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-replay-independence-uncontrolled"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "replay-independence-not-enforced"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "replay-independence-not-structurally-enforced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "count-plan-replay-independence-uncontrolled",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "replay-independence-not-enforced",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    }
+  ]
+}

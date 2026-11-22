@@ -222,6 +222,11 @@
       "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
     },
     {
+      "source": "gnd.commands.witness",
+      "target": "gnd.witness.count_cli",
+      "reason": "Register the bounded COUNT membership producer and replay at the witness command boundary."
+    },
+    {
       "source": "gnd.commands.export",
       "target": "gnd.export.pyrel_runtime",
       "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."

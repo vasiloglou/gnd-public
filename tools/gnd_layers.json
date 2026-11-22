@@ -992,6 +992,22 @@
       "lane": "witness",
       "layer": "lanes"
     },
+    "gnd.witness.count_cli": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.count_membership": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.count_producer": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.count_replay": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
     "gnd.witness.flattening": {
       "lane": "witness",
       "layer": "lanes"

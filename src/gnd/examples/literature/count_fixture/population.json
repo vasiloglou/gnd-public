@@ -1,0 +1,20 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "model_id": "urn:gnd-fixture:count-membership@1",
+    "covers": ["observation", "method_count"]
+  },
+  "facts": {
+    "observation": [
+      {"group": "flow", "member": "beta", "tag": "included", "source": "notes-b"},
+      {"group": "other", "member": "gamma", "tag": "included", "source": "notes-c"},
+      {"group": "flow", "member": "alpha", "tag": "included", "source": "notes-a"},
+      {"group": "flow", "member": "beta", "tag": "included", "source": "corroboration-b"}
+    ],
+    "method_count": [
+      {"group": "flow", "count": 2},
+      {"group": "other", "count": 1}
+    ]
+  }
+}

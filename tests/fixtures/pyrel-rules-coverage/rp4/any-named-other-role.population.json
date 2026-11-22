@@ -1,0 +1,24 @@
+{
+ "population": {
+  "model": "any-named.orm.json",
+  "source": "fixture",
+  "covers": [
+   "assessed_any",
+   "wants_grade"
+  ]
+ },
+ "facts": {
+  "wants_grade": [
+   {
+    "student": "s1",
+    "grade": "C"
+   }
+  ],
+  "assessed_any": [
+   {
+    "student": "s1",
+    "grade": "A"
+   }
+  ]
+ }
+}

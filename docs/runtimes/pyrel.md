@@ -168,6 +168,13 @@ are empty, as GND reports it. One difference: GND accepts any scalar as the
 value of an externally identified entity, and the programs need strings, so a
 number there is refused (exit 3).
 
+A value constraint scoped to a role (`role_ref`), written at the top level
+or on a fact type, checks only the values in that role, as GND does: the
+same value in another role of the object type, or in its instances roster,
+does not count, and the rule is vacuous when the role has no facts. A value
+constraint on a fact type without `role_ref` covers the object type's
+values everywhere, like the top-level form.
+
 `Number` is typed like `Float`: GND admits a finite integer or float there
 and checks no precision or scale, and the programs hold it as a binary
 float. An integer beyond 2**53 in a `Number` or `Float` cell cannot be held

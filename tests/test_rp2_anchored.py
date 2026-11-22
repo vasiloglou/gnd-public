@@ -12,7 +12,7 @@ import pytest
 import test_pyrel_rules as rules_tests
 
 from gnd.export.pyrel_rules import _Model, render, render_report, requirements
-from gnd.export.pyrel_runtime import ExportInputError, _parse_document
+from gnd.export.pyrel_runtime import _parse_document
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = rules_tests.NATIVE
@@ -51,9 +51,10 @@ def test_anchored_models_render(model, target):
     assert listed and 'not checked' in source
 
 
-def test_quantity_fixture_passes_anchored_and_stops_on_its_value_rules():
-    with pytest.raises(ExportInputError, match=r"time_step#1: family 'value'"):
-        render(LIT / 'quantity_fixture/time.orm.yaml', 'duckdb')
+def test_quantity_fixture_passes_anchored_and_lists_it():
+    # RP2 let the anchored rule through; its role-scoped value rules export since RP4 (test_rp4_role_value)
+    source, listed = render_report(LIT / 'quantity_fixture/time.orm.yaml', 'duckdb')
+    assert listed == ['time_step#0'] and 'not checked' in source
 
 
 def test_anchored_ids_are_listed_and_never_compiled():

@@ -1,0 +1,93 @@
+{
+ "version": 4,
+ "model_id": "urn:gnd:rp4:create-named",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "student",
+   "name": "Student",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "grade",
+   "name": "Grade",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "grade_code"
+   }
+  },
+  {
+   "id": "grade_code",
+   "name": "GradeCode",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "grade_any",
+   "reading": "{Student} has {Grade}",
+   "roles": [
+    {
+     "role_name": "student",
+     "object_type": "student"
+    },
+    {
+     "role_name": "grade",
+     "object_type": "grade"
+    }
+   ]
+  },
+  {
+   "id": "wants_grade",
+   "reading": "{Student} wants {Grade}",
+   "roles": [
+    {
+     "role_name": "student",
+     "object_type": "student"
+    },
+    {
+     "role_name": "grade",
+     "object_type": "grade"
+    }
+   ]
+  }
+ ],
+ "constraints": [],
+ "operations": [
+  {
+   "id": "add_grade",
+   "reading": "{Grade} is added",
+   "parameters": [
+    {
+     "name": "g",
+     "object_type": "grade"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "create": {
+      "object_type": "grade",
+      "param": "g"
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Grade} is added"
+   }
+  }
+ ]
+}

@@ -1,0 +1,184 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:rp1:disconnected-semiderived",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "Personid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "country",
+   "name": "Country",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "country_id"
+   }
+  },
+  {
+   "id": "country_id",
+   "name": "Countryid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "city",
+   "name": "City",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "city_id"
+   }
+  },
+  {
+   "id": "city_id",
+   "name": "Cityid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "company",
+   "name": "Company",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "company_id"
+   }
+  },
+  {
+   "id": "company_id",
+   "name": "Companyid",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "lives",
+   "reading": "{Person} {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ],
+   "derivation": "semiderived",
+   "derivation_rule": {
+    "head": {
+     "person": "$person",
+     "country": "$country"
+    },
+    "body": [
+     {
+      "fact_type": "lives_seed",
+      "bind": {
+       "person": "$person",
+       "country": "$country"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "capital",
+   "reading": "{City} {Country}",
+   "roles": [
+    {
+     "object_type": "city",
+     "role_name": "city"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ],
+   "derivation": "semiderived",
+   "derivation_rule": {
+    "head": {
+     "city": "$city",
+     "country": "$country"
+    },
+    "body": [
+     {
+      "fact_type": "capital_seed",
+      "bind": {
+       "city": "$city",
+       "country": "$country"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "lives_seed",
+   "reading": "{Person} {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  },
+  {
+   "id": "capital_seed",
+   "reading": "{City} {Country}",
+   "roles": [
+    {
+     "object_type": "city",
+     "role_name": "city"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "eu",
+   "type": "uniqueness",
+   "scope": "external",
+   "role_refs": [
+    {
+     "fact_type": "lives",
+     "role": "country"
+    },
+    {
+     "fact_type": "capital",
+     "role": "country"
+    }
+   ],
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "eu"
+   }
+  }
+ ]
+}

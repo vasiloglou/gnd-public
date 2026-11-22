@@ -158,8 +158,17 @@ when it checks without a sidecar: each program prints the rule's id and the
 reason, and a must-rule listed this way gives exit 4. An anchored rule ties a
 value to a span of a source document; `gnd check --anchors SIDECAR --document
 DOC` decides it, and the programs read no sidecar. The export's success line
-says how many rules are listed. External uniqueness
-and frequency, exclusive-or over role sequences, subtypes, disconnected rule
+says how many rules are listed.
+
+External uniqueness is checked over GND's shared-entity join: the referenced
+fact types join on their other roles by object type, and two join rows with
+the same referenced values break the rule. A join whose fact types share no
+such object type is listed as not checked, or vacuous when all its fact lists
+are empty, as GND reports it. One difference: GND accepts any scalar as the
+value of an externally identified entity, and the programs need strings, so a
+number there is refused (exit 3).
+
+External frequency, exclusive-or over role sequences, subtypes, disconnected rule
 bodies, opaque derivation rules, `avg`, division, rounding, the other
 non-exact functions, arithmetic on Float values and times of day (`DateTime`)
 are refused by name when you export. So is a fact type

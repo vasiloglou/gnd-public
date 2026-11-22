@@ -1,0 +1,32 @@
+{
+ "population": {
+  "model": "renamed-anchor.orm.json",
+  "source": "fixture",
+  "covers": [
+   "heads",
+   "lives"
+  ]
+ },
+ "facts": {
+  "lives": [
+   {
+    "resident": "p1",
+    "country": "fr"
+   },
+   {
+    "resident": "p2",
+    "country": "fr"
+   }
+  ],
+  "heads": [
+   {
+    "leader": "p1",
+    "country": "fr"
+   },
+   {
+    "leader": "p2",
+    "country": "fr"
+   }
+  ]
+ }
+}

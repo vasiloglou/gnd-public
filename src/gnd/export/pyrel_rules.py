@@ -183,6 +183,8 @@ class _Model:
             raise ExportInputError(f"unknown object type {object_id!r}")
         if "primitive" in obj:
             primitive = obj["primitive"]
+        elif self.external(object_id):
+            primitive = "String"   # D4: its values are strings here; check_cell refuses any other scalar
         else:
             reference = (obj.get("reference") or {}).get("value_type")
             if reference is None:
@@ -191,6 +193,17 @@ class _Model:
         if primitive not in _TYPES:
             raise ExportInputError(f"primitive {primitive!r} is not supported by the rules programs yet")
         return primitive
+
+    def external(self, object_id: str) -> bool:
+        """An entity identified outside the model: no primitive and no reference value type."""
+        obj = self.objects.get(object_id) or {}
+        reference = obj.get("reference") or {}
+        return obj.get("kind") == "entity" and "primitive" not in obj and reference.get("mode") == "external" \
+            and reference.get("value_type") is None
+
+    def cell_type(self, object_id: str) -> str:
+        """The type the programs check a cell against: an external entity's is its own (D4 message)."""
+        return "External" if self.external(object_id) else self.raw_primitive(object_id)
 
     def raw_role_type(self, fact_id: str, role_name: str) -> str:
         for role in self.roles(fact_id):
@@ -701,6 +714,76 @@ def _uniqueness(model: _Model, c: dict[str, Any], fact_id: str) -> Requirement |
                        ("any", (fact_id,)), (fact_id,))
 
 
+def _external_uniqueness(model: _Model, c: dict[str, Any]) -> list[Requirement]:
+    """GND's shared-entity join (semantic_spec.role_sequence_rows), twice: equal referenced values need equal anchors.
+
+    One fact type is a projection, so its rows differ when any other role differs; across fact
+    types the non-referenced (anchor) roles join by object type. A disconnected join is listed
+    as not checked, as GND reports it; an ambiguous one is an invalid model, refused.
+    """
+    refs = c.get("role_refs")
+    if (not isinstance(refs, list) or not refs
+            or not all(isinstance(r, dict) and isinstance(r.get("fact_type"), str) and isinstance(r.get("role"), str)
+                       for r in refs)):
+        raise ExportInputError(f"{c['id']}: external uniqueness needs role_refs, a non-empty list of "
+                               "{fact_type, role} mappings")
+    by_fact: dict[str, list[str]] = {}
+    for ref in refs:
+        fact_id, role = ref["fact_type"], ref["role"]
+        if role not in {r["role_name"] for r in model.roles(fact_id)}:
+            raise ExportInputError(f"{c['id']}: fact type {fact_id!r} has no role {role!r}")
+        if role in by_fact.get(fact_id, []):
+            raise ExportInputError(f"{c['id']}: role_refs name {fact_id}.{role} twice; the rules programs refuse that")
+        by_fact.setdefault(fact_id, []).append(role)
+    facts = tuple(by_fact)
+    joined = len(facts) > 1
+    anchors = {f: [(r["role_name"], r["object_type"] if joined else r["role_name"])
+                   for r in model.roles(f) if r["role_name"] not in by_fact[f]] for f in facts}
+    if joined:
+        for fact_id, pairs in anchors.items():
+            keys = [key for _, key in pairs]
+            if len(keys) != len(set(keys)):
+                raise ExportInputError(f"{c['id']}: invalid model: the shared-entity join is ambiguous in {fact_id} "
+                                       "(two anchor roles of one object type); gnd check refuses it too")
+        holders: dict[str, list[str]] = {}
+        for fact_id in facts:
+            for _, key in anchors[fact_id]:
+                holders.setdefault(key, []).append(fact_id)
+        reached, frontier = {facts[0]}, [facts[0]]
+        while frontier:   # fact types are linked when they share an anchor object type
+            for _, key in anchors[frontier.pop()]:
+                for other in holders.pop(key, ()):
+                    if other not in reached:
+                        reached.add(other)
+                        frontier.append(other)
+        if len(reached) != len(facts):
+            model.unchecked.append({"id": c["id"], "modality": c["modality"], "vacuous_if_empty": list(facts),
+                                    "reason": f"join-disconnected: {', '.join(facts)} share no anchor object type"})
+            return []
+    ref_names = _sequence_names(refs)
+    taken = set(ref_names)
+
+    def anchor(key: str, copy: int) -> str:
+        name = f"${key}_{copy}"
+        while name in taken:
+            name = f"{name}_"
+        return name
+
+    keys = list(dict.fromkeys(key for f in facts for _, key in anchors[f]))
+    copies = [{key: anchor(key, n) for key in keys} for n in (1, 2)]
+    slot = {(ref["fact_type"], ref["role"]): name for ref, name in zip(refs, ref_names)}
+    atoms = [tuple(Atom(f, tuple(slot.get((f, r["role_name"])) or copy[dict(anchors[f])[r["role_name"]]]
+                                 for r in model.roles(f))) for f in facts) for copy in copies]
+    info = (("external", True), ("refs", [[ref["fact_type"], ref["role"]] for ref in refs]))
+    lowered = [Requirement(c["id"], "uniqueness", c["modality"], _quote(c), atoms[0], Check("none"), tuple(ref_names),
+                           ("any", facts), facts, part="join", listing=True, info=info)]
+    if keys:   # with no anchor role, rows of a set are distinct: only the listing (vacuity) remains
+        pairs = tuple((copies[0][key], copies[1][key]) for key in keys)
+        lowered.append(Requirement(c["id"], "uniqueness", c["modality"], _quote(c), atoms[0] + atoms[1],
+                                   Check("same", pairs=pairs), tuple(ref_names), ("any", facts), facts, info=info))
+    return lowered
+
+
 def spanning_uniqueness(doc: dict[str, Any]) -> list[str]:
     """Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header)."""
     model = _Model(doc)
@@ -887,8 +970,10 @@ def constraint_requirements(
         return _exclusive_or(model, c)
     if family == "cardinality":
         return _cardinality(model, c)
-    if family in ("uniqueness", "frequency") and c.get("scope") == "external":
-        raise ExportInputError(f"{c.get('id')}: external {family} is a later phase of the rules programs")
+    if family == "uniqueness" and c.get("scope") == "external":
+        return _external_uniqueness(model, c)
+    if family == "frequency" and c.get("scope") == "external":
+        raise ExportInputError(f"{c.get('id')}: external frequency is a later phase of the rules programs")
     if family == "textual":
         model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"],
                                 "reason": f"textual rule: {c['expression']}"})
@@ -1543,6 +1628,14 @@ def judge(parts, found, facts, computed=()):
         # the count requirements decide; the member listing supplies GND's witness (every member)
         low, high = bool(rows_of.get('min')), bool(rows_of.get('max'))
         return ('fail', sorted(members, key=canon)) if low or high else ('pass', None)
+    if info.get('external'):
+        # GND's shared-entity join: vacuous when it has no rows; else one line listing every
+        # referenced tuple that two join rows share (role_refs order)
+        if not rows_of['join']:
+            return 'vacuous', None
+        repeated = {json.dumps(list(row)): list(row) for row in rows_of.get('', [])}
+        witness = [repeated[k] for k in sorted(repeated)]
+        return ('fail', witness) if witness else ('pass', None)
     if family == 'derivation':
         # GND reports at most one missing and one extra fact, the first of each
         witness = [{label: first_row(rows_of[part], info['roles'])}
@@ -1636,7 +1729,7 @@ def state_lines(population, found, computed=None, derivations=True):
                 print(f'{name}  not checked  ({reason})')
                 unchecked = unchecked or rule['modality'] == 'alethic'
                 continue
-        if rule['family'] in GROUPED:
+        if rule['family'] in GROUPED or rule['info'].get('external'):
             verdict, witness = judge(parts, found, facts, computed)
             if verdict == 'vacuous':
                 print(f'{name}  vacuous  (no facts for it to apply to)')
@@ -1655,6 +1748,11 @@ def state_lines(population, found, computed=None, derivations=True):
             print(f'{name}  {status}  {json.dumps(hit, sort_keys=True)}')
         violated = violated or (bool(hits) and status == 'violated')
     for rule in UNCHECKED:
+        lists = rule.get('vacuous_if_empty')
+        if lists and all(not (found.get(f'computed:{ref}') if ref in computed else facts.get(ref)) for ref in lists):
+            print(f"{rule['id']}  vacuous  (no facts for it to apply to)")
+            vacuous = True
+            continue
         print(f"{rule['id']}  not checked  ({rule['reason']})")
         unchecked = unchecked or rule['modality'] == 'alethic'
     return out, {'violated': violated, 'unchecked': unchecked, 'vacuous': vacuous}
@@ -2080,7 +2178,11 @@ def main(argv=None):
         parser.error('enforcing requirements needs a population and --connection NAME '
                      '(a RelationalAI engine); DuckDB does not enforce require. '
                      'Use --compile to inspect, or the duckdb version of this program to check locally.')
-    population = read_population(args.population)
+    try:
+        population = read_population(args.population)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(f'{args.population}: not a readable population ({type(error).__name__}: {error})', file=sys.stderr)
+        return 3
     import warnings
     from relationalai.config import create_config
     # The direct LQP compiler lowers `where(D).require(C)` to `D and not C => Error("Requirements not met", ...)`.
@@ -2394,7 +2496,7 @@ def _roster_types(model: _Model) -> dict[str, str]:
     found = {}
     for object_id in model.objects:
         try:
-            found[object_id] = model.raw_primitive(object_id)
+            found[object_id] = model.cell_type(object_id)
         except ExportInputError:
             continue
     return found
@@ -2523,7 +2625,7 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
         + ("\nfrom fractions import Fraction" if target == "duckdb" else ""),
         (f"\nSCHEMA = {schema!r}\n" + flattening_constants(flat) + f"RULES = json.loads({_rules_table(reqs)!r})\n"
          f"SEMIDERIVED = {[h for h in model.derived if model.facts[h]['derivation'] == 'semiderived']!r}\n"
-         f"ROLES = {({f: [[r['role_name'], model.raw_role_type(f, r['role_name'])] for r in model.roles(f)] for f in model.facts})!r}\n"
+         f"ROLES = {({f: [[r['role_name'], model.cell_type(r['object_type'])] for r in model.roles(f)] for f in model.facts})!r}\n"
          f"ROSTERS = {_roster_types(model)!r}\n"
          f"UNCHECKED = json.loads({json.dumps(model.unchecked)!r})\n"
          f"REFERENCE = json.loads({json.dumps(reference)!r})\nLIMIT = 1 << 20\n"
@@ -2558,7 +2660,11 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
         "        for row in rows_:\n"
         "            for role, primitive in ROLES.get(fact_type, []):\n"
         "                check_cell(fact_type, role, primitive, row.get(role))\n"
-        "            key = json.dumps(row, sort_keys=True)\n"
+        "            if any(isinstance(v, float) and (v != v or abs(v) == float('inf')) for v in row.values()):\n"
+        "                raise ValueError(f'{fact_type} holds a number that is not finite; GND refuses it')\n"
+        "            # GND's identity: 1 and 1.0 are one number, so the row repeats a fact\n"
+        "            key = json.dumps({r: ['number', *v.as_integer_ratio()] if isinstance(v, (int, float)) and not isinstance(v, bool)\n"
+        "                              else v for r, v in row.items()}, sort_keys=True)\n"
         "            if key in seen:\n"
         "                raise ValueError(f'duplicate rows in {fact_type}: PyRel relations are sets, so '\n"
         "                                 'repeated facts cannot be checked here; GND reports them')\n"
@@ -2574,7 +2680,14 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
         "    \"\"\"GND refuses a cell of the wrong type (exit 3); so does this program, before PyRel sees it.\"\"\"\n"
         "    if isinstance(value, dict):\n"
         "        raise ValueError(f'{fact_type}.{role} holds an opaque value; the rules programs do not check those')\n"
+        "    if primitive == 'External':   # D4: an externally identified entity\n"
+        "        if not isinstance(value, str):\n"
+        "            raise ValueError(f'{fact_type}.{role} is {value!r}: GND accepts any scalar for an externally '\n"
+        "                             'identified entity; the rules programs need strings')\n"
+        "        return\n"
         "    number = isinstance(value, (int, float)) and not isinstance(value, bool)\n"
+        "    if isinstance(value, float) and (value != value or abs(value) == float('inf')):\n"
+        "        raise ValueError(f'{fact_type}.{role} is {value!r}, a number that is not finite; GND refuses it')\n"
         "    ok = {'String': isinstance(value, str), 'Boolean': isinstance(value, bool),\n"
         "          'Integer': number and isinstance(value, int), 'Float': number,\n"
         "          'Duration': number and isinstance(value, int) and 0 <= value <= 1_000_000,\n"
@@ -2627,6 +2740,9 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
     for rule in model.unchecked:
         if "expression" in rule:
             out.append(f"    # {rule['id']}: textual rule, not checked by GND or here: {rule['expression']!r}")
+        elif "vacuous_if_empty" in rule:
+            out.append(f"    # {rule['id']}: not checked by GND or here (vacuous when its fact lists are empty): "
+                       f"{rule['reason']}")
         else:
             out.append(f"    # {rule['id']}: not checked by GND without a sidecar, or here: {rule['reason']}")
     if names.step:

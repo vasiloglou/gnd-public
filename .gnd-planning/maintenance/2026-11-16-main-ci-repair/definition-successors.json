@@ -1,0 +1,26 @@
+{
+ "schema_version": 1,
+ "reason": "Main CI repair 2026-11-16: two model-composition definitions changed again after MC3; each row names its phases.",
+ "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json",
+ "predecessor_sha256": "bfdeefc9bf23e406e609df654227118a74cca03ccb6710d9e1df73d2373e2204",
+ "successors": [
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_rule_temporal_language",
+   "home": "gnd.model._validation",
+   "before": "103b7fa206683165bf02face125bd8d46e053ccd9cede2a340c8b4eb7328b1fd",
+   "after": "20ffaf038be22725a2b66d4ed746ae8b5bd2d045cc232e7ddabbc81a92ee823a",
+   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
+  },
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "_load_model_no_follow",
+   "home": "gnd.model",
+   "before": "a5f47fe10efebb934e14ccb729b2115dde19743318603ffb9f932ca661a30e97",
+   "after": "3ad8687c0c3dcc88200877068f9b35218bf2f39bdbc240d9d509471d15cb2b12",
+   "reason": "Body changed by LX3 review (9e1c1d29) catalog validation and mixed witness intake."
+  }
+ ]
+}

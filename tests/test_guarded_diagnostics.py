@@ -116,11 +116,12 @@ def test_guarded_diagnostics_and_baseline_share_ratchet(tmp_path):
 
 
 def test_literal_domain_work_exhaustion_is_visible(tmp_path, monkeypatch):
-    from gnd.model import _validation
+    from gnd.model import _guarded, _validation
 
     _write(tmp_path, ["antecedent_typo"])
     model = json.loads((tmp_path / "model.orm.yaml").read_text())
-    monkeypatch.setattr(_validation, "_GUARDED_LITERAL_DOMAIN_WORK", 1)
+    # The limit is read in its defining home, gnd.model._guarded (CI repair 2026-11-16).
+    monkeypatch.setattr(_guarded, "_GUARDED_LITERAL_DOMAIN_WORK", 1)
     findings = _validation._rule_guarded_literal_domain(model)
     assert len(findings) == 1
     assert findings[0].rule_id == "semantic:guarded-literal-domain-work-limit"

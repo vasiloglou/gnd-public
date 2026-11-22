@@ -1,0 +1,23 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/pyrel-rules-coverage-plan.md",
+  "sha256": "077871ed1e7b5e2adad1b47ae5fab84603c24ea54d406794a663aaaefd874179",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "pyrel-rules-coverage plan r3",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, a phase cannot be specified, implemented or tested as written, or the milestone would not do what its goal claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "Can each phase RP1 to RP5 be specified, implemented and tested as sections 2 and 4 write it, within the scope of sections 1 and 7? Is any criterion in section 4 impossible or unfalsifiable?",
+   "Does each code location, line number, quoted message and measured GND behaviour cited in the plan (especially section 1) match the repository at this checkout? Read the cited lines in src/gnd and tests before reporting a mismatch.",
+   "Do the binding rules of section 0 (including same-verdict scoped to accepted inputs, and Ossie export unchanged) and the proposals of section 10 (D1, D2, D4, D5, D6) agree with what GND's checker actually does, and with the criteria? Would any of them make the DuckDB program disagree with gnd check on an input it accepts?",
+   "Is the external-uniqueness lowering of section 2 RP1 the same join GND's checker uses (src/gnd/checker/_core.py _join_rows; semantic_spec.py join classification), including vacuity, ambiguous and disconnected joins, and anchor matching by object type?",
+   "Are the order, dependencies and verification lanes of sections 3, 8 and 9 consistent and sufficient for each criterion, including the opted-in pyrel_oracle lane?",
+   "Round 1's findings and their dispositions are in evidence/plan-review-r1/disposition.md; r3's repairs are tagged (p1). Judge whether each repair holds, and whether a repair introduced a new defect.",
+   "The RP1 draft spec at .gnd-planning/milestones/pyrel-rules-coverage/notes/phase-RP1-spec.md may be read for context; a concern about it must still cite the plan file and name the spec line in the observation.",
+   "Every concern's evidence must cite the plan file."
+  ]
+ }
+}

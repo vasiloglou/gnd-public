@@ -39,11 +39,11 @@ _cmd_export_pyrel.__module__ = "gnd.cli"
 
 def _cmd_export_pyrel_rules(model_path: str, out_path: str, *, target: str) -> int:
     """Write the model's rules as a readable PyRel program of requirements (duckdb or lqp)."""
-    from gnd.export.emit import render_pyrel_rules
+    from gnd.export.emit import render_pyrel_rules_report
     from gnd.export.pyrel_runtime import ExportInputError, write_new
 
     try:
-        source = render_pyrel_rules(Path(model_path), target)
+        source, not_checked = render_pyrel_rules_report(Path(model_path), target)
     except FileNotFoundError as error:
         print(f"missing input: {error}", file=sys.stderr)
         return EXIT_NO_INPUT
@@ -61,7 +61,8 @@ def _cmd_export_pyrel_rules(model_path: str, out_path: str, *, target: str) -> i
     except OSError as error:
         print(f"output failure: {error}", file=sys.stderr)
         return EXIT_INTERNAL
-    print(f"Exported the model's rules as PyRel requirements ({target} version) to {out_path}")
+    listed = f"; {len(not_checked)} rule(s) are not checked (listed in the program)" if not_checked else ""
+    print(f"Exported the model's rules as PyRel requirements ({target} version) to {out_path}{listed}")
     return 0
 
 

@@ -1,0 +1,43 @@
+{
+ "population": {
+  "model": "three-way.orm.json",
+  "source": "fixture",
+  "covers": [
+   "citizen",
+   "lives",
+   "works_at"
+  ]
+ },
+ "facts": {
+  "works_at": [
+   {
+    "person": "p1",
+    "company": "acme"
+   },
+   {
+    "person": "p2",
+    "company": "acme"
+   }
+  ],
+  "lives": [
+   {
+    "person": "p1",
+    "city": "paris"
+   },
+   {
+    "person": "p2",
+    "city": "paris"
+   }
+  ],
+  "citizen": [
+   {
+    "person": "p1",
+    "country": "fr"
+   },
+   {
+    "person": "p2",
+    "country": "fr"
+   }
+  ]
+ }
+}

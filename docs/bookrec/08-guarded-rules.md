@@ -18,16 +18,11 @@ Each step answers one question about a guarded rule:
 
 !!! note "Where these commands ship"
 
-    `--guarded-diagnostics`, `--baseline-model` and `--guarded-cases` are on
-    `main` after 0.3.0 and are not in a published package yet. Install GND
-    from a checkout of the repository to run this chapter. `--rule-ids`,
-    `--baseline` and `--allow-vacuous` have shipped since 0.2.0, as the
-    [release notes](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules)
-    record.
-
-    Case generation needs the optional `synth` extra. From the checkout, run
-    `uv sync --locked --extra synth`, then activate the environment before
-    running the commands below.
+    GND 0.4.0 includes all commands in this chapter. Case generation needs
+    the optional `synth` extra. See the
+    [installation guide](../installation.md) for the published runtime and
+    [synthetic data guide](../guides/synthetic-data.md#generate-examples-for-guarded-rules)
+    for the optional extra.
 
 No model account, native solver or network connection is needed. The chapter
 does not need the PyRel environment of [chapter 7](07-native.md).

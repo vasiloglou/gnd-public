@@ -204,6 +204,7 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'bookrec': sorted((root / 'docs/bookrec').glob('[0-9]*.md')),
         'shared-expenses': [root / 'docs/how-to/shared-expense-policies-commands.md'],
         'expense': sorted((root / 'docs/expense').glob('[0-9]*.md')),
+        'literature': [root / 'docs/literature/commands.md'],
         'api': [root / 'docs/reference/python-api.md'],
         'walkthrough': [root / 'docs/walkthrough.md'],
         'induced': [root / 'docs/how-to/learn-rules-commands.md'],

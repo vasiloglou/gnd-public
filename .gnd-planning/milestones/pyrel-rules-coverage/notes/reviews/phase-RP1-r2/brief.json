@@ -1,0 +1,276 @@
+{
+  "base": "6cfeed33",
+  "claims": [
+    "F1 fixed: the population reader keys rows by GND's identity, so 1 and 1.0 in one role are a repeated fact and the input is refused (exit 3) for external and inline uniqueness alike, never merged into a pass",
+    "F2 fixed: a disconnected rule's vacuity reads the computed view of semiderived relations, agreeing with gnd check (exit 2)",
+    "F3 fixed: the LQP program returns 3, without a traceback, for a population it cannot read, as the DuckDB version does",
+    "RP1-C1..C9 as in round 1 still hold; the Ossie export of assertions and the three-way fixture keeps its pre-phase bytes",
+    "The RF6 dynamic-query successor records exactly the new counted reads, chained after the previous head with its SHA-256; no historical evidence file is rewritten"
+  ],
+  "created": "2026-11-22T09:07:28.254457+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r2/diff.patch",
+      "sha256": "23595aa590c286019a45e3a72e579aa9e090c449aab00fc482285999c80055c2"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/README.md",
+      "sha256": "49819e6f6ab850a173355f48858c1b7a1a3f278e1a0549b7d39b5321c5ab929b"
+    },
+    {
+      "path": "docs/runtimes/pyrel.md",
+      "sha256": "38712ee499852a45d9539c82edbbe915f2b8689a10501e670d57e6caa60daefb"
+    },
+    {
+      "path": "src/gnd/export/pyrel_rules.py",
+      "sha256": "07386801ed0deb1fbf1ef735ea7371b29f1898bec31ada1ff0142013117ae847"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "bd6429e6f3fddf231f9dd857c547e1418fbc69c9e0dd993790c25311f5b02006"
+    },
+    {
+      "path": "tests/test_pyrel_rules_families.py",
+      "sha256": "3389b5662e5153c46ef6ee01fa3875e7677dcf98df02770a3d0cfe11d3f01aa1"
+    },
+    {
+      "path": ".gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR1-r1/review.log",
+      "sha256": "29e5bb8e3df4449f059bde94dbd0978425590735c205e106fae0f99f46c272ef"
+    },
+    {
+      "path": ".gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR2-r1/review.log",
+      "sha256": "ad6e15580205508df8f33356314f9f7072521cf01bd493151e42dba41e697b48"
+    },
+    {
+      "path": ".gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR3-r1/review.log",
+      "sha256": "5da792cfb6c988e2a9f21c01ad7f4f2d55010781af2f27579e4e03c156c7a5a5"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/evidence/RP1/dynamic-query-successor.json",
+      "sha256": "aa180028b0cd2291b8e168aa1a2f82ce1a5a014029a480cb255ca36b0d6a5be6"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/phase-RP3-spec.md",
+      "sha256": "e6d9f314294fa3891d8c2d134c4db1c7cbf70aa52f0704bd00590935f6c4e3bb"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/BRIEF.md",
+      "sha256": "db5bd1a54ab5af81b66965312b0cf1b9ad7be62c529f3f066f0217413173b08a"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/FINDINGS.md",
+      "sha256": "1c74a215688c64a7d153420a6c909e8ba6b2fe4f37ea6a5ee29e9494697e1ee7"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/brief.json",
+      "sha256": "3fa96eb71e551973e9dba82a5400468f7c3b22bb23aeeb58504fa65359724ac7"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/diff.patch",
+      "sha256": "dce5ed910fc49e7e445b9a50c569eaa3d72a93dbf2f4328e5e2907b1a2146dc3"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/review.log",
+      "sha256": "61b8189d5c3f37a4536085e0f9d30f09b9fa1849c3981f47e659bb26ed802b07"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/review.md",
+      "sha256": "af90362ec56fc315e9d9f9ea798a19244ea2e7aa7a9136af05d77434ac6aaf7d"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/run.json",
+      "sha256": "a9621041e30f46a31d748745dd83ad41bb2416283ef2cddb8ebe84974f96ad5f"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP2-r1/review.log",
+      "sha256": "c2bf65c347c1197196e91a95d0bbec8e1b7ed9565d8ddf94b0da0392a58e96e3"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/ambiguous.orm.json",
+      "sha256": "f3f03f1637adf5e8b93bfe45235d038a3917de186b4cd7364b3390353aa01e99"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/assertions-duplicate.population.json",
+      "sha256": "8a5d7f5276f673a6ef11a31dcb78b7ec08a5ff1d42295d5b12cc60dae84e6a60"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/assertions-empty-join.population.json",
+      "sha256": "baa942110dd260f6cbf432d0fa50130c027e66751b7376202bfa36125ef1ff24"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/assertions-integer-id.population.json",
+      "sha256": "2a309fb0f0d47e3d6cf13b4a4cec42b138977fe5b33a521d2aac5caba8dc0afe"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/disconnected-empty.population.json",
+      "sha256": "4233be1a90c2bc42a5bc0282280dce817af058bfe1190694f8bf6626d21c2bc3"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/disconnected-facts.population.json",
+      "sha256": "9e2f8da3eba0920f8a85c02799babda5e3fac0c44684981779ec2f6ceb58323f"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/disconnected-partial.population.json",
+      "sha256": "69511dd3fa9360f4a364af91afafa579ca49327fe7f03503d378f022be5ee409"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/disconnected-semiderived.orm.json",
+      "sha256": "5bc0193aa73074d9ec5707ed028c64b41ab6ce73a504c43b507be514e078975e"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/disconnected-semiderived.population.json",
+      "sha256": "6ada9ab0584b8d3f8f22f1e1d58bcbdc44a5919982f85584433ea17605efff04"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/disconnected.orm.json",
+      "sha256": "3d2c1de99b1837846295d5cdd0d62091a62a6d32000e2c0abf5f6679d846273e"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/numeric-anchor.orm.json",
+      "sha256": "b3eddc57affb401533190862e74a6a6149ffb48f5b17e9e596aac81bd30b37da"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/numeric-duplicate.population.json",
+      "sha256": "179bf97f2e3a0fe3de23f3c89136d285bc443649f0b9d379af5f9665e315ec4c"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/numeric-inline-repeated.population.json",
+      "sha256": "7a801ee030f95b29404b42c95df73a5ebe99cef1c4a2aabfb29d39c6bd87744d"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/numeric-inline.orm.json",
+      "sha256": "62b3dd24c1d2f45015e1aa95713960b7fe1331422092643b229b0b38855f5a49"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/numeric-repeated-fact.population.json",
+      "sha256": "105fad723955518127610069299439b35344ff544b6de6b084e5b27c7c3e4096"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/renamed-anchor.orm.json",
+      "sha256": "6f6d4191965111f29dd891735ae6790183e682bdbe7426ff87a8434ee51639ff"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/renamed-duplicate.population.json",
+      "sha256": "21d6b09b43d37ee4700b2b8e729324c59b8e8f02dc66cee7ecfe86ef5180e6db"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/three-way-duplicate.population.json",
+      "sha256": "459d7f4c776c7eeafe67028edbcd9e2f00a5bc80fa735957eef98c995ff91935"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/three-way-pass.population.json",
+      "sha256": "1a96a6509b3471a71d24e3d1638d806dcdc0e529128e33441fe540068b8eccd0"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp1/three-way.orm.json",
+      "sha256": "2f683881401a274e9a093e94756772eab373706ddaeb9db366fc74925bc015d9"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/allowed-beyond.orm.json",
+      "sha256": "2575c355fe4ccd2f83bc2476423300bbf5327a06eeed0639e24c174c437563c8"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/arithmetic.orm.json",
+      "sha256": "b31092be400e78f3f7041b24b6070943ba4edd4d4b0d2bae0c0e3081caf3a643"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/at-bound.population.json",
+      "sha256": "12cd79553b2b897406e5e95ec9c88dafad316e248659c5301bd197b6627f039f"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/beyond.population.json",
+      "sha256": "27d6e2c35ba5331560a77ba9e96e4a2f7fb9d9af1ca12f8fdb78a9d3bc7ee702"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/boolean.population.json",
+      "sha256": "38393e12ee97f26369196be0e7b6b0f30bf46f6fa8a4cdbb3eae5973a7ae42ae"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/compare-beyond.orm.json",
+      "sha256": "80fb56a869275989629944365fc0a5f7f9da331083432626b3116f8efa4bb779"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/duplicate.population.json",
+      "sha256": "c1605ddab8a000905d28a565cb73d0a7ffedad7e83f3d48b7c08698a9b9e2f22"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/float.orm.json",
+      "sha256": "ecdb57e13faaba619f167d6618862d058a58a819f0ebafd2616c108f904a2822"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/pass.population.json",
+      "sha256": "86f49f990c7d5951f566f7bffb2c3810d2ec2bde1d53f18b6674ccd4133ebae4"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/range-beyond.orm.json",
+      "sha256": "edaaa636d7cc2784afc46d9d27fd4bd332351d77313b54230326f995f6582e33"
+    },
+    {
+      "path": "tests/fixtures/pyrel-rules-coverage/rp3/six-line.orm.json",
+      "sha256": "d27c126262a79e01d7cc919c56749aef083a6d52d4eccc5b9697399608b98668"
+    },
+    {
+      "path": "tests/test_rp1_external_uniqueness.py",
+      "sha256": "55472b5ba85852c64e14424440656317b12c652e875fd57bc694e03641fc366f"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-rules-coverage/notes/phase-RP1-spec.md",
+      "sha256": "de95894e6e26c4b78f7d982a0b029f38d0534878d0aea80efd13ad3ed4619818"
+    }
+  ],
+  "head": "6cfeed33433a95018ed8142cbd8e338e33a1ab86",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR1-r1/review.log (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR2-r1/review.log (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR3-r1/review.log (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/evidence/RP1/dynamic-query-successor.json (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/phase-RP3-spec.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/BRIEF.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/FINDINGS.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/brief.json (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/diff.patch (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/review.log (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/review.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/run.json (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP2-r1/review.log (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/ambiguous.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/assertions-duplicate.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/assertions-empty-join.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/assertions-integer-id.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/disconnected-empty.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/disconnected-facts.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/disconnected-partial.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/disconnected-semiderived.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/disconnected-semiderived.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/disconnected.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/numeric-anchor.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/numeric-duplicate.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/numeric-inline-repeated.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/numeric-inline.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/numeric-repeated-fact.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/renamed-anchor.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/renamed-duplicate.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/three-way-duplicate.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/three-way-pass.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp1/three-way.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/allowed-beyond.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/arithmetic.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/at-bound.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/beyond.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/boolean.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/compare-beyond.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/duplicate.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/float.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/pass.population.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/range-beyond.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/fixtures/pyrel-rules-coverage/rp3/six-line.orm.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/test_rp1_external_uniqueness.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Round 2 of the RP1 phase review. Round 1 (phase-RP1-r1/review.md) returned F1-F3; FINDINGS.md records them reproduced and fixed. Are the repairs correct and complete, did they break anything, and does the RP1 diff now lower GND's external uniqueness with the same verdict and witness as gnd check on every accepted input, refusing by name what it cannot represent?",
+  "subject": "phase",
+  "version": 1
+}

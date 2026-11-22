@@ -1,0 +1,28 @@
+{
+ "population": {
+  "model": "disconnected-semiderived.orm.json",
+  "source": "fixture",
+  "covers": [
+   "lives",
+   "capital",
+   "lives_seed",
+   "capital_seed"
+  ]
+ },
+ "facts": {
+  "lives": [
+   {
+    "person": "p1",
+    "country": "fr"
+   }
+  ],
+  "capital": [
+   {
+    "city": "paris",
+    "country": "fr"
+   }
+  ],
+  "lives_seed": [],
+  "capital_seed": []
+ }
+}

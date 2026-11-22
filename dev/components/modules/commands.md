@@ -92,8 +92,8 @@ Components: cli.export_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 181 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 210 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 182 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 211 | (no docstring) |
 
 ## gnd.commands.extract — `src/gnd/commands/extract.py`
 Components: cli.extract_command
@@ -112,6 +112,15 @@ Components: cli.fidelity_command
 | --- | --- | --- | --- |
 | `add_parsers(subparsers, *, command)` | function | 56 | (no docstring) |
 | `handle(args, parsers) -> int` | function | 67 | (no docstring) |
+
+## gnd.commands.flatten — `src/gnd/commands/flatten.py`
+Components: cli.flatten_command
+(no docstring)
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `add_parsers(subparsers, *, command)` | function | 26 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 38 | (no docstring) |
 
 ## gnd.commands.judgments — `src/gnd/commands/judgments.py`
 Components: cli.judgments_command

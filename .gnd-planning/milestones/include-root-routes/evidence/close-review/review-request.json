@@ -1,0 +1,30 @@
+{
+ "schema_version": 1,
+ "kind": "spec-results-delta",
+ "spec": {
+  "path": ".gnd-planning/milestones/include-root-routes/notes/include-root-routes-plan.md",
+  "sha256": "d090387762a75d0c64bfd8c16f16af53776dce46e923753fbd98984021af1a3d",
+  "media_type": "text/markdown"
+ },
+ "results": {
+  "path": ".gnd-planning/milestones/include-root-routes/notes/close-results.md",
+  "sha256": "012dad61cab5ace04dc4fe3123749df798b42816eae4596391c64fa044107b9b",
+  "media_type": "text/markdown"
+ },
+ "delta": {
+  "path": ".gnd-planning/milestones/include-root-routes/notes/close-delta.md",
+  "sha256": "fdf2d287d3622155557f071b81347af6dbc07ec979349d8aa0bd4324dde90d25",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "include-root-routes milestone close",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the milestone does not demonstrably do what its goal predicates claim, or a result in the results file is not supported by the cited records or code. \"No concerns, and here is what I checked\" is a valid answer.",
+   "Does every goal predicate in the plan have evidence in the results that would fail if the predicate were false? Read the phase records 002-phase-IR1.md, 003-phase-IR2.md, 004-phase-IR3.md and the tests they cite before judging.",
+   "Do the shipped code paths (src/gnd/api.py judgments, src/gnd/judgments.py, src/gnd/extract/flatten_service.py, src/gnd/export/include_roots.py, src/gnd/export/emit.py, src/gnd/export/pyrel_rules.py) behave as the results and delta say, in particular for models without includes, which must be unchanged?",
+   "Is every open question raised in the milestone's records dispositioned in the results (closed, carried with an owner, or an accepted residual), and is any disposition wrong?",
+   "Are the close amendments in plan section 11 each supported by the record that raised them, with the prior wording kept?",
+   "Every concern's evidence must cite one of the three named files; name the record, code or test line in the observation."
+  ]
+ }
+}

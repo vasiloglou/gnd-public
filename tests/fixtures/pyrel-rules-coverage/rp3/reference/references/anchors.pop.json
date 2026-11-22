@@ -1,0 +1,32 @@
+{
+ "population": {
+  "model": "../model.orm.json",
+  "source": "fixture",
+  "covers": [
+   "holds",
+   "visits"
+  ]
+ },
+ "facts": {
+  "holds": [
+   {
+    "badge": 9007199254740992,
+    "country": "fr"
+   },
+   {
+    "badge": 9007199254740993,
+    "country": "fr"
+   }
+  ],
+  "visits": [
+   {
+    "badge": 9007199254740992,
+    "city": "paris"
+   },
+   {
+    "badge": 9007199254740993,
+    "city": "paris"
+   }
+  ]
+ }
+}

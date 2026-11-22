@@ -10,6 +10,7 @@
     "gnd.commands.exp",
     "gnd.commands.export",
     "gnd.commands.extract",
+    "gnd.commands.flatten",
     "gnd.commands.fidelity",
     "gnd.commands.judgments",
     "gnd.commands.lifecycle",
@@ -30,6 +31,7 @@
     "gnd.export.ilp_service",
     "gnd.export.verification_service",
     "gnd.extract.service",
+    "gnd.extract.flatten_service",
     "gnd.fidelity.doccheck_service",
     "gnd.fidelity.service",
     "gnd.measure.service",
@@ -367,6 +369,9 @@
     ],
     "gnd.commands.extract": [
       "gnd.extract.service"
+    ],
+    "gnd.commands.flatten": [
+      "gnd.extract.flatten_service"
     ],
     "gnd.commands.fidelity": [
       "gnd.fidelity.service"

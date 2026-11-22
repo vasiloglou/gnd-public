@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reason": "RP3 types Number like Float and bounds integers at 2**53 (D6): the guards read the type of every role a variable fills, an aggregate result's type, the head's role types and what each head role is given, and each operand's terms, so no constant, arithmetic or aggregate next to a Float or Number value escapes the bound.",
+  "predecessor": ".gnd-planning/milestones/pyrel-rules-coverage/evidence/RP1/dynamic-query-successor.json",
+  "predecessor_sha256": "aa180028b0cd2291b8e168aa1a2f82ce1a5a014029a480cb255ca36b0d6a5be6",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_binary_variables",
+      "set[str]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_clause_lines",
+      "types.get(aggregate['of'])",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_binary_context",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact",
+      "(head_types or {}).get(role)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact",
+      "types.get(t)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact_head",
+      "clause['head'][role]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact_head",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact_head",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact_head",
+      "head_types.get(role)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_inexact_head",
+      "set[str]",
+      2
+    ]
+  ],
+  "result_distinct_rows": 7841,
+  "result_occurrences": 9748
+}

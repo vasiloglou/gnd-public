@@ -521,13 +521,20 @@ IKE_Q3_RULED = {
                                         "reason": "binding"}],
     "judgments/linked": ["return", 3, {"message": "invalid bound judgment input",
                                        "reason": "binding"}],
+    # LX3 review (9e1c1d29): a changed catalog raises ReferenceHashMismatch, a
+    # subclass of ReferenceInputError, with the same message.
+    "witness/changed": ["raise", "ReferenceHashMismatch",
+                        "reference raw hash does not match declared sha256"],
+    "replay/changed": ["raise", "ReferenceHashMismatch",
+                       "reference raw hash does not match declared sha256"],
 }
 
 
 @pytest.mark.parametrize("key", sorted(H3_BEFORE))
 def test_h3_every_homes_outcome_is_unchanged(tmp_path, monkeypatch, key):
     """D6-A: adopting the helper changes no home's outcome, except the four
-    rows IKE-Q3 ruled (discover and judgments on a missing or linked reference)."""
+    rows IKE-Q3 ruled (discover and judgments on a missing or linked reference)
+    and the two LX3 rows (witness and replay on a changed catalog)."""
     from support import reference_homes
 
     home, damage = key.split("/")

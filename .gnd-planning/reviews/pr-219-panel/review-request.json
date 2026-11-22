@@ -1,0 +1,21 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/PROJECT.md",
+  "sha256": "9f7d5fa2250f0d8d0a4859206e5e73087ce11c6b38db88f625881ed5f790dfd0",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "roadmap after 0.4.0",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "Judge the section 'Roadmap after 0.4.0 -- planned, 2026-11-21' at the end of the plan, together with the README, plan outline and maintenance note each of its table rows links to. The earlier sections are history and are not under review.",
+   "For each planned milestone and the maintenance pass, can every phase be specified, implemented and tested as its linked outline writes it, within the scope the outline states?",
+   "Does each code location, line number and quoted message cited in the roadmap section and its linked files match the repository at this checkout?",
+   "Does the partition of the issue requests the outlines quote (#214 to #218) leave any request unowned, owned twice, or contradicted by a stated out-of-scope line?",
+   "Are the order, the dependencies, the owner decisions and the acceptance criteria consistent across the roadmap section and its linked files, and is any acceptance criterion impossible within its stated scope?",
+   "Every concern's evidence must cite the plan file. For a concern in a linked file, cite the roadmap table row that links it and name the linked file and line in the observation."
+  ]
+ }
+}

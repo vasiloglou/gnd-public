@@ -1,0 +1,43 @@
+{
+  "artifacts": {
+    "reading.orm.applicable.json": {
+      "sha256": "61cea62e030360026e1b6b81a2a017f7ce5a84a61de9a64fbb9007c4f8b27ee4"
+    },
+    "reading.orm.flat.orm.json": {
+      "sha256": "e124c113508b688ed4313d34f65454571aae88ea6cd2be1a0d47dd306efb08fc"
+    },
+    "reading.orm.flattening.json": {
+      "sha256": "1329657a3ff15133662bf846cc7c162782bf9c7dd0bbc69ab7d14bc0aa02ff48"
+    },
+    "reading.orm.projection.schema.json": {
+      "sha256": "ea7dc060026ed2d19db5aa2a00bd27de7eaa2205b718f5c308e501a28519a9f0"
+    },
+    "reading.orm.verbalization.txt": {
+      "sha256": "5fbf70e702fcb3c7f4e93ca5cd9f5375fd1ba20175937a8d5f68adc8c496ce15"
+    }
+  },
+  "flattening": {
+    "flat_model": "reading.orm.flat.orm.json",
+    "record": "reading.orm.flattening.json"
+  },
+  "gnd_version": "0.3.1",
+  "header_template": {
+    "covers": [
+      "approved_vendor",
+      "expense_claimed_for_trip",
+      "expense_has_amount",
+      "expense_incurred_on",
+      "expense_paid_to_vendor",
+      "receipt_issued_by_vendor",
+      "trip_ends_on",
+      "trip_starts_on"
+    ],
+    "model": "reading.orm.json",
+    "model_id": "urn:gnd-example:expense-receipts-reading@1",
+    "source": "agent-output"
+  },
+  "model": {
+    "path": "reading.orm.json",
+    "sha256": "f5280c4db56c3e045ebd5538f8e0330105b9abcdfb9d00cc8df9d7278aabaffe"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "state": "done",
+  "reviewer": "claude",
+  "argv": [
+    "claude",
+    "--print",
+    "--safe-mode",
+    "--model",
+    "opus",
+    "--permission-mode",
+    "plan",
+    "--output-format",
+    "text",
+    "--no-session-persistence"
+  ],
+  "stdout": "review.md",
+  "model": "opus",
+  "effort": "",
+  "timeout_minutes": 15,
+  "brief_sha256": "f3e6d48a5ba65d33b780137b04d43d7a7f1b80d8783ac42a536b1f759fb52cf3",
+  "started": "2026-11-17T13:45:08.293765+00:00",
+  "transport": "stdin",
+  "exit": 0,
+  "finished": "2026-11-17T13:49:24.001477+00:00",
+  "review_sha256": "cca9412deaec0ed51c33e6544fa3c9b276a2d3f7121584d8da3fd1748eb4f515",
+  "brief_files_unchanged": true
+}

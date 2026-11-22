@@ -1,0 +1,28 @@
+{
+ "population": {
+  "model": "numeric-anchor.orm.json",
+  "source": "fixture",
+  "covers": [
+   "holds",
+   "visits"
+  ]
+ },
+ "facts": {
+  "holds": [
+   {
+    "badge": 1,
+    "country": "fr"
+   },
+   {
+    "badge": 1.0,
+    "country": "fr"
+   }
+  ],
+  "visits": [
+   {
+    "badge": 1,
+    "city": "paris"
+   }
+  ]
+ }
+}

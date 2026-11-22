@@ -38,7 +38,9 @@ def _immutable(value):
         assert value.__dataclass_params__.frozen
         for field in dataclasses.fields(value):
             _immutable(getattr(value, field.name))
-    elif isinstance(value, tuple):
+    elif isinstance(value, (tuple, frozenset)):
+        # GC2 added SnapshotIR.computed_available, a frozenset of names: immutable
+        # as long as every member is.
         for item in value:
             _immutable(item)
     else:

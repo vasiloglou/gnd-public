@@ -25,6 +25,14 @@ The ONE owner of the two per-model bundle conventions: the slugged stem and
 | `bundle_stem(model_path) -> str` | function | 49 | The slugged filename stem the bundle's four files share. |
 | `header_template(model_path, model) -> dict[str, Any]` | function | 64 | The one deterministic owner of the extraction population header. |
 
+## gnd.extract.flatten_service — `src/gnd/extract/flatten_service.py`
+Components: extract.flatten_service
+``gnd flatten``: write an include root's flat model and its flattening record.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `flatten_to(model_path, out_dir, *, output_format) -> int` | function | 19 | Flatten MODEL_PATH into OUT_DIR, both files or neither; return the exit code. |
+
 ## gnd.extract.guidelines — `src/gnd/extract/guidelines.py`
 Components: extract.guidelines
 The optional extraction guideline file of ``gnd extract --guidelines`` (MG4).

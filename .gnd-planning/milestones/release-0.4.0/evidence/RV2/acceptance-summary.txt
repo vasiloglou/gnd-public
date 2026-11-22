@@ -1,0 +1,30 @@
+Run output. Edited to replace home and temporary paths.
+
+release/get_nick_done-0.4.0-py3-none-any.whl: OK
+release/get_nick_done-0.4.0.tar.gz: OK
+comparison/get_nick_done-0.4.0-py3-none-any.whl: OK
+release/get_nick_done-0.4.0-py3-none-any.whl: OK
+release/get_nick_done-0.4.0.tar.gz: OK
+comparison/get_nick_done-0.4.0-py3-none-any.whl: OK
+648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+arm64
+Python 3.11.18
+uv 0.10.10 (8c730aaad 2026-03-13)
+36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c  release/get_nick_done-0.4.0-py3-none-any.whl
+2c171ccccc891333a580c3fe01c4b79ac5d3e5098af20827977a6ce455a229b6  release/get_nick_done-0.4.0.tar.gz
+36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c  comparison/get_nick_done-0.4.0-py3-none-any.whl
+Independent wheel, sdist and comparison wheel match the retained SHA256SUMS.
+release/get_nick_done-0.4.0-py3-none-any.whl: OK
+release/get_nick_done-0.4.0.tar.gz: OK
+comparison/get_nick_done-0.4.0-py3-none-any.whl: OK
+Python 3.11.18
+uv 0.10.10 (8c730aaad 2026-03-13)
+2026-11-17T14:37:20Z
+.......................                                                  [100%]
+23 passed in 920.19s (0:15:20)
+Installed acceptance exit 0.
+gnd 0.4.0
+2026-11-17T14:52:42Z

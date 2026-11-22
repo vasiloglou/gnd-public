@@ -1,10 +1,80 @@
 # Release notes and milestones
 
-Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and 0.1.0
-came before it. Version 0.3.1 is a GitHub tag only and is not published on the
-package index. Releases follow the [release procedure](releasing.md). Changes on
-`main` after a release are listed in an `Unreleased:` section until the next
-one.
+Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
+0.1.0 came before it. Releases follow the [release procedure](releasing.md).
+Changes on `main` after a release are listed in an `Unreleased:` section until
+the next one.
+
+## Unreleased: include roots on more routes
+
+- **Judgments on include roots.** `gnd judgments check` accepts a version-5
+  root with includes, temporal or not, and judges the model `gnd check`
+  composes. Receipts bind the root file's sha256, which commits to every
+  include's pin; `--reference-root` applies to include roots too. Include
+  refusals now report `reason: "binding"` with the include code in
+  `message`, which `judgment.schema.json` allows; 0.4.0 wrote the include
+  code as the reason ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
+- **`gnd flatten`.** A new command writes an include root's
+  `<stem>.flat.orm.json` and its `gnd-flattening/1` record, for temporal
+  roots too, which `gnd extract` refuses; extract's refusal for a temporal
+  include root now names it ([#217](https://github.com/vasiloglou/gnd-public/issues/217)).
+- **PyRel export of include roots.** `gnd export pyrel`, in the default mode
+  and with `--rules duckdb` or `--rules lqp`, exports an include root through
+  its flat model and records `FLATTENING_RECORD_SHA256` and `MODEL_INCLUDES`
+  in the program. The default mode still refuses temporal models; the
+  `--rules` programs accept them ([#214](https://github.com/vasiloglou/gnd-public/issues/214)).
+- **Unencodable include paths.** An include path that cannot be encoded as
+  UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
+  error itself, and the PyRel export exited 70.
+
+## 0.4.0 (2026-11-17)
+
+If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)
+also describe changes in this release. The 0.3.1 tag also adds an explicit
+diagnostic when guarded-case synthesis needs the optional `synth` extra.
+
+### Literature: identity, composition and depth
+
+The [literature lineage walkthrough](literature/01-lineage.md) follows reviewed
+claims back to their sources and checks which lineage paths those claims support.
+
+- **Identity and lineage.** Witness and why-not commands accept version 1 models
+  and models without an explicit identifier. The packaged literature corpus
+  includes a staged assurance report. Composition binds reviewed identity
+  decisions to its record. Name diagnostics suggest unresolved candidates for
+  review. Saved judgments support contextual assertions and checked lineage paths.
+- **Model includes and reference catalogs.** Extract and check with separately
+  rooted models, and verify witness and replay against the flattened model.
+  A [fixed reference catalog](reference/composition.md) can participate in
+  composition, checking, witness and replay. Replay refuses a catalog whose
+  bytes differ from the recorded input.
+- **Scientific evidence and revisions.** The packaged examples cover
+  source-scoped claims, time dimensions, exact decimal replay and multipass
+  reading with explicit coverage. Semantic migration records bind a revision
+  to its inputs and support replay of earlier snapshots. Support-scoped
+  verdicts show which derived claims survive a revision.
+
+### Guarded-rule clauses
+
+Guarded and derivation comparisons support typed literal lists with `in`.
+Guarded antecedents support `negate` and `where` filters, with coverage-aware
+verdicts. Guarded consequents support `any_of`, with diagnostics for failed
+alternatives. Supported clause shapes lower into exporters, with installed
+retail examples exercising the behavior. See the
+[rule-check report reference](reference/rule-check-report.md).
+
+### Other changes
+
+- The [expense receipts walkthrough](expense/05-receipts.md) combines three
+  documents using reviewed vendor identities. It shows how an omitted
+  decision stops composition and how different decisions change findings.
+- BookRec now has runnable chapters for
+  [guarded rules](bookrec/08-guarded-rules.md),
+  [suggested rules](bookrec/09-suggested-rules.md) and
+  [claims from reviews](bookrec/10-what-reviews-say.md).
+- The representation format names five additional rule IDs. Synthesis and
+  assurance preserve the scope of their existing bounded coverage measures
+  as the new guarded clauses become available.
 
 ## 0.3.1 (tagged 2026-11-11, not published on PyPI)
 

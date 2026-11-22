@@ -6,12 +6,11 @@ marketplace commands below. Python 3.11 or newer is required.
 See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
 for the pip virtual-environment alternative.
 
-The command below installs the published runtime. If your plugin comes from a
-`main` that has unreleased changes, install the runtime from a checkout of the
-same commit instead, as [Updates](#updates) shows.
+The command below installs the published runtime. When using a plugin from
+another commit, match its runtime as [Updates](#updates) describes.
 
 ```sh
-uv tool install get-nick-done==0.3.0
+uv tool install get-nick-done==0.4.0
 uv tool update-shell
 ```
 
@@ -50,7 +49,7 @@ it there if that client does not share the CLI installation.
 These commands use GND's repository marketplace. They do not submit GND to an
 Anthropic or OpenAI curated directory. Until the repository is public, GitHub
 access is required. The marketplace files must be merged into `main` before the
-commands above work. The `v0.3.0` tag contains both the Python release and these
+commands above work. The `v0.4.0` tag contains both the Python release and these
 marketplace entries; the commands above use `main`.
 
 ## Existing skill installations

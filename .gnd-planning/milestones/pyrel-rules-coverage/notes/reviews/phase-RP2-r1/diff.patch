@@ -1,0 +1,596 @@
+diff --git a/docs/explanation/rules-as-pyrel.md b/docs/explanation/rules-as-pyrel.md
+index 05813be1..e7cdf75c 100644
+--- a/docs/explanation/rules-as-pyrel.md
++++ b/docs/explanation/rules-as-pyrel.md
+@@ -67,7 +67,8 @@ those rows are the facts GND names in its feedback, like
+   the state before a step, `previous(step, before)`. A rule across a step reads
+   both.
+ - **A judgement.** A textual rule has no PyRel line. It is reported as not
+-  checked on every run.
++  checked on every run. So is an anchored rule, which ties a value to a
++  passage of a source document that only `gnd check --anchors` can read.
+ 
+ ## What GND refuses to export
+ 
+diff --git a/docs/runtimes/pyrel.md b/docs/runtimes/pyrel.md
+index 1834b57c..2fa30771 100644
+--- a/docs/runtimes/pyrel.md
++++ b/docs/runtimes/pyrel.md
+@@ -153,7 +153,12 @@ becomes two requirements: every computed fact is in the input, and every fact
+ the input states is computed. A derived fact type that is not in `covers` is
+ reported as not checked, as GND reports it.
+ 
+-Textual rules are listed as not checked, as GND lists them. External uniqueness
++Textual rules and anchored rules are listed as not checked, as GND lists them
++when it checks without a sidecar: each program prints the rule's id and the
++reason, and a must-rule listed this way gives exit 4. An anchored rule ties a
++value to a span of a source document; `gnd check --anchors SIDECAR --document
++DOC` decides it, and the programs read no sidecar. The export's success line
++says how many rules are listed. External uniqueness
+ and frequency, exclusive-or over role sequences, subtypes, disconnected rule
+ bodies, opaque derivation rules, `avg`, division, rounding, the other
+ non-exact functions, arithmetic on Float values and times of day (`DateTime`)
+diff --git a/src/gnd/commands/export.py b/src/gnd/commands/export.py
+index f7f51b5b..eb05783e 100644
+--- a/src/gnd/commands/export.py
++++ b/src/gnd/commands/export.py
+@@ -39,11 +39,11 @@ _cmd_export_pyrel.__module__ = "gnd.cli"
+ 
+ def _cmd_export_pyrel_rules(model_path: str, out_path: str, *, target: str) -> int:
+     """Write the model's rules as a readable PyRel program of requirements (duckdb or lqp)."""
+-    from gnd.export.emit import render_pyrel_rules
++    from gnd.export.emit import render_pyrel_rules_report
+     from gnd.export.pyrel_runtime import ExportInputError, write_new
+ 
+     try:
+-        source = render_pyrel_rules(Path(model_path), target)
++        source, not_checked = render_pyrel_rules_report(Path(model_path), target)
+     except FileNotFoundError as error:
+         print(f"missing input: {error}", file=sys.stderr)
+         return EXIT_NO_INPUT
+@@ -61,7 +61,8 @@ def _cmd_export_pyrel_rules(model_path: str, out_path: str, *, target: str) -> i
+     except OSError as error:
+         print(f"output failure: {error}", file=sys.stderr)
+         return EXIT_INTERNAL
+-    print(f"Exported the model's rules as PyRel requirements ({target} version) to {out_path}")
++    listed = f"; {len(not_checked)} rule(s) are not checked (listed in the program)" if not_checked else ""
++    print(f"Exported the model's rules as PyRel requirements ({target} version) to {out_path}{listed}")
+     return 0
+ 
+ 
+diff --git a/src/gnd/export/emit.py b/src/gnd/export/emit.py
+index c43ae13f..16f3e03c 100644
+--- a/src/gnd/export/emit.py
++++ b/src/gnd/export/emit.py
+@@ -72,3 +72,10 @@ def render_pyrel_rules(model_path, target):
+     from .pyrel_rules import render
+ 
+     return render(model_path, target)
++
++
++def render_pyrel_rules_report(model_path, target):
++    """The rules program and the ids of the rules it lists as not checked."""
++    from .pyrel_rules import render_report
++
++    return render_report(model_path, target)
+diff --git a/src/gnd/export/pyrel_rules.py b/src/gnd/export/pyrel_rules.py
+index 5a787466..c56f34b5 100644
+--- a/src/gnd/export/pyrel_rules.py
++++ b/src/gnd/export/pyrel_rules.py
+@@ -153,7 +153,9 @@ class _Model:
+                 self.reference_rosters.setdefault(reference, []).append(oid)
+         self._players: dict[str, list[tuple[str, str]]] | None = None
+         self.helpers: dict[str, dict[str, Any]] = {}
+-        self.unchecked: list[dict[str, str]] = []   # textual rules: listed, never evaluated (as GND)
++        # rules listed as not checked, never evaluated, as GND reports them without an anchor sidecar:
++        # textual and anchored ones; each row carries the reason both programs print
++        self.unchecked: list[dict[str, str]] = []
+         # structured derived heads, lower strata first; each gets <head>_derived (computed) and, when
+         # semiderived, <head>_claimed (the claim), while <head> is what constraints read (GND's view)
+         self.derived = _strata({f: fact for f, fact in self.facts.items() if isinstance(fact.get("derivation_rule"), dict)})
+@@ -837,6 +839,10 @@ def _derivation(model: _Model, head: str) -> list[Requirement]:
+     return found
+ 
+ 
++_ANCHORED_REASON = ("source anchor: gnd check decides it with --anchors and --document; "
++                    "the rules programs read no sidecar")
++
++
+ def constraint_context(doc: dict[str, Any]) -> _Model:
+     """Index the admitted source for lowerers that assign their own constraint IDs."""
+     return _Model(doc, strict_ids=False)
+@@ -861,6 +867,9 @@ def constraint_requirements(
+             return _frequency(model, c, fact_id)
+         if family == "ring":
+             return _ring(model, c, fact_id)
++        if family == "anchored":   # GND leaves it unchecked unless gnd check is given a sidecar
++            model.unchecked.append({"id": c["id"], "modality": c["modality"], "reason": _ANCHORED_REASON})
++            return []
+         raise ExportInputError(f"{c['id']}: family {family!r} is a later phase of the rules programs")
+     if family == "guarded":
+         return _guarded(model, c)
+@@ -881,7 +890,8 @@ def constraint_requirements(
+     if family in ("uniqueness", "frequency") and c.get("scope") == "external":
+         raise ExportInputError(f"{c.get('id')}: external {family} is a later phase of the rules programs")
+     if family == "textual":
+-        model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"]})
++        model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"],
++                                "reason": f"textual rule: {c['expression']}"})
+         return []
+     raise ExportInputError(f"{c.get('id')}: family {family!r} is a later phase of the rules programs")
+ 
+@@ -1645,7 +1655,7 @@ def state_lines(population, found, computed=None, derivations=True):
+             print(f'{name}  {status}  {json.dumps(hit, sort_keys=True)}')
+         violated = violated or (bool(hits) and status == 'violated')
+     for rule in UNCHECKED:
+-        print(f"{rule['id']}  not checked  (textual rule: {rule['expression']})")
++        print(f"{rule['id']}  not checked  ({rule['reason']})")
+         unchecked = unchecked or rule['modality'] == 'alethic'
+     return out, {'violated': violated, 'unchecked': unchecked, 'vacuous': vacuous}
+ 
+@@ -2086,14 +2096,28 @@ def main(argv=None):
+         print(f'PyRel execution failed: {type(error).__name__}: {error}', file=sys.stderr)
+         return 70
+     problems = [w for w in caught if 'Requirements not met' in str(w.message)]
++    return lqp_report(problems)
++
++
++def not_checked():
++    """Print each rule listed as not checked; True when a must-rule is among them."""
++    for rule in UNCHECKED:
++        print(f"{rule['id']}  not checked  ({rule['reason']})")
++    return any(rule['modality'] == 'alethic' for rule in UNCHECKED)
++
++
++def lqp_report(problems):
++    """The engine's violation reports, after the rules listed as not checked. Exit 1, 4 or 0, as GND bands them."""
++    must_unchecked = not_checked()
+     for w in problems:
+         print(f'violated  {w.message}')
+     print(f'{len(problems)} requirement violation report(s) from the engine')
+-    return 1 if problems else 0
++    return 1 if problems else 4 if must_unchecked else 0
+ 
+ 
+ def compile_only():
+     """Show how PyRel compiled each requirement. Uses PyRel's front-end compiler (internal API, pinned version)."""
++    not_checked()
+     from relationalai.config import Config
+     from relationalai.semantics.frontend.front_compiler import FrontCompiler
+     from relationalai.semantics.metamodel.rewriter import Walker
+@@ -2405,7 +2429,14 @@ def _bind_reference(loaded: Any, model_path: Path) -> dict[str, Any] | None:
+             "facts": facts, "instances": instances, "covers": covers}
+ 
+ 
+-def render(model_path: Path, target: str) -> str:
++def render_report(model_path: Path, target: str) -> tuple:
++    """The program, and the ids of the rules it lists as not checked."""
++    not_checked_ids: list = []
++    return render(model_path, target, not_checked_ids=not_checked_ids), not_checked_ids
++
++
++def render(model_path: Path, target: str, *, not_checked_ids: list | None = None) -> str:
++    """The rules program; `not_checked_ids`, when given, receives the ids of the rules it lists as not checked."""
+     if target not in TARGETS:
+         raise ExportInputError(f"target must be one of {TARGETS}")
+     raw = Path(model_path).read_bytes()
+@@ -2594,7 +2625,10 @@ def render(model_path: Path, target: str) -> str:
+     for rule_id in spanning:
+         out.append(f"    # {rule_id}: spanning uniqueness, broken only by a repeated fact; the input is refused instead")
+     for rule in model.unchecked:
+-        out.append(f"    # {rule['id']}: textual rule, not checked by GND or here: {rule['expression']!r}")
++        if "expression" in rule:
++            out.append(f"    # {rule['id']}: textual rule, not checked by GND or here: {rule['expression']!r}")
++        else:
++            out.append(f"    # {rule['id']}: not checked by GND without a sidecar, or here: {rule['reason']}")
+     if names.step:
+         out += plan_lines
+     if target == "duckdb":
+@@ -2617,4 +2651,6 @@ def render(model_path: Path, target: str) -> str:
+             main = main.replace("\nif __name__ == '__main__':\n    raise SystemExit(main())\n", "\n")
+         main = _PLAN_HELPERS + main + (_PLAN_MAIN if target == "duckdb" else "")
+     out.append(main)
++    if not_checked_ids is not None:
++        not_checked_ids.extend(row.get("id") for row in model.unchecked)
+     return "\n".join(out) + "\n"
+diff --git a/tests/fixtures/pyrel-rules-coverage/rp2/anchored-deontic.orm.json b/tests/fixtures/pyrel-rules-coverage/rp2/anchored-deontic.orm.json
+new file mode 100644
+index 00000000..ad82d8f0
+--- /dev/null
++++ b/tests/fixtures/pyrel-rules-coverage/rp2/anchored-deontic.orm.json
+@@ -0,0 +1,63 @@
++{
++ "version": 2,
++ "source": {
++  "kind": "fixture"
++ },
++ "object_types": [
++  {
++   "id": "coefficient",
++   "name": "Coefficient",
++   "kind": "value",
++   "primitive": "Integer"
++  },
++  {
++   "id": "decimal_places",
++   "name": "DecimalPlaces",
++   "kind": "value",
++   "primitive": "Integer"
++  },
++  {
++   "id": "time_unit",
++   "name": "TimeUnit",
++   "kind": "value",
++   "primitive": "String"
++  }
++ ],
++ "fact_types": [
++  {
++   "id": "time_step",
++   "reading": "{Coefficient} denotes a time step with {DecimalPlaces} decimal places in {TimeUnit}",
++   "roles": [
++    {
++     "role_name": "coefficient",
++     "object_type": "coefficient"
++    },
++    {
++     "role_name": "places",
++     "object_type": "decimal_places"
++    },
++    {
++     "role_name": "unit",
++     "object_type": "time_unit"
++    }
++   ],
++   "constraints": [
++    {
++     "type": "anchored",
++     "role": "coefficient",
++     "recognise": [
++      "time-fs"
++     ],
++     "source": "user-supplied",
++     "status": "confirmed",
++     "modality": "deontic",
++     "provenance": {
++      "user_quote": "The coefficient is the source time step in whole femtoseconds."
++     }
++    }
++   ]
++  }
++ ],
++ "model_id": "urn:gnd:test:rp2-anchored-deontic@1",
++ "constraints": []
++}
+\ No newline at end of file
+diff --git a/tests/fixtures/pyrel-rules-coverage/rp2/anchored-only.orm.json b/tests/fixtures/pyrel-rules-coverage/rp2/anchored-only.orm.json
+new file mode 100644
+index 00000000..9131366e
+--- /dev/null
++++ b/tests/fixtures/pyrel-rules-coverage/rp2/anchored-only.orm.json
+@@ -0,0 +1,63 @@
++{
++ "version": 2,
++ "source": {
++  "kind": "fixture"
++ },
++ "object_types": [
++  {
++   "id": "coefficient",
++   "name": "Coefficient",
++   "kind": "value",
++   "primitive": "Integer"
++  },
++  {
++   "id": "decimal_places",
++   "name": "DecimalPlaces",
++   "kind": "value",
++   "primitive": "Integer"
++  },
++  {
++   "id": "time_unit",
++   "name": "TimeUnit",
++   "kind": "value",
++   "primitive": "String"
++  }
++ ],
++ "fact_types": [
++  {
++   "id": "time_step",
++   "reading": "{Coefficient} denotes a time step with {DecimalPlaces} decimal places in {TimeUnit}",
++   "roles": [
++    {
++     "role_name": "coefficient",
++     "object_type": "coefficient"
++    },
++    {
++     "role_name": "places",
++     "object_type": "decimal_places"
++    },
++    {
++     "role_name": "unit",
++     "object_type": "time_unit"
++    }
++   ],
++   "constraints": [
++    {
++     "type": "anchored",
++     "role": "coefficient",
++     "recognise": [
++      "time-fs"
++     ],
++     "source": "user-supplied",
++     "status": "confirmed",
++     "modality": "alethic",
++     "provenance": {
++      "user_quote": "The coefficient is the source time step in whole femtoseconds."
++     }
++    }
++   ]
++  }
++ ],
++ "model_id": "urn:gnd:test:rp2-anchored-only@1",
++ "constraints": []
++}
+\ No newline at end of file
+diff --git a/tests/fixtures/pyrel-rules-coverage/rp2/empty.population.json b/tests/fixtures/pyrel-rules-coverage/rp2/empty.population.json
+new file mode 100644
+index 00000000..c1543b0b
+--- /dev/null
++++ b/tests/fixtures/pyrel-rules-coverage/rp2/empty.population.json
+@@ -0,0 +1,12 @@
++{
++ "population": {
++  "model": "anchored-only.orm.json",
++  "source": "fixture",
++  "covers": [
++   "time_step"
++  ]
++ },
++ "facts": {
++  "time_step": []
++ }
++}
+\ No newline at end of file
+diff --git a/tests/fixtures/pyrel-rules-coverage/rp2/full.population.json b/tests/fixtures/pyrel-rules-coverage/rp2/full.population.json
+new file mode 100644
+index 00000000..f4869c1c
+--- /dev/null
++++ b/tests/fixtures/pyrel-rules-coverage/rp2/full.population.json
+@@ -0,0 +1,18 @@
++{
++ "population": {
++  "model": "anchored-only.orm.json",
++  "source": "fixture",
++  "covers": [
++   "time_step"
++  ]
++ },
++ "facts": {
++  "time_step": [
++   {
++    "coefficient": 2,
++    "places": 3,
++    "unit": "ps"
++   }
++  ]
++ }
++}
+\ No newline at end of file
+diff --git a/tests/test_pyrel_rules.py b/tests/test_pyrel_rules.py
+index 6027a3ce..25f466b8 100644
+--- a/tests/test_pyrel_rules.py
++++ b/tests/test_pyrel_rules.py
+@@ -66,7 +66,7 @@ def _findings(stdout):
+         if rest == 'OK':
+             continue
+         status, _, witness = rest.partition('  ')
+-        if status in ('vacuous', 'unknown'):
++        if status in ('vacuous', 'unknown', 'not checked'):   # a not-checked line carries its reason, not a witness
+             found.add((rule, status, 'null'))
+         else:
+             found.add((rule, status, json.dumps(json.loads(witness), sort_keys=True)))
+@@ -85,8 +85,8 @@ def _gnd(name, population):
+         if verdict['verdict'] == 'pass':
+             continue
+         rule = names[verdict['constraint_ref']]
+-        if verdict['verdict'] == 'vacuous':
+-            found.add((rule, 'vacuous', 'null'))
++        if verdict['verdict'] in ('vacuous', 'unchecked'):
++            found.add((rule, 'vacuous' if verdict['verdict'] == 'vacuous' else 'not checked', 'null'))
+             continue
+         status = 'violated' if verdict['verdict'] == 'fail' else 'warning'
+         if verdict['constraint_type'] == 'uniqueness':
+@@ -100,6 +100,10 @@ def _gnd(name, population):
+             witnesses = verdict['offending_facts']
+         for w in witnesses:
+             found.add((rule, status, json.dumps(w, sort_keys=True)))
++    for derivation in report.get('derivations') or []:   # failures are compared in test_pyrel_rules_derivations
++        if derivation['verdict'] in ('unchecked', 'vacuous'):
++            status = 'not checked' if derivation['verdict'] == 'unchecked' else 'vacuous'
++            found.add((derivation['derivation_ref'], status, 'null'))
+     return report['exit_code'], found
+ 
+ 
+diff --git a/tests/test_rp2_anchored.py b/tests/test_rp2_anchored.py
+new file mode 100644
+index 00000000..828ffbce
+--- /dev/null
++++ b/tests/test_rp2_anchored.py
+@@ -0,0 +1,176 @@
++"""RP2: anchored constraints are listed as not checked, as gnd check reports them without a sidecar."""
++from __future__ import annotations
++
++import ast
++import json
++import subprocess
++import sys
++from importlib.resources import files
++from pathlib import Path
++
++import pytest
++import test_pyrel_rules as rules_tests
++
++from gnd.export.pyrel_rules import _Model, render, render_report, requirements
++from gnd.export.pyrel_runtime import ExportInputError, _parse_document
++
++ROOT = Path(__file__).resolve().parents[1]
++NATIVE = rules_tests.NATIVE
++LIT = Path(str(files('gnd').joinpath('examples', 'literature')))
++RP2 = ROOT / 'tests/fixtures/pyrel-rules-coverage/rp2'
++REVIEW = ROOT / 'tests/fixtures/pyrel-rules-families/review'
++FLAT = LIT / 'model.orm.yaml'
++ANCHORED_IDS = ['work_introduces_method#0', 'method_builds_on_method#0', 'method_builds_on_method#1',
++                'method_is_used_in_field#0']
++REASON = ('source anchor: gnd check decides it with --anchors and --document; '
++          'the rules programs read no sidecar')
++GOLD = sorted((LIT / 'answers/gold').glob('*.population.json'))
++
++
++def _run(program, population):
++    return subprocess.run([str(NATIVE), '-I', str(program), str(population)], capture_output=True, text=True,
++                          timeout=300, check=False)
++
++
++def _agree(tmp_path, monkeypatch, model, population, source=None):
++    """(program exit, GND exit, program findings, GND findings), through the shared comparator."""
++    monkeypatch.setitem(rules_tests.MODELS, 'rp2', model)
++    program = tmp_path / 'rules.py'
++    program.write_text(source if source is not None else render(model, 'duckdb'))
++    run = _run(program, population)
++    assert run.stderr == '', run.stderr
++    gnd_exit, gnd = rules_tests._gnd('rp2', population)
++    return run.returncode, gnd_exit, rules_tests._findings(run.stdout), gnd
++
++
++@pytest.mark.parametrize('model', [FLAT, LIT / 'resolution/model.orm.yaml', LIT / 'interop_fixture/extraction.orm.json',
++                                   LIT / 'interop_fixture/checking.orm.json'], ids=lambda p: p.parent.name + '/' + p.name)
++@pytest.mark.parametrize('target', ['duckdb', 'lqp'])
++def test_anchored_models_render(model, target):
++    source, listed = render_report(model, target)
++    assert listed and 'not checked' in source
++
++
++def test_quantity_fixture_passes_anchored_and_stops_on_its_value_rules():
++    with pytest.raises(ExportInputError, match=r"time_step#1: family 'value'"):
++        render(LIT / 'quantity_fixture/time.orm.yaml', 'duckdb')
++
++
++def test_anchored_ids_are_listed_and_never_compiled():
++    doc = _parse_document(FLAT.read_text())
++    model = _Model(doc)
++    found = requirements(doc, model)
++    assert [row['id'] for row in model.unchecked] == ANCHORED_IDS
++    assert {row['reason'] for row in model.unchecked} == {REASON}
++    assert not {req.id for req in found} & set(ANCHORED_IDS)
++    _, listed = render_report(FLAT, 'duckdb')
++    assert listed == ANCHORED_IDS
++
++
++def test_textual_reason_keeps_the_printed_line():
++    doc = _parse_document((REVIEW / 'textual.orm.json').read_text())
++    model = _Model(doc)
++    requirements(doc, model)
++    assert len(model.unchecked) == 2
++    for row in model.unchecked:
++        assert row['reason'] == f"textual rule: {row['expression']}"
++    source = render(REVIEW / 'textual.orm.json', 'duckdb')
++    assert "print(f\"{rule['id']}  not checked  ({rule['reason']})\")" in source
++
++
++def _export(tmp_path, model, *extra):
++    return subprocess.run([sys.executable, '-m', 'gnd', 'export', 'pyrel', str(model), *extra,
++                           '--out', str(tmp_path / 'out.py')], capture_output=True, text=True, timeout=120, check=False)
++
++
++def test_success_line_counts_the_listed_rules(tmp_path):
++    run = _export(tmp_path, FLAT, '--rules', 'lqp')
++    assert run.returncode == 0, run.stderr
++    assert run.stdout.strip().endswith('; 4 rule(s) are not checked (listed in the program)')
++
++
++def test_success_line_without_listed_rules_is_unchanged(tmp_path):
++    out = tmp_path / 'out.py'
++    run = _export(tmp_path, rules_tests.MODELS['bookrec'], '--rules', 'duckdb')
++    assert run.returncode == 0, run.stderr
++    assert run.stdout == f"Exported the model's rules as PyRel requirements (duckdb version) to {out}\n"
++
++
++def test_checker_export_success_line_is_unchanged(tmp_path):
++    from gnd.commands import export as export_commands
++    source = Path(export_commands.__file__).read_text()
++    checker = source[source.index('def _cmd_export_pyrel('):source.index('def _cmd_export_pyrel_rules(')]
++    assert 'not checked' not in checker
++
++
++def test_runtime_page_names_anchored_rules_and_the_deciding_route():
++    page = (ROOT / 'docs/runtimes/pyrel.md').read_text()
++    assert 'anchored rules are listed as not checked' in page.lower()
++    assert '--anchors' in page and '--document' in page
++
++
++@pytest.mark.pyrel_oracle
++@pytest.mark.parametrize('population', GOLD, ids=lambda p: p.stem)
++def test_gold_populations_agree_with_gnd(tmp_path, monkeypatch, population):
++    ours, theirs, found, gnd = _agree(tmp_path, monkeypatch, FLAT, population)
++    assert ours == theirs == 4
++    assert found == gnd
++    assert {(rule, 'not checked', 'null') for rule in ANCHORED_IDS} <= found
++
++
++@pytest.mark.pyrel_oracle
++def test_negative_control_a_dropped_anchored_id_disagrees(tmp_path, monkeypatch):
++    source = render(FLAT, 'duckdb')
++    marker = 'UNCHECKED = json.loads('
++    start = source.index(marker)
++    end = source.index('\n', start)
++    rows = json.loads(ast.literal_eval(source[start + len(marker):end - 1]))
++    kept = json.dumps(rows[1:])
++    tampered = source[:start] + f'{marker}{kept!r})' + source[end:]
++    _, _, found, gnd = _agree(tmp_path, monkeypatch, FLAT, GOLD[0], source=tampered)
++    assert found != gnd
++
++
++@pytest.mark.pyrel_oracle
++@pytest.mark.parametrize('population,expected', [('full', 4), ('empty', 4)])
++def test_anchored_over_an_empty_fact_list_is_still_not_checked(tmp_path, monkeypatch, population, expected):
++    ours, theirs, found, gnd = _agree(tmp_path, monkeypatch, RP2 / 'anchored-only.orm.json',
++                                      RP2 / f'{population}.population.json')
++    assert ours == theirs == expected
++    assert found == gnd == {('time_step#0', 'not checked', 'null')}
++
++
++@pytest.mark.pyrel_oracle
++def test_a_deontic_anchored_rule_keeps_the_band(tmp_path, monkeypatch):
++    ours, theirs, found, gnd = _agree(tmp_path, monkeypatch, RP2 / 'anchored-deontic.orm.json',
++                                      RP2 / 'full.population.json')
++    assert ours == theirs == 0
++    assert found == gnd
++
++
++def _lqp_call(tmp_path, model, call):
++    program = tmp_path / 'rules_lqp.py'
++    program.write_text(render(model, 'lqp'))
++    code = (f"import runpy, sys\nns = runpy.run_path({str(program)!r}, run_name='lqp')\n"
++            f"sys.exit({call})\n")
++    return subprocess.run([str(NATIVE), '-I', '-c', code], capture_output=True, text=True, timeout=300, check=False)
++
++
++@pytest.mark.pyrel_oracle
++def test_lqp_report_lists_the_rules_and_bands_a_must_rule_four(tmp_path):
++    run = _lqp_call(tmp_path, FLAT, "ns['lqp_report']([])")
++    assert run.returncode == 4, run.stderr
++    lines = [line for line in run.stdout.splitlines() if 'not checked' in line]
++    assert lines == [f'{rule}  not checked  ({REASON})' for rule in ANCHORED_IDS]
++    deontic = _lqp_call(tmp_path, RP2 / 'anchored-deontic.orm.json', "ns['lqp_report']([])")
++    assert deontic.returncode == 0, deontic.stderr
++
++
++@pytest.mark.pyrel_oracle
++def test_lqp_compile_prints_the_not_checked_rules(tmp_path):
++    program = tmp_path / 'rules_lqp.py'
++    program.write_text(render(RP2 / 'anchored-only.orm.json', 'lqp'))
++    run = subprocess.run([str(NATIVE), '-I', str(program), '--compile'], capture_output=True, text=True,
++                         timeout=300, check=False)
++    assert run.returncode == 0, run.stdout + run.stderr
++    assert f'time_step#0  not checked  ({REASON})' in run.stdout

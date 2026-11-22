@@ -1,0 +1,29 @@
+Freeze lane on beast-3. Edited to replace the scratch checkout path.
+
+RV2 freeze scratch directory: <scratch>
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a
+Python 3.13.18
+
+Shard 0 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+2489 passed, 125 deselected, 2 errors in 440.57s (0:07:20)
+
+Shard 1 exit 0
+3941 passed, 102 deselected in 390.51s (0:06:30)
+
+Shard 2 exit 0
+2796 passed, 13 skipped, 184 deselected in 489.77s (0:08:09)
+
+Shard 3 exit 0
+3538 passed, 123 deselected in 622.66s (0:10:22)
+
+Shard 4 exit 0
+3888 passed, 71 deselected in 705.08s (0:11:45)
+
+Shard 5 exit 0
+3047 passed, 255 deselected, 1 warning in 754.23s (0:12:34)

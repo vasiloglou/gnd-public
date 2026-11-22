@@ -1,0 +1,38 @@
+Local path prefixes replaced with placeholders.
+
+2026-11-17T15:27:06Z
+ProductName:		macOS
+ProductVersion:		26.6.2
+BuildVersion:		25G83
+arm64
+uv 0.10.10 (Homebrew 2026-03-13)
+Using CPython 3.11.15 interpreter at: <home>/.local/bin/python3.11
+Creating virtual environment at: installed
+Activate with: source installed/bin/activate
+Using Python 3.11.15 environment at: installed
+Resolved 12 packages in 2.28s
+Downloading pydantic-core (1.9MiB)
+Downloading get-nick-done (3.3MiB)
+ Downloaded pydantic-core
+ Downloaded get-nick-done
+Prepared 12 packages in 1.46s
+Installed 12 packages in 53ms
+ + annotated-types==0.8.0
+ + attrs==26.1.0
+ + get-nick-done==0.4.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + referencing==0.37.0
+ + rpds-py==2026.9.1
+ + ruamel-yaml==0.19.1
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.5
+Python 3.11.15
+gnd 0.4.0
+gnd --help exited 0.
+dispatch/seed.pop.json: exit 1
+dispatch/repaired.pop.json: exit 0
+Fresh PyPI install rejected the invalid plan and accepted its repair.
+2026-11-17T15:27:13Z

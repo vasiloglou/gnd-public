@@ -1,0 +1,357 @@
+{
+ "schema_version": 1,
+ "run_sha256": "4304fd11dbf30f8b1b2a48aaa335b6f8b0d41e02ef9bc8e027dce1063bd53025",
+ "summary": "All six seats returned schema-valid responses at xhigh. Four seats agreed that the LQP version's verdict on an empty disconnected join (exit 4 where GND gives 2) breaks plan section 0; Codex also found malformed populations escaping exit 3. The other sixteen concerns are hardening and completeness: missing page messages, unamended comparator changes, and counts and quotes in the close records. No seat approved.",
+ "agreed_concerns": [
+  {
+   "group_id": "lqp-disconnected-vacuity",
+   "severity": "high",
+   "title": "LQP verdict on an empty disconnected join differs from GND",
+   "summary": "The LQP version listed a disconnected join as not checked with every list empty, exit 4 where gnd check gives 2, contradicting plan section 0.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lqp-disconnected-vacuity-verdict"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lqp-disconnected-verdict"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lqp-disconnected-vacuity-contradicts-same-verdict"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "lqp-verdict-disagreement"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "qwen",
+    "gemini"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "rp5-c3-page-messages-incomplete"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "rp5-c2-resolution-exit-unpinned"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "s11-goldens-disposition-wrong-base"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "close-counts-misreconciled"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "delta-items-missing-s11-rows"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "malformed-population-uncaught"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ossie-byte-pins-not-evidenced"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "comparator-identity-change-unamended"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "final-edits-without-second-reader"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "ruff-gate-scope-narrowed"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "rp5-acceptance-set-inconsistent"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "amendment-prior-wording-not-in-r4"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "rp3-round-count-overstated"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "rp5c1-eleven-vs-twelve-model-count"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "close-results-rp3-round-count-off-by-one"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "close-results-wholetree-ruff-not-a-gate-of-006"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-lqp-vacuity",
+   "rank": 1,
+   "title": "LQP reports an empty disconnected join vacuous",
+   "action": "The LQP version reads the population and gives exit 2 when every stated fact list is empty; a disconnected join over a derived fact type is refused at LQP export. Pinned against GND (plan \u00a711 A10, A2).",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lqp-disconnected-vacuity-verdict"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lqp-disconnected-verdict"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lqp-disconnected-vacuity-contradicts-same-verdict"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "lqp-verdict-disagreement"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lqp-disconnected-vacuity-verdict",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lqp-disconnected-verdict",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lqp-disconnected-vacuity-contradicts-same-verdict",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "lqp-verdict-disagreement",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "qwen",
+    "gemini"
+   ]
+  },
+  {
+   "fix_id": "fix-population-shape",
+   "rank": 2,
+   "title": "Refuse malformed populations with exit 3",
+   "action": "A non-object population or a fact list of non-objects raises a named ValueError; both mains catch AttributeError too (A11).",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "malformed-population-uncaught"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "malformed-population-uncaught",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-page-messages",
+   "rank": 3,
+   "title": "State every milestone refusal on the page",
+   "action": "The page and T3 list the role_refs, role_ref, ambiguity, LQP-derived and shape refusals; a role named twice is a stated difference pinned with both exits (A12); 'Float or Number' in the older list.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp5-c3-page-messages-incomplete"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp5-c3-page-messages-incomplete",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-comparator",
+   "rank": 4,
+   "title": "Record the comparator changes with a negative control",
+   "action": "Plan \u00a711 A8 states both comparator changes; test_the_comparator_identifies_1_and_1_0_and_nothing_else is the control.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "comparator-identity-change-unamended"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "delta-items-missing-s11-rows"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "comparator-identity-change-unamended",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "delta-items-missing-s11-rows",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-records",
+   "rank": 5,
+   "title": "Correct the close records",
+   "action": "Round counts (RP3: 4 with a verdict, 2 without), model count (A9), Ossie pins named (A5), verbatim r4 quotes in \u00a711, goldens resolved by RP2's own evidence, ruff residual attributed to its baseline, unreread repairs as accepted residuals, resolution exits pinned literally.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp5-c2-resolution-exit-unpinned"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "s11-goldens-disposition-wrong-base"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "close-counts-misreconciled"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ossie-byte-pins-not-evidenced"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "final-edits-without-second-reader"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ruff-gate-scope-narrowed"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "rp5-acceptance-set-inconsistent"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "amendment-prior-wording-not-in-r4"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rp3-round-count-overstated"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp5c1-eleven-vs-twelve-model-count"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-results-rp3-round-count-off-by-one"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-results-wholetree-ruff-not-a-gate-of-006"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rp5-c2-resolution-exit-unpinned",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "s11-goldens-disposition-wrong-base",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "close-counts-misreconciled",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ossie-byte-pins-not-evidenced",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "final-edits-without-second-reader",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "ruff-gate-scope-narrowed",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "rp5-acceptance-set-inconsistent",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "amendment-prior-wording-not-in-r4",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rp3-round-count-overstated",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "rp5c1-eleven-vs-twelve-model-count",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-results-rp3-round-count-off-by-one",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-results-wholetree-ruff-not-a-gate-of-006",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "kimi",
+    "glm"
+   ]
+  }
+ ]
+}

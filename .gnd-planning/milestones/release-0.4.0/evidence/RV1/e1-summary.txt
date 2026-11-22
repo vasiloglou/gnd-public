@@ -1,0 +1,72 @@
+E1 on beast-3. Edited to replace the scratch and home paths.
+The runner exited 0 after collecting all six shard exits.
+
+E1 scratch directory: <scratch>
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+cc4c8bf05ae8720b1ec5814b3709bfadb8643b16
+.claude-plugin/marketplace.json
+.claude-plugin/plugin.json
+.codex-plugin/plugin.json
+pyproject.toml
+uv.lock
+Python 3.13.18
+
+Shard 0 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+2489 passed, 118 deselected, 2 errors in 440.85s (0:07:20)
+
+Shard 1 exit 1
+FAILED tests/test_li1_assurance_report.py::test_report_golden[reference] - As...
+FAILED tests/test_li1_assurance_report.py::test_report_golden[M1-drop-all] - ...
+FAILED tests/test_li1_assurance_report.py::test_report_golden[M2-drop-one] - ...
+FAILED tests/test_li1_assurance_report.py::test_report_golden[M3-stale] - Ass...
+FAILED tests/test_li1_assurance_report.py::test_report_golden[M4-false-derived]
+FAILED tests/test_li1_assurance_report.py::test_report_golden[M5-invalid-population]
+FAILED tests/test_li1_assurance_report.py::test_report_golden[M6-shifted-span]
+FAILED tests/test_li1_assurance_report.py::test_report_golden[M7-false-merge]
+FAILED tests/test_li1_assurance_report.py::test_report_golden[X1-abstain-6]
+FAILED tests/test_li1_assurance_report.py::test_report_golden[X2-consistent-shift]
+10 failed, 3931 passed, 102 deselected in 392.54s (0:06:32)
+
+Shard 2 exit 1
+FAILED tests/test_expense_receipts_example.py::test_rebuilds_byte_identically
+FAILED tests/test_li1_literature_corpus.py::test_rebuild_is_byte_identical - ...
+2 failed, 2794 passed, 13 skipped, 184 deselected in 490.96s (0:08:10)
+
+Shard 3 exit 0
+3538 passed, 123 deselected in 627.18s (0:10:27)
+
+Shard 4 exit 1
+FAILED tests/test_release_text.py::test_publication_of_a_prepared_version - A...
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[compatibility-edited]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[date-placeholder]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[heading-still-prepared]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[old-pin]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[older-version-named]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[opening-edited]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[prepared-wording]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[release-link-old]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[standing-line-gone]
+FAILED tests/test_release_text.py::test_a_page_left_in_the_earlier_state_is_reported[support-row-missing]
+FAILED tests/test_release_text.py::test_a_malformed_publication_input_changes_nothing[arguments0-is not YYYY-MM-DD]
+FAILED tests/test_release_text.py::test_a_malformed_publication_input_changes_nothing[arguments1-eight lowercase hexadecimal digits]
+FAILED tests/test_release_text.py::test_a_malformed_publication_input_changes_nothing[arguments2-eight lowercase hexadecimal digits]
+FAILED tests/test_release_text.py::test_a_malformed_publication_input_changes_nothing[arguments3-one line of text]
+FAILED tests/test_release_text.py::test_a_malformed_publication_input_changes_nothing[arguments4-one line of text]
+FAILED tests/test_release_text.py::test_a_page_the_tool_cannot_work_from_stops_publication_with_the_tree_untouched[support]
+FAILED tests/test_release_text.py::test_a_page_the_tool_cannot_work_from_stops_publication_with_the_tree_untouched[notes]
+FAILED tests/test_release_text.py::test_a_page_the_tool_cannot_work_from_stops_publication_with_the_tree_untouched[compatibility]
+FAILED tests/test_release_text.py::test_command_exit_codes - AssertionError: ...
+20 failed, 3868 passed, 71 deselected in 708.97s (0:11:48)
+
+Shard 5 exit 1
+FAILED tests/test_release_version.py::test_lock_manifests_and_notes_agree_with_pyproject
+FAILED tests/test_release_version.py::test_agreement_control_passes_on_an_unmutated_copy
+FAILED tests/test_release_version.py::test_drift_is_refused[notes] - Assertio...
+FAILED tests/test_release_version.py::test_notes_and_compatibility_do_not_claim_publication
+FAILED tests/test_release_version.py::test_support_and_plugin_pages_state_the_prepared_version
+5 failed, 3042 passed, 255 deselected, 1 warning in 756.88s (0:12:36)

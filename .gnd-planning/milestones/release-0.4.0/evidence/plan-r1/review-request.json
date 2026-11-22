@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/release-0.4.0/notes/release-0.4.0-plan.md",
+    "sha256": "6eb1f3a6146d69de3a587cd94ab213133c9f0e61ba499d0f962b001a8fc5b338",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "GND 0.4.0 release plan",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Check the phase dependencies, authorization gates, and exact candidate and publication boundaries.",
+      "Check that each completion predicate can be measured with the planned inputs and controls.",
+      "Check that the release notes and installed acceptance cover the changes and that release evidence can be reproduced."
+    ]
+  }
+}

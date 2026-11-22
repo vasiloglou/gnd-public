@@ -111,7 +111,12 @@ def uses_temporal(model: Any) -> bool:
 
 
 def require_non_temporal(model: Any, consumer: str) -> None:
-    """Refuse unsupported consumers before they publish artifacts or claims."""
+    """Refuse unsupported consumers before they publish artifacts or claims.
+
+    For ``gnd extract`` on a temporal include root the message also names
+    ``gnd flatten``, which writes that root's flat model; every other consumer
+    and model keeps the historical message.
+    """
     if uses_temporal(model):
         from gnd.errors import ModelValidationError, ValidationIssue
 
@@ -119,7 +124,9 @@ def require_non_temporal(model: Any, consumer: str) -> None:
             [
                 ValidationIssue(
                     path="$",
-                    message=f"{consumer} does not support temporal models in Phase 1",
+                    message=f"{consumer} does not support temporal models in Phase 1"
+                    + ("; gnd flatten writes the flat model of a temporal include root"
+                       if consumer == "extract" and getattr(model, "includes", None) else ""),
                     rule_id="temporal:consumer-unsupported",
                 )
             ]

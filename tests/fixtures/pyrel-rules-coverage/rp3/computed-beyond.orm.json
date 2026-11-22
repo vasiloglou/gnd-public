@@ -1,0 +1,88 @@
+{
+ "version": 4,
+ "model_id": "urn:test:number@1",
+ "source": {
+  "confidence": "standard",
+  "kind": "text-conversation",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "run",
+   "kind": "value",
+   "name": "RunId",
+   "primitive": "String"
+  },
+  {
+   "id": "score",
+   "kind": "value",
+   "name": "Score",
+   "primitive": "Number"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "run_has_score",
+   "reading": "{RunId} has score {Score}",
+   "roles": [
+    {
+     "role_name": "run",
+     "object_type": "run"
+    },
+    {
+     "role_name": "score",
+     "object_type": "score"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "one_score",
+     "type": "uniqueness",
+     "roles": [
+      "run"
+     ],
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "one score per run"
+     }
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "score_cap",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "x"
+   },
+   "antecedent": [
+    {
+     "fact_type": "run_has_score",
+     "bind": {
+      "run": "$r",
+      "score": "$s"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "operator": "<",
+     "left": "$s",
+     "right": {
+      "fn": "add",
+      "args": [
+       9007199254740992,
+       1
+      ]
+     }
+    }
+   }
+  }
+ ]
+}

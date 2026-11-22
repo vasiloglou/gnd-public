@@ -44,6 +44,45 @@ dest = ".claude/skills/handle-issue"
 source = "skills/handle-issue"
 dest = ".codex/skills/handle-issue"
 
+# dev-handoff writes a branch's hand-off note in .gnd-planning/handoffs/ when work moves
+# to another assistant, account or machine; dev-takeover is the receiving side and runs
+# dev-handoff's script. Both go to both discovery roots, with the same settings.
+[[sync]]
+source = "skills/dev-handoff"
+dest = ".claude/skills/dev-handoff"
+
+[sync.settings."scripts/handoff.settings.json"]
+planning_dir = ".gnd-planning"
+base_branch = "main"
+max_mb = 200
+rebuild_paths = []
+tools = ["git", "gh", "uv"]
+env_paths = [".venv"]
+setup_command = "uv sync --locked --group dev"
+key_files = []
+
+[[sync]]
+source = "skills/dev-takeover"
+dest = ".claude/skills/dev-takeover"
+
+[[sync]]
+source = "skills/dev-handoff"
+dest = ".codex/skills/dev-handoff"
+
+[sync.settings."scripts/handoff.settings.json"]
+planning_dir = ".gnd-planning"
+base_branch = "main"
+max_mb = 200
+rebuild_paths = []
+tools = ["git", "gh", "uv"]
+env_paths = [".venv"]
+setup_command = "uv sync --locked --group dev"
+key_files = []
+
+[[sync]]
+source = "skills/dev-takeover"
+dest = ".codex/skills/dev-takeover"
+
 # The component index: the skill in both discovery roots, and the script that builds it.
 [[sync]]
 source = "skills/components"

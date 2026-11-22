@@ -204,6 +204,35 @@ LOCAL_SKILL_FILES: frozenset[str] = frozenset(
         ".codex/skills/components/references/build.md",
         ".codex/skills/components/references/reader-brief.md",
         ".codex/skills/components/references/review.md",
+        # Later dev-tools deliveries: the components rules check, the
+        # process-phase review tool, and the handle-issue skill (PR 198).
+        ".claude/skills/components/references/rules.md",
+        ".claude/skills/components/scripts/rules_check.py",
+        ".claude/skills/process-phase/references/review-tool.md",
+        ".claude/skills/process-phase/scripts/review_tool.py",
+        ".claude/skills/handle-issue/SKILL.md",
+        ".claude/skills/handle-issue/agents/openai.yaml",
+        ".codex/skills/components/references/rules.md",
+        ".codex/skills/components/scripts/rules_check.py",
+        ".codex/skills/process-phase/references/review-tool.md",
+        ".codex/skills/process-phase/scripts/review_tool.py",
+        ".codex/skills/handle-issue/SKILL.md",
+        ".codex/skills/handle-issue/agents/openai.yaml",
+        # The dev-tools hand-off skills (dev-tools c9648dd).
+        ".claude/skills/dev-handoff/SKILL.md",
+        ".claude/skills/dev-handoff/agents/openai.yaml",
+        ".claude/skills/dev-handoff/references/handoff.md",
+        ".claude/skills/dev-handoff/scripts/handoff.py",
+        ".claude/skills/dev-handoff/scripts/handoff.settings.json",
+        ".claude/skills/dev-takeover/SKILL.md",
+        ".claude/skills/dev-takeover/agents/openai.yaml",
+        ".codex/skills/dev-handoff/SKILL.md",
+        ".codex/skills/dev-handoff/agents/openai.yaml",
+        ".codex/skills/dev-handoff/references/handoff.md",
+        ".codex/skills/dev-handoff/scripts/handoff.py",
+        ".codex/skills/dev-handoff/scripts/handoff.settings.json",
+        ".codex/skills/dev-takeover/SKILL.md",
+        ".codex/skills/dev-takeover/agents/openai.yaml",
     }
 )
 
@@ -217,6 +246,9 @@ LOCAL_SKILL_NAMES: tuple[str, ...] = (
     "process-milestone",
     "start-milestone",
     "components",
+    "handle-issue",
+    "dev-handoff",
+    "dev-takeover",
 )
 
 UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
@@ -231,10 +263,12 @@ UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
 #: never adopt. ``process-phase`` is ours and equally unmanaged.
 UNMANAGED_ROOT_ENTRIES: dict[str, frozenset[str]] = {
     ".claude/skills": frozenset(
-        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components"}
+        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components",
+         "handle-issue", "dev-handoff", "dev-takeover"}
     ),
     ".codex/skills": frozenset(
-        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components"}
+        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components",
+         "handle-issue", "dev-handoff", "dev-takeover"}
     ),
 }
 

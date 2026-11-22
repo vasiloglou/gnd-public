@@ -1,0 +1,23 @@
+Snapshot labels added after independent review.
+2026-11-17T14:55:03Z
+{"defaultBranchRef":{"name":"main"},"visibility":"PUBLIC"}
+648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a	refs/heads/main
+75eda93f314e7ef82578ab4ee212d5e6d964fd71	refs/tags/v0.1.0
+d84ad6d5cca021aa572751223d7c640d2b261055	refs/tags/v0.2.0
+7c0f4d0e320ff7976296d785077280d180ea688e	refs/tags/v0.2.0^{}
+257a8bb3cc0ec5f0746e95d72b5d11cb5acdb185	refs/tags/v0.3.0
+4c07c0e6a623263048cb675d237046ebb239cb32	refs/tags/v0.3.0^{}
+5fe5852473465ea718f67088143a425f3492bb20	refs/tags/v0.3.1
+aff85c6764a3ef58f4eaed47fff57afacb4f20f6	refs/tags/v0.3.1^{}
+GitHub environments:
+["github-pages"]
+release.yml runs:
+[]
+[{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-11T15:38:27Z","tagName":"v0.3.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-09T03:19:04Z","tagName":"v0.2.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-10-12T04:06:31Z","tagName":"v0.1.0"}]
+[{"filename": "get_nick_done-0.1.0-py3-none-any.whl", "hashes": {"sha256": "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183"}, "yanked": false}, {"filename": "get_nick_done-0.1.0.tar.gz", "hashes": {"sha256": "f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86"}, "yanked": false}, {"filename": "get_nick_done-0.2.0-py3-none-any.whl", "hashes": {"sha256": "e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4"}, "yanked": false}, {"filename": "get_nick_done-0.2.0.tar.gz", "hashes": {"sha256": "f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104"}, "yanked": false}, {"filename": "get_nick_done-0.3.0-py3-none-any.whl", "hashes": {"sha256": "143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b"}, "yanked": false}, {"filename": "get_nick_done-0.3.0.tar.gz", "hashes": {"sha256": "5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42"}, "yanked": false}]
+0.4.0 version endpoint HTTP 404
+Workflow diff cc4c8bf0..648cc6e0 for .github: empty.
+Retained bundle validation on the first build Mac (macOS 26.6.2 arm64):
+release/get_nick_done-0.4.0-py3-none-any.whl: OK
+release/get_nick_done-0.4.0.tar.gz: OK
+comparison/get_nick_done-0.4.0-py3-none-any.whl: OK

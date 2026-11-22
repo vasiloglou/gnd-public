@@ -5,6 +5,7 @@ from __future__ import annotations
 from importlib.resources import files
 from pathlib import Path
 
+from .include_roots import flatten_for_export, flattening_constants
 from .pyrel_runtime import _constraint_entries, _parse_document, _read_text, admit_model
 
 SCRIPT_HEADER = (
@@ -18,8 +19,16 @@ SCRIPT_HEADER = (
 def render_pyrel(
     model_path: Path, *, duckdb_path: str = ":memory:", connection: str | None = None
 ) -> str:
-    """Render from one bounded input read; no checker or foreign-runtime import."""
+    """Render from one bounded input read; no checker or foreign-runtime import.
+
+    That holds for a model without includes. An include root is first
+    composed and flattened (``flatten_for_export``) and its flat model is
+    rendered, with two constants recording the flattening.
+    """
     text = _read_text(model_path)
+    flat = flatten_for_export(model_path, text.encode("utf-8"))
+    if flat is not None:
+        text = flat.model_bytes.decode("utf-8")
     document = _parse_document(text)
     from gnd.errors import ModelValidationError
     from gnd.model._includes import guard_document
@@ -51,7 +60,8 @@ def render_pyrel(
     runtime = files("gnd.export").joinpath("pyrel_runtime.py").read_text(encoding="utf-8")
     config = {"duckdb_path": duckdb_path, "connection": connection}
     source = (SCRIPT_HEADER + runtime + f"\nMODEL_TEXT = {text!r}\n"
-              f"MODEL_NAME = {str(model_path)!r}\nEXPORT_CONFIG = {config!r}\n"
+              f"MODEL_NAME = {str(model_path)!r}\n" + flattening_constants(flat)
+              + f"EXPORT_CONFIG = {config!r}\n"
               '\nif __name__ == "__main__":\n    sys.exit(program_main())\n')
     compile(source, "<pyrel-export>", "exec")
     return source
@@ -62,3 +72,10 @@ def render_pyrel_rules(model_path, target):
     from .pyrel_rules import render
 
     return render(model_path, target)
+
+
+def render_pyrel_rules_report(model_path, target):
+    """The rules program and the ids of the rules it lists as not checked."""
+    from .pyrel_rules import render_report
+
+    return render_report(model_path, target)

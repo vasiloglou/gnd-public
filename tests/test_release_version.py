@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Versions that exist on the package index. Publication adds the new version
 # here, in the same patch that moves the install pins (historical data: the one
 # literal of its kind in the tests).
-RELEASED = {"0.1.0", "0.2.0", "0.3.0"}
+RELEASED = {"0.1.0", "0.2.0", "0.3.0", "0.4.0"}
 
 # Versions released as a GitHub tag only, never uploaded to the package index.
 # A tag-only version is newer than every published one and is never pinned; the
@@ -251,7 +251,10 @@ def test_a_left_placeholder_is_refused():
 
 # -- release-0.3.0 RN1: what the prepared version's pages must say (review P7) --
 
-HEADLINE_BLOCK = {"0.3.0": ("### Apache Ossie interchange", "explanation/ossie.md")}
+HEADLINE_BLOCK = {
+    "0.3.0": ("### Apache Ossie interchange", "explanation/ossie.md"),
+    "0.4.0": ("### Literature: identity, composition and depth", "literature/01-lineage.md"),
+}
 
 
 def version_section(notes: str, version: str) -> str:

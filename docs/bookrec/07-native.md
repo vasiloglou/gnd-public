@@ -711,9 +711,9 @@ does not name is unknown, which is different from a list that is declared but em
 ## Next steps
 
 - Continue offline with [chapter 8](08-guarded-rules.md): add a guarded rule
-  and prove it judges something. It does not need the PyRel environment.
+  and prove it judges something, without PyRel.
 - Write rules for your own domain with
-  [gnd-model-from-text](../agents/model-from-text.md), then build the same kind of app.
+  [gnd-model-from-text](../agents/model-from-text.md), then build a similar app.
 - Drive your own coding assistant against the same model and checker. That is a
   separate session contract you write for [`gnd exp run`](../agents/dev-session.md),
   with your agent's policy in place of the stand-in's; the recorded sessions

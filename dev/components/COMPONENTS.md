@@ -14,7 +14,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd check, check population, validate population, constraint verdicts, snapshot check, evaluate constraints, report violations
 - status: canonical
 - components: cli.dispatch, cli.checking_command, cli.api, check.service, model.loading, model.population_loading, checker.evaluate, check.admission, check.baseline, checker.reports
-- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +79 more (graph.md)
+- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +80 more (graph.md)
 - flow: cli.dispatch -> cli.checking_command -> cli.api -> check.service -> model.loading -> model.population_loading -> checker.evaluate -> check.admission -> checker.reports
 - notes: Extension calculation, semantic snapshot adapters and redaction branch inside check.service and checker.evaluate. Anchored and composed checks add anchor binding before evaluation. Under `--rule-ids` (report version 15) the service adds declared rule identity, remedies and acyclic extents; `--baseline` checks the base population too and compares the two in check.baseline, and the exit band then comes from `band(report, comparison, allow_vacuous=)`.
 
@@ -49,8 +49,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - does: Produce the offline extraction bundle for a model and measure extraction fidelity and renderer obligations.
 - verbs: gnd extract, extraction schema, shape only projection, extraction guidelines, gnd fidelity, gnd doccheck, document manifest
 - status: canonical
-- components: cli.extract_command, extract.service, extract.bundle, extract.projection, extract.guidelines, extract.manifest, cli.fidelity_command, fidelity.service, fidelity.match, fidelity.report, cli.doccheck_command, fidelity.doccheck
-- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +10 more (graph.md)
+- components: cli.extract_command, extract.service, cli.flatten_command, extract.flatten_service, extract.bundle, extract.projection, extract.guidelines, extract.manifest, cli.fidelity_command, fidelity.service, fidelity.match, fidelity.report, cli.doccheck_command, fidelity.doccheck
+- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +11 more (graph.md)
 - notes: Three entry points share the manifest and bundle helpers: extract writes artifacts, fidelity matches extracted facts to source facts, doccheck validates rendered documents.
 
 ### subsystem.measure
@@ -383,7 +383,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/extract/bundle.py
 - uses: model.extraction_scope, synth.paths
-- used_by: codegen.emit, conformance.structural, examples.literature_interop, extract.service
+- used_by: codegen.emit, conformance.structural, examples.literature_interop, extract.flatten_service, extract.service
 - part_of: subsystem.extract
 - tests: tests/test_codegen_manifest.py, tests/test_v51_phase2_extraction_scope.py, tests/test_v70_phase1_surfaces.py
 
@@ -436,10 +436,24 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/extract/__init__.py, src/gnd/extract/service.py
 - uses: extract.bundle, extract.guidelines, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.version, model.document, model.loading, model.scalar_terms, model.validation, synth.paths
-- used_by: cli.dispatch, cli.extract_command, examples.literature_interop, export.verification, fidelity.doccheck, fidelity.service
+- used_by: cli.dispatch, cli.extract_command, examples.literature_interop, export.verification, extract.flatten_service, fidelity.doccheck, fidelity.service
 - part_of: subsystem.extract
 - tests: tests/test_extract_guidelines.py, tests/test_extract_projection.py, tests/test_lx1_flattening.py
 - notes: The command derives artifacts for an extracting agent; the actual language extraction is performed outside this service.
+
+
+### extract.flatten_service
+- does: Write an include root's flat model and its gnd-flattening/1 record, both files or neither, temporal roots included [flatten_to].
+- verbs: gnd flatten, flatten include root, flat model file, flattening record file, temporal include root, no-replace publication, output collision, reference coordinate note, flatten summary json
+- in: Model path, output directory and output format
+- out: Two files in the output directory and a command exit (0, 3, 11, 66, 74)
+- status: canonical
+- modules: src/gnd/extract/flatten_service.py
+- uses: extract.bundle, extract.service, infra.artifacts, infra.errors, infra.exit_codes, infra.text_output, install.skill_lifecycle, model.loading, synth.paths
+- used_by: cli.flatten_command
+- part_of: subsystem.extract
+- tests: tests/test_ir2_flatten.py
+- notes: Reuses extract's file names and the shipped flatten_model; unlike extract's bundle it never replaces an existing file.
 
 
 ### extract.source_anchors
@@ -660,7 +674,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - modules: src/gnd/commands/judgments.py
 - uses: cli.api, infra.artifacts
 - used_by: cli.dispatch
-- tests: tests/test_rf5_commands.py
+- tests: tests/test_rf5_commands.py, tests/test_ir1_judgments_includes.py
+
+
+### cli.flatten_command
+- does: Register and dispatch gnd flatten [add_parsers; handle].
+- verbs: flatten command, register parser, dispatch handler, output directory, output format
+- in: argparse subparsers or a parsed command namespace
+- out: registered parsers or the command exit code
+- status: canonical
+- modules: src/gnd/commands/flatten.py
+- uses: extract.flatten_service
+- used_by: cli.dispatch
+- part_of: subsystem.extract
+- tests: tests/test_ir2_flatten.py, tests/test_rf1_cli_pins.py
 
 
 ### cli.lifecycle_command
@@ -1584,10 +1611,23 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Python source string; callers own publication.
 - status: canonical
 - modules: src/gnd/export/emit.py
-- uses: export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms
+- uses: export.include_roots, export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms
 - used_by: cli.export_command, export.applications
 - tests: tests/test_pyrel_export.py, tests/test_pyrel_native_seam.py
-- notes: The checker runtime is embedded verbatim without importing the foreign runtime during export; render_pyrel_rules delegates to export.pyrel_rules.
+- notes: The checker runtime is embedded verbatim without importing the foreign runtime during export; render_pyrel_rules delegates to export.pyrel_rules. An include root is exported through its flat model (export.include_roots); other models keep the one-read path.
+
+
+### export.include_roots
+- does: Give both PyRel renderers an include root's flat model and the two constants that record its flattening [flatten_for_export, flattening_constants].
+- verbs: export include root, flat model export, flattening record digest, model includes constant, include refusal to export error, one read path
+- in: Model path and the bytes already read
+- out: None for a model without includes, otherwise the flat model bytes, record digest and pins
+- status: canonical
+- modules: src/gnd/export/include_roots.py
+- uses: export.pyrel_runtime, infra.errors, model.loading
+- used_by: export.pyrel_emit, export.pyrel_rules
+- tests: tests/test_ir3_pyrel_includes.py
+- notes: Cannot live in pyrel_runtime.py, which every default program embeds, nor in emit.py, which pyrel_rules would import in a cycle.
 
 
 ### export.pyrel_runtime
@@ -1598,20 +1638,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/export/pyrel_runtime.py
 - uses: (none)
-- used_by: cli.export_command, export.applications, export.pyrel_emit, export.pyrel_rules
+- used_by: cli.export_command, export.applications, export.include_roots, export.pyrel_emit, export.pyrel_rules
 - tests: tests/test_pyrel_constraint_oracle.py, tests/test_pyrel_export.py, tests/test_pyrel_application_acceptance.py, tests/test_pyrel_native_seam.py, tests/test_public_pyrel_oracle_isolation.py, tests/test_pyrel_application_derivations.py
 - checked: partial
 - notes: Copied standalone code intentionally has no GND imports and maintains its own raw-document ModelIndex. Ordinary report completion is separate from the opt-in applications-v1 acceptance profile, which requires supported complete verdicts and matching derived claims.
 
 
 ### export.pyrel_rules
-- does: Render readable PyRel requirements as DuckDB violation queries or LQP require programs [requirements, render].
+- does: Render readable PyRel requirements as DuckDB violation queries or LQP require programs, exporting an include root through its flat model [requirements, render].
 - verbs: readable rules, PyRel requirements, denial queries, violation witnesses, LQP program, DuckDB program, guarded lowering, rule families, derived relations, plan checking, transition programs, require_text, denial_text, requirements, render
 - in: Model path and duckdb or lqp target.
 - out: Standalone Python program assembled from shared Requirement records and target-specific execution code.
 - status: canonical
 - modules: src/gnd/export/pyrel_rules.py
-- uses: export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, model.scalar_terms, semantics.transitions
+- uses: export.include_roots, export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, model.scalar_terms, semantics.transitions
 - used_by: examples.plan_apps, export.ossie, export.pyrel_emit
 - tests: tests/test_pyrel_rules.py, tests/test_pyrel_rules_calendar.py, tests/test_pyrel_rules_derivations.py, tests/test_pyrel_rules_families.py, tests/test_pyrel_rules_plans.py, tests/test_plan_apps.py
 - checked: partial
@@ -1757,7 +1797,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +73 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +75 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1769,7 +1809,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
-- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
+- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
 - used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
@@ -1842,7 +1882,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: assurance.identity, check.branches, check.snapshot_decision, checker.evaluate, infra.artifacts, model.loading, semantics.snapshot_spec, semantics.transitions
 - used_by: assurance.transport, check.service, cli.api, exp.acceptance, infra.report_payloads
 - tests: tests/test_v6_phase6_execution.py
-- notes: The package initializer is a pure compatibility re-export surface assigned to its policy owner, including CorrespondenceDigests from assurance.identity. Certification separates semantic acceptance from evidence coverage and requires proved infrastructure, matching production identity and a valid extraction route.
+- notes: The package initializer is a pure compatibility re-export surface assigned to its policy owner, including CorrespondenceDigests from assurance.identity. Certification separates semantic acceptance from evidence coverage and requires proved infrastructure, matching production identity and a valid extraction route. The legacy Phase 3 denominator excludes the later guarded exists, filter and disjunction rows.
 
 
 ### assurance.identity
@@ -1918,7 +1958,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +73 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +74 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
@@ -2101,7 +2141,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: handler exit code and command output
 - status: canonical
 - modules: src/gnd/cli.py, src/gnd/__main__.py
-- uses: agent.solve, check.branches, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.codegen_command, cli.conformance_command, cli.discover_command, cli.doccheck_command, cli.evolve_command, cli.exp_command, cli.export_command, cli.extract_command, cli.fidelity_command, cli.judgments_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, cli.synth_command, cli.verify_command, cli.witness_command, codegen.service, conformance.command, evolve.command, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.disclosure, infra.exit_codes, infra.output, infra.report_payloads, infra.verdict_prose, infra.version, install.skill_lifecycle, measure.service, model.loading, model.population_loading, recovery.command, review.command, review.service, semantics.transitions, synth.corpus, synth.service
+- uses: agent.solve, check.branches, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.codegen_command, cli.conformance_command, cli.discover_command, cli.doccheck_command, cli.evolve_command, cli.exp_command, cli.export_command, cli.extract_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, cli.synth_command, cli.verify_command, cli.witness_command, codegen.service, conformance.command, evolve.command, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.disclosure, infra.exit_codes, infra.output, infra.report_payloads, infra.verdict_prose, infra.version, install.skill_lifecycle, measure.service, model.loading, model.population_loading, recovery.command, review.command, review.service, semantics.transitions, synth.corpus, synth.service
 - used_by: (none)
 - part_of: subsystem.check
 - tests: tests/test_report_json.py, tests/test_packaged_skills.py
@@ -2219,7 +2259,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +27 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +29 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2232,7 +2272,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/exits.py
 - uses: (none)
-- used_by: agent.solve, check.service, cli.api, cli.arguments, cli.checking_command, cli.dispatch, cli.exp_command, cli.export_command, cli.lifecycle_command, cli.solve_command, codegen.service, conformance.service, … +22 more (graph.md)
+- used_by: agent.solve, check.service, cli.api, cli.arguments, cli.checking_command, cli.dispatch, cli.exp_command, cli.export_command, cli.lifecycle_command, cli.solve_command, codegen.service, conformance.service, … +23 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf1_cli_pins.py, tests/test_coverage_cli.py
 - notes: Consumers preserve their older public names through imports or explicit aliases; quarantine and checker-defect names intentionally share value 6.
 
@@ -2357,7 +2397,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### semantics.saved_judgments
-- does: Bind saved external opinions to candidate and source bytes, then apply separate admission and repair policies.
+- does: Bind saved external opinions to candidate and source bytes, then apply separate admission and repair policies; an include root is judged as composed when its root is named.
 - verbs: saved judgments, external opinions, judgment policy, judgment receipts, fact digest, source binding, quote digest, consumer pinned trust, confidence evidence, verdict probability, evidence floor, approval quorum, rejection quorum, opinion admission, repair policy, read_judgment_policy, read_judgment_receipts, evaluate_judgments, redact_policy
 - in: Retained policy/receipt bytes, model/candidate objects and bytes, mechanical admission report and trusted evidence root
 - out: Bound opinion admission, mechanical-and-opinion admission, repair and review-required decisions with per-judge qualifications
@@ -2419,7 +2459,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/install.py
 - uses: infra.artifacts, infra.input_policy, infra.safe_filesystem, infra.version
-- used_by: cli.dispatch, cli.lifecycle_command
+- used_by: cli.dispatch, cli.lifecycle_command, extract.flatten_service
 - tests: tests/test_install.py, tests/test_doctor_uninstall.py, tests/test_packaged_skills.py, tests/test_rf4_peripheral.py, tests/test_public_packaged_invocation_guards.py
 - checked: partial
 - notes: Enumerates only packaged and receipt-owned names; filesystem mutation primitives are explicit aliases from gnd.safefs, while lifecycle policy remains here.
@@ -2576,7 +2616,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/output.py
 - uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, model.scalar_identity, semantics.transitions
-- used_by: codegen.service, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
+- used_by: codegen.service, exp.command, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
 - tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py, tests/test_rof2_projected_text.py
 - notes: Projected text is rendered from the projected payload only: for an active redaction policy on check, validate, walks, `check --admission` and verify, and for temporal terms on check, validate and walks (temporal admission and verify are not projected and print plain text); the plain routes share the same row renderers (render_check_rows, render_transition_rows) and the one extraction_line. _print_projected_text is a dispatcher kept for the historical binding. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
 
@@ -2883,7 +2923,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/paths.py
 - uses: infra.safe_filesystem
-- used_by: codegen.emit, exp.command, export.verification, extract.bundle, extract.service, fidelity.service, measure.promote, synth.corpus, synth.service
+- used_by: codegen.emit, exp.command, export.verification, extract.bundle, extract.flatten_service, extract.service, fidelity.service, measure.promote, synth.corpus, synth.service
 - tests: tests/test_synth_conforming.py, tests/test_codegen_manifest.py
 - notes: safe_output_path delegates containment to gnd.safefs.safe_destination and is reused by other lanes.
 
@@ -3049,7 +3089,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: check.branches, checker.evaluate, model.loading, model.population_loading, model.query_index, synth.assemble, synth.boundary, synth.mutations
 - used_by: measure.coverage, measure.report, synth.service
 - tests: tests/test_measure_coverage.py, tests/test_measure_derivation.py, tests/test_synth_boundary.py
-- notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists and opt-in compiled-subset routes from the predecessor frontier contract.
+- notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists, guarded-filter, guarded-disjunction and opt-in compiled-subset routes from the predecessor frontier contract.
 
 
 ### synth.corpus
@@ -3488,7 +3528,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - derived relations: export.pyrel_rules, semantics.extensions
 - digest binding: exp.schema, fidelity.service, model.ossie_import
 - disclosure mode: cli.discover_command, cli.dispatch, export.service, infra.disclosure
-- dispatch handler: cli.codegen_command, cli.conformance_command, cli.doccheck_command, cli.evolve_command, cli.exp_command, cli.export_command, cli.extract_command, cli.fidelity_command, cli.judgments_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.synth_command, cli.verify_command, cli.witness_command
+- dispatch handler: cli.codegen_command, cli.conformance_command, cli.doccheck_command, cli.evolve_command, cli.exp_command, cli.export_command, cli.extract_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.synth_command, cli.verify_command, cli.witness_command
 - distinct identifiers: synth.identity, synth.pool
 - distractor kinds: extract.manifest, fidelity.doccheck
 - document manifest: cli.doccheck_command, extract.manifest, fidelity.doccheck, subsystem.extract
@@ -3576,9 +3616,9 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - openai compatible: agent.declared_adapter, exp.adapter_policy
 - oracle abstention: synth.guarded, synth.prediction
 - oscillation: exp.service, exp.session_runtime
-- output collision: cli.export_command, review.command
-- output directory: cli.codegen_command, codegen.service, synth.paths
-- output format: cli.arguments, cli.conformance_command, cli.fidelity_command, cli.judgments_command, cli.verify_command
+- output collision: cli.export_command, extract.flatten_service, review.command
+- output directory: cli.codegen_command, cli.flatten_command, codegen.service, synth.paths
+- output format: cli.arguments, cli.conformance_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.verify_command
 - output limits: agent.invocation, export.souffle_runtime
 - output report: cli.fidelity_command, cli.measure_command
 - panel light: cli.review_command, review.command
@@ -3618,7 +3658,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - reference root: cli.judgments_command, witness.command, witness.service
 - reference value type: check.universe, extract.reference_schemes
 - regenerate project: codegen.regenerate, subsystem.codegen
-- register parser: cli.codegen_command, cli.conformance_command, cli.doccheck_command, cli.exp_command, cli.extract_command, cli.fidelity_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.synth_command, cli.verify_command, cli.witness_command
+- register parser: cli.codegen_command, cli.conformance_command, cli.doccheck_command, cli.exp_command, cli.extract_command, cli.fidelity_command, cli.flatten_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.synth_command, cli.verify_command, cli.witness_command
 - regression corpus: examples.literature_assurance, measure.promote
 - regular file: infra.safe_filesystem, model.population_loading
 - reject aliases: exp.frontmatter, model.architecture, skills.model_structure

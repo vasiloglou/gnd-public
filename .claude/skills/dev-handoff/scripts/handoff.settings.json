@@ -1,0 +1,16 @@
+{
+  "base_branch": "main",
+  "env_paths": [
+    ".venv"
+  ],
+  "key_files": [],
+  "max_mb": 200,
+  "planning_dir": ".gnd-planning",
+  "rebuild_paths": [],
+  "setup_command": "uv sync --locked --group dev",
+  "tools": [
+    "git",
+    "gh",
+    "uv"
+  ]
+}

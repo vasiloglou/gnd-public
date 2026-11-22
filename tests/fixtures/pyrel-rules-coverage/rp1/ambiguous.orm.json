@@ -1,0 +1,128 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:rp1:ambiguous",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "Personid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "country",
+   "name": "Country",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "country_id"
+   }
+  },
+  {
+   "id": "country_id",
+   "name": "Countryid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "city",
+   "name": "City",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "city_id"
+   }
+  },
+  {
+   "id": "city_id",
+   "name": "Cityid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "company",
+   "name": "Company",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "company_id"
+   }
+  },
+  {
+   "id": "company_id",
+   "name": "Companyid",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "lives",
+   "reading": "{Person} {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  },
+  {
+   "id": "knows",
+   "reading": "{Person} {Person} {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "person",
+     "role_name": "friend"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "eu",
+   "type": "uniqueness",
+   "scope": "external",
+   "role_refs": [
+    {
+     "fact_type": "lives",
+     "role": "country"
+    },
+    {
+     "fact_type": "knows",
+     "role": "country"
+    }
+   ],
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "eu"
+   }
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+{
+  "fact_types": [
+    {
+      "applicable": true,
+      "id": "approved_vendor",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "expense_claimed_for_trip",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "expense_has_amount",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "expense_incurred_on",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "expense_paid_to_vendor",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "receipt_issued_by_vendor",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "trip_ends_on",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "trip_starts_on",
+      "reason": null
+    }
+  ],
+  "object_types": [
+    {
+      "id": "amount",
+      "path": "direct",
+      "value_type": "amount"
+    },
+    {
+      "id": "day",
+      "path": "direct",
+      "value_type": "day"
+    },
+    {
+      "id": "expense",
+      "path": "direct",
+      "value_type": "expense"
+    },
+    {
+      "id": "receipt",
+      "path": "direct",
+      "value_type": "receipt"
+    },
+    {
+      "id": "trip",
+      "path": "direct",
+      "value_type": "trip"
+    },
+    {
+      "id": "vendor",
+      "path": "direct",
+      "value_type": "vendor"
+    }
+  ]
+}

@@ -95,7 +95,6 @@ def test_duckdb_program_agrees_with_gnd_on_every_family(tmp_path_factory, name, 
 
 @pytest.mark.parametrize('model,reason', [
     (CORPUS / 'exclusive-or-multi.orm.json', 'multi-role sequences'),
-    (REVIEW / 'refuse-external-uniqueness.orm.json', 'external uniqueness'),
     (REVIEW / 'refuse-external-frequency.orm.json', 'external frequency'),
     (REVIEW / 'helper-collision.orm.json', "fact type 'likes_reverse' has the name of a relation"),
 ])

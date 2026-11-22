@@ -115,6 +115,9 @@ def _phase3_target(row: Branch) -> bool:
     # Phase 6 existential consequents likewise stay outside the frozen denominator.
     if row.surface == "snapshot" and row.family == "guarded" and row.variant == "exists":
         return False
+    # GC2 antecedent filters and GC3 disjunctive consequents are later guarded lanes too.
+    if row.surface == "snapshot" and row.family == "guarded" and row.variant in {"filtered", "any_of"}:
+        return False
     if (
         row.reason_code
         in {

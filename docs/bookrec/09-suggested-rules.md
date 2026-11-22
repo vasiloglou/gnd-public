@@ -15,9 +15,8 @@ preview and apply it, as in [chapter 6](06-evolution.md).
 
 !!! note "Where these commands ship"
 
-    The `guarded-join` family and constants in mined rules are on `main` after
-    0.3.0 and are not in a published package yet. Install GND from a checkout
-    of the repository to run this chapter.
+    GND 0.4.0 includes guarded-join discovery and constants in mined rules.
+    See the [installation guide](../installation.md) for the published runtime.
 
 Continue in the directory of chapter 8; this chapter starts from its
 `bookrec-rules/rules.orm.yaml`. No miner, model account or network connection
@@ -428,15 +427,14 @@ the expense context where one exists.
 | GR-D4 (issue 95) | shared definitions, project-owned policies | [Two-team expense tutorial](../tutorials/shared-expense-policies.md) and [its commands](../how-to/shared-expense-policies-commands.md) |
 | GR-D5 (issue 96) | accept rules with nothing to judge | [`--allow-vacuous` on the series export](#a-series-export); [Adopt rules with a baseline](../how-to/adopt-rules-with-a-baseline.md#accept-a-rule-that-has-nothing-to-judge-yet) |
 | GR-D6 (issue 97) | label facts a program produced | [`source: tool-output` and `producer` on the series export](#a-series-export) |
-| GR-D7 (issue 118) | a release that carries the rule checks | [Release notes, 0.2.0](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules) |
+| GR-D7 (issue 118) | a release that carries the rule checks | [Release notes](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules) |
 | GR-D8 (issue 179) | a failing and an active passing case per guarded rule | [Chapter 8: generate a failing and a passing case](08-guarded-rules.md#generate-failing-and-active-passing-cases) |
 | GR-D9 (issue 180) | two rule editions on one population | [Chapter 8: compare two editions](08-guarded-rules.md#compare-two-editions-on-the-same-output) |
 | GR-D10 (issue 181) | guarded rules from joined facts | [Ask the data for joined rules](#ask-the-data-for-joined-rules) |
 | GR-D11 (issue 182) | typed constants in mined rules | [Import a mined rule that names a genre](#import-a-mined-rule-that-names-a-genre) |
 | GR-D12 (issue 183) | say when a guarded rule matched nothing; warn on an out-of-domain literal | [Chapter 8: binding counts](08-guarded-rules.md#ask-each-guard-how-many-bindings-it-had) and [the validation warning](08-guarded-rules.md#let-validation-catch-the-typo) |
 
-GR-D1 to GR-D7 are in published releases. GR-D8 to GR-D12 are on `main` after
-0.3.0.
+GND 0.4.0 includes GR-D1 through GR-D12.
 
 ### Earlier requests, shipped
 

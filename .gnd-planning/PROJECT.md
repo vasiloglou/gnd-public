@@ -2,6 +2,9 @@
 
 ## Current status — public launch closed, 2026-10-12
 
+This section records the 0.1.0 launch. The current release and the open
+work are in [Roadmap after 0.4.0](#roadmap-after-040--planned-2026-11-21).
+
 The owner accepted and closed the public launch. GND is public on GitHub;
 `get-nick-done==0.1.0` is published on PyPI and verified from a fresh install.
 The GitHub release/tag, Claude Code and Codex marketplace plugins, installation
@@ -206,3 +209,60 @@ The owner approved literature-identity plan r3 on 2026-11-15 ([plan gate](milest
 LI0–LI5 are implemented and merged. The [fresh independent reserve](milestones/literature-identity/031-phase-LI5-independent-reserve.md)
 met the L1 scoring threshold. Literature-identity [closed on 2026-11-15](milestones/literature-identity/035-milestone-close.md)
 after six valid responses in its renewed close review. The two successor outlines keep their own gates.
+
+## Roadmap after 0.4.0 — planned, 2026-11-21
+
+GND 0.4.0 is published, and its milestone closed on 2026-11-17
+([close record](milestones/release-0.4.0/014-milestone-close.md)). It is the
+latest release, which supersedes the 0.1.0 line under "Current status" above.
+Every milestone an earlier section calls planned has since closed:
+model-growth-guardrails, composition-and-type-induction, literature-interop and
+literature-depth each have a milestone-close record in their folders.
+
+Six issues were open on 2026-11-21.
+[#179](https://github.com/vasiloglou/gnd-public/issues/179) was already
+delivered by guarded-rule-authoring GA1
+([phase record](milestones/guarded-rule-authoring/003-phase-GA1.md),
+[close](milestones/guarded-rule-authoring/008-milestone-close.md)) and shipped
+in 0.4.0; it is closed. The other five are planned below. Each milestone is an
+outline r1: not reviewed and not approved. `start-milestone` writes its full
+plan and first spec, and the owner approves the plan before any code. Each
+outline's §1 maps every issue request to the phase that discharges it.
+
+| Order | Work | Issues | Phases |
+|---|---|---|---|
+| any time | [Maintenance: evolve and the unattended-growth sources](maintenance/2026-11-21-evolve-constraint-sources/README.md) | [#218](https://github.com/vasiloglou/gnd-public/issues/218) | One fix, after the owner rules (a) widen rule D-12 ([its home](../src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md#evolve-admission-d-12)) or (b) change the growth document |
+| 1 | [include-root-routes](milestones/include-root-routes/README.md) | [#217](https://github.com/vasiloglou/gnd-public/issues/217), [#214](https://github.com/vasiloglou/gnd-public/issues/214) item 1 | IR1 judgments on include roots, IR2 flattening outside extract, IR3 PyRel export of include roots |
+| 2 | [pyrel-rules-coverage](milestones/pyrel-rules-coverage/README.md) | [#214](https://github.com/vasiloglou/gnd-public/issues/214) items 2–4 and its quantity-fixture case | RP1 external uniqueness, RP2 anchored projection, RP3 `Number`, RP4 role-scoped value constraints, RP5 literature end to end |
+| 3 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) | [#216](https://github.com/vasiloglou/gnd-public/issues/216), [#215](https://github.com/vasiloglou/gnd-public/issues/215) | LH1 producer protocol over caller inputs, LH2 replay of a live run, LH3 generic admission, LH4 admission policy |
+
+#214 lists four items under "What would unblock it": item 1 is IR3, items 2–4
+are RP1–RP3.
+
+Status, 2026-11-22: milestones 1 and 2 are closed and merged.
+include-root-routes merged as
+[PR #220](https://github.com/vasiloglou/gnd-public/pull/220)
+([close](milestones/include-root-routes/005-milestone-close.md)), and
+pyrel-rules-coverage as
+[PR #223](https://github.com/vasiloglou/gnd-public/pull/223)
+([close](milestones/pyrel-rules-coverage/007-milestone-close.md)). Neither is
+released. Milestone 3 and the maintenance pass remain planned.
+
+Why this order: #217 has no workaround; #214 blocks a downstream query layer
+but the default export of a flat model works; #215 and #216 have working host-side
+workarounds. The maintenance pass is independent: no milestone waits for its
+ruling, and it ships whenever the ruling is made.
+
+Dependencies: milestones 1 and 2 both edit `export/pyrel_rules.py`, so they
+never have two writers at once: one works while the other waits, or the second
+rebases on the first's merged change. RP1–RP4 may start before
+include-root-routes closes; RP5's include-root cases need IR3 merged.
+Milestone 3 is independent of both: RP5 exports packaged models and uses none
+of its interfaces. Milestones 1 and 2 widen accepted inputs and together suit a
+0.5.0 release; the maintenance fix may ship earlier.
+
+Open owner decisions are listed in each plan's §5 and, for the maintenance
+pass, in its "Ruling needed" table. Work handed to another assistant or
+machine carries a hand-off note in `.gnd-planning/handoffs/`, written with the
+dev-handoff skill and read with dev-takeover. The reviews of this roadmap are
+in `reviews/pr-219-r2/` and `reviews/pr-219-panel/`.

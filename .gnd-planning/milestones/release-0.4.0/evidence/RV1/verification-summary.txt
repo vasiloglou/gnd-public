@@ -1,0 +1,31 @@
+RV1 candidate verification on beast-3. Edited to replace scratch and home paths.
+The runner exited 0 after collecting all six shard exits.
+
+RV1 scratch directory: <scratch>
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+Candidate patch SHA-256: 1fadc97e40329de94bb070987b16d243b1e979a614e574f70b6c39b898f41edf
+Candidate Git tree: 1bd2f7a23429ad532b898276e63f200267fc745e
+Python 3.13.18
+
+Shard 0 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+2489 passed, 118 deselected, 2 errors in 446.55s (0:07:26)
+
+Shard 1 exit 0
+3941 passed, 102 deselected in 396.00s (0:06:36)
+
+Shard 2 exit 0
+2796 passed, 13 skipped, 184 deselected in 497.24s (0:08:17)
+
+Shard 3 exit 0
+3538 passed, 123 deselected in 634.00s (0:10:34)
+
+Shard 4 exit 0
+3888 passed, 71 deselected in 715.04s (0:11:55)
+
+Shard 5 exit 0
+3047 passed, 255 deselected, 1 warning in 763.18s (0:12:43)

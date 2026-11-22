@@ -1,0 +1,14 @@
+{
+ "population": {
+  "model": "disconnected.orm.json",
+  "source": "fixture",
+  "covers": [
+   "capital",
+   "lives"
+  ]
+ },
+ "facts": {
+  "lives": [],
+  "capital": []
+ }
+}

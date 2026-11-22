@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker><marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#b91c1c"/></marker></defs><title id="title">The whale chain: joined by spelling, then joined by decision</title><desc id="desc">Top panel, joined by spelling: three true sentences from two notes. OpenCap Monocular builds on WHAM, WHAM builds on VampNet, VampNet builds on DMD. Because the human-pose WHAM and the whale WhAM share a spelling, and the music VampNet and the molecular VAMPnet share a spelling, the three edges join into one chain and GND proves the false claim that OpenCap Monocular descends from DMD. Bottom panel, joined by decision: a reviewer recorded both pairs as different. Four separate methods remain, each true edge survives, and the claim is missing.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:16px} .title{font-size:22px;font-weight:700} .head{font-size:18px;font-weight:700} .small{font-size:13px;fill:#50657a} .mid{text-anchor:middle} .node{fill:#f1f5f9;stroke:#50657a;stroke-width:1.5} .bad{fill:#fef2f2;stroke:#b91c1c;stroke-width:2} .good{fill:#ecfdf5;stroke:#047857;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .false{stroke:#b91c1c;stroke-width:2.5;fill:none;stroke-dasharray:7 5;marker-end:url(#arrow-red)} .verdict-bad{fill:#b91c1c;font-weight:700} .verdict-good{fill:#047857;font-weight:700}</style><rect width="760" height="560" fill="#fff" stroke="none"/>
+<text x="24" y="38" class="title">One question: does OpenCap Monocular descend from DMD?</text>
+<text x="24" y="82" class="head">Joined by spelling</text>
+<text x="200" y="82" class="small">three true sentences, two false merges</text>
+<rect x="24" y="104" width="150" height="58" rx="10" class="node"/><text x="99" y="130" class="mid">OpenCap</text><text x="99" y="150" class="mid">Monocular</text>
+<rect x="214" y="104" width="150" height="58" rx="10" class="bad"/><text x="289" y="130" class="mid">WHAM</text><text x="289" y="150" class="mid small">pose = whale?</text>
+<rect x="404" y="104" width="150" height="58" rx="10" class="bad"/><text x="479" y="130" class="mid">VampNet</text><text x="479" y="150" class="mid small">music = molecules?</text>
+<rect x="594" y="104" width="142" height="58" rx="10" class="node"/><text x="665" y="138" class="mid">DMD</text>
+<path d="M174 133H210" class="edge"/><path d="M364 133H400" class="edge"/><path d="M554 133H590" class="edge"/>
+<text x="192" y="190" class="mid small">builds on</text><text x="382" y="190" class="mid small">builds on</text><text x="572" y="190" class="mid small">builds on</text>
+<path d="M99 214C99 250 665 250 665 214" class="false"/>
+<text x="380" y="274" class="mid verdict-bad">GND proves it (exit 0), but it is false</text>
+<line x1="24" y1="300" x2="736" y2="300" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="24" y="336" class="head">Joined by decision</text>
+<text x="200" y="336" class="small">a reviewer recorded both pairs as different</text>
+<rect x="24" y="358" width="150" height="58" rx="10" class="node"/><text x="99" y="384" class="mid">OpenCap</text><text x="99" y="404" class="mid">Monocular</text>
+<rect x="214" y="358" width="150" height="58" rx="10" class="good"/><text x="289" y="384" class="mid">WHAM</text><text x="289" y="404" class="mid small">human pose</text>
+<rect x="404" y="358" width="150" height="58" rx="10" class="good"/><text x="479" y="384" class="mid">VAMPnet</text><text x="479" y="404" class="mid small">molecular kinetics</text>
+<rect x="594" y="358" width="142" height="58" rx="10" class="node"/><text x="665" y="392" class="mid">DMD</text>
+<path d="M174 387H210" class="edge"/><path d="M554 387H590" class="edge"/>
+<rect x="214" y="444" width="150" height="58" rx="10" class="good"/><text x="289" y="470" class="mid">WhAM</text><text x="289" y="490" class="mid small">whale vocalization</text>
+<rect x="404" y="444" width="150" height="58" rx="10" class="good"/><text x="479" y="470" class="mid">VampNet</text><text x="479" y="490" class="mid small">music</text>
+<path d="M364 473H400" class="edge"/>
+<text x="380" y="536" class="mid verdict-good">Same three sentences. The claim is missing (exit 2)</text>
+</svg>

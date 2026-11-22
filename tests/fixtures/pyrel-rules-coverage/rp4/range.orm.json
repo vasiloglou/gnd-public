@@ -1,0 +1,74 @@
+{
+ "version": 4,
+ "model_id": "urn:gnd:rp4:range",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "student",
+   "name": "Student",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "grade",
+   "name": "Grade",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "has_grade",
+   "reading": "{Student} has {Grade}",
+   "roles": [
+    {
+     "role_name": "student",
+     "object_type": "student"
+    },
+    {
+     "role_name": "grade",
+     "object_type": "grade"
+    }
+   ]
+  },
+  {
+   "id": "wants_grade",
+   "reading": "{Student} wants {Grade}",
+   "roles": [
+    {
+     "role_name": "student",
+     "object_type": "student"
+    },
+    {
+     "role_name": "grade",
+     "object_type": "grade"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "graded",
+   "type": "value",
+   "object_type": "grade",
+   "role_ref": {
+    "fact_type": "has_grade",
+    "role": "grade"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "grades are A or B"
+   },
+   "range": {
+    "min": 1,
+    "max": 5
+   }
+  }
+ ]
+}

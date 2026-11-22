@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import importlib.util
 import re
-import shutil
 import sys
 from pathlib import Path
 
@@ -30,20 +29,66 @@ def _tool():
 
 tool = _tool()
 
-PAGES = (
-    "pyproject.toml", "README.md", "tests/test_release_version.py",
-    "docs/release-notes.md", "docs/compatibility.md", "docs/support.md", "docs/installation.md",
-    "docs/index.md", "docs/marketplace-plugins.md", "docs/releasing.md", "docs/development/candidate.md",
-)
+# A small historical site shape keeps the mutation cases stable as releases
+# change the live repository pages.
+PIN_030 = "uv tool install get-nick-done==0.3.0\n"
+PAGES = {
+    "pyproject.toml": '[project]\nversion = "0.3.1"\n',
+    "tests/test_release_version.py": 'RELEASED = {"0.1.0", "0.2.0", "0.3.0"}\nTAGGED = {"0.3.1"}\n',
+    "README.md": PIN_030,
+    "docs/index.md": PIN_030,
+    "docs/installation.md": (
+        "# Install GND\n\n" + PIN_030
+        + "[v0.3.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.3.0)\n"
+        "get_nick_done-0.3.0-py3-none-any.whl\n"
+    ),
+    "docs/marketplace-plugins.md": (
+        PIN_030 + "The `v0.3.0` tag contains the marketplace entries.\n"
+        "installs only the latest release. Install the runtime from a checkout of the\n"
+        "same commit.\n"
+        "not register the development checkout in the user's marketplace configuration.\n"
+    ),
+    "docs/release-notes.md": (
+        "# Release notes\n\n"
+        "Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and 0.1.0\n"
+        "came before it. Version 0.3.1 is a GitHub tag only and is not published on the\n"
+        "package index. Releases follow the [release procedure](releasing.md). Changes on\n"
+        "`main` after a release are listed in an `Unreleased:` section until the next\n"
+        "one.\n\n"
+        "## 0.3.1 (tagged 2026-11-11, not published on PyPI)\n\n"
+        'uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.3.1"\n\n'
+        "## 0.3.0 (2026-11-11)\n"
+    ),
+    "docs/compatibility.md": (
+        "# Compatibility\n\n"
+        "Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions\n"
+        "0.1.0, 0.2.0 and 0.3.0 are published (0.3.0 on 2026-11-11). Version 0.3.1 is a\n"
+        "GitHub tag only and is not published on the package index. For the next version,\n"
+        "confirm service ownership and that the version is still free before candidate\n"
+        "freeze and again before any upload. Milestone numbers are not package versions.\n\n"
+    ),
+    "docs/support.md": (
+        "| Ubuntu, Python 3.11 | Observed in Phase 3 acceptance of 0.1.0 |\n"
+        "| macOS 27 arm64 | Observed in release acceptance of the 0.2.0 candidate built from `7c0f4d0e` |\n"
+        "| macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.3.0"
+        " candidate built from `4c07c0e6` |\n"
+        "| Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |\n"
+    ),
+    "docs/releasing.md": (
+        "were validated. Every release through 0.3.0 (0.1.0, 0.2.0 and 0.3.0) was\n"
+        "   `## X.Y.Z (tagged YYYY-MM-DD, not published on PyPI)`, and give in it the\n"
+    ),
+    "docs/development/candidate.md": "The artifact is `get_nick_done-0.1.0-py3-none-any.whl`.\n",
+}
 NEXT = "9.9.9"
 PUBLISH = {"date": "2027-01-02", "built": "0123abcd", "profile": "macOS 27 arm64, Python 3.11, uv 0.10.10"}
 
 
 def copy_tree(tmp_path: Path) -> Path:
-    for relative in PAGES:
+    for relative, contents in PAGES.items():
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(ROOT / relative, target)
+        target.write_text(contents, encoding="utf-8")
     return tmp_path
 
 
@@ -160,7 +205,9 @@ def test_a_later_publication_drops_the_older_tag_sentence(tmp_path):
 
 
 def test_publication_of_a_prepared_version(tmp_path):
-    root = prepare_next(copy_tree(tmp_path))
+    root = copy_tree(tmp_path)
+    previous = tool.declared_version(root)
+    prepare_next(root)
     before = tool.released_versions(root)
     assert NEXT not in before
     assert tool.problems(root) == []   # before publication the check has nothing to say
@@ -193,7 +240,7 @@ def test_publication_of_a_prepared_version(tmp_path):
     # What is left is what a person wrote for this release, and only that.
     left = tool.problems(root)
     assert left == [
-        f"stale: docs/release-notes.md: Everything in this section is on `main` after {tool.declared_version(ROOT)} and is not in any published",
+        f"stale: docs/release-notes.md: Everything in this section is on `main` after {previous} and is not in any published",
         "stale: docs/marketplace-plugins.md: which is prepared and not published. Install the runtime from a checkout of the",
     ], left
     edit(root, "docs/release-notes.md", " and is not in any published\npackage.", ".")
@@ -246,8 +293,8 @@ MUTATIONS = {
 
 @pytest.mark.parametrize("name", sorted(MUTATIONS))
 def test_a_page_left_in_the_earlier_state_is_reported(tmp_path, name):
-    assert tool.subject_version(ROOT) == "0.3.0", "these mutations are written against the 0.3.0 pages"
     root = copy_tree(tmp_path)
+    assert tool.subject_version(root) == "0.3.0"
     assert tool.problems(root) == []   # the control: the copy is clean
     relative, start, new, expected = MUTATIONS[name]
     _replace_line(root, relative, start, new)
@@ -309,5 +356,6 @@ def test_command_exit_codes(tmp_path, capsys):
     assert out.startswith("changed 8 files: ") and "stale: docs/marketplace-plugins.md" in out
     assert tool.main([*base, "check"]) == 1
     capsys.readouterr()
-    assert tool.main(["--root", str(ROOT), "check"]) == 0
+    published = copy_tree(tmp_path / "tagged")
+    assert tool.main(["--root", str(published), "check"]) == 0
     assert "no page describes the state before" in capsys.readouterr().out

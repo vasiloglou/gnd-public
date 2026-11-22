@@ -237,6 +237,9 @@
     "gnd.commands.fidelity": {
       "layer": "entry"
     },
+    "gnd.commands.flatten": {
+      "layer": "entry"
+    },
     "gnd.commands.judgments": {
       "layer": "entry"
     },
@@ -485,6 +488,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.include_roots": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.lean": {
       "lane": "export",
       "layer": "lanes"
@@ -600,6 +607,10 @@
       "lane": "extract",
       "layer": "lanes"
     },
+    "gnd.extract.flatten_service": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
     "gnd.extract.identity": {
       "lane": "extract",
       "layer": "lanes"
@@ -712,6 +723,12 @@
       "layer": "model"
     },
     "gnd.model._operations": {
+      "layer": "model"
+    },
+    "gnd.model._guarded": {
+      "layer": "model"
+    },
+    "gnd.model._parsing": {
       "layer": "model"
     },
     "gnd.model._unattended": {

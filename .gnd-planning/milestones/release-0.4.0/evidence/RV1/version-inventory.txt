@@ -1,0 +1,186 @@
+Source: cc4c8bf05ae8720b1ec5814b3709bfadb8643b16
+Command: git grep -l -z -F VERSION cc4c8bf0 --
+Scope: tracked literal mentions, including historical planning files and the lock.
+Each row labels the prior mention. Some files gain new 0.4.0 text while retaining their historical entries.
+The literal grep does not inspect compressed payloads. The default-lane diagnostic covers their active consumers.
+
+0.3.0 (129 tracked files)
+.claude/skills/components/references/rules.md	historical reference, compatibility statement or fixed test input; retain
+.claude/skills/components/scripts/rules_check.py	historical reference, compatibility statement or fixed test input; retain
+.codex/skills/components/references/rules.md	historical reference, compatibility statement or fixed test input; retain
+.codex/skills/components/scripts/rules_check.py	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/maintenance/2026-11-11-open-issues/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/maintenance/2026-11-11-query-budget-headroom/evidence/outputs-head.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/maintenance/2026-11-11-query-budget-headroom/query-successor.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/maintenance/2026-11-11-query-budget-headroom/spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/maintenance/2026-11-11-version-independent-fixtures/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/maintenance/2026-11-16-main-ci-repair/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-authoring/evidence/GA3/installed-smoke.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-authoring/evidence/close/installed-clean.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-authoring/evidence/close/installed-provenance.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-authoring/evidence/plan-review/r2.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-authoring/notes/guarded-rule-authoring-plan.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-workflows/evidence/GW0/dynamic-query-successor.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-workflows/evidence/GW2/installed-smoke.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-workflows/notes/guarded-rule-workflows-plan.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ilp-learners/notes/phase-IL3-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/023-OS5-docs-candidate.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/031-close-candidate.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/OS0/E5.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/OS0/refunds.yaml	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/OS0/revised/reproduce/controls.py	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/OS2/corpus-r1/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/OS3/flights.ontology.yaml	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/close-review/panel-run/reviewers/codex/stderr	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/close-review/panel-run/reviewers/kimi/stdout	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/close-review/panel-run/reviewers/qwen/envelope.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/close-review/panel-run/reviewers/qwen/response.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/close-review/panel-run/reviewers/qwen/stdout	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/close-review/panel-run/run.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/plan-review-r2/panel-run/request.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/plan-review-r2/panel-run/reviewers/codex/stderr	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/plan-review-r2/panel-run/reviewers/kimi/stdout	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/plan-review-r2/panel-run/run.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/plan-review-r2/review-request.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/notes/OS5-draft-checkpoint.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/notes/ossie-interchange-plan.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/notes/phase-OS3-claude-review.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/notes/phase-OS5-claude-review.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/001-plan-gate.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/002-phase-RN0.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/003-phase-RN1.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/004-phase-RN2.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/005-phase-RN3.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/006-publication.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/007-milestone-close.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN0/dynamic-query-successor.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN0/query-successor.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN0/source-successors.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN1/rerecord.py	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN2/beast3-run.log	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN2/beast3-script.sh	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN2/candidate/SHA256SUMS	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN2/t3-red-on-0.2.0.txt	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN3/checks.txt	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN3/dossier.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN3/github-release-notes.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN3/post-publication-release-files.patch	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN3/post-publication-tag.patch	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN3/post-publication.patch	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/RN3/stale-text-check.sh	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/close/remote-state-2026-11-11.txt	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/e1/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/e1/moved-digests.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/plan-review-r1/codex-review.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/evidence/publication/step-E-served-files.txt	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/close-codex-review.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/phase-RN0-codex-review.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/phase-RN0-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/phase-RN1-codex-review.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/phase-RN1-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/phase-RN2-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/phase-RN3-codex-review.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/phase-RN3-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/release-0.3.0/notes/release-0.3.0-plan.md	historical reference, compatibility statement or fixed test input; retain
+README.md	retained install pin; change at publication
+docs/bookrec/08-guarded-rules.md	prepared-state instruction; update in the RV3 publication patch
+docs/bookrec/09-suggested-rules.md	prepared-state instruction; update in the RV3 publication patch
+docs/compatibility.md	historical release information; RV1 adds prepared state
+docs/explanation/ossie.md	historical reference, compatibility statement or fixed test input; retain
+docs/how-to/shared-expense-policies-commands.md	historical reference, compatibility statement or fixed test input; retain
+docs/index.md	retained install pin; change at publication
+docs/installation.md	retained install pin; change at publication
+docs/marketplace-plugins.md	retained install pin; change at publication; RV1 adds prepared state
+docs/release-notes.md	historical release information; RV1 adds prepared state
+docs/releasing.md	historical reference, compatibility statement or fixed test input; retain
+docs/support.md	historical release information; RV1 adds prepared state
+docs/tutorials/shared-expense-policies.md	historical reference, compatibility statement or fixed test input; retain
+src/gnd/export/ossie.py	historical reference, compatibility statement or fixed test input; retain
+src/gnd/schema/ossie/PINNED.json	historical reference, compatibility statement or fixed test input; retain
+src/gnd/schema/ossie/core-spec.json	historical reference, compatibility statement or fixed test input; retain
+src/gnd/schema/ossie/ontology.json	historical reference, compatibility statement or fixed test input; retain
+src/gnd/skills/gnd-orm-core/references/representation-format.md	historical reference, compatibility statement or fixed test input; retain
+tests/fixtures/li0/golden.json	recorded output, fixture or recorded-version control; retain
+tests/fixtures/public-launch-phase-3/measurement/measurements/movie.faker.json	recorded output, fixture or recorded-version control; retain
+tests/fixtures/public-launch-phase-3/measurement/measurements/movie.llm-proposed.json	recorded output, fixture or recorded-version control; retain
+tests/fixtures/release-acceptance/0.3.0/README.md	recorded output, fixture or recorded-version control; retain
+tests/fixtures/rf2-pins/measure-successor.json	recorded output, fixture or recorded-version control; retain
+tests/fixtures/roundtrip/artifacts/setfam.artifacts.json	recorded output, fixture or recorded-version control; retain
+tests/support/pyrel_application_successors.py	historical reference, compatibility statement or fixed test input; retain
+tests/support/recorded_version.py	historical reference, compatibility statement or fixed test input; retain
+tests/support/rf9_ci_sources.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_development_scaffold.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_fidelity_stub_gate.py	recorded output, fixture or recorded-version control; retain
+tests/test_ik6_walk.py	recorded output, fixture or recorded-version control; retain
+tests/test_object_type_description.py	recorded output, fixture or recorded-version control; retain
+tests/test_ossie_external_oracle.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_ossie_import.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_package_description.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_packaged_skills.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_public_book_runtime.py	recorded output, fixture or recorded-version control; retain
+tests/test_public_coverage_goldens.py	recorded output, fixture or recorded-version control; retain
+tests/test_public_expense_current.py	recorded output, fixture or recorded-version control; retain
+tests/test_public_extract_controls.py	recorded output, fixture or recorded-version control; retain
+tests/test_public_legacy_codegen_pins.py	recorded output, fixture or recorded-version control; retain
+tests/test_public_measure_corpus.py	recorded output, fixture or recorded-version control; retain
+tests/test_public_measurement_publication.py	recorded output, fixture or recorded-version control; retain
+tests/test_recorded_version.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_release_acceptance.py	stale candidate-version guard; RV2 migrates it and retains positive regression checks
+tests/test_release_text.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_release_version.py	historical version sets and controls; RV1 adds the 0.4.0 headline
+tests/test_rf1_semantic_pins.py	recorded output, fixture or recorded-version control; retain
+tests/test_rf2_pre_move_pins.py	recorded output, fixture or recorded-version control; retain
+tools/gnd_entrypoints.json	historical reference, compatibility statement or fixed test input; retain
+tools/release_text.py	historical reference, compatibility statement or fixed test input; retain
+
+0.3.1 (48 tracked files)
+.claude-plugin/marketplace.json	stale release field; bump to 0.4.0
+.claude-plugin/plugin.json	stale release field; bump to 0.4.0
+.claude/skills/components/references/rules.md	historical reference, compatibility statement or fixed test input; retain
+.claude/skills/components/scripts/rules_check.py	historical reference, compatibility statement or fixed test input; retain
+.codex-plugin/plugin.json	stale release field; bump to 0.4.0
+.codex/skills/components/references/rules.md	historical reference, compatibility statement or fixed test input; retain
+.codex/skills/components/scripts/rules_check.py	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/maintenance/2026-11-11-version-independent-fixtures/README.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/installed-smoke.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/installed-smoke.json	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/guarded-rule-clauses/notes/guarded-rule-clauses-plan.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-identity/evidence/close/r1.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-identity/evidence/plan-review/r2.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-identity/notes/literature-identity-plan.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-identity/notes/phase-LI0-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-identity/notes/phase-LI1-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-identity/notes/phase-LI2-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-identity/notes/plan-review-disposition.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/004-phase-LX1-spec-gate.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/005-phase-LX1.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/007-phase-LX2.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/evidence/plan-r1/reviewed-plan.txt	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/notes/phase-LX1-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/notes/phase-LX2-spec.md	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/notes/reviews/phase-LX1-r1/diff.patch	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/literature-interop/notes/reviews/phase-LX2-r1/diff.patch	historical reference, compatibility statement or fixed test input; retain
+.gnd-planning/milestones/ossie-interchange/evidence/OS0/pins.json	historical reference, compatibility statement or fixed test input; retain
+docs/compatibility.md	historical release information; RV1 adds prepared state
+docs/expense/05-receipts.md	prepared-state instruction; update in the RV3 publication patch
+docs/release-notes.md	historical release information; RV1 adds prepared state
+docs/releasing.md	historical reference, compatibility statement or fixed test input; retain
+pyproject.toml	stale release field; bump to 0.4.0
+src/gnd/examples/expense/receipts/artifacts/reading.orm.artifacts.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/corpus/artifacts/model.artifacts.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/M1-drop-all.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/M2-drop-one.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/M3-stale.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/M4-false-derived.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/M5-invalid-population.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/M6-shifted-span.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/M7-false-merge.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/X1-abstain-6.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/X2-consistent-shift.report.json	recorded output, fixture or recorded-version control; retain
+src/gnd/examples/literature/expected/reference.report.json	recorded output, fixture or recorded-version control; retain
+tests/test_lx1_flattening.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_recorded_version.py	historical reference, compatibility statement or fixed test input; retain
+tests/test_release_version.py	historical version sets and controls; RV1 adds the 0.4.0 headline
+uv.lock	stale release field; bump to 0.4.0

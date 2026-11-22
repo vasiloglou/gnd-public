@@ -109,7 +109,7 @@ SURFACES: Mapping[str, Surface] = {
         "codegen", "conformance", "coverage", "doctor", "evolve apply",
         "evolve finalize", "evolve preview", "exp author-expectation", "exp close", "exp init",
         "exp validate", "export lean-compile", "export lean-verify", "export pyrel",
-        "export souffle-verify", "extract", "import ilp-rules", "import mined-rules",
+        "export souffle-verify", "extract", "flatten", "import ilp-rules", "import mined-rules",
         "import rai-orm", "install", "recovery inventory", "recovery verify", "review finalize",
         "synth", "uninstall")]),
     "gnd export ossie": Surface(

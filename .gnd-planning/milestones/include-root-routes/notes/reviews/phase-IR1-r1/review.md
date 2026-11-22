@@ -1,0 +1,10 @@
+<!-- Edited by review_tool.py sanitize: 2 absolute path(s) replaced with <repo> or <home>. The reviewer's words are otherwise unchanged; run.json holds the SHA-256 of the original. -->
+1. **F1 — Missing C7 byte-preservation test (medium).** [The spec’s T11](<<repo>/.gnd-planning/milestones/include-root-routes/notes/phase-IR1-spec.md:218>) names existing suites as the control, but their assertions compare selected observations rather than complete report bytes. [T2 likewise selects policy fields](<<repo>/tests/test_ir1_judgments_includes.py:158>).
+
+   Observable consequence: report-format regressions can escape these assertions. I reproduced this in memory: changing an include-free report’s `schema_version` from 15 to 14 changed its bytes and invalidated its schema, while the retained corpus’s `observation()` returned identical results. Add a complete report golden pinned to `1e419a88`, including `model_digest`, with a mutation control.
+
+2. **Checked and found true.** All ten hashes match. Read-only probes confirmed temporal-root admission, direct/flat target parity, stale-pin and stale-receipt refusals, nested/orphan refusals, schema-valid refusal reports, preserved direct/session guards, policy precedence, and reference-root routing. One include-free report was byte-identical to the baseline. Two compositions with 1,000 added types took **0.283 seconds**. Smaller checker benchmarks showed comparable include/flat costs; the relevant checker code is unchanged. Focused Ruff checks passed.
+
+3. **Limits.** I did not run the fixture-writing pytest suites because the brief prohibits creating files. Probes used packaged models with in-memory candidate/input substitutions, rather than the exact generated `composed.population.json`. The reported 580.9-second benchmark was not independently repeated. `git diff --check` also identified trailing whitespace at spec line 73; that is style only.
+
+VERDICT: CHANGES_REQUESTED

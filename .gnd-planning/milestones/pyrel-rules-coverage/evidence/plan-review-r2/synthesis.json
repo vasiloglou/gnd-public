@@ -1,0 +1,541 @@
+{
+ "schema_version": 1,
+ "run_sha256": "1744b2cbcf2a04f3b76424cf99cd87d8749b8da87d3bc0a7674c11d21e418475",
+ "summary": "Four of six seats returned schema-valid responses at xhigh (Claude and Gemini malformed). Kimi approved; Codex, Qwen and GLM asked for revision with 19 concerns, none raised by two seats. Codex found that GND's vacuity precedes its join refusal and that D6 leaves model constants inexact; Qwen raised twelve consistency and falsifiability concerns; GLM raised the resolution count, cumulative lanes, Ossie pins and the RP1 spec's ledger. Twelve of the nineteen attack text the round-1 repair created.",
+ "agreed_concerns": [],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "codex",
+   "concern_id": "rp2-anchored-empty-subject"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "rp1-join-refusal-vacuity-order"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "rp3-model-numeric-literals"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-line-882-two-opposite-treatments"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-rp2c4-byte-identity-vs-lqp-textual-line"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-rp2c7-default-lane-executes-lqp"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-rp3c2-boolean-exit-unmeasured"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-d6-float-bound-unmeasured-populations"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-success-line-scope-vs-frozen-default-export"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-rp5c1-acceptance-table-undefined"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-rp5c3-not-falsifiable"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-rp1-numeric-anchor-no-criterion"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-rp1-join-arity"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-d5-modality-gap"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "r3-round1-blocking-evidence"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "r2-population-count-resolution-41"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "r2-lanes-not-cumulative-rp3-rp5"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "r2-ossie-backstop-misses-new-shapes"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "r2-rp1-spec-diverges-from-plan-homes-lanes"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-join-vacuity",
+   "rank": 1,
+   "title": "Decide a disconnected join's vacuity at run time",
+   "action": "Measured: vacuous (exit 2) when every referenced list is empty, unchecked (exit 4) otherwise; ambiguous joins are refused at load (exit 3). RP1-C6, RP1-C7 corrected.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-join-refusal-vacuity-order"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp1-join-refusal-vacuity-order",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-anchored-empty",
+   "rank": 2,
+   "title": "Pin the anchored empty-subject case",
+   "action": "Measured: GND reports an anchored rule unchecked over an empty subject (exit 4); RP2-C8 pins it in the oracle lane.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp2-anchored-empty-subject"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp2-anchored-empty-subject",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-model-constants",
+   "rank": 3,
+   "title": "Extend D6 to model constants and measure populations",
+   "action": "Refuse model numeric constants beyond 2**53 in Number/Float contexts (RP3-C5); record the population scan (none found).",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp3-model-numeric-literals"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-d6-float-bound-unmeasured-populations"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rp3-model-numeric-literals",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-d6-float-bound-unmeasured-populations",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-d6-float-bound-unmeasured-populations",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-d6-float-bound-unmeasured-populations",
+     "evidence_index": 2
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-882",
+   "rank": 4,
+   "title": "Say that :882 serves both external families",
+   "action": "RP1 splits the line.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-line-882-two-opposite-treatments"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-line-882-two-opposite-treatments",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-line-882-two-opposite-treatments",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-line-882-two-opposite-treatments",
+     "evidence_index": 2
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-rp2c4-lqp",
+   "rank": 5,
+   "title": "Scope RP2-C4 to the DuckDB program",
+   "action": "The LQP program gains not-checked lines.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c4-byte-identity-vs-lqp-textual-line"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c4-byte-identity-vs-lqp-textual-line",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c4-byte-identity-vs-lqp-textual-line",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c4-byte-identity-vs-lqp-textual-line",
+     "evidence_index": 2
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-rp2c7-lane",
+   "rank": 6,
+   "title": "Run RP2-C7 in the oracle lane",
+   "action": "The default lane executes no program.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c7-default-lane-executes-lqp"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c7-default-lane-executes-lqp",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c7-default-lane-executes-lqp",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp2c7-default-lane-executes-lqp",
+     "evidence_index": 2
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-rp3c2",
+   "rank": 7,
+   "title": "Record GND's measured exit for a boolean in Number",
+   "action": "gnd check exits 3 (population:type-mismatch).",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp3c2-boolean-exit-unmeasured"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp3c2-boolean-exit-unmeasured",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp3c2-boolean-exit-unmeasured",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp3c2-boolean-exit-unmeasured",
+     "evidence_index": 2
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-success-line",
+   "rank": 8,
+   "title": "Keep the checker success line",
+   "action": "Only _cmd_export_pyrel_rules changes; RP2-C5 names both halves.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-success-line-scope-vs-frozen-default-export"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-success-line-scope-vs-frozen-default-export",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-success-line-scope-vs-frozen-default-export",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-success-line-scope-vs-frozen-default-export",
+     "evidence_index": 2
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-rp5-set",
+   "rank": 9,
+   "title": "Enumerate RP5's models and fix the population count",
+   "action": "RP5-C1 lists eleven models; 41 resolution populations.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp5c1-acceptance-table-undefined"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-population-count-resolution-41"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp5c1-acceptance-table-undefined",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp5c1-acceptance-table-undefined",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp5c1-acceptance-table-undefined",
+     "evidence_index": 2
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-population-count-resolution-41",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-rp5c3",
+   "rank": 10,
+   "title": "Make RP5-C3 falsifiable",
+   "action": "A test asserts every reason and refusal message appears on the runtime page.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp5c3-not-falsifiable"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp5c3-not-falsifiable",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp5c3-not-falsifiable",
+     "evidence_index": 1
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-rp1-anchor-arity",
+   "rank": 11,
+   "title": "Add numeric-anchor and three-way join criteria",
+   "action": "RP1-C8 and RP1-C9.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp1-numeric-anchor-no-criterion"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp1-join-arity"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp1-numeric-anchor-no-criterion",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp1-numeric-anchor-no-criterion",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp1-numeric-anchor-no-criterion",
+     "evidence_index": 2
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp1-join-arity",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-rp1-join-arity",
+     "evidence_index": 1
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-d5-modality",
+   "rank": 12,
+   "title": "State the deontic case of D5",
+   "action": "A deontic not-checked rule keeps the band.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-d5-modality-gap"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-d5-modality-gap",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-d5-modality-gap",
+     "evidence_index": 1
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-round1-evidence",
+   "rank": 13,
+   "title": "Cite round 1's blocking count",
+   "action": "6 of 19.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-round1-blocking-evidence"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-round1-blocking-evidence",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "r3-round1-blocking-evidence",
+     "evidence_index": 1
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-lanes-ossie-spec",
+   "rank": 14,
+   "title": "Cumulative lanes, Ossie pins, aligned RP1 spec",
+   "action": "Lanes run earlier phases' files; phases pin Ossie bytes for newly lowerable shapes; the RP1 spec's ledger and fixture home match the plan.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-lanes-not-cumulative-rp3-rp5"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-ossie-backstop-misses-new-shapes"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-rp1-spec-diverges-from-plan-homes-lanes"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-lanes-not-cumulative-rp3-rp5",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-ossie-backstop-misses-new-shapes",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r2-rp1-spec-diverges-from-plan-homes-lanes",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ]
+  }
+ ]
+}

@@ -9,7 +9,10 @@ The complete normative references are shipped in both real discovery roots;
 keep twins byte-for-byte and executable-mode identical. These three skills are
 delivered from dev-tools (`.devtools.toml`) and are not edited here; this
 repository's own rules for them are in
-[project.md](.codex/skills/process-phase/references/project.md). The owned compatibility
+[project.md](.codex/skills/process-phase/references/project.md). When unfinished work
+moves to another assistant or machine, use [dev-handoff](.codex/skills/dev-handoff/SKILL.md)
+on the leaving side and [dev-takeover](.codex/skills/dev-takeover/SKILL.md) on the receiving
+side, also delivered from dev-tools; the note informs and approves nothing. The owned compatibility
 [plan-review-panel](.codex/skills/plan-review-panel/SKILL.md) requires an explicit
 handoff to the maintained advisory panel. No automatic sibling execution.
 

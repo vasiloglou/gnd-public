@@ -1,0 +1,11 @@
+phase-RV1-spec.md: delegated gate digest verified.
+phase-RV2-spec.md: delegated gate digest verified.
+phase-RV3-spec.md: delegated gate digest verified.
+005-phase-RV1.md: 7 evidence digests verified.
+008-phase-RV2.md: 10 evidence digests verified.
+010-phase-RV3.md: 13 evidence digests verified.
+011-publication.md: 9 evidence digests verified.
+Baseline and pre-publication snapshots agree for tags, environments, workflows, releases, and PyPI.
+Closing delta: only the authorized tag, release, and two matching PyPI files.
+All three GitHub asset digests match the accepted artifacts and the release-only checksum file.
+No workflow or package-input diff relative to their named baselines.

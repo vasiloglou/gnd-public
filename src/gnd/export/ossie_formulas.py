@@ -287,6 +287,8 @@ def place_formulas(document, ontology, components, relations, mapped, fact_types
     def place(constraint, path, fact_id=None):
         if not _supported_shape(constraint, relations):
             return
+        if fact_id is not None and constraint.get("type") == "value":
+            return   # a value rule written on a fact type stays an extension, as before the rules programs lowered it
         synthetic = "_ossie_rule_" + "_".join(map(str, path))
         named = {**constraint, "id": constraint.get("id") or synthetic}
         try:

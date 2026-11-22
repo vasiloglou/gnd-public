@@ -12,7 +12,15 @@ import pytest
 from support import public_adapter_mutation_controls as controls
 
 from gnd import semantic_adapter
+from gnd import values as scalar_values
 from gnd.semantic_registry import IR_DIMENSIONS
+
+#: Dimensions whose mutation site lives in gnd.values since GW0.
+_VALUES_DIMENSIONS = frozenset({
+    "identity", "order", "order:Date", "order:DateTime:calendar", "order:DateTime:hour",
+    "order:DateTime:minute", "order:DateTime:second", "order:DateTime:microsecond",
+    "order:DateTime:offset-days", "order:DateTime:offset-seconds",
+})
 
 _MUTATIONS = (
     (
@@ -107,8 +115,8 @@ _MUTATIONS = (
     ),
     (
         "consequent",
-        "consequent_kind=kind, antecedent=atoms",
-        'consequent_kind="atom" if kind == "absence" else kind, antecedent=atoms',
+        "base = replace(base, consequent_kind=kind, variant=kind)",
+        'base = replace(base, consequent_kind="atom" if kind == "absence" else kind, variant=kind)',
         "test_guard_consequents_and_variants_remain_distinct",
     ),
     (
@@ -196,7 +204,13 @@ def test_each_dimension_has_a_failing_single_source_mutant(
     monkeypatch,
 ):
     source = inspect.getsource(semantic_adapter)
-    assert source.count(before) == 1, f"{dimension}: stale mutation site"
+    # GW0 (24c72d86) moved scalar identity and order into gnd.values, which the
+    # adapter reads as ``scalar_values``; those sites are mutated there.
+    values_source = inspect.getsource(scalar_values)
+    in_values = dimension in _VALUES_DIMENSIONS
+    site = values_source if in_values else source
+    assert site.count(before) == 1, f"{dimension}: stale mutation site"
+    assert (source if in_values else values_source).count(before) == 0, f"{dimension}: ambiguous site"
     if test_name == 'test_datetime_coordinates_retain_every_instant_component':
         import test_v6_phase2_adapter as current_controls
         control_owner = current_controls
@@ -206,10 +220,24 @@ def test_each_dimension_has_a_failing_single_source_mutant(
     available = {"tmp_path": tmp_path, "monkeypatch": monkeypatch}
     arguments = {name: available[name] for name in inspect.signature(control).parameters}
     control(**arguments)
+    if in_values:
+        import gnd
+
+        mutant_values = types.ModuleType("gnd.values")
+        mutant_values.__dict__["__name__"] = "gnd.values"
+        exec(  # noqa: S102 -- repository source plus one fixed, local mutation only
+            compile(values_source.replace(before, after), f"<values mutant: {dimension}>", "exec"),
+            mutant_values.__dict__,
+        )
+        monkeypatch.setitem(sys.modules, "gnd.values", mutant_values)
+        monkeypatch.setattr(gnd, "values", mutant_values)
+        adapter_source = source
+    else:
+        adapter_source = source.replace(before, after)
     mutant = types.ModuleType("gnd._adapter_mutant")
     monkeypatch.setitem(sys.modules, mutant.__name__, mutant)
     exec(  # noqa: S102 -- repository source plus one fixed, local mutation only
-        compile(source.replace(before, after), f"<adapter mutant: {dimension}>", "exec"),
+        compile(adapter_source, f"<adapter mutant: {dimension}>", "exec"),
         mutant.__dict__,
     )
     monkeypatch.setattr(control_owner, "adapter", mutant)

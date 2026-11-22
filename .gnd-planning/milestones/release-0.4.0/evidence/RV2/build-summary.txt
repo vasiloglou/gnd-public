@@ -1,0 +1,15 @@
+Run output. Edited to replace home and temporary paths.
+
+release/get_nick_done-0.4.0-py3-none-any.whl: OK
+release/get_nick_done-0.4.0.tar.gz: OK
+comparison/get_nick_done-0.4.0-py3-none-any.whl: OK
+648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a
+ProductName:		macOS
+ProductVersion:		26.6.2
+BuildVersion:		25G83
+arm64
+Python 3.11.15
+uv 0.10.10 (Homebrew 2026-03-13)
+36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c  release/get_nick_done-0.4.0-py3-none-any.whl
+2c171ccccc891333a580c3fe01c4b79ac5d3e5098af20827977a6ce455a229b6  release/get_nick_done-0.4.0.tar.gz
+36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c  comparison/get_nick_done-0.4.0-py3-none-any.whl

@@ -15,6 +15,7 @@ import zipfile
 from pathlib import Path
 
 import pytest
+from support.recorded_version import move_version
 
 pytestmark = pytest.mark.distribution
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,7 +41,15 @@ def run(args, cwd, env, *, timeout=300, expected=0):
     return result.stdout
 
 
+def candidate_source(root):
+    source = (root / 'SOURCE_COMMIT').read_text(encoding='ascii').strip()
+    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    assert source == head, 'candidate SOURCE_COMMIT differs from the acceptance checkout HEAD'
+    return head
+
+
 def verify_files(root):
+    candidate_source(root)
     lines = (root / 'SHA256SUMS').read_text().splitlines()
     expected = set()
     for line in lines:
@@ -90,7 +99,7 @@ def test_retained_candidate_identity(candidate):
         assert all(not Path(n).is_absolute() and '..' not in Path(n).parts for n in names)
 
 
-@pytest.mark.parametrize('mutation', ['changed', 'missing', 'extra'])
+@pytest.mark.parametrize('mutation', ['changed', 'missing', 'extra', 'wrong-source'])
 def test_candidate_identity_negative_controls(candidate, tmp_path, mutation):
     copy = tmp_path / 'candidate'
     shutil.copytree(candidate, copy, ignore=shutil.ignore_patterns('source'))
@@ -99,8 +108,13 @@ def test_candidate_identity_negative_controls(candidate, tmp_path, mutation):
         wheel.write_bytes(wheel.read_bytes() + b'changed')
     elif mutation == 'missing':
         wheel.unlink()
-    else:
+    elif mutation == 'extra':
         (copy / 'release' / 'extra.whl').write_bytes(b'extra')
+    else:
+        (copy / 'SOURCE_COMMIT').write_text('0' * 40 + '\n', encoding='ascii')
+        with pytest.raises(AssertionError, match='candidate SOURCE_COMMIT differs'):
+            verify_files(copy)
+        return
     with pytest.raises((AssertionError, FileNotFoundError)):
         verify_files(copy)
 
@@ -123,7 +137,8 @@ def installed(candidate, tmp_path_factory, request):
     # Git-tracked candidate only: dirty/untracked local helpers cannot fill a gap.
     checkout = outside / 'checkout'
     checkout.mkdir()
-    snapshot = subprocess.run(['git', 'archive', 'HEAD'], cwd=ROOT, capture_output=True, check=True)
+    snapshot = subprocess.run(['git', 'archive', candidate_source(candidate)], cwd=ROOT,
+                              capture_output=True, check=True)
     archive = outside / 'checkout.tar'
     archive.write_bytes(snapshot.stdout)
     with tarfile.open(archive) as source:
@@ -224,13 +239,9 @@ def test_target_only_contributor_lifecycle(installed):
 # docs/reference/rule-check-report.md and docs/how-to/adopt-rules-with-a-baseline.md,
 # which replays the same example; the RR2 spec (§6) cites each line.
 
-# The wheel PyPI serves for the release before the candidate, historical data like
-# RELEASED in tests/test_release_version.py: the negative control installs exactly
-# this file. Acceptance keeps a negative control only against that one release
-# (issue 176, owner ruling of 2026-11-11). The control against 0.1.0, which showed
-# that the rule-check probes below measure what 0.2.0 added, was retired with it:
-# the probes stay as regressions, and its record is rule-check-release RR2.
-PUBLISHED_WHEEL_SHA256 = {'0.2.0': 'e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4'}
+# Only the latest published wheel provides release availability controls.
+# The older release probes stay as positive regressions.
+PUBLISHED_WHEEL_SHA256 = {'0.3.0': '143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b'}
 MODEL, HEAD, BASE, FIXED = (f'catalog/{n}' for n in [
     'model.orm.yaml', 'head.population.yaml', 'base.population.yaml', 'fixed.population.yaml'])
 REMEDIES = {
@@ -419,8 +430,10 @@ YAML_TO_JSON = ('import json,sys; from ruamel.yaml import YAML; '
 
 
 @pytest.fixture(scope='module')
-def published_0_2_0(tmp_path_factory):
-    return published_wheel(tmp_path_factory, '0.2.0')
+def published_0_3_0(tmp_path_factory):
+    python, env = published_wheel(tmp_path_factory, '0.3.0')
+    assert gnd(python, [], env, python.parent, '--version', expected=0).stdout.strip() == 'gnd 0.3.0'
+    return python, env
 
 
 def copy_packaged(python, prefix, env, work, relative, name):
@@ -453,10 +466,9 @@ def identity(result):
     return match.group(1)
 
 
-def test_installed_0_3_0_carries(candidate, installed, tmp_path):
+def test_installed_0_3_0_regressions(installed, tmp_path):
     _outside, checkout, python, wheel, env, prefix = installed
     version = declared_version(checkout)
-    assert version == '0.3.0', 'these probes describe 0.3.0; a later version writes its own'
     # The installed package is the declared version, before any probe input is touched.
     assert gnd(python, prefix, env, tmp_path, '--version', expected=0).stdout.strip() == f'gnd {version}'
     work = acceptance_inputs(python, prefix, env, checkout, tmp_path / 'work')
@@ -542,33 +554,172 @@ def test_installed_0_3_0_carries(candidate, installed, tmp_path):
     assert covered['issues'] == [] and covered['warnings'] == []
 
 
-def test_published_0_2_0_lacks_0_3_0_features(installed, published_0_2_0, tmp_path):
-    _outside, checkout, python, _wheel, env, prefix = installed
-    old_python, old_env = published_0_2_0
-    work = acceptance_inputs(python, prefix, env, checkout, tmp_path / 'work')
+@pytest.fixture(scope='module')
+def rv2_installed(installed):
+    outside, checkout, python, _wheel, env, prefix = installed
+    assert declared_version(checkout) == '0.4.0'
+    assert gnd(python, prefix, env, outside, '--version', expected=0).stdout.strip() == 'gnd 0.4.0'
+    return installed
 
-    def old(cwd, *args, expected):
-        return gnd(old_python, prefix, old_env, work / cwd, *args, expected=expected)
 
-    assert old('.', '--version', expected=0).stdout.strip() == 'gnd 0.2.0'
-    # Q1: both Ossie commands are new.
-    assert "invalid choice: 'ossie'" in old('q1', 'export', 'ossie', 'model.orm.yaml', '--out', 'o.yaml', expected=64).stderr
-    assert "invalid choice: 'ossie'" in old('q1', 'import', 'ossie', 'o.yaml', '--out', 'r.json', expected=64).stderr
-    assert sorted(p.name for p in (work / 'q1').iterdir()) == ['model.orm.yaml']
-    # Q2: --identity is new.
-    assert 'unrecognized arguments: --identity' in old('q1', 'validate', 'model.orm.yaml', '--identity', expected=64).stderr
-    # Q3: model format version 5 is new, as the 0.3.0 notes say: 0.2.0 refuses the version.
-    refused = json.loads(old('q3', 'validate', 'sales.orm.json', '--format', 'json', expected=3).stdout)
-    assert any(i['path'] == '$.version' and i['message'] == '5 is not one of [1, 2, 3, 4]'
-               for i in refused['issues']), refused['issues']
-    # Q4: --check-population is new; the refusal it lifts is not.
-    assert 'unrecognized arguments: --check-population' in old(
-        'q4', *Q4_PREVIEW, '--out', 'clean.json', '--check-population', 'populations/clean.json', expected=64).stderr
-    old('q4', *Q4_PREVIEW, '--out', 'plain.json', expected=3)
-    plain = json.loads((work / 'q4/plain.json').read_text(encoding='utf-8'))
-    assert [i['cell'] for i in plain['policy_issues']] == ['constraint.populated.add']
-    # Q5: --require-documents and the unchecked-span count are new.
-    assert 'unrecognized arguments: --require-documents' in old(
-        'q5', 'validate', 'model.orm.yaml', '--document', 'ledger.txt', '--require-documents', expected=64).stderr
-    silent = old('q5', 'validate', 'model.orm.yaml', '--document', 'ledger.txt', '--format', 'json', expected=0)
-    assert 'spans-unchecked' not in silent.stdout + silent.stderr
+def test_installed_rv2_guarded_membership(rv2_installed, published_0_3_0, tmp_path):
+    _, checkout, python, _, env, prefix = rv2_installed
+    model = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON,
+                            checkout / 'tests/fixtures/models/guarded_minimal.orm.yaml'], tmp_path, env))
+    guard = model['constraints'][0]
+    model['constraints'] = [guard]
+    guard['where'] = [{'operator': '>=', 'left': '$a', 'right': 100}]
+    guard['consequent'] = {'comparison': {'operator': 'in', 'left': '$a', 'right': [150, 200]}}
+    model_path = tmp_path / 'guard.json'
+    model_path.write_text(json.dumps(model), encoding='utf-8')
+    gnd(python, prefix, env, tmp_path, 'validate', model_path, expected=0)
+
+    facts = {'expense_in_category': [{'expense': 1, 'category': 'travel'}],
+             'expense_has_amount': [{'expense': 1, 'amount': 150}]}
+    population = {'population': {'model': model_path.name, 'model_id': model['model_id'],
+                                 'source': 'fixture', 'covers': list(facts)},
+                  'instances': {}, 'facts': facts}
+    population_path = tmp_path / 'population.json'
+    for amount, code, verdict, bindings in [(150, 0, 'pass', 1), (250, 1, 'fail', 1), (50, 2, 'vacuous', 0)]:
+        facts['expense_has_amount'][0]['amount'] = amount
+        population_path.write_text(json.dumps(population), encoding='utf-8')
+        report = gnd_json(python, prefix, env, tmp_path, model_path, population_path,
+                          '--guarded-diagnostics', expected=code)
+        result, = [row for row in report['verdicts'] if row['constraint_type'] == 'guarded']
+        assert (result['verdict'], result['guarded_antecedent']['binding_count']) == (verdict, bindings)
+
+    old_python, old_env = published_0_3_0
+    result = gnd(old_python, prefix, old_env, tmp_path, 'validate', model_path, '--format', 'json', expected=3)
+    assert {(row['path'], row['rule_id']) for row in json.loads(result.stdout)['issues']} == {
+        ('$.constraints[0]', 'jsonschema:oneOf'),
+        ('$.constraints[0]', 'jsonschema:unevaluatedProperties'),
+    }
+
+
+def test_installed_rv2_composition_and_catalog(rv2_installed, published_0_3_0, tmp_path):
+    _, _, python, _, env, prefix = rv2_installed
+    old_python, old_env = published_0_3_0
+    work = tmp_path.resolve() / 'interop'
+    run([*prefix, python, '-I', '-m', 'gnd.examples.literature.interop', 'run', '--out', work], tmp_path, env)
+    model, population, record = 'checking.orm.json', 'composed.population.json', 'composition.json'
+    authored = json.loads((work / model).read_bytes())
+    assert [item['id'] for item in authored['includes']] == ['literature', 'chronology']
+    manifest_path = work / 'sources/manifest.json'
+    manifest = json.loads(manifest_path.read_bytes())
+    resolution_path = work / 'sources/resolution.json'
+    raw_resolution = resolution_path.read_bytes()
+    assert manifest['resolution'] == {'path': resolution_path.name,
+                                      'sha256': hashlib.sha256(raw_resolution).hexdigest()}
+    resolution = json.loads(raw_resolution)
+    decision, = resolution['decisions']
+    assert decision['decision'] == 'same'
+    composition = json.loads((work / record).read_bytes())
+    assert composition['schema'] == 'gnd-composition/2'
+    decided = [row for row in composition['facts'] if row['fact_type'] == 'paper_names_parent_method']
+    assert decided and all(row['decisions'] == [0] for row in decided)
+    checked = gnd_json(python, prefix, env, work, model, population, '--composition', record,
+                       '--sources', 'sources', expected=0)
+    assert checked['exit_code'] == 0
+
+    alias = copy_packaged(python, prefix, env, tmp_path, 'examples/literature/resolution', 'resolution')
+    alias_args = ('compose', alias / 'model.orm.yaml', alias / 'cases/A-alias',
+                  '--out', 'alias.population.json', '--record', 'alias.composition.json')
+    gnd(python, prefix, env, tmp_path, *alias_args, expected=0)
+    old_root = tmp_path / 'old'
+    old_root.mkdir()
+    old_alias = gnd(old_python, prefix, old_env, old_root, *alias_args, expected=3)
+    assert 'manifest has missing or unexpected fields' in old_alias.stderr
+    assert not list(old_root.iterdir())
+    old_catalog = gnd(old_python, prefix, old_env, work, 'compose', model, 'sources',
+                      '--out', 'old.population.json', '--record', 'old.composition.json', expected=3)
+    assert 'composition with reference populations is unsupported' in old_catalog.stderr
+
+    witness = ('witness', model, population, '--targets', 'targets.json', '--composition', record, '--raw')
+    replay = ('replay', model, population, 'rv2.witness.json', '--composition', record, '--raw')
+    gnd(python, prefix, env, work, *witness, '--out', 'rv2.witness.json', expected=0)
+    proof = json.loads((work / 'rv2.witness.json').read_bytes())
+    assert any(node.get('origin', {}).get('reference_id') == 'method-catalog' for node in proof['nodes'])
+    assert json.loads(gnd(python, prefix, env, work, *replay, expected=0).stdout)['exit_code'] == 0
+
+    catalog = work / 'reference/catalog.json'
+    original_catalog = catalog.read_bytes()
+    catalog.write_bytes(original_catalog + b' ')
+    typed_refusal = '''from pathlib import Path
+from gnd.errors import ReferenceHashMismatch
+from gnd.model import bind_references, load_model
+root = Path.cwd()
+try:
+    bind_references(load_model(root / "checking.orm.json"), root=root)
+except ReferenceHashMismatch:
+    pass
+else:
+    raise AssertionError("changed catalog bytes were accepted")
+'''
+    run([*prefix, python, '-I', '-c', typed_refusal], work, env)
+    for command in (witness, replay):
+        assert json.loads(gnd(python, prefix, env, work, *command, expected=3).stdout)['reason'] == 'binding-stale'
+    catalog.write_bytes(original_catalog)
+
+    decision['decision'] = 'different'
+    changed = json.dumps(resolution).encode('utf-8')
+    resolution_path.write_bytes(changed)
+    manifest['resolution']['sha256'] = hashlib.sha256(changed).hexdigest()
+    manifest_path.write_text(json.dumps(manifest), encoding='utf-8')
+    result = gnd(python, prefix, env, work, 'compose', model, 'sources',
+                 '--out', 'mutant.population.json', '--record', 'mutant.composition.json', expected=3)
+    assert 'decision 0 (different) keys end joined' in result.stderr
+    assert not list(work.glob('mutant.*.json'))
+
+
+def test_installed_rv2_literature_assurance(rv2_installed, published_0_3_0, tmp_path):
+    _, checkout, python, _, env, prefix = rv2_installed
+    literature = copy_packaged(python, prefix, env, tmp_path, 'examples/literature', 'literature')
+    reference = literature / 'runs/reference'
+    command = ('-I', '-m', 'gnd.examples.literature.assurance_report', literature,
+               literature / 'answers/answer-key.json', reference)
+    result = run([*prefix, python, *command], tmp_path, env).encode('utf-8')
+    tracked = checkout / 'src/gnd/examples/literature'
+    expected = json.loads((tracked / 'expected/reference.report.json').read_bytes())
+    actual_inputs = json.loads(result)['inputs']
+    version = declared_version(checkout)
+    assert actual_inputs['gnd_version'] == version
+    assert actual_inputs['harness_sha256'] == hashlib.sha256((tracked / 'assurance_report.py').read_bytes()).hexdigest()
+    expected['inputs']['harness_sha256'] = actual_inputs['harness_sha256']
+    assert json.loads(move_version(result, version, expected['inputs']['gnd_version'])) == expected
+
+    population = reference / 'composed/population.json'
+    mutant = json.loads(population.read_bytes())
+    assert mutant['facts']
+    mutant['facts'] = {}
+    population.write_text(json.dumps(mutant), encoding='utf-8')
+    changed = json.loads(run([*prefix, python, *command], tmp_path, env, expected=1))
+    assert changed['failed_stages'] == ['identity-decisions', 'derivation', 'freshness']
+
+    old_python, old_env = published_0_3_0
+    absence = ("from importlib.resources import files; "
+               "assert not files('gnd').joinpath('examples/literature/assurance_report.py').is_file()")
+    run([*prefix, old_python, '-I', '-c', absence], tmp_path, old_env)
+
+
+def test_installed_rv2_expense_receipts(rv2_installed, published_0_3_0, tmp_path):
+    _, _, python, _, env, prefix = rv2_installed
+    work = copy_packaged(python, prefix, env, tmp_path, 'examples/expense/receipts', 'receipts')
+    model, population, record = 'checking.orm.json', 'claim.population.json', 'claim.composition.json'
+    gnd(python, prefix, env, work, 'compose', model, 'claim', '--out', population, '--record', record, expected=0)
+    checked = gnd_json(python, prefix, env, work, model, population, '--composition', record,
+                       '--sources', 'claim', expected=1)
+    failures = {row['constraint_ref']: row['offending_facts']
+                for row in checked['report']['verdicts'] if row['verdict'] == 'fail'}
+    assert failures == {
+        'constraints[0]': [['Café Central, Vienna'], ['TAXI G7 (unresolved)']],
+        'constraints[1]': [['Café Central, Vienna'], ['Spa Lumière'], ['TAXI G7 (unresolved)']],
+        'constraints[3]': [{'$e': 'C4', '$t': 'T-114', '$d': '2026-03-09', '$b': '2026-03-06'}],
+    }
+    missing = gnd(python, prefix, env, work, 'compose', model, 'claim-missing',
+                  '--out', 'missing.population.json', '--record', 'missing.composition.json', expected=3)
+    assert 'joined without a same decision' in missing.stderr
+    assert not list(work.glob('missing.*.json'))
+
+    old_python, old_env = published_0_3_0
+    absence = "from importlib.resources import files; assert not files('gnd').joinpath('examples/expense/receipts').is_dir()"
+    run([*prefix, old_python, '-I', '-c', absence], tmp_path, old_env)

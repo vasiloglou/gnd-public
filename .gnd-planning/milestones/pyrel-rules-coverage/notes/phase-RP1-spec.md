@@ -1,23 +1,25 @@
-# Phase RP1 — external uniqueness in the rules programs · spec (draft)
+# Phase RP1 — external uniqueness in the rules programs · spec
 
 ## 1. Status
 
-Draft, 2026-11-21, written by `start-milestone`, amended for plan r3
-`(p1)`. Implementable once the plan gate is recorded **and RP2 has its
-record**: plan r3 runs RP2 first, because this phase lists disconnected and
-ambiguous joins as not checked through RP2's reason field. No
-implementation file exists. `(p2)` Amended again for plan r4: measured
-GND behaviour corrected the join cases (T4, T14) and added T16–T17; the
-verification ledger now matches plan §9.
+owner-decided (2026-11-22) by **delegated approval (auto=true)**: see §7 and
+§12. Base commit `6e04fe7f` (RP2 recorded).
+
+History: draft 2026-11-21 by `start-milestone`; `(p1)` amended for plan r3;
+`(p2)` amended for plan r4 (join cases measured, T16–T17 added, ledger to
+plan §9); `(p3)` 2026-11-22, finalized against RP2's bytes and further
+measurement (§6.3): one fact type is a projection, so its anchors are its
+roles; a disconnected join is vacuous only when every list is empty;
+duplicate role references are refused; the witness order is the comparator's.
 
 ## 2. Provenance
 
-Derived from plan r3 (`notes/pyrel-rules-coverage-plan.md`), §2 RP1, §4
-RP1-C1…C7, §9 row RP1 and §10 D4. No review has run over this spec. The
-plan-review round 1 (over r2) found that GND reports disconnected and
-ambiguous joins as unchecked, not refused; `(p1)` marks the repairs here. Every
-citation was read at `8c909013`. The measurements in §6 were run on
-2026-11-21 against scratch copies of the packaged populations.
+Derived from plan r4 (sha256 `9a93f4c2…9434`, approved in
+`001-plan-gate.md`), §2 RP1, §4 RP1-C1…C9, §9 row RP1 and §10 D4. No review
+has run over this spec. Citations read at `6e04fe7f`; GND's normative join
+is `semantic_spec.role_sequence_rows` (`:560-700`), its checker twin
+`checker/_core.py` `_join_rows` (`:1099-1153`). Measurements in §6.3 were run
+on 2026-11-21 and 2026-11-22 with `gnd.api.check` over the committed fixtures.
 
 ## 3. Obligations
 
@@ -33,173 +35,182 @@ citation was read at `8c909013`. The measurements in §6 were run on
 | plan §4 RP1-C8 `(p2)` | numeric anchor agrees, or is refused by name | T15 |
 | plan §4 RP1-C9 `(p2)` | a three-fact-type join | T16 |
 | plan §3 `(p2)` | Ossie pin for external uniqueness and the `String` entity | T17 |
-| plan §2 RP1 `(p1)` | a numeric-anchor case measures anchor equality against GND's identity | T15 |
 | plan §2 RP1 | anchors matched by object type, not role name | T9 |
 | plan §10 D4 | `String` for an `external` entity, decided from the model | §6.2, T8 |
 | plan §0 "Same verdict as GND" | vacuity is the join's emptiness | T7 |
 | plan §0 "Families stay registered" | no new family; lowering under `constraint_requirements` | §6.1, T10 |
-| plan §5 | `docs/runtimes/pyrel.md:156-161` stops listing external uniqueness as refused and states D4's difference | §6.4, T11 |
-| plan §6 | wrong-join risk | T6, T9 |
+| plan §0 "Say what each test proves" | a negative control fails | T18 |
+| plan §5 | `docs/runtimes/pyrel.md` stops listing external uniqueness as refused and states D4's difference | §6.4, T11 |
+| plan §6 | wrong-join risk | T6, T9, T18 |
 | plan §9 RP1 | focused lane and oracle lane, exit 0 | §8 ledger |
 | plan §1 open question | the join listing's part name and witness shape | §6.1 |
 
 ## 4. Standing rules, bound to this phase
 
-1. **Totality.** `_external_uniqueness` reads model JSON that passed
-   `gnd validate`, but is total anyway: a `role_refs` that is not a list of
-   mappings, an unknown fact type or role, or an empty list raises
-   `ExportInputError` naming the constraint, never a traceback. T12 feeds
-   each to `requirements()`.
-2. **Cap bounds the algorithm.** The lowering is linear in `len(role_refs)`
-   plus the referenced fact types' roles. T13 renders a 200-fact-type chain
-   join under a 5-second bound.
-3. **Validation order.** Model-wide refusals (`_refuse_unsupported_model`)
-   run first, then constraints in model order: fact-scoped, then top-level.
-   Within one external uniqueness: shape (T12), then connectivity (T4), then
-   lowering. Pinned by T4's source-order assertion that join classification
-   precedes the atom construction.
-4. **One walk.** The external branch is reached only through
-   `constraint_requirements`, which `requirements()` already walks once over
-   every family (`pyrel_rules.py:845-908`). T10 asserts no second loop over
-   top-level constraints is added (a source scan of `render` and
-   `requirements`).
-5. **One home.** `docs/runtimes/pyrel.md` is the home of the refusal list;
-   it yields in this phase (T11). The plan's §1 measurement table is history.
-6. **Measurement.** The witness shape and the vacuous verdict were measured
-   with `gnd check` before this spec (§6.3), not argued.
+1. **Totality.** `_external_uniqueness` is total over `role_refs`: not a
+   non-empty list of `{fact_type, role}` mappings, an unknown fact type or
+   role, or one role named twice raises `ExportInputError` naming the
+   constraint (T12).
+2. **Cap bounds the algorithm.** Linear in `len(role_refs)` plus the
+   referenced fact types' roles; the connectivity walk visits each anchor key
+   once. T13 lowers a 200-fact-type chain under 5 seconds.
+3. **Validation order.** Model validation first (an ambiguous join is an
+   invalid model, exit 3, before lowering); then `_refuse_unsupported_model`;
+   then constraints in model order. Within one external uniqueness: shape
+   (T12), ambiguity guard, connectivity (T4), then lowering; T4 asserts the
+   classification precedes the atom construction in the source.
+4. **One walk.** Reached only through `constraint_requirements`; T10 asserts
+   `requirements` and `render` keep one read of the model's rule list.
+5. **One home.** `docs/runtimes/pyrel.md` is the home of the refusal list
+   (T11).
+6. **Measurement.** Every expected exit and witness was measured with GND
+   (§6.3) and is written literally in the tests as well as compared.
 
 ## 5. Goal
 
 `gnd export pyrel MODEL --rules duckdb|lqp` exits 0 for
-`assertions/model.orm.yaml` and `lineage/model.orm.yaml`. On the
-populations of §8, the DuckDB program's exit code and finding set equal
-`gnd check`'s: 0, 1 and 2 as measured, and 3 for a non-string `assertion`
-value (GND exits 0 there; D4's stated difference).
+`assertions/model.orm.yaml` and `lineage/model.orm.yaml`. On §8's
+populations the DuckDB program's exit and findings equal `gnd check`'s, and
+a non-string `assertion` value is refused (exit 3) where GND exits 0, D4's
+stated difference.
 
 ## 6. Design
 
-### 6.1 `src/gnd/export/pyrel_rules.py` (~70 lines)
+### 6.1 `src/gnd/export/pyrel_rules.py`
 
-```python
-def _external_uniqueness(model: _Model, c: dict[str, Any]) -> list[Requirement]:
-    """GND's shared-entity join (checker/_core.py:1099-1150), twice; equal referenced values need equal anchors."""
-```
+`_external_uniqueness(model, c) -> list[Requirement]`, called from the
+top-level branch of `constraint_requirements` in place of the refusal for
+`uniqueness`; `frequency` keeps its refusal, and a fact-scoped
+`scope: external` keeps its own.
 
-- Called from `constraint_requirements` in the top-level branch, in place of
-  the `:882` refusal for `uniqueness`; `frequency` keeps the refusal.
-- Join shape. Group `role_refs` by fact type in first-seen order, as
-  `_join_rows` does. For each fact type, each referenced role binds
-  `$<role>` (numbered by `_sequence_names` on repeats). Each non-referenced
-  role binds `$<object type>_1` in copy one and `$<object type>_2` in copy
-  two, so two roles of the same object type in different fact types share a
-  variable, which is GND's merge by object type.
-- Join classification `(p1)`. When the referenced fact types do not form
-  one component under shared anchor object types, or one of them has two
-  non-referenced roles of one object type, append a not-checked row to
-  `model.unchecked` with GND's reason (`join-disconnected` /
-  `join-anchor-ambiguous`, rendered at `checker/_core.py:569-577`) and
-  return no requirement. GND decides the same way at
-  `semantic_spec.py:2665-2700`.
-  `(p2)` Corrected by measurement: only the disconnected case reaches this
-  code, and its row carries the referenced fact types so the report prints
-  vacuous when all of them are empty and not checked otherwise. An ambiguous
-  join is refused earlier, at model load (`semantic:join-anchor-ambiguous`,
-  exit 3).
-- Requirement `"uniqueness"`, part `""`: domain = copy one's atoms plus copy
-  two's atoms; check `same` over the anchor pairs; witness = the referenced
-  variables in `role_refs` order; `vacuous_when = ("any", ())` with the
-  listing below deciding; `info` carries `("external", True)` and
-  `("refs", [[fact_type, role], ...])`.
-- Listing part `"join"`: one `Requirement` with `listing=True`, domain =
-  copy one's atoms, selecting the referenced variables. It compiles to no
-  `require` (`_require_count` returns 0 for a listing, `:1399-1403`).
-- `uniqueness` with `info['external']` joins `GROUPED` in the DuckDB
-  program; `judge` returns `vacuous` when the `join` rows are empty, else
-  `fail` with the distinct offending referenced tuples, else `pass`.
-  `witnesses` is not used for it.
+- Group `role_refs` by fact type in first-seen order, as GND does.
+  Referenced roles bind `_sequence_names(role_refs)` (`$<role>`, numbered on
+  repeats). `(p3)` Anchor keys: with two or more fact types, the object type
+  of each non-referenced role (GND merges anchors by object type); with one
+  fact type, the role name, because GND projects one fact type and its rows
+  differ when any other role differs (`role_sequence_rows`, `:589-607`). Each
+  key binds `$<key>_1` in copy one and `$<key>_2` in copy two, suffixed with
+  `_` while it collides with a referenced name.
+- Ambiguity `(p2)`: GND refuses the model at load (exit 3); the function also
+  refuses it by name, as a guard for callers that skip validation.
+- Connectivity: fact types linked by a shared anchor key; when not one
+  component, append `{"id", "modality", "vacuous_if_empty": [fact types],
+  "reason": "join-disconnected: F, G share no anchor object type"}` to
+  `model.unchecked` and return no requirement. `(p3)` The DuckDB report
+  prints it vacuous when every listed fact list is empty and not checked
+  otherwise, as measured; the LQP program, which reads no population, always
+  lists it as not checked.
+- Listing part `"join"`: copy one's atoms, `Check("none")`, selecting the
+  referenced variables; it compiles to no `require`.
+- Part `""`: copy one's plus copy two's atoms, `Check("same")` over the
+  anchor pairs, witness the referenced variables in `role_refs` order. With
+  no anchor key at all (one fact type, every role referenced) this part is
+  omitted: rows of a set are distinct, so only vacuity remains.
+- Both parts carry `info` `("external", True)` and `("refs", …)` and
+  `vacuous_when = ("any", fact types)` (an empty list empties the join).
+- DuckDB report: a rule with `info['external']` is judged with the grouped
+  families. `judge` returns `vacuous` when the `join` rows are empty, else
+  `fail` with the distinct offending referenced tuples, else `pass`. `(p3)`
+  Witness order is by JSON text, the order the shared comparator puts GND's
+  witness in (as for inline uniqueness).
 
 ### 6.2 Typing the external entity (D4)
 
-`raw_primitive(object_id)` returns `"String"` when the object type is an
-entity with `reference.mode == "external"` and no `value_type`. Nothing else
-changes there. `check_cell` already refuses a non-string in a `String` role;
-the message for this case names the entity and says
-`GND accepts any scalar for an externally identified entity; the rules
-programs need strings`. Exact text fixed in T8.
+`_Model.external(object_id)`: an entity with `reference.mode == "external"`,
+no primitive and no reference value type. `raw_primitive` returns `String`
+for it. `(p3)` `_Model.cell_type` gives `External` for such an entity, else
+the raw primitive; `ROLES` and `ROSTERS` carry it, and `check_cell` refuses a
+non-string `External` cell with `<fact>.<role> is <value>: GND accepts any
+scalar for an externally identified entity; the rules programs need strings`.
 
-### 6.3 Measured GND behaviour (2026-11-21)
+### 6.3 Measured GND behaviour
 
-| Population | `gnd check` exit | verdict for `constraints[0]` |
+| Model / population | `gnd check` exit | verdict |
 |---|---|---|
-| `assertions/raw.population.json` | 0 | pass |
-| one second assertion given the first one's passage and work | 1 | fail, `offending_facts [["p01", "working-notes"]]` |
-| every `assertion_names_work` row renamed to another assertion | 2 | vacuous, `offending_facts []` |
-
-The witness is the list of offending referenced-value tuples in
-`role_refs` order (passage, work), one per tuple. The program prints it as
-one line, as GND reports one verdict per rule.
+| assertions / `raw` | 0 | pass |
+| assertions / `rp1/assertions-duplicate` | 1 | fail `[["p01", "working-notes"]]` |
+| assertions / `rp1/assertions-empty-join` | 2 | vacuous |
+| assertions / `rp1/assertions-integer-id` | 0 | pass (GND accepts the integer) |
+| `rp1/disconnected` / facts | 4 | unchecked, `join-disconnected` |
+| `rp1/disconnected` / partial (one list empty) `(p3)` | 4 | unchecked, `join-disconnected` |
+| `rp1/disconnected` / empty | 2 | vacuous |
+| `rp1/ambiguous` | 3 | invalid model at load |
+| `rp1/renamed-anchor` / duplicate | 1 | fail `[["fr", "fr"]]` |
+| `rp1/numeric-anchor` (anchors `1` and `1.0`) / duplicate | 1 | fail `[["fr", "paris"]]` |
+| `rp1/three-way` / duplicate | 1 | fail `[["acme", "paris", "fr"]]` |
+| `rp1/three-way` / pass | 0 | pass |
+| three-way, one list not in covers `(p3)` | 1 | fail (covers not read) |
+| three-way, one list empty `(p3)` | 2 | vacuous |
 
 ### 6.4 `docs/runtimes/pyrel.md`
 
-Line 156: external uniqueness moves from the refused list to the checked
-list; external frequency stays refused. One sentence states D4: values of
-an externally identified entity must be strings in the programs, though GND
-accepts any scalar.
+External uniqueness leaves the refused list; a paragraph states the join,
+the disconnected case and D4's difference. External frequency stays refused.
 
 ## 7. Decisions
 
-| ID | Question | Readings and cost | Ruling |
-|---|---|---|---|
-| RP1-D1 | Vacuity source | (a) the `join` listing, GND's rule; (b) `("any", fact types)`, which calls a non-empty pair of lists with an empty join "decided", exit 0 vs GND's 2 | open; proposed (a) |
-| RP1-D2 | Witness shape | (a) referenced tuples in `role_refs` order, as measured; (b) GND-internal facts, as inline uniqueness prints | open; proposed (a) |
-| RP1-D3 | Non-string external ids | (a) exit 3 by name (D4); (b) coerce to string, which merges `1` and `"1"`, which GND keeps distinct | open; proposed (a) |
+| ID | Question | Ruling (delegated, 2026-11-22) |
+|---|---|---|
+| RP1-D1 | Vacuity source | (a) the `join` listing, GND's rule; `("any", fact types)` kept as a shortcut that agrees with it |
+| RP1-D2 | Witness shape | (a) referenced tuples in `role_refs` order, one line, as measured |
+| RP1-D3 | Non-string external ids | (a) exit 3 by name (D4); coercion would merge `1` and `"1"`, which GND keeps distinct |
+| RP1-D4 `(p3)` | One role named twice in `role_refs` | refused by name; GND reads it as one reference, and the programs' variable naming has no meaning for it |
 
 ## 8. Tests
 
-New file `tests/test_rp1_external_uniqueness.py`; fixtures under
-`tests/fixtures/pyrel-rules-coverage/rp1/`, committed red before the code.
+`tests/test_rp1_external_uniqueness.py`; fixtures in
+`tests/fixtures/pyrel-rules-coverage/rp1/`.
 
 | # | Case | Lane | Expected |
 |---|---|---|---|
-| T1 | render `assertions/` and `lineage/`, both targets | default | no exception |
-| T2 | both programs carry `require_text` of the one `Requirement`; `#   rule:` count equals requirements | default | pass |
-| T3 | `refuse-external-uniqueness.orm.json` renders; `refuse-external-frequency.orm.json` still refuses `external frequency` | default | pass; the `:98` parametrize row moves |
-| T4 `(p1)` `(p2)` | `rp1/disconnected.orm.json`: rule in `UNCHECKED` with GND's reason, no requirement; source order: classification before atoms; oracle runs with facts and with empty lists agree with GND | default + oracle | render; exit 4 both, exit 2 both |
-| T5 | DuckDB program on `assertions/raw.population.json` agrees with GND | oracle | exit 0 both |
-| T6 | `rp1/duplicate.population.json` | oracle | exit 1 both; `[["p01", "working-notes"]]` |
-| T7 | `rp1/empty-join.population.json` | oracle | exit 2 both; vacuous |
-| T8 | `rp1/integer-id.population.json` | oracle | program exit 3 with the D4 message; GND exit 0 (asserted, the difference is pinned) |
-| T9 | `rp1/renamed-anchor.orm.json` (anchor roles of one object type with different role names) with a duplicate | oracle | exit 1 both |
-| T10 | source scan: no new loop over `doc['constraints']` | default | pass |
-| T11 | runtime page no longer lists external uniqueness as refused, still lists external frequency | default | pass |
-| T12 | malformed `role_refs` shapes | default | `ExportInputError`, no traceback |
-| T13 | 200-fact-type chain render under 5 s | default | pass |
-| T14 `(p2)` | `rp1/ambiguous.orm.json` (one referenced fact type with two anchor roles of one object type) | default | export exit 3 `invalid model`; `gnd check` exit 3 (both pinned) |
-| T15 `(p1)` | `rp1/numeric-anchor.orm.json`, anchors `1` and `1.0` with one repeated referenced tuple | oracle | the program agrees with GND; if it does not, the case is recorded as a finding and becomes a stated input refusal |
-| T16 `(p2)` | `rp1/three-way.orm.json`, a join over three fact types, with a duplicate | default + oracle | renders; exit 1 both |
-| T17 `(p2)` | `gnd export ossie` on `assertions/model.orm.yaml` and on `rp1/three-way.orm.json` gives its `8c909013` bytes | default | equal |
+| T1 | export `assertions/` and `lineage/`, both targets | default | exit 0 |
+| T2 | one checked `Requirement`; its statement once in each program; `#   rule:` count equals checked requirements | default | pass |
+| T3 | the review fixture renders; external frequency still refuses; its `test_pyrel_rules_families` row removed | default | pass |
+| T4 | disconnected: listed, not lowered, source order; oracle facts 4, partial 4, empty 2, agreeing with GND | default + oracle | pass |
+| T5–T7 | assertions raw 0, duplicate 1, empty join 2 | oracle | agree, literal |
+| T8 | integer id: program exit 3 with the D4 message; GND exit 0 | oracle | pass |
+| T9 | renamed anchor roles, duplicate | oracle | exit 1 both |
+| T10 | one walk (source scan) | default | pass |
+| T11 | runtime page | default | pass |
+| T12 | malformed `role_refs` (8 shapes) | default | `ExportInputError` by name |
+| T13 | 200-fact-type chain under 5 s | default | pass |
+| T14 | ambiguous: export exit 3 `invalid model`; `gnd check` exit 3; guard without validation | default | pass |
+| T15 | numeric anchors `1`/`1.0`, duplicate | oracle | exit 1 both |
+| T16 | three-way duplicate (1) and pass (0) | oracle | agree |
+| T17 | Ossie export of assertions and three-way keeps its digests from `6e04fe7f` | default | equal |
+| T18 `(p3)` | negative control: the program with the anchor check removed disagrees with GND on the raw population | oracle | disagree |
+| T19 `(p3)` | the LQP program compiles (assertions, three-way) and `--compile` lists the disconnected rule | oracle | exit 0 |
 
 Verification ledger:
 
-- Focused `(p2)`: `uv run pytest -q tests/test_rp1_external_uniqueness.py tests/test_rp2_anchored.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py tests/test_pyrel_rules_derivations.py tests/test_rules_in_pyrel.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_ossie_formulas.py tests/test_ossie_export.py --tb=short`, exit 0.
-- Oracle (opted in): `uv run pytest -q -m pyrel_oracle tests/test_rp1_external_uniqueness.py tests/test_rp2_anchored.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py`, exit 0; baseline 110 passed.
-- Guards: the `project.md` guard block; `uv run ruff check`.
+- Focused: `uv run pytest -q tests/test_rp1_external_uniqueness.py tests/test_rp2_anchored.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py tests/test_pyrel_rules_derivations.py tests/test_rules_in_pyrel.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_ossie_formulas.py tests/test_ossie_export.py --tb=short`, exit 0.
+- Oracle (opted in): `uv run pytest -q -m pyrel_oracle tests/test_rp1_external_uniqueness.py tests/test_rp2_anchored.py tests/test_pyrel_rules.py tests/test_pyrel_rules_families.py`, exit 0; RP2's count was 128.
+- Guards: the `project.md` guard block; `uv run ruff check src tests tools` (whole-tree ruff is the known red of RP2's record).
 - Broad lanes: not selected.
 
 ## 9. Out of scope for this phase
 
-External frequency; anchored (RP2); `Number` (RP3); role-scoped value
-(RP4); a live engine run; typing an external entity from its identifying
-tuple.
+External frequency; `Number` (RP3); role-scoped value (RP4); a live engine
+run; typing an external entity from its identifying tuple; the LQP program
+deciding a disconnected join's vacuity.
 
 ## 10. Size
 
-Estimate: ~70 source lines, ~220 test lines, 5 fixture files.
+Estimate: ~90 source lines, ~260 test lines, 15 fixture files.
 
 ## 11. Approval instrument
 
-Prose plus a fixture corpus whose answer key is `gnd check` itself, run in
-the oracle lane: the populations are committed first and T5–T9 are red
-until the lowering exists. Expected exits are written literally in the
-tests as well as compared with GND, so a change in GND cannot silently move
-them.
+Prose plus a fixture corpus whose answer key is `gnd check`, run in the
+oracle lane, with expected exits written literally.
+
+## 12. Gate
+
+Delegated approval (auto=true), 2026-11-22, under the owner's
+`/process-milestone pyrel-rules-coverage auto` (2026-11-21), scope phase RP1
+of this milestone. Decisions RP1-D1…D4 as ruled in §7. Budget: no paid call;
+the phase review is Codex through the review helper (plan gate D7). The
+sweep: every obligation of §3 maps to a test or a design section; every
+expected value in §8 was measured (§6.3). The spec's SHA-256 is recorded in
+`003-phase-RP1.md`. Disclosure: the implementation was drafted in the
+working tree before this gate was written, against the `(p2)` draft; the
+gate was ruled over this text, and the record says so.

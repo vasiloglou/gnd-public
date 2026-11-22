@@ -32,7 +32,7 @@ def test_literature_model_exports(tmp_path, model, target):
 POPULATIONS = (
     [('model.orm.yaml', p, 4) for p in sorted((LIT / 'answers/gold').glob('*.population.json'))]
     + [('assertions/model.orm.yaml', LIT / 'assertions/raw.population.json', 0)]
-    + [('resolution/model.orm.yaml', p, None) for p in sorted((LIT / 'resolution/cases').glob('*/*/population.json'))]
+    + [('resolution/model.orm.yaml', p, 4) for p in sorted((LIT / 'resolution/cases').glob('*/*/population.json'))]
     + [('quantity_fixture/time.orm.yaml', LIT / 'quantity_fixture/time.population.json', 4),
        ('depth_fixture/decimal.orm.json', LIT / 'depth_fixture/decimal.population.json', 0)]
 )
@@ -76,6 +76,16 @@ MESSAGES = [
     'a number that is not finite; GND refuses it',
     'duplicate rows in <fact type>: PyRel relations are sets, so repeated facts cannot be checked here; GND reports them',
     'role_ref must be a {fact_type, role} mapping',
+    'role_ref <fact type>.<role> is not played by <object type>',
+    'external uniqueness needs role_refs, a non-empty list of {fact_type, role} mappings',
+    'fact type <fact type> has no role <role>',
+    'role_refs name <fact type>.<role> twice; the rules programs refuse that',
+    'the shared-entity join is ambiguous in <fact type> (two anchor roles of one object type); gnd check refuses it too',
+    ('a disconnected join over the derived fact type <fact type>; the LQP version cannot tell whether it is vacuous '
+     'without the engine, so it refuses it (the DuckDB version checks it)'),
+    'a population is a JSON object',
+    'a float literal compared with an Integer value is exact in GND and binary in PyRel; the rules programs refuse it',
+    '<fact type>: a fact list is a JSON array of objects',
     ('<variable> is an Integer value written into the Float or Number role <role>; PyRel would round it '
      'beyond 2**53, so the rules programs refuse it'),
 ]

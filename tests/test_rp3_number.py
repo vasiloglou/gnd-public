@@ -203,3 +203,21 @@ def test_an_integer_sum_compared_with_a_number_value_is_refused(tmp_path):
     run = _export(tmp_path, RP3 / 'sum-compared.orm.json')
     assert run.returncode == 3, run.stdout + run.stderr
     assert 'comparing a Float variable with an Integer variable' in run.stderr
+
+
+# Close review (qwen): the comparator's numeric identity is GND's and no wider; a negative control
+def test_the_comparator_identifies_1_and_1_0_and_nothing_else():
+    canonical = rules_tests._canonical
+    assert canonical([{'score': 1.0}]) == canonical([{'score': 1}])
+    assert canonical([{'score': 1.5}]) != canonical([{'score': 1}])
+    assert canonical([{'score': 2.0}]) != canonical([{'score': 1}])
+    assert canonical(True) is True and canonical(1.0) == 1 and type(canonical(1.0)) is int
+    line_float, line_int = "r  violated  [{\"score\": 1.0}]", "r  violated  [{\"score\": 2}]"
+    assert rules_tests._findings(line_float) != rules_tests._findings(line_int)
+
+
+# Close repair review F1: a float literal compared with an Integer value (here a sum) compares in binary
+def test_a_float_literal_compared_with_an_integer_sum_is_refused(tmp_path):
+    run = _export(tmp_path, RP3 / 'sum-float-literal.orm.json')
+    assert run.returncode == 3, run.stdout + run.stderr
+    assert 'a float literal compared with an Integer value is exact in GND and binary in PyRel' in run.stderr

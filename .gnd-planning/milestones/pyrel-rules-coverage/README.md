@@ -16,4 +16,4 @@ milestone's gates.
 
 [Plan](notes/pyrel-rules-coverage-plan.md). Second in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
-Next: the milestone close review (full GND panel).
+Closed 2026-11-22 by delegated ruling: [close record](007-milestone-close.md). Merge stays with the owner.

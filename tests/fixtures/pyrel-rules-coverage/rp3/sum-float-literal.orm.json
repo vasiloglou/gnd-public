@@ -1,0 +1,113 @@
+{
+ "version": 4,
+ "model_id": "urn:test:sum-float-literal@1",
+ "source": {
+  "confidence": "standard",
+  "kind": "text-conversation",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "run",
+   "kind": "value",
+   "name": "RunId",
+   "primitive": "String"
+  },
+  {
+   "id": "score",
+   "kind": "value",
+   "name": "Score",
+   "primitive": "Number"
+  },
+  {
+   "id": "points",
+   "kind": "value",
+   "name": "Points",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "run_has_score",
+   "reading": "{RunId} has score {Points}",
+   "roles": [
+    {
+     "role_name": "run",
+     "object_type": "run"
+    },
+    {
+     "role_name": "score",
+     "object_type": "points"
+    }
+   ],
+   "constraints": []
+  },
+  {
+   "id": "limits",
+   "reading": "{RunId} has limit {Score}",
+   "roles": [
+    {
+     "role_name": "run",
+     "object_type": "run"
+    },
+    {
+     "role_name": "score",
+     "object_type": "score"
+    }
+   ]
+  },
+  {
+   "id": "run_scores_big",
+   "reading": "{RunId} scores {Score}",
+   "derivation": "derived",
+   "roles": [
+    {
+     "role_name": "run",
+     "object_type": "run"
+    },
+    {
+     "role_name": "score",
+     "object_type": "score"
+    }
+   ],
+   "derivation_rule": {
+    "head": {
+     "run": "$r",
+     "score": "$limit"
+    },
+    "body": [
+     {
+      "fact_type": "run_has_score",
+      "bind": {
+       "run": "$r",
+       "score": "$s"
+      }
+     },
+     {
+      "fact_type": "limits",
+      "bind": {
+       "run": "$r",
+       "score": "$limit"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "sum",
+     "of": "$s",
+     "over": [
+      "$s"
+     ],
+     "as": "$total"
+    },
+    "where": [
+     {
+      "operator": "=",
+      "left": "$total",
+      "right": 1e+16
+     }
+    ]
+   }
+  }
+ ],
+ "constraints": []
+}

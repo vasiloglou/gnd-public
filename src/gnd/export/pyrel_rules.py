@@ -77,6 +77,15 @@ def _refuse_binary_context(context: str, terms: Any, binary: set[str], *, always
             _refuse_beyond_exact(literal, context)
 
 
+def _refuse_float_next_to_integer(context: str, terms: Any, types: dict[str, str]) -> None:
+    """A float literal compared with an Integer value: PyRel compares in binary (an integer beyond 2**53 rounds
+    to the float), GND compares exactly, so the rules programs refuse it."""
+    integers = any(types.get(v) in ("Integer", "Duration") for t in terms for v in _term_variables(t))
+    if integers and any(isinstance(lit, float) for t in terms for lit in _term_literals(t)):
+        raise ExportInputError(f"{context}a float literal compared with an Integer value is exact in GND and binary "
+                               "in PyRel; the rules programs refuse it")
+
+
 def _refuse_beyond_exact(value: Any, context: str = "") -> None:
     """D6: an integer constant a binary float cannot hold exactly is refused by name."""
     if type(value) is int and abs(value) > _EXACT_FLOAT:
@@ -381,6 +390,7 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
             left, right = (_typed_term(model, c["id"], payload[side], types, payload["right" if side == "left" else "left"])
                            for side in ("left", "right"))
             _refuse_binary_context(f"{c['id']}: ", (left, right), _binary_variables(model, domain))   # D6
+            _refuse_float_next_to_integer(f"{c['id']}: ", (left, right), types)
             check = Check("compare", compare=Compare(payload["operator"], left, right))
     else:
         if guard_uses_membership(consequent):
@@ -1455,6 +1465,7 @@ def _refuse_inexact(head: str, clause: dict[str, Any], types: dict[str, str],
         kinds = {"Float" if types.get(t) in _BINARY else types.get(t)
                  for t in sides if isinstance(t, str) and t.startswith("$")}
         _refuse_binary_context(f"{head}: ", sides, binary)   # D6
+        _refuse_float_next_to_integer(f"{head}: ", sides, types)
         if kinds == {"Float", "Integer"}:
             raise ExportInputError(f"{head}: comparing a Float variable with an Integer variable is a later phase of the "
                                    "rules programs")
@@ -1935,7 +1946,7 @@ def main(argv=None):
         return 64
     try:
         population = read_population(argv[0])
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError) as error:
         print(f'{argv[0]}: not a readable population ({type(error).__name__}: {error})', file=sys.stderr)
         return 3
     try:
@@ -2306,7 +2317,7 @@ def main(argv=None):
                      'Use --compile to inspect, or the duckdb version of this program to check locally.')
     try:
         population = read_population(args.population)
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError) as error:
         print(f'{args.population}: not a readable population ({type(error).__name__}: {error})', file=sys.stderr)
         return 3
     import warnings
@@ -2324,23 +2335,35 @@ def main(argv=None):
         print(f'PyRel execution failed: {type(error).__name__}: {error}', file=sys.stderr)
         return 70
     problems = [w for w in caught if 'Requirements not met' in str(w.message)]
-    return lqp_report(problems)
+    return lqp_report(problems, population)
 
 
-def not_checked():
-    """Print each rule listed as not checked; True when a must-rule is among them."""
+def not_checked(population=None):
+    """Print each rule listed as not checked: (a must-rule is among them, a rule was vacuous).
+
+    With the population, a disconnected join over fact lists that are all empty is vacuous, as GND reports it
+    (its fact types are stated ones: the export refuses a disconnected join over a derived fact type here).
+    """
+    facts = (population or {}).get('facts', {})
+    must, vacuous = False, False
     for rule in UNCHECKED:
+        lists = rule.get('vacuous_if_empty')
+        if population is not None and lists and not any(facts.get(ref) for ref in lists):
+            print(f"{rule['id']}  vacuous  (no facts for it to apply to)")
+            vacuous = True
+            continue
         print(f"{rule['id']}  not checked  ({rule['reason']})")
-    return any(rule['modality'] == 'alethic' for rule in UNCHECKED)
+        must = must or rule['modality'] == 'alethic'
+    return must, vacuous
 
 
-def lqp_report(problems):
-    """The engine's violation reports, after the rules listed as not checked. Exit 1, 4 or 0, as GND bands them."""
-    must_unchecked = not_checked()
+def lqp_report(problems, population=None):
+    """The engine's violation reports, after the rules listed as not checked. Exit 1, 4, 2 or 0, as GND bands them."""
+    must_unchecked, vacuous = not_checked(population)
     for w in problems:
         print(f'violated  {w.message}')
     print(f'{len(problems)} requirement violation report(s) from the engine')
-    return 1 if problems else 4 if must_unchecked else 0
+    return 1 if problems else 4 if must_unchecked else 2 if vacuous else 0
 
 
 def compile_only():
@@ -2706,6 +2729,13 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
                                        "GND's plan walk computes it empty in later states (a checker bug), so there is "
                                        "no verdict to match")
     reqs = requirements(doc, model)
+    if target == "lqp":   # the LQP version reads stated facts only; a derived list's emptiness needs the engine
+        for row in model.unchecked:
+            derived = [ref for ref in row.get("vacuous_if_empty") or [] if ref in model.derived]
+            if derived:
+                raise ExportInputError(f"{row['id']}: a disconnected join over the derived fact type {derived[0]!r}; the "
+                                       "LQP version cannot tell whether it is vacuous without the engine, so it refuses it "
+                                       "(the DuckDB version checks it)")
     names = _Names(model)
     plan_lines, step_table = _plan_checks(model, names, target) if names.step else ([], [])
     compiled_lines, compiled_table = _compiled_checks(model, loaded, names, target) if names.step else ([], [])
@@ -2763,6 +2793,8 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
         "    if len(raw) > LIMIT:\n"
         "        raise ValueError('population larger than 1 MiB')\n"
         "    document = json.loads(raw)\n"
+        "    if not isinstance(document, dict):\n"
+        "        raise ValueError('a population is a JSON object')\n"
         "    if not isinstance(document.get('facts'), dict):\n"
         "        raise KeyError('facts')\n"
         "    header = document.setdefault('population', {})\n"
@@ -2782,6 +2814,8 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
         "        if head and head not in covers and document['facts'].get(head):\n"
         "            raise ValueError(f'{head} lists derived facts but is not in covers; GND refuses that input')\n"
         "    for fact_type, rows_ in document['facts'].items():\n"
+        "        if not isinstance(rows_, list) or not all(isinstance(row, dict) for row in rows_):\n"
+        "            raise ValueError(f'{fact_type}: a fact list is a JSON array of objects')\n"
         "        seen = set()\n"
         "        for row in rows_:\n"
         "            for role, primitive in ROLES.get(fact_type, []):\n"

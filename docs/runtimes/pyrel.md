@@ -165,12 +165,16 @@ says how many rules are listed.
 External uniqueness is checked over GND's shared-entity join: the referenced
 fact types join on their other roles by object type, and two join rows with
 the same referenced values break the rule. A join whose fact types share no
-such object type is listed as not checked, as GND reports it; the DuckDB
-version reports it vacuous when all its fact lists are empty, as GND does,
-while the LQP version, which reads no facts before the engine, always lists
-it as not checked (exit 4 where GND gives 2). One difference: GND accepts any scalar as the
-value of an externally identified entity, and the programs need strings, so a
-number there is refused (exit 3).
+such object type is listed as not checked, and both versions report it
+vacuous when all its fact lists are empty, as GND does. Over a derived fact
+type, whose emptiness only the engine could compute, the LQP version refuses
+such a join when you export; the DuckDB version checks it. A join that is
+ambiguous (one fact type with two other roles of one object type) is an
+invalid model, refused when you export, as `gnd check` refuses it. Two
+differences from GND: GND accepts any scalar as the value of an externally
+identified entity, and the programs need strings, so a number there is
+refused (exit 3); and GND accepts a role named twice in `role_refs`, which
+the programs refuse when you export.
 
 A value constraint scoped to a role (`role_ref`), written at the top level
 or on a fact type, checks only the values in that role, as GND does: the
@@ -188,7 +192,7 @@ refused when you export. GND keeps those integers exact.
 
 External frequency, exclusive-or over multi-role sequences, subtypes, disconnected guarded
 antecedents, opaque derivation rules, `avg`, division, rounding, the other
-non-exact functions, arithmetic on Float values and times of day (`DateTime`)
+non-exact functions, arithmetic on Float or Number values and times of day (`DateTime`)
 are refused by name when you export. So is a fact type
 whose name the program needs for a helper relation, such as `likes_reverse`.
 
@@ -200,7 +204,7 @@ reason. The reasons this milestone added are:
 - `source anchor: gnd check decides it with --anchors and --document; the rules programs read no sidecar`
 - `textual rule: <expression>`
 - `join-disconnected: <fact types> share no anchor object type` (or
-  `vacuous` when all those fact lists are empty, DuckDB version)
+  `vacuous` when all those fact lists are empty)
 
 The DuckDB version also prints GND's other not-checked reasons: `no claim:
 <head> is not in covers` for a derived fact type, `term:date-out-of-range`
@@ -222,10 +226,18 @@ exit 3:
 - `the integer <N> is beyond 2**53, which a Float or Number value here (a binary float) cannot hold exactly; GND keeps it exact`
 - `arithmetic next to a Float or Number value is exact in GND and binary in PyRel; the rules programs refuse it`
 - `a sum over or into a Float or Number value is exact in GND and binary in PyRel; the rules programs refuse it`
+- `a float literal compared with an Integer value is exact in GND and binary in PyRel; the rules programs refuse it`
 - `<variable> is an Integer value written into the Float or Number role <role>; PyRel would round it beyond 2**53, so the rules programs refuse it`
 - `arithmetic on Float or Number values (...) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)`
 - `external frequency is a later phase of the rules programs`
 - `role_ref must be a {fact_type, role} mapping`
+- `role_ref <fact type>.<role> is not played by <object type>`
+- `external uniqueness needs role_refs, a non-empty list of {fact_type, role} mappings`
+- `fact type <fact type> has no role <role>`
+- `role_refs name <fact type>.<role> twice; the rules programs refuse that`
+- `the shared-entity join is ambiguous in <fact type> (two anchor roles of one object type); gnd check refuses it too`
+- `a disconnected join over the derived fact type <fact type>; the LQP version cannot tell whether it is vacuous without the engine, so it refuses it (the DuckDB version checks it)`
+- `a population is a JSON object`, and `<fact type>: a fact list is a JSON array of objects` (input, exit 3)
 
 For a model with operations, the DuckDB version also checks plans (the LQP
 version takes a single population):

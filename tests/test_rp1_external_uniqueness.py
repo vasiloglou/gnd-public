@@ -339,3 +339,53 @@ def test_check_cell_refuses_non_finite_numbers_for_every_caller(tmp_path, value)
 def test_success_line_counts_a_disconnected_rule(tmp_path):
     _, listed = render_report(RP1 / 'disconnected.orm.json', 'duckdb')
     assert listed == ['eu']
+
+
+# Close review B1: the LQP version decides a disconnected join's vacuity from the population, as GND does
+@pytest.mark.pyrel_oracle
+@pytest.mark.parametrize('population,expected', [('disconnected-empty', 2), ('disconnected-facts', 4),
+                                                 ('disconnected-partial', 4)])
+def test_lqp_report_bands_a_disconnected_join_as_gnd(tmp_path, population, expected):
+    program = tmp_path / 'rules_lqp.py'
+    program.write_text(render(RP1 / 'disconnected.orm.json', 'lqp'))
+    path = RP1 / f'{population}.population.json'
+    code = (f"import runpy, sys\nns = runpy.run_path({str(program)!r}, run_name='lqp')\n"
+            f"sys.exit(ns['lqp_report']([], ns['read_population']({str(path)!r})))\n")
+    run = subprocess.run([str(NATIVE), '-I', '-c', code], capture_output=True, text=True, timeout=300, check=False)
+    assert run.returncode == expected, run.stdout + run.stderr
+    assert api.check(RP1 / 'disconnected.orm.json', path, unredacted=True)['exit_code'] == expected
+
+
+def test_lqp_refuses_a_disconnected_join_over_a_derived_fact_type():
+    with pytest.raises(ExportInputError, match='LQP version cannot tell whether it is vacuous'):
+        render(RP1 / 'disconnected-semiderived.orm.json', 'lqp')
+    render(RP1 / 'disconnected-semiderived.orm.json', 'duckdb')   # the DuckDB version checks it (RP1 review r1-F2)
+
+
+# Close review B2: a population that is not an object, or a fact list that is not a list of objects, exits 3
+@pytest.mark.pyrel_oracle
+@pytest.mark.parametrize('target', ['duckdb', 'lqp'])
+@pytest.mark.parametrize('population', ['array', 'bad-row'])
+def test_a_malformed_population_is_refused_with_exit_3(tmp_path, target, population):
+    program = tmp_path / 'rules.py'
+    program.write_text(render(RP1 / 'disconnected.orm.json', target))
+    extra = ['--connection', 'unused'] if target == 'lqp' else []
+    run = subprocess.run([str(NATIVE), '-I', str(program), str(RP1 / f'{population}.population.json'), *extra],
+                         capture_output=True, text=True, timeout=300, check=False)
+    assert run.returncode == 3 and 'not a readable population' in run.stderr and 'Traceback' not in run.stderr
+
+
+# Close review (claude): GND accepts a role named twice in role_refs and decides it; the programs refuse it
+def test_a_role_named_twice_is_refused_where_gnd_decides_it(tmp_path):
+    doc = json.loads((RP1 / 'renamed-anchor.orm.json').read_text())
+    doc['constraints'][0]['role_refs'] = [{'fact_type': 'lives', 'role': 'country'},
+                                          {'fact_type': 'lives', 'role': 'country'},
+                                          {'fact_type': 'heads', 'role': 'country'}]
+    model = tmp_path / 'twice.orm.json'
+    model.write_text(json.dumps(doc))
+    with pytest.raises(ExportInputError, match='twice; the rules programs refuse that'):
+        render(model, 'duckdb')
+    population = json.loads((RP1 / 'renamed-duplicate.population.json').read_text())
+    population['population']['model'] = model.name
+    (tmp_path / 'twice.population.json').write_text(json.dumps(population))
+    assert api.check(model, tmp_path / 'twice.population.json', unredacted=True)['exit_code'] == 1

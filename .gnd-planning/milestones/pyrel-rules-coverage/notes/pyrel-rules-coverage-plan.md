@@ -475,3 +475,28 @@ Open questions carried into the phases:
 | Which program-text goldens and pinned strings move when the not-checked line changes | RP2 spec, measured |
 | Whether a bare top-level `anchored` constraint validates; whether GND scopes a fact-scoped value constraint without `role_ref` to the object type | RP2 and RP4 specs, by test |
 | The lqp program gives textual rules no not-checked line today (`_LQP_MAIN`, `pyrel_rules.py:2057-2126`); RP2 fixes it for both kinds | RP2 |
+
+## 11. Close amendments (2026-11-22)
+
+Plan repairs deferred to the close. Each names the record that raised it; the
+r4 wording above is kept as written.
+
+| # | Section, prior wording kept | Amendment | Raised by |
+|---|---|---|---|
+| A1 | §2 RP1, "anchors matched by object type" | across fact types, by object type; within one fact type, by role, because GND projects one fact type (`semantic_spec.role_sequence_rows`) | `003-phase-RP1.md`, implementation finding 1; spec `(p3)` |
+| A2 | §1 and RP1-C6, disconnected join "vacuous when its lists are empty" | vacuous only when **every** referenced list is empty; one empty list still gives unchecked (exit 4). The DuckDB version reads the computed view of semiderived types; the LQP version always lists it as not checked | `003-phase-RP1.md` (finding 1, review r1-F2, boundary) |
+| A3 | §0 "Same verdict on accepted inputs" | repeated facts include rows equal by GND's numeric identity (`1`, `1.0`), refused like other repeats; a non-finite number is refused in every cell, roster and plan binding; an LQP program returns 3 for a population it cannot read | `003-phase-RP1.md`, review r1-F1, r1-F3, r2-F2, r3-F1 |
+| A4 | §10 D6, "integers beyond 2**53 in a Number or Float role … model constants" | the bound also covers reference facts, constants at any depth, arithmetic next to a Float or Number value (refused), and what a derivation writes into a Float or Number head (a sum over or into one is refused; an Integer value written into one is refused) | `004-phase-RP3.md`, review r1–r5 |
+| A5 | §0 "Ossie export unchanged" | holds; RP4 needed one Ossie line to keep it (fact-scoped value rules stay extensions) | `005-phase-RP4.md`, review r1-F2 |
+| A6 | §2 RP4 | universes (`<type>_any`) are recorded where the lowering creates them, plan creates included, so a fact type named like one is read as itself or refused by name | `005-phase-RP4.md`, review r2–r4 |
+| A7 | §5, the runtime page | several older statements were narrowed to match the code: DuckDB-only reporting, plans on DuckDB only, exclusive-or over multi-role sequences, disconnected guarded antecedents, exit 4 when no rule is violated | `006-phase-RP5.md`, review r1–r3 |
+
+Open questions of §10, swept:
+
+| Question | Disposition |
+|---|---|
+| Part name and witness shape for the join listing | resolved (RP1 spec §6.1): part `join`; witness the distinct referenced tuples in `role_refs` order |
+| GND's reason texts (disconnected, ambiguous, anchored) | resolved: ambiguous is an invalid model at load (exit 3); disconnected and anchored reasons as printed in `docs/runtimes/pyrel.md` |
+| Program-text goldens moved by the not-checked line | resolved (RP2): textual lines byte-identical; RP4's comparison shows 573 accepted programs unchanged |
+| Bare top-level `anchored`; fact-scoped value without `role_ref` | resolved: the first does not validate (RP2 spec); the second covers the universe, as GND (RP4) |
+| LQP textual rules had no not-checked line | resolved (RP2, `not_checked()`) |

@@ -18,3 +18,7 @@ scope and verified evidence.
 The branch integrated `main` on 2026-11-22 before merging: the
 [main-integration record](007-main-integration.md) states the resolved
 conflicts and the gates on the merged tree.
+
+Merged to `main` on 2026-11-22 as
+[PR #204](https://github.com/vasiloglou/gnd-public/pull/204), on the owner's
+instruction. Not released.

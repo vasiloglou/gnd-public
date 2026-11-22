@@ -248,6 +248,15 @@ pyrel-rules-coverage as
 ([close](milestones/pyrel-rules-coverage/007-milestone-close.md)). Neither is
 released. Milestone 3 and the maintenance pass remain planned.
 
+Outside this roadmap, [aggregate-count-certificates](milestones/aggregate-count-certificates/README.md)
+delivered [#193](https://github.com/vasiloglou/gnd-public/issues/193) part 10,
+which the literature-depth outline had deferred. It closed by delegated ruling
+on 2026-11-16 ([close](milestones/aggregate-count-certificates/006-milestone-close.md))
+and merged on 2026-11-22 as
+[PR #204](https://github.com/vasiloglou/gnd-public/pull/204), after its branch
+integrated `main` ([record](milestones/aggregate-count-certificates/007-main-integration.md)).
+It is not released.
+
 Why this order: #217 has no workaround; #214 blocks a downstream query layer
 but the default export of a flat model works; #215 and #216 have working host-side
 workarounds. The maintenance pass is independent: no milestone waits for its

@@ -16,4 +16,6 @@ milestone's gates.
 
 [Plan](notes/pyrel-rules-coverage-plan.md). Second in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
-Closed 2026-11-22 by delegated ruling: [close record](007-milestone-close.md). Merge stays with the owner.
+Closed 2026-11-22 by delegated ruling: [close record](007-milestone-close.md).
+Merged to `main` on 2026-11-22 as
+[PR #223](https://github.com/vasiloglou/gnd-public/pull/223), on the owner's instruction.

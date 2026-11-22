@@ -239,6 +239,15 @@ outline's §1 maps every issue request to the phase that discharges it.
 #214 lists four items under "What would unblock it": item 1 is IR3, items 2–4
 are RP1–RP3.
 
+Status, 2026-11-22: milestones 1 and 2 are closed and merged.
+include-root-routes merged as
+[PR #220](https://github.com/vasiloglou/gnd-public/pull/220)
+([close](milestones/include-root-routes/005-milestone-close.md)), and
+pyrel-rules-coverage as
+[PR #223](https://github.com/vasiloglou/gnd-public/pull/223)
+([close](milestones/pyrel-rules-coverage/007-milestone-close.md)). Neither is
+released. Milestone 3 and the maintenance pass remain planned.
+
 Why this order: #217 has no workaround; #214 blocks a downstream query layer
 but the default export of a flat model works; #215 and #216 have working host-side
 workarounds. The maintenance pass is independent: no milestone waits for its

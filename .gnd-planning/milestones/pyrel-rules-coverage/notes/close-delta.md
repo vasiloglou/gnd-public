@@ -24,7 +24,7 @@ written. The canonical statement of each is plan §11.
 8. **Comparator** (RP3). The shared comparator compares witness numbers by
    GND's identity (`1` = `1.0`), because the programs print Float values
    as floats.
-9. **RF6 inventory**. Four authenticated successor deltas
+9. **RF6 inventory**. Three authenticated successor deltas
    (`evidence/RP1`, `RP3`, `RP4`) record the new counted reads; no
    historical evidence was rewritten.
 10. **Process**. RP1's code and RP5's tests were drafted before their gates

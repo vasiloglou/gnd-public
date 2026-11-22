@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "reason": "RP1 lowers external uniqueness over GND's shared-entity join; the new reads are local lookups of the join's own grouping, anchor and variable tables, and one object-type read for the external reference mode (D4).",
+  "predecessor": ".gnd-planning/milestones/literature-depth/evidence/LD2/review-dynamic-query-successor.json",
+  "predecessor_sha256": "dc2b82af5e0adc8c4a5731f07f445274f5f4ef4567aca005963d078df9292d2d",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "anchors[f]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "anchors[fact_id]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "anchors[frontier.pop()]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "by_fact.get(fact_id, [])",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "by_fact[f]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "copies[0][key]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "copies[1][key]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "copy[dict(anchors[f])[r['role_name']]]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "dict(anchors[f])[r['role_name']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "dict[str, list[str]]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "list[Requirement]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "list[str]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_external_uniqueness",
+      "slot.get((f, r['role_name']))",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "external",
+      "self.objects.get(object_id)",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7831,
+  "result_occurrences": 9733
+}

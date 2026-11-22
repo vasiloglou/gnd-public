@@ -1,0 +1,24 @@
+{
+ "population": {
+  "model": "top.orm.json",
+  "source": "fixture",
+  "covers": [
+   "has_grade",
+   "wants_grade"
+  ]
+ },
+ "facts": {
+  "has_grade": [
+   {
+    "student": "s1",
+    "grade": "A"
+   }
+  ],
+  "wants_grade": [
+   {
+    "student": "s1",
+    "grade": "C"
+   }
+  ]
+ }
+}

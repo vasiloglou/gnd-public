@@ -1,0 +1,24 @@
+{
+ "population": {
+  "model": "universe-named.orm.json",
+  "source": "fixture",
+  "covers": [
+   "grade_any",
+   "wants_grade"
+  ]
+ },
+ "facts": {
+  "wants_grade": [
+   {
+    "student": "s1",
+    "grade": "C"
+   }
+  ],
+  "grade_any": [
+   {
+    "student": "s1",
+    "grade": "A"
+   }
+  ]
+ }
+}

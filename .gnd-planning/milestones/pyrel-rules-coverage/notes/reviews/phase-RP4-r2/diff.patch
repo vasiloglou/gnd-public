@@ -1,0 +1,214 @@
+diff --git a/docs/runtimes/pyrel.md b/docs/runtimes/pyrel.md
+index 6f5f3e12..8a9eb184 100644
+--- a/docs/runtimes/pyrel.md
++++ b/docs/runtimes/pyrel.md
+@@ -168,6 +168,13 @@ are empty, as GND reports it. One difference: GND accepts any scalar as the
+ value of an externally identified entity, and the programs need strings, so a
+ number there is refused (exit 3).
+ 
++A value constraint scoped to a role (`role_ref`), written at the top level
++or on a fact type, checks only the values in that role, as GND does: the
++same value in another role of the object type, or in its instances roster,
++does not count, and the rule is vacuous when the role has no facts. A value
++constraint on a fact type without `role_ref` covers the object type's
++values everywhere, like the top-level form.
++
+ `Number` is typed like `Float`: GND admits a finite integer or float there
+ and checks no precision or scale, and the programs hold it as a binary
+ float. An integer beyond 2**53 in a `Number` or `Float` cell cannot be held
+diff --git a/src/gnd/export/ossie_formulas.py b/src/gnd/export/ossie_formulas.py
+index a8d5cf40..9a662de7 100644
+--- a/src/gnd/export/ossie_formulas.py
++++ b/src/gnd/export/ossie_formulas.py
+@@ -287,6 +287,8 @@ def place_formulas(document, ontology, components, relations, mapped, fact_types
+     def place(constraint, path, fact_id=None):
+         if not _supported_shape(constraint, relations):
+             return
++        if fact_id is not None and constraint.get("type") == "value":
++            return   # a value rule written on a fact type stays an extension, as before the rules programs lowered it
+         synthetic = "_ossie_rule_" + "_".join(map(str, path))
+         named = {**constraint, "id": constraint.get("id") or synthetic}
+         try:
+diff --git a/src/gnd/export/pyrel_rules.py b/src/gnd/export/pyrel_rules.py
+index e45d8f58..f99c4d1d 100644
+--- a/src/gnd/export/pyrel_rules.py
++++ b/src/gnd/export/pyrel_rules.py
+@@ -195,6 +195,31 @@ class _Model:
+         self.derived_relations.update({f"{head}_claimed": head for head in self.derived
+                                        if self.facts[head].get("derivation") == "semiderived"})
+ 
++    def value_rules(self) -> dict[str, str]:
++        """Every value rule (allowed list or ranges) by the id it lowers with: {id: object type}."""
++        found: dict[str, str] = {}
++        for fact_id, fact in self.facts.items():
++            for index, c in enumerate(fact.get("constraints") or []):
++                if isinstance(c, dict) and c.get("type") == "value":
++                    found[c.get("id") or f"{fact_id}#{index}"] = c["object_type"]
++        for c in self.doc.get("constraints") or []:
++            if isinstance(c, dict) and c.get("type") == "value":
++                found[c["id"]] = c["object_type"]
++        return found
++
++    def allowed_lists(self) -> dict[str, tuple[str, list[Any]]]:
++        """Every value rule with an allowed list, in lowering order (fact-scoped, then top-level), by the id
++        it lowers with: {id: (object type, allowed)}. The one home for the <id>_allowed relations."""
++        found: dict[str, tuple[str, list[Any]]] = {}
++        for fact_id, fact in self.facts.items():
++            for index, c in enumerate(fact.get("constraints") or []):
++                if isinstance(c, dict) and c.get("type") == "value" and "allowed" in c:
++                    found[c.get("id") or f"{fact_id}#{index}"] = (c["object_type"], list(c["allowed"]))
++        for c in self.doc.get("constraints") or []:
++            if isinstance(c, dict) and c.get("type") == "value" and "allowed" in c:
++                found[c["id"]] = (c["object_type"], list(c["allowed"]))
++        return found
++
+     def helper(self, name: str, fields: list[tuple[str, str]], kind: str, **data: Any) -> str:
+         """Register a helper relation the rules refer to; rendered once, in registration order."""
+         self.helpers.setdefault(name, {"fields": fields, "kind": kind, **data})
+@@ -517,8 +542,12 @@ def _subset(model: _Model, c: dict[str, Any]) -> Requirement:
+ 
+ def _value(model: _Model, c: dict[str, Any]) -> Requirement:
+     object_id = c["object_type"]
+-    if c.get("role_ref"):
+-        raise ExportInputError(f"{c.get('id')}: role-scoped value constraints are a later phase")
++    ref = c.get("role_ref")
++    if ref is not None and not (isinstance(ref, dict) and isinstance(ref.get("fact_type"), str)
++                                and isinstance(ref.get("role"), str)):
++        raise ExportInputError(f"{c.get('id')}: role_ref must be a {{fact_type, role}} mapping")
++    if ref is not None and _role_object(model, ref["fact_type"], ref["role"]) != object_id:
++        raise ExportInputError(f"{c.get('id')}: role_ref {ref['fact_type']}.{ref['role']} is not played by {object_id}")
+     if "allowed" not in c:
+         ranges = c.get("ranges") or ([c["range"]] if isinstance(c.get("range"), dict) else None)
+         if not ranges:
+@@ -526,11 +555,16 @@ def _value(model: _Model, c: dict[str, Any]) -> Requirement:
+         model.helper(f"{c['id']}_allowed", [("value", model.primitive(object_id))], "ranges",
+                      object_type=object_id, ranges=ranges)
+     var = f"${object_id}"
++    allowed = Check("holds", atom=Atom(f"{c['id']}_allowed", (var,)))
++    if ref is not None:   # GND reads only the values in that role, vacuous when its fact list is empty
++        atom = _seq_atom(model, [ref], [var], c["id"])
++        return Requirement(c["id"], "value", c["modality"], _quote(c), (atom,), allowed, (var,),
++                           ("any", (atom.relation,)), (atom.relation,))
+     plays = tuple(dict.fromkeys(fact for fact, _ in model.plays(object_id)))
+     # GND evaluates a value rule over every fact and the instances roster; it is vacuous only when
+     # both are empty, so the report checks the rosters too (vacuous_when "universe").
+     return Requirement(c["id"], "value", c["modality"], _quote(c), (Atom(f"{object_id}_any", (var,)),),
+-                       Check("holds", atom=Atom(f"{c['id']}_allowed", (var,))), (var,), ("universe", plays), plays,
++                       allowed, (var,), ("universe", plays), plays,
+                        info=(("rosters", _rosters(model, object_id)),))
+ 
+ 
+@@ -983,6 +1017,8 @@ def constraint_requirements(
+             return _frequency(model, c, fact_id)
+         if family == "ring":
+             return _ring(model, c, fact_id)
++        if family == "value":   # written on a fact type; scoped by its role_ref, or the object type's universe
++            return [_value(model, c)]
+         if family == "anchored":   # GND leaves it unchecked unless gnd check is given a sidecar
+             model.unchecked.append({"id": c["id"], "modality": c["modality"], "reason": _ANCHORED_REASON})
+             return []
+@@ -1038,7 +1074,8 @@ def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requi
+ def _refuse_name_collisions(model: _Model, found: list[Requirement]) -> None:
+     """Helper relations share the fact types' namespace, so a fact type may not take a generated name."""
+     used = {atom.relation for r in found for atom in (*r.domain, *([r.check.atom] if r.check.atom else []))}
+-    generated = set(model.helpers) | set(model.derived_relations) | ({f"{o}_any" for o in model.objects} & used) | {
++    universes = {f"{spec['object_type']}_any" for spec in model.helpers.values() if spec["kind"] == "ranges"}
++    generated = set(model.helpers) | set(model.derived_relations) | ({f"{o}_any" for o in model.objects} & used) | universes | {
+         f"{r.id}_allowed" for r in found if r.family == "value"}
+     clash = sorted(generated & set(model.facts))
+     if clash:
+@@ -1069,8 +1106,7 @@ class _Names:
+         self.vars: dict[str, str] = {}
+         # with operations, every state of a plan lives in one PyRel model: relations get a leading step
+         self.step: str | None = "step" if model.doc.get("operations") else None
+-        self.constant = {f"{c.get('id')}_allowed" for c in model.doc.get("constraints", [])
+-                         if c.get("type") == "value" and "allowed" in c}
++        self.constant = {f"{rule_id}_allowed" for rule_id in model.allowed_lists()}
+ 
+     def relation(self, name: str) -> str:
+         if name not in self.relations:
+@@ -1104,8 +1140,10 @@ def _relation_roles(model: _Model, relation: str) -> list[tuple[str, str]]:
+     if relation in model.derived_relations:
+         return _relation_roles(model, model.derived_relations[relation])
+     if relation.endswith("_allowed"):
+-        constraint = next(c for c in model.doc.get("constraints", []) if f"{c.get('id')}_allowed" == relation)
+-        return [("value", model.primitive(constraint["object_type"]))]
++        object_id = model.value_rules().get(relation[: -len("_allowed")])
++        if object_id is None:
++            raise ExportInputError(f"unknown relation {relation!r}")
++        return [("value", model.primitive(object_id))]
+     if relation.endswith("_any"):
+         return [("member", model.primitive(relation[: -len("_any")]))]
+     raise ExportInputError(f"unknown relation {relation!r}")
+@@ -1233,7 +1271,9 @@ def denial_text(req: Requirement, names: _Names, model: _Model) -> str:
+ def _universes(model: _Model, reqs: list[Requirement], names: _Names) -> list[str]:
+     wanted = sorted({a.relation[: -len("_any")] for r in reqs for a in r.domain if a.relation.endswith("_any")}
+                     | {e["create"]["object_type"] for o in model.doc.get("operations") or [] for e in o.get("effects", [])
+-                       if "create" in e})
++                       if "create" in e}
++                    # a range helper selects its allowed values from the universe, role-scoped rules included
++                    | {spec["object_type"] for spec in model.helpers.values() if spec["kind"] == "ranges"})
+     lines = []
+     for object_id in wanted:
+         primitive = model.primitive(object_id)
+@@ -1260,14 +1300,14 @@ def _universes(model: _Model, reqs: list[Requirement], names: _Names) -> list[st
+ 
+ def _allowed(model: _Model, reqs: list[Requirement], names: _Names) -> list[str]:
+     lines = []
+-    for c in model.doc.get("constraints", []):
+-        if c.get("type") == "value" and "allowed" in c and any(r.id == c["id"] for r in reqs):
+-            rel = names.relation(f"{c['id']}_allowed")
+-            primitive = model.primitive(c["object_type"])
+-            lines.append(f"    # {c['id']}: the declared list of allowed values")
+-            lines.append(f"    {rel} = m.Relationship(fields=[Field('value', {primitive})], short_name='{c['id']}_allowed')")
++    for rule_id, (object_id, allowed) in model.allowed_lists().items():
++        if any(r.id == rule_id for r in reqs):
++            rel = names.relation(f"{rule_id}_allowed")
++            primitive = model.primitive(object_id)
++            lines.append(f"    # {rule_id}: the declared list of allowed values")
++            lines.append(f"    {rel} = m.Relationship(fields=[Field('value', {primitive})], short_name='{rule_id}_allowed')")
+             # a malformed date in the list can never equal a date value, as in GND: it is left out
+-            listed = [v for v in c["allowed"] if primitive != "Date" or _iso_date(v)]
++            listed = [v for v in allowed if primitive != "Date" or _iso_date(v)]
+             values = ", ".join(_literal(v, primitive) for v in listed)
+             lines.append(f"    m.define(*[{rel}(v) for v in [{values}]])")
+     return lines
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index bf2f8095..7b70af12 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -151,6 +151,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/literature-depth/evidence/LD2/review-dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/pyrel-rules-coverage/evidence/RP1/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/pyrel-rules-coverage/evidence/RP3/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/pyrel-rules-coverage/evidence/RP4/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_rp2_anchored.py b/tests/test_rp2_anchored.py
+index 828ffbce..204d77b3 100644
+--- a/tests/test_rp2_anchored.py
++++ b/tests/test_rp2_anchored.py
+@@ -12,7 +12,7 @@ import pytest
+ import test_pyrel_rules as rules_tests
+ 
+ from gnd.export.pyrel_rules import _Model, render, render_report, requirements
+-from gnd.export.pyrel_runtime import ExportInputError, _parse_document
++from gnd.export.pyrel_runtime import _parse_document
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ NATIVE = rules_tests.NATIVE
+@@ -51,9 +51,10 @@ def test_anchored_models_render(model, target):
+     assert listed and 'not checked' in source
+ 
+ 
+-def test_quantity_fixture_passes_anchored_and_stops_on_its_value_rules():
+-    with pytest.raises(ExportInputError, match=r"time_step#1: family 'value'"):
+-        render(LIT / 'quantity_fixture/time.orm.yaml', 'duckdb')
++def test_quantity_fixture_passes_anchored_and_lists_it():
++    # RP2 let the anchored rule through; its role-scoped value rules export since RP4 (test_rp4_role_value)
++    source, listed = render_report(LIT / 'quantity_fixture/time.orm.yaml', 'duckdb')
++    assert listed == ['time_step#0'] and 'not checked' in source
+ 
+ 
+ def test_anchored_ids_are_listed_and_never_compiled():

@@ -1,0 +1,102 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:rp1:numeric-inline",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "badge",
+   "name": "Badge",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "badge_id"
+   }
+  },
+  {
+   "id": "badge_id",
+   "name": "Badgeid",
+   "kind": "value",
+   "primitive": "Float"
+  },
+  {
+   "id": "country",
+   "name": "Country",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "country_id"
+   }
+  },
+  {
+   "id": "country_id",
+   "name": "Countryid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "city",
+   "name": "City",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "city_id"
+   }
+  },
+  {
+   "id": "city_id",
+   "name": "Cityid",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "holds",
+   "reading": "{Badge} {Country}",
+   "roles": [
+    {
+     "object_type": "badge",
+     "role_name": "badge"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "one",
+     "type": "uniqueness",
+     "roles": [
+      "country"
+     ],
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "x"
+     }
+    }
+   ]
+  },
+  {
+   "id": "visits",
+   "reading": "{Badge} {City}",
+   "roles": [
+    {
+     "object_type": "badge",
+     "role_name": "badge"
+    },
+    {
+     "object_type": "city",
+     "role_name": "city"
+    }
+   ]
+  }
+ ],
+ "constraints": []
+}

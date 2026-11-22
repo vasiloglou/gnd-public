@@ -1,0 +1,269 @@
+{
+ "facts": {
+  "assertion_names_passage": [
+   {
+    "assertion": "working-notes#p01",
+    "passage": "p01"
+   },
+   {
+    "assertion": "working-notes#p02",
+    "passage": "p02"
+   },
+   {
+    "assertion": "working-notes#p03",
+    "passage": "p03"
+   },
+   {
+    "assertion": "working-notes#p04",
+    "passage": "p04"
+   },
+   {
+    "assertion": "working-notes#p05",
+    "passage": "p05"
+   },
+   {
+    "assertion": "working-notes#p06",
+    "passage": "p06"
+   },
+   {
+    "assertion": "working-notes#p07",
+    "passage": "p07"
+   },
+   {
+    "assertion": "working-notes#p08",
+    "passage": "p08"
+   },
+   {
+    "assertion": "working-notes#p09",
+    "passage": "p09"
+   },
+   {
+    "assertion": "working-notes#p10",
+    "passage": "p10"
+   },
+   {
+    "assertion": "second#p01",
+    "passage": "p01"
+   }
+  ],
+  "assertion_names_work": [
+   {
+    "assertion": "working-notes#p01",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p02",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p03",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p04",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p05",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p06",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p07",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p08",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p09",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "working-notes#p10",
+    "work": "working-notes"
+   },
+   {
+    "assertion": "second#p01",
+    "work": "working-notes"
+   }
+  ],
+  "assertion_statement": [
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "own-finding",
+    "condition": "low noise",
+    "experiment": "trial-a",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p01",
+    "polarity": "asserts",
+    "predicate": "reduces-error",
+    "qualification": "conditional",
+    "regime": "low-noise",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "own-finding",
+    "condition": "high noise",
+    "experiment": "trial-b",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p02",
+    "polarity": "asserts",
+    "predicate": "increases-error",
+    "qualification": "conditional",
+    "regime": "high-noise",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "own-finding",
+    "condition": "unspecified",
+    "experiment": "table",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p03",
+    "polarity": "asserts",
+    "predicate": "implements",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "own-finding",
+    "condition": "unspecified",
+    "experiment": "trial-c",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p04",
+    "polarity": "negates",
+    "predicate": "component-use",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "baseline-comparison",
+    "condition": "unspecified",
+    "experiment": "trial-d",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p05",
+    "polarity": "asserts",
+    "predicate": "compared-against",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "speculation",
+    "condition": "unspecified",
+    "experiment": "next",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p06",
+    "polarity": "asserts",
+    "predicate": "inspired-by",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "cites-other-work",
+    "condition": "unspecified",
+    "experiment": "prior",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p07",
+    "polarity": "asserts",
+    "predicate": "extends",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "working-notes@421-427",
+    "actor_kind": "mention",
+    "attribution": "own-finding",
+    "condition": "unspecified",
+    "experiment": "mention",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p08",
+    "polarity": "asserts",
+    "predicate": "mentions",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "own-finding",
+    "condition": "unspecified",
+    "experiment": "plot",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p09",
+    "polarity": "asserts",
+    "predicate": "extends",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   },
+   {
+    "actor": "Quartz",
+    "actor_kind": "sense",
+    "attribution": "own-finding",
+    "condition": "unspecified",
+    "experiment": "supplement",
+    "object": "Slate",
+    "object_kind": "sense",
+    "passage": "p10",
+    "polarity": "asserts",
+    "predicate": "fine-tunes",
+    "qualification": "unqualified",
+    "regime": "unspecified",
+    "version": "v1",
+    "work": "working-notes"
+   }
+  ]
+ },
+ "instances": {},
+ "population": {
+  "covers": [
+   "assertion_statement",
+   "assertion_names_work",
+   "assertion_names_passage"
+  ],
+  "model": "../../../../../src/gnd/examples/literature/assertions/model.orm.yaml",
+  "model_id": "urn:gnd-example:literature-contextual-assertions@1",
+  "source": "fixture"
+ }
+}

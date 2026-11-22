@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "reason": "Milestone close repair: a float literal compared with an Integer value is refused (it would compare in binary); the guard reads the types of the variables in each comparison operand.",
+  "predecessor": ".gnd-planning/milestones/pyrel-rules-coverage/evidence/RP4/dynamic-query-successor.json",
+  "predecessor_sha256": "5d681ef8727f43f89cccbc88fe6424408c3fda56a1e5c69d66a24aa65c8b019d",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_float_next_to_integer",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_refuse_float_next_to_integer",
+      "types.get(v)",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7848,
+  "result_occurrences": 9760
+}

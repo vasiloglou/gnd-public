@@ -1,0 +1,70 @@
+{
+ "version": 4,
+ "model_id": "urn:gnd:rp4:fact-plain",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "student",
+   "name": "Student",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "grade",
+   "name": "Grade",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "has_grade",
+   "reading": "{Student} has {Grade}",
+   "roles": [
+    {
+     "role_name": "student",
+     "object_type": "student"
+    },
+    {
+     "role_name": "grade",
+     "object_type": "grade"
+    }
+   ],
+   "constraints": [
+    {
+     "type": "value",
+     "object_type": "grade",
+     "allowed": [
+      "A",
+      "B"
+     ],
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "grades are A or B"
+     }
+    }
+   ]
+  },
+  {
+   "id": "wants_grade",
+   "reading": "{Student} wants {Grade}",
+   "roles": [
+    {
+     "role_name": "student",
+     "object_type": "student"
+    },
+    {
+     "role_name": "grade",
+     "object_type": "grade"
+    }
+   ]
+  }
+ ],
+ "constraints": []
+}

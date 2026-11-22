@@ -1,0 +1,427 @@
+diff --git a/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-delta.md b/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-delta.md
+index 0ae4894b..e1412d98 100644
+--- a/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-delta.md
++++ b/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-delta.md
+@@ -1,7 +1,8 @@
+ # pyrel-rules-coverage — delta from the plan
+ 
+ What the milestone delivered beyond, or differently from, plan r4 as
+-written. The canonical statement of each is plan §11.
++written. Items 1–8 and 11–13 are plan amendments, stated canonically in
++plan §11; items 9 and 10 are process facts, recorded in the phase records.
+ 
+ 1. **Single-fact-type external uniqueness** (A1). The plan named anchors by
+    object type only. One fact type is a projection in GND, so its anchors
+@@ -21,12 +22,18 @@ written. The canonical statement of each is plan §11.
+ 6. **Generated names** (A6). Universes are recorded where they arise. This
+    also closes a pre-existing gap for plan create effects.
+ 7. **Runtime page** (A7). Older statements narrowed to match the code.
+-8. **Comparator** (RP3). The shared comparator compares witness numbers by
+-   GND's identity (`1` = `1.0`), because the programs print Float values
+-   as floats.
++8. **Comparator** (A8). The shared comparator reads derivation verdicts
++   (RP2) and compares witness numbers by GND's identity, `1` = `1.0` (RP3),
++   with a negative control.
+ 9. **RF6 inventory**. Three authenticated successor deltas
+    (`evidence/RP1`, `RP3`, `RP4`) record the new counted reads; no
+    historical evidence was rewritten.
+ 10. **Process**. RP1's code and RP5's tests were drafted before their gates
+     were written, and the records disclose it. Each gate was committed
+     before its phase commit.
++11. **LQP disconnected vacuity** (A10, close panel). The LQP version reads
++    the population and reports an empty disconnected join vacuous, as GND.
++    It refuses such a join over a derived fact type at export.
++12. **Population shape** (A11, close panel). A non-object population, or a
++    fact list of non-objects, exits 3 in both versions.
++13. **A role named twice** (A12, close panel). A stated difference, pinned.
+diff --git a/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-results.md b/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-results.md
+index 0279db86..93439f25 100644
+--- a/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-results.md
++++ b/.gnd-planning/milestones/pyrel-rules-coverage/notes/close-results.md
+@@ -1,52 +1,57 @@
+ # pyrel-rules-coverage — close results
+ 
+-Measured at `bba37de8` plus the close amendments of plan §11. Every number
+-below is a gate output quoted in the named phase record.
++Measured at the close commit named in `007-milestone-close.md`. Phase
++numbers are gate outputs quoted in the named phase records; the close gates
++were run after the close panel's repairs and are quoted in the close record.
+ 
+ ## Goal predicates (plan, "Goal and completion predicates")
+ 
+ | Predicate | Result | Evidence |
+ |---|---|---|
+-| RP1: external uniqueness in `--rules duckdb\|lqp`; `assertions/` and `lineage/` export | holds | `003-phase-RP1.md`: C1–C9; agreement on raw (0), duplicate (1), empty join (2), disconnected (4/4/2), renamed, numeric, three-way |
++| RP1: external uniqueness in `--rules duckdb\|lqp`; `assertions/` and `lineage/` export | holds | `003-phase-RP1.md`: C1–C9. Agreement on raw (0), duplicate (1), empty join (2), disconnected (4/4/2), renamed, numeric, three-way. Since the close (plan §11 A10), the LQP version also gives exit 2 for an empty disconnected join |
+ | RP2: anchored constraints listed as not checked, never compiled | holds | `002-phase-RP2.md`: C1–C8; twelve gold populations agree, exit 4 |
+-| RP3: `Number` typed like `Float`; integers beyond 2**53 refused by name, cells and constants | holds | `004-phase-RP3.md`: C1–C5, the extended bound (plan §11 A4) |
+-| RP4: role-scoped value constraints, top level and fact-scoped | holds | `005-phase-RP4.md`: C1–C3; 573 accepted programs byte-identical |
+-| RP5: every packaged literature model of §1 exports; agreement on the §1 populations; the page states every message | holds | `006-phase-RP5.md`: 12 models × 2 targets; 56 populations agree |
++| RP3: `Number` typed like `Float`; integers beyond 2**53 refused by name, cells and constants | holds | `004-phase-RP3.md`: C1–C5, with the extended bound (A4) |
++| RP4: role-scoped value constraints, top level and fact-scoped | holds | `005-phase-RP4.md`: C1–C3; 573 programs accepted at its base are byte-identical |
++| RP5: every packaged literature model of §1 exports; agreement on the §1 populations; the page states every message | holds | `006-phase-RP5.md`: twelve models (A9) × 2 targets. 56 populations agree, the 41 resolution cases with a literal exit 4 since the close |
+ 
+-## Last gates (from `006-phase-RP5.md`, cumulative)
+-
+-- Focused lane: 304 passed, 309 deselected.
+-- `pyrel_oracle` lane, the five phase files plus the shared suites and plans:
+-  338 passed, 151 deselected.
+-- Structure and inventory guard block: 679 passed.
+-- `uv run ruff check src tests tools`: clean. Whole-tree `ruff check`: 198
+-  errors, the known red in dev-tools-delivered skill scripts, unchanged
+-  since the base.
++Ossie byte pins for each newly lowerable shape are named in plan §11 A5.
+ 
+ ## Review
+ 
+-Phase reviews were one reviewer each (Codex, through the review helper),
+-with every finding reproduced, fixed or deferred, and regression-tested:
++Phase reviews were one reviewer each (Codex, through the review helper).
++Every finding was reproduced, then fixed or deferred, with a regression
++test:
++
++| Phase | Rounds with a verdict | Last verdict | Note |
++|---|---|---|---|
++| RP2 | 1 | APPROVE | — |
++| RP1 | 3 | CHANGES_REQUESTED | r2-F1 deferred to RP3, closed there; stopped by the convergence rule (2/2 self-inflicted) |
++| RP3 | 4 (r1, r2, r3, r5) | CHANGES_REQUESTED | 2 more attempts (r4, r6) ended without a verdict (provider flag); the r5 repair has no second phase reader |
++| RP4 | 5 | APPROVE | — |
++| RP5 | 3 | CHANGES_REQUESTED | stopped by the convergence rule (1/1); the last sentence has no second phase reader |
+ 
+-- RP2: 1 round, approved.
+-- RP1: 3 rounds; r2-F1 was deferred to RP3 and closed there.
+-- RP3: 5 rounds, plus 2 attempts with no verdict (provider flag). The last
+-  repair has no second reader.
+-- RP4: 5 rounds, the last approving.
+-- RP5: 3 rounds, stopped by the convergence rule. The last sentence has no
+-  second reader.
++Plan §8 asks for one independent reviewer over each phase's diff. The two
++unreread repairs are accepted residuals of that protocol. The close panel
++read the code at `e99782fe`, both repairs included; its own repairs had a
++Codex read (`007-milestone-close.md`).
+ 
+ ## Boundaries
+ 
+ - No RelationalAI engine ran; the LQP programs' enforcement is unverified.
++  The LQP version relays engine reports only and does not report a compiled
++  rule as vacuous (`docs/runtimes/pyrel.md`).
+ - The programs are stricter than GND by stated design:
+   - D4: non-string external ids;
+   - D6 and A4: integers beyond 2**53, arithmetic or sums next to Float or
+     Number values;
+-  - repeated facts, including numerically equal rows.
+-- The LQP version lists a disconnected join as not checked even when GND
+-  calls it vacuous (exit 4 where GND gives 2).
++  - repeated facts, including numerically equal rows (A3);
++  - a role named twice in `role_refs` (A12);
++  - in the LQP version, a disconnected join over a derived fact type (A2).
+ - Agreement is with `gnd check` without an anchor sidecar.
++- Whole-tree `uv run ruff check` stays red with the 198 errors present at
++  the base `92cd5c9b` (proven in `002-phase-RP2.md`), all in
++  dev-tools-delivered skill scripts. This is a residual against plan §9's
++  whole-tree "exit 0"; `uv run ruff check src tests tools` is clean.
+ 
+ ## Questions
+ 
+diff --git a/.gnd-planning/milestones/pyrel-rules-coverage/notes/pyrel-rules-coverage-plan.md b/.gnd-planning/milestones/pyrel-rules-coverage/notes/pyrel-rules-coverage-plan.md
+index 4908c905..2b45f519 100644
+--- a/.gnd-planning/milestones/pyrel-rules-coverage/notes/pyrel-rules-coverage-plan.md
++++ b/.gnd-planning/milestones/pyrel-rules-coverage/notes/pyrel-rules-coverage-plan.md
+@@ -478,18 +478,25 @@ Open questions carried into the phases:
+ 
+ ## 11. Close amendments (2026-11-22)
+ 
+-Plan repairs deferred to the close. Each names the record that raised it; the
+-r4 wording above is kept as written.
++Plan repairs deferred to the close. Each names the record that raised it and
++quotes the r4 wording it narrows; that wording is kept above as written.
++Rows A8–A12 and the exact quotes were added after the close panel
++(`evidence/close-review/disposition.md`).
+ 
+-| # | Section, prior wording kept | Amendment | Raised by |
++| # | r4 wording kept | Amendment | Raised by |
+ |---|---|---|---|
+-| A1 | §2 RP1, "anchors matched by object type" | across fact types, by object type; within one fact type, by role, because GND projects one fact type (`semantic_spec.role_sequence_rows`) | `003-phase-RP1.md`, implementation finding 1; spec `(p3)` |
+-| A2 | §1 and RP1-C6, disconnected join "vacuous when its lists are empty" | vacuous only when **every** referenced list is empty; one empty list still gives unchecked (exit 4). The DuckDB version reads the computed view of semiderived types; the LQP version always lists it as not checked | `003-phase-RP1.md` (finding 1, review r1-F2, boundary) |
+-| A3 | §0 "Same verdict on accepted inputs" | repeated facts include rows equal by GND's numeric identity (`1`, `1.0`), refused like other repeats; a non-finite number is refused in every cell, roster and plan binding; an LQP program returns 3 for a population it cannot read | `003-phase-RP1.md`, review r1-F1, r1-F3, r2-F2, r3-F1 |
+-| A4 | §10 D6, "integers beyond 2**53 in a Number or Float role … model constants" | the bound also covers reference facts, constants at any depth, arithmetic next to a Float or Number value (refused), and what a derivation writes into a Float or Number head (a sum over or into one is refused; an Integer value written into one is refused) | `004-phase-RP3.md`, review r1–r5 |
+-| A5 | §0 "Ossie export unchanged" | holds; RP4 needed one Ossie line to keep it (fact-scoped value rules stay extensions) | `005-phase-RP4.md`, review r1-F2 |
+-| A6 | §2 RP4 | universes (`<type>_any`) are recorded where the lowering creates them, plan creates included, so a fact type named like one is read as itself or refused by name | `005-phase-RP4.md`, review r2–r4 |
+-| A7 | §5, the runtime page | several older statements were narrowed to match the code: DuckDB-only reporting, plans on DuckDB only, exclusive-or over multi-role sequences, disconnected guarded antecedents, exit 4 when no rule is violated | `006-phase-RP5.md`, review r1–r3 |
++| A1 | §1: "joins the referenced fact types on their shared anchor object types" | across fact types, by object type; within one fact type, by role, because GND projects one fact type (`semantic_spec.role_sequence_rows`) | `003-phase-RP1.md`, implementation finding 1; RP1 spec `(p3)` |
++| A2 | §1: "vacuous, exit 2, when both referenced fact lists are empty, and **unchecked**, exit 4, otherwise"; RP1-C6: "on one with every referenced list empty (vacuous, exit 2)" | unchanged for stated fact types, now in both versions; the DuckDB version reads the computed view of semiderived types; the LQP version refuses at export a disconnected join over a derived fact type | `003-phase-RP1.md` review r1-F2; close panel (A10) |
++| A3 | §0: "On every input a program accepts, it reports a rule as not checked exactly where `gnd check` (without an anchor sidecar) does" and "An input the program cannot represent exactly is refused by name with exit 3" | the stated input refusals include rows equal by GND's numeric identity (`1`, `1.0`) as repeats, a non-finite number in any cell, roster or plan binding, and a population or fact list of the wrong shape (A11); both versions return 3 for them | `003-phase-RP1.md` review r1-F1, r1-F3, r2-F2, r3-F1; close panel |
++| A4 | §10 D6: "refuse by name with exit 3, for `Float` as well as `Number` … The model's own constants in those types are refused at export the same way" | the bound also covers reference facts, constants at any depth, arithmetic next to a Float or Number value (refused), and what a derivation writes into a Float or Number head (a sum over or into one, or an Integer value, is refused) | `004-phase-RP3.md`, review r1–r5 |
++| A5 | §0: "Ossie export unchanged" | holds; RP4 needed one Ossie line to keep it (fact-scoped value rules stay extensions). Ossie byte pins: `test_rp1_external_uniqueness.py::test_ossie_export_is_unchanged` (external uniqueness, String entity), `test_rp3_number.py::test_ossie_export_is_unchanged` (Number), `test_rp4_role_value.py::test_ossie_export_is_unchanged` (role- and fact-scoped value, the quantity fixture) | `005-phase-RP4.md`, review r1-F2 |
++| A6 | §2 RP4 (no wording on generated names) | universes (`<type>_any`) are recorded where the lowering creates them, plan creates included, so a fact type named like one is read as itself or refused by name | `005-phase-RP4.md`, review r2–r4 |
++| A7 | §5: "`docs/runtimes/pyrel.md:156-161` is the one home of the refusal list" | several older statements were narrowed to match the code: DuckDB-only reporting, plans on DuckDB only, exclusive-or over multi-role sequences, disconnected guarded antecedents, exit 4 when no rule is violated | `006-phase-RP5.md`, review r1–r3 |
++| A8 | §3/§9: agreement "as `test_duckdb_program_agrees_with_gnd` compares them" | the shared comparator also reads GND's unchecked and vacuous derivation verdicts (RP2), and compares witness numbers by GND's identity, `1` = `1.0` (RP3), with a negative control (`test_the_comparator_identifies_1_and_1_0_and_nothing_else`). Every agreement test in the close lanes ran after both changes | `002-phase-RP2.md` finding 1; `004-phase-RP3.md`; close panel |
++| A9 | RP5-C1: "these eleven packaged models" | the list names twelve (`depth_fixture/decimal` among them, RP3's); RP5 exports all twelve | close panel |
++| A10 | §0 "Same verdict as GND", for the LQP version | the LQP version reads the population it is given and reports a disconnected join vacuous when all its stated fact lists are empty (exit 2), as GND | close panel (four seats) |
++| A11 | §0, stated refusals | a population that is not a JSON object, or a fact list that is not a list of objects, is refused with exit 3 in both versions | close panel (codex) |
++| A12 | §0, stated refusals | GND accepts a role named twice in `role_refs`; the programs refuse it at export, a stated difference pinned with both exits (`test_a_role_named_twice_is_refused_where_gnd_decides_it`) | close panel (claude) |
+ 
+ Open questions of §10, swept:
+ 
+@@ -497,6 +504,6 @@ Open questions of §10, swept:
+ |---|---|
+ | Part name and witness shape for the join listing | resolved (RP1 spec §6.1): part `join`; witness the distinct referenced tuples in `role_refs` order |
+ | GND's reason texts (disconnected, ambiguous, anchored) | resolved: ambiguous is an invalid model at load (exit 3); disconnected and anchored reasons as printed in `docs/runtimes/pyrel.md` |
+-| Program-text goldens moved by the not-checked line | resolved (RP2): textual lines byte-identical; RP4's comparison shows 573 accepted programs unchanged |
++| Program-text goldens moved by the not-checked line | resolved by RP2 itself: textual lines byte-identical (RP2-C4), and RP2's review found eleven checker programs and three Ossie bundles at their baseline bytes (`002-phase-RP2.md`, Review). RP4's 573-program comparison is RP4 evidence only |
+ | Bare top-level `anchored`; fact-scoped value without `role_ref` | resolved: the first does not validate (RP2 spec); the second covers the universe, as GND (RP4) |
+ | LQP textual rules had no not-checked line | resolved (RP2, `not_checked()`) |
+diff --git a/docs/runtimes/pyrel.md b/docs/runtimes/pyrel.md
+index a4fceed9..e1d9d5e7 100644
+--- a/docs/runtimes/pyrel.md
++++ b/docs/runtimes/pyrel.md
+@@ -165,12 +165,16 @@ says how many rules are listed.
+ External uniqueness is checked over GND's shared-entity join: the referenced
+ fact types join on their other roles by object type, and two join rows with
+ the same referenced values break the rule. A join whose fact types share no
+-such object type is listed as not checked, as GND reports it; the DuckDB
+-version reports it vacuous when all its fact lists are empty, as GND does,
+-while the LQP version, which reads no facts before the engine, always lists
+-it as not checked (exit 4 where GND gives 2). One difference: GND accepts any scalar as the
+-value of an externally identified entity, and the programs need strings, so a
+-number there is refused (exit 3).
++such object type is listed as not checked, and both versions report it
++vacuous when all its fact lists are empty, as GND does. Over a derived fact
++type, whose emptiness only the engine could compute, the LQP version refuses
++such a join when you export; the DuckDB version checks it. A join that is
++ambiguous (one fact type with two other roles of one object type) is an
++invalid model, refused when you export, as `gnd check` refuses it. Two
++differences from GND: GND accepts any scalar as the value of an externally
++identified entity, and the programs need strings, so a number there is
++refused (exit 3); and GND accepts a role named twice in `role_refs`, which
++the programs refuse when you export.
+ 
+ A value constraint scoped to a role (`role_ref`), written at the top level
+ or on a fact type, checks only the values in that role, as GND does: the
+@@ -188,7 +192,7 @@ refused when you export. GND keeps those integers exact.
+ 
+ External frequency, exclusive-or over multi-role sequences, subtypes, disconnected guarded
+ antecedents, opaque derivation rules, `avg`, division, rounding, the other
+-non-exact functions, arithmetic on Float values and times of day (`DateTime`)
++non-exact functions, arithmetic on Float or Number values and times of day (`DateTime`)
+ are refused by name when you export. So is a fact type
+ whose name the program needs for a helper relation, such as `likes_reverse`.
+ 
+@@ -226,6 +230,13 @@ exit 3:
+ - `arithmetic on Float or Number values (...) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)`
+ - `external frequency is a later phase of the rules programs`
+ - `role_ref must be a {fact_type, role} mapping`
++- `role_ref <fact type>.<role> is not played by <object type>`
++- `external uniqueness needs role_refs, a non-empty list of {fact_type, role} mappings`
++- `fact type <fact type> has no role <role>`
++- `role_refs name <fact type>.<role> twice; the rules programs refuse that`
++- `the shared-entity join is ambiguous in <fact type> (two anchor roles of one object type); gnd check refuses it too`
++- `a disconnected join over the derived fact type <fact type>; the LQP version cannot tell whether it is vacuous without the engine, so it refuses it (the DuckDB version checks it)`
++- `a population is a JSON object`, and `<fact type>: a fact list is a JSON array of objects` (input, exit 3)
+ 
+ For a model with operations, the DuckDB version also checks plans (the LQP
+ version takes a single population):
+diff --git a/src/gnd/export/pyrel_rules.py b/src/gnd/export/pyrel_rules.py
+index cc8f0801..309dfd8b 100644
+--- a/src/gnd/export/pyrel_rules.py
++++ b/src/gnd/export/pyrel_rules.py
+@@ -1935,7 +1935,7 @@ def main(argv=None):
+         return 64
+     try:
+         population = read_population(argv[0])
+-    except (OSError, ValueError, KeyError, TypeError) as error:
++    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError) as error:
+         print(f'{argv[0]}: not a readable population ({type(error).__name__}: {error})', file=sys.stderr)
+         return 3
+     try:
+@@ -2306,7 +2306,7 @@ def main(argv=None):
+                      'Use --compile to inspect, or the duckdb version of this program to check locally.')
+     try:
+         population = read_population(args.population)
+-    except (OSError, ValueError, KeyError, TypeError) as error:
++    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError) as error:
+         print(f'{args.population}: not a readable population ({type(error).__name__}: {error})', file=sys.stderr)
+         return 3
+     import warnings
+@@ -2324,23 +2324,35 @@ def main(argv=None):
+         print(f'PyRel execution failed: {type(error).__name__}: {error}', file=sys.stderr)
+         return 70
+     problems = [w for w in caught if 'Requirements not met' in str(w.message)]
+-    return lqp_report(problems)
++    return lqp_report(problems, population)
+ 
+ 
+-def not_checked():
+-    """Print each rule listed as not checked; True when a must-rule is among them."""
++def not_checked(population=None):
++    """Print each rule listed as not checked: (a must-rule is among them, a rule was vacuous).
++
++    With the population, a disconnected join over fact lists that are all empty is vacuous, as GND reports it
++    (its fact types are stated ones: the export refuses a disconnected join over a derived fact type here).
++    """
++    facts = (population or {}).get('facts', {})
++    must, vacuous = False, False
+     for rule in UNCHECKED:
++        lists = rule.get('vacuous_if_empty')
++        if population is not None and lists and not any(facts.get(ref) for ref in lists):
++            print(f"{rule['id']}  vacuous  (no facts for it to apply to)")
++            vacuous = True
++            continue
+         print(f"{rule['id']}  not checked  ({rule['reason']})")
+-    return any(rule['modality'] == 'alethic' for rule in UNCHECKED)
++        must = must or rule['modality'] == 'alethic'
++    return must, vacuous
+ 
+ 
+-def lqp_report(problems):
+-    """The engine's violation reports, after the rules listed as not checked. Exit 1, 4 or 0, as GND bands them."""
+-    must_unchecked = not_checked()
++def lqp_report(problems, population=None):
++    """The engine's violation reports, after the rules listed as not checked. Exit 1, 4, 2 or 0, as GND bands them."""
++    must_unchecked, vacuous = not_checked(population)
+     for w in problems:
+         print(f'violated  {w.message}')
+     print(f'{len(problems)} requirement violation report(s) from the engine')
+-    return 1 if problems else 4 if must_unchecked else 0
++    return 1 if problems else 4 if must_unchecked else 2 if vacuous else 0
+ 
+ 
+ def compile_only():
+@@ -2706,6 +2718,13 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
+                                        "GND's plan walk computes it empty in later states (a checker bug), so there is "
+                                        "no verdict to match")
+     reqs = requirements(doc, model)
++    if target == "lqp":   # the LQP version reads stated facts only; a derived list's emptiness needs the engine
++        for row in model.unchecked:
++            derived = [ref for ref in row.get("vacuous_if_empty") or [] if ref in model.derived]
++            if derived:
++                raise ExportInputError(f"{row['id']}: a disconnected join over the derived fact type {derived[0]!r}; the "
++                                       "LQP version cannot tell whether it is vacuous without the engine, so it refuses it "
++                                       "(the DuckDB version checks it)")
+     names = _Names(model)
+     plan_lines, step_table = _plan_checks(model, names, target) if names.step else ([], [])
+     compiled_lines, compiled_table = _compiled_checks(model, loaded, names, target) if names.step else ([], [])
+@@ -2763,6 +2782,8 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
+         "    if len(raw) > LIMIT:\n"
+         "        raise ValueError('population larger than 1 MiB')\n"
+         "    document = json.loads(raw)\n"
++        "    if not isinstance(document, dict):\n"
++        "        raise ValueError('a population is a JSON object')\n"
+         "    if not isinstance(document.get('facts'), dict):\n"
+         "        raise KeyError('facts')\n"
+         "    header = document.setdefault('population', {})\n"
+@@ -2782,6 +2803,8 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
+         "        if head and head not in covers and document['facts'].get(head):\n"
+         "            raise ValueError(f'{head} lists derived facts but is not in covers; GND refuses that input')\n"
+         "    for fact_type, rows_ in document['facts'].items():\n"
++        "        if not isinstance(rows_, list) or not all(isinstance(row, dict) for row in rows_):\n"
++        "            raise ValueError(f'{fact_type}: a fact list is a JSON array of objects')\n"
+         "        seen = set()\n"
+         "        for row in rows_:\n"
+         "            for role, primitive in ROLES.get(fact_type, []):\n"
+diff --git a/tests/test_rp1_external_uniqueness.py b/tests/test_rp1_external_uniqueness.py
+index 0627e3f1..a07ad018 100644
+--- a/tests/test_rp1_external_uniqueness.py
++++ b/tests/test_rp1_external_uniqueness.py
+@@ -339,3 +339,53 @@ def test_check_cell_refuses_non_finite_numbers_for_every_caller(tmp_path, value)
+ def test_success_line_counts_a_disconnected_rule(tmp_path):
+     _, listed = render_report(RP1 / 'disconnected.orm.json', 'duckdb')
+     assert listed == ['eu']
++
++
++# Close review B1: the LQP version decides a disconnected join's vacuity from the population, as GND does
++@pytest.mark.pyrel_oracle
++@pytest.mark.parametrize('population,expected', [('disconnected-empty', 2), ('disconnected-facts', 4),
++                                                 ('disconnected-partial', 4)])
++def test_lqp_report_bands_a_disconnected_join_as_gnd(tmp_path, population, expected):
++    program = tmp_path / 'rules_lqp.py'
++    program.write_text(render(RP1 / 'disconnected.orm.json', 'lqp'))
++    path = RP1 / f'{population}.population.json'
++    code = (f"import runpy, sys\nns = runpy.run_path({str(program)!r}, run_name='lqp')\n"
++            f"sys.exit(ns['lqp_report']([], ns['read_population']({str(path)!r})))\n")
++    run = subprocess.run([str(NATIVE), '-I', '-c', code], capture_output=True, text=True, timeout=300, check=False)
++    assert run.returncode == expected, run.stdout + run.stderr
++    assert api.check(RP1 / 'disconnected.orm.json', path, unredacted=True)['exit_code'] == expected
++
++
++def test_lqp_refuses_a_disconnected_join_over_a_derived_fact_type():
++    with pytest.raises(ExportInputError, match='LQP version cannot tell whether it is vacuous'):
++        render(RP1 / 'disconnected-semiderived.orm.json', 'lqp')
++    render(RP1 / 'disconnected-semiderived.orm.json', 'duckdb')   # the DuckDB version checks it (RP1 review r1-F2)
++
++
++# Close review B2: a population that is not an object, or a fact list that is not a list of objects, exits 3
++@pytest.mark.pyrel_oracle
++@pytest.mark.parametrize('target', ['duckdb', 'lqp'])
++@pytest.mark.parametrize('population', ['array', 'bad-row'])
++def test_a_malformed_population_is_refused_with_exit_3(tmp_path, target, population):
++    program = tmp_path / 'rules.py'
++    program.write_text(render(RP1 / 'disconnected.orm.json', target))
++    extra = ['--connection', 'unused'] if target == 'lqp' else []
++    run = subprocess.run([str(NATIVE), '-I', str(program), str(RP1 / f'{population}.population.json'), *extra],
++                         capture_output=True, text=True, timeout=300, check=False)
++    assert run.returncode == 3 and 'not a readable population' in run.stderr and 'Traceback' not in run.stderr
++
++
++# Close review (claude): GND accepts a role named twice in role_refs and decides it; the programs refuse it
++def test_a_role_named_twice_is_refused_where_gnd_decides_it(tmp_path):
++    doc = json.loads((RP1 / 'renamed-anchor.orm.json').read_text())
++    doc['constraints'][0]['role_refs'] = [{'fact_type': 'lives', 'role': 'country'},
++                                          {'fact_type': 'lives', 'role': 'country'},
++                                          {'fact_type': 'heads', 'role': 'country'}]
++    model = tmp_path / 'twice.orm.json'
++    model.write_text(json.dumps(doc))
++    with pytest.raises(ExportInputError, match='twice; the rules programs refuse that'):
++        render(model, 'duckdb')
++    population = json.loads((RP1 / 'renamed-duplicate.population.json').read_text())
++    population['population']['model'] = model.name
++    (tmp_path / 'twice.population.json').write_text(json.dumps(population))
++    assert api.check(model, tmp_path / 'twice.population.json', unredacted=True)['exit_code'] == 1
+diff --git a/tests/test_rp3_number.py b/tests/test_rp3_number.py
+index 07362aa5..9a4bf0e3 100644
+--- a/tests/test_rp3_number.py
++++ b/tests/test_rp3_number.py
+@@ -203,3 +203,14 @@ def test_an_integer_sum_compared_with_a_number_value_is_refused(tmp_path):
+     run = _export(tmp_path, RP3 / 'sum-compared.orm.json')
+     assert run.returncode == 3, run.stdout + run.stderr
+     assert 'comparing a Float variable with an Integer variable' in run.stderr
++
++
++# Close review (qwen): the comparator's numeric identity is GND's and no wider; a negative control
++def test_the_comparator_identifies_1_and_1_0_and_nothing_else():
++    canonical = rules_tests._canonical
++    assert canonical([{'score': 1.0}]) == canonical([{'score': 1}])
++    assert canonical([{'score': 1.5}]) != canonical([{'score': 1}])
++    assert canonical([{'score': 2.0}]) != canonical([{'score': 1}])
++    assert canonical(True) is True and canonical(1.0) == 1 and type(canonical(1.0)) is int
++    line_float, line_int = "r  violated  [{\"score\": 1.0}]", "r  violated  [{\"score\": 2}]"
++    assert rules_tests._findings(line_float) != rules_tests._findings(line_int)
+diff --git a/tests/test_rp5_literature_rules.py b/tests/test_rp5_literature_rules.py
+index d9769e61..4a085ccb 100644
+--- a/tests/test_rp5_literature_rules.py
++++ b/tests/test_rp5_literature_rules.py
+@@ -32,7 +32,7 @@ def test_literature_model_exports(tmp_path, model, target):
+ POPULATIONS = (
+     [('model.orm.yaml', p, 4) for p in sorted((LIT / 'answers/gold').glob('*.population.json'))]
+     + [('assertions/model.orm.yaml', LIT / 'assertions/raw.population.json', 0)]
+-    + [('resolution/model.orm.yaml', p, None) for p in sorted((LIT / 'resolution/cases').glob('*/*/population.json'))]
++    + [('resolution/model.orm.yaml', p, 4) for p in sorted((LIT / 'resolution/cases').glob('*/*/population.json'))]
+     + [('quantity_fixture/time.orm.yaml', LIT / 'quantity_fixture/time.population.json', 4),
+        ('depth_fixture/decimal.orm.json', LIT / 'depth_fixture/decimal.population.json', 0)]
+ )
+@@ -76,6 +76,15 @@ MESSAGES = [
+     'a number that is not finite; GND refuses it',
+     'duplicate rows in <fact type>: PyRel relations are sets, so repeated facts cannot be checked here; GND reports them',
+     'role_ref must be a {fact_type, role} mapping',
++    'role_ref <fact type>.<role> is not played by <object type>',
++    'external uniqueness needs role_refs, a non-empty list of {fact_type, role} mappings',
++    'fact type <fact type> has no role <role>',
++    'role_refs name <fact type>.<role> twice; the rules programs refuse that',
++    'the shared-entity join is ambiguous in <fact type> (two anchor roles of one object type); gnd check refuses it too',
++    ('a disconnected join over the derived fact type <fact type>; the LQP version cannot tell whether it is vacuous '
++     'without the engine, so it refuses it (the DuckDB version checks it)'),
++    'a population is a JSON object',
++    '<fact type>: a fact list is a JSON array of objects',
+     ('<variable> is an Integer value written into the Float or Number role <role>; PyRel would round it '
+      'beyond 2**53, so the rules programs refuse it'),
+ ]

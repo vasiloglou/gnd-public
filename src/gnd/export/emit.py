@@ -72,3 +72,10 @@ def render_pyrel_rules(model_path, target):
     from .pyrel_rules import render
 
     return render(model_path, target)
+
+
+def render_pyrel_rules_report(model_path, target):
+    """The rules program and the ids of the rules it lists as not checked."""
+    from .pyrel_rules import render_report
+
+    return render_report(model_path, target)

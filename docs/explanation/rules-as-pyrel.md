@@ -67,7 +67,8 @@ those rows are the facts GND names in its feedback, like
   the state before a step, `previous(step, before)`. A rule across a step reads
   both.
 - **A judgement.** A textual rule has no PyRel line. It is reported as not
-  checked on every run.
+  checked on every run. So is an anchored rule, which ties a value to a
+  passage of a source document that only `gnd check --anchors` can read.
 
 ## What GND refuses to export
 

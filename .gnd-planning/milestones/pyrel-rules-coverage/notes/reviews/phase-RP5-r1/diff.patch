@@ -1,0 +1,40 @@
+diff --git a/docs/runtimes/pyrel.md b/docs/runtimes/pyrel.md
+index 8a9eb184..5cb27607 100644
+--- a/docs/runtimes/pyrel.md
++++ b/docs/runtimes/pyrel.md
+@@ -188,6 +188,35 @@ non-exact functions, arithmetic on Float values and times of day (`DateTime`)
+ are refused by name when you export. So is a fact type
+ whose name the program needs for a helper relation, such as `likes_reverse`.
+ 
++### What the programs print when they do not check a rule
++
++A rule the programs list as not checked prints its id, `not checked`, and
++one of these reasons:
++
++- `source anchor: gnd check decides it with --anchors and --document; the rules programs read no sidecar`
++- `textual rule: <expression>`
++- `join-disconnected: <fact types> share no anchor object type` (or
++  `vacuous` when all those fact lists are empty)
++
++An input the programs cannot represent exactly is refused with exit 3, and
++the message names the cell or rule:
++
++- `GND accepts any scalar for an externally identified entity; the rules programs need strings`
++- `an integer beyond 2**53, which a <Float or Number> here (a binary float) cannot hold exactly; GND keeps it exact`
++- `a number that is not finite; GND refuses it`
++- `duplicate rows in <fact type>: PyRel relations are sets, so repeated facts cannot be checked here; GND reports them`
++  (also when two rows differ only as `1` and `1.0`, one number to GND)
++
++A model the programs cannot represent exactly is refused when you export,
++exit 3:
++
++- `the integer <N> is beyond 2**53, which a Float or Number value here (a binary float) cannot hold exactly; GND keeps it exact`
++- `arithmetic next to a Float or Number value is exact in GND and binary in PyRel; the rules programs refuse it`
++- `a sum over or into a Float or Number value is exact in GND and binary in PyRel; the rules programs refuse it`
++- `arithmetic on Float or Number values (...) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)`
++- `external frequency is a later phase of the rules programs`
++- `role_ref must be a {fact_type, role} mapping`
++
+ For a model with operations, the program also checks plans:
+ 
+ ```text

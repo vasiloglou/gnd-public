@@ -143,7 +143,8 @@ Both versions cover these rule families:
 Dates are PyRel `Date` values, and `date_add(x, n)` becomes
 `std_date.add(x, days(n))`. A rule whose computed date would fall outside
 years 1 to 9999, or that needs more than 10,000 date calculations, is reported
-as not checked, as GND reports it. Reference populations are verified with
+as not checked by the DuckDB version, as GND reports it; the LQP version
+states such rules for the engine and does not classify them. Reference populations are verified with
 GND's own checks when the program is generated, and embedded in it; its header
 names each file and its SHA-256. A plan that restates a reference-owned fact
 type is refused, as GND refuses it.
@@ -151,16 +152,95 @@ type is refused, as GND refuses it.
 A derived fact type becomes PyRel `define` rules, and GND's derivation check
 becomes two requirements: every computed fact is in the input, and every fact
 the input states is computed. A derived fact type that is not in `covers` is
-reported as not checked, as GND reports it.
+reported as not checked by the DuckDB version, as GND reports it.
 
-Textual rules are listed as not checked, as GND lists them. External uniqueness
-and frequency, exclusive-or over role sequences, subtypes, disconnected rule
-bodies, opaque derivation rules, `avg`, division, rounding, the other
-non-exact functions, arithmetic on Float values and times of day (`DateTime`)
+Textual rules and anchored rules are listed as not checked, as GND lists them
+when it checks without a sidecar: each program prints the rule's id and the
+reason, and a must-rule listed this way gives exit 4 when the program checks
+a population and no rule is violated (a violation gives exit 1) (`--compile` only compiles, and exits by its compilation). An anchored rule ties a
+value to a span of a source document; `gnd check --anchors SIDECAR --document
+DOC` decides it, and the programs read no sidecar. The export's success line
+says how many rules are listed.
+
+External uniqueness is checked over GND's shared-entity join: the referenced
+fact types join on their other roles by object type, and two join rows with
+the same referenced values break the rule. A join whose fact types share no
+such object type is listed as not checked, and both versions report it
+vacuous when all its fact lists are empty, as GND does. Over a derived fact
+type, whose emptiness only the engine could compute, the LQP version refuses
+such a join when you export; the DuckDB version checks it. A join that is
+ambiguous (one fact type with two other roles of one object type) is an
+invalid model, refused when you export, as `gnd check` refuses it. Two
+differences from GND: GND accepts any scalar as the value of an externally
+identified entity, and the programs need strings, so a number there is
+refused (exit 3); and GND accepts a role named twice in `role_refs`, which
+the programs refuse when you export.
+
+A value constraint scoped to a role (`role_ref`), written at the top level
+or on a fact type, checks only the values in that role, as GND does: the
+same value in another role of the object type, or in its instances roster,
+does not count, and the rule is vacuous when the role has no facts. A value
+constraint on a fact type without `role_ref` covers the object type's
+values everywhere, like the top-level form.
+
+`Number` is typed like `Float`: GND admits a finite integer or float there
+and checks no precision or scale, and the programs hold it as a binary
+float. An integer beyond 2**53 in a `Number` or `Float` cell cannot be held
+exactly that way, so the program refuses it (exit 3), and a model whose
+allowed values, range bounds or comparison literals hold such an integer is
+refused when you export. GND keeps those integers exact.
+
+External frequency, exclusive-or over multi-role sequences, subtypes, disconnected guarded
+antecedents, opaque derivation rules, `avg`, division, rounding, the other
+non-exact functions, arithmetic on Float or Number values and times of day (`DateTime`)
 are refused by name when you export. So is a fact type
 whose name the program needs for a helper relation, such as `likes_reverse`.
 
-For a model with operations, the program also checks plans:
+### What the programs print when they do not check a rule
+
+A rule the programs list as not checked prints its id, `not checked`, and a
+reason. The reasons this milestone added are:
+
+- `source anchor: gnd check decides it with --anchors and --document; the rules programs read no sidecar`
+- `textual rule: <expression>`
+- `join-disconnected: <fact types> share no anchor object type` (or
+  `vacuous` when all those fact lists are empty)
+
+The DuckDB version also prints GND's other not-checked reasons: `no claim:
+<head> is not in covers` for a derived fact type, `term:date-out-of-range`
+and `term:temporal-work-limit` for date arithmetic, the guarded-filter
+coverage reason, and, in plans, the reasons for nonfunctional dynamic rules.
+
+An input the programs cannot represent exactly is refused with exit 3, and
+the message names the cell or rule:
+
+- `GND accepts any scalar for an externally identified entity; the rules programs need strings`
+- `an integer beyond 2**53, which a <Float or Number> here (a binary float) cannot hold exactly; GND keeps it exact`
+- `a number that is not finite; GND refuses it`
+- `duplicate rows in <fact type>: PyRel relations are sets, so repeated facts cannot be checked here; GND reports them`
+  (also when two rows differ only as `1` and `1.0`, one number to GND)
+
+A model the programs cannot represent exactly is refused when you export,
+exit 3:
+
+- `the integer <N> is beyond 2**53, which a Float or Number value here (a binary float) cannot hold exactly; GND keeps it exact`
+- `arithmetic next to a Float or Number value is exact in GND and binary in PyRel; the rules programs refuse it`
+- `a sum over or into a Float or Number value is exact in GND and binary in PyRel; the rules programs refuse it`
+- `a float literal compared with an Integer value is exact in GND and binary in PyRel; the rules programs refuse it`
+- `<variable> is an Integer value written into the Float or Number role <role>; PyRel would round it beyond 2**53, so the rules programs refuse it`
+- `arithmetic on Float or Number values (...) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)`
+- `external frequency is a later phase of the rules programs`
+- `role_ref must be a {fact_type, role} mapping`
+- `role_ref <fact type>.<role> is not played by <object type>`
+- `external uniqueness needs role_refs, a non-empty list of {fact_type, role} mappings`
+- `fact type <fact type> has no role <role>`
+- `role_refs name <fact type>.<role> twice; the rules programs refuse that`
+- `the shared-entity join is ambiguous in <fact type> (two anchor roles of one object type); gnd check refuses it too`
+- `a disconnected join over the derived fact type <fact type>; the LQP version cannot tell whether it is vacuous without the engine, so it refuses it (the DuckDB version checks it)`
+- `a population is a JSON object`, and `<fact type>: a fact list is a JSON array of objects` (input, exit 3)
+
+For a model with operations, the DuckDB version also checks plans (the LQP
+version takes a single population):
 
 ```text
 python RULES.py --pre STATE.json --steps PLAN.steps.json

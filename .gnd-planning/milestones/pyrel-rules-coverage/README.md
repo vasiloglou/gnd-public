@@ -12,8 +12,8 @@ milestone's gates.
 | RP1 | External uniqueness in the `--rules` programs, and `String` for an externally identified entity | done, [record](003-phase-RP1.md) |
 | RP3 | `Number` typed like `Float` | done, [record](004-phase-RP3.md) |
 | RP4 | Value constraints scoped to a role | done, [record](005-phase-RP4.md) |
-| RP5 | The packaged literature models exported end to end | outline |
+| RP5 | The packaged literature models exported end to end | done, [record](006-phase-RP5.md) |
 
 [Plan](notes/pyrel-rules-coverage-plan.md). Second in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
-Next: phase RP5 (spec, delegated gate, code).
+Next: the milestone close review (full GND panel).

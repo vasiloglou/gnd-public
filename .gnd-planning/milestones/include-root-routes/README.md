@@ -4,7 +4,8 @@ Plan r6, 2026-11-21, from [issue #217](https://github.com/vasiloglou/gnd-public/
 and item 1 of [issue #214](https://github.com/vasiloglou/gnd-public/issues/214).
 Plan reviewed twice by the GND panel light and approved by delegated ruling
 ([plan gate](001-plan-gate.md)). **Closed locally** by delegated ruling after
-a panel-light close review ([close record](005-milestone-close.md)); not merged. Run with
+a panel-light close review ([close record](005-milestone-close.md)); merged to
+`main` on 2026-11-21 as [PR #220](https://github.com/vasiloglou/gnd-public/pull/220). Run with
 `process-milestone include-root-routes auto`.
 
 | Phase | Deliverable | State |

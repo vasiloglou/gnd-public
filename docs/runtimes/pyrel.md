@@ -168,6 +168,13 @@ are empty, as GND reports it. One difference: GND accepts any scalar as the
 value of an externally identified entity, and the programs need strings, so a
 number there is refused (exit 3).
 
+`Number` is typed like `Float`: GND admits a finite integer or float there
+and checks no precision or scale, and the programs hold it as a binary
+float. An integer beyond 2**53 in a `Number` or `Float` cell cannot be held
+exactly that way, so the program refuses it (exit 3), and a model whose
+allowed values, range bounds or comparison literals hold such an integer is
+refused when you export. GND keeps those integers exact.
+
 External frequency, exclusive-or over role sequences, subtypes, disconnected rule
 bodies, opaque derivation rules, `avg`, division, rounding, the other
 non-exact functions, arithmetic on Float values and times of day (`DateTime`)

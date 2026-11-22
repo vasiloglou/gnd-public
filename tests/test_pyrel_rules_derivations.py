@@ -218,8 +218,8 @@ def test_review_reproductions_agree_with_gnd(tmp_path, model, population):
 
 
 @pytest.mark.parametrize('model,reason', [
-    ('fl', 'arithmetic on Float values'),            # F2 GND adds exact rationals; PyRel adds binary floats
-    ('num', 'arithmetic on Float values'),
+    ('fl', 'arithmetic on Float or Number values'),            # F2 GND adds exact rationals; PyRel adds binary floats
+    ('num', 'arithmetic on Float or Number values'),
     ('misc', 'comparing a Float variable with an Integer variable'),   # F6
 ])
 def test_inexact_arithmetic_is_refused_by_name(model, reason):

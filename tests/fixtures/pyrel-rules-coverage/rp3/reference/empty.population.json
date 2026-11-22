@@ -1,0 +1,8 @@
+{
+ "population": {
+  "model": "model.orm.json",
+  "source": "fixture",
+  "covers": []
+ },
+ "facts": {}
+}

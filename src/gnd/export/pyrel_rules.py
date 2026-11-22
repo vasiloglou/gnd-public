@@ -49,13 +49,45 @@ TARGETS = ("duckdb", "lqp")
 PYREL_VERSION = "1.30.1"
 # model primitive -> PyRel type; a Duration is a whole number of days (GND has no other durations)
 _TYPES = {"String": "String", "Integer": "Integer", "Float": "Float", "Boolean": "Boolean", "Date": "Date",
-          "Duration": "Integer"}
+          "Duration": "Integer", "Number": "Float"}   # D2: GND's Number admits what Float admits
+_BINARY = {"Float", "Number"}   # model types the programs hold as binary floats
+_EXACT_FLOAT = 2**53            # D6: every integer up to this magnitude is exact as a binary float
+
+
+def _binary_variables(model: _Model, atoms: Any) -> set[str]:
+    """Every variable that fills a Float or Number role in any of the atoms, whatever its other roles."""
+    found: set[str] = set()
+    for atom in atoms:
+        for role, arg in zip(model.roles(atom.relation), atom.args):
+            if isinstance(arg, str) and arg.startswith("$") and model.raw_role_type(atom.relation, role["role_name"]) in _BINARY:
+                found.add(arg)
+    return found
+
+
+def _refuse_binary_context(context: str, terms: Any, binary: set[str], *, always: bool = False) -> None:
+    """D6: where a Float or Number value takes part, every constant must be exact as a binary float, and no
+    arithmetic may compute one: PyRel would compute it in binary, GND computes it exactly."""
+    if not always and not any(v in binary for t in terms for v in _term_variables(t)):
+        return
+    for term in terms:
+        if isinstance(term, dict) and term.get("fn") in _ARITHMETIC:
+            raise ExportInputError(f"{context}arithmetic next to a Float or Number value is exact in GND and binary "
+                                   "in PyRel; the rules programs refuse it")
+        for literal in _term_literals(term):
+            _refuse_beyond_exact(literal, context)
+
+
+def _refuse_beyond_exact(value: Any, context: str = "") -> None:
+    """D6: an integer constant a binary float cannot hold exactly is refused by name."""
+    if type(value) is int and abs(value) > _EXACT_FLOAT:
+        raise ExportInputError(f"{context}the integer {value} is beyond 2**53, which a Float or Number value here "
+                               "(a binary float) cannot hold exactly; GND keeps it exact")
 _NEGATED = {"<": ">=", "<=": ">", "=": "!=", "!=": "==", ">=": "<", ">": "<="}
 _PYOP = {"<": "<", "<=": "<=", "=": "==", "==": "==", "!=": "!=", ">=": ">=", ">": ">"}
 _RESERVED = {"m", "not_", "Field", "String", "Integer", "Float", "Boolean", "Model", "Config",
              "rows", "facts", "report", "load", "json", "sys", "os", "re", "tempfile", "found",
              "value", "values", "probe_vars", "instances", "population", "config", "build", "main",
-             "read_population", "witnesses", "compile_only", "RULES", "SCHEMA", "LIMIT", "EXPECTED",
+             "read_population", "witnesses", "compile_only", "RULES", "SCHEMA", "LIMIT", "EXPECTED", "EXACT_FLOAT",
              "warnings", "create_config", "argparse", "args", "parser", "problems", "caught", "w",
              "directory", "error", "rule", "name", "hits", "hit", "status", "row", "rows_", "path",
              "document", "relation", "roles", "r", "v", "k", "f", "g", "key", "fact", "seen", "aggregates",
@@ -320,6 +352,7 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
                 raise ExportInputError(f"{c.get('id')}: unknown operator {payload.get('operator')!r}")
             left, right = (_typed_term(model, c["id"], payload[side], types, payload["right" if side == "left" else "left"])
                            for side in ("left", "right"))
+            _refuse_binary_context(f"{c['id']}: ", (left, right), _binary_variables(model, domain))   # D6
             check = Check("compare", compare=Compare(payload["operator"], left, right))
     else:
         if guard_uses_membership(consequent):
@@ -1095,6 +1128,8 @@ def _literal(value: Any, primitive: str) -> str:
     GND compares a string that is not a strict YYYY-MM-DD date with dates as text, so it never equals one,
     and an ordered comparison with it is unchecked; the rules programs refuse such a literal by name.
     """
+    if primitive == "Float":
+        _refuse_beyond_exact(value)
     if isinstance(value, dict) and set(value) == {"date"}:
         value, primitive = value["date"], "Date"
     if isinstance(value, dict) and set(value) == {"duration_days"}:
@@ -1349,7 +1384,8 @@ def _term_variables(term: Any) -> list[str]:
     return [term] if isinstance(term, str) and term.startswith("$") else []
 
 
-def _refuse_inexact(head: str, clause: dict[str, Any], types: dict[str, str]) -> None:
+def _refuse_inexact(head: str, clause: dict[str, Any], types: dict[str, str],
+                    head_types: dict[str, str] | None = None, binary: set[str] = frozenset()) -> None:
     """GND computes add, sub, mul, neg and abs as exact rationals; PyRel uses binary floats for Float values.
 
     So arithmetic is admitted only over Integer variables and integer literals, and a where comparison
@@ -1359,16 +1395,51 @@ def _refuse_inexact(head: str, clause: dict[str, Any], types: dict[str, str]) ->
     for term in terms:
         if not isinstance(term, dict):
             continue
-        floats = [v for v in _term_variables(term) if types.get(v) == "Float"]
+        floats = [v for v in _term_variables(term) if types.get(v) in _BINARY]
         literals = [a for a in _term_literals(term) if isinstance(a, float) and not a.is_integer()]
         if floats or literals:
-            raise ExportInputError(f"{head}: arithmetic on Float values ({', '.join(map(str, floats + literals))}) is exact "
+            raise ExportInputError(f"{head}: arithmetic on Float or Number values ({', '.join(map(str, floats + literals))}) is exact "
                                    "in GND and binary in PyRel; the rules programs refuse it (later phase)")
+    for role, value in clause["head"].items():   # D6: what a Float or Number head role is given
+        _refuse_binary_context(f"{head}: ", (value,), binary, always=(head_types or {}).get(role) in _BINARY)
     for comparison in clause["where"]:
-        kinds = {types.get(t) for t in (comparison["left"], comparison["right"]) if isinstance(t, str) and t.startswith("$")}
+        sides = (comparison["left"], comparison["right"])
+        kinds = {"Float" if types.get(t) in _BINARY else types.get(t)
+                 for t in sides if isinstance(t, str) and t.startswith("$")}
+        _refuse_binary_context(f"{head}: ", sides, binary)   # D6
         if kinds == {"Float", "Integer"}:
             raise ExportInputError(f"{head}: comparing a Float variable with an Integer variable is a later phase of the "
                                    "rules programs")
+
+
+def _refuse_inexact_head(head: str, clause: dict[str, Any], head_types: dict[str, str], binary: set[str]) -> set[str]:
+    """D6 for what a derivation writes into a Float or Number head role; returns the aggregate result as a
+    binary context when it lands in one.
+
+    PyRel holds such a role as a binary float: a value from an Integer role, or an Integer aggregate, would
+    be rounded beyond 2**53, and a sum is exact in GND but binary in PyRel. So the role takes only a Float or
+    Number value, a count, or a constant; a sum over or into a Float or Number value is refused.
+    """
+    aggregate = clause.get("aggregate") or {}
+    if not isinstance(aggregate.get("of"), str):   # an aggregate of a computed term is refused where it is lowered
+        return set()
+    result = aggregate.get("as")
+    into = {role for role, value in clause["head"].items() if head_types.get(role) in _BINARY}
+    lands = result is not None and any(clause["head"][role] == result for role in into)
+    if aggregate.get("fn") == "sum" and (lands or aggregate.get("of") in binary):
+        raise ExportInputError(f"{head}: a sum over or into a Float or Number value is exact in GND and binary in "
+                               "PyRel; the rules programs refuse it")
+    for role in sorted(into):
+        value = clause["head"][role]
+        if not (isinstance(value, str) and value.startswith("$")) or value in binary:
+            continue
+        if value == result and aggregate.get("fn") == "count":
+            continue
+        if value == result and aggregate.get("of") in binary:   # min or max of Float or Number values
+            continue
+        raise ExportInputError(f"{head}: {value} is an Integer value written into the Float or Number role {role!r}; "
+                               "PyRel would round it beyond 2**53, so the rules programs refuse it")
+    return {result} if lands else set()
 
 
 def _term_literals(term: Any) -> list[Any]:
@@ -1427,7 +1498,14 @@ def _clause_lines(model: _Model, names: _Names, head: str, clause: dict[str, Any
     negated = [Atom(_derived_relation(model, a.relation), a.args) for a in negated]
     unswapped = _unswap(model, atoms + negated)
     atoms, negated = unswapped[: len(atoms)], unswapped[len(atoms):]
-    _refuse_inexact(head, clause, types)
+    head_types = {r["role_name"]: model.raw_role_type(head, r["role_name"]) for r in model.roles(head)}
+    binary = _binary_variables(model, [_atom(model, pattern) for pattern in clause["body"]])
+    binary |= _refuse_inexact_head(head, clause, head_types, binary)
+    checked = dict(types)   # the guard also knows an aggregate result's type (not declared as a variable)
+    aggregate = clause.get("aggregate") or {}
+    if isinstance(aggregate.get("of"), str) and isinstance(aggregate.get("as"), str):
+        checked.setdefault(aggregate["as"], "Integer" if aggregate.get("fn") == "count" else types.get(aggregate["of"]))
+    _refuse_inexact(head, clause, checked, head_types, binary)
     lines = []
     if types:
         lines.append(_declare(sorted(types), types, names))
@@ -2628,7 +2706,7 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
          f"ROLES = {({f: [[r['role_name'], model.cell_type(r['object_type'])] for r in model.roles(f)] for f in model.facts})!r}\n"
          f"ROSTERS = {_roster_types(model)!r}\n"
          f"UNCHECKED = json.loads({json.dumps(model.unchecked)!r})\n"
-         f"REFERENCE = json.loads({json.dumps(reference)!r})\nLIMIT = 1 << 20\n"
+         f"REFERENCE = json.loads({json.dumps(reference)!r})\nLIMIT = 1 << 20\nEXACT_FLOAT = {_EXACT_FLOAT}\n"
          + (_plan_constants(model, loaded, step_table, compiled_table) if names.step else "")
          + f"PLAN_REQUIRES = {_plan_require_count(step_table) + len(compiled_table)}\n"),
         ("\ndef read_population(path):\n"
@@ -2670,6 +2748,13 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
         "                                 'repeated facts cannot be checked here; GND reports them')\n"
         "            seen.add(key)\n"
         "    if REFERENCE:   # the candidate plus the embedded reference facts, as GND checks them\n"
+        "        for fact_type, rows_ in REFERENCE['facts'].items():   # the same cell checks (D4, D6, finite)\n"
+        "            for row in rows_:\n"
+        "                for role, primitive in ROLES.get(fact_type, []):\n"
+        "                    check_cell(fact_type, role, primitive, row.get(role))\n"
+        "        for object_type, values in REFERENCE['instances'].items():\n"
+        "            for value in values if object_type in ROSTERS else ():\n"
+        "                check_cell('instances', object_type, ROSTERS[object_type], value)\n"
         "        document['facts'].update(REFERENCE['facts'])\n"
         "        for object_type, values in REFERENCE['instances'].items():\n"
         "            document.setdefault('instances', {}).setdefault(object_type, []).extend(values)\n"
@@ -2689,11 +2774,14 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
         "    if isinstance(value, float) and (value != value or abs(value) == float('inf')):\n"
         "        raise ValueError(f'{fact_type}.{role} is {value!r}, a number that is not finite; GND refuses it')\n"
         "    ok = {'String': isinstance(value, str), 'Boolean': isinstance(value, bool),\n"
-        "          'Integer': number and isinstance(value, int), 'Float': number,\n"
+        "          'Integer': number and isinstance(value, int), 'Float': number, 'Number': number,\n"
         "          'Duration': number and isinstance(value, int) and 0 <= value <= 1_000_000,\n"
         "          'Date': is_date(value)}[primitive]\n"
         "    if not ok:\n"
-        "        raise ValueError(f'{fact_type}.{role} is {value!r}, which is not a valid {primitive}')\n"),
+        "        raise ValueError(f'{fact_type}.{role} is {value!r}, which is not a valid {primitive}')\n"
+        "    if primitive in ('Float', 'Number') and isinstance(value, int) and abs(value) > EXACT_FLOAT:   # D6\n"
+        "        raise ValueError(f'{fact_type}.{role} is {value}, an integer beyond 2**53, which a {primitive} here '\n"
+        "                         '(a binary float) cannot hold exactly; GND keeps it exact')\n"),
         ("\ndef is_date(value):\n"
         "    \"\"\"A real Gregorian day written YYYY-MM-DD, as GND requires.\"\"\"\n"
         "    if not isinstance(value, str) or not re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}', value):\n"

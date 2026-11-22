@@ -1,0 +1,93 @@
+{
+ "version": 4,
+ "model_id": "urn:test:int-arithmetic@1",
+ "source": {
+  "confidence": "standard",
+  "kind": "text-conversation",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "run",
+   "kind": "value",
+   "name": "RunId",
+   "primitive": "String"
+  },
+  {
+   "id": "score",
+   "kind": "value",
+   "name": "Score",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "run_has_score",
+   "reading": "{RunId} has score {Score}",
+   "roles": [
+    {
+     "role_name": "run",
+     "object_type": "run"
+    },
+    {
+     "role_name": "score",
+     "object_type": "score"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "one_score",
+     "type": "uniqueness",
+     "roles": [
+      "run"
+     ],
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "one score per run"
+     }
+    }
+   ]
+  },
+  {
+   "id": "run_scores_one",
+   "reading": "{RunId} scores one",
+   "derivation": "derived",
+   "roles": [
+    {
+     "role_name": "run",
+     "object_type": "run"
+    }
+   ],
+   "derivation_rule": {
+    "head": {
+     "run": "$r"
+    },
+    "body": [
+     {
+      "fact_type": "run_has_score",
+      "bind": {
+       "run": "$r",
+       "score": "$s"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": "=",
+      "left": {
+       "fn": "add",
+       "args": [
+        "$s",
+        1
+       ]
+      },
+      "right": 2
+     }
+    ]
+   }
+  }
+ ],
+ "constraints": []
+}

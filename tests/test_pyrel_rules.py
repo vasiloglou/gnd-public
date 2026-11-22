@@ -59,6 +59,18 @@ def _program(tmp_path, name, target):
     return path
 
 
+def _canonical(value):
+    """GND's numeric identity in a witness: 1 and 1.0 are one number (the programs print Float values as
+    floats, GND echoes the input's form), so an integral float compares as its integer."""
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    if isinstance(value, list):
+        return [_canonical(v) for v in value]
+    if isinstance(value, dict):
+        return {k: _canonical(v) for k, v in value.items()}
+    return value
+
+
 def _findings(stdout):
     found = set()
     for line in stdout.splitlines():
@@ -69,13 +81,13 @@ def _findings(stdout):
         if status in ('vacuous', 'unknown', 'not checked'):   # a not-checked line carries its reason, not a witness
             found.add((rule, status, 'null'))
         else:
-            found.add((rule, status, json.dumps(json.loads(witness), sort_keys=True)))
+            found.add((rule, status, json.dumps(_canonical(json.loads(witness)), sort_keys=True)))
     return found
 
 
 def _gnd(name, population):
     doc = _parse_document(MODELS[name].read_text())
-    names = {f'constraints[{i}]': c.get('id') or f'constraints_{i}' for i, c in enumerate(doc['constraints'])}
+    names = {f'constraints[{i}]': c.get('id') or f'constraints_{i}' for i, c in enumerate(doc.get('constraints') or [])}
     for fact in doc['fact_types']:
         for i, c in enumerate(fact.get('constraints', [])):
             names[f'fact_types[{fact["id"]}].constraints[{i}]'] = c.get('id') or f'{fact["id"]}#{i}'
@@ -99,7 +111,7 @@ def _gnd(name, population):
         else:
             witnesses = verdict['offending_facts']
         for w in witnesses:
-            found.add((rule, status, json.dumps(w, sort_keys=True)))
+            found.add((rule, status, json.dumps(_canonical(w), sort_keys=True)))
     for derivation in report.get('derivations') or []:   # failures are compared in test_pyrel_rules_derivations
         if derivation['verdict'] in ('unchecked', 'vacuous'):
             status = 'not checked' if derivation['verdict'] == 'unchecked' else 'vacuous'

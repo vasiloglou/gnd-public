@@ -1,0 +1,21 @@
+{
+ "population": {
+  "model": "six-line.orm.json",
+  "source": "fixture",
+  "covers": [
+   "run_has_score"
+  ]
+ },
+ "facts": {
+  "run_has_score": [
+   {
+    "run": "a",
+    "score": 9007199254740993
+   },
+   {
+    "run": "a",
+    "score": 9007199254740992
+   }
+  ]
+ }
+}

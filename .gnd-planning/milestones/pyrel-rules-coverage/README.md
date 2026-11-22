@@ -10,10 +10,10 @@ milestone's gates.
 |---|---|---|
 | RP2 | Anchored constraints listed as not checked, as `gnd check` reports them (runs first) | done, [record](002-phase-RP2.md) |
 | RP1 | External uniqueness in the `--rules` programs, and `String` for an externally identified entity | done, [record](003-phase-RP1.md) |
-| RP3 | `Number` typed like `Float` | outline |
+| RP3 | `Number` typed like `Float` | done, [record](004-phase-RP3.md) |
 | RP4 | Value constraints scoped to a role | outline |
 | RP5 | The packaged literature models exported end to end | outline |
 
 [Plan](notes/pyrel-rules-coverage-plan.md). Second in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
-Next: phase RP3 (spec, delegated gate, code).
+Next: phase RP4 (spec, delegated gate, code).

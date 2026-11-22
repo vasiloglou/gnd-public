@@ -150,6 +150,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/literature-depth/evidence/LD2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/literature-depth/evidence/LD2/review-dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/pyrel-rules-coverage/evidence/RP1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/pyrel-rules-coverage/evidence/RP3/dynamic-query-successor.json',
 ]
 
 

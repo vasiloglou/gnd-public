@@ -10,7 +10,7 @@ is selected. `auto=false`.
 |---|---|---|
 | LR1 | A host can see why `gnd verify` fails a source: which constraint, on which rows | [draft spec](notes/phase-LR1-spec.md), awaiting the plan gate, rulings D7 and D8, and the owner's review |
 | LR2 | The pages say where a quote may lie: anywhere in the document the anchor sidecar names | outline; waits for ruling D2 |
-| LR3 | A labelled reference set for the reading stages, with a recorded recall and precision | outline; needs LH1 and LH2 of [literature-host-interfaces](../literature-host-interfaces/README.md) on `main`, and rulings D1, D3, D4 and D9 |
+| LR3 | A labelled reference set for the reading stages, with a recorded recall and precision | outline; needs LH1 and LH2 of [literature-host-interfaces](../literature-host-interfaces/README.md) implemented and merged, and rulings D1, D3, D4 and D9 |
 
 [Plan](notes/literature-reading-reference-plan.md). Listed in the
 [roadmap update of 2026-11-22](../../PROJECT.md#open-issues-on-2026-11-22--roadmap-update).

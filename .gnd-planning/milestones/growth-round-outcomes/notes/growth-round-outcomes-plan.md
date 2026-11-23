@@ -108,7 +108,7 @@ Harvested obligations. "Observed" means read or run at `548b9a1d` on
 | H18 | `evolve/shapes.py:1-13`; `evolve/cli_service.py:373-376`; `unattended-growth.md:57-73` | `--shape-report` lists, for each added fact type, the existing fact types over the same role players. It is advice; the host decides and logs | observed by reading | GO5 reuses it |
 | H19 | #227 "What we measured" | 20 rounds over four growers added 2 elements; two growers applied 0 of 5 rounds | inherited | GO5 (the baseline a summary must explain) |
 | H20 | #227 "Not requested"; #228 "Not requested" | no relaxing of `proposed` and `deontic`; no check, record, exit code or revalidation step changes | inherited | R0.2 |
-| H21 | [reviewed-vocabulary-growth](../../reviewed-vocabulary-growth/notes/reviewed-vocabulary-growth-plan.md) §3, H36; `PROJECT.md`, "Proposed order" | that plan's VG2 and VG4 change `src/gnd/evolve/service.py`, and its VG2 and VG5 change `unattended-growth.md`. One writer at a time on each: VG1, then GO1, then VG2–VG5, then GO2–GO5 | observed by reading | §3 |
+| H21 | [reviewed-vocabulary-growth](../../reviewed-vocabulary-growth/notes/reviewed-vocabulary-growth-plan.md) r4, approved by the owner on 2026-11-23 (PR 236), §3 and H36; `PROJECT.md`, "Proposed order" | that plan's VG2 and VG4 change `src/gnd/evolve/service.py`, and its VG2 and VG5 change `unattended-growth.md`. One writer at a time on each: VG1, then GO1, then VG2–VG5, then GO2–GO5 | observed by reading | §3 |
 | H22 | `model_index.py:52-71` | `index_scope()` already gives one public call a shared cache through a context variable, re-entrant, dropped on exit | observed by reading | GO1 reuses the pattern |
 | H23 | `project.md`, "Component index"; `components_index.py review` | the index is searched before a capability is built and updated in the same commit. `review` lists 276 leads in 10 groups; an index review is offered to the owner and is not a prerequisite | observed | all |
 | H24 | reviewed-vocabulary-growth plan H27, D11 | whole-repository `uv run ruff check` exits 1 on files dev-tools delivers; `uv run ruff check src tests tools` exits 0. This plan names the second as its lint gate, as that plan does | observed (re-run 2026-11-23) | all |
@@ -209,7 +209,10 @@ Other writers. reviewed-vocabulary-growth (H21) is the one milestone that
 shares files with this one. Its plan and the roadmap give the order: VG1,
 then GO1, then VG2–VG5, then GO2–GO5. VG1 and GO1 share no file. If GO1
 merges by its own pull request ahead of the rest (D6), GO2 starts from a
-`main` that holds VG2–VG5. Start condition: `main` at `548b9a1d` or later.
+`main` that holds VG2–VG5. Start condition: `main` at `78934ee3` or later;
+`main` moved there from `548b9a1d` while this plan was written, by merges that
+changed planning files and six skill scripts dev-tools delivers, and nothing
+under `src`, `tests` or `docs`.
 
 Fixtures. GO1 builds its models with the helpers of
 `tests/test_unattended_model_growth_acceptance.py` and

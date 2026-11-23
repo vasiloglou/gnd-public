@@ -24,7 +24,11 @@ two rows "not read". Both are read now, and both change the plan `(r2)`:
   reporter's own host. GND's one binding of a quote to text is the anchor
   check, against the whole document a sidecar names (H10).
 
-Code citations were read at `548b9a1d` (`main`, 2026-11-23). Rows marked
+Code citations were read at `548b9a1d` (`main`, 2026-11-23). `main` moved to
+`78934ee3` the same day (PR 234, PR 236, PR 237) while this plan was written;
+those merges changed planning files and six skill scripts that dev-tools
+delivers, and nothing under `src`, `tests` or `docs`. H17 and §3 are brought
+up to them `(m)`. Rows marked
 "agent" were read by the read-only harvest agent of this session and not all
 re-read by the author; the rows the plan rests on (H2, H3, H4, H8, H9, H10,
 H13) were re-read or run by the author.
@@ -103,7 +107,7 @@ Harvested obligations. "Observed" means read or run by the author at
 | H14 | #226 "What we measured" | on 20 papers and about 100 gold claims: broad pass best recall 29 of 101 with precision 15 to 38 %; targeted pass best recall 30 of 100 with precision 10 to 20 %; 233 kept claims outside the gold passages; 3 of 29 aligned claims agree on the predicate | inherited | LR3 (comparison rows) |
 | H15 | `reading.py:149-158`, `:562-584` | the producer is duck-typed (`produce(stage, section)`); `run()` wires the saved producer; `replay()` re-derives from the retained table with zero producer calls and requires byte identity, for the packaged fixture only | observed | LR3 |
 | H16 | `reading.py:587-596` | a run's settings are `--budget-bytes` and `--scenario`; broad against targeted is fixed per section in the roster. There is no other stage setting to report | observed | LR3 (D9) |
-| H17 | [literature-host-interfaces](../../literature-host-interfaces/README.md) outline r1, LH1 and LH2, on `main` | LH1: a public producer protocol over a caller corpus and vocabulary. LH2: `replay()` of a live run from its own folder with zero producer calls. Its full plan is being written in another session and is not on `main` | observed by reading | LR3 needs both |
+| H17 | [literature-host-interfaces](../../literature-host-interfaces/README.md) plan r6, approved by the owner on 2026-11-23 (PR 237) `(m)` | LH1: a public producer protocol in the reading example, a caller's producer driving the six stages over a caller's root. LH2: `replay()` of a live run from its own folder with zero producer calls, its settings read from the run. LH1 has a draft spec waiting for its owner gate; nothing is implemented | observed by reading | LR3 needs both |
 | H18 | literature-depth close, `016-milestone-close.md:162` | "Host-scale reading and extraction: carry to the existing literature-identity follow-up for a separately selected corpus and provider budget" | observed by reading | LR3 (D1) |
 | H19 | #226 "Not requested" | "Changes to the anchor or verify formats. Those work for us as they are" | inherited | R0.1 |
 | H20 | `tests/test_verify_cli.py:309-336`, `:387` | exit 1 with `outcome: "violated"` and a deontic-only violation at exit 0 are pinned; every verify exit path validates against `report.schema.json`. No test lists failing constraints with their rows for `gnd verify` | agent | LR1 |
@@ -190,18 +194,18 @@ Proposed under D2 (b):
 |---|---|---|
 | LR1 | D7 and D8 ruled, or the plan gate accepting their proposals | the home D8 names (proposed `docs/guides/documents.md`), `extraction-contract.md` (one citing line), `docs/literature/commands.md` (one citing line), a new `tests/test_lr1_verify_failure_listing.py`, `docs/release-notes.md` |
 | LR2 | D2 ruled | `docs/reference/anchors.md`, `docs/literature/index.md`, `docs/literature/commands.md`, `src/gnd/examples/literature/README.md`, a new `tests/test_lr2_quote_scope.py`, `docs/release-notes.md` |
-| LR3 | LH1 and LH2 of literature-host-interfaces merged; D1, D3, D4 and D9 ruled | a new fixture folder under `src/gnd/examples/literature/`, `reading.py` only if LH1 leaves a scoring hook to add, the literature pages, a new `tests/test_lr3_reference_set.py`, the packaged-example inventories the guards name, `notes/issue-reply.md` |
+| LR3 | LH1 and LH2 of literature-host-interfaces implemented and merged; D1, D3, D4 and D9 ruled | a new fixture folder under `src/gnd/examples/literature/`, `reading.py` only if LH1 leaves a scoring hook to add, the literature pages, a new `tests/test_lr3_reference_set.py`, the packaged-example inventories the guards name, `notes/issue-reply.md` |
 
 Order: LR1 and LR2 in either order, LR3 last. The graph is acyclic. LR1 is
 the first ready phase: it needs no other milestone. LR3 is an outline until
-LH1 and LH2 are on `main` and its three rulings exist.
+the code of LH1 and LH2 is on `main` and its rulings exist.
 
 Other writers. literature-host-interfaces changes
 `src/gnd/examples/literature/reading.py` and the literature pages. One
 writer at a time on `reading.py`: LR1 and LR2 do not touch it, and LR3
 starts after LH2 merges. LR1 and LR2 change `docs/literature/commands.md`
 and `index.md` by a few lines; the second branch to merge rebases. Start
-condition: `main` at `548b9a1d` or later.
+condition: `main` at `78934ee3` or later.
 
 Fixtures. LR1 uses the packaged reading run's reported conflict
 (`reported-conflict.population.json`, which the example already verifies at
@@ -312,11 +316,11 @@ All rows are proposals until the plan gate rules them.
 | D2 | LR2: the rule. (a) A quote must lie inside the section the model was shown. (b) A quote may lie anywhere in the document the sidecar names, and the pages recommend naming the whole source version and recording the section | (b). It is what `bind_anchors` enforces today (H10); (a) would need a new check and a section concept GND does not have `(r2)` |
 | D3 | LR3: the producer and its budget for the recorded run | Owner names one model and a ceiling; the run is recorded once and replayed after |
 | D4 | LR3: the scoring rule for "a gold fact is found" | Span overlap plus participant names, as #226 scored, so the figures are comparable; predicate agreement reported beside it |
-| D5 | Whether LR1 and LR2 ship ahead of LR3, by their own pull request | Yes `(r2)`. They need no other milestone, and LR3 waits for literature-host-interfaces. The outline proposed holding them so the three replies go out together; the wait is now open-ended |
+| D5 | Whether LR1 and LR2 ship ahead of LR3, by their own pull request | Yes `(r2)`. They need no other milestone, and LR3 waits for literature-host-interfaces. The outline proposed holding them so the three replies go out together; LR3 now waits for two phases of another milestone |
 | D6 | Plan review and close review instrument | Not selected. Proposed: the GND panel light for both, as the owner selected for reviewed-vocabulary-growth |
 | D7 `(r2)` | LR1: does `gnd verify` change. (a) No: the JSON report already answers the request and the phase is a page and a test. (b) (a), and the text output prints each failing verdict's rows under its line. (c) (a), and `gnd verify` accepts `--rule-ids` as `gnd check` does, so a verdict carries the constraint's declared id | (a). #226 asks for no format change (H19). (c) is the one that would let a host name a constraint by its id and not by position; it is offered, not proposed |
 | D8 `(r2)` | LR1: the one home of "Reading a failed verification". (a) `docs/guides/documents.md`, after the verify command. (b) `extraction-contract.md` §5, in the packaged skill. (c) `docs/reference/cli.md` | (a); the other two cite it |
-| D9 `(r2)` | LR3: what "stage settings" means, given that a run has only a budget and a scenario (H16) | The record names the producer, the prompt of each stage, the budget and the roster's split into opening and targeted sections. Whether LR3 adds a setting of its own is decided in its spec, after LH1 |
+| D9 `(r2)` | LR3: what "stage settings" means, given that a run has only a budget and a scenario (H16) | The record names the producer, the prompt of each stage, the budget and the roster's split into opening and targeted sections, read from the settings LH2 writes into a run. Whether LR3 adds a setting of its own is decided in its spec, after LH1 |
 
 Open questions carried into the specs: LR1, whether the page's steps are
 shown as a short Python snippet the documentation tests run or as prose with

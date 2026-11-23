@@ -1,9 +1,14 @@
-# Phase VG1 · checker cost in the number of object types · spec r2
+# Phase VG1 · checker cost in the number of object types · spec r3
 
 ## 1. Status
 
-**Draft, awaiting owner review. Implementable once the plan gate approves
-the plan and the owner signs off this spec.** Written by `start-milestone`
+**Approved by delegated ruling (auto=true), 2026-11-23** `(d)`: the owner
+invoked `process-milestone reviewed-vocabulary-growth auto` on 2026-11-23,
+which delegates spec rulings within this milestone. That is the driving
+agent's ruling under the delegation, not the owner's reading of the spec.
+The ruled bytes are r3 of this file (§7, the ruling paragraph). Prior status,
+kept: "Draft, awaiting owner review. Implementable once the plan gate approves
+the plan and the owner signs off this spec." Written by `start-milestone`
 on 2026-11-22; `process-phase` has not run and no owner gate is recorded. r2
 of 2026-11-23 follows plan r2: its changes are tagged `(p1)` where a panel
 finding caused them and `(m)` where the author corrected them. Plans r3 and
@@ -14,8 +19,9 @@ and the first line of §2 name the newer plan.
 
 - Derives from [plan r4](reviewed-vocabulary-growth-plan.md), Goal (VG1), §0
   (R0.1, R0.2), §1 (H1–H10, H27–H29), §2 (VG1), §4 (VG1-C1 to VG1-C8), §9
-  (the VG1 lane) and §10 (D9, D10, D12). The plan was reviewed once, at r1,
-  and is not approved.
+  (the VG1 lane) and §10 (D9, D10, D12). The plan was reviewed once, at r1.
+  The owner approved plan r4 on 2026-11-23
+  ([plan gate](../001-plan-gate.md)) `(d)`.
 - From [#221](https://github.com/vasiloglou/gnd-public/issues/221) and the
   include-root-routes IR1 spec, finding i1
   (`../../include-root-routes/notes/phase-IR1-spec.md`).
@@ -25,6 +31,11 @@ and the first line of §2 name the newer plan.
   reached no quorum and raised nothing about VG1.
 - Every code citation was read at `4ad0d216`. Measurements were run on that
   commit on 2026-11-22, on one laptop, once each unless a row says otherwise.
+- r3 `(d)`, 2026-11-23: this spec is executed from `main` at `1f403b07`.
+  `git diff 4ad0d216 1f403b07` is empty for `universe.py`, `model_index.py`,
+  `model_queries.py` and `semantic_adapter.py`, so every citation holds there.
+  The `(d)` changes are the implementability findings and rulings below; no
+  review has read them.
 
 ## 3. Obligations
 
@@ -170,7 +181,12 @@ report and every CLI surface.
 
 ## 7. Decisions
 
-Every row is open.
+Ruled by delegated approval (auto=true) on 2026-11-23 `(d)`, each as
+proposed: VG1-D1 (a), VG1-D2 (a), VG1-D3 (a), VG1-D4 (a), VG1-D5 as stated,
+VG1-D6 10 s, ratio 3, `gnd judgments check` 20 s. Budget: one diff review
+round through the review helper (plan D7). Compatibility: no report, schema,
+CLI flag or exit code changes (plan R0.1). Prior line, kept: "Every row is
+open."
 
 | ID | Question | Readings and their cost | Proposed |
 |---|---|---|---|
@@ -218,6 +234,42 @@ cases, which no loadable fixture is guaranteed to hold.
 Gate: the plan §9 VG1 lane with this file, the guard block of `project.md`,
 `uv run ruff check src tests tools`, and
 `python3 scripts/components_index.py changed --base origin/main --strict`.
+
+### Verification-selection ledger `(d)`
+
+| Obligation | Disposition | Command or evidence | Input boundary | Justification | Invalidation |
+|---|---|---|---|---|---|
+| VG1-C1, C2, C3, C4, C6, C7; T1–T13 | run | `uv run pytest -q tests/test_vg1_object_type_scaling.py tests/test_reference_universe.py tests/test_subtype_universe.py tests/test_public_semantic_adapter.py tests/test_tp1_index_scope.py tests/test_ir1_judgments_includes.py tests/test_rf1_semantic_pins.py --tb=short`, exit 0 | `universe.py`, `model_index.py`, `semantic_adapter.py`, the interop fixture, the loadable fixture models | the plan §9 VG1 lane as written, plus the new file | any change to those modules or to the fixture |
+| VG1-C5; plan H8 | run | the same command (T8 lives in `tests/test_ir1_judgments_includes.py`) | as above, and the judgments route | the route the bound names | as above |
+| Structure and inventory guards (`project.md`, issue 171) | run | the guard block of `project.md`, exit 0 | every file outside `.gnd-planning/` | the phase changes source files | any source change |
+| Lint | run | `uv run ruff check src tests tools`, exit 0 (plan D11) | `src`, `tests`, `tools` | the whole-repository command exits 1 on dev-tools scripts (plan H27) | a change to the excluded scripts or to `pyproject.toml` |
+| Component index | run | `python3 scripts/components_index.py changed --base 1f403b07 --strict`, exit 0 | `dev/components/` and the changed modules | plan H28 | any module added, moved or retired |
+| VG1-C8; VG1-D5 | run | the experiment below, `gnd verify` row, base and head | the witness oracle and `gnd verify` | plan D9 | a change to `synth/oracle/constructive.py` |
+| Other consumers of the three walks (the checker families, the witness and replay routes) | cadence | the default lane at milestone close | `gnd.checker`, `gnd.synth` | T1 holds each walk equal to its frozen body over every loadable model, so a consumer sees the same answers; T10 holds the reports | a change to a walk's answer |
+
+### Implementability findings `(d)`
+
+Found while completing this spec, before any code.
+
+- **T1's count.** 473 files under `src/gnd/examples/` and `tests/fixtures/`
+  are named `*.orm.yaml`, `*.orm.yml` or `*.orm.json`; 407 load with
+  `load_model` at `1f403b07`, holding 1,810 object types. "At least 200"
+  holds.
+- **T9's counter.** `universe.py` and other modules bind
+  `_supertype_parents` by name at import (`universe.py:28-31`), so patching
+  `gnd.model_queries._supertype_parents` would count nothing. T9 counts calls
+  of that function's code object with `cProfile`, which sees every binding.
+- **Where the absolute bounds are judged.** The experiment's machine is
+  amended from "one laptop" to beast-3 (Apple M5 Pro, 18 cores), the
+  repository's remote machine. The base sweep was started there before this
+  amendment was written; only its first two rows (`values` at N = 0 and 250)
+  had been read. T3–T8 are judged by running the VG1 lane on that machine at
+  the head. They also run on the laptop. Prior wording of the limit, kept:
+  "One laptop."
+- **The fixture route.** `gnd check` on a copy of the interop fixture refuses
+  with `include:unreadable` when the copy's path goes through a symlink
+  (`/var` to `/private/var` on macOS). The helper resolves its directory
+  first; pytest's `tmp_path` is already resolved.
 
 Which test is which `(p1)`. T1, T2, T9, T10, T12 and T13 read no clock; T1,
 T9 and T10 are the required regression gates of plan §4. T11 compares two
@@ -268,6 +320,6 @@ on the same machine, in process.
 - **Liveness.** At `values`, N = 250, the base run must cost at least 5
   times the head run. If it does not, the sweep is not measuring the walk
   this phase changes and its numbers are not reported as evidence.
-- **Limits, stated first.** One laptop. The bounds of §5 were chosen from
+- **Limits, stated first.** One machine, beast-3 `(d)` (prior: "One laptop"). The bounds of §5 were chosen from
   the prototype before this sweep and do not move after it; a bound that the
   head misses is a failed criterion, not a reason to raise the bound.

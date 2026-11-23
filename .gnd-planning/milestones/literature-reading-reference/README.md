@@ -9,7 +9,7 @@ Plan r4, 2026-11-23, for
 
 | Phase | Deliverable | State |
 |---|---|---|
-| LR1 | A host can see why `gnd verify` fails a source: which constraint or derivation, on which rows | [spec r2](notes/phase-LR1-spec.md); next: spec gate, then implementation |
+| LR1 | A host can see why `gnd verify` fails a source: which constraint or derivation, on which rows | done locally: [record](002-phase-LR1.md); pull request open, merge is the owner's |
 | LR2 | The pages say where a quote may lie: anywhere in the document the anchor sidecar names | outline; waits for LR1 and the coordinator's GO |
 | LR3 | A labelled reference set for the reading stages, with a recorded recall and precision | outline; needs LH1 and LH2 of [literature-host-interfaces](../literature-host-interfaces/README.md) merged on `main`, and the owner's D3 (producer and budget) |
 

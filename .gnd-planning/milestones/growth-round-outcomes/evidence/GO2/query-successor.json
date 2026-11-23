@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reason": "growth-round-outcomes GO2 (#227): an operation is dropped with a refused one when its fact type's role players include an object type the refused operation adds; the roles are read from the operation's own `after` document, which no Model or ModelIndex holds when the candidate is refused.",
+  "predecessor": ".gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json",
+  "predecessor_sha256": "8ecdf9575ee946d9e276fc8c96d68d403148b57c4880bbb9ef46747523577737",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_depends_on",
+      "after.get('roles')",
+      1
+    ]
+  ],
+  "result_distinct_rows": 294,
+  "result_occurrences": 362,
+  "original_metric_current": 305
+}

@@ -76,7 +76,7 @@ policy refuses them.
 - The `rows` row: "Rows for a new fact type only. Rows the document gives
   for a fact type the model already has are an `open_questions` entry: the
   additive policy refuses a changed sample row
-  ([evolution contract](../../gnd-model-evolve/references/evolution-contract.md), the additive matrix)."
+  (the evolution contract's additive matrix, `../../gnd-model-evolve/references/evolution-contract.md` from the page)."
 - The example: one constraint whose `host` is a fact type the model is
   assumed to hold (`policy_has_holder`), stated in one sentence above the
   example, beside the new fact type it already shows.
@@ -135,3 +135,19 @@ reading of the spec. No spec review ran (optional, omitted).
   "GO" to "READY GO4". A spec approved now is re-read against `main` at
   that start; a change on `main` that moves a cited line or a premise
   amends this spec before code, with the prior wording retained.
+
+## 13. Amendment r2 (2026-11-23)
+
+The quoted page text in §6 carried a markdown link written relative to the
+page it will land in, `unattended-growth.md`; from this note it pointed
+nowhere and `tests/test_development_scaffold.py` refused it. r2 writes the
+same target as a code span. Prior wording, retained in words (the scaffold
+guard reads link syntax even inside a code span): a markdown link with the
+text "evolution contract" to `../../gnd-model-evolve/references/evolution-contract.md`,
+followed by ", the additive matrix", in parentheses.
+The page itself gets the working link when GO4 edits it. No ruling changes.
+
+### Gate of r2
+
+**Delegated approval (auto=true), 2026-11-23**, of spec r2, sha256 `ad48ad7794a279428478b59b906802a110dc97dfb93b338721951bcf49f5ee62`
+(the bytes above this subsection). r1's approval (§12) is retained as history.

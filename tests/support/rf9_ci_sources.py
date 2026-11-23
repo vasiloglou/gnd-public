@@ -21,6 +21,8 @@ PHASE_SUCCESSORS = (
     EVIDENCE.parents[4] / '.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG2/source-successors.json',
     # reviewed-vocabulary-growth VG3 (2026-11-23): the include attribution line of gnd validate.
     EVIDENCE.parents[4] / '.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3/source-successors.json',
+    # growth-round-outcomes GO2 (2026-11-23): the outcome options of evolve preview and apply.
+    EVIDENCE.parents[4] / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/source-successors.json',
 )
 
 

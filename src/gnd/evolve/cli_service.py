@@ -532,6 +532,44 @@ def _evolve_population_relative(workspace: Path, value: str | None) -> str | Non
     return os.path.abspath(value)
 
 
+def _evolve_outcome_target(
+    workspace_path: str, preview_path: str, operation_outcomes: bool, outcome_report: str | None
+) -> tuple[Path, Path, str] | None:
+    """Where a refused preview's outcome report goes (GO2): a workspace path the
+    CLI confines as it confines ``--out``, never the preview path itself."""
+
+    if outcome_report is None:
+        return None
+    if not operation_outcomes:
+        raise _EvolutionCLIError(3, "--outcome-report requires --operation-outcomes")
+    workspace = _evolve_workspace(workspace_path)
+    target, relative = _evolve_workspace_path(
+        workspace, outcome_report, label="outcome report output", required=False
+    )
+    preview, _preview_relative = _evolve_workspace_path(
+        workspace, preview_path, label="preview output", required=False
+    )
+    if target == preview:
+        raise _EvolutionCLIError(3, "--outcome-report must not be the preview output path")
+    return workspace, target, relative
+
+
+def _evolve_write_outcome_report(error: Exception, target: tuple[Path, Path, str] | None) -> None:
+    """Write the outcome report of a refused preview (GO2), with the exit and
+    message the refusal prints. A failure to write it is reported and changes
+    neither the refusal nor its exit."""
+
+    pending = getattr(error, "outcome_refusal", None)
+    if target is None or pending is None:
+        return
+    workspace, path, relative = target
+    try:
+        report = pending.report(exit_code=_evolve_error_exit(error), message=str(error))
+        _evolve_publish_preview(workspace, path, relative, _evolve_json_bytes(report))
+    except Exception as write_error:  # noqa: BLE001 -- the refusal below is the result
+        print(f"outcome report not written: {write_error}", file=sys.stderr)
+
+
 def _evolve_fail(error: Exception, *, stage: str) -> int:
     exit_code = _evolve_error_exit(error)
     print(f"EVOLUTION {stage.upper()} REFUSED ({exit_code}): {error}", file=sys.stderr)
@@ -607,17 +645,25 @@ def _cmd_evolve_preview(
     shape_report: bool = False,
     check_population: str | None = None,
     previous_include: list[str] | None = None,
+    operation_outcomes: bool = False,
+    outcome_report: str | None = None,
 ) -> int:
     """Validate one proposal through ``EvolutionService.preview`` and publish its claim.
 
     Under ``--policy additive`` the preview is published even when the policy
     refuses operations, so the issues are reviewable; the exit is then 3.
+
+    With ``--operation-outcomes`` (GO2) the preview names an outcome per
+    operation; a refused preview writes the outcome report to
+    ``--outcome-report`` and exits exactly as without it.
     """
 
     from gnd.evolve import EvolutionIncludeAnalysis, EvolutionService, read_evolution_proposal
 
+    report_target = None
     try:
         _evolve_policy_arguments(policy, populated, check_population)
+        report_target = _evolve_outcome_target(workspace_path, preview_path, operation_outcomes, outcome_report)
         workspace = _evolve_workspace(workspace_path)
         model, _model_relative = _evolve_workspace_path(
             workspace, model_path, label="model", required=True
@@ -646,6 +692,7 @@ def _cmd_evolve_preview(
             preview = service.preview(
                 proposal, policy=policy, populated=populated or (), shape_report=shape_report,
                 check_population=population_relative, previous_includes=history,
+                operation_outcomes=operation_outcomes,
             )
         except EvolutionIncludeAnalysis as error:
             from gnd.evolve._includes import exclude_input_outputs
@@ -684,6 +731,7 @@ def _cmd_evolve_preview(
             return 3
         return 0
     except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
+        _evolve_write_outcome_report(error, report_target)
         return _evolve_fail(error, stage="preview")
 
 def _cmd_evolve_apply(
@@ -826,6 +874,7 @@ def _cmd_evolve_apply(
             check_population=population_relative,
             expected_population_sha256=_reviewed_population_sha256(reviewed),
             previous_includes=history,
+            operation_outcomes=reviewed.operation_outcomes is not None,
         )
         if reviewed != fresh:
             raise _EvolutionCLIError(

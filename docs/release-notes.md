@@ -77,6 +77,12 @@ the next one.
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message
   and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
+- **An outcome for every operation.** `gnd evolve preview --operation-outcomes`
+  names each operation `admitted`, refused by the policy, validation or D-12,
+  `dropped-with` a refused one, or `unassessed`. When a gate refuses the
+  proposal, `--outcome-report FILE` receives the same rows; the refusal and
+  its exit are unchanged. Without the option nothing changes
+  ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
 
 ## 0.4.0 (2026-11-17)
 

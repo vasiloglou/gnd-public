@@ -221,7 +221,8 @@ the policy existed; `accepted_blast_radius_sha256` keeps writing `null`. Readers
 are unchanged. Under `--shape-report` the preview carries one more optional field, `shape_matches`
 ("Shape report" below), omitted by the same rule. Under `--check-population` it carries
 `population_check` ("Population check" below), omitted by the same rule; a GND reader older than
-that field refuses a preview that carries it.
+that field refuses a preview that carries it. Under `--operation-outcomes` it carries
+`operation_outcomes` ("Operation outcomes" below), omitted by the same rule.
 
 ### Additive policy
 
@@ -395,6 +396,39 @@ Preview, apply and finalize parse every model as `gnd validate` does, including 
 `.json` model name. A model or candidate that holds a value JSON cannot represent (a date, a
 timestamp, binary, a set, a non-finite float, a non-core tag or a non-string key) exits `3`, and the
 refusal names the value's path.
+
+### Operation outcomes
+
+`gnd evolve preview --operation-outcomes` names an outcome for every operation of the proposal,
+one row per operation in proposal order: `operation_index`, `operation_id`, the locator
+`reference`, a `verdict`, a value-free `detail` (ids, a rule id or the gate's fixed refusal text,
+never a constraint or sample value) and `gates_not_run`.
+
+| `verdict` | Meaning |
+|---|---|
+| `admitted` | Every gate ran over the operation and none refused it |
+| `refused-by-policy` | The additive policy refused it; `detail` is its matrix cell, the same row as in `policy_issues` |
+| `refused-by-validation` | A validation issue's path names an element this operation adds or changes; `detail` is the rule id and path |
+| `refused-by-d12` | D-12 refused the constraint this operation adds or changes; `detail` is the D-12 refusal |
+| `dropped-with` | It needs an element a refused operation adds (a constraint's host, a role player, a supertype, a reference value type) |
+| `unassessed` | A gate that would read it did not run, or a refusal could not be tied to an operation; `gates_not_run` names the gates, in the preview's order: `current-model`, `include-ownership`, `operations-gate`, `candidate-validation`, `semantic-validation`, `replay-equality`, `d12`, `policy` |
+
+When the preview is written, the rows are in `operation_outcomes` and every refusal is the
+policy's. When a gate refuses the proposal after the current model is read, no preview is
+written, the refusal and its exit are exactly as without the option, and `--outcome-report FILE`
+(beneath `ROOT`, never the `--out` path; requires `--operation-outcomes`) receives an
+`evolution-outcome-report` document: `schema_version` `1`, `kind`, `proposal_id`,
+`proposal_sha256`, `before_model` (as the preview has it), `refusal` (`gate`, `exit`, `message`
+as printed) and `operation_outcomes`. A candidate-validation refusal is tied to operations through
+its issues' paths, and D-12 then runs over the parsed candidate too, so its refusals are named in
+the same report. Every other gate refuses the proposal whole: each operation is `unassessed`.
+`admitted` in a report means every gate ran; with no policy requested the policy is not counted.
+A refusal before the current model is read (a stale model identity, an incomplete evolution)
+writes no report.
+
+`apply` refuses a report given as its preview (exit `3`). It takes no outcome option; it rebuilds
+the rows exactly when the reviewed preview carries `operation_outcomes`, so an edited row exits
+`11`. A preview made without the option is byte-identical to one made before it existed.
 
 ### BlastRadiusEntry
 

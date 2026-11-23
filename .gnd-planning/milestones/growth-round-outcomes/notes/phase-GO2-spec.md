@@ -278,3 +278,32 @@ take precedence where they differ.
 (the bytes above this subsection); r1's approval (§12) is retained as
 history. Rulings unchanged; the amendment adds no decision. Same budget and
 the same start condition.
+
+## 14. Implementation findings
+
+Recorded as found, at code written from `8fea6da5`.
+
+1. **Pinned handlers.** `_cmd_evolve_preview` and `_cmd_evolve_apply` are
+   pinned by the RF5 relocation guard; their changes are recorded as
+   successors in `evidence/GO2/source-successors.json`, chained in
+   `tests/support/rf9_ci_sources.py` (the route VG2 and VG3 used).
+2. **Pinned help.** The `gnd evolve preview` help and tree are pinned by
+   `tests/test_rf1_cli_pins.py`; its reference parser gains the two options
+   after `--shape-report`, where the production parser declares them.
+3. **Query inventories.** One counted roles read
+   (`after.get('roles')` in `_depends_on`: the roles of an operation's own
+   `after`, held by no Model when the candidate is refused) is recorded in
+   `evidence/GO2/query-successor.json`; every new dynamic subscript and
+   annotation is recorded in `evidence/GO2/dynamic-query-successor.json`,
+   which also moves `_enforce_d12`'s five candidates to `_d12_refusals`.
+4. **Gate order.** The draft listed the gates with `operations-gate` first;
+   the preview reads the current model first, then include ownership, then
+   the operations gate. `OUTCOME_GATES` follows the code.
+5. **Fixtures.** An `imported` constraint needs anchor fields that
+   validation refuses before D-12 runs, so T3's D-12 rows are `explicit`,
+   `llm-inferred`, `sample` and `common-sense` (VG2's two); `user-supplied`
+   with `proposed` is refused by semantic validation (`semantic:status-source`),
+   which T2's validation case covers.
+6. **Homes outside the spec's list:** `tests/support/rf9_ci_sources.py`,
+   `tests/support/pyrel_application_successors.py`,
+   `tests/test_rf1_cli_pins.py`, `tools/gnd_layers.json` (the new module).

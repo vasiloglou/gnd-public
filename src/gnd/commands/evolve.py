@@ -69,6 +69,17 @@ def _register_evolve(subparsers):
         help="list existing fact types with the same role players as each added one (advice only)",
     )
     evolve_preview_parser.add_argument(
+        "--operation-outcomes",
+        action="store_true",
+        help="name an outcome for every operation of the proposal (admitted, refused and why, or unassessed)",
+    )
+    evolve_preview_parser.add_argument(
+        "--outcome-report",
+        default=None,
+        metavar="FILE",
+        help="when the preview is refused, write every operation's outcome to FILE beneath ROOT; requires --operation-outcomes",
+    )
+    evolve_preview_parser.add_argument(
         "--check-population",
         default=None,
         metavar="FILE",
@@ -187,6 +198,8 @@ def handle(args, parsers) -> int:
                 shape_report=args.shape_report,
                 check_population=args.check_population,
                 previous_include=args.previous_include,
+                operation_outcomes=args.operation_outcomes,
+                outcome_report=args.outcome_report,
             )
         if args.evolve_command == "apply":
             return _handler_evolve_cli_service._cmd_evolve_apply(

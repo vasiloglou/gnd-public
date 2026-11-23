@@ -1,0 +1,38 @@
+{
+ "schema_version": 1,
+ "reason": "growth-round-outcomes GO2 (#227): the evolve preview handler takes --operation-outcomes and --outcome-report, and apply replays the outcomes setting from the reviewed preview.",
+ "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+ "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+ "successors": [
+  {
+   "kind": "RF5",
+   "old": "gnd.cli",
+   "name": "_cmd_evolve_preview",
+   "home": "gnd.evolve.cli_service",
+   "before": {
+    "raw_sha256": "1eaa2bfbb5a00ebcabe0213c790bca5b8400fd4c092e4d0d16d7022070067853",
+    "algorithm_sha256": "8d1e5da054985a61e065387474e375e6dc3a63911510e8b266a8151009098956"
+   },
+   "after": {
+    "raw_sha256": "db8013fa1a9592328e85ff1e6faea34ec8fc5528400a89078ac255ab9e46506c",
+    "algorithm_sha256": "2311c31444a4c3c44c7fb78e7d2f1b6e684e336d2b8a2f70841ad57ca8949545"
+   },
+   "reason": "GO2 (#227): optional operation_outcomes and outcome_report keywords; the outcome target is resolved before the service runs, the flag is passed to the preview, and a refused preview writes its outcome report before the unchanged refusal. Without those options the handler is unchanged."
+  },
+  {
+   "kind": "RF5",
+   "old": "gnd.cli",
+   "name": "_cmd_evolve_apply",
+   "home": "gnd.evolve.cli_service",
+   "before": {
+    "raw_sha256": "6810a4052158f583b02a794a6f139d118ec1df9c49eecda240e64835a0b4e2b4",
+    "algorithm_sha256": "e2338595413cc00d97acf1f25531dfb5fc79e5bedf2af6573d9940611ad5ad4d"
+   },
+   "after": {
+    "raw_sha256": "15f0e87ecdf433f1c15e5b7e2cb918aed992b7ae76cbb86d38578a85a914fe97",
+    "algorithm_sha256": "5ecd05037476abc82e95da60e2c0d2fc76965e8966041f50af14c6658b4f6d76"
+   },
+   "reason": "GO2 (#227): the fresh preview is rebuilt with operation_outcomes exactly when the reviewed preview carries them, as for the shape report; every other line unchanged."
+  }
+ ]
+}

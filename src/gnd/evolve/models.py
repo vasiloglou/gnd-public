@@ -872,7 +872,7 @@ _POLICY_FIELDS = ("policy", "populated_args", "populated", "policy_issues")
 #: shape report's one (MG3) and the population check's one (UG2), under the
 #: same rule.
 _OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches", "population_check",
-                            "before_includes", "candidate_includes")
+                            "before_includes", "candidate_includes", "operation_outcomes")
 
 
 class EvolutionPolicyGapError(Exception):
@@ -898,6 +898,96 @@ class PolicyIssue(_ClosedFrozenModel):
     reference: NonEmptyString
     cell: PolicyCell
     detail: NonEmptyString
+
+
+#: GO2 (#227): what one preview says about each operation of a proposal. The
+#: evolution contract's preview section is the home of these words.
+OperationVerdict = Literal[
+    "admitted",
+    "refused-by-policy",
+    "refused-by-validation",
+    "refused-by-d12",
+    "dropped-with",
+    "unassessed",
+]
+#: The preview's gates in the order it runs them (GO2). An outcome row names
+#: the ones that did not run over its operation.
+OutcomeGate = Literal[
+    "current-model",
+    "include-ownership",
+    "operations-gate",
+    "candidate-validation",
+    "semantic-validation",
+    "replay-equality",
+    "d12",
+    "policy",
+]
+OUTCOME_GATES: tuple[str, ...] = OutcomeGate.__args__  # type: ignore[attr-defined]
+
+
+class OperationOutcome(_ClosedFrozenModel):
+    """One operation's outcome (GO2). ``detail`` names ids, rule ids and verdict
+    words only, as `PolicyIssue.detail` does, so a preview stays value-free."""
+
+    operation_index: int = Field(ge=0)
+    operation_id: StableId
+    reference: NonEmptyString
+    verdict: OperationVerdict
+    detail: str = Field(default="", max_length=512)
+    gates_not_run: tuple[OutcomeGate, ...] = ()
+
+    @model_validator(mode="after")
+    def _gates_match_verdict(self) -> OperationOutcome:
+        if (self.verdict == "unassessed") != bool(self.gates_not_run):
+            raise ValueError("gates_not_run is set exactly when the verdict is unassessed")
+        if list(self.gates_not_run) != sorted(set(self.gates_not_run), key=OUTCOME_GATES.index):
+            raise ValueError("gates_not_run must be unique and in gate order")
+        return self
+
+
+def _outcomes_cover(outcomes: tuple[OperationOutcome, ...], operations: tuple[Any, ...] | None) -> None:
+    """Rows are the operations in order: one row each, with its id and reference."""
+    if [row.operation_index for row in outcomes] != list(range(len(outcomes))):
+        raise ValueError("operation_outcomes must hold one row per operation, in order")
+    if operations is None:
+        return
+    if len(outcomes) != len(operations):
+        raise ValueError("operation_outcomes must hold one row per operation, in order")
+    for row, operation in zip(outcomes, operations, strict=True):
+        if (row.operation_id, row.reference) != (operation.operation_id, operation.locator.reference()):
+            raise ValueError("operation_outcomes names an operation the proposal does not carry")
+
+
+class OutcomeRefusal(_ClosedFrozenModel):
+    """The refusal that stopped a preview (GO2): its gate, its exit and its
+    message exactly as `gnd evolve preview` printed it."""
+
+    gate: OutcomeGate
+    exit: int = Field(ge=1, le=255)
+    message: NonEmptyString
+
+
+class EvolutionOutcomeReport(_ClosedFrozenModel):
+    """GO2: the outcome of every operation of a proposal no preview was written
+    for. Its own type, so `apply` refuses it where a preview is due."""
+
+    schema_version: Literal[1] = 1
+    kind: Literal["evolution-outcome-report"] = "evolution-outcome-report"
+    proposal_id: StableId
+    proposal_sha256: Sha256String
+    before_model: CommittedText
+    refusal: OutcomeRefusal
+    operation_outcomes: tuple[OperationOutcome, ...]
+
+    @model_validator(mode="after")
+    def _rows_in_order(self) -> EvolutionOutcomeReport:
+        _outcomes_cover(self.operation_outcomes, None)
+        return self
+
+
+def read_evolution_outcome_report_document(document: Any) -> EvolutionOutcomeReport:
+    """The closed reader of an outcome report: any other JSON is a named refusal."""
+    return EvolutionOutcomeReport.model_validate(document)
 
 
 #: The population check's outcome per constraint operation (UG2). The checker's
@@ -1030,6 +1120,7 @@ class _EvolutionPreviewV3(_EvolutionPreviewV2):
     population_check: PopulationCheckRecord | None = None
     before_includes: tuple[IncludeSnapshot, ...] | None = None
     candidate_includes: tuple[IncludeSnapshot, ...] | None = None
+    operation_outcomes: tuple[OperationOutcome, ...] | None = None
 
 
 class EvolutionPreview(_ClosedFrozenModel):
@@ -1052,6 +1143,7 @@ class EvolutionPreview(_ClosedFrozenModel):
     population_check: PopulationCheckRecord | None = None
     before_includes: tuple[IncludeSnapshot, ...] | None = None
     candidate_includes: tuple[IncludeSnapshot, ...] | None = None
+    operation_outcomes: tuple[OperationOutcome, ...] | None = None
     preview_sha256: Sha256String
 
     @classmethod
@@ -1126,6 +1218,10 @@ class EvolutionPreview(_ClosedFrozenModel):
                 raise ValueError("populated_args must be a subset of populated")
         if self.shape_matches is not None:
             _check_shape_matches(self.shape_matches, self.proposal)
+        if self.operation_outcomes is not None:
+            if self.schema_version != EVOLUTION_SCHEMA_VERSION:
+                raise ValueError("operation_outcomes require the current preview version")
+            _outcomes_cover(self.operation_outcomes, self.proposal.operations)
         if self.population_check is not None:
             if self.policy is None:
                 raise ValueError("population_check requires policy")
@@ -1619,6 +1715,7 @@ __all__ = [
     "EvolutionOperation",
     "EvolutionOperationAudit",
     "EvolutionOperationKind",
+    "EvolutionOutcomeReport",
     "EvolutionPolicyGapError",
     "EvolutionPreview",
     "EvolutionProposal",
@@ -1626,6 +1723,8 @@ __all__ = [
     "LinkedProject",
     "LinkedProjectConformance",
     "ModelIdentityLocator",
+    "OperationOutcome",
+    "OutcomeRefusal",
     "PolicyIssue",
     "ProjectLocator",
     "RoleLocator",
@@ -1642,6 +1741,7 @@ __all__ = [
     "conformance_payload_sha256",
     "read_evolution_finalization_state_document",
     "read_evolution_intent_document",
+    "read_evolution_outcome_report_document",
     "read_evolution_preview_document",
     "read_evolution_proposal_document",
     "read_evolution_record_document",

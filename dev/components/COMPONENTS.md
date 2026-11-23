@@ -64,11 +64,11 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### subsystem.evolve
 - does: Preview, apply and finalize explicit model changes with blast-radius review and linked conformance evidence.
-- verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal, additive policy, check population
+- verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal, additive policy, check population, operation outcomes, outcome report
 - status: canonical
-- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.schema
+- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.operation_outcomes, evolve.schema
 - members_uses: checker.evaluate, cli.arguments, conformance.report, conformance.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.address, model.document, … +9 more (graph.md)
-- flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.population_check -> evolve.policy -> evolve.shape_matches -> evolve.schema
+- flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.population_check -> evolve.policy -> evolve.shape_matches -> evolve.operation_outcomes -> evolve.schema
 - notes: Apply writes staged evidence before one model compare-and-swap. Finalize reruns conformance on linked projects.
 
 ### subsystem.recovery
@@ -963,7 +963,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
 - status: canonical
 - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
+- uses: conformance.report, conformance.service, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
 - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
@@ -979,7 +979,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/evolve/models.py
 - uses: infra.errors, infra.input_policy, model.loading
-- used_by: discover.fact_types, discover.output, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
+- used_by: discover.fact_types, discover.output, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_public_evolution_version_graph.py, tests/test_public_evolution_legacy_readers.py, tests/test_evolve_shape_matches.py, tests/test_evolve_additive_policy.py
 - checked: partial
@@ -1025,6 +1025,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.evolve
 - tests: tests/test_evolve_shape_matches.py
 - notes: This is structural advice; the evolution service does not use it to decide policy refusal, breaking status, or blast radius.
+
+
+### evolve.operation_outcomes
+- does: Name an outcome for every operation of a proposal: locate validation, D-12 and policy refusals on their operations and drop the dependents of a refused one [outcomes, locate_validation_issues, locate_d12_refusals].
+- verbs: operation outcomes, per-operation verdict, admitted, refused by policy, refused by validation, refused by d12, dropped with, unassessed, gates not run, outcome report, locate refusal, issue path, dependent operations
+- in: A proposal's operations, validation issues with the candidate document, D-12 refusals, additive-policy issues.
+- out: Ordered OperationOutcome rows; the preview's operation_outcomes field or the outcome report of a refused preview.
+- status: canonical
+- modules: src/gnd/evolve/outcomes.py
+- uses: evolve.schema
+- used_by: evolve.service
+- part_of: subsystem.evolve
+- tests: tests/test_go2_operation_outcomes.py
+- notes: GO2 (#227). Read by nothing that decides a refusal: the printed refusal and its exit are those of the preview without outcomes. The verdict words have one home in the evolution contract's "Operation outcomes".
 
 
 ### evolve.command
@@ -3614,8 +3628,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - offending facts: checker.evaluate, examples.session_agents
 - opaque values: model.population_sentences, semantics.extensions, semantics.temporal_guards
 - openai compatible: agent.declared_adapter, exp.adapter_policy
+- operation outcomes: evolve.operation_outcomes, subsystem.evolve
 - oracle abstention: synth.guarded, synth.prediction
 - oscillation: exp.service, exp.session_runtime
+- outcome report: evolve.operation_outcomes, subsystem.evolve
 - output collision: cli.export_command, extract.flatten_service, review.command
 - output directory: cli.codegen_command, cli.flatten_command, codegen.service, synth.paths
 - output format: cli.arguments, cli.conformance_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.verify_command

@@ -368,7 +368,14 @@ def _flatten_successor():
 
 
 def _include_preview_successor():
-    """Restore the frozen predecessor, then add MC3's one literal repeatable flag."""
+    """MC3's successor, then GO2's two outcome options (growth-round-outcomes, #227)."""
+    return _include_preview_reference(outcomes=True)
+
+
+def _include_preview_reference(*, outcomes):
+    """Restore the frozen predecessor, then add MC3's one literal repeatable flag;
+    with ``outcomes``, also GO2's --operation-outcomes and --outcome-report,
+    declared right after --shape-report as the production parser declares them."""
     base = copy.deepcopy(json.loads(golden_path('cli', 'tree').read_text())['subcommands']['evolve']['subcommands']['preview'])
     old = CHECK_POPULATION_SUCCESSOR['preview']
     base['actions'].insert(old['action_index'], copy.deepcopy(old['action']))
@@ -385,6 +392,21 @@ def _include_preview_successor():
                            help='authenticate old bytes for a repinned include from PATH beneath ROOT; repeatable')
     reference._actions.append(format_action)
     reference._optionals._group_actions.append(format_action)
+    if outcomes:
+        added = [
+            reference.add_argument(
+                '--operation-outcomes', action='store_true',
+                help='name an outcome for every operation of the proposal (admitted, refused and why, or unassessed)'),
+            reference.add_argument(
+                '--outcome-report', default=None, metavar='FILE',
+                help='when the preview is refused, write every operation\'s outcome to FILE beneath ROOT; '
+                     'requires --operation-outcomes'),
+        ]
+        for container in (reference._actions, reference._optionals._group_actions):
+            for action in added:
+                container.remove(action)
+            anchor = next(i for i, action in enumerate(container) if '--shape-report' in action.option_strings)
+            container[anchor + 1:anchor + 1] = added
     after = _walk(reference, ('gnd', 'evolve', 'preview'), {})
     after['listed_help'] = base['listed_help']
     def probe(argv):

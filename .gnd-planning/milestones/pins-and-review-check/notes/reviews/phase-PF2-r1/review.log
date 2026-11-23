@@ -10537,15 +10537,15 @@ d939514b
 fe8b819d reset: moving to HEAD
 7125f82a 
 fe8b819d 
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/clone       6b0a7e5a (detached HEAD)
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-a fe8b819d [change-a]
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-b 7125f82a [change-b]
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-c 03a8eb22 [change-c]
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-d 7e75231f [change-d]
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-e 91a875b8 [change-e]
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-f d939514b [change-f]
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-g 045a83d9 [change-g]
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-h 63b3e6e5 [change-h]
+<scratch>/pf2/clone       6b0a7e5a (detached HEAD)
+<scratch>/pf2/wt/change-a fe8b819d [change-a]
+<scratch>/pf2/wt/change-b 7125f82a [change-b]
+<scratch>/pf2/wt/change-c 03a8eb22 [change-c]
+<scratch>/pf2/wt/change-d 7e75231f [change-d]
+<scratch>/pf2/wt/change-e 91a875b8 [change-e]
+<scratch>/pf2/wt/change-f d939514b [change-f]
+<scratch>/pf2/wt/change-g 045a83d9 [change-g]
+<scratch>/pf2/wt/change-h 63b3e6e5 [change-h]
 
 exec
 /bin/zsh -lc "git -C /tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-a for-each-ref --format='%(refname) %(subject)'; git -C /tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-a show change-c:tools/skill_names.py; ls /tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/held" in <repo>
@@ -10823,7 +10823,7 @@ exec
 /bin/zsh -lc 'shasum -a 256 ../../../held/key/branch-map.json; git rev-parse --show-toplevel; git show change-c:tools/skill_names.py' in /tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-a
  succeeded in 0ms:
 9cc6dd3636f6a238956e873a44f80e05e3516bfd90f2a553393d863604b043c6  ../../../held/key/branch-map.json
-/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-new-issues-milestone-b1620e/780f0ced-f678-4415-aca7-b22b5eb3e473/scratchpad/pf2/wt/change-a
+<scratch>/pf2/wt/change-a
 """Read the declared name of every skill under a skills root."""
 from __future__ import annotations
 

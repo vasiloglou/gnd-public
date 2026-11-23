@@ -1,0 +1,23 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviewed-vocabulary-growth-plan.md",
+  "sha256": "3d4a06b864a339f55c82a83c2e9dad6cc704d45bf156aeaeb1aaa086fbd4eb7f",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "reviewed-vocabulary-growth plan r1",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "For this plan, a concern is blocking only if, left unfixed, a phase cannot be specified, implemented or tested as written, or the milestone would not do what its goal claims.",
+   "Can each phase VG1, VG2, VG3, VG4 and VG5 be specified, implemented and tested as section 2 and section 4 write it, within the scope sections 1 and 7 state? Is any criterion in section 4 impossible, unfalsifiable or dependent on one machine's speed?",
+   "Does each code location, line number and quoted message cited in the plan match the repository at this checkout? Read the cited lines in src/gnd and tests before reporting a mismatch.",
+   "Do the binding rules of section 0, the decisions of section 10 and the controls of section 6 agree with each other and with the criteria? In particular: does the include exemption of D3 (a) keep R0.4 and R0.5 for every U rule, including U6, U7 and U8; can an unattended root carry unreviewed content as if reviewed through an include, and is the control in section 6 enough; is the U1 relaxation of D4 (a) safe; and does widening D-12 under D2 (a) admit anything U5 or U8 should refuse?",
+   "Does the plan agree with what gnd evolve does today on an include root (evolution contract, 'Shared vocabulary evolution'; src/gnd/evolve/service.py), so that VG4 is a pin of existing behaviour plus D4 and D6, and not unstated new work?",
+   "Are the order, dependencies, homes and verification lanes of sections 3 and 9 consistent, acyclic and sufficient for each criterion?",
+   "The VG1 draft spec at .gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG1-spec.md may be read for context; a concern about it must still cite the plan file and name the spec line in the observation.",
+   "Every concern's evidence must cite the plan file."
+  ]
+ }
+}

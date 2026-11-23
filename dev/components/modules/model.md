@@ -58,11 +58,11 @@ One resolver and admission guards for pinned version-5 model includes.
 | `included_rows(document, origins) -> frozenset[int]` | function | 246 | ``id()`` of every element of DOCUMENT whose origin is an include (VG3). |
 | `include_attribution(model) -> list[dict[str, Any]]` | function | 264 | One row per include of MODEL: its id, sha256 and what its file declares (VG3, D5). |
 | `remap_issues(issues, origins)` | function | 290 | (no docstring) |
-| `refuse_unsupported(route) -> NoReturn` | function | 324 | (no docstring) |
-| `guard_document(document, route)` | function | 328 | (no docstring) |
-| `bytes_declare_includes(raw, *, source) -> bool` | function | 333 | True when RAW parses and declares includes or attachments. |
-| `guard_bytes(raw, *, source, route)` | function | 348 | (no docstring) |
-| `guard_path(path, route)` | function | 353 | (no docstring) |
+| `refuse_unsupported(route) -> NoReturn` | function | 328 | (no docstring) |
+| `guard_document(document, route)` | function | 332 | (no docstring) |
+| `bytes_declare_includes(raw, *, source) -> bool` | function | 337 | True when RAW parses and declares includes or attachments. |
+| `guard_bytes(raw, *, source, route)` | function | 352 | (no docstring) |
+| `guard_path(path, route)` | function | 357 | (no docstring) |
 
 ## gnd.model._induction — `src/gnd/model/_induction.py`
 Components: model.validation
@@ -102,11 +102,11 @@ MG5 unattended source mode (model-growth-guardrails milestone).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SpanCoverage` | class | 287 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
-| `SpanCoverage.unchecked(self) -> int` | method | 299 | (no docstring) |
-| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 302 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
-| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 355 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
-| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 367 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
+| `SpanCoverage` | class | 291 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
+| `SpanCoverage.unchecked(self) -> int` | method | 303 | (no docstring) |
+| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 306 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
+| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 359 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 371 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
 
 ## gnd.model._validation — `src/gnd/model/_validation.py`
 Components: model.validation

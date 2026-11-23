@@ -289,17 +289,21 @@ def include_attribution(model) -> list[dict[str, Any]]:
 
 def remap_issues(issues, origins):
     addresses = {entry.composed_address: entry for entry in origins}
-    # VG3: object types as well as fact types (plan H17).
-    selectors = {(entry.composed_address.split('[')[0], entry.element_id): entry.composed_address
-                 for entry in origins
-                 if re.fullmatch(r'\$\.(fact_types|object_types)\[\d+\]', entry.composed_address)}
+    # An issue may name an element by id: ``$.fact_types[id=X]`` or, since VG3,
+    # ``$.object_types[id=X]`` (plan H17). The selector is matched as the whole
+    # text the rules write for a declared element, never parsed, so an id holding
+    # a newline or a bracket is still found (VG3 review r1, F2).
+    selectors = {}
+    for entry in origins:
+        for section in ('$.fact_types', '$.object_types'):
+            if re.fullmatch(re.escape(section) + r'\[\d+\]', entry.composed_address):
+                selectors[f'{section}[id={entry.element_id}]'] = entry
     result = []
     for issue in issues:
         path = issue.path
-        selector = re.match(r'^(\$\.(?:fact_types|object_types))\[id=(.*?)\]', path)
-        key = (selector[1], selector[2]) if selector else None
-        if key in selectors:
-            path = selectors[key] + path[selector.end():]
+        selector = max((text for text in selectors if path.startswith(text)), key=len, default=None)
+        if selector is not None:
+            path = selectors[selector].composed_address + path[len(selector):]
         candidates = re.findall(r'\$\.[a-z_]+\[\d+\](?:\.constraints\[\d+\])?', path)
         address = candidates[0] if candidates else ''
         entry = addresses.get(address)
@@ -312,9 +316,9 @@ def remap_issues(issues, origins):
                 continue
             prefix = '' if entry.origin == 'model' else entry.origin + ':'
             original = entry.original_address
-            if selector and entry.origin != 'model':
-                original = re.sub(r'^\$\.(fact_types|object_types)\[\d+\]',
-                                  lambda match, selector=selector: f'{selector[1]}[id={selector[2]}]', original)
+            host = selectors[selector] if selector is not None else None
+            if host is not None and entry.origin != 'model' and original.startswith(host.original_address):
+                original = selector + original[len(host.original_address):]
             path = prefix + original + path[len(address):]
             issue = issue.model_copy(update={'path': path})
         result.append(issue)

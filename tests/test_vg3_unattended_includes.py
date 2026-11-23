@@ -332,3 +332,39 @@ def test_the_origin_set_is_reset_after_validation(tmp_path):
     load_model(cases.write(tmp_path))
     assert _INCLUDED.get() == frozenset()
     assert copy.copy(_INCLUDED.get()) == frozenset()
+
+
+# --- review round 1 (notes/reviews/phase-VG3-r1), regression cases ----------
+
+
+def test_R1_F1_sample_spans_are_read_on_included_fact_types_only(tmp_path):
+    """F1: U7 read sample_spans on an included object type, where no rule read them before."""
+    seed = cases.spanned_seed()
+    bad = dict(_span("A work is a published piece"))
+    bad["end"] = bad["start"]
+    seed["object_types"][0]["provenance"]["sample_spans"] = [{"row": 0, "span": bad}]
+    root = cases.write(tmp_path, seed_doc=seed)
+    code, out = _documented(root)
+    assert code == 0, out
+    assert "4 of 4 source spans were not re-hashed" in cases.validate(root, "--require-documents")[1]
+
+
+def test_R1_F2_an_identifier_with_a_newline_keeps_its_include_prefix(tmp_path):
+    """F2: the selector pattern stopped at a newline, so the issue lost includes[seed]:."""
+    seed = cases.spanned_seed()
+    seed["object_types"][0]["id"] = "work\n"
+    seed["fact_types"][0]["roles"][0]["object_type"] = "work\n"
+    seed["object_types"][0]["provenance"]["spans"][0]["excerpt_sha256"] = "2" * 64
+    root = cases.write(tmp_path, seed_doc=seed)
+    code, out = cases.validate(root, "--document", str(root.parent / cases.DOC), "--format", "json")
+    paths = [issue["path"] for issue in json.loads(out)["issues"]]
+    assert code == 3
+    assert paths == ["includes[seed]:$.object_types[id=work\n].provenance.spans[0]"], paths
+
+
+@pytest.mark.parametrize("identifier", ["a]b", "a", "x[id=y]"])
+def test_R1_F2_remap_matches_the_whole_declared_identifier(identifier):
+    origins = (ElementOrigin("includes[seed]", "$.object_types[0]", "$.object_types[0]", "a"),
+               ElementOrigin("includes[seed]", "$.object_types[1]", "$.object_types[1]", identifier))
+    issue = ValidationIssue(path=f"$.object_types[id={identifier}].provenance", message="m", rule_id="r")
+    assert remap_issues([issue], origins)[0].path == f"includes[seed]:$.object_types[id={identifier}].provenance"

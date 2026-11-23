@@ -65,7 +65,7 @@ _UNATTENDED_ALETHIC_SOURCES = ("sample", "llm-inferred", "common-sense", "induce
 _INCLUDED: ContextVar[frozenset[int]] = ContextVar("gnd_unattended_included", default=frozenset())
 
 
-def _declared_spans(owner: Any, declared: set[str]) -> Iterator[tuple[str, Any]]:
+def _declared_spans(owner: Any, declared: set[str], *, samples: bool) -> Iterator[tuple[str, Any]]:
     """(suffix, span) for each span an included element carries over a document the root declares.
 
     D14 (a): such a span is the root's business and keeps U7's shape check;
@@ -78,7 +78,9 @@ def _declared_spans(owner: Any, declared: set[str]) -> Iterator[tuple[str, Any]]
         if isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str) \
                 and span["document_sha256"] in declared:
             yield f".provenance.spans[{index}]", span
-    for index, entry in enumerate(_listed(provenance.get("sample_spans"))):
+    # Sample spans belong to fact types, the one place the span walk visits them
+    # (VG3 review r1, F1).
+    for index, entry in enumerate(_listed(provenance.get("sample_spans")) if samples else []):
         span = entry.get("span") if isinstance(entry, Mapping) else None
         if isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str) \
                 and span["document_sha256"] in declared:
@@ -236,13 +238,14 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
     for collection, label in (("object_types", "object type"), ("fact_types", "fact type")):
         for element in _listed(doc.get(collection)):
             if isinstance(element, Mapping) and id(element) in included:
-                _included_span_issues(element, f"$.{collection}[id={element.get('id', '?')}]", declared, issues)
+                _included_span_issues(element, f"$.{collection}[id={element.get('id', '?')}]", declared, issues,
+                                      samples=collection == "fact_types")
             elif isinstance(element, Mapping):
                 _require_spans(element, f"$.{collection}[id={element.get('id', '?')}]", label, declared, issues,
                                rule_id="semantic:unattended-u4", span_rule_id="semantic:unattended-u7")
     for path, constraint in constraints:
         if id(constraint) in included:
-            _included_span_issues(constraint, path, declared, issues)  # VG3: U5 asks nothing
+            _included_span_issues(constraint, path, declared, issues, samples=False)  # VG3: U5 asks nothing
             continue
         provenance = constraint.get("provenance")
         has_spans = isinstance(provenance, Mapping) and "spans" in provenance
@@ -275,9 +278,10 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
     return sorted(issues, key=lambda issue: order[issue.rule_id])
 
 
-def _included_span_issues(owner: Any, path: str, declared: set[str], issues: list[ValidationIssue]) -> None:
+def _included_span_issues(owner: Any, path: str, declared: set[str], issues: list[ValidationIssue], *,
+                          samples: bool) -> None:
     """U7 over the spans an included element carries over a root-declared document (D14 (a))."""
-    for suffix, span in _declared_spans(owner, declared):
+    for suffix, span in _declared_spans(owner, declared, samples=samples):
         found = _span_issue(span, f"{path}{suffix}", declared, rule_id="semantic:unattended-u7")
         if found is not None:
             issues.append(found)

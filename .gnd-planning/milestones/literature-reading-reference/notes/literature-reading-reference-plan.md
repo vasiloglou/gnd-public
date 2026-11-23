@@ -417,3 +417,17 @@ ruled at the plan gate.
 | fix-corpus-reuse-only | D1 (d) reuses the corpus with an overlay and changes none of its bytes; the LR3 lane names its tests | §2 LR3, D1, §9 |
 | fix-lr1-disclosure-and-levels | LR1 cites the disclosure home; the redacting fixture edits the vocabulary; `GND_DISCLOSURE` pinned; three-level field check | §2 LR1, §3 Fixtures, LR1-C3 |
 | fix-plan-gate-wording | the gate rules under delegation; full skill path | §8, R0.3, H6 |
+
+## 13. Close amendments
+
+Made at milestone close on 2026-11-23 under the `auto=true` delegation, from
+the refuted premises and open rows of the phase records. Each keeps the
+prior wording.
+
+| # | Raised in | Prior wording | Amendment |
+|---|---|---|---|
+| A1 | [002-phase-LR1.md](../002-phase-LR1.md), refuted premises | §2 LR1 (via the LR1 spec §6): "the constraint's own `id` is at that address in the file that declares it" | `constraint_ref` is an address in the model `gnd verify` composed; for a model with includes it maps back to the declaring file and the constraint's `id` through the `gnd-flattening/1` record of `gnd flatten`. The guide says so |
+| A2 | [005-phase-LR3.md](../005-phase-LR3.md); LR3 spec §13 F1 | §2 LR3 and LR3-C1 assume every gold fact of the answer key is a reading target (LR3 spec: "38 gold facts") | the labels are the 31 asserted gold facts; `work_builds_on_method` is derived by the model and left out. Every label is anchored in a section, so D4's document-grain fallback is not used |
+| A3 | [005-phase-LR3.md](../005-phase-LR3.md) | D9: stage prompts "read from the settings LH2 writes into a run" | LH2's run settings carry no prompt; the run record beside the run (`run-record.json`) names the prompt template and its SHA-256, the model, the CLI flags and the spend, as D9's alternative allowed |
+| A4 | the phase records' gates | §9 lanes for LR1, LR2 and LR3 | widened at each spec: LR1 adds `test_public_extraction_prose_policy.py` and `test_extract_guidelines.py`; LR2 adds `test_documentation_tutorials.py`; LR3 adds the LH1–LH4 tests and the LR1/LR2 files |
+| A5 | owner, 2026-11-23 | D3's producer transport unstated | the producer is the `claude` CLI with the owner's Claude Code login ("Claude CLI login") |

@@ -1,8 +1,8 @@
 # Pins and the review check · plan r1
 
-**Status: r1, 2026-11-23, draft. Not reviewed, not approved.** No review
-instrument has read these bytes. Approval is recorded only in a plan-gate
-record, which does not exist yet.
+**Status: r1, 2026-11-23. Approved by the owner on 2026-11-23, with D1–D5
+ruled as proposed ([plan gate](../001-plan.md)). Not reviewed:** no review
+instrument has read these bytes (o).
 
 This plan takes the work that three merged pull requests listed as not done:
 
@@ -210,7 +210,9 @@ making it a gate.
 
 ## 10. Owner decisions and open questions
 
-All rows are proposals until the plan gate rules them.
+Ruled by the owner on 2026-11-23 ("approve the plan"): every row as
+proposed (o). D3 is ruled as its proposal reads, so the panel bar of
+`project.md` is waived for this milestone only.
 
 | ID | Question | Proposed |
 |---|---|---|

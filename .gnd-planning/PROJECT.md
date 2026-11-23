@@ -389,3 +389,21 @@ D1–D9 of
 and whether this order stands. Each of the three has its full plan and first
 spec; no plan review has read the last two. The owner approves a plan before
 any code.
+
+### Added 2026-11-23: pins-and-review-check
+
+[pins-and-review-check](milestones/pins-and-review-check/README.md) takes
+the work that pull requests
+[235](https://github.com/vasiloglou/gnd-public/pull/235),
+[246](https://github.com/vasiloglou/gnd-public/pull/246) and
+[247](https://github.com/vasiloglou/gnd-public/pull/247) left undone. No
+issue was filed for it. The owner approved plan r1 on 2026-11-23 with D1–D5
+as proposed ([plan gate](milestones/pins-and-review-check/001-plan.md)); no
+review has read it.
+
+| Order | Work | Source | Why here |
+|---|---|---|---|
+| any time | PF1: the packaged-skill inventory defined once; the install, uninstall and verification-fix tests import it and join the guard block | PR 247 | `tests/test_verification_fixes.py` fails 5 of 13 tests on `main`. Tests only; shares no file with the milestones above |
+| after PF1 | PF2: a recorded calibration of the standing "code fitted to its examples" review check | PRs 235, 246 | About eight paid `codex` reviews; nothing waits for it |
+
+The PF1 spec waits for its owner gate.

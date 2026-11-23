@@ -1,6 +1,7 @@
 # Pins and the review check
 
-Plan r1, 2026-11-23: draft, **not reviewed, not approved**. It covers the
+Plan r1, 2026-11-23: **approved by the owner** on 2026-11-23 with D1–D5 as
+proposed ([plan gate](001-plan.md)); no review has read it. It covers the
 work left undone by
 [PR 235](https://github.com/vasiloglou/gnd-public/pull/235),
 [PR 246](https://github.com/vasiloglou/gnd-public/pull/246) and
@@ -14,8 +15,9 @@ filed for it.
 
 [Plan](notes/pins-and-review-check-plan.md).
 
-Pending rulings (plan §10): D1 baseline run, D2 PF2 reviewer and size, D3
-review instrument, D4 pull requests per phase, D5 the distribution-lane
-exception.
+Rulings (plan §10), all as proposed: D1 one baseline run on beast-3, D2
+`codex` over about eight diffs, D3 one reviewer in a different tool for
+plan, phase and close (panel waived for this milestone), D4 one pull request
+per phase, D5 the distribution-lane pin stays as a named exception.
 
-Next action: the owner rules on the plan, then PF1's spec.
+Next action: the owner's gate on the [PF1 spec](notes/phase-PF1-spec.md).

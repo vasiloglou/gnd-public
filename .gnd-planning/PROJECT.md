@@ -275,3 +275,65 @@ pass, in its "Ruling needed" table. Work handed to another assistant or
 machine carries a hand-off note in `.gnd-planning/handoffs/`, written with the
 dev-handoff skill and read with dev-takeover. The reviews of this roadmap are
 in `reviews/pr-219-r2/` and `reviews/pr-219-panel/`.
+
+## Open issues on 2026-11-22 — roadmap update
+
+Ten issues are open. Five were filed after the roadmap above was written:
+#221 and #222 on 2026-11-21, and #226, #227 and #228 on 2026-11-22. This
+section gives every open issue a home and an order. It replaces nothing above:
+the milestones the 0.4.0 roadmap planned keep their outlines. The two new
+outlines are r1, not reviewed and not approved.
+
+| Issue | What it asks | State | Home |
+|---|---|---|---|
+| [#214](https://github.com/vasiloglou/gnd-public/issues/214) | PyRel rules programs for literature-style models | On `main` (PRs 220 and 223), not released | Closes with the 0.5.0 release |
+| [#217](https://github.com/vasiloglou/gnd-public/issues/217) | Judging a temporal include root | On `main` (PR 220), not released | Closes with the 0.5.0 release |
+| [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Planned | reviewed-vocabulary-growth VG1 |
+| [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Planned, waits for a ruling | reviewed-vocabulary-growth VG2, or the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
+| [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Planned, waits for rulings | reviewed-vocabulary-growth VG3–VG5 |
+| [#228](https://github.com/vasiloglou/gnd-public/issues/228) | A growth round costs time in proportion to the whole model | Outline r1 | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO1 |
+| [#227](https://github.com/vasiloglou/gnd-public/issues/227) | Growth rounds add almost nothing: whole-proposal outcomes, restated replies, no diagnostic | Outline r1 | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO2–GO5 |
+| [#216](https://github.com/vasiloglou/gnd-public/issues/216) | A public producer protocol for the reading example | Outline r1 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH1, LH2 |
+| [#215](https://github.com/vasiloglou/gnd-public/issues/215) | Model-generic assertion admission | Outline r1 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH3, LH4 |
+| [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Outline r1 | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
+
+reviewed-vocabulary-growth has no folder on `main` yet. Its plan r1 and VG1
+draft spec are being written in a separate session on 2026-11-22 and arrive by
+their own pull request; the phase names here are that draft's. The same holds
+for the full plan and LH1 spec of literature-host-interfaces.
+
+### Proposed order
+
+| Order | Work | Issues | Why here |
+|---|---|---|---|
+| any time | Release 0.5.0: include-root-routes, pyrel-rules-coverage and aggregate-count-certificates, all merged and unreleased | #214, #217 | Owner trigger. Nothing else waits for it, and it closes two issues |
+| 1 | reviewed-vocabulary-growth VG1 | #221 | No workaround: 265.74 s at 1,000 extra object types. Needs no ruling beyond its plan gate |
+| 2 | growth-round-outcomes GO1 | #228 | Small, internal, no ruling. Every growth round pays it: 42.6 s at 2,404 object types for one added fact type |
+| 3 | reviewed-vocabulary-growth VG2–VG5 | #218, #222 | The reporter has a workaround (the seed carried as imported, proposed, deontic). Waits for the plan's rulings |
+| 4 | growth-round-outcomes GO2–GO5 | #227 | The reporter measured 2 elements added in 20 rounds. Waits for rulings D1–D4 of its outline |
+| 5 | literature-host-interfaces LH1–LH4 | #216, #215 | Working host-side workarounds for both |
+| 6 | literature-reading-reference LR1–LR3 | #226 | LR1 and LR2 can run at any time; LR3 needs LH1 and LH2 and an owner-selected producer and budget |
+
+Dependencies, by shared file:
+
+- `evolve/service.py`: VG2 (rule D-12), VG4 and GO1–GO3. One writer at a
+  time. GO1 goes before VG2 starts or after it merges.
+- `unattended-growth.md`: VG2, VG5 and GO4. GO4 follows VG2's change.
+- `examples/literature/reading.py`: LH1, LH2, LR2 and LR3. The LR phases
+  follow LH2.
+- Orders 1 and 2 share no file, so they can run on two branches at once. So
+  can order 5 beside orders 1 to 4.
+
+Three growth issues meet in the same round: the seed it starts from (#222),
+what a round keeps (#227) and what a round costs (#228). #222 and #227 come
+from one reporter's unattended run; #228 was measured here on a synthetic
+model. A 0.6.0 release that carries reviewed-vocabulary-growth
+and growth-round-outcomes together answers all three.
+
+Decisions waiting for the owner: whether to cut 0.5.0 now; the rulings of the
+reviewed-vocabulary-growth plan; D1–D6 of
+[growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);
+D1–D5 of
+[literature-reading-reference](milestones/literature-reading-reference/notes/literature-reading-reference-plan.md);
+and whether this order stands. `start-milestone` writes each full plan and
+first spec, and the owner approves a plan before any code.

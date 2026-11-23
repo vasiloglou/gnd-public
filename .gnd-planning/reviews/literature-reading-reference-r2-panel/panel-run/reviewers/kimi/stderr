@@ -1,0 +1,260 @@
+4960c18dfcf59c7b15b0ca0da1964ae5a4bf6c5034d43455dfb21c8cac97dee2  .gnd-planning/milestones/literature-reading-reference/notes/literature-reading-reference-plan.md
+   27045 .gnd-planning/milestones/literature-reading-reference/notes/literature-reading-reference-plan.md
+README.md
+annex.txt
+calibration.json
+calibration.txt
+closure.json
+conflict.json
+conflict.txt
+control.txt
+gold.json
+producer-pin.json
+reading.orm.json
+responses.json
+reviews.json
+roster.json
+scope.json
+study.txt
+{"reason":"[Errno 17] File exists: '/tmp/lr-probe'","status":"incomplete"}
+{"absence":{"below_floor_status":"unavailable","status":"qualified"},"attempt_counts":{"accepted":3,"empty":1,"refused":1},"broad_fact_types":["subject_label","system"],"coverage":[{"inspected":true,"question":"system","section":"study-opening","source":"study","state":"supported"},{"inspected":true,"question":"method","section":"study-methods","source":"study","state":"supported"},{"inspected":true,"question":"denial","section":"study-limits","source":"study","state":"explicitly-denied"},{"inspected":true,"question":"alternative","section":"study-methods","source":"study","state":"inspected-not-found"},{"inspected":false,"question":"annex-method","section":"annex-methods","source":"annex","state":"unavailable"},{"inspected":false,"question":"equation","section":"control-equation","source":"control","state":"not-applicable"}],"evidence_sha256":"ee67e13c082c340052cd37b09c77f2feb90c124b633738b8863bcd3d22b8fd1c","fidelity":{"high":[2,2],"low":[1,2]},"format":"literature-reading-report/1","inspections":[{"end":40,"excerpt_sha256":"6f933ec6ab5bd08bf476c5a9fc8db30f2ffa404699d730c3e7d9754e4a97befe","outcome":"accepted","response_sha256":"a2328d1acceee7d31ba2e278e4c2745d1a56e977a5388b2444e64dbce27c8040","section":"study-opening","source":"study","source_version":"authored-note-1","start":0},{"end":43,"excerpt_sha256":"3b466a0b42bcacbd5aa23e4c3f01d7b51b12fc34b6345c7312221bec9128e13b","outcome":"empty","response_sha256":"3da5ac2ed4dfe6f09f74f416ab04ef58e5fcfb54664084ee3332d5142afd23f2","section":"annex-opening","source":"annex","source_version":"authored-note-1","start":0},{"end":56,"excerpt_sha256":"2f426186f3e29619880cf9887c84574a826646e6acca0c01d47341193c104b2a","outcome":"refused","response_sha256":"fe65033cd1b95d8990d691a5490b06e618d2c1dac3a99aa6f85c9a37ac139ed6","section":"control-table","source":"control","source_version":"authored-note-1","start":0},{"end":93,"excerpt_sha256":"e7901bc7466b42501b99734d44e188751cf5352e12b1cc2260c28a8d9ab3a61d","outcome":"accepted","response_sha256":"7e708a195d9d4e2dee9d1c223549fa1b60cfa5d7afdc5bfeac42d341746e19eb","section":"study-methods","source":"study","source_version":"authored-note-1","start":41},{"end":137,"excerpt_sha256":"31973c282788a8768b5346eaef9054aee0cd5522878c0e7c12772893f20f2d69","outcome":"accepted","response_sha256":"63f2bf7f5b523f7c5a81a3be7dd78c7652028aa91bf6ee151a59d0025ae35af4","section":"study-limits","source":"study","source_version":"authored-note-1","start":94}],"newly_answered":2,"omitted":[],"producer_calls":{"broad-extraction":3,"targeted-extraction":2},"productivity":{"new_answers_per_byte":{"denominator":234,"numerator":2},"new_facts_per_byte":{"denominator":234,"numerator":2}},"public_routes":{"broad":{"check":0,"verify":0},"reported-conflict":{"check":1,"verify":1},"targeted":{"check":0,"verify":0}},"questions":[{"id":"system","outcome":"resolved","reason":"supported"},{"id":"method","outcome":"resolved","reason":"supported"},{"id":"denial","outcome":"resolved","reason":"explicitly-denied"},{"id":"alternative","outcome":"retained","reason":"inspected-not-found"},{"id":"annex-method","outcome":"retained","reason":"unavailable"},{"id":"equation","outcome":"retained","reason":"not-applicable"},{"id":"old-method","outcome":"superseded","target":"method"}],"read_denominator":{"attempted":5,"omitted":0,"scheduled":6,"unavailable":1},"reading_bytes":234,"revisit":["study-opening"],"stages":[{"inputs":{"annex.txt":"0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136","calibration.json":"94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7","calibration.txt":"acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466","closure.json":"bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a","conflict.json":"b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14","conflict.txt":"ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f","control.txt":"e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a","gold.json":"b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62","producer-pin.json":"cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b","reading.orm.json":"be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739","responses.json":"f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10","reviews.json":"f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07","roster.json":"0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418","scope.json":"d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c","study.txt":"d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843","vocabulary.orm.json":"25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"},"inspected":[],"payload_sha256":"e684efbe4e366b79f700ca02f227718c6a2100febf14f285225db1cac048e946","predecessor_sha256":null,"purpose":"Identify available source versions and sections","questions":["system","method","denial","alternative","annex-method","equation","old-method"],"stage":"inventory"},{"inputs":{"annex.txt":"0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136","calibration.json":"94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7","calibration.txt":"acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466","closure.json":"bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a","conflict.json":"b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14","conflict.txt":"ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f","control.txt":"e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a","gold.json":"b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62","producer-pin.json":"cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b","reading.orm.json":"be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739","responses.json":"f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10","reviews.json":"f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07","roster.json":"0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418","scope.json":"d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c","study.txt":"d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843","vocabulary.orm.json":"25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"},"inspected":["study-opening","annex-opening","control-table"],"payload_sha256":"ce0f27a816eff4a6753a6652c96d9a65bfcd13490e11859b4abe306a38944ab7","predecessor_sha256":"dce643fc27bb94b5960630be954cf022ed02a6c49aa71b13e9354ac2079d41ce","purpose":"Read opening material and retain unanswered questions","questions":["system","method","denial","alternative","annex-method","equation","old-method"],"stage":"broad-extraction"},{"inputs":{"annex.txt":"0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136","calibration.json":"94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7","calibration.txt":"acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466","closure.json":"bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a","conflict.json":"b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14","conflict.txt":"ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f","control.txt":"e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a","gold.json":"b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62","producer-pin.json":"cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b","reading.orm.json":"be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739","responses.json":"f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10","reviews.json":"f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07","roster.json":"0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418","scope.json":"d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c","study.txt":"d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843","vocabulary.orm.json":"25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"},"inspected":[],"payload_sha256":"b1f504d025eb36c0cf8887e1d4e4943ae6318bbf27c3162735856577f2185fd6","predecessor_sha256":"3cae76e228e1bb7fde0a1c2a615b26ad3b164912eb86ec32d0a5161035ff6706","purpose":"Select available ranges for unresolved questions","questions":["system","method","denial","alternative","annex-method","equation","old-method"],"stage":"selection"},{"inputs":{"annex.txt":"0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136","calibration.json":"94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7","calibration.txt":"acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466","closure.json":"bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a","conflict.json":"b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14","conflict.txt":"ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f","control.txt":"e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a","gold.json":"b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62","producer-pin.json":"cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b","reading.orm.json":"be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739","responses.json":"f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10","reviews.json":"f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07","roster.json":"0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418","scope.json":"d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c","study.txt":"d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843","vocabulary.orm.json":"25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"},"inspected":["study-methods","study-limits"],"payload_sha256":"3efd7116a83a2d3a09983e5d96205c5dc18c00c26129851592a6fafa520514ac","predecessor_sha256":"4202b4afb849764c8e6f8f6facd3fa62fcfe0e7bb9b3699b541e3d846356fd36","purpose":"Recover targeted facts and identify earlier material to revisit","questions":["system","method","denial","alternative","annex-method","equation","old-method"],"stage":"targeted-extraction"},{"inputs":{"annex.txt":"0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136","calibration.json":"94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7","calibration.txt":"acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466","closure.json":"bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a","conflict.json":"b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14","conflict.txt":"ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f","control.txt":"e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a","gold.json":"b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62","producer-pin.json":"cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b","reading.orm.json":"be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739","responses.json":"f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10","reviews.json":"f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07","roster.json":"0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418","scope.json":"d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c","study.txt":"d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843","vocabulary.orm.json":"25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"},"inspected":[],"payload_sha256":"88f413a7470e71d3a29f58840e0446d8b35c4813bceeae3a9c9828796b84e833","predecessor_sha256":"0236f84f996e57e7923fee3b7b3189522b06c9dca9d153a5e065ad0d0bc98b21","purpose":"Resolve source coverage and review reported assertions","questions":["system","method","denial","alternative","annex-method","equation","old-method"],"stage":"review"},{"inputs":{"annex.txt":"0b5cdb10ce08818ec6d6d62c90647af85312e36dbb945259df1e9f8e8f61b136","calibration.json":"94a2fa8e007a7dbbc307c370526cdf4fb7fa7773162f240729d6eb67521f22d7","calibration.txt":"acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466","closure.json":"bc66c2876bdfc946163e9217d9f1bd4575f12b9a81bae3c2abb4dbb17e541b0a","conflict.json":"b64a40d66d80d4370a439c5b27b5cd17cf204e0f8c3ca101ea5a2a4449bade14","conflict.txt":"ba6cb3c2adbf886ace21693ff85d6a43796f846bd4e4cf276c6fa40efece950f","control.txt":"e8f025c5f8d82f1cdf578dcf577c5782c5814ce84db871824159eddf7f8c8a1a","gold.json":"b329bd7dd22ca6af23f639a7e3eda1b632142d5142e6ac546d8a54df4d31ee62","producer-pin.json":"cc3e39b00b0e65e790cde1e7a8586ad842eb1fd84e3c44aef4a0a21caf6a0c2b","reading.orm.json":"be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739","responses.json":"f6f7e9c76ee6b23af0daf9e807efa8b6aeb03c21719fdf211adb39a10829ec10","reviews.json":"f1ebc75de190fb0cafdaf676881df2b037052b549878cf52601966f423abde07","roster.json":"0a7d9a271c0c5eadad8f997439eedcea2557c83d0fba7bb137050e971426f418","scope.json":"d9eba8d1dfb6adfd59adb584e9ae3184d53464b2cea14f7d3a1a3e31a7c2c41c","study.txt":"d334e308267a33d0b3e3f8811f5f1ed725f3f8d14b32c67287d50e5f0bcaf843","vocabulary.orm.json":"25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"},"inspected":[],"payload_sha256":"91dfa4b495b6d4756f368426863c7f8763ef7f5a2d3c4f13eb14623eaeba57f0","predecessor_sha256":"423e5cf5c867747bff4e7fbbf8124a417c8589936c85f2ec73d1074914e47438","purpose":"Check affected facts and measure held-back fidelity","questions":["system","method","denial","alternative","annex-method","equation","old-method"],"stage":"recheck"}],"stop":"required-coverage-completed","supported_fact_gain":2,"targeted_fact_types":["approximation","explicit_denial","subject_label","system"]}
+broad.population.json
+closure.json
+coverage.json
+fidelity-high.json
+fidelity-low.json
+payload-0.json
+payload-1.json
+payload-2.json
+payload-3.json
+payload-4.json
+payload-5.json
+producer-output-table.json
+reported-conflict.population.json
+reported-conflict.source.txt
+run.json
+scope.json
+stage-0.json
+stage-1.json
+stage-2.json
+stage-3.json
+stage-4.json
+stage-5.json
+targeted.population.json
+exit=3
+outcome: ill_formed
+schema_version: 7
+counts: {'pass': 0, 'fail': 0, 'warning': 0, 'unchecked': 0, 'vacuous': 0}
+fails: 0
+{
+ "schema_version": 7,
+ "tool": "gnd",
+ "command": "verify",
+ "outcome": "ill_formed",
+ "exit_code": 3,
+ "acceptance_ready": false,
+ "model": "src/gnd/examples/literature/reading_fixture/reading.orm.json",
+ "model_digest": null,
+ "population": "/tmp/lr-probe-run/reported-conflict.population.json",
+ "counts": {
+  "pass": 0,
+  "fail": 0,
+  "warning": 0,
+  "unchecked": 0,
+  "vacuous": 0
+ },
+ "verdicts": [],
+ "derivations": null,
+ "coverage": {},
+ "extraction": {
+  "state": "skipped",
+  "reason": "extraction opted out (--no-extraction)",
+  "sidecar": null,
+  "population_sha256": null,
+  "model_sha256": null,
+  "projection_sha256": null,
+  "document": null,
+  "document_sha256": null,
+  "skill": null,
+  "skill_version": null,
+  "executing_model": null
+ },
+ "issues": [
+  {
+   "path": "$.includes[0]",
+   "message": "include:unreadable",
+   "rule_id": "include:unreadable",
+   "severity": "error"
+  }
+ ],
+ "issues_total": 1,
+ "issues_truncated": false,
+ "warnings": [],
+ "error": null,
+ "transition": null,
+ "assurance": {
+  "schema_version": 1,
+  "semantic_decision": null,
+  "assurance_level": "none",
+  "scope_digest": null,
+  "semantics_digest": null,
+  "production_roster_digest": null,
+  "proof_digest": null,
+  "toolchain_digest": null,
+  "uncovered_applicable_scope_ids": [],
+  "assumptions": []
+ }
+}
+{
+ "version": 5,
+ "source": {
+  "kind": "fixture"
+ },
+ "object_types": [],
+ "fact_types": [
+  {
+   "id": "system",
+   "reading": "{Subject} has system {Text}",
+   "roles": [
+    {
+     "role_name": "subject",
+     "object_type": "subject"
+    },
+    {
+     "role_name": "value",
+     "object_type": "text"
+    }
+   ]
+  },
+  {
+   "id": "energy_model",
+   "reading": "{Subject} has energy model {Text}",
+   "roles": [
+    {
+     "role_name": "subject",
+     "object_type": "subject"
+    },
+    {
+     "role_name": "value",
+     "object_type": "text"
+    }
+   ]
+  },
+  {
+   "id": "objective",
+   "reading": "{Subject} has objective {Text}",
+   "roles": [
+    {
+     "role_name": "subject",
+     "object_type": "subject"
+    },
+    {
+     "role_name": "value",
+     "object_type": "text"
+    }
+   ]
+  },
+
+includes: [{"id": "scientific-vocabulary", "path": "vocabulary.orm.json", "sha256": "25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796"}]
+src/gnd/examples/literature/reading.py:260:        "schema_version": 1, "model": header["model"], "model_sha256": index["model"]["sha256"],
+src/gnd/examples/literature/reading.py:268:def _route(folder, *arguments, exits=(0,)):
+src/gnd/examples/literature/reading.py:283:    verify = _route(folder, "verify", header["model"], name, "--artifacts", "bundle",
+src/gnd/examples/literature/reading.py:285:    check = _route(folder, "check", header["model"], name, "--format", "json", exits=(0, 1))
+src/gnd/examples/literature/reading.py:295:        "schema_version": 1, "model": header["model"], "model_sha256": index["model"]["sha256"],
+src/gnd/examples/literature/reading.py:326:        report = _route(folder, "fidelity", header["model"], "--cases", kind,
+src/gnd/examples/literature/reading.py:388:        header = index["header_template"]
+src/gnd/examples/literature/depth.py:162:    raw = _write(out, population, {"population": index["header_template"], "facts": facts})
+/private/tmp/claude-501/-Users-***-github-repos-gnd-public--claude-worktrees-literature-reading-reference-cef7c9/b6ecc44f-9100-41c0-ae31-e350e6049307/scratchpad/panel-clone/src/gnd/examples/literature/depth_fixture
+exit=3
+outcome: ill_formed
+[
+ {
+  "path": "$.includes",
+  "message": "include:unreadable",
+  "rule_id": "include:unreadable",
+  "severity": "error"
+ }
+]
+extraction state: skipped
+25ac1974dc8a1686efe5b794ca55d5560f655d23632002bf625a03a2f1bfc796  /tmp/lr-model/vocabulary.orm.json
+exit=1
+outcome: violated counts: {'pass': 0, 'fail': 1, 'warning': 0, 'unchecked': 0, 'vacuous': 0}
+[]
+schema_version: 7
+constraint_ref: fact_types[subject_label].constraints[0]
+constraint_type: uniqueness
+modality: alethic
+source: user-supplied | status: confirmed
+keys: ['constraint_ref', 'constraint_type', 'message', 'modality', 'offending_facts', 'reason_code', 'source', 'status', 'verdict']
+message: Each subject plays 'subject_label' with at most one combination of the other roles — violated: subject 'alanine-in-vacuum' has 2 facts.
+offending_facts: [
+ {
+  "subject": "alanine-in-vacuum",
+  "label": "Alanine dipeptide observation"
+ },
+ {
+  "subject": "alanine-in-vacuum",
+  "label": "Conflicting reported label"
+ }
+]
+exit=1
+EXTRACTION: state=skipped (extraction opted out (--no-extraction))
+BLOCKING (alethic)
+  [fail] fact_types[subject_label].constraints[0]: Each subject plays 'subject_label' with at most one combination of the other roles — violated: subject 'alanine-in-vacuum' has 2 facts.
+ADVISORY (deontic)
+  (none)
+pass=0 fail=1 warning=0 unchecked=0 vacuous=0
+COVERAGE
+  system: declared, facts=0
+  energy_model: declared, facts=0
+  objective: declared, facts=0
+  approximation: declared, facts=0
+  ensemble: declared, facts=0
+  validity: declared, facts=0
+  explicit_denial: declared, facts=0
+  alternative_integrator: declared, facts=0
+  equation: declared, facts=0
+  subject_label: declared, facts=2
+  subject_specializes: declared, facts=0
+  subject_has_component: declared, facts=0
+  subject_influenced_by: declared, facts=0
+  experiment_dataset: declared, facts=0
+  experiment_split: declared, facts=0
+  experiment_metric: declared, facts=0
+  experiment_units: declared, facts=0
+  experiment_conditions: declared, facts=0
+  experiment_score: declared, facts=0
+  experiment_baseline: declared, facts=0
+  experiment_configuration: declared, facts=0
+  experiment_uncertainty: declared, facts=0
+--- rule-ids probe ---
+usage: gnd [-h] [--version] [--disclosure {internal,customer}]
+           {witness,replay,witness-view,why-not,witness-count,replay-count,import,validate,diff,coverage,check,verbalize,compose,verify,synth,measure,discover,extract,flatten,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...
+gnd: error: unrecognized arguments: --rule-ids
+exit=0
+--- declared id in model ---
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    m = json.load(open('src/gnd/examples/literature/reading_fixture/reading.orm.json'))
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'src/gnd/examples/literature/reading_fixture/reading.orm.json'
+n fact types: 9
+
+subject_label present: False
+top-level constraints: null
+   1 src/gnd/examples/literature/depth_fixture/vocabulary.orm.json:subject_has_one_label
+adversarial
+allow-vacuous-cli
+architecture
+baseline-cli
+check-population-cli
+checker
+compiled-snapshot
+compiled-snapshot-cli
+count-certificates
+coverage
+./src/gnd/examples/literature/reading_fixture
+outcome: ill_formed
+issues: ['include:unreadable']
+outcome from /tmp with both files in model dir: ill_formed
+issues: ['include:unreadable']

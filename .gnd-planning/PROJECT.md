@@ -368,7 +368,17 @@ from one reporter's unattended run; #228 was measured here on a synthetic
 model. A 0.6.0 release that carries reviewed-vocabulary-growth
 and growth-round-outcomes together answers all three.
 
-Decisions waiting for the owner: whether to cut 0.5.0 now; the VG1 spec
+Status, 2026-11-23, later: the owner asked for the 0.5.0 release, selected
+the standard GND panel for its plan and close, and delegated the milestone's
+approval rulings. The owner also ruled that the release depends on
+literature-host-interfaces and reviewed-vocabulary-growth, so it is cut after
+both are merged; this replaces the "any time" row of the order above and the
+0.6.0 pairing for reviewed-vocabulary-growth.
+[release-0.5.0](milestones/release-0.5.0/README.md) has plan r2, reviewed at
+r1 and approved by delegated ruling, and a blocked RW1 draft spec; nothing is
+bumped or built. Merges and each publication act stay with the owner.
+
+Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D6 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);
 D1–D5 of

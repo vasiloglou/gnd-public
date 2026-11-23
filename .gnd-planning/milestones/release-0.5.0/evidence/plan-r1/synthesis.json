@@ -1,0 +1,364 @@
+{
+  "schema_version": 1,
+  "run_sha256": "c7edeab17da6f9d14180520d436d384eba75f454b350d30e2bbf096bc2f5d327",
+  "summary": "Five of six seats returned schema-valid responses at xhigh; Qwen exceeded its 600 second wall-clock budget and returned nothing. One seat approved, three asked for revision and one blocked. Fourteen concerns: three seats agree that role-scoped value rules have no installed probe, and two that the notes reconciliation does not cover the freeze commit or every shipped surface. Nine concerns come from one seat each.",
+  "agreed_concerns": [
+    {
+      "group_id": "installed-probe-coverage",
+      "severity": "high",
+      "title": "Role-scoped value rules have no installed probe and no stated reason",
+      "summary": "W7 lists role-scoped value rules as a user-visible change, and probe 3 exercises no such model. No table maps each change to a probe or to a reason for having none.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "installed-probe-coverage-not-reconciled"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "acceptance-omits-role-scoped"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r050-role-scoped-probe-gap"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "freeze-notes-reconciliation",
+      "severity": "high",
+      "title": "The notes reconciliation does not cover the freeze commit or every shipped surface",
+      "summary": "RW1-C3 reads the diff over src and docs at the RW1 base. Later merges, and changes to pyproject.toml, PYPI.md and the manifests, are outside it, and the RW2-C0 recheck names no scope.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "notes-reconciliation-path-scope"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-NOTES-FREEZE"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rw2-freeze-build-commit-unbound"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rw3-releasing-sentence-standing-pin"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "RW-INSTALLED-PYREL"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "RW-PUBLISH-ORDER"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "RW-STRUCTURE-GATES"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "retired-controls-deferred"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "typo-rw1-d4"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "r050-e1-base-run-commit"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "r050-pyrel-oracle-environment"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-probe-coverage",
+      "rank": 1,
+      "title": "Probe role-scoped value rules and reconcile every change with a probe or a reason",
+      "action": "Probe 3 gains a role-scoped value model. The RW2 spec maps each W7 change and each source change merged by the freeze to an installed probe with its 0.4.0 control or to a stated reason, and the RW3 dossier lists the uncovered rows.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "installed-probe-coverage-not-reconciled"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "acceptance-omits-role-scoped"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r050-role-scoped-probe-gap"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "installed-probe-coverage-not-reconciled",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "acceptance-omits-role-scoped",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r050-role-scoped-probe-gap",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-freeze-reconciliation",
+      "rank": 2,
+      "title": "Reconcile the exact freeze commit across every shipped surface",
+      "action": "RW1-C3 and the RW2-C0 recheck read the diff from v0.4.0 over src, docs, README.md, PYPI.md, pyproject.toml, LICENSE, NOTICE and the plugin manifest directories, file by file, at the commit the candidate is built from.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "notes-reconciliation-path-scope"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-NOTES-FREEZE"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "notes-reconciliation-path-scope",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-NOTES-FREEZE",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-one-candidate-commit",
+      "rank": 3,
+      "title": "Bind the freeze, the probe merge and the build to one commit",
+      "action": "The probes pull request and any preparation pull request merge first. The freeze commit is the resulting main commit and is the SOURCE_COMMIT of both builds. If main moves before the build, RW2-C0 runs again.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rw2-freeze-build-commit-unbound"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rw2-freeze-build-commit-unbound",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-pyrel-probe-content",
+      "rank": 4,
+      "title": "Assert what the exported programs contain, in every advertised mode",
+      "action": "Probe 3 exports in the default mode and with both rules targets where the notes advertise them, and asserts the rule content or the documented refusal, each with a 0.4.0 control.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-INSTALLED-PYREL"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-INSTALLED-PYREL",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-publication-order",
+      "rank": 5,
+      "title": "Compare the served files before the tag and the GitHub release",
+      "action": "The publication stage runs the served-file comparison and the fresh index install right after the upload.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-PUBLISH-ORDER"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-PUBLISH-ORDER",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-structure-gates",
+      "rank": 6,
+      "title": "Name the structure guards in the RW2 and RW3 gates",
+      "action": "The section 9 rows of RW2 and RW3 list the project.md guard block.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-STRUCTURE-GATES"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RW-STRUCTURE-GATES",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-standing-pin",
+      "rank": 7,
+      "title": "Move the pinned releasing sentence in the helper and its test with the page",
+      "action": "RW3 edits the STANDING entry of tools/release_text.py and the fixture of tests/test_release_text.py together with docs/releasing.md. That helper change is the trigger of RC-03, so the receipts negative control lands with it.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rw3-releasing-sentence-standing-pin"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rw3-releasing-sentence-standing-pin",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-e1-base",
+      "rank": 8,
+      "title": "Run the E1 base lane at the commit the bump is applied to",
+      "action": "The base run and the bumped run use the same commit, named in the first RW1 ruling, so the version fields are the only difference.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r050-e1-base-run-commit"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r050-e1-base-run-commit",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-retired-controls",
+      "rank": 9,
+      "title": "State in the plan what each retired 0.3.0 control checked",
+      "action": "The plan lists the four 0.3.0 availability assertions and says each retires without a replacement because 0.4.0 has the feature, while the candidate behavior control of each probe stays.",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "retired-controls-deferred"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "retired-controls-deferred",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "fix-oracle-environment",
+      "rank": 10,
+      "title": "Check the runtime environment the oracle lane needs",
+      "action": "The plan records that the tutorials runtime environment imports on the machine that will run the lane, and RW2 rechecks it before the freeze.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r050-pyrel-oracle-environment"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r050-pyrel-oracle-environment",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-headline-reference",
+      "rank": 11,
+      "title": "Say which decision names the headline block",
+      "action": "The notes paragraph cites plan decision RW-D3 and the RW1 spec decision D4 by their own names.",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "typo-rw1-d4"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "typo-rw1-d4",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "gemini"
+      ]
+    }
+  ]
+}

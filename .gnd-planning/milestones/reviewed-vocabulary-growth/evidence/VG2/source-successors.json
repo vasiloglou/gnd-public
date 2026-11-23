@@ -1,0 +1,23 @@
+{
+ "schema_version": 1,
+ "reason": "reviewed-vocabulary-growth VG2: the sample and common-sense D-12 refusal maps to exit 3 beside the other D-12 markers (review r1, F1).",
+ "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+ "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+ "successors": [
+  {
+   "kind": "RF5",
+   "old": "gnd.cli",
+   "name": "_evolve_service_exit",
+   "home": "gnd.evolve.cli_service",
+   "before": {
+    "raw_sha256": "39e69d76f7d39389b33a7ea8d7229e094955fbffab5c323183740c04147276b7",
+    "algorithm_sha256": "f57edba086a7891c88ad368f0a97888541c8c36db737e45cf253d33ec2b1f195"
+   },
+   "after": {
+    "raw_sha256": "923abf11678a295909afb745f271b79fecee8cef7fef4cd70bd98fbd5487391f",
+    "algorithm_sha256": "c21082980977ce8356b49ccc1fb0eab0dc71bf7177d194d3ae6b966b4b1e05f6"
+   },
+   "reason": "VG2 (issue 218): one marker, 'new sample and common-sense constraints', in the malformed family, so the new D-12 refusal exits 3 and not 70; every other branch unchanged."
+  }
+ ]
+}

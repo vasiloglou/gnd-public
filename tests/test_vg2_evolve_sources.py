@@ -139,9 +139,43 @@ def test_T2_the_induction_refusal_still_comes_first(tmp_path):
 # --- T3 (VG2-C3): the three pages and the code agree --------------------------
 
 
-def _section(path: str, start: str, end: str) -> str:
-    text = (REPO / path).read_text(encoding="utf-8")
-    return text[text.index(start):text.index(end, text.index(start))]
+def _markdown_section(text: str, heading: str) -> str:
+    """The lines under the ATX heading line HEADING, up to the next heading of its level or above.
+
+    Fenced code blocks (a line opening with three or more backticks or tildes,
+    indented at most three spaces, closed by a run of the same character at
+    least as long) are skipped, so an example inside one is never read as the
+    section (VG2 review r1, F4).
+    """
+    level = len(heading) - len(heading.lstrip("#"))
+    fence = None
+    taken: list[str] | None = None
+    for line in text.splitlines(keepends=True):
+        stripped = line.lstrip(" ")
+        indent = len(line) - len(stripped)
+        marker = stripped[:1]
+        run = len(stripped) - len(stripped.lstrip(marker)) if marker in ("`", "~") else 0
+        if fence is None and indent <= 3 and run >= 3:
+            fence = (marker, run)
+        elif fence is not None and indent <= 3 and marker == fence[0] and run >= fence[1] \
+                and not stripped[run:].strip():
+            fence = None
+        elif fence is None and stripped.startswith("#"):
+            hashes = len(stripped) - len(stripped.lstrip("#"))
+            if line.rstrip("\n").rstrip() == heading:
+                taken = [line]
+                continue
+            if taken is not None and hashes <= level and stripped[hashes:hashes + 1] in (" ", "\n", ""):
+                break
+        if taken is not None:
+            taken.append(line)
+    if taken is None:
+        raise AssertionError(f"no heading {heading!r} outside a fenced block")
+    return "".join(taken)
+
+
+def _section(path: str, heading: str) -> str:
+    return _markdown_section((REPO / path).read_text(encoding="utf-8"), heading)
 
 
 def test_T3_the_d12_home_its_restatement_and_the_growth_page_agree():
@@ -167,11 +201,11 @@ def test_T3_the_d12_home_its_restatement_and_the_growth_page_agree():
     assert proposed_deontic == {"sample", "common-sense", "llm-inferred", "induced"}
 
     home = _section("src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md",
-                    "## Evolve admission (D-12)", "## Worked examples")
+                    "## Evolve admission (D-12)")
     contract = _section("src/gnd/skills/gnd-model-evolve/references/evolution-contract.md",
-                        "## 6. D-12 provenance and D-13 record", "## 7. Exit bands")
+                        "## 6. D-12 provenance and D-13 record")
     growth = _section("src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
-                      "## Evidence for Steps 3 to 7", "### Step 3")
+                      "## Evidence for Steps 3 to 7")
     for source in ("sample", "common-sense", "llm-inferred", "induced"):
         assert f"A new `{source}` constraint is `proposed` and `deontic`" in home, source
     assert "`sample` or\n  `common-sense`, `proposed`, `deontic`" in contract
@@ -211,3 +245,63 @@ def test_T4_an_alethic_library_constraint_is_refused(tmp_path):
     _, result = acceptance._preview(paths, "--policy", "additive", expect=3)
     # candidate validation runs before D-12, so U8 refuses it first (its message)
     assert b"constraints[1]: an unreviewed common-sense mandatory constraint cannot be alethic" in result.stderr
+
+
+# --- review round 1 (notes/reviews/phase-VG2-r1), regression cases ----------
+
+
+@pytest.mark.parametrize("source", ["sample", "common-sense"])
+@pytest.mark.parametrize(("status", "modality"), [("confirmed", "deontic"), ("proposed", "alethic"),
+                                                  ("confirmed", "alethic")])
+def test_R1_F1_the_refusal_exits_3_at_the_command_line(tmp_path, source, status, modality):
+    """F1: the refusal was missing from the CLI's exit classifier and exited 70."""
+    operation = policy._op("add", policy._constraint_locator(policy.CONTROL, None, "mandatory"),
+                           after=_new(source, status, modality))
+    paths = policy._cli_workspace(tmp_path / "ws", (operation,))
+    result = run_main(policy._preview_argv(paths))
+    assert result.returncode == 3, result.stderr.decode()
+    assert REFUSAL.encode() in result.stderr
+
+
+@pytest.mark.parametrize("source", ["sample", "common-sense"])
+def test_R1_F2_a_changed_sample_or_common_sense_constraint_is_judged_as_a_new_one(tmp_path, source):
+    """F2: D-12 judges a new or changed constraint by one rule (its home's opening sentence).
+
+    VG2's brief claimed a changed constraint was judged as before; it is judged
+    as a new one, so a proposed, deontic sample or common-sense constraint whose
+    roles change is now admitted, and refused when it becomes confirmed.
+    """
+    from gnd.evolve import EvolutionError
+
+    before = dict(_new(source, "proposed", "deontic"), type="uniqueness", roles=["order"])
+    before.pop("role")
+    document = policy._doc()
+    policy._fact(document, policy.CONTROL).setdefault("constraints", []).append(before)
+    text = _yaml(document)
+    locator = policy._constraint_locator(policy.CONTROL, before, "uniqueness")
+    changed = dict(before, roles=["amount"])
+    admitted = policy._preview(tmp_path / "a", (policy._op("modify", locator, before=before, after=changed),),
+                               before_text=text)
+    assert admitted.policy_issues == ()
+    confirmed = dict(changed, status="confirmed")
+    with pytest.raises(EvolutionError, match=re.escape(REFUSAL)):
+        policy._preview(tmp_path / "b", (policy._op("modify", locator, before=before, after=confirmed),),
+                        before_text=text)
+
+
+def _yaml(document: dict) -> str:
+    import io
+
+    from ruamel.yaml import YAML
+
+    buffer = io.StringIO()
+    YAML().dump(document, buffer)
+    return buffer.getvalue()
+
+
+def test_R1_F4_a_fenced_copy_of_a_section_is_not_read_as_the_section():
+    """F4: the section reader matched headings inside fenced examples."""
+    text = ("# Page\n\n```markdown\n## Evolve admission (D-12)\n\n- A fenced example.\n```\n\n"
+            "## Evolve admission (D-12)\n\n- The real rule.\n\n## Worked examples\n\n- after\n")
+    section = _markdown_section(text, "## Evolve admission (D-12)")
+    assert "The real rule." in section and "A fenced example." not in section and "after" not in section

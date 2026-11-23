@@ -1,9 +1,10 @@
-# Draft reply to #226 (interim, requests 3 and 2)
+# Draft reply to #226 (all three requests)
 
-Status: interim draft, written in phase LR2 on 2026-11-23. The owner posts
-it; nothing here is posted. The final draft, with request 1's figures, is
-written at milestone close after LR3. Update this draft's merge status when
-the pull requests merge.
+Status: draft, first written in phase LR2 on 2026-11-23 and completed in
+phase LR3 the same day. The owner posts it; nothing here is posted. Update
+the merge status before posting: on 2026-11-23 the three phases are in pull
+requests 243 (LR1), 244 (LR2) and the LR3 pull request, none merged and none
+released.
 
 ---
 
@@ -35,7 +36,19 @@ GND's anchor check does not make. The anchor reference states the rule, and
 an anchor still shows where a value occurs, not that the text supports the
 claim.
 
-**1. A reference recall and precision.** Not yet. It needs the host
-producer interface that is being built now, and a recorded run over a
-labelled set. We will follow up here with the figures and the settings that
-produced them.
+**1. A reference recall and precision.** The literature example now ships
+a reference set: the twelve development papers of the regression corpus
+with 31 labelled facts, and one recorded run of the reading stages over it
+with Claude Sonnet as the reading agent. After the broad pass it found 9 of
+31 facts (precision 9 of 10); after the targeted pass, 27 of 31 (precision
+of the targeted rows 18 of 23, two of the misses a right pair of names under
+the wrong predicate). The run cost USD 0.29 and replays with no model call;
+the record names the model, the CLI flags and the prompt.
+
+Please read those figures as a measurement of one run, not as what you
+should get. The papers are short paraphrases written to state their claims
+plainly, and the set scores a fact by the section it was read from, while
+you scored quotes. So they don't tell you your 30 % is your host's loss; they
+tell you the stages can find most plainly stated facts, and give you a set
+you can run your own producer on (`reference_set.score(your_run)`) to see
+how much of the gap is your producer or prompt and how much is your papers.

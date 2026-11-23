@@ -1797,7 +1797,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +75 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +76 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1958,7 +1958,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +74 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +75 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
@@ -3768,7 +3768,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/depth.py
 - uses: infra.artifacts, infra.bounded_process, model.anchors
-- used_by: examples.literature_reading, examples.literature_revision, examples.literature_verdict
+- used_by: examples.literature_reading, examples.literature_reference_set, examples.literature_revision, examples.literature_verdict
 - tests: tests/test_ld1_competency_examples.py
 
 ### examples.literature_reading
@@ -3782,6 +3782,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: examples.literature_assurance, examples.literature_revision
 - tests: tests/test_ld3_reading_workflow.py, tests/test_lh1_reading_host.py, tests/test_lh2_reading_replay.py
 - notes: Release replay can provide its retained reading fixture and rooted vocabulary together. The protocol's one home is src/gnd/examples/literature/reading_fixture/README.md, "Drive it from your host".
+
+### examples.literature_reference_set
+- does: Build the literature reading reference set over the regression corpus's development documents without changing them, and score a reading run's produced facts against its labels at section grain.
+- verbs: reference set, reference recall, reference precision, labelled set, reading score, wrong predicate, gold facts, corpus overlay, section grain
+- in: The packaged corpus, answer key, gold populations and flat model; a reading run folder and the reference root.
+- out: The reference root's files by name; a literature-reference-score/1 document with per-pass produced, found, wrong-predicate and precision pairs and recall after each pass.
+- status: canonical
+- modules: src/gnd/examples/literature/reference_set.py
+- uses: examples.literature_depth, infra.artifacts, model.loading
+- used_by: (none)
+- tests: tests/test_lr3_reference_set.py
+- notes: The scoring rule's one home is src/gnd/examples/literature/reference_fixture/README.md. The recorded run was produced by tools/record_lr3_reference_run.py, which spends paid calls and is outside every gate; tests replay the run.
 
 ### examples.literature_revision
 - does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.

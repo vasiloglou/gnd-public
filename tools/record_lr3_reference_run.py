@@ -104,7 +104,7 @@ class ClaudeCliProducer:
             raise RuntimeError(f"claude used models {sorted(models)}, not {MODEL_ID}")
         output = result.get("structured_output")
         if not isinstance(output, dict) or not isinstance(output.get("facts"), dict):
-            raise RuntimeError("claude returned no structured facts")
+            raise TypeError("claude returned no structured facts")
         return output
 
     def produce(self, call: reading.ProducerCall) -> dict:

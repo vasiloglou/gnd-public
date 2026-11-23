@@ -406,6 +406,18 @@ Record Claude Code running a GND judgement skill over its fixture, every run kep
 | `finish(out, skill) -> int` | function | 280 | The leak search, then the manifest. On a hit the run folder is removed and only results.json stays. |
 | `main() -> int` | function | 299 | (no docstring) |
 
+## tools.record_lr3_reference_run — `tools/record_lr3_reference_run.py`
+Components: unassigned
+Record LR3's one live reading run over the literature reference set.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `SpendError` | class(RuntimeError) | 71 | (no docstring) |
+| `ClaudeCliProducer` | class | 75 | A reading producer that asks Claude Sonnet through the ``claude`` CLI, one call per section. |
+| `ClaudeCliProducer.produce(self, call) -> dict` | method | 110 | (no docstring) |
+| `record(out, root, *, command) -> dict` | function | 130 | (no docstring) |
+| `main(argv) -> int` | function | 158 | (no docstring) |
+
 ## tools.record_plan_apps — `tools/record_plan_apps.py`
 Components: unassigned
 Record real models answering the five plan apps' questions, every run kept.

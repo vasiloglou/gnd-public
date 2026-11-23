@@ -2233,7 +2233,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +53 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +54 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2484,7 +2484,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: model lookup, query model, cached models, detached snapshot, fact types, object types, role players, supertype closure, positional constraints, index_scope, independent_index_scope, cache invalidation, reference value type table, denoted by, subtype children, object type kind
 - status: canonical
 - modules: src/gnd/model_index.py
-- uses: infra.artifacts, model.address, model.document, model.reference_resolution
+- uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
 - used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +40 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.

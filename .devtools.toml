@@ -5,6 +5,10 @@
 # The repository's own rules for these skills live in
 # <root>/skills/process-phase/references/project.md, which the sync never writes.
 
+# What dev-tools ships and this repository leaves out on purpose. `agents` holds the
+# subagents of the phase workflow; this repository uses the milestone workflow.
+declined = ["agents"]
+
 [[sync]]
 source = "skills/milestone/process-milestone"
 dest = ".claude/skills/process-milestone"
@@ -34,6 +38,16 @@ values = { planning_dir = ".gnd-planning" }
 source = "skills/milestone/start-milestone"
 dest = ".codex/skills/start-milestone"
 values = { planning_dir = ".gnd-planning" }
+
+# review-pr drives process-phase's review helper for a pull request, so it sits beside
+# process-phase in both roots. It has no values or settings of its own.
+[[sync]]
+source = "skills/milestone/review-pr"
+dest = ".claude/skills/review-pr"
+
+[[sync]]
+source = "skills/milestone/review-pr"
+dest = ".codex/skills/review-pr"
 
 # handle-issue triages, reproduces and routes a GitHub issue, delivered to both roots.
 [[sync]]

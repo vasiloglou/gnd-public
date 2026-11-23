@@ -233,6 +233,11 @@ LOCAL_SKILL_FILES: frozenset[str] = frozenset(
         ".codex/skills/dev-handoff/scripts/handoff.settings.json",
         ".codex/skills/dev-takeover/SKILL.md",
         ".codex/skills/dev-takeover/agents/openai.yaml",
+        # The dev-tools pull-request review skill (dev-tools cecebc6).
+        ".claude/skills/review-pr/SKILL.md",
+        ".claude/skills/review-pr/agents/openai.yaml",
+        ".codex/skills/review-pr/SKILL.md",
+        ".codex/skills/review-pr/agents/openai.yaml",
     }
 )
 
@@ -249,6 +254,7 @@ LOCAL_SKILL_NAMES: tuple[str, ...] = (
     "handle-issue",
     "dev-handoff",
     "dev-takeover",
+    "review-pr",
 )
 
 UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
@@ -264,11 +270,11 @@ UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
 UNMANAGED_ROOT_ENTRIES: dict[str, frozenset[str]] = {
     ".claude/skills": frozenset(
         {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components",
-         "handle-issue", "dev-handoff", "dev-takeover"}
+         "handle-issue", "dev-handoff", "dev-takeover", "review-pr"}
     ),
     ".codex/skills": frozenset(
         {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components",
-         "handle-issue", "dev-handoff", "dev-takeover"}
+         "handle-issue", "dev-handoff", "dev-takeover", "review-pr"}
     ),
 }
 

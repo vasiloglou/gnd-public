@@ -75,42 +75,19 @@ skill text this repository wrote for itself, before the shared text replaced it.
 - Provenance tags in a spec: `(p2)` marks a change applied for a first panel
   round, `(o)` an owner decision.
 
-## Pattern-matched solutions: a standing claim in every diff review (process-phase step 4; review-and-record.md "What the prompt carries"; review-tool.md)
+## Pattern-matched solutions: the standing check in every diff review (review-and-record.md "What the prompt carries"; review-tool.md; standing-rules.md "Code fitted to its examples")
 
-- The rule is in `AGENTS.md`, "General solutions, not pattern-matched ones", and
-  has its one home there. This section says how a review round tests it.
-- Every brief written for a phase diff or a pull request of this repository
-  (`--subject phase`, `--subject pr`) carries this claim, word for word, beside
-  the phase's or the pull request's own claims:
-
-  ```text
-  --claim "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
-  ```
-
-  The brief tells the reviewer to look for the case that breaks a claim, so
-  this one sends the reviewer after an input the author did not have.
-- What the reviewer is looking for:
-  - a pattern over YAML, JSON, Python source, a diff, a path or a command line,
-    where a loader, `ast`, `pathlib` or `shlex` reads the same text whole;
-  - a pattern over text this project itself renders (a report line, a
-    verbalization, a table), where the producer could return the value;
-  - a pattern fitted to the fixtures: it matches every committed example and
-    fails on a legal input with other whitespace, quoting, casing, nesting,
-    Unicode or a line break;
-  - a branch on one literal name, file or message, added to make one case pass;
-  - a second matcher for something a helper in `dev/components/` already does.
-- A finding under this claim names the input: a legal member of the class, what
-  the code returned for it and what it should have returned. A finding that
-  only says a pattern "looks fragile" names no consequence and is style.
-  Reproduce it like any other finding, and the fix's regression test is that
-  input.
-- Class, by `review-convergence.md` "Relevance is not severity": `blocking`
-  when an input the change claims to handle gets a wrong result or is silently
-  accepted; `hardening` when the wrong result needs an input nobody sends yet.
-  A pattern that states the whole grammar of a flat token is not a finding.
-- The fix replaces the matcher with the parser, the reader or the general rule.
-  A wider pattern that also matches the reviewer's input is the same defect
-  with one more example.
+- The shared text carries this check. Every `phase` and `pr` brief the review
+  helper writes tells the reviewer to look for code fitted to its examples, and
+  `standing-rules.md`, "Code fitted to its examples", is the rule's one home for
+  a review round: what to look for, what a finding must name, how it is classed
+  and what counts as its fix. A brief needs no `--claim` for it.
+- `AGENTS.md`, "General solutions, not pattern-matched ones", says the same to
+  whoever writes or reviews code outside a review round, and names this
+  repository's readers. Where the two differ, `standing-rules.md` governs.
+- In this repository the existing readers are `ast` for Python source,
+  `ModelIndex` for model queries and the helpers listed in `dev/components/`.
+  A second matcher for something one of them already does is a finding.
 
 ## Opt-in gates: certification and recertification (process-phase step 2; architect-overrides.md; verification-selection.md)
 

@@ -1,0 +1,13 @@
+{
+  "format": "literature-reading-profile/1",
+  "model": "survey.orm.json",
+  "includes": [
+    "terms.orm.json"
+  ],
+  "producer_label": "host-extractor",
+  "base_facts": {},
+  "review": false,
+  "calibration": null,
+  "conflict": null,
+  "absence": false
+}

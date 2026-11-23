@@ -1,0 +1,55 @@
+{
+  "study-opening": {
+    "outcome": "accepted",
+    "facts": {
+      "system": [
+        {
+          "subject": "alanine-in-vacuum",
+          "value": "alanine dipeptide in vacuum"
+        }
+      ]
+    },
+    "proposal_keys": []
+  },
+  "study-methods": {
+    "outcome": "accepted",
+    "facts": {
+      "approximation": [
+        {
+          "subject": "alanine-in-vacuum",
+          "value": "Langevin integration at 300 K with 2 fs steps"
+        }
+      ]
+    },
+    "proposal_keys": [
+      "method-family"
+    ]
+  },
+  "study-limits": {
+    "outcome": "accepted",
+    "facts": {
+      "explicit_denial": [
+        {
+          "subject": "alanine-in-vacuum",
+          "value": "no barostat"
+        }
+      ]
+    },
+    "proposal_keys": []
+  },
+  "annex-opening": {
+    "outcome": "empty",
+    "facts": {},
+    "proposal_keys": []
+  },
+  "control-table": {
+    "outcome": "refused",
+    "facts": {},
+    "proposal_keys": []
+  },
+  "study-equation": {
+    "outcome": "empty",
+    "facts": {},
+    "proposal_keys": []
+  }
+}

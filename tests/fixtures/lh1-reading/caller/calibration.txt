@@ -1,0 +1,1 @@
+A control paper compares stratified sampling with uniform sampling.

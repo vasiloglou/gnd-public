@@ -963,7 +963,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
 - status: canonical
 - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.verbalization
+- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
 - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
@@ -1034,7 +1034,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Published preview claims or completed evolution claims, stdout diagnostics, and classified exit codes.
 - status: canonical
 - modules: src/gnd/evolve/cli_service.py
-- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading
+- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading, model.validation
 - used_by: cli.dispatch, cli.evolve_command, recovery.command
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_additive_policy.py, tests/test_evolve_shape_matches.py
@@ -1804,17 +1804,17 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.validation
-- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
-- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
+- does: Parse bounded model bytes, remembering each parse for one public call inside a parse scope, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate, parse_scope].
+- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage, parse once, parse scope, parse cache, parse_scoped, remembered document, write check
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
-- tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
+- used_by: evolve.command, evolve.service, extract.service, model.loading, model.operation_obligations, semantics.extensions
+- tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
 - checked: partial
-- notes: The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
+- notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
 
 
 ### model.json_document
@@ -2233,7 +2233,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +54 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +55 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2590,7 +2590,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/process.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_reading, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
 - tests: tests/test_agent_cli.py, tests/test_rf4_peripheral.py
 - in: Trusted argv, real cwd, explicit environment, ProcessLimits and optional stdin bytes.
 - out: BoundedProcessResult with closed metadata and out-of-band byte streams.
@@ -3319,8 +3319,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - modules: src/gnd/examples/literature/assurance_report.py
 - uses: examples.literature_reading
 - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
-- tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
-- notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
+- tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py, tests/test_lh2_reading_replay.py
+- notes: The formats' one home is src/gnd/examples/literature/README.md. score_reading_coverage takes the reading root a caller run replays against. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
 
 
 ### examples.literature_name_diagnostics
@@ -3772,16 +3772,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_ld1_competency_examples.py
 
 ### examples.literature_reading
-- does: Run and replay bounded literature reading with saved producer outputs, typed coverage, custody and fidelity.
-- verbs: reading workflow, multipass reading, methods extraction, coverage evidence, scope, absence, fidelity, revisit, question disposition
-- in: Packaged public source inventory, section and question roster, saved responses, held-back fidelity labels and source scope.
-- out: Six bound pass records, producer call counts, typed coverage, read cost, checked populations and fidelity reports.
+- does: Run and replay bounded literature reading, with saved producer outputs or a caller's live producer over a caller's root, typed coverage, custody and fidelity; replay re-derives a caller run from its folder and root with no producer call.
+- verbs: reading workflow, multipass reading, methods extraction, coverage evidence, scope, absence, fidelity, revisit, question disposition, producer protocol, caller root, reading profile, per-document budget, reading limits
+- in: Packaged public source inventory, or a caller root with profile.json; section and question roster, saved responses or a producer object, optional reviewer, held-back fidelity labels and source scope.
+- out: Six bound pass records, producer call counts, typed coverage, read cost, checked populations and fidelity reports; a literature-reading-run/2 folder with settings, step statuses and per-document stops for a caller run.
 - status: canonical
 - modules: src/gnd/examples/literature/reading.py
-- uses: examples.literature_depth, infra.artifacts
+- uses: examples.literature_depth, infra.artifacts, infra.bounded_process, infra.input_policy
 - used_by: examples.literature_assurance, examples.literature_revision
-- tests: tests/test_ld3_reading_workflow.py
-- notes: Release replay can provide its retained reading fixture and rooted vocabulary together.
+- tests: tests/test_ld3_reading_workflow.py, tests/test_lh1_reading_host.py, tests/test_lh2_reading_replay.py
+- notes: Release replay can provide its retained reading fixture and rooted vocabulary together. The protocol's one home is src/gnd/examples/literature/reading_fixture/README.md, "Drive it from your host".
 
 ### examples.literature_revision
 - does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.

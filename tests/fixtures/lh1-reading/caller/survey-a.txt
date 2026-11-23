@@ -1,0 +1,3 @@
+Paper A: Graph sampling at scale.
+We use stratified sampling over 40 graphs.
+Results: sampling cuts cost by half.

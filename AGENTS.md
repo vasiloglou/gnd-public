@@ -12,7 +12,9 @@ repository's own rules for them are in
 [project.md](.codex/skills/process-phase/references/project.md). When unfinished work
 moves to another assistant or machine, use [dev-handoff](.codex/skills/dev-handoff/SKILL.md)
 on the leaving side and [dev-takeover](.codex/skills/dev-takeover/SKILL.md) on the receiving
-side, also delivered from dev-tools; the note informs and approves nothing. The owned compatibility
+side, also delivered from dev-tools; the note informs and approves nothing. Use
+[review-pr](.codex/skills/review-pr/SKILL.md), delivered the same way, for an independent
+review of a pull request; it posts only on the owner's approval for that pull request. The owned compatibility
 [plan-review-panel](.codex/skills/plan-review-panel/SKILL.md) requires an explicit
 handoff to the maintained advisory panel. No automatic sibling execution.
 
@@ -112,6 +114,7 @@ file or shape. Search for an existing helper before writing a new matcher.
 When reviewing a diff or a pull request, read each new regular expression,
 string split, slice and special-case branch as a claim that it covers its input
 class. Build a legal input of that class that the tests and fixtures lack, run
-it, and report a wrong result as a finding that names the input. How a review
-round carries this is in
-[project.md](.codex/skills/process-phase/references/project.md).
+it, and report a wrong result as a finding that names the input. A review
+round carries this check in its brief; the rule's full text is "Code fitted to
+its examples" in
+[standing-rules.md](.codex/skills/process-phase/references/standing-rules.md).

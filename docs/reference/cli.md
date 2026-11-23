@@ -103,6 +103,8 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 | `gnd witness MODEL POPULATION --targets REQUEST` | Redacted finite-witness result (raw under `internal`) |
 | `gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE` | Explicit new raw certificate; refused under `customer` |
 | `gnd replay MODEL POPULATION CERTIFICATE --json` | Independent finite inference replay |
+| `gnd witness-count MODEL POPULATION --request REQUEST --raw --out CERTIFICATE` | [Bounded COUNT membership](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-export/references/count-witness-contract.md) for one covered group |
+| `gnd replay-count MODEL POPULATION CERTIFICATE --request REQUEST` | Independent COUNT membership replay, including a covered empty group |
 | `gnd witness ... --composition RECORD` / `gnd replay ... --composition RECORD` | Version-2 witness of a composed population, traced to its sources ([composition](composition.md#trace-a-derived-fact-back-to-its-sources)) |
 | `gnd witness-view CERTIFICATE --json` | Non-replayable presentation of a certificate |
 | `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted (raw under `internal`) |

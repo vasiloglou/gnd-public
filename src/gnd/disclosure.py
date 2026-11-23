@@ -94,7 +94,7 @@ SURFACES: Mapping[str, Surface] = {
     "gnd discover": Surface("site", convention="option",
                             note="--show-values follows the mode; redacted roles never get value candidates"),
     **{f"gnd {leaf}": Surface(**_VIEW) for leaf in (
-        "witness", "witness-view", "replay", "why-not",
+        "witness", "witness-view", "replay", "why-not", "witness-count", "replay-count",
         "export lean", "export souffle", "export souffle-run", "export souffle-witness")},
     "gnd exp run": Surface("every-mode", spawns=True, note="session kinds are applied in every mode"),
     "gnd solve": Surface("value-free", spawns=True, note="stations are GND commands"),

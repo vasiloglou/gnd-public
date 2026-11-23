@@ -1,0 +1,26 @@
+version: 2
+model_id: urn:gnd-fixture:count-membership@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: method, name: Method, kind: value, primitive: String}
+  - {id: label, name: Label, kind: value, primitive: String}
+  - {id: count, name: Count, kind: value, primitive: Integer}
+fact_types:
+  - id: observation
+    reading: "{Method} reports {Method} under {Label} in {Label}"
+    roles:
+      - {object_type: method, role_name: group}
+      - {object_type: method, role_name: member}
+      - {object_type: label, role_name: tag}
+      - {object_type: label, role_name: source}
+  - id: method_count
+    reading: "{Method} has {Count} qualifying distinct contributions"
+    roles:
+      - {object_type: method, role_name: group}
+      - {object_type: count, role_name: count}
+    derivation: derived
+    derivation_rule:
+      body:
+        - {fact_type: observation, bind: {group: "$group", member: "$member", tag: "$tag", source: "$source"}}
+      aggregate: {fn: count, of: "$tag", over: ["$member"], as: "$n"}
+      head: {group: "$group", count: "$n"}

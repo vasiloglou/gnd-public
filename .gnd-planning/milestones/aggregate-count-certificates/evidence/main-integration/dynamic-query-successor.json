@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "reason": "Main integration of aggregate-count-certificates: AC1's counted delta (COUNT group, contribution and bounded wire lookups, evidence/AC1/dynamic-query-successor.json) re-chained after the pyrel-rules-coverage successors that reached main first. The AC1 file is retained as reviewed and is no longer in the chain.",
+  "predecessor": ".gnd-planning/milestones/pyrel-rules-coverage/evidence/close/dynamic-query-successor.json",
+  "predecessor_sha256": "316bb84b26b1ce0d0e3458b6754a7bfdb7bd647669ccc5579de8a49ece0a386f",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/witness/count_membership.py",
+      "_cell",
+      "PRIMITIVES.get(name)",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inputs[inverse[of]]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inputs[inverse[var]]",
+      2
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inverse[of]",
+      2
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "inverse[var]",
+      4
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "role_players[body['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "role_players[request['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "selected[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "types[count_roles[0]]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "_declared_rule",
+      "types[role]",
+      2
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "members_from_snapshot",
+      "members[key]",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "members_from_snapshot",
+      "population.facts.get(source, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/count_membership.py",
+      "members_from_snapshot",
+      "row[role]",
+      3
+    ]
+  ],
+  "result_distinct_rows": 7861,
+  "result_occurrences": 9781
+}

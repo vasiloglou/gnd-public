@@ -89,6 +89,17 @@ this milestone's planning files, the answer key, or the other version of the
 capability. The answer key stays in the scratchpad until every run has
 ended, then is copied into the evidence directory with the reviews.
 
+**Correction c1 (PF2 phase review round 1, F1, reproduced, 2026-11-23).**
+The arrangement above kept the key and the other version out of the
+reviewer's *way*, not out of its *reach*. All eight worktrees shared one
+clone, so `git show change-c:tools/skill_names.py` from `change-a` showed the
+other version; and the held key sat in the scratchpad, which the read-only
+sandbox can read. The retained review logs show no `git show` of another
+branch, no reference to another `change-*` branch and no path into the held
+folder, so no review used either route; but the design did not prevent it.
+Prior wording kept above. A later calibration gives each diff its own clone
+and keeps the key off the reviewer's disk.
+
 ### Runs
 
 Per diff: `review_tool.py brief --subject phase --base <origin/main>` with no

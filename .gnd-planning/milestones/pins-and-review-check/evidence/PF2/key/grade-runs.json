@@ -42,6 +42,27 @@
   "{'demo': None}"
  ],
  [
+  "change-a",
+  "K2-planted",
+  "indented frontmatter mapping",
+  "{'demo': 'demo'}",
+  "{'demo': None}"
+ ],
+ [
+  "change-a",
+  "K2-planted",
+  "no frontmatter",
+  "no name read: {'demo': None} or a refusal",
+  "raises IndexError"
+ ],
+ [
+  "change-a",
+  "K2-planted",
+  "a name after a body rule",
+  "no name read: {'demo': None} or a refusal",
+  "{'demo': 'evil'}"
+ ],
+ [
   "change-b",
   "K4-control",
   "earlier table",
@@ -68,6 +89,27 @@
   "dynamic version, tool table version",
   "None",
   "None"
+ ],
+ [
+  "change-b",
+  "K4-control",
+  "version line inside a multiline description",
+  "'1.2.3'",
+  "'1.2.3'"
+ ],
+ [
+  "change-b",
+  "K4-control",
+  "quoted key",
+  "'1.2.3'",
+  "'1.2.3'"
+ ],
+ [
+  "change-b",
+  "K4-control",
+  "unicode escape",
+  "'1.2.3'",
+  "'1.2.3'"
  ],
  [
   "change-c",
@@ -112,6 +154,27 @@
   "{'demo': None}"
  ],
  [
+  "change-c",
+  "K2-control",
+  "indented frontmatter mapping",
+  "{'demo': 'demo'}",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "no frontmatter",
+  "no name read: {'demo': None} or a refusal",
+  "no name read: {'demo': None} or a refusal"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "a name after a body rule",
+  "no name read: {'demo': None} or a refusal",
+  "no name read: {'demo': None} or a refusal"
+ ],
+ [
   "change-d",
   "K1-control",
   "object_types first",
@@ -131,6 +194,27 @@
   "fact_types before object_types, later source id",
   "['title']",
   "['title']"
+ ],
+ [
+  "change-d",
+  "K1-control",
+  "inline comment on the header",
+  "['title']",
+  "['title']"
+ ],
+ [
+  "change-d",
+  "K1-control",
+  "indentless sequence",
+  "['title']",
+  "['title']"
+ ],
+ [
+  "change-d",
+  "K1-control",
+  "object_types: []",
+  "[]",
+  "[]"
  ],
  [
   "change-e",
@@ -154,6 +238,55 @@
   "'gnd-solve'"
  ],
  [
+  "change-e",
+  "K3-control",
+  "gnd-model-from-text/examples/movie_catalog.orm.yaml",
+  "'gnd-model-from-text'",
+  "'gnd-model-from-text'"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md",
+  "'gnd-model-from-text'",
+  "'gnd-model-from-text'"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "gnd-solve/scripts/nested/tool.py",
+  "'gnd-solve'",
+  "'gnd-solve'"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "gnd-solve/references/references/guide.md",
+  "'gnd-solve'",
+  "'gnd-solve'"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "../skills/gnd-solve/SKILL.md",
+  "'gnd-solve'",
+  "'..'"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "a relative path under an absolute root",
+  "'gnd-solve'",
+  "raises ValueError"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "a file outside the root",
+  "a refusal (raises)",
+  "'..'"
+ ],
+ [
   "change-f",
   "K1-planted",
   "object_types first",
@@ -175,6 +308,27 @@
   "['title', 'metadata']"
  ],
  [
+  "change-f",
+  "K1-planted",
+  "inline comment on the header",
+  "['title']",
+  "raises IndexError"
+ ],
+ [
+  "change-f",
+  "K1-planted",
+  "indentless sequence",
+  "['title']",
+  "[]"
+ ],
+ [
+  "change-f",
+  "K1-planted",
+  "object_types: []",
+  "[]",
+  "raises IndexError"
+ ],
+ [
   "change-g",
   "K3-planted",
   "gnd-update-review-panel/agents/openai.yaml",
@@ -194,6 +348,55 @@
   "gnd-solve/../gnd-adopt/SKILL.md",
   "'gnd-adopt'",
   "'gnd-adopt'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "gnd-model-from-text/examples/movie_catalog.orm.yaml",
+  "'gnd-model-from-text'",
+  "'examples'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md",
+  "'gnd-model-from-text'",
+  "'synthetic_good_user'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "gnd-solve/scripts/nested/tool.py",
+  "'gnd-solve'",
+  "'nested'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "gnd-solve/references/references/guide.md",
+  "'gnd-solve'",
+  "'references'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "../skills/gnd-solve/SKILL.md",
+  "'gnd-solve'",
+  "'gnd-solve'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "a relative path under an absolute root",
+  "'gnd-solve'",
+  "'gnd-solve'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "a file outside the root",
+  "a refusal (raises)",
+  "'..'"
  ],
  [
   "change-h",
@@ -222,5 +425,26 @@
   "dynamic version, tool table version",
   "None",
   "'9.9.9'"
+ ],
+ [
+  "change-h",
+  "K4-planted",
+  "version line inside a multiline description",
+  "'1.2.3'",
+  "'9.9.9'"
+ ],
+ [
+  "change-h",
+  "K4-planted",
+  "quoted key",
+  "'1.2.3'",
+  "None"
+ ],
+ [
+  "change-h",
+  "K4-planted",
+  "unicode escape",
+  "'1.2.3'",
+  "'1.2.\\\\u0033'"
  ]
 ]

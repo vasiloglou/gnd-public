@@ -10,6 +10,7 @@ scope and by any binding form, other than by importing it from the home.
 from __future__ import annotations
 
 import ast
+import importlib.util
 import sys
 from pathlib import Path
 
@@ -26,6 +27,25 @@ EXCEPTIONS = {
 _TYPE_PARAMS = tuple(getattr(ast, kind) for kind in ("TypeVar", "TypeVarTuple", "ParamSpec") if hasattr(ast, kind))
 
 
+_FUNCTION_SCOPES = (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)
+
+
+def _inert_annotations(node: ast.AST, in_function: bool = False) -> set[int]:
+    """Targets of bare annotations whose innermost scope is the module or a class body."""
+    found: set[int] = set()
+    for child in ast.iter_child_nodes(node):
+        if isinstance(child, ast.AnnAssign) and child.value is None and not in_function:
+            found.add(id(child.target))
+        if isinstance(child, _FUNCTION_SCOPES):
+            inner = True
+        elif isinstance(child, ast.ClassDef):
+            inner = False
+        else:
+            inner = in_function
+        found |= _inert_annotations(child, inner)
+    return found
+
+
 def _bindings(tree: ast.AST) -> list[tuple[str, str | None]]:
     """Every name the source binds, in any scope, with the module it is imported from.
 
@@ -34,13 +54,13 @@ def _bindings(tree: ast.AST) -> list[tuple[str, str | None]]:
     and walrus targets, ``for``, ``with`` and comprehension targets, ``global``
     writes), a function or lambda parameter, a type parameter, an import alias,
     a ``def`` or ``class`` name, an ``except ... as`` name and a ``match``
-    capture. A bare annotation (``X: int``) binds nothing, so its target is
-    skipped. The second item is the importing module for an import alias and
-    None for every other binding.
+    capture. A bare annotation (``X: int``) at module or class level binds
+    nothing, so its target is skipped; inside a function it makes the name
+    local, so there it counts. A star import yields ``("*", module)``. The
+    second item is the importing module for an import alias and None for
+    every other binding.
     """
-    bare_annotations = {
-        id(node.target) for node in ast.walk(tree) if isinstance(node, ast.AnnAssign) and node.value is None
-    }
+    bare_annotations = _inert_annotations(tree)
     found: list[tuple[str, str | None]] = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Name):
@@ -64,10 +84,61 @@ def _bindings(tree: ast.AST) -> list[tuple[str, str | None]]:
     return found
 
 
-def inventory_bindings(source: str) -> set[str]:
-    """Inventory names the source binds other than by importing them, unrenamed, from the home."""
+def _module_source(module: str) -> str | None:
+    """The source text of ``module``, "" for a compiled module, None when it cannot be found.
+
+    A sibling test module is looked up first, then the import system. A built-in,
+    frozen or extension module has no Python source, so it cannot define this
+    test-only inventory: it reads as an empty source.
+    """
+    sibling = ROOT / "tests" / f"{module}.py"
+    if sibling.is_file():
+        return sibling.read_text(encoding="utf-8")
+    try:
+        spec = importlib.util.find_spec(module)
+    except (ImportError, ValueError):
+        return None
+    if spec is None:
+        return None
+    if not spec.origin or not spec.origin.endswith(".py"):
+        return ""
+    return Path(spec.origin).read_text(encoding="utf-8")
+
+
+def _exported(tree: ast.AST) -> set[str] | None:
+    """The literal ``__all__`` of a module, or None when it declares none."""
+    for node in getattr(tree, "body", []):
+        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "__all__" for t in node.targets):
+            try:
+                return set(ast.literal_eval(node.value))
+            except ValueError:
+                return None
+    return None
+
+
+def inventory_bindings(source: str, *, _seen: frozenset[str] = frozenset()) -> set[str]:
+    """Inventory names the source binds other than by importing them, unrenamed, from the home.
+
+    A star import binds the names its module binds (limited to a literal
+    ``__all__``), so it is resolved and judged by the same rule. A module whose
+    source cannot be found is taken to bind every inventory name.
+    """
     home = Path(HOME).stem
-    return {name for name, origin in _bindings(ast.parse(source)) if name in NAMES and origin != home}
+    found: set[str] = set()
+    for name, origin in _bindings(ast.parse(source)):
+        if name == "*":
+            if origin == home or origin in _seen:
+                continue
+            text = _module_source(origin) if origin else None
+            if text is None:
+                found |= NAMES
+                continue
+            names = inventory_bindings(text, _seen=_seen | {origin})
+            exported = _exported(ast.parse(text))
+            found |= names if exported is None else names & exported
+        elif name in NAMES and origin != home:
+            found.add(name)
+    return found
 
 
 def test_the_inventory_has_one_home() -> None:
@@ -134,6 +205,17 @@ def test_the_guard_sees_every_binding_form() -> None:
             "    EXPECTED_SKILL_NAMES as EXPECTED_SKILL_FILE_COUNT,\n)"
         ),
         "from .test_packaged_skills import EXPECTED_SKILL_FILE_COUNT",
+        # Close review, F1: a star import from a module that binds its own inventory.
+        "from test_public_distribution_runtime import *",
+        "from .test_packaged_skills import *",
+        # Close review, F2: a bare annotation inside a function makes the name local.
+        (
+            "from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT\n\n"
+            "def f():\n    EXPECTED_SKILL_FILE_COUNT: int\n    return EXPECTED_SKILL_FILE_COUNT"
+        ),
+        "class C:\n    def m(self):\n        EXPECTED_SKILL_NAMES: frozenset",
+        "g = lambda: [EXPECTED_SKILL_FILES := 1]",
+        "from a_module_that_does_not_exist import *",
     ]
     if sys.version_info >= (3, 12):
         # Review round 2, F2: type parameters.
@@ -152,6 +234,13 @@ def test_the_guard_sees_every_binding_form() -> None:
         "def f(count=EXPECTED_SKILL_FILE_COUNT):\n    return count",
         # Review round 1, F3: a bare annotation binds nothing.
         "from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT\nEXPECTED_SKILL_FILE_COUNT: int",
+        "class C:\n    EXPECTED_SKILL_FILE_COUNT: int",
+        "def f():\n    class C:\n        EXPECTED_SKILL_FILE_COUNT: int",
+        # Star imports that bind no inventory name of their own.
+        "from test_packaged_skills import *",
+        "from os.path import *",
+        "from test_install import *",
+        "from math import *",
         "assert len(found) == EXPECTED_SKILL_FILE_COUNT",
         "del EXPECTED_SKILL_NAMES",
         "OTHER_COUNT = 71",

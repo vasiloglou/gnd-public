@@ -203,3 +203,27 @@ Delegated approval (`auto=true`), 2026-11-23, under
 rulings above. Budget: one recorded run, USD 50 ceiling; development probes
 count against it. No spec review. Compatibility: no existing file's format
 changes. The SHA-256 is in the phase record; findings go in §13.
+
+## 13. Implementation findings
+
+- **F1, `work_builds_on_method` is derived.** The model derives it from
+  `work_introduces_method` and `method_builds_on_method`; no producer reads it.
+  The labels leave it out: 31 facts, all anchored in a section, so §6's
+  document-grain fallback is never used. Refutes §6's "38 gold facts" and
+  LR3-D2's count.
+- **F2, the default byte budget (4,096) stops the targeted pass after two
+  sections.** The recorded run sets the budget to every source byte (7,708);
+  all 46 sections were read.
+- **F3, the fixture folder is `reference_fixture/`.** A `reference_set/`
+  folder beside `reference_set.py` would shadow nothing but reads as the
+  module's package; renamed after `reading_fixture/`.
+- **F4, the recorded run.** 46 calls, `claude-sonnet-5-5` only, USD
+  0.290965, plus one USD 0.012956 probe before the run: USD 0.30 of the USD
+  50 ceiling. Recall 9/31 after the broad pass, 27/31 after the targeted
+  pass; precision 9/10 and 18/23.
+- **F5, #245.** The run was recorded on `main` `a0270591`, before PR 245's
+  rule that no fact type may map to an empty list. The adapter never sends
+  one; the run replays to the same evidence under PR 245's `reading.py`
+  (an archive of its branch) and, after the merge, on `main` `f7fad6a1`.
+- **F6, review round 1.** Five findings, all fixed (`aec93739`); the
+  figures are unchanged.

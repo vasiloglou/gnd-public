@@ -425,11 +425,11 @@ Record LR3's one live reading run over the literature reference set.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SpendError` | class(RuntimeError) | 71 | (no docstring) |
-| `ClaudeCliProducer` | class | 75 | A reading producer that asks Claude Sonnet through the ``claude`` CLI, one call per section. |
-| `ClaudeCliProducer.produce(self, call) -> dict` | method | 110 | (no docstring) |
-| `record(out, root, *, command) -> dict` | function | 130 | (no docstring) |
-| `main(argv) -> int` | function | 158 | (no docstring) |
+| `SpendError` | class(RuntimeError) | 84 | (no docstring) |
+| `ClaudeCliProducer` | class | 88 | A reading producer that asks Claude Sonnet through the ``claude`` CLI, one call per section. |
+| `ClaudeCliProducer.produce(self, call) -> dict` | method | 124 | (no docstring) |
+| `record(out, root, *, command) -> dict` | function | 144 | (no docstring) |
+| `main(argv) -> int` | function | 172 | (no docstring) |
 
 ## tools.record_plan_apps — `tools/record_plan_apps.py`
 Components: unassigned

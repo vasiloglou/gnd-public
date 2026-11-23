@@ -1,0 +1,6 @@
+Replay of the recorded run under PR 245's reading.py, before PR 245 merged (2026-11-23).
+Tree: git archive origin/claude/literature-host-interfaces-admission src, plus this
+branch's reference_set.py and reference_fixture/, imported with python -I from that tree.
+reading.replay(run, fixture=root, expected_evidence_sha256=<run-record>) -> same evidence: True
+reference_set.score(run, root) == score.json: True
+After PR 245 merged, the LR3 lane ran on main f7fad6a1 merged in: see final-gate.txt.

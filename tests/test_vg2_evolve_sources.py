@@ -17,6 +17,7 @@ import pytest
 import test_evolve_additive_policy as policy
 import test_unattended_model_growth_acceptance as acceptance
 from support.cli_runner import run_main
+from support.markdown_sections import markdown_section
 
 REPO = Path(__file__).resolve().parents[1]
 REFUSAL = "new sample and common-sense constraints must be proposed/deontic (D-12)"
@@ -139,43 +140,8 @@ def test_T2_the_induction_refusal_still_comes_first(tmp_path):
 # --- T3 (VG2-C3): the three pages and the code agree --------------------------
 
 
-def _markdown_section(text: str, heading: str) -> str:
-    """The lines under the ATX heading line HEADING, up to the next heading of its level or above.
-
-    Fenced code blocks (a line opening with three or more backticks or tildes,
-    indented at most three spaces, closed by a run of the same character at
-    least as long) are skipped, so an example inside one is never read as the
-    section (VG2 review r1, F4).
-    """
-    level = len(heading) - len(heading.lstrip("#"))
-    fence = None
-    taken: list[str] | None = None
-    for line in text.splitlines(keepends=True):
-        stripped = line.lstrip(" ")
-        indent = len(line) - len(stripped)
-        marker = stripped[:1]
-        run = len(stripped) - len(stripped.lstrip(marker)) if marker in ("`", "~") else 0
-        if fence is None and indent <= 3 and run >= 3:
-            fence = (marker, run)
-        elif fence is not None and indent <= 3 and marker == fence[0] and run >= fence[1] \
-                and not stripped[run:].strip():
-            fence = None
-        elif fence is None and stripped.startswith("#"):
-            hashes = len(stripped) - len(stripped.lstrip("#"))
-            if line.rstrip("\n").rstrip() == heading:
-                taken = [line]
-                continue
-            if taken is not None and hashes <= level and stripped[hashes:hashes + 1] in (" ", "\n", ""):
-                break
-        if taken is not None:
-            taken.append(line)
-    if taken is None:
-        raise AssertionError(f"no heading {heading!r} outside a fenced block")
-    return "".join(taken)
-
-
 def _section(path: str, heading: str) -> str:
-    return _markdown_section((REPO / path).read_text(encoding="utf-8"), heading)
+    return markdown_section((REPO / path).read_text(encoding="utf-8"), heading)
 
 
 def test_T3_the_d12_home_its_restatement_and_the_growth_page_agree():
@@ -303,5 +269,5 @@ def test_R1_F4_a_fenced_copy_of_a_section_is_not_read_as_the_section():
     """F4: the section reader matched headings inside fenced examples."""
     text = ("# Page\n\n```markdown\n## Evolve admission (D-12)\n\n- A fenced example.\n```\n\n"
             "## Evolve admission (D-12)\n\n- The real rule.\n\n## Worked examples\n\n- after\n")
-    section = _markdown_section(text, "## Evolve admission (D-12)")
+    section = markdown_section(text, "## Evolve admission (D-12)")
     assert "The real rule." in section and "A fenced example." not in section and "after" not in section

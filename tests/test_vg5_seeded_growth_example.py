@@ -130,10 +130,13 @@ def test_T3_a_route_outside_the_list_refuses_the_include_root(tmp_path, grown):
 
 
 def test_T4_one_drafted_reply_per_issue_naming_its_pull_request():
+    from support.markdown_sections import markdown_section
+
     replies = (ROOT / ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/issue-replies.md").read_text()
+    headings = {line.split(":")[0][len("## Issue "):]: line for line in replies.splitlines()
+                if line.startswith("## Issue ")}
     for issue, pull in (("221", "pull request 239"), ("222", "pull request 240"), ("218", "pull request 240")):
-        section = replies[replies.index(f"## Issue {issue}"):]
-        section = section[:section.index("\n## ", 1)] if "\n## " in section[1:] else section
+        section = markdown_section(replies, headings[issue])
         assert pull in section, issue
         assert "release" in section, issue
 
@@ -149,3 +152,25 @@ def test_T5_the_growth_page_and_the_agents_pages_link_the_section_and_the_homes(
     assert "src/gnd/examples/seeded_growth/" in section
     for page in ("docs/agents/model-from-text.md", "docs/agents/evolve.md"):
         assert "unattended-growth.md#starting-from-a-reviewed-vocabulary" in (ROOT / page).read_text(), page
+
+
+# --- review round 1 (notes/reviews/phase-VG5-r1), regression cases ----------
+
+
+def test_R1_F1_the_route_list_names_discover_which_resolves_an_include_root(grown):
+    """F1: gnd discover resolves an include root, and the list said every unlisted route refuses."""
+    from gnd.discover.service import discover
+
+    result = discover(grown / "root.orm.yaml", grown / "population.json", families=("mandatory",),
+                      max_values=20, max_pairs=256)
+    assert result is not None
+    assert "| `gnd discover` |" in _route_list()
+
+
+def test_R1_F2_a_fenced_heading_inside_a_reply_does_not_end_its_section():
+    from support.markdown_sections import markdown_section
+
+    text = ("## Issue 221: x\n\n```markdown\n## Example output\n```\n\npull request 239; not released.\n\n"
+            "## Issue 222: y\n\nother\n")
+    section = markdown_section(text, "## Issue 221: x")
+    assert "pull request 239" in section and "other" not in section

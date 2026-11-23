@@ -144,3 +144,10 @@ showed that was the wrong axis.
 - The red tests of OQ3: listed, not diagnosed beyond their first assertion.
 - The baseline ran on beast-3's uv and Python, not the CI pin.
 - No merge, release or publication. PF2 is not started.
+
+## Ruling after the record (2026-11-23)
+
+OQ1 is ruled by **delegated approval (auto=true)** under the owner's
+`process-milestone pins-and-review-check auto`: keep `c1ecb8c1`; PF1's homes
+gain `tests/test_public_built_inventory.py` (spec amendment a1). OQ2 and OQ3
+go to the milestone close's question sweep.

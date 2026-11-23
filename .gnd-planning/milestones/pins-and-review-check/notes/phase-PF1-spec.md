@@ -189,3 +189,19 @@ This prose.
    4.2.1, in any scope, and exempts an import alias by alias. A copy in a
    function or class body now counts, which T2 previously listed as not
    bound; that row of §8 is superseded (r1 F1 repair).
+
+## Amendment a1 — delegated approval (auto=true), 2026-11-23
+
+- **Authorization:** the owner invoked `process-milestone pins-and-review-check
+  auto` on 2026-11-23, delegating plan, spec and close rulings for this
+  milestone only. This is an agent ruling under that delegation, not the
+  owner's reading.
+- **Ruling (PF1 record OQ1):** keep commit `c1ecb8c1`. §3's homes for PF1
+  gain `tests/test_public_built_inventory.py`. Prior wording kept: §3 of the
+  plan lists PF1's homes without it.
+- **Why:** the change is R0.1 applied to the one remaining copy the phase found
+  (an inline `70` and `18` beside the imported inventory). Round 1's
+  reviewer judged it correct, and without it the distribution lane stays red
+  at 71 files. It removes no check: the agreement assertions remain and read
+  the imported values.
+- **Bytes amended:** the spec above this section, sha256 `9b02046bf9f712c19f51e2166d9b10b4a26af30c711e1dd146fad222e556b83d`.

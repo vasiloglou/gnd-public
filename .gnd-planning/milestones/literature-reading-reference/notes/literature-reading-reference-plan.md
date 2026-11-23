@@ -1,7 +1,9 @@
-# Literature reading reference · plan r3
+# Literature reading reference · plan r4
 
-**Status: r3, 2026-11-23. Revised after the first panel round; not yet
-approved.** r2 was the full plan `start-milestone` wrote from outline r1
+**Status: r4, 2026-11-23. Approved under delegation (`auto=true`) in
+[001-plan-gate.md](../001-plan-gate.md).** r4 applies the second and final
+panel round's five fixes, listed in §12, as amendments ruled at the gate.
+r3 was the revision after the first panel round. r2 was the full plan `start-milestone` wrote from outline r1
 (2026-11-22, merged in PR 229). The owner delegated `auto=true` for this
 milestone on 2026-11-23 and selected the full GND panel for plan and close
 review (D6). The first round read r2
@@ -70,7 +72,7 @@ reply to #226, and a close review on the instrument D6 selects.
   corpora or models, and the page says so beside every figure.
 - **R0.3 No fidelity rate in the `verify` payload.** `gnd verify` keeps
   saying that checker acceptance is not proof of faithfulness
-  (`extraction-contract.md:152`); the reference figures live in the
+  (`src/gnd/skills/gnd-extract/references/extraction-contract.md:152`); the reference figures live in the
   example's own record.
 - **R0.4 Fixture bytes stay.** The packaged reading run, its pinned producer
   table and its recorded outputs are byte-identical after LR1 and LR2. LR3
@@ -100,10 +102,10 @@ Harvested obligations. "Observed" means read or run by the author at
 | H3 | the same probe, text output | one line under `BLOCKING (alethic)`: `[fail] <constraint_ref>: <message>`. The rows are not printed; the value appears only inside the message | observed | LR1 |
 | H4 | the same probe; `commands/checking.py:904` | the constraint's declared id (`subject_has_one_label`) is not in the payload. `gnd verify --rule-ids` is refused ("unrecognized arguments"); the flag exists on `gnd check` only | observed | LR1 (D7) |
 | H5 | `redaction.py:616-633` | when a model's redaction policy selects a verdict's roles, `message` becomes a fixed marker and `offending_facts` one marker row. A host of such a model sees which constraint failed and not the rows | observed by reading | LR1 |
-| H6 | `docs/guides/documents.md:62-72`; `extraction-contract.md:136-148` | the pages say "Read the `extraction` block and the semantic verdicts independently" and "REPORT IT" for exit 1. No page shows how to list the failing constraints and their rows from a verify report. `offending_facts` is shown on the expense and book tutorial pages, for the Python `check` call, and on no verify page | observed | LR1 |
+| H6 | `docs/guides/documents.md:62-72`; `src/gnd/skills/gnd-extract/references/extraction-contract.md:136-148` | the pages say "Read the `extraction` block and the semantic verdicts independently" and "REPORT IT" for exit 1. No page shows how to list the failing constraints and their rows from a verify report. `offending_facts` is shown on the expense and book tutorial pages, for the Python `check` call, and on no verify page | observed | LR1 |
 | H7 | #226 request 2; "What we measured" | 82 claims dropped host-side: 44 quoted text outside the shown section, 38 used a participant or predicate not in the quote. "Nearly half of our drops were quotes from elsewhere in the paper, and many looked correct" | inherited | LR2 |
 | H8 | `src/gnd/examples/literature/reading.py:176-193` | a producer response is `{outcome, facts, proposal_keys}`. There is no quote in it and no check of one. Each attempt records the shown section's span and `excerpt_sha256`, which binds the attempt to the section, not a claim to a quote | observed | LR2 |
-| H9 | `src/gnd/examples/literature/reading.py:390-392` | the document the example hands to `gnd verify` is the attempted sections of one pass joined with newlines, not the declared source and not one shown section. The example writes no anchor sidecar, so it is not a model for anchoring `(r3)` | observed | LR2 |
+| H9 | `src/gnd/examples/literature/reading.py:258-286`, `:390-395` | the example verifies two kinds of document. For the broad and targeted passes it is the attempted sections of one pass joined with newlines, not the declared source and not one shown section; for the reported conflict it is `conflict.txt` `(r4)`. Each verify writes an extraction sidecar that binds its document by digest, and no anchor sidecar, so the example is not a model for anchoring `(r3, r4)` | observed | LR2 |
 | H10 | `anchors.py:238-271`; `docs/reference/anchors.md:41-45` | `bind_anchors` requires the sidecar's `document_sha256` to equal the digest of the document bytes, and each anchor's span to lie inside that document with a matching `excerpt_sha256`; otherwise `anchor:binding-mismatch`. `block_id` and `unit_id` are free labels. So a quote is bound to a document version, never to a section | observed | LR2 |
 | H11 | `src/gnd/examples/literature/reading.py:93-112` | a roster section is `source`, `kind`, `span` (byte offsets, increasing per source) and `selection` (`opening` or `targeted`); an unavailable section has no span and a reason | observed | LR2, LR3 |
 | H12 | #226 request 1 | "A reference recall (and precision) for the literature-reading stages on a labelled set, with the stage settings that produced it" | inherited | LR3 |
@@ -152,7 +154,9 @@ H2, H3, H13 and H14.
 
 - One page section, "Reading a failed verification" (home: D8), gives the
   steps: run `gnd verify … --format json` with the model's includes beside
-  it (H2); the failing constraints are the `verdicts` with
+  it (H2), and with `--unredacted` or `GND_DISCLOSURE=internal` where the
+  disclosure policy allows the rows, citing `docs/reference/disclosure.md`
+  for that rule `(r4)`; the failing constraints are the `verdicts` with
   `verdict: "fail"` and `modality: "alethic"`, and the failing derivations
   are the `derivations` with `verdict: "fail"` (H23) `(r3)`; each names its
   constraint by `constraint_ref` and `constraint_type`, says what it
@@ -182,8 +186,8 @@ Proposed under D2 (b):
   cannot bind. Which document a host names is the host's choice, and the
   pages recommend the whole source version.
 - The packaged reading example is neither case: it verifies the attempted
-  sections of one pass joined with newlines and writes no anchor sidecar
-  (H9). Its README says so and says it is not a model for anchoring `(r3)`.
+  sections of one pass joined with newlines, or `conflict.txt` for the
+  reported conflict, and writes no anchor sidecar (H9) `(r4)`. Its README says so and says it is not a model for anchoring `(r3)`.
   r2 said the example verifies "against the shown section only", which was
   wrong.
 - `docs/literature/index.md:11` ("GND keeps each claim tied to its
@@ -200,8 +204,9 @@ Proposed under D2 (b):
 ### LR3 — a labelled reference set and one recorded run
 
 - A labelled set the example reads: either the packaged regression corpus
-  and its answer key (H24), extended where the reading stages need
-  sections, or a second fixture beside `reading_fixture/` (D1) `(r3)`.
+  and its answer key (H24), with an overlay beside it where the reading
+  stages need sections and no change to its bytes, or a second fixture
+  beside `reading_fixture/` (D1) `(r3, r4)`.
 - One live run over it through the producer protocol of LH1, recorded and
   replayed as LH2 specifies (D3). The record gives recall and precision per
   stage (broad, targeted) under the scoring rule of D4, and names the
@@ -215,7 +220,7 @@ Proposed under D2 (b):
 | Phase | Needs | Homes it changes |
 |---|---|---|
 | LR1 | D7 and D8 ruled, or the plan gate accepting their proposals | the home D8 names (proposed `docs/guides/documents.md`), `src/gnd/skills/gnd-extract/references/extraction-contract.md` (one citing line, absolute URL, H25), `docs/literature/commands.md` (one citing line), a new `tests/test_lr1_verify_failure_listing.py`, `docs/release-notes.md` |
-| LR2 | D2 ruled | `docs/reference/anchors.md`, `docs/literature/index.md`, `docs/literature/commands.md`, `src/gnd/examples/literature/README.md`, a new `tests/test_lr2_quote_scope.py`, `docs/release-notes.md` |
+| LR2 | D2 ruled | `docs/reference/anchors.md`, `docs/literature/index.md`, `docs/literature/commands.md`, `src/gnd/examples/literature/README.md`, a new `tests/test_lr2_quote_scope.py`, `docs/release-notes.md`, the interim draft in `notes/issue-reply.md` `(r4)` |
 | LR3 | LH1 and LH2 of literature-host-interfaces implemented and merged; D1, D3, D4 and D9 ruled | a new fixture folder under `src/gnd/examples/literature/` or the regression corpus (D1), `reading.py` only if LH1 leaves a scoring hook or a settings field to add (D9) `(r3)`, the literature pages, a new `tests/test_lr3_reference_set.py`, the packaged-example inventories the guards name, `notes/issue-reply.md` |
 
 Order: LR1 and LR2 in either order, LR3 last. The graph is acyclic. LR1 is
@@ -234,15 +239,18 @@ Fixtures. LR1 uses the packaged reading run's reported conflict
 exit 1) and its broad population (exit 0), staged with the model and its
 included vocabulary as H2 says. It authors in the test a deontic-only
 violation (the case of `tests/test_verify_cli.py:309`), a redacting copy of
-the reading model, and a derivation failure `(r3)`. LR2 authors one two-section
+the included vocabulary with `redact: true` on `subject_label` and the
+include re-pinned, and a derivation failure `(r3)`. The test runs with
+`GND_DISCLOSURE` unset, and the redacting case once under `internal`
+`(r4)`. LR2 authors one two-section
 source and its sidecars in the test. LR3's fixture is its own deliverable.
 
 ## 4. Phases
 
 | Phase | Criteria | Inherited residuals |
 |---|---|---|
-| LR1 | **LR1-C1** on the reported conflict, the documented steps give exactly one failing constraint, `fact_types[subject_label].constraints[0]`, kind `uniqueness`, with its two rows. **LR1-C2** on the broad population they give none, exit 0. **LR1-C3** every field name the page's section uses, at report level or verdict level, is a property in `report.schema.json` and a key of the live report at that level; the test takes the names from the section's code spans `(r3)`. **LR1-C4** a deontic-only violation is listed as a warning and not as a failure; a redacting model gives the marker and the page says so. **LR1-C5** the default `gnd verify` text and JSON for both sources are byte-identical before and after the phase (R0.1). **LR1-C6** `(r3)` every exit-1 fixture gives a non-empty listing, including a derivation failure | none |
-| LR2 | **LR2-C1** the rule is stated once, in `anchors.md`, and the literature pages cite it. **LR2-C2** a quote from a source's second section binds when the sidecar names the whole source. **LR2-C3** the same quote is refused with `anchor:binding-mismatch: source span or excerpt differs` when the sidecar's document is the first section alone `(r3)`. **LR2-C4** the packaged reading run replays byte-identical (R0.4). **LR2-C5** `(r3)` the example's README says its verify document is the joined attempted sections with no sidecar, and `index.md:11` cites the rule; the test reads both | none |
+| LR1 | **LR1-C1** on the reported conflict, the documented steps give exactly one failing constraint, `fact_types[subject_label].constraints[0]`, kind `uniqueness`, with its two rows. **LR1-C2** on the broad population they give none, exit 0. **LR1-C3** every field name the page's section uses, at report, constraint-verdict or derivation-verdict level, is a property of that level's definition in `report.schema.json` and a key of the live report at that level (derivation names from the derivation fixture); the names are a listed set in the test, each checked to occur in the section `(r4)`. **LR1-C4** a deontic-only violation is listed as a warning and not as a failure; a redacting model gives the marker and the page says so. **LR1-C5** the default `gnd verify` text and JSON for both sources are byte-identical before and after the phase (R0.1). **LR1-C6** `(r3)` every exit-1 fixture gives a non-empty listing, including a derivation failure | none |
+| LR2 | **LR2-C1** the rule is stated once, in `anchors.md`, and the literature pages cite it. **LR2-C2** a quote from a source's second section binds when the sidecar names the whole source. **LR2-C3** the same quote is refused with `anchor:binding-mismatch: source span or excerpt differs` when the sidecar's document is the first section alone `(r3)`. **LR2-C4** the packaged reading run replays byte-identical (R0.4). **LR2-C5** `(r3, r4)` the example's README says its verify documents are the joined attempted sections and, for the reported conflict, `conflict.txt`, each bound by an extraction sidecar and none by an anchor sidecar, and `index.md:11` cites the rule; the test reads both | none |
 | LR3 | **LR3-C1** the labelled set ships with a licence per source and a count of gold facts per fact type. **LR3-C2** replay of the recorded run makes zero producer calls and reproduces the figures byte for byte. **LR3-C3** the record gives recall and precision per stage, with numerator and denominator, and names the producer, budget and roster. **LR3-C4** a changed gold fact, a changed response and a changed section each change the figure or refuse; the scoring rule has one fixture that tells "found" from "found with the wrong predicate". **LR3-C5** the page shows the figures, the scoring rule and R0.2's sentence, beside #226's figures. **LR3-C6** the reply to #226 is drafted and names what is on `main` and what is not released | H18 |
 
 Each phase also runs the structure and inventory guards,
@@ -265,7 +273,9 @@ review and its record.
   and LR1-C5 at the same gate `(r3)`. r2 said "the default bytes stay either
   way", which was wrong for (b). LR3 adds a
   fixture and changes none.
-- **Issue reply.** The close drafts it; the owner posts it.
+- **Issue reply.** `(r4)` An interim draft covering requests 3 and 2 is
+  written in LR2 and updated when LR2 merges; the close writes the final
+  draft with LR3's figures. The owner posts both.
 
 ## 6. Risks and required controls
 
@@ -313,8 +323,9 @@ review and its record.
   that survives reproduction is fixed and recorded at the gate.
 - Phase-diff review: one independent reviewer in a different tool per phase
   (the owner's ruling, "Review helper, both") `(r3)`.
-- The plan gate is recorded in `001-plan-gate.md` once the owner rules D1–D9
-  or amends them.
+- The plan gate is recorded in `001-plan-gate.md` `(r4)`: it rules D1, D2,
+  D4, D5, D7, D8 and D9 under the delegation, records D6 as the owner's
+  ruling, and leaves D3 to the owner at LR3's spec gate (R0.5).
 - Each phase: spec, owner gate, change, focused gates, one independent
   reviewer over the diff, refactoring review, record, commit.
 - LR3's live run is an owner-selected step inside its phase, with the
@@ -331,7 +342,7 @@ review and its record.
 |---|---|---|
 | LR1 | `uv run pytest -q tests/test_lr1_verify_failure_listing.py tests/test_verify_cli.py tests/test_ld3_reading_workflow.py tests/test_documentation_tutorials.py --tb=short` | exit 0 |
 | LR2 | `uv run pytest -q tests/test_lr2_quote_scope.py tests/test_anchor_sidecar_v2.py tests/test_ld3_reading_workflow.py --tb=short` | exit 0 |
-| LR3 | `uv run pytest -q tests/test_lr3_reference_set.py tests/test_ld3_reading_workflow.py tests/test_ld4_revision.py tests/test_ld5_verdict.py --tb=short` | exit 0 |
+| LR3 | `uv run pytest -q tests/test_lr3_reference_set.py tests/test_ld3_reading_workflow.py tests/test_ld4_revision.py tests/test_ld5_verdict.py tests/test_li1_literature_corpus.py tests/test_li1_assurance_report.py --tb=short` `(r4)` | exit 0 |
 | all | the structure and inventory guard block of `project.md`, `uv run ruff check` `(r3)`, and `python3 scripts/components_index.py changed --base origin/main --strict` | exit 0 |
 
 The lanes name files that exist at `548b9a1d`, plus one new file per phase.
@@ -344,7 +355,7 @@ All rows are proposals until the plan gate rules them.
 
 | ID | Question | Proposed |
 |---|---|---|
-| D1 | LR3: the labelled set. (a) A small set written for the example from openly licensed papers. (b) The corpus run the literature-depth close carried (H18). (c) Ask the reporter for a redistributable slice of theirs. (d) `(r3)` Reuse or extend the packaged regression corpus and its answer key (H24) | (d) if LR3's spec shows the reading stages can read its documents as sources with sections; else (a). (b) stays carried `(r3)` |
+| D1 | LR3: the labelled set. (a) A small set written for the example from openly licensed papers. (b) The corpus run the literature-depth close carried (H18). (c) Ask the reporter for a redistributable slice of theirs. (d) `(r3, r4)` Reuse the packaged regression corpus and its answer key (H24), with any sections the reading stages need added as an overlay beside it; `corpus/`, `answers/` and `expected/` keep their bytes (R0.4). r3's "or extend", retired | (d) if LR3's spec shows the reading stages can read its documents as sources with sections; else (a). (b) stays carried `(r3)` |
 | D2 | LR2: the rule. (a) A quote must lie inside the section the model was shown. (b) A quote may lie anywhere in the document the sidecar names, and the pages recommend naming the whole source version and recording the section | (b). It is what `bind_anchors` enforces today (H10); (a) would need a new check and a section concept GND does not have `(r2)` |
 | D3 | LR3: the producer and its budget for the recorded run | Owner names one model and a ceiling; the run is recorded once and replayed after |
 | D4 | LR3: the scoring rule for "a gold fact is found" | Participant names plus the section the fact was read from overlapping the gold passage, with predicate agreement reported beside it; the scorer reuses `assurance_report.py`'s precision and recall counting (H24). A produced fact has no span of its own (H8), only its section's, so the figures are comparable to #226's only at section grain, and the page says so. If LH1 adds a per-fact span, LR3's spec may score by it `(r3)` |
@@ -388,3 +399,21 @@ staged beside the model, is in H2). Codex's note that `project.md` says
 `project.md` itself, which its later "Component index" section, `AGENTS.md`
 and the sibling plans contradict; the check stays, and the stale line is
 reported as a follow-up, not edited here.
+
+## 12. r4: the second panel round's fixes
+
+The second and final round
+([r3 panel](../../../reviews/literature-reading-reference-r3-panel/README.md))
+read r3 at SHA-256
+`a1ab8a9c87e7b733eea0b42a5306173385e4c9c44319b96767af82ac0172a299`. Three of
+six seats succeeded (quorum); none raised a blocking concern. Under the stop
+rule of §8 there is no third round: the five fixes are applied here and
+ruled at the plan gate.
+
+| Fix | What r4 changes | Sites |
+|---|---|---|
+| fix-interim-reply | the interim reply is an LR2 deliverable; §5 names both drafts | §3 LR2 row, §5 |
+| fix-example-verify-paths | both verify paths; "no anchor sidecar" | H9, §2 LR2, LR2-C5 |
+| fix-corpus-reuse-only | D1 (d) reuses the corpus with an overlay and changes none of its bytes; the LR3 lane names its tests | §2 LR3, D1, §9 |
+| fix-lr1-disclosure-and-levels | LR1 cites the disclosure home; the redacting fixture edits the vocabulary; `GND_DISCLOSURE` pinned; three-level field check | §2 LR1, §3 Fixtures, LR1-C3 |
+| fix-plan-gate-wording | the gate rules under delegation; full skill path | §8, R0.3, H6 |

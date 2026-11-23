@@ -1,0 +1,483 @@
+{
+ "schema_version": 1,
+ "run_sha256": "b5124eb719517ccd3b2393a52fbe5c16338edb4ecec13cd81247421755acd5a5",
+ "summary": "Four of six seats returned schema-valid reviews of plan r1 (claude, codex, kimi, glm); all four asked for revision. Qwen exited nonzero and Gemini returned no JSON, so neither contributes an opinion. Two groups are rated high: the trust boundary of an exempt include (D3) and the predicate of the first-document exception (D4). Three more groups reach two supporters: VG1's machine-dependent bounds, the missing D2 (b) branch, and one citation. Twelve concerns have one supporter each; R0.4's wording is raised by kimi alone and, as a secondary remark, inside one claude concern.",
+ "agreed_concerns": [
+  {
+   "group_id": "include-trust",
+   "severity": "high",
+   "title": "The include exemption lets an unattended root carry unreviewed claims as if reviewed",
+   "summary": "D3 (a) exempts every included element from U2-U6 and U8, but standalone include validation establishes validity, not review: a file the unattended host writes itself can carry confirmed, explicit or alethic claims. The section 6 control (attribution lines and pins) reports the include and does not establish that an owner reviewed it.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d3-include-launders-unreviewed-content"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "reviewed-include-trust"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "first-document-predicate",
+   "severity": "high",
+   "title": "D4's 'owns no element' predicate for the U1 exception is under-defined",
+   "summary": "The exception names object types, fact types and constraints. It does not say how ownership is decided on a composed document, whether an attached constraint counts, whether operations and obligations count, or that the reviewer half of U1 stays in force. VG4-C3 tests none of these boundaries.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-owned-element-definition"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "first-document-owned-operations"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "vg1-machine-dependent-bounds",
+   "severity": "medium",
+   "title": "VG1's absolute wall-clock bounds depend on the machine",
+   "summary": "VG1-C2, C3 and C5 are thresholds in seconds calibrated from one laptop, once. Both reviewers ask for a machine-independent invariant (a ratio or a call count) as the required gate, with the absolute bound relative to a same-run baseline or in an opt-in lane.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg1-absolute-time-bounds"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "vg1-machine-dependent-gate"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "d2b-branch-missing",
+   "severity": "medium",
+   "title": "A D2 (b) ruling leaves VG2 and VG5 unspecifiable as written",
+   "summary": "Section 3 carries the D3 (b) branch forward but not the D2 (b) branch. VG2-C1 and VG5's round 2 use a new sample constraint, which _enforce_d12 keeps refusing under (b).",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-001"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "d2b-branch-vg5-round2"
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "h13-u8-citation",
+   "severity": "low",
+   "title": "H13's line range anchors U5 and not U8",
+   "summary": "H13 cites _unattended.py:56 and :211-222 for both U5 and U8; the U8 constant is at :58 and the check at :229-234.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-002"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h13-u8-line-range"
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "r04-criteria-miss-u6-u7-u8"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "u7-status-ambiguous"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "compat-claim-false-unattended-include-roots"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "vg3-c8-no-producer"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "vg4-lane-omits-u1-tests"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "vg1-c1-base-commit-oracle"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "d9-no-criterion-or-home"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "include-attribution-per-element"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "rvg-r1-003"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "lint-gate-conflicts-project-guard"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "vg1-c1-examples-path"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "include-attribution-validate-only"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-include-trust",
+   "rank": 1,
+   "title": "State the trust boundary of an exempt include and narrow or count what it carries",
+   "action": "Decide in the plan what makes an include exempt (for example a declared non-none reviewer in the included file, or keeping U8 for included constraints that are not confirmed), widen the attribution counts beyond confirmed, add a VG3 criterion for an included file that carries an unconfirmed alethic constraint, and state the remaining trust assumption in section 6 as a named limit.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d3-include-launders-unreviewed-content"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "reviewed-include-trust"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d3-include-launders-unreviewed-content",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "reviewed-include-trust",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-first-document-predicate",
+   "rank": 2,
+   "title": "Define the U1 exception over the whole root-authored claim surface",
+   "action": "Define 'owns' by the same origin test VG3 uses, count attached constraints, operations and obligations, say that reviewer: none stays required, and add VG4-C3 cases at each boundary.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-owned-element-definition"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "first-document-owned-operations"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-owned-element-definition",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "first-document-owned-operations",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-u-rule-coverage",
+   "rank": 3,
+   "title": "Settle U7 for included elements and test every U rule on root-owned elements",
+   "action": "List U7 in the D3 exemption for spans an included element carries, and extend VG3-C2 and VG3-C3 to one root-owned case each for U6, U7 and U8, with the U8 case on a constraint attached to an included fact type.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "r04-criteria-miss-u6-u7-u8"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "u7-status-ambiguous"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "r04-criteria-miss-u6-u7-u8",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "u7-status-ambiguous",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-compatibility-claim",
+   "rank": 4,
+   "title": "Correct the compatibility statement for unattended include roots that validate today",
+   "action": "Remove the claim that the current release admits no unattended include root, decide whether an included span naming a root-declared document is still re-hashed, and pin the validate output of a root the current release admits.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "compat-claim-false-unattended-include-roots"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "compat-claim-false-unattended-include-roots",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-d2b-branch",
+   "rank": 5,
+   "title": "Carry the D2 (b) branch into sections 3 and 4",
+   "action": "Add the D2 (b) variant of VG2's criteria and of VG5's round 2 beside the D3 (b) note.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-001"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "d2b-branch-vg5-round2"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-001",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "d2b-branch-vg5-round2",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-vg1-gates",
+   "rank": 6,
+   "title": "Make VG1's required gates machine-independent and name its oracle and corpus",
+   "action": "Make the ratio and the call count the required gates and state where the absolute bounds run, name the frozen reference VG1-C1 compares against, name src/gnd/examples as the corpus, and give D9's measurement a criterion and a conditional home.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg1-absolute-time-bounds"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "vg1-machine-dependent-gate"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg1-c1-base-commit-oracle"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d9-no-criterion-or-home"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "vg1-c1-examples-path"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg1-absolute-time-bounds",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "vg1-machine-dependent-gate",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg1-c1-base-commit-oracle",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d9-no-criterion-or-home",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "vg1-c1-examples-path",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-attribution-claims",
+   "rank": 7,
+   "title": "Make the attribution promise match what the criteria show",
+   "action": "Either add a per-element attribution output or reword the VG3 predicate to per-include lines plus diagnostic prefixes, say why validate-only attribution is enough or extend it, and restate VG3-C8 as a test with a reachable producer.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg3-c8-no-producer"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "include-attribution-per-element"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "include-attribution-validate-only"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg3-c8-no-producer",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "include-attribution-per-element",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "include-attribution-validate-only",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-lanes-and-lint",
+   "rank": 8,
+   "title": "Add the U1 tests to VG4 and reconcile the lint gate with project.md",
+   "action": "Add tests/test_unattended_mode.py to VG4's homes and lane, re-measure whole-repository ruff and record which statement is stale in D11.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg4-lane-omits-u1-tests"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lint-gate-conflicts-project-guard"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "vg4-lane-omits-u1-tests",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lint-gate-conflicts-project-guard",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-wording-and-citations",
+   "rank": 9,
+   "title": "Repair R0.4's wording and H13's citation",
+   "action": "Rewrite R0.4's second sentence and extend H13's citation to :58 and :229-234.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-002"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h13-u8-line-range"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-003"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-002",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h13-u8-line-range",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "rvg-r1-003",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi",
+    "glm"
+   ]
+  }
+ ]
+}

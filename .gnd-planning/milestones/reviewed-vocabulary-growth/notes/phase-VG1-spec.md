@@ -1,21 +1,25 @@
-# Phase VG1 · checker cost in the number of object types · spec r1
+# Phase VG1 · checker cost in the number of object types · spec r2
 
 ## 1. Status
 
 **Draft, awaiting owner review. Implementable once the plan gate approves
-plan r1 and the owner signs off this spec.** Written by `start-milestone` on
-2026-11-22; `process-phase` has not run and no owner gate is recorded.
+plan r2 and the owner signs off this spec.** Written by `start-milestone` on
+2026-11-22; `process-phase` has not run and no owner gate is recorded. r2 of
+2026-11-23 follows plan r2: its changes are tagged `(p1)` where a panel
+finding caused them and `(m)` where the author corrected them.
 
 ## 2. Provenance
 
-- Derives from [plan r1](reviewed-vocabulary-growth-plan.md), Goal (VG1), §0
-  (R0.1, R0.2), §1 (H1–H10, H27–H29), §2 (VG1), §4 (VG1-C1 to VG1-C6), §9
-  (the VG1 lane) and §10 (D9, D10, D12). The plan is not reviewed and not
-  approved.
+- Derives from [plan r2](reviewed-vocabulary-growth-plan.md), Goal (VG1), §0
+  (R0.1, R0.2), §1 (H1–H10, H27–H29), §2 (VG1), §4 (VG1-C1 to VG1-C8), §9
+  (the VG1 lane) and §10 (D9, D10, D12). The plan was reviewed once, at r1,
+  and is not approved.
 - From [#221](https://github.com/vasiloglou/gnd-public/issues/221) and the
   include-root-routes IR1 spec, finding i1
   (`../../include-root-routes/notes/phase-IR1-spec.md`).
-- No review has read these bytes.
+- The plan review of 2026-11-23 had plan r1 as its subject. Five of its 22
+  concerns are about VG1 and are answered here and in plan r2. No review has
+  had this spec as its subject, and none has read r2.
 - Every code citation was read at `4ad0d216`. Measurements were run on that
   commit on 2026-11-22, on one laptop, once each unless a row says otherwise.
 
@@ -39,6 +43,9 @@ plan r1 and the owner signs off this spec.** Written by `start-milestone` on
 | VG1-C3 | three more shapes and the fact-type control, same bound | T4, T5, T6, T7 |
 | VG1-C4 | 2,000 costs at most 3 times 1,000, four shapes | T11 |
 | VG1-C5 | `gnd judgments check` under 20 s at 1,000 | T8 |
+| VG1-C7 `(p1)` | one check builds the supertype map the same number of times at two sizes, at most 100 | T9 |
+| VG1-C8 `(p1)` | `gnd verify` at 1,000 extra value types is measured at the base commit and at the head; over 10 s, the witness oracle gets its own table | VG1-D5; the experiment, which records both figures |
+| plan §4, "Which gate is which" `(p1)` | the gates that read no clock are the required regression gates | T1, T9, T10 (§8, closing paragraph) |
 | plan §9 | the VG1 lane, the guard block, `uv run ruff check src tests tools` | §8, closing paragraph |
 | plan H28 | component index updated in the same commit | §6, reuse table; §8 |
 | `AGENTS.md`, "Refactoring dependency homes" | moved names keep explicit identity aliases; patch the defining home | §6 (`universe.py`: names, aliases and `__module__` lines unchanged) |
@@ -185,7 +192,7 @@ types over them).
 
 | # | Case | Expected |
 |---|---|---|
-| T1 | for every model that loads under `src/gnd/examples/` and `tests/fixtures/`, and every object type: `reference_value_types()[id]` equals `resolve_reference_value_type(id, model)`; `_denoting_types`, `_descendant_closure` and `_kind_of` equal frozen copies of their bodies at `4ad0d216`, kept in the test file | equal; the count of models compared is asserted to be at least 200 |
+| T1 | for every model that loads under `src/gnd/examples/` and `tests/fixtures/`, and every object type: `reference_value_types()[id]` equals `resolve_reference_value_type(id, model)`; `_denoting_types`, `_descendant_closure` and `_kind_of` equal frozen copies of their bodies at `4ad0d216`, kept in the test file; `_universe_types` equals a frozen copy that calls those frozen walks `(m)` | equal; the count of models compared is asserted to be at least 200 |
 | T2 | a `Model` with a two-type subtype cycle; one whose `subtype_of` names an undeclared id; an entity type with no reference; a subtype with two supertypes resolved by two value types; a code-built `Model` with a duplicate id | each walk returns what its frozen copy returns; no exception |
 | T3 | `values`, N = 1,000: `gnd check` in process on the checking root | exit and constraint verdicts equal to N = 0; under 10 s |
 | T4 | `entities`, N = 1,000 | as T3 |
@@ -208,6 +215,12 @@ cases, which no loadable fixture is guaranteed to hold.
 Gate: the plan §9 VG1 lane with this file, the guard block of `project.md`,
 `uv run ruff check src tests tools`, and
 `python3 scripts/components_index.py changed --base origin/main --strict`.
+
+Which test is which `(p1)`. T1, T2, T9, T10, T12 and T13 read no clock; T1,
+T9 and T10 are the required regression gates of plan §4. T11 compares two
+sizes on one machine. T3–T8 are absolute bounds: they depend on the machine,
+are judged on the one that runs the sweep below, and stay in the default
+lane as coarse guards, 7.7 times or more above the prototype's figures.
 
 ## 9. Out of scope for this phase
 

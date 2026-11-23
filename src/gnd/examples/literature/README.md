@@ -352,6 +352,13 @@ The [multipass reading example](reading_fixture/README.md) shows how a
 targeted pass recovers a methods fact, records source coverage and
 replays completed stages without calling its producer.
 
+The reading example verifies two kinds of document: for the broad and
+targeted passes, the attempted sections of that pass joined with newlines,
+and for the reported conflict, `conflict.txt`. Each verification binds its
+document by digest in an extraction sidecar. The example writes no anchor
+sidecar, so it is not a model for anchoring quotes; see
+[where a span may lie](https://vasiloglou.github.io/gnd-public/reference/anchors/#where-a-span-may-lie).
+
 ## Semantic revision
 
 The [release migration example](revision_fixture/README.md) traces a whale

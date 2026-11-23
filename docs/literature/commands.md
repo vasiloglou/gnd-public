@@ -289,6 +289,14 @@ witness: [2, 3, 'ps'] proved
 replay exit: 0
 ```
 
+An anchor binds a value to the document its sidecar names, anywhere in it
+([where a span may lie](../reference/anchors.md#where-a-span-may-lie)). If
+your host shows its model one section of a paper at a time and wants quotes
+from anywhere in the paper, name the whole source version as the anchor
+document and record the section the model was shown in `block_id`. If the
+sidecar names only the shown section, a correct quote from another section
+is refused with `anchor:binding-mismatch`.
+
 ## Act 3. Read again, and find more each time
 
 Run the multipass reading example. First, list what each pass read, what

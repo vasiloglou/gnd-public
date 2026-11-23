@@ -27,7 +27,7 @@ Plan r4 repairs the eight points its two returned reviews raised, tagged
 | VG1 | `gnd check` cost about linear in the number of object types (#221) | done 2026-11-23: [record](002-phase-VG1.md), [spec](notes/phase-VG1-spec.md) (delegated approval, `auto=true`) |
 | VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | done 2026-11-23: [record](004-phase-VG2.md), [spec](notes/phase-VG2-spec.md) (delegated approval, `auto=true`) |
 | VG3 | an unattended root may include a reviewed vocabulary (#222) | done 2026-11-23: [record](003-phase-VG3.md), [spec](notes/phase-VG3-spec.md) (delegated approval, `auto=true`) |
-| VG4 | growth rounds on that root, and its first source document (#222) | [spec](notes/phase-VG4-spec.md) approved (delegated); cleared by the coordinator, next |
+| VG4 | growth rounds on that root, and its first source document (#222) | done 2026-11-23: [record](005-phase-VG4.md), [spec](notes/phase-VG4-spec.md) (delegated approval, `auto=true`) |
 | VG5 | one packaged example, the pages and the three issue replies | [spec](notes/phase-VG5-spec.md) approved (delegated); needs VG2 and VG4 |
 
 [Plan](notes/reviewed-vocabulary-growth-plan.md). Listed in the

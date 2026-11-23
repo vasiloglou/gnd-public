@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**Approved by delegated ruling (auto=true), 2026-11-23** `(d)`, under the
+**Approved by delegated ruling (auto=true), 2026-11-23; implemented, recorded in [005-phase-VG4.md](../005-phase-VG4.md)** `(d)`, under the
 owner's `process-milestone reviewed-vocabulary-growth auto` of 2026-11-23;
 the driving agent's ruling, not the owner's reading. Implementation waits
 for GO1 of growth-round-outcomes on `main` and for the milestone
@@ -163,3 +163,32 @@ About 40 source lines, 20 page lines, 300 test lines.
 ## 11. Approval instrument
 
 This prose (VG4-D3).
+
+## Implementation findings, recorded as they were found `(d)`
+
+2026-11-23, at `002dc86e`, on the branch holding `main` with GO1
+(`11ca75b0`). `_source_document_target` and `enforce_ownership` were
+unchanged by GO1; every citation held.
+
+1. **The first-document add is limited to unattended models.** §6 said the
+   add creates the list "on a model whose `source` is a mapping without
+   `documents`". The code also requires `source.mode: unattended`, so a
+   model without the mode keeps today's refusal (plan R0.3). Prior wording
+   kept above.
+2. **Refusal cases need the authored root as the candidate.** An operation
+   on an included element cannot be replayed on the authored file (the
+   discovery replay helper finds no such element), and ownership is refused
+   before the candidate is read. T2 and T4 build their proposals with the
+   authored root as the candidate.
+3. **T5 is narrower than its row.** It holds that `--populated` naming an
+   included fact type refuses an attached constraint with the same cell as
+   on any model, and that `--check-population` reads the composed root. It
+   does not compare against a flattened copy of the root.
+4. **A known timing flake.** One run of the VG3 and VG2 lanes failed one
+   test and three reruns passed (246 each); the same lanes' MC1 T22 timing
+   test (median of three, linear against a quadratic mutant) flaked once in
+   VG3's first run too.
+5. **Review r1 (Codex), F1, fixed at the commit after `002dc86e`.** A
+   present `documents: null` passed the first-document rule, which the
+   first round's add cannot extend. The rule admits only an absent key or
+   an empty list, as plan D4 says.

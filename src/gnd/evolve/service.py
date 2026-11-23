@@ -26,6 +26,7 @@ from gnd.artifacts import (
 from gnd.conformance.report import canonical as canonical_conformance
 from gnd.conformance.service import run_conformance
 from gnd.model import ModelLoadError, ModelValidationError
+from gnd.model._parsing import parse_scoped
 from gnd.model_verbalization import render_model_verbalization
 from gnd.safefs import (
     InstallError,
@@ -1517,6 +1518,7 @@ class EvolutionService:
         )
         return model, document, _validation_for(model, candidate)
 
+    @parse_scoped  # GO1: re-entrant, so the command line opens one scope
     def preview(
         self,
         proposal: EvolutionProposal,
@@ -2107,6 +2109,7 @@ class EvolutionService:
             f"`gnd evolve finalize <model> {pending_path}` before starting a new evolution"
         )
 
+    @parse_scoped
     def apply(
         self, preview: EvolutionPreview, *, check_population: str | None = None
     ) -> EvolutionFinalizationState:
@@ -2374,6 +2377,7 @@ class EvolutionService:
     def final_record_file_sha256(self, record: EvolutionRecord) -> str:
         return sha256_hex(canonical_json_bytes(record))
 
+    @parse_scoped
     def finalize(self, state: EvolutionFinalizationState) -> EvolutionRecord:
         """Complete exact post-CAS leaves and publish the immutable D-13 record last."""
 

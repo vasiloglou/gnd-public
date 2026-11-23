@@ -13,7 +13,6 @@ model content while serving a call. A nested scope joins the outer one.
 from __future__ import annotations
 
 import hashlib
-import json
 from collections import OrderedDict
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -26,6 +25,7 @@ from types import MappingProxyType
 from typing import Any, Literal
 
 from gnd import artifacts
+from gnd import input_policy as _rf7_input
 from gnd.address import positional_constraint_ref
 from gnd.documents import Model
 from gnd.model_queries import _identifying_id, _resolve_reference, _supertype_parents, primitive_for
@@ -299,7 +299,12 @@ class ModelIndex:
         def build() -> dict[str, Any]:
             if self.digest is None:
                 return self._document  # uncacheable, so never shared with another model
-            return json.loads(artifacts.canonical_json_bytes(self._document))
+            try:
+                return _rf7_input.loads(artifacts.canonical_json_bytes(self._document))
+            except (ValueError, RecursionError):
+                # Over the routed reader's 10 MB or 64-level caps: the cached rows,
+                # as before VG1 (a residual the VG1 record names).
+                return self._document
         return self._table('canonical', build)
 
     def _canonical_objects(self) -> dict[str, dict[str, Any]]:

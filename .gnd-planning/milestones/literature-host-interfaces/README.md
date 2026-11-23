@@ -2,8 +2,12 @@
 
 Plan r6, 2026-11-23, from [issue #216](https://github.com/vasiloglou/gnd-public/issues/216)
 and [issue #215](https://github.com/vasiloglou/gnd-public/issues/215).
-**Plan approved by the owner on 2026-11-23** ([plan-gate record](001-plan-gate.md),
-r6 sha256 `2dc760e5…1528`), with every decision ruled. The full panel
+**Closed on 2026-11-23** ([close record](006-milestone-close.md)): all four
+phases recorded, the full GND panel ran on the close, and the plan is r6
+with close amendments A1 to A4. Pull requests #241 and #245 are open; merging
+is the owner's. Plan approved by the owner on 2026-11-23
+([plan-gate record](001-plan-gate.md), r6 sha256 `2dc760e5…1528`), with every
+decision ruled. The full panel
 reviewed r4 and r5; r6 answers the second round and is not itself reviewed.
 Nothing is implemented, and no phase spec is approved.
 

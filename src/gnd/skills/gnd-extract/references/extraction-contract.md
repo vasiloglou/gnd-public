@@ -142,7 +142,7 @@ text and do not render it.
 | The sidecar has an unknown field, a missing digest, or an unsafe path | `extraction:sidecar-invalid`, state `failed` | 3 | fix the sidecar against §3 |
 | A recorded digest does not match the file bytes | `extraction:binding-mismatch`, state `failed` | 3 | recompute digests after the last write and rewrite the sidecar |
 | The header disagrees with the model | `extraction:header-mismatch`, state `failed` | 3 | re-copy `header_template` verbatim (§4) |
-| The checker found an alethic violation | verdicts on the checker channel, state `ran` | 1 | REPORT IT — the document describes a world that violates the model |
+| The checker found an alethic violation | verdicts on the checker channel, state `ran` | 1 | REPORT IT — the document describes a world that violates the model; to list the failing constraints and their rows, see [Reading a failed verification](https://vasiloglou.github.io/gnd-public/guides/documents/#reading-a-failed-verification) |
 | The population is vacuous | state `ran` | 2 | report it; a document that supports no facts is a finding |
 | The checker could not decide | state `ran` | 4 | report it |
 | Everything held | state `ran` | 0 | report it |

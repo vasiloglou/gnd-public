@@ -26,6 +26,11 @@ the next one.
 - **Unencodable include paths.** An include path that cannot be encoded as
   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
   error itself, and the PyRel export exited 70.
+- **Reading a failed verification.** The documents guide shows how to list
+  the constraints and derivations a `gnd verify` exit 1 failed, with the
+  violating rows, from the JSON report, with a runnable example on the
+  literature reading example's conflicting labels. `gnd verify` itself is
+  unchanged ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
 
 ## 0.4.0 (2026-11-17)
 

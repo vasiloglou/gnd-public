@@ -338,6 +338,10 @@ conflicting labels, verify and check exits: {'check': 1, 'verify': 1}
 absence: {'below_floor_status': 'unavailable', 'status': 'qualified'} recall {'high': [2, 2], 'low': [1, 2]}
 ```
 
+The conflicting labels exit `1` on purpose. To see which constraint they break,
+and on which rows, follow
+[Reading a failed verification](../guides/documents.md#reading-a-failed-verification).
+
 Then list what the run says about each question:
 
 <!-- gnd-run expect=0 output=stdout -->

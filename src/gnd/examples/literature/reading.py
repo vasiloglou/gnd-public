@@ -200,6 +200,19 @@ def _canonical(value: object, what: str) -> bytes:
         raise ExampleError(f"{what} is not serializable JSON") from error
 
 
+def _utf8(raw: bytes, what: str) -> None:
+    try:
+        raw.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise ExampleError(f"{what} is not UTF-8 text") from error
+
+
+SHA256 = re.compile(r"[0-9a-f]{64}\Z")
+SOURCE_KEYS = frozenset({"id", "version", "path", "sha256"})
+SECTION_KEYS = frozenset({"id", "source", "kind", "selection", "keys", "span", "reason"})
+QUESTION_KEYS = frozenset({"id", "section", "fact", "required", "superseded_by", "denial"})
+
+
 def _fact_rows(value: object, what: str) -> dict:
     """The one row validator: fact-type names mapped to rows of role names and scalar values."""
     _need(isinstance(value, dict), f"invalid {what}")
@@ -344,23 +357,32 @@ class ReadingInputs:
             self.raw["reviews.json"] = read("reviews.json")
             self.reviews = _decode(self.raw["reviews.json"], max_bytes=cap)
             _canonical(self.reviews, "saved reviews")
-            _need(all(name in self.response_sections and isinstance(receipt, dict)
+            for name, receipt in self.reviews.items():
+                _need(name in self.response_sections and isinstance(receipt, dict)
                       and set(receipt) == {"basis", "decision", "excerpt_sha256", "facts_sha256"}
                       and all(isinstance(item, str) for item in receipt.values())
-                      for name, receipt in self.reviews.items()), "invalid saved reviews")
+                      and len(canonical_json_bytes(receipt)) <= self.limits.response_bytes,
+                      "invalid saved reviews")
+                _need(receipt["decision"] == "supported" and bool(receipt["basis"])
+                      and receipt["excerpt_sha256"] == sha256_hex(self.source_range(self.sections[name]))
+                      and SHA256.fullmatch(receipt["facts_sha256"]) is not None,
+                      "stale semantic reading review")
 
     def _roster(self, roster, read, limit):
         _need(roster.get("format") == "literature-reading-roster/1", "invalid reading roster format")
         self.sources = _rows_by_id(roster.get("sources"), limit)
         self.sections = _rows_by_id(roster.get("sections"), limit)
         self.questions = _rows_by_id(roster.get("questions"), limit)
+        for rows, keys in ((self.sources, SOURCE_KEYS), (self.sections, SECTION_KEYS),
+                           (self.questions, QUESTION_KEYS)):
+            _need(all(keys <= set(row) for row in rows.values()), "incomplete reading roster row")
         self.documents = {}
         for name, source in self.sources.items():
             _need(source.get("path") == f"{name}.txt" and isinstance(source.get("version"), str),
                   "invalid reading source location")
             document = read(source["path"])
             _need(sha256_hex(document) == source.get("sha256"), "stale reading source")
-            document.decode("utf-8")
+            _utf8(document, "reading source")
             self.documents[name] = document
             self.raw[source["path"]] = document
         last_end: dict[str, int] = {}
@@ -377,7 +399,7 @@ class ReadingInputs:
                 _need(isinstance(span, list) and len(span) == 2 and all(type(x) is int for x in span)
                       and last_end.get(source, 0) <= span[0] < span[1] <= len(self.documents[source])
                       and selection in ("opening", "targeted"), "invalid reading span")
-                self.documents[source][span[0]:span[1]].decode("utf-8")
+                _utf8(self.documents[source][span[0]:span[1]], "reading span")
                 last_end[source] = span[1]
                 self.response_sections.add(section["id"])
             keys = section.get("keys")

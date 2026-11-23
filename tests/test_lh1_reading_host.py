@@ -705,3 +705,70 @@ def test_r4_a_superseded_required_question_stays_with_its_own_source(tmp_path):
     report = reading.run(tmp_path / "run", fixture=root, producer=Empty())
     documents = {row["source"]: row["stop"] for row in report["documents"]}
     assert documents == {"survey-a": "available-evidence-exhausted", "survey-b": "required-coverage-completed"}
+
+
+def _saved_review(root, **changes):
+    roster = json.loads((root / "roster.json").read_bytes())
+    span = next(row["span"] for row in roster["sections"] if row["id"] == "a-opening")
+    excerpt = (root / "survey-a.txt").read_bytes()[span[0]:span[1]]
+    facts = ANSWERS["a-opening"]["facts"]
+    receipt = {"basis": "the opening names the title", "decision": "supported",
+               "excerpt_sha256": sha256_hex(excerpt), "facts_sha256": sha256_hex(canonical_json_bytes(facts))}
+    receipt.update(changes)
+    (root / "reviews.json").write_bytes(canonical_json_bytes({"a-opening": receipt}))
+
+
+ONLY_TITLE = {**{name: {"outcome": "empty", "facts": {}, "proposal_keys": []} for name in ANSWERS},
+              "a-opening": ANSWERS["a-opening"]}
+
+
+def test_r5_a_long_saved_receipt_refuses_before_any_call(tmp_path):
+    root = _root(tmp_path, profile=_profile(review=True))
+    _saved_review(root, basis="b" * 200_000)
+    out = tmp_path / "run"
+    limits = ReadingLimits(roster=7, input_bytes=1 << 20, response_bytes=1024)
+    _refuses(out, lambda: reading.run(out, fixture=root, producer=Forbidden(), limits=limits))
+
+
+@pytest.mark.parametrize("change", [{"basis": ""}, {"excerpt_sha256": "not-a-digest"},
+                                    {"decision": "unsupported"}, {"facts_sha256": "x"}])
+def test_r6_a_saved_receipt_knowably_wrong_refuses_before_any_call(tmp_path, change):
+    root = _root(tmp_path, profile=_profile(review=True))
+    _saved_review(root, **change)
+    out = tmp_path / "run"
+    _refuses(out, lambda: reading.run(out, fixture=root, producer=Forbidden()))
+
+
+def test_r6_a_correct_saved_receipt_runs(tmp_path):
+    root = _root(tmp_path, profile=_profile(review=True))
+    _saved_review(root)
+    report = reading.run(tmp_path / "run", fixture=root, producer=Producer(ONLY_TITLE))
+    assert report["settings"]["reviewer"] == "saved"
+
+
+@pytest.mark.parametrize("case", ["invalid-byte", "split-character"])
+def test_r7_a_source_that_is_not_utf8_refuses(tmp_path, case):
+    root = _root(tmp_path)
+    path = root / "survey-a.txt"
+    if case == "invalid-byte":
+        path.write_bytes(b"\xff" + path.read_bytes()[1:])
+    else:
+        path.write_bytes("é".encode() + path.read_bytes()[2:])
+
+    def repin(roster):
+        roster["sources"][0]["sha256"] = sha256_hex(path.read_bytes())
+        if case == "split-character":
+            roster["sections"][0]["span"] = [0, 1]
+
+    _edit(root, "roster.json", repin)
+    out = tmp_path / "run"
+    _refuses(out, lambda: reading.run(out, fixture=root, producer=Forbidden()))
+
+
+@pytest.mark.parametrize(("kind", "key"), [("questions", "superseded_by"), ("sections", "selection"),
+                                           ("sources", "version"), ("sections", "reason")])
+def test_r8_a_roster_row_missing_a_key_refuses(tmp_path, kind, key):
+    root = _root(tmp_path)
+    _edit(root, "roster.json", lambda roster: roster[kind][-1].pop(key))
+    out = tmp_path / "run"
+    _refuses(out, lambda: reading.run(out, fixture=root, producer=Forbidden()))

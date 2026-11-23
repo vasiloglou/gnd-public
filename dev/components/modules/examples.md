@@ -293,18 +293,18 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | `Reviewer.review(self, call) -> dict` | method | 145 | (no docstring) |
 | `Profile` | class | 149 | What a root binds the loop to: the packaged constants, or a caller's profile.json. |
 | `Profile.steps(self) -> dict` | method | 163 | (no docstring) |
-| `ReadingInputs` | class | 257 | Read and validate the declared source, section and question inventories. |
-| `ReadingInputs.selection(self, kind) -> list[str]` | method | 415 | (no docstring) |
-| `ReadingInputs.source_range(self, section) -> bytes` | method | 418 | (no docstring) |
-| `ReadingInputs.pins(self) -> dict` | method | 422 | (no docstring) |
-| `SavedProducer` | class | 427 | Local saved-response adapter with observed invocation counts. |
-| `SavedProducer.produce(self, call) -> dict` | method | 434 | (no docstring) |
-| `affected_sections(sections, changed_keys) -> list[str]` | function | 439 | Return available earlier section IDs sharing a changed dependency key. |
-| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 707 | Read a run's optional coverage artifact using its external digest. |
-| `absence_status(artifacts, pins, *, facts, predicate, floor)` | function | 720 | Qualify the declared absence claim from four independently bound inputs. |
-| `run(out, *, budget, scenario, fixture, producer, reviewer, document_budget, unavailable, limits) ->…` | function | 1002 | Run the reading workflow over the packaged fixture or a caller's root, and retain its evidence. |
-| `replay(folder, *, fixture, vocabulary_fixture) -> dict` | function | 1032 | Re-derive the reading result from retained evidence without invoking producers. |
-| `main(argv) -> int` | function | 1045 | (no docstring) |
+| `ReadingInputs` | class | 279 | Read and validate the declared source, section and question inventories. |
+| `ReadingInputs.selection(self, kind) -> list[str]` | method | 457 | (no docstring) |
+| `ReadingInputs.source_range(self, section) -> bytes` | method | 460 | (no docstring) |
+| `ReadingInputs.pins(self) -> dict` | method | 464 | (no docstring) |
+| `SavedProducer` | class | 469 | Local saved-response adapter with observed invocation counts. |
+| `SavedProducer.produce(self, call) -> dict` | method | 476 | (no docstring) |
+| `affected_sections(sections, changed_keys) -> list[str]` | function | 481 | Return available earlier section IDs sharing a changed dependency key. |
+| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 750 | Read a run's optional coverage artifact using its external digest. |
+| `absence_status(artifacts, pins, *, facts, predicate, floor)` | function | 763 | Qualify the declared absence claim from four independently bound inputs. |
+| `run(out, *, budget, scenario, fixture, producer, reviewer, document_budget, unavailable, limits) ->…` | function | 1080 | Run the reading workflow over the packaged fixture or a caller's root, and retain its evidence. |
+| `replay(folder, *, fixture, vocabulary_fixture) -> dict` | function | 1110 | Re-derive the reading result from retained evidence without invoking producers. |
+| `main(argv) -> int` | function | 1123 | (no docstring) |
 
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
 Components: examples.literature_revision

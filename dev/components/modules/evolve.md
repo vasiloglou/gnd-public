@@ -138,26 +138,26 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `EvolutionError` | class(Exception) | 105 | A proposal, stage, CAS, or immutable evidence write was refused. |
-| `EvolutionIncludeError` | class(EvolutionError) | 109 | An include input was refused, independent of user-supplied message text. |
-| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 118 | (no docstring) |
-| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 138 | An old evidence document that may be READ but cannot be finished. |
-| `EvolutionOperationsGatedError` | class(EvolutionError) | 150 | An ORM+ v2 operation delta this tool deliberately does not own. |
-| `EvolutionPolicyRefusedError` | class(EvolutionError) | 160 | The additive policy refused an operation at apply (MG2, exit 3). |
-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1307 | Read one bounded, closed JSON evolution proposal. |
-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1324 | Read one bounded, version-selected preview claim. |
-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1341 | Read one bounded, version-selected staged intent. |
-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1358 | Read one bounded pending-finalization claim. |
-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1375 | Read one bounded, version-selected immutable record. |
-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1392 | Read one bounded standalone conformance leaf for an explicit envelope. |
-| `EvolutionService` | class | 1413 | Preview, apply, and finalize one explicit model evolution proposal. |
-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1520 | Validate and bind a proposal without changing any publication leaf. |
-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2035 | Report one staged pending finalization that has no completed record. |
-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2089 | Refuse to start a *new* evolution over an incomplete published one. |
-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2110 | Stage immutable evidence and publish only the candidate model CAS. |
-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2368 | (no docstring) |
-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2374 | (no docstring) |
-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2377 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+| `EvolutionError` | class(Exception) | 106 | A proposal, stage, CAS, or immutable evidence write was refused. |
+| `EvolutionIncludeError` | class(EvolutionError) | 110 | An include input was refused, independent of user-supplied message text. |
+| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 119 | (no docstring) |
+| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 139 | An old evidence document that may be READ but cannot be finished. |
+| `EvolutionOperationsGatedError` | class(EvolutionError) | 151 | An ORM+ v2 operation delta this tool deliberately does not own. |
+| `EvolutionPolicyRefusedError` | class(EvolutionError) | 161 | The additive policy refused an operation at apply (MG2, exit 3). |
+| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1308 | Read one bounded, closed JSON evolution proposal. |
+| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1325 | Read one bounded, version-selected preview claim. |
+| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1342 | Read one bounded, version-selected staged intent. |
+| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1359 | Read one bounded pending-finalization claim. |
+| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1376 | Read one bounded, version-selected immutable record. |
+| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1393 | Read one bounded standalone conformance leaf for an explicit envelope. |
+| `EvolutionService` | class | 1414 | Preview, apply, and finalize one explicit model evolution proposal. |
+| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1522 | Validate and bind a proposal without changing any publication leaf. |
+| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2037 | Report one staged pending finalization that has no completed record. |
+| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2091 | Refuse to start a *new* evolution over an incomplete published one. |
+| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2113 | Stage immutable evidence and publish only the candidate model CAS. |
+| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2371 | (no docstring) |
+| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2377 | (no docstring) |
+| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2381 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
 
 ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
 Components: evolve.shape_matches

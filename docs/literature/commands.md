@@ -374,6 +374,18 @@ reads: {'attempted': 5, 'omitted': 0, 'scheduled': 6, 'unavailable': 1}
 stop: required-coverage-completed
 ```
 
+### Drive it from your host
+
+The same loop reads your own documents with your own model. Put a
+`profile.json` beside your roster, sources and model, and call
+`reading.run(out, fixture=your_root, producer=your_producer)` from Python:
+your producer gets each section's bytes and answers with facts, and the run
+records what it read, what it skipped and why. `reading.replay(out,
+fixture=your_root)` re-derives the run without calling your producer again.
+The profile, the producer protocol, the limits and the run format are
+described in the example's
+[README](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/reading_fixture/README.md#drive-it-from-your-host).
+
 ## Act 3. Change your mind, and keep the verdicts honest
 
 Publish a release from the reading run, apply the vocabulary change that

@@ -211,10 +211,10 @@ The staged assurance report over the literature corpus (phase LI1).
 | `run_route(gnd, route, paths, shown) -> dict` | function | 300 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
 | `Inputs` | class | 342 | Everything validated in steps 1-4, with the run's files located. |
 | `Inputs.source_dir(self, source) -> Path` | method | 400 | (no docstring) |
-| `score_reading_coverage(run_dir, expected_rows) -> dict` | function | 755 | Score exact replayable reading rows against a caller-owned answer roster. |
-| `refused_report(reason) -> dict` | function | 808 | (no docstring) |
-| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 875 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
-| `main(argv) -> int` | function | 928 | (no docstring) |
+| `score_reading_coverage(run_dir, expected_rows, *, fixture) -> dict` | function | 755 | Score exact replayable reading rows against a caller-owned answer roster. |
+| `refused_report(reason) -> dict` | function | 811 | (no docstring) |
+| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 878 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+| `main(argv) -> int` | function | 931 | (no docstring) |
 
 ## gnd.examples.literature.depth — `src/gnd/examples/literature/depth.py`
 Components: examples.literature_depth
@@ -284,18 +284,27 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ReadingInputs` | class | 67 | Read and validate the declared source, section and question inventories. |
-| `ReadingInputs.selection(self, kind) -> list[str]` | method | 138 | (no docstring) |
-| `ReadingInputs.source_range(self, section) -> bytes` | method | 141 | (no docstring) |
-| `ReadingInputs.pins(self) -> dict` | method | 145 | (no docstring) |
-| `SavedProducer` | class | 149 | Local saved-response adapter with observed invocation counts. |
-| `SavedProducer.produce(self, stage, section) -> dict` | method | 156 | (no docstring) |
-| `affected_sections(sections, changed_keys) -> list[str]` | function | 161 | Return available earlier section IDs sharing a changed dependency key. |
-| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 344 | Read a run's optional coverage artifact using its external digest. |
-| `absence_status(artifacts, pins)` | function | 357 | Qualify the declared fixture claim from four independently bound inputs. |
-| `run(out, *, budget, scenario, fixture) -> dict` | function | 562 | Run the saved-response workflow and retain its complete evidence. |
-| `replay(folder, *, fixture, vocabulary_fixture) -> dict` | function | 574 | Re-derive the reading result from retained evidence without invoking producers. |
-| `main(argv) -> int` | function | 587 | (no docstring) |
+| `ReadingLimits` | class | 83 | The caps of a caller run; each default is today's constant or effective bound. |
+| `ProducerCall` | class | 115 | One section offered to a producer, with its bytes and the open questions on it. |
+| `Producer` | class(Protocol) | 130 | (no docstring) |
+| `Producer.produce(self, call) -> dict` | method | 131 | (no docstring) |
+| `ReviewCall` | class | 135 | One accepted response offered to a reviewer. |
+| `Reviewer` | class(Protocol) | 145 | (no docstring) |
+| `Reviewer.review(self, call) -> dict` | method | 146 | (no docstring) |
+| `Profile` | class | 150 | What a root binds the loop to: the packaged constants, or a caller's profile.json. |
+| `Profile.steps(self) -> dict` | method | 164 | (no docstring) |
+| `ReadingInputs` | class | 280 | Read and validate the declared source, section and question inventories. |
+| `ReadingInputs.selection(self, kind) -> list[str]` | method | 466 | (no docstring) |
+| `ReadingInputs.source_range(self, section) -> bytes` | method | 469 | (no docstring) |
+| `ReadingInputs.pins(self) -> dict` | method | 473 | (no docstring) |
+| `SavedProducer` | class | 478 | Local saved-response adapter with observed invocation counts. |
+| `SavedProducer.produce(self, call) -> dict` | method | 485 | (no docstring) |
+| `affected_sections(sections, changed_keys) -> list[str]` | function | 490 | Return available earlier section IDs sharing a changed dependency key. |
+| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 761 | Read a run's optional coverage artifact using its external digest. |
+| `absence_status(artifacts, pins, *, facts, predicate, floor)` | function | 774 | Qualify the declared absence claim from four independently bound inputs. |
+| `run(out, *, budget, scenario, fixture, producer, reviewer, document_budget, unavailable, limits) ->…` | function | 1154 | Run the reading workflow over the packaged fixture or a caller's root, and retain its evidence. |
+| `replay(folder, *, fixture, vocabulary_fixture, expected_evidence_sha256) -> dict` | function | 1185 | Re-derive a reading result from retained evidence without invoking producers or reviewers. |
+| `main(argv) -> int` | function | 1225 | (no docstring) |
 
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
 Components: examples.literature_revision

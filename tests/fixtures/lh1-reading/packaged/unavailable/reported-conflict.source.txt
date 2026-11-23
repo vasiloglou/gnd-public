@@ -1,0 +1,3 @@
+The separate synthetic report gives both labels for the same identifier.
+Alanine dipeptide observation
+Conflicting reported label

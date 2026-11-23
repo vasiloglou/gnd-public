@@ -5,6 +5,22 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: the reading example from a host
+
+- **A live producer over your own documents.** The literature reading
+  example's `run()` takes a producer object over a root that holds
+  `profile.json`: your documents, your reading model and its includes, and
+  the optional review, calibration, conflict and absence steps, each
+  recorded `skipped` when undeclared. The run has a byte budget per document
+  as well as in all, seven limits with ceilings, and records the exits of
+  `verify` and `check`, 0, 1, 2 or 4. It writes
+  `literature-reading-run/2`; the packaged run keeps its bytes
+  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
+- **Replay of a host run.** `replay(folder, fixture=root)` re-derives such a
+  run with no producer call, from its settings and retained tables;
+  `expected_evidence_sha256` ties it to the run that returned that digest
+  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
+
 ## Unreleased: include roots on more routes
 
 - **Judgments on include roots.** `gnd judgments check` accepts a version-5
@@ -26,6 +42,10 @@ the next one.
 - **Unencodable include paths.** An include path that cannot be encoded as
   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
   error itself, and the PyRel export exited 70.
+- **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
+  `gnd evolve apply` now parses each model text once per reader. Before, an
+  `apply` parsed the same two texts 22 times. Every preview, record, message
+  and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
 - **Reading a failed verification.** The documents guide shows how to list
   the constraints and derivations a `gnd verify` exit 1 failed, with the
   violating rows, from the JSON report, with a runnable example on the

@@ -1,0 +1,157 @@
+{
+  "format": "literature-reading-roster/1",
+  "sources": [
+    {
+      "id": "survey-a",
+      "version": "host-note-1",
+      "path": "survey-a.txt",
+      "sha256": "20f427b067c4e3959ba14393ab896b78168159fab115d8bc95bb33c9ee584bc7"
+    },
+    {
+      "id": "survey-b",
+      "version": "host-note-1",
+      "path": "survey-b.txt",
+      "sha256": "e484782f1cd027c85a62cac452c35eff4c04643b82ad292e43000201ce7629e6"
+    }
+  ],
+  "sections": [
+    {
+      "id": "a-opening",
+      "source": "survey-a",
+      "kind": "section",
+      "selection": "opening",
+      "keys": [
+        "scope"
+      ],
+      "span": [
+        0,
+        33
+      ],
+      "reason": null
+    },
+    {
+      "id": "a-methods",
+      "source": "survey-a",
+      "kind": "section",
+      "selection": "targeted",
+      "keys": [
+        "method"
+      ],
+      "span": [
+        34,
+        76
+      ],
+      "reason": null
+    },
+    {
+      "id": "a-results",
+      "source": "survey-a",
+      "kind": "table",
+      "selection": "targeted",
+      "keys": [],
+      "span": [
+        77,
+        113
+      ],
+      "reason": null
+    },
+    {
+      "id": "b-opening",
+      "source": "survey-b",
+      "kind": "section",
+      "selection": "opening",
+      "keys": [
+        "scope"
+      ],
+      "span": [
+        0,
+        36
+      ],
+      "reason": null
+    },
+    {
+      "id": "b-methods",
+      "source": "survey-b",
+      "kind": "section",
+      "selection": "targeted",
+      "keys": [
+        "method"
+      ],
+      "span": [
+        37,
+        73
+      ],
+      "reason": null
+    },
+    {
+      "id": "b-appendix",
+      "source": "survey-b",
+      "kind": "equation",
+      "selection": null,
+      "keys": [],
+      "span": null,
+      "reason": "unavailable"
+    }
+  ],
+  "questions": [
+    {
+      "id": "a-title",
+      "section": "a-opening",
+      "fact": "paper_title",
+      "required": true,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "a-method",
+      "section": "a-methods",
+      "fact": "paper_method",
+      "required": true,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "a-baseline",
+      "section": "a-methods",
+      "fact": "paper_baseline",
+      "required": false,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "a-finding",
+      "section": "a-results",
+      "fact": "paper_finding",
+      "required": false,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "b-title",
+      "section": "b-opening",
+      "fact": "paper_title",
+      "required": true,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "b-method",
+      "section": "b-methods",
+      "fact": "paper_method",
+      "required": true,
+      "superseded_by": null,
+      "denial": false
+    },
+    {
+      "id": "b-dataset",
+      "section": "b-appendix",
+      "fact": "paper_dataset",
+      "required": false,
+      "superseded_by": null,
+      "denial": false
+    }
+  ],
+  "revisit_keys": [
+    "method"
+  ]
+}

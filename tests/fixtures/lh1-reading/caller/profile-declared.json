@@ -1,0 +1,36 @@
+{
+  "format": "literature-reading-profile/1",
+  "model": "survey.orm.json",
+  "includes": [
+    "terms.orm.json"
+  ],
+  "producer_label": "host-extractor",
+  "base_facts": {
+    "paper_venue": [
+      {
+        "paper": "paper-a",
+        "value": "Host workshop"
+      }
+    ]
+  },
+  "review": true,
+  "calibration": {
+    "section": "a-methods",
+    "section_facts": [
+      "paper_method"
+    ],
+    "held_back_facts": [
+      "paper_baseline"
+    ],
+    "renderer_label": "host-renderer",
+    "case_names": [
+      "methods-case",
+      "held-back-case"
+    ]
+  },
+  "conflict": {
+    "fact_type": "paper_title",
+    "role": "title"
+  },
+  "absence": true
+}

@@ -1,0 +1,264 @@
+c1a832378a2f303cdf1be8884ea61e745eca7f22e4fab19a449761d62b082c9b  .gnd-planning/milestones/literature-host-interfaces/notes/literature-host-interfaces-plan.md
+def _fixture_inputs(snapshot: str, retained: dict[str, bytes]) -> dict[str, bytes]:
+    case = RESOLUTION / "cases" / ("W-flat" if snapshot == "before" else "W-resolved")
+    files = {
+        MODEL: _read(RESOLUTION, MODEL),
+        "targets.json": _read(FIXTURE, "targets.json"),
+        "interpretation.json": _read(FIXTURE, "interpretation.json"),
+        "review-inputs.json": _read(FIXTURE, "review-inputs.json"),
+        **{f"reading-inputs/{name}": _read(reading.FIXTURE, name)
+           for name in READING_INPUTS if name != "vocabulary.orm.json"},
+        "reading-inputs/vocabulary.orm.json": _read(reading.DEPTH_FIXTURE, "vocabulary.orm.json"),
+        **retained,
+    }
+    for name in _input_names(snapshot):
+        if name in files:
+            continue
+        if name.startswith("sources/corroboration/"):
+
+def _reading(root: Path) -> tuple[dict, dict]:
+    retained = root / "reading"
+    inputs = root / "reading-inputs"
+    pins = {name: sha256_hex(_read(inputs, name)) for name in READING_INPUTS}
+    require(sha256_hex(canonical_json_bytes(pins)) == READING_INPUTS_SHA256, "retained reading inputs differ")
+    report = reading.replay(retained, fixture=inputs, vocabulary_fixture=inputs)
+    require(report["absence"]["status"] == "qualified", "release needs the exact qualified reading scope")
+    absence = {
+        "status": "qualified",
+        "reading_sha256": report["evidence_sha256"],
+                  "identity_pairs", "name_pairs"):
+        _need(isinstance(key.get(group), list))
+    for item in key["assertions"]:
+        _need(isinstance(item, dict) and _is_str(item.get("id")) and _is_str(item.get("passage"))
+              and item.get("support") in SUPPORT and _fact_ok(item.get("fact")))
+    for item in key["anchored_facts"]:
+        _need(isinstance(item, dict) and _is_str(item.get("id")) and _is_str(item.get("source"))
+              and _fact_ok(item.get("fact")) and _is_str(item.get("role")) and _span_ok(item.get("span")))
+    for item in key["populations"]:
+        _need(isinstance(item, dict) and _is_str(item.get("source")) and type(item.get("expected_check_exit")) is int)
+
+
+def anchors_in_passages(index: dict, anchors: list[dict]) -> list[str | None]:
+    """For each anchor ({document, span}), the id of the passage that contains it, or None.
+
+    Linear in anchors times log passages; passages in one document never overlap.
+    """
+    found = []
+    for anchor in anchors:
+        starts, rows = index.get(anchor["document"], ([], []))
+        position = bisect_right(starts, anchor["span"]["start"]) - 1
+        hit = None
+                                  {**pins, "fidelity.json": sha256_hex(low)}) == "unavailable"
+
+
+def test_repeated_inspections_charge_both_actual_reads():
+    from gnd.examples.literature import reading
+
+    inputs = reading.ReadingInputs(reading.FIXTURE)
+    producer = reading.SavedProducer(inputs.responses)
+    selected = "study-opening"
+    size = len(inputs.source_range(inputs.sections[selected]))
+    payload, remaining = reading._inspect(
+        inputs, "broad-extraction", [selected, selected], size * 2, producer, {},
+    )
+    assert len(payload["attempts"]) == 2
+    assert producer.calls["broad-extraction"] == 2
+    assert remaining == 0
+
+
+def test_reported_violation_round_trip_is_available(fresh):
+    run, report = fresh
+    retained = json.loads((run / "reported-conflict.population.json").read_bytes())
+    index = json.loads(manifest.read_bytes())
+    index["artifacts"][stage.name] = sha256_hex(raw)
+    manifest.write_bytes(canonical_json_bytes(index))
+    original_read = reading._read
+
+    def restricted_read(folder, name):
+        assert name in {"run.json", "stage-0.json"}
+        return original_read(folder, name)
+
+    monkeypatch.setattr(reading, "_read", restricted_read)
+    with pytest.raises(reading.ExampleError, match="stale retained reading stage"):
+        reading.replay(run)
+
+
+def test_manifest_digest_cannot_describe_different_file_bytes(fresh, tmp_path):
+    import shutil
+---
+from gnd.judgments import JudgmentInputError, judgment_fact_digest, judgment_receipt_digest
+from gnd.model import ModelLoadError, load_model_bytes
+
+from .assertion_admission import ABSENT_CONDITIONS, PASSAGE, ROLES, SCHEMA, STATEMENT, WORK, admit
+from .assurance_report import Refusal
+
+INPUT_SCHEMA = "literature-lineage-input/1"
+            folder = root / "opinions" / identifier
+            evidence = _authority(source, document, model_doc.model_id, model_raw, rubric, folder)
+            destination = root / "admissions" / identifier
+            admit(snapshot, folder/"raw.population.json", folder/"policy.json", folder/"receipts.json",
+                  evidence, destination)
+            population = _read(destination/"admitted.population.json", MODEL_CAP)
+            admitted[identifier] = population
+    for source in sources:
+        publication = run / "admissions" / source.id
+        authority = run / "opinions" / source.id
+        marker = _decode(_read(publication / "admission.json"))
+        _require(isinstance(marker, dict) and marker.get("schema") == SCHEMA,
+                 "input:invalid-admission-marker")
+        bindings = {
+            "model_sha256": model_sha,
+            "admitted_sha256": source.digests["population_sha256"],
+---
+    if type(doc["schema_version"]) is not int or doc["schema_version"] != 1:
+        refuse("unsupported", "unsupported judgment version")
+    text(doc["policy_id"])
+    if doc["trust_mode"] not in {"consumer-pinned", "self-asserted"}:
+        refuse()
+    for key, maximum in [("judges", 32), ("targets", 1024), ("trusted_receipts", 8192)]:
+        if not isinstance(doc[key], list):
+            refuse()
+        cap(len(doc[key]), maximum)
+    if not doc["judges"] or not doc["targets"]:
+        refuse()
+    cap(len(doc["judges"]) * len(doc["targets"]), 4096)
+    for judge in doc["judges"]:
+        text(judge)
+    if len(set(doc["judges"])) != len(doc["judges"]):
+        refuse()
+---
+        issues.append(ValidationIssue(path=path, message=message, rule_id="semantic:string-ref"))
+
+    for fact_type in doc.get("fact_types") or []:
+        fact_type_id = str(fact_type.get("id", "?"))
+        objectified = fact_type.get("objectified_as")
+        if objectified is not None and str(objectified) not in object_type_ids:
+            unresolved(
+                f"$.fact_types[id={fact_type_id}].objectified_as",
+                f"objectified_as names undeclared object type '{objectified}'",
+---
+    object_ids = [str(role.get("object_type")) for role in roles]
+    if len(roles) > 1 and len(set(object_ids)) < len(object_ids):
+        role_names = " and ".join(str(role.get("role_name")) for role in roles)
+        sentence += f" Repeated object-type roles are named {role_names}."
+    objectification = item.get("objectification") or item.get("objectified_as")
+    if objectification:
+        sentence += f" This fact type is objectified as {objectification}."
+    if item.get("derivation_rule"):
+        rule = item["derivation_rule"]
+---
+src/gnd/evolve/service.py
+---
+never decide the exit code.
+
+## Exit codes
+
+Once the model and the populations have loaded (a load failure or refusal
+returns 3 first), the precedence is 1 > 4 > 2 > 0, as for every check.
+
+| Exit | Without `--baseline` | With `--baseline` |
+|---|---|---|
+| 1 | a must-hold rule fails | a must-hold rule fails with a new row |
+| 4 | a must-hold rule is unchecked | a must-hold rule is unchecked in the head or the base |
+| 2 | a rule is vacuous (either modality) | a rule is vacuous in the head (either modality) |
+| 0 | none of the above | none of the above |
+---
+            )
+        )
+
+    if presentation_refused:
+        vocabulary = ("pass", "fail", "warning", "unchecked", "vacuous")
+        result_band = 1 if projection.band == 1 else 4
+        projection = replace(
+            projection,
+            findings=tuple(retained_findings),
+            counts=tuple(
+---
+    examples = Path(__file__).resolve().parents[1] / 'src/gnd/examples'
+    paths = sorted(examples.rglob('*.orm.yaml')) + sorted(examples.rglob('*.orm.json'))
+    assert paths
+    included = {path.relative_to(examples).as_posix() for path in paths
+                if declares_includes(parse_model_document(path.read_bytes(), source=path))}
+    expected = {'expense/teams/engineering.orm.json', 'expense/teams/sales.orm.json',
+                'expense/teams/sales-v2.orm.json',
+                'literature/interop_fixture/checking.orm.json',
+                'literature/interop_fixture/extraction.orm.json',
+                # LD1 competency examples and LD3 multipass reading (literature-depth).
+                'literature/depth_fixture/algorithms.orm.json',
+                'literature/depth_fixture/dynamics.orm.json',
+                'literature/depth_fixture/molecular.orm.json',
+                'literature/reading_fixture/reading.orm.json',
+                # The expense receipts chapter (PR 205): reading and checking roots.
+                'expense/receipts/checking.orm.json',
+                'expense/receipts/reading.orm.json'}
+    assert included == expected
+    # LD3's reading root pins the depth vocabulary, which reading.py places beside
+    # it in each run directory; it is not loadable where it is packaged.
+    staged = {'literature/reading_fixture/reading.orm.json'}
+62:        **{f"reading-inputs/{name}": _read(reading.FIXTURE, name)
+64:        "reading-inputs/vocabulary.orm.json": _read(reading.DEPTH_FIXTURE, "vocabulary.orm.json"),
+171:    report = reading.replay(retained, fixture=inputs, vocabulary_fixture=inputs)
+---
+42:MAX_DIGITS = 128
+725:    _need(isinstance(rows, list) and 0 < len(rows) <= 128)
+760:        report = replay(run_dir)
+---
+63:    text(value, 4096)
+115:    for key, maximum in [("judges", 32), ("targets", 1024), ("trusted_receipts", 8192)]:
+121:    cap(len(doc["judges"]) * len(doc["targets"]), 4096)
+332:    cap(len(doc["receipts"]), 4096)
+490:    cap(len(receipts), 4096)
+---
+927:    ``subtypes[]``/``objectified_as`` against declared object-type ids, and
+942:        objectified = fact_type.get("objectified_as")
+945:                f"$.fact_types[id={fact_type_id}].objectified_as",
+946:                f"objectified_as names undeclared object type '{objectified}'",
+---
+            )
+        if "provenance" in fact_type:
+            add(f"{reference}.provenance", "provenance", fact_type["provenance"])
+        objectification = fact_type.get("objectification") or fact_type.get("objectified_as")
+        if objectification is not None:
+            add(
+                f"{reference}.objectification",
+---
+    if presentation_refused:
+        vocabulary = ("pass", "fail", "warning", "unchecked", "vacuous")
+        result_band = 1 if projection.band == 1 else 4
+        projection = replace(
+            projection,
+---
+    included = {path.relative_to(examples).as_posix() for path in paths
+                if declares_includes(parse_model_document(path.read_bytes(), source=path))}
+    expected = {'expense/teams/engineering.orm.json', 'expense/teams/sales.orm.json',
+                'expense/teams/sales-v2.orm.json',
+                'literature/interop_fixture/checking.orm.json',
+                'literature/interop_fixture/extraction.orm.json',
+                # LD1 competency examples and LD3 multipass reading (literature-depth).
+                'literature/depth_fixture/algorithms.orm.json',
+                'literature/depth_fixture/dynamics.orm.json',
+                'literature/depth_fixture/molecular.orm.json',
+                'literature/reading_fixture/reading.orm.json',
+                # The expense receipts chapter (PR 205): reading and checking roots.
+                'expense/receipts/checking.orm.json',
+                'expense/receipts/reading.orm.json'}
+    assert included == expected
+    # LD3's reading root pins the depth vocabulary, which reading.py places beside
+---
+34:    assert report["producer_calls"] == EXPECTED["full_calls"]
+37:        assert payload["original_producer_calls"] == EXPECTED["full_calls"][EXPECTED["stages"][index]]
+41:    assert replay["producer_calls"] == EXPECTED["replay_calls"]
+91:    monkeypatch.setattr(reading.SavedProducer, "produce", lambda *_: pytest.fail("replay invoked producer"))
+92:    assert reading.replay(run)["producer_calls"] == EXPECTED["replay_calls"]
+110:def test_input_roster_refuses_before_a_producer_runs(tmp_path, monkeypatch, defect):
+130:    monkeypatch.setattr(reading.SavedProducer, "produce", lambda *_: pytest.fail("admitted invalid roster"))
+157:    producer = reading.SavedProducer(inputs.responses)
+161:        inputs, "broad-extraction", [selected, selected], size * 2, producer, {},
+164:    assert producer.calls["broad-extraction"] == 2
+194:    (fixture / "producer-pin.json").write_bytes(canonical_json_bytes({"sha256": sha256_hex(raw)}))
+195:    monkeypatch.setattr(reading, "_public_results", lambda *_: pytest.fail("admitted stale semantic review"))
+284:    pin_path = fixture / "producer-pin.json"
+296:def test_replay_reads_the_retained_producer_table(fresh, tmp_path, monkeypatch):
+301:    monkeypatch.setattr(reading.SavedProducer, "produce", lambda *_: pytest.fail("replay invoked producer"))
+303:    assert report["producer_calls"] == EXPECTED["replay_calls"]
+All checks passed!

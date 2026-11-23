@@ -1,0 +1,314 @@
+{
+ "schema_version": 1,
+ "run_sha256": "614d4f74ff2d1b2b497dc7dfda6fbe8200574166bdea7fade3ae2d8cf1b99de1",
+ "summary": "Second round, over plan r5. Five of six seats succeeded (Claude, Codex, Gemini, Kimi, GLM); Qwen timed out. Gemini approved with no concerns; Claude, Codex, Kimi and GLM asked for revision. All four found the r4 fixes broadly applied. Three concerns reached agreement: LH1-C14's completing run at the response and roster ceilings cannot fit the retained-file ceiling (Claude, Codex, Kimi); section 3 still starts LH1 at 4ad0d216, before the lint re-sync (Claude, Codex, GLM); and LH1-C10 omits time-bound tests at two of the seven ceilings (Kimi, GLM). Marked blocking: the retained-file bound refuses the packaged and default runs under D4's defaults (Claude, singleton), LH1-C14 (Codex), the start commit (Codex), and LH3's attached-row rule contradicting LH3-C4 (Codex, singleton). Every code fact the driving agent re-checked held. Claude and GLM share one CLI codebase; Kimi's response is retained as incomplete (one preamble line, nothing dropped); one of Codex's three concerns is unanchored.",
+ "agreed_concerns": [
+  {
+   "group_id": "lh1-c14-joint-ceilings-impossible",
+   "severity": "high",
+   "title": "LH1-C14's completing run at the response and roster ceilings cannot fit the 64 MiB retained-file ceiling",
+   "summary": "Under the plan's own bound (scheduled sections times the response cap), 4,096 sections at 1 MiB bound a payload near 4 GiB, so the criterion is either impossible or met only by a fixture that schedules few sections; it does not say which.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh1-c14-ceilings-cannot-fit"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh1-combined-ceilings"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "kimi-r5-lh1c14-joint-ceilings-vs-retained-cap"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "start-condition-predates-lint-resync",
+   "severity": "medium",
+   "title": "Section 3's start condition, main at 4ad0d216, is the commit where the whole-repository lint exits 1",
+   "summary": "The goal says LH1 starts from a lint-clean main carrying the committed re-sync; section 3 still pins the start to 4ad0d216, before that re-sync.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "start-condition-predates-lint-resync"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lint-start-commit"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "start-condition-4ad0d216-vs-lint-clean-main"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "lh1-c10-omits-two-ceilings",
+   "severity": "medium",
+   "title": "LH1-C10 names time-bound tests for five of D4's seven ceilings",
+   "summary": "R0.8 asks for a time-bound test at each parameter's ceiling; the route-output (16 MiB) and retained-file (64 MiB) ceilings have none.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "kimi-r5-r08-two-ceilings-without-time-bound"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lh1c10-ceiling-time-bounds-omit-two-limits"
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "retained-bound-defaults-refuse"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "frozen-read-patch-vs-retained-cap"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "packaged-shape-rules-attached-undefined"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "max-rows-without-shape"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "lh3-attached-row-exception"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-retained-bound-rule",
+   "rank": 1,
+   "title": "Make the retained-file bound agree with D4's defaults and ceilings",
+   "action": "Scope the pre-call bound to /2 runs and derive a /2 run's default retained-file cap from its other limits (scheduled sections times the response cap, plus a stated per-attempt overhead), capped at the ceiling; the packaged /1 configurations keep today's path and bytes. State in D4 that the ceilings cannot all be reached together, and restate LH1-C14 as: a run whose bound exceeds the retained cap refuses before any call; a run at the response ceiling whose scheduled sections fit the retained ceiling completes and replays; a run at the roster and response ceilings with every section scheduled refuses.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "retained-bound-defaults-refuse"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh1-c14-ceilings-cannot-fit"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh1-combined-ceilings"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "kimi-r5-lh1c14-joint-ceilings-vs-retained-cap"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "retained-bound-defaults-refuse",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lh1-c14-ceilings-cannot-fit",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh1-combined-ceilings",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "kimi-r5-lh1c14-joint-ceilings-vs-retained-cap",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-start-condition",
+   "rank": 2,
+   "title": "Restate the start condition as the commit that lands the plan with the re-sync",
+   "action": "Change section 3's start condition to main at the plan-landing merge (parent 4ad0d216, carrying the dev-tools re-sync), and have the LH1 spec record that the whole-repository ruff exits 0 there.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "start-condition-predates-lint-resync"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lint-start-commit"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "start-condition-4ad0d216-vs-lint-clean-main"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "start-condition-predates-lint-resync",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lint-start-commit",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "start-condition-4ad0d216-vs-lint-clean-main",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-lh3-attached-row-exception",
+   "rank": 3,
+   "title": "State the rejected-assertion exception in the attached-row rule",
+   "action": "Rewrite LH3 'Attached facts' to say every attached row of an admitted assertion is kept unless it also names an assertion that was not admitted, and point LH3-C1 and LH3-C4 at that one rule.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh3-attached-row-exception"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh3-attached-row-exception",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-lh1-c10-seven-ceilings",
+   "rank": 4,
+   "title": "Name the route-output and retained-file ceilings in LH1-C10",
+   "action": "Add a route at the route-output ceiling and a retained file at the retained-file ceiling to LH1-C10's time-bound demonstrations, or name the shared test that covers each.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "kimi-r5-r08-two-ceilings-without-time-bound"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lh1c10-ceiling-time-bounds-omit-two-limits"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "kimi-r5-r08-two-ceilings-without-time-bound",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lh1c10-ceiling-time-bounds-omit-two-limits",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-frozen-read-patch",
+   "rank": 5,
+   "title": "Keep the frozen two-argument reading._read on the /1 replay path",
+   "action": "Say in section 5 that /1 replay keeps calling reading._read(folder, name), that the recorded retained cap applies on the /2 path through a reader local to reading.py, and that depth.py's _read and _decode change only as section 3 lists.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "frozen-read-patch-vs-retained-cap"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "frozen-read-patch-vs-retained-cap",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-packaged-shape-rule-fact-type",
+   "rank": 6,
+   "title": "Name the fact type rules address on the packaged shape",
+   "action": "State that on the packaged shape a requirement names assertion_statement (one row per assertion), that the default rules name it, and that a rule naming another packaged fact type refuses.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "packaged-shape-rules-attached-undefined"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "packaged-shape-rules-attached-undefined",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-max-rows-packaged",
+   "rank": 7,
+   "title": "Decide max_rows on a packaged-shape call",
+   "action": "Refuse max_rows without a shape (or record it as not applicable) and add the case to LH4-C7.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "max-rows-without-shape"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "max-rows-without-shape",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  }
+ ]
+}

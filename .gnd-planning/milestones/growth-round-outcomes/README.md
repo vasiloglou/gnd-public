@@ -11,7 +11,7 @@ reviewer has read r4.
 
 | Phase | Deliverable | State |
 |---|---|---|
-| GO1 | `gnd evolve` parses each model text once per invocation: 22 parses become at most 3 in `apply` (#228) | [draft spec](notes/phase-GO1-spec.md), next: its delegated gate |
+| GO1 | `gnd evolve` parses each model text once per invocation: 22 parses become at most 3 in `apply` (#228) | done on its branch: [002-phase-GO1.md](002-phase-GO1.md); `apply` parses 2 times where it parsed 22; pull request open, not merged |
 | GO2 | `gnd evolve preview` reports an outcome for every operation of a proposal (#227) | outline; waits for VG2 and VG4 merged on `main` |
 | GO3 | the admitted part of a proposal as a new proposal, with one call (#227) | outline; needs GO2 |
 | GO4 | `unattended-growth.md` says what a reply carries for a fact type it reuses (#227) | outline; waits for VG2 and VG5 merged on `main` |
@@ -34,5 +34,5 @@ Two files are shared with
 `evolve/service.py` and `unattended-growth.md`. One writer at a time, in the
 roadmap's order: VG1, then GO1, then VG2–VG5, then GO2–GO5 (plan §3).
 
-Next action: GO1's spec gate, then GO1 by its own pull request. Each phase
+Next action: the owner merges GO1's pull request; then GO2 waits for VG2 and VG4 merged on `main`. Each phase
 start is announced to the coordinating session ("READY <phase>").

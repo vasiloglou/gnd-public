@@ -26,6 +26,12 @@ the next one.
 - **Unencodable include paths.** An include path that cannot be encoded as
   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
   error itself, and the PyRel export exited 70.
+- **`gnd check` on large vocabularies.** The checker no longer rebuilds its
+  type maps once per object type: on the interop example with 1,000 extra
+  object types `gnd check` takes about half a second where 0.4.0 took over
+  two minutes, and `gnd judgments check` and `gnd verify` gain the same.
+  Reports are unchanged. A subtype chain hundreds of types deep is still
+  slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
 
 ## 0.4.0 (2026-11-17)
 

@@ -266,3 +266,24 @@ pass, in its "Ruling needed" table. Work handed to another assistant or
 machine carries a hand-off note in `.gnd-planning/handoffs/`, written with the
 dev-handoff skill and read with dev-takeover. The reviews of this roadmap are
 in `reviews/pr-219-r2/` and `reviews/pr-219-panel/`.
+
+### Added 2026-11-22: reviewed-vocabulary-growth
+
+Two issues were filed after this roadmap was written:
+[#221](https://github.com/vasiloglou/gnd-public/issues/221) (`gnd check` is
+superlinear in the number of object types) and
+[#222](https://github.com/vasiloglou/gnd-public/issues/222) (unattended
+growth cannot start from a reviewed vocabulary).
+[reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md)
+plans both, and proposes to carry #218 with them in place of the maintenance
+pass above (its decision D1; the pass stays as written until the owner
+rules). Plan r1 and the VG1 draft spec are written; neither is reviewed or
+approved.
+
+| Order | Work | Issues | Phases |
+|---|---|---|---|
+| 4 | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) | #221, #222, #218 (proposed) | VG1 checker cost in object types, VG2 evolve sources, VG3 an unattended root that includes a reviewed model, VG4 growth rounds on it, VG5 example, pages and replies |
+
+It is independent of literature-host-interfaces: the two share no source
+file. VG1 has no workaround for the reporter (265.74 s at 1,000 extra object
+types) and needs no ruling beyond its plan gate, so it can run first.

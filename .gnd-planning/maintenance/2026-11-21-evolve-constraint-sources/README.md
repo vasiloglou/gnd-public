@@ -4,6 +4,11 @@ From [issue #218](https://github.com/vasiloglou/gnd-public/issues/218). A
 maintenance pass, not a milestone. Nothing is changed yet. It is independent
 of the roadmap milestones: none of them waits for its ruling.
 
+**2026-11-22.** The plan of
+[reviewed-vocabulary-growth](../../milestones/reviewed-vocabulary-growth/README.md)
+proposes to run this fix as its phase VG2 (plan decision D1) with the same
+ruling (its D2). Until the owner rules D1, this page stands as written.
+
 ## The disagreement
 
 `src/gnd/skills/gnd-model-from-text/references/unattended-growth.md` (lines 94

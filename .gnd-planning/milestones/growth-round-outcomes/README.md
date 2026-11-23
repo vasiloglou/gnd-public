@@ -12,10 +12,10 @@ reviewer has read r4.
 | Phase | Deliverable | State |
 |---|---|---|
 | GO1 | `gnd evolve` parses each model text once per invocation: 22 parses become at most 3 in `apply` (#228) | done on its branch: [002-phase-GO1.md](002-phase-GO1.md); `apply` parses 2 times where it parsed 22; pull request open, not merged |
-| GO2 | `gnd evolve preview` reports an outcome for every operation of a proposal (#227) | outline; waits for VG2 and VG4 merged on `main` |
-| GO3 | the admitted part of a proposal as a new proposal, with one call (#227) | outline; needs GO2 |
-| GO4 | `unattended-growth.md` says what a reply carries for a fact type it reuses (#227) | outline; waits for VG2 and VG5 merged on `main` |
-| GO5 | a per-round growth summary: proposed, mapped onto existing elements, dropped, added (#227) | outline; needs GO2, and VG2 and VG5 merged on `main` |
+| GO2 | `gnd evolve preview` reports an outcome for every operation of a proposal (#227) | [spec r1](notes/phase-GO2-spec.md) approved by delegated ruling; code waits for VG2 and VG4 merged on `main` |
+| GO3 | the admitted part of a proposal as a new proposal, with one call (#227) | [spec r1](notes/phase-GO3-spec.md) approved by delegated ruling; code needs GO2 |
+| GO4 | `unattended-growth.md` says what a reply carries for a fact type it reuses (#227) | [spec r1](notes/phase-GO4-spec.md) approved by delegated ruling (records a refuted premise of D3); code waits for VG2 and VG5 merged on `main` |
+| GO5 | a per-round growth summary: proposed, mapped onto existing elements, dropped, added (#227) | [spec r1](notes/phase-GO5-spec.md) approved by delegated ruling; code needs GO2, and VG2 and VG5 merged on `main` |
 
 [Plan](notes/growth-round-outcomes-plan.md). Listed in the
 [roadmap update of 2026-11-22](../../PROJECT.md#open-issues-on-2026-11-22--roadmap-update).

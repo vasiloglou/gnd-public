@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**Approved by delegated ruling (auto=true), 2026-11-23** `(d)`. The owner
+**Approved by delegated ruling (auto=true), 2026-11-23; implemented, recorded in [004-phase-VG2.md](../004-phase-VG2.md)** `(d)`. The owner
 invoked `process-milestone reviewed-vocabulary-growth auto` on 2026-11-23,
 which delegates spec rulings within this milestone. That is the driving
 agent's ruling under the delegation, not the owner's reading of the spec.
@@ -186,3 +186,31 @@ About 6 source lines, about 20 page lines, about 200 test lines.
 ## 11. Approval instrument
 
 This prose (VG2-D1).
+
+## Implementation findings, recorded as they were found `(d)`
+
+2026-11-23. The branch took `main` with GO1 (`fdffdcd1`) at `11ca75b0`;
+`_enforce_d12` was unchanged there (one line of offset), so every citation
+held.
+
+1. **Test-authoring slips.** T3 first expected D-12 to refuse a proposed,
+   deontic `induced` constraint; D-12 admits it, and the induction block is
+   required by candidate validation. T4 first edited operations in place;
+   they are immutable, and the test rebuilds them. Neither changed a rule.
+2. **Review r1 (Codex), F1, fixed at `53280cba`.** The new refusal was not
+   in `_evolve_service_exit`'s marker list, so the command exited 70. The
+   marker joins the D-12 markers; the change is an RF5 successor in
+   `evidence/VG2/source-successors.json`, chained after IK2's row.
+3. **Review r1, F2, a corrected claim.** The brief said a changed constraint
+   is judged as before. D-12 judges a new or changed constraint by one rule
+   (its home's first sentence), so a `sample` or `common-sense` constraint
+   that changes and stays `proposed`/`deontic` is now admitted. This spec's
+   §6 already wrote "a changed constraint still has to be … sample or
+   common-sense and proposed/deontic" into the contract. Pinned by a test.
+4. **Review r1, F3, a corrected claim.** On an unattended model a
+   `confirmed` or `alethic` constraint is refused by U2 or U8 first, because
+   candidate validation precedes D-12. VG2-C2's named refusal holds on a
+   model without the mode; on any model the exit is 3.
+5. **Review r1, F4, fixed at `53280cba`.** T3's section reader matched a
+   heading inside a fenced example; it now reads sections outside fenced
+   blocks.

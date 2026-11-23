@@ -466,6 +466,13 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
                 raise EvolutionError(
                     "new llm-inferred constraints must remain proposed/deontic (D-12)"
                 )
+        elif source in ("sample", "common-sense"):
+            # VG2 (issue 218): row evidence and library evidence, as the growth
+            # document has the host write them; never confirmed, never alethic.
+            if (status, modality) != ("proposed", "deontic"):
+                raise EvolutionError(
+                    "new sample and common-sense constraints must be proposed/deontic (D-12)"
+                )
         elif source == "user-supplied":
             if status != "confirmed":
                 raise EvolutionError(
@@ -1001,6 +1008,11 @@ def _source_document_target(
     with the digest: two would make the target depend on list order (finding 5)."""
     source = document.get("source")
     documents = source.get("documents") if isinstance(source, dict) else None
+    if (documents is None and isinstance(source, dict) and "documents" not in source
+            and source.get("mode") == "unattended" and operation.kind is EvolutionOperationKind.ADD):
+        # VG4 (VG4-D1): an unattended root may start without documents (U1's
+        # first-document rule); its first round's add creates the list.
+        documents = source["documents"] = []
     if not isinstance(documents, list):
         purpose = " to append to" if operation.kind is EvolutionOperationKind.ADD else ""
         raise EvolutionError(

@@ -211,6 +211,8 @@ Two mechanical guards keep the policy honest:
 `gnd evolve` (preview, apply and finalize) admits a constraint that is new or changed relative to the current model only under these rules; an unchanged constraint keeps its complete canonical metadata. This is the one home of the lifecycle; the gnd-model-evolve evolution contract cites it.
 
 - A new `llm-inferred` constraint is `proposed` and `deontic`.
+- A new `sample` constraint is `proposed` and `deontic`: rows that are evidence for a rule are not a review of it.
+- A new `common-sense` constraint is `proposed` and `deontic`: a matched library entry is not a review either.
 - A new `user-supplied` constraint is `confirmed`, with modality assigned by the D-03 table.
 - A new `induced` constraint is `proposed` and `deontic` and carries no `reviewed_in`. Output from discovery or an ILP import is always new, so it can never arrive already reviewed.
 - An `induced` constraint becomes `confirmed` only as a **reviewed status change**: the candidate equals an existing `proposed` `induced` constraint except for `status`, `modality` and an added non-blank `provenance.reviewed_in`. Each proposed predecessor can be confirmed once. Any other change to a confirmed induced constraint returns it to `proposed`.
@@ -225,6 +227,7 @@ The named refusals, all exit 3:
 | `new induced constraints cannot carry provenance.reviewed_in (D-12)` | a new proposed induced constraint names a review |
 | `induced constraints become confirmed only as a reviewed status change of an existing proposed induced constraint (D-12)` | a confirmed induced constraint with no claimable predecessor or no review record |
 | `new induced constraints must be proposed/deontic (D-12)` | any other status/modality on a new induced constraint |
+| `new sample and common-sense constraints must be proposed/deontic (D-12)` | a new `sample` or `common-sense` constraint that is `confirmed` or `alethic` |
 
 An owner may still rewrite an induced rule as `user-supplied`/`confirmed` without its induction block; that drops the marker, and the reviewed status change is the path that keeps it.
 

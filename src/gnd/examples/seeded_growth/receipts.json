@@ -1,0 +1,49 @@
+{
+  "receipts": [
+    {
+      "external_evidence": null,
+      "judge_id": "a",
+      "receipt_id": "r-a",
+      "sources": [
+        {
+          "path": "round-1.document.txt",
+          "quote": null,
+          "sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "af0dad2be147ee1643e01f012d844d3a9b9e132518c7d76ecbaf64fba254da38",
+        "fact_type": "author_writes_work",
+        "index": 0,
+        "model_sha256": "ac530f87fc2560a3ff73027fcfdc0af9888c18aefa0b1e9708c6e5b1acd43d5c",
+        "population_sha256": "9f481316d8e86d297b1ba00505fae57e3274d531c9ab2d56f102e9a81ef77ad7",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "b",
+      "receipt_id": "r-b",
+      "sources": [
+        {
+          "path": "round-1.document.txt",
+          "quote": null,
+          "sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "af0dad2be147ee1643e01f012d844d3a9b9e132518c7d76ecbaf64fba254da38",
+        "fact_type": "author_writes_work",
+        "index": 0,
+        "model_sha256": "ac530f87fc2560a3ff73027fcfdc0af9888c18aefa0b1e9708c6e5b1acd43d5c",
+        "population_sha256": "9f481316d8e86d297b1ba00505fae57e3274d531c9ab2d56f102e9a81ef77ad7",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    }
+  ],
+  "schema_version": 1
+}

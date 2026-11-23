@@ -1,0 +1,1256 @@
+diff --git a/.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3/source-successors.json b/.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3/source-successors.json
+new file mode 100644
+index 00000000..9bfffff0
+--- /dev/null
++++ b/.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3/source-successors.json
+@@ -0,0 +1,23 @@
++{
++ "schema_version": 1,
++ "reason": "reviewed-vocabulary-growth VG3: gnd validate prints one INCLUDE line per include of an unattended root, in text output, before the OK line (plan D5 (a)); chained after release-0.3.0 RN0.",
++ "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
++ "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
++ "successors": [
++  {
++   "kind": "RF5",
++   "old": "gnd.cli",
++   "name": "_cmd_validate",
++   "home": "gnd.commands.checking",
++   "before": {
++    "raw_sha256": "b7aea56b6943d882c26e166314df1ed491e62180d8451cc84b9c4ffa88c6bb30",
++    "algorithm_sha256": "2f2def2982e82f3e91c5e4f3e40b8cf45c30ff4fc6f6b224a5668c0e4a5534df"
++   },
++   "after": {
++    "algorithm_sha256": "51507dff19c3294cbd1970cef2c80fa3210349d39b25ab4aecb8a2d971aaad1e",
++    "raw_sha256": "7f7d4fa6b6d298c3895f2118149d899f1fd15daa42072572fb3497969620baa2"
++   },
++   "reason": "VG3 (issue 222): the text output of an unattended include root names each include and its counts; a model without the mode or without includes prints what it printed before (VG3-C7)."
++  }
++ ]
++}
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index b2936514..4759617e 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -534,7 +534,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### cli.checking_command
+-- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms.
++- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
+ - verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review, baseline model, compare rule editions
+ - in: argparse subparsers or a parsed command namespace
+ - out: registered parsers or the selected command exit code
+@@ -1790,7 +1790,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### model.loading
+-- does: Load bounded models, compose pinned vocabularies, record flattened origins and bind reference populations [load_model, flatten_model, bind_population].
++- does: Load bounded models, compose pinned vocabularies, record flattened origins and bind reference populations [load_model, flatten_model, bind_population]; tell which composed elements came from an include and count what each include declares [included_rows, include_attribution].
+ - verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance, flatten includes, projected model bytes
+ - in: Model path or immutable bytes; optional composition/reference root, declared content hashes and validated candidate population.
+ - out: Validated Model with warnings, include provenance/private authored-byte binding and compiled side table; bound reference context or combined population.
+@@ -1804,7 +1804,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### model.validation
+-- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
++- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate]. The unattended rules exempt included elements from U2-U6 and keep U7 and U8 as the include rule says.
+ - verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
+ - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
+ - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index 76e3a34f..bbdfe92a 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -29,8 +29,8 @@ Components: cli.checking_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 1058 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 1093 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 1082 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 1117 | (no docstring) |
+ 
+ ## gnd.commands.codegen — `src/gnd/commands/codegen.py`
+ Components: cli.codegen_command
+diff --git a/dev/components/modules/model.md b/dev/components/modules/model.md
+index 10b592c5..332f0536 100644
+--- a/dev/components/modules/model.md
++++ b/dev/components/modules/model.md
+@@ -8,22 +8,22 @@ Model loading with two-layer validation.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `load_model_bytes(data, *, source) -> Model` | function | 287 | Validate one immutable bounded buffer; source is diagnostic metadata. |
+-| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 359 | Resolve the authored model and bind references under one retained root. |
+-| `load_model(path) -> Model` | function | 424 | Read model and reference bytes beneath a single retained directory. |
+-| `ReferenceOrigin` | class | 484 | (no docstring) |
+-| `OccurrenceOrigin` | class | 490 | (no docstring) |
+-| `BoundReferenceContext` | class | 496 | (no docstring) |
+-| `BoundPopulationView` | class | 506 | (no docstring) |
+-| `validate_reference_structure(document) -> None` | function | 513 | (no docstring) |
+-| `validate_declarations(model) -> dict[str, str]` | function | 528 | (no docstring) |
+-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 635 | (no docstring) |
+-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 641 | Bind a model's declared reference populations at ``root``, or return None |
+-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 656 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+-| `resolve_context(model, references) -> BoundReferenceContext` | function | 665 | (no docstring) |
+-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 697 | (no docstring) |
+-| `candidate_fact_count(view) -> int` | function | 773 | (no docstring) |
+-| `is_bound_population(model, population, context) -> bool` | function | 777 | Recognize only a current combined population created by this binder. |
++| `load_model_bytes(data, *, source) -> Model` | function | 290 | Validate one immutable bounded buffer; source is diagnostic metadata. |
++| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 368 | Resolve the authored model and bind references under one retained root. |
++| `load_model(path) -> Model` | function | 433 | Read model and reference bytes beneath a single retained directory. |
++| `ReferenceOrigin` | class | 493 | (no docstring) |
++| `OccurrenceOrigin` | class | 499 | (no docstring) |
++| `BoundReferenceContext` | class | 505 | (no docstring) |
++| `BoundPopulationView` | class | 515 | (no docstring) |
++| `validate_reference_structure(document) -> None` | function | 522 | (no docstring) |
++| `validate_declarations(model) -> dict[str, str]` | function | 537 | (no docstring) |
++| `bind_references(model, *, root) -> BoundReferenceContext` | function | 644 | (no docstring) |
++| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 650 | Bind a model's declared reference populations at ``root``, or return None |
++| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 665 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
++| `resolve_context(model, references) -> BoundReferenceContext` | function | 674 | (no docstring) |
++| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 706 | (no docstring) |
++| `candidate_fact_count(view) -> int` | function | 782 | (no docstring) |
++| `is_bound_population(model, population, context) -> bool` | function | 786 | Recognize only a current combined population created by this binder. |
+ 
+ ## gnd.model._documents — `src/gnd/model/_documents.py`
+ Components: model.json_document
+@@ -48,19 +48,21 @@ One resolver and admission guards for pinned version-5 model includes.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `CompositionView` | class | 37 | (no docstring) |
+-| `refuse_unresolved() -> NoReturn` | function | 51 | Refuse a consumer's include Model without matching resolver metadata. |
+-| `declares_includes(document) -> bool` | function | 56 | (no docstring) |
+-| `parse_declarations(document) -> Declarations` | function | 61 | (no docstring) |
+-| `parse_included(raw, *, include_id, path) -> dict` | function | 91 | (no docstring) |
+-| `include_reason(error) -> str \| None` | function | 116 | (no docstring) |
+-| `compose(document, *, descriptor, source, historical, issues)` | function | 181 | (no docstring) |
+-| `remap_issues(issues, origins)` | function | 245 | (no docstring) |
+-| `refuse_unsupported(route) -> NoReturn` | function | 276 | (no docstring) |
+-| `guard_document(document, route)` | function | 280 | (no docstring) |
+-| `bytes_declare_includes(raw, *, source) -> bool` | function | 285 | True when RAW parses and declares includes or attachments. |
+-| `guard_bytes(raw, *, source, route)` | function | 300 | (no docstring) |
+-| `guard_path(path, route)` | function | 305 | (no docstring) |
++| `CompositionView` | class | 38 | (no docstring) |
++| `refuse_unresolved() -> NoReturn` | function | 52 | Refuse a consumer's include Model without matching resolver metadata. |
++| `declares_includes(document) -> bool` | function | 57 | (no docstring) |
++| `parse_declarations(document) -> Declarations` | function | 62 | (no docstring) |
++| `parse_included(raw, *, include_id, path) -> dict` | function | 92 | (no docstring) |
++| `include_reason(error) -> str \| None` | function | 117 | (no docstring) |
++| `compose(document, *, descriptor, source, historical, issues)` | function | 182 | (no docstring) |
++| `included_rows(document, origins) -> frozenset[int]` | function | 246 | ``id()`` of every element of DOCUMENT whose origin is an include (VG3). |
++| `include_attribution(model) -> list[dict[str, Any]]` | function | 264 | One row per include of MODEL: its id, sha256 and what its file declares (VG3, D5). |
++| `remap_issues(issues, origins)` | function | 290 | (no docstring) |
++| `refuse_unsupported(route) -> NoReturn` | function | 324 | (no docstring) |
++| `guard_document(document, route)` | function | 328 | (no docstring) |
++| `bytes_declare_includes(raw, *, source) -> bool` | function | 333 | True when RAW parses and declares includes or attachments. |
++| `guard_bytes(raw, *, source, route)` | function | 348 | (no docstring) |
++| `guard_path(path, route)` | function | 353 | (no docstring) |
+ 
+ ## gnd.model._induction — `src/gnd/model/_induction.py`
+ Components: model.validation
+@@ -100,11 +102,11 @@ MG5 unattended source mode (model-growth-guardrails milestone).
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `SpanCoverage` | class | 240 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
+-| `SpanCoverage.unchecked(self) -> int` | method | 252 | (no docstring) |
+-| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 255 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
+-| `unattended_span_issues(doc, documents) -> list[ValidationIssue]` | function | 304 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+-| `unattended_span_coverage(doc, documents) -> SpanCoverage \| None` | function | 314 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
++| `SpanCoverage` | class | 287 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
++| `SpanCoverage.unchecked(self) -> int` | method | 299 | (no docstring) |
++| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 302 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
++| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 355 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
++| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 367 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
+ 
+ ## gnd.model._validation — `src/gnd/model/_validation.py`
+ Components: model.validation
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 89eac951..220094a2 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -26,6 +26,20 @@ the next one.
+ - **Unencodable include paths.** An include path that cannot be encoded as
+   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
+   error itself, and the PyRel export exited 70.
++- **`gnd check` on large vocabularies.** The checker no longer rebuilds its
++  type maps once per object type: on the interop example with 1,000 extra
++  object types `gnd check` takes about half a second where 0.4.0 took over
++  two minutes, and `gnd judgments check` and `gnd verify` gain the same.
++  Reports are unchanged. A subtype chain hundreds of types deep is still
++  slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
++- **Unattended growth from a reviewed vocabulary.** A version-5 root with
++  `source.mode: unattended` may include an owner-reviewed model: the included
++  elements keep their own source, status and modality and are exempt from the
++  unattended rules U2 to U6, while an unconfirmed inferred `alethic` claim in
++  an include is still refused (U8). `gnd validate` prints one `INCLUDE` line
++  per include in its text output, and span diagnostics on included elements
++  now carry the `includes[ID]:` prefix
++  ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
+ 
+ ## 0.4.0 (2026-11-17)
+ 
+diff --git a/src/gnd/commands/checking.py b/src/gnd/commands/checking.py
+index 603c2e42..03f9c98a 100644
+--- a/src/gnd/commands/checking.py
++++ b/src/gnd/commands/checking.py
+@@ -66,7 +66,12 @@ def _cmd_validate_documents(
+     and returns its exit with ``None``; otherwise the result is rebuilt through
+     the validate pipeline with the walk's issues and warnings, for the caller
+     to print (exit 0 with nothing to add returns the original result)."""
+-    from gnd.model import unattended_span_coverage, unattended_span_issues
++    from gnd.model import (
++        included_rows,
++        remap_issues,
++        unattended_span_coverage,
++        unattended_span_issues,
++    )
+ 
+     documents, exit_code, message = _read_validate_documents(paths)
+     if exit_code is not None:
+@@ -81,8 +86,10 @@ def _cmd_validate_documents(
+         print(f"ERROR: {message}")
+         return exit_code, None
+     document = result.model.model_dump(exclude={"warnings"})
+-    issues = unattended_span_issues(document, documents)
+-    coverage = unattended_span_coverage(document, documents)
++    origins = result.model._provenance
++    included = included_rows(document, origins)  # VG3: the rule walk's origin test, over this dump
++    issues = remap_issues(unattended_span_issues(document, documents, included=included), origins)
++    coverage = unattended_span_coverage(document, documents, included=included)
+     entry = None if coverage is None else coverage.issue(severity="error" if require else "warning")
+     warnings = list(result.warnings)
+     if entry is not None:
+@@ -101,6 +108,20 @@ def _is_unattended(model: Any) -> bool:
+     return isinstance(source, dict) and source.get("mode") == UNATTENDED_MODE
+ 
+ 
++def _print_include_attribution(model: Any) -> None:
++    """VG3 (D5): one text line per include of an unattended root; counts and a digest, never a value."""
++    if model is None or not _is_unattended(model):
++        return
++    from gnd.model import include_attribution
++
++    for row in include_attribution(model):
++        print(f"INCLUDE {row['id']} sha256={row['sha256']}: {row['object_type_count']} object types, "
++              f"{row['fact_type_count']} fact types, {row['sample_rows']} sample rows, "
++              f"{row['constraints']} constraints ({row['confirmed']} confirmed, {row['alethic']} alethic, "
++              f"{row['explicit_or_user_supplied']} explicit or user-supplied), "
++              f"{row['deontic_notes']} deontic notes")
++
++
+ def _cmd_validate(
+     model_path: str,
+     output_format: str,
+@@ -140,6 +161,8 @@ def _cmd_validate(
+     if "redaction" in mechanical_payload:
+         if trace and result.model is not None and not result.issues and result.error is None:
+             _print_trace(result.model, model_path)
++        if result.exit_code == 0:
++            _print_include_attribution(result.model)
+         _print_projected_check_text(mechanical_payload)
+         return result.exit_code
+     for warning in result.warnings:
+@@ -153,6 +176,7 @@ def _cmd_validate(
+         return result.exit_code
+     if trace:
+         _print_trace(result.model, model_path)
++    _print_include_attribution(result.model)
+     print(f"OK: {model_path} is a valid GND ORM model")
+     return result.exit_code
+ 
+diff --git a/src/gnd/model/__init__.py b/src/gnd/model/__init__.py
+index 1685e86a..a9640db6 100644
+--- a/src/gnd/model/__init__.py
++++ b/src/gnd/model/__init__.py
+@@ -25,6 +25,9 @@ from typing import TYPE_CHECKING
+ 
+ from gnd.model._documents import ModelValueError as ModelValueError
+ from gnd.model._documents import json_document as json_document
++from gnd.model._includes import include_attribution as include_attribution
++from gnd.model._includes import included_rows as included_rows
++from gnd.model._includes import remap_issues as remap_issues
+ from gnd.model._induction import _induction_strings as _induction_strings
+ from gnd.model._induction import (
+     _rule_induced_confirmed_reviewed as _rule_induced_confirmed_reviewed,
+@@ -297,12 +300,18 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+ 
+ 
+ def _model_warnings(doc, origins):
+-    from gnd.model._includes import remap_issues
++    from gnd.model._includes import included_rows, remap_issues
++    from gnd.model._unattended import _INCLUDED
+ 
+     issues = remap_issues(_layer1_structural(doc), origins)
+     if issues:
+         raise ModelValidationError(issues)
+-    issues = remap_issues(semantic_validate(dict(doc)), origins)
++    # VG3: the unattended rules read which elements came from an include.
++    token = _INCLUDED.set(included_rows(doc, origins))
++    try:
++        issues = remap_issues(semantic_validate(dict(doc)), origins)
++    finally:
++        _INCLUDED.reset(token)
+     errors = [issue for issue in issues if issue.severity == "error"]
+     warnings = [issue for issue in issues if issue.severity == "warning"]
+     if errors:
+diff --git a/src/gnd/model/_includes.py b/src/gnd/model/_includes.py
+index e379fd4f..5aa3bffb 100644
+--- a/src/gnd/model/_includes.py
++++ b/src/gnd/model/_includes.py
+@@ -19,6 +19,7 @@ from gnd.model._paths import _relative, historical_path_at
+ from gnd.model._validation import (
+     ID_SECTIONS,
+     MAX_MODEL_BYTES,
++    _iter_constraints,
+     _layer1_structural,
+     parse_model_document,
+     semantic_validate,
+@@ -242,16 +243,63 @@ def compose(document: object, *, descriptor: int, source: str | Path, historical
+     return result, origins, metadata
+ 
+ 
++def included_rows(document: Mapping, origins) -> frozenset[int]:
++    """``id()`` of every element of DOCUMENT whose origin is an include (VG3).
++
++    The one origin test of the unattended rules and of the span walk. It walks
++    ``_ids(document)``, the walk ``_merge`` keys origins by, so no address is
++    parsed. A constraint the root attaches to an included fact type has origin
++    ``model``. Positional: it reads the composed document and a dump of it alike.
++    """
++    if not isinstance(document, Mapping):
++        return frozenset()
++    by_address = {entry.composed_address: entry.origin for entry in origins}
++    try:
++        return frozenset(id(element) for address, element in _ids(document)
++                         if by_address.get(address, 'model') != 'model')
++    except (AttributeError, TypeError):
++        return frozenset()
++
++
++def include_attribution(model) -> list[dict[str, Any]]:
++    """One row per include of MODEL: its id, sha256 and what its file declares (VG3, D5).
++
++    Read from each included file's own document, which is what composition
++    appends; counts only, never a value.
++    """
++    rows = []
++    for included in getattr(model, '_included', ()) or ():
++        doc = parse_included(included.raw, include_id=included.id, path=included.path)
++        constraints = [constraint for _, constraint in _iter_constraints(doc)]
++        fact_types = [row for row in doc.get('fact_types') or [] if isinstance(row, Mapping)]
++        rows.append({
++            'id': included.id, 'sha256': included.sha256,
++            'object_type_count': len(doc.get('object_types') or []),
++            'fact_type_count': len(fact_types),
++            'sample_rows': sum(len(row.get('sample_population') or []) for row in fact_types),
++            'constraints': len(constraints),
++            'confirmed': sum(c.get('status') == 'confirmed' for c in constraints),
++            'alethic': sum(c.get('modality') == 'alethic' for c in constraints),
++            'explicit_or_user_supplied': sum(c.get('source') in ('explicit', 'user-supplied')
++                                             for c in constraints),
++            'deontic_notes': len(doc.get('deontic_notes') or []),
++        })
++    return rows
++
++
+ def remap_issues(issues, origins):
+     addresses = {entry.composed_address: entry for entry in origins}
+-    selectors = {entry.element_id: entry.composed_address for entry in origins
+-                 if re.fullmatch(r'\$\.fact_types\[\d+\]', entry.composed_address)}
++    # VG3: object types as well as fact types (plan H17).
++    selectors = {(entry.composed_address.split('[')[0], entry.element_id): entry.composed_address
++                 for entry in origins
++                 if re.fullmatch(r'\$\.(fact_types|object_types)\[\d+\]', entry.composed_address)}
+     result = []
+     for issue in issues:
+         path = issue.path
+-        selector = re.match(r'^\$\.fact_types\[id=(.*?)\]', path)
+-        if selector and selector[1] in selectors:
+-            path = selectors[selector[1]] + path[selector.end():]
++        selector = re.match(r'^(\$\.(?:fact_types|object_types))\[id=(.*?)\]', path)
++        key = (selector[1], selector[2]) if selector else None
++        if key in selectors:
++            path = selectors[key] + path[selector.end():]
+         candidates = re.findall(r'\$\.[a-z_]+\[\d+\](?:\.constraints\[\d+\])?', path)
+         address = candidates[0] if candidates else ''
+         entry = addresses.get(address)
+@@ -265,8 +313,8 @@ def remap_issues(issues, origins):
+             prefix = '' if entry.origin == 'model' else entry.origin + ':'
+             original = entry.original_address
+             if selector and entry.origin != 'model':
+-                original = re.sub(r'^\$\.fact_types\[\d+\]',
+-                                  lambda _, selector=selector: f'$.fact_types[id={selector[1]}]', original)
++                original = re.sub(r'^\$\.(fact_types|object_types)\[\d+\]',
++                                  lambda match, selector=selector: f'{selector[1]}[id={selector[2]}]', original)
+             path = prefix + original + path[len(address):]
+             issue = issue.model_copy(update={'path': path})
+         result.append(issue)
+diff --git a/src/gnd/model/_unattended.py b/src/gnd/model/_unattended.py
+index 34c5c559..0231a392 100644
+--- a/src/gnd/model/_unattended.py
++++ b/src/gnd/model/_unattended.py
+@@ -18,6 +18,7 @@ from __future__ import annotations
+ import hashlib
+ import re
+ from collections.abc import Callable, Iterator, Mapping
++from contextvars import ContextVar
+ from dataclasses import dataclass
+ from typing import Any, Literal
+ 
+@@ -57,6 +58,32 @@ _UNATTENDED_SPANLESS_SOURCE = "common-sense"
+ _UNATTENDED_INDUCED_SOURCE = "induced"
+ _UNATTENDED_ALETHIC_SOURCES = ("sample", "llm-inferred", "common-sense", "induced")
+ 
++#: VG3: ``id()`` of the composed document's elements whose origin is an
++#: include, set by ``gnd.model._model_warnings`` around ``semantic_validate``
++#: and by nothing else (``gnd.model._includes.included_rows`` computes it).
++#: Every other caller sees the empty set, and so today's rules.
++_INCLUDED: ContextVar[frozenset[int]] = ContextVar("gnd_unattended_included", default=frozenset())
++
++
++def _declared_spans(owner: Any, declared: set[str]) -> Iterator[tuple[str, Any]]:
++    """(suffix, span) for each span an included element carries over a document the root declares.
++
++    D14 (a): such a span is the root's business and keeps U7's shape check;
++    any other span an included element carries is read by no rule.
++    """
++    provenance = owner.get("provenance") if isinstance(owner, Mapping) else None
++    if not isinstance(provenance, Mapping):
++        return
++    for index, span in enumerate(_listed(provenance.get("spans"))):
++        if isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str) \
++                and span["document_sha256"] in declared:
++            yield f".provenance.spans[{index}]", span
++    for index, entry in enumerate(_listed(provenance.get("sample_spans"))):
++        span = entry.get("span") if isinstance(entry, Mapping) else None
++        if isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str) \
++                and span["document_sha256"] in declared:
++            yield f".provenance.sample_spans[{index}].span", span
++
+ 
+ def _unattended_source(doc: dict[str, Any]) -> dict[str, Any] | None:
+     source = doc.get("source")
+@@ -190,23 +217,33 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
+         ]
+     issues: list[ValidationIssue] = []
+     declared = _declared_documents(source, issues, rule_id="semantic:unattended-u1")
++    included = _INCLUDED.get()
+     for path, element in _iter_provenance_bearing(doc):
++        if id(element) in included:
++            continue  # VG3: an included element's status is the include's (U2)
+         if element.get("status") == "confirmed":
+             issues.append(ValidationIssue(
+                 path=path, message=f"{_provenance_bearing_label(element)} is confirmed, but no reviewer exists",
+                 rule_id="semantic:unattended-u2"))
+     constraints = list(_iter_constraints(doc))
+     for path, constraint in constraints:
++        if id(constraint) in included:
++            continue  # VG3 (U3)
+         if constraint.get("source") in ("explicit", "user-supplied"):
+             issues.append(ValidationIssue(
+                 path=path, message=f"source '{constraint.get('source')}' claims a human said it; nobody did",
+                 rule_id="semantic:unattended-u3"))
+     for collection, label in (("object_types", "object type"), ("fact_types", "fact type")):
+         for element in _listed(doc.get(collection)):
+-            if isinstance(element, Mapping):
++            if isinstance(element, Mapping) and id(element) in included:
++                _included_span_issues(element, f"$.{collection}[id={element.get('id', '?')}]", declared, issues)
++            elif isinstance(element, Mapping):
+                 _require_spans(element, f"$.{collection}[id={element.get('id', '?')}]", label, declared, issues,
+                                rule_id="semantic:unattended-u4", span_rule_id="semantic:unattended-u7")
+     for path, constraint in constraints:
++        if id(constraint) in included:
++            _included_span_issues(constraint, path, declared, issues)  # VG3: U5 asks nothing
++            continue
+         provenance = constraint.get("provenance")
+         has_spans = isinstance(provenance, Mapping) and "spans" in provenance
+         # An induced constraint cites the digest-bound population evidence in
+@@ -221,12 +258,14 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
+             _require_spans(constraint, path, "constraint", declared, issues,
+                            rule_id="semantic:unattended-u5", span_rule_id="semantic:unattended-u7")
+     for fact_type in _listed(doc.get("fact_types")):
+-        if isinstance(fact_type, Mapping):
++        if isinstance(fact_type, Mapping) and id(fact_type) not in included:  # VG3: U6; U7 above
+             _sample_span_issues(dict(fact_type), f"$.fact_types[id={fact_type.get('id', '?')}]", declared, issues,
+                                 rule_id="semantic:unattended-u6", span_rule_id="semantic:unattended-u7")
+     # Every provenance-bearing element, obligations and operations included:
+     # D-03 is an error in this mode (close review R3-2).
+     for path, element in _iter_provenance_bearing(doc):
++        if id(element) in included and element.get("status") == "confirmed":
++            continue  # VG3, D13 (a): an included element is exempt from U8 only when confirmed
+         if element.get("modality") == "alethic" and element.get("source") in _UNATTENDED_ALETHIC_SOURCES:
+             issues.append(ValidationIssue(
+                 path=path,
+@@ -236,6 +275,14 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
+     return sorted(issues, key=lambda issue: order[issue.rule_id])
+ 
+ 
++def _included_span_issues(owner: Any, path: str, declared: set[str], issues: list[ValidationIssue]) -> None:
++    """U7 over the spans an included element carries over a root-declared document (D14 (a))."""
++    for suffix, span in _declared_spans(owner, declared):
++        found = _span_issue(span, f"{path}{suffix}", declared, rule_id="semantic:unattended-u7")
++        if found is not None:
++            issues.append(found)
++
++
+ @dataclass(frozen=True)
+ class SpanCoverage:
+     """UG3: how many of an unattended model's source spans one ``--document`` run re-hashed.
+@@ -262,7 +309,8 @@ class SpanCoverage:
+                     "supply every declared document with --document")
+ 
+ 
+-def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[list[ValidationIssue], SpanCoverage]:
++def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes],
++               included: frozenset[int] = frozenset()) -> tuple[list[ValidationIssue], SpanCoverage]:
+     from gnd.anchors import AnchorError, canonical_document_text
+ 
+     source = _unattended_source(doc) or {}
+@@ -282,7 +330,10 @@ def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[lis
+                                           message=f"document is not strict UTF-8 text: {error}".replace(
+                                               "anchor:sidecar-invalid: ", "")))
+     total = rehashed = 0
+-    for path, span in _iter_unattended_spans(doc):
++    for path, span, from_include in _iter_unattended_spans(doc, included):
++        if from_include and not (isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str)
++                                 and span["document_sha256"] in declared):
++            continue  # VG3, D14 (a): an included span over another document is not the root's claim
+         total += 1
+         # Shape first: a digest that is not a string is never a key (UG3 review finding 4).
+         digest = span.get("document_sha256") if isinstance(span, Mapping) else None
+@@ -301,30 +352,34 @@ def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[lis
+     return issues, SpanCoverage(total=total, rehashed=rehashed)
+ 
+ 
+-def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes]) -> list[ValidationIssue]:
++def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes], *,
++                           included: frozenset[int] = frozenset()) -> list[ValidationIssue]:
+     """MG5 `gnd validate --document`: re-hash every valid span over a supplied document.
+ 
+     ``documents`` maps a display path to raw bytes. Offsets count code points
+     of the NFC text of the strict UTF-8 decoding (``canonical_document_text``);
+     ``documents[].sha256`` is over the raw bytes. Messages name paths, digests
+-    and offsets, never document text (MG-R5)."""
+-    return _span_walk(doc, documents)[0]
++    and offsets, never document text (MG-R5). ``included`` is
++    ``gnd.model.included_rows`` over ``doc`` (VG3)."""
++    return _span_walk(doc, documents, included)[0]
+ 
+ 
+-def unattended_span_coverage(doc: dict[str, Any], documents: Mapping[str, bytes]) -> SpanCoverage | None:
++def unattended_span_coverage(doc: dict[str, Any], documents: Mapping[str, bytes], *,
++                             included: frozenset[int] = frozenset()) -> SpanCoverage | None:
+     """UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode."""
+     if _unattended_source(doc) is None:
+         return None
+-    return _span_walk(doc, documents)[1]
++    return _span_walk(doc, documents, included)[1]
+ 
+ 
+-def _iter_unattended_spans(doc: dict[str, Any]):
++def _iter_unattended_spans(doc: dict[str, Any], included: frozenset[int] = frozenset()):
++    """(path, span, whether its owner came from an include) for every span the walk visits."""
+     def spans_of(owner: Any, path: str):
+         provenance = owner.get("provenance") if isinstance(owner, Mapping) else None
+         # Total over any shape (UG3 review finding 2): outside the mode, layer one
+         # does not check `provenance.spans`, and `--document` still walks it.
+         for index, span in enumerate(_listed(provenance.get("spans")) if isinstance(provenance, Mapping) else []):
+-            yield f"{path}.provenance.spans[{index}]", span
++            yield f"{path}.provenance.spans[{index}]", span, id(owner) in included
+ 
+     for collection in ("object_types", "fact_types"):
+         for element in _listed(doc.get(collection)):
+@@ -337,4 +392,5 @@ def _iter_unattended_spans(doc: dict[str, Any]):
+         entries = provenance.get("sample_spans") if isinstance(provenance, Mapping) else None
+         for index, entry in enumerate(entries if isinstance(entries, list) else []):
+             if isinstance(entry, Mapping):
+-                yield f"$.fact_types[id={fact_type.get('id', '?')}].provenance.sample_spans[{index}].span", entry.get("span")
++                yield (f"$.fact_types[id={fact_type.get('id', '?')}].provenance.sample_spans[{index}].span",
++                       entry.get("span"), id(fact_type) in included)
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index 632d6963..203fb8af 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -787,6 +787,45 @@ after the walk's other issues. With the flag and no `--document`, every span is
+ the flag and without `--document`, nothing is counted and the output is unchanged. The flag is a
+ no-op for a model without the mode, and is not combined with `--identity` (exit 64).
+ 
++### An unattended root that includes a reviewed model
++
++A version-5 root with `source.mode: unattended` may include a model that is not itself
++unattended ([Model includes](#model-includes-version-5)), such as an owner-reviewed vocabulary.
++The root's `source` governs, and U1 reads it as above. An element whose origin is an include keeps
++its own `source`, `status` and `modality`:
++
++- U2 to U6 ask nothing of it.
++- U8 applies unless it is `confirmed`: an unconfirmed `sample`, `llm-inferred`, `common-sense` or
++  `induced` claim stays refused as `alethic`, in whichever file it sits.
++- A span it carries is the root's claim only when its `document_sha256` names a document the root
++  declares. Such a span is checked by U7, re-hashed by `--document` and counted by
++  `--require-documents`, as a root span is. Any other span it carries is read by no rule and is
++  neither re-hashed nor counted.
++
++Everything the root owns keeps every rule, including a constraint it attaches to an included fact
++type through `fact_type_constraints`, and its operations and obligations (an include cannot declare
++those). Diagnostics on included elements, the span walk's included, carry the `includes[ID]:`
++prefix.
++
++What makes an included element exempt is the root's pin: the root names each include by id, path
++and SHA-256, the owner authors the root, and a growth round cannot change a pin. GND checks the bytes
++against the pin, and that the file is a standalone-valid model; it cannot check who wrote or
++reviewed them. A host that can write both the root and an include can therefore carry any claim
++through the include, `confirmed` and `alethic` ones included. That is a limit, not a control.
++
++To show what each include carries, the text output of `gnd validate` on such a root prints one line
++per include, in declaration order, after any warnings and before `OK:`:
++
++```text
++INCLUDE <id> sha256=<pin>: <n> object types, <n> fact types, <n> sample rows, <n> constraints (<n> confirmed, <n> alethic, <n> explicit or user-supplied), <n> deontic notes
++```
++
++The counts are what the included file declares; they list no element. The JSON payload of
++`gnd validate` does not carry these lines (its variant is frozen); a reader of JSON sees the
++`includes[ID]:` prefix on each issue's path. `gnd check` and `gnd judgments check` print no such
++line: their reports bind the include set already, by the composed `model_digest` and by the root's
++SHA-256.
++
+ ## `rejected_proposals` — kept so future runs don't re-propose
+ 
+ Same shape as a regular constraint, but with `status: rejected` and two added fields. Schema-light: `modality` is not required (archived proposals, not active constraints).
+@@ -1843,7 +1882,9 @@ An included file is a standalone-valid model at version 1–4, declaring its
+ object types and fact types and optionally constraints and deontic notes.
+ It cannot declare `includes`, `reference_populations`, `operations`,
+ `rejected_proposals` or `fact_type_constraints`, even as empty lists. Its
+-source mode cannot be `unattended`. Nesting is not admitted. The includer's
++source mode cannot be `unattended`; an unattended root may include it, and
++[Unattended source](#unattended-source) says what its rules ask of the
++included elements. Nesting is not admitted. The includer's
+ version, model id and source govern composition; each included file's
+ version, model id and source are retained privately as origin metadata.
+ 
+diff --git a/tests/fixtures/vg3/base-outputs.json b/tests/fixtures/vg3/base-outputs.json
+new file mode 100644
+index 00000000..3bc10c65
+--- /dev/null
++++ b/tests/fixtures/vg3/base-outputs.json
+@@ -0,0 +1,61 @@
++{
++ "captured_at": "7b68c558 (src unchanged at 3ea39d7f)",
++ "outputs": {
++  "h30-no-document:json": {
++   "exit": 0,
++   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
++  },
++  "h30-no-document:text": {
++   "exit": 0,
++   "stdout": "OK: <case>/root.orm.json is a valid GND ORM model\n"
++  },
++  "h30-require-only:json": {
++   "exit": 3,
++   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"$.source.documents\", \"message\": \"4 of 4 source spans were not re-hashed; supply every declared document with --document\", \"rule_id\": \"unattended:spans-unchecked\", \"severity\": \"error\"}], \"issues_total\": 1, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
++  },
++  "h30-require-only:text": {
++   "exit": 3,
++   "stdout": "ERROR at $.source.documents: 4 of 4 source spans were not re-hashed; supply every declared document with --document [unattended:spans-unchecked]\n"
++  },
++  "h30:json": {
++   "exit": 0,
++   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
++  },
++  "h30:text": {
++   "exit": 0,
++   "stdout": "OK: <case>/root.orm.json is a valid GND ORM model\n"
++  },
++  "include-root-without-mode-document:json": {
++   "exit": 3,
++   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"<case>/doc.md\", \"message\": \"document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents\", \"rule_id\": \"unattended:document-undeclared\", \"severity\": \"error\"}], \"issues_total\": 1, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
++  },
++  "include-root-without-mode-document:text": {
++   "exit": 3,
++   "stdout": "ERROR at <case>/doc.md: document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents [unattended:document-undeclared]\n"
++  },
++  "include-root-without-mode:json": {
++   "exit": 0,
++   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
++  },
++  "include-root-without-mode:text": {
++   "exit": 0,
++   "stdout": "OK: <case>/root.orm.json is a valid GND ORM model\n"
++  },
++  "seed-alone-document:json": {
++   "exit": 3,
++   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<case>/seed.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"<case>/doc.md\", \"message\": \"document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents\", \"rule_id\": \"unattended:document-undeclared\", \"severity\": \"error\"}], \"issues_total\": 1, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
++  },
++  "seed-alone-document:text": {
++   "exit": 3,
++   "stdout": "ERROR at <case>/doc.md: document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents [unattended:document-undeclared]\n"
++  },
++  "seed-alone:json": {
++   "exit": 0,
++   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/seed.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
++  },
++  "seed-alone:text": {
++   "exit": 0,
++   "stdout": "OK: <case>/seed.orm.json is a valid GND ORM model\n"
++  }
++ }
++}
+diff --git a/tests/support/rf9_ci_sources.py b/tests/support/rf9_ci_sources.py
+index 176f9457..9a232f3b 100644
+--- a/tests/support/rf9_ci_sources.py
++++ b/tests/support/rf9_ci_sources.py
+@@ -17,6 +17,8 @@ PHASE_SUCCESSORS = (
+     EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json',
+     # Main CI repair (2026-11-16): guarded-rule and literature bodies recorded after the fact.
+     EVIDENCE.parents[4] / '.gnd-planning/maintenance/2026-11-16-main-ci-repair/source-successors.json',
++    # reviewed-vocabulary-growth VG3 (2026-11-23): the include attribution line of gnd validate.
++    EVIDENCE.parents[4] / '.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3/source-successors.json',
+ )
+ 
+ 
+diff --git a/tests/test_mc1_model_includes.py b/tests/test_mc1_model_includes.py
+index 544ec7b0..5a44a6dc 100644
+--- a/tests/test_mc1_model_includes.py
++++ b/tests/test_mc1_model_includes.py
+@@ -569,6 +569,11 @@ def test_T45b_mixed_host_warning_paths(tmp_path):
+ def test_T44_anonymous_origin_and_source_direction(tmp_path):
+     doc = vocabulary()
+     doc['constraints'][0].pop('id')
++    # reviewed-vocabulary-growth VG3: an unattended root exempts its includes from
++    # U2-U6 and keeps U8 for an unconfirmed inferred claim (plan D13). The included
++    # constraint is made one, so the anonymous origin still has an issue to carry.
++    doc['constraints'][0].update(source='llm-inferred', status='proposed', modality='alethic',
++                                 rationale='r', provenance={'rationale_world_fact': 'w'})
+     path, own, _ = write_case(tmp_path, doc)
+     own['source'] = {'kind':'prose','mode':'unattended','reviewer':'none',
+                      'documents':[{'sha256':'0'*64,'label':'source.txt'}]}
+diff --git a/tests/test_mc3_source_observations.py b/tests/test_mc3_source_observations.py
+index ab1c60ea..988b4006 100644
+--- a/tests/test_mc3_source_observations.py
++++ b/tests/test_mc3_source_observations.py
+@@ -10,6 +10,23 @@ ROOT = Path(__file__).resolve().parents[1]
+ EVIDENCE = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC3'
+ 
+ 
++def _successor_raw(name, raw):
++    """Follow registered body successors from RAW (reviewed-vocabulary-growth VG3).
++
++    The observations stay as recorded; a body changed later is admitted only
++    through an exact, chained successor row naming its raw bytes.
++    """
++    from support.rf9_ci_sources import PHASE_SUCCESSORS
++
++    for path in PHASE_SUCCESSORS:
++        for row in json.loads(path.read_text())['successors']:
++            before, after = row.get('before'), row.get('after')
++            if (row.get('name') == name and isinstance(before, dict) and isinstance(after, dict)
++                    and before.get('raw_sha256') == raw and 'raw_sha256' in after):
++                raw = after['raw_sha256']
++    return raw
++
++
+ def observed_bodies():
+     data = json.loads((EVIDENCE / 'actual-base-body-observations.json').read_text())
+     predecessor = ROOT / data['predecessor']
+@@ -20,7 +37,8 @@ def observed_bodies():
+         assert row['before_raw_sha256'] == old[row['path'], row['name']]
+         source = (ROOT / row['path']).read_text()
+         node = next(n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name == row['name'])
+-        assert hashlib.sha256(ast.get_source_segment(source, node).encode()).hexdigest() == row['after_raw_sha256']
++        expected = _successor_raw(row['name'], row['after_raw_sha256'])
++        assert hashlib.sha256(ast.get_source_segment(source, node).encode()).hexdigest() == expected
+ 
+ 
+ def test_actual_base_bodies_are_exact():
+diff --git a/tests/test_unattended_span_coverage.py b/tests/test_unattended_span_coverage.py
+index 4bc22118..4b7e10dd 100644
+--- a/tests/test_unattended_span_coverage.py
++++ b/tests/test_unattended_span_coverage.py
+@@ -271,9 +271,9 @@ def test_a13_the_walk_is_one_linear_pass(count: int, monkeypatch: pytest.MonkeyP
+     calls = {"walk": 0, "span": 0}
+     original_walk, original_span = unattended._iter_unattended_spans, unattended._span_issue
+ 
+-    def walk(doc: dict[str, Any]):
++    def walk(doc: dict[str, Any], *included: Any):  # VG3 passes the include origin set
+         calls["walk"] += 1
+-        return original_walk(doc)
++        return original_walk(doc, *included)
+ 
+     def span_issue(*args: Any, **kwargs: Any):
+         calls["span"] += 1
+diff --git a/tests/test_vg3_unattended_includes.py b/tests/test_vg3_unattended_includes.py
+new file mode 100644
+index 00000000..ef777e94
+--- /dev/null
++++ b/tests/test_vg3_unattended_includes.py
+@@ -0,0 +1,334 @@
++"""VG3 (reviewed-vocabulary-growth): an unattended root that includes a reviewed vocabulary.
++
++Issue 222. The spec is
++``.gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG3-spec.md``;
++the test names are its section 8 rows. The fixture cases live in
++``tests/vg3_cases.py``; T7 and T10 compare against outputs captured before
++the first VG3 edit (``tests/fixtures/vg3/base-outputs.json``).
++"""
++from __future__ import annotations
++
++import copy
++import json
++import tempfile
++import time
++from pathlib import Path
++
++import pytest
++import vg3_cases as cases
++from support.cli_runner import run_main
++
++from gnd.documents import ElementOrigin
++from gnd.errors import ValidationIssue
++from gnd.model import load_model, remap_issues
++from gnd.model._unattended import _INCLUDED, _rule_unattended
++
++BASE = json.loads((Path(__file__).parent / "fixtures" / "vg3" / "base-outputs.json").read_text())["outputs"]
++ROOT_DOC = ("--document",)
++
++
++def _documented(root: Path, *extra: str) -> tuple[int, str]:
++    return cases.validate(root, "--document", str(root.parent / cases.DOC), "--require-documents", *extra)
++
++
++def _issues(root: Path, *extra: str) -> tuple[int, list[tuple[str, str]]]:
++    code, out = _documented(root, *extra, "--format", "json")
++    payload = json.loads(out)
++    return code, [(issue["rule_id"], issue["path"]) for issue in payload["issues"]]
++
++
++def _span(quote: str) -> dict:
++    return cases.span(quote)
++
++
++def _owned_value(identifier: str, quote: str) -> dict:
++    return {"id": identifier, "kind": "value", "primitive": "String", "provenance": {"spans": [_span(quote)]}}
++
++
++def _inferred(**changes) -> dict:
++    constraint = {"type": "mandatory", "role": "work", "source": "llm-inferred", "status": "proposed",
++                  "modality": "deontic", "rationale": "r",
++                  "provenance": {"rationale_world_fact": "w", "spans": [_span("Each version belongs to one work")]}}
++    constraint.update(changes)
++    return constraint
++
++
++def _top_level(**changes) -> dict:
++    """A top-level constraint the root owns: a value constraint on the included value type."""
++    constraint = _inferred(**changes)
++    constraint.pop("role")
++    constraint.update(type="value", object_type="work", allowed=["w1"])
++    return constraint
++
++
++# --- T1: issue 222's root validates ------------------------------------------
++
++
++def test_T1_issue_222_root_validates_with_its_documents(tmp_path):
++    code, out = _documented(cases.write(tmp_path))
++    assert code == 0, out
++    assert out.endswith("OK: <case>/root.orm.json is a valid GND ORM model\n")
++
++
++def test_T1_control_the_same_root_without_the_include_exemption_is_refused(tmp_path, monkeypatch):
++    """The exemption is what admits it: with no origin set, U2-U5 fire on the included elements."""
++    from gnd.model import _includes
++
++    monkeypatch.setattr(_includes, "included_rows", lambda document, origins: frozenset())
++    code, issues = _issues(cases.write(tmp_path))
++    assert code == 3
++    assert {rule for rule, _ in issues} == {f"semantic:unattended-u{n}" for n in (2, 3, 4, 5)}
++    assert all(path.startswith("includes[seed]:") for _, path in issues), issues
++
++
++# --- T2, T3: root-owned defects keep every rule -------------------------------
++
++
++ROOT_DEFECTS = {
++    "confirmed-constraint": ({"constraints": [_top_level(status="confirmed")]}, "semantic:unattended-u2"),
++    "explicit-constraint": ({"constraints": [_top_level(source="explicit", status="confirmed",
++                                                        provenance={"user_quote": "q",
++                                                                    "spans": [_span("An author writes works")]})]},
++                            "semantic:unattended-u3"),
++    "object-type-without-span": ({"object_types": [{"id": "author", "kind": "value", "primitive": "String"}]},
++                                 "semantic:unattended-u4"),
++    "sample-row-without-span": ({"object_types": [_owned_value("author", "An author writes works")],
++                                 "fact_types": [{"id": "author_writes_work", "reading": "{Author} writes {Work}",
++                                                 "roles": [{"object_type": "author", "role_name": "author"},
++                                                           {"object_type": "work", "role_name": "work"}],
++                                                 "sample_population": [{"author": "a", "work": "w"}],
++                                                 "provenance": {"spans": [_span("An author writes works")],
++                                                                "sample_spans": []}}]},
++                                "semantic:unattended-u6"),
++    "undeclared-document": ({"object_types": [{"id": "author", "kind": "value", "primitive": "String",
++                                               "provenance": {"spans": [dict(_span("An author writes works"),
++                                                                             document_sha256="0" * 64)]}}]},
++                            "semantic:unattended-u7"),
++}
++
++
++@pytest.mark.parametrize("name", sorted(ROOT_DEFECTS))
++def test_T2_a_root_owned_defect_keeps_its_rule(tmp_path, name):
++    own, rule = ROOT_DEFECTS[name]
++    code, issues = _issues(cases.write(tmp_path, **own))
++    assert code == 3
++    assert rule in {r for r, _ in issues}, issues
++    assert not any(path.startswith("includes[") for r, path in issues if r == rule), issues
++
++
++def test_T2_a_confirmed_root_operation_keeps_U2_at_the_rule():
++    """No include can carry an operation, so every operation is the root's (plan H32)."""
++    doc = cases.root(b"x")
++    doc["operations"] = [{"id": "op", "status": "confirmed", "source": "llm-inferred"}]
++    rules = {issue.rule_id for issue in _rule_unattended(doc)}
++    assert "semantic:unattended-u2" in rules
++
++
++@pytest.mark.parametrize(("changes", "rule"), [
++    ({"provenance": {"rationale_world_fact": "w"}}, "semantic:unattended-u5"),
++    ({"source": "sample", "modality": "alethic",
++      "provenance": {"sample_size": 1, "spans": [_span("Each version belongs to one work")]}},
++     "semantic:unattended-u8"),
++], ids=["U5", "U8"])
++def test_T3_a_constraint_attached_to_an_included_fact_type_is_the_roots(tmp_path, changes, rule):
++    attached = [{"fact_type": "work_has_version", "constraints": [_inferred(**changes)]}]
++    code, issues = _issues(cases.write(tmp_path, fact_type_constraints=attached))
++    assert code == 3
++    assert (rule, "$.fact_type_constraints[0].constraints[0]") in issues, issues
++
++
++# --- T4: what stays refused ----------------------------------------------------
++
++
++def test_T4_an_included_file_with_the_mode_is_still_forbidden(tmp_path):
++    seed = cases.seed()
++    seed["source"] = {"kind": "prose", "mode": "unattended", "reviewer": "none",
++                      "documents": [{"sha256": "0" * 64, "label": "x"}]}
++    code, out = _documented(cases.write(tmp_path, seed_doc=seed))
++    assert code == 3 and "include:forbidden-section" in out
++
++
++def test_T4_the_seed_with_the_mode_on_itself_keeps_U2_to_U5(tmp_path):
++    seed = cases.seed()
++    seed["source"] = {"kind": "prose", "mode": "unattended", "reviewer": "none",
++                      "documents": [{"sha256": cases.root(b"")["source"]["documents"][0]["sha256"], "label": "d"}]}
++    tmp_path.mkdir(exist_ok=True)
++    path = tmp_path / "seed-alone.orm.json"
++    path.write_text(json.dumps(seed))
++    (tmp_path / cases.DOC).write_text(cases.DOCUMENT)
++    result = run_main(["validate", str(path), "--format", "json"])
++    rules = {issue["rule_id"] for issue in json.loads(result.stdout)["issues"]}
++    assert result.returncode == 3
++    assert {f"semantic:unattended-u{n}" for n in (2, 3, 4, 5)} <= rules
++
++
++# --- T5: spans an included element carries (D14 (a)) ------------------------
++
++
++def _counted(root: Path) -> str:
++    return cases.validate(root, "--require-documents")[1]
++
++
++def test_T5_an_included_span_over_the_roots_document_is_counted_and_rehashed(tmp_path):
++    root = cases.write(tmp_path, seed_doc=cases.spanned_seed())
++    assert "4 of 4 source spans were not re-hashed" in _counted(root)  # counted
++    code, out = _documented(root)
++    assert code == 0, out  # re-hashed and matching
++
++
++def test_T5_an_included_span_over_another_document_is_neither_checked_nor_counted(tmp_path):
++    seed = cases.spanned_seed()
++    for row in seed["object_types"]:
++        row["provenance"]["spans"][0]["document_sha256"] = "1" * 64
++    seed["object_types"][0]["provenance"]["spans"].append("not a span")
++    seed["object_types"][1]["provenance"]["spans"].append({"document_sha256": 7})
++    root = cases.write(tmp_path, seed_doc=seed)
++    assert "2 of 2 source spans were not re-hashed" in _counted(root)
++    code, out = _documented(root)
++    assert code == 0, out
++
++
++def test_T5_a_root_operation_span_is_not_counted(tmp_path):
++    from gnd.model._unattended import _span_walk
++
++    doc = cases.root(b"x")
++    doc["operations"] = [{"id": "op", "provenance": {"spans": [_span("An author writes works")]}}]
++    assert _span_walk(doc, {})[1].total == 0
++
++
++@pytest.mark.parametrize("with_document", [True, False], ids=["document", "no-document"])
++def test_T5_a_malformed_included_span_over_the_roots_document_is_U7(tmp_path, with_document):
++    seed = cases.spanned_seed()
++    seed["object_types"][0]["provenance"]["spans"][0]["end"] = seed["object_types"][0]["provenance"]["spans"][0]["start"]
++    root = cases.write(tmp_path, seed_doc=seed)
++    argv = ("--document", str(root.parent / cases.DOC)) if with_document else ()
++    code, out = cases.validate(root, *argv, "--format", "json")
++    issues = [(i["rule_id"], i["path"]) for i in json.loads(out)["issues"]]
++    assert code == 3
++    assert ("semantic:unattended-u7", "includes[seed]:$.object_types[id=work].provenance.spans[0]") in issues, issues
++
++
++# --- T6: the attribution line -------------------------------------------------
++
++
++def test_T6_the_attribution_line_names_the_include_and_its_counts(tmp_path):
++    root = cases.write(tmp_path)
++    code, out = _documented(root)
++    digest = json.loads(root.read_text())["includes"][0]["sha256"]
++    assert code == 0
++    assert out.splitlines() == [
++        (f"INCLUDE seed sha256={digest}: 2 object types, 1 fact types, 0 sample rows, 1 constraints "
++         "(1 confirmed, 1 alethic, 1 explicit or user-supplied), 0 deontic notes"),
++        "OK: <case>/root.orm.json is a valid GND ORM model",
++    ]
++
++
++def test_T6_json_output_carries_no_attribution(tmp_path):
++    code, out = _documented(cases.write(tmp_path), "--format", "json")
++    assert code == 0 and "INCLUDE" not in out and "attribution" not in out
++
++
++# --- T7, T10: outputs equal the base -----------------------------------------
++
++
++@pytest.fixture(scope="module")
++def observed():
++    with tempfile.TemporaryDirectory() as scratch:
++        return cases.observations(Path(scratch).resolve())
++
++
++@pytest.mark.parametrize("name", sorted(k for k in BASE if not k.startswith("h30")))
++def test_T7_models_without_the_mode_are_byte_identical(observed, name):
++    code, out = observed[name]
++    assert (code, out) == (BASE[name]["exit"], BASE[name]["stdout"])
++
++
++@pytest.mark.parametrize("name", sorted(k for k in BASE if k.startswith("h30")))
++def test_T10_a_root_that_0_4_0_validates_keeps_its_output(observed, name):
++    code, out = observed[name]
++    base = BASE[name]
++    assert code == base["exit"]
++    if name.endswith(":json") or code != 0:
++        assert out == base["stdout"]
++    else:  # text, exit 0: the attribution line is the only new output
++        lines = out.splitlines(keepends=True)
++        assert lines[0].startswith("INCLUDE seed sha256=") and "".join(lines[1:]) == base["stdout"]
++
++
++# --- T8: remapping an included object type -----------------------------------
++
++
++def test_T8_remap_issues_maps_an_included_object_type_selector():
++    origins = (ElementOrigin("model", "$.object_types[0]", "$.object_types[0]", "own"),
++               ElementOrigin("includes[seed]", "$.object_types[1]", "$.object_types[0]", "work"))
++    issues = [ValidationIssue(path="$.object_types[id=work].provenance.spans[0]", message="m", rule_id="r"),
++              ValidationIssue(path="$.object_types[id=own]", message="m", rule_id="r")]
++    assert [i.path for i in remap_issues(issues, origins)] == [
++        "includes[seed]:$.object_types[id=work].provenance.spans[0]", "$.object_types[id=own]"]
++
++
++# --- T9: U8 inside an include (D13 (a)) --------------------------------------
++
++
++@pytest.mark.parametrize(("status", "expected"), [("proposed", 3), ("confirmed", 0)])
++def test_T9_an_unconfirmed_inferred_alethic_included_constraint_is_U8(tmp_path, status, expected):
++    seed = cases.seed()
++    seed["fact_types"][0]["constraints"].append({
++        "type": "mandatory", "role": "work", "source": "llm-inferred", "status": status, "modality": "alethic",
++        "rationale": "r", "provenance": {"rationale_world_fact": "w"}})
++    code, out = _documented(cases.write(tmp_path, seed_doc=seed), "--format", "json")
++    issues = [(i["rule_id"], i["path"]) for i in json.loads(out)["issues"]]
++    assert code == expected, issues
++    if expected:
++        assert issues == [("semantic:unattended-u8", "includes[seed]:$.fact_types[id=work_has_version].constraints[1]")]
++
++
++# --- T11: span-walk diagnostics under the include ------------------------------
++
++
++@pytest.mark.parametrize("fmt", ["text", "json"])
++def test_T11_an_included_span_with_a_wrong_excerpt_digest_is_reported_under_the_include(tmp_path, fmt):
++    seed = cases.spanned_seed()
++    seed["object_types"][0]["provenance"]["spans"][0]["excerpt_sha256"] = "2" * 64
++    root = cases.write(tmp_path, seed_doc=seed)
++    code, out = cases.validate(root, "--document", str(root.parent / cases.DOC), "--format", fmt)
++    assert code == 3
++    assert "includes[seed]:$.object_types[id=work].provenance.spans[0]" in out
++    assert "unattended:excerpt-mismatch" in out
++
++
++# --- T12: the pages -------------------------------------------------------------
++
++
++def test_T12_the_pages_state_the_include_rule_in_one_home():
++    page = (Path(__file__).resolve().parents[1]
++            / "src/gnd/skills/gnd-orm-core/references/representation-format.md").read_text()
++    unattended = page[page.index("## Unattended source"):page.index("## `rejected_proposals`")]
++    includes = page[page.index("## Model includes (version 5)"):page.index("### Extraction flattening record")]
++    assert "### An unattended root that includes a reviewed model" in unattended
++    assert "INCLUDE <id> sha256=" in unattended
++    assert "[Unattended source](#unattended-source)" in includes
++
++
++# --- T13: the layer is linear --------------------------------------------------
++
++
++def test_T13_validate_on_a_large_include_stays_within_the_bound(tmp_path):
++    seed = cases.seed()
++    seed["object_types"] += [{"id": f"x{i}", "kind": "value", "primitive": "String"} for i in range(1000)]
++    seed["fact_types"] += [{"id": f"f{i}", "reading": f"{{X{i}}} pairs with {{X{(i + 1) % 1000}}}",
++                            "roles": [{"object_type": f"x{i}", "role_name": "a"},
++                                      {"object_type": f"x{(i + 1) % 1000}", "role_name": "b"}]}
++                           for i in range(1000)]
++    root = cases.write(tmp_path, seed_doc=seed)
++    started = time.perf_counter()
++    code, out = _documented(root)
++    elapsed = time.perf_counter() - started
++    assert code == 0, out[:400]
++    assert elapsed < 10, elapsed
++
++
++def test_the_origin_set_is_reset_after_validation(tmp_path):
++    load_model(cases.write(tmp_path))
++    assert _INCLUDED.get() == frozenset()
++    assert copy.copy(_INCLUDED.get()) == frozenset()
+diff --git a/tests/vg3_cases.py b/tests/vg3_cases.py
+new file mode 100644
+index 00000000..371e98cd
+--- /dev/null
++++ b/tests/vg3_cases.py
+@@ -0,0 +1,126 @@
++"""VG3 fixture cases (reviewed-vocabulary-growth): issue 222's two files and their variants.
++
++Shared by tests/test_vg3_unattended_includes.py and by the capture of the
++base outputs that T7 and T10 compare against
++(``.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3-base/``).
++"""
++from __future__ import annotations
++
++import copy
++import hashlib
++import json
++from pathlib import Path
++from typing import Any
++
++from support.cli_runner import run_main
++from test_unattended_growth_guidance import _span
++
++DOCUMENT = (
++    "Each version belongs to one work.\n"
++    "A work is a published piece; a version is one edition of it.\n"
++    "An author writes works.\n"
++)
++SEED = "seed.orm.json"
++ROOT = "root.orm.json"
++DOC = "doc.md"
++
++
++def span(quote: str) -> dict[str, Any]:
++    return _span(DOCUMENT.encode(), quote)
++
++
++def seed() -> dict[str, Any]:
++    """Issue 222's seed: version 4, owner-reviewed, one explicit confirmed alethic constraint."""
++    return {
++        "version": 4,
++        "model_id": "urn:example:seed@1",
++        "source": {"kind": "text-conversation", "mode": "one-shot"},
++        "object_types": [
++            {"id": "work", "kind": "value", "name": "WorkKey", "primitive": "String"},
++            {"id": "version", "kind": "value", "name": "VersionId", "primitive": "String"},
++        ],
++        "fact_types": [{
++            "id": "work_has_version",
++            "reading": "{WorkKey} has version {VersionId}",
++            "roles": [{"object_type": "work", "role_name": "work"},
++                      {"object_type": "version", "role_name": "version"}],
++            "constraints": [{
++                "id": "u1", "type": "uniqueness", "roles": ["version"], "source": "explicit",
++                "status": "confirmed", "modality": "alethic", "rationale": "Each version belongs to one work.",
++                "provenance": {"user_quote": "yes", "reviewed_in": "review-1"},
++            }],
++        }],
++    }
++
++
++def spanned_seed() -> dict[str, Any]:
++    """Plan H30: included elements that pass U2-U8 against the root's document in 0.4.0."""
++    doc = seed()
++    for row in doc["object_types"]:
++        quote = "A work is a published piece" if row["id"] == "work" else "a version is one edition of it"
++        row["provenance"] = {"spans": [span(quote)]}
++    fact = doc["fact_types"][0]
++    fact["provenance"] = {"spans": [span("Each version belongs to one work")]}
++    fact["constraints"] = [{
++        "id": "u1", "type": "uniqueness", "roles": ["version"], "source": "llm-inferred",
++        "status": "proposed", "modality": "deontic", "rationale": "One work per version.",
++        "provenance": {"rationale_world_fact": "Each version belongs to one work.",
++                       "spans": [span("Each version belongs to one work")]},
++    }]
++    return doc
++
++
++def root(seed_raw: bytes, *, unattended: bool = True, **own: Any) -> dict[str, Any]:
++    """Issue 222's root: version 5, unattended, one document, the include, empty own sections."""
++    source: dict[str, Any] = {"kind": "prose"}
++    if unattended:
++        source.update(mode="unattended", reviewer="none",
++                      documents=[{"sha256": hashlib.sha256(DOCUMENT.encode()).hexdigest(), "label": DOC}])
++    else:
++        source.update(mode="one-shot")
++    doc = {"version": 5, "model_id": "urn:example:growth", "source": source,
++           "includes": [{"id": "seed", "path": SEED, "sha256": hashlib.sha256(seed_raw).hexdigest()}],
++           "object_types": [], "fact_types": []}
++    doc.update(copy.deepcopy(own))
++    return doc
++
++
++def write(directory: Path, *, seed_doc: dict | None = None, unattended: bool = True, **own: Any) -> Path:
++    """Write seed, root and document under DIRECTORY; return the root's path."""
++    directory.mkdir(parents=True, exist_ok=True)
++    seed_raw = json.dumps(seed() if seed_doc is None else seed_doc).encode()
++    (directory / SEED).write_bytes(seed_raw)
++    (directory / DOC).write_text(DOCUMENT, encoding="utf-8")
++    path = directory / ROOT
++    path.write_text(json.dumps(root(seed_raw, unattended=unattended, **own)))
++    return path
++
++
++def validate(model: Path, *args: str) -> tuple[int, str]:
++    """(exit, stdout) of one in-process ``gnd validate``, the case directory written as <case>."""
++    result = run_main(["validate", str(model), *args])
++    return result.returncode, result.stdout.decode().replace(str(model.parent), "<case>")
++
++
++#: The observations T7 and T10 hold equal to the base: name -> (writer, argv after the model).
++def observations(directory: Path) -> dict[str, tuple[int, str]]:
++    plain = write(directory / "plain", seed_doc=None, unattended=False)
++    alone = directory / "alone"
++    alone.mkdir(parents=True, exist_ok=True)
++    (alone / SEED).write_text(json.dumps(seed()))
++    (alone / DOC).write_text(DOCUMENT, encoding="utf-8")
++    h30 = write(directory / "h30", seed_doc=spanned_seed())
++    cases = {
++        "seed-alone": (alone / SEED, ()),
++        "seed-alone-document": (alone / SEED, ("--document", str(alone / DOC))),
++        "include-root-without-mode": (plain, ()),
++        "include-root-without-mode-document": (plain, ("--document", str(plain.parent / DOC))),
++        "h30": (h30, ("--document", str(h30.parent / DOC), "--require-documents")),
++        "h30-no-document": (h30, ()),
++        "h30-require-only": (h30, ("--require-documents",)),
++    }
++    result = {}
++    for name, (model, extra) in cases.items():
++        for fmt in ("text", "json"):
++            result[f"{name}:{fmt}"] = validate(model, *extra, "--format", fmt)
++    return result

@@ -770,3 +770,11 @@ def test_r9_the_retained_ceiling_is_the_json_read_cap():
     assert reading.LIMIT_CEILINGS["retained_bytes"] == input_policy.MAX_BYTES
     with pytest.raises(ValueError):
         input_policy.loads(b"[" + b" " * input_policy.MAX_BYTES + b"]")
+
+
+def test_r10_an_empty_fact_list_is_not_support(tmp_path):
+    answers = {**ANSWERS, "a-opening": {"outcome": "accepted", "proposal_keys": [], "facts": {"paper_title": []}}}
+    out = tmp_path / "run"
+    with pytest.raises(reading.ExampleError, match="invalid saved producer response"):
+        reading.run(out, fixture=CALLER, producer=Producer(answers))
+    assert not out.exists()

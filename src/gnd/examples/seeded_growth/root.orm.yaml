@@ -1,0 +1,10 @@
+# The unattended growth root. It includes the reviewed seed by pin and holds
+# nothing of its own, so it may start without a source document: the first
+# growth round declares one ("Unattended source" in representation-format.md).
+version: 5
+model_id: urn:example:seeded-growth
+source: {kind: prose, mode: unattended, reviewer: none}
+includes:
+  - {id: seed, path: seed.orm.yaml, sha256: 69c31805fc53de4c2b6717bb10c00ecda1b4e8a523661ffc27428c8e5dc82457}
+object_types: []
+fact_types: []

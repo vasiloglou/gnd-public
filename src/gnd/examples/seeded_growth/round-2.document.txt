@@ -1,0 +1,2 @@
+Catalogue note, round 2.
+Every work we hold has a version: W-1 has version V-1, and W-2 has version V-2.

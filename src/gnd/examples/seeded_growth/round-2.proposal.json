@@ -1,0 +1,70 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "agent:grower",
+    "origin": "unattended-growth.md",
+    "requested_at": "2026-11-23T12:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "ac530f87fc2560a3ff73027fcfdc0af9888c18aefa0b1e9708c6e5b1acd43d5c",
+    "text": "{\"version\":5,\"model_id\":\"urn:example:seeded-growth\",\"source\":{\"kind\":\"prose\",\"mode\":\"unattended\",\"reviewer\":\"none\",\"documents\":[{\"sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"label\":\"round-1.document.txt\"},{\"sha256\":\"6ed65c19e20d68329fa38de5632cf1093ba6d2b1f60c848ab33f1aa75e167d23\",\"label\":\"round-2.document.txt\"}]},\"includes\":[{\"id\":\"seed\",\"path\":\"seed.orm.yaml\",\"sha256\":\"69c31805fc53de4c2b6717bb10c00ecda1b4e8a523661ffc27428c8e5dc82457\"}],\"object_types\":[{\"id\":\"author\",\"kind\":\"value\",\"name\":\"Author\",\"primitive\":\"String\",\"provenance\":{\"spans\":[{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":25,\"end\":47,\"excerpt_sha256\":\"c1211038104bcce115f22bf3000e8ce0eff1c35d5fbaf5bfb06fc3cfff7af556\"}]}}],\"fact_types\":[{\"id\":\"author_writes_work\",\"reading\":\"{Author} writes {WorkKey}\",\"roles\":[{\"object_type\":\"author\",\"role_name\":\"author\"},{\"object_type\":\"work\",\"role_name\":\"work\"}],\"sample_population\":[{\"author\":\"Ana\",\"work\":\"W-1\"},{\"author\":\"Ben\",\"work\":\"W-2\"}],\"provenance\":{\"spans\":[{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":25,\"end\":47,\"excerpt_sha256\":\"c1211038104bcce115f22bf3000e8ce0eff1c35d5fbaf5bfb06fc3cfff7af556\"}],\"sample_spans\":[{\"row\":0,\"span\":{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":49,\"end\":71,\"excerpt_sha256\":\"e24ca5998362b0f683f5a4afb2e161af9d75aaa187af9b1ea15e4ea12c89dfcc\"}},{\"row\":1,\"span\":{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":77,\"end\":99,\"excerpt_sha256\":\"1bced07e21067c1d288419f4f4860bd5e8fb1d23b57fc2005882b0f896a43aaf\"}}]}}],\"fact_type_constraints\":[{\"fact_type\":\"work_has_version\",\"constraints\":[{\"type\":\"mandatory\",\"role\":\"work\",\"source\":\"sample\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"Every work in the catalogue rows has a version.\",\"provenance\":{\"sample_size\":2,\"spans\":[{\"document_sha256\":\"6ed65c19e20d68329fa38de5632cf1093ba6d2b1f60c848ab33f1aa75e167d23\",\"start\":25,\"end\":57,\"excerpt_sha256\":\"fb71e180ad8df4fbf300c879b0f8528ad4e56e4283299ff56dd3a0e770307098\"}]}}]}]}\n"
+  },
+  "expected_model_sha256": "211d0cdfe2fae7528bd2ee0de948da6522d03ea4efcf6eac5b6f4cb0687bbe47",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "label": "round-2.document.txt",
+        "sha256": "6ed65c19e20d68329fa38de5632cf1093ba6d2b1f60c848ab33f1aa75e167d23"
+      },
+      "after_sha256": "9379c753b02f99e772a4259850b08c5a433379a2a99a49c99889a138509820e1",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "locator_kind": "source-document",
+        "sha256": "6ed65c19e20d68329fa38de5632cf1093ba6d2b1f60c848ab33f1aa75e167d23"
+      },
+      "operation_id": "declare-round-2.document.txt"
+    },
+    {
+      "after": {
+        "modality": "deontic",
+        "provenance": {
+          "sample_size": 2,
+          "spans": [
+            {
+              "document_sha256": "6ed65c19e20d68329fa38de5632cf1093ba6d2b1f60c848ab33f1aa75e167d23",
+              "end": 57,
+              "excerpt_sha256": "fb71e180ad8df4fbf300c879b0f8528ad4e56e4283299ff56dd3a0e770307098",
+              "start": 25
+            }
+          ]
+        },
+        "rationale": "Every work in the catalogue rows has a version.",
+        "role": "work",
+        "source": "sample",
+        "status": "proposed",
+        "type": "mandatory"
+      },
+      "after_sha256": "dc2c1255d6f49bbd0741807e72fdba10f3af4f5999bcf1fe6a695f1788ab1196",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "canonical_before_sha256": null,
+        "duplicate_occurrence": 0,
+        "family": "mandatory",
+        "host": "included_fact_type",
+        "host_id": "work_has_version",
+        "locator_kind": "constraint"
+      },
+      "operation_id": "attach-every-work"
+    }
+  ],
+  "proposal_id": "round-2",
+  "rationale": "One unattended growth round from a reviewed seed.",
+  "schema_version": 3
+}

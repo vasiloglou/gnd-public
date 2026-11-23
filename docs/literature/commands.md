@@ -152,6 +152,18 @@ false     normalizing flows -> simulation-based inference -> deep optimal sensor
 supported paths kept 3/3, false paths excluded 5/5
 ```
 
+### Admit your own assertions
+
+The lineage run admits statements of the example's own shape. A host whose
+model names its assertions differently calls
+`assertion_admission.admit(..., shape=..., rules=...)` from Python: the
+shape names your assertion entity and the entities to follow from it, and
+the rules say which reviewed values are admissible. Every fact attached to
+an admitted assertion is kept, and a reviewed assertion your rules refuse is
+recorded as `policy-refused`, not as failed. The shape, the rules and the
+record are described in the example's
+[README](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/README.md#admitting-your-own-assertion-entity).
+
 ## Act 2. Two papers, one vocabulary
 
 Extract two papers against a shared vocabulary, merge their spellings of

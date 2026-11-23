@@ -1,0 +1,61 @@
+{
+ "captured_at": "7b68c558 (src unchanged at 3ea39d7f)",
+ "outputs": {
+  "h30-no-document:json": {
+   "exit": 0,
+   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+  },
+  "h30-no-document:text": {
+   "exit": 0,
+   "stdout": "OK: <case>/root.orm.json is a valid GND ORM model\n"
+  },
+  "h30-require-only:json": {
+   "exit": 3,
+   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"$.source.documents\", \"message\": \"4 of 4 source spans were not re-hashed; supply every declared document with --document\", \"rule_id\": \"unattended:spans-unchecked\", \"severity\": \"error\"}], \"issues_total\": 1, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+  },
+  "h30-require-only:text": {
+   "exit": 3,
+   "stdout": "ERROR at $.source.documents: 4 of 4 source spans were not re-hashed; supply every declared document with --document [unattended:spans-unchecked]\n"
+  },
+  "h30:json": {
+   "exit": 0,
+   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+  },
+  "h30:text": {
+   "exit": 0,
+   "stdout": "OK: <case>/root.orm.json is a valid GND ORM model\n"
+  },
+  "include-root-without-mode-document:json": {
+   "exit": 3,
+   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"<case>/doc.md\", \"message\": \"document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents\", \"rule_id\": \"unattended:document-undeclared\", \"severity\": \"error\"}], \"issues_total\": 1, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+  },
+  "include-root-without-mode-document:text": {
+   "exit": 3,
+   "stdout": "ERROR at <case>/doc.md: document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents [unattended:document-undeclared]\n"
+  },
+  "include-root-without-mode:json": {
+   "exit": 0,
+   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/root.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+  },
+  "include-root-without-mode:text": {
+   "exit": 0,
+   "stdout": "OK: <case>/root.orm.json is a valid GND ORM model\n"
+  },
+  "seed-alone-document:json": {
+   "exit": 3,
+   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<case>/seed.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"<case>/doc.md\", \"message\": \"document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents\", \"rule_id\": \"unattended:document-undeclared\", \"severity\": \"error\"}], \"issues_total\": 1, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+  },
+  "seed-alone-document:text": {
+   "exit": 3,
+   "stdout": "ERROR at <case>/doc.md: document sha256 f02777ea49dc232f71cc49ab43a421046318d6c61cdac94303d66fdf403f2f18 is not declared in source.documents [unattended:document-undeclared]\n"
+  },
+  "seed-alone:json": {
+   "exit": 0,
+   "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<case>/seed.orm.json\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+  },
+  "seed-alone:text": {
+   "exit": 0,
+   "stdout": "OK: <case>/seed.orm.json is a valid GND ORM model\n"
+  }
+ }
+}

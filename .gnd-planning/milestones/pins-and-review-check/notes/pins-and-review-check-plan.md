@@ -226,3 +226,17 @@ Open questions carried into the specs: PF1, none beyond D1 and D5 (the copies
 were found by reading every module-level assignment of the three names under
 `tests/`: H2, H3, H12, H13); PF2, the exact corpus and the wording that
 counts as "names a breaking input".
+
+## Amendment c1 — milestone close, 2026-11-23
+
+Plan repairs the phases deferred to the close, under the close ruling
+(`../004-close.md`). Each names the record that raised it and keeps the prior
+wording; the sentences above are unchanged.
+
+| # | Raised by | Prior wording | Repair |
+|---|---|---|---|
+| C1 | PF1 record, implementation finding 2 (refuted premise) | §1 H1 and the Goal read the duplicated inventory as drift to remove | `tests/test_install.py` called its copy "Duplicated deliberately", so that an added file fails both guards as one decision. The import keeps that decision in one place: an added file fails `tests/test_packaged_skills.py` once. The premise that the copies were unintended is withdrawn; the repair stands on R0.1 |
+| C2 | PF1 spec amendment a1 (OQ1, delegated) | §3 PF1 homes end at `tests/test_gate_guard_list.py` | PF1's homes also include `tests/test_public_built_inventory.py`, whose inline `70` and `18` restated the inventory |
+| C3 | PF1 record, finding 4 (two review rounds) | §2 PF1: the guard "fails when a file other than `tests/test_packaged_skills.py` assigns one of the inventory names at module level"; §6: "it reads module-level assignments with `ast`" | the guard fails when a test module binds an inventory name in any scope by any binding construct of the language reference (section 4.2.1), other than an unrenamed import from the home |
+| C4 | PF1 record OQ2 | §7: "Other duplicated test constants beyond the skill inventory" are out of scope | inline restatements of the skill count itself (`== 18` in `tests/test_development_scaffold.py:200` and `tests/test_marketplace_plugins.py:25`) are in the inventory's class but outside any name guard. Carried to the owner, not done here |
+| C5 | PF2 spec correction c1 (phase review F1) | R0.4: "The answer key is kept apart from what the reviewer reads" | the key and the other versions were kept out of what the reviewer was given, not out of its reach; the logs show neither used. A later calibration isolates each diff |

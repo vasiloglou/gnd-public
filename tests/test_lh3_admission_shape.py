@@ -298,3 +298,69 @@ def test_t10_with_an_empty_follow_list_nothing_is_followed(tmp_path):
     assert "quantity_value" not in facts and "quantity_unit" not in facts
     assert facts["claim_quantity"] == ROWS["claim_quantity"][:2]
     assert record["schema"] == admission.SHAPED_SCHEMA
+
+
+def _model(*fact_types):
+    return {"object_types": [{"id": "claim", "kind": "entity"}, {"id": "passage", "kind": "entity"},
+                             {"id": "note", "kind": "value"}],
+            "fact_types": [{"id": name, "roles": [{"role_name": role, "object_type": kind} for role, kind in roles]}
+                           for name, roles in fact_types]}
+
+
+def _target(fact_type, index, admitted=True):
+    return {"fact_type": fact_type, "index": index, "admitted": admitted,
+            "judgments": [{"verdict": "approve" if admitted else "reject"}]}
+
+
+CLAIM_SEEN = ("claim_seen", [("claim", "claim"), ("passage", "passage")])
+LONE_SHAPE = {"format": admission.SHAPE_FORMAT, "assertion": "claim", "follow": []}
+
+
+def test_r1_a_boolean_handle_is_not_a_number(tmp_path):
+    subject = {"population": {}, "facts": {"claim_seen": [{"claim": True, "passage": "p"},
+                                                           {"claim": 1, "passage": "p"}]}}
+    population, stages = admission.project_shaped(subject, [_target("claim_seen", 0)], _model(CLAIM_SEEN),
+                                                   LONE_SHAPE)
+    assert population["facts"]["claim_seen"] == [{"claim": True, "passage": "p"}]
+    assert [row["status"] for row in stages["semantic-support"]] == ["pass", "fail"]
+
+
+def test_r1_one_and_one_point_zero_are_one_number():
+    subject = {"population": {}, "facts": {"claim_seen": [{"claim": 1, "passage": "p"},
+                                                           {"claim": 1.0, "passage": "q"}]}}
+    population, stages = admission.project_shaped(subject, [_target("claim_seen", 0)], _model(CLAIM_SEEN),
+                                                   LONE_SHAPE)
+    assert len(population["facts"]["claim_seen"]) == 2 and len(stages["semantic-support"]) == 1
+
+
+@pytest.mark.parametrize("includes", [1, True, [1], [{"path": 3}]])
+def test_r2_a_malformed_include_list_refuses(includes):
+    raw = canonical_json_bytes({"version": 5, "object_types": [], "fact_types": [], "includes": includes})
+    _refuses(lambda: admission._include_paths(raw), "input:include-path")
+
+
+def test_r2_a_missing_include_refuses(tmp_path):
+    root = _case(tmp_path)
+    (root / "terms.orm.json").unlink()
+    out = tmp_path / "out"
+    _refuses(lambda: _admit(root, out, shape=SHAPE), "input:include-read")
+    assert not out.exists()
+
+
+def test_r3_an_opaque_value_is_an_ordinary_value():
+    subject = {"format_version": 2, "population": {}, "facts": {
+        "claim_seen": [{"claim": "c1", "passage": "p"}],
+        "claim_note": [{"claim": "c1", "note": {"$opaque": "unreadable-note"}}]}}
+    model = _model(CLAIM_SEEN, ("claim_note", [("claim", "claim"), ("note", "note")]))
+    population, _ = admission.project_shaped(subject, [_target("claim_seen", 0)], model, LONE_SHAPE)
+    assert population["facts"]["claim_note"] == subject["facts"]["claim_note"]
+
+
+def test_r4_covers_is_linear_in_the_fact_types():
+    count = 40_000
+    names = [f"seen_{index}" for index in range(count)]
+    model = _model(*[(name, [("claim", "claim")]) for name in names])
+    subject = {"population": {}, "facts": {name: [{"claim": "c1"}] for name in names}}
+    started = time.monotonic()
+    admission.project_shaped(subject, [_target(names[0], 0)], model, LONE_SHAPE, max_rows=65536)
+    assert time.monotonic() - started < 1.5

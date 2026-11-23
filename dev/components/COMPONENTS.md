@@ -2977,7 +2977,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/identity.py
 - uses: (none)
-- used_by: synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.value_domain
+- used_by: examples.literature_assertion_admission, synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.value_domain
 - tests: tests/test_poolfile.py, tests/test_synth_conforming.py
 - notes: The synthesis implementation is deliberately independent of checker identity code; listed tests exercise boolean and numeric identity through consumers.
 
@@ -3342,7 +3342,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker (literature-assertion-admission/1, or /2 for a shaped call).
 - status: canonical
 - modules: src/gnd/examples/literature/assertion_admission.py
-- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors, model.loading, model.validation
+- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors, model.loading, model.validation, synth.identity
 - used_by: examples.literature_lineage
 - tests: tests/test_li4_assertions.py, tests/test_lh3_admission_shape.py
 - notes: The shape and the /2 record are described once, in src/gnd/examples/literature/README.md, "Admitting your own assertion entity".

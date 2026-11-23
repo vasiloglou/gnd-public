@@ -188,9 +188,9 @@ Publish the positive contextual assertions selected by saved judgments.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `project(subject, targets) -> tuple[dict, dict]` | function | 110 | Project accepted positive occurrences and their original identity links. |
-| `project_shaped(subject, targets, model, shape, max_rows) -> tuple[dict, dict]` | function | 212 | Admit the assertions of a caller-named entity type, with every attached and followed row they keep. |
-| `admit(model, raw, policy, receipts, trusted_root, out, *, shape, max_rows) -> dict` | function | 353 | Check saved opinion bytes, project supported rows and publish one bound result. |
-| `main(argv) -> int` | function | 402 | (no docstring) |
+| `project_shaped(subject, targets, model, shape, max_rows) -> tuple[dict, dict]` | function | 218 | Admit the assertions of a caller-named entity type, with every attached and followed row they keep. |
+| `admit(model, raw, policy, receipts, trusted_root, out, *, shape, max_rows) -> dict` | function | 358 | Check saved opinion bytes, project supported rows and publish one bound result. |
+| `main(argv) -> int` | function | 410 | (no docstring) |
 
 ## gnd.examples.literature.assurance_report — `src/gnd/examples/literature/assurance_report.py`
 Components: examples.literature_assurance

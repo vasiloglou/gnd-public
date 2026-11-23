@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
-import math
 import os
 import sys
 import tempfile
@@ -17,6 +16,7 @@ from gnd.anchors import read_regular_path, strict_json
 from gnd.artifacts import ArtifactError, canonical_json_bytes, publish_directory_once, sha256_hex
 from gnd.disclosure import ENVIRONMENT as DISCLOSURE_ENV
 from gnd.process import ProcessLimits, run_bounded_process
+from gnd.synth.identity import scalar_identity
 
 from .assurance_report import Refusal
 
@@ -175,8 +175,11 @@ def _include_paths(model_bytes: bytes) -> list[str]:
     if not bytes_declare_includes(model_bytes, source=MODEL):
         return []
     document = parse_model_document(model_bytes, source=MODEL)
+    entries = document.get("includes", []) if isinstance(document, dict) else None
+    if not isinstance(entries, list):
+        raise Refusal("input:include-path")
     paths = []
-    for entry in document.get("includes") or []:
+    for entry in entries:
         path = entry.get("path") if isinstance(entry, dict) else None
         parts = PurePosixPath(path).parts if isinstance(path, str) else ()
         if (not parts or PurePosixPath(path).is_absolute() or ".." in parts or "\\" in path
@@ -205,8 +208,11 @@ def _model_document(snapshots: dict[str, bytes], includes: dict[str, bytes]) -> 
     return loaded.model_dump(mode="json", exclude_none=True)
 
 
-def _scalar(value: Any) -> bool:
-    return type(value) in (str, int, bool) or type(value) is float and math.isfinite(value)
+def _identity(value: Any) -> tuple:
+    """A handle's identity as the checker keeps it: booleans, numbers and strings apart, 1 and 1.0 one."""
+    if isinstance(value, (dict, list)):
+        return ("json", canonical_json_bytes(value))
+    return scalar_identity(value)
 
 
 def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows: int = MAX_ROWS) -> tuple[dict, dict]:
@@ -225,8 +231,9 @@ def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows
     if not attached:
         raise Refusal("shape:no-attached-facts")
     followed = set(follow)
+    attached_names = set(attached)
     covers = [name for name, pairs in roles.items()
-              if name in attached or any(kind in followed for _, kind in pairs)]
+              if name in attached_names or any(kind in followed for _, kind in pairs)]
     if not isinstance(subject, dict) or not isinstance(subject.get("population"), dict):
         raise Refusal("input:invalid-contextual-population")
     facts = subject.get("facts")
@@ -236,9 +243,7 @@ def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows
     for name in covers:
         value = facts.get(name, [])
         names = {role for role, _ in roles[name]}
-        if (not isinstance(value, list)
-                or not all(isinstance(row, dict) and set(row) == names and all(map(_scalar, row.values()))
-                           for row in value)):
+        if not isinstance(value, list) or not all(isinstance(row, dict) and set(row) == names for row in value):
             raise Refusal("input:invalid-contextual-population")
         rows[name] = value
     if sum(map(len, rows.values())) > max_rows:
@@ -250,12 +255,12 @@ def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows
     for name in attached:
         for row in rows[name]:
             for role in holders[name]:
-                order.setdefault(row[role], len(order))
+                order.setdefault(_identity(row[role]), (len(order), row[role]))
     for item in targets:
         if not isinstance(item, dict) or item.get("fact_type") not in roles:
             raise Refusal("judgments:invalid-result")
         name, index, judgments = item["fact_type"], item.get("index"), item.get("judgments")
-        if name not in attached:
+        if name not in attached_names:
             raise Refusal("judgments:target-outside-shape")
         if (type(index) is not int or not 0 <= index < len(rows[name]) or (name, index) in seen
                 or type(item.get("admitted")) is not bool or not isinstance(judgments, list) or len(judgments) > 32
@@ -264,27 +269,27 @@ def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows
             raise Refusal("judgments:invalid-result")
         seen.add((name, index))
         for role in holders[name]:
-            by_assertion.setdefault(rows[name][index][role], []).append(item)
+            by_assertion.setdefault(_identity(rows[name][index][role]), []).append(item)
     reasons = {}
-    for handle in sorted(order, key=order.get):
-        found = by_assertion.get(handle)
-        reasons[handle] = "missing" if not found else next(
+    for key in sorted(order, key=lambda item: order[item][0]):
+        found = by_assertion.get(key)
+        reasons[key] = "missing" if not found else next(
             (reason for reason in map(_target_reason, found) if reason is not None), None)
-    admitted = {handle for handle, reason in reasons.items() if reason is None}
+    admitted = {key for key, reason in reasons.items() if reason is None}
     index = {}
     for name in covers:
         for position, row in enumerate(rows[name]):
             for role, kind in roles[name]:
                 if kind in followed:
-                    index.setdefault((kind, row[role]), []).append((name, position))
+                    index.setdefault((kind, _identity(row[role])), []).append((name, position))
     kept, queue = set(), deque()
 
     def keep(name, position):
         row = rows[name][position]
-        if (name, position) in kept or any(row[role] not in admitted for role in holders[name]):
+        if (name, position) in kept or any(_identity(row[role]) not in admitted for role in holders[name]):
             return
         kept.add((name, position))
-        queue.extend((kind, row[role]) for role, kind in roles[name] if kind in followed)
+        queue.extend((kind, _identity(row[role])) for role, kind in roles[name] if kind in followed)
 
     for name in attached:
         for position in range(len(rows[name])):
@@ -303,8 +308,8 @@ def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows
         "instances": {},
         "facts": {name: [row for position, row in enumerate(rows[name]) if (name, position) in kept] for name in covers},
     }
-    stages = {"semantic-support": [{"assertion": handle, "status": "pass" if reason is None else "fail",
-                                    "reason": reason} for handle, reason in reasons.items()]}
+    stages = {"semantic-support": [{"assertion": order[key][1], "status": "pass" if reason is None else "fail",
+                                    "reason": reason} for key, reason in reasons.items()]}
     return population, stages
 
 
@@ -373,8 +378,11 @@ def admit(model: Path, raw: Path, policy: Path, receipts: Path, trusted_root: Pa
     includes = {}
     if shape is not None:
         base = Path(model).absolute().parent
-        includes = {path: read_regular_path(base / path, label="include", max_bytes=CAP)
-                    for path in _include_paths(snapshots[MODEL])}
+        try:
+            includes = {path: read_regular_path(base / path, label="include", max_bytes=CAP)
+                        for path in _include_paths(snapshots[MODEL])}
+        except (ArtifactError, OSError) as error:
+            raise Refusal("input:include-read") from error
     judgment, report_raw = _judgments({**snapshots, **includes}, trusted_root)
     subject = strict_json(snapshots[RAW], max_bytes=CAP, too_large="input:population-cap")
     if shape is None:

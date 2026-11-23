@@ -183,3 +183,25 @@ def test_t8_sixty_four_requirements_at_the_row_ceiling(tmp_path):
     assert time.monotonic() - started < 60
     assert all(row["status"] == "pass" for row in record["stages"]["admission-rules"])
     assert json.dumps(record["stages"]).count("policy-refused") == 0
+
+
+@pytest.mark.parametrize("kind", ["object", "list", "infinity", "nan"])
+@pytest.mark.parametrize("where", ["admissible", "reason-value"])
+def test_r1_a_rule_value_must_be_a_json_scalar(tmp_path, monkeypatch, kind, where):
+    value = {"object": {}, "list": [], "infinity": float("inf"), "nan": float("nan")}[kind]
+    if where == "admissible":
+        requirement = _requirement(admissible=[value])
+    else:
+        requirement = _requirement(reasons=[{"value": value, "reason": "odd"}])
+    rules = {"format": admission.RULES_FORMAT, "requirements": [requirement]}
+    monkeypatch.setattr(admission, "_judgments", lambda *_: pytest.fail("ran the judgment route"))
+    out = tmp_path / "out"
+    _refuses(lambda: _admit(_polar(tmp_path), out, shape=SHAPE, rules=rules), "rules:invalid")
+    assert not out.exists()
+
+
+def test_r2_reasons_are_optional(tmp_path):
+    requirement = {key: value for key, value in _requirement().items() if key != "reasons"}
+    rules = {"format": admission.RULES_FORMAT, "requirements": [requirement]}
+    record, _ = _admit(_polar(tmp_path), shape=SHAPE, rules=rules)
+    assert _stage(record)["c2"] == ("policy-refused", "positive")

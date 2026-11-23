@@ -187,10 +187,10 @@ Publish the positive contextual assertions selected by saved judgments.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `project(subject, targets, *, requirements, policy_status) -> tuple[dict, dict]` | function | 171 | Project accepted positive occurrences and their original identity links. |
-| `project_shaped(subject, targets, model, shape, max_rows, *, requirements) -> tuple[dict, dict]` | function | 301 | Admit the assertions of a caller-named entity type, with every attached and followed row they keep. |
-| `admit(model, raw, policy, receipts, trusted_root, out, *, shape, rules, max_targets, max_rows) -> d…` | function | 452 | Check saved opinion bytes, project supported rows and publish one bound result. |
-| `main(argv) -> int` | function | 532 | (no docstring) |
+| `project(subject, targets, *, requirements, policy_status) -> tuple[dict, dict]` | function | 180 | Project accepted positive occurrences and their original identity links. |
+| `project_shaped(subject, targets, model, shape, max_rows, *, requirements) -> tuple[dict, dict]` | function | 310 | Admit the assertions of a caller-named entity type, with every attached and followed row they keep. |
+| `admit(model, raw, policy, receipts, trusted_root, out, *, shape, rules, max_targets, max_rows) -> d…` | function | 461 | Check saved opinion bytes, project supported rows and publish one bound result. |
+| `main(argv) -> int` | function | 541 | (no docstring) |
 
 ## gnd.examples.literature.assurance_report — `src/gnd/examples/literature/assurance_report.py`
 Components: examples.literature_assurance

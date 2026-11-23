@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import math
 import os
 import re
 import sys
@@ -118,6 +119,11 @@ def _support(row: dict, target: dict | None) -> str | None:
     return _target_reason(target)
 
 
+def _rule_value(value: Any) -> bool:
+    """A value a rule may name: a JSON scalar, a finite number included."""
+    return value is None or type(value) in (str, int, bool) or type(value) is float and math.isfinite(value)
+
+
 def _rules(value: Any, roles: dict[str, set[str]]) -> list[dict]:
     """Check a rules document against the fact types its requirements may name, and normalize it."""
     if (not isinstance(value, dict) or set(value) != {"format", "requirements"} or value["format"] != RULES_FORMAT
@@ -125,21 +131,24 @@ def _rules(value: Any, roles: dict[str, set[str]]) -> list[dict]:
         raise Refusal("rules:invalid")
     requirements, ids = [], set()
     for item in value["requirements"]:
-        if (not isinstance(item, dict) or set(item) != {"id", "fact_type", "role", "admissible", "reasons"}
+        if (not isinstance(item, dict) or not {"id", "fact_type", "role", "admissible"} <= set(item)
+                or not set(item) <= {"id", "fact_type", "role", "admissible", "reasons"}
                 or not isinstance(item["id"], str) or RULE_NAME.fullmatch(item["id"]) is None or item["id"] in ids
                 or not isinstance(item["fact_type"], str) or not isinstance(item["role"], str)
                 or not isinstance(item["admissible"], list) or not item["admissible"]
-                or not isinstance(item["reasons"], list)):
+                or not isinstance(item.get("reasons", []), list)
+                or not all(map(_rule_value, item["admissible"]))):
             raise Refusal("rules:invalid")
         ids.add(item["id"])
         admissible = [_identity(entry) for entry in item["admissible"]]
         reasons = {}
-        for entry in item["reasons"]:
-            if (not isinstance(entry, dict) or set(entry) != {"value", "reason"}
+        for entry in item.get("reasons", []):
+            if (not isinstance(entry, dict) or set(entry) != {"value", "reason"} or not _rule_value(entry["value"])
                     or not isinstance(entry["reason"], str) or RULE_NAME.fullmatch(entry["reason"]) is None):
                 raise Refusal("rules:invalid")
             reasons[_identity(entry["value"])] = entry["reason"]
-        if len(set(admissible)) != len(admissible) or len(reasons) != len(item["reasons"]) or set(reasons) & set(admissible):
+        if (len(set(admissible)) != len(admissible) or len(reasons) != len(item.get("reasons", []))
+                or set(reasons) & set(admissible)):
             raise Refusal("rules:invalid")
         if item["fact_type"] not in roles:
             raise Refusal("rules:unknown-fact-type")

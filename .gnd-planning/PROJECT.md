@@ -307,27 +307,30 @@ outlines are r1, not reviewed and not approved.
 
 | Issue | What it asks | State | Home |
 |---|---|---|---|
-| [#214](https://github.com/vasiloglou/gnd-public/issues/214) | PyRel rules programs for literature-style models | On `main` (PRs 220 and 223), not released | Closes with the 0.5.0 release |
-| [#217](https://github.com/vasiloglou/gnd-public/issues/217) | Judging a temporal include root | On `main` (PR 220), not released | Closes with the 0.5.0 release |
-| [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Planned | reviewed-vocabulary-growth VG1 |
-| [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Planned, waits for a ruling | reviewed-vocabulary-growth VG2, or the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
-| [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Planned, waits for rulings | reviewed-vocabulary-growth VG3–VG5 |
+| [#214](https://github.com/vasiloglou/gnd-public/issues/214) | PyRel rules programs for literature-style models | Closed 2026-11-23: on `main` (PRs 220 and 223), not released | Ships in the 0.5.0 release |
+| [#217](https://github.com/vasiloglou/gnd-public/issues/217) | Judging a temporal include root | Closed 2026-11-23: on `main` (PR 220), not released | Ships in the 0.5.0 release |
+| [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Plan r1 | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG1 |
+| [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Plan r1, waits for a ruling | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG2, or the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
+| [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Plan r1, waits for rulings | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG3–VG5 |
 | [#228](https://github.com/vasiloglou/gnd-public/issues/228) | A growth round costs time in proportion to the whole model | Outline r1 | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO1 |
 | [#227](https://github.com/vasiloglou/gnd-public/issues/227) | Growth rounds add almost nothing: whole-proposal outcomes, restated replies, no diagnostic | Outline r1 | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO2–GO5 |
 | [#216](https://github.com/vasiloglou/gnd-public/issues/216) | A public producer protocol for the reading example | Outline r1 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH1, LH2 |
 | [#215](https://github.com/vasiloglou/gnd-public/issues/215) | Model-generic assertion admission | Outline r1 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH3, LH4 |
 | [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Outline r1 | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
 
-reviewed-vocabulary-growth has no folder on `main` yet. Its plan r1 and VG1
-draft spec are being written in a separate session on 2026-11-22 and arrive by
-their own pull request; the phase names here are that draft's. The same holds
-for the full plan and LH1 spec of literature-host-interfaces.
+Status, 2026-11-23: eight issues are open. #214 and #217 were closed as
+delivered on `main`; 0.4.0 still behaves as they describe until 0.5.0 is
+released. The reviewed-vocabulary-growth plan r1 and VG1 draft spec merged as
+[PR #230](https://github.com/vasiloglou/gnd-public/pull/230); the plan is not
+approved. The full plan and LH1 spec of literature-host-interfaces are being
+written in a separate session and arrive by their own pull request; that
+milestone is still the outline on `main`.
 
 ### Proposed order
 
 | Order | Work | Issues | Why here |
 |---|---|---|---|
-| any time | Release 0.5.0: include-root-routes, pyrel-rules-coverage and aggregate-count-certificates, all merged and unreleased | #214, #217 | Owner trigger. Nothing else waits for it, and it closes two issues |
+| any time | Release 0.5.0: include-root-routes, pyrel-rules-coverage and aggregate-count-certificates, all merged and unreleased | #214, #217 (closed) | Owner trigger. Nothing else waits for it, and it puts both fixes in a release |
 | 1 | reviewed-vocabulary-growth VG1 | #221 | No workaround: 265.74 s at 1,000 extra object types. Needs no ruling beyond its plan gate |
 | 2 | growth-round-outcomes GO1 | #228 | Small, internal, no ruling. Every growth round pays it: 42.6 s at 2,404 object types for one added fact type |
 | 3 | reviewed-vocabulary-growth VG2–VG5 | #218, #222 | The reporter has a workaround (the seed carried as imported, proposed, deontic). Waits for the plan's rulings |

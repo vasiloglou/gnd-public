@@ -1,11 +1,13 @@
 # Reviewed-vocabulary growth
 
-Plan r3, 2026-11-23, for three open issues that no milestone owned (r1 was
+Plan r4, 2026-11-23, for three open issues that no milestone owned (r1 was
 written by `start-milestone` on 2026-11-22):
 [#221](https://github.com/vasiloglou/gnd-public/issues/221),
 [#222](https://github.com/vasiloglou/gnd-public/issues/222) and
 [#218](https://github.com/vasiloglou/gnd-public/issues/218).
-**Reviewed once, at r1; not approved.** The owner selected the GND panel
+**Approved by the owner on 2026-11-23** ([plan gate](001-plan-gate.md)),
+with decisions D1–D14 ruled as proposed. A panel reviewed it once, at r1; no
+reviewer has read r4. The owner selected the GND panel
 light on 2026-11-23; it reviewed plan r1 (sha256 `3d4a06b8…`) and four of six
 seats returned `revise`
 ([report](evidence/plan-review-r1/PANEL-REVIEW.md),
@@ -14,37 +16,37 @@ repairs, tagged `(p1)`, at the owner's request of the same day. A second
 round over r2 on 2026-11-23 ended below quorum, two of six seats, so **there
 is no panel result for r2**
 ([record](evidence/plan-review-r2/disposition.md)). Plan r3 repairs the four
-points the two returned reviews raised, tagged `(s2)`. No review has read
-r3. `auto=false`.
+points the two returned reviews raised, tagged `(s2)`. A new run over r3 the
+same day also ended below quorum, two of six seats, so **there is no panel
+result for r3** either ([record](evidence/plan-review-r3/disposition.md)).
+Plan r4 repairs the eight points its two returned reviews raised, tagged
+`(s3)`, at the owner's request. `auto=false`.
 
 | Phase | Deliverable | State |
 |---|---|---|
-| VG1 | `gnd check` cost about linear in the number of object types (#221) | [draft spec](notes/phase-VG1-spec.md), awaiting the plan gate and the owner's review |
-| VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | outline; waits for ruling D2 |
-| VG3 | an unattended root may include a reviewed vocabulary (#222) | outline; waits for rulings D3, D13 and D14 |
-| VG4 | growth rounds on that root, and its first source document (#222) | outline; needs VG3, D4 and D6 |
+| VG1 | `gnd check` cost about linear in the number of object types (#221) | [draft spec](notes/phase-VG1-spec.md), awaiting its own owner gate |
+| VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | outline; D2 ruled (a), widen rule D-12 |
+| VG3 | an unattended root may include a reviewed vocabulary (#222) | outline; D3, D13 and D14 ruled (a) |
+| VG4 | growth rounds on that root, and its first source document (#222) | outline; needs VG3 |
 | VG5 | one packaged example, the pages and the three issue replies | outline; needs VG1–VG4 |
 
 [Plan](notes/reviewed-vocabulary-growth-plan.md). Listed in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
 
-Decisions waiting for the owner (plan §10): D1 one milestone or two
-maintenance passes plus #222; D2 widen rule D-12 or change the growth
-document; D3 the include route or the documented packaging; D4 the first
-document; D6 re-pinning under the unattended mode; D8 the review instrument.
-
-The review added two, each with a proposal in the plan. D13: what an
-include must be for its elements to be exempt from the unattended rules
-(proposed: the root's pin is the statement of review, and an unconfirmed
-inferred claim in an include still cannot be `alethic`). D14: whether an
-included span that names one of the root's documents is still hashed and
-counted (proposed: yes, as today).
+Decisions D1–D14 are ruled, each as the plan proposes; the
+[plan-gate record](001-plan-gate.md) lists them. In short: one milestone
+(D1); rule D-12 is widened (D2); an unattended root may include a reviewed
+model, on the strength of its pin (D3, D13); an included span that names one
+of the root's documents is still checked and counted (D14); a root with an
+include and nothing else may start without a document (D4); the per-include
+lines are in the text output of `gnd validate` (D5); a growth round cannot
+re-pin an include (D6).
 
 The roadmap of 2026-11-22 puts VG1 first, then GO1 of
 [growth-round-outcomes](../growth-round-outcomes/README.md), then VG2–VG5:
 that milestone edits `evolve/service.py` and `unattended-growth.md` too, one
 writer at a time (plan §3).
 
-Next action, the owner's: rule D1–D14 or amend them. Both planned review
-rounds are spent; a new panel is the owner's to ask for. Then the plan gate.
-VG1 can start from its spec gate after that; it needs no other ruling.
+Next action, the owner's: review the [VG1 spec](notes/phase-VG1-spec.md) at
+its own gate. VG1 needs no other ruling. `process-phase` or
+`process-milestone` runs it when the owner selects one.

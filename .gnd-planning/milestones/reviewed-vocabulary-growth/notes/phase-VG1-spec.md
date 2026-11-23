@@ -6,13 +6,13 @@
 the plan and the owner signs off this spec.** Written by `start-milestone`
 on 2026-11-22; `process-phase` has not run and no owner gate is recorded. r2
 of 2026-11-23 follows plan r2: its changes are tagged `(p1)` where a panel
-finding caused them and `(m)` where the author corrected them. Plan r3
-changed nothing about VG1, so this spec is still r2; only this paragraph and
-the first line of §2 name the newer plan.
+finding caused them and `(m)` where the author corrected them. Plans r3 and
+r4 changed nothing about VG1, so this spec is still r2; only this paragraph
+and the first line of §2 name the newer plan.
 
 ## 2. Provenance
 
-- Derives from [plan r3](reviewed-vocabulary-growth-plan.md), Goal (VG1), §0
+- Derives from [plan r4](reviewed-vocabulary-growth-plan.md), Goal (VG1), §0
   (R0.1, R0.2), §1 (H1–H10, H27–H29), §2 (VG1), §4 (VG1-C1 to VG1-C8), §9
   (the VG1 lane) and §10 (D9, D10, D12). The plan was reviewed once, at r1,
   and is not approved.

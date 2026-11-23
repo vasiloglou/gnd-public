@@ -363,3 +363,34 @@ def test_T13_tables_refuse_writes_and_denoted_by_returns_a_new_set():
     answer.add("intruder")
     assert index.denoted_by({"left_id"}) == {"left_id", "left"}  # a value type denotes itself
     assert "intruder" not in index.denoted_by({"left_id"})
+
+
+# --- review round 1 (notes/reviews/phase-VG1-r1), regression cases ----------
+
+
+def test_R1_F1_a_cached_index_never_answers_for_a_model_whose_values_differ():
+    """F1: a str-enum ``kind`` and the plain string share a canonical JSON form and a cache key."""
+    from enum import Enum
+
+    class Kind(str, Enum):
+        VALUE = "value"
+
+    def model(kind):
+        return Model(version=2, object_types=[{"id": "v", "kind": kind, "primitive": "String"},
+                                               _entity("e", "v")], fact_types=[])
+
+    warm = model(Kind.VALUE)
+    _kind_of("v", warm)
+    _universe_types("v", warm)
+    plain = model("value")
+    assert ModelIndex.for_model(plain).digest == ModelIndex.for_model(warm).digest  # the shared key
+    assert _kind_of("v", plain) == frozen_kind_of("v", plain) == "value"
+    assert _universe_types("v", plain) == frozen_universe_types("v", plain) == {"v", "e"}
+
+
+def test_R1_F2_a_malformed_reference_in_a_code_built_model_does_not_raise():
+    """F2: the base body resolved only uncovered types; the table resolves every type, so it is total."""
+    model = Model(version=2, object_types=[_value("v"), {"id": "e", "kind": "entity", "reference": "bad"}],
+                  fact_types=[])
+    assert _denoting_types({"v", "e"}, model) == frozen_denoting_types({"v", "e"}, model) == set()
+    assert ModelIndex.for_model(model).reference_value_types()["e"] is None

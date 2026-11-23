@@ -13,6 +13,7 @@ model content while serving a call. A nested scope joins the outer one.
 from __future__ import annotations
 
 import hashlib
+import json
 from collections import OrderedDict
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -279,14 +280,32 @@ class ModelIndex:
 
     # --- the universe tables (VG1) -------------------------------------------
     # Read by the checker's three universe walks (gnd.universe). Each is built
-    # once per index from the index's own rows and kept; a returned mapping is
-    # a read-only view, so no caller can write into the shared cache.
+    # once per index and kept; a returned mapping is a read-only view, so no
+    # caller can write into the shared cache.
+    #
+    # The tables are built from the canonical JSON form of the document, the
+    # bytes the cache key is a digest of, so two models that share a key share
+    # tables that are right for both. The rows of the first model to reach the
+    # cache are not: a str-enum ``kind`` and the plain string share a key and
+    # differ under ``str()`` (VG1 review r1, F1).
 
     def _table(self, name: str, build) -> Any:
         table = self._tables.get(name)
         if table is None:
             table = self._tables.setdefault(name, build())
         return table
+
+    def _canonical(self) -> dict[str, Any]:
+        def build() -> dict[str, Any]:
+            if self.digest is None:
+                return self._document  # uncacheable, so never shared with another model
+            return json.loads(artifacts.canonical_json_bytes(self._document))
+        return self._table('canonical', build)
+
+    def _canonical_objects(self) -> dict[str, dict[str, Any]]:
+        """The last row of each id, as ``object_map`` reads live rows."""
+        return {str(row.get('id')): row for row in self._canonical().get('object_types') or []
+                if isinstance(row, dict) and row.get('id') is not None}
 
     def reference_value_types(self) -> MappingProxyType[str, str | None]:
         """object-type id -> the value type that denotes it, or None.
@@ -297,10 +316,18 @@ class ModelIndex:
         supertype map, once per object type.
         """
         def build() -> MappingProxyType[str, str | None]:
-            parents = _supertype_parents(self._document)
-            return MappingProxyType({
-                identifier: _resolve_reference(identifier, self._objects, parents, set(), _identifying_id)
-                for identifier in self._objects})
+            objects = self._canonical_objects()
+            parents = _supertype_parents(self._canonical())
+            table: dict[str, str | None] = {}
+            for identifier in objects:
+                try:
+                    table[identifier] = _resolve_reference(identifier, objects, parents, set(), _identifying_id)
+                except (AttributeError, TypeError):
+                    # A shape only a model built in code can hold (a reference that is
+                    # not a mapping): not resolvable. The base walk raised here only
+                    # for a type it was not asked to skip (VG1 review r1, F2).
+                    table[identifier] = None
+            return MappingProxyType(table)
         return self._table('reference', build)
 
     def denoted_by(self, value_type_ids: Any) -> set[str]:
@@ -325,7 +352,7 @@ class ModelIndex:
         """
         def build() -> MappingProxyType[str, frozenset[str]]:
             children: dict[str, set[str]] = {}
-            for identifier, supertypes in _supertype_parents(self._document).items():
+            for identifier, supertypes in _supertype_parents(self._canonical()).items():
                 for supertype in supertypes:
                     children.setdefault(supertype, set()).add(identifier)
             return MappingProxyType({key: frozenset(value) for key, value in children.items()})
@@ -353,7 +380,7 @@ class ModelIndex:
         """The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None."""
         def build() -> MappingProxyType[str, str | None]:
             kinds: dict[str, str | None] = {}
-            for row in self._document.get('object_types') or []:
+            for row in self._canonical().get('object_types') or []:
                 if isinstance(row, dict):
                     value = row.get('kind')
                     kinds.setdefault(str(row.get('id')), str(value) if value is not None else None)

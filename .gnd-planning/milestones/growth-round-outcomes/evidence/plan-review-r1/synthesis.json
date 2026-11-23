@@ -1,0 +1,632 @@
+{
+ "schema_version": 1,
+ "run_sha256": "324832d2f59b00511f90b580a483d71a281c1042030d8b0d4781bd090c715765",
+ "summary": "Five of six seats returned schema-valid reviews of plan r2 (claude, codex, gemini, kimi, glm); gemini approved with no concern and the other four asked for revision. Qwen exited nonzero after its 600 s wall-time budget, so it contributes no opinion. Five groups are rated high: the GO1 cache key, the preview of a refused candidate, whole-proposal refusals, the GO2 version move, and GO5's empty round. Three more reach two or three supporters; five concerns have one supporter each.",
+ "agreed_concerns": [
+  {
+   "group_id": "go1-reader-key",
+   "severity": "high",
+   "title": "GO1 cache key must keep the strict .json reader distinct",
+   "summary": "Keyed by content alone (R0.5) or by a reader test restated as \".json or starts with {\", a parse that succeeded through the YAML fallback could be returned to a .json caller that must refuse it. The parse depends on the bytes and on whether the source suffix is .json.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-key-reader-conflates-strict-json"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-reader-key"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "r0.5-cache-key-omits-reader"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "go2-refused-preview-shape",
+   "severity": "high",
+   "title": "GO2 promises a preview for a candidate that does not validate, which the preview model cannot hold",
+   "summary": "EvolutionPreview requires validation evidence, verbalization and blast radius built from a validated candidate; a refused candidate raises before any preview exists. The plan does not say what document carries outcomes of a refused proposal or what apply does with it.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-refused-candidate-has-no-preview"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-refused-candidate-preview-shape-unstated"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "go2-whole-refusals",
+   "severity": "high",
+   "title": "Whole-proposal refusals (D-12, validation) cannot yield per-operation verdicts, and one pass cannot establish admitted",
+   "summary": "D-12 messages name no element and stop at the first fault; layer-1 issues stop layer 2. Under D1 (a) refused-by-d12 is unreachable per operation, and admitted after one pass may hide a masked fault.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-d12-unreachable-and-admitted-unsound"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go2-whole-refusal"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "go2-digests-move",
+   "severity": "high",
+   "title": "GO2-C3 and R0.3 cannot hold if the preview schema version moves",
+   "summary": "The preview version must equal the proposal version, so moving it moves the proposal version and every proposal and preview digest. The omit-when-unset optional-field precedent adds a field without a version move.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-c3-schema-bump-changes-digests"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go2-preview-binding"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-c3-digests-cannot-stay-identical"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "go5-empty-round",
+   "severity": "high",
+   "title": "GO5-C2 cannot be met from a proposal and its preview: an empty round has no proposal",
+   "summary": "A round that proposes nothing has no proposal or preview, and a reused element leaves no operation, so the stated inputs cannot tell the two rounds apart.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-c2-no-input-distinguishes-rounds"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go5-empty-round"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go5-c2-empty-round-has-no-input"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "go3-stale",
+   "severity": "medium",
+   "title": "Narrowing alone does not make the original preview stale",
+   "summary": "Narrowing writes no model bytes; only applying the narrowed proposal makes the original preview a stale model CAS.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-c3-original-preview-not-stale"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go3-stale-preview"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go3-c3-stale-preview-only-after-apply"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "cross-milestone-order",
+   "severity": "medium",
+   "title": "Start conditions disagree with the one-writer order",
+   "summary": "\"merged or not started\" and \"GO4 at any point\" contradict the order VG1, GO1, VG2-VG5, GO2-GO5; GO5 edits unattended-growth.md without the VG5 condition.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "order-go5-missing-vg5-condition"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "cross-milestone-order"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "go4-order-omits-one-writer-constraint"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "go1-timing-gate",
+   "severity": "medium",
+   "title": "GO1-C5 timed ratio sits in the required lane",
+   "summary": "The ratio depends on machine load; parse counts and byte equality should be the required gates and the ratio a recorded measurement.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-c5-timed-test-in-required-lane"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-timing-gate"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "codex",
+   "concern_id": "go1-canonical-date"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "go2-c1-exit-3-unverified"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "go2-lane-omits-preview-consumers"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "h21-d6-shared-file-claim-incomplete"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "h20-wording-contradicts-r03-d2"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "go1-reader-key",
+   "rank": 1,
+   "title": "GO1 cache key must keep the strict .json reader distinct",
+   "action": "Amend R0.5, section 2 GO1 and section 6: key = (sha256 of bytes, source suffix is .json); one helper computes it for the parser and the key. Add a case: YAML flow bytes starting with { parsed as .yaml then requested as .json are refused.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-key-reader-conflates-strict-json"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-reader-key"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "r0.5-cache-key-omits-reader"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-key-reader-conflates-strict-json",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-reader-key",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "r0.5-cache-key-omits-reader",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "go2-refused-preview-shape",
+   "rank": 2,
+   "title": "GO2 promises a preview for a candidate that does not validate, which the preview model cannot hold",
+   "action": "Add to section 2 GO2 and D1: outcomes for a refused candidate live in a refusal report separate from EvolutionPreview, which apply cannot take; criterion: apply refuses it. Carry its shape into the GO2 spec.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-refused-candidate-has-no-preview"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-refused-candidate-preview-shape-unstated"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-refused-candidate-has-no-preview",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-refused-candidate-preview-shape-unstated",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "go2-whole-refusals",
+   "rank": 3,
+   "title": "Whole-proposal refusals (D-12, validation) cannot yield per-operation verdicts, and one pass cannot establish admitted",
+   "action": "Restate D1 (a): a refusal names an operation only where the gate can locate it; the gate collects every fault it can locate; otherwise the outcome is a whole-proposal refusal with operations unassessed. Define admitted as no refusal found and require a re-preview of the narrowed proposal; add a two-fault fixture.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-d12-unreachable-and-admitted-unsound"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go2-whole-refusal"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-d12-unreachable-and-admitted-unsound",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go2-whole-refusal",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "go2-digests-move",
+   "rank": 4,
+   "title": "GO2-C3 and R0.3 cannot hold if the preview schema version moves",
+   "action": "Change D2 (a): operation_outcomes is an omit-when-unset optional preview field with no schema version move. Restate R0.3 and GO2-C3: a proposal admitted today with no outcomes requested keeps every byte and digest.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-c3-schema-bump-changes-digests"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go2-preview-binding"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-c3-digests-cannot-stay-identical"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-c3-schema-bump-changes-digests",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go2-preview-binding",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-c3-digests-cannot-stay-identical",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "go5-empty-round",
+   "rank": 5,
+   "title": "GO5-C2 cannot be met from a proposal and its preview: an empty round has no proposal",
+   "action": "Define the GO5 summary input as the host round file (reply ids reused, host drops) plus the proposal and preview when one exists; define the summary of a round with no proposal; build GO5-C2 fixtures differing only there.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-c2-no-input-distinguishes-rounds"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go5-empty-round"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go5-c2-empty-round-has-no-input"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-c2-no-input-distinguishes-rounds",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go5-empty-round",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go5-c2-empty-round-has-no-input",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "go3-stale",
+   "rank": 6,
+   "title": "Narrowing alone does not make the original preview stale",
+   "action": "Split GO3-C3: before the narrowed proposal is applied, the original preview still applies whole or is refused by revalidation as today; after it is applied, the original preview is refused as a stale model CAS.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-c3-original-preview-not-stale"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go3-stale-preview"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go3-c3-stale-preview-only-after-apply"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-c3-original-preview-not-stale",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go3-stale-preview",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go3-c3-stale-preview-only-after-apply",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "cross-milestone-order",
+   "rank": 7,
+   "title": "Start conditions disagree with the one-writer order",
+   "action": "Replace \"merged or not started\" with \"merged on main\" for VG2/VG4 (GO2, GO3) and VG2/VG5 (GO4, GO5); GO4 after its ruling and that condition; add the coordinator handshake.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "order-go5-missing-vg5-condition"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "cross-milestone-order"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "go4-order-omits-one-writer-constraint"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "order-go5-missing-vg5-condition",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "cross-milestone-order",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "go4-order-omits-one-writer-constraint",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "go1-timing-gate",
+   "rank": 8,
+   "title": "GO1-C5 timed ratio sits in the required lane",
+   "action": "Move GO1-C5 to a recorded measurement (marker excluded from the focused lane) beside C6; C1-C4 stay the required gates.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-c5-timed-test-in-required-lane"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-timing-gate"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-c5-timed-test-in-required-lane",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-timing-gate",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "go1-canonical-date",
+   "rank": 9,
+   "title": "go1-canonical-date",
+   "action": "T3 compares a type-preserving snapshot (the round-trip YAML dump or a deep structural equality) rather than canonical JSON, demonstrated on the YAML date case.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-canonical-date"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go1-canonical-date",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "go2-c1-exit-3-unverified",
+   "rank": 10,
+   "title": "go2-c1-exit-3-unverified",
+   "action": "Read the exit of each whole-proposal refusal now; word GO2-C1 as the exit today's refusal gives.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "go2-c1-exit-3-unverified"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "go2-c1-exit-3-unverified",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "go2-lane-omits-preview-consumers",
+   "rank": 11,
+   "title": "go2-lane-omits-preview-consumers",
+   "action": "Add tests/test_evolve_source_document.py, tests/test_evolve_population_check.py and tests/test_evolve_shape_matches.py to the GO2 lane.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-lane-omits-preview-consumers"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go2-lane-omits-preview-consumers",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "h21-d6-shared-file-claim-incomplete",
+   "rank": 12,
+   "title": "h21-d6-shared-file-claim-incomplete",
+   "action": "Say GO1 and VG1 share only the append-only homes docs/release-notes.md and dev/components/; name tests/test_unattended_growth_guidance.py among the shared files.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h21-d6-shared-file-claim-incomplete"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h21-d6-shared-file-claim-incomplete",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "h20-wording-contradicts-r03-d2",
+   "rank": 13,
+   "title": "h20-wording-contradicts-r03-d2",
+   "action": "Gloss H20 to R0.2: no check weakened or removed and no existing refusal's exit moves.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h20-wording-contradicts-r03-d2"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h20-wording-contradicts-r03-d2",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ]
+  }
+ ]
+}

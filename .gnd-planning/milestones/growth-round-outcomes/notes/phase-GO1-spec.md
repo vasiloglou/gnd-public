@@ -1,10 +1,12 @@
-# Phase GO1 · one parse per model text in `gnd evolve` · spec r1
+# Phase GO1 · one parse per model text in `gnd evolve` · spec r2
 
 ## 1. Status
 
-**Draft, awaiting owner review. Implementable once the plan gate approves
-the plan and the owner signs off this spec.** Written by `start-milestone`
-on 2026-11-23; `process-phase` has not run and no owner gate is recorded.
+**Draft r2, awaiting its gate.** r1 was written by `start-milestone` on
+2026-11-23. r2 applies the GO1 findings of the plan's panel round 1 (the
+reader key, the snapshot of T3, the timed test outside the focused lane),
+tagged `(p1)`. Under the owner's `auto` delegation for this milestone the
+gate is a delegated ruling, recorded in the phase record.
 
 ## 2. Provenance
 
@@ -13,7 +15,7 @@ on 2026-11-23; `process-phase` has not run and no owner gate is recorded.
   §9 (the GO1 lane) and §10 (D6, D9). The plan is not reviewed and not
   approved.
 - From [#228](https://github.com/vasiloglou/gnd-public/issues/228).
-- No review has read these bytes.
+- r1 was offered to the plan's panel round 1 as context; no review has read r2.
 - Every code citation was read at `548b9a1d`. Measurements were run on that
   commit on 2026-11-23, in process, on one laptop under other load, once
   each.
@@ -111,10 +113,13 @@ def parse_scope() -> Iterator[None]:
 - `parse_model_document(data, *, source)` keeps its signature. Inside a
   scope it returns the remembered document for `(sha256(data), reader)`;
   otherwise it parses and, on success, remembers.
-- `reader` is the value of the parser's own reader test, moved into one
-  private function that both the parser and the key call (`_parsing.py:37`:
-  the `.json` suffix, or text that starts with `{`). The key never restates
-  the test.
+- `reader` is whether the source name selects the strict JSON reader, the
+  `.json` suffix (`_parsing.py:37`), moved into one private function that
+  both the parser and the key call. It is the only way the name changes a
+  successful parse: text starting with `{` under another name tries JSON and
+  falls back to YAML, and under a `.json` name the same text is refused, so
+  a key that also read "starts with `{`" would hand a YAML-built document to
+  a `.json` caller (p1). The key never restates the test.
 - Outside a scope nothing is remembered and two calls return two documents,
   as today.
 - The scope is a `ContextVar`, as `index_scope` is, so it does not cross
@@ -165,12 +170,12 @@ manager that remembers nothing.
 |---|---|---|
 | T1 | count calls that reach the real parser during one `preview` and one `apply`, at N = 10 and N = 40 | `preview` at most 2 and `apply` at most 3, equal at both sizes. Negative control: scope off, 6 and 22 |
 | T2 | scope on against scope off, for: the one-round proposal; a proposal the additive policy refuses; a D-12 refusal; an include root (the case of `tests/test_mc3_evolution.py`); a model named `model.orm.json`; a YAML model holding an unquoted date; a candidate that is not valid YAML | preview bytes, pending state, record, published model, stdout, stderr and exit equal in each pair |
-| T3 | for every case of T2, the canonical JSON of each remembered document when the scope closes against its canonical JSON when the parser returned it | equal. Liveness: a test double that appends a key to the shared document makes this case fail |
+| T3 | for every case of T2, a type-preserving snapshot of each remembered document when the scope closes against the same snapshot taken when the parser returned it: the round-trip YAML dump for a YAML document, which keeps dates and tags canonical JSON cannot spell, and canonical JSON for a JSON document (p1) | equal, including on the YAML-date case. Liveness: a test double that appends a key to the shared document makes this case fail |
 | T4 | preview, then the model file is rewritten, then `apply` | the refusal `apply` gives today for a model changed since its preview, same message and exit as with the scope off (the neighbouring stale case is `test_t3_populated_set_change_before_apply_is_stale`, `tests/test_evolve_additive_policy.py:788`) |
-| T5 | inside one scope: the same bytes under `model.orm.json` and under `model.orm.yaml`; a text over the 10 MiB cap twice; malformed YAML twice | two parses for the two names; the cap refusal and the YAML refusal raised both times with the caller's label |
+| T5 | inside one scope: the same bytes under `model.orm.json` and under `model.orm.yaml`; YAML-flow bytes that start with `{` and are not JSON, first under `model.orm.yaml` and then under `model.orm.json` (p1); a text over the 10 MiB cap twice; malformed YAML twice | two parses for the two names; the `.yaml` parse succeeds and the `.json` request is still refused as strict JSON; the cap refusal and the YAML refusal raised both times with the caller's label |
 | T6 | `parse_model_document` twice outside any scope; twice inside nested scopes | two distinct objects; one object, and none remembered after the outer scope exits |
 | T7 | two `preview` commands in one process on two workspaces with equal model bytes | each parses its texts; the second reads nothing from the first |
-| T8 | N = 200 (604 object types): the minimum of two `apply` runs with the scope over the minimum of two with it off | at most 0.6 |
+| T8 | N = 200 (604 object types): the minimum of two `apply` runs with the scope over the minimum of two with it off. The test is marked `slow`, which the default `addopts` excludes; it is run once with `-m slow` for the record (p1) | at most 0.6, recorded |
 | T9 | the existing lane, unmodified: `tests/test_evolve_additive_policy.py`, `tests/test_evolve_source_document.py`, `tests/test_evolve_loading.py`, `tests/test_mc3_evolution.py`, `tests/test_unattended_model_growth_acceptance.py` | exit 0, no golden changed |
 
 Branch table. The lookup has four branches: no scope; a scope and a first
@@ -183,7 +188,9 @@ Gate: the plan §9 GO1 lane with this file, the guard block of `project.md`,
 `python3 scripts/components_index.py changed --base origin/main --strict`.
 
 Which test is which. T1 to T7 and T9 read no clock and are the required
-regression gates. T8 compares two runs on one machine in one test.
+regression gates. T8 compares two runs on one machine, is excluded from the
+focused lane and is recorded; a ratio over 0.6 is a failed criterion stated
+in the record (p1).
 
 ## 9. Out of scope for this phase
 

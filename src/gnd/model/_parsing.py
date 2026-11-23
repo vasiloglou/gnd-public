@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import re
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -25,6 +24,9 @@ from gnd.errors import ModelLoadError
 from gnd.yaml_comments import configure_comment_scanner
 
 MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
+
+#: The two block scalar styles, as the YAML reader's scalar events name them.
+_BLOCK_STYLES = ("|", ">")
 
 _F = TypeVar("_F", bound=Callable[..., Any])
 
@@ -136,13 +138,11 @@ def parse_model_document(data: bytes, *, source: str | Path) -> Any:
 
 
 def _parse_model_document(data: bytes, *, source: str | Path) -> Any:
-    from ruamel.yaml.events import AliasEvent
+    from ruamel.yaml.events import AliasEvent, ScalarEvent
 
     if len(data) > MAX_MODEL_BYTES:
         raise ModelLoadError("model exceeds the 10 MiB input cap")
     text = data.decode("utf-8")
-    if re.search(r"(?m)[|>][-+0-9]{0,2}[ \t]*(?:#.*)?$", text) is None:
-        text = text.rstrip()
     doc = None
     strict = _strict_json_source(source)
     if strict or text.lstrip().startswith("{"):
@@ -160,10 +160,17 @@ def _parse_model_document(data: bytes, *, source: str | Path) -> Any:
                 raise ModelLoadError("model JSON input refused") from error
             # A YAML flow mapping may start with an unquoted key.
     if doc is None:
-        for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(text), 1):
+        # A document's trailing whitespace is content only inside a block scalar,
+        # so it is dropped unless the reader's own events show one. The events
+        # know a block scalar under every line ending; a pattern over the text
+        # knew it only under LF.
+        stripped = text.rstrip()
+        block_scalar = False
+        for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(stripped), 1):
             if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
                 raise ModelLoadError("model YAML alias/event guard refused input")
-        doc = configure_comment_scanner(YAML(typ="rt")).load(text)
+            block_scalar = block_scalar or (isinstance(event, ScalarEvent) and event.style in _BLOCK_STYLES)
+        doc = configure_comment_scanner(YAML(typ="rt")).load(text if block_scalar else stripped)
     return doc
 
 parse_model_document.__module__ = "gnd.model"

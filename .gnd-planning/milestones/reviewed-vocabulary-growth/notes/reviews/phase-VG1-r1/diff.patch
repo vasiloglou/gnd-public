@@ -1,0 +1,786 @@
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 0511b9e6..ec2bdd33 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -2480,13 +2480,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### model.query_index
+-- does: Query detached model snapshots through a bounded content cache [ModelIndex].
+-- verbs: model lookup, query model, cached models, detached snapshot, fact types, object types, role players, supertype closure, positional constraints, index_scope, independent_index_scope, cache invalidation
++- does: Query detached model snapshots through a bounded content cache [ModelIndex], and keep per-model universe tables (reference value types, denoting types, subtype children, kinds) that the checker's universe walks read.
++- verbs: model lookup, query model, cached models, detached snapshot, fact types, object types, role players, supertype closure, positional constraints, index_scope, independent_index_scope, cache invalidation, reference value type table, denoted by, subtype children, object type kind
+ - status: canonical
+ - modules: src/gnd/model_index.py
+ - uses: infra.artifacts, model.address, model.document, model.reference_resolution
+-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +39 more (graph.md)
+-- tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
++- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +40 more (graph.md)
++- tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
+ - in: Loaded Model and query identifiers.
+ - out: Detached lookup results and scoped ModelIndex snapshots.
+ 
+@@ -2715,7 +2715,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - verbs: adapt snapshot, canonical_scalar, typed scalar, rational identity, datetime coordinate, opaque refusal, adapt_constraint, adapt_snapshot, adapt_snapshot_observed, derived lineage, value origins, validation marker, input refusal, canonical scalar compatibility alias
+ - status: canonical
+ - modules: src/gnd/semantic_adapter.py
+-- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
++- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+ - used_by: check.admission, check.snapshot_decision, discover.population_view, semantics.temporal_guards, semantics.witness_origins
+ - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py, tests/test_public_adapter_derivation.py
+ - checked: partial
+@@ -2778,8 +2778,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - modules: src/gnd/universe.py
+ - uses: check.constraint_families, model.atom_bindings, model.document, model.query_index, model.reference_resolution, model.scalar_identity
+ - used_by: check.admission, check.applicability, check.population_structure, checker.evaluate, discover.candidates, discover.population_view, extract.reference_schemes, extract.vocabulary, model.extraction_vocabulary, model.population_sentences, model.reference_schemes, model.validation, … +5 more (graph.md)
+-- tests: tests/test_rf3_core.py, tests/test_rf6_index.py, tests/test_checker_families.py, tests/test_popvalidate.py
+-- notes: Also owns constraint shape/scope hooks dispatched through FAMILIES; layer-map placement is model despite the check area chosen by capability. Historical model, checker and popvalidate names remain compatibility aliases.
++- tests: tests/test_rf3_core.py, tests/test_rf6_index.py, tests/test_checker_families.py, tests/test_popvalidate.py, tests/test_vg1_object_type_scaling.py
++- notes: Also owns constraint shape/scope hooks dispatched through FAMILIES; layer-map placement is model despite the check area chosen by capability. Historical model, checker and popvalidate names remain compatibility aliases. The descendant, denoting and kind walks read model.query_index's per-model tables (VG1); resolve_reference_value_type stays the uncached definition those tables cache.
+ 
+ 
+ ### model.scalar_identity
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index ee9fd5b3..877219a9 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -4140,7 +4140,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.query_index
+ - uses: infra.artifacts, model.address, model.document, model.reference_resolution
+-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.reference_schemes, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.count_membership, witness.why_not
++- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.reference_schemes, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.count_membership, witness.why_not
+ 
+ #### model.query_index -> infra.artifacts
+ - `src/gnd/model_index.py -> src/gnd/artifacts.py`
+@@ -4586,7 +4586,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/judgments.py -> src/gnd/model_index.py`
+ 
+ ### semantics.snapshot_adapter
+-- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
++- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+ - used_by: check.admission, check.snapshot_decision, discover.population_view, semantics.temporal_guards, semantics.witness_origins
+ 
+ #### semantics.snapshot_adapter -> check.applicability
+@@ -4619,6 +4619,9 @@ Generated by `scripts/components_index.py`.
+ #### semantics.snapshot_adapter -> model.population_loading
+ - `src/gnd/semantic_adapter.py -> src/gnd/population.py`
+ 
++#### semantics.snapshot_adapter -> model.query_index
++- `src/gnd/semantic_adapter.py -> src/gnd/model_index.py`
++
+ #### semantics.snapshot_adapter -> model.scalar_identity
+ - `src/gnd/semantic_adapter.py -> src/gnd/values.py`
+ 
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 49594047..99f05362 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -695,32 +695,37 @@ Detached model query snapshots with a bounded, content-keyed cache.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `scoped(function)` | function | 52 | Run ``function`` inside an index scope: the decorator public entry points use. |
+-| `index_scope() -> Iterator[None]` | function | 62 | Reuse one ModelIndex per Model object for the duration of one public call. |
+-| `independent_index_scope(model) -> Iterator[ModelIndex \| None]` | function | 75 | Own a fresh call scope even under a caller-held outer index scope. |
+-| `cache_info() -> dict[str, int]` | function | 95 | (no docstring) |
+-| `ModelIndex` | class | 101 | A retained snapshot: queries return detached values, never writable cache state. |
+-| `ModelIndex.for_model(cls, model) -> ModelIndex` | method | 123 | (no docstring) |
+-| `ModelIndex.object_map(model) -> dict[str, dict[str, Any]]` | method | 173 | Compatibility lookup retains live rows and historical malformed errors. |
+-| `ModelIndex.role_map(model) -> dict[str, dict[str, str]]` | method | 179 | (no docstring) |
+-| `ModelIndex.constraint_roles(constraint) -> list[str]` | method | 187 | The role names a fact-type constraint spans (uniqueness, frequency), in declared order. |
+-| `ModelIndex.scope_facts(model, targets) -> list[str]` | method | 193 | (no docstring) |
+-| `ModelIndex.fact_types(self) -> tuple[dict[str, Any], ...]` | method | 198 | (no docstring) |
+-| `ModelIndex.iter_fact_types(self) -> Iterator[dict[str, Any]]` | method | 201 | (no docstring) |
+-| `ModelIndex.iter_fact_types_shared(self) -> Iterator[dict[str, Any]]` | method | 204 | Internal readers only: the index's own fact-type rows, not copied. |
+-| `ModelIndex.role_object_types(self) -> dict[str, dict[str, str]]` | method | 213 | (no docstring) |
+-| `ModelIndex.fact_type_roles(self) -> dict[str, set[str]]` | method | 223 | (no docstring) |
+-| `ModelIndex.facts_for_objects(self, identifiers) -> list[str]` | method | 229 | (no docstring) |
+-| `ModelIndex.legacy_fact_type(model, identifier) -> dict[str, Any] \| None` | method | 234 | (no docstring) |
+-| `ModelIndex.legacy_role_type(model, fact_type_id, role_name) -> str \| None` | method | 241 | (no docstring) |
+-| `ModelIndex.fact_type(self, identifier) -> dict[str, Any] \| None` | method | 248 | (no docstring) |
+-| `ModelIndex.object_type(self, identifier) -> dict[str, Any] \| None` | method | 251 | (no docstring) |
+-| `ModelIndex.object_types_by_id(self) -> dict[str, dict[str, Any]]` | method | 254 | (no docstring) |
+-| `ModelIndex.role_object_type(self, fact_type_id, role_name) -> str \| None` | method | 257 | (no docstring) |
+-| `ModelIndex.supertype_closure(self, identifier) -> frozenset[str]` | method | 264 | (no docstring) |
+-| `ModelIndex.primitive(self, identifier, *, variant) -> str \| None` | method | 276 | (no docstring) |
+-| `ModelIndex.iter_constraints_shared(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| No…` | method | 279 | Internal readers only: ``iter_constraints`` refs and order, rows not copied. |
+-| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 294 | (no docstring) |
++| `scoped(function)` | function | 53 | Run ``function`` inside an index scope: the decorator public entry points use. |
++| `index_scope() -> Iterator[None]` | function | 63 | Reuse one ModelIndex per Model object for the duration of one public call. |
++| `independent_index_scope(model) -> Iterator[ModelIndex \| None]` | function | 76 | Own a fresh call scope even under a caller-held outer index scope. |
++| `cache_info() -> dict[str, int]` | function | 96 | (no docstring) |
++| `ModelIndex` | class | 102 | A retained snapshot: queries return detached values, never writable cache state. |
++| `ModelIndex.for_model(cls, model) -> ModelIndex` | method | 127 | (no docstring) |
++| `ModelIndex.object_map(model) -> dict[str, dict[str, Any]]` | method | 177 | Compatibility lookup retains live rows and historical malformed errors. |
++| `ModelIndex.role_map(model) -> dict[str, dict[str, str]]` | method | 183 | (no docstring) |
++| `ModelIndex.constraint_roles(constraint) -> list[str]` | method | 191 | The role names a fact-type constraint spans (uniqueness, frequency), in declared order. |
++| `ModelIndex.scope_facts(model, targets) -> list[str]` | method | 197 | (no docstring) |
++| `ModelIndex.fact_types(self) -> tuple[dict[str, Any], ...]` | method | 202 | (no docstring) |
++| `ModelIndex.iter_fact_types(self) -> Iterator[dict[str, Any]]` | method | 205 | (no docstring) |
++| `ModelIndex.iter_fact_types_shared(self) -> Iterator[dict[str, Any]]` | method | 208 | Internal readers only: the index's own fact-type rows, not copied. |
++| `ModelIndex.role_object_types(self) -> dict[str, dict[str, str]]` | method | 217 | (no docstring) |
++| `ModelIndex.fact_type_roles(self) -> dict[str, set[str]]` | method | 227 | (no docstring) |
++| `ModelIndex.facts_for_objects(self, identifiers) -> list[str]` | method | 233 | (no docstring) |
++| `ModelIndex.legacy_fact_type(model, identifier) -> dict[str, Any] \| None` | method | 238 | (no docstring) |
++| `ModelIndex.legacy_role_type(model, fact_type_id, role_name) -> str \| None` | method | 245 | (no docstring) |
++| `ModelIndex.fact_type(self, identifier) -> dict[str, Any] \| None` | method | 252 | (no docstring) |
++| `ModelIndex.object_type(self, identifier) -> dict[str, Any] \| None` | method | 255 | (no docstring) |
++| `ModelIndex.object_types_by_id(self) -> dict[str, dict[str, Any]]` | method | 258 | (no docstring) |
++| `ModelIndex.role_object_type(self, fact_type_id, role_name) -> str \| None` | method | 261 | (no docstring) |
++| `ModelIndex.supertype_closure(self, identifier) -> frozenset[str]` | method | 268 | (no docstring) |
++| `ModelIndex.reference_value_types(self) -> MappingProxyType[str, str \| None]` | method | 291 | object-type id -> the value type that denotes it, or None. |
++| `ModelIndex.denoted_by(self, value_type_ids) -> set[str]` | method | 306 | Object types whose resolved value type is one of ``value_type_ids`` (a new set). |
++| `ModelIndex.subtype_children(self) -> MappingProxyType[str, frozenset[str]]` | method | 320 | Declared id -> the ids that name it in ``subtype_of`` (direct children). |
++| `ModelIndex.descendants(self, identifier) -> set[str]` | method | 334 | ``identifier`` and every transitive subtype of it, cycle-safe (a new set). |
++| `ModelIndex.kind(self, identifier) -> str \| None` | method | 352 | The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None. |
++| `ModelIndex.primitive(self, identifier, *, variant) -> str \| None` | method | 363 | (no docstring) |
++| `ModelIndex.iter_constraints_shared(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| No…` | method | 366 | Internal readers only: ``iter_constraints`` refs and order, rows not copied. |
++| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 381 | (no docstring) |
+ 
+ ## gnd.model_queries — `src/gnd/model_queries.py`
+ Components: model.reference_resolution
+@@ -974,14 +979,14 @@ Admitted snapshot -> immutable semantic inputs, without verdict evaluation.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `ValueOrigin` | class | 83 | (no docstring) |
+-| `SnapshotObservation` | class | 95 | (no docstring) |
+-| `AdaptedSnapshot` | class | 108 | (no docstring) |
+-| `adapt_constraint(constraint, fact_type, ref, model) -> IRConstraint` | function | 323 | Total over constraint JSON shapes; refusals never become empty successful predicates. |
+-| `universe_of(object_type_id, model, population) -> IRRoster` | function | 474 | The production universe walk, retaining every occurrence and its order. |
+-| `adapt_snapshot(model, population, *, effective_facts, computed_available) -> SnapshotIR` | function | 592 | (no docstring) |
+-| `adapt_snapshot_observed(model, population, *, effective_facts, computed_available, effective_lineag…` | function | 746 | Retain the exact value origins beside the immutable semantic snapshot. |
+-| `correspondence_scope(adapted) -> tuple[str, tuple[IRRefusal, ...]]` | function | 929 | Fail closed when any admitted value needed by the snapshot was refused. |
++| `ValueOrigin` | class | 84 | (no docstring) |
++| `SnapshotObservation` | class | 96 | (no docstring) |
++| `AdaptedSnapshot` | class | 109 | (no docstring) |
++| `adapt_constraint(constraint, fact_type, ref, model) -> IRConstraint` | function | 324 | Total over constraint JSON shapes; refusals never become empty successful predicates. |
++| `universe_of(object_type_id, model, population) -> IRRoster` | function | 475 | The production universe walk, retaining every occurrence and its order. |
++| `adapt_snapshot(model, population, *, effective_facts, computed_available) -> SnapshotIR` | function | 594 | (no docstring) |
++| `adapt_snapshot_observed(model, population, *, effective_facts, computed_available, effective_lineag…` | function | 748 | Retain the exact value origins beside the immutable semantic snapshot. |
++| `correspondence_scope(adapted) -> tuple[str, tuple[IRRefusal, ...]]` | function | 931 | Fail closed when any admitted value needed by the snapshot was refused. |
+ 
+ ## gnd.semantic_ir — `src/gnd/semantic_ir.py`
+ Components: semantics.snapshot_ir
+diff --git a/src/gnd/model_index.py b/src/gnd/model_index.py
+index b344f674..8123b02a 100644
+--- a/src/gnd/model_index.py
++++ b/src/gnd/model_index.py
+@@ -21,12 +21,13 @@ from copy import deepcopy
+ from dataclasses import dataclass, field
+ from functools import wraps
+ from threading import RLock
++from types import MappingProxyType
+ from typing import Any, Literal
+ 
+ from gnd import artifacts
+ from gnd.address import positional_constraint_ref
+ from gnd.documents import Model
+-from gnd.model_queries import primitive_for
++from gnd.model_queries import _identifying_id, _resolve_reference, _supertype_parents, primitive_for
+ 
+ _CACHE: OrderedDict[str, ModelIndex] = OrderedDict()
+ _LOCK = RLock()
+@@ -105,6 +106,8 @@ class ModelIndex:
+     _document: dict[str, Any] = field(repr=False, compare=False)
+     _facts: dict[str, dict[str, Any]] = field(init=False, repr=False, compare=False)
+     _objects: dict[str, dict[str, Any]] = field(init=False, repr=False, compare=False)
++    #: The universe tables (VG1), built on first use: name -> read-only table.
++    _tables: dict[str, Any] = field(init=False, repr=False, compare=False)
+ 
+     def __post_init__(self) -> None:
+         document = deepcopy(self._document)
+@@ -118,6 +121,7 @@ class ModelIndex:
+                    if isinstance(row, dict) and row.get('id') is not None}
+         object.__setattr__(self, '_facts', facts)
+         object.__setattr__(self, '_objects', objects)
++        object.__setattr__(self, '_tables', {})
+ 
+     @classmethod
+     def for_model(cls, model: Model) -> ModelIndex:
+@@ -273,6 +277,89 @@ class ModelIndex:
+                 pending.extend(parents.get(parent, []))
+         return frozenset(seen)
+ 
++    # --- the universe tables (VG1) -------------------------------------------
++    # Read by the checker's three universe walks (gnd.universe). Each is built
++    # once per index from the index's own rows and kept; a returned mapping is
++    # a read-only view, so no caller can write into the shared cache.
++
++    def _table(self, name: str, build) -> Any:
++        table = self._tables.get(name)
++        if table is None:
++            table = self._tables.setdefault(name, build())
++        return table
++
++    def reference_value_types(self) -> MappingProxyType[str, str | None]:
++        """object-type id -> the value type that denotes it, or None.
++
++        A cache of ``gnd.universe.resolve_reference_value_type``, which stays the
++        definition: built by the same walk (``_resolve_reference`` with
++        ``_identifying_id``) over the same last-duplicate object map and one
++        supertype map, once per object type.
++        """
++        def build() -> MappingProxyType[str, str | None]:
++            parents = _supertype_parents(self._document)
++            return MappingProxyType({
++                identifier: _resolve_reference(identifier, self._objects, parents, set(), _identifying_id)
++                for identifier in self._objects})
++        return self._table('reference', build)
++
++    def denoted_by(self, value_type_ids: Any) -> set[str]:
++        """Object types whose resolved value type is one of ``value_type_ids`` (a new set)."""
++        def build() -> MappingProxyType[str, frozenset[str]]:
++            inverse: dict[str, set[str]] = {}
++            for identifier, value_type in self.reference_value_types().items():
++                if value_type is not None:
++                    inverse.setdefault(value_type, set()).add(identifier)
++            return MappingProxyType({key: frozenset(value) for key, value in inverse.items()})
++        inverse = self._table('denoted', build)
++        result: set[str] = set()
++        for value_type in value_type_ids:
++            result.update(inverse.get(value_type, ()))
++        return result
++
++    def subtype_children(self) -> MappingProxyType[str, frozenset[str]]:
++        """Declared id -> the ids that name it in ``subtype_of`` (direct children).
++
++        The edges are those of ``_supertype_parents``: the last row of a
++        duplicate id declares its supertypes.
++        """
++        def build() -> MappingProxyType[str, frozenset[str]]:
++            children: dict[str, set[str]] = {}
++            for identifier, supertypes in _supertype_parents(self._document).items():
++                for supertype in supertypes:
++                    children.setdefault(supertype, set()).add(identifier)
++            return MappingProxyType({key: frozenset(value) for key, value in children.items()})
++        return self._table('children', build)
++
++    def descendants(self, identifier: Any) -> set[str]:
++        """``identifier`` and every transitive subtype of it, cycle-safe (a new set).
++
++        Follows :meth:`subtype_children` downward. It reaches exactly the least
++        set containing ``identifier`` that admits a declared type as soon as one
++        of its supertypes is in it, which is the fixpoint
++        ``gnd.universe._descendant_closure`` computed before VG1.
++        """
++        children = self.subtype_children()
++        members = {identifier}
++        pending = [identifier]
++        while pending:
++            for child in children.get(pending.pop(), ()):
++                if child not in members:
++                    members.add(child)
++                    pending.append(child)
++        return members
++
++    def kind(self, identifier: Any) -> str | None:
++        """The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None."""
++        def build() -> MappingProxyType[str, str | None]:
++            kinds: dict[str, str | None] = {}
++            for row in self._document.get('object_types') or []:
++                if isinstance(row, dict):
++                    value = row.get('kind')
++                    kinds.setdefault(str(row.get('id')), str(value) if value is not None else None)
++            return MappingProxyType(kinds)
++        return self._table('kind', build).get(identifier) if isinstance(identifier, str) else None
++
+     def primitive(self, identifier: str, *, variant: Literal['truthy', 'strict']) -> str | None:
+         return primitive_for(identifier, self._objects, variant=variant)
+ 
+diff --git a/src/gnd/semantic_adapter.py b/src/gnd/semantic_adapter.py
+index e7a1d9f3..1a27de8b 100644
+--- a/src/gnd/semantic_adapter.py
++++ b/src/gnd/semantic_adapter.py
+@@ -33,6 +33,7 @@ from gnd.model import (
+     derivation_strata,
+     iter_derivation_clauses,
+ )
++from gnd.model_index import scoped
+ from gnd.population import Population
+ from gnd.semantic_ir import (
+     ADAPTER_REFUSALS,
+@@ -589,6 +590,7 @@ def _input_refusals(
+     return result
+ 
+ 
++@scoped  # VG1-D4: one index per model for a direct caller too
+ def adapt_snapshot(
+     model: Model,
+     population: Population,
+diff --git a/src/gnd/universe.py b/src/gnd/universe.py
+index ec4a9b5e..29ddcf64 100644
+--- a/src/gnd/universe.py
++++ b/src/gnd/universe.py
+@@ -231,28 +231,20 @@ def _descendant_closure(object_type_id: str, model: Model) -> set[str]:
+     Cycle safety is load-bearing here, not defensive. No ``semantic:`` rule
+     forbids subtype cycles today (verified: ``a subtype_of [b]`` plus
+     ``b subtype_of [a]`` validates at exit 0; the missing rule is recorded in
+-    the phase's ``deferred-items.md``). The fixpoint terminates because it only
++    the phase's ``deferred-items.md``). The walk terminates because it only
+     ever adds to a subset of a finite set of declared ids.
+ 
++    VG1: :meth:`ModelIndex.descendants` follows the index's direct-children
++    table, built once per model, from ``object_type_id`` downward. It reaches exactly the set the earlier
++    fixpoint over the parents map reached, which rebuilt that map and rescanned
++    every declared type on every call.
++
+     Kept as its own helper rather than parameterising ``model._ancestor_closure``
+     (the same shape walking the opposite edge direction): both directions are
+     live in this phase, and one function taking a direction argument is one call
+     site away from being handed the wrong one.
+     """
+-    parents = {
+-        str(object_type.get("id")): [str(s) for s in object_type.get("subtype_of") or []]
+-        for object_type in model.object_types
+-        if object_type.get("id") is not None
+-    }
+-    members = {object_type_id}
+-    changed = True
+-    while changed:
+-        changed = False
+-        for declared_id, supertypes in parents.items():
+-            if declared_id not in members and members.intersection(supertypes):
+-                members.add(declared_id)
+-                changed = True
+-    return members
++    return ModelIndex.for_model(model).descendants(object_type_id)
+ 
+ 
+ def _denoting_types(covered: set[str], model: Model) -> set[str]:
+@@ -286,14 +278,12 @@ def _denoting_types(covered: set[str], model: Model) -> set[str]:
+     Types already in ``covered`` are excluded so a role can contribute at most
+     once, which keeps ``offending`` one entry per OCCURRENCE rather than per
+     occurrence per route.
++
++    VG1: the resolution is read from :meth:`ModelIndex.denoted_by`, a table
++    built once per model from :func:`resolve_reference_value_type`'s own walk,
++    instead of resolving every object type again on every call.
+     """
+-    return {
+-        str(object_type.get("id"))
+-        for object_type in model.object_types
+-        if object_type.get("id") is not None
+-        and str(object_type.get("id")) not in covered
+-        and resolve_reference_value_type(str(object_type.get("id")), model) in covered
+-    }
++    return ModelIndex.for_model(model).denoted_by(covered) - covered
+ 
+ 
+ def _universe_types(object_type_id: str, model: Model) -> set[str]:
+@@ -356,11 +346,8 @@ def _instance_values_of(object_type_id: str, model: Model, population: Populatio
+ 
+ 
+ def _kind_of(object_type_id: str, model: Model) -> str | None:
+-    for object_type in model.object_types:
+-        if str(object_type.get("id")) == object_type_id:
+-            kind = object_type.get("kind")
+-            return str(kind) if kind is not None else None
+-    return None
++    """The ``kind`` of the first object type with this id, or None (VG1: one table per model)."""
++    return ModelIndex.for_model(model).kind(object_type_id)
+ 
+ 
+ def _instances_of(object_type_id: str, model: Model, population: Population) -> _IdentitySet:
+diff --git a/tests/test_ir1_judgments_includes.py b/tests/test_ir1_judgments_includes.py
+index 767f2cfb..3d8a0f02 100644
+--- a/tests/test_ir1_judgments_includes.py
++++ b/tests/test_ir1_judgments_includes.py
+@@ -295,6 +295,25 @@ def test_T9_composition_layer_within_bound(case):
+     assert elapsed < 5, elapsed
+ 
+ 
++# --- T9, route level: restored by reviewed-vocabulary-growth VG1 ---------
++#
++# The row IR1 withdrew (its spec, T9, prior row) is restored at the bound it
++# first named, now that the checker is no longer superlinear in object types
++# (VG1-C5). The composition-only T9 above stays beside it.
++
++
++def test_T9_route_level_judgments_check_at_1000_extra_types_within_bound(case):
++    edit_include(case, extra_types(1000))
++    repin(case, "checking.orm.json", "chronology")
++    bind(case, "checking.orm.json")
++    started = time.monotonic()
++    code, out = judge(case, "checking.orm.json")
++    elapsed = time.monotonic() - started
++    assert code in (0, 1), out
++    assert out["outcome"] in (0, 1)
++    assert elapsed < 20, elapsed
++
++
+ # --- T12: references of an include root bind at --reference-root ----------
+ 
+ 
+diff --git a/tests/test_vg1_object_type_scaling.py b/tests/test_vg1_object_type_scaling.py
+new file mode 100644
+index 00000000..02279562
+--- /dev/null
++++ b/tests/test_vg1_object_type_scaling.py
+@@ -0,0 +1,365 @@
++"""VG1 (reviewed-vocabulary-growth): ``gnd check`` cost in the number of object types.
++
++The three universe walks of ``gnd.universe`` read per-model tables on
++``ModelIndex`` instead of rebuilding a map, or resolving every object type, on
++each call (issue 221). The spec is
++``.gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG1-spec.md``;
++the test names below are its section 8 rows.
++
++T1, T2, T9, T10, T12 and T13 read no clock; T1, T9 and T10 are the required
++regression gates. T11 compares two sizes on one machine. T3-T8 are absolute
++bounds, about 8 times above the figures of the scratch prototype.
++"""
++from __future__ import annotations
++
++import cProfile
++import json
++import pstats
++import shutil
++import time
++from hashlib import sha256
++from pathlib import Path
++
++import pytest
++from support.cli_runner import run_main
++
++from gnd import universe
++from gnd.documents import Model
++from gnd.errors import ModelValidationError, ReferenceInputError
++from gnd.model import load_model
++from gnd.model_index import ModelIndex, index_scope
++from gnd.universe import (
++    _denoting_types,
++    _descendant_closure,
++    _kind_of,
++    _universe_types,
++    resolve_reference_value_type,
++)
++
++REPO = Path(__file__).resolve().parents[1]
++CHRONOLOGY = "vocabulary/chronology.orm.json"
++ROOTS = ("checking.orm.json", "extraction.orm.json")
++BOUND = 10.0
++RATIO = 3.0
++
++
++# --- frozen copies of the base bodies (4ad0d216; unchanged at 1f403b07) -----
++
++
++def frozen_descendant_closure(object_type_id, model):
++    parents = {
++        str(object_type.get("id")): [str(s) for s in object_type.get("subtype_of") or []]
++        for object_type in model.object_types
++        if object_type.get("id") is not None
++    }
++    members = {object_type_id}
++    changed = True
++    while changed:
++        changed = False
++        for declared_id, supertypes in parents.items():
++            if declared_id not in members and members.intersection(supertypes):
++                members.add(declared_id)
++                changed = True
++    return members
++
++
++def frozen_denoting_types(covered, model):
++    return {
++        str(object_type.get("id"))
++        for object_type in model.object_types
++        if object_type.get("id") is not None
++        and str(object_type.get("id")) not in covered
++        and resolve_reference_value_type(str(object_type.get("id")), model) in covered
++    }
++
++
++def frozen_kind_of(object_type_id, model):
++    for object_type in model.object_types:
++        if str(object_type.get("id")) == object_type_id:
++            kind = object_type.get("kind")
++            return str(kind) if kind is not None else None
++    return None
++
++
++def frozen_universe_types(object_type_id, model):
++    covered = frozen_descendant_closure(object_type_id, model)
++    if frozen_kind_of(object_type_id, model) == "value":
++        return covered | frozen_denoting_types(covered, model)
++    return covered
++
++
++# --- the growth helper (spec section 8) ------------------------------------
++
++
++def _value(identifier):
++    return {"id": identifier, "kind": "value", "primitive": "String"}
++
++
++def _entity(identifier, value_type):
++    return {"id": identifier, "kind": "entity", "reference": {"mode": "popular", "value_type": value_type}}
++
++
++def _subtype(identifier, parent):
++    return {"id": identifier, "kind": "entity", "subtype_of": [parent], "inherits_reference": True}
++
++
++def extra_rows(shape, count):
++    """(object types, fact types) the shape adds for COUNT extra types."""
++    if shape == "values":
++        return [_value(f"extra_{i}") for i in range(count)], []
++    if shape == "entities":
++        half = count // 2
++        return ([_value(f"extra_v{i}") for i in range(half)]
++                + [_entity(f"extra_e{i}", f"extra_v{i}") for i in range(half)]), []
++    if shape == "shared":
++        return [_value("extra_v")] + [_entity(f"extra_e{i}", "extra_v") for i in range(count)], []
++    if shape == "tree":
++        rows = [_value("extra_v")]
++        for r in range(count // 100):
++            rows.append(_entity(f"extra_r{r}", "extra_v"))
++            for s in range(9):
++                rows.append(_subtype(f"extra_r{r}_s{s}", f"extra_r{r}"))
++                rows.extend(_subtype(f"extra_r{r}_s{s}_t{t}", f"extra_r{r}_s{s}") for t in range(10))
++        return rows, []
++    if shape == "both":
++        values = [_value(f"extra_{i}") for i in range(count)]
++        facts = [{"id": f"extra_ft_{i}", "reading": f"{{Extra{i}}} pairs with {{Extra{(i + 1) % count}}}",
++                  "roles": [{"object_type": f"extra_{i}", "role_name": "left"},
++                            {"object_type": f"extra_{(i + 1) % count}", "role_name": "right"}]}
++                 for i in range(count)]
++        return values, facts
++    raise ValueError(f"unknown shape {shape!r}")
++
++
++def grow(root, rows):
++    """Append ROWS to the chronology include and re-pin both roots."""
++    object_types, fact_types = rows
++    path = root / CHRONOLOGY
++    doc = json.loads(path.read_bytes())
++    doc["object_types"].extend(object_types)
++    doc["fact_types"].extend(fact_types)
++    path.write_text(json.dumps(doc))
++    digest = sha256(path.read_bytes()).hexdigest()
++    for name in ROOTS:
++        model = json.loads((root / name).read_bytes())
++        for entry in model["includes"]:
++            if entry["path"] == CHRONOLOGY:
++                entry["sha256"] = digest
++        (root / name).write_text(json.dumps(model))
++
++
++@pytest.fixture(scope="module")
++def built(tmp_path_factory):
++    from gnd.examples.literature.interop import build
++
++    out = tmp_path_factory.mktemp("vg1").resolve() / "interop"
++    build(out)
++    return out
++
++
++def _case(built, tmp_path, shape=None, count=0):
++    root = tmp_path.resolve() / f"case-{shape}-{count}"
++    shutil.copytree(built, root)
++    if count:
++        grow(root, extra_rows(shape, count))
++    return root
++
++
++def _check(root):
++    """(exit, verdicts, seconds) of one in-process ``gnd check`` on the checking root."""
++    argv = ["check", str(root / "checking.orm.json"), str(root / "composed.population.json"), "--format", "json"]
++    started = time.perf_counter()
++    result = run_main(argv)
++    elapsed = time.perf_counter() - started
++    payload = json.loads(result.stdout)
++    report = payload.get("report", payload)
++    return result.returncode, report["verdicts"], elapsed
++
++
++@pytest.fixture(scope="module")
++def baseline(built, tmp_path_factory):
++    code, verdicts, _ = _check(_case(built, tmp_path_factory.mktemp("vg1-base")))
++    assert code == 4 and len(verdicts) == 3
++    return code, verdicts
++
++
++# --- T1: the tables and the walks equal the base bodies on every fixture ----
++
++
++def _loadable_models():
++    for base in ("src/gnd/examples", "tests/fixtures"):
++        for path in sorted((REPO / base).rglob("*")):
++            if path.is_file() and path.name.endswith((".orm.yaml", ".orm.yml", ".orm.json")):
++                try:
++                    yield path, load_model(path)
++                except (ModelValidationError, ReferenceInputError):
++                    continue
++
++
++def _branch(row, resolved):
++    if resolved is None:
++        return "unresolvable"
++    if row.get("kind") == "value":
++        return "value"
++    if isinstance(row.get("reference"), dict):
++        return "own-reference"
++    return "inherits"
++
++
++def test_T1_tables_and_walks_equal_the_base_bodies_on_every_loadable_model():
++    models = branches = 0
++    seen: set[str] = set()
++    for path, model in _loadable_models():
++        models += 1
++        index = ModelIndex.for_model(model)
++        table = index.reference_value_types()
++        rows = {str(row.get("id")): row for row in model.object_types if row.get("id") is not None}
++        assert set(table) == set(rows), path
++        for identifier, row in rows.items():
++            resolved = resolve_reference_value_type(identifier, model)
++            assert table[identifier] == resolved, (path, identifier)
++            seen.add(_branch(row, resolved))
++            closure = frozen_descendant_closure(identifier, model)
++            assert _descendant_closure(identifier, model) == closure, (path, identifier)
++            assert _denoting_types(closure, model) == frozen_denoting_types(closure, model), (path, identifier)
++            assert _kind_of(identifier, model) == frozen_kind_of(identifier, model), (path, identifier)
++            assert _universe_types(identifier, model) == frozen_universe_types(identifier, model), (path, identifier)
++            branches += 1
++    assert models >= 200, models
++    assert seen == {"value", "own-reference", "inherits", "unresolvable"}, seen
++    assert branches > 1000, branches
++
++
++# --- T2: hostile shapes built in code ---------------------------------------
++
++
++def _built_in_code(object_types):
++    return Model(version=1, object_types=object_types, fact_types=[])
++
++
++T2_MODELS = {
++    "cycle": [_subtype("a", "b"), _subtype("b", "a"), _value("tag")],
++    "undeclared-supertype": [_subtype("orphan", "ghost"), _value("tag")],
++    "entity-without-reference": [{"id": "lonely", "kind": "entity"}, _value("tag")],
++    "two-supertypes-two-value-types": [
++        _value("left_id"), _value("right_id"), _entity("left", "left_id"), _entity("right", "right_id"),
++        {"id": "both", "kind": "entity", "subtype_of": ["left", "right"], "inherits_reference": True}],
++    "duplicate-id": [_value("dup"), {"id": "dup", "kind": "entity", "reference": {"mode": "popular",
++                                                                                    "value_type": "v"}},
++                     _value("v"), _entity("user", "dup")],
++}
++
++
++@pytest.mark.parametrize("name", sorted(T2_MODELS))
++def test_T2_hostile_shapes_answer_as_the_base_bodies(name):
++    model = _built_in_code(T2_MODELS[name])
++    identifiers = [str(row["id"]) for row in model.object_types] + ["ghost", "missing", "None"]
++    for identifier in identifiers:
++        closure = frozen_descendant_closure(identifier, model)
++        assert _descendant_closure(identifier, model) == closure, identifier
++        assert _denoting_types(closure, model) == frozen_denoting_types(closure, model), identifier
++        assert _kind_of(identifier, model) == frozen_kind_of(identifier, model), identifier
++        assert _universe_types(identifier, model) == frozen_universe_types(identifier, model), identifier
++        if identifier in ModelIndex.for_model(model).reference_value_types():
++            assert (ModelIndex.for_model(model).reference_value_types()[identifier]
++                    == resolve_reference_value_type(identifier, model)), identifier
++
++
++def test_T2_the_cycle_and_two_supertype_cases_take_their_branches():
++    cycle = _built_in_code(T2_MODELS["cycle"])
++    assert _descendant_closure("a", cycle) == {"a", "b"}
++    assert ModelIndex.for_model(cycle).reference_value_types()["a"] is None
++    both = _built_in_code(T2_MODELS["two-supertypes-two-value-types"])
++    assert ModelIndex.for_model(both).reference_value_types()["both"] is None
++    assert _denoting_types({"left_id"}, both) == {"left"}
++    duplicate = _built_in_code(T2_MODELS["duplicate-id"])
++    assert _kind_of("dup", duplicate) == "value"  # first match, as the base body
++    assert ModelIndex.for_model(duplicate).reference_value_types()["dup"] == "v"  # last duplicate
++
++
++# --- T3-T7: absolute bounds at 1,000 extra types ----------------------------
++
++
++@pytest.mark.parametrize("shape", ["values", "entities", "shared", "tree", "both"])
++def test_T3_to_T7_check_at_1000_extra_types_keeps_its_verdicts_within_the_bound(built, tmp_path, baseline, shape):
++    code, verdicts, elapsed = _check(_case(built, tmp_path, shape, 1000))
++    assert (code, verdicts) == baseline
++    assert elapsed < BOUND, elapsed
++
++
++# --- T9: the supertype map is built a number of times that does not grow ----
++
++
++def _supertype_parent_calls(root):
++    profile = cProfile.Profile()
++    profile.enable()
++    try:
++        run_main(["check", str(root / "checking.orm.json"), str(root / "composed.population.json"),
++                  "--format", "json"])
++    finally:
++        profile.disable()
++    stats = pstats.Stats(profile).stats
++    return sum(entry[1] for (filename, _line, name), entry in stats.items()
++               if name == "_supertype_parents" and filename.endswith("model_queries.py"))
++
++
++def test_T9_supertype_map_builds_do_not_grow_with_the_model(built, tmp_path):
++    small = _supertype_parent_calls(_case(built, tmp_path, "values", 300))
++    large = _supertype_parent_calls(_case(built, tmp_path, "values", 600))
++    assert small == large, (small, large)
++    assert 0 < small <= 100, small
++
++
++def test_T9_negative_control_the_base_walk_builds_the_map_per_object_type(built, tmp_path, monkeypatch):
++    monkeypatch.setattr(universe, "_denoting_types", frozen_denoting_types)
++    monkeypatch.setattr(universe, "denoting_types", frozen_denoting_types)
++    # At 100 extra value types, not the spec's 300: the base walk under the
++    # profiler took 36 s at 300 and builds the map 21,677 times at 100 (spec,
++    # implementation findings).
++    assert _supertype_parent_calls(_case(built, tmp_path, "values", 100)) > 1000
++
++
++# --- T11: doubling costs at most three times ---------------------------------
++
++
++@pytest.mark.parametrize("shape", ["values", "entities", "shared", "tree"])
++def test_T11_doubling_the_extra_types_costs_at_most_three_times(built, tmp_path, shape):
++    def fastest(count):
++        root = _case(built, tmp_path, shape, count)
++        return min(_check(root)[2] for _ in range(3))
++
++    small, large = fastest(1000), fastest(2000)
++    assert large <= RATIO * small, (small, large)
++
++
++# --- T12: outside any scope, and over an equal model object -----------------
++
++
++def test_T12_direct_calls_outside_a_scope_and_over_an_equal_model(built, tmp_path):
++    root = _case(built, tmp_path, "entities", 20)
++    path = root / "checking.orm.json"
++    first = load_model(path)
++    second = load_model(path)
++    assert first is not second
++    for identifier in [str(row["id"]) for row in first.object_types]:
++        expected = frozen_universe_types(identifier, first)
++        assert _universe_types(identifier, first) == expected
++        assert _universe_types(identifier, second) == expected
++        with index_scope():
++            assert _universe_types(identifier, second) == expected
++
++
++# --- T13: the tables cannot be written through ------------------------------
++
++
++def test_T13_tables_refuse_writes_and_denoted_by_returns_a_new_set():
++    model = _built_in_code(T2_MODELS["two-supertypes-two-value-types"])
++    index = ModelIndex.for_model(model)
++    with pytest.raises(TypeError):
++        index.reference_value_types()["left"] = "right_id"
++    with pytest.raises(TypeError):
++        index.subtype_children()["left"] = frozenset({"x"})
++    answer = index.denoted_by({"left_id"})
++    answer.add("intruder")
++    assert index.denoted_by({"left_id"}) == {"left_id", "left"}  # a value type denotes itself
++    assert "intruder" not in index.denoted_by({"left_id"})

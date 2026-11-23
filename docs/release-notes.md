@@ -46,6 +46,12 @@ the next one.
   `deontic`, as the unattended-growth guide tells a host to write them; with
   `confirmed` or `alethic` it is refused by name. 0.4.0 refused both sources
   in every form ([#218](https://github.com/vasiloglou/gnd-public/issues/218)).
+- **Growth rounds on a seeded root.** An unattended root that includes a
+  reviewed model and holds nothing of its own may start without a source
+  document; its first `gnd evolve` round declares one. `gnd evolve` refuses
+  `repin-include` on an unattended root under every policy
+  (`evolve:unattended-repin`), where 0.4.0 refused it only under
+  `--policy additive` ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
 - **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message

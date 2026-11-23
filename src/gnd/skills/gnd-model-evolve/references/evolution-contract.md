@@ -625,7 +625,10 @@ Include declarations and resolution follow the [ORM includes contract](../../gnd
 values are complete declaration triples with the locator's exact id, and path
 or SHA must change. Add/delete/rename of includes and no-op re-pins are refused.
 Every re-pin is conservatively breaking and requires exact blast-radius acceptance.
-Its additive-policy disposition is defined in the policy matrix above.
+Its additive-policy disposition is defined in the policy matrix above. On a root with
+`source.mode: unattended` a re-pin is refused under every policy, before the policy runs:
+`evolve:unattended-repin: <reference>`, exit `3`. A growth round never changes what the root's
+pins say was reviewed; the owner re-pins by editing the root.
 
 Included semantic elements and their constraints are read-only. Owned constraints
 attached to included fact types use `ConstraintLocator.host: included_fact_type`

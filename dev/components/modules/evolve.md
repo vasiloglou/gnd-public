@@ -17,18 +17,18 @@ Ownership and authenticated evolution history; resolution stays in model.
 | --- | --- | --- | --- |
 | `IncludeInputError` | class(Exception) | 23 | An include evolution input, rather than a stale model CAS, was refused. |
 | `enforce_ownership(model, document, operations) -> None` | function | 27 | (no docstring) |
-| `owned_impact(document, changed_ids, *, all_roots) -> tuple` | function | 85 | Conservative semantic dependencies, with one iterative policy for every owned root. |
-| `include_snapshots(model) -> tuple[IncludeSnapshot, ...]` | function | 133 | (no docstring) |
-| `historical_bytes(proposal, snapshots) -> dict[str, bytes]` | function | 144 | (no docstring) |
-| `previous_bindings(document, bindings) -> dict[str, str]` | function | 162 | (no docstring) |
-| `AttachmentReplay` | class | 178 | Index authored attachment constraints once; materialize deletions only at the end. |
-| `AttachmentReplay.apply(self, operation)` | method | 206 | (no docstring) |
-| `AttachmentReplay.finish(self)` | method | 250 | (no docstring) |
-| `included_delta(before, candidate) -> frozenset[str]` | function | 262 | (no docstring) |
-| `augment_radius(radius, proposal, before, candidate, changed_ids)` | function | 299 | (no docstring) |
-| `provided_history(proposal, values)` | function | 327 | (no docstring) |
-| `exclude_input_outputs(model_path, declarations, outputs)` | function | 339 | Refuse declared dependency spellings and existing aliases before writing. |
-| `included_hosts(model)` | function | 364 | Verified included fact-type identities for replay and proposal writers. |
+| `owned_impact(document, changed_ids, *, all_roots) -> tuple` | function | 92 | Conservative semantic dependencies, with one iterative policy for every owned root. |
+| `include_snapshots(model) -> tuple[IncludeSnapshot, ...]` | function | 140 | (no docstring) |
+| `historical_bytes(proposal, snapshots) -> dict[str, bytes]` | function | 151 | (no docstring) |
+| `previous_bindings(document, bindings) -> dict[str, str]` | function | 169 | (no docstring) |
+| `AttachmentReplay` | class | 185 | Index authored attachment constraints once; materialize deletions only at the end. |
+| `AttachmentReplay.apply(self, operation)` | method | 213 | (no docstring) |
+| `AttachmentReplay.finish(self)` | method | 257 | (no docstring) |
+| `included_delta(before, candidate) -> frozenset[str]` | function | 269 | (no docstring) |
+| `augment_radius(radius, proposal, before, candidate, changed_ids)` | function | 306 | (no docstring) |
+| `provided_history(proposal, values)` | function | 334 | (no docstring) |
+| `exclude_input_outputs(model_path, declarations, outputs)` | function | 346 | Refuse declared dependency spellings and existing aliases before writing. |
+| `included_hosts(model)` | function | 371 | Verified included fact-type identities for replay and proposal writers. |
 
 ## gnd.evolve.cli_service — `src/gnd/evolve/cli_service.py`
 Components: evolve.command
@@ -144,20 +144,20 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
 | `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 139 | An old evidence document that may be READ but cannot be finished. |
 | `EvolutionOperationsGatedError` | class(EvolutionError) | 151 | An ORM+ v2 operation delta this tool deliberately does not own. |
 | `EvolutionPolicyRefusedError` | class(EvolutionError) | 161 | The additive policy refused an operation at apply (MG2, exit 3). |
-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1315 | Read one bounded, closed JSON evolution proposal. |
-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1332 | Read one bounded, version-selected preview claim. |
-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1349 | Read one bounded, version-selected staged intent. |
-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1366 | Read one bounded pending-finalization claim. |
-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1383 | Read one bounded, version-selected immutable record. |
-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1400 | Read one bounded standalone conformance leaf for an explicit envelope. |
-| `EvolutionService` | class | 1421 | Preview, apply, and finalize one explicit model evolution proposal. |
-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1529 | Validate and bind a proposal without changing any publication leaf. |
-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2044 | Report one staged pending finalization that has no completed record. |
-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2098 | Refuse to start a *new* evolution over an incomplete published one. |
-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2120 | Stage immutable evidence and publish only the candidate model CAS. |
-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2378 | (no docstring) |
-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2384 | (no docstring) |
-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2388 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1320 | Read one bounded, closed JSON evolution proposal. |
+| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1337 | Read one bounded, version-selected preview claim. |
+| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1354 | Read one bounded, version-selected staged intent. |
+| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1371 | Read one bounded pending-finalization claim. |
+| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1388 | Read one bounded, version-selected immutable record. |
+| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1405 | Read one bounded standalone conformance leaf for an explicit envelope. |
+| `EvolutionService` | class | 1426 | Preview, apply, and finalize one explicit model evolution proposal. |
+| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1534 | Validate and bind a proposal without changing any publication leaf. |
+| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2049 | Report one staged pending finalization that has no completed record. |
+| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2103 | Refuse to start a *new* evolution over an incomplete published one. |
+| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2125 | Stage immutable evidence and publish only the candidate model CAS. |
+| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2383 | (no docstring) |
+| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2389 | (no docstring) |
+| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2393 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
 
 ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
 Components: evolve.shape_matches

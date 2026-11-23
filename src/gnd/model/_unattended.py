@@ -103,7 +103,8 @@ def _is_int(value: Any) -> bool:
     return isinstance(value, int) and not isinstance(value, bool)
 
 
-def _declared_documents(source: dict[str, Any], issues: list[ValidationIssue], *, rule_id: str) -> set[str]:
+def _declared_documents(source: dict[str, Any], issues: list[ValidationIssue], *, rule_id: str,
+                        first_document_pending: bool = False) -> set[str]:
     def issue(path: str, message: str) -> None:
         issues.append(ValidationIssue(path=path, message=message, rule_id=rule_id))
 
@@ -112,7 +113,10 @@ def _declared_documents(source: dict[str, Any], issues: list[ValidationIssue], *
     documents = source.get("documents")
     declared: set[str] = set()
     if not isinstance(documents, list) or not documents:
-        issue("$.source.documents", "an unattended model must declare at least one source document")
+        # VG4 (D4 (a)): a root that includes a reviewed model and holds nothing of
+        # its own may wait for its first document; a growth round declares it.
+        if not (first_document_pending and (documents is None or documents == [])):
+            issue("$.source.documents", "an unattended model must declare at least one source document")
         return declared
     for index, entry in enumerate(documents):
         if (
@@ -218,8 +222,9 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
             and "spans" in constraint["provenance"]
         ]
     issues: list[ValidationIssue] = []
-    declared = _declared_documents(source, issues, rule_id="semantic:unattended-u1")
     included = _INCLUDED.get()
+    declared = _declared_documents(source, issues, rule_id="semantic:unattended-u1",
+                                   first_document_pending=_owns_nothing(doc, included))
     for path, element in _iter_provenance_bearing(doc):
         if id(element) in included:
             continue  # VG3: an included element's status is the include's (U2)
@@ -276,6 +281,38 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
                 rule_id="semantic:unattended-u8"))
     order = {f"semantic:unattended-u{n}": n for n in range(1, 9)}
     return sorted(issues, key=lambda issue: order[issue.rule_id])
+
+
+#: The sections composition appends included entries to (``_includes.SECTIONS``).
+_MERGED_SECTIONS = ("object_types", "fact_types", "constraints", "deontic_notes")
+_HEADER_KEYS = frozenset({"version", "model_id", "source", "includes"})
+
+
+def _owns_nothing(doc: dict[str, Any], included: frozenset[int]) -> bool:
+    """VG4 (D4 (a)): the root declares includes and nothing of its own.
+
+    Read on the composed document with VG3's origin set, which is the root's
+    own document as authored: composition appends only included entries to the
+    four merged sections, an attachment enters an included fact type as the
+    root's, and an include cannot declare any other section.
+    """
+    if not _listed(doc.get("includes")):
+        return False
+    for key, value in doc.items():
+        if key in _HEADER_KEYS:
+            continue
+        if key in _MERGED_SECTIONS:
+            if value is not None and not isinstance(value, list):
+                return False
+            for element in _listed(value):
+                if id(element) not in included:
+                    return False
+                if key == "fact_types" and isinstance(element, Mapping) and any(
+                        id(constraint) not in included for constraint in _listed(element.get("constraints"))):
+                    return False
+        elif value is not None and value != [] and value != {}:
+            return False
+    return True
 
 
 def _included_span_issues(owner: Any, path: str, declared: set[str], issues: list[ValidationIssue], *,

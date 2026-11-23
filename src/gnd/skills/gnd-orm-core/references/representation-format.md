@@ -749,7 +749,7 @@ decoding, as anchors do; `excerpt_sha256` is the SHA-256 of the UTF-8 encoding o
 
 | Rule | Refused |
 |---|---|
-| U1 | `reviewer` absent or not `none`; `documents` absent, empty, or an entry that is not `{sha256, label}` |
+| U1 | `reviewer` absent or not `none`; `documents` absent, empty, or an entry that is not `{sha256, label}`; a root that includes a reviewed model and holds nothing of its own may omit `documents` (below) |
 | U2 | any constraint, operation or obligation with `status: confirmed` |
 | U3 | any constraint with `source: explicit` or `user-supplied` (also refused by U2 and the status/source rule) |
 | U4 | an object type or fact type without a non-empty `provenance.spans` |
@@ -806,6 +806,15 @@ Everything the root owns keeps every rule, including a constraint it attaches to
 type through `fact_type_constraints`, and its operations and obligations (an include cannot declare
 those). Diagnostics on included elements, the span walk's included, carry the `includes[ID]:`
 prefix.
+
+Such a root may wait for its first document. U1 does not require `documents` (absent or `[]`) while
+the root declares at least one include and nothing of its own: no object type, fact type,
+constraint (an attached one included), deontic note, operation, rejected proposal or reference
+population, and no other section beside `version`, `model_id`, `source` and `includes`.
+`reviewer: none` is still required. `gnd evolve` reads such a root, and the first round's
+`source-document` add declares the first document, creating the list when it is absent. Once the
+root owns one element, U1 is as above. An unattended model without includes always declares a
+document.
 
 What makes an included element exempt is the root's pin: the root names each include by id, path
 and SHA-256, the owner authors the root, and a growth round cannot change a pin. GND checks the bytes

@@ -83,6 +83,11 @@ the next one.
   proposal, `--outcome-report FILE` receives the same rows; the refusal and
   its exit are unchanged. Without the option nothing changes
   ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **What a reply carries for an element the model has.** "The reply
+  shape" in `unattended-growth.md` now says a reply names an element the
+  model already has, its own or included, by id only, and routes rows for an
+  existing fact type to `open_questions`, since the additive policy refuses
+  a changed sample row ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
 
 ## 0.4.0 (2026-11-17)
 

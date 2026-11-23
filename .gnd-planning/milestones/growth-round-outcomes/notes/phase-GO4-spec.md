@@ -151,3 +151,18 @@ The page itself gets the working link when GO4 edits it. No ruling changes.
 
 **Delegated approval (auto=true), 2026-11-23**, of spec r2, sha256 `ad48ad7794a279428478b59b906802a110dc97dfb93b338721951bcf49f5ee62`
 (the bytes above this subsection). r1's approval (§12) is retained as history.
+
+## 14. Implementation findings
+
+1. VG5 (on `main` at `8fea6da5`) added "Starting from a reviewed
+   vocabulary": on a seeded root an element the model already has may be
+   an included one. The rule says "its own or included".
+2. The packaged examples ship proposals, not replies, so T3 reads the
+   proposals of `growth` and `seeded_growth`: no `add` names an element the
+   round's before-model has, and no element operation is other than `add`.
+3. `tests/test_packaged_skills.py` pins the number of relative links in the
+   packaged skills (248). The new `rows` row cites the matrix by name, not
+   by a second link, so the pin does not move.
+4. The guard reads the section by its heading and the table rows by their
+   first cell; the example is loaded with `json`, as the existing guidance
+   test does.

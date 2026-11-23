@@ -304,3 +304,89 @@ def test_ug4_the_guard_can_fail(old: str | None, new: str | None, suffix: str) -
         assert old in text, old
         text = text.replace(old, new, 1)
     assert _drift(text + suffix)
+
+
+# --- GO4 (#227): what a reply carries for an element the model already has ------------------------
+# Spec: .gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md (§8, T1-T3).
+
+
+def _section(text: str, heading: str) -> list[str]:
+    """The lines of one ``## heading`` section, by its heading line."""
+    lines = text.splitlines()
+    start = lines.index(f"## {heading}") + 1
+    end = next((i for i in range(start, len(lines)) if lines[i].startswith("## ")), len(lines))
+    return lines[start:end]
+
+
+def _table_rows(lines: list[str]) -> dict[str, str]:
+    """A markdown table's rows by their first cell; a row is one line of `|`-separated cells."""
+    rows = {}
+    for line in lines:
+        if line.startswith("| ") and not line.startswith("|---"):
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            rows[cells[0]] = " | ".join(cells[1:])
+    return rows
+
+
+def _reply_rule_problems(text: str) -> list[str]:
+    section = _section(text, "The reply shape")
+    rows = _table_rows(section)
+    elements, sample_rows = rows.get("`object_types`, `fact_types`", ""), rows.get("`rows`", "")
+    prose = "\n".join(line for line in section if not line.startswith("|"))
+    problems = []
+    if "New elements only" not in elements or "is not repeated here" not in elements:
+        problems.append("the element row does not say a reply repeats no element the model has")
+    if "ids that already exist are reused" in elements:
+        problems.append("the element row keeps the old, ambiguous wording")
+    if "`open_questions` entry" not in sample_rows or "fact_types.modify" not in sample_rows:
+        problems.append("the rows row does not route rows for an existing fact type to open_questions")
+    if "is never repeated in\n`object_types` or `fact_types`" not in prose:
+        problems.append("the reply-shape prose does not state the rule")
+    block = prose.split("```json\n", 1)[1].split("\n```", 1)[0]
+    example = json.loads(block)
+    added = {entry["id"] for entry in example["fact_types"] + example["derived_fact_types"]}
+    hosts = {entry["host"] for entry in example["constraints"]} - {"model"}
+    if not hosts - added:
+        problems.append("the example names no fact type the model already has")
+    return problems
+
+
+def test_go4_t1_the_reply_shape_states_the_rule_and_shows_it() -> None:
+    assert _reply_rule_problems(REFERENCE.read_text(encoding="utf-8")) == []
+
+
+@pytest.mark.parametrize(("old", "new"), [
+    ("is not repeated here", "is repeated here"),
+    ("New elements only, in the model's own element shapes", "The model's own element shapes, ids that already exist are reused"),
+    ("Rows for a new fact type only", "Rows for a new fact type only"),
+    ("are an `open_questions` entry: the additive policy refuses", "are appended: the additive policy refuses"),
+    ("is never repeated in\n`object_types` or `fact_types`", "may be repeated in\n`object_types` or `fact_types`"),
+    ('{"host": "policy_has_holder"', '{"host": "policy_expires_on_expiry_date"'),
+], ids=["element-row", "old-wording", "noop-control", "rows-row", "prose", "example"])
+def test_go4_t2_the_guard_fails_when_the_rule_is_removed(old: str, new: str) -> None:
+    text = REFERENCE.read_text(encoding="utf-8")
+    assert old in text
+    problems = _reply_rule_problems(text.replace(old, new, 1))
+    assert bool(problems) == (old != new), problems
+
+
+@pytest.mark.parametrize("example", ["growth", "seeded_growth"])
+def test_go4_t3_the_packaged_examples_repeat_no_existing_element(example: str) -> None:
+    """GO4-C3: no round adds an element its before-model already has, and none
+    changes an existing fact type (a restated fact type with rows would)."""
+    from gnd.evolve import read_evolution_proposal_document
+    from gnd.model import parse_model_document
+
+    directory = REPO_ROOT / "src/gnd/examples" / example
+    first = directory / ("model.orm.yaml" if example == "growth" else "root.orm.yaml")
+    before = parse_model_document(first.read_bytes(), source=first)
+    for name in ("round-1.proposal.json", "round-2.proposal.json"):
+        proposal = read_evolution_proposal_document(json.loads((directory / name).read_text(encoding="utf-8")))
+        existing = {(collection, entry.get("id")) for collection in ("object_types", "fact_types")
+                    for entry in before.get(collection) or []}
+        for operation in proposal.operations:
+            locator = operation.locator
+            if getattr(locator, "collection", None) in ("object_types", "fact_types"):
+                key = (locator.collection, locator.element_id)
+                assert operation.kind.value == "add" and key not in existing, (name, operation.reference())
+        before = parse_model_document(proposal.candidate_model.text.encode("utf-8"), source=first)

@@ -534,7 +534,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.checking_command
-- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms.
+- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
 - verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review, baseline model, compare rule editions
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
@@ -1790,7 +1790,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.loading
-- does: Load bounded models, compose pinned vocabularies, record flattened origins and bind reference populations [load_model, flatten_model, bind_population].
+- does: Load bounded models, compose pinned vocabularies, record flattened origins and bind reference populations [load_model, flatten_model, bind_population]; tell which composed elements came from an include and count what each include declares [included_rows, include_attribution].
 - verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance, flatten includes, projected model bytes
 - in: Model path or immutable bytes; optional composition/reference root, declared content hashes and validated candidate population.
 - out: Validated Model with warnings, include provenance/private authored-byte binding and compiled side table; bound reference context or combined population.
@@ -1804,7 +1804,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.validation
-- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
+- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate]. The unattended rules exempt included elements from U2-U6 and keep U7 and U8 as the include rule says.
 - verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.

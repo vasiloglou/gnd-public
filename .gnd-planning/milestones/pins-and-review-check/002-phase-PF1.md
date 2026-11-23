@@ -151,3 +151,17 @@ OQ1 is ruled by **delegated approval (auto=true)** under the owner's
 `process-milestone pins-and-review-check auto`: keep `c1ecb8c1`; PF1's homes
 gain `tests/test_public_built_inventory.py` (spec amendment a1). OQ2 and OQ3
 go to the milestone close's question sweep.
+
+## Repair after the record: the milestone close review (2026-11-23)
+
+The close review (`notes/reviews/close-r1/`, on the PF2 branch) reproduced
+two more guard misses. **F1:** `from test_public_distribution_runtime import *`
+binds that module's own 59-file inventory, and the guard saw only `*`.
+**F2:** a bare annotation inside a function makes the name local, but the
+guard exempted every bare annotation. Fixed: a star import is resolved and
+judged by the same rule (limited to a literal `__all__`; a module that
+cannot be found counts as binding every inventory name, a compiled one as
+binding none), and the annotation exemption holds only at module and class
+level. Both reproductions are cases that fail on the round-2 guard. Gates:
+the PF1 lane 241 passed; the guard tests pass on Python 3.11 and 3.13.
+**This repair carries no review opinion.**

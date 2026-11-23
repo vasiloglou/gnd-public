@@ -179,3 +179,24 @@ and the four ruling cells changed with this gate. Instrument: this prose
 `codex` runs, one each, one retry for a run that fails (plan D2, ruled by the
 owner). Implementability sweep: the scratch clone of `origin/main` carries
 `review_tool.py`; a `phase` brief needs only `--base`; E1–E5 can each be run.
+
+## Implementation findings, recorded as they were found
+
+1. **A cloned corpus leaks through refs.** A clone of this worktree carried
+   its remote-tracking refs and the checked-out PF branch, which hold the
+   plan. The clone's remote and branch were removed and pruned before any
+   brief was written (no ref mentions the milestone afterwards), and the
+   corpus branches were renamed from `corpus/K*-planted|control` to the
+   neutral `change-a`..`change-h` by a seeded shuffle
+   (`key/branch-map.json`).
+2. **The corpus scripts name the versions.** `make_corpus.py` and
+   `run_key.py` were held back with the key and only their sha256 was
+   committed before the runs (`KEY-SHA256SUMS`, commit `36ca151e`); all five
+   hashes check after the runs (E4).
+3. **One answer-key input was invalid YAML.** The first K1 input
+   ("four-space list indent") made the control raise `ParserError`: the
+   input was wrong, not the control. It was replaced before the key was
+   hashed by "a comment after the id".
+4. **Result:** planted found 4 of 4 with inputs that reproduce; 0 false
+   findings on controls; 2 true findings on controls, one of them a defect
+   on `main` in `gnd.exp.frontmatter._split` (`evidence/PF2/GRADING.md`).

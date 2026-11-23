@@ -1,0 +1,226 @@
+[
+ [
+  "change-a",
+  "K2-planted",
+  "name: \"demo\"",
+  "{'demo': 'demo'}",
+  "{'demo': '\"demo\"'}"
+ ],
+ [
+  "change-a",
+  "K2-planted",
+  "name: demo # comment",
+  "{'demo': 'demo'}",
+  "{'demo': 'demo # comment'}"
+ ],
+ [
+  "change-a",
+  "K2-planted",
+  "\"name\": demo",
+  "{'demo': 'demo'}",
+  "{'demo': None}"
+ ],
+ [
+  "change-a",
+  "K2-planted",
+  "folded name",
+  "{'demo': 'demo'}",
+  "{'demo': '>-'}"
+ ],
+ [
+  "change-a",
+  "K2-planted",
+  "description \"Use --- to separate\"",
+  "{'demo': 'demo'}",
+  "{'demo': None}"
+ ],
+ [
+  "change-a",
+  "K2-planted",
+  "block-scalar description holding ---",
+  "{'demo': 'demo'}",
+  "{'demo': None}"
+ ],
+ [
+  "change-b",
+  "K4-control",
+  "earlier table",
+  "'1.2.3'",
+  "'1.2.3'"
+ ],
+ [
+  "change-b",
+  "K4-control",
+  "no spaces",
+  "'1.2.3'",
+  "'1.2.3'"
+ ],
+ [
+  "change-b",
+  "K4-control",
+  "single quotes",
+  "'1.2.3'",
+  "'1.2.3'"
+ ],
+ [
+  "change-b",
+  "K4-control",
+  "dynamic version, tool table version",
+  "None",
+  "None"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "name: \"demo\"",
+  "{'demo': 'demo'}",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "name: demo # comment",
+  "{'demo': 'demo'}",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "\"name\": demo",
+  "{'demo': 'demo'}",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "folded name",
+  "{'demo': 'demo'}",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "description \"Use --- to separate\"",
+  "{'demo': 'demo'}",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "change-c",
+  "K2-control",
+  "block-scalar description holding ---",
+  "{'demo': 'demo'}",
+  "{'demo': None}"
+ ],
+ [
+  "change-d",
+  "K1-control",
+  "object_types first",
+  "['title']",
+  "['title']"
+ ],
+ [
+  "change-d",
+  "K1-control",
+  "quoted id, version first",
+  "['title']",
+  "['title']"
+ ],
+ [
+  "change-d",
+  "K1-control",
+  "fact_types before object_types, later source id",
+  "['title']",
+  "['title']"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "gnd-update-review-panel/agents/openai.yaml",
+  "'gnd-update-review-panel'",
+  "'gnd-update-review-panel'"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "gnd-solve/references/nested/guide.md",
+  "'gnd-solve'",
+  "'gnd-solve'"
+ ],
+ [
+  "change-e",
+  "K3-control",
+  "gnd-solve/../gnd-adopt/SKILL.md",
+  "'gnd-adopt'",
+  "'gnd-solve'"
+ ],
+ [
+  "change-f",
+  "K1-planted",
+  "object_types first",
+  "['title']",
+  "raises IndexError"
+ ],
+ [
+  "change-f",
+  "K1-planted",
+  "quoted id, version first",
+  "['title']",
+  "[]"
+ ],
+ [
+  "change-f",
+  "K1-planted",
+  "fact_types before object_types, later source id",
+  "['title']",
+  "['title', 'metadata']"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "gnd-update-review-panel/agents/openai.yaml",
+  "'gnd-update-review-panel'",
+  "'agents'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "gnd-solve/references/nested/guide.md",
+  "'gnd-solve'",
+  "'nested'"
+ ],
+ [
+  "change-g",
+  "K3-planted",
+  "gnd-solve/../gnd-adopt/SKILL.md",
+  "'gnd-adopt'",
+  "'gnd-adopt'"
+ ],
+ [
+  "change-h",
+  "K4-planted",
+  "earlier table",
+  "'1.2.3'",
+  "'9.9.9'"
+ ],
+ [
+  "change-h",
+  "K4-planted",
+  "no spaces",
+  "'1.2.3'",
+  "None"
+ ],
+ [
+  "change-h",
+  "K4-planted",
+  "single quotes",
+  "'1.2.3'",
+  "None"
+ ],
+ [
+  "change-h",
+  "K4-planted",
+  "dynamic version, tool table version",
+  "None",
+  "'9.9.9'"
+ ]
+]

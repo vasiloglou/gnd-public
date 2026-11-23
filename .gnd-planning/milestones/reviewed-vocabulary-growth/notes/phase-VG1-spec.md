@@ -323,3 +323,45 @@ on the same machine, in process.
 - **Limits, stated first.** One machine, beast-3 `(d)` (prior: "One laptop"). The bounds of §5 were chosen from
   the prototype before this sweep and do not move after it; a bound that the
   head misses is a failed criterion, not a reason to raise the bound.
+
+## Implementation findings, recorded as they were found `(d)`
+
+2026-11-23, at `1519ecb8`.
+
+1. **The descendant walk moved into `ModelIndex`.** With the walk in
+   `universe._descendant_closure`, the guard
+   `tests/test_rf6_query_policy.py::test_dynamic_candidate_inventory_is_complete_and_live`
+   failed: `children.get(pending.pop(), ())` is a new dynamic lookup outside
+   the model modules, and that guard keeps every such lookup in a counted
+   inventory. Shared model queries belong on `ModelIndex` (`AGENTS.md`,
+   "Model queries and family dispatch"), which the guard exempts, so the
+   walk is `ModelIndex.descendants(identifier) -> set[str]` and
+   `_descendant_closure` returns it. This adds one method to §6's surface;
+   no inventory row was added.
+2. **T9's negative control runs at 100 extra value types, not 300.** Under
+   the profiler the base walk took 36 s at 300. At 100 it builds the
+   supertype map 21,677 times, which is over the 1,000 the row asks for.
+   Prior wording, kept: "the count at 300 is over 1,000".
+3. **T9's figures.** One `gnd check` builds the supertype map 48 times at
+   300 extra value types and 48 times at 600 (base: 184,876 at 300, plan
+   H2).
+4. **A test-authoring slip, not a spec finding.** T13 first expected
+   `denoted_by({"left_id"}) == {"left"}`. A value type denotes itself, so
+   the table answers `{"left_id", "left"}`, and `_denoting_types` removes
+   the covered ids, as the base body does. The expectation was corrected.
+5. **Review r1 (Codex), F1, reproduced and fixed at `7e235d4a`.** The
+   content-keyed cache gives a code-built model with a str-enum `kind` and
+   the plain loaded model one key, and the tables first read the rows of
+   whichever model reached the cache first. After the enum model,
+   `_kind_of` answered `K.VALUE` for the plain model, and the reviewer
+   showed a range check reading `vacuous` for `fail`. The tables are now
+   built from the canonical JSON form the key is a digest of. The collision
+   itself predates VG1 and still reaches the index's other readers (record,
+   open questions).
+6. **Review r1, F2, reproduced and fixed at `7e235d4a`.** The table resolves
+   every type, so a code-built `reference` that is a string raised where
+   the base body skipped the covered type. Such a type now resolves to None.
+7. **The canonical copy is parsed by the routed reader** (`5427e8fe`).
+   `tests/test_rf7_structure.py` refuses `json.loads` outside
+   `gnd.input_policy`. Past that reader's 10 MB and 64-level caps the
+   tables read the cached rows, as before VG1: a residual the record names.

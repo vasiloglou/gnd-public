@@ -24,7 +24,7 @@ Plan r4 repairs the eight points its two returned reviews raised, tagged
 
 | Phase | Deliverable | State |
 |---|---|---|
-| VG1 | `gnd check` cost about linear in the number of object types (#221) | [draft spec](notes/phase-VG1-spec.md), awaiting its own owner gate |
+| VG1 | `gnd check` cost about linear in the number of object types (#221) | done 2026-11-23: [record](002-phase-VG1.md), [spec](notes/phase-VG1-spec.md) (delegated approval, `auto=true`) |
 | VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | outline; D2 ruled (a), widen rule D-12 |
 | VG3 | an unattended root may include a reviewed vocabulary (#222) | outline; D3, D13 and D14 ruled (a) |
 | VG4 | growth rounds on that root, and its first source document (#222) | outline; needs VG3 |
@@ -47,6 +47,8 @@ The roadmap of 2026-11-22 puts VG1 first, then GO1 of
 that milestone edits `evolve/service.py` and `unattended-growth.md` too, one
 writer at a time (plan §3).
 
-Next action, the owner's: review the [VG1 spec](notes/phase-VG1-spec.md) at
-its own gate. VG1 needs no other ruling. `process-phase` or
-`process-milestone` runs it when the owner selects one.
+`process-milestone reviewed-vocabulary-growth auto` runs this milestone
+since 2026-11-23: spec rulings are delegated (`auto=true`); merge is not.
+VG2, VG4 and VG5 change `evolve/service.py` or `unattended-growth.md`, so by
+the plan's order (§3) they wait for GO1 of growth-round-outcomes, whose plan
+is not approved yet. VG3 changes neither file and runs next.

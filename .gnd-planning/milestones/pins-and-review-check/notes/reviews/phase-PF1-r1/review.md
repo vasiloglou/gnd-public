@@ -1,6 +1,7 @@
+<!-- Edited by review_tool.py sanitize: 5 absolute path(s) replaced with <repo> or <home>. The reviewer's words are otherwise unchanged; run.json holds the SHA-256 of the original. -->
 All nine hashes match the brief.
 
-1. **F1 — Missed assignments in definition headers.** [tests/test_inventory_pin_home.py:40](/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/new-issues-milestone-b1620e/tests/test_inventory_pin_home.py:40) skips entire function, lambda and class nodes, including expressions evaluated in module scope.
+1. **F1 — Missed assignments in definition headers.** [tests/test_inventory_pin_home.py:40](<repo>/tests/test_inventory_pin_home.py:40) skips entire function, lambda and class nodes, including expressions evaluated in module scope.
 
    Reproduced with:
 
@@ -11,7 +12,7 @@ All nine hashes match the brief.
 
    Execution binds the module name to `999`; `module_level_pins` returns `set()`. Lambda defaults, decorators and class bases also bypass the guard. These duplicate definitions would leave the guard green.
 
-2. **F2 — Other module binding forms escape detection.** [tests/test_inventory_pin_home.py:49](/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/new-issues-milestone-b1620e/tests/test_inventory_pin_home.py:49) recognizes only four assignment node types.
+2. **F2 — Other module binding forms escape detection.** [tests/test_inventory_pin_home.py:49](<repo>/tests/test_inventory_pin_home.py:49) recognizes only four assignment node types.
 
    Reproduced with:
 
@@ -22,7 +23,7 @@ All nine hashes match the brief.
 
    Execution binds the module name; the detector returns `set()`. Tested `with … as`, `match` capture and function-name bindings with the same result. This refutes the claim that every module binding is caught.
 
-3. **F3 — A type annotation produces a false positive.** [tests/test_inventory_pin_home.py:51](/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/new-issues-milestone-b1620e/tests/test_inventory_pin_home.py:51) treats value-free annotations as definitions.
+3. **F3 — A type annotation produces a false positive.** [tests/test_inventory_pin_home.py:51](<repo>/tests/test_inventory_pin_home.py:51) treats value-free annotations as definitions.
 
    Reproduced with:
 
@@ -35,8 +36,8 @@ All nine hashes match the brief.
 
 4. **F4 — Current-tree inline inventory pins remain.** These are pre-existing residuals relevant to the brief’s explicit question:
 
-   - [tests/test_development_scaffold.py:200](/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/new-issues-milestone-b1620e/tests/test_development_scaffold.py:200): `assert len(names) == 18`
-   - [tests/test_marketplace_plugins.py:25](/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/new-issues-milestone-b1620e/tests/test_marketplace_plugins.py:25): `assert len(expected) == 18`
+   - [tests/test_development_scaffold.py:200](<repo>/tests/test_development_scaffold.py:200): `assert len(names) == 18`
+   - [tests/test_marketplace_plugins.py:25](<repo>/tests/test_marketplace_plugins.py:25): `assert len(expected) == 18`
 
    Both count the current packaged skill directories independently. Executing their extracted assertions with 18 entries passes; 19 fails. The name guard returns `set()` for both files. Adding a nineteenth skill would still require updating multiple pins.
 

@@ -155,3 +155,37 @@ This prose.
   selects one reviewer in a different tool for the phase diff.
 - **Rulings:** PF1-D1 (a), PF1-D2 (a). Plan D1 and D5 were ruled at the plan
   gate (`../001-plan.md`).
+
+## Implementation findings, recorded as they were found
+
+1. **Baseline (D1), before any edit.** The default lane at `04945d39` on
+   beast-3, six shards: 20,077 passed, 19 failed, 2 errors, 13 skipped. The
+   2 errors are the known `tests/test_public_optional.py` pair. 5 failures
+   are `tests/test_verification_fixes.py`, the inventory copy (H12),
+   repaired here. The other 14 are not inventory copies and reproduce
+   locally on the PF1 head, so they are red on `main`, listed in the record
+   and not repaired (D1): `test_guarded_clause_exports.py` (1),
+   `test_ir3_pyrel_includes.py` (5), `test_rf1_pin_harness.py` (1),
+   `test_rf4_peripheral.py` (6) and `test_rf5_handler_pins.py` (1).
+2. **A premise of H1 was incomplete.** `tests/test_install.py` said its copy
+   was "Duplicated deliberately: if a skill file is added, BOTH guards should
+   fail and be updated as one decision." The plan read the duplication as
+   accidental. The import keeps the intent: an added file still fails
+   `tests/test_packaged_skills.py`'s tree check, once, and that is the one
+   decision. It removes the outcome the duplication produced, four copies
+   that drifted apart.
+3. **A copy need not be a name.** T5 failed at the base:
+   `tests/test_public_built_inventory.py:316` and `:321` compared the
+   imported inventory with the inline literals `70` and `18`. The name
+   guard cannot see an inline literal. Fixed in its own commit, outside §3's
+   listed homes, for the owner's ruling. The reviewer found two more inline
+   `18`s (round 1, F4): `tests/test_development_scaffold.py:200` and
+   `tests/test_marketplace_plugins.py:25`. They are deferred (record, open
+   questions).
+4. **The first guard enumerated statement types, and that was the wrong
+   axis.** Review round 1 reproduced three faults (F1–F3), and round 2 three
+   more (parameters, type parameters, one alias excusing another). The guard
+   now covers the binding constructs of the language reference, section
+   4.2.1, in any scope, and exempts an import alias by alias. A copy in a
+   function or class body now counts, which T2 previously listed as not
+   bound; that row of §8 is superseded (r1 F1 repair).

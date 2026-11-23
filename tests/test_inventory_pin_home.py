@@ -10,6 +10,7 @@ scope and by any binding form, other than by importing it from the home.
 from __future__ import annotations
 
 import ast
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,47 +22,52 @@ EXCEPTIONS = {
 }
 
 
-def _bindings(tree: ast.AST) -> list[tuple[str, ast.AST]]:
-    """Every name the module binds, in any scope, with the node that binds it.
+#: Type-parameter nodes exist from Python 3.12; on older versions the tuple is empty.
+_TYPE_PARAMS = tuple(getattr(ast, kind) for kind in ("TypeVar", "TypeVarTuple", "ParamSpec") if hasattr(ast, kind))
 
-    The binding sites are the grammar's: a ``Name`` in store context (assignment,
-    augmented and walrus targets, ``for``, ``with`` and comprehension targets,
-    ``global`` writes), an import alias, a ``def`` or ``class`` name, an
-    ``except ... as`` name and a ``match`` capture. A bare annotation
-    (``X: int``) binds nothing, so its target is skipped.
+
+def _bindings(tree: ast.AST) -> list[tuple[str, str | None]]:
+    """Every name the source binds, in any scope, with the module it is imported from.
+
+    The binding constructs are those of the language reference, "Naming and
+    binding" (section 4.2.1): a target in store context (assignment, augmented
+    and walrus targets, ``for``, ``with`` and comprehension targets, ``global``
+    writes), a function or lambda parameter, a type parameter, an import alias,
+    a ``def`` or ``class`` name, an ``except ... as`` name and a ``match``
+    capture. A bare annotation (``X: int``) binds nothing, so its target is
+    skipped. The second item is the importing module for an import alias and
+    None for every other binding.
     """
     bare_annotations = {
         id(node.target) for node in ast.walk(tree) if isinstance(node, ast.AnnAssign) and node.value is None
     }
-    found: list[tuple[str, ast.AST]] = []
+    found: list[tuple[str, str | None]] = []
     for node in ast.walk(tree):
-        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store) and id(node) not in bare_annotations:
-            found.append((node.id, node))
-        elif isinstance(node, (ast.Import, ast.ImportFrom)):
-            found.extend(((alias.asname or alias.name).split(".")[0], node) for alias in node.names)
-        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) or isinstance(node, (ast.ExceptHandler, ast.MatchAs, ast.MatchStar)) and node.name:
-            found.append((node.name, node))
+        if isinstance(node, ast.Name):
+            if isinstance(node.ctx, ast.Store) and id(node) not in bare_annotations:
+                found.append((node.id, None))
+        elif isinstance(node, ast.Import):
+            found.extend(((alias.asname or alias.name).split(".")[0], None) for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            origin = node.module if node.level == 0 else None
+            found.extend((alias.asname or alias.name, origin if alias.asname in (None, alias.name) else None)
+                         for alias in node.names)
+        elif isinstance(node, ast.arg):
+            found.append((node.arg, None))
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, *_TYPE_PARAMS)):
+            found.append((node.name, None))
+        elif isinstance(node, (ast.ExceptHandler, ast.MatchAs, ast.MatchStar)):
+            if node.name:
+                found.append((node.name, None))
         elif isinstance(node, ast.MatchMapping) and node.rest:
-            found.append((node.rest, node))
+            found.append((node.rest, None))
     return found
 
 
-def _imported_from_home(name: str, node: ast.AST) -> bool:
-    return (
-        isinstance(node, ast.ImportFrom)
-        and node.module == Path(HOME).stem
-        and node.level == 0
-        and any(alias.name == name and alias.asname in (None, name) for alias in node.names)
-    )
-
-
 def inventory_bindings(source: str) -> set[str]:
-    """Inventory names the source binds other than by importing them from the home."""
-    return {
-        name
-        for name, node in _bindings(ast.parse(source))
-        if name in NAMES and not _imported_from_home(name, node)
-    }
+    """Inventory names the source binds other than by importing them, unrenamed, from the home."""
+    home = Path(HOME).stem
+    return {name for name, origin in _bindings(ast.parse(source)) if name in NAMES and origin != home}
 
 
 def test_the_inventory_has_one_home() -> None:
@@ -114,12 +120,36 @@ def test_the_guard_sees_every_binding_form() -> None:
         "from test_packaged_skills import EXPECTED_SKILL_NAMES as EXPECTED_SKILL_FILES",
         "import EXPECTED_SKILL_NAMES",
         "from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT\nEXPECTED_SKILL_FILE_COUNT = 1",
+        # Review round 2, F1: parameters of every kind.
+        "def f(EXPECTED_SKILL_FILE_COUNT=999):\n    return EXPECTED_SKILL_FILE_COUNT",
+        "def f(EXPECTED_SKILL_FILE_COUNT, /):\n    pass",
+        "def f(*, EXPECTED_SKILL_NAMES):\n    pass",
+        "def f(*EXPECTED_SKILL_FILES):\n    pass",
+        "def f(**EXPECTED_SKILL_FILES):\n    pass",
+        "async def f(EXPECTED_SKILL_NAMES):\n    pass",
+        "g = lambda EXPECTED_SKILL_FILE_COUNT: 0",
+        # Review round 2, F3: one good alias does not excuse another in the same statement.
+        (
+            "from test_packaged_skills import (\n    EXPECTED_SKILL_FILE_COUNT,\n"
+            "    EXPECTED_SKILL_NAMES as EXPECTED_SKILL_FILE_COUNT,\n)"
+        ),
+        "from .test_packaged_skills import EXPECTED_SKILL_FILE_COUNT",
     ]
+    if sys.version_info >= (3, 12):
+        # Review round 2, F2: type parameters.
+        bound += [
+            "def f[EXPECTED_SKILL_FILES]():\n    return EXPECTED_SKILL_FILES",
+            "class C[*EXPECTED_SKILL_NAMES]:\n    pass",
+            "type Alias[**EXPECTED_SKILL_FILE_COUNT] = int",
+        ]
     for source in bound:
         assert inventory_bindings(source), source
     not_bound = [
         "from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT",
         "from test_packaged_skills import EXPECTED_SKILL_FILES, EXPECTED_SKILL_NAMES",
+        "from test_packaged_skills import (\n    EXPECTED_SKILL_FILE_COUNT,\n    EXPECTED_SKILL_NAMES,\n)",
+        "from test_packaged_skills import EXPECTED_SKILL_NAMES as EXPECTED_SKILL_NAMES",
+        "def f(count=EXPECTED_SKILL_FILE_COUNT):\n    return count",
         # Review round 1, F3: a bare annotation binds nothing.
         "from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT\nEXPECTED_SKILL_FILE_COUNT: int",
         "assert len(found) == EXPECTED_SKILL_FILE_COUNT",

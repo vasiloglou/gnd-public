@@ -24,6 +24,7 @@
   "pid": 94041,
   "review_sha256": "5ac61f542b957eef869a9c62c982c22faec062a82c15edcf8663ededc89dd1d7",
   "reviewer": "codex",
+  "sanitized_sha256": "f89a90de3f77acc81d74b687152e9c0dd677fea9d9dc7ebe65d4cc7ab7a5188c",
   "started": "2026-11-23T22:58:54+00:00",
   "state": "done",
   "stdout": "review.log",

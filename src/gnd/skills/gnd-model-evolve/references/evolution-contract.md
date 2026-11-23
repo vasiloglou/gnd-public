@@ -276,8 +276,9 @@ neither, and refused on a populated subject.
 | `modality` | `deontic` to `alethic` | `alethic` to `deontic` |
 | `status` | `proposed` to `confirmed` | `confirmed` to `proposed` |
 
-D-12 runs first, so a changed constraint still has to be llm-inferred/proposed/deontic,
-user-supplied/confirmed, or a reviewed induced confirmation; the policy judges what D-12 admits.
+D-12 runs first, so a changed constraint still has to be llm-inferred, sample or common-sense
+and proposed/deontic, user-supplied/confirmed, or a reviewed induced confirmation; the policy
+judges what D-12 admits.
 
 A locator kind the matrix has no row for is refused, never admitted: the policy raises
 `EvolutionPolicyGapError`, which exits `3` by type.
@@ -525,6 +526,8 @@ Evolution enforces it at preview, apply, and finalize:
 
 - unchanged constraints retain complete canonical metadata;
 - a new semantic interpretation is `llm-inferred`, `proposed`, `deontic`;
+- a new rule read from sample rows or matched from the constraint library is `sample` or
+  `common-sense`, `proposed`, `deontic`;
 - a new owner rule is `user-supplied`, `confirmed`, with modality assigned by policy;
 - a new induced rule is `induced`, `proposed`, `deontic`, without `reviewed_in`, and becomes
   `confirmed` only as a reviewed status change; `provenance.induction` under any other source is
@@ -622,7 +625,10 @@ Include declarations and resolution follow the [ORM includes contract](../../gnd
 values are complete declaration triples with the locator's exact id, and path
 or SHA must change. Add/delete/rename of includes and no-op re-pins are refused.
 Every re-pin is conservatively breaking and requires exact blast-radius acceptance.
-Its additive-policy disposition is defined in the policy matrix above.
+Its additive-policy disposition is defined in the policy matrix above. On a root with
+`source.mode: unattended` a re-pin is refused under every policy, before the policy runs:
+`evolve:unattended-repin: <reference>`, exit `3`. A growth round never changes what the root's
+pins say was reviewed; the owner re-pins by editing the root.
 
 Included semantic elements and their constraints are read-only. Owned constraints
 attached to included fact types use `ConstraintLocator.host: included_fact_type`

@@ -43,8 +43,8 @@ def assert_move_bodies(sources):
         source = sources[module]
         node = next(n for n in ast.parse(source).body
                     if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name == name)
-        start = min([node.lineno, *(d.lineno for d in node.decorator_list)])
-        segment = ''.join(source.splitlines(keepends=True)[start-1:node.end_lineno])
+        from support.definition_source import definition_source
+        segment = definition_source(source, node)
         assert hashlib.sha256(segment.encode()).hexdigest() == row['body_sha256'], row
 
 

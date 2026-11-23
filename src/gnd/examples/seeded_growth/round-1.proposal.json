@@ -1,0 +1,130 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "agent:grower",
+    "origin": "unattended-growth.md",
+    "requested_at": "2026-11-23T12:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "211d0cdfe2fae7528bd2ee0de948da6522d03ea4efcf6eac5b6f4cb0687bbe47",
+    "text": "{\"version\":5,\"model_id\":\"urn:example:seeded-growth\",\"source\":{\"kind\":\"prose\",\"mode\":\"unattended\",\"reviewer\":\"none\",\"documents\":[{\"sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"label\":\"round-1.document.txt\"}]},\"includes\":[{\"id\":\"seed\",\"path\":\"seed.orm.yaml\",\"sha256\":\"69c31805fc53de4c2b6717bb10c00ecda1b4e8a523661ffc27428c8e5dc82457\"}],\"object_types\":[{\"id\":\"author\",\"kind\":\"value\",\"name\":\"Author\",\"primitive\":\"String\",\"provenance\":{\"spans\":[{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":25,\"end\":47,\"excerpt_sha256\":\"c1211038104bcce115f22bf3000e8ce0eff1c35d5fbaf5bfb06fc3cfff7af556\"}]}}],\"fact_types\":[{\"id\":\"author_writes_work\",\"reading\":\"{Author} writes {WorkKey}\",\"roles\":[{\"object_type\":\"author\",\"role_name\":\"author\"},{\"object_type\":\"work\",\"role_name\":\"work\"}],\"sample_population\":[{\"author\":\"Ana\",\"work\":\"W-1\"},{\"author\":\"Ben\",\"work\":\"W-2\"}],\"provenance\":{\"spans\":[{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":25,\"end\":47,\"excerpt_sha256\":\"c1211038104bcce115f22bf3000e8ce0eff1c35d5fbaf5bfb06fc3cfff7af556\"}],\"sample_spans\":[{\"row\":0,\"span\":{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":49,\"end\":71,\"excerpt_sha256\":\"e24ca5998362b0f683f5a4afb2e161af9d75aaa187af9b1ea15e4ea12c89dfcc\"}},{\"row\":1,\"span\":{\"document_sha256\":\"865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9\",\"start\":77,\"end\":99,\"excerpt_sha256\":\"1bced07e21067c1d288419f4f4860bd5e8fb1d23b57fc2005882b0f896a43aaf\"}}]}}]}\n"
+  },
+  "expected_model_sha256": "5bc77662bebc77c7dbd2ccb7dbf712f21add117d4b4787547da1e026a24a147f",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "label": "round-1.document.txt",
+        "sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9"
+      },
+      "after_sha256": "1b990e04be39c5cad9a0210e2c1349fed3017003c417cf215f0d8c4e3abd0f47",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "locator_kind": "source-document",
+        "sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9"
+      },
+      "operation_id": "declare-round-1.document.txt"
+    },
+    {
+      "after": {
+        "id": "author",
+        "kind": "value",
+        "name": "Author",
+        "primitive": "String",
+        "provenance": {
+          "spans": [
+            {
+              "document_sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9",
+              "end": 47,
+              "excerpt_sha256": "c1211038104bcce115f22bf3000e8ce0eff1c35d5fbaf5bfb06fc3cfff7af556",
+              "start": 25
+            }
+          ]
+        }
+      },
+      "after_sha256": "c99aafdf1f0df57186867cc4b0a76f7b1f6fc9d88bcdf55c236535cc34331063",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "collection": "object_types",
+        "element_id": "author",
+        "locator_kind": "element"
+      },
+      "operation_id": "add-author"
+    },
+    {
+      "after": {
+        "id": "author_writes_work",
+        "provenance": {
+          "sample_spans": [
+            {
+              "row": 0,
+              "span": {
+                "document_sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9",
+                "end": 71,
+                "excerpt_sha256": "e24ca5998362b0f683f5a4afb2e161af9d75aaa187af9b1ea15e4ea12c89dfcc",
+                "start": 49
+              }
+            },
+            {
+              "row": 1,
+              "span": {
+                "document_sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9",
+                "end": 99,
+                "excerpt_sha256": "1bced07e21067c1d288419f4f4860bd5e8fb1d23b57fc2005882b0f896a43aaf",
+                "start": 77
+              }
+            }
+          ],
+          "spans": [
+            {
+              "document_sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9",
+              "end": 47,
+              "excerpt_sha256": "c1211038104bcce115f22bf3000e8ce0eff1c35d5fbaf5bfb06fc3cfff7af556",
+              "start": 25
+            }
+          ]
+        },
+        "reading": "{Author} writes {WorkKey}",
+        "roles": [
+          {
+            "object_type": "author",
+            "role_name": "author"
+          },
+          {
+            "object_type": "work",
+            "role_name": "work"
+          }
+        ],
+        "sample_population": [
+          {
+            "author": "Ana",
+            "work": "W-1"
+          },
+          {
+            "author": "Ben",
+            "work": "W-2"
+          }
+        ]
+      },
+      "after_sha256": "2b8102809e832d8f26e6ba83bf78815fdc31afac0ab8d4074e16dcb6a123f731",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "collection": "fact_types",
+        "element_id": "author_writes_work",
+        "locator_kind": "element"
+      },
+      "operation_id": "add-writes"
+    }
+  ],
+  "proposal_id": "round-1",
+  "rationale": "One unattended growth round from a reviewed seed.",
+  "schema_version": 3
+}

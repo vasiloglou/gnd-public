@@ -29,6 +29,13 @@ def enforce_ownership(model, document, operations) -> None:
         raise IncludeInputError('invalid include ownership input')
     if not model.includes:
         return
+    source = model.source
+    if isinstance(source, Mapping) and source.get('mode') == 'unattended':
+        # VG4 (plan D6): a growth round never re-pins an include of an unattended
+        # root, under any policy; the owner re-pins by editing the root.
+        for item in operations:
+            if isinstance(item, EvolutionOperation) and isinstance(item.locator, IncludeLocator):
+                raise IncludeInputError('evolve:unattended-repin: ' + item.reference())
     declared = parse_declarations(document)
     if [(e['id'], e['path'], e['sha256']) for e in declared] != [
             (e.id, e.path, e.sha256) for e in model._included]:

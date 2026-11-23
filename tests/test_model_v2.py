@@ -12,6 +12,7 @@ import pytest
 from ruamel.yaml import YAML
 from support.cli_runner import run_gnd_text as _run_cli
 from support.repository import REPO_ROOT
+from support.rule_source import keyword_literals, semantic_literals
 
 from gnd import cli
 from gnd.checker import check
@@ -498,13 +499,11 @@ def test_each_new_rule_rejects_a_document(name, edit, rule_id, tmp_path) -> None
 def test_every_error_rule_added_by_this_phase_has_a_rejecting_case() -> None:
     from gnd import model as model_module
     covered = {rule_id for _, _, rule_id in REJECTING_CASES}
-    import inspect
     registered = {}
     for rule in model_module._SEMANTIC_RULES:
-        source = inspect.getsource(rule)
         # A rule may name several ids, or name them in a loop (GC1 membership).
-        for rule_id in re.findall('"(semantic:[^"]+)"', source):
-            registered[rule_id] = 'severity="warning"' in source
+        for rule_id in semantic_literals(rule):
+            registered[rule_id] = 'warning' in keyword_literals(rule, 'severity')
     v2_error_rules = {rule_id for rule_id, is_warning in registered.items() if not is_warning and rule_id.startswith(('semantic:op-', 'semantic:imported-'))}
     assert v2_error_rules <= covered, f'no rejecting case for {sorted(v2_error_rules - covered)}'
 

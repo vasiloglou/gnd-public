@@ -1,0 +1,23 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md",
+  "sha256": "a041b21d544865d73196d2c4f602231be5d7e77fffd44314de1f01837dae17ba",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "growth-round-outcomes plan r2",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "For this plan, a concern is blocking only if, left unfixed, a phase cannot be specified, implemented or tested as written, or the milestone would not do what its goal claims.",
+   "Can each phase GO1, GO2, GO3, GO4 and GO5 be specified, implemented and tested as section 2 and section 4 write it, within the scope sections 1 and 7 state? Is any criterion in section 4 impossible, unfalsifiable or dependent on one machine's speed?",
+   "Does each code location, line number and quoted message cited in the plan match the repository at this checkout? Read the cited lines in src/gnd and tests before reporting a mismatch.",
+   "GO1: is a per-invocation parse cache keyed by content and reader, sharing one document object between callers, safe? Can any caller of parse_model_document inside gnd evolve (src/gnd/evolve/service.py, src/gnd/model/__init__.py, src/gnd/model/_includes.py) write into the returned document, and do the controls of section 6 and criterion GO1-C3 catch it? Does R0.2 (no check removed) hold?",
+   "Do the binding rules of section 0, the decisions of section 10 and the controls of section 6 agree with each other and with the criteria? In particular: can GO2's per-operation verdicts be computed for refusals that happen today as one whole-proposal EvolutionError; does GO3's narrowed proposal keep apply whole (R0.1) and stale-preview refusal; does GO5's summary have discriminating fixtures?",
+   "Are the order, dependencies, homes and verification lanes of sections 3 and 9 consistent, acyclic and sufficient for each criterion, including the one-writer-at-a-time order with the reviewed-vocabulary-growth milestone on src/gnd/evolve/service.py and unattended-growth.md?",
+   "The GO1 draft spec at .gnd-planning/milestones/growth-round-outcomes/notes/phase-GO1-spec.md may be read for context; a concern about it must still cite the plan file and name the spec line in the observation.",
+   "Every concern's evidence must cite the plan file."
+  ]
+ }
+}

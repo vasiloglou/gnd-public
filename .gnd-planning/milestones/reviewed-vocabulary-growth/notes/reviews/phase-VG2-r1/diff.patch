@@ -1,0 +1,366 @@
+diff --git a/dev/components/modules/evolve.md b/dev/components/modules/evolve.md
+index 3a897ee9..a0be9d54 100644
+--- a/dev/components/modules/evolve.md
++++ b/dev/components/modules/evolve.md
+@@ -144,20 +144,20 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
+ | `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 139 | An old evidence document that may be READ but cannot be finished. |
+ | `EvolutionOperationsGatedError` | class(EvolutionError) | 151 | An ORM+ v2 operation delta this tool deliberately does not own. |
+ | `EvolutionPolicyRefusedError` | class(EvolutionError) | 161 | The additive policy refused an operation at apply (MG2, exit 3). |
+-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1308 | Read one bounded, closed JSON evolution proposal. |
+-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1325 | Read one bounded, version-selected preview claim. |
+-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1342 | Read one bounded, version-selected staged intent. |
+-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1359 | Read one bounded pending-finalization claim. |
+-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1376 | Read one bounded, version-selected immutable record. |
+-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1393 | Read one bounded standalone conformance leaf for an explicit envelope. |
+-| `EvolutionService` | class | 1414 | Preview, apply, and finalize one explicit model evolution proposal. |
+-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1522 | Validate and bind a proposal without changing any publication leaf. |
+-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2037 | Report one staged pending finalization that has no completed record. |
+-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2091 | Refuse to start a *new* evolution over an incomplete published one. |
+-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2113 | Stage immutable evidence and publish only the candidate model CAS. |
+-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2371 | (no docstring) |
+-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2377 | (no docstring) |
+-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2381 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
++| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1315 | Read one bounded, closed JSON evolution proposal. |
++| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1332 | Read one bounded, version-selected preview claim. |
++| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1349 | Read one bounded, version-selected staged intent. |
++| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1366 | Read one bounded pending-finalization claim. |
++| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1383 | Read one bounded, version-selected immutable record. |
++| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1400 | Read one bounded standalone conformance leaf for an explicit envelope. |
++| `EvolutionService` | class | 1421 | Preview, apply, and finalize one explicit model evolution proposal. |
++| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1529 | Validate and bind a proposal without changing any publication leaf. |
++| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2044 | Report one staged pending finalization that has no completed record. |
++| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2098 | Refuse to start a *new* evolution over an incomplete published one. |
++| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2120 | Stage immutable evidence and publish only the candidate model CAS. |
++| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2378 | (no docstring) |
++| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2384 | (no docstring) |
++| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2388 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+ 
+ ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
+ Components: evolve.shape_matches
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 9a3d5aee..c12463de 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -40,6 +40,12 @@ the next one.
+   per include in its text output, and span diagnostics on included elements
+   now carry the `includes[ID]:` prefix
+   ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
++- **`gnd evolve` admits sample and common-sense constraints.** A new
++  constraint may now carry `source: sample` (row evidence) or
++  `source: common-sense` (library evidence) when it is `proposed` and
++  `deontic`, as the unattended-growth guide tells a host to write them; with
++  `confirmed` or `alethic` it is refused by name. 0.4.0 refused both sources
++  in every form ([#218](https://github.com/vasiloglou/gnd-public/issues/218)).
+ - **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
+   `gnd evolve apply` now parses each model text once per reader. Before, an
+   `apply` parsed the same two texts 22 times. Every preview, record, message
+diff --git a/src/gnd/evolve/service.py b/src/gnd/evolve/service.py
+index a2fca85f..51259af6 100644
+--- a/src/gnd/evolve/service.py
++++ b/src/gnd/evolve/service.py
+@@ -466,6 +466,13 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
+                 raise EvolutionError(
+                     "new llm-inferred constraints must remain proposed/deontic (D-12)"
+                 )
++        elif source in ("sample", "common-sense"):
++            # VG2 (issue 218): row evidence and library evidence, as the growth
++            # document has the host write them; never confirmed, never alethic.
++            if (status, modality) != ("proposed", "deontic"):
++                raise EvolutionError(
++                    "new sample and common-sense constraints must be proposed/deontic (D-12)"
++                )
+         elif source == "user-supplied":
+             if status != "confirmed":
+                 raise EvolutionError(
+diff --git a/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md b/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+index edc6c809..835f4b26 100644
+--- a/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
++++ b/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+@@ -276,8 +276,9 @@ neither, and refused on a populated subject.
+ | `modality` | `deontic` to `alethic` | `alethic` to `deontic` |
+ | `status` | `proposed` to `confirmed` | `confirmed` to `proposed` |
+ 
+-D-12 runs first, so a changed constraint still has to be llm-inferred/proposed/deontic,
+-user-supplied/confirmed, or a reviewed induced confirmation; the policy judges what D-12 admits.
++D-12 runs first, so a changed constraint still has to be llm-inferred, sample or common-sense
++and proposed/deontic, user-supplied/confirmed, or a reviewed induced confirmation; the policy
++judges what D-12 admits.
+ 
+ A locator kind the matrix has no row for is refused, never admitted: the policy raises
+ `EvolutionPolicyGapError`, which exits `3` by type.
+@@ -525,6 +526,8 @@ Evolution enforces it at preview, apply, and finalize:
+ 
+ - unchanged constraints retain complete canonical metadata;
+ - a new semantic interpretation is `llm-inferred`, `proposed`, `deontic`;
++- a new rule read from sample rows or matched from the constraint library is `sample` or
++  `common-sense`, `proposed`, `deontic`;
+ - a new owner rule is `user-supplied`, `confirmed`, with modality assigned by policy;
+ - a new induced rule is `induced`, `proposed`, `deontic`, without `reviewed_in`, and becomes
+   `confirmed` only as a reviewed status change; `provenance.induction` under any other source is
+diff --git a/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md b/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md
+index b199df03..8035c8a7 100644
+--- a/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md
++++ b/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md
+@@ -211,6 +211,8 @@ Two mechanical guards keep the policy honest:
+ `gnd evolve` (preview, apply and finalize) admits a constraint that is new or changed relative to the current model only under these rules; an unchanged constraint keeps its complete canonical metadata. This is the one home of the lifecycle; the gnd-model-evolve evolution contract cites it.
+ 
+ - A new `llm-inferred` constraint is `proposed` and `deontic`.
++- A new `sample` constraint is `proposed` and `deontic`: rows that are evidence for a rule are not a review of it.
++- A new `common-sense` constraint is `proposed` and `deontic`: a matched library entry is not a review either.
+ - A new `user-supplied` constraint is `confirmed`, with modality assigned by the D-03 table.
+ - A new `induced` constraint is `proposed` and `deontic` and carries no `reviewed_in`. Output from discovery or an ILP import is always new, so it can never arrive already reviewed.
+ - An `induced` constraint becomes `confirmed` only as a **reviewed status change**: the candidate equals an existing `proposed` `induced` constraint except for `status`, `modality` and an added non-blank `provenance.reviewed_in`. Each proposed predecessor can be confirmed once. Any other change to a confirmed induced constraint returns it to `proposed`.
+@@ -225,6 +227,7 @@ The named refusals, all exit 3:
+ | `new induced constraints cannot carry provenance.reviewed_in (D-12)` | a new proposed induced constraint names a review |
+ | `induced constraints become confirmed only as a reviewed status change of an existing proposed induced constraint (D-12)` | a confirmed induced constraint with no claimable predecessor or no review record |
+ | `new induced constraints must be proposed/deontic (D-12)` | any other status/modality on a new induced constraint |
++| `new sample and common-sense constraints must be proposed/deontic (D-12)` | a new `sample` or `common-sense` constraint that is `confirmed` or `alethic` |
+ 
+ An owner may still rewrite an induced rule as `user-supplied`/`confirmed` without its induction block; that drops the marker, and the reviewed status change is the path that keeps it.
+ 
+diff --git a/tests/test_induced_provenance.py b/tests/test_induced_provenance.py
+index 29911438..15404158 100644
+--- a/tests/test_induced_provenance.py
++++ b/tests/test_induced_provenance.py
+@@ -226,7 +226,21 @@ def test_t5_d12_outcomes_equal_the_base_commit_table() -> None:
+     unknown["source"] = "oracle"
+     rows["unknown-source"] = capture.outcome(before, capture.with_constraint(before, unknown))
+     assert len(baseline["rows"]) == 27
+-    assert rows == baseline["rows"]
++    assert rows == {**baseline["rows"], **VG2_D12_DELTA}
++    assert len(VG2_D12_DELTA) == 8 and set(VG2_D12_DELTA) <= set(baseline["rows"])
++
++
++#: reviewed-vocabulary-growth VG2 (issue 218, plan D2 (a)): the eight rows of the
++#: table captured at 328061ee that D-12 now answers differently. The captured
++#: fixture stays as recorded; every other row must still equal it.
++VG2_D12_DELTA = {
++    f"new:{source}:{status}:{modality}": (
++        "admitted" if (status, modality) == ("proposed", "deontic")
++        else "new sample and common-sense constraints must be proposed/deontic (D-12)")
++    for source in ("sample", "common-sense")
++    for status in ("proposed", "confirmed")
++    for modality in ("alethic", "deontic")
++}
+ 
+ 
+ # ---- implementation tests (spec section 8, T6-T13) --------------------------
+diff --git a/tests/test_vg2_evolve_sources.py b/tests/test_vg2_evolve_sources.py
+new file mode 100644
+index 00000000..ea006f2c
+--- /dev/null
++++ b/tests/test_vg2_evolve_sources.py
+@@ -0,0 +1,213 @@
++"""VG2 (reviewed-vocabulary-growth): the sources a new constraint may carry in ``gnd evolve``.
++
++Issue 218. Rule D-12 admits a new ``sample`` and a new ``common-sense``
++constraint when it is ``proposed`` and ``deontic``, as
++``unattended-growth.md`` tells a host to write them. The spec is
++``.gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG2-spec.md``;
++the test names are its section 8 rows (T5 lives in
++``tests/test_induced_provenance.py``).
++"""
++from __future__ import annotations
++
++import json
++import re
++from pathlib import Path
++
++import pytest
++import test_evolve_additive_policy as policy
++import test_unattended_model_growth_acceptance as acceptance
++from support.cli_runner import run_main
++
++REPO = Path(__file__).resolve().parents[1]
++REFUSAL = "new sample and common-sense constraints must be proposed/deontic (D-12)"
++DOCUMENT = (
++    "A loan is renewed by a borrower on a date.\n"
++    "Renewals seen: ana renewed L-1, ben renewed L-2.\n"
++    "Each loan is renewed by at most one borrower.\n"
++)
++ROWS = "Each loan is renewed by at most one borrower"
++
++
++def _reply() -> dict:
++    """One growth round in the reply shape of unattended-growth.md: a fact type, a rows rule, a library rule."""
++    return {
++        "document": "round-4.txt",
++        "object_types": [],
++        "fact_types": [{
++            "id": "loan_renewed_by_borrower",
++            "reading": "{Loan} is renewed by {Borrower}",
++            "roles": [{"object_type": "loan", "role_name": "loan"},
++                      {"object_type": "borrower", "role_name": "borrower"}],
++            "quote": "A loan is renewed by a borrower",
++            "rows": [{"values": {"loan": "L-1", "borrower": "ana"}, "quote": "ana renewed L-1"},
++                     {"values": {"loan": "L-2", "borrower": "ben"}, "quote": "ben renewed L-2"}],
++        }],
++        "subtype_links": [],
++        "constraints": [
++            {"host": "loan_renewed_by_borrower", "basis": "rows",
++             "constraint": {"type": "uniqueness", "roles": ["loan"]}, "quote": ROWS,
++             "rationale": "No loan in the rows is renewed by two borrowers."},
++            {"host": "loan_renewed_by_borrower", "basis": "library", "library_entry": "ring-irreflexive",
++             "constraint": {"type": "mandatory", "role": "loan"}, "quote": "A loan is renewed",
++             "rationale": "Library entry: a renewal names its loan."},
++        ],
++    }
++
++
++def _grown(tmp_path: Path) -> dict[str, Path]:
++    ws = acceptance._workspace(tmp_path / "ws")
++    for n, reply in enumerate(acceptance.ROUNDS, 1):
++        acceptance._round(ws, n, reply)
++    return ws
++
++
++def _round(ws: dict[str, Path], reply: dict, tag: str, *, expect: int = 0):
++    raw = DOCUMENT.encode()
++    (ws["workspace"] / "round-4.txt").write_bytes(raw)
++    acceptance._declare(ws["model"], raw, "round-4.txt")
++    paths = acceptance._write_proposal(ws, tag, acceptance._operations(reply, raw))
++    preview, result = acceptance._preview(paths, "--policy", "additive", expect=expect)
++    return paths, preview, result
++
++
++def _documents(ws: dict[str, Path]) -> tuple[Path, ...]:
++    return (*(acceptance.FIXTURES / f"round-{n}.txt" for n in (1, 2, 3)), acceptance.SEED_DOCUMENT,
++            ws["workspace"] / "round-4.txt")
++
++
++# --- T1 (VG2-C1, C4): the growth document's proposal on an unattended model ---
++
++
++def test_T1_a_rows_and_a_library_constraint_preview_and_apply(tmp_path):
++    ws = _grown(tmp_path)
++    paths, preview, _ = _round(ws, _reply(), "vg2")
++    assert preview["policy"] == "additive" and preview["policy_issues"] == []
++    applied = run_main(policy._apply_argv(paths, "--policy", "additive"))
++    assert applied.returncode == 0, applied.stderr.decode()
++    published = policy._doc(ws["model"].read_text(encoding="utf-8"))
++    fact = policy._fact(published, "loan_renewed_by_borrower")
++    assert [(c["source"], c["status"], c["modality"]) for c in fact["constraints"]] == [
++        ("sample", "proposed", "deontic"), ("common-sense", "proposed", "deontic")]
++    validated = acceptance._validate(ws["model"], _documents(ws))
++    assert validated["exit_code"] == 0
++    argv = ["validate", str(ws["model"]), "--require-documents", "--format", "json"]
++    for document in _documents(ws):
++        argv += ["--document", str(document)]
++    assert run_main(argv).returncode == 0
++
++
++# --- T2 (VG2-C2): confirmed or alethic is refused by name ---------------------
++
++
++def _new(source: str, status: str, modality: str) -> dict:
++    constraint = {"type": "mandatory", "role": "order", "source": source, "status": status,
++                  "modality": modality, "rationale": "r"}
++    constraint["provenance"] = ({"sample_size": 2} if source == "sample"
++                                else {"library_entry": "ring-irreflexive"})
++    return constraint
++
++
++def _preview(tmp_path: Path, constraint: dict):
++    operation = policy._op("add", policy._constraint_locator(policy.CONTROL, None, "mandatory"), after=constraint)
++    return policy._preview(tmp_path, (operation,))
++
++
++@pytest.mark.parametrize("source", ["sample", "common-sense"])
++@pytest.mark.parametrize(("status", "modality"), [("confirmed", "deontic"), ("proposed", "alethic")])
++def test_T2_confirmed_or_alethic_is_refused_by_name(tmp_path, source, status, modality):
++    from gnd.evolve import EvolutionError
++
++    with pytest.raises(EvolutionError, match=re.escape(REFUSAL)):
++        _preview(tmp_path, _new(source, status, modality))
++
++
++@pytest.mark.parametrize("source", ["sample", "common-sense"])
++def test_T2_control_proposed_and_deontic_is_admitted_on_a_model_without_the_mode(tmp_path, source):
++    preview = _preview(tmp_path, _new(source, "proposed", "deontic"))
++    assert preview.policy_issues == ()
++
++
++def test_T2_the_induction_refusal_still_comes_first(tmp_path):
++    from gnd.evolve import EvolutionError
++
++    constraint = _new("sample", "proposed", "deontic")
++    constraint["provenance"]["induction"] = {}
++    with pytest.raises(EvolutionError, match=re.escape("provenance.induction is allowed only under source induced")):
++        _preview(tmp_path, constraint)
++
++
++# --- T3 (VG2-C3): the three pages and the code agree --------------------------
++
++
++def _section(path: str, start: str, end: str) -> str:
++    text = (REPO / path).read_text(encoding="utf-8")
++    return text[text.index(start):text.index(end, text.index(start))]
++
++
++def test_T3_the_d12_home_its_restatement_and_the_growth_page_agree():
++    from gnd.evolve.service import EvolutionError, _enforce_d12
++
++    def admitted(source: str) -> bool:
++        before = {"version": 1, "fact_types": [{"id": "f", "roles": [], "constraints": []}]}
++        candidate = json.loads(json.dumps(before))
++        provenance = {"rationale_world_fact": "w"} if source == "llm-inferred" else {}
++        candidate["fact_types"][0]["constraints"].append(
++            {"type": "mandatory", "role": "r", "source": source, "status": "proposed", "modality": "deontic",
++             "provenance": provenance})
++        try:
++            _enforce_d12(before, candidate)
++        except EvolutionError:
++            return False
++        return True
++
++    sources = ("explicit", "sample", "common-sense", "llm-inferred", "user-supplied", "imported", "induced")
++    proposed_deontic = {source for source in sources if admitted(source)}
++    # D-12 admits a proposed deontic induced constraint; its induction block is
++    # required by candidate validation, not here.
++    assert proposed_deontic == {"sample", "common-sense", "llm-inferred", "induced"}
++
++    home = _section("src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md",
++                    "## Evolve admission (D-12)", "## Worked examples")
++    contract = _section("src/gnd/skills/gnd-model-evolve/references/evolution-contract.md",
++                        "## 6. D-12 provenance and D-13 record", "## 7. Exit bands")
++    growth = _section("src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
++                      "## Evidence for Steps 3 to 7", "### Step 3")
++    for source in ("sample", "common-sense", "llm-inferred", "induced"):
++        assert f"A new `{source}` constraint is `proposed` and `deontic`" in home, source
++    assert "`sample` or\n  `common-sense`, `proposed`, `deontic`" in contract
++    assert "`rows` is `sample`" in growth and "`library` is `common-sense`" in growth
++    assert REFUSAL in home
++
++
++# --- T4 (VG2-C4): U5 and U8 still run on the unattended model ------------------
++
++
++def _changed(ws: dict[str, Path], index: int, change) -> tuple:
++    """The round's operations, the constraint at INDEX rebuilt with CHANGE applied (operations are immutable)."""
++    raw = DOCUMENT.encode()
++    (ws["workspace"] / "round-4.txt").write_bytes(raw)
++    acceptance._declare(ws["model"], raw, "round-4.txt")
++    operations = list(acceptance._operations(_reply(), raw))
++    old = operations[index]
++    after = json.loads(json.dumps(old.after, default=dict))
++    change(after)
++    operations[index] = policy._op("add", old.locator, after=after, operation_id=old.operation_id)
++    return tuple(operations)
++
++
++def test_T4_without_its_span_the_rows_constraint_is_refused_by_U5(tmp_path):
++    ws = _grown(tmp_path)
++    operations = _changed(ws, -2, lambda after: after["provenance"].pop("spans"))
++    paths = acceptance._write_proposal(ws, "vg2-u5", operations)
++    _, result = acceptance._preview(paths, "--policy", "additive", expect=3)
++    # evolve prints the rule's message (U5), not its id
++    assert b"constraints[0]: constraint cites no source span (provenance.spans)" in result.stderr
++
++
++def test_T4_an_alethic_library_constraint_is_refused(tmp_path):
++    ws = _grown(tmp_path)
++    operations = _changed(ws, -1, lambda after: after.update(modality="alethic"))
++    paths = acceptance._write_proposal(ws, "vg2-u8", operations)
++    _, result = acceptance._preview(paths, "--policy", "additive", expect=3)
++    # candidate validation runs before D-12, so U8 refuses it first (its message)
++    assert b"constraints[1]: an unreviewed common-sense mandatory constraint cannot be alethic" in result.stderr

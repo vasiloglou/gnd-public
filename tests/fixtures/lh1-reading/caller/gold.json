@@ -1,0 +1,14 @@
+{
+  "paper_method": [
+    {
+      "paper": "paper-a",
+      "value": "stratified sampling over 40 graphs"
+    }
+  ],
+  "paper_baseline": [
+    {
+      "paper": "control-paper",
+      "value": "uniform sampling"
+    }
+  ]
+}

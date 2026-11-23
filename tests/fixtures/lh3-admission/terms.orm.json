@@ -1,0 +1,66 @@
+{
+  "version": 2,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [
+    {
+      "id": "handle",
+      "name": "Handle",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "note",
+      "name": "Note",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "claim",
+      "name": "Claim",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "handle"
+      }
+    },
+    {
+      "id": "quantity",
+      "name": "Quantity",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "handle"
+      }
+    },
+    {
+      "id": "paper",
+      "name": "Paper",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "handle"
+      }
+    },
+    {
+      "id": "passage",
+      "name": "Passage",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "handle"
+      }
+    },
+    {
+      "id": "venue",
+      "name": "Venue",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "handle"
+      }
+    }
+  ],
+  "fact_types": []
+}

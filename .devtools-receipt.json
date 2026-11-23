@@ -3,12 +3,12 @@
     ".claude/skills/components/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/components/SKILL.md",
-      "sha256": "944ab0bb757e80d2e482043252011f810adcc7245994d64342c84a56b3e3046e"
+      "sha256": "1232e277b0b9b116325956b0084027963491aa02065d441392698eb5013d1e10"
     },
     ".claude/skills/components/references/build.md": {
       "mode": "0o644",
       "origin": "skills/components/references/build.md",
-      "sha256": "8b74ccda535b97bcc4fdcf1b911dc246d6a7a18c6033ef555456076d25efb263"
+      "sha256": "f01ae0b3865c4f5028a2075b988a3a84ec4665436d2120a7df97a1c82562fb32"
     },
     ".claude/skills/components/references/reader-brief.md": {
       "mode": "0o644",
@@ -43,12 +43,12 @@
     ".claude/skills/dev-handoff/references/handoff.md": {
       "mode": "0o644",
       "origin": "skills/dev-handoff/references/handoff.md",
-      "sha256": "fd4a0ee50d5bded553a17d1ba3320515a442c94390eca97f11b4caf0b9fa3327"
+      "sha256": "4ab09c9621c60c1f7afdef00aa1eba4d4626d6490cf39fa8bc3222ec55a85629"
     },
     ".claude/skills/dev-handoff/scripts/handoff.py": {
       "mode": "0o755",
       "origin": "skills/dev-handoff/scripts/handoff.py",
-      "sha256": "3343e4d55965bd98d5d86df5ebbe35341f4475eb23c1a4622f54094fcc287b41"
+      "sha256": "56e59d628e48b864af2818a202f11478fd025ed0112be5dbf9735ff556c05522"
     },
     ".claude/skills/dev-handoff/scripts/handoff.settings.json": {
       "mode": "0o644",
@@ -88,7 +88,7 @@
     ".claude/skills/process-phase/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/SKILL.md",
-      "sha256": "71c658a80b16e67b181f5eb7b70513ffd23dcdb7b24948db079bbf979aa08d30"
+      "sha256": "969efdddf9e01c9f9ca64b0cab0567909e94181424681543ef8576fa72c7dc15"
     },
     ".claude/skills/process-phase/references/agent-delegation.md": {
       "mode": "0o644",
@@ -108,7 +108,7 @@
     ".claude/skills/process-phase/references/review-and-record.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/references/review-and-record.md",
-      "sha256": "654b24babc755c0dd07a0b462ea8c1549593c40519fdc1fb32bf83f689c82542"
+      "sha256": "e88babdc4ec74686c43204f5af27075ae277a62c7b97bb60c116635003c4c795"
     },
     ".claude/skills/process-phase/references/review-convergence.md": {
       "mode": "0o644",
@@ -118,7 +118,7 @@
     ".claude/skills/process-phase/references/review-tool.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/references/review-tool.md",
-      "sha256": "2b0749b659f3f20706d1e2d415bcd4c696fd85001197a4f18c47af2ca123d065"
+      "sha256": "7716379182edb8d7eb6c0dc0d526e87fa8e67ba9952a3174aee898372f249435"
     },
     ".claude/skills/process-phase/references/spec-note-contract.md": {
       "mode": "0o644",
@@ -128,7 +128,7 @@
     ".claude/skills/process-phase/references/standing-rules.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/references/standing-rules.md",
-      "sha256": "b749e864a34bc392cf505b6b0738d9f367efa7a85f16c7c8595bdd4a06c3baf4"
+      "sha256": "1cd5438b2764641dc3dfb56c190ce96ea24a1f2ab0868f0f441926148241d8fd"
     },
     ".claude/skills/process-phase/references/verification-selection.md": {
       "mode": "0o644",
@@ -138,7 +138,17 @@
     ".claude/skills/process-phase/scripts/review_tool.py": {
       "mode": "0o755",
       "origin": "skills/milestone/process-phase/scripts/review_tool.py",
-      "sha256": "088cb33fa4386d9951aca0badf3fd991fe38c35c7584b01f8319d0366ae6cad1"
+      "sha256": "ef07d53fcf3649a13726ab82c0eba2a824d92c857e81030b3b2f3262895ed9be"
+    },
+    ".claude/skills/review-pr/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/review-pr/SKILL.md",
+      "sha256": "dc1223579734912e3fa8e2acbcd354452be7d086af65564fd777fe098540029b"
+    },
+    ".claude/skills/review-pr/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/milestone/review-pr/agents/openai.yaml",
+      "sha256": "247a7ede120d5c303ab30158dead7ec8387495b032eeb946c05f30f2f3405880"
     },
     ".claude/skills/start-milestone/SKILL.md": {
       "mode": "0o644",
@@ -153,12 +163,12 @@
     ".codex/skills/components/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/components/SKILL.md",
-      "sha256": "944ab0bb757e80d2e482043252011f810adcc7245994d64342c84a56b3e3046e"
+      "sha256": "1232e277b0b9b116325956b0084027963491aa02065d441392698eb5013d1e10"
     },
     ".codex/skills/components/references/build.md": {
       "mode": "0o644",
       "origin": "skills/components/references/build.md",
-      "sha256": "8b74ccda535b97bcc4fdcf1b911dc246d6a7a18c6033ef555456076d25efb263"
+      "sha256": "f01ae0b3865c4f5028a2075b988a3a84ec4665436d2120a7df97a1c82562fb32"
     },
     ".codex/skills/components/references/reader-brief.md": {
       "mode": "0o644",
@@ -193,12 +203,12 @@
     ".codex/skills/dev-handoff/references/handoff.md": {
       "mode": "0o644",
       "origin": "skills/dev-handoff/references/handoff.md",
-      "sha256": "fd4a0ee50d5bded553a17d1ba3320515a442c94390eca97f11b4caf0b9fa3327"
+      "sha256": "4ab09c9621c60c1f7afdef00aa1eba4d4626d6490cf39fa8bc3222ec55a85629"
     },
     ".codex/skills/dev-handoff/scripts/handoff.py": {
       "mode": "0o755",
       "origin": "skills/dev-handoff/scripts/handoff.py",
-      "sha256": "3343e4d55965bd98d5d86df5ebbe35341f4475eb23c1a4622f54094fcc287b41"
+      "sha256": "56e59d628e48b864af2818a202f11478fd025ed0112be5dbf9735ff556c05522"
     },
     ".codex/skills/dev-handoff/scripts/handoff.settings.json": {
       "mode": "0o644",
@@ -238,7 +248,7 @@
     ".codex/skills/process-phase/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/SKILL.md",
-      "sha256": "71c658a80b16e67b181f5eb7b70513ffd23dcdb7b24948db079bbf979aa08d30"
+      "sha256": "969efdddf9e01c9f9ca64b0cab0567909e94181424681543ef8576fa72c7dc15"
     },
     ".codex/skills/process-phase/references/agent-delegation.md": {
       "mode": "0o644",
@@ -258,7 +268,7 @@
     ".codex/skills/process-phase/references/review-and-record.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/references/review-and-record.md",
-      "sha256": "654b24babc755c0dd07a0b462ea8c1549593c40519fdc1fb32bf83f689c82542"
+      "sha256": "e88babdc4ec74686c43204f5af27075ae277a62c7b97bb60c116635003c4c795"
     },
     ".codex/skills/process-phase/references/review-convergence.md": {
       "mode": "0o644",
@@ -268,7 +278,7 @@
     ".codex/skills/process-phase/references/review-tool.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/references/review-tool.md",
-      "sha256": "2b0749b659f3f20706d1e2d415bcd4c696fd85001197a4f18c47af2ca123d065"
+      "sha256": "7716379182edb8d7eb6c0dc0d526e87fa8e67ba9952a3174aee898372f249435"
     },
     ".codex/skills/process-phase/references/spec-note-contract.md": {
       "mode": "0o644",
@@ -278,7 +288,7 @@
     ".codex/skills/process-phase/references/standing-rules.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-phase/references/standing-rules.md",
-      "sha256": "b749e864a34bc392cf505b6b0738d9f367efa7a85f16c7c8595bdd4a06c3baf4"
+      "sha256": "1cd5438b2764641dc3dfb56c190ce96ea24a1f2ab0868f0f441926148241d8fd"
     },
     ".codex/skills/process-phase/references/verification-selection.md": {
       "mode": "0o644",
@@ -288,7 +298,17 @@
     ".codex/skills/process-phase/scripts/review_tool.py": {
       "mode": "0o755",
       "origin": "skills/milestone/process-phase/scripts/review_tool.py",
-      "sha256": "088cb33fa4386d9951aca0badf3fd991fe38c35c7584b01f8319d0366ae6cad1"
+      "sha256": "ef07d53fcf3649a13726ab82c0eba2a824d92c857e81030b3b2f3262895ed9be"
+    },
+    ".codex/skills/review-pr/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/review-pr/SKILL.md",
+      "sha256": "dc1223579734912e3fa8e2acbcd354452be7d086af65564fd777fe098540029b"
+    },
+    ".codex/skills/review-pr/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/milestone/review-pr/agents/openai.yaml",
+      "sha256": "247a7ede120d5c303ab30158dead7ec8387495b032eeb946c05f30f2f3405880"
     },
     ".codex/skills/start-milestone/SKILL.md": {
       "mode": "0o644",
@@ -303,7 +323,7 @@
     "scripts/components_index.py": {
       "mode": "0o644",
       "origin": "skills/components/scripts/components_index.py",
-      "sha256": "13105bfbee8587baf491e757c47e2f6da7b1594bb99bb89b006773577fe95793"
+      "sha256": "3b76af42ff825159ae80a445fbd69a11ae13c935e93793aa79888e6dd5ce4d14"
     },
     "scripts/components_index.settings.json": {
       "mode": "0o644",
@@ -311,8 +331,22 @@
       "sha256": "6709d595912c0983dd74f7b0f33f845402e2c885c0e2ad72b18c0e1b2beb8a8a"
     }
   },
+  "shipped": [
+    "agents",
+    "skills/components",
+    "skills/dev-handoff",
+    "skills/dev-takeover",
+    "skills/handle-issue",
+    "skills/milestone/process-milestone",
+    "skills/milestone/process-phase",
+    "skills/milestone/review-pr",
+    "skills/milestone/start-milestone",
+    "skills/phase/phase-tests",
+    "skills/phase/process-phase",
+    "skills/phase/pytest/phase_selection.py"
+  ],
   "source": {
-    "commit": "a29562a3978c32198dcff5991ca0ff82ecbe7a63",
+    "commit": "cecebc6f5612531b539ced10c47b3a0d05cc3636",
     "dirty": false
   }
 }

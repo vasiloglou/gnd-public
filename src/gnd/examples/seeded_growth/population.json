@@ -1,0 +1,43 @@
+{
+  "facts": {
+    "author_writes_work": [
+      {
+        "author": "Ana",
+        "work": "W-1"
+      },
+      {
+        "author": "Ben",
+        "work": "W-2"
+      }
+    ],
+    "work_has_version": [
+      {
+        "version": "V-1",
+        "work": "W-1"
+      },
+      {
+        "version": "V-2",
+        "work": "W-2"
+      }
+    ]
+  },
+  "instances": {
+    "author": [
+      "Ana",
+      "Ben"
+    ],
+    "work": [
+      "W-1",
+      "W-2"
+    ]
+  },
+  "population": {
+    "covers": [
+      "work_has_version",
+      "author_writes_work"
+    ],
+    "model": "root.orm.yaml",
+    "model_id": "urn:example:seeded-growth",
+    "source": "fixture"
+  }
+}

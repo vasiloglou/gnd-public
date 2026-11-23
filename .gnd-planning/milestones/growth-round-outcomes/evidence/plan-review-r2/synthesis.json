@@ -1,0 +1,390 @@
+{
+ "schema_version": 1,
+ "run_sha256": "dfdb18d6ff606683c92e173c7b128961d86abacb944060bcb1df8abfc34b9ac0",
+ "summary": "Three of six seats returned schema-valid reviews of plan r3 (claude, codex, glm), each asking for revision; gemini and kimi returned malformed output and qwen exited nonzero, so none of them contributes an opinion. Two groups are rated high: GO3-C1 citing a preview that r3 removed, and GO5 lacking evidence of what was actually applied. Ten concerns have one supporter each; most attack text the r3 repairs created.",
+ "agreed_concerns": [
+  {
+   "group_id": "go3-c1-input",
+   "severity": "high",
+   "title": "GO3-C1 starts from a GO2-C1 preview that r3 no longer writes",
+   "summary": "r3 made GO2-C1 write an outcome report and no preview; GO3-C1 and C3 still start from \"the GO2-C1 preview\", and the report need not carry the before model needed to replay the admitted operations.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-c1-input-missing"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go3-c1-nonexistent-preview"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go3-c1-references-refused-case-preview"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "go5-added-evidence",
+   "severity": "high",
+   "title": "GO5 cannot tell elements applied from elements previewed",
+   "summary": "A proposal and its preview exist whether or not the preview was applied, so \"elements added\" is unestablished; a narrowed round has two proposals.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-added-vs-applied"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go5-added-without-apply-evidence"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "go2-outcomes-apply-replay"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "go2-admitted-unreached-gates"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "go3-origin-no-home"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "go1-shared-doc-control-coverage"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "d6-forced-by-order"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "go5-c1-not-discriminating"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "go1-c5-failure-consequence"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "go1-goal-json-two-parses"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "s7-ruff-red-stale"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "h21-vg2-unattended-growth-claim"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "go3-c1-input",
+   "rank": 1,
+   "title": "GO3-C1 starts from a GO2-C1 preview that r3 no longer writes",
+   "action": "GO3-C1 starts from the GO2-C1 outcome report; the outcome report carries the before model as the preview does (text and sha256); GO3-C3 uses a second fixture with an admitted preview that has policy refusals.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-c1-input-missing"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go3-c1-nonexistent-preview"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go3-c1-references-refused-case-preview"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-c1-input-missing",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go3-c1-nonexistent-preview",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "go3-c1-references-refused-case-preview",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "go5-added-evidence",
+   "rank": 2,
+   "title": "GO5 cannot tell elements applied from elements previewed",
+   "action": "The evolution record, or its absence, is a GO5 input and the only source of elements added; a narrowed round reads the applied proposal; add applied-vs-unapplied and narrowed-then-applied criteria.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-added-vs-applied"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go5-added-without-apply-evidence"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-added-vs-applied",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go5-added-without-apply-evidence",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "go2-outcomes-apply-replay",
+   "rank": 3,
+   "title": "go2-outcomes-apply-replay",
+   "action": "GO2: name the outcomes switch and make apply replay it from the reviewed preview, as shape_report is replayed (cli_service.py:810); add a criterion that a preview with outcomes applies and an edited one is refused.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-outcomes-apply-replay"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-outcomes-apply-replay",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "go2-admitted-unreached-gates",
+   "rank": 4,
+   "title": "go2-admitted-unreached-gates",
+   "action": "GO2: in an outcome report, operations that a later gate never reached are unassessed with the gates named, not admitted.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-admitted-unreached-gates"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go2-admitted-unreached-gates",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "go3-origin-no-home",
+   "rank": 5,
+   "title": "go3-origin-no-home",
+   "action": "GO3: the origin id is an optional proposal field under R0.3, models.py joins GO3 homes, and a proposal without it keeps its bytes.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-origin-no-home"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go3-origin-no-home",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "go1-shared-doc-control-coverage",
+   "rank": 6,
+   "title": "go1-shared-doc-control-coverage",
+   "action": "GO1: a verify mode of parse_scope compares snapshots at scope close and is switched on for the whole GO1 lane; name loaded Models as holders of nested references.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-shared-doc-control-coverage"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-shared-doc-control-coverage",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "d6-forced-by-order",
+   "rank": 7,
+   "title": "d6-forced-by-order",
+   "action": "D6 is forced: GO1 merges by its own pull request; state it in section 3 as binding.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d6-forced-by-order"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d6-forced-by-order",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "go5-c1-not-discriminating",
+   "rank": 8,
+   "title": "go5-c1-not-discriminating",
+   "action": "GO5: a committed round with a known mix states each bucket count derived from the fixture.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-c1-not-discriminating"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go5-c1-not-discriminating",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "go1-c5-failure-consequence",
+   "rank": 9,
+   "title": "go1-c5-failure-consequence",
+   "action": "GO1: a failed C5 stops GO1 for a ruling before its pull request.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-c5-failure-consequence"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-c5-failure-consequence",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "go1-goal-json-two-parses",
+   "rank": 10,
+   "title": "go1-goal-json-two-parses",
+   "action": "GO1: goal reads once per text and reader; GO1-C1 adds .json counts.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-goal-json-two-parses"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "go1-goal-json-two-parses",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "s7-ruff-red-stale",
+   "rank": 11,
+   "title": "s7-ruff-red-stale",
+   "action": "Section 7: drop the stale ruff-red line.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "s7-ruff-red-stale"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "s7-ruff-red-stale",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "h21-vg2-unattended-growth-claim",
+   "rank": 12,
+   "title": "h21-vg2-unattended-growth-claim",
+   "action": "H21: under the ruled VG D2 (a) only VG5 changes unattended-growth.md; the start conditions stay as the coordinator set them.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h21-vg2-unattended-growth-claim"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "h21-vg2-unattended-growth-claim",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ]
+  }
+ ]
+}

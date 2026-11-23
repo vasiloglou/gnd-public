@@ -752,12 +752,15 @@ def _coverage_result(expected_rows, observed_rows, sections):
                   disagreements={"count": len(expected ^ observed), "units": sorted({row[0] for row in expected ^ observed})})
 
 
-def score_reading_coverage(run_dir: Path, expected_rows: list[dict]) -> dict:
-    """Score exact replayable reading rows against a caller-owned answer roster."""
+def score_reading_coverage(run_dir: Path, expected_rows: list[dict], *, fixture: Path | None = None) -> dict:
+    """Score exact replayable reading rows against a caller-owned answer roster.
+
+    ``fixture`` is the reading root a caller run replays against; without it the packaged root is used.
+    """
     from .reading import ArtifactError, replay
 
     try:
-        report = replay(run_dir)
+        report = replay(run_dir) if fixture is None else replay(run_dir, fixture=fixture)
     except (OSError, ArtifactError, ValueError, KeyError, TypeError, AttributeError, IndexError):
         return _coverage_result(expected_rows, None, {})
     rows = report["coverage"]

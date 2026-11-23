@@ -33,6 +33,7 @@ from gnd.model import (
     derivation_strata,
     iter_derivation_clauses,
 )
+from gnd.model_index import scoped
 from gnd.population import Population
 from gnd.semantic_ir import (
     ADAPTER_REFUSALS,
@@ -589,6 +590,7 @@ def _input_refusals(
     return result
 
 
+@scoped  # VG1-D4: one index per model for a direct caller too
 def adapt_snapshot(
     model: Model,
     population: Population,

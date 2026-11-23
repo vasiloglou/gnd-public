@@ -171,6 +171,7 @@ def add_parsers(subparsers, *, command: str | None = None):
     return parsers
 
 
+@_handler_evolve_cli_service.parse_scoped  # GO1 (#228): one command parses each model text once per reader
 def handle(args, parsers) -> int:
     if args.command == "evolve":
         if args.evolve_command == "preview":

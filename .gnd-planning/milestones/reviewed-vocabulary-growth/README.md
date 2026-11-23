@@ -25,10 +25,10 @@ Plan r4 repairs the eight points its two returned reviews raised, tagged
 | Phase | Deliverable | State |
 |---|---|---|
 | VG1 | `gnd check` cost about linear in the number of object types (#221) | done 2026-11-23: [record](002-phase-VG1.md), [spec](notes/phase-VG1-spec.md) (delegated approval, `auto=true`) |
-| VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | outline; D2 ruled (a), widen rule D-12 |
+| VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | [spec](notes/phase-VG2-spec.md) approved (delegated); waits for GO1 on `main` |
 | VG3 | an unattended root may include a reviewed vocabulary (#222) | done 2026-11-23: [record](003-phase-VG3.md), [spec](notes/phase-VG3-spec.md) (delegated approval, `auto=true`) |
-| VG4 | growth rounds on that root, and its first source document (#222) | outline; needs VG3 |
-| VG5 | one packaged example, the pages and the three issue replies | outline; needs VG1–VG4 |
+| VG4 | growth rounds on that root, and its first source document (#222) | [spec](notes/phase-VG4-spec.md) approved (delegated); waits for GO1 on `main` |
+| VG5 | one packaged example, the pages and the three issue replies | [spec](notes/phase-VG5-spec.md) approved (delegated); needs VG2 and VG4 |
 
 [Plan](notes/reviewed-vocabulary-growth-plan.md). Listed in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).

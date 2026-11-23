@@ -192,6 +192,14 @@ def _plain(value: object, what: str) -> None:
             _need(item is None or type(item) in (str, int, bool), f"{what} is not JSON")
 
 
+def _canonical(value: object, what: str) -> bytes:
+    """Serialize an untrusted value, refusing what canonical JSON cannot carry."""
+    try:
+        return canonical_json_bytes(value)
+    except (ValueError, TypeError, RecursionError, UnicodeError) as error:
+        raise ExampleError(f"{what} is not serializable JSON") from error
+
+
 def _fact_rows(value: object, what: str) -> dict:
     """The one row validator: fact-type names mapped to rows of role names and scalar values."""
     _need(isinstance(value, dict), f"invalid {what}")
@@ -219,6 +227,7 @@ def _rows_by_id(rows: list, limit: int = ROSTER_LIMIT) -> dict:
 def _profile(raw: bytes, limits: ReadingLimits) -> Profile:
     value = _decode(raw, max_bytes=limits.input_bytes)
     _plain(value, "reading profile")
+    _canonical(value, "reading profile")
     _need(set(value) == PROFILE_KEYS and value["format"] == PROFILE_FORMAT, "invalid reading profile keys")
     model, includes = value["model"], value["includes"]
     _need(isinstance(includes, list) and len(includes) < MAX_MODEL_FILES
@@ -296,7 +305,9 @@ class ReadingInputs:
         self.raw = {PROFILE: read(PROFILE)}
         self.profile = profile = _profile(self.raw[PROFILE], self.limits)
         self.raw["roster.json"] = read("roster.json")
-        self._roster(_decode(self.raw["roster.json"], max_bytes=cap), read, self.limits.roster)
+        roster = _decode(self.raw["roster.json"], max_bytes=cap)
+        _canonical(roster, "reading roster")
+        self._roster(roster, read, self.limits.roster)
         _need(all(isinstance(name, str) and name in self.sections for name in unavailable),
               "unknown unavailable section")
         for name in (profile.model, *profile.includes):
@@ -325,12 +336,18 @@ class ReadingInputs:
                   "saved producer table differs from its pin")
             self.raw["responses.json"] = responses
             self.responses = _decode(responses, max_bytes=cap)
+            _canonical(self.responses, "saved responses")
             _need(set(self.responses) == self.response_sections, "saved response roster differs")
         _need(profile.review or not live_review, "a reviewer needs the review step")
         self.reviews = None
         if profile.review and not live_review:
             self.raw["reviews.json"] = read("reviews.json")
             self.reviews = _decode(self.raw["reviews.json"], max_bytes=cap)
+            _canonical(self.reviews, "saved reviews")
+            _need(all(name in self.response_sections and isinstance(receipt, dict)
+                      and set(receipt) == {"basis", "decision", "excerpt_sha256", "facts_sha256"}
+                      and all(isinstance(item, str) for item in receipt.values())
+                      for name, receipt in self.reviews.items()), "invalid saved reviews")
 
     def _roster(self, roster, read, limit):
         _need(roster.get("format") == "literature-reading-roster/1", "invalid reading roster format")
@@ -394,17 +411,20 @@ class ReadingInputs:
         self.gold = self.calibration = self.conflict_facts = None
         if profile.calibration is not None:
             gold = _fact_rows(_decode(self.raw["gold.json"], max_bytes=cap), "held-back gold")
+            _canonical(gold, "held-back gold")
             wanted = {*profile.calibration["section_facts"], *profile.calibration["held_back_facts"]}
             _need(set(gold) == wanted, "invalid held-back gold roster")
             calibration = _decode(self.raw["calibration.json"], max_bytes=cap)
             _need(set(calibration) == {"high", "low"}, "invalid calibration candidates")
             for kind in ("high", "low"):
                 _fact_rows(calibration[kind], "calibration candidate")
+            _canonical(calibration, "calibration candidates")
             self.gold, self.calibration = gold, calibration
         if profile.conflict is not None:
             document = self.raw["conflict.txt"]
             conflict = _decode(self.raw["conflict.json"], max_bytes=cap)
             facts = _fact_rows(conflict.get("facts"), "reported conflict facts")
+            _canonical(facts, "reported conflict facts")
             rows, role = facts.get(profile.conflict["fact_type"]), profile.conflict["role"]
             _need(conflict.get("document_sha256") == sha256_hex(document)
                   and isinstance(rows, list) and len(rows) == 2
@@ -454,7 +474,7 @@ def _response(value, inputs, covers, limits):
           and isinstance(facts, dict) and bool(facts) == (outcome == "accepted"), "invalid saved producer response")
     _fact_rows(facts, "producer facts")
     _need(covers is None or set(facts) <= covers, "producer fact type outside the model")
-    raw = canonical_json_bytes(value)
+    raw = _canonical(value, "producer response")
     _need(len(raw) <= limits.response_bytes, "producer response exceeds its cap")
     return _decode(raw, max_bytes=limits.response_bytes)
 
@@ -522,7 +542,8 @@ def _review_attempts(inputs, attempts, reviewer=None):
                 raise ExampleError(f"reviewer failed at {name}") from error
             _plain(answer, "review receipt")
             _need(isinstance(answer, dict) and set(answer) == {"decision", "basis"}
-                  and len(canonical_json_bytes(answer)) <= inputs.limits.response_bytes, "invalid review receipt")
+                  and len(_canonical(answer, "review receipt")) <= inputs.limits.response_bytes,
+                  "invalid review receipt")
             receipt = {**answer, "excerpt_sha256": row["excerpt_sha256"], "facts_sha256": facts_sha256}
             receipts[name] = receipt
         _need(isinstance(receipt, dict) and receipt.get("decision") == "supported"
@@ -795,16 +816,46 @@ def _read_retained(run):
     return manifest, artifacts, retained
 
 
-def _retained_cap(inputs, work):
-    """An upper bound on every file a caller run retains, computed from the roster before any call."""
+def _retained_cap(inputs, work, unavailable, live):
+    """An upper bound on every file a caller run retains, from what is known before the first call.
+
+    Roster strings, input pins and saved files are measured; each answer and receipt counts at the
+    response cap; identifiers are at most 64 characters, so a coverage or question row fits in 512 bytes.
+    """
     limits, profile = inputs.limits, inputs.profile
-    eligible = len(inputs.response_sections)
-    rows = limits.roster * ROW_OVERHEAD
-    bound = eligible * (limits.response_bytes + ROW_OVERHEAD) + len(canonical_json_bytes(profile.base_facts)) + 4 * rows
-    if profile.conflict is not None or profile.absence:
-        bound = max(bound, limits.input_bytes)
+    response = limits.response_bytes
+    eligible = [name for name in inputs.sections if name in inputs.response_sections]
+
+    def attempt(name):
+        section = inputs.sections[name]
+        stub = {"section": name, "source": section["source"], "start": section["span"][0],
+                "end": section["span"][1], "source_version": inputs.sources[section["source"]]["version"],
+                "excerpt_sha256": "0" * 64, "response_sha256": "0" * 64, "outcome": "accepted", "response": None}
+        return len(canonical_json_bytes(stub)) + response
+
+    ids = (len(inputs.sections) + len(inputs.questions)) * (64 + 4) + ROW_OVERHEAD
+    rows = len(inputs.questions) * 512
+    receipts = len(eligible) * (response + 300)
+    header = len(canonical_json_bytes(work.header))
+    bounds = [
+        sum(attempt(name) for name in eligible) + ids,
+        len(inputs.raw["responses.json"]) if not live else receipts,
+        header + len(canonical_json_bytes(profile.base_facts)) + len(eligible) * response + ROW_OVERHEAD,
+        len(canonical_json_bytes({"sources": list(inputs.sources.values()),
+                                  "sections": list(inputs.sections.values()), "unavailable": sorted(unavailable)})),
+        rows + receipts + len(canonical_json_bytes(sorted(inputs.revisit_keys))) + ids,
+        len(canonical_json_bytes(inputs.input_pins)) + ids + ROW_OVERHEAD,
+    ]
+    if profile.review:
+        bounds.append(len(inputs.raw["reviews.json"]) if "reviews.json" in inputs.raw else receipts)
+    if profile.conflict is not None:
+        bounds += [len(inputs.raw["conflict.txt"]),
+                   header + len(canonical_json_bytes(inputs.conflict_facts)) + ROW_OVERHEAD]
+    if profile.absence:
+        bounds += [len(inputs.raw["scope.json"]), len(inputs.raw["closure.json"])]
     if profile.calibration is not None:
-        bound = max(bound, limits.route_output_bytes)
+        bounds.append(limits.route_output_bytes)
+    bound = max(bounds)
     if limits.retained_bytes is not None:
         _need(bound <= limits.retained_bytes, "retained files would exceed the retained-file cap")
         return limits.retained_bytes
@@ -813,9 +864,14 @@ def _retained_cap(inputs, work):
     return cap
 
 
-def _stops(inputs, required, resolved, omitted):
-    """The global stop rule, applied to each source's own questions and sections."""
-    open_sources = {inputs.sections[inputs.questions[key]["section"]]["source"] for key in required - resolved}
+def _stops(inputs, terminal, resolved, omitted):
+    """The global stop rule, applied to each source's own required questions and sections.
+
+    A required question belongs to the source of its own section; it is answered when its last
+    successor is resolved, wherever that successor points.
+    """
+    open_sources = {inputs.sections[question["section"]]["source"] for key, question in inputs.questions.items()
+                    if question["required"] and terminal[key] not in resolved}
     short_sources = {inputs.sections[name]["source"] for name in omitted}
     return {source: "required-coverage-completed" if source not in open_sources
             else "budget-exhausted" if source in short_sources else "available-evidence-exhausted"
@@ -852,7 +908,7 @@ def _evaluate(inputs, budget, scenario, *, producer=None, retained=None, retaine
         cap = None
         if profile.caller:
             _need(set(profile.base_facts) <= work.covers, "profile base fact outside the model")
-            cap = _retained_cap(inputs, work)
+            cap = _retained_cap(inputs, work, unavailable, live)
         counts = dict.fromkeys((STAGES[1], STAGES[3]), 0)
         documents = dict.fromkeys(inputs.sources, document_budget) if document_budget is not None else None
         opening = [name for name in inputs.selection("opening") if name not in unavailable]
@@ -987,7 +1043,7 @@ def _evaluate(inputs, budget, scenario, *, producer=None, retained=None, retaine
     }
     if profile.caller:
         omitted = broad["omitted"] + targeted["omitted"]
-        stops = _stops(inputs, required, resolved, omitted)
+        stops = _stops(inputs, terminal, resolved, omitted)
         tally = {source: {"source": source, "stop": stops[source], "reading_bytes": 0, "attempted": 0, "omitted": 0}
                  for source in inputs.sources}
         for row in attempts:

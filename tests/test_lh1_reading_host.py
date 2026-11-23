@@ -634,3 +634,74 @@ def test_t20_default_limits_derive_a_cap_above_today(plain):
     out, report, _ = plain
     assert report["settings"]["limits"]["retained_bytes"] > reading.RETAINED_FLOOR
     assert json.loads((out / "run.json").read_bytes())["settings"] == report["settings"]
+
+
+class Empty:
+    def produce(self, call):
+        return {"outcome": "empty", "facts": {}, "proposal_keys": []}
+
+
+def _reads_back(out, report):
+    cap = report["settings"]["limits"]["retained_bytes"]
+    for name, raw in _files(out).items():
+        assert len(raw) <= cap, (name, len(raw), cap)
+
+
+def test_r1_long_roster_strings_stay_under_the_recorded_cap(tmp_path):
+    root = _root(tmp_path)
+    _edit(root, "roster.json", lambda roster: roster["sources"][0].update(version="v" * 200_000))
+    limits = ReadingLimits(roster=7, input_bytes=1 << 20, response_bytes=1024)
+    out = tmp_path / "run"
+    report = reading.run(out, fixture=root, producer=Empty(), limits=limits)
+    _reads_back(out, report)
+
+
+def test_r1_a_padded_saved_table_stays_under_the_recorded_cap(tmp_path):
+    root = _root(tmp_path)
+    raw = canonical_json_bytes(ANSWERS) + b" " * (2 << 20)
+    (root / "responses.json").write_bytes(raw)
+    (root / "producer-pin.json").write_bytes(canonical_json_bytes({"sha256": sha256_hex(raw)}))
+    out = tmp_path / "run"
+    report = reading.run(out, fixture=root, limits=ReadingLimits(input_bytes=4 << 20))
+    _reads_back(out, report)
+
+
+@pytest.mark.parametrize("kind", ["surrogate", "huge-int"])
+def test_r2_an_unserializable_answer_refuses(tmp_path, kind):
+    value = chr(0xD800) if kind == "surrogate" else 10**5000
+    answers = {**ANSWERS, "a-opening": {"outcome": "accepted", "proposal_keys": [],
+                                        "facts": {"paper_title": [{"paper": "paper-a", "title": value}]}}}
+    out = tmp_path / "run"
+    _refuses(out, lambda: reading.run(out, fixture=CALLER, producer=Producer(answers)))
+
+
+def test_r2_an_unserializable_receipt_refuses(tmp_path):
+    class Surrogate:
+        def review(self, call):
+            return {"decision": "supported", "basis": chr(0xD800)}
+
+    root = _root(tmp_path, profile=_profile(review=True))
+    out = tmp_path / "run"
+    _refuses(out, lambda: reading.run(out, fixture=root, producer=Producer(), reviewer=Surrogate()))
+
+
+def test_r3_a_malformed_saved_review_refuses_before_any_call(tmp_path):
+    root = _root(tmp_path, profile=_profile(review=True))
+    (root / "reviews.json").write_bytes(canonical_json_bytes({"a-opening": []}))
+    out = tmp_path / "run"
+    _refuses(out, lambda: reading.run(out, fixture=root, producer=Forbidden()))
+
+
+def test_r4_a_superseded_required_question_stays_with_its_own_source(tmp_path):
+    root = _root(tmp_path)
+
+    def cross(roster):
+        for question in roster["questions"]:
+            question["required"] = question["id"] == "a-title"
+            if question["id"] == "a-title":
+                question["superseded_by"] = "b-title"
+
+    _edit(root, "roster.json", cross)
+    report = reading.run(tmp_path / "run", fixture=root, producer=Empty())
+    documents = {row["source"]: row["stop"] for row in report["documents"]}
+    assert documents == {"survey-a": "available-evidence-exhausted", "survey-b": "required-coverage-completed"}

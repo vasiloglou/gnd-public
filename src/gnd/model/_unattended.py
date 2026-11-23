@@ -115,7 +115,9 @@ def _declared_documents(source: dict[str, Any], issues: list[ValidationIssue], *
     if not isinstance(documents, list) or not documents:
         # VG4 (D4 (a)): a root that includes a reviewed model and holds nothing of
         # its own may wait for its first document; a growth round declares it.
-        if not (first_document_pending and (documents is None or documents == [])):
+        # Absent or empty only: a present null cannot take the first round's add
+        # (VG4 review r1, F1).
+        if not (first_document_pending and ("documents" not in source or documents == [])):
             issue("$.source.documents", "an unattended model must declare at least one source document")
         return declared
     for index, entry in enumerate(documents):

@@ -298,3 +298,18 @@ def test_T6_the_pages_state_the_first_document_rule_and_the_repin_refusal():
     contract = (REPO / "src/gnd/skills/gnd-model-evolve/references/evolution-contract.md").read_text()
     assert "may wait for its first document" in page
     assert "`evolve:unattended-repin: <reference>`, exit `3`" in contract
+
+
+# --- review round 1 (notes/reviews/phase-VG4-r1), regression case ------------
+
+
+def test_R1_F1_a_null_documents_value_keeps_U1(tmp_path):
+    """F1: ``documents: null`` passed U1 but the first round could not append to it."""
+    root = _undocumented(tmp_path / "ws")
+    doc = json.loads(root.read_text())
+    doc["source"]["documents"] = None
+    root.write_text(json.dumps(doc))
+    result = run_main(["validate", str(root), "--format", "json"])
+    issues = [(i["rule_id"], i["message"]) for i in json.loads(result.stdout)["issues"]]
+    assert result.returncode == 3
+    assert ("semantic:unattended-u1", U1_DOCUMENTS) in issues, issues

@@ -1,6 +1,6 @@
-# Reviewed-vocabulary growth · plan r5
+# Reviewed-vocabulary growth · plan r6
 
-**Status: r5, 2026-11-23: r4 as approved by the owner ([plan gate](../001-plan-gate.md)) with the close amendments of §11, tagged `(c1)`.** Prior status line of r4, kept: "Status: r4, 2026-11-23. Reviewed once, at r1; not approved." The owner
+**Status: r6, 2026-11-23: r4 as approved by the owner ([plan gate](../001-plan-gate.md)) with the close amendments of §11, tagged `(c1)`, and the close review's repairs, tagged `(c2)`.** Prior status of r5: "r4 as approved … with the close amendments of §11, tagged `(c1)`." Prior status line of r4, kept: "Status: r4, 2026-11-23. Reviewed once, at r1; not approved." The owner
 selected the GND review panel light for the plan review on 2026-11-23 (D8).
 The panel read r1 (sha256
 `3d4a06b864a339f55c82a83c2e9dad6cc704d45bf156aeaeb1aaa086fbd4eb7f`, commit
@@ -475,7 +475,8 @@ refactoring review and its record.
   `confirmed`: that is `gnd evolve` under a reviewer, as today.
 - The whole-repository ruff red (H27) and the stale lines of `project.md`,
   its lint-gate sentence among them `(p1)` (D11): owner policy, outside a
-  phase.
+  phase. `(c2)` At the close the whole-repository command exits 0 (§11,
+  amendment 4); the stale `project.md` lines stay the owner's.
 - #226, #227 and #228 (literature-reading-reference, growth-round-outcomes)
   `(m)`.
 
@@ -589,5 +590,7 @@ changes a goal predicate or a ruling of §10.
 | 2 | §3, VG3 homes | "`src/gnd/model/_unattended.py`, `src/gnd/model/__init__.py` (`_model_warnings`), `src/gnd/model/_includes.py` (`remap_issues`), `src/gnd/commands/checking.py`, `representation-format.md` (\"Unattended source\", \"Model includes\"), a new `tests/test_vg3_unattended_includes.py`, `tests/test_unattended_mode.py`, `tests/test_mc1_model_includes.py`, `docs/release-notes.md`" | adds `tests/vg3_cases.py` and `tests/fixtures/vg3/base-outputs.json`; `tests/support/rf9_ci_sources.py` and `evidence/VG3/source-successors.json` (the `_cmd_validate` successor); `tests/test_mc3_source_observations.py` (follows registered successors); `tests/test_unattended_span_coverage.py` (a13's fake) | `003-phase-VG3.md` |
 | 3 | §2, VG5; §3, VG5 homes | "The route list of \"Model includes\" names every route that resolves an include root, `gnd coverage` and `gnd evolve` included (H24)"; homes "… `notes/issue-replies.md`" | the route list also names `gnd discover`; homes add `tests/test_mc1_guards.py` (R30, the packaged include roots), `tests/test_packaged_skills.py` (the skill link graph) and `tests/support/markdown_sections.py` | `006-phase-VG5.md` |
 | 4 | §1, H27; §10, D11 | H27: "whole-repository `uv run ruff check` exits 1 with 198 errors" | at the close, `main` at `f7fad6a1`, the whole-repository command exits 0; the close records both commands. D11's other stale lines of `project.md` stay the owner's | the close gates |
-| 5 | §2, VG1 | "Where the table lives is a VG1 spec decision; the proposal is `ModelIndex`" | the tables live on `ModelIndex` and are built from the canonical JSON form the cache key is a digest of, not from the cached rows (the cache can hold another model's rows) | `002-phase-VG1.md`, refuted premise |
+| 5 | §2, VG1 | "Where the table lives is a VG1 spec decision; the proposal is `ModelIndex`" | the tables live on `ModelIndex` and are built from the canonical JSON form the cache key is a digest of, not from the cached rows (the cache can hold another model's rows); past the routed reader's 10 MB or 64-level caps they read the cached rows, as before VG1 `(c2)` | `002-phase-VG1.md`, refuted premise and boundary |
+| 6 `(c2)` | §2, VG4, first-document bullet; §3, VG4 homes | §2: "The test is read on the root's own document, as authored, before composition merges the included elements into it. It cannot be read on the composed document, which the U rules read today (H16)"; §3: "`src/gnd/model/__init__.py` (the root's own document reaches U1)" | the test reads the composed document with VG3's origin set (`_owns_nothing`, `model/_unattended.py`), which equals the root's own document by the argument §2 gives (only included entries are appended to the merged sections; an attachment is the root's; an include declares no other section), measured by VG4 T3's per-section cases; `model/__init__.py` did not change for it | the close review (claude); `005-phase-VG4.md` |
+| 7 `(c2)` | §5, Compatibility | "VG2 (a) and VG3 (a) admit inputs that 0.4.0 refuses and refuse nothing 0.4.0 admits" | also: since VG3, `remap_issues` maps `$.object_types[id=…]` for every include root, so an error on an included object type of a root without the mode would carry `includes[ID]:`; a standalone-valid include cannot carry such an error, and the exit is 3 either way. The span walk cannot raise an issue on an included element of a root without the mode, which declares no document | the close review (glm), reproduced in part |
 

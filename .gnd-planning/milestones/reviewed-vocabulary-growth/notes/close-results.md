@@ -1,6 +1,6 @@
 # reviewed-vocabulary-growth · close results
 
-Measured 2026-11-23 on `main` at `f7fad6a1`, which holds pull request 239
+**Repaired after the close review** `(c2)`: the open-questions rows named in the close record changed; the gates and predicates did not. Measured 2026-11-23 on `main` at `f7fad6a1`, which holds pull request 239
 (VG1, `7952ee9e`) and pull request 240 (VG2–VG5, `8fea6da5`). These are the
 results the close review reads beside plan r5
 (`notes/reviewed-vocabulary-growth-plan.md`) and the delta
@@ -54,7 +54,7 @@ approved by delegated ruling under the owner's
 
 | Question | Raised in | Disposition |
 |---|---|---|
-| `ModelIndex`'s cache key admits two models whose values differ; readers other than the VG1 tables still read the first model's rows | `002-phase-VG1.md` | carried: a maintenance pass, the owner to file |
+| `ModelIndex`'s cache key admits two models whose values differ; readers other than the VG1 tables still read the first model's rows, and so do the VG1 tables past the routed reader's 10 MB or 64-level caps `(c2)` | `002-phase-VG1.md` | carried: a maintenance pass, the owner to file |
 | a subtype chain hundreds of types deep stays slow (44.6 s at 800) | plan D12; `002-phase-VG1.md` | carried: successor question, figures recorded |
 | `gnd judgments check` runs the checker twice | plan D10 | carried: successor question |
 | VG1-D5: does the witness oracle's walk need a table | `002-phase-VG1.md` | closed: `gnd verify` measured 0.40 s at 1,000 |
@@ -67,3 +67,4 @@ approved by delegated ruling under the owner's
 | the stale lines of `project.md` (D11) | plan D11 | carried: the owner's, outside a phase; the lint line is now true |
 | posting the three replies | plan §5 | carried: the owner's |
 | the spec-level open questions of plan §10 (VG1 table home, VG3 origin route and line text, VG4 D6 home) | plan §10 | closed by VG1-D1, VG3-D1, VG3-D2, VG4-D2 |
+| plan §10: VG4, how the root's own document reaches U1 `(c2)` | plan §10 | closed by the VG4 spec, §6: U1 reads the composed document with VG3's origin set (plan §11, amendment 6) |

@@ -16,7 +16,12 @@ What the milestone delivered differently from plan r4 as approved
    section reader.
 4. H27: the whole-repository ruff now exits 0.
 5. VG1's tables are built from the canonical JSON form the cache key is a
-   digest of, not from the cached rows.
+   digest of, not from the cached rows; past the routed reader's caps they
+   read the cached rows `(c2)`.
+6. `(c2)` VG4's first-document test reads the composed document with VG3's
+   origin set, not the root's own document before the merge as §2 said.
+7. `(c2)` §5 states the object-type remapping's reach on include roots
+   without the mode.
 
 ## Spec-level changes recorded in the phases
 
@@ -30,7 +35,9 @@ What the milestone delivered differently from plan r4 as approved
 - VG3: the origin reaches the rules through a context variable set only by
   `_model_warnings` (VG3-D1); sample spans are read on included fact types
   only; selectors are matched as whole text.
-- VG4: the first-document add creates the list only on an unattended model;
+- VG4: U1's first-document test reads the composed document with VG3's
+  origin set; VG4-C3's per-section cases measure its equivalence to the
+  root's own file `(c2)`. The first-document add creates the list only on an unattended model;
   a present `documents: null` keeps U1; T5 does not compare against a
   flattened copy.
 - VG5: a receipt binds no reference identity for a model without

@@ -130,6 +130,20 @@
       "reason": "GW0 (24c72d86) moved canonical_scalar to gnd.values; semantic_adapter.canonical_scalar is the same object, so the site keeps its failure meaning",
       "after_old": "def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | None:\n    \"\"\"Exact identity plus optional ordering coordinates; never stringify a type mismatch.\"\"\"\n",
       "after_new": "def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Exact identity plus optional ordering coordinates; never stringify a type mismatch.\"\"\"\n"
+    },
+    {
+      "id": "M-SEM-extract-temporal-refusal",
+      "before_file": "src/gnd/terms.py",
+      "after_file": "src/gnd/terms.py",
+      "old": "message=f\"{consumer} does not support temporal models in Phase 1\",",
+      "new": "message=f\"{consumer} does not support temporal models in Phase 1 (rf1)\",",
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_extract[ex/dispatch/model.orm.json]",
+        "tests/test_rf1_semantic_pins.py::test_extract[ex/release/model.orm.json]"
+      ],
+      "reason": "IR2 (1311ae6d) appended the gnd flatten hint to the extract refusal for a temporal include root, so the message literal no longer ends in a comma; the mutant changes the same literal and both models are flat, so the site keeps its failure meaning",
+      "after_old": "message=f\"{consumer} does not support temporal models in Phase 1\"\n",
+      "after_new": "message=f\"{consumer} does not support temporal models in Phase 1 (rf1)\"\n"
     }
   ]
 }

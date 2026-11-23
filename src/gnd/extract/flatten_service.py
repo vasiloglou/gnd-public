@@ -22,10 +22,10 @@ def flatten_to(model_path: str, out_dir: str, *, output_format: str = "text") ->
     from gnd.errors import ModelLoadError, ModelValidationError, ReferenceInputError
     from gnd.extract.bundle import bundle_stem
     from gnd.extract.service import _flattening_names
-    from gnd.install import InstallPathError
     from gnd.model import load_model
     from gnd.model.flattening import FlatteningError, flatten_model
     from gnd.output import _print_issues
+    from gnd.safefs import InstallPathError
     from gnd.synth.paths import safe_output_path
 
     # The model is loaded and flattened before any output check, so an invalid

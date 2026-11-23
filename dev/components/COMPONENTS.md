@@ -50,7 +50,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd extract, extraction schema, shape only projection, extraction guidelines, gnd fidelity, gnd doccheck, document manifest
 - status: canonical
 - components: cli.extract_command, extract.service, cli.flatten_command, extract.flatten_service, extract.bundle, extract.projection, extract.guidelines, extract.manifest, cli.fidelity_command, fidelity.service, fidelity.match, fidelity.report, cli.doccheck_command, fidelity.doccheck
-- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +11 more (graph.md)
+- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +10 more (graph.md)
 - notes: Three entry points share the manifest and bundle helpers: extract writes artifacts, fidelity matches extracted facts to source facts, doccheck validates rendered documents.
 
 ### subsystem.measure
@@ -449,7 +449,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Two files in the output directory and a command exit (0, 3, 11, 66, 74)
 - status: canonical
 - modules: src/gnd/extract/flatten_service.py
-- uses: extract.bundle, extract.service, infra.artifacts, infra.errors, infra.exit_codes, infra.text_output, install.skill_lifecycle, model.loading, synth.paths
+- uses: extract.bundle, extract.service, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem, infra.text_output, model.loading, synth.paths
 - used_by: cli.flatten_command
 - part_of: subsystem.extract
 - tests: tests/test_ir2_flatten.py
@@ -2459,7 +2459,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/install.py
 - uses: infra.artifacts, infra.input_policy, infra.safe_filesystem, infra.version
-- used_by: cli.dispatch, cli.lifecycle_command, extract.flatten_service
+- used_by: cli.dispatch, cli.lifecycle_command
 - tests: tests/test_install.py, tests/test_doctor_uninstall.py, tests/test_packaged_skills.py, tests/test_rf4_peripheral.py, tests/test_public_packaged_invocation_guards.py
 - checked: partial
 - notes: Enumerates only packaged and receipt-owned names; filesystem mutation primitives are explicit aliases from gnd.safefs, while lifecycle policy remains here.
@@ -2578,7 +2578,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +17 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +18 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.

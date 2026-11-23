@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-import inspect
 import json
-import re
 from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Literal, get_args, get_origin
 
 import pytest
+from support.rule_source import rule_id_arguments
 
 from gnd import api, redaction, semantic_adapter, semantic_spec
 from gnd import model as model_module
@@ -145,7 +144,7 @@ def test_opaque_temporal_applications_still_observe_the_work_budget():
     assert evaluate_term(term, {'day': None}, temporal_work=work).reason == 'term:temporal-work-limit'
 
 def test_current_temporal_rule_emits_a_declared_identifier_family():
-    identifiers = set(re.findall('rule_id="([^"]+)"', inspect.getsource(model_module._rule_temporal_language)))
+    identifiers = set(rule_id_arguments(model_module._rule_temporal_language))
     assert identifiers == {'semantic:guarded-binding-type', 'semantic:temporal-comparison-type', 'semantic:temporal-site'}
     assert model_module._rule_temporal_language in model_module._SEMANTIC_RULES
 

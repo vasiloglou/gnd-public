@@ -1,0 +1,86 @@
+{
+  "version": 5,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [],
+  "fact_types": [
+    {
+      "id": "paper_method",
+      "reading": "{Paper} uses method {Note}",
+      "roles": [
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        },
+        {
+          "role_name": "value",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "paper_dataset",
+      "reading": "{Paper} uses dataset {Note}",
+      "roles": [
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        },
+        {
+          "role_name": "value",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "paper_finding",
+      "reading": "{Paper} reports finding {Note}",
+      "roles": [
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        },
+        {
+          "role_name": "value",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "paper_baseline",
+      "reading": "{Paper} compares with {Note}",
+      "roles": [
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        },
+        {
+          "role_name": "value",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "paper_venue",
+      "reading": "{Paper} appears in {Note}",
+      "roles": [
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        },
+        {
+          "role_name": "value",
+          "object_type": "note"
+        }
+      ]
+    }
+  ],
+  "includes": [
+    {
+      "id": "survey-terms",
+      "path": "terms.orm.json",
+      "sha256": "2cf8e537670f826622f7255079bcfa6bfedd6d960ca823180d91593add56c3e9"
+    }
+  ]
+}

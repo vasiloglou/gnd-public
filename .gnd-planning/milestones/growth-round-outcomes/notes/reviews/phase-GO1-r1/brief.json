@@ -1,0 +1,83 @@
+{
+  "base": "2814d9be",
+  "claims": [
+    "GO1-C1: one gnd evolve apply parses at most 3 times and one preview at most 2, the same at two model sizes and for a YAML and a .json workspace; with the scope off the counts are 22 and 6.",
+    "GO1-C2: for the cases of the focused evolve lane and for an include root, a .json model, a YAML model with a value JSON cannot spell, a policy refusal and a D-12 refusal, every output byte, message and exit is identical with the scope on and off.",
+    "GO1-C3: no remembered document differs at scope close from what the parser built, and the write check (set_parse_scope_verify) detects any write, including one made through a loaded Model, without false positives on values JSON cannot spell.",
+    "GO1-C4: a model file changed between preview and apply is refused as today, a second command in the same process parses again, and nothing remembered outlives its outermost scope or crosses threads.",
+    "R0.2: no validation, guard, digest comparison or refusal is removed or reordered; a parse that raises is never remembered and its refusal names the caller's own source.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T20:51:05.266548+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/growth-round-outcomes/notes/reviews/phase-GO1-r1/diff.patch",
+      "sha256": "1260d693d385349750391d6d4d3c7ca35f6ea0f7a60f80dc9c57de73e0429de5"
+    },
+    {
+      "path": ".gnd-planning/milestones/growth-round-outcomes/notes/phase-GO1-spec.md",
+      "sha256": "6ba1f929022f8e12a0e0fd05706171b8106ec52357884e3572b60801dcd6b000"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "7d20f4f65b48c401017cd576348a778ba1d75a3afd91980bdbfb3b79217d0f1d"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "c6e97de6d478f5393292ad25c7efadef649a708bc6f01a34aaad7d90e36f335f"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "3f8f1e91fe1c0dc17d0666703193d3f0a0e6ee5703a24fbb20191f43fe4e7984"
+    },
+    {
+      "path": "dev/components/modules/evolve.md",
+      "sha256": "b660723360b65e206f09b7364395a612a366cb9a7f50d0eb35a0272a35a9f15e"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "51e2a79c9fe9c670e36e16f12bf0612e930c29ec75d33cf12c94d047d9088564"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "fcc11c43e444fbb43c5f5b6f3f1a2687c44bc55f3c6f3cf15e6bbc8d60b5fbe5"
+    },
+    {
+      "path": "src/gnd/commands/evolve.py",
+      "sha256": "106a045fa89a4439e279b166cf197146fa52e9b8b1330b7186045bb4f5e4874d"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "sha256": "a1145e7fcee18e93bc59433438117060c4a647eeb00ba1f2f0cb53495cc01835"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "sha256": "8662e9368bfccc009ced7f86b6dfd1096c901bf11b72c589f56061a7975c2873"
+    },
+    {
+      "path": "src/gnd/model/_parsing.py",
+      "sha256": "d4411dbdf813193ec46660b80c881718a4ca4f849737d582881c2a0bbca50f96"
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "f18fedd4c10f45a4717095c353aab3a4529b51b50a0737ac9f635c5817048249"
+    },
+    {
+      "path": "tests/test_go1_evolve_parse_once.py",
+      "sha256": "fa26af6136af5eb43a3512c375854e748429f63edb3ef8d7bf5e701e8e34fd05"
+    },
+    {
+      "path": ".gnd-planning/milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md",
+      "sha256": "b107bd366101719a7cc997a6d5d4212dea5dc80f5d121c4dec3fc8b669007431"
+    }
+  ],
+  "head": "84c8df0b9772dc7c2980ab628dd0067ef78dfaa0",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does this diff make one gnd evolve preview or apply parse each model text once per reader without changing any preview, record, published model, message or exit, and without letting a shared parsed document be changed or handed to a caller whose reader would refuse those bytes? Find the input or path where it does not.",
+  "subject": "phase",
+  "version": 1
+}

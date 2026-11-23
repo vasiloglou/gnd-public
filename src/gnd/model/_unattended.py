@@ -18,6 +18,7 @@ from __future__ import annotations
 import hashlib
 import re
 from collections.abc import Callable, Iterator, Mapping
+from contextvars import ContextVar
 from dataclasses import dataclass
 from typing import Any, Literal
 
@@ -57,6 +58,34 @@ _UNATTENDED_SPANLESS_SOURCE = "common-sense"
 _UNATTENDED_INDUCED_SOURCE = "induced"
 _UNATTENDED_ALETHIC_SOURCES = ("sample", "llm-inferred", "common-sense", "induced")
 
+#: VG3: ``id()`` of the composed document's elements whose origin is an
+#: include, set by ``gnd.model._model_warnings`` around ``semantic_validate``
+#: and by nothing else (``gnd.model._includes.included_rows`` computes it).
+#: Every other caller sees the empty set, and so today's rules.
+_INCLUDED: ContextVar[frozenset[int]] = ContextVar("gnd_unattended_included", default=frozenset())
+
+
+def _declared_spans(owner: Any, declared: set[str], *, samples: bool) -> Iterator[tuple[str, Any]]:
+    """(suffix, span) for each span an included element carries over a document the root declares.
+
+    D14 (a): such a span is the root's business and keeps U7's shape check;
+    any other span an included element carries is read by no rule.
+    """
+    provenance = owner.get("provenance") if isinstance(owner, Mapping) else None
+    if not isinstance(provenance, Mapping):
+        return
+    for index, span in enumerate(_listed(provenance.get("spans"))):
+        if isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str) \
+                and span["document_sha256"] in declared:
+            yield f".provenance.spans[{index}]", span
+    # Sample spans belong to fact types, the one place the span walk visits them
+    # (VG3 review r1, F1).
+    for index, entry in enumerate(_listed(provenance.get("sample_spans")) if samples else []):
+        span = entry.get("span") if isinstance(entry, Mapping) else None
+        if isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str) \
+                and span["document_sha256"] in declared:
+            yield f".provenance.sample_spans[{index}].span", span
+
 
 def _unattended_source(doc: dict[str, Any]) -> dict[str, Any] | None:
     source = doc.get("source")
@@ -74,7 +103,8 @@ def _is_int(value: Any) -> bool:
     return isinstance(value, int) and not isinstance(value, bool)
 
 
-def _declared_documents(source: dict[str, Any], issues: list[ValidationIssue], *, rule_id: str) -> set[str]:
+def _declared_documents(source: dict[str, Any], issues: list[ValidationIssue], *, rule_id: str,
+                        first_document_pending: bool = False) -> set[str]:
     def issue(path: str, message: str) -> None:
         issues.append(ValidationIssue(path=path, message=message, rule_id=rule_id))
 
@@ -83,7 +113,12 @@ def _declared_documents(source: dict[str, Any], issues: list[ValidationIssue], *
     documents = source.get("documents")
     declared: set[str] = set()
     if not isinstance(documents, list) or not documents:
-        issue("$.source.documents", "an unattended model must declare at least one source document")
+        # VG4 (D4 (a)): a root that includes a reviewed model and holds nothing of
+        # its own may wait for its first document; a growth round declares it.
+        # Absent or empty only: a present null cannot take the first round's add
+        # (VG4 review r1, F1).
+        if not (first_document_pending and ("documents" not in source or documents == [])):
+            issue("$.source.documents", "an unattended model must declare at least one source document")
         return declared
     for index, entry in enumerate(documents):
         if (
@@ -189,24 +224,36 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
             and "spans" in constraint["provenance"]
         ]
     issues: list[ValidationIssue] = []
-    declared = _declared_documents(source, issues, rule_id="semantic:unattended-u1")
+    included = _INCLUDED.get()
+    declared = _declared_documents(source, issues, rule_id="semantic:unattended-u1",
+                                   first_document_pending=_owns_nothing(doc, included))
     for path, element in _iter_provenance_bearing(doc):
+        if id(element) in included:
+            continue  # VG3: an included element's status is the include's (U2)
         if element.get("status") == "confirmed":
             issues.append(ValidationIssue(
                 path=path, message=f"{_provenance_bearing_label(element)} is confirmed, but no reviewer exists",
                 rule_id="semantic:unattended-u2"))
     constraints = list(_iter_constraints(doc))
     for path, constraint in constraints:
+        if id(constraint) in included:
+            continue  # VG3 (U3)
         if constraint.get("source") in ("explicit", "user-supplied"):
             issues.append(ValidationIssue(
                 path=path, message=f"source '{constraint.get('source')}' claims a human said it; nobody did",
                 rule_id="semantic:unattended-u3"))
     for collection, label in (("object_types", "object type"), ("fact_types", "fact type")):
         for element in _listed(doc.get(collection)):
-            if isinstance(element, Mapping):
+            if isinstance(element, Mapping) and id(element) in included:
+                _included_span_issues(element, f"$.{collection}[id={element.get('id', '?')}]", declared, issues,
+                                      samples=collection == "fact_types")
+            elif isinstance(element, Mapping):
                 _require_spans(element, f"$.{collection}[id={element.get('id', '?')}]", label, declared, issues,
                                rule_id="semantic:unattended-u4", span_rule_id="semantic:unattended-u7")
     for path, constraint in constraints:
+        if id(constraint) in included:
+            _included_span_issues(constraint, path, declared, issues, samples=False)  # VG3: U5 asks nothing
+            continue
         provenance = constraint.get("provenance")
         has_spans = isinstance(provenance, Mapping) and "spans" in provenance
         # An induced constraint cites the digest-bound population evidence in
@@ -221,12 +268,14 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
             _require_spans(constraint, path, "constraint", declared, issues,
                            rule_id="semantic:unattended-u5", span_rule_id="semantic:unattended-u7")
     for fact_type in _listed(doc.get("fact_types")):
-        if isinstance(fact_type, Mapping):
+        if isinstance(fact_type, Mapping) and id(fact_type) not in included:  # VG3: U6; U7 above
             _sample_span_issues(dict(fact_type), f"$.fact_types[id={fact_type.get('id', '?')}]", declared, issues,
                                 rule_id="semantic:unattended-u6", span_rule_id="semantic:unattended-u7")
     # Every provenance-bearing element, obligations and operations included:
     # D-03 is an error in this mode (close review R3-2).
     for path, element in _iter_provenance_bearing(doc):
+        if id(element) in included and element.get("status") == "confirmed":
+            continue  # VG3, D13 (a): an included element is exempt from U8 only when confirmed
         if element.get("modality") == "alethic" and element.get("source") in _UNATTENDED_ALETHIC_SOURCES:
             issues.append(ValidationIssue(
                 path=path,
@@ -234,6 +283,47 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
                 rule_id="semantic:unattended-u8"))
     order = {f"semantic:unattended-u{n}": n for n in range(1, 9)}
     return sorted(issues, key=lambda issue: order[issue.rule_id])
+
+
+#: The sections composition appends included entries to (``_includes.SECTIONS``).
+_MERGED_SECTIONS = ("object_types", "fact_types", "constraints", "deontic_notes")
+_HEADER_KEYS = frozenset({"version", "model_id", "source", "includes"})
+
+
+def _owns_nothing(doc: dict[str, Any], included: frozenset[int]) -> bool:
+    """VG4 (D4 (a)): the root declares includes and nothing of its own.
+
+    Read on the composed document with VG3's origin set, which is the root's
+    own document as authored: composition appends only included entries to the
+    four merged sections, an attachment enters an included fact type as the
+    root's, and an include cannot declare any other section.
+    """
+    if not _listed(doc.get("includes")):
+        return False
+    for key, value in doc.items():
+        if key in _HEADER_KEYS:
+            continue
+        if key in _MERGED_SECTIONS:
+            if value is not None and not isinstance(value, list):
+                return False
+            for element in _listed(value):
+                if id(element) not in included:
+                    return False
+                if key == "fact_types" and isinstance(element, Mapping) and any(
+                        id(constraint) not in included for constraint in _listed(element.get("constraints"))):
+                    return False
+        elif value is not None and value != [] and value != {}:
+            return False
+    return True
+
+
+def _included_span_issues(owner: Any, path: str, declared: set[str], issues: list[ValidationIssue], *,
+                          samples: bool) -> None:
+    """U7 over the spans an included element carries over a root-declared document (D14 (a))."""
+    for suffix, span in _declared_spans(owner, declared, samples=samples):
+        found = _span_issue(span, f"{path}{suffix}", declared, rule_id="semantic:unattended-u7")
+        if found is not None:
+            issues.append(found)
 
 
 @dataclass(frozen=True)
@@ -262,7 +352,8 @@ class SpanCoverage:
                     "supply every declared document with --document")
 
 
-def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[list[ValidationIssue], SpanCoverage]:
+def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes],
+               included: frozenset[int] = frozenset()) -> tuple[list[ValidationIssue], SpanCoverage]:
     from gnd.anchors import AnchorError, canonical_document_text
 
     source = _unattended_source(doc) or {}
@@ -282,7 +373,10 @@ def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[lis
                                           message=f"document is not strict UTF-8 text: {error}".replace(
                                               "anchor:sidecar-invalid: ", "")))
     total = rehashed = 0
-    for path, span in _iter_unattended_spans(doc):
+    for path, span, from_include in _iter_unattended_spans(doc, included):
+        if from_include and not (isinstance(span, Mapping) and isinstance(span.get("document_sha256"), str)
+                                 and span["document_sha256"] in declared):
+            continue  # VG3, D14 (a): an included span over another document is not the root's claim
         total += 1
         # Shape first: a digest that is not a string is never a key (UG3 review finding 4).
         digest = span.get("document_sha256") if isinstance(span, Mapping) else None
@@ -301,30 +395,34 @@ def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[lis
     return issues, SpanCoverage(total=total, rehashed=rehashed)
 
 
-def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes]) -> list[ValidationIssue]:
+def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes], *,
+                           included: frozenset[int] = frozenset()) -> list[ValidationIssue]:
     """MG5 `gnd validate --document`: re-hash every valid span over a supplied document.
 
     ``documents`` maps a display path to raw bytes. Offsets count code points
     of the NFC text of the strict UTF-8 decoding (``canonical_document_text``);
     ``documents[].sha256`` is over the raw bytes. Messages name paths, digests
-    and offsets, never document text (MG-R5)."""
-    return _span_walk(doc, documents)[0]
+    and offsets, never document text (MG-R5). ``included`` is
+    ``gnd.model.included_rows`` over ``doc`` (VG3)."""
+    return _span_walk(doc, documents, included)[0]
 
 
-def unattended_span_coverage(doc: dict[str, Any], documents: Mapping[str, bytes]) -> SpanCoverage | None:
+def unattended_span_coverage(doc: dict[str, Any], documents: Mapping[str, bytes], *,
+                             included: frozenset[int] = frozenset()) -> SpanCoverage | None:
     """UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode."""
     if _unattended_source(doc) is None:
         return None
-    return _span_walk(doc, documents)[1]
+    return _span_walk(doc, documents, included)[1]
 
 
-def _iter_unattended_spans(doc: dict[str, Any]):
+def _iter_unattended_spans(doc: dict[str, Any], included: frozenset[int] = frozenset()):
+    """(path, span, whether its owner came from an include) for every span the walk visits."""
     def spans_of(owner: Any, path: str):
         provenance = owner.get("provenance") if isinstance(owner, Mapping) else None
         # Total over any shape (UG3 review finding 2): outside the mode, layer one
         # does not check `provenance.spans`, and `--document` still walks it.
         for index, span in enumerate(_listed(provenance.get("spans")) if isinstance(provenance, Mapping) else []):
-            yield f"{path}.provenance.spans[{index}]", span
+            yield f"{path}.provenance.spans[{index}]", span, id(owner) in included
 
     for collection in ("object_types", "fact_types"):
         for element in _listed(doc.get(collection)):
@@ -337,4 +435,5 @@ def _iter_unattended_spans(doc: dict[str, Any]):
         entries = provenance.get("sample_spans") if isinstance(provenance, Mapping) else None
         for index, entry in enumerate(entries if isinstance(entries, list) else []):
             if isinstance(entry, Mapping):
-                yield f"$.fact_types[id={fact_type.get('id', '?')}].provenance.sample_spans[{index}].span", entry.get("span")
+                yield (f"$.fact_types[id={fact_type.get('id', '?')}].provenance.sample_spans[{index}].span",
+                       entry.get("span"), id(fact_type) in included)

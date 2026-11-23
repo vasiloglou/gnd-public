@@ -66,7 +66,12 @@ def _cmd_validate_documents(
     and returns its exit with ``None``; otherwise the result is rebuilt through
     the validate pipeline with the walk's issues and warnings, for the caller
     to print (exit 0 with nothing to add returns the original result)."""
-    from gnd.model import unattended_span_coverage, unattended_span_issues
+    from gnd.model import (
+        included_rows,
+        remap_issues,
+        unattended_span_coverage,
+        unattended_span_issues,
+    )
 
     documents, exit_code, message = _read_validate_documents(paths)
     if exit_code is not None:
@@ -81,8 +86,10 @@ def _cmd_validate_documents(
         print(f"ERROR: {message}")
         return exit_code, None
     document = result.model.model_dump(exclude={"warnings"})
-    issues = unattended_span_issues(document, documents)
-    coverage = unattended_span_coverage(document, documents)
+    origins = result.model._provenance
+    included = included_rows(document, origins)  # VG3: the rule walk's origin test, over this dump
+    issues = remap_issues(unattended_span_issues(document, documents, included=included), origins)
+    coverage = unattended_span_coverage(document, documents, included=included)
     entry = None if coverage is None else coverage.issue(severity="error" if require else "warning")
     warnings = list(result.warnings)
     if entry is not None:
@@ -99,6 +106,20 @@ def _is_unattended(model: Any) -> bool:
 
     source = model.source
     return isinstance(source, dict) and source.get("mode") == UNATTENDED_MODE
+
+
+def _print_include_attribution(model: Any) -> None:
+    """VG3 (D5): one text line per include of an unattended root; counts and a digest, never a value."""
+    if model is None or not _is_unattended(model):
+        return
+    from gnd.model import include_attribution
+
+    for row in include_attribution(model):
+        print(f"INCLUDE {row['id']} sha256={row['sha256']}: {row['object_type_count']} object types, "
+              f"{row['fact_type_count']} fact types, {row['sample_rows']} sample rows, "
+              f"{row['constraints']} constraints ({row['confirmed']} confirmed, {row['alethic']} alethic, "
+              f"{row['explicit_or_user_supplied']} explicit or user-supplied), "
+              f"{row['deontic_notes']} deontic notes")
 
 
 def _cmd_validate(
@@ -140,6 +161,8 @@ def _cmd_validate(
     if "redaction" in mechanical_payload:
         if trace and result.model is not None and not result.issues and result.error is None:
             _print_trace(result.model, model_path)
+        if result.exit_code == 0:
+            _print_include_attribution(result.model)
         _print_projected_check_text(mechanical_payload)
         return result.exit_code
     for warning in result.warnings:
@@ -153,6 +176,7 @@ def _cmd_validate(
         return result.exit_code
     if trace:
         _print_trace(result.model, model_path)
+    _print_include_attribution(result.model)
     print(f"OK: {model_path} is a valid GND ORM model")
     return result.exit_code
 

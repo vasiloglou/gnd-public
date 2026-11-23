@@ -26,6 +26,7 @@ from gnd.artifacts import (
 from gnd.conformance.report import canonical as canonical_conformance
 from gnd.conformance.service import run_conformance
 from gnd.model import ModelLoadError, ModelValidationError
+from gnd.model._parsing import parse_scoped
 from gnd.model_verbalization import render_model_verbalization
 from gnd.safefs import (
     InstallError,
@@ -464,6 +465,13 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
             if (status, modality) != ("proposed", "deontic"):
                 raise EvolutionError(
                     "new llm-inferred constraints must remain proposed/deontic (D-12)"
+                )
+        elif source in ("sample", "common-sense"):
+            # VG2 (issue 218): row evidence and library evidence, as the growth
+            # document has the host write them; never confirmed, never alethic.
+            if (status, modality) != ("proposed", "deontic"):
+                raise EvolutionError(
+                    "new sample and common-sense constraints must be proposed/deontic (D-12)"
                 )
         elif source == "user-supplied":
             if status != "confirmed":
@@ -1000,6 +1008,11 @@ def _source_document_target(
     with the digest: two would make the target depend on list order (finding 5)."""
     source = document.get("source")
     documents = source.get("documents") if isinstance(source, dict) else None
+    if (documents is None and isinstance(source, dict) and "documents" not in source
+            and source.get("mode") == "unattended" and operation.kind is EvolutionOperationKind.ADD):
+        # VG4 (VG4-D1): an unattended root may start without documents (U1's
+        # first-document rule); its first round's add creates the list.
+        documents = source["documents"] = []
     if not isinstance(documents, list):
         purpose = " to append to" if operation.kind is EvolutionOperationKind.ADD else ""
         raise EvolutionError(
@@ -1517,6 +1530,7 @@ class EvolutionService:
         )
         return model, document, _validation_for(model, candidate)
 
+    @parse_scoped  # GO1: re-entrant, so the command line opens one scope
     def preview(
         self,
         proposal: EvolutionProposal,
@@ -2107,6 +2121,7 @@ class EvolutionService:
             f"`gnd evolve finalize <model> {pending_path}` before starting a new evolution"
         )
 
+    @parse_scoped
     def apply(
         self, preview: EvolutionPreview, *, check_population: str | None = None
     ) -> EvolutionFinalizationState:
@@ -2374,6 +2389,7 @@ class EvolutionService:
     def final_record_file_sha256(self, record: EvolutionRecord) -> str:
         return sha256_hex(canonical_json_bytes(record))
 
+    @parse_scoped
     def finalize(self, state: EvolutionFinalizationState) -> EvolutionRecord:
         """Complete exact post-CAS leaves and publish the immutable D-13 record last."""
 

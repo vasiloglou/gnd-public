@@ -1,0 +1,698 @@
+{
+  "artifacts": {
+    "applicable_sha256": "92a77913736869962417e2e390e746370329fd10715275d223d401d0e5a65a0e",
+    "projection_sha256": "1e0c61414df00eb32b91b9db07ce60c2a5f616281344d038717894d838a314a2"
+  },
+  "calibration": {
+    "state": "uncalibrated",
+    "unquantified_biases": [
+      "self-consistency",
+      "unmentioned-entity-recall",
+      "relation-permutation"
+    ]
+  },
+  "cases": {
+    "failed": 0,
+    "ran": 2,
+    "reasons": [],
+    "skipped": 0
+  },
+  "command": "fidelity",
+  "evidence": {
+    "cases": [
+      {
+        "case": "held-back-predicate",
+        "document_sha256": "acbbf0923da8abe349d93543675b6c846af747bb4783677186f105fdc7635466",
+        "extracted_population_sha256": "b807771e871b5e07a18ffd651e4d336bcf6731ad37883ba4db45b3803b73eab5",
+        "source_population_sha256": "59fc87f7ab047ae2ff7f93c666396d9bded7460ba560794347b6e78c3b5ea3fe",
+        "state": "ran"
+      },
+      {
+        "case": "run-methods",
+        "document_sha256": "e7901bc7466b42501b99734d44e188751cf5352e12b1cc2260c28a8d9ab3a61d",
+        "extracted_population_sha256": "5ea9e77565c4509beac2dd9deac886ae9e25a0b197715ef05b88d757f86e2149",
+        "source_population_sha256": "2db31c62c08fd46cc8983e170fd712da0afe1ed7cca8375de29b2219dcd1ee88",
+        "state": "ran"
+      }
+    ],
+    "excerpt": {
+      "case": "held-back-predicate",
+      "fact": {
+        "subject": "calibration-control",
+        "value": "Velocity Verlet"
+      },
+      "fact_type": "alternative_integrator",
+      "outcome": "tp",
+      "reason": null,
+      "source": "extracted"
+    }
+  },
+  "gnd_version": "0.4.0",
+  "model": {
+    "id": "reading.orm.json",
+    "sha256": "be7752ec6ce48e84a58d0c8f1406f1156a3c20bad05dc4a0c1db7e76da483739"
+  },
+  "per_fact_type": [
+    {
+      "applicable": true,
+      "id": "alternative_integrator",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 1,
+        "missed": 0,
+        "source_total": 1,
+        "tp": 1,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 1,
+        "numerator": 1,
+        "rate": 1.0
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 1,
+        "numerator": 1,
+        "rate": 1.0
+      },
+      "unresolved": {
+        "denominator": 1,
+        "numerator": 0,
+        "rate": 0.0
+      }
+    },
+    {
+      "applicable": true,
+      "id": "approximation",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 1,
+        "source_total": 1,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 1,
+        "numerator": 0,
+        "rate": 0.0
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "energy_model",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "ensemble",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "equation",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_baseline",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_conditions",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_configuration",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_dataset",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_metric",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_score",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_split",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_uncertainty",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "experiment_units",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "explicit_denial",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "objective",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "subject_has_component",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "subject_influenced_by",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "subject_label",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "subject_specializes",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "system",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    },
+    {
+      "applicable": true,
+      "id": "validity",
+      "matched": {
+        "ambiguous": 0,
+        "extracted_total": 0,
+        "missed": 0,
+        "source_total": 0,
+        "tp": 0,
+        "unmatched": 0,
+        "unresolved": 0
+      },
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "reason": null,
+      "recall": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      },
+      "unresolved": {
+        "denominator": 0,
+        "numerator": 0,
+        "rate": null
+      }
+    }
+  ],
+  "publishable": false,
+  "schema_version": 2,
+  "tool": "gnd"
+}

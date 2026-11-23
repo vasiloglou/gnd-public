@@ -1,0 +1,58 @@
+{
+  "base": "11ca75b0",
+  "claims": [
+    "VG2-C1: a proposal built as unattended-growth.md describes, with one sample and one common-sense constraint, proposed and deontic, previews and applies, exit 0.",
+    "VG2-C2: a new sample or common-sense constraint that is confirmed or alethic exits 3 with the named D-12 refusal, on any model.",
+    "No D-12 answer other than the eight sample and common-sense rows changes; a changed constraint is judged as before.",
+    "VG2-C3: the D-12 home, the evolution contract and the growth document state the same admitted combinations.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T21:51:50.435364+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG2-r1/diff.patch",
+      "sha256": "e80a379fbaa9b78604023b65dfd0460f72fd78a8410fde77113f051c67ed4cc2"
+    },
+    {
+      "path": "dev/components/modules/evolve.md",
+      "sha256": "d195b6f249725e9a3eac51e6c006d943aa0bcf7a35f62281a3bb95b82664574c"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "ab1849524cb73d0edd650ad89f16b3ee679de6e31a408226b366905498dcc72e"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "sha256": "404cd6b224937484106d394660de188d0eb4ad60ffd83e50d2fcf9a8d5520f5e"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-evolve/references/evolution-contract.md",
+      "sha256": "fc234d62acc1cd49015baa2afe9ac800e9467496a48e8a51327e18cbf68fc8eb"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md",
+      "sha256": "e3eb7ecae2c404f7b123389a115d889f0486d448db666760b7c93260fe7108df"
+    },
+    {
+      "path": "tests/test_induced_provenance.py",
+      "sha256": "8e7b07e51614235f58c17ced3bb4fa85d2bab678326cde8c63d7ad543096b8f3"
+    },
+    {
+      "path": "tests/test_vg2_evolve_sources.py",
+      "sha256": "afbd0338b526a982ede4599535670e4b52bbdcebf81859beadf7dd7172052262"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG2-spec.md",
+      "sha256": "ddb0f24913d1cbf5b942fb7c341e2bc9ad261cb9cfef10f62f27f4b34dc5cb4d"
+    }
+  ],
+  "head": "b2ce8bb02f8504a8ec6b5c7f328dc996fc3157ea",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does this diff admit exactly the new constraints the growth document tells a host to write, and refuse every other sample or common-sense constraint, without changing any other D-12 answer?",
+  "subject": "phase",
+  "version": 1
+}

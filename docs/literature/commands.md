@@ -152,6 +152,18 @@ false     normalizing flows -> simulation-based inference -> deep optimal sensor
 supported paths kept 3/3, false paths excluded 5/5
 ```
 
+### Admit your own assertions
+
+The lineage run admits statements of the example's own shape. A host whose
+model names its assertions differently calls
+`assertion_admission.admit(..., shape=..., rules=...)` from Python: the
+shape names your assertion entity and the entities to follow from it, and
+the rules say which reviewed values are admissible. Every fact attached to
+an admitted assertion is kept, and a reviewed assertion your rules refuse is
+recorded as `policy-refused`, not as failed. The shape, the rules and the
+record are described in the example's
+[README](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/README.md#admitting-your-own-assertion-entity).
+
 ## Act 2. Two papers, one vocabulary
 
 Extract two papers against a shared vocabulary, merge their spellings of
@@ -365,6 +377,18 @@ equation      control-equation inspected=false not-applicable
 reads: {'attempted': 5, 'omitted': 0, 'scheduled': 6, 'unavailable': 1}
 stop: required-coverage-completed
 ```
+
+### Drive it from your host
+
+The same loop reads your own documents with your own model. Put a
+`profile.json` beside your roster, sources and model, and call
+`reading.run(out, fixture=your_root, producer=your_producer)` from Python:
+your producer gets each section's bytes and answers with facts, and the run
+records what it read, what it skipped and why. `reading.replay(out,
+fixture=your_root)` re-derives the run without calling your producer again.
+The profile, the producer protocol, the limits and the run format are
+described in the example's
+[README](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/reading_fixture/README.md#drive-it-from-your-host).
 
 ## Act 3. Change your mind, and keep the verdicts honest
 

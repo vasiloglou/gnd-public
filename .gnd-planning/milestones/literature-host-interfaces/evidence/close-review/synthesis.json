@@ -1,0 +1,233 @@
+{
+ "schema_version": 1,
+ "run_sha256": "b8753de76a701cc9f1333b556afdfa62cdecbb146b97d9690b02092737bd10df",
+ "summary": "Milestone close of literature-host-interfaces at 9abb436a (full panel, owner's word 'full'). Four of six seats succeeded (Codex, Qwen, Gemini, Kimi); Claude and GLM timed out. Gemini approved; Codex and Kimi asked for revision; Qwen blocked. One concern reached agreement (Qwen, Kimi): close-results asserts predicates whose evidence is not checkable at the reviewed commit. Singleton blocking: an accepted answer with an empty fact list marks its question supported (Codex), and the Qwen seat, given the three artifacts inline, could not read the code (Qwen). The rest are hardening and completeness fixes to the close documents and the amended plan. Kimi's response is retained as incomplete and one of its concerns is unanchored.",
+ "agreed_concerns": [
+  {
+   "group_id": "close-results-unverifiable-at-commit",
+   "severity": "high",
+   "title": "close-results.md asserts closure predicates whose evidence is not checkable at the reviewed commit",
+   "summary": "The results quote no commit, digest or gate summary, and point at a close record and close-review evidence that do not exist yet at 9abb436a.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "results-quote-no-measurement"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "close-record-evidence-missing"
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "kimi"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "codex",
+   "concern_id": "lh1-empty-fact-support"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-panel-received-no-code"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "retained-bound-response-term-unstated"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "handle-key-semantics-only-in-delta"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "plan-11-undercounts-departures"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "a2-left-section-3-branch-stale"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "status-block-contradicts-d15-a3"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "delta-omits-lane-departure"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-empty-fact-support",
+   "rank": 1,
+   "title": "An accepted answer may not carry an empty fact list; support needs rows",
+   "action": "Refuse an accepted response whose fact lists include an empty one, and decide supported from a non-empty row list; add the regression case.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh1-empty-fact-support"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lh1-empty-fact-support",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-results-measurements",
+   "rank": 2,
+   "title": "Quote the close measurements in close-results.md and write the close record",
+   "action": "Name the close commit, the three packaged digests and each close gate's command and summary in close-results.md, and write 006-milestone-close.md and evidence/close-review/ so every cited predicate resolves.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "results-quote-no-measurement"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "close-record-evidence-missing"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "results-quote-no-measurement",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "close-record-evidence-missing",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-qwen-seat-scope",
+   "rank": 3,
+   "title": "Record that the Qwen seat read the three artifacts only",
+   "action": "State in the close record which seats read code (Codex, Gemini, Kimi) and that Qwen's opinion covers the three planning artifacts it was given inline.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-panel-received-no-code"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-panel-received-no-code",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-handle-identity-home",
+   "rank": 4,
+   "title": "Give handle equality its documentation home and criterion citation",
+   "action": "State in the admission README that handles compare as the checker compares them (true and 1 differ, 1 and 1.0 are one), and cite the regression tests in close-results' LH3 row.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "handle-key-semantics-only-in-delta"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "handle-key-semantics-only-in-delta",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-delta-wording",
+   "rank": 5,
+   "title": "Complete and sharpen the delta",
+   "action": "State the response-cap term of the retained bound in item 5, add the test_ld1 lane addition and the close panel's repair as items.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "retained-bound-response-term-unstated"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "delta-omits-lane-departure"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "retained-bound-response-term-unstated",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "delta-omits-lane-departure",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-plan-consistency",
+   "rank": 6,
+   "title": "Make the amended plan agree with itself",
+   "action": "Amend the status block and section 3's branch sentence (A2, A4), and point section 11 at close-delta.md as the complete list of phase-level departures.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "plan-11-undercounts-departures"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "a2-left-section-3-branch-stale"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "status-block-contradicts-d15-a3"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "plan-11-undercounts-departures",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "a2-left-section-3-branch-stale",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "status-block-contradicts-d15-a3",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+  "high": {
+    "paper_baseline": [
+      {
+        "paper": "control-paper",
+        "value": "uniform sampling"
+      }
+    ]
+  },
+  "low": {}
+}

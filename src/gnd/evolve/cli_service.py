@@ -15,6 +15,9 @@ from gnd.exits import (
     EXIT_NO_INPUT,
 )
 from gnd.model import ModelValidationError
+from gnd.model._parsing import (
+    parse_scoped as parse_scoped,  # noqa: PLC0414 -- GO1: gnd.commands.evolve opens its scope through this service
+)
 
 
 class _EvolutionCLIError(Exception):
@@ -319,6 +322,8 @@ def _evolve_service_exit(error: Exception) -> int:
         "candidate model media type",
         "operation audit actor/origin/time",
         "new llm-inferred constraints",
+        # VG2 (issue 218): the sample and common-sense D-12 refusal.
+        "new sample and common-sense constraints",
         "owner-approved user-supplied constraints",
         "new or changed constraints",
         # IK2 D-12 refusals for induced provenance (spec R-I1..R-I4).

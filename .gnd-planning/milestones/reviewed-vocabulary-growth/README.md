@@ -24,11 +24,11 @@ Plan r4 repairs the eight points its two returned reviews raised, tagged
 
 | Phase | Deliverable | State |
 |---|---|---|
-| VG1 | `gnd check` cost about linear in the number of object types (#221) | [draft spec](notes/phase-VG1-spec.md), awaiting its own owner gate |
-| VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | outline; D2 ruled (a), widen rule D-12 |
-| VG3 | an unattended root may include a reviewed vocabulary (#222) | outline; D3, D13 and D14 ruled (a) |
-| VG4 | growth rounds on that root, and its first source document (#222) | outline; needs VG3 |
-| VG5 | one packaged example, the pages and the three issue replies | outline; needs VG1–VG4 |
+| VG1 | `gnd check` cost about linear in the number of object types (#221) | done 2026-11-23: [record](002-phase-VG1.md), [spec](notes/phase-VG1-spec.md) (delegated approval, `auto=true`) |
+| VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | done 2026-11-23: [record](004-phase-VG2.md), [spec](notes/phase-VG2-spec.md) (delegated approval, `auto=true`) |
+| VG3 | an unattended root may include a reviewed vocabulary (#222) | done 2026-11-23: [record](003-phase-VG3.md), [spec](notes/phase-VG3-spec.md) (delegated approval, `auto=true`) |
+| VG4 | growth rounds on that root, and its first source document (#222) | done 2026-11-23: [record](005-phase-VG4.md), [spec](notes/phase-VG4-spec.md) (delegated approval, `auto=true`) |
+| VG5 | one packaged example, the pages and the three issue replies | done 2026-11-23: [record](006-phase-VG5.md), [spec](notes/phase-VG5-spec.md) (delegated approval, `auto=true`) |
 
 [Plan](notes/reviewed-vocabulary-growth-plan.md). Listed in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
@@ -47,6 +47,7 @@ The roadmap of 2026-11-22 puts VG1 first, then GO1 of
 that milestone edits `evolve/service.py` and `unattended-growth.md` too, one
 writer at a time (plan §3).
 
-Next action, the owner's: review the [VG1 spec](notes/phase-VG1-spec.md) at
-its own gate. VG1 needs no other ruling. `process-phase` or
-`process-milestone` runs it when the owner selects one.
+`process-milestone reviewed-vocabulary-growth auto` ran this milestone on
+2026-11-23 (spec rulings delegated; merge is not). All five phases are
+recorded. VG1 is in pull request 239; VG2–VG5 are in pull request 240. Next:
+the owner's merges, then the milestone close (its review instrument, D8).

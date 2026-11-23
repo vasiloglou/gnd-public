@@ -1,0 +1,33 @@
+{
+  "admission": {
+    "evidence_floor": null,
+    "minimum_approvals": 2
+  },
+  "judges": [
+    "a",
+    "b"
+  ],
+  "policy_id": "seeded-growth",
+  "repair": {
+    "evidence_floor": null,
+    "minimum_rejections": 1
+  },
+  "schema_version": 1,
+  "targets": [
+    {
+      "fact_type": "author_writes_work",
+      "index": 0
+    }
+  ],
+  "trust_mode": "consumer-pinned",
+  "trusted_receipts": [
+    {
+      "judge_id": "a",
+      "receipt_sha256": "c5069ffaf98797d7cc851429f22089de49c818ebbaa62b314042ab9aa7e28293"
+    },
+    {
+      "judge_id": "b",
+      "receipt_sha256": "d608446baec6dacf9eb1d52ed371b2d003a2b0895595e02498b34325fa95f4e7"
+    }
+  ]
+}

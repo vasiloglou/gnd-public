@@ -231,28 +231,20 @@ def _descendant_closure(object_type_id: str, model: Model) -> set[str]:
     Cycle safety is load-bearing here, not defensive. No ``semantic:`` rule
     forbids subtype cycles today (verified: ``a subtype_of [b]`` plus
     ``b subtype_of [a]`` validates at exit 0; the missing rule is recorded in
-    the phase's ``deferred-items.md``). The fixpoint terminates because it only
+    the phase's ``deferred-items.md``). The walk terminates because it only
     ever adds to a subset of a finite set of declared ids.
+
+    VG1: :meth:`ModelIndex.descendants` follows the index's direct-children
+    table, built once per model, from ``object_type_id`` downward. It reaches exactly the set the earlier
+    fixpoint over the parents map reached, which rebuilt that map and rescanned
+    every declared type on every call.
 
     Kept as its own helper rather than parameterising ``model._ancestor_closure``
     (the same shape walking the opposite edge direction): both directions are
     live in this phase, and one function taking a direction argument is one call
     site away from being handed the wrong one.
     """
-    parents = {
-        str(object_type.get("id")): [str(s) for s in object_type.get("subtype_of") or []]
-        for object_type in model.object_types
-        if object_type.get("id") is not None
-    }
-    members = {object_type_id}
-    changed = True
-    while changed:
-        changed = False
-        for declared_id, supertypes in parents.items():
-            if declared_id not in members and members.intersection(supertypes):
-                members.add(declared_id)
-                changed = True
-    return members
+    return ModelIndex.for_model(model).descendants(object_type_id)
 
 
 def _denoting_types(covered: set[str], model: Model) -> set[str]:
@@ -286,14 +278,12 @@ def _denoting_types(covered: set[str], model: Model) -> set[str]:
     Types already in ``covered`` are excluded so a role can contribute at most
     once, which keeps ``offending`` one entry per OCCURRENCE rather than per
     occurrence per route.
+
+    VG1: the resolution is read from :meth:`ModelIndex.denoted_by`, a table
+    built once per model from :func:`resolve_reference_value_type`'s own walk,
+    instead of resolving every object type again on every call.
     """
-    return {
-        str(object_type.get("id"))
-        for object_type in model.object_types
-        if object_type.get("id") is not None
-        and str(object_type.get("id")) not in covered
-        and resolve_reference_value_type(str(object_type.get("id")), model) in covered
-    }
+    return ModelIndex.for_model(model).denoted_by(covered) - covered
 
 
 def _universe_types(object_type_id: str, model: Model) -> set[str]:
@@ -356,11 +346,8 @@ def _instance_values_of(object_type_id: str, model: Model, population: Populatio
 
 
 def _kind_of(object_type_id: str, model: Model) -> str | None:
-    for object_type in model.object_types:
-        if str(object_type.get("id")) == object_type_id:
-            kind = object_type.get("kind")
-            return str(kind) if kind is not None else None
-    return None
+    """The ``kind`` of the first object type with this id, or None (VG1: one table per model)."""
+    return ModelIndex.for_model(model).kind(object_type_id)
 
 
 def _instances_of(object_type_id: str, model: Model, population: Population) -> _IdentitySet:

@@ -491,3 +491,40 @@ Implementability sweep, 2026-11-23, at `78934ee3`:
   with facts the stable command accepts (an `empty` outcome padded with
   repeated `proposal_keys`), and the record says which cases do.
 - Every other requirement has a direct implementation in the design above.
+
+## Implementation findings (2026-11-23)
+
+1. **Size, over the threshold.** `reading.py` went from 610 to 1,068 lines
+   (+615, -157, net +458), past §10's 400. The split it names (LH1a protocol,
+   profile and steps; LH1b limits and per-document budget) is ruled out by
+   delegated approval (auto=true): the two halves share `_evaluate`, `_inspect`
+   and the `/2` manifest, so a split adds a record without making either half
+   reviewable alone. The estimate was low by about a fifth; the record says so.
+2. **Two more keywords on `ReadingInputs`.** §6.3 has it perform steps 2 to 5
+   with `limits` and `live` only. Steps 3 and 5 also need `unavailable` (to
+   check it before the model files are read) and `live_review` (to know
+   whether `reviews.json` is required). Both are keyword-only.
+3. **The retained bound covers more than §6.3 step 7 lists.** Fidelity
+   reports are route output, so a declared calibration raises the bound to
+   `route_output_bytes`; the conflict and absence steps copy input files, so
+   they raise it to `input_bytes`. The run computes one bound, the largest
+   of its files', which is the cap it records.
+4. **Step files are decoded once, at input time, for both roots.** `gold`,
+   `calibration` and `conflict` content is checked in `ReadingInputs._steps`,
+   before any producer call. The packaged run keeps its bytes (T11); a
+   malformed packaged step file now refuses before the loop rather than after.
+5. **Three walks would have been quadratic at the roster ceiling**: the
+   required-question walk, the per-source stop and the per-source tally.
+   Each is now one pass (`_terminal`, `_stops`, the `documents` tally).
+6. **Exit 4 is reached by a real caller model.** A textual must-hold rule
+   makes `gnd check` exit 4 (measured); T15 uses that model, not the
+   exit-table fallback.
+7. **Ceiling cases.** T12's 1 MiB accepted response passes through `gnd
+   verify` under its own caps. Only T20's 63 sections at 1 MiB use `empty`
+   answers padded with `proposal_keys`, to keep 63 MiB of facts out of the
+   populations. T12's route-output case runs a stub through the bounded
+   process at the ceiling; no `gnd` route writes 16 MiB.
+8. **T8's roster case.** The caller fixture has two sources and six sections;
+   `roster=2` refuses on the six sections.
+9. **Impact closure widened.** `depth.py` changed, so its own test,
+   `tests/test_ld1_competency_examples.py`, joins the focused lane.

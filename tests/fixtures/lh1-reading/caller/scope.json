@@ -1,0 +1,10 @@
+{
+  "format": "literature-reading-scope/1",
+  "questions": [
+    "a-baseline"
+  ],
+  "sections": [
+    "a-methods"
+  ],
+  "predicate": "paper_baseline"
+}

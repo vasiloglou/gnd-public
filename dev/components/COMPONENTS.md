@@ -2590,7 +2590,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/process.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_reading, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
 - tests: tests/test_agent_cli.py, tests/test_rf4_peripheral.py
 - in: Trusted argv, real cwd, explicit environment, ProcessLimits and optional stdin bytes.
 - out: BoundedProcessResult with closed metadata and out-of-band byte streams.
@@ -3772,16 +3772,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_ld1_competency_examples.py
 
 ### examples.literature_reading
-- does: Run and replay bounded literature reading with saved producer outputs, typed coverage, custody and fidelity.
-- verbs: reading workflow, multipass reading, methods extraction, coverage evidence, scope, absence, fidelity, revisit, question disposition
-- in: Packaged public source inventory, section and question roster, saved responses, held-back fidelity labels and source scope.
-- out: Six bound pass records, producer call counts, typed coverage, read cost, checked populations and fidelity reports.
+- does: Run and replay bounded literature reading, with saved producer outputs or a caller's live producer over a caller's root, typed coverage, custody and fidelity.
+- verbs: reading workflow, multipass reading, methods extraction, coverage evidence, scope, absence, fidelity, revisit, question disposition, producer protocol, caller root, reading profile, per-document budget, reading limits
+- in: Packaged public source inventory, or a caller root with profile.json; section and question roster, saved responses or a producer object, optional reviewer, held-back fidelity labels and source scope.
+- out: Six bound pass records, producer call counts, typed coverage, read cost, checked populations and fidelity reports; a literature-reading-run/2 folder with settings, step statuses and per-document stops for a caller run.
 - status: canonical
 - modules: src/gnd/examples/literature/reading.py
-- uses: examples.literature_depth, infra.artifacts
+- uses: examples.literature_depth, infra.artifacts, infra.bounded_process
 - used_by: examples.literature_assurance, examples.literature_revision
-- tests: tests/test_ld3_reading_workflow.py
-- notes: Release replay can provide its retained reading fixture and rooted vocabulary together.
+- tests: tests/test_ld3_reading_workflow.py, tests/test_lh1_reading_host.py
+- notes: Release replay can provide its retained reading fixture and rooted vocabulary together. The protocol's one home is src/gnd/examples/literature/reading_fixture/README.md, "Drive it from your host".
 
 ### examples.literature_revision
 - does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.

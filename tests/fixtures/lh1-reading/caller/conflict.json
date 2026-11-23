@@ -1,0 +1,15 @@
+{
+  "document_sha256": "67f82f8529a8a007b9c7ba3ea7a531ade2b047edb26e3d1f461a55a804680a04",
+  "facts": {
+    "paper_title": [
+      {
+        "paper": "paper-a",
+        "title": "Graph sampling at scale"
+      },
+      {
+        "paper": "paper-a",
+        "title": "Sampling graphs at scale"
+      }
+    ]
+  }
+}

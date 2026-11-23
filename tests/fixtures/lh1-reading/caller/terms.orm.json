@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [
+    {
+      "id": "paper_key",
+      "name": "PaperKey",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "note",
+      "name": "Note",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "paper",
+      "name": "Paper",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "paper_key"
+      }
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "paper_title",
+      "reading": "{Paper} has title {Note}",
+      "roles": [
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        },
+        {
+          "role_name": "title",
+          "object_type": "note"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "paper_has_one_title",
+          "type": "uniqueness",
+          "roles": [
+            "paper"
+          ],
+          "source": "user-supplied",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "A paper has at most one title."
+          }
+        }
+      ]
+    }
+  ]
+}

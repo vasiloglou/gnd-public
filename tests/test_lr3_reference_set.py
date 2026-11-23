@@ -53,7 +53,16 @@ def test_t1_the_committed_root_is_the_build_and_the_corpus_is_untouched() -> Non
     assert labels["counts"] == {"method_builds_on_method": 8, "method_is_used_in_field": 12,
                                 "work_introduces_method": 11}
     assert labels["derived_fact_types_left_out"] == ["work_builds_on_method"]
-    assert labels["licence"] and all(fact["sections"] for fact in labels["facts"])
+    assert set(labels["sources"]) == {row["id"] for row in dev}
+    for row in dev:
+        assert labels["sources"][row["id"]] == {"licence": "Apache-2.0", "paraphrase_of": row["work"]["identifier"]}
+    assert all(fact["sections"] for fact in labels["facts"])
+    source_of = {row["id"]: row["source"] for row in json.loads(built["roster.json"])["sections"]}
+    assert all(source_of[section] == fact["document"] for fact in labels["facts"] for section in fact["sections"])
+    # A fact whose work identifier is in the opening section and whose method is later is reachable from both.
+    (boltz,) = [fact for fact in labels["facts"] if fact["document"] == "boltz-1"
+                and fact["roles"] == {"method": "Boltz-steering", "work": "doi:10.1101/2024.11.19.624167"}]
+    assert {"boltz-1-p1", "boltz-1-p3"} <= set(boltz["sections"])
 
 
 # --- T2, T3: the recorded run replays and scores byte for byte -------------------------------
@@ -280,3 +289,21 @@ def test_t9_prompt_fields_are_filled_once(tmp_path: Path) -> None:
     prompt = captured.read_text()
     assert '"{section} introduces {Method}"' in prompt
     assert "Section vampnet-p1 of source vampnet:" in prompt
+
+
+def test_t4_a_fact_repeated_in_two_documents_is_found_per_document(tmp_path: Path) -> None:
+    """A row read in one document finds only that document's gold fact (review finding, close round)."""
+    other = dict(GOLD, document="vampnets", sections=["vampnets-p2"])
+    root = _root_with_labels(tmp_path, [GOLD, other])
+    right = {"method_builds_on_method": [{"method": "VampNet", "base_method": "bidirectional transformer"}]}
+    score = reference_set.score(_run_with(tmp_path, [], [_attempt("vampnet-p2", right)]), root)
+    assert score["recall_after"]["targeted"] == [1, 2]
+
+
+def test_t1_a_corpus_document_that_differs_from_its_digest_refuses(tmp_path: Path) -> None:
+    corpus = tmp_path / "corpus-root"
+    shutil.copytree(CORPUS, corpus, ignore=shutil.ignore_patterns("reference_fixture", "__pycache__"))
+    document = corpus / "corpus" / "documents" / "vampnet.md"
+    document.write_bytes(document.read_bytes() + b" ")
+    with pytest.raises(ExampleError):
+        reference_set.build(corpus)

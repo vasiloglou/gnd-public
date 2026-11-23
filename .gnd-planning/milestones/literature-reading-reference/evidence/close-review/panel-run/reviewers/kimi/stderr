@@ -1,0 +1,108 @@
+6dcf10929081330322d385c83cc3c21347a7ab6bc54c270ed44663eef7654098  .gnd-planning/milestones/literature-reading-reference/notes/literature-reading-reference-plan.md
+2d9c6857c29b5c5af905260cfb2ac584a1b385853fa2f42d7027a060f0615ffd  .gnd-planning/milestones/literature-reading-reference/notes/close-results.md
+5bba9edce2a805b0fec692dee0eee352b1903b3f388f1c26c7d2b2bb19edcb2f  .gnd-planning/milestones/literature-reading-reference/notes/close-delta.md
+README.md
+apinn.txt
+boltz-1.txt
+corpus.orm.json
+flows-review.txt
+labels.json
+opencap-monocular.txt
+pinn-failure-modes.txt
+posex.txt
+profile.json
+roster.json
+run
+run-record.json
+sbi-frontier.txt
+score.json
+sensor-placement.txt
+vampnet.txt
+vampnets.txt
+wham-pose.txt
+wham-whale.txt
+    4372 src/gnd/examples/literature/reference_fixture/README.md
+     791 src/gnd/examples/literature/reference_fixture/apinn.txt
+     643 src/gnd/examples/literature/reference_fixture/boltz-1.txt
+    2125 src/gnd/examples/literature/reference_fixture/corpus.orm.json
+     532 src/gnd/examples/literature/reference_fixture/flows-review.txt
+    5228 src/gnd/examples/literature/reference_fixture/labels.json
+     763 src/gnd/examples/literature/reference_fixture/opencap-monocular.txt
+     798 src/gnd/examples/literature/reference_fixture/pinn-failure-modes.txt
+     659 src/gnd/examples/literature/reference_fixture/posex.txt
+     201 src/gnd/examples/literature/reference_fixture/profile.json
+   12332 src/gnd/examples/literature/reference_fixture/roster.json
+    9861 src/gnd/examples/literature/reference_fixture/run-record.json
+     556 src/gnd/examples/literature/reference_fixture/sbi-frontier.txt
+     317 src/gnd/examples/literature/reference_fixture/score.json
+     651 src/gnd/examples/literature/reference_fixture/sensor-placement.txt
+     588 src/gnd/examples/literature/reference_fixture/vampnet.txt
+     506 src/gnd/examples/literature/reference_fixture/vampnets.txt
+     612 src/gnd/examples/literature/reference_fixture/wham-pose.txt
+     609 src/gnd/examples/literature/reference_fixture/wham-whale.txt
+    8761 tools/record_lr3_reference_run.py
+    9798 src/gnd/examples/literature/reference_set.py
+   60703 total
+broad.population.json
+coverage.json
+payload-0.json
+payload-1.json
+payload-2.json
+payload-3.json
+payload-4.json
+payload-5.json
+producer-output-table.json
+run.json
+{'method_builds_on_method': 8, 'method_is_used_in_field': 12, 'work_introduces_method': 11} ['work_builds_on_method'] "Synthetic paraphrases of public works, written for this repository's regression
+facts: 31 all sections: True
+final-gate.txt
+pr245-replay.txt
+close-delta.md
+close-results.md
+issue-reply.md
+literature-reading-reference-plan.md
+phase-LR1-spec.md
+phase-LR2-spec.md
+phase-LR3-spec.md
+reviews
+001-plan-gate.md
+002-phase-LR1.md
+003-phase-LR2.md
+004-ruling-D3.md
+005-phase-LR3.md
+README.md
+evidence
+notes
+215:        'compose': [root / 'docs/how-to/compose-documents.md'],
+216:        'failed-verification': [root / 'docs/guides/documents.md'],
+== lane at aec93739 (origin/main f7fad6a1 merged): uv run pytest -q tests/test_lr3_reference_set.py tests/test_ld3_reading_workflow.py tests/test_ld4_revision.py tests/test_ld5_verdict.py tests/test_li1_literature_corpus.py tests/test_li1_assurance_report.py tests/test_lh1_reading_host.py tests/test_lh2_reading_replay.py tests/test_lh3_admission_shape.py tests/test_lh4_admission_rules.py tests/test_lr1_verify_failure_listing.py tests/test_lr2_quote_scope.py tests/test_documentation_tutorials.py --tb=short
+exit=0
+475 passed in 860.62s (0:14:20)
+== guards (project.md guard block)
+exit=0
+679 passed, 2 deselected in 224.52s (0:03:44)
+== uv run ruff check
+All checks passed!
+exit=0
+== python3 scripts/components_index.py changed --base origin/main --strict
+fail: stale or missing: dev/components/modules/examples.md (run `python3 scripts/components_index.py write`)
+fail: stale or missing: dev/components/modules/tools.md (run `python3 scripts/components_index.py write`)
+changed against origin/main (f7fad6a): 170 file(s) differ; 2 to fix, 0 warning(s), 0 to reread
+exit=1
+== after python3 scripts/components_index.py write: python3 scripts/components_index.py changed --base origin/main --strict
+changed against origin/main (f7fad6a): 172 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+exit=0
+7:gates:
+14:  - command: "uv run ruff check"
+17:  - command: "python3 scripts/components_index.py changed --base origin/main --strict"
+29:  - path: .gnd-planning/milestones/literature-reading-reference/evidence/LR3/final-gate.txt
+67:## Spec gate and rulings
+69:Delegated approval (`auto=true`), 2026-11-23, under
+70:[001-plan-gate.md](001-plan-gate.md). Gated bytes: `notes/phase-LR3-spec.md`
+73:appended after the gate. §7's rulings (D1 (d), the set, precision counting
+75:schedule) are the gate's: delegated, not the owner's reading.
+77:Owner rulings this phase rests on, not delegated:
+93:  It is outside every gate, and it spends paid calls.
+['admission', 'baseline_v15', 'coverage_entry', 'derivation_finding', 'derivation_finding_v10', 'derivation_verdict', 'derivation_verdict_v10', 'derivation_verdict_v15', 'derivation_verdict_v9', 'diff_reference_report', 'edition_check_side', 'edition_rule_comparison', 'edition_verdict', 'error', 'extraction', 'fact_ref_v10', 'guarded_diagnostics_report', 'guarded_disjunction_report', 'issue', 'legacy_reference_report', 'opaque_dependency_v10', 'redacted_marker', 'redaction', 'redaction_v11', 'rule_edition_comparison', 'rule_ids_report', 'scalar', 'temporal_admission_report', 'verdict', 'verdict_v10', 'verdict_v15', 'verdict_v16', 'verdict_v17', 'verdict_v9', 'witness']
+docs/reference/disclosure.md
+1

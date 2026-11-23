@@ -338,6 +338,10 @@ scored quotes; the two rows are a point of comparison, not a ranking. The
 holds the scoring rule, the settings and the run, which replays without
 calling the reading agent.
 
+Both passes use one prompt that asks no question; the rows differ only in
+which sections were read. This section's figures are reproduced by the
+reference set's replay, not by the commands page.
+
 ### Change the vocabulary, and see what goes stale
 
 Suppose the team decides to split the whale senses after the release has

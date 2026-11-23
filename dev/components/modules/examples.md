@@ -313,10 +313,10 @@ A labelled reference set for the reading stages, and its scorer.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `build(corpus_root) -> dict[str, bytes]` | function | 51 | The reference root's files, by name, built from the packaged corpus. |
-| `build_root(out, corpus_root) -> None` | function | 113 | Write the reference root's built files into ``out``. |
-| `score(run, root) -> dict` | function | 137 | Score a reading run over the reference root against its labels. |
-| `main(argv) -> int` | function | 181 | (no docstring) |
+| `build(corpus_root) -> dict[str, bytes]` | function | 53 | The reference root's files, by name, built from the packaged corpus. |
+| `build_root(out, corpus_root) -> None` | function | 128 | Write the reference root's built files into ``out``. |
+| `score(run, root) -> dict` | function | 152 | Score a reading run over the reference root against its labels. |
+| `main(argv) -> int` | function | 196 | (no docstring) |
 
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
 Components: examples.literature_revision

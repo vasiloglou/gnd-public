@@ -14,7 +14,7 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 
-from gnd.artifacts import canonical_json_bytes, read_regular_bounded
+from gnd.artifacts import canonical_json_bytes, read_regular_bounded, sha256_hex
 from gnd.model import parse_model_document
 
 from .depth import ExampleError, _decode
@@ -29,8 +29,10 @@ QUESTION_FACT = "method_builds_on_method"
 MODEL = "corpus.orm.json"
 STAGE_PAYLOADS = (("broad", "payload-1.json"), ("targeted", "payload-3.json"))
 READ_LIMIT = 1 << 20
-LICENCE = ("Synthetic paraphrases of public works, written for this repository's regression tests; "
-           "no document is the text of its work (see the corpus README).")
+LICENCE = "Apache-2.0"
+LICENCE_NOTE = ("Each document is a synthetic paraphrase of the public work it names, written for this "
+                "repository's regression tests and distributed under the repository's licence; no document "
+                "is the text of its work (see the corpus README).")
 
 
 def _json(path: Path) -> dict:
@@ -50,16 +52,23 @@ def _byte_offset(text: str, index: int) -> int:
 
 def build(corpus_root: Path = HERE) -> dict[str, bytes]:
     """The reference root's files, by name, built from the packaged corpus."""
-    corpus = _json(corpus_root / "corpus" / "corpus.json")
+    corpus_raw = read_regular_bounded(corpus_root / "corpus", "corpus.json", max_bytes=READ_LIMIT)[0]
+    corpus = _decode(corpus_raw, max_bytes=READ_LIMIT)
     key = _json(corpus_root / "answers" / "answer-key.json")
-    model_path = corpus_root / "model.orm.yaml"
-    model = parse_model_document(read_regular_bounded(corpus_root, model_path.name, max_bytes=READ_LIMIT)[0],
-                                 source=model_path)
+    if key.get("corpus_sha256") != sha256_hex(corpus_raw):
+        raise ExampleError("the answer key is bound to another corpus")
+    model_path = corpus_root / corpus["model"]
+    model_raw = read_regular_bounded(model_path.parent, model_path.name, max_bytes=READ_LIMIT)[0]
+    if sha256_hex(model_raw) != corpus.get("model_sha256"):
+        raise ExampleError("the corpus model differs from its digest")
+    model = parse_model_document(model_raw, source=model_path)
     documents = [row for row in corpus["documents"] if row["split"] == "dev"]
     files: dict[str, bytes] = {MODEL: canonical_json_bytes(model)}
-    sources, sections, questions, section_of = [], [], [], {}
+    sources, sections, questions, section_of, section_text = [], [], [], {}, {}
     for document in documents:
         raw = read_regular_bounded(corpus_root, document["path"], max_bytes=READ_LIMIT)[0]
+        if sha256_hex(raw) != document["sha256"]:
+            raise ExampleError(f"corpus document {document['id']} differs from its digest")
         text = unicodedata.normalize("NFC", raw.decode("utf-8"))
         if text.encode("utf-8") != raw:
             raise ExampleError(f"corpus document {document['id']} is not NFC")
@@ -73,6 +82,7 @@ def build(corpus_root: Path = HERE) -> dict[str, bytes]:
             section_of[passage["id"]] = section
             start = 0 if index == 0 else _byte_offset(text, passage["span"]["start"])
             end = _byte_offset(text, passage["span"]["end"])
+            section_text[section] = (name, _normal(raw[start:end].decode("utf-8")))
             sections.append({"id": section, "source": name, "kind": "section",
                              "selection": "opening" if index == 0 else "targeted", "keys": [],
                              "span": [start, end], "reason": None})
@@ -90,7 +100,7 @@ def build(corpus_root: Path = HERE) -> dict[str, bytes]:
     anchored: dict[tuple, set] = {}
     for row in key["anchored_facts"]:
         fact = row["fact"]
-        identity = (fact["fact_type"], tuple(sorted(fact["roles"].items())))
+        identity = (row["source"], fact["fact_type"], tuple(sorted(fact["roles"].items())))
         anchored.setdefault(identity, set()).add(section_of[row["passage"]])
     derived = {row["id"] for row in model["fact_types"] if row.get("derivation") is not None}
     labels = []
@@ -98,12 +108,17 @@ def build(corpus_root: Path = HERE) -> dict[str, bytes]:
         gold = _json(corpus_root / "answers" / "gold" / f"{document['id']}.population.json")
         for fact_type in sorted(set(gold["facts"]) - derived):
             for roles in gold["facts"][fact_type]:
-                identity = (fact_type, tuple(sorted(roles.items())))
+                identity = (document["id"], fact_type, tuple(sorted(roles.items())))
+                values = {_normal(value) for value in roles.values()}
+                holding = {section for section, (source, body) in section_text.items()
+                           if source == document["id"] and any(value in body for value in values)}
                 labels.append({"document": document["id"], "fact_type": fact_type, "roles": roles,
-                               "sections": sorted(anchored.get(identity, ()))})
+                               "sections": sorted(anchored.get(identity, set()) | holding)})
     counts = Counter(label["fact_type"] for label in labels)
     files["labels.json"] = canonical_json_bytes({
-        "format": LABELS_FORMAT, "corpus_sha256": key["corpus_sha256"], "licence": LICENCE,
+        "format": LABELS_FORMAT, "corpus_sha256": key["corpus_sha256"], "licence_note": LICENCE_NOTE,
+        "sources": {row["id"]: {"licence": LICENCE, "paraphrase_of": row["work"]["identifier"]}
+                    for row in documents},
         "derived_fact_types_left_out": sorted(derived),
         "counts": dict(sorted(counts.items())), "facts": labels,
     })

@@ -12,7 +12,7 @@ Nothing is implemented, and no phase spec is approved.
 | LH1 | A public producer protocol in the reading example; a caller's producer drives the six stages over a caller's root, with a budget per document, caps as parameters and optional steps recorded as skipped | done: [record](002-phase-LH1.md), [spec](notes/phase-LH1-spec.md) |
 | LH2 | `replay()` of a live run from its own folder and the caller's root, with zero producer calls and its settings read from the run | done: [record](003-phase-LH2.md), [spec](notes/phase-LH2-spec.md) |
 | LH3 | Admission over a caller-named assertion entity, identified by its own handle: every attached fact row kept, the facts of followed entities kept with them, include roots admitted | done: [record](004-phase-LH3.md), [spec](notes/phase-LH3-spec.md) |
-| LH4 | Admission rules as data, the status `policy-refused`, and `max_targets` as an argument up to 1,024 | [draft spec](notes/phase-LH4-spec.md), next |
+| LH4 | Admission rules as data, the status `policy-refused`, and `max_targets` as an argument up to 1,024 | done: [record](005-phase-LH4.md), [spec](notes/phase-LH4-spec.md) |
 
 [Plan](notes/literature-host-interfaces-plan.md). Third in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21):

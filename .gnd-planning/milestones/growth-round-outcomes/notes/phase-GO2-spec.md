@@ -240,3 +240,41 @@ reading of the spec. No spec review ran (optional, omitted).
   "GO" to "READY GO2". A spec approved now is re-read against `main` at
   that start; a change on `main` that moves a cited line or a premise
   amends this spec before code, with the prior wording retained.
+
+## 13. Amendment r2 — checked against PR 240's diff (2026-11-23)
+
+Read `claude/reviewed-vocabulary-growth` at `53fcd448` (VG2 and VG4
+implemented and recorded, PR 240). r1's text above is kept; these rules
+take precedence where they differ.
+
+1. **The report's exit is today's exit, computed, not restated.**
+   `_evolve_service_exit` (`cli_service.py`) decides a refusal's exit by
+   message markers, and VG2 adds "new sample and common-sense constraints".
+   The report's `refusal.exit` is `_evolve_error_exit(error)` of the error
+   `preview` actually raised, so a marker list change moves the report with
+   it. The collecting D-12 walk keeps every message byte-identical, so every
+   marker still matches (T2 already pins the first message; T3 now adds one
+   row per marker of the D-12 family, VG2's included).
+2. **VG4's re-pin refusal stays a whole-proposal row.** `enforce_ownership`
+   now raises `IncludeInputError('evolve:unattended-repin: <reference>')`
+   on an unattended root, before the candidate is read. r1 already makes the
+   include gate a whole-proposal refusal; the reference in its message is
+   **not** parsed to locate an operation (that would be a pattern over text
+   this project writes, `AGENTS.md`). If a host needs the operation, the
+   gate can return it as data in a later phase. T2 gains this case: every
+   operation `unassessed`, `gates_not_run` naming the candidate gates.
+3. **VG4's first-document add** creates `source.documents` inside the
+   replay, on the replay's own deep copy (`_apply_declared_operations`), so
+   it writes into no remembered parse (GO1's write check holds) and needs no
+   outcome rule of its own: a `source-document` add is located by its
+   locator as r1 says.
+4. **T10** gains `tests/test_vg3_unattended_includes.py` and
+   `tests/test_vg4_seeded_growth_rounds.py`, VG3's and VG4's lane files on
+   PR 240.
+
+### Gate of r2
+
+**Delegated approval (auto=true), 2026-11-23**, of spec r2, sha256 `bf558c0ec171dd14aa271e7bedf368983b115a6d33d36c0d37bce9f03244e371`
+(the bytes above this subsection); r1's approval (§12) is retained as
+history. Rulings unchanged; the amendment adds no decision. Same budget and
+the same start condition.

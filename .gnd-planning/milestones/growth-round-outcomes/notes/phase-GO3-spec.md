@@ -161,3 +161,11 @@ reading of the spec. No spec review ran (optional, omitted).
   "GO" to "READY GO3". A spec approved now is re-read against `main` at
   that start; a change on `main` that moves a cited line or a premise
   amends this spec before code, with the prior wording retained.
+
+## 13. Note, checked against PR 240's diff (2026-11-23)
+
+`discover.output.candidate_document` calls the service's own
+`_apply_declared_operations`, so a narrowed proposal replays VG4's
+first-document add exactly as `preview` does. No amendment: the approved r1
+bytes (§12) stand. T1 gains a case on a seeded unattended root with no
+`documents` key, read from VG4's fixtures at GO3's start.

@@ -3337,15 +3337,15 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### examples.literature_assertion_admission
 - does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements; with a shape, admit the instances of a caller-named assertion entity with their attached and followed facts.
-- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest, assertion shape, attached facts, followed entities, include root admission
+- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest, assertion shape, attached facts, followed entities, include root admission, admission rules, policy-refused, target cap
 - in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root; optionally a literature-assertion-shape/1 document and a row bound.
 - out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker (literature-assertion-admission/1, or /2 for a shaped call).
 - status: canonical
 - modules: src/gnd/examples/literature/assertion_admission.py
 - uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors, model.loading, model.validation, synth.identity
 - used_by: examples.literature_lineage
-- tests: tests/test_li4_assertions.py, tests/test_lh3_admission_shape.py
-- notes: The shape and the /2 record are described once, in src/gnd/examples/literature/README.md, "Admitting your own assertion entity".
+- tests: tests/test_li4_assertions.py, tests/test_lh3_admission_shape.py, tests/test_lh4_admission_rules.py
+- notes: The shape, the admission rules and the /2 record are described once, in src/gnd/examples/literature/README.md, "Admitting your own assertion entity".
 
 
 ### examples.literature_lineage

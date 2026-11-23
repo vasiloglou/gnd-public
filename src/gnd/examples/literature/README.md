@@ -288,14 +288,39 @@ record = admission.admit(model, raw, policy, receipts, evidence, out, shape=shap
   vocabulary and condition checks above apply to the packaged shape only:
   in a shaped call no value means "absent".
 - **Bounds.** `max_rows` (default 16,384, at most 65,536) bounds the
-  attached and followed rows read; it needs a shape. `gnd judgments check`
-  caps a policy at 1,024 targets.
+  attached and followed rows read; it needs a shape.
 - **Include roots.** A model that declares includes is admitted with its
   includes copied beside it; each include path must be relative.
-- **Record.** A shaped call writes `literature-assertion-admission/2`: the
-  `/1` digests, the includes' digests, `shape_sha256` (of the canonical
-  shape) and `max_rows`, with one `semantic-support` row per assertion,
-  keyed by its handle. The packaged call keeps `/1`.
+- **Rules.** `rules` decides which supported assertions are admitted:
+
+  ```json
+  {"format": "literature-admission-rules/1", "requirements": [
+    {"id": "positive", "fact_type": "claim_polarity", "role": "polarity",
+     "admissible": ["asserts"], "reasons": [{"value": "negates", "reason": "negated"}]}]}
+  ```
+
+  An assertion satisfies a requirement when it has at least one row of the
+  named fact type and every such row's role value is admissible; values are
+  matched as JSON values, so `"1"` and `1` differ. Requirements are checked
+  in order, and the first one that fails gives the reason: the one declared
+  for the offending value, else the requirement's `id`. Under a shape a
+  requirement names an attached fact type; on the packaged shape it names
+  `assertion_statement`, and the packaged comparison is the default rules
+  (`DEFAULT_RULES`: polarity first, then attribution). A requirement naming
+  an unknown fact type or role is refused, never read as "no row matched".
+- **Statuses.** In a `/2` record a supported assertion that fails a rule is
+  `policy-refused` with that reason; an unsupported one is `fail`. A shaped
+  call with rules adds an `admission-rules` stage, one row per assertion.
+- **Target cap.** `max_targets` (1 to 1,024) refuses a policy with more
+  targets; 1,024 is `gnd judgments check`'s own cap, so a larger set is
+  admitted in several calls.
+- **Record.** A call with a shape, rules, `max_targets` or `max_rows` writes
+  `literature-assertion-admission/2`: the `/1` digests, the includes'
+  digests, `shape` (`caller` or `packaged`), `shape_sha256` (of the
+  canonical shape, `null` for the packaged one), `rules_sha256` (or
+  `null`), `max_targets` and `max_rows` (`null` on the packaged shape), with
+  one `semantic-support` row per assertion, keyed by its handle. The
+  packaged call with none of them keeps `/1`.
 
 ## Context-qualified lineage
 

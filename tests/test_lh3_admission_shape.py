@@ -50,12 +50,16 @@ def _sha(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def _case(tmp_path, *, rows=None, verdicts=None, name="case", model="claims.orm.json"):
+def _case(tmp_path, *, rows=None, verdicts=None, name="case", model="claims.orm.json", edit_model=None):
     """A caller's admission inputs: model and include, raw population, policy, saved receipts, evidence."""
     root = tmp_path / name
     root.mkdir()
     for file in ("claims.orm.json", "terms.orm.json"):
         shutil.copyfile(FIXTURE / file, root / file)
+    if edit_model is not None:
+        document = json.loads((root / "claims.orm.json").read_bytes())
+        edit_model(document)
+        (root / "claims.orm.json").write_bytes(canonical_json_bytes(document))
     shutil.copytree(FIXTURE / "evidence", root / "evidence")
     rows = ROWS if rows is None else rows
     verdicts = VERDICTS if verdicts is None else verdicts
@@ -176,7 +180,7 @@ def test_t5_an_include_root_admits_and_binds_its_include(shaped, tmp_path):
     path = edited / "terms.orm.json"
     path.write_bytes(path.read_bytes() + b"\n")
     out = tmp_path / "out"
-    _refuses(lambda: _admit(edited, out, shape=SHAPE), "judgments:refused")
+    _refuses(lambda: _admit(edited, out, shape=SHAPE), "input:model")
     assert not out.exists()
 
 

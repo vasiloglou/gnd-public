@@ -174,3 +174,23 @@ Implementability sweep, at `ce8d442a`:
   admission is used, two sections away from literature-reading-reference's
   LR2 paragraph (PR 244, after Act 2's anchor check).
 - Every other requirement maps to LH3's code.
+
+## Implementation findings (2026-11-23)
+
+1. **`reasons` is a list of `{"value", "reason"}` pairs**, not a mapping
+   keyed by canonical JSON text. A mapping keyed that way makes an author
+   write `"\"negates\""` for a string; the list keeps LH4-D1's rule (values
+   match as JSON values, `"1"` and `1` differ) with plain values. Matching
+   uses the same handle identity as LH3 (`gnd.synth.identity.scalar_identity`).
+2. **The model is loaded before the judgment route** so the rules can be
+   checked against it first (§4 rule 3). An include edited without a new
+   pin is therefore refused by the model loader, `input:model`, before the
+   route runs, instead of `judgments:refused` from it; LH3's T5 now expects
+   `input:model`, and `ModelValidationError` is caught with the loader's
+   other errors.
+3. **The `/2` record names the shape kind.** `shape` is `caller` or
+   `packaged`, `shape_sha256` is `null` for the packaged one, and
+   `max_targets` is recorded as 1,024 when not given.
+4. **`_case` in LH3's test module takes `edit_model`**, so LH4's model
+   variant (`claim_polarity` added) is built in the test and LH3's fixture
+   files do not move.

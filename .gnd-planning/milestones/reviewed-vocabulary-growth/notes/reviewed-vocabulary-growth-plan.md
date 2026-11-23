@@ -1,6 +1,6 @@
-# Reviewed-vocabulary growth · plan r4
+# Reviewed-vocabulary growth · plan r5
 
-**Status: r4, 2026-11-23. Reviewed once, at r1; not approved.** The owner
+**Status: r5, 2026-11-23: r4 as approved by the owner ([plan gate](../001-plan-gate.md)) with the close amendments of §11, tagged `(c1)`.** Prior status line of r4, kept: "Status: r4, 2026-11-23. Reviewed once, at r1; not approved." The owner
 selected the GND review panel light for the plan review on 2026-11-23 (D8).
 The panel read r1 (sha256
 `3d4a06b864a339f55c82a83c2e9dad6cc704d45bf156aeaeb1aaa086fbd4eb7f`, commit
@@ -576,3 +576,18 @@ carries them was left to the spec in r3 and is now in D5 `(s3)`); VG4, how
 the root's own document reaches U1 `(s3)`, and whether D6's refusal belongs
 to the additive-policy table or to the mode. What U7 does with a span an
 included element carries was an open question in r1; it is now D14 `(p1)`.
+
+## 11. Amendments at the close `(c1)`
+
+Written at the milestone close, 2026-11-23, from the phase records. Each row
+names the record that raised it and keeps the r4 wording it amends. None
+changes a goal predicate or a ruling of §10.
+
+| # | Amends | r4 wording, kept | Amended | Raised by |
+|---|---|---|---|---|
+| 1 | §3, VG2 homes | "for (a): `src/gnd/evolve/service.py` (`_enforce_d12`), `provenance-and-modality.md` (D-12), `evolution-contract.md:279-280`, a new `tests/test_vg2_evolve_sources.py`, `tests/test_unattended_growth_guidance.py`, `docs/release-notes.md`" | adds `src/gnd/evolve/cli_service.py` (`_evolve_service_exit`: the refusal exits 3), `tests/test_induced_provenance.py` (IK2's D-12 table, an explicit eight-row delta), `tests/support/rf9_ci_sources.py` and `evidence/VG2/source-successors.json` (the RF5 successor) | `004-phase-VG2.md` |
+| 2 | §3, VG3 homes | "`src/gnd/model/_unattended.py`, `src/gnd/model/__init__.py` (`_model_warnings`), `src/gnd/model/_includes.py` (`remap_issues`), `src/gnd/commands/checking.py`, `representation-format.md` (\"Unattended source\", \"Model includes\"), a new `tests/test_vg3_unattended_includes.py`, `tests/test_unattended_mode.py`, `tests/test_mc1_model_includes.py`, `docs/release-notes.md`" | adds `tests/vg3_cases.py` and `tests/fixtures/vg3/base-outputs.json`; `tests/support/rf9_ci_sources.py` and `evidence/VG3/source-successors.json` (the `_cmd_validate` successor); `tests/test_mc3_source_observations.py` (follows registered successors); `tests/test_unattended_span_coverage.py` (a13's fake) | `003-phase-VG3.md` |
+| 3 | §2, VG5; §3, VG5 homes | "The route list of \"Model includes\" names every route that resolves an include root, `gnd coverage` and `gnd evolve` included (H24)"; homes "… `notes/issue-replies.md`" | the route list also names `gnd discover`; homes add `tests/test_mc1_guards.py` (R30, the packaged include roots), `tests/test_packaged_skills.py` (the skill link graph) and `tests/support/markdown_sections.py` | `006-phase-VG5.md` |
+| 4 | §1, H27; §10, D11 | H27: "whole-repository `uv run ruff check` exits 1 with 198 errors" | at the close, `main` at `f7fad6a1`, the whole-repository command exits 0; the close records both commands. D11's other stale lines of `project.md` stay the owner's | the close gates |
+| 5 | §2, VG1 | "Where the table lives is a VG1 spec decision; the proposal is `ModelIndex`" | the tables live on `ModelIndex` and are built from the canonical JSON form the cache key is a digest of, not from the cached rows (the cache can hold another model's rows) | `002-phase-VG1.md`, refuted premise |
+

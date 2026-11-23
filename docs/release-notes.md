@@ -5,6 +5,23 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: the admission example from a host
+
+- **Your own assertion entity.** The literature admission example's
+  `admit()` takes a shape naming the assertion entity in your model and the
+  entity types to follow from it. An assertion is identified by its own
+  handle; every fact attached to an admitted assertion is kept, the facts of
+  the followed entities with them, and an include root is admitted with its
+  includes. `max_rows` bounds the rows read
+  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+- **Admission rules as data.** `rules` lists the requirements a reviewed
+  assertion must meet, in order, with a reason for each refused value. A
+  supported assertion that fails one is `policy-refused`; the packaged
+  comparison is now the default rules. `max_targets` (up to 1,024, the cap
+  of `gnd judgments check`) lowers the target cap. Such a call writes
+  `literature-assertion-admission/2`; the packaged call keeps its bytes
+  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+
 ## Unreleased: the reading example from a host
 
 - **A live producer over your own documents.** The literature reading

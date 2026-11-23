@@ -1797,7 +1797,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +75 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +76 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1811,7 +1811,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: evolve.command, evolve.service, extract.service, model.loading, model.operation_obligations, semantics.extensions
+- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
 - checked: partial
 - notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
@@ -2977,7 +2977,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/identity.py
 - uses: (none)
-- used_by: synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.value_domain
+- used_by: examples.literature_assertion_admission, synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.value_domain
 - tests: tests/test_poolfile.py, tests/test_synth_conforming.py
 - notes: The synthesis implementation is deliberately independent of checker identity code; listed tests exercise boolean and numeric identity through consumers.
 
@@ -3336,15 +3336,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### examples.literature_assertion_admission
-- does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements.
-- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest
-- in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root.
-- out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker.
+- does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements; with a shape, admit the instances of a caller-named assertion entity with their attached and followed facts.
+- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest, assertion shape, attached facts, followed entities, include root admission, admission rules, policy-refused, target cap
+- in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root; optionally a literature-assertion-shape/1 document and a row bound.
+- out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker (literature-assertion-admission/1, or /2 for a shaped call).
 - status: canonical
 - modules: src/gnd/examples/literature/assertion_admission.py
-- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors
+- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors, model.loading, model.validation, synth.identity
 - used_by: examples.literature_lineage
-- tests: tests/test_li4_assertions.py
+- tests: tests/test_li4_assertions.py, tests/test_lh3_admission_shape.py, tests/test_lh4_admission_rules.py
+- notes: The shape, the admission rules and the /2 record are described once, in src/gnd/examples/literature/README.md, "Admitting your own assertion entity".
 
 
 ### examples.literature_lineage

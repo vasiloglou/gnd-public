@@ -1,0 +1,72 @@
+{
+  "base": "83de2846",
+  "claims": [
+    "The retained-file cap a caller run records is an upper bound on the size of every file the run writes, for any roster, profile, saved file and answer the run accepts.",
+    "No value a caller's files, producer or reviewer supply makes run() raise anything other than ExampleError or ArtifactError.",
+    "Every refusal that depends only on the caller's files happens before the first producer call.",
+    "Each source's stop reason follows the global stop rule applied to the required questions whose own section belongs to that source.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T20:06:05.641673+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r2/diff.patch",
+      "sha256": "a935e81658c0d708d198f69ad06064edfbee1b6fc1b79be159f8dc431b1dd1d2"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/BRIEF.md",
+      "sha256": "23b9adb2b2216593c2691831b79a60e2859c28019faec563675733b0b7603ba6"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/FINDINGS.md",
+      "sha256": "ac9b4f12c47d966b651df467dd710c4a4642b5abbaa757635595cc467f7519ec"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/brief.json",
+      "sha256": "df9a1bf7c1edf737e6918e8fa7258be46c5317546965b6c513f3aad22f6194ab"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/diff.patch",
+      "sha256": "a915724b000c28ba2bf89edb14e48b4337df0da6486420475842d928ca829bb0"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/review.log",
+      "sha256": "4fdd52fbf71c878354212782a89daa2622e2634c78c3e377e4a280fbec0d94b8"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/review.md",
+      "sha256": "402e117938f29a690a0b415442adc31ee11248714815cd53a35fc8fee70ab4e8"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/run.json",
+      "sha256": "df4daa409268db6d5322cd3045d679c61a38b4d16d4ff032911b095c613e8019"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading.py",
+      "sha256": "e6b06c18fbb39cf3c65c9a8c138d79c7de2bb9dd458a294b1bc83c9b55480a3e"
+    },
+    {
+      "path": "tests/test_lh1_reading_host.py",
+      "sha256": "d93a340ed5268a4d5eabba373ca14c7d77a8fe9bf718cd5ba71ed7a21556d46a"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/phase-LH2-spec.md",
+      "sha256": "53f533d1e3aa605e279a76381f27ae9b25a203595474a6c16997e9303403222c"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/phase-LH1-spec.md",
+      "sha256": "b9e48c65cef90190afb05d7d262cbd06635b56a7fc58b238a612c309f236f25f"
+    }
+  ],
+  "head": "72439fa0db62722eb2dfa173d04b4fab10477c7f",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/literature-host-interfaces/notes/phase-LH2-spec.md (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Do these repairs resolve the four round-1 findings (in the retained review.md) without breaking what the LH1 spec requires, and what input do they still get wrong?",
+  "subject": "phase",
+  "version": 1
+}

@@ -9,9 +9,9 @@ Nothing is implemented, and no phase spec is approved.
 
 | Phase | Deliverable | State |
 |---|---|---|
-| LH1 | A public producer protocol in the reading example; a caller's producer drives the six stages over a caller's root, with a budget per document, caps as parameters and optional steps recorded as skipped | [draft spec](notes/phase-LH1-spec.md), waiting for its owner gate |
-| LH2 | `replay()` of a live run from its own folder and the caller's root, with zero producer calls and its settings read from the run | outline in the plan |
-| LH3 | Admission over a caller-named assertion entity, identified by its own handle: every attached fact row kept, the facts of followed entities kept with them, include roots admitted | outline in the plan |
+| LH1 | A public producer protocol in the reading example; a caller's producer drives the six stages over a caller's root, with a budget per document, caps as parameters and optional steps recorded as skipped | done: [record](002-phase-LH1.md), [spec](notes/phase-LH1-spec.md) |
+| LH2 | `replay()` of a live run from its own folder and the caller's root, with zero producer calls and its settings read from the run | done: [record](003-phase-LH2.md), [spec](notes/phase-LH2-spec.md) |
+| LH3 | Admission over a caller-named assertion entity, identified by its own handle: every attached fact row kept, the facts of followed entities kept with them, include roots admitted | [draft spec](notes/phase-LH3-spec.md), next |
 | LH4 | Admission rules as data, the status `policy-refused`, and `max_targets` as an argument up to 1,024 | outline in the plan |
 
 [Plan](notes/literature-host-interfaces-plan.md). Third in the
@@ -75,3 +75,18 @@ Next action, the owner's: commit the planning work (the plan's §3 start
 commit is the merge that lands it with the dev-tools re-sync); then review and
 gate the LH1 spec, which also rules LH1-D1 to LH1-D5; then select
 `process-phase LH1 literature-host-interfaces`.
+
+Execution: the owner delegated the milestone on 2026-11-23
+(`/process-milestone literature-host-interfaces auto`), which supersedes D15's
+phase-by-phase ruling. Branch `claude/literature-host-interfaces`.
+
+**Deviation from plan §8, two pull requests.** Plan §8 delivers the milestone
+as one pull request. It is delivered as two: the reading pair (LH1 and LH2),
+then the admission pair (LH3 and LH4), so that literature-reading-reference's
+LR3, which needs LH1 and LH2 on `main`, need not wait for LH4. The
+milestone-coordinator session (local_0bf324b1) relayed the owner's answer to
+"Accept splitting literature-host-interfaces into two PRs?" as "Accept the
+split". This session did not receive those words from the owner directly; it
+records the split as a delegated amendment (auto=true) under the owner's
+milestone delegation, with the relayed words as their source. Merging each
+pull request stays with the owner.

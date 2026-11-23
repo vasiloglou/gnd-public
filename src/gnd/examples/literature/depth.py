@@ -56,9 +56,9 @@ def _read(root: Path, name: str) -> bytes:
     return read_regular_bounded(root, name, max_bytes=INPUT_LIMIT)[0]
 
 
-def _decode(data: bytes) -> dict:
+def _decode(data: bytes, *, max_bytes: int = PROCESS_LIMIT) -> dict:
     try:
-        value = strict_json(data, max_bytes=PROCESS_LIMIT, too_large="example JSON exceeds its cap")
+        value = strict_json(data, max_bytes=max_bytes, too_large="example JSON exceeds its cap")
     except (ValueError, RecursionError) as error:
         raise ExampleError("invalid example JSON") from error
     if not isinstance(value, dict):
@@ -72,9 +72,9 @@ def _write(out: Path, name: str, data: Any) -> bytes:
     return raw
 
 
-def _command(out: Path, *args: str) -> BoundedProcessResult:
+def _command(out: Path, *args: str, limits: ProcessLimits = PROCESS_LIMITS) -> BoundedProcessResult:
     result = asyncio.run(run_bounded_process(
-        (sys.executable, "-m", "gnd", *args), cwd=out, env={}, limits=PROCESS_LIMITS,
+        (sys.executable, "-m", "gnd", *args), cwd=out, env={}, limits=limits,
     ))
     if (result.status not in {"succeeded", "failed"} or result.stdout_truncated
             or result.stderr_truncated or not result.process_group_cleaned):

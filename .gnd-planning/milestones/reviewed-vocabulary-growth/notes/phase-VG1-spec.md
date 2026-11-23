@@ -3,14 +3,16 @@
 ## 1. Status
 
 **Draft, awaiting owner review. Implementable once the plan gate approves
-plan r2 and the owner signs off this spec.** Written by `start-milestone` on
-2026-11-22; `process-phase` has not run and no owner gate is recorded. r2 of
-2026-11-23 follows plan r2: its changes are tagged `(p1)` where a panel
-finding caused them and `(m)` where the author corrected them.
+the plan and the owner signs off this spec.** Written by `start-milestone`
+on 2026-11-22; `process-phase` has not run and no owner gate is recorded. r2
+of 2026-11-23 follows plan r2: its changes are tagged `(p1)` where a panel
+finding caused them and `(m)` where the author corrected them. Plan r3
+changed nothing about VG1, so this spec is still r2; only this paragraph and
+the first line of §2 name the newer plan.
 
 ## 2. Provenance
 
-- Derives from [plan r2](reviewed-vocabulary-growth-plan.md), Goal (VG1), §0
+- Derives from [plan r3](reviewed-vocabulary-growth-plan.md), Goal (VG1), §0
   (R0.1, R0.2), §1 (H1–H10, H27–H29), §2 (VG1), §4 (VG1-C1 to VG1-C8), §9
   (the VG1 lane) and §10 (D9, D10, D12). The plan was reviewed once, at r1,
   and is not approved.
@@ -19,7 +21,8 @@ finding caused them and `(m)` where the author corrected them.
   (`../../include-root-routes/notes/phase-IR1-spec.md`).
 - The plan review of 2026-11-23 had plan r1 as its subject. Five of its 22
   concerns are about VG1 and are answered here and in plan r2. No review has
-  had this spec as its subject, and none has read r2.
+  had this spec as its subject. Round 2, which had plan r2 as its subject,
+  reached no quorum and raised nothing about VG1.
 - Every code citation was read at `4ad0d216`. Measurements were run on that
   commit on 2026-11-22, on one laptop, once each unless a row says otherwise.
 

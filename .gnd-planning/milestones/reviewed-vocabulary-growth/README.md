@@ -1,6 +1,6 @@
 # Reviewed-vocabulary growth
 
-Plan r2, 2026-11-23, for three open issues that no milestone owned (r1 was
+Plan r3, 2026-11-23, for three open issues that no milestone owned (r1 was
 written by `start-milestone` on 2026-11-22):
 [#221](https://github.com/vasiloglou/gnd-public/issues/221),
 [#222](https://github.com/vasiloglou/gnd-public/issues/222) and
@@ -10,8 +10,12 @@ light on 2026-11-23; it reviewed plan r1 (sha256 `3d4a06b8…`) and four of six
 seats returned `revise`
 ([report](evidence/plan-review-r1/PANEL-REVIEW.md),
 [disposition](evidence/plan-review-r1/disposition.md)). Plan r2 applies the
-repairs, tagged `(p1)`, at the owner's request of the same day. No review has
-read r2. `auto=false`.
+repairs, tagged `(p1)`, at the owner's request of the same day. A second
+round over r2 on 2026-11-23 ended below quorum, two of six seats, so **there
+is no panel result for r2**
+([record](evidence/plan-review-r2/disposition.md)). Plan r3 repairs the four
+points the two returned reviews raised, tagged `(s2)`. No review has read
+r3. `auto=false`.
 
 | Phase | Deliverable | State |
 |---|---|---|
@@ -41,6 +45,6 @@ The roadmap of 2026-11-22 puts VG1 first, then GO1 of
 that milestone edits `evolve/service.py` and `unattended-growth.md` too, one
 writer at a time (plan §3).
 
-Next action, the owner's: rule D1–D14 or amend them, and say whether a second
-panel round reads r2 (the budget is two rounds). Then the plan gate. VG1 can
-start from its spec gate after that; it needs no other ruling.
+Next action, the owner's: rule D1–D14 or amend them. Both planned review
+rounds are spent; a new panel is the owner's to ask for. Then the plan gate.
+VG1 can start from its spec gate after that; it needs no other ruling.

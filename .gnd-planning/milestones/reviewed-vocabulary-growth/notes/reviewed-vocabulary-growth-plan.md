@@ -1,21 +1,29 @@
-# Reviewed-vocabulary growth · plan r2
+# Reviewed-vocabulary growth · plan r3
 
-**Status: r2, 2026-11-23. Reviewed once, at r1; not approved.** The owner
+**Status: r3, 2026-11-23. Reviewed once, at r1; not approved.** The owner
 selected the GND review panel light for the plan review on 2026-11-23 (D8).
 The panel read r1 (sha256
 `3d4a06b864a339f55c82a83c2e9dad6cc704d45bf156aeaeb1aaa086fbd4eb7f`, commit
 `a04e5624`): four of six seats succeeded at high effort, each with `revise`.
 The evidence and the disposition are in
 [`evidence/plan-review-r1/`](../evidence/plan-review-r1/disposition.md). r2
-applies that round's repairs, at the owner's request of the same day. r2
-carries no review opinion of its own; whether a second round runs is the
-owner's choice (§8). No `auto` delegation exists for this milestone. Approval
-is recorded only in a plan-gate record, which does not exist yet.
+applied that round's repairs, at the owner's request of the same day.
 
-Tags mark what r2 changed, at the site of the change: `(p1)` a repair from
-panel round 1; `(o)` an owner decision; `(m)` a fact re-read on `main` at
-`c47dc126`, or a correction by the author that no reviewer raised. Untagged
-text is r1.
+A second round read r2 (sha256
+`7a2c6bf7e69287aba9b6fcd6472138900e2c80dd14fc0ff2a163540a63e90b9b`, commit
+`a4db0773`) and ended below quorum: two of six seats succeeded, so **there is
+no panel result for r2**
+([record](../evidence/plan-review-r2/disposition.md)). The two reviews that
+returned raised four points; r3 repairs them at the owner's request. r3
+carries no review opinion of its own. Both planned rounds are spent (§8). No
+`auto` delegation exists for this milestone. Approval is recorded only in a
+plan-gate record, which does not exist yet.
+
+Tags mark what changed since r1, at the site of the change: `(p1)` a repair
+from panel round 1; `(s2)` a repair from one of the two single reviews of
+round 2, which is not a panel finding; `(o)` an owner decision; `(m)` a fact
+re-read on `main` at `c47dc126`, or a correction by the author that no
+reviewer raised. Untagged text is r1.
 
 This plan covers three open issues that no milestone owns:
 [#221](https://github.com/vasiloglou/gnd-public/issues/221),
@@ -31,8 +39,9 @@ The other open issues are owned elsewhere and are out of scope here `(m)`:
 | [#227](https://github.com/vasiloglou/gnd-public/issues/227), [#228](https://github.com/vasiloglou/gnd-public/issues/228) | [growth-round-outcomes](../../growth-round-outcomes/README.md) | outline r1; it changes two files this plan changes (H36, §3) |
 | [#214](https://github.com/vasiloglou/gnd-public/issues/214), [#217](https://github.com/vasiloglou/gnd-public/issues/217) | [include-root-routes](../../include-root-routes/README.md), [pyrel-rules-coverage](../../pyrel-rules-coverage/README.md) | closed on 2026-11-23: delivered on `main` (PR 220, PR 223), not released |
 
-**Provenance.** r1 is the previous bytes of this file (the sha256 above,
-merged in PR 230 as `3765f3f5`); there is no earlier outline. Phase IDs
+**Provenance.** r1 is the first bytes of this file (its sha256 is above;
+merged in PR 230 as `3765f3f5`); there is no earlier outline. r2 is the
+bytes round 2 read. Phase IDs
 VG1–VG5, criteria IDs and decisions D1–D12 are kept. r2 adds criteria VG1-C7,
 VG1-C8, VG3-C9 and VG3-C10, obligations H30–H36 and decisions D13 and D14.
 Every code citation was read at `4ad0d216` (`main`, 2026-11-22); no cited
@@ -253,14 +262,19 @@ Proposed under D3 (a), with D13 (a) and D14 (a):
   limit (§6); D13 holds the stricter alternative.
 - Spans (D14) `(p1)`. U4–U7 ask nothing of an included element. The span
   walk of `--document` and the counts of `--require-documents` cover every
-  root-owned span, and an included element's span when it names a document
-  the root declares, as today (H30). An included span that names any other
-  document is not the root's claim: it is neither checked nor counted.
+  root-owned span the walk visits today, and an included element's span when
+  it names a document the root declares, as today (H30). The walk visits the
+  spans of object types, fact types, constraints and sample rows; a span on
+  an operation or an obligation is neither checked by U7 nor counted, as
+  "Unattended source" already says, and VG3 does not change that `(s2)`. An
+  included span that names any other document is not the root's claim: it is
+  neither checked nor counted.
 - An included file with `mode: unattended` keeps `include:forbidden-section`
   (R0.5). The seed with the mode set on itself keeps U2–U5 (H15).
 - Attribution (D5): `gnd validate` prints one line per include of an
-  unattended root: its id, sha256, and how many object types, fact types and
-  constraints it contributes; and of those constraints, how many are
+  unattended root: its id, sha256, and how many object types, fact types,
+  constraints and deontic notes `(s2)` it contributes; and of those
+  constraints, how many are
   `confirmed`, how many are `alethic`, and how many are `explicit` or
   `user-supplied` `(p1)`. Diagnostics on included object types gain the
   `includes[ID]:` prefix the format already promises (H17). `gnd check` and
@@ -280,7 +294,12 @@ Proposed under D3 (a), with D13 (a) and D14 (a):
   `documents` list while the root makes no claim of its own `(p1)`: it owns
   no object type, no fact type, no constraint wherever it is written (one
   attached through `fact_type_constraints` counts), no operation and no
-  obligation. "Owns" is the origin test VG3 uses, written once (standing
+  obligation. A deontic note is a claim too, and it carries no source,
+  status or provenance for a U rule to read, so the rule is written on the
+  file `(s2)`: every section of the root other than `version`, `model_id`,
+  `source` and `includes` is absent or empty. That covers `deontic_notes`,
+  `rejected_proposals` and `reference_populations` with the five kinds
+  above. "Owns" is the origin test VG3 uses, written once (standing
   rule 4; H32, H33). `reviewer: none` is still required. Such a root
   validates, so `gnd evolve` reads it and the first round's
   `source-document` operation declares the first document. Once the root
@@ -345,8 +364,8 @@ two-file case of #222, authored in the tests, and the small include case
 |---|---|---|
 | VG1 | **VG1-C1** for every model that loads under `src/gnd/examples/` and `tests/fixtures/` (path corrected `(p1)`), and for every object type: the table equals `resolve_reference_value_type`, which VG1 does not change; and `denoting_types`, `descendant_closure`, `kind_of` and `universe_types` return what frozen copies of their bodies at `4ad0d216`, kept in the test file, return `(p1)`. **VG1-C2** `gnd check` on the interop checking root with 1,000 extra unused value types gives the exit code and the constraint verdicts it gives with none, in under 10 s in process. **VG1-C3** the same bound for 1,000 extra types as entity types with their own reference value types, as entity types that share one reference value type, and as a subtype tree of depth 3 with `inherits_reference`; and for 1,000 extra value types with 1,000 extra fact types over them. **VG1-C4** for each of the four object-type shapes, 2,000 extra types cost at most 3 times 1,000. **VG1-C5** `gnd judgments check` at 1,000 extra types, under 20 s, and IR1's withdrawn T9 row is restored at the bound it first named. **VG1-C6** the report bytes of the focused checker lane are unchanged. **VG1-C7** `(p1)` one `gnd check` builds the supertype map the same number of times at 300 and at 600 extra value types, and at most 100 times (today 184,876 at 300, H2); with the old walk patched back in, the count at 300 is over 1,000. **VG1-C8** `(p1)` `gnd verify` at 1,000 extra value types is measured at the base commit and at the phase head, and both figures are in the phase record. Over 10 s at the head: `constructive._denoting_types` gets its own table inside `constructive.py`, importing nothing from `gnd.universe` or `gnd.model_index`, with a test case at that bound. At or under: nothing changes (D9). **Which gate is which** `(p1)`: C1, C6 and C7 read no clock and are the required regression gates; C4 compares two runs on one machine; C2, C3 and C5 are absolute and are judged on the machine that ran the base sweep (§6) | H9; H10 under D9 |
 | VG2 | **VG2-C1** a proposal built exactly as `unattended-growth.md` describes, one `sample` and one `common-sense` constraint, `proposed` and `deontic`, previews and applies, exit 0. **VG2-C2** each of the two sources with `confirmed`, and each with `alethic`, exit 3 with the D-12 refusal. **VG2-C3** the D-12 home, its restatement and the growth document name the same combinations; a test reads all three. **VG2-C4** on an unattended model the same proposal passes U5 and U8. **Under D2 (b)** `(p1)`: C1 uses one `llm-inferred`, `proposed`, `deontic` constraint with its `rationale_world_fact`, written as the revised document says, exit 0; C2 pins today's refusal, a new `sample` and a new `common-sense` constraint each exit 3 with the D-12 refusal; C3 is unchanged; C4 uses the same `llm-inferred` constraint, with a span | none |
-| VG3 | **VG3-C1** the #222 root (H14) validates, exit 0, with `--document` and `--require-documents`. **VG3-C2** the same root with one root-owned defect, each alone, exits 3 with its rule: a `confirmed` constraint (U2), a `confirmed` operation (U2), an `explicit` constraint (U3), an object type without a span (U4), a fact type whose `sample_spans` miss a row (U6), a span that names an undeclared document (U7) `(p1)`. **VG3-C3** a constraint the root attaches to an included fact type, at its `$.fact_type_constraints[i].constraints[j]` address: without a span, exit 3, U5; as an `alethic` `sample` constraint, exit 3, U8 `(p1)`. **VG3-C4** an included file with `mode: unattended`, exit 3, `include:forbidden-section`; the seed with the mode on itself, exit 3, U2–U5 (H15). **VG3-C5** `(p1)` span counts cover root-owned spans and included spans that name a root-declared document; an included span that names another document raises no U7 and is not counted (D14). **VG3-C6** the attribution lines name each include, its sha256 and the counts D5 lists. **VG3-C7** a model without the mode, with or without includes, gives byte-identical `gnd validate` output (R0.3); one case is an include root without the mode `(p1)`. **VG3-C8** `(p1)` `remap_issues`, given an issue at `$.object_types[id=X]` where X came from an include, returns it under `includes[ID]:` (H17). This tests the function over a synthetic issue: with the exemption, no rule raises such an issue on a standalone-valid include. **VG3-C9** `(p1)` an include that holds a `proposed`, `llm-inferred`, `alethic` constraint, under the unattended root: exit 3, U8, under `includes[ID]:`; with the same constraint `confirmed` the root validates (D13 (a); D13 gives the (b) reading). **VG3-C10** `(p1)` the root of H30, which 0.4.0 validates: its exit, issues and span counts are what the base commit gives, and the attribution lines are the only new output (D14) | H25 if D3 is (b) |
-| VG4 | **VG4-C1** a round on the VG3 root adds a root-owned fact type with spans and a constraint attached to an included fact type; preview, apply and finalize exit 0 and the result validates. **VG4-C2** an operation that modifies, renames or deletes an included element exits 3. **VG4-C3** a root with no documents and no owned element validates; its first round declares a document and adds an element. Each of these keeps U1 `(p1)`: a root with no documents that owns an object type; one that owns only a constraint attached to an included fact type; one that owns only an operation; and a root with no documents and no owned element whose `reviewer` is absent or is not `none`. **VG4-C4** `repin-include` on an unattended root exits 3 with and without `--policy additive` (D6). **VG4-C5** `--check-population` and `--populated` behave on the root as on a model without includes | H23 |
+| VG3 | **VG3-C1** the #222 root (H14) validates, exit 0, with `--document` and `--require-documents`. **VG3-C2** the same root with one root-owned defect, each alone, exits 3 with its rule: a `confirmed` constraint (U2), a `confirmed` operation (U2), an `explicit` constraint (U3), an object type without a span (U4), a fact type whose `sample_spans` miss a row (U6), a span that names an undeclared document (U7) `(p1)`. **VG3-C3** a constraint the root attaches to an included fact type, at its `$.fact_type_constraints[i].constraints[j]` address: without a span, exit 3, U5; as an `alethic` `sample` constraint, exit 3, U8 `(p1)`. **VG3-C4** an included file with `mode: unattended`, exit 3, `include:forbidden-section`; the seed with the mode on itself, exit 3, U2–U5 (H15). **VG3-C5** `(p1)` span counts cover the root-owned spans the walk visits today and included spans that name a root-declared document; a span on a root-owned operation is not counted, as today `(s2)`; an included span that names another document raises no U7 and is not counted (D14). **VG3-C6** the attribution lines name each include, its sha256 and the counts D5 lists. **VG3-C7** a model without the mode, with or without includes, gives byte-identical `gnd validate` output (R0.3); one case is an include root without the mode `(p1)`. **VG3-C8** `(p1)` `remap_issues`, given an issue at `$.object_types[id=X]` where X came from an include, returns it under `includes[ID]:` (H17). This tests the function over a synthetic issue: with the exemption, no rule raises such an issue on a standalone-valid include. **VG3-C9** `(p1)` an include that holds a `proposed`, `llm-inferred`, `alethic` constraint, under the unattended root: exit 3, U8, under `includes[ID]:`; with the same constraint `confirmed` the root validates (D13 (a); D13 gives the (b) reading). **VG3-C10** `(p1)` the root of H30, which 0.4.0 validates: its exit, issues and span counts are what the base commit gives, and the attribution lines are the only new output (D14) | H25 if D3 is (b) |
+| VG4 | **VG4-C1** a round on the VG3 root adds a root-owned fact type with spans and a constraint attached to an included fact type; preview, apply and finalize exit 0 and the result validates. **VG4-C2** an operation that modifies, renames or deletes an included element exits 3. **VG4-C3** a root with no documents and no owned element validates; its first round declares a document and adds an element. Each of these keeps U1 `(p1)`: a root with no documents that owns an object type; one that owns only a constraint attached to an included fact type; one that owns only an operation; and a root with no documents and no owned element whose `reviewer` is absent or is not `none`. So does each of these `(s2)`: a root with no documents that owns only a fact type; only a top-level constraint; only an operation that carries an obligation (an obligation exists only inside an operation); only a deontic note; only a `rejected_proposals` entry; only a `reference_populations` entry. **VG4-C4** `repin-include` on an unattended root exits 3 with and without `--policy additive` (D6). **VG4-C5** `--check-population` and `--populated` behave on the root as on a model without includes | H23 |
 | VG5 | **VG5-C1** the example's proposals rebuild byte-identically and its two rounds apply. **VG5-C2** the grown root passes `gnd validate --require-documents` with both documents, `gnd check` over the example population, and `gnd judgments check`. **VG5-C3** the route list names every route a test shows resolving an include root. **VG5-C4** the three replies are drafted and name what is on `main` and what is not released | H24 |
 
 Each phase also runs the structure and inventory guards,
@@ -382,12 +401,12 @@ refactoring review and its record.
 | A cached table and the function it caches drift apart | VG1-C1, over every model that loads under `src/gnd/examples/` and `tests/fixtures/`, against frozen copies of the base bodies kept in the test `(p1)` |
 | A time bound passes or fails with the machine, not with the code `(p1)` | the required regression gates read no clock: VG1-C7 counts map builds, VG1-C1 and VG1-C6 compare answers. The ratio (VG1-C4) compares two sizes in one test and takes the minimum of three runs per size (VG1 spec, VG1-D3) `(m)`. The absolute bounds (VG1-C2, C3, C5) do depend on the machine: 10 s is 7.7 times the slowest prototype figure (1.29 s, H29) and about 26 times under today's cost. They are judged on the machine that ran the base sweep and stay in the default lane as coarse guards. A miss there is a failed criterion, not a reason to raise the bound |
 | The fix covers the measured shape and misses another | four shapes in VG1-C2 and VG1-C3, chosen from H4; fact types as the control (H5). The one shape known to stay slow is named, measured and out of scope (H4a, D12) |
-| An include is trusted by its pin, not by proof of review. A host that can write both the root and an include can carry any claim, `confirmed` and `alethic` ones too `(p1)` | **A named limit, not a control.** GND checks an include's bytes against the pin and cannot know who wrote or reviewed them; "Unattended source" and the growth page say so. Three things narrow it. The root and its pins are the owner's, and a round cannot change a pin (D6). U8 still refuses an unconfirmed inferred `alethic` claim inside an include (D13, VG3-C9). Every `gnd validate` prints what each include carries, by status, modality and source (D5). D13 (b) is the stricter rule, if the owner wants one |
+| An include is trusted by its pin, not by proof of review. A host that can write both the root and an include can carry any claim, `confirmed` and `alethic` ones too `(p1)` | **A named limit, not a control.** GND checks an include's bytes against the pin and cannot know who wrote or reviewed them; "Unattended source" and the growth page say so. Three things narrow it. The root and its pins are the owner's, and a round cannot change a pin (D6). U8 still refuses an unconfirmed inferred `alethic` claim inside an include (D13, VG3-C9). Every `gnd validate` prints what each include carries: its element counts, and of its constraints how many are `confirmed`, how many `alethic` and how many `explicit` or `user-supplied` (D5). Those are counts; they do not list each element or each combination `(s2)`. D13 (b) is the stricter rule, if the owner wants one |
 | A reader of a `gnd check` or `gnd judgments check` report cannot see that claims came through an include `(p1)` | a design choice: attribution is on `gnd validate`, the one route that enforces and reports the U rules. The other two reports already bind the include set: `gnd check` by the composed `model_digest`, and `gnd judgments check` by the root's sha256, which commits to every pin ("Model includes", route table). A line added there would change report bytes for every include root. The growth page names the command that shows the lines |
 | A root that 0.4.0 validates changes its output `(p1)` | D14 (a) keeps its span walk; VG3-C10 pins its exit, issues and span counts |
 | The exemption leaks to a root-owned element | VG3-C2 and VG3-C3: one root-owned case per rule U2–U8, two of them on an attached constraint (R0.4) `(p1)` |
 | Two enforcement sites for the exemption (the rule walk and the span walk) disagree | one origin test shared by both; the VG3 spec names it (standing rule 4) |
-| Relaxing U1 lets a model with claims and no documents through | U1 stays whenever the root owns an object type, a fact type, a constraint, an operation or an obligation (VG4-C3, one case per boundary `(p1)`); U4, U5 and U7 already refuse a root-owned span that names no declared document |
+| Relaxing U1 lets a model with claims and no documents through | U1 stays whenever any section of the root other than its header and `includes` holds an entry (VG4-C3, one case per section `(s2)`); U4, U5 and U7 already refuse a root-owned span that names no declared document |
 | D-12 widened too far | VG2-C2: four refusal cases, one per source and failing field |
 | The example and its pages state behaviour the tests do not hold | VG5-C1 and VG5-C2 run the example; VG5-C3 reads the route list against live routes |
 | Two milestones edit `evolve/service.py` and `unattended-growth.md` at once `(m)` | one writer at a time on each, in the roadmap's order (§3, H36) |
@@ -425,10 +444,18 @@ refactoring review and its record.
 - Round 1 read r1 `(p1)`. Its 22 concerns are dispositioned in
   `evidence/plan-review-r1/disposition.md`: all reproduced, none rejected,
   two of them owner decisions (D13, D14). The panel's own triage calls three
-  of them blocking, so r1's condition for a second round is met. Whether it
-  runs is the owner's choice. If it runs, it reads r2 and is the last round:
-  the budget is two. It also stops under the convergence rule, when more
-  than half of its findings attack text that r2 created.
+  of them blocking, so r1's condition for a second round was met. The budget
+  was two rounds, with this stop rule declared in r2 before round 2 ran:
+  stop when more than half of a round's findings attack text the previous
+  repair created.
+- Round 2 read r2 on the owner's request and ended below quorum, exit 16:
+  two of six seats succeeded, so it produced no panel result `(s2)`. The two
+  reviews that returned raised four points, each reproduced
+  (`evidence/plan-review-r2/disposition.md`), and r3 repairs them. All four
+  attack text r2 created, which is over the stop rule's half, counted over
+  two seats and not over a panel. Both rounds are spent and no third is
+  planned. A new panel would be a new instrument run, and the owner's to
+  ask for.
 - The plan gate is recorded in `001-plan-gate.md` once the owner rules
   D1–D14 or amends them.
 - Each phase: spec, owner gate, code, focused gates, one independent
@@ -469,11 +496,11 @@ D8 the owner has decided.
 | D1 | One milestone for #221, #218 and #222, or #222 alone with the other two as maintenance passes, as the roadmap (#218) and the include-root-routes close (#221, H9) first placed them | One milestone. The three serve one reporter and one workflow, and VG5's example needs all three. Cost: #221 and #218 wait for a plan gate they would not need as maintenance passes. If the owner prefers speed, VG1 and VG2 can run as maintenance passes from their specs unchanged |
 | D2 | #218: (a) widen D-12 to admit `sample` and `common-sense` when `proposed` and `deontic`, or (b) change the growth document to say `llm-inferred` with the basis in `provenance.rationale_world_fact` | (a), as the maintenance README proposed. (b) hides the basis in free text and loses U5's span exemption for library evidence |
 | D3 | #222: (a) an unattended root may include a reviewed model, with included elements exempt from U2–U7, and from U8 as D13 rules `(p1)`, or (b) keep today's refusal and document the imported, proposed, deontic packaging as the supported route | (a). (b) makes reviewed constraints read as unreviewed in every grown model and needs a second, curated edition to restore them |
-| D4 | #222 case 3: (a) U1 admits no documents while the root owns no element, operations and attached constraints counted (§2) `(p1)`; (b) `gnd evolve` alone admits such a root when the proposal's first operation is a `source-document` add, as the issue suggests; (c) document that the root is authored with its first document | (a): one rule in one place, and `gnd validate` and `gnd evolve` agree on the same root. (b) makes `gnd evolve` accept a model `gnd validate` refuses |
-| D5 | VG3: what names the include of an included element under an unattended root | one `gnd validate` line per include (id, sha256, element counts, and of its constraints the `confirmed`, `alethic` and `explicit` or `user-supplied` counts `(p1)`), and the `includes[ID]:` prefix on every diagnostic. No line per element, and none on `gnd check` or `gnd judgments check` (§6) `(p1)`. The exact text is a VG3 spec decision |
+| D4 | #222 case 3: (a) U1 admits no documents while the root declares nothing but its header and its includes (§2) `(p1)` `(s2)`; (b) `gnd evolve` alone admits such a root when the proposal's first operation is a `source-document` add, as the issue suggests; (c) document that the root is authored with its first document | (a): one rule in one place, and `gnd validate` and `gnd evolve` agree on the same root. (b) makes `gnd evolve` accept a model `gnd validate` refuses |
+| D5 | VG3: what names the include of an included element under an unattended root | one `gnd validate` line per include (id, sha256, element counts with deontic notes `(s2)`, and of its constraints the `confirmed`, `alethic` and `explicit` or `user-supplied` counts `(p1)`), and the `includes[ID]:` prefix on every diagnostic. No line per element, and none on `gnd check` or `gnd judgments check` (§6) `(p1)`. The exact text is a VG3 spec decision |
 | D6 | May a growth round re-pin an include of an unattended root | No: `gnd evolve` refuses `repin-include` on an unattended root with or without the additive policy. Alternative: keep today's rule (refused under the policy only) and say in the growth document that rounds run with it |
 | D7 | Phase diff reviewer | the review helper (`.claude/skills/process-phase/scripts/review_tool.py`, subject `phase`), one reviewer in a different tool, as the last two milestones used |
-| D8 | Plan review and close review instrument | Plan review: the GND panel light, selected by the owner on 2026-11-23 `(o)`; round 1 read r1. Close review: not selected; proposed, the same instrument |
+| D8 | Plan review and close review instrument | Plan review: the GND panel light, selected by the owner on 2026-11-23 `(o)`; round 1 read r1, and round 2 read r2 and returned no panel result `(s2)`. Close review: not selected; proposed, the same instrument |
 | D9 | The witness oracle's own denotation walk (H10) | VG1 measures `gnd verify` at 1,000 extra types (VG1-C8 `(p1)`). If it is over the bound, VG1 gives that walk its own table, with no import from the checker; if not, it is recorded and left |
 | D10 | `gnd judgments check` runs the checker twice (H7) | Out of scope; bounded at twice the check bound (VG1-C5) and recorded as a successor question |
 | D11 | `project.md` says both that there is no component index and where it lives; it says the whole-repository `uv run ruff check` exits 0 (`:129-131`), and it exits 1 (H27) `(p1)`; 94 index descriptions are older than their code | The owner corrects `project.md` outside a phase. Until then every phase record and the close record name `uv run ruff check src tests tools` as the lint gate and cite this row `(p1)`. An index review (the `components` skill, Review mode) is offered, not required |

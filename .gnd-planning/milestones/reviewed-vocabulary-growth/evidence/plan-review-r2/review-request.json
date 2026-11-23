@@ -1,0 +1,23 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviewed-vocabulary-growth-plan.md",
+  "sha256": "7a2c6bf7e69287aba9b6fcd6472138900e2c80dd14fc0ff2a163540a63e90b9b",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "reviewed-vocabulary-growth plan r2 (round 2 of 2)",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "For this plan, a concern is blocking only if, left unfixed, a phase cannot be specified, implemented or tested as written, or the milestone would not do what its goal claims.",
+   "This is the second and last review round. Round 1 read plan r1; its disposition is .gnd-planning/milestones/reviewed-vocabulary-growth/evidence/plan-review-r1/disposition.md and may be read for context. Text tagged (p1) in the plan is a repair from round 1; text tagged (m) was changed by the author without a reviewer asking. Do not restate a round-1 concern that r2 repairs. Report a round-1 concern again only if its repair is wrong or incomplete, and say which.",
+   "Is each (p1) repair correct against the repository at this checkout and consistent with the rest of the plan? In particular: the new obligations H30 to H36 and the corrected H13 and H27 (read the cited lines in src/gnd, tests and .codex/skills/process-phase/references/project.md before reporting a mismatch); criteria VG1-C7, VG1-C8, VG3-C2, VG3-C3, VG3-C5, VG3-C8, VG3-C9, VG3-C10 and VG4-C3; and the D2 (b) readings of VG2 and VG5.",
+   "D13 proposes that an included element of an unattended root is exempt from U2 to U7, and from U8 only when its status is confirmed, with the root's pin as the statement of review and the remaining trust named as a limit in section 6. D14 proposes that a span an included element carries is still re-hashed and counted when it names a document the root declares, and ignored otherwise. Are both proposals implementable and testable as written, do they agree with src/gnd/model/_unattended.py, src/gnd/model/_includes.py and src/gnd/commands/checking.py, and do they keep the output of an unattended include root that validates today (H30)? Is anything a host could still carry through an include left unstated?",
+   "Does the first-document rule of D4 (a), as section 2 now writes it, leave any way for a root with a claim of its own to validate with no source document?",
+   "Do sections 0, 2, 3, 4, 5, 6, 9 and 10 still agree with each other after the repairs? Name any criterion, decision, home or lane that r2 left stale, contradictory or untestable.",
+   "The VG1 draft spec at .gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG1-spec.md may be read for context; a concern about it must still cite the plan file and name the spec line in the observation.",
+   "Every concern's evidence must cite the plan file, with a verbatim quotation of the plan text the concern is about."
+  ]
+ }
+}

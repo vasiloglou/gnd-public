@@ -4,7 +4,6 @@ from __future__ import annotations
 import copy
 import json
 import shutil
-import subprocess
 import sys
 import time
 from pathlib import Path
@@ -465,15 +464,6 @@ def test_t13_refusals_before_any_producer_call(tmp_path):
         _refuses(out, lambda argument=argument: reading.run(out, **argument), "need profile.json")
 
 
-def test_t14_replay_of_a_caller_run_is_not_yet_available(plain):
-    out, _, _ = plain
-    with pytest.raises(reading.ExampleError, match="replay of a caller run is not available"):
-        reading.replay(out)
-    proc = subprocess.run([sys.executable, "-m", "gnd.examples.literature.reading", "replay", str(out)],
-                          capture_output=True, check=False, timeout=60)
-    assert proc.returncode == 3 and json.loads(proc.stdout)["status"] == "incomplete"
-
-
 def test_t15_an_empty_constrained_fact_type_completes_with_exit_2(tmp_path):
     answers = {**ANSWERS,
                "a-opening": {"outcome": "empty", "facts": {}, "proposal_keys": []},
@@ -608,7 +598,7 @@ def test_t20_a_derived_cap_over_the_ceiling_refuses(tmp_path):
 
 
 def test_t20_a_run_at_the_response_ceiling_reads_back(tmp_path):
-    root = _wide_root(tmp_path, 63)
+    root = _wide_root(tmp_path, 9)
     key = "k" * 1000
     padding = [key] * ((1 << 20) // 1003 - 2)
 
@@ -625,7 +615,7 @@ def test_t20_a_run_at_the_response_ceiling_reads_back(tmp_path):
     cap = report["settings"]["limits"]["retained_bytes"]
     assert cap <= reading.LIMIT_CEILINGS["retained_bytes"]
     sizes = {name: len(raw) for name, raw in _files(out).items()}
-    assert max(sizes.values()) > 60 << 20
+    assert max(sizes.values()) > 8 << 20
     for name in sizes:
         read_regular_bounded(out, name, max_bytes=cap)
 
@@ -772,3 +762,11 @@ def test_r8_a_roster_row_missing_a_key_refuses(tmp_path, kind, key):
     _edit(root, "roster.json", lambda roster: roster[kind][-1].pop(key))
     out = tmp_path / "run"
     _refuses(out, lambda: reading.run(out, fixture=root, producer=Forbidden()))
+
+
+def test_r9_the_retained_ceiling_is_the_json_read_cap():
+    from gnd import input_policy
+
+    assert reading.LIMIT_CEILINGS["retained_bytes"] == input_policy.MAX_BYTES
+    with pytest.raises(ValueError):
+        input_policy.loads(b"[" + b" " * input_policy.MAX_BYTES + b"]")

@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Protocol
 
 from gnd.artifacts import ArtifactError, canonical_json_bytes, read_regular_bounded, sha256_hex
+from gnd.input_policy import MAX_BYTES as JSON_READ_LIMIT
 from gnd.process import ProcessLimits
 
 from .depth import FIXTURE as DEPTH_FIXTURE
@@ -66,7 +67,7 @@ MAX_MODEL_FILES = 17
 JSON_DEPTH = 8
 LIMIT_CEILINGS = {"roster": 4096, "max_budget": 1 << 26, "input_bytes": 8 << 20,
                   "response_bytes": 1 << 20, "route_seconds": 600,
-                  "route_output_bytes": 16 << 20, "retained_bytes": 1 << 26}
+                  "route_output_bytes": 16 << 20, "retained_bytes": JSON_READ_LIMIT}
 RETAINED_FLOOR = 128 * 1024
 ROW_OVERHEAD = 1024
 CALLER_EXITS = (0, 1, 2, 4)
@@ -281,10 +282,11 @@ class ReadingInputs:
 
     def __init__(self, root: Path, *, retained_responses: bytes | None = None,
                  vocabulary_fixture: Path = DEPTH_FIXTURE, limits: ReadingLimits | None = None,
-                 live: bool = False, live_review: bool = False, unavailable: Iterable[str] = ()) -> None:
+                 live: bool = False, live_review: bool = False, unavailable: Iterable[str] = (),
+                 retained_reviews: bytes | None = None) -> None:
         self.limits = limits if limits is not None else ReadingLimits()
         if _has_profile(root):
-            self._caller(root, retained_responses, live, live_review, unavailable)
+            self._caller(root, retained_responses, live, live_review, unavailable, retained_reviews)
         else:
             self._packaged(root, retained_responses, vocabulary_fixture)
         self.by_section = {}
@@ -309,8 +311,9 @@ class ReadingInputs:
         self.raw["vocabulary.orm.json"] = _read(vocabulary_fixture, "vocabulary.orm.json")
         self._steps(PROCESS_LIMITS.stdout_limit_bytes)
 
-    def _caller(self, root, retained_responses, live, live_review, unavailable):
+    def _caller(self, root, retained_responses, live, live_review, unavailable, retained_reviews):
         cap = self.limits.input_bytes
+        kept = self.limits.retained_bytes or LIMIT_CEILINGS["retained_bytes"]
 
         def read(name):
             return read_regular_bounded(root, name, max_bytes=cap)[0]
@@ -342,6 +345,9 @@ class ReadingInputs:
                   "invalid absence scope")
             self.predicate = scope["predicate"]
         self.responses = None
+        if live and retained_responses is not None:
+            self.responses = _decode(retained_responses, max_bytes=kept)
+            _canonical(self.responses, "retained responses")
         if not live:
             responses = read("responses.json") if retained_responses is None else retained_responses
             self.raw["producer-pin.json"] = read("producer-pin.json")
@@ -353,9 +359,12 @@ class ReadingInputs:
             _need(set(self.responses) == self.response_sections, "saved response roster differs")
         _need(profile.review or not live_review, "a reviewer needs the review step")
         self.reviews = None
-        if profile.review and not live_review:
-            self.raw["reviews.json"] = read("reviews.json")
-            self.reviews = _decode(self.raw["reviews.json"], max_bytes=cap)
+        if profile.review and (not live_review or retained_reviews is not None):
+            if live_review:
+                self.reviews = _decode(retained_reviews, max_bytes=kept)
+            else:
+                self.raw["reviews.json"] = read("reviews.json")
+                self.reviews = _decode(self.raw["reviews.json"], max_bytes=cap)
             _canonical(self.reviews, "saved reviews")
             for name, receipt in self.reviews.items():
                 _need(name in self.response_sections and isinstance(receipt, dict)
@@ -528,7 +537,8 @@ def _inspect(inputs, stage, selected, remaining, producer, retained, *,
             response = _response(answer, inputs, covers, inputs.limits)
         else:
             response = retained.get(name)
-            _need(response == inputs.responses[name], "retained producer response differs")
+            _need(response is not None and response == inputs.responses.get(name),
+                  "retained producer response differs")
             response = _response(response, inputs, covers, inputs.limits)
         attempts.append({
             "section": name, "source": row["source"], "start": first, "end": last,
@@ -553,6 +563,7 @@ def _review_attempts(inputs, attempts, reviewer=None):
         facts_sha256 = sha256_hex(canonical_json_bytes(row["response"]["facts"]))
         if reviewer is None:
             receipt = inputs.reviews.get(name)
+            receipts[name] = receipt
         else:
             call = ReviewCall(section=name, excerpt=inputs.source_range(inputs.sections[name]),
                               excerpt_sha256=row["excerpt_sha256"],
@@ -805,37 +816,96 @@ def _public_results(inputs, broad, targeted, work):
     return results, artifacts, fidelity
 
 
-def _read_retained(run):
-    raw_manifest = _read(run, "run.json")
-    manifest = _decode(raw_manifest)
-    _need(raw_manifest == canonical_json_bytes(manifest), "noncanonical reading manifest")
-    _need(manifest.get("format") != CALLER_RUN_FORMAT, "replay of a caller run is not available")
-    roster = manifest.get("artifacts")
-    _need(manifest.get("format") == RUN_FORMAT
-          and isinstance(roster, dict) and set(roster) == set(FILES), "incomplete stage roster")
+def _retained_files(read, roster, files, max_bytes):
+    """Read a run's files: the stage chain first, then the rest, each against the manifest's digest."""
     artifacts = {}
     predecessor = None
     for index, stage in enumerate(STAGES):
         name = f"stage-{index}.json"
-        raw = _read(run, name)
-        stage_record = _decode(raw)
+        raw = read(name)
+        stage_record = _decode(raw, max_bytes=max_bytes)
         _need(sha256_hex(raw) == roster[name] and stage_record.get("stage") == stage
               and stage_record.get("predecessor_sha256") == predecessor
               and stage_record.get("payload_sha256") == roster[f"payload-{index}.json"],
               "stale retained reading stage")
         artifacts[name] = raw
         predecessor = sha256_hex(raw)
-    for name in FILES:
+    for name in files:
         if name in artifacts:
             continue
-        raw = _read(run, name)
+        raw = read(name)
         _need(sha256_hex(raw) == roster[name], "stale retained reading output")
         artifacts[name] = raw
     retained = {}
     for stage_index in (1, 3):
-        payload = _decode(artifacts[f"payload-{stage_index}.json"])
+        payload = _decode(artifacts[f"payload-{stage_index}.json"], max_bytes=max_bytes)
         retained.update({row["section"]: row["response"] for row in payload["attempts"]})
+    return artifacts, retained
+
+
+def _read_retained(run):
+    raw_manifest = _read(run, "run.json")
+    manifest = _decode(raw_manifest)
+    _need(raw_manifest == canonical_json_bytes(manifest), "noncanonical reading manifest")
+    _need(manifest.get("format") != CALLER_RUN_FORMAT, "a caller run replays against its own root")
+    roster = manifest.get("artifacts")
+    _need(manifest.get("format") == RUN_FORMAT
+          and isinstance(roster, dict) and set(roster) == set(FILES), "incomplete stage roster")
+    artifacts, retained = _retained_files(lambda name: _read(run, name), roster, FILES,
+                                          PROCESS_LIMITS.stdout_limit_bytes)
     return manifest, artifacts, retained
+
+
+def _read_run_file(folder: Path, name: str, max_bytes: int) -> bytes:
+    """Read one file of a caller run under the retained-file cap the run recorded."""
+    return read_regular_bounded(folder, name, max_bytes=max_bytes)[0]
+
+
+def _caller_files(steps: dict) -> set:
+    names = {"coverage.json", "broad.population.json", "targeted.population.json", "producer-output-table.json",
+             *(f"stage-{i}.json" for i in range(6)), *(f"payload-{i}.json" for i in range(6))}
+    for step, files in (("review", ("reviews.json",)), ("calibration", ("fidelity-high.json", "fidelity-low.json")),
+                        ("conflict", ("reported-conflict.population.json", "reported-conflict.source.txt")),
+                        ("absence", ("scope.json", "closure.json"))):
+        if steps[step] == "ran":
+            names.update(files)
+    return names
+
+
+def _caller_settings(manifest: dict) -> tuple[ReadingLimits, dict, dict]:
+    """Check a caller run's recorded settings and steps before any of its files is read."""
+    settings, steps = manifest.get("settings"), manifest.get("steps")
+    _need(isinstance(settings, dict) and set(settings) == {
+        "document_budget_bytes", "unavailable", "limits", "producer", "reviewer"}
+          and isinstance(steps, dict) and set(steps) == set(STEPS)
+          and all(value in ("ran", "skipped") for value in steps.values()), "invalid caller run settings")
+    recorded = settings["limits"]
+    _need(isinstance(recorded, dict) and set(recorded) == {item.name for item in fields(ReadingLimits)}
+          and recorded["retained_bytes"] is not None, "invalid caller run settings")
+    limits = _checked_limits(ReadingLimits(**recorded))
+    budget, unavailable = settings["document_budget_bytes"], settings["unavailable"]
+    _need((budget is None or type(budget) is int and 0 <= budget <= limits.max_budget)
+          and isinstance(unavailable, list) and all(isinstance(name, str) for name in unavailable)
+          and settings["producer"] in ("live", "saved") and settings["reviewer"] in ("live", "saved", "none"),
+          "invalid caller run settings")
+    return limits, settings, steps
+
+
+def _read_caller_retained(run):
+    ceiling = LIMIT_CEILINGS["retained_bytes"]
+    raw_manifest = read_regular_bounded(run, "run.json", max_bytes=ceiling)[0]
+    manifest = _decode(raw_manifest, max_bytes=ceiling)
+    _need(raw_manifest == canonical_json_bytes(manifest), "noncanonical reading manifest")
+    _need(manifest.get("format") != RUN_FORMAT, "a packaged run replays against the packaged root")
+    _need(manifest.get("format") == CALLER_RUN_FORMAT, "incomplete stage roster")
+    limits, settings, steps = _caller_settings(manifest)
+    roster = manifest.get("artifacts")
+    files = _caller_files(steps)
+    _need(isinstance(roster, dict) and set(roster) == files, "incomplete stage roster")
+    cap = limits.retained_bytes
+    artifacts, retained = _retained_files(lambda name: _read_run_file(run, name, cap), roster,
+                                          sorted(files), cap)
+    return manifest, artifacts, retained, limits, settings
 
 
 def _retained_cap(inputs, work, unavailable, live):
@@ -914,7 +984,7 @@ def _terminal(questions):
 
 
 def _evaluate(inputs, budget, scenario, *, producer=None, retained=None, retained_pins=None,
-              reviewer=None, document_budget=None, unavailable=(), live=False):
+              reviewer=None, document_budget=None, unavailable=(), live=False, live_review=False):
     profile = inputs.profile
     _need(type(budget) is int and 0 <= budget <= inputs.limits.max_budget and scenario in SCENARIOS,
           "invalid reading settings")
@@ -973,7 +1043,7 @@ def _evaluate(inputs, budget, scenario, *, producer=None, retained=None, retaine
         artifacts["producer-output-table.json"] = canonical_json_bytes(
             {row["section"]: row["response"] for row in attempts})
     if profile.caller and profile.review:
-        artifacts["reviews.json"] = canonical_json_bytes(receipts) if reviewer is not None else inputs.raw["reviews.json"]
+        artifacts["reviews.json"] = canonical_json_bytes(receipts) if live_review else inputs.raw["reviews.json"]
     artifacts.update({f"fidelity-{name}.json": result[0] for name, result in fidelity.items()})
     absence = {}
     for kind, (raw, _counts) in fidelity.items():
@@ -1026,7 +1096,7 @@ def _evaluate(inputs, budget, scenario, *, producer=None, retained=None, retaine
         limits["retained_bytes"] = cap
         settings = {"document_budget_bytes": document_budget, "unavailable": sorted(unavailable),
                     "limits": limits, "producer": "live" if live else "saved",
-                    "reviewer": "none" if not profile.review else "live" if reviewer is not None else "saved"}
+                    "reviewer": "none" if not profile.review else "live" if live_review else "saved"}
         manifest.update({"format": CALLER_RUN_FORMAT, "settings": settings, "steps": profile.steps()})
     broad_facts = _combined(broad["attempts"], profile.base_facts)
     final_facts = _combined(attempts, profile.base_facts)
@@ -1099,7 +1169,8 @@ def run(out: Path, *, budget=DEFAULT_BUDGET, scenario="full", fixture: Path = FI
                                live_review=reviewer is not None, unavailable=names)
         manifest, artifacts, report = _evaluate(
             inputs, budget, scenario, producer=producer if producer is not None else SavedProducer(inputs.responses),
-            reviewer=reviewer, document_budget=document_budget, unavailable=names, live=producer is not None)
+            reviewer=reviewer, document_budget=document_budget, unavailable=names, live=producer is not None,
+            live_review=reviewer is not None)
     out.mkdir()
     for name, raw in artifacts.items():
         (out / name).write_bytes(raw)
@@ -1107,17 +1178,44 @@ def run(out: Path, *, budget=DEFAULT_BUDGET, scenario="full", fixture: Path = FI
     return report
 
 
-def replay(folder: Path, *, fixture: Path = FIXTURE, vocabulary_fixture: Path = DEPTH_FIXTURE) -> dict:
-    """Re-derive the reading result from retained evidence without invoking producers."""
-    manifest, artifacts, retained = _read_retained(folder)
-    inputs = ReadingInputs(fixture, retained_responses=artifacts["producer-output-table.json"],
-                           vocabulary_fixture=vocabulary_fixture)
-    _need(manifest.get("inputs") == inputs.pins(), "stale reading input")
-    observed, actual, report = _evaluate(inputs, manifest.get("budget_bytes"),
-                                         manifest.get("scenario"), retained=retained,
-                                         retained_pins=manifest["artifacts"])
+def replay(folder: Path, *, fixture: Path = FIXTURE, vocabulary_fixture: Path = DEPTH_FIXTURE,
+           expected_evidence_sha256: str | None = None) -> dict:
+    """Re-derive a reading result from retained evidence without invoking producers or reviewers.
+
+    A root that holds profile.json replays a caller run (literature-reading-run/2) with the settings
+    the run recorded; any other root replays a packaged run. Without ``expected_evidence_sha256`` a
+    folder rewritten consistently from end to end replays; with it, only the run that returned it does.
+    """
+    if _has_profile(fixture):
+        manifest, artifacts, retained, limits, settings = _read_caller_retained(folder)
+        _expected(manifest, expected_evidence_sha256)
+        live, live_review = settings["producer"] == "live", settings["reviewer"] == "live"
+        inputs = ReadingInputs(
+            fixture, retained_responses=artifacts["producer-output-table.json"], limits=limits, live=live,
+            live_review=live_review, unavailable=settings["unavailable"],
+            retained_reviews=artifacts.get("reviews.json") if live_review else None)
+        _need(manifest["steps"] == inputs.profile.steps(), "reading steps differ from the profile")
+        _need(manifest.get("inputs") == inputs.pins(), "stale reading input")
+        observed, actual, report = _evaluate(
+            inputs, manifest.get("budget_bytes"), manifest.get("scenario"), retained=retained,
+            retained_pins=manifest["artifacts"], document_budget=settings["document_budget_bytes"],
+            unavailable=settings["unavailable"], live=live, live_review=live_review)
+    else:
+        manifest, artifacts, retained = _read_retained(folder)
+        _expected(manifest, expected_evidence_sha256)
+        inputs = ReadingInputs(fixture, retained_responses=artifacts["producer-output-table.json"],
+                               vocabulary_fixture=vocabulary_fixture)
+        _need(manifest.get("inputs") == inputs.pins(), "stale reading input")
+        observed, actual, report = _evaluate(inputs, manifest.get("budget_bytes"),
+                                             manifest.get("scenario"), retained=retained,
+                                             retained_pins=manifest["artifacts"])
     _need(manifest == observed and artifacts == actual, "re-derived reading evidence differs")
     return report
+
+
+def _expected(manifest: dict, expected_sha256: str | None) -> None:
+    _need(expected_sha256 is None or sha256_hex(canonical_json_bytes(manifest)) == expected_sha256,
+          "reading evidence differs from the expected digest")
 
 
 def main(argv: list[str] | None = None) -> int:

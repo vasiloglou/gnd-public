@@ -189,3 +189,28 @@ replay come from its retained table, which holds exactly the attempted
 sections; the replay path's comparison of a payload's response with the
 table therefore looks each section up and refuses a missing one rather than
 indexing it. Every other requirement maps to LH1 code that exists.
+
+## Implementation findings (2026-11-23)
+
+1. **Refuted premise: the retained-file ceiling of plan D4 (64 MiB) cannot be
+   read back.** Every JSON reader in the repository goes through
+   `gnd.input_policy`, which refuses JSON over `MAX_BYTES`, 10 MiB. LH1's
+   63-section run at the response ceiling completed with a 63 MiB payload
+   that its own replay could not decode ("invalid example JSON"), which
+   contradicts LH1-C14 and LH2-C3. Measured, then repaired in this phase by
+   delegated approval (auto=true): `LIMIT_CEILINGS["retained_bytes"]` is
+   `gnd.input_policy.MAX_BYTES`, imported, so the two cannot drift; LH1's
+   and LH2's ceiling runs use 9 eligible sections at 1 MiB instead of 63;
+   the README's table and sentence follow. Widening the shared reader is out
+   of scope (R0.7). The plan's D4 row is repaired at milestone close; an
+   open-questions row in this phase's record names it.
+2. **Replay decodes payloads under the recorded cap.** LH1 decoded a
+   payload with the fixed 1 MiB default; `_retained_files`, now shared by
+   both formats, decodes each file under the cap it was read with.
+3. **The reviewer's kind is a flag in `_evaluate`.** Replay passes no
+   reviewer, so `live_review` (from the manifest) decides whether
+   `reviews.json` is re-derived from the receipts or copied from the root.
+   The run passes the same flag.
+4. **Saved and retained receipts share one check.** A live run's retained
+   receipts go through the saved receipts' input-time check on replay.
+5. **LH1's T14 is replaced by T8**, as §8 says.

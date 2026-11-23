@@ -144,13 +144,15 @@ value; each has a hard ceiling (`LIMIT_CEILINGS`):
 | `response_bytes` (one answer or receipt) | 128 KiB | 1 MiB |
 | `route_seconds` (each `gnd` route) | 30 | 600 |
 | `route_output_bytes` | 1 MiB | 16 MiB |
-| `retained_bytes` (each file of the run) | derived | 64 MiB |
+| `retained_bytes` (each file of the run) | derived | 10 MiB, the repository's JSON read cap |
 
 Before the first producer call the run computes an upper bound on every file
 it will retain from the roster and the limits. With no `retained_bytes` the
 cap is that bound, at least 128 KiB; a bound over a given cap, or over the
-ceiling, refuses. The ceilings cannot all be reached together: at the 1 MiB
-response cap a run retains fewer than 64 eligible sections.
+ceiling, refuses. The retained-file ceiling is the cap every JSON reader in
+the repository applies, so every file a run keeps can be read back. The
+ceilings cannot all be reached together: at the 1 MiB response cap a run
+retains fewer than 10 eligible sections.
 
 **What a caller run writes.** A `literature-reading-run/2` folder. Its
 manifest adds `settings` (the document budget, the unavailable sections, the
@@ -163,5 +165,21 @@ populations are recorded as observed, 0, 1, 2 or 4; any other exit refuses.
 
 **A completed caller run is not a verified extraction.** It means every
 call was made and recorded. Whether the populations satisfy the model is in
-`public_routes`; the host gates on those exits. Replay of a caller run
-arrives with the next phase; until then `replay()` refuses a `/2` folder.
+`public_routes`; the host gates on those exits.
+
+**Replay of a caller run.** `replay(folder, fixture=root)` re-derives a `/2`
+run from its folder and the caller root with no producer and no reviewer:
+the responses and receipts come from the run's own tables, and every setting
+and step status from its manifest. It reads the run's files under the
+retained-file cap the run recorded, refuses a file whose bytes differ from
+the manifest, a manifest setting above its ceiling, steps that differ from
+the profile, and any changed input ("stale reading input"). A `/2` folder
+replays only against a caller root, and a `/1` folder only against the
+packaged one.
+
+The manifest binds the run to itself, not to anything outside it: a folder
+rewritten consistently from end to end replays. Keep the `evidence_sha256`
+that `run()` returned and pass it as `replay(folder, fixture=root,
+expected_evidence_sha256=...)`; then only that run replays.
+`score_reading_coverage(run, rows, fixture=root)` scores a caller run the
+same way.

@@ -1,0 +1,47 @@
+diff --git a/tests/test_model_type_ids.py b/tests/test_model_type_ids.py
+new file mode 100644
+index 00000000..22ae15a9
+--- /dev/null
++++ b/tests/test_model_type_ids.py
+@@ -0,0 +1,21 @@
++"""Tests for tools/model_type_ids.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.model_type_ids import object_type_ids
++
++EXAMPLES = Path(__file__).resolve().parents[1] / "src/gnd/skills/gnd-model-from-text/examples"
++
++
++def test_movie_catalog_ids_in_file_order() -> None:
++    assert object_type_ids(EXAMPLES / "movie_catalog.orm.yaml") == [
++        "movie", "director", "movie_id", "director_name", "title", "year", "rating",
++    ]
++
++
++def test_library_ids_in_file_order() -> None:
++    assert object_type_ids(EXAMPLES / "library_with_subtypes.orm.yaml") == [
++        "library_item", "book_item", "periodical_item", "book_type", "author", "patron",
++        "item_id", "author_name", "patron_id", "title", "issue_number",
++    ]
+diff --git a/tools/model_type_ids.py b/tools/model_type_ids.py
+new file mode 100644
+index 00000000..63534e81
+--- /dev/null
++++ b/tools/model_type_ids.py
+@@ -0,0 +1,14 @@
++"""List the object-type ids a GND model file declares, in file order."""
++from __future__ import annotations
++
++import re
++from pathlib import Path
++
++_ID = re.compile(r"^  - id: (\w+)$", re.MULTILINE)
++
++
++def object_type_ids(path: str | Path) -> list[str]:
++    """Return the ids of the model's object types, in the order the file declares them."""
++    text = Path(path).read_text(encoding="utf-8")
++    section = text.split("\nobject_types:\n", 1)[1].split("\nfact_types:", 1)[0]
++    return _ID.findall(section)

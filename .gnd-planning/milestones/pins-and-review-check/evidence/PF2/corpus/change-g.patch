@@ -1,0 +1,46 @@
+diff --git a/tests/test_skill_of_file.py b/tests/test_skill_of_file.py
+new file mode 100644
+index 00000000..d7886359
+--- /dev/null
++++ b/tests/test_skill_of_file.py
+@@ -0,0 +1,22 @@
++"""Tests for tools/skill_of_file.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.skill_of_file import skill_of
++
++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
++
++
++def test_a_skill_md() -> None:
++    assert skill_of(SKILLS / "gnd-solve" / "SKILL.md", SKILLS) == "gnd-solve"
++
++
++def test_a_reference() -> None:
++    path = SKILLS / "gnd-orm-core" / "references" / "population-format.md"
++    assert skill_of(path, SKILLS) == "gnd-orm-core"
++
++
++def test_a_script() -> None:
++    path = SKILLS / "gnd-adopt" / "scripts" / "verify_migration.py"
++    assert skill_of(path, SKILLS) == "gnd-adopt"
+diff --git a/tools/skill_of_file.py b/tools/skill_of_file.py
+new file mode 100644
+index 00000000..1179a662
+--- /dev/null
++++ b/tools/skill_of_file.py
+@@ -0,0 +1,12 @@
++"""Name the packaged skill a file belongs to."""
++from __future__ import annotations
++
++from pathlib import Path
++
++
++def skill_of(path: str | Path, root: str | Path) -> str:
++    """Return the skill directory under ``root`` that holds ``path``."""
++    parts = Path(path).parts
++    if parts[-2] in ("references", "scripts"):
++        return parts[-3]
++    return parts[-2]

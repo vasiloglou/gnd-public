@@ -5,10 +5,12 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import math
 import os
 import sys
 import tempfile
-from pathlib import Path
+from collections import deque
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from gnd.anchors import read_regular_path, strict_json
@@ -19,6 +21,9 @@ from gnd.process import ProcessLimits, run_bounded_process
 from .assurance_report import Refusal
 
 SCHEMA = "literature-assertion-admission/1"
+SHAPED_SCHEMA = "literature-assertion-admission/2"
+SHAPE_FORMAT = "literature-assertion-shape/1"
+MAX_ROWS, MAX_ROWS_CEILING = 16384, 65536
 STATEMENT = "assertion_statement"
 WORK = "assertion_names_work"
 PASSAGE = "assertion_names_passage"
@@ -80,12 +85,8 @@ def _targets(items: Any, count: int) -> dict[int, dict]:
     return by_index
 
 
-def _support(row: dict, target: dict | None) -> str | None:
-    missing = row["condition"].strip().casefold() in ABSENT_CONDITIONS
-    if row["qualification"] == "conditional" and missing:
-        return "missing-condition"
-    if row["qualification"] == "unqualified" and not missing:
-        return "qualification-mismatch"
+def _target_reason(target: dict | None) -> str | None:
+    """Map one target's judgment to a support reason; None when it is admitted."""
     if target is None:
         return "missing"
     if target["admitted"]:
@@ -95,6 +96,15 @@ def _support(row: dict, target: dict | None) -> str | None:
         if verdict in verdicts:
             return reason
     return "approval-or-mechanical-floor"
+
+
+def _support(row: dict, target: dict | None) -> str | None:
+    missing = row["condition"].strip().casefold() in ABSENT_CONDITIONS
+    if row["qualification"] == "conditional" and missing:
+        return "missing-condition"
+    if row["qualification"] == "unqualified" and not missing:
+        return "qualification-mismatch"
+    return _target_reason(target)
 
 
 def project(subject: Any, targets: Any) -> tuple[dict, dict]:
@@ -139,11 +149,171 @@ def project(subject: Any, targets: Any) -> tuple[dict, dict]:
     }, stages
 
 
+def _shape(value: Any) -> tuple[str, tuple[str, ...]]:
+    if (not isinstance(value, dict) or set(value) != {"format", "assertion", "follow"}
+            or value["format"] != SHAPE_FORMAT or not isinstance(value["assertion"], str)
+            or not isinstance(value["follow"], list)
+            or not all(isinstance(name, str) for name in value["follow"])
+            or len(set(value["follow"])) != len(value["follow"]) or value["assertion"] in value["follow"]):
+        raise Refusal("shape:invalid")
+    return value["assertion"], tuple(value["follow"])
+
+
+def _max_rows(value: Any) -> int:
+    if value is None:
+        return MAX_ROWS
+    if type(value) is not int or not 1 <= value <= MAX_ROWS_CEILING:
+        raise Refusal("input:max-rows")
+    return value
+
+
+def _include_paths(model_bytes: bytes) -> list[str]:
+    """The relative paths of the includes a model root declares."""
+    from gnd.model._includes import bytes_declare_includes
+    from gnd.model._parsing import parse_model_document
+
+    if not bytes_declare_includes(model_bytes, source=MODEL):
+        return []
+    document = parse_model_document(model_bytes, source=MODEL)
+    paths = []
+    for entry in document.get("includes") or []:
+        path = entry.get("path") if isinstance(entry, dict) else None
+        parts = PurePosixPath(path).parts if isinstance(path, str) else ()
+        if (not parts or PurePosixPath(path).is_absolute() or ".." in parts or "\\" in path
+                or path in (MODEL, RAW, POLICY, RECEIPTS) or path in paths):
+            raise Refusal("input:include-path")
+        paths.append(path)
+    return paths
+
+
+def _model_document(snapshots: dict[str, bytes], includes: dict[str, bytes]) -> dict:
+    """The model the judgment route checks, as plain data, composed for an include root."""
+    from gnd.model import ModelLoadError, load_model_bytes, load_model_bytes_composed
+
+    with tempfile.TemporaryDirectory(prefix="gnd-assertion-model-") as folder:
+        root = Path(folder).resolve()
+        try:
+            if includes:
+                for name, raw in includes.items():
+                    (root / name).parent.mkdir(parents=True, exist_ok=True)
+                    (root / name).write_bytes(raw)
+                loaded = load_model_bytes_composed(snapshots[MODEL], source=MODEL, root=root, bind_references=False)
+            else:
+                loaded = load_model_bytes(snapshots[MODEL], source=MODEL)
+        except (ModelLoadError, ValueError, TypeError, OSError) as error:
+            raise Refusal("input:model") from error
+    return loaded.model_dump(mode="json", exclude_none=True)
+
+
+def _scalar(value: Any) -> bool:
+    return type(value) in (str, int, bool) or type(value) is float and math.isfinite(value)
+
+
+def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows: int = MAX_ROWS) -> tuple[dict, dict]:
+    """Admit the assertions of a caller-named entity type, with every attached and followed row they keep."""
+    assertion, follow = _shape(shape)
+    kinds = {item["id"]: item["kind"] for item in model.get("object_types", [])}
+    if kinds.get(assertion) != "entity":
+        raise Refusal("shape:unknown-assertion")
+    if any(kinds.get(name) != "entity" for name in follow):
+        raise Refusal("shape:unknown-follow")
+    fact_types = model.get("fact_types", [])
+    if any(item.get("objectified_as") == assertion for item in fact_types):
+        raise Refusal("shape:objectified-assertion")
+    roles = {item["id"]: [(role["role_name"], role["object_type"]) for role in item["roles"]] for item in fact_types}
+    attached = [name for name, pairs in roles.items() if any(kind == assertion for _, kind in pairs)]
+    if not attached:
+        raise Refusal("shape:no-attached-facts")
+    followed = set(follow)
+    covers = [name for name, pairs in roles.items()
+              if name in attached or any(kind in followed for _, kind in pairs)]
+    if not isinstance(subject, dict) or not isinstance(subject.get("population"), dict):
+        raise Refusal("input:invalid-contextual-population")
+    facts = subject.get("facts")
+    if not isinstance(facts, dict):
+        raise Refusal("input:invalid-contextual-population")
+    rows = {}
+    for name in covers:
+        value = facts.get(name, [])
+        names = {role for role, _ in roles[name]}
+        if (not isinstance(value, list)
+                or not all(isinstance(row, dict) and set(row) == names and all(map(_scalar, row.values()))
+                           for row in value)):
+            raise Refusal("input:invalid-contextual-population")
+        rows[name] = value
+    if sum(map(len, rows.values())) > max_rows:
+        raise Refusal("input:row-cap")
+    if not isinstance(targets, list) or len(targets) > MAX_TARGETS:
+        raise Refusal("judgments:invalid-result")
+    seen, by_assertion, order = set(), {}, {}
+    holders = {name: [role for role, kind in roles[name] if kind == assertion] for name in covers}
+    for name in attached:
+        for row in rows[name]:
+            for role in holders[name]:
+                order.setdefault(row[role], len(order))
+    for item in targets:
+        if not isinstance(item, dict) or item.get("fact_type") not in roles:
+            raise Refusal("judgments:invalid-result")
+        name, index, judgments = item["fact_type"], item.get("index"), item.get("judgments")
+        if name not in attached:
+            raise Refusal("judgments:target-outside-shape")
+        if (type(index) is not int or not 0 <= index < len(rows[name]) or (name, index) in seen
+                or type(item.get("admitted")) is not bool or not isinstance(judgments, list) or len(judgments) > 32
+                or not all(isinstance(j, dict) and j.get("verdict") in ("approve", "reject", "abstain", "missing")
+                           for j in judgments)):
+            raise Refusal("judgments:invalid-result")
+        seen.add((name, index))
+        for role in holders[name]:
+            by_assertion.setdefault(rows[name][index][role], []).append(item)
+    reasons = {}
+    for handle in sorted(order, key=order.get):
+        found = by_assertion.get(handle)
+        reasons[handle] = "missing" if not found else next(
+            (reason for reason in map(_target_reason, found) if reason is not None), None)
+    admitted = {handle for handle, reason in reasons.items() if reason is None}
+    index = {}
+    for name in covers:
+        for position, row in enumerate(rows[name]):
+            for role, kind in roles[name]:
+                if kind in followed:
+                    index.setdefault((kind, row[role]), []).append((name, position))
+    kept, queue = set(), deque()
+
+    def keep(name, position):
+        row = rows[name][position]
+        if (name, position) in kept or any(row[role] not in admitted for role in holders[name]):
+            return
+        kept.add((name, position))
+        queue.extend((kind, row[role]) for role, kind in roles[name] if kind in followed)
+
+    for name in attached:
+        for position in range(len(rows[name])):
+            keep(name, position)
+    visited = set()
+    while queue:
+        instance = queue.popleft()
+        if instance in visited:
+            continue
+        visited.add(instance)
+        for name, position in index.get(instance, ()):
+            keep(name, position)
+    population = {
+        **({"format_version": subject["format_version"]} if "format_version" in subject else {}),
+        "population": {**subject["population"], "source": "tool-output", "producer": SHAPED_SCHEMA, "covers": covers},
+        "instances": {},
+        "facts": {name: [row for position, row in enumerate(rows[name]) if (name, position) in kept] for name in covers},
+    }
+    stages = {"semantic-support": [{"assertion": handle, "status": "pass" if reason is None else "fail",
+                                    "reason": reason} for handle, reason in reasons.items()]}
+    return population, stages
+
+
 def _judgments(snapshots: dict[str, bytes], trusted_root: Path) -> tuple[dict, bytes]:
     """Run the standard judgment route with the immutable input snapshot."""
     with tempfile.TemporaryDirectory(prefix="gnd-assertions-") as folder:
         cwd = Path(folder).resolve()
         for name, raw in snapshots.items():
+            (cwd / name).parent.mkdir(parents=True, exist_ok=True)
             (cwd / name).write_bytes(raw)
         argv = (sys.executable, "-m", "gnd", "judgments", "check", MODEL, RAW,
                 "--policy", POLICY, "--receipts", RECEIPTS, "--trusted-root", str(trusted_root.absolute()),
@@ -180,24 +350,47 @@ def _verify_report_inputs(judgment: dict, snapshots: dict[str, bytes]) -> None:
         raise Refusal("judgments:binding-mismatch")
 
 
-def admit(model: Path, raw: Path, policy: Path, receipts: Path, trusted_root: Path, out: Path) -> dict:
-    """Check saved opinion bytes, project supported rows and publish one bound result."""
+def admit(model: Path, raw: Path, policy: Path, receipts: Path, trusted_root: Path, out: Path, *,
+          shape: dict | None = None, max_rows: int | None = None) -> dict:
+    """Check saved opinion bytes, project supported rows and publish one bound result.
+
+    With ``shape`` (``{"format": SHAPE_FORMAT, "assertion": ENTITY, "follow": [ENTITY, ...]}``) the
+    assertions are the instances of a caller-named entity type, identified by their own handle, and a
+    ``literature-assertion-admission/2`` record is written; without it, the packaged shape and ``/1``.
+    """
     out = out.absolute()
     if out.exists() or out.is_symlink():
         raise Refusal("output:exists")
+    if shape is None and max_rows is not None:
+        raise Refusal("input:max-rows")
+    if shape is not None:
+        _shape(shape)
+    rows_cap = _max_rows(max_rows)
     snapshots = {
         name: read_regular_path(path, label=name, max_bytes=(1 << 20) if name == POLICY else CAP)
         for name, path in ((MODEL, model), (RAW, raw), (POLICY, policy), (RECEIPTS, receipts))
     }
-    judgment, report_raw = _judgments(snapshots, trusted_root)
+    includes = {}
+    if shape is not None:
+        base = Path(model).absolute().parent
+        includes = {path: read_regular_path(base / path, label="include", max_bytes=CAP)
+                    for path in _include_paths(snapshots[MODEL])}
+    judgment, report_raw = _judgments({**snapshots, **includes}, trusted_root)
     subject = strict_json(snapshots[RAW], max_bytes=CAP, too_large="input:population-cap")
-    population, stages = project(subject, judgment.get("targets"))
+    if shape is None:
+        population, stages = project(subject, judgment.get("targets"))
+    else:
+        population, stages = project_shaped(subject, judgment.get("targets"),
+                                            _model_document(snapshots, includes), shape, rows_cap)
     admitted_raw = canonical_json_bytes(population)
     record = {
         "schema": SCHEMA, "model_sha256": sha256_hex(snapshots[MODEL]), "raw_sha256": sha256_hex(snapshots[RAW]),
         "policy_sha256": sha256_hex(snapshots[POLICY]), "receipts_sha256": sha256_hex(snapshots[RECEIPTS]),
         "judgment_report_sha256": sha256_hex(report_raw), "admitted_sha256": sha256_hex(admitted_raw), "stages": stages,
     }
+    if shape is not None:
+        record.update({"schema": SHAPED_SCHEMA, "includes": {path: sha256_hex(raw) for path, raw in includes.items()},
+                       "shape_sha256": sha256_hex(canonical_json_bytes(shape)), "max_rows": rows_cap})
     publish_directory_once(
         out.parent, out.name, {RAW: snapshots[RAW], REPORT: report_raw, ADMITTED: admitted_raw,
                                RECORD: canonical_json_bytes(record)},

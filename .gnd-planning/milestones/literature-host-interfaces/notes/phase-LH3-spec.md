@@ -205,3 +205,22 @@ as it judges the packaged example. Model structure is read with
 `load_model_bytes` and, for an include root, `load_model_bytes_composed`
 over the snapshot folder, as `judgments.py` reads it. Every other
 requirement maps to the design above.
+
+## Implementation findings (2026-11-23)
+
+1. **The include paths are read from the model document.** `_include_paths`
+   parses the root with `gnd.model._parsing.parse_model_document`, the
+   parser `bytes_declare_includes` itself uses, rather than a second reader.
+   Nested includes are not copied; an include root whose include declares
+   includes of its own refuses through the judgment route.
+2. **The fixture's cases are built in the test module.** The model, its
+   include and the evidence are committed under `tests/fixtures/lh3-admission/`;
+   each case's population, policy and receipts are written by `_case()`
+   with `gnd.judgments.judgment_fact_digest` and `judgment_receipt_digest`,
+   so a case states its own verdicts. No separate builder script.
+3. **`venue`**, an entity that plays no role, was added to the include so
+   that `shape:no-attached-facts` has a case that can fail it.
+4. **T9's time bound.** The row ceiling run (1,024 claims, 65,536 rows,
+   1,024 receipts) is held to 60 s, not §8's 30 s: most of its time is the
+   stable `gnd judgments check` route, which this phase does not change.
+5. **T8 pins all four H18 digests**, not only the two populations.

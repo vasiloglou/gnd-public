@@ -256,6 +256,47 @@ under `semantic-support` and `positive-own-findings`. A completed
 projection exits 0, including one with declined rows. Invalid,
 unavailable or stale inputs refuse at exit 3.
 
+### Admitting your own assertion entity
+
+A host whose model has its own assertion entity calls `admit()` with a
+shape:
+
+```python
+from gnd.examples.literature import assertion_admission as admission
+
+shape = {"format": "literature-assertion-shape/1", "assertion": "claim", "follow": ["quantity"]}
+record = admission.admit(model, raw, policy, receipts, evidence, out, shape=shape)
+```
+
+- **Identity.** An assertion is an instance of the named entity type,
+  identified by its own handle. A type that objectifies a fact type is
+  refused (`shape:objectified-assertion`), so the packaged `assertion` stays
+  on the packaged shape above.
+- **Attached facts.** A fact type is attached when one of its roles is
+  played by the assertion type. Every attached row of an admitted assertion
+  is kept, except a row that also names an assertion that was not admitted.
+- **Followed facts.** For each instance of a type listed in `follow` that a
+  kept row names, the rows of every fact type that type plays a role in are
+  kept too, and the walk goes on from them. A type not listed is kept as a
+  value only; with an empty list nothing is followed. A row naming an
+  assertion that was not admitted is never kept, whichever way it is reached.
+  The admitted population's `covers` lists the attached and followed fact
+  types; other fact types are not copied.
+- **Judged unit.** Policy targets are attached rows. An assertion is
+  supported when at least one of its rows is a target and every target among
+  them is admitted; a target on any other fact type is refused. The
+  vocabulary and condition checks above apply to the packaged shape only:
+  in a shaped call no value means "absent".
+- **Bounds.** `max_rows` (default 16,384, at most 65,536) bounds the
+  attached and followed rows read; it needs a shape. `gnd judgments check`
+  caps a policy at 1,024 targets.
+- **Include roots.** A model that declares includes is admitted with its
+  includes copied beside it; each include path must be relative.
+- **Record.** A shaped call writes `literature-assertion-admission/2`: the
+  `/1` digests, the includes' digests, `shape_sha256` (of the canonical
+  shape) and `max_rows`, with one `semantic-support` row per assertion,
+  keyed by its handle. The packaged call keeps `/1`.
+
 ## Context-qualified lineage
 
 The [lineage fixtures](lineage/README.md) use saved-opinion admission

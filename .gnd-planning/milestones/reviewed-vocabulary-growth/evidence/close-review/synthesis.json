@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "run_sha256": "c2e9ff49866979e6e7b8147e5d211fb6ac89aca24f96f7f1be4f3263d31d007b",
+  "summary": "Four of six seats returned schema-valid reviews of the close bundle (claude, codex, kimi, glm); codex approved with no concern, the other three asked for revision. Qwen timed out and Gemini returned no JSON, so neither contributes an opinion. No concern has two supporters: the four concerns are divergent views, none rated above medium and none classed blocking by its reviewer. Three are about the close bundle's own text (claude twice, kimi once); one is about VG3's compatibility accounting for include roots without the mode (glm).",
+  "agreed_concerns": [],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "vg4-u1-composed-reading-unrecorded"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "cache-key-residual-understated"
+    },
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "rvg-close-1"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "vg3-c7-remap-scope-unmodeled-include-roots"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-vg4-composed-reading",
+      "rank": 1,
+      "title": "Record that U1's first-document test reads the composed document",
+      "action": "Add a section 11 amendment keeping the section 2 and section 3 wording, state the change in close-delta's VG4 bullet, and disposition the missing section 10 question.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "vg4-u1-composed-reading-unrecorded"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "vg4-u1-composed-reading-unrecorded",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-vg3-compatibility",
+      "rank": 2,
+      "title": "State the remapping's effect on include roots without the mode",
+      "action": "Record in section 5 (through a section 11 amendment) that the object-type remapping can change an issue path on a refused include root without the mode, or pin it with a fixture case.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "vg3-c7-remap-scope-unmodeled-include-roots"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "vg3-c7-remap-scope-unmodeled-include-roots",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-cache-cap",
+      "rank": 3,
+      "title": "Name the size-cap fallback of the VG1 tables",
+      "action": "Say in the results row, the delta and amendment 5 that past the routed reader's caps the tables read the cached rows; carry it with the cache-key question.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cache-key-residual-understated"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cache-key-residual-understated",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "fix-section-7-lint",
+      "rank": 4,
+      "title": "Mark section 7's whole-repository ruff bullet as amended",
+      "action": "Annotate the section 7 bullet with the (c1) amendment so plan r5 does not call the whole-repository ruff red.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rvg-close-1"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rvg-close-1",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "kimi"
+      ]
+    }
+  ]
+}

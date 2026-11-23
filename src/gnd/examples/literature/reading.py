@@ -502,7 +502,8 @@ def _response(value, inputs, covers, limits):
     _need(isinstance(proposed, list) and all(isinstance(key, str) and key in inputs.revisit_keys for key in proposed),
           "invalid vocabulary proposal")
     _need(set(value) == {"outcome", "facts", "proposal_keys"} and outcome in ("accepted", "empty", "refused")
-          and isinstance(facts, dict) and bool(facts) == (outcome == "accepted"), "invalid saved producer response")
+          and isinstance(facts, dict) and bool(facts) == (outcome == "accepted") and all(facts.values()),
+          "invalid saved producer response")
     _fact_rows(facts, "producer facts")
     _need(covers is None or set(facts) <= covers, "producer fact type outside the model")
     raw = _canonical(value, "producer response")
@@ -608,7 +609,7 @@ def _outcomes(inputs, attempted, unavailable):
             state = "producer-refused"
         elif observation["outcome"] == "empty":
             state = "empty-extraction"
-        elif question["fact"] in facts:
+        elif facts.get(question["fact"]):
             state = "explicitly-denied" if question["denial"] else "supported"
         else:
             state = "inspected-not-found"

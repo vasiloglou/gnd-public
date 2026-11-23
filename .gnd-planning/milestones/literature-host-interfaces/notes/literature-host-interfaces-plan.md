@@ -1,7 +1,11 @@
 # Literature host interfaces · plan r6, amended at close
 
-**Status: r6 draft, 2026-11-23. Not approved; r6's own bytes are not
-reviewed.** The owner selected the full GND review panel (D14, ruled `(o)`),
+**Status at close, 2026-11-23 (close A4): r6 was approved by the owner at
+the plan gate (`001-plan-gate.md`, sha256 `2dc760e5…1528`) and executed;
+this file is r6 with the close amendments of §11, which the milestone close
+record (`006-milestone-close.md`) binds. The paragraph below is r6's status
+at the gate, kept as it was:** Status: r6 draft, 2026-11-23. Not approved; r6's own bytes are not
+reviewed. The owner selected the full GND review panel (D14, ruled `(o)`),
 and it ran twice. The first round read r4 (sha256
 `6cadaa9134585b348d53ef50ef5c35638a3b0bb20c7c36726ac53039ac357cb6`): four of
 six reviewers succeeded, all asking for revision, with twelve ranked fixes
@@ -376,8 +380,10 @@ contract each spec must realise.
 | LH3 | nothing | `src/gnd/examples/literature/assertion_admission.py`, a new `tests/test_lh3_admission_shape.py`, a new `tests/fixtures/lh3-admission/`, `src/gnd/examples/literature/README.md`, `dev/components/` |
 | LH4 | LH3 | `assertion_admission.py`, a new `tests/test_lh4_admission_rules.py`, `tests/fixtures/lh3-admission/` (rules files), the same README, `docs/literature/commands.md`, `docs/release-notes.md`, `dev/components/` |
 
-Order: LH1, LH2, LH3, LH4, one at a time on the branch
-`claude/literature-host-interfaces`. The graph is acyclic. The two pairs share
+Order: LH1, LH2, LH3, LH4, one at a time, LH1 and LH2 on the branch
+`claude/literature-host-interfaces` and LH3 and LH4 on
+`claude/literature-host-interfaces-admission` (close A2; r6 named the first
+branch only). The graph is acyclic. The two pairs share
 no source file; they run in sequence so that `docs/literature/commands.md`,
 `docs/release-notes.md` and `dev/components/` have one writer at a time. Start
 condition `(p2)`: `main` at the merge that lands this plan with the dev-tools
@@ -622,10 +628,11 @@ owner's delegated close ruling (auto=true). Prior wording is r6's.
 | Tag | Raised in | Site | Prior wording (r6) | Now |
 |---|---|---|---|---|
 | A1 | `003-phase-LH2.md`, refuted premise and open question Q1 | §10 D4 | "retained file (…; ceiling 64 MiB). The ceilings cannot all be reached together: at the 1 MiB response ceiling a retained file holds fewer than 64 eligible sections" | ceiling 10 MiB, `gnd.input_policy.MAX_BYTES`, which every JSON reader of the repository applies, so a larger retained file could never be read back; fewer than 10 eligible sections |
-| A2 | milestone README, "Deviation from plan §8" | §8 | "One pull request from `claude/literature-host-interfaces` to `main`." | two pull requests, the reading pair then the admission pair; the milestone-coordinator session relayed the owner's words "Accept the split" |
+| A2 | milestone README, "Deviation from plan §8" | §8, §3 "Order" | "One pull request from `claude/literature-host-interfaces` to `main`." | two pull requests, the reading pair then the admission pair; the milestone-coordinator session relayed the owner's words "Accept the split" |
 | A3 | `002-phase-LH1.md`, Gate | §10 D15 | "The owner selects: phase by phase …" with the plan gate's phase-by-phase ruling | superseded by the owner's `/process-milestone literature-host-interfaces auto` |
 
-The other departures from the plan's letter are phase-level and recorded in
-the phase specs' findings: the LH1 size over the 400-line threshold, the
-`reasons` format of the LH4 rules, and the earlier `input:model` refusal of
-an edited include (close delta).
+| A4 | close panel (`evidence/close-review/PANEL-REVIEW.md`) | the status block | "Status: r6 draft … Not approved … No plan-gate record exists" | the status at close, with r6's gate status kept |
+
+The departures from the plan's letter below the plan level are recorded in
+the phase specs' findings and phase records; `close-delta.md` is their
+complete list (items 4 to 13).

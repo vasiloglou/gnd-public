@@ -269,7 +269,9 @@ record = admission.admit(model, raw, policy, receipts, evidence, out, shape=shap
 ```
 
 - **Identity.** An assertion is an instance of the named entity type,
-  identified by its own handle. A type that objectifies a fact type is
+  identified by its own handle. Handles compare as the checker compares
+  values: `true` and `1` are two assertions, `"1"` and `1` are two, and `1`
+  and `1.0` are one. A type that objectifies a fact type is
   refused (`shape:objectified-assertion`), so the packaged `assertion` stays
   on the packaged shape above.
 - **Attached facts.** A fact type is attached when one of its roles is

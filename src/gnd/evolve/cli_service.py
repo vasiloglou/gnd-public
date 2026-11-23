@@ -15,6 +15,9 @@ from gnd.exits import (
     EXIT_NO_INPUT,
 )
 from gnd.model import ModelValidationError
+from gnd.model._parsing import (
+    parse_scoped as parse_scoped,  # noqa: PLC0414 -- GO1: gnd.commands.evolve opens its scope through this service
+)
 
 
 class _EvolutionCLIError(Exception):

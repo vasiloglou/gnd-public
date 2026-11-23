@@ -26,6 +26,10 @@ the next one.
 - **Unencodable include paths.** An include path that cannot be encoded as
   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
   error itself, and the PyRel export exited 70.
+- **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
+  `gnd evolve apply` now parses each model text once per reader. Before, an
+  `apply` parsed the same two texts 22 times. Every preview, record, message
+  and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
 
 ## 0.4.0 (2026-11-17)
 

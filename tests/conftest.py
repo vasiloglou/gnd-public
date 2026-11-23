@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import pytest
 from test_public_distribution import (
     package_probe as package_probe,  # noqa: PLC0414 -- pytest fixture export
 )
@@ -15,6 +16,19 @@ from gnd.population import Population, _stamp_validated_against
 # NM2-C6: an operator's GND_DISCLOSURE never reaches a test or a fixture of any
 # scope; tests that need a mode set it with monkeypatch.
 os.environ.pop("GND_DISCLOSURE", None)
+
+
+@pytest.fixture(autouse=True)
+def _parse_scope_write_check():
+    """GO1: every test that opens a model parse scope also checks that nothing
+    wrote into a remembered, shared document (``set_parse_scope_verify``)."""
+    from gnd.model._parsing import set_parse_scope_verify
+
+    previous = set_parse_scope_verify(True)
+    try:
+        yield
+    finally:
+        set_parse_scope_verify(previous)
 
 
 def make_population(model: Model, /, **kwargs: Any) -> Population:

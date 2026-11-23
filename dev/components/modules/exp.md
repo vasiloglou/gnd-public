@@ -80,9 +80,9 @@ The ``---``-fenced YAML frontmatter reader/writer (plan 03-01).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `FrontmatterError` | class(Exception) | 58 | A document could not be read, was unfenced, or its block was not a mapping. |
-| `read_frontmatter(path) -> tuple[dict[str, Any], str]` | function | 110 | Return ``(mapping, body)`` for a fenced document, or raise. |
-| `render_frontmatter(mapping, body) -> str` | function | 157 | Render ``mapping`` as a fenced block above ``body``, byte-deterministically. |
+| `FrontmatterError` | class(Exception) | 59 | A document could not be read, was unfenced, or its block was not a mapping. |
+| `read_frontmatter(path) -> tuple[dict[str, Any], str]` | function | 124 | Return ``(mapping, body)`` for a fenced document, or raise. |
+| `render_frontmatter(mapping, body) -> str` | function | 171 | Render ``mapping`` as a fenced block above ``body``, byte-deterministically. |
 
 ## gnd.exp.junit — `src/gnd/exp/junit.py`
 Components: exp.junit

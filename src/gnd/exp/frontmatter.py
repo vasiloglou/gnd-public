@@ -50,8 +50,9 @@ __all__ = [
 #: being slurped before validation (the MAX_MANIFEST_BYTES posture, T-03-03).
 MAX_DOCUMENT_BYTES = 1 * 1024 * 1024
 
-#: The fence line. Exactly three dashes on a line of their own, the form this
-#: repository's own PLAN/SUMMARY documents already use.
+#: The fence line. Exactly three dashes at column 0 on a line of their own (see
+#: :func:`_is_fence`), the form this repository's own PLAN/SUMMARY documents
+#: already use.
 _FENCE = "---"
 
 
@@ -90,16 +91,29 @@ def _alias_issue(block: str) -> str | None:
     return None
 
 
+def _is_fence(line: str) -> bool:
+    """Whether ``line`` is a frontmatter fence.
+
+    A fence is ``---`` starting at column 0, optionally followed by spaces or
+    tabs, then the line ending. Leading whitespace disqualifies it: YAML
+    recognises its own ``---`` marker only at column 0, so an indented ``---``
+    is content (a block-scalar line or a plain-scalar continuation). Stripping
+    both ends, as a bare ``strip()`` does, would end the block inside such a
+    value and silently drop every key after it.
+    """
+    return line.rstrip(" \t\r\n") == _FENCE
+
+
 def _split(text: str, path: Path) -> tuple[str, str]:
     """The fenced block and the body, or raise :class:`FrontmatterError`."""
     lines = text.splitlines(keepends=True)
-    if not lines or lines[0].strip() != _FENCE:
+    if not lines or not _is_fence(lines[0]):
         raise FrontmatterError(
             f"{path} does not open with a '{_FENCE}' frontmatter fence; a document "
             f"without declared frontmatter is refused, never read as an empty one"
         )
     for index in range(1, len(lines)):
-        if lines[index].strip() == _FENCE:
+        if _is_fence(lines[index]):
             return "".join(lines[1:index]), "".join(lines[index + 1 :])
     raise FrontmatterError(
         f"{path} has no closing '{_FENCE}' fence; an unterminated frontmatter "

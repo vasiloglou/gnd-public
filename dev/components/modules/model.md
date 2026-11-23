@@ -8,22 +8,22 @@ Model loading with two-layer validation.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `load_model_bytes(data, *, source) -> Model` | function | 287 | Validate one immutable bounded buffer; source is diagnostic metadata. |
-| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 359 | Resolve the authored model and bind references under one retained root. |
-| `load_model(path) -> Model` | function | 424 | Read model and reference bytes beneath a single retained directory. |
-| `ReferenceOrigin` | class | 484 | (no docstring) |
-| `OccurrenceOrigin` | class | 490 | (no docstring) |
-| `BoundReferenceContext` | class | 496 | (no docstring) |
-| `BoundPopulationView` | class | 506 | (no docstring) |
-| `validate_reference_structure(document) -> None` | function | 513 | (no docstring) |
-| `validate_declarations(model) -> dict[str, str]` | function | 528 | (no docstring) |
-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 635 | (no docstring) |
-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 641 | Bind a model's declared reference populations at ``root``, or return None |
-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 656 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
-| `resolve_context(model, references) -> BoundReferenceContext` | function | 665 | (no docstring) |
-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 697 | (no docstring) |
-| `candidate_fact_count(view) -> int` | function | 773 | (no docstring) |
-| `is_bound_population(model, population, context) -> bool` | function | 777 | Recognize only a current combined population created by this binder. |
+| `load_model_bytes(data, *, source) -> Model` | function | 290 | Validate one immutable bounded buffer; source is diagnostic metadata. |
+| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 368 | Resolve the authored model and bind references under one retained root. |
+| `load_model(path) -> Model` | function | 433 | Read model and reference bytes beneath a single retained directory. |
+| `ReferenceOrigin` | class | 493 | (no docstring) |
+| `OccurrenceOrigin` | class | 499 | (no docstring) |
+| `BoundReferenceContext` | class | 505 | (no docstring) |
+| `BoundPopulationView` | class | 515 | (no docstring) |
+| `validate_reference_structure(document) -> None` | function | 522 | (no docstring) |
+| `validate_declarations(model) -> dict[str, str]` | function | 537 | (no docstring) |
+| `bind_references(model, *, root) -> BoundReferenceContext` | function | 644 | (no docstring) |
+| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 650 | Bind a model's declared reference populations at ``root``, or return None |
+| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 665 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+| `resolve_context(model, references) -> BoundReferenceContext` | function | 674 | (no docstring) |
+| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 706 | (no docstring) |
+| `candidate_fact_count(view) -> int` | function | 782 | (no docstring) |
+| `is_bound_population(model, population, context) -> bool` | function | 786 | Recognize only a current combined population created by this binder. |
 
 ## gnd.model._documents — `src/gnd/model/_documents.py`
 Components: model.json_document
@@ -48,19 +48,21 @@ One resolver and admission guards for pinned version-5 model includes.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `CompositionView` | class | 37 | (no docstring) |
-| `refuse_unresolved() -> NoReturn` | function | 51 | Refuse a consumer's include Model without matching resolver metadata. |
-| `declares_includes(document) -> bool` | function | 56 | (no docstring) |
-| `parse_declarations(document) -> Declarations` | function | 61 | (no docstring) |
-| `parse_included(raw, *, include_id, path) -> dict` | function | 91 | (no docstring) |
-| `include_reason(error) -> str \| None` | function | 116 | (no docstring) |
-| `compose(document, *, descriptor, source, historical, issues)` | function | 181 | (no docstring) |
-| `remap_issues(issues, origins)` | function | 245 | (no docstring) |
-| `refuse_unsupported(route) -> NoReturn` | function | 276 | (no docstring) |
-| `guard_document(document, route)` | function | 280 | (no docstring) |
-| `bytes_declare_includes(raw, *, source) -> bool` | function | 285 | True when RAW parses and declares includes or attachments. |
-| `guard_bytes(raw, *, source, route)` | function | 300 | (no docstring) |
-| `guard_path(path, route)` | function | 305 | (no docstring) |
+| `CompositionView` | class | 38 | (no docstring) |
+| `refuse_unresolved() -> NoReturn` | function | 52 | Refuse a consumer's include Model without matching resolver metadata. |
+| `declares_includes(document) -> bool` | function | 57 | (no docstring) |
+| `parse_declarations(document) -> Declarations` | function | 62 | (no docstring) |
+| `parse_included(raw, *, include_id, path) -> dict` | function | 92 | (no docstring) |
+| `include_reason(error) -> str \| None` | function | 117 | (no docstring) |
+| `compose(document, *, descriptor, source, historical, issues)` | function | 182 | (no docstring) |
+| `included_rows(document, origins) -> frozenset[int]` | function | 246 | ``id()`` of every element of DOCUMENT whose origin is an include (VG3). |
+| `include_attribution(model) -> list[dict[str, Any]]` | function | 264 | One row per include of MODEL: its id, sha256 and what its file declares (VG3, D5). |
+| `remap_issues(issues, origins)` | function | 290 | (no docstring) |
+| `refuse_unsupported(route) -> NoReturn` | function | 324 | (no docstring) |
+| `guard_document(document, route)` | function | 328 | (no docstring) |
+| `bytes_declare_includes(raw, *, source) -> bool` | function | 333 | True when RAW parses and declares includes or attachments. |
+| `guard_bytes(raw, *, source, route)` | function | 348 | (no docstring) |
+| `guard_path(path, route)` | function | 353 | (no docstring) |
 
 ## gnd.model._induction — `src/gnd/model/_induction.py`
 Components: model.validation
@@ -100,11 +102,11 @@ MG5 unattended source mode (model-growth-guardrails milestone).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SpanCoverage` | class | 240 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
-| `SpanCoverage.unchecked(self) -> int` | method | 252 | (no docstring) |
-| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 255 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
-| `unattended_span_issues(doc, documents) -> list[ValidationIssue]` | function | 304 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
-| `unattended_span_coverage(doc, documents) -> SpanCoverage \| None` | function | 314 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
+| `SpanCoverage` | class | 287 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
+| `SpanCoverage.unchecked(self) -> int` | method | 299 | (no docstring) |
+| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 302 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
+| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 355 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 367 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
 
 ## gnd.model._validation — `src/gnd/model/_validation.py`
 Components: model.validation

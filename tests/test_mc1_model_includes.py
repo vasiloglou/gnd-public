@@ -569,6 +569,11 @@ def test_T45b_mixed_host_warning_paths(tmp_path):
 def test_T44_anonymous_origin_and_source_direction(tmp_path):
     doc = vocabulary()
     doc['constraints'][0].pop('id')
+    # reviewed-vocabulary-growth VG3: an unattended root exempts its includes from
+    # U2-U6 and keeps U8 for an unconfirmed inferred claim (plan D13). The included
+    # constraint is made one, so the anonymous origin still has an issue to carry.
+    doc['constraints'][0].update(source='llm-inferred', status='proposed', modality='alethic',
+                                 rationale='r', provenance={'rationale_world_fact': 'w'})
     path, own, _ = write_case(tmp_path, doc)
     own['source'] = {'kind':'prose','mode':'unattended','reviewer':'none',
                      'documents':[{'sha256':'0'*64,'label':'source.txt'}]}

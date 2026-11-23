@@ -19,6 +19,7 @@ from gnd.model._paths import _relative, historical_path_at
 from gnd.model._validation import (
     ID_SECTIONS,
     MAX_MODEL_BYTES,
+    _iter_constraints,
     _layer1_structural,
     parse_model_document,
     semantic_validate,
@@ -242,16 +243,63 @@ def compose(document: object, *, descriptor: int, source: str | Path, historical
     return result, origins, metadata
 
 
+def included_rows(document: Mapping, origins) -> frozenset[int]:
+    """``id()`` of every element of DOCUMENT whose origin is an include (VG3).
+
+    The one origin test of the unattended rules and of the span walk. It walks
+    ``_ids(document)``, the walk ``_merge`` keys origins by, so no address is
+    parsed. A constraint the root attaches to an included fact type has origin
+    ``model``. Positional: it reads the composed document and a dump of it alike.
+    """
+    if not isinstance(document, Mapping):
+        return frozenset()
+    by_address = {entry.composed_address: entry.origin for entry in origins}
+    try:
+        return frozenset(id(element) for address, element in _ids(document)
+                         if by_address.get(address, 'model') != 'model')
+    except (AttributeError, TypeError):
+        return frozenset()
+
+
+def include_attribution(model) -> list[dict[str, Any]]:
+    """One row per include of MODEL: its id, sha256 and what its file declares (VG3, D5).
+
+    Read from each included file's own document, which is what composition
+    appends; counts only, never a value.
+    """
+    rows = []
+    for included in getattr(model, '_included', ()) or ():
+        doc = parse_included(included.raw, include_id=included.id, path=included.path)
+        constraints = [constraint for _, constraint in _iter_constraints(doc)]
+        fact_types = [row for row in doc.get('fact_types') or [] if isinstance(row, Mapping)]
+        rows.append({
+            'id': included.id, 'sha256': included.sha256,
+            'object_type_count': len(doc.get('object_types') or []),
+            'fact_type_count': len(fact_types),
+            'sample_rows': sum(len(row.get('sample_population') or []) for row in fact_types),
+            'constraints': len(constraints),
+            'confirmed': sum(c.get('status') == 'confirmed' for c in constraints),
+            'alethic': sum(c.get('modality') == 'alethic' for c in constraints),
+            'explicit_or_user_supplied': sum(c.get('source') in ('explicit', 'user-supplied')
+                                             for c in constraints),
+            'deontic_notes': len(doc.get('deontic_notes') or []),
+        })
+    return rows
+
+
 def remap_issues(issues, origins):
     addresses = {entry.composed_address: entry for entry in origins}
-    selectors = {entry.element_id: entry.composed_address for entry in origins
-                 if re.fullmatch(r'\$\.fact_types\[\d+\]', entry.composed_address)}
+    # VG3: object types as well as fact types (plan H17).
+    selectors = {(entry.composed_address.split('[')[0], entry.element_id): entry.composed_address
+                 for entry in origins
+                 if re.fullmatch(r'\$\.(fact_types|object_types)\[\d+\]', entry.composed_address)}
     result = []
     for issue in issues:
         path = issue.path
-        selector = re.match(r'^\$\.fact_types\[id=(.*?)\]', path)
-        if selector and selector[1] in selectors:
-            path = selectors[selector[1]] + path[selector.end():]
+        selector = re.match(r'^(\$\.(?:fact_types|object_types))\[id=(.*?)\]', path)
+        key = (selector[1], selector[2]) if selector else None
+        if key in selectors:
+            path = selectors[key] + path[selector.end():]
         candidates = re.findall(r'\$\.[a-z_]+\[\d+\](?:\.constraints\[\d+\])?', path)
         address = candidates[0] if candidates else ''
         entry = addresses.get(address)
@@ -265,8 +313,8 @@ def remap_issues(issues, origins):
             prefix = '' if entry.origin == 'model' else entry.origin + ':'
             original = entry.original_address
             if selector and entry.origin != 'model':
-                original = re.sub(r'^\$\.fact_types\[\d+\]',
-                                  lambda _, selector=selector: f'$.fact_types[id={selector[1]}]', original)
+                original = re.sub(r'^\$\.(fact_types|object_types)\[\d+\]',
+                                  lambda match, selector=selector: f'{selector[1]}[id={selector[2]}]', original)
             path = prefix + original + path[len(address):]
             issue = issue.model_copy(update={'path': path})
         result.append(issue)

@@ -32,6 +32,14 @@ the next one.
   two minutes, and `gnd judgments check` and `gnd verify` gain the same.
   Reports are unchanged. A subtype chain hundreds of types deep is still
   slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
+- **Unattended growth from a reviewed vocabulary.** A version-5 root with
+  `source.mode: unattended` may include an owner-reviewed model: the included
+  elements keep their own source, status and modality and are exempt from the
+  unattended rules U2 to U6, while an unconfirmed inferred `alethic` claim in
+  an include is still refused (U8). `gnd validate` prints one `INCLUDE` line
+  per include in its text output, and span diagnostics on included elements
+  now carry the `includes[ID]:` prefix
+  ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
 
 ## 0.4.0 (2026-11-17)
 

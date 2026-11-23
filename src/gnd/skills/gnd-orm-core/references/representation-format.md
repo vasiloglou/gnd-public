@@ -787,6 +787,45 @@ after the walk's other issues. With the flag and no `--document`, every span is 
 the flag and without `--document`, nothing is counted and the output is unchanged. The flag is a
 no-op for a model without the mode, and is not combined with `--identity` (exit 64).
 
+### An unattended root that includes a reviewed model
+
+A version-5 root with `source.mode: unattended` may include a model that is not itself
+unattended ([Model includes](#model-includes-version-5)), such as an owner-reviewed vocabulary.
+The root's `source` governs, and U1 reads it as above. An element whose origin is an include keeps
+its own `source`, `status` and `modality`:
+
+- U2 to U6 ask nothing of it.
+- U8 applies unless it is `confirmed`: an unconfirmed `sample`, `llm-inferred`, `common-sense` or
+  `induced` claim stays refused as `alethic`, in whichever file it sits.
+- A span it carries is the root's claim only when its `document_sha256` names a document the root
+  declares. Such a span is checked by U7, re-hashed by `--document` and counted by
+  `--require-documents`, as a root span is. Any other span it carries is read by no rule and is
+  neither re-hashed nor counted.
+
+Everything the root owns keeps every rule, including a constraint it attaches to an included fact
+type through `fact_type_constraints`, and its operations and obligations (an include cannot declare
+those). Diagnostics on included elements, the span walk's included, carry the `includes[ID]:`
+prefix.
+
+What makes an included element exempt is the root's pin: the root names each include by id, path
+and SHA-256, the owner authors the root, and a growth round cannot change a pin. GND checks the bytes
+against the pin, and that the file is a standalone-valid model; it cannot check who wrote or
+reviewed them. A host that can write both the root and an include can therefore carry any claim
+through the include, `confirmed` and `alethic` ones included. That is a limit, not a control.
+
+To show what each include carries, the text output of `gnd validate` on such a root prints one line
+per include, in declaration order, after any warnings and before `OK:`:
+
+```text
+INCLUDE <id> sha256=<pin>: <n> object types, <n> fact types, <n> sample rows, <n> constraints (<n> confirmed, <n> alethic, <n> explicit or user-supplied), <n> deontic notes
+```
+
+The counts are what the included file declares; they list no element. The JSON payload of
+`gnd validate` does not carry these lines (its variant is frozen); a reader of JSON sees the
+`includes[ID]:` prefix on each issue's path. `gnd check` and `gnd judgments check` print no such
+line: their reports bind the include set already, by the composed `model_digest` and by the root's
+SHA-256.
+
 ## `rejected_proposals` — kept so future runs don't re-propose
 
 Same shape as a regular constraint, but with `status: rejected` and two added fields. Schema-light: `modality` is not required (archived proposals, not active constraints).
@@ -1843,7 +1882,9 @@ An included file is a standalone-valid model at version 1–4, declaring its
 object types and fact types and optionally constraints and deontic notes.
 It cannot declare `includes`, `reference_populations`, `operations`,
 `rejected_proposals` or `fact_type_constraints`, even as empty lists. Its
-source mode cannot be `unattended`. Nesting is not admitted. The includer's
+source mode cannot be `unattended`; an unattended root may include it, and
+[Unattended source](#unattended-source) says what its rules ask of the
+included elements. Nesting is not admitted. The includer's
 version, model id and source govern composition; each included file's
 version, model id and source are retained privately as origin metadata.
 

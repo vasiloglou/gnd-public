@@ -97,3 +97,21 @@ query exceptions are live, counted entries rather than blanket module waivers.
 Register family hooks in gnd.constraint_families.FAMILIES; keep common refusal
 order and existing branch evidence identities. Preserve old import shims until
 the separately approved retirement trigger.
+
+## General solutions, not pattern-matched ones
+
+Solve the class of input, not the examples at hand. Read structured text with
+its parser or the reader this repository already has: YAML and JSON through
+their loaders, Python source through ast, model queries through ModelIndex,
+paths through pathlib. A regular expression is for a flat token whose whole
+grammar it states. It is not for nested, quoted, escaped or multi-line
+structure, and not for text this project writes and could hand over as data. A
+fix repairs the rule that failed; it never names the failing input by literal,
+file or shape. Search for an existing helper before writing a new matcher.
+
+When reviewing a diff or a pull request, read each new regular expression,
+string split, slice and special-case branch as a claim that it covers its input
+class. Build a legal input of that class that the tests and fixtures lack, run
+it, and report a wrong result as a finding that names the input. How a review
+round carries this is in
+[project.md](.codex/skills/process-phase/references/project.md).

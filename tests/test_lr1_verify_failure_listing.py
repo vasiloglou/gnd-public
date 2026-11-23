@@ -118,9 +118,15 @@ def test_t1_reported_conflict_lists_one_constraint_and_its_rows(staged: Path) ->
     rows = entry["offending_facts"]
     assert len(rows) == 2
     assert rows[0]["subject"] == rows[1]["subject"] and rows[0]["label"] != rows[1]["label"]
-    vocabulary = json.loads((staged / "vocabulary.orm.json").read_text(encoding="utf-8"))
-    (fact_type,) = [ft for ft in vocabulary["fact_types"] if ft["id"] == "subject_label"]
-    assert fact_type["constraints"][0]["id"] == "subject_has_one_label"
+    # Step 2: the flattening record maps the composed address back to its declaration.
+    flat = staged.parent / "t1-flat"
+    assert _gnd(staged, "flatten", "reading.orm.json", "--out", str(flat)).returncode == 0
+    (record,) = flat.glob("*.flattening.json")
+    origins = json.loads(record.read_text(encoding="utf-8"))["origins"]
+    (fact_type,) = [o for o in origins if o["element_id"] == "subject_label"]
+    (constraint,) = [o for o in origins if o["composed_address"] == fact_type["composed_address"] + ".constraints[0]"]
+    assert constraint["element_id"] == "subject_has_one_label"
+    assert constraint["origin"] == "includes[scientific-vocabulary]"
 
 
 def test_t2_broad_population_lists_nothing(staged: Path) -> None:
@@ -212,7 +218,7 @@ def test_t6_default_verify_output_is_unchanged(staged: Path, population: str, fm
 
 
 def test_t7_the_steps_have_one_home_and_two_citations() -> None:
-    sentence = "`offending_facts` lists the witnesses of the violation"
+    sentence = "record whose `origins` map each composed"
     pages = [*sorted((ROOT / "docs").rglob("*.md")), *sorted((ROOT / "src" / "gnd" / "skills").rglob("*.md"))]
     homes = [page for page in pages if sentence in page.read_text(encoding="utf-8")]
     assert homes == [GUIDE]
@@ -248,3 +254,23 @@ def test_t10_a_mandatory_failure_lists_bare_instance_witnesses(tmp_path: Path) -
     by_kind = {entry["constraint_type"]: entry["offending_facts"] for entry in listing(report)}
     assert by_kind["mandatory"] == [3]
     assert all(isinstance(row, dict) for row in by_kind["uniqueness"])
+
+
+def test_t11_a_ring_failure_lists_its_positional_witness(tmp_path: Path) -> None:
+    """A witness that is neither a row object nor a bare instance (review round 2, F2)."""
+    shutil.copyfile(SKELETON / "model.orm.yaml", tmp_path / "model.orm.yaml")
+    population = {
+        "population": {"model": "model.orm.yaml", "source": "agent-output",
+                       "covers": ["movie_has_title", "movie_released_in_year", "movie_sequel_of_movie"]},
+        "instances": {"movie": [1, 2]},
+        "facts": {
+            "movie_has_title": [{"movie": 1, "title": "A"}, {"movie": 2, "title": "B"}],
+            "movie_released_in_year": [{"movie": 1, "year": 2006}, {"movie": 2, "year": 2002}],
+            "movie_sequel_of_movie": [{"sequel": 1, "original": 2}, {"sequel": 2, "original": 1}],
+        },
+    }
+    (tmp_path / "pop.json").write_text(json.dumps(population), encoding="utf-8")
+    report, code = _verify_json(tmp_path, "model.orm.yaml", "pop.json")
+    assert code == 1
+    witnesses = [w for entry in listing(report) for w in entry["offending_facts"]]
+    assert any(isinstance(w, list) for w in witnesses), witnesses

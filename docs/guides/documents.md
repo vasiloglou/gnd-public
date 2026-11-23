@@ -81,17 +81,24 @@ model.
 
 1. The failing constraints are the entries of `verdicts` whose `verdict` is
    `fail` and whose `modality` is `alethic`.
-2. Each one says where the constraint is declared in `constraint_ref`:
-   `fact_types[<fact type>].constraints[<n>]` for a constraint written inside
-   a fact type, `constraints[<n>]` for one at the top level. The
-   constraint's own `id` is at that address in the file that declares it,
-   which for an included vocabulary is the included file. `constraint_type`
-   names its kind, `message` says what it requires and what broke it, and
-   `offending_facts` lists the witnesses of the violation. Their shape
-   depends on the kind: the violating facts as objects of role values (the
-   uniqueness failure below), a bare instance that plays no required fact
-   for a mandatory constraint, a binding keyed by variable names for a
-   guarded constraint. Read them with `message`.
+2. Each one gives the constraint's address in `constraint_ref`:
+   `fact_types[<fact type>].constraints[<n>]` for a constraint on a fact
+   type, `constraints[<n>]` for one at the top level. The address is in the
+   model `gnd verify` composed. For a model without includes that is the
+   file you wrote. For a model with includes, the root's constraints and the
+   included ones are composed into one list, so the position can differ from
+   the file that declared the constraint. `gnd flatten MODEL --out DIR`
+   writes a `gnd-flattening/1` record whose `origins` map each composed
+   address to the file that declared it (`origin`), its address there
+   (`original_address`) and its `id` (`element_id`); a fact type's composed
+   position is the origin whose `element_id` is the fact type
+   ([the record's format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md)).
+   `constraint_type` names the kind, `message` says what the constraint
+   requires and what broke it, and `offending_facts` lists the witnesses of
+   the violation. A witness's shape depends on the kind of constraint: the
+   violating facts as objects of role values for the uniqueness failure
+   below, for instance, or a bare instance for a mandatory constraint it
+   does not meet. Read each witness with `message`, which says what it is.
 3. The failing derivations are the entries of `derivations` whose `verdict`
    is `fail`. Each names itself in `derivation_ref` and lists what went
    wrong in `findings`. `derivations` is `null` for a model that declares
@@ -154,8 +161,9 @@ fact_types[subject_label].constraints[0] uniqueness
    {'subject': 'alanine-in-vacuum', 'label': 'Conflicting reported label'}
 ```
 
-The constraint at `fact_types[subject_label].constraints[0]` in the
-vocabulary is `subject_has_one_label`. Which side is wrong, the data or the
+The flattening record of this model maps
+`fact_types[subject_label].constraints[0]` to the included vocabulary's
+`subject_has_one_label`. Which side is wrong, the data or the
 constraint, is yours to judge: the report shows the rule and the rows. A
 passing report is still not proof that the extraction is faithful; see the
 [extraction contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-extract/references/extraction-contract.md#5-failure-semantics).

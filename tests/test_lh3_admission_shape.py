@@ -364,3 +364,12 @@ def test_r4_covers_is_linear_in_the_fact_types():
     started = time.monotonic()
     admission.project_shaped(subject, [_target(names[0], 0)], model, LONE_SHAPE, max_rows=65536)
     assert time.monotonic() - started < 1.5
+
+
+@pytest.mark.parametrize("missing", ["claims.orm.json", "raw.population.json", "policy.json", "receipts.json"])
+def test_r5_a_missing_primary_input_refuses_without_its_path(tmp_path, missing):
+    root = _case(tmp_path)
+    (root / missing).unlink()
+    out = tmp_path / "out"
+    _refuses(lambda: _admit(root, out, shape=SHAPE), "input:read")
+    assert not out.exists()

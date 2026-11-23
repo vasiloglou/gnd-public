@@ -371,10 +371,15 @@ def admit(model: Path, raw: Path, policy: Path, receipts: Path, trusted_root: Pa
     if shape is not None:
         _shape(shape)
     rows_cap = _max_rows(max_rows)
-    snapshots = {
-        name: read_regular_path(path, label=name, max_bytes=(1 << 20) if name == POLICY else CAP)
-        for name, path in ((MODEL, model), (RAW, raw), (POLICY, policy), (RECEIPTS, receipts))
-    }
+    try:
+        snapshots = {
+            name: read_regular_path(path, label=name, max_bytes=(1 << 20) if name == POLICY else CAP)
+            for name, path in ((MODEL, model), (RAW, raw), (POLICY, policy), (RECEIPTS, receipts))
+        }
+    except (ArtifactError, OSError) as error:
+        if shape is None:
+            raise
+        raise Refusal("input:read") from error
     includes = {}
     if shape is not None:
         base = Path(model).absolute().parent

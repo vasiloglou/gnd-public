@@ -28,6 +28,7 @@ Offline publication of a self-contained optional PyRel program.
 | --- | --- | --- | --- |
 | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 19 | Render from one bounded input read; no checker or foreign-runtime import. |
 | `render_pyrel_rules(model_path, target)` | function | 70 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+| `render_pyrel_rules_report(model_path, target)` | function | 77 | The rules program and the ids of the rules it lists as not checked. |
 
 ## gnd.export.ilp — `src/gnd/export/ilp.py`
 Components: export.ilp_neutral
@@ -264,18 +265,19 @@ Render a model's rules as a readable PyRel program, as requirements.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Atom` | class | 67 | (no docstring) |
-| `Count` | class | 73 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
-| `Compare` | class | 80 | (no docstring) |
-| `Check` | class | 87 | (no docstring) |
-| `Requirement` | class | 95 | (no docstring) |
-| `spanning_uniqueness(doc) -> list[str]` | function | 702 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
-| `constraint_context(doc) -> _Model` | function | 840 | Index the admitted source for lowerers that assign their own constraint IDs. |
-| `constraint_requirements(model, c, fact_id) -> list[Requirement]` | function | 845 | Lower one admitted constraint through the shared requirement IR. |
-| `requirements(doc, model) -> list[Requirement]` | function | 889 | Lower every supported constraint to requirements, in model order. One walk for all families. |
-| `require_text(req, names, model) -> str` | function | 1085 | (no docstring) |
-| `denial_text(req, names, model) -> str` | function | 1097 | (no docstring) |
-| `render(model_path, target) -> str` | function | 2408 | (no docstring) |
+| `Atom` | class | 108 | (no docstring) |
+| `Count` | class | 114 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
+| `Compare` | class | 121 | (no docstring) |
+| `Check` | class | 128 | (no docstring) |
+| `Requirement` | class | 136 | (no docstring) |
+| `spanning_uniqueness(doc) -> list[str]` | function | 874 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
+| `constraint_context(doc) -> _Model` | function | 1016 | Index the admitted source for lowerers that assign their own constraint IDs. |
+| `constraint_requirements(model, c, fact_id) -> list[Requirement]` | function | 1021 | Lower one admitted constraint through the shared requirement IR. |
+| `requirements(doc, model) -> list[Requirement]` | function | 1073 | Lower every supported constraint to requirements, in model order. One walk for all families. |
+| `require_text(req, names, model) -> str` | function | 1275 | (no docstring) |
+| `denial_text(req, names, model) -> str` | function | 1287 | (no docstring) |
+| `render_report(model_path, target) -> tuple` | function | 2683 | The program, and the ids of the rules it lists as not checked. |
+| `render(model_path, target, *, not_checked_ids) -> str` | function | 2689 | The rules program; `not_checked_ids`, when given, receives the ids of the rules it lists as not checked. |
 
 ## gnd.export.pyrel_runtime — `src/gnd/export/pyrel_runtime.py`
 Components: export.pyrel_runtime

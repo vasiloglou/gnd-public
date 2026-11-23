@@ -1,0 +1,1558 @@
+diff --git a/.gnd-planning/milestones/aggregate-count-certificates/evidence/AC1/dynamic-query-successor.json b/.gnd-planning/milestones/aggregate-count-certificates/evidence/AC1/dynamic-query-successor.json
+new file mode 100644
+index 00000000..6608cd3b
+--- /dev/null
++++ b/.gnd-planning/milestones/aggregate-count-certificates/evidence/AC1/dynamic-query-successor.json
+@@ -0,0 +1,89 @@
++{
++  "schema_version": 1,
++  "reason": "AC1 COUNT group, contribution and bounded wire lookups. These keys index explicit ModelIndex results, certificate data and validated candidate rows.",
++  "predecessor": ".gnd-planning/milestones/literature-depth/evidence/LD2/review-dynamic-query-successor.json",
++  "predecessor_sha256": "dc2b82af5e0adc8c4a5731f07f445274f5f4ef4567aca005963d078df9292d2d",
++  "removed": [],
++  "added": [
++    [
++      "src/gnd/witness/count_membership.py",
++      "_cell",
++      "PRIMITIVES.get(name)",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "inputs[inverse[of]]",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "inputs[inverse[var]]",
++      2
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "inverse[of]",
++      2
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "inverse[var]",
++      4
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "role_players[body['fact_type']]",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "role_players[request['fact_type']]",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "selected[role]",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "types[count_roles[0]]",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "_declared_rule",
++      "types[role]",
++      2
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "members_from_snapshot",
++      "members[key]",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "members_from_snapshot",
++      "population.facts.get(source, ())",
++      1
++    ],
++    [
++      "src/gnd/witness/count_membership.py",
++      "members_from_snapshot",
++      "row[role]",
++      3
++    ]
++  ],
++  "result_distinct_rows": 7829,
++  "result_occurrences": 9736
++}
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 09ba5d2e..c3597062 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -91,8 +91,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - does: Produce and independently replay grounded derivation witnesses and explain why a derived row is absent.
+ - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
+ - status: canonical
+-- components: cli.witness_command, witness.command, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
+-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, … +2 more (graph.md)
++- components: cli.witness_command, witness.command, witness.count_membership, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
++- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, … +3 more (graph.md)
+ - notes: Production evaluates through the checker; replay does not search for a fixpoint.
+ 
+ ### subsystem.review_panel
+@@ -753,13 +753,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### cli.witness_command
+-- does: Register witness, replay, witness view and why not commands through the witness CLI [add_parsers; handle].
++- does: Register witness, replay, witness view, why not and COUNT membership commands through the witness CLI [add_parsers; handle].
+ - verbs: witness command, replay witness, witness view, why not, bounded witness, explanation command, witness dispatch, register parser, dispatch handler, parse flags
+ - in: argparse subparsers or a parsed command namespace
+ - out: registered parsers or the selected command exit code
+ - status: canonical
+ - modules: src/gnd/commands/witness.py
+-- uses: witness.command
++- uses: witness.command, witness.count_membership
+ - used_by: cli.dispatch
+ - part_of: subsystem.witness
+ - tests: tests/test_rf5_commands.py
+@@ -1757,7 +1757,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +72 more (graph.md)
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +73 more (graph.md)
+ - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
+ - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
+ - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+@@ -1918,10 +1918,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +72 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +73 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+-- notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
++- notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
+ 
+ 
+ ### infra.version
+@@ -2219,7 +2219,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/errors.py
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +26 more (graph.md)
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +27 more (graph.md)
+ - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
+ - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
+ 
+@@ -2314,7 +2314,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - uses: (none)
+ - used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
+ - tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
+-- notes: Customer mode wins over internal mode from either source; forward propagates only the restrictive customer setting.
++- notes: Customer mode wins over internal mode from either source. The surface registry includes both COUNT membership commands. Forward propagates only the restrictive customer setting.
+ 
+ 
+ ### check.evaluation_feedback
+@@ -2431,7 +2431,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/population.py
+ - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
+-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, … +32 more (graph.md)
++- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, … +33 more (graph.md)
+ - part_of: subsystem.check
+ - tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
+ - in: Population path or bytes; optional loaded Model.
+@@ -2445,7 +2445,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model_index.py
+ - uses: infra.artifacts, model.address, model.document, model.reference_resolution
+-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +38 more (graph.md)
++- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +39 more (graph.md)
+ - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
+ - in: Loaded Model and query identifiers.
+ - out: Detached lookup results and scoped ModelIndex snapshots.
+@@ -2538,7 +2538,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
+ - uses: infra.artifacts, infra.errors
+-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +16 more (graph.md)
++- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +17 more (graph.md)
+ - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
+ - checked: partial
+ - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
+@@ -3088,7 +3088,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/witness/io.py, src/gnd/witness/types.py
+ - uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+-- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
++- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.count_membership, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+ - part_of: subsystem.witness
+ - tests: tests/test_v71_phase3_successors.py, tests/test_public_why_not.py, tests/test_witness_composition.py
+ - notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Model wire is re-exported from model.json_document. Limits may only be lowered from the fixed ceilings.
+@@ -3122,6 +3122,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - notes: src/gnd/commands/witness.py is the external command-registration bridge; this component owns the lane's argument and execution boundary. Writing --out requires --raw.
+ 
+ 
++### witness.count_membership
++- does: Produce and independently replay the exact distinct contribution roster of one selected COUNT group over a covered candidate relation.
++- verbs: witness count, replay count, count membership, empty group, source occurrence, declared coverage, bounded source scan, raw snapshot binding
++- in: Reference-free model, candidate population, typed group request and an optional COUNT membership certificate.
++- out: Bound certificate with ordered representative occurrences or a replay verdict, including empty-group success.
++- status: canonical
++- modules: src/gnd/witness/count_cli.py, src/gnd/witness/count_membership.py, src/gnd/witness/count_producer.py, src/gnd/witness/count_replay.py
++- uses: infra.artifacts, infra.errors, infra.safe_filesystem, model.loading, model.population_loading, model.query_index, witness.schema
++- used_by: cli.witness_command
++- part_of: subsystem.witness
++- tests: tests/test_count_certificates.py
++- notes: Replay reconstructs the roster through the shared bounded scan. Ordinary witness and aggregate checker behavior is unchanged.
++
++
+ ### witness.produce
+ - does: Capture production derivation firings as compact grounded proof DAGs for requested tuples [produce_witness].
+ - verbs: produce witness, grounded trace, trace derivations, capture firings, proof DAG, compact graph, base occurrence, reference origin, proof roots, typed bindings, missing target, unknown value, unsupported fragment, work ceiling, produce_witness
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index a26317c7..60efc304 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1192,12 +1192,15 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/commands/verify.py -> src/gnd/export/verification_service.py`
+ 
+ ### cli.witness_command
+-- uses: witness.command
++- uses: witness.command, witness.count_membership
+ - used_by: cli.dispatch
+ 
+ #### cli.witness_command -> witness.command
+ - `src/gnd/commands/witness.py -> src/gnd/witness/cli.py`
+ 
++#### cli.witness_command -> witness.count_membership
++- `src/gnd/commands/witness.py -> src/gnd/witness/count_cli.py`
++
+ ### codegen.emit
+ - uses: check.population_structure, codegen.identifiers, codegen.manifest, codegen.regenerate, exp.frontmatter, extract.bundle, extract.projection, extract.reference_schemes, extract.vocabulary, infra.safe_filesystem, infra.verdict_prose, infra.version, model.architecture, model.loading, model.query_index, model.scalar_terms, synth.paths
+ - used_by: codegen.service, conformance.structural
+@@ -3372,7 +3375,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_revision, examples.literature_verdict, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_revision, examples.literature_verdict, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+@@ -3391,7 +3394,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.errors
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, examples.literature_verdict, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.service
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, examples.literature_verdict, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.count_membership, witness.service
+ 
+ ### infra.exit_codes
+ - uses: (none)
+@@ -3479,7 +3482,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.safe_filesystem
+ - uses: infra.artifacts, infra.errors
+-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, extract.manifest, extract.service, fidelity.service, install.skill_lifecycle, measure.labels, measure.promote, measure.service, model.ossie_import, model.population_loading, recovery.command, semantics.saved_judgments, semantics.transitions, synth.corpus, synth.paths, synth.provenance, synth.service
++- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, extract.manifest, extract.service, fidelity.service, install.skill_lifecycle, measure.labels, measure.promote, measure.service, model.ossie_import, model.population_loading, recovery.command, semantics.saved_judgments, semantics.transitions, synth.corpus, synth.paths, synth.provenance, synth.service, witness.count_membership
+ 
+ #### infra.safe_filesystem -> infra.artifacts
+ - `src/gnd/safefs.py -> src/gnd/artifacts.py`
+@@ -3925,7 +3928,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.loading
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.service, evolve.command, evolve.schema, evolve.service, examples.literature_interop, examples.literature_lineage, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.service, evolve.command, evolve.schema, evolve.service, examples.literature_interop, examples.literature_lineage, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ #### model.loading -> infra.artifacts
+ - `src/gnd/model/__init__.py -> src/gnd/artifacts.py`
+@@ -3999,7 +4002,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.population_loading
+ - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
+-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, examples.plan_apps, exp.session_judgments, exp.session_replay, exp.session_runtime, export.ilp_service, export.souffle_lowering, export.verification, fidelity.doccheck, fidelity.service, measure.labels, measure.service, model.composition, model.diff, model.loading, model.population_sentences, model.validation, semantics.extensions, semantics.phase1_slice, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.frontier, synth.mutations, synth.provenance, synth.service, witness.produce, witness.replay, witness.schema, witness.service
++- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, examples.plan_apps, exp.session_judgments, exp.session_replay, exp.session_runtime, export.ilp_service, export.souffle_lowering, export.verification, fidelity.doccheck, fidelity.service, measure.labels, measure.service, model.composition, model.diff, model.loading, model.population_sentences, model.validation, semantics.extensions, semantics.phase1_slice, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.frontier, synth.mutations, synth.provenance, synth.service, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service
+ 
+ #### model.population_loading -> check.population_structure
+ - `src/gnd/population.py -> src/gnd/popvalidate.py`
+@@ -4074,7 +4077,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.query_index
+ - uses: infra.artifacts, model.address, model.document, model.reference_resolution
+-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.reference_schemes, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.why_not
++- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.reference_schemes, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.count_membership, witness.why_not
+ 
+ #### model.query_index -> infra.artifacts
+ - `src/gnd/model_index.py -> src/gnd/artifacts.py`
+@@ -4703,7 +4706,7 @@ Generated by `scripts/components_index.py`.
+ - members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.document, model.json_document, model.operation_obligations, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, model.validation, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.guarded, synth.identity, synth.paths, synth.value_domain
+ 
+ ### subsystem.witness
+-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_identity
++- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_identity
+ 
+ ### synth.assemble
+ - uses: check.population_structure, checker.evaluate, infra.input_policy, model.address, model.loading, model.population_loading, model.scalar_terms, synth.comparison, synth.constructive, synth.guarded, synth.identity, synth.pool, synth.prediction, synth.value_domain
+@@ -5144,6 +5147,34 @@ Generated by `scripts/components_index.py`.
+ #### witness.command -> witness.service
+ - `src/gnd/witness/cli.py -> src/gnd/witness/service.py`
+ 
++### witness.count_membership
++- uses: infra.artifacts, infra.errors, infra.safe_filesystem, model.loading, model.population_loading, model.query_index, witness.schema
++- used_by: cli.witness_command
++
++#### witness.count_membership -> infra.artifacts
++- `src/gnd/witness/count_cli.py -> src/gnd/artifacts.py`
++- `src/gnd/witness/count_membership.py -> src/gnd/artifacts.py`
++
++#### witness.count_membership -> infra.errors
++- `src/gnd/witness/count_membership.py -> src/gnd/errors.py`
++
++#### witness.count_membership -> infra.safe_filesystem
++- `src/gnd/witness/count_membership.py -> src/gnd/safefs.py`
++
++#### witness.count_membership -> model.loading
++- `src/gnd/witness/count_membership.py -> src/gnd/model/__init__.py`
++
++#### witness.count_membership -> model.population_loading
++- `src/gnd/witness/count_membership.py -> src/gnd/population.py`
++
++#### witness.count_membership -> model.query_index
++- `src/gnd/witness/count_membership.py -> src/gnd/model_index.py`
++
++#### witness.count_membership -> witness.schema
++- `src/gnd/witness/count_membership.py -> src/gnd/witness/io.py`
++- `src/gnd/witness/count_membership.py -> src/gnd/witness/types.py`
++- `src/gnd/witness/count_producer.py -> src/gnd/witness/types.py`
++
+ ### witness.presentation
+ - uses: witness.schema
+ - used_by: witness.command, witness.service
+@@ -5200,7 +5231,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### witness.schema
+ - uses: check.population_structure, infra.artifacts, infra.input_policy, model.json_document, model.loading, model.population_loading, model.reference_binding
+-- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
++- used_by: examples.literature_interop, export.lean_lowering, export.service, export.souffle_lowering, export.souffle_runtime, witness.command, witness.count_membership, witness.presentation, witness.produce, witness.replay, witness.service, witness.why_not
+ 
+ #### witness.schema -> check.population_structure
+ - `src/gnd/witness/io.py -> src/gnd/popvalidate.py`
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 57b563ba..574bcf4f 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -205,12 +205,12 @@ Bounded, no-follow artifact reads and publication primitives.
+ | `read_regular_bounded(root, relative, *, max_bytes, expected, expected_root) -> tuple[bytes, LeafSna…` | function | 899 | Read one contained regular leaf through no-follow descriptors. |
+ | `inventory_tree(root, *, max_files, max_file_bytes, max_total_bytes, max_depth, expected_root) -> Tr…` | function | 1069 | Inventory every regular leaf beneath ``root`` in stable POSIX order. |
+ | `remove_regular_if_unchanged(root, relative, *, expected, expected_root) -> None` | function | 1280 | Remove one regular leaf only while it has the identity already read. |
+-| `publish_leaf_atomic(root, relative, data, *, expected, expected_root) -> LeafSnapshot` | function | 1385 | Publish one complete leaf, requiring absence or an exact prior identity. |
+-| `publish_directory_once(root, relative, files, *, manifest_name, max_files, max_file_bytes, max_tota…` | function | 1515 | Publish one descriptor-bound directory, writing its manifest leaf last. |
+-| `canonical_report_text(payload) -> str` | function | 1727 | The payload as canonical JSON: sorted keys, no NaN, stable separators. |
+-| `reject_json_constant(token) -> None` | function | 1738 | (no docstring) |
+-| `reject_json_duplicate_pairs(pairs) -> dict[str, Any]` | function | 1742 | (no docstring) |
+-| `reject_json_duplicate_pairs_result(pairs) -> dict[str, Any]` | function | 1751 | (no docstring) |
++| `publish_leaf_atomic(root, relative, data, *, expected, expected_root, mode) -> LeafSnapshot` | function | 1385 | Publish one complete leaf, requiring absence or an exact prior identity. |
++| `publish_directory_once(root, relative, files, *, manifest_name, max_files, max_file_bytes, max_tota…` | function | 1516 | Publish one descriptor-bound directory, writing its manifest leaf last. |
++| `canonical_report_text(payload) -> str` | function | 1728 | The payload as canonical JSON: sorted keys, no NaN, stable separators. |
++| `reject_json_constant(token) -> None` | function | 1739 | (no docstring) |
++| `reject_json_duplicate_pairs(pairs) -> dict[str, Any]` | function | 1743 | (no docstring) |
++| `reject_json_duplicate_pairs_result(pairs) -> dict[str, Any]` | function | 1752 | (no docstring) |
+ 
+ ## gnd.assurance_claims — `src/gnd/assurance_claims.py`
+ Components: assurance.claims
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index 172adda2..64956846 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -191,5 +191,5 @@ Components: cli.witness_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 12 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 26 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 14 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 28 | (no docstring) |
+diff --git a/dev/components/modules/witness.md b/dev/components/modules/witness.md
+index f648b575..2cba31a1 100644
+--- a/dev/components/modules/witness.md
++++ b/dev/components/modules/witness.md
+@@ -18,6 +18,49 @@ CLI boundary for explicit finite-witness export and read-only replay.
+ | `add_parsers(subparsers)` | function | 13 | (no docstring) |
+ | `run(args)` | function | 50 | (no docstring) |
+ 
++## gnd.witness.count_cli — `src/gnd/witness/count_cli.py`
++Components: witness.count_membership
++Public commands for bounded COUNT membership evidence.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `add_parsers(subparsers)` | function | 9 | (no docstring) |
++| `run(args)` | function | 26 | (no docstring) |
++
++## gnd.witness.count_membership — `src/gnd/witness/count_membership.py`
++Components: witness.count_membership
++Bounded intake and exact source enumeration for a selected COUNT group.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `CountRefusal` | class(ValueError) | 25 | (no docstring) |
++| `refused(error) -> dict` | function | 32 | (no docstring) |
++| `request_shape(doc)` | function | 50 | (no docstring) |
++| `certificate_shape(doc, limits)` | function | 59 | (no docstring) |
++| `read_bytes(path, limits, *, snapshot)` | function | 83 | (no docstring) |
++| `read_request(path, limits)` | function | 91 | (no docstring) |
++| `read_snapshot(model, population, request_digest, limits)` | function | 98 | (no docstring) |
++| `members_from_snapshot(model_path, population_path, snapshot, request, limits)` | function | 169 | (no docstring) |
++| `make_document(binding, request, members)` | function | 212 | (no docstring) |
++| `check_result_bound(document, limits)` | function | 217 | (no docstring) |
++| `success(document, *, include_certificate)` | function | 226 | (no docstring) |
++
++## gnd.witness.count_producer — `src/gnd/witness/count_producer.py`
++Components: witness.count_membership
++Produce a snapshot-bound COUNT membership certificate.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `produce_count(model, population, request_path, *, limits)` | function | 16 | (no docstring) |
++
++## gnd.witness.count_replay — `src/gnd/witness/count_replay.py`
++Components: witness.count_membership
++Verify COUNT membership against caller-selected inputs independently.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `replay_count(model, population, certificate_path, request_path, *, limits)` | function | 20 | (no docstring) |
++
+ ## gnd.witness.flattening — `src/gnd/witness/flattening.py`
+ Components: witness.service
+ Rooted include bindings for path-based witness production and replay.
+diff --git a/docs/reference/cli.md b/docs/reference/cli.md
+index 694f0d6d..aff82ed0 100644
+--- a/docs/reference/cli.md
++++ b/docs/reference/cli.md
+@@ -102,6 +102,8 @@ prerequisites and credentials are separate from deterministic tutorial runs.
+ | `gnd witness MODEL POPULATION --targets REQUEST` | Redacted finite-witness result (raw under `internal`) |
+ | `gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE` | Explicit new raw certificate; refused under `customer` |
+ | `gnd replay MODEL POPULATION CERTIFICATE --json` | Independent finite inference replay |
++| `gnd witness-count MODEL POPULATION --request REQUEST --raw --out CERTIFICATE` | [Bounded COUNT membership](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-export/references/count-witness-contract.md) for one covered group |
++| `gnd replay-count MODEL POPULATION CERTIFICATE --request REQUEST` | Independent COUNT membership replay, including a covered empty group |
+ | `gnd witness ... --composition RECORD` / `gnd replay ... --composition RECORD` | Version-2 witness of a composed population, traced to its sources ([composition](composition.md#trace-a-derived-fact-back-to-its-sources)) |
+ | `gnd witness-view CERTIFICATE --json` | Non-replayable presentation of a certificate |
+ | `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted (raw under `internal`) |
+diff --git a/docs/reference/disclosure.md b/docs/reference/disclosure.md
+index b040ee4c..38dc82af 100644
+--- a/docs/reference/disclosure.md
++++ b/docs/reference/disclosure.md
+@@ -26,13 +26,14 @@ behaves as it did before the mode existed.
+ 
+ **`internal`** acts as if every value option were passed: `--unredacted` on
+ the check family, `--raw` on `witness`, `witness-view`, `replay`,
+-`why-not` and the Lean and Soufflé exports, and the matching Python keywords.
++`why-not`, `witness-count`, `replay-count` and the Lean and Soufflé exports,
++and the matching Python keywords.
+ 
+ **`customer`** withholds two kinds of value:
+ 
+ - in check-family reports, the roles your model declares sensitive with
+   `redact: true` (see [declare what is sensitive](#declare-what-is-sensitive));
+-- in witness, replay, why-not, Lean and Soufflé outputs, every population
++- in witness, replay, why-not, COUNT membership, Lean and Soufflé outputs, every population
+   value. The Python functions return what the CLI prints by default:
+   `api.why_not` returns the redacted view, and `api.witness` and
+   `api.replay` return the default view with no raw certificate.
+@@ -100,7 +101,7 @@ a redacted answer for the raw one.
+ | Request under `customer` | Command line | Python |
+ |---|---|---|
+ | `--unredacted` on a check-family command; `unredacted=True` | exit 3 | `DisclosureRefused` |
+-| `--raw` on `witness`, `witness-view`, `replay`, `why-not`, `export lean`, `export souffle*`; `raw=True` | exit 3 | `DisclosureRefused` |
++| `--raw` on witness, replay, why-not, COUNT membership and the Lean and Soufflé exports, or `raw=True` | exit 3 | `DisclosureRefused` |
+ | `gnd --disclosure internal …` with `GND_DISCLOSURE=customer` | exit 3 | — |
+ | a malformed `GND_DISCLOSURE` | exit 3 | `DisclosureRefused` |
+ 
+@@ -209,7 +210,7 @@ exactly one row. A test keeps this table equal to the code.
+ | Command: `gnd check`, `gnd validate`, `gnd diff`, `gnd verbalize population`, `gnd measure`, `gnd verify`, `gnd judgments check` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
+ | `gnd.api`: `validate`, `check`, `diff`, `verbalize`, `transition`, `check_with_receipt`, `judgments`, `EvaluationSession.check`, `EvaluationSession.check_with_receipt`, `EvaluationSession.transition` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
+ | Output kind: `validate`, `check`, `admission`, `verify`, `transition`, `plan`, `batch`, `measure`, `population-verbalization`, `diff` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
+-| Command: `gnd witness`, `gnd witness-view`, `gnd replay`, `gnd why-not`, `gnd export lean`, `gnd export souffle`, `gnd export souffle-run`, `gnd export souffle-witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
++| Command: `gnd witness`, `gnd witness-view`, `gnd replay`, `gnd why-not`, `gnd witness-count`, `gnd replay-count`, `gnd export lean`, `gnd export souffle`, `gnd export souffle-run`, `gnd export souffle-witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
+ | `gnd.api`: `witness`, `replay`, `why_not`, `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
+ | `gnd.export.service`: `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
+ | Command: `gnd discover` | one named value option, `gnd discover --show-values`: values under `internal`, as requested when unset, the option refused under `customer`; every other output the same in every mode |
+diff --git a/src/gnd/artifacts.py b/src/gnd/artifacts.py
+index d66b7665..2aa456eb 100644
+--- a/src/gnd/artifacts.py
++++ b/src/gnd/artifacts.py
+@@ -1389,6 +1389,7 @@ def publish_leaf_atomic(
+     *,
+     expected: LeafSnapshot | None = None,
+     expected_root: tuple[int, int] | None = None,
++    mode: int = FILE_MODE,
+ ) -> LeafSnapshot:
+     """Publish one complete leaf, requiring absence or an exact prior identity."""
+ 
+@@ -1410,7 +1411,7 @@ def publish_leaf_atomic(
+         descriptor = os.open(
+             staging,
+             os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0),
+-            FILE_MODE,
++            mode,
+             dir_fd=parent_fd,
+         )
+         with os.fdopen(descriptor, "wb") as stream:
+diff --git a/src/gnd/commands/witness.py b/src/gnd/commands/witness.py
+index efd8aea4..442478c5 100644
+--- a/src/gnd/commands/witness.py
++++ b/src/gnd/commands/witness.py
+@@ -3,8 +3,10 @@ from __future__ import annotations
+ 
+ def _register_witness(subparsers):
+     from gnd.witness.cli import add_parsers as add_witness_parsers
++    from gnd.witness.count_cli import add_parsers as add_count_parsers
+ 
+     add_witness_parsers(subparsers)
++    add_count_parsers(subparsers)
+ 
+     return {name: subparsers.choices[name] for name in ('witness', 'replay', 'witness-view', 'why-not')}
+ 
+diff --git a/src/gnd/disclosure.py b/src/gnd/disclosure.py
+index 08c983bf..9f722cc1 100644
+--- a/src/gnd/disclosure.py
++++ b/src/gnd/disclosure.py
+@@ -94,7 +94,7 @@ SURFACES: Mapping[str, Surface] = {
+     "gnd discover": Surface("site", convention="option",
+                             note="--show-values follows the mode; redacted roles never get value candidates"),
+     **{f"gnd {leaf}": Surface(**_VIEW) for leaf in (
+-        "witness", "witness-view", "replay", "why-not",
++        "witness", "witness-view", "replay", "why-not", "witness-count", "replay-count",
+         "export lean", "export souffle", "export souffle-run", "export souffle-witness")},
+     "gnd exp run": Surface("every-mode", spawns=True, note="session kinds are applied in every mode"),
+     "gnd solve": Surface("value-free", spawns=True, note="stations are GND commands"),
+diff --git a/src/gnd/examples/literature/count_fixture/README.md b/src/gnd/examples/literature/count_fixture/README.md
+new file mode 100644
+index 00000000..eb181f45
+--- /dev/null
++++ b/src/gnd/examples/literature/count_fixture/README.md
+@@ -0,0 +1,28 @@
++# COUNT membership for a named group
++
++Copy this directory to a writable location and run the commands there with
++an installed `gnd`. The example ships under `gnd/examples/literature/count_fixture`.
++
++```sh
++gnd check model.orm.yaml population.json
++gnd witness-count model.orm.yaml population.json --request group.json --raw --out flow.cert.json
++gnd replay-count model.orm.yaml population.json flow.cert.json --request group.json --raw
++gnd witness-count model.orm.yaml population.json --request empty-group.json --raw --out empty.cert.json
++gnd replay-count model.orm.yaml population.json empty.cert.json --request empty-group.json --raw
++```
++
++The `flow` group has two contributions. Alpha and beta both have the
++label `included`. Their distinct member keys count separately. Two source
++occurrences support beta's contribution, and the certificate selects its
++first occurrence. The `empty` group has no contributions in the declared
++covered relation. Its certificate replays successfully with an empty
++roster. The aggregate checker yields rows for `flow` and `other` only.
++
++The first member of the `flow` roster points to row index 2 of
++`observation`, the alpha row. The supplied `member-targets.json` requests
++that row for a separate positive witness.
++
++```sh
++gnd witness model.orm.yaml population.json --targets member-targets.json --raw --out alpha.cert.json
++gnd replay model.orm.yaml population.json alpha.cert.json
++```
+diff --git a/tests/fixtures/count-certificates/empty-group.json b/src/gnd/examples/literature/count_fixture/empty-group.json
+similarity index 100%
+rename from tests/fixtures/count-certificates/empty-group.json
+rename to src/gnd/examples/literature/count_fixture/empty-group.json
+diff --git a/tests/fixtures/count-certificates/group.json b/src/gnd/examples/literature/count_fixture/group.json
+similarity index 100%
+rename from tests/fixtures/count-certificates/group.json
+rename to src/gnd/examples/literature/count_fixture/group.json
+diff --git a/tests/fixtures/count-certificates/member-targets.json b/src/gnd/examples/literature/count_fixture/member-targets.json
+similarity index 100%
+rename from tests/fixtures/count-certificates/member-targets.json
+rename to src/gnd/examples/literature/count_fixture/member-targets.json
+diff --git a/tests/fixtures/count-certificates/model.orm.yaml b/src/gnd/examples/literature/count_fixture/model.orm.yaml
+similarity index 100%
+rename from tests/fixtures/count-certificates/model.orm.yaml
+rename to src/gnd/examples/literature/count_fixture/model.orm.yaml
+diff --git a/tests/fixtures/count-certificates/population.json b/src/gnd/examples/literature/count_fixture/population.json
+similarity index 100%
+rename from tests/fixtures/count-certificates/population.json
+rename to src/gnd/examples/literature/count_fixture/population.json
+diff --git a/src/gnd/skills/gnd-export/references/count-witness-contract.md b/src/gnd/skills/gnd-export/references/count-witness-contract.md
+new file mode 100644
+index 00000000..e79970f9
+--- /dev/null
++++ b/src/gnd/skills/gnd-export/references/count-witness-contract.md
+@@ -0,0 +1,85 @@
++# Bounded COUNT membership certificate
++
++`gnd witness-count MODEL POPULATION --request REQUEST --raw --out CERTIFICATE`
++creates a certificate for one named group. Run
++`gnd replay-count MODEL POPULATION CERTIFICATE --request REQUEST` to verify
++it against the caller's expected inputs. These commands follow the
++[disclosure policy](https://vasiloglou.github.io/gnd-public/reference/disclosure/).
++`--out` requires raw output and creates a new file.
++
++## Rule and snapshot scope
++
++The model declares one derived COUNT clause with a single asserted body
++fact type. The body binds each role to a distinct variable. The head
++projects at least one group variable and one fresh Integer count
++variable. `over` and `of` name body variables, and the roles use String,
++Boolean or Integer. The clause admits direct variable projection and
++has no filters, negation, arithmetic or recursion. The inputs are a
++single include-free and reference-free model and its candidate population.
++The population must list the entire body relation in `population.covers`.
++An opaque value in that relation prevents certification.
++
++Completeness is relative to the declared coverage of the bound population.
++For an empty selected group, the certificate succeeds with an empty roster
++and count zero. The ordinary checker continues to derive aggregate rows
++only for groups with contributing bindings.
++
++## Closed version 1 JSON
++
++A request has exactly `version`, `fact_type` and `group`. The version is
++the integer `1`. The fact type identifies the derived COUNT rule. The
++group maps each non-count head role name to a typed cell. A cell has
++exactly `primitive` and `value`. The value is a JSON string, boolean or
++integer matching the cell's declared primitive and the model role.
++
++```json
++{"version":1,"fact_type":"method_count","group":{"group":{"primitive":"String","value":"flow"}}}
++```
++
++A certificate has exactly `version` (integer `1`), `kind`
++(`count-membership`), `binding`, `request`, `count`, `status` and
++`members`. The binding contains `model_sha256`, `population_sha256`
++and `request_sha256`, each the lowercase SHA-256 of the corresponding
++file's exact bytes. Replay uses the caller's request file and compares the
++parsed request to the embedded one as well as checking all three digests.
++
++`members` lists distinct contributions in lexicographic order of the
++canonical JSON bytes of `[over, of]`. Each entry has exactly `over`
++(ordered typed cells in aggregate declaration order), `of` (one typed
++cell), and `fact_index` (the lowest zero-based position in the body
++relation's population row array that produces this contribution). Count
++is the number of members. A nonempty roster has status `complete`. An
++empty roster has status `empty-group`.
++
++Replay reconstructs the entire roster from the caller's model, request
++and candidate rows. It checks the supplied count, status, order,
++contributions and representative positions against that reconstruction.
++To get an ordinary positive witness for a member, use `fact_index` to
++look up the body row and pass its typed tuple in role order to
++`gnd witness`. The [worked example](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/literature/count_fixture)
++shows both group outcomes and the individual member witness.
++
++## Verdicts and limits
++
++| Exit | Reason | Meaning |
++|---|---|---|
++| 0 | JSON null | The exact group membership was established. |
++| 1 | `proof-invalid` | A well-formed certificate disagrees with the reconstructed result. |
++| 2 | `fragment-unsupported`, `coverage-undeclared`, `opaque-value` | The rule or body relation cannot establish complete membership under this contract. |
++| 3 | `input-invalid`, `binding-stale` | An input is unreadable or malformed, or the certificate mismatches the caller's expected inputs. |
++| 4 | `work-limit` | Input snapshot bytes, work, or generated output exceeded a limit. |
++
++Replay validates certificate shape first, then reads the external request
++and bounded snapshot bytes. An oversized snapshot refuses before digest
++comparison. Replay checks bindings before model evaluation and checks
++declared coverage before deciding membership. Request and certificate
++input byte, depth and scalar limits apply at intake. Inputs are regular
++files. Unresolved includes fail model intake.
++
++The limits are 10 MiB per request, certificate, model or population file,
++64 container levels, 4,096 UTF-8 bytes per wire string and 128 digits
++per wire integer. The scan checks a ceiling of 100,000 body rows and
++100,000 cells, accounting for the body width, group projection and
++contribution width for every row. At most 10,000 distinct contributions
++may be emitted. Generated certificate size includes the canonical final
++newline. Refusal yields no certificate.
+diff --git a/src/gnd/skills/gnd-export/references/witness-contract.md b/src/gnd/skills/gnd-export/references/witness-contract.md
+index 3894cd05..e3e58ef2 100644
+--- a/src/gnd/skills/gnd-export/references/witness-contract.md
++++ b/src/gnd/skills/gnd-export/references/witness-contract.md
+@@ -1,6 +1,7 @@
+ # Certificate versions 1 through 4
+ 
+ See the [closed wire schema](witness.schema.json) and [workflow](../SKILL.md).
++For a bounded COUNT group, see the separate [membership certificate contract](count-witness-contract.md).
+ Bindings include the existing model identity, SHA-256 of canonical candidate
+ model_dump JSON and each fixed reference's raw-byte SHA-256. Changed bound input
+ is stale before inference is attempted. Metadata participates in candidate
+diff --git a/src/gnd/witness/count_cli.py b/src/gnd/witness/count_cli.py
+new file mode 100644
+index 00000000..71178a29
+--- /dev/null
++++ b/src/gnd/witness/count_cli.py
+@@ -0,0 +1,48 @@
++"""Public commands for bounded COUNT membership evidence."""
++
++import json
++from pathlib import Path
++
++from gnd.artifacts import ArtifactError, canonical_json_bytes, publish_leaf_atomic
++
++
++def add_parsers(subparsers):
++    for name, help_message in (
++        ("witness-count", "produce a bounded COUNT membership certificate"),
++        ("replay-count", "independently replay a COUNT membership certificate"),
++    ):
++        parser = subparsers.add_parser(name, help=help_message)
++        parser.add_argument("model")
++        parser.add_argument("population")
++        parser.add_argument("--request", required=True, help="expected COUNT group request")
++        parser.add_argument("--raw", action="store_true", help="explicitly reveal bound values")
++        if name == "witness-count":
++            parser.add_argument("--out", help="create a new certificate file; requires --raw")
++        else:
++            parser.add_argument("certificate")
++        parser.set_defaults(handler=run)
++
++
++def run(args):
++    if args.command == "witness-count":
++        from gnd.witness.count_producer import produce_count
++        if args.out and not args.raw:
++            result = {"exit_code": 3, "reason": "input-invalid"}
++        else:
++            result = produce_count(args.model, args.population, args.request)
++            if args.out and "certificate" in result:
++                output = Path(args.out).absolute()
++                try:
++                    publish_leaf_atomic(
++                        output.parent, output.name, canonical_json_bytes(result["certificate"]), mode=0o600
++                    )
++                except (ArtifactError, OSError):
++                    result = {"exit_code": 3, "reason": "input-invalid"}
++    else:
++        from gnd.witness.count_replay import replay_count
++        result = replay_count(args.model, args.population, args.certificate, args.request)
++    if not args.raw:
++        for key in ("certificate", "request", "count"):
++            result.pop(key, None)
++    print(json.dumps(result, ensure_ascii=False, sort_keys=True))
++    return result["exit_code"]
+diff --git a/src/gnd/witness/count_membership.py b/src/gnd/witness/count_membership.py
+new file mode 100644
+index 00000000..4e53eb7e
+--- /dev/null
++++ b/src/gnd/witness/count_membership.py
+@@ -0,0 +1,231 @@
++"""Bounded intake and exact source enumeration for a selected COUNT group."""
++
++from __future__ import annotations
++
++import os
++
++from ruamel.yaml.error import YAMLError
++
++from gnd.artifacts import canonical_json_bytes, is_sha256_hex, sha256_hex
++from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
++from gnd.model import iter_derivation_clauses, load_model_bytes
++from gnd.model_index import ModelIndex
++from gnd.population import load_population_bytes
++from gnd.safefs import open_regular
++from gnd.witness.io import integer, parse_wire, record, validate_witness_structure
++from gnd.witness.types import WitnessInputError, checked_limits
++
++KIND = "count-membership"
++PRIMITIVES = {"String": str, "Boolean": bool, "Integer": int}
++BINDING_KEYS = ("model_sha256", "population_sha256", "request_sha256")
++INPUT_ERRORS = (OSError, ValueError, TypeError, KeyError, RecursionError, OverflowError, YAMLError,
++                ModelLoadError, ModelValidationError, PopulationLoadError)
++
++
++class CountRefusal(ValueError):
++    def __init__(self, exit_code: int, reason: str):
++        super().__init__(reason)
++        self.exit_code = exit_code
++        self.reason = reason
++
++
++def refused(error: Exception) -> dict:
++    if isinstance(error, CountRefusal):
++        return {"exit_code": error.exit_code, "reason": error.reason}
++    return {"exit_code": 3, "reason": "input-invalid"}
++
++
++def _version(value):
++    if type(value) is not int or value != 1:
++        raise WitnessInputError("invalid COUNT membership wire version")
++
++
++def _cell(wire):
++    record(wire, "primitive value")
++    name = wire["primitive"]
++    if type(name) is not str or type(wire["value"]) is not PRIMITIVES.get(name):
++        raise WitnessInputError("invalid COUNT membership scalar")
++
++
++def request_shape(doc):
++    record(doc, "version fact_type group")
++    _version(doc["version"])
++    if type(doc["fact_type"]) is not str or not doc["fact_type"] or type(doc["group"]) is not dict:
++        raise WitnessInputError("invalid COUNT group selector")
++    for cell in doc["group"].values():
++        _cell(cell)
++
++
++def certificate_shape(doc, limits):
++    record(doc, "version kind binding request count status members")
++    _version(doc["version"])
++    if doc["kind"] != KIND or doc["status"] not in ("complete", "empty-group"):
++        raise WitnessInputError("invalid COUNT certificate")
++    binding = doc["binding"]
++    record(binding, " ".join(BINDING_KEYS))
++    if not all(is_sha256_hex(value) for value in binding.values()):
++        raise WitnessInputError("invalid COUNT certificate binding")
++    request_shape(doc["request"])
++    integer(doc["count"])
++    members = doc["members"]
++    if type(members) is not list or len(members) > limits.nodes:
++        raise WitnessInputError("invalid COUNT membership roster")
++    for member in members:
++        record(member, "over of fact_index")
++        integer(member["fact_index"])
++        _cell(member["of"])
++        if type(member["over"]) is not list or not member["over"]:
++            raise WitnessInputError("invalid COUNT contribution key")
++        for cell in member["over"]:
++            _cell(cell)
++
++
++def read_bytes(path, limits, *, snapshot=False):
++    with os.fdopen(open_regular(path), "rb") as stream:
++        data = stream.read(limits.bytes + 1)
++    if len(data) > limits.bytes:
++        raise CountRefusal(4, "work-limit") if snapshot else WitnessInputError("wire byte ceiling")
++    return data
++
++
++def read_request(path, limits):
++    raw = read_bytes(path, limits)
++    request = parse_wire(raw, limits=limits)
++    request_shape(request)
++    return request, sha256_hex(raw)
++
++
++def read_snapshot(model, population, request_digest, limits):
++    checked_limits(limits)
++    raw_model = read_bytes(model, limits, snapshot=True)
++    raw_population = read_bytes(population, limits, snapshot=True)
++    binding = dict(zip(BINDING_KEYS, (sha256_hex(raw_model), sha256_hex(raw_population), request_digest), strict=True))
++    return raw_model, raw_population, binding
++
++
++def _is_variable(value):
++    return type(value) is str and value.startswith("$")
++
++
++def _role_primitives(index, player_types):
++    return {role: index.primitive(player, variant="strict") for role, player in player_types.items()}
++
++
++def _declared_rule(model, request):
++    index = ModelIndex.for_model(model)
++    fact = index.fact_type(request["fact_type"])
++    if fact is None:
++        raise WitnessInputError("unknown COUNT fact type")
++    rules = tuple(iter_derivation_clauses(fact.get("derivation_rule")))
++    if fact.get("derivation") != "derived" or len(rules) != 1:
++        raise CountRefusal(2, "fragment-unsupported")
++    clause = rules[0]
++    agg = clause.get("aggregate")
++    if (
++        not isinstance(agg, dict) or agg["fn"] != "count" or len(clause["body"]) != 1
++        or clause.get("where") or clause.get("negate")
++    ):
++        raise CountRefusal(2, "fragment-unsupported")
++    body = clause["body"][0]
++    source = index.fact_type(body["fact_type"])
++    slots = body["bind"]
++    if (
++        source is None or source.get("derivation") not in (None, "asserted")
++        or source.get("derivation_rule") is not None
++        or not all(_is_variable(value) for value in slots.values())
++        or len(set(slots.values())) != len(slots)
++    ):
++        raise CountRefusal(2, "fragment-unsupported")
++    inverse = {value: role for role, value in slots.items()}
++    head = clause["head"]
++    role_players = index.role_object_types()
++    types = _role_primitives(index, role_players[request["fact_type"]])
++    inputs = _role_primitives(index, role_players[body["fact_type"]])
++    fresh = agg["as"]
++    groups = {role: value for role, value in head.items() if value != fresh}
++    count_roles = [role for role, value in head.items() if value == fresh]
++    over = agg["over"]
++    of = agg["of"]
++    if (
++        not groups or len(count_roles) != 1 or types[count_roles[0]] != "Integer"
++        or not all(_is_variable(value) and value in inverse for value in groups.values())
++        or len(set(groups.values())) != len(groups)
++        or not over or not _is_variable(of) or of not in inverse
++        or any(var not in inverse for var in over)
++        or any(primitive not in PRIMITIVES for primitive in (*inputs.values(), *types.values()))
++        or any(types[role] != inputs[inverse[var]] for role, var in groups.items())
++    ):
++        raise CountRefusal(2, "fragment-unsupported")
++
++    selected = request["group"]
++    if selected.keys() != groups.keys() or any(cell["primitive"] != types[role] for role, cell in selected.items()):
++        raise WitnessInputError("COUNT group does not match the model")
++    filters = {inverse[var]: selected[role]["value"] for role, var in groups.items()}
++    over_roles = [(inverse[var], inputs[inverse[var]]) for var in over]
++    of_role = (inverse[of], inputs[inverse[of]])
++    return body["fact_type"], len(inputs), filters, over_roles, of_role
++
++
++def members_from_snapshot(model_path, population_path, snapshot, request, limits):
++    raw_model, raw_population, _ = snapshot
++    model = load_model_bytes(raw_model, source=model_path)
++    if model.reference_populations:
++        raise CountRefusal(2, "fragment-unsupported")
++    source, body_width, filters, over_roles, of_role = _declared_rule(model, request)
++    population = load_population_bytes(raw_population, source=population_path, model=model)
++    if source not in population.covers:
++        raise CountRefusal(2, "coverage-undeclared")
++    rows = population.facts.get(source, ())
++    cells_per_row = body_width + len(filters) + len(over_roles) + 1
++    if len(rows) > limits.joins or len(rows) * cells_per_row > limits.binding_cells:
++        raise CountRefusal(4, "work-limit")
++
++    members = {}
++    output_bytes = 0
++    for fact_index, row in enumerate(rows):
++        # A redacted row can hide a group key or contribution.
++        if any(isinstance(value, dict) for value in row.values()):
++            raise CountRefusal(2, "opaque-value")
++        if any(row[role] != value for role, value in filters.items()):
++            continue
++        over = [{"primitive": primitive, "value": row[role]} for role, primitive in over_roles]
++        role, primitive = of_role
++        of = {"primitive": primitive, "value": row[role]}
++        # These admitted primitive domains have exact typed JSON equality.
++        key = canonical_json_bytes([over, of])
++        if key in members:
++            continue
++        if len(members) == limits.nodes:
++            raise CountRefusal(4, "work-limit")
++        member = {"over": over, "of": of, "fact_index": fact_index}
++        output_bytes += len(canonical_json_bytes(member)) + 1
++        if output_bytes > limits.bytes:
++            raise CountRefusal(4, "work-limit")
++        try:
++            validate_witness_structure(member, limits=limits)
++        except WitnessInputError as error:
++            raise CountRefusal(4, "work-limit") from error
++        members[key] = member
++    return [members[key] for key in sorted(members)]
++
++
++def make_document(binding, request, members):
++    return {"version": 1, "kind": KIND, "binding": binding, "request": request,
++            "count": len(members), "status": "complete" if members else "empty-group", "members": members}
++
++
++def check_result_bound(document, limits):
++    try:
++        validate_witness_structure(document, limits=limits)
++        if len(canonical_json_bytes(document)) > limits.bytes:
++            raise WitnessInputError("canonical certificate byte ceiling")
++    except WitnessInputError as error:
++        raise CountRefusal(4, "work-limit") from error
++
++
++def success(document, *, include_certificate=False):
++    result = {"exit_code": 0, "reason": None, "status": document["status"],
++              "count": document["count"], "request": document["request"]}
++    if include_certificate:
++        result["certificate"] = document
++    return result
+diff --git a/src/gnd/witness/count_producer.py b/src/gnd/witness/count_producer.py
+new file mode 100644
+index 00000000..2d699cd0
+--- /dev/null
++++ b/src/gnd/witness/count_producer.py
+@@ -0,0 +1,26 @@
++"""Produce a snapshot-bound COUNT membership certificate."""
++
++from gnd.witness.count_membership import (
++    INPUT_ERRORS,
++    check_result_bound,
++    make_document,
++    members_from_snapshot,
++    read_request,
++    read_snapshot,
++    refused,
++    success,
++)
++from gnd.witness.types import DEFAULT_LIMITS, checked_limits
++
++
++def produce_count(model, population, request_path, *, limits=DEFAULT_LIMITS):
++    try:
++        checked_limits(limits)
++        request, request_digest = read_request(request_path, limits)
++        snapshot = read_snapshot(model, population, request_digest, limits)
++        members = members_from_snapshot(model, population, snapshot, request, limits)
++        certificate = make_document(snapshot[2], request, members)
++        check_result_bound(certificate, limits)
++        return success(certificate, include_certificate=True)
++    except INPUT_ERRORS as error:
++        return refused(error)
+diff --git a/src/gnd/witness/count_replay.py b/src/gnd/witness/count_replay.py
+new file mode 100644
+index 00000000..fc615aec
+--- /dev/null
++++ b/src/gnd/witness/count_replay.py
+@@ -0,0 +1,36 @@
++"""Verify COUNT membership against caller-selected inputs independently."""
++
++from gnd.witness.count_membership import (
++    INPUT_ERRORS,
++    CountRefusal,
++    certificate_shape,
++    check_result_bound,
++    make_document,
++    members_from_snapshot,
++    read_bytes,
++    read_request,
++    read_snapshot,
++    refused,
++    success,
++)
++from gnd.witness.io import parse_wire
++from gnd.witness.types import DEFAULT_LIMITS, checked_limits
++
++
++def replay_count(model, population, certificate_path, request_path, *, limits=DEFAULT_LIMITS):
++    try:
++        checked_limits(limits)
++        certificate = parse_wire(read_bytes(certificate_path, limits), limits=limits)
++        certificate_shape(certificate, limits)
++        request, request_digest = read_request(request_path, limits)
++        snapshot = read_snapshot(model, population, request_digest, limits)
++        if certificate["binding"] != snapshot[2] or certificate["request"] != request:
++            raise CountRefusal(3, "binding-stale")
++        members = members_from_snapshot(model, population, snapshot, request, limits)
++        expected = make_document(snapshot[2], request, members)
++        check_result_bound(expected, limits)
++        if certificate != expected:
++            raise CountRefusal(1, "proof-invalid")
++        return success(expected)
++    except INPUT_ERRORS as error:
++        return refused(error)
+diff --git a/tests/fixtures/count-certificates/README.md b/tests/fixtures/count-certificates/README.md
+index ebd82402..cd68891d 100644
+--- a/tests/fixtures/count-certificates/README.md
++++ b/tests/fixtures/count-certificates/README.md
+@@ -1,4 +1,5 @@
+-The model declares a positive COUNT over one asserted relation. The
++The executable inputs ship in the packaged `count_fixture` example. The
++model declares a positive COUNT over one asserted relation. The
+ source rows distinguish a repeated contribution from distinct contributors
+ with equal values. The group request names a populated or absent group.
+ The answer file supplies the independently authored member and occurrence
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index 28b9a926..dbb8f2c5 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -149,6 +149,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/literature-interop/evidence/LX4/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-depth/evidence/LD2/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-depth/evidence/LD2/review-dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/aggregate-count-certificates/evidence/AC1/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_count_certificates.py b/tests/test_count_certificates.py
+index c65ec1c1..d7f532d7 100644
+--- a/tests/test_count_certificates.py
++++ b/tests/test_count_certificates.py
+@@ -3,14 +3,20 @@ from __future__ import annotations
+ 
+ import json
+ import shutil
++import stat
+ import subprocess
+ import sys
++from dataclasses import replace
+ from pathlib import Path
+ 
+ import pytest
++from ruamel.yaml import YAML
+ 
+-FIXTURE = Path(__file__).parent / "fixtures/count-certificates"
+-ANSWER = json.loads((FIXTURE / "expected.json").read_bytes())
++from gnd.artifacts import canonical_json_bytes, sha256_hex
++from gnd.witness.types import DEFAULT_LIMITS
++
++FIXTURE = Path(__file__).resolve().parents[1] / "src/gnd/examples/literature/count_fixture"
++ANSWER = json.loads((Path(__file__).parent / "fixtures/count-certificates/expected.json").read_bytes())
+ 
+ 
+ def _read(file):
+@@ -141,8 +147,11 @@ def test_forged_zero_aggregate_row_remains_unsound(case):
+ 
+ 
+ def test_individual_base_occurrence_still_witnesses_and_replays(case):
++    roster = _certify(case)
+     assert _command(case, "witness", "model.orm.yaml", "population.json", "--targets", "member-targets.json",
+                     "--raw", "--out", "member.json")[0] == 0
++    [node] = _read(case / "member.json")["nodes"]
++    assert node["origin"]["fact_index"] == roster["members"][0]["fact_index"]
+     assert _command(case, "replay", "model.orm.yaml", "population.json", "member.json", "--raw")[0] == 0
+ 
+ 
+@@ -185,3 +194,207 @@ def test_empty_covered_relation_and_edited_nonempty_snapshot(case):
+     _write(path, prior)
+     assert _produce(case, "empty-group.json", "truly-empty.json")[0] == 0
+     assert _replay(case, "truly-empty.json", "empty-group.json")[0] == 0
++    prior["population"]["covers"].remove("observation")
++    _write(path, prior)
++    assert _produce(case, "empty-group.json", "uncovered.json")[0] == 2
++
++
++def test_all_fixture_groups_match_independent_aggregate_evaluation(case):
++    from gnd.checker import structured_extension_facts
++    from gnd.model import load_model
++    from gnd.population import load_population
++    from gnd.witness.count_producer import produce_count
++
++    model_path = case / "model.orm.yaml"
++    population_path = case / "population.json"
++    request_path = case / "group.json"
++    model = load_model(model_path)
++    population = load_population(population_path, model=model)
++    rows = structured_extension_facts(model, population)["method_count"]
++    assert {row["group"]: row["count"] for row in rows} == {"flow": 2, "other": 1}
++    request = _read(request_path)
++    for row in rows:
++        request["group"]["group"]["value"] = row["group"]
++        _write(request_path, request)
++        result = produce_count(model_path, population_path, request_path)
++        assert result["exit_code"] == 0
++        assert result["count"] == row["count"]
++    _write(case / "aggregate-targets.json", {"version": 1, "targets": [{
++        "fact_type": "method_count", "tuple": [{"primitive": "String", "value": "flow"},
++                                               {"primitive": "Integer", "value": 2}]
++    }]})
++    assert _command(case, "witness", model_path.name, population_path.name,
++                    "--targets", "aggregate-targets.json", "--raw")[0] == 2
++
++
++def test_replay_runs_with_producer_and_evaluator_imports_blocked(case):
++    assert _produce(case)[0] == 0
++    code = """
++import sys
++from importlib.abc import MetaPathFinder
++
++class Block(MetaPathFinder):
++    def find_spec(self, fullname, path=None, target=None):
++        if fullname in {"gnd.extensions", "gnd.witness.count_producer", "gnd.witness.producer"}:
++            raise AssertionError(f"unexpected import: {fullname}")
++
++sys.meta_path.insert(0, Block())
++from gnd.witness.count_replay import replay_count
++result = replay_count("model.orm.yaml", "population.json", "certificate.json", "group.json")
++assert result["exit_code"] == 0, result
++"""
++    process = subprocess.run((sys.executable, "-c", code), cwd=case, capture_output=True, check=False)
++    assert process.returncode == 0, process.stderr.decode()
++
++
++@pytest.mark.parametrize("mutation", ("version", "extra", "embedded-group", "nested"))
++def test_certificate_intake_precedes_model_reads(case, monkeypatch, mutation):
++    from gnd.witness import count_replay
++
++    proof = _certify(case)
++    if mutation == "version":
++        proof["version"] = 2
++    elif mutation == "extra":
++        proof["coverage"] = []
++    elif mutation == "embedded-group":
++        proof["request"]["group"]["group"]["value"] = "other"
++    else:
++        for _ in range(DEFAULT_LIMITS.container_depth + 1):
++            proof = [proof]
++    path = case / "certificate.json"
++    _write(path, proof)
++    if mutation == "embedded-group":
++        code, output, _ = _replay(case)
++        assert code == 3 and json.loads(output)["reason"] == "binding-stale"
++    else:
++        def unexpected_read(*_args):
++            pytest.fail("certificate refusal must precede request and snapshot intake")
++
++        monkeypatch.setattr(count_replay, "read_request", unexpected_read)
++        assert count_replay.replay_count(None, None, path, None) == {"exit_code": 3, "reason": "input-invalid"}
++
++
++def test_work_limits_apply_to_empty_scans_both_ways_and_input_intake(case):
++    from gnd.witness.count_producer import produce_count
++    from gnd.witness.count_replay import replay_count
++
++    model = case / "model.orm.yaml"
++    population = case / "population.json"
++    request = case / "empty-group.json"
++    certificate = case / "certificate.json"
++    _certify(case, request.name)
++    refusal = {"exit_code": 4, "reason": "work-limit"}
++    for limits in (replace(DEFAULT_LIMITS, joins=3), replace(DEFAULT_LIMITS, binding_cells=27)):
++        assert produce_count(model, population, request, limits=limits) == refusal
++        assert replay_count(model, population, certificate, request, limits=limits) == refusal
++    assert produce_count(model, population, case / "group.json",
++                         limits=replace(DEFAULT_LIMITS, nodes=1)) == refusal
++    limits = replace(DEFAULT_LIMITS, bytes=1400)
++    assert model.stat().st_size < limits.bytes
++    population.write_bytes(b" " * (limits.bytes + 1))
++    assert replay_count(model, population, certificate, request, limits=limits) == refusal
++    certificate.write_bytes(b" " * (limits.bytes + 1))
++    assert replay_count(model, population, certificate, request, limits=limits) == {
++        "exit_code": 3, "reason": "input-invalid"
++    }
++
++
++def test_projected_output_has_its_own_byte_limit(case):
++    from gnd.witness.count_producer import produce_count
++
++    path = case / "population.json"
++    population = _read(path)
++    population["facts"]["observation"] = [
++        {"group": "flow", "member": "alpha", "tag": str(index), "source": "x"}
++        for index in range(40)
++    ]
++    path.write_bytes(canonical_json_bytes(population))
++    args = (case / "model.orm.yaml", path, case / "group.json")
++    proof = produce_count(*args)["certificate"]
++    assert proof["count"] == 40
++    assert len(canonical_json_bytes(proof)) > path.stat().st_size
++    assert produce_count(*args, limits=replace(DEFAULT_LIMITS, bytes=path.stat().st_size)) == {
++        "exit_code": 4, "reason": "work-limit"
++    }
++
++
++def test_changed_rule_binding_and_rebound_invalid_proof(case):
++    proof = _certify(case)
++    model = case / "model.orm.yaml"
++    model.write_text(model.read_text().replace('of: "$tag"', 'of: "$source"'))
++    stale = _replay(case)
++    assert stale[0] == 3 and json.loads(stale[1])["reason"] == "binding-stale"
++    assert _produce(case, output="new.json")[0] == 0
++    proof["binding"]["model_sha256"] = sha256_hex(model.read_bytes())
++    _write(case / "certificate.json", proof)
++    assert _replay(case)[0] == 1
++
++
++@pytest.mark.parametrize("rule_kind", ("no-group", "post-filter", "repeated", "constant", "join"))
++def test_valid_models_outside_fragment_refuse(case, rule_kind):
++    from gnd.model import load_model
++    from gnd.witness.count_producer import produce_count
++
++    path = case / "model.orm.yaml"
++    model = YAML(typ="safe").load(path)
++    count = model["fact_types"][1]
++    rule = count["derivation_rule"]
++    body = rule["body"][0]
++    if rule_kind == "no-group":
++        count["roles"].pop(0)
++        count["reading"] = "There are {Count} qualifying contributions"
++        del rule["head"]["group"]
++    elif rule_kind == "post-filter":
++        rule["where"] = [{"operator": ">", "left": "$n", "right": 0}]
++    elif rule_kind == "repeated":
++        body["bind"]["source"] = "$tag"
++    elif rule_kind == "constant":
++        body["bind"]["source"] = "notes-a"
++    else:
++        rule["body"].append(body)
++    _write(path, model)
++    load_model(path)
++    assert produce_count(path, case / "population.json", case / "group.json") == {
++        "exit_code": 2, "reason": "fragment-unsupported"
++    }
++
++
++def test_opaque_group_key_cannot_prove_either_group_complete(case):
++    from gnd.model import load_model
++    from gnd.population import load_population
++    from gnd.witness.count_producer import produce_count
++
++    model = case / "model.orm.yaml"
++    path = case / "population.json"
++    population = _read(path)
++    population["format_version"] = 2
++    population["facts"]["observation"][1]["group"] = {"$opaque": "redacted"}
++    _write(path, population)
++    load_population(path, model=load_model(model))
++    for request in ("group.json", "empty-group.json"):
++        assert produce_count(model, path, case / request) == {"exit_code": 2, "reason": "opaque-value"}
++
++
++def test_malformed_snapshot_yaml_gets_a_structured_refusal(case):
++    (case / "model.orm.yaml").write_text("fact_types: [")
++    code, output, stderr = _produce(case)
++    assert code == 3 and json.loads(output)["reason"] == "input-invalid"
++    assert not stderr
++
++
++def test_public_count_routes_share_disclosure_policy(case):
++    args = ("model.orm.yaml", "population.json", "--request", "group.json")
++    default = _command(case, "witness-count", *args)
++    public = {"exit_code": 0, "reason": None, "status": "complete"}
++    assert default[0] == 0 and json.loads(default[1]) == public
++    assert _command(case, "--disclosure", "customer", "witness-count", *args,
++                    "--raw", "--out", "certificate.json")[0] == 3
++    assert not (case / "certificate.json").exists()
++    assert _command(case, "--disclosure", "internal", "witness-count", *args,
++                    "--out", "certificate.json")[0] == 0
++    assert stat.S_IMODE((case / "certificate.json").stat().st_mode) == 0o600
++    assert _command(case, "--disclosure", "customer", "replay-count", *args, "certificate.json",
++                    "--raw")[0] == 3
++    assert _command(case, "witness-count", *args, "--raw", "--out", "certificate.json")[0] == 3
++    replay = _command(case, "--disclosure", "customer", "replay-count", *args, "certificate.json")
++    assert replay[0] == 0 and json.loads(replay[1]) == public
+diff --git a/tests/test_disclosure_mode.py b/tests/test_disclosure_mode.py
+index 5e3e575f..dc2a093d 100644
+--- a/tests/test_disclosure_mode.py
++++ b/tests/test_disclosure_mode.py
+@@ -176,9 +176,9 @@ def test_t11_every_raw_request_is_refused_under_customer(monkeypatch):
+             assert (result.returncode, result.stdout) == (3, b""), (path, option, result.stderr)
+             assert result.stderr.decode().strip() == refusal(option), path
+     assert calls == []
+-    # 7 leaves with --unredacted and 8 with --raw (spec, implementability sweep).
++    # AC1 adds two COUNT membership leaves with --raw.
+     assert sorted(o for _, o in found).count("--unredacted") == 7
+-    assert sorted(o for _, o in found).count("--raw") == 8
++    assert sorted(o for _, o in found).count("--raw") == 10
+ 
+ 
+ def test_t12_the_cli_mode_does_not_leak_after_main(monkeypatch):
+@@ -215,7 +215,7 @@ def assert_table(surfaces, keys):
+ def test_t13_the_table_is_total_and_live(monkeypatch):
+     from gnd.disclosure import SURFACES
+     keys = table_keys(monkeypatch)
+-    assert sum(k.startswith("gnd ") for k in keys) == 52  # MC2 model-review leaf; RN0: gnd export ossie and gnd import ossie
++    assert sum(k.startswith("gnd ") for k in keys) == 54
+     assert_table(SURFACES, keys)
+ 
+ 
+@@ -296,7 +296,7 @@ def test_t16_the_cli_walk_sets_every_value_dest(monkeypatch):
+         _, customer = captured_namespaces(monkeypatch, argv, env="customer")
+         for dest in dests:
+             assert (unset[0][dest], internal[0][dest], customer[0][dest]) == (False, True, False), path
+-    assert sites == 15
++    assert sites == 17
+ 
+ 
+ def _emails(payload):
+@@ -497,7 +497,7 @@ def test_t26_every_mode_and_value_free_leaves_see_no_mode(monkeypatch):
+             assert {k: v for k, v in other[0].items() if k != "disclosure"} == \
+                    {k: v for k, v in unset[0].items() if k != "disclosure"}, path
+         checked += 1
+-    assert checked == 52 - 16 - 4   # minus the site leaves and the spawners
++    assert checked == 54 - 18 - 4   # minus the site leaves and the spawners
+ 
+ 
+ # -- T28-T34b: child processes -------------------------------------------------------------
+diff --git a/tests/test_packaged_skills.py b/tests/test_packaged_skills.py
+index 149a27fe..e4b0ca32 100644
+--- a/tests/test_packaged_skills.py
++++ b/tests/test_packaged_skills.py
+@@ -16,7 +16,7 @@ import pytest
+ 
+ from gnd import DEV_VERSION, DISTRIBUTION, resolve_version
+ 
+-EXPECTED_SKILL_FILE_COUNT = 70  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued; #104: references/unattended-growth.md
++EXPECTED_SKILL_FILE_COUNT = 71  # AC1 adds the bounded COUNT membership contract.
+ EXPECTED_RELATIVE_LINK_COUNT = 238  # MG5: the Unattended mode cites representation-format.md once more; TS3: six new edges; TS4: nine, and S1 cites gnd-model-evolve once more; #104: unattended-growth.md adds seven; UG4: it cites the contract at two new anchors and representation-format.md once more
+ EXPECTED_RELATIVE_LINKS = frozenset({('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/constraint-reference.md#internal-uniqueness-uc'), ('gnd-model-multivalued/SKILL.md', '../gnd-judge-fact-types/SKILL.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-multivalued/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-multivalued/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'), ('gnd-orm-core/SKILL.md', '../gnd-judge-fact-types/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-extract/references/extraction-contract.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/references/population-format.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-render-doc/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-render-doc/references/rendering-contract.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'), ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/session-v7-contract.md'), ('gnd-extract/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-export/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-export/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-export/references/export-contract.md', '../SKILL.md'), ('gnd-export/references/witness-contract.md', '../SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-adopt/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-adopt/SKILL.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-adopt/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-adopt/references/gsd-mapping.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-codegen/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-codegen/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-codegen/references/codegen-contract.md', '../../gnd-extract/references/extraction-contract.md'), ('gnd-codegen/references/codegen-contract.md', '../../gnd-orm-core/references/population-format.md'), ('gnd-codegen/references/codegen-contract.md', '../SKILL.md'), ('gnd-codegen/references/architecture-contract.md', '../SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-conformance/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-conformance/references/conformance-contract.md', '../SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/representation-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'), ('gnd-extract/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-extract/references/extraction-contract.md', '../../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'), ('gnd-extract/references/extraction-contract.md', '../SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-conformance/references/conformance-contract.md'), ('gnd-model-evolve/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/SKILL.md'), ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-evolve/references/evolution-contract.md', '../SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-code/references/recovery-contract.md', '../../gnd-orm-core/SKILL.md'), ('gnd-model-from-code/references/recovery-contract.md', '../SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/orm-meta.schema.json'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/verbalization-patterns.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/evals/README.md', '../examples/movie_catalog.dialogue.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/representation-format.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/verbalization-patterns.md'), ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-new-project/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-new-project/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/coverage-and-element-addressing.md'), ('gnd-new-project/SKILL.md', '../gnd-solve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-dev-session/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel-light/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-solve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-update-review-panel/SKILL.md'), ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-new-project/SKILL.md'), ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-solve/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-render-doc/references/rendering-contract.md', '../SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-review-panel/SKILL.md', '../gnd-update-review-panel/SKILL.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/references/review-contract.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-review-panel/references/review-contract.md', '../../gnd-update-review-panel/SKILL.md'), ('gnd-review-panel/references/review-contract.md', '../SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-dev-session/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-solve/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-update-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/SKILL.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#additive-policy'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#unattended-source'), ('gnd-model-from-text/references/unattended-growth.md', '../SKILL.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#stable-locators'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#population-check')})
+ EXPECTED_SKILL_NAMES = frozenset({'gnd-adopt', 'gnd-judge-fact-types', 'gnd-model-multivalued', 'gnd-codegen', 'gnd-conformance', 'gnd-dev-session', 'gnd-extract', 'gnd-export', 'gnd-model-evolve', 'gnd-model-from-code', 'gnd-model-from-text', 'gnd-new-project', 'gnd-orm-core', 'gnd-render-doc', 'gnd-review-panel', 'gnd-review-panel-light', 'gnd-solve', 'gnd-update-review-panel'})
+@@ -46,6 +46,7 @@ GC4_GUARDED_EDGES = frozenset(
+ )
+ GC4_RELATIVE_LINKS = RN0_RELATIVE_LINKS | GC4_GUARDED_EDGES
+ GC4_RELATIVE_LINK_COUNT = RN0_RELATIVE_LINK_COUNT + len(GC4_GUARDED_EDGES)
++EXPECTED_SKILL_FILES |= {'gnd-export/references/count-witness-contract.md'}
+ 
+ 
+ RELATIVE_LINK_RE = re.compile(b'\\]\\((\\.\\./[^)\\s]+)\\)')
+diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
+index e6d0eaf0..4d6a99ff 100644
+--- a/tests/test_rf1_cli_pins.py
++++ b/tests/test_rf1_cli_pins.py
+@@ -20,7 +20,8 @@ from gnd.evolve import models as evolve_models
+ from gnd.evolve import service as evolve_service
+ from gnd.exp import session_eval
+ 
+-EXPECTED_PARSERS = 61  # OS1 and OS3 add one Ossie leaf each.
++EXPECTED_PARSERS = 63  # AC1 adds two COUNT membership leaves.
++COUNT_CLI_PATHS = {"gnd", "gnd witness-count", "gnd replay-count"}
+ COMPILED_SUCCESSOR = json.loads(
+     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
+ )
+@@ -415,6 +416,38 @@ def _guarded_successor_probe(parser):
+     return result
+ 
+ 
++def _count_cli_successor(base):
++    """Reconstruct the frozen root and add the two COUNT command grammars."""
++    root = cli._BandSafeParser(prog=base["prog"], description=base["description"])
++    root.add_argument("--version", action="version", help=base["actions"][1]["help"])
++    root.add_argument("--disclosure", action=cli._StoreOnce, choices=base["actions"][2]["choices"],
++                      help=base["actions"][2]["help"])
++    children = root.add_subparsers(dest="command", required=True)
++    additions = {
++        "witness-count": "produce a bounded COUNT membership certificate",
++        "replay-count": "independently replay a COUNT membership certificate",
++    }
++    for name in base["actions"][-1]["choices"]:
++        children.add_parser(name, help=base["subcommands"][name]["listed_help"])
++        if name != "why-not":
++            continue
++        for count_name, help_text in additions.items():
++            child = children.add_parser(count_name, help=help_text)
++            child.add_argument("model")
++            child.add_argument("population")
++            child.add_argument("--request", required=True, help="expected COUNT group request")
++            child.add_argument("--raw", action="store_true", help="explicitly reveal bound values")
++            if count_name == "witness-count":
++                child.add_argument("--out", help="create a new certificate file; requires --raw")
++            else:
++                child.add_argument("certificate")
++    parsers = {}
++    observed = _walk(root, ("gnd",), parsers)
++    base["actions"][-1] = observed["actions"][-1]
++    base["subcommands"].update({name: observed["subcommands"][name] for name in additions})
++    return parsers
++
++
+ def test_cli_tree(tree):
+     # Preserve RF1's historical bytes; approve only this additive successor.
+     expected = json.loads(golden_path("cli", "tree").read_text())
+@@ -438,11 +471,17 @@ def test_cli_tree(tree):
+         expected["subcommands"][command] = _ossie_successor(command)["tree"]
+     for command in ("witness", "replay"):
+         expected["subcommands"][command] = _witness_projection_successor(command)[0]
++    _count_cli_successor(expected)
+     _assert_successor("cli", "tree", tree[0], expected)
+ 
+ 
+ @pytest.mark.parametrize("path", PATHS)
+ def test_cli_help(tree, path):
++    if path in COUNT_CLI_PATHS:
++        parser = _count_cli_successor(json.loads(golden_path("cli", "tree").read_text()))[path]
++        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
++                          {"path": path, "help": parser.format_help()})
++        return
+     if path in {"gnd witness", "gnd replay"}:
+         parser = _witness_projection_successor(path.split()[1])[1]
+         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+@@ -489,6 +528,14 @@ def test_cli_exit_probe(path, monkeypatch):
+     argv = path.split()[1:]
+     shown = run_main([*argv, "--help"])
+     refused = run_main([*argv, "--rf1-unknown-flag"])
++    if path in COUNT_CLI_PATHS:
++        observed = {
++            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
++            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
++        }
++        parser = _count_cli_successor(json.loads(golden_path("cli", "tree").read_text()))[path]
++        _assert_successor("cli-exit", path, observed, _guarded_successor_probe(parser))
++        return
+     if path in {"gnd witness", "gnd replay"}:
+         observed = {
+             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+@@ -541,6 +588,18 @@ def test_cli_exit_probe(path, monkeypatch):
+         }
+         _assert_successor("cli-exit", path, observed, _check_population_successor(path, "exit_probe"))
+         return
++    if path in {"gnd doctor", "gnd install", "gnd uninstall"}:
++        expected = json.loads(golden_path("cli-exit", path).read_text())
++        expected["unknown_flag"]["stderr"] = expected["unknown_flag"]["stderr"].replace(
++            "witness,replay,witness-view,why-not,import",
++            "witness,replay,witness-view,why-not,witness-count,replay-count,import",
++        )
++        observed = {
++            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
++            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
++        }
++        _assert_successor("cli-exit", path, observed, expected)
++        return
+     assert_golden(
+         "cli-exit",
+         path,
+diff --git a/tests/test_rf5_commands.py b/tests/test_rf5_commands.py
+index f8c97a40..7d45f622 100644
+--- a/tests/test_rf5_commands.py
++++ b/tests/test_rf5_commands.py
+@@ -120,7 +120,7 @@ def test_all_parser_paths_receive_command_handlers(monkeypatch):
+     from test_rf1_cli_pins import _root, _walk
+     parsers = {}
+     _walk(_root(monkeypatch), ('gnd',), parsers)
+-    assert len(parsers) == 61  # MC2 adds `gnd verbalize model`; RN0 records `gnd export ossie` and `gnd import ossie`.
++    assert len(parsers) == 63  # AC1 adds the COUNT membership producer and replay.
+     for path in parsers:
+         if path != 'gnd':
+             assert callable(parsers[' '.join(path.split()[:2])].get_default('handler')), path
+diff --git a/tools/gnd_entrypoints.json b/tools/gnd_entrypoints.json
+index 8941f560..2832d8ce 100644
+--- a/tools/gnd_entrypoints.json
++++ b/tools/gnd_entrypoints.json
+@@ -219,6 +219,11 @@
+       "target": "gnd.export.lean_cli",
+       "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+     },
++    {
++      "source": "gnd.commands.witness",
++      "target": "gnd.witness.count_cli",
++      "reason": "Register the bounded COUNT membership producer and replay at the witness command boundary."
++    },
+     {
+       "source": "gnd.commands.export",
+       "target": "gnd.export.pyrel_runtime",
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index 8a7f7282..97b2286f 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -975,6 +975,22 @@
+       "lane": "witness",
+       "layer": "lanes"
+     },
++    "gnd.witness.count_cli": {
++      "lane": "witness",
++      "layer": "lanes"
++    },
++    "gnd.witness.count_membership": {
++      "lane": "witness",
++      "layer": "lanes"
++    },
++    "gnd.witness.count_producer": {
++      "lane": "witness",
++      "layer": "lanes"
++    },
++    "gnd.witness.count_replay": {
++      "lane": "witness",
++      "layer": "lanes"
++    },
+     "gnd.witness.flattening": {
+       "lane": "witness",
+       "layer": "lanes"

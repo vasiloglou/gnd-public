@@ -20,7 +20,8 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 62  # OS1 and OS3 add one Ossie leaf each; include-root-routes IR2 adds `gnd flatten`.
+EXPECTED_PARSERS = 64  # OS1 and OS3 add one Ossie leaf each; include-root-routes IR2 adds `gnd flatten`; AC1 adds two COUNT membership leaves.
+COUNT_CLI_PATHS = {"gnd", "gnd witness-count", "gnd replay-count"}
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )
@@ -479,6 +480,38 @@ def _guarded_successor_probe(parser):
     return result
 
 
+def _count_cli_successor(base):
+    """Reconstruct the frozen root and add the two COUNT command grammars."""
+    root = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    root.add_argument("--version", action="version", help=base["actions"][1]["help"])
+    root.add_argument("--disclosure", action=cli._StoreOnce, choices=base["actions"][2]["choices"],
+                      help=base["actions"][2]["help"])
+    children = root.add_subparsers(dest="command", required=True)
+    additions = {
+        "witness-count": "produce a bounded COUNT membership certificate",
+        "replay-count": "independently replay a COUNT membership certificate",
+    }
+    for name in base["actions"][-1]["choices"]:
+        children.add_parser(name, help=base["subcommands"][name]["listed_help"])
+        if name != "why-not":
+            continue
+        for count_name, help_text in additions.items():
+            child = children.add_parser(count_name, help=help_text)
+            child.add_argument("model")
+            child.add_argument("population")
+            child.add_argument("--request", required=True, help="expected COUNT group request")
+            child.add_argument("--raw", action="store_true", help="explicitly reveal bound values")
+            if count_name == "witness-count":
+                child.add_argument("--out", help="create a new certificate file; requires --raw")
+            else:
+                child.add_argument("certificate")
+    parsers = {}
+    observed = _walk(root, ("gnd",), parsers)
+    base["actions"][-1] = observed["actions"][-1]
+    base["subcommands"].update({name: observed["subcommands"][name] for name in additions})
+    return parsers
+
+
 def test_cli_tree(tree):
     # Preserve RF1's historical bytes; approve only this additive successor.
     expected = json.loads(golden_path("cli", "tree").read_text())
@@ -505,11 +538,17 @@ def test_cli_tree(tree):
     flattened = _flatten_successor()["tree"]
     expected["actions"] = flattened["actions"]
     expected["subcommands"]["flatten"] = flattened["subcommands"]["flatten"]
+    _count_cli_successor(expected)   # AC1's two leaves go on top of the root that already lists flatten
     _assert_successor("cli", "tree", tree[0], expected)
 
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path in COUNT_CLI_PATHS:
+        parser = _count_cli_successor(_flatten_successor()["tree"])[path]
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": parser.format_help()})
+        return
     if path in {"gnd witness", "gnd replay"}:
         parser = _witness_projection_successor(path.split()[1])[1]
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -560,6 +599,14 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path in COUNT_CLI_PATHS:
+        observed = {
+            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
+        }
+        parser = _count_cli_successor(_flatten_successor()["tree"])[path]
+        _assert_successor("cli-exit", path, observed, _guarded_successor_probe(parser))
+        return
     if path in {"gnd witness", "gnd replay"}:
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
@@ -573,7 +620,13 @@ def test_cli_exit_probe(path, monkeypatch):
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
             "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
         }
-        _assert_successor("cli-exit", path, observed, _flatten_successor()["exit_probe"][path])
+        expected = _flatten_successor()["exit_probe"][path]
+        if path != "gnd flatten":   # AC1: the root usage these probes print also lists the two COUNT leaves
+            expected["unknown_flag"]["stderr"] = expected["unknown_flag"]["stderr"].replace(
+                "witness,replay,witness-view,why-not,import",
+                "witness,replay,witness-view,why-not,witness-count,replay-count,import",
+            )
+        _assert_successor("cli-exit", path, observed, expected)
         return
     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:
         observed = {

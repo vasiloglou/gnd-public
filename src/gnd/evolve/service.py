@@ -466,6 +466,13 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
                 raise EvolutionError(
                     "new llm-inferred constraints must remain proposed/deontic (D-12)"
                 )
+        elif source in ("sample", "common-sense"):
+            # VG2 (issue 218): row evidence and library evidence, as the growth
+            # document has the host write them; never confirmed, never alethic.
+            if (status, modality) != ("proposed", "deontic"):
+                raise EvolutionError(
+                    "new sample and common-sense constraints must be proposed/deontic (D-12)"
+                )
         elif source == "user-supplied":
             if status != "confirmed":
                 raise EvolutionError(

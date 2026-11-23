@@ -276,8 +276,9 @@ neither, and refused on a populated subject.
 | `modality` | `deontic` to `alethic` | `alethic` to `deontic` |
 | `status` | `proposed` to `confirmed` | `confirmed` to `proposed` |
 
-D-12 runs first, so a changed constraint still has to be llm-inferred/proposed/deontic,
-user-supplied/confirmed, or a reviewed induced confirmation; the policy judges what D-12 admits.
+D-12 runs first, so a changed constraint still has to be llm-inferred, sample or common-sense
+and proposed/deontic, user-supplied/confirmed, or a reviewed induced confirmation; the policy
+judges what D-12 admits.
 
 A locator kind the matrix has no row for is refused, never admitted: the policy raises
 `EvolutionPolicyGapError`, which exits `3` by type.
@@ -525,6 +526,8 @@ Evolution enforces it at preview, apply, and finalize:
 
 - unchanged constraints retain complete canonical metadata;
 - a new semantic interpretation is `llm-inferred`, `proposed`, `deontic`;
+- a new rule read from sample rows or matched from the constraint library is `sample` or
+  `common-sense`, `proposed`, `deontic`;
 - a new owner rule is `user-supplied`, `confirmed`, with modality assigned by policy;
 - a new induced rule is `induced`, `proposed`, `deontic`, without `reviewed_in`, and becomes
   `confirmed` only as a reviewed status change; `provenance.induction` under any other source is

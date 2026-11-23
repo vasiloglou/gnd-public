@@ -40,6 +40,12 @@ the next one.
   per include in its text output, and span diagnostics on included elements
   now carry the `includes[ID]:` prefix
   ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
+- **`gnd evolve` admits sample and common-sense constraints.** A new
+  constraint may now carry `source: sample` (row evidence) or
+  `source: common-sense` (library evidence) when it is `proposed` and
+  `deontic`, as the unattended-growth guide tells a host to write them; with
+  `confirmed` or `alethic` it is refused by name. 0.4.0 refused both sources
+  in every form ([#218](https://github.com/vasiloglou/gnd-public/issues/218)).
 - **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message

@@ -45,10 +45,10 @@ of the targeted rows 18 of 23, two of the misses a right pair of names under
 the wrong predicate). The run cost USD 0.29 and replays with no model call;
 the record names the model, the CLI flags and the prompt.
 
-Please read those figures as a measurement of one run, not as what you
-should get. The papers are short paraphrases written to state their claims
-plainly, and the set scores a fact by the section it was read from, while
-you scored quotes. So they don't tell you your 30 % is your host's loss; they
-tell you the stages can find most plainly stated facts, and give you a set
-you can run your own producer on (`reference_set.score(your_run)`) to see
-how much of the gap is your producer or prompt and how much is your papers.
+Please read those figures as a measurement of one run on this set, not as
+what you should get. The papers are short paraphrases written to state their
+claims plainly, and the set scores a fact by the section it was read from,
+while you scored quotes, so the two are not directly comparable and the run
+does not say where your gap comes from. What it gives you is a labelled set
+your own producer can run over, scored the same way
+(`reference_set.score(your_run)`), next to this one.

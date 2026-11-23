@@ -150,9 +150,9 @@ def score(run: Path, root: Path = ROOT) -> dict:
     for stage, payload in STAGE_PAYLOADS:
         produced = hit = wrong = outside = 0
         for attempt in _attempts(run, payload):
-            section = attempt.get("section")
-            facts = (attempt.get("response") or {}).get("facts")
-            if section not in sections or not isinstance(facts, dict):
+            section, response = attempt.get("section"), attempt.get("response")
+            facts = response.get("facts") if isinstance(response, dict) else None
+            if not isinstance(section, str) or section not in sections or not isinstance(facts, dict):
                 raise ExampleError("a scored attempt names no known section or facts")
             for fact_type, rows in facts.items():
                 if not isinstance(rows, list):
@@ -167,7 +167,8 @@ def score(run: Path, root: Path = ROOT) -> dict:
                     if match:
                         hit += 1
                         found.update(match)
-                    elif any(sorted(v for _, v in g[2]) == sorted(v for _, v in values) for g in in_scope):
+                    elif any(g[1] != fact_type and sorted(v for _, v in g[2]) == sorted(v for _, v in values)
+                             for g in in_scope):
                         wrong += 1
                     if not in_scope:
                         outside += 1

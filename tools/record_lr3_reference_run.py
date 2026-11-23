@@ -44,6 +44,7 @@ Section {section} of source {source}:
 {text}
 </section>
 """
+FIELDS = ("{fact_types}", "{section}", "{source}", "{text}")
 
 
 def _vocabulary(model: dict) -> list[dict]:
@@ -68,6 +69,18 @@ def _fact_type_lines(fact_types: list[dict]) -> str:
         role["role_name"] for role in row["roles"]) for row in fact_types)
 
 
+def _fill(template: str, values: dict[str, str]) -> str:
+    """Substitute each field of the template once; an inserted value is never searched again."""
+    parts, rest = [], template
+    while True:
+        found = [(rest.find(field), field) for field in FIELDS if rest.find(field) >= 0]
+        if not found:
+            return "".join([*parts, rest])
+        index, field = min(found)
+        parts += [rest[:index], values[field]]
+        rest = rest[index + len(field):]
+
+
 class SpendError(RuntimeError):
     pass
 
@@ -79,7 +92,8 @@ class ClaudeCliProducer:
         self.fact_types = _vocabulary(model)
         self.roles = {row["id"]: {role["role_name"] for role in row["roles"]} for row in self.fact_types}
         self.schema = _schema(self.fact_types)
-        self.template = PROMPT.replace("{fact_types}", _fact_type_lines(self.fact_types))
+        self.vocabulary = _fact_type_lines(self.fact_types)
+        self.template = PROMPT.replace("{fact_types}", self.vocabulary)
         self.command, self.ceiling = command, ceiling
         self.spent, self.calls, self.models = 0.0, [], set()
 
@@ -108,8 +122,8 @@ class ClaudeCliProducer:
         return output
 
     def produce(self, call: reading.ProducerCall) -> dict:
-        prompt = (self.template.replace("{section}", call.section).replace("{source}", call.source)
-                  .replace("{text}", call.excerpt.decode("utf-8")))
+        prompt = _fill(PROMPT, {"{fact_types}": self.vocabulary, "{section}": call.section,
+                                "{source}": call.source, "{text}": call.excerpt.decode("utf-8")})
         output = self._ask(prompt)
         facts = {}
         for fact_type, rows in output["facts"].items():

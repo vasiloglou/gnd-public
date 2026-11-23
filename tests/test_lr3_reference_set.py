@@ -58,7 +58,12 @@ def test_t1_the_committed_root_is_the_build_and_the_corpus_is_untouched() -> Non
 
 # --- T2, T3: the recorded run replays and scores byte for byte -------------------------------
 
-def test_t2_the_recorded_run_replays_with_zero_producer_calls() -> None:
+def test_t2_the_recorded_run_replays_with_zero_producer_calls(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A producer call is built only as a ProducerCall; replay must build none (review finding codex-4)."""
+    def no_call(*_args, **_kwargs):
+        raise AssertionError("replay offered a section to a producer")
+
+    monkeypatch.setattr(reading, "ProducerCall", no_call)
     record = _record()
     replayed = reading.replay(RUN, fixture=FIXTURE, expected_evidence_sha256=record["evidence_sha256"])
     assert replayed["evidence_sha256"] == record["evidence_sha256"]
@@ -119,6 +124,10 @@ def test_t4_found_wrong_predicate_and_wrong_section_are_told_apart(tmp_path: Pat
     assert score["stages"]["targeted"]["wrong_predicate"] == 1
     assert score["stages"]["targeted"]["found"] == 0
     assert score["recall_after"] == {"broad": [0, 1], "targeted": [0, 1]}
+    reversed_roles = {"method_builds_on_method": [{"method": "bidirectional transformer", "base_method": "VampNet"}]}
+    neither = reference_set.score(_run_with(tmp_path / "c", [], [_attempt("vampnet-p2", reversed_roles)]), root)
+    assert neither["stages"]["targeted"]["wrong_predicate"] == 0
+    assert neither["stages"]["targeted"]["found"] == 0
     found = _run_with(tmp_path / "b", [], [_attempt("vampnet-p2", right)])
     assert reference_set.score(found, root)["recall_after"]["targeted"] == [1, 1]
 
@@ -181,7 +190,9 @@ def test_t7_a_changed_source_byte_refuses_replay(tmp_path: Path) -> None:
 # --- T8: hostile score inputs -------------------------------------------------------------------
 
 @pytest.mark.parametrize("payload", [b"not json", b"[]", b'{"attempts": 3}', b'{"attempts": [{"section": "nope"}]}',
-                                     b'{"attempts": [{"section": "vampnet-p2", "response": {"facts": {"x": [1]}}}]}'])
+                                     b'{"attempts": [{"section": "vampnet-p2", "response": {"facts": {"x": [1]}}}]}',
+                                     b'{"attempts": [{"section": "vampnet-p2", "response": [1]}]}',
+                                     b'{"attempts": [{"section": [], "response": {"facts": {}}}]}'])
 def test_t8_a_malformed_run_refuses(tmp_path: Path, payload: bytes) -> None:
     run = tmp_path / "run"
     run.mkdir()
@@ -253,3 +264,19 @@ def test_t5_the_page_shows_the_recorded_figures_beside_issue_226() -> None:
     readme = (FIXTURE / "README.md").read_text(encoding="utf-8")
     assert readme.count("## The scoring rule") == 1
     assert f"USD {_record()['budget']['spent_usd']:.2f}" in readme
+
+
+def test_t9_prompt_fields_are_filled_once(tmp_path: Path) -> None:
+    """A reading that spells a field name keeps it (review finding codex-2)."""
+    model = json.loads((FIXTURE / reference_set.MODEL).read_bytes())
+    model["fact_types"][0]["reading"] = "{section} introduces {Method}"
+    captured = tmp_path / "prompt.txt"
+    script = tmp_path / "claude"
+    reply = {"type": "result", "subtype": "success", "is_error": False, "total_cost_usd": 0.01,
+             "modelUsage": {"claude-sonnet-5-5": {}}, "structured_output": {"facts": {}}}
+    script.write_text(f"import json, sys\nopen({str(captured)!r}, 'w').write(sys.stdin.read())\n"
+                      f"print(json.dumps({reply!r}))\n")
+    TOOL.ClaudeCliProducer(model, command=(sys.executable, str(script))).produce(_call())
+    prompt = captured.read_text()
+    assert '"{section} introduces {Method}"' in prompt
+    assert "Section vampnet-p1 of source vampnet:" in prompt

@@ -73,8 +73,8 @@ reading.replay(reference_set.ROOT / "run", fixture=reference_set.ROOT,
 print(reference_set.score(reference_set.ROOT / "run"))
 ```
 
-These documents are short paraphrases with one claim per passage, written so
-the claims are stated plainly. Real papers are longer, denser and less
-direct, so expect lower figures on them; this set measures the stages, not
-a corpus like yours. To score your own run over this set, run the stages on
-this root with your producer and call `reference_set.score(your_run)`.
+These documents are short paraphrases with one claim per passage, written
+so that the claims are stated plainly. The run measures the stages on this
+set only; it predicts nothing about longer or denser papers. To score your
+own run over this set, run the stages on this root with your producer and
+call `reference_set.score(your_run)`.

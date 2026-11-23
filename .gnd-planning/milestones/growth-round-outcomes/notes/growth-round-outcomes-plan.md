@@ -1,13 +1,17 @@
-# Growth round outcomes · plan r3
+# Growth round outcomes · plan r4
 
-**Status: r3, 2026-11-23.** r2 was the full plan `start-milestone` wrote from
+**Status: r4, 2026-11-23.** r2 was the full plan `start-milestone` wrote from
 outline r1 (2026-11-22, merged in PR 229). The owner delegated `auto` for this
 milestone only on 2026-11-23 and ruled D7 ("Full panel, both") and D8
 ("Review helper, both"). The full GND panel read r2 (sha256 `a041b21d…17ba`)
 in round 1: five of six seats, 8 agreed groups and 5 single-reviewer
 concerns, all reproduced
 ([disposition](../evidence/plan-review-r1/disposition.md)). r3 applies them,
-each change tagged `(p1)`. Approval is recorded only in a plan-gate record.
+each change tagged `(p1)`. Round 2 read r3 (sha256 `2d9e62f8…8d48`): three
+of six seats, 2 agreed groups and 10 single-reviewer concerns, all
+reproduced ([disposition](../evidence/plan-review-r2/disposition.md)). r4
+applies them, tagged `(p2)`; the review budget of two rounds is spent and no
+reviewer has read r4. Approval is recorded only in a plan-gate record.
 
 This plan covers two open issues:
 [#228](https://github.com/vasiloglou/gnd-public/issues/228) (a growth round
@@ -34,7 +38,8 @@ A host that grows one model over many documents with no reviewer gets more
 out of each round, and each round costs less.
 
 - **GO1.** One `gnd evolve preview` or `gnd evolve apply` parses each distinct
-  model text once. Today `apply` parses two texts 22 times and `preview` 6
+  model text once per reader (a `.json` workspace model is parsed once as
+  strict JSON and once under the YAML name `_parse_model_text` uses) (p2). Today `apply` parses two texts 22 times and `preview` 6
   times (H2). The number of parses does not depend on the size of the model,
   and every record `gnd evolve` writes is byte-identical.
 - **GO2.** `gnd evolve preview` names an outcome for every operation of the
@@ -67,7 +72,7 @@ selects.
   New constraints stay `proposed` and `deontic` (#227, "Not requested").
 - **R0.3 Records keep their bytes.** A proposal that is admitted today
   produces the same preview, pending state, record and published model after
-  GO1. GO2 and GO5 add only optional fields that are omitted when unset, as
+  GO1. GO2, GO3 and GO5 add only optional fields that are omitted when unset, as
   `_OPTIONAL_PREVIEW_FIELDS` does today (`evolve/models.py:874`), and move no
   schema version, so a preview that does not carry them keeps every byte and
   digest (D2) (p1).
@@ -116,7 +121,7 @@ Harvested obligations. "Observed" means read or run at `548b9a1d` on
 | H18 | `evolve/shapes.py:1-13`; `evolve/cli_service.py:373-376`; `unattended-growth.md:57-73` | `--shape-report` lists, for each added fact type, the existing fact types over the same role players. It is advice; the host decides and logs | observed by reading | GO5 reuses it |
 | H19 | #227 "What we measured" | 20 rounds over four growers added 2 elements; two growers applied 0 of 5 rounds | inherited | GO5 (the baseline a summary must explain) |
 | H20 | #227 "Not requested"; #228 "Not requested" | no relaxing of `proposed` and `deontic`; no check is weakened, skipped or removed, and no existing refusal changes its exit (R0.2). Optional fields added under R0.3 are not a record change in this sense (p1) | inherited | R0.2 |
-| H21 | [reviewed-vocabulary-growth](../../reviewed-vocabulary-growth/notes/reviewed-vocabulary-growth-plan.md) r4, approved by the owner on 2026-11-23 (PR 236), §3 and H36; `PROJECT.md`, "Proposed order" | that plan's VG2 and VG4 change `src/gnd/evolve/service.py`, and its VG2 and VG5 change `unattended-growth.md`. One writer at a time on each: VG1, then GO1, then VG2–VG5, then GO2–GO5. `tests/test_unattended_growth_guidance.py` is shared with VG2 and VG5 too; `docs/release-notes.md`, `PROJECT.md` and `dev/components/` are append-only homes every lane edits (p1) | observed by reading | §3 |
+| H21 | [reviewed-vocabulary-growth](../../reviewed-vocabulary-growth/notes/reviewed-vocabulary-growth-plan.md) r4, approved by the owner on 2026-11-23 (PR 236), §3 and H36; `PROJECT.md`, "Proposed order" | that plan's VG2 and VG4 change `src/gnd/evolve/service.py`, and its VG2 and VG5 change `unattended-growth.md`. Under that plan's ruled D2 (a), VG2's homes omit `unattended-growth.md` and only VG5 changes it there; the conditions below keep VG2 because the coordinating session set them that way (p2). One writer at a time on each: VG1, then GO1, then VG2–VG5, then GO2–GO5. `tests/test_unattended_growth_guidance.py` is shared with VG2 and VG5 too; `docs/release-notes.md`, `PROJECT.md` and `dev/components/` are append-only homes every lane edits (p1) | observed by reading | §3 |
 | H22 | `model_index.py:52-71` | `index_scope()` already gives one public call a shared cache through a context variable, re-entrant, dropped on exit | observed by reading | GO1 reuses the pattern |
 | H23 | `project.md`, "Component index"; `components_index.py review` | the index is searched before a capability is built and updated in the same commit. `review` lists 276 leads in 10 groups; an index review is offered to the owner and is not a prerequisite | observed | all |
 | H24 | reviewed-vocabulary-growth plan H27, D11; `project.md`, "Test and gate commands" | r2 said whole-repository `uv run ruff check` exits 1. Re-run at `11a7ebf7` on 2026-11-23: both `uv run ruff check` and `uv run ruff check src tests tools` exit 0 (p1). Records name `uv run ruff check src tests tools`, as that plan's D11 rules, and also run the whole-repository form | observed | all |
@@ -134,7 +139,7 @@ Component index (`dev/components/`), searched 2026-11-23:
 
 | Request | Phase |
 |---|---|
-| #228: parse each distinct model text once per `gnd evolve` invocation | GO1 |
+| #228: parse each distinct model text once per `gnd evolve` invocation (once per text and reader, p2) | GO1 |
 | #228: a bound a test can hold on the number of parses, the same at 100 and at 1,000 object types | GO1 |
 | #227: a per-element outcome from `evolve preview` | GO2 |
 | #227: or a documented way to apply part of a proposal | GO3 |
@@ -160,8 +165,14 @@ H19.
   dropped when the outermost call returns.
 - A parse that raises is not remembered: the refusal is raised again by a
   second parse, with the caller's own name in the message.
-- The remembered document is shared, not copied (H7). No caller may write
-  into it; a test compares a type-preserving snapshot of it (one that keeps
+- The remembered document is shared, not copied (H7). Every `Model` loaded
+  inside the scope holds its nested lists and mappings, because
+  `_finish_model` copies only the top level (`model/__init__.py:315`) and a
+  frozen `Model` leaves nested content mutable (`documents.py:40-41`), so a
+  write through a loaded model is a write into the shared document (p2). A
+  verify mode of the scope compares the snapshots below at every scope close
+  and is switched on for the whole GO1 lane, not only for GO1's own cases
+  (p2). No caller may write into it; a test compares a type-preserving snapshot of it (one that keeps
   YAML dates, tags and other values JSON cannot spell) when the scope closes
   with the same snapshot taken when it was built (p1).
 - No record, flag, message or exit code changes (R0.3). The details and the
@@ -188,12 +199,23 @@ the refusal is raised before any preview exists (`evolve/service.py:294-295`).
   an operation (by the element's id or locator) is a row with
   `refused-by-validation` or `refused-by-d12`; a refusal the gate cannot tie
   to an operation is one whole-proposal row, and every operation is then
-  `unassessed`.
+  `unassessed`. The report carries the before model as the preview does
+  (its text and sha256), so GO3 can replay the admitted operations over it
+  (p2). An operation that a later gate never reached because an earlier gate
+  refused the candidate is `unassessed`, and the row names the gates that did
+  not run; `admitted` in an outcome report means every gate ran over it
+  (p2).
+- **Apply replays the setting.** Outcomes are switched on by a preview flag
+  beside `--shape-report` and the matching library keyword. `apply` reads the
+  setting from the reviewed preview, as it does for the shape report
+  (`cli_service.py:810`), so the fresh preview it compares carries outcomes
+  exactly when the reviewed one does (p2).
 - **One pass.** Today `_enforce_d12` and the validators stop at the first
   fault (`service.py:402-477`; `model/__init__.py:302-304`). GO2 collects
   every fault the gate can locate in one pass where the gate allows it, keeps
   today's first message and exit for the whole-proposal path, and defines
-  `admitted` as "no refusal found in this pass". A narrowed proposal is
+  `admitted` as "every gate ran over the operation and none refused it in
+  this pass" (p2). A narrowed proposal is
   previewed again (GO3), which is where a masked fault surfaces.
 - The GO2 spec reads the exit and message of each whole-proposal refusal
   (H11's unread half) and states the report's fields.
@@ -202,9 +224,12 @@ the refusal is raised before any preview exists (`evolve/service.py:294-295`).
 
 Proposed under D5 (a): a library function beside `candidate_document` takes a
 proposal and its preview or outcome report and returns the proposal of the
-admitted operations:
+operations that are `admitted` or `unassessed`, dropping those refused and
+those `dropped-with` a refused one (p2):
 the candidate text rebuilt by `candidate_document` and `candidate_text`, a
-new `proposal_id`, and the id of the proposal it came from. An operation that
+new `proposal_id`, and the id of the proposal it came from, in an optional
+proposal field omitted when unset (R0.3), so a proposal without it keeps its
+bytes and `proposal_sha256` (p2). An operation that
 depends on a dropped one is dropped with it and named. The host previews and
 applies the narrowed proposal as any other (R0.1).
 
@@ -217,9 +242,13 @@ shows one reused and one new fact type.
 
 ### GO5 — the round summary
 
-Proposed under D4 (a), repaired in r3 (p1): GND computes the summary from a
-round file the host writes plus, when the round produced one, the proposal
-and its preview or outcome report. The round file lists the ids the reply
+Proposed under D4 (a), repaired in r3 (p1) and r4 (p2): GND computes the
+summary from a round file the host writes plus, when the round produced one,
+the proposal and its preview or outcome report, and the evolution record
+when the round was applied. Elements added come from the evolution record
+only; a round that was previewed and not applied adds none. A narrowed
+round reads the narrowed proposal that was applied and names the original
+(p2). The round file lists the ids the reply
 reused (mapped onto existing elements) and what the host dropped before the
 proposal, with reasons. A reused element leaves no operation and an empty
 round leaves no proposal, so without the round file the two rounds cannot be
@@ -235,7 +264,7 @@ zero.
 |---|---|---|
 | GO1 | nothing; reviewed-vocabulary-growth VG2 not started | `src/gnd/model/_parsing.py`, `src/gnd/evolve/cli_service.py`, `src/gnd/evolve/service.py` (three scope openings), a new `tests/test_go1_evolve_parse_once.py`, `docs/release-notes.md`, `dev/components/` |
 | GO2 | D1 and D2 ruled; reviewed-vocabulary-growth VG2 and VG4 merged on `main` (H21) (p1) | `src/gnd/evolve/service.py`, `src/gnd/evolve/models.py`, `src/gnd/evolve/cli_service.py`, the evolution contract's preview section, a new `tests/test_go2_operation_outcomes.py`, `tests/test_evolve_additive_policy.py`, `docs/release-notes.md` |
-| GO3 | GO2 merged into the branch; D5 ruled | `src/gnd/discover/output.py` or a new module beside it, a new `tests/test_go3_narrowed_proposal.py`, the evolution contract, `docs/release-notes.md` |
+| GO3 | GO2 merged into the branch; D5 ruled | `src/gnd/discover/output.py` or a new module beside it, `src/gnd/evolve/models.py` (the origin field, p2), a new `tests/test_go3_narrowed_proposal.py`, the evolution contract, `docs/release-notes.md` |
 | GO4 | D3 ruled; VG2 and VG5 of reviewed-vocabulary-growth merged on `main` (H21) (p1) | `unattended-growth.md`, `tests/test_unattended_growth_guidance.py`, the packaged growth example if its replies restate a reused element |
 | GO5 | GO2 merged into the branch; D4 ruled; VG2 and VG5 merged on `main`, because GO5 edits `unattended-growth.md` (p1) | `src/gnd/evolve/` (one new module), the evolution contract, `unattended-growth.md`, a new `tests/test_go5_round_summary.py`, `docs/release-notes.md`, `notes/issue-replies.md` |
 
@@ -249,7 +278,11 @@ the order: VG1, then GO1, then VG2–VG5, then GO2–GO5. VG1 and GO1 share only
 the append-only homes `docs/release-notes.md` and `dev/components/`, where
 the branch that merges second merges `main` in and regenerates the index
 (p1). If GO1 merges by its own pull request ahead of the rest (D6), GO2
-starts from a `main` that holds VG2–VG5. Before each phase starts, this
+starts from a `main` that holds VG2–VG5. GO1's own pull request is binding,
+not optional (D6): the reviewed-vocabulary-growth plan starts VG2 from a
+`main` that holds GO1, so a single pull request holding GO1 and GO2 would
+wait on VG2 while VG2 waits on it. The graph is acyclic under that rule
+(p2). Before each phase starts, this
 session fetches `origin/main`, checks the start condition above and sends
 "READY <phase>" to the coordinating session, which owns the cross-milestone
 order; a phase whose condition is unmet stops and is reported (p1). Start condition: `main` at `78934ee3` or later;
@@ -267,11 +300,11 @@ the unattended acceptance replay.
 
 | Phase | Criteria | Inherited residuals |
 |---|---|---|
-| GO1 | **GO1-C1** one `gnd evolve apply` parses at most 3 times and one `preview` at most 2, the same number at two model sizes; with the scope switched off the counts are 22 and 6. **GO1-C2** for every case of the focused evolve lane, and for an include root, a `.json` model, a YAML model with a value JSON cannot spell, a policy refusal and a D-12 refusal: preview bytes, pending state, record, published model, messages and exits are identical with the scope on and off. **GO1-C3** no remembered document differs when the scope closes from what the parser built. **GO1-C4** a model file changed between preview and apply is refused as today, and a second command in the same process parses again. **GO1-C5** at 604 object types `apply` with the scope costs at most 0.6 of `apply` with it switched off, measured on one machine and recorded (the prototype measured 0.31, H6); its test is marked `slow`, which the default lane excludes (p1). **GO1-C6** the #228 table is measured again at the phase head and recorded beside the base figures. **Which gate is which:** C1 to C4 read no clock and are the required regression gates; C5 and C6 are recorded measurements, and a C5 ratio over 0.6 is a failed criterion reported in the record, not a red lane (p1) | none |
-| GO2 | **GO2-C1** a proposal of four operations, one of which the candidate validation refuses at a locatable element: no preview is written, the outcome report names all four, three `admitted` and one `refused-by-validation`, and the exit is the one today's refusal gives (p1). **GO2-C2** one case per verdict word (`admitted`, `refused-by-policy`, `refused-by-validation`, `refused-by-d12`, `dropped-with`, `unassessed`), each reachable with a committed fixture, plus a proposal with two faults in two operations that names both or names the second `unassessed` as the spec rules (p1). **GO2-C3** a proposal admitted today, previewed without outcomes, gives a byte-identical preview with the same `proposal_sha256` and `preview_sha256`; with outcomes, every row is `admitted` and every other field is unchanged apart from `preview_sha256` (p1). **GO2-C4** no outcome row carries a constraint or sample value; the disclosure tests hold it. **GO2-C5** `apply` refuses an outcome report given in place of a preview (p1) | H11's unread half |
-| GO3 | **GO3-C1** from the GO2-C1 preview, one call returns a proposal of the three admitted operations; it previews and applies, exit 0. **GO3-C2** a constraint on a dropped fact type is dropped with it and named. **GO3-C3** the narrowed proposal has its own `proposal_id` and names its origin. Narrowing writes nothing, so before the narrowed proposal is applied the original preview behaves exactly as today; after the narrowed proposal is applied, applying the original preview is refused as a stale model, as any stale preview is (p1). **GO3-C4** a proposal with nothing admitted returns no proposal and says so | none |
+| GO1 | **GO1-C1** one `gnd evolve apply` parses at most 3 times and one `preview` at most 2, the same number at two model sizes and for a YAML and a `.json` workspace model; with the scope switched off the counts are 22 and 6 (p2). **GO1-C2** for every case of the focused evolve lane, and for an include root, a `.json` model, a YAML model with a value JSON cannot spell, a policy refusal and a D-12 refusal: preview bytes, pending state, record, published model, messages and exits are identical with the scope on and off. **GO1-C3** no remembered document differs when the scope closes from what the parser built, checked by the scope's verify mode across the whole GO1 lane (p2). **GO1-C4** a model file changed between preview and apply is refused as today, and a second command in the same process parses again. **GO1-C5** at 604 object types `apply` with the scope costs at most 0.6 of `apply` with it switched off, measured on one machine and recorded (the prototype measured 0.31, H6); its test is marked `slow`, which the default lane excludes (p1). **GO1-C6** the #228 table is measured again at the phase head and recorded beside the base figures. **Which gate is which:** C1 to C4 read no clock and are the required regression gates; C5 and C6 are recorded measurements, and a C5 ratio over 0.6 is a failed criterion reported in the record, not a red lane (p1), and it stops GO1 for a ruling before its pull request (p2) | none |
+| GO2 | **GO2-C1** a proposal of four operations, one of which the candidate validation refuses at a locatable element: no preview is written, the outcome report names all four: one `refused-by-validation` and three `unassessed` naming D-12 and the policy as not run, or `admitted` where the GO2 spec runs those gates over the parsed candidate; the exit is the one today's refusal gives (p1, p2). **GO2-C2** one case per verdict word (`admitted`, `refused-by-policy`, `refused-by-validation`, `refused-by-d12`, `dropped-with`, `unassessed`), each reachable with a committed fixture, plus a proposal with two faults in two operations that names both or names the second `unassessed` as the spec rules (p1). **GO2-C3** a proposal admitted today, previewed without outcomes, gives a byte-identical preview with the same `proposal_sha256` and `preview_sha256`; with outcomes, every row is `admitted` and every other field is unchanged apart from `preview_sha256` (p1). **GO2-C4** no outcome row carries a constraint or sample value; the disclosure tests hold it. **GO2-C5** `apply` refuses an outcome report given in place of a preview (p1). **GO2-C6** a preview that carries `operation_outcomes` applies with exit 0, and the same preview with one outcome row edited is refused as stale (p2). **GO2-C7** in the GO2-C1 report, an operation no later gate reached is `unassessed` with the gates named (p2) | H11's unread half |
+| GO3 | **GO3-C1** from the GO2-C1 outcome report, one call returns a proposal of the three operations not refused, replayed over the report's before model; it previews and applies, exit 0, or its preview names the fault the first pass masked (p2). **GO3-C2** a constraint on a dropped fact type is dropped with it and named. **GO3-C3** on a second fixture, an admitted preview with a policy refusal: the narrowed proposal has its own `proposal_id` and names its origin, and an original proposal without the origin field keeps its bytes (p2). Narrowing writes nothing, so before the narrowed proposal is applied the original preview behaves exactly as today; after the narrowed proposal is applied, applying the original preview is refused as a stale model, as any stale preview is (p1). **GO3-C4** a proposal with no operation `admitted` or `unassessed` returns no proposal and says so (p2) | none |
 | GO4 | **GO4-C1** "The reply shape" states the rule and shows it in the example. **GO4-C2** a guard test fails when the sentence is removed. **GO4-C3** the packaged growth example's replies follow the rule, or change in this phase | none |
-| GO5 | **GO5-C1** three rounds of the unattended acceptance replay each produce a summary whose counts add up to the operations proposed. **GO5-C2** two rounds with no proposal, whose round files differ only in that one lists reused ids, give different summaries; the empty one reports zero in every count (p1). **GO5-C3** the host's own drops, given as a file, appear under the host's name and a malformed file is refused. **GO5-C4** the two replies are drafted and name what is on `main` and what is not released | H19 |
+| GO5 | **GO5-C1** three rounds of the unattended acceptance replay each produce a summary whose counts add up to the operations proposed; a committed round with a known mix (one admitted, one `refused-by-policy`, one `dropped-with`, one host drop, one reused id, one shape match) gives each bucket the count the fixture was built with (p2). **GO5-C1b** an admitted round previewed and not applied reports 0 added; a narrowed-then-applied round reports the narrowed proposal's additions (p2). **GO5-C2** two rounds with no proposal, whose round files differ only in that one lists reused ids, give different summaries; the empty one reports zero in every count (p1). **GO5-C3** the host's own drops, given as a file, appear under the host's name and a malformed file is refused. **GO5-C4** the two replies are drafted and name what is on `main` and what is not released | H19 |
 
 Each phase also runs the structure and inventory guards,
 `uv run ruff check src tests tools`, an independent review of its diff that
@@ -328,8 +361,8 @@ review and its record.
 - Starting growth from a reviewed vocabulary (#222) and the sources a new
   constraint may carry (#218): reviewed-vocabulary-growth.
 - Release, tag and publication.
-- The whole-repository ruff red and the stale lines of `project.md` (H24):
-  owner policy, outside a phase.
+- The stale lines of `project.md` (H24): owner policy, outside a phase.
+  The whole-repository ruff run is green (H24) (p2).
 
 ## 8. Execution, approval and review protocol
 
@@ -375,7 +408,7 @@ All rows are proposals until the plan gate rules them.
 | D3 | GO4: what a reply carries for a reused fact type. (a) Its id only; rows for it go against the existing id when the document has new ones. (b) The full element, as replies do today | (a). It is the two-thirds cut #227 measured |
 | D4 | GO5: who computes the summary. (a) GND, from the proposal and the preview, with the host's own drops as an input file. (b) A log format in the document that the host fills alone | (a) |
 | D5 | GO3: the surface. (a) A library function beside `candidate_document`. (b) A `gnd evolve` subcommand that writes the narrowed proposal | (a) until a host asks for the command |
-| D6 | Whether GO1 ships alone, by its own pull request, before the rest | Yes. It needs no ruling beyond the plan gate, shares no file with VG1, and the roadmap places it before VG2 |
+| D6 | Whether GO1 ships alone, by its own pull request, before the rest | Yes, and binding (p2): ruling no makes a cycle with VG2 (§3). It needs no ruling beyond the plan gate, shares no file with VG1, and the roadmap places it before VG2 |
 | D7 | Plan review and close review instrument | **Ruled by the owner, 2026-11-23: "Full panel, both"** — the full maintained GND panel (`gnd-review-panel`) for plan and close review |
 | D8 | Phase diff reviewer | **Ruled by the owner, 2026-11-23: "Review helper, both"** — the review helper (`.claude/skills/process-phase/scripts/review_tool.py`, subject `phase`), one reviewer in a different tool |
 | D9 | The loader's own double parse (H9): `load_model` parses every model twice, in every command | Out of GO1 as planned; decided in the GO1 spec (GO1-D4). It is a two-line change in `model/__init__.py` that halves `gnd validate` at size, and it touches every command, so it is the owner's call whether it rides with GO1 or is a maintenance pass of its own |

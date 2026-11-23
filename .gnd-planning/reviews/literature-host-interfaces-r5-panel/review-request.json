@@ -1,0 +1,21 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/milestones/literature-host-interfaces/notes/literature-host-interfaces-plan.md",
+  "sha256": "c1a832378a2f303cdf1be8884ea61e745eca7f22e4fab19a449761d62b082c9b",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "literature-host-interfaces plan r5 (second round)",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, a phase cannot be specified, implemented and tested as the plan writes it, or the software would not demonstrably do what the plan claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "This is the second and final review round. The first round reviewed r4; its report is .gnd-planning/reviews/literature-host-interfaces-r4-panel/PANEL-REVIEW.md (context only). Section 11's table 'r5: the panel's fixes' maps its twelve fixes to sites in r5. For each fix, say whether r5 resolves it, and report any new inconsistency a fix introduced.",
+   "Rows tagged (o) in sections 10 and 11 (D6, D9, D10, D14, D17) are owner rulings. Do not re-argue them; report only a ruling that is applied inconsistently, or that makes a criterion impossible.",
+   "For each phase LH1 to LH4, can it be specified, implemented and tested as section 2 and section 4 write it, with the lanes section 9 names, within the scope sections 2 and 7 state?",
+   "Does each code location, line number, digest and quoted message cited in the plan (notably section 1, H1 to H25) match the repository at this checkout? Cite the plan line and name the source file and line in the observation.",
+   "Are the phase order, dependencies, standing rules (section 0), proposed decisions (section 10, including the new D18) and acceptance criteria consistent with one another, and is any criterion unmeasurable or impossible within its stated scope?",
+   "Every concern's evidence must quote the plan file. The draft LH1 spec beside it (notes/phase-LH1-spec.md), the milestone README and the first-round report are context only, not under review."
+  ]
+ }
+}

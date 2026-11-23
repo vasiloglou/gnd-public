@@ -305,7 +305,8 @@ Ten issues are open. Five were filed after the roadmap above was written:
 #221 and #222 on 2026-11-21, and #226, #227 and #228 on 2026-11-22. This
 section gives every open issue a home and an order. It replaces nothing above:
 the milestones the 0.4.0 roadmap planned keep their outlines. The two new
-outlines are r1, not reviewed and not approved.
+milestones were outlines r1 on 2026-11-22; since 2026-11-23 each has a full
+plan r2 and a first draft spec, not reviewed and not approved.
 
 | Issue | What it asks | State | Home |
 |---|---|---|---|
@@ -314,11 +315,11 @@ outlines are r1, not reviewed and not approved.
 | [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Plan r4 approved 2026-11-23; the VG1 spec waits for its owner gate | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG1 |
 | [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Plan r4 approved 2026-11-23; D2 ruled (a) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG2, in place of the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
 | [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Plan r4 approved 2026-11-23; D3, D4, D13 and D14 ruled (a), D6 ruled as proposed | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG3–VG5 |
-| [#228](https://github.com/vasiloglou/gnd-public/issues/228) | A growth round costs time in proportion to the whole model | Outline r1 | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO1 |
-| [#227](https://github.com/vasiloglou/gnd-public/issues/227) | Growth rounds add almost nothing: whole-proposal outcomes, restated replies, no diagnostic | Outline r1 | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO2–GO5 |
-| [#216](https://github.com/vasiloglou/gnd-public/issues/216) | A public producer protocol for the reading example | Outline r1 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH1, LH2 |
-| [#215](https://github.com/vasiloglou/gnd-public/issues/215) | Model-generic assertion admission | Outline r1 | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH3, LH4 |
-| [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Outline r1 | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
+| [#228](https://github.com/vasiloglou/gnd-public/issues/228) | A growth round costs time in proportion to the whole model | Plan r2 and GO1 draft spec, not reviewed, not approved | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO1 |
+| [#227](https://github.com/vasiloglou/gnd-public/issues/227) | Growth rounds add almost nothing: whole-proposal outcomes, restated replies, no diagnostic | Plan r2, not reviewed, not approved; waits for rulings | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO2–GO5 |
+| [#216](https://github.com/vasiloglou/gnd-public/issues/216) | A public producer protocol for the reading example | Plan r6 approved 2026-11-23; the LH1 spec waits for its owner gate | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH1, LH2 |
+| [#215](https://github.com/vasiloglou/gnd-public/issues/215) | Model-generic assertion admission | Plan r6 approved 2026-11-23; LH3 and LH4 are outlines in the plan | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH3, LH4 |
+| [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Plan r2 and LR1 draft spec, not reviewed, not approved | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
 
 Status, 2026-11-23: eight issues are open. #214 and #217 were closed as
 delivered on `main`; 0.4.0 still behaves as they describe until 0.5.0 is
@@ -336,9 +337,11 @@ also ended below quorum, two of six seats
 ([record](milestones/reviewed-vocabulary-growth/evidence/plan-review-r3/disposition.md));
 r4 repairs the eight points its two reviews raised. No reviewer has read r4.
 The owner approved r4 on 2026-11-23 with decisions D1–D14 ruled as proposed
-([plan gate](milestones/reviewed-vocabulary-growth/001-plan-gate.md)); each phase spec still has its own gate. The full plan and LH1 spec of literature-host-interfaces are being
-written in a separate session and arrive by their own pull request; that
-milestone is still the outline on `main`.
+([plan gate](milestones/reviewed-vocabulary-growth/001-plan-gate.md)); each phase spec still has its own gate. The literature-host-interfaces plan
+r6 and its LH1 draft spec merged as
+[PR #237](https://github.com/vasiloglou/gnd-public/pull/237); the owner
+approved r6 on 2026-11-23
+([plan gate](milestones/literature-host-interfaces/001-plan-gate.md)).
 
 ### Proposed order
 
@@ -348,7 +351,7 @@ milestone is still the outline on `main`.
 | 1 | reviewed-vocabulary-growth VG1 | #221 | No workaround: 265.74 s at 1,000 extra object types. The plan is approved; its spec waits for the owner's gate |
 | 2 | growth-round-outcomes GO1 | #228 | Small, internal, no ruling. Every growth round pays it: 42.6 s at 2,404 object types for one added fact type |
 | 3 | reviewed-vocabulary-growth VG2–VG5 | #218, #222 | The reporter has a workaround (the seed carried as imported, proposed, deontic). The plan's rulings were made on 2026-11-23; each phase needs its spec |
-| 4 | growth-round-outcomes GO2–GO5 | #227 | The reporter measured 2 elements added in 20 rounds. Waits for rulings D1–D4 of its outline |
+| 4 | growth-round-outcomes GO2–GO5 | #227 | The reporter measured 2 elements added in 20 rounds. Waits for rulings D1–D5 of its plan |
 | 5 | literature-host-interfaces LH1–LH4 | #216, #215 | Working host-side workarounds for both |
 | 6 | literature-reading-reference LR1–LR3 | #226 | LR1 and LR2 can run at any time; LR3 needs LH1 and LH2 and an owner-selected producer and budget |
 
@@ -368,10 +371,21 @@ from one reporter's unattended run; #228 was measured here on a synthetic
 model. A 0.6.0 release that carries reviewed-vocabulary-growth
 and growth-round-outcomes together answers all three.
 
-Decisions waiting for the owner: whether to cut 0.5.0 now; the VG1 spec
-of reviewed-vocabulary-growth; D1–D6 of
+Status, 2026-11-23, later: the owner asked for the 0.5.0 release, selected
+the standard GND panel for its plan and close, and delegated the milestone's
+approval rulings. The owner also ruled that the release depends on
+literature-host-interfaces and reviewed-vocabulary-growth, so it is cut after
+both are merged; this replaces the "any time" row of the order above and the
+0.6.0 pairing for reviewed-vocabulary-growth.
+[release-0.5.0](milestones/release-0.5.0/README.md) has plan r2, reviewed at
+r1 and approved by delegated ruling, and a blocked RW1 draft spec; nothing is
+bumped or built. Merges and each publication act stay with the owner.
+
+Decisions waiting for the owner: the VG1 spec
+of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);
-D1–D5 of
+D1–D9 of
 [literature-reading-reference](milestones/literature-reading-reference/notes/literature-reading-reference-plan.md);
-and whether this order stands. `start-milestone` writes each full plan and
-first spec, and the owner approves a plan before any code.
+and whether this order stands. Each of the three has its full plan and first
+spec; no plan review has read the last two. The owner approves a plan before
+any code.

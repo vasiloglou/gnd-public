@@ -1,0 +1,444 @@
+{
+ "schema_version": 1,
+ "run_sha256": "1e9f693f2f3fe4a226536d5cc0f0f87e6fd0dd2ccfacd94b8834e5e4250f4522",
+ "summary": "Four of six seats succeeded (Claude, Codex, Kimi, GLM); Qwen timed out and Gemini returned malformed output. All four asked for revision. Two concerns are marked blocking, each by one reviewer: under the D10 ruling R0.4's single admission projection cannot hold (Claude), and the plan's narrowed lint gate conflicts with the project's whole-repository lint rule, which exits 1 today in dev-tools scripts (Codex). Two concerns reached two or more supporters: the 64 KiB response-cap default is not today's constant, and two H10 line citations are off. The rest are hardening and citation fixes. Every cited code fact checked by the driving agent held. Claude and GLM share one CLI codebase; Kimi's response is retained as incomplete (one preamble line, nothing dropped).",
+ "agreed_concerns": [
+  {
+   "group_id": "response-cap-default-not-todays-constant",
+   "severity": "medium",
+   "title": "D4's 64 KiB response-cap default is not today's constant, as section 2 LH1 'Limits' claims",
+   "summary": "Section 2 says every limit defaults to today's constant; no 64 KiB response constant exists. Today a response is bounded only by the 128 KiB per-file read and the 1 MiB decode cap.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-response-default-not-today"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lh-r4-d4-response-cap-default"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lh1-limits-response-default-not-todays-constant"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "h10-assurance-line-drift",
+   "severity": "low",
+   "title": "H10 cites assurance_report.py:757 and :726; the call is at :760 and the cap at :725",
+   "summary": "Two line references in H10 are off by one to three lines at 4ad0d216; the revision.py citations in the same row match.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h10-assurance-line-drift"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "H10-assurance-report-line-refs"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "r04-packaged-admission-second-path"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "fixed-1mib-caps-break-replay-at-scale"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "d16-ignores-check-exit-4"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "generic-row-bound-unowned"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "admission-settings-not-bound"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "unavailable-scenario-unowned"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "per-document-budget-semantics"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "test-ld3-direct-inspect-call"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "h3-calibration-bindings-incomplete"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "lint-gate-conflict"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "lh-r4-d6-continuation-uncriteriaed"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "lh-r4-r08-time-bound-coverage"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "r02-lh1c9-three-scenarios-vs-SCENARIOS"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "document-budget-missing-from-D4"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-r04-admission-two-paths",
+   "rank": 1,
+   "title": "Make R0.4 consistent with the D10 ruling for admission",
+   "action": "State that under D10 the packaged objectified admission keeps its own projection, name the code the two admission paths share (judgment call, rules evaluation, record writing), and say how the default rules reproduce the packaged reason strings and polarity-first order so LH3-C8 and LH4-C6 hold. R0.4 keeps its single-loop meaning for reading.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "r04-packaged-admission-second-path"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "r04-packaged-admission-second-path",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-lint-gate",
+   "rank": 2,
+   "title": "Reconcile the phase lint gate with the project's whole-repository lint rule",
+   "action": "The whole-repository lint exits 1 today in the dev-tools-delivered skill scripts, which this repository does not edit, while project.md says it exits 0. Either obtain an owner-recorded scoped lint gate for this milestone, or have the dev-tools scripts fixed upstream first; record which in section 9.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lint-gate-conflict"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lint-gate-conflict",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-retained-read-caps",
+   "rank": 3,
+   "title": "Bound replay's reads to what a run can write",
+   "action": "Make D4 cover the 1 MiB decode cap and the route output cap, or derive them; say which cap replay applies to retained payloads; add a criterion that a run at the response and roster ceilings replays, or refuses before the first producer call.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "fixed-1mib-caps-break-replay-at-scale"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "fixed-1mib-caps-break-replay-at-scale",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-d16-exit-4",
+   "rank": 4,
+   "title": "Cover gnd check's exit 4 in D16",
+   "action": "State whether exit 4 (a must-hold rule unchecked) is recorded like 2 or detected before the first producer call, and cover it in LH1-C11 or LH1-C13.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d16-ignores-check-exit-4"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d16-ignores-check-exit-4",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-response-cap-default",
+   "rank": 5,
+   "title": "Give the response cap a real default or call it new",
+   "action": "Mark the 64 KiB response default as a new limit (and say whether it applies to saved responses under R0.2), or set it to today's effective bound.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-response-default-not-today"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lh-r4-d4-response-cap-default"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lh1-limits-response-default-not-todays-constant"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-response-default-not-today",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lh-r4-d4-response-cap-default",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lh1-limits-response-default-not-todays-constant",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-document-budget",
+   "rank": 6,
+   "title": "Finish the per-document budget: semantics, home, ceiling and the D6 continuation criterion",
+   "action": "Say whether a document budget skips an oversized section and continues or stops the document; put document_budget in D4 or the limits argument with a ceiling; add a criterion that a document with its required questions resolved still gets its other scheduled reads.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "per-document-budget-semantics"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lh-r4-d6-continuation-uncriteriaed"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "document-budget-missing-from-D4"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "per-document-budget-semantics",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lh-r4-d6-continuation-uncriteriaed",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "document-budget-missing-from-D4",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-time-bound-at-each-ceiling",
+   "rank": 7,
+   "title": "A time-bound test at every parameter ceiling",
+   "action": "Widen LH1-C10 to each D4 ceiling, as R0.8 requires, or say in the LH1 spec which ceilings share one bound test and why.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lh-r4-r08-time-bound-coverage"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lh-r4-r08-time-bound-coverage",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-generic-row-bound",
+   "rank": 8,
+   "title": "Give the generic admission projection its own row bound",
+   "action": "Separate the row bound from max_targets, give it a ceiling under R0.8, and size LH3-C9 to it.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "generic-row-bound-unowned"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "generic-row-bound-unowned",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-admission-record-settings",
+   "rank": 9,
+   "title": "Bind shape, rules and max_targets in the admission record",
+   "action": "State that a /2 record binds the shape, the rules digest and max_targets, state the format of a rules-only call, and add a criterion for both.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "admission-settings-not-bound"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "admission-settings-not-bound",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-unavailable-on-caller-root",
+   "rank": 10,
+   "title": "Give the unavailable scenario an owner on a caller root",
+   "action": "Say whether scenario='unavailable' refuses on a caller root or how a caller names unavailable sections, with a criterion that the packaged section name cannot leak.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "unavailable-scenario-unowned"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "unavailable-scenario-unowned",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-frozen-test-surface",
+   "rank": 11,
+   "title": "Correct how test_ld3 reaches the producer and record the frozen surface",
+   "action": "Correct section 5 and H10: test_ld3 calls _inspect directly and reads SavedProducer.calls; record that these and reading._read are frozen and that new parameters are keyword-only.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "test-ld3-direct-inspect-call"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "test-ld3-direct-inspect-call",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-citations",
+   "rank": 12,
+   "title": "Correct the harvest citations",
+   "action": "Cite assurance_report.py:760 and :725 in H10; add the calibration literals (reading.py:300, :320, :323, :335) to H3; say 'three packaged run configurations' in R0.2 and LH1-C9.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h10-assurance-line-drift"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "H10-assurance-report-line-refs"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h3-calibration-bindings-incomplete"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r02-lh1c9-three-scenarios-vs-SCENARIOS"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h10-assurance-line-drift",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "H10-assurance-report-line-refs",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h3-calibration-bindings-incomplete",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "r02-lh1c9-three-scenarios-vs-SCENARIOS",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ]
+}

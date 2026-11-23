@@ -1,0 +1,21 @@
+{
+ "schema_version": 1,
+ "kind": "plan",
+ "plan": {
+  "path": ".gnd-planning/milestones/literature-host-interfaces/notes/literature-host-interfaces-plan.md",
+  "sha256": "6cadaa9134585b348d53ef50ef5c35638a3b0bb20c7c36726ac53039ac357cb6",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "literature-host-interfaces plan r4",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, a phase cannot be specified, implemented and tested as the plan writes it, or the software would not demonstrably do what the plan claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+   "Rows tagged (o) in sections 10 and 11 (D6, D9, D10, D17) are owner rulings. Do not re-argue them; report only a ruling that is applied inconsistently, or that makes a criterion impossible.",
+   "For each phase LH1 to LH4, can it be specified, implemented and tested as section 2 and section 4 write it, with the lanes section 9 names, within the scope sections 2 and 7 state?",
+   "Does each code location, line number, digest and quoted message cited in the plan (notably section 1, H1 to H23) match the repository at this checkout? Cite the plan line and name the source file and line in the observation.",
+   "Does the plan leave any request in issues #215 and #216, as section 1 quotes them, unowned, owned twice, or contradicted by section 7?",
+   "Are the phase order, dependencies, standing rules (section 0), proposed decisions (section 10) and acceptance criteria consistent with one another, and is any criterion unmeasurable or impossible within its stated scope?",
+   "Every concern's evidence must quote the plan file. The draft LH1 spec beside it (notes/phase-LH1-spec.md) and the milestone README are context only, not under review."
+  ]
+ }
+}

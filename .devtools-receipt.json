@@ -26,9 +26,9 @@
       "sha256": "40985e2331569d25653f7f111151f5b5c4fb4a8280c8ec1f75548290fa1d8b7e"
     },
     ".claude/skills/components/scripts/rules_check.py": {
-      "mode": "0o644",
+      "mode": "0o755",
       "origin": "skills/components/scripts/rules_check.py",
-      "sha256": "69dd596107826bdf3fc551db810097ae8e292e61c257977cef6b5cde8dbb772b"
+      "sha256": "7e2e49cb065942aa7868a7f615c3b06bef8a603bb82f6edcd5ec60d76b9779ec"
     },
     ".claude/skills/dev-handoff/SKILL.md": {
       "mode": "0o644",
@@ -46,9 +46,9 @@
       "sha256": "fd4a0ee50d5bded553a17d1ba3320515a442c94390eca97f11b4caf0b9fa3327"
     },
     ".claude/skills/dev-handoff/scripts/handoff.py": {
-      "mode": "0o644",
+      "mode": "0o755",
       "origin": "skills/dev-handoff/scripts/handoff.py",
-      "sha256": "8cf8cb2bccc255a0318d1aa922ecc062bcdd89cd02a5bd6b772322ca27f2cc18"
+      "sha256": "3343e4d55965bd98d5d86df5ebbe35341f4475eb23c1a4622f54094fcc287b41"
     },
     ".claude/skills/dev-handoff/scripts/handoff.settings.json": {
       "mode": "0o644",
@@ -136,9 +136,9 @@
       "sha256": "0f8547f879aa0b21577037e70c57ea1debcd5e353ef3e33a35c2601b307ff5f1"
     },
     ".claude/skills/process-phase/scripts/review_tool.py": {
-      "mode": "0o644",
+      "mode": "0o755",
       "origin": "skills/milestone/process-phase/scripts/review_tool.py",
-      "sha256": "12dc9800f55dc9f409dadf8466b39591c6b58f2210195478cb4ce39e985a38ff"
+      "sha256": "088cb33fa4386d9951aca0badf3fd991fe38c35c7584b01f8319d0366ae6cad1"
     },
     ".claude/skills/start-milestone/SKILL.md": {
       "mode": "0o644",
@@ -176,9 +176,9 @@
       "sha256": "40985e2331569d25653f7f111151f5b5c4fb4a8280c8ec1f75548290fa1d8b7e"
     },
     ".codex/skills/components/scripts/rules_check.py": {
-      "mode": "0o644",
+      "mode": "0o755",
       "origin": "skills/components/scripts/rules_check.py",
-      "sha256": "69dd596107826bdf3fc551db810097ae8e292e61c257977cef6b5cde8dbb772b"
+      "sha256": "7e2e49cb065942aa7868a7f615c3b06bef8a603bb82f6edcd5ec60d76b9779ec"
     },
     ".codex/skills/dev-handoff/SKILL.md": {
       "mode": "0o644",
@@ -196,9 +196,9 @@
       "sha256": "fd4a0ee50d5bded553a17d1ba3320515a442c94390eca97f11b4caf0b9fa3327"
     },
     ".codex/skills/dev-handoff/scripts/handoff.py": {
-      "mode": "0o644",
+      "mode": "0o755",
       "origin": "skills/dev-handoff/scripts/handoff.py",
-      "sha256": "8cf8cb2bccc255a0318d1aa922ecc062bcdd89cd02a5bd6b772322ca27f2cc18"
+      "sha256": "3343e4d55965bd98d5d86df5ebbe35341f4475eb23c1a4622f54094fcc287b41"
     },
     ".codex/skills/dev-handoff/scripts/handoff.settings.json": {
       "mode": "0o644",
@@ -286,9 +286,9 @@
       "sha256": "0f8547f879aa0b21577037e70c57ea1debcd5e353ef3e33a35c2601b307ff5f1"
     },
     ".codex/skills/process-phase/scripts/review_tool.py": {
-      "mode": "0o644",
+      "mode": "0o755",
       "origin": "skills/milestone/process-phase/scripts/review_tool.py",
-      "sha256": "12dc9800f55dc9f409dadf8466b39591c6b58f2210195478cb4ce39e985a38ff"
+      "sha256": "088cb33fa4386d9951aca0badf3fd991fe38c35c7584b01f8319d0366ae6cad1"
     },
     ".codex/skills/start-milestone/SKILL.md": {
       "mode": "0o644",
@@ -312,7 +312,7 @@
     }
   },
   "source": {
-    "commit": "c9648dd177f40ed2100e0e63bee585be5c7a77d5",
+    "commit": "a29562a3978c32198dcff5991ca0ff82ecbe7a63",
     "dirty": false
   }
 }

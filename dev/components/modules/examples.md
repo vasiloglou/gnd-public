@@ -302,9 +302,9 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | `affected_sections(sections, changed_keys) -> list[str]` | function | 490 | Return available earlier section IDs sharing a changed dependency key. |
 | `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 761 | Read a run's optional coverage artifact using its external digest. |
 | `absence_status(artifacts, pins, *, facts, predicate, floor)` | function | 774 | Qualify the declared absence claim from four independently bound inputs. |
-| `run(out, *, budget, scenario, fixture, producer, reviewer, document_budget, unavailable, limits) ->…` | function | 1150 | Run the reading workflow over the packaged fixture or a caller's root, and retain its evidence. |
-| `replay(folder, *, fixture, vocabulary_fixture, expected_evidence_sha256) -> dict` | function | 1181 | Re-derive a reading result from retained evidence without invoking producers or reviewers. |
-| `main(argv) -> int` | function | 1221 | (no docstring) |
+| `run(out, *, budget, scenario, fixture, producer, reviewer, document_budget, unavailable, limits) ->…` | function | 1154 | Run the reading workflow over the packaged fixture or a caller's root, and retain its evidence. |
+| `replay(folder, *, fixture, vocabulary_fixture, expected_evidence_sha256) -> dict` | function | 1185 | Re-derive a reading result from retained evidence without invoking producers or reviewers. |
+| `main(argv) -> int` | function | 1225 | (no docstring) |
 
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
 Components: examples.literature_revision

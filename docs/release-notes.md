@@ -48,6 +48,31 @@ the next one.
   two minutes, and `gnd judgments check` and `gnd verify` gain the same.
   Reports are unchanged. A subtype chain hundreds of types deep is still
   slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
+- **Unattended growth from a reviewed vocabulary.** A version-5 root with
+  `source.mode: unattended` may include an owner-reviewed model: the included
+  elements keep their own source, status and modality and are exempt from the
+  unattended rules U2 to U6, while an unconfirmed inferred `alethic` claim in
+  an include is still refused (U8). `gnd validate` prints one `INCLUDE` line
+  per include in its text output, and span diagnostics on included elements
+  now carry the `includes[ID]:` prefix
+  ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
+- **`gnd evolve` admits sample and common-sense constraints.** A new
+  constraint may now carry `source: sample` (row evidence) or
+  `source: common-sense` (library evidence) when it is `proposed` and
+  `deontic`, as the unattended-growth guide tells a host to write them; with
+  `confirmed` or `alethic` it is refused by name. 0.4.0 refused both sources
+  in every form ([#218](https://github.com/vasiloglou/gnd-public/issues/218)).
+- **Growth rounds on a seeded root.** An unattended root that includes a
+  reviewed model and holds nothing of its own may start without a source
+  document; its first `gnd evolve` round declares one. `gnd evolve` refuses
+  `repin-include` on an unattended root under every policy
+  (`evolve:unattended-repin`), where 0.4.0 refused it only under
+  `--policy additive` ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
+- **A seeded growth example.** `src/gnd/examples/seeded_growth/` grows an
+  unattended root from a reviewed seed in two rounds, then validates, checks
+  and judges it; `unattended-growth.md` gains "Starting from a reviewed
+  vocabulary", and the include route list names `gnd coverage`,
+  `gnd evolve` and `gnd discover`.
 - **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message

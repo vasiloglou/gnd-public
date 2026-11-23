@@ -226,7 +226,21 @@ def test_t5_d12_outcomes_equal_the_base_commit_table() -> None:
     unknown["source"] = "oracle"
     rows["unknown-source"] = capture.outcome(before, capture.with_constraint(before, unknown))
     assert len(baseline["rows"]) == 27
-    assert rows == baseline["rows"]
+    assert rows == {**baseline["rows"], **VG2_D12_DELTA}
+    assert len(VG2_D12_DELTA) == 8 and set(VG2_D12_DELTA) <= set(baseline["rows"])
+
+
+#: reviewed-vocabulary-growth VG2 (issue 218, plan D2 (a)): the eight rows of the
+#: table captured at 328061ee that D-12 now answers differently. The captured
+#: fixture stays as recorded; every other row must still equal it.
+VG2_D12_DELTA = {
+    f"new:{source}:{status}:{modality}": (
+        "admitted" if (status, modality) == ("proposed", "deontic")
+        else "new sample and common-sense constraints must be proposed/deontic (D-12)")
+    for source in ("sample", "common-sense")
+    for status in ("proposed", "confirmed")
+    for modality in ("alethic", "deontic")
+}
 
 
 # ---- implementation tests (spec section 8, T6-T13) --------------------------

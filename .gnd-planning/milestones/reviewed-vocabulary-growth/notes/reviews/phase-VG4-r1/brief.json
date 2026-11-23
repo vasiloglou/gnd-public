@@ -1,0 +1,66 @@
+{
+  "base": "b50593b2",
+  "claims": [
+    "D4 (a): U1 omits the documents issue only when the composed root declares at least one include and nothing of its own in any section; every other unattended model keeps U1 exactly as before.",
+    "VG4-C1 and C3: a seeded root's first round declares its first document and adds owned elements and an attached constraint; preview, apply and finalize exit 0 and the result validates.",
+    "D6: repin-include on an unattended root is refused under every policy, before the policy runs; a root without the mode is answered as before.",
+    "R0.6: an operation that modifies, renames or deletes an included element is refused.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T22:11:13.217076+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/diff.patch",
+      "sha256": "4c2b80603f709d514f0cac1d39354f14473f24075f16baa9334d99d044023994"
+    },
+    {
+      "path": "dev/components/modules/evolve.md",
+      "sha256": "f2ca5da4ef4224911369c632d0f520a95f5b7a1f913687c285cde3ba293d87eb"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "6258ba4298a2a119633bc0b634c790115a0bdf188c4f03b526966387f0c972cb"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "cd87a6a42375d7f3035350d42045106e4599241e09a7d0a74944262d9d4b1168"
+    },
+    {
+      "path": "src/gnd/evolve/_includes.py",
+      "sha256": "b0f939fa57c9927a647ade7aa75c914e700b9cee0da45fb32533c430eb5efb5d"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "sha256": "3e1c4e9923ab8f48deae954098a4d2b0de9058703f5aece2c99ed00313a09531"
+    },
+    {
+      "path": "src/gnd/model/_unattended.py",
+      "sha256": "764fc94ef912d9bc230e4b3f062cfe181608dd2a29f5319b8d5dbf3d24ace51f"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-evolve/references/evolution-contract.md",
+      "sha256": "f67c07c4084f8874d01030dff7964e78c7918e7f0f2995386af72585b29722be"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "939e9ef2d429bdde040001bbd301ee8abbb36badf6a89d15fe77531d8f72e02c"
+    },
+    {
+      "path": "tests/test_vg4_seeded_growth_rounds.py",
+      "sha256": "75cbb0dc7c4f5bc4bda922365b3ce6c3df70412906f163441275878e78f993e9"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG4-spec.md",
+      "sha256": "05022d341219cd2a8d262f2f732df2f6abc96cc25b07224443ed07fda6043d90"
+    }
+  ],
+  "head": "002dc86e964b7a47404c93bd517541cde5c1f4b1",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does this diff let only a seeded root that truly owns nothing skip the document requirement, let its first round declare the document, and keep every included element and every pin out of a growth round's reach?",
+  "subject": "phase",
+  "version": 1
+}

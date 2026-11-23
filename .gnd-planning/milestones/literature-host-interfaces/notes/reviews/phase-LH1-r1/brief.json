@@ -1,0 +1,120 @@
+{
+  "base": "c5fbaf58",
+  "claims": [
+    "With no new argument and no profile.json, run() writes byte-identical packaged runs and test_ld3, test_ld4 and test_ld5 pass unedited.",
+    "Every refusal of a caller run (limits, profile, roster, model, step files, saved responses and reviews, retained-file bound) happens before the first producer call, and nothing is written when a run refuses.",
+    "Every value a producer or reviewer returns is validated as bounded plain JSON of the declared shape before the loop uses it, and no exception other than ExampleError or ArtifactError escapes run() for any such value.",
+    "The retained-file cap a caller run records is an upper bound on the size of every file the run writes, so its replay can read every file under that cap.",
+    "The per-document budget omits a section that does not fit and continues, and each source's stop reason follows the global stop rule applied to that source's own questions and sections.",
+    "Every limit is enforced at its ceiling and the work added is linear in the roster, the responses and the inputs.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T19:54:51.112923+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/phase-LH1-r1/diff.patch",
+      "sha256": "a915724b000c28ba2bf89edb14e48b4337df0da6486420475842d928ca829bb0"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/phase-LH1-spec.md",
+      "sha256": "b9e48c65cef90190afb05d7d262cbd06635b56a7fc58b238a612c309f236f25f"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "8243162ca04ce32a39a90b79c62c9b243aae3d2280c1a600ed022b264e09e7cc"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "6cc5701a89bafc8373a069e4d39f73f23b758eb34eeba28182a0a9e8415f8df0"
+    },
+    {
+      "path": "dev/components/modules/examples.md",
+      "sha256": "cdf14eac67fd75aaa47938b6aa868540adf5028744b841d2d3d8c2a0ff33e117"
+    },
+    {
+      "path": "src/gnd/examples/literature/depth.py",
+      "sha256": "f50ff0cbd22f73cf151b5985eb207828111e0cbde06cd4213e7c9211b4a798f7"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading.py",
+      "sha256": "4eb351ee3652f5d752af770cb7fbc7c353d5d6c734b60ccba068a721768aed34"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading_fixture/README.md",
+      "sha256": "046790deff8f792fcbdd7c66b603d5d7383f241c92b4aa91e958c8f493e8dd90"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/README.md",
+      "sha256": "923e92b47281e653d8d41df799b6ad03fe59607330c542dec521174c4b3792cf"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/calibration.json",
+      "sha256": "a0bb381686ad575c7b3a10dcd14005d9e62ebe1975de9d21b821886883df4e04"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/calibration.txt",
+      "sha256": "5b6367e0cdb100c9faf97a38f3bce7886df514a9e23bf1636abe25fb74b71112"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/closure.json",
+      "sha256": "20ae6dfc4679bfaf3ae7fd1f726d9a96e2849968e7073658fc84826ca04acb22"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/conflict.json",
+      "sha256": "46a923bb87cd1551373429b3ec61105c1afbc23bd2acf17d7b958116578048ce"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/conflict.txt",
+      "sha256": "67f82f8529a8a007b9c7ba3ea7a531ade2b047edb26e3d1f461a55a804680a04"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/gold.json",
+      "sha256": "89c232e0c1feed38fbc5ad1d38b32ab0ffe21720d1b9b458996b8ecbe39ef3e8"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/profile-declared.json",
+      "sha256": "7fc6bbf2c1bf1d14682d19fa87c19c6d485de029ca09a173e9339ccbf1eae730"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/profile.json",
+      "sha256": "d24ffb2a621dc1d6b68df6832ee351700a68520338cd22c099714a679337640b"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/roster.json",
+      "sha256": "98d97b789e6cff724354b256c41fd5ea1dc1896613a0dde61c4fb0965c3888ad"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/scope.json",
+      "sha256": "577fa9b3988a3be340b7096b630cf974364d71fefdbfecee8eeb81cbe8df6f53"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/survey-a.txt",
+      "sha256": "20f427b067c4e3959ba14393ab896b78168159fab115d8bc95bb33c9ee584bc7"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/survey-b.txt",
+      "sha256": "e484782f1cd027c85a62cac452c35eff4c04643b82ad292e43000201ce7629e6"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/survey.orm.json",
+      "sha256": "75048afed04a575f3bf1930e6aa63156c1fbf968fafa91ad36ecf0e4fafc319b"
+    },
+    {
+      "path": "tests/fixtures/lh1-reading/caller/terms.orm.json",
+      "sha256": "2cf8e537670f826622f7255079bcfa6bfedd6d960ca823180d91593add56c3e9"
+    },
+    {
+      "path": "tests/test_lh1_reading_host.py",
+      "sha256": "c5813c5f5a58c42e4559339e3aaa3400e4361c31d5ea2ae3000163c9869324d4"
+    }
+  ],
+  "head": "83de28465d1f280b6be7d41cb84ef964d1b72bf8",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does this change let a caller's producer drive the reading stages over a caller's root as the LH1 spec writes it, while the packaged runs keep their bytes, and what input does it get wrong?",
+  "subject": "phase",
+  "version": 1
+}

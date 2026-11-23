@@ -1,0 +1,2467 @@
+diff --git a/.gnd-planning/maintenance/2026-11-16-main-ci-repair/README.md b/.gnd-planning/maintenance/2026-11-16-main-ci-repair/README.md
+new file mode 100644
+index 000000000..3af1b9f58
+--- /dev/null
++++ b/.gnd-planning/maintenance/2026-11-16-main-ci-repair/README.md
+@@ -0,0 +1,57 @@
++# Main CI repair, 2026-11-16
++
++The owner asked for this repair after a full local run of the default test lane on
++`main` at `3fe7b136` (beast-3, six shards, uv 0.13.7, Python 3.13.18). The run had 278
++failures and 2 errors. The same test files pass at v0.3.0 (`257a8bb3`). Running them at
++every first-parent merge since then attributes each failure to the merge that introduced
++it:
++
++| Merge | Work | New failures |
++|---|---|---:|
++| PR 184 (`0ff0e9ca`) | guarded-rule workflows (GW) | 18 |
++| PR 191 (`ecd12986`) | guarded-rule pages | 3 |
++| PR 198 (`09c89840`) | dev-tools handle-issue delivery | 4 |
++| PR 196 (`2dd38cf7`) | guarded-rule clauses (GC1–GC4) | 239 |
++| PR 202 (`e3431ba1`) | literature interop (LX) | 10 |
++| PR 203 (`a7785ffb`) | literature depth (LD) | 2 |
++| PR 205 (`3fe7b136`) | expense receipts docs | 2, fixed by PR 206 |
++
++Every failure came from merged work that changed pinned code or behavior without
++updating the matching record. Each fix below uses the repository's own mechanism and
++names the commit it accounts for. No pin is loosened and no check is removed.
++
++The 2 errors are `tests/test_public_optional.py`. Its fixture requires the CI-pinned
++uv 0.10.10, and beast-3 has uv 0.13.7. Both tests pass on a machine with the pinned uv,
++and the 0.3.0 baseline recorded the same two errors on beast-3.
++
++| Failure | Cause | Repair (mechanism) |
++|---|---|---|
++| `test_public_semantic_adapter` ×206 | GC2 (`b4e84af4`) added `SnapshotIR.computed_available`, a `frozenset` | The immutability walk also accepts a `frozenset`, and checks every member is immutable |
++| `test_measure_coverage` ×2, `test_measure_derivation`, `test_rf1_semantic_pins::test_synth` ×8, `test_rf2_pre_move_pins::test_measure_output_bytes`, `test_public_measurement_publication` ×2, `test_public_measure_corpus`, `test_tp2_shared_fact_types` | GC2 and GC3 registered `filtered` and `any_of` guarded refusals, which entered the frozen band-4 frontier | **Code fix:** `gnd.synth.frontier` excludes the GC2 filter and GC3 disjunction variants, exactly as it already excluded Phase 6 guarded `exists`. All the drifted goldens reproduce unchanged |
++| `test_rf1_semantic_pins::test_assurance_blocks` | The same rows entered the frozen Phase 3 assurance denominator | **Code fix:** `gnd.assurance.core._phase3_target` excludes them, as it already excluded guarded `exists`. The RF4 body successor for `_phase3_target` is recorded |
++| `test_rf6_packages::test_original_definition_body_is_verbatim` ×18 | GC1–GC3, GW0, LD2 (`07a2bb06`) and the LX3 review (`9e1c1d29`) changed pinned bodies | Chained RF6b rows in [source-successors.json](source-successors.json), registered in `tests/support/rf9_ci_sources.py`. The two definitions on the model-composition chain get rows in [definition-successors.json](definition-successors.json), chained after MC3; `mc1_definition` now walks that chain |
++| `test_rf4_peripheral` ×6, `test_rf9_ci_repairs` ×1 | LX1–LX4 changed `witness`, `_witness_inputs`, `replay`, `_run_check_raw` and `_run_check` | RF4 rows in the same file, each with the predecessor digest as `before` |
++| `test_rf6_packages::test_package_size_targets…` | GC and GW took `model/_validation.py` to 5346 lines (ceiling 5000) | **Code move:** the ten unpinned GW/GC guarded validation additions move verbatim to the new `gnd.model._guarded`; it calls seven pinned helpers through a registry that `_validation` fills, as `_unattended` does. `parse_model_document` and `MAX_MODEL_BYTES` move verbatim to the new `gnd.model._parsing`. `_validation` re-exports every name, so lookups resolve as before. It is now 4989 lines. Both modules are in `tools/gnd_layers.json`, the home lists of `test_rf6_packages` and `test_atom_bind`, and the component index |
++| `test_rf6_packages::test_new_package_scope…`, `test_atom_bind` | LX1 (`e2ce2ade`) added `model/flattening.py` | Added to both home lists. The measure and generation scans never import it, so a new test checks that the extraction and provider scans read it |
++| `test_v6_phase2_adapter_mutations` ×11 | GW0 (`24c72d86`) moved scalar identity and order into `gnd.values`; GC2 rewrote the consequent site | Ten mutants are seeded in `gnd.values` and loaded into the adapter; the consequent mutant names the new site. Every mutant still kills its control |
++| `test_public_semantic_guarded_join[comparison-polarity]` | GC2 moved the comparison into `guarded_pair_state` | The mutant names the new function and site |
++| `test_rf1_pin_harness::test_mutation_table_rows_of_their_own` | GW0 moved `canonical_scalar` | A retarget row in `code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json`, with the same failure meaning |
++| `test_model_validation`, `test_model_v2` | GC1, GC2 and GW1 registered rules whose ids were not in the normative table | Five rows are added to the Layer 2 table in `gnd-orm-core/references/representation-format.md`. The inventory test names the shared ids and the loop-built ids explicitly, and the v2 scan reads every quoted rule id |
++| `test_evolve_loading::test_h3…` ×2 | The LX3 review raises `ReferenceHashMismatch`, a subclass of `ReferenceInputError`, on a changed catalog | Two ruled rows beside the IKE-Q3 rows |
++| `test_mc1_guards::test_R30…` | LD1, LD3 and PR 205 added include roots | Listed. The LD3 reading root is staged by `reading.py` with its vocabulary, so it is not loaded in place |
++| `test_doctor_uninstall` ×4 | PR 198 delivered `handle-issue`, the components rules check and the review tool | The local skill files and root entries are pinned |
++| `test_release_text` ×2, `test_pyrel_learning_path::test_short_paragraphs` | PR 191 pages named 0.2.0 and lengthened a list | Version-free wording, and two words shorter |
++
++## Policy and pinned evidence touched (disclosed)
++
++- `mutation-retargets.json` gains one row, which is the only update its reader allows.
++- The Layer 2 rule table gains five rows for rules that merged code already registers.
++- The layer allow-list stays empty.
++
++Historical records keep their original hashes. They describe the bytes they were written
++against. `tools/build_ci_repair_successors.py` rebuilds both successor files from the
++current sources.
++
++## Verification
++
++See the PR description for the exact commands and results.
+diff --git a/.gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json b/.gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json
+new file mode 100644
+index 000000000..b751753e2
+--- /dev/null
++++ b/.gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json
+@@ -0,0 +1,26 @@
++{
++ "schema_version": 1,
++ "reason": "Main CI repair 2026-11-16: two model-composition definitions changed again after MC3; each row names its phases.",
++ "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json",
++ "predecessor_sha256": "bfdeefc9bf23e406e609df654227118a74cca03ccb6710d9e1df73d2373e2204",
++ "successors": [
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_temporal_language",
++   "home": "gnd.model._validation",
++   "before": "103b7fa206683165bf02face125bd8d46e053ccd9cede2a340c8b4eb7328b1fd",
++   "after": "20ffaf038be22725a2b66d4ed746ae8b5bd2d045cc232e7ddabbc81a92ee823a",
++   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_load_model_no_follow",
++   "home": "gnd.model",
++   "before": "a5f47fe10efebb934e14ccb729b2115dde19743318603ffb9f932ca661a30e97",
++   "after": "3ad8687c0c3dcc88200877068f9b35218bf2f39bdbc240d9d509471d15cb2b12",
++   "reason": "Body changed by LX3 review (9e1c1d29) catalog validation and mixed witness intake."
++  }
++ ]
++}
+diff --git a/.gnd-planning/maintenance/2026-11-16-main-ci-repair/source-successors.json b/.gnd-planning/maintenance/2026-11-16-main-ci-repair/source-successors.json
+new file mode 100644
+index 000000000..ada07c262
+--- /dev/null
++++ b/.gnd-planning/maintenance/2026-11-16-main-ci-repair/source-successors.json
+@@ -0,0 +1,313 @@
++{
++ "schema_version": 1,
++ "reason": "Main CI repair 2026-11-16: bodies changed by the guarded-rule and literature milestones without a recorded successor; each row names its phases.",
++ "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
++ "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
++ "successors": [
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_anchored_role_and_recogniser",
++   "home": "gnd.model._validation",
++   "before": "5bffb927ddd6efee6d6e481e592c6ca7b829aaebd0a9cb166d58163eee606ea1",
++   "after": "ae066590cbc2471dd5234cd053344bb901c1a88b2915532ca87a82997c38e09f",
++   "reason": "Body changed by LD2 (07a2bb06) time dimensions and exact decimal replay."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_iter_guarded_atoms",
++   "home": "gnd.model._validation",
++   "before": "37f5cdc681bff923a85919bf80218ecbff74e23999ae93334b12d04037a9aac1",
++   "after": "079179651708f6cde66743784fa6935db90d47ed03757ed0b3f1c531788c121a",
++   "reason": "Body changed by GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_iter_guarded_consequent_terms",
++   "home": "gnd.model._validation",
++   "before": "89c190d0b4594cd0e8b2c49c444c7ba6642e6d4603dd9fbe270dcd4bfcbe08af",
++   "after": "d1fc37fa7e366f4d6fdd106780b3f830837c7cce51fa6f00b80c149ff4eb508c",
++   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_guarded_consequent_ground",
++   "home": "gnd.model._validation",
++   "before": "bccecba41feb72d2c0107faa042927c39acda8f62a91655c1ca837f6f19f858c",
++   "after": "32dc5db5d27767a1b821eaca2c926755152662ff94f71a3e34343a377eb9e0cd",
++   "reason": "Body changed by GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_guarded_exists_range",
++   "home": "gnd.model._validation",
++   "before": "e7181017e8a24b28aa5e9759551bbd7a7c8c973bd482a19037380187827a9a52",
++   "after": "84506e55a9abc54c16f78bc53c385f120b7811091e7aaea1cb47d000fe262c75",
++   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_guarded_exists_where_bound",
++   "home": "gnd.model._validation",
++   "before": "666f74c676527d09752d1efda4d8696ea218493851c2fad8e8bd05d7b50f4034",
++   "after": "8979473ec6834356c5c645700abf78b32a820d2f867a6aa3da689a82d770792d",
++   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_guarded_comparison_type",
++   "home": "gnd.model._validation",
++   "before": "73dfb3fff3fe7f78cfdf43f5bb23299ef1ca3f45a1f1027272c4b2047de98e21",
++   "after": "b38278a5900208a900a4d1a47c421bb69654fd08d67c2db2b7b215717333450c",
++   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_guarded_exists_where_type",
++   "home": "gnd.model._validation",
++   "before": "356c82f7919f43f7167f67c2002d227eb971dd997de54f79a764f750090320c0",
++   "after": "36c9b450d61bbd72ff62e2ee89b6c862c77cf0b750f99bb6a585da806b6f5293",
++   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_derivation_variable_primitives",
++   "home": "gnd.model._validation",
++   "before": "245ea28f60b98aabb2e025d0c904e705fd00bdf15da4f47f75486bdba61fe080",
++   "after": "b50629819497ee6a348ba4a8c6936e247e8bc1a78035036a9dc0630f8af6e58f",
++   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_derivation_head_term_issues",
++   "home": "gnd.model._validation",
++   "before": "4546a929e72f3a169951a90d40a5846dc893bf8efb320bef05424f56133fa2d5",
++   "after": "7e1a0f169427260d710dacf63f77ebbb129d71b64147d74330f483aed3d996f3",
++   "reason": "Body changed by GC1 (62c45016, 270303c0) literal set membership."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_rule_term_non_finite_number",
++   "home": "gnd.model._validation",
++   "before": "40863440e8ccb22ec1fe229c1624ba34c07e37ff7d2fcf28a20583270ab0e141",
++   "after": "4cfa003012dd4955483192f1191d5caf2e0deaaed05ed5f206af199c2bb15d82",
++   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.model",
++   "name": "_bind_at",
++   "home": "gnd.model",
++   "before": "f8dd186f2421a7bd0db780140ae211ba840ea83b2e3de04cf6fabfb3b1060571",
++   "after": "d1b4288429f91a348f4dccab7b04371767458bb9153c021152fdcdee7a85d0e8",
++   "reason": "Body changed by LX3 review (9e1c1d29) catalog validation and mixed witness intake."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.checker",
++   "name": "ConstraintVerdict",
++   "home": "gnd.checker._reports",
++   "before": "5f57d756fdc9205a8a4e6d68054001dd442f0a31713a256324e070907f626f84",
++   "after": "45d98dcf9d4183036b8d2d94f2096ae6e33071a2aa9735fdea44b7b30a343348",
++   "reason": "Body changed by GW0 (24c72d86) guarded antecedent and literal domain reports; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.checker",
++   "name": "check_legacy",
++   "home": "gnd.checker._core",
++   "before": "351bc07424c30c90265e4b44287ed92b68e1b6e22f3e3ae583b2b8c66b93c42a",
++   "after": "234b70d556b2e9ae9b8ec7074977e7cc0919fd069752383f7e9d55df21f67b59",
++   "reason": "Body changed by GW0 (24c72d86) guarded antecedent and literal domain reports; GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.checker",
++   "name": "_correspondence_message",
++   "home": "gnd.checker._core",
++   "before": "e79933ec6b7dc23a0ca0c7a974b2215c085df95f93a1fb2b059031da3b4f03af",
++   "after": "74e66de4bb3c6dd2f82c484ca030f3b8500f0c25486d4898996a2cf1901bdc03",
++   "reason": "Body changed by GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF6b",
++   "module": "gnd.checker",
++   "name": "_family_message_guarded",
++   "home": "gnd.checker._core",
++   "before": "3ab324ee716cf1dc22654bce2d4c18e113fb7b6746c9e89039f7606caf27aa60",
++   "after": "127410c2e323aabe7cf6d620fab9be9984364018fa2e19c8cb23bbf037f72d45",
++   "reason": "Body changed by GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters; GC3 (20172ace, b89a1f00) disjunctive guarded consequents."
++  },
++  {
++   "kind": "RF4",
++   "old": "gnd.api",
++   "name": "_witness_inputs",
++   "home": "gnd.witness.service",
++   "before": {
++    "algorithm_sha256": "fee59503ebf5d68349dc8172b34f753fc2a0fc1ce4060b7179ef8d7cb493667a",
++    "imports": [
++     "DEFAULT_LIMITS",
++     "Path",
++     "WitnessInputError",
++     "_parse_document_bytes",
++     "bind_declared_references",
++     "guard_bytes",
++     "load_model_bytes",
++     "load_population_bytes"
++    ],
++    "raw_sha256": "a1e6e15a1d9b3ea7be24fea1d79b9a6ae874ea4de8841e8c1dfdcc94688262f8"
++   },
++   "after": {
++    "algorithm_sha256": "75b882a4aa0a10e4a5f3bef0642c44d53c7569e118db2bbfa1d75e3834920120",
++    "imports": [
++     "Path",
++     "_parse_document_bytes",
++     "bind_declared_references",
++     "guard_bytes",
++     "load_model_bytes",
++     "load_population_bytes"
++    ],
++    "raw_sha256": "3f6dc94d73395ad52d973c77578c0e130574c2ce2ec2b45604fcd5f0f4c0a6e2"
++   },
++   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
++  },
++  {
++   "kind": "RF4",
++   "old": "gnd.api",
++   "name": "witness",
++   "home": "gnd.witness.service",
++   "before": {
++    "raw_sha256": "d80dd38c50c84bedafae3f0e6745a6f8a341ff846ccc3c9e15cdf239f35aa2b4",
++    "algorithm_sha256": "74c6c0a0e626d822bdc0a918aa9ce919567a5f96171e4394e1b219a01c40176d",
++    "imports": []
++   },
++   "after": {
++    "algorithm_sha256": "617a4be6f6aea01b1782b2899f284e0392b156cdf8122b3d15b408a891ac8cd9",
++    "imports": [],
++    "raw_sha256": "a6aa13f8eb254a2f233534df2dc3468a89222070b16ce21080e009a1dc8c5947"
++   },
++   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
++  },
++  {
++   "kind": "RF4",
++   "old": "gnd.api",
++   "name": "replay",
++   "home": "gnd.witness.service",
++   "before": {
++    "raw_sha256": "940f2777f6a073df07dcd9439b73d61029d403cbe9209000c31bf31621065ff3",
++    "algorithm_sha256": "150f7d03935b7ec9add7e5cb207b06a3d5185b4055055a9b28606655931603bb",
++    "imports": []
++   },
++   "after": {
++    "algorithm_sha256": "5b2bbf59e00897890365cca178bb723ddd2bf029a7c7ad035f9a8cadf61b4970",
++    "imports": [],
++    "raw_sha256": "cfa6e62d84c867e16722aaec40257d80aace438b44d25472493aaf115562fbce"
++   },
++   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
++  },
++  {
++   "kind": "RF4",
++   "old": "gnd.assurance",
++   "name": "_phase3_target",
++   "home": "gnd.assurance.core",
++   "before": {
++    "raw_sha256": "916209f11a7283346e5c9c3eaf1f2406caf473888591a188328f614c9214cc66",
++    "algorithm_sha256": "ceee6e9f5060af3720af21829a1b3b8277815fb9a329097717536b6addd0db2e",
++    "imports": []
++   },
++   "after": {
++    "algorithm_sha256": "879056b79e6d9dd19080c61d2076dc7df58c91e22b999832794b69e80522bf7b",
++    "imports": [],
++    "raw_sha256": "049b5d5b8bdd40de1b8e8f705fc9b7d43e74ad58d22485897278511b3d611f1f"
++   },
++   "reason": "This repair excludes GC2 filtered and GC3 any_of guarded rows from the frozen Phase 3 denominator, as Phase 6 excluded guarded exists."
++  },
++  {
++   "kind": "RF4",
++   "old": "gnd.api",
++   "name": "_run_check_raw",
++   "home": "gnd.checking_service",
++   "before": {
++    "algorithm_sha256": "21493c7deeda8412c5c013e8a9cbad967de075bf2d8ce6b4071ba85abfcac65e",
++    "imports": [
++     "AnchorError",
++     "AnchorSidecar",
++     "CompositionError",
++     "MAX_DOCUMENT_BYTES",
++     "acyclic_extents",
++     "acyclic_extents",
++     "bind_anchors",
++     "bind_population",
++     "calculation_scope",
++     "compare",
++     "compose",
++     "read_anchor_sidecar",
++     "read_regular_path",
++     "refuse_unsupported",
++     "resolve_context",
++     "validate_anchor_sidecar",
++     "verify_composition"
++    ],
++    "raw_sha256": "db7a6e988164b9e691569bf8afa9d6f3f109194e48fb22b7f7119920501f85ee"
++   },
++   "after": {
++    "algorithm_sha256": "e0c33a59a6e8d1d997fc261cc5adb682a6fd536da4ed1b7008d8e75cb7077837",
++    "imports": [
++     "AnchorError",
++     "AnchorSidecar",
++     "CompositionError",
++     "MAX_DOCUMENT_BYTES",
++     "ReferenceInputError",
++     "acyclic_extents",
++     "acyclic_extents",
++     "bind_anchors",
++     "bind_population",
++     "calculation_scope",
++     "compare",
++     "compose",
++     "read_anchor_sidecar",
++     "read_regular_path",
++     "refuse_unsupported",
++     "resolve_context",
++     "validate_anchor_sidecar",
++     "verify_composition"
++    ],
++    "raw_sha256": "ad05dba206e56afa2000ea26cd1e57fdd449fb1efbbc22af163f7ad465fdaf5f"
++   },
++   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
++  },
++  {
++   "kind": "RF4",
++   "old": "gnd.api",
++   "name": "_run_check",
++   "home": "gnd.checking_service",
++   "before": {
++    "raw_sha256": "7d158ab405d7c483a3413011173144084de980208bdd07495c55c452e50f1db8",
++    "algorithm_sha256": "6df10f44b770a3362cad9f101d0abcefc9be457dd0383f4baa2dbd2df1def50d",
++    "imports": [
++     "build_admission",
++     "wire_verdicts"
++    ]
++   },
++   "after": {
++    "algorithm_sha256": "098300c5ef021a9c99938b2d0469c320745bd3ec7811d6709749b7ea01020e49",
++    "imports": [
++     "build_admission",
++     "wire_verdicts"
++    ],
++    "raw_sha256": "322efa15704043b4ee14f7150548937a0dc1aceed983bcf780492f427c81039e"
++   },
++   "reason": "Literature interop LX1-LX4 and the LX3 review route witness, replay and check through include roots and fixed reference catalogs."
++  }
++ ]
++}
+diff --git a/.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json b/.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json
+index 563277368..bf284068e 100644
+--- a/.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json
++++ b/.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json
+@@ -117,6 +117,19 @@
+       "reason": "Retained failure meaning after the analytics-m3-repairs phase-8 frozen population schema preparation (65b6de0) changed the function's first statement.",
+       "after_old": "def _schema_issues(doc: Any) -> list[ValidationIssue]:\n    schema = _prepared_population_schema(_load_population_schema())\n",
+       "after_new": "def _schema_issues(doc: Any) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n    schema = _prepared_population_schema(_load_population_schema())\n"
++    },
++    {
++      "id": "M-SEM-datetime-semantic_adapter-canonical_scalar",
++      "before_file": "src/gnd/semantic_adapter.py",
++      "after_file": "src/gnd/values.py",
++      "old": "def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | None:\n    \"\"\"Exact identity plus optional ordering coordinates; never stringify a type mismatch.\"\"\"\n",
++      "new": "def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Exact identity plus optional ordering coordinates; never stringify a type mismatch.\"\"\"\n",
++      "expect_red": [
++        "tests/test_rf1_semantic_pins.py::test_datetime_site[semantic_adapter.canonical_scalar]"
++      ],
++      "reason": "GW0 (24c72d86) moved canonical_scalar to gnd.values; semantic_adapter.canonical_scalar is the same object, so the site keeps its failure meaning",
++      "after_old": "def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | None:\n    \"\"\"Exact identity plus optional ordering coordinates; never stringify a type mismatch.\"\"\"\n",
++      "after_new": "def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Exact identity plus optional ordering coordinates; never stringify a type mismatch.\"\"\"\n"
+     }
+   ]
+ }
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 09ba5d2ef..f36aaa93c 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1769,7 +1769,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
+ - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
+ - status: canonical
+-- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
++- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+ - used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
+ - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
+@@ -1842,7 +1842,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - uses: assurance.identity, check.branches, check.snapshot_decision, checker.evaluate, infra.artifacts, model.loading, semantics.snapshot_spec, semantics.transitions
+ - used_by: assurance.transport, check.service, cli.api, exp.acceptance, infra.report_payloads
+ - tests: tests/test_v6_phase6_execution.py
+-- notes: The package initializer is a pure compatibility re-export surface assigned to its policy owner, including CorrespondenceDigests from assurance.identity. Certification separates semantic acceptance from evidence coverage and requires proved infrastructure, matching production identity and a valid extraction route.
++- notes: The package initializer is a pure compatibility re-export surface assigned to its policy owner, including CorrespondenceDigests from assurance.identity. Certification separates semantic acceptance from evidence coverage and requires proved infrastructure, matching production identity and a valid extraction route. The legacy Phase 3 denominator excludes the later guarded exists, filter and disjunction rows.
+ 
+ 
+ ### assurance.identity
+@@ -3049,7 +3049,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - uses: check.branches, checker.evaluate, model.loading, model.population_loading, model.query_index, synth.assemble, synth.boundary, synth.mutations
+ - used_by: measure.coverage, measure.report, synth.service
+ - tests: tests/test_measure_coverage.py, tests/test_measure_derivation.py, tests/test_synth_boundary.py
+-- notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists and opt-in compiled-subset routes from the predecessor frontier contract.
++- notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists, guarded-filter, guarded-disjunction and opt-in compiled-subset routes from the predecessor frontier contract.
+ 
+ 
+ ### synth.corpus
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index a26317c7a..2574f42c3 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -4166,54 +4166,60 @@ Generated by `scripts/components_index.py`.
+ - used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
+ 
+ #### model.validation -> check.universe
++- `src/gnd/model/_guarded.py -> src/gnd/universe.py`
+ - `src/gnd/model/_validation.py -> src/gnd/universe.py`
+ 
+ #### model.validation -> infra.errors
++- `src/gnd/model/_guarded.py -> src/gnd/errors.py`
+ - `src/gnd/model/_induction.py -> src/gnd/errors.py`
+-- `src/gnd/model/_unattended.py -> src/gnd/errors.py`
+-- `src/gnd/model/_validation.py -> src/gnd/errors.py`
++- `src/gnd/model/_parsing.py -> src/gnd/errors.py`
+ 
+ #### model.validation -> infra.graphs
+ - `src/gnd/model/_validation.py -> src/gnd/graphs.py`
+ 
+ #### model.validation -> infra.input_policy
++- `src/gnd/model/_parsing.py -> src/gnd/input_policy.py`
+ - `src/gnd/model/_validation.py -> src/gnd/input_policy.py`
+ 
+ #### model.validation -> infra.verdict_prose
+ - `src/gnd/model/_validation.py -> src/gnd/verbalize.py`
+ 
+ #### model.validation -> infra.yaml_comments
++- `src/gnd/model/_parsing.py -> src/gnd/yaml_comments.py`
+ - `src/gnd/model/_validation.py -> src/gnd/yaml_comments.py`
+ 
+ #### model.validation -> model.anchors
+ - `src/gnd/model/_unattended.py -> src/gnd/anchors.py`
+ 
+ #### model.validation -> model.atom_bindings
++- `src/gnd/model/_guarded.py -> src/gnd/atoms.py`
+ - `src/gnd/model/_validation.py -> src/gnd/atoms.py`
+ 
+ #### model.validation -> model.document
++- `src/gnd/model/_parsing.py -> src/gnd/documents.py`
+ - `src/gnd/model/_validation.py -> src/gnd/documents.py`
+ 
+ #### model.validation -> model.population_loading
+-- `src/gnd/model/_validation.py -> src/gnd/population.py`
++- `src/gnd/model/_parsing.py -> src/gnd/population.py`
+ 
+ #### model.validation -> model.query_index
+-- `src/gnd/model/_validation.py -> src/gnd/model_index.py`
++- `src/gnd/model/_guarded.py -> src/gnd/model_index.py`
+ 
+ #### model.validation -> model.reference_resolution
+-- `src/gnd/model/_validation.py -> src/gnd/model_queries.py`
++- `src/gnd/model/_guarded.py -> src/gnd/model_queries.py`
+ 
+ #### model.validation -> model.scalar_identity
+-- `src/gnd/model/_validation.py -> src/gnd/values.py`
++- `src/gnd/model/_guarded.py -> src/gnd/values.py`
+ 
+ #### model.validation -> model.scalar_terms
++- `src/gnd/model/_guarded.py -> src/gnd/terms.py`
+ - `src/gnd/model/_validation.py -> src/gnd/terms.py`
+ 
+ #### model.validation -> semantics.snapshot_ir
+-- `src/gnd/model/_validation.py -> src/gnd/semantic_ir.py`
++- `src/gnd/model/_guarded.py -> src/gnd/semantic_ir.py`
+ 
+ #### model.validation -> semantics.snapshot_spec
+-- `src/gnd/model/_validation.py -> src/gnd/semantic_spec.py`
++- `src/gnd/model/_guarded.py -> src/gnd/semantic_spec.py`
+ 
+ ### model.verbalization
+ - uses: check.universe, infra.verdict_prose, model.atom_bindings, model.document, model.extraction_vocabulary, model.loading, model.population_sentences, model.query_index, model.reference_schemes, model.scalar_terms
+diff --git a/dev/components/modules/assurance.md b/dev/components/modules/assurance.md
+index 479673a78..e26c72110 100644
+--- a/dev/components/modules/assurance.md
++++ b/dev/components/modules/assurance.md
+@@ -41,17 +41,17 @@ Internal v6 snapshot correspondence coverage and assurance decisions.
+ | `CorrespondenceEvidence` | class | 40 | Authenticated evidence capability produced only by the repository reader. |
+ | `ValidatedScopeWalk` | class | 70 | (no docstring) |
+ | `AssuranceBlock` | class | 80 | (no docstring) |
+-| `phase3_scope_ids() -> tuple[str, ...]` | function | 152 | The owner-approved 230-row correspondence denominator. |
+-| `walk_snapshot_scope(adapted, decision, evidence) -> ValidatedScopeWalk` | function | 157 | Validate exact applicable/current sets; reject forged registry rows. |
+-| `certify_snapshot(decision, *, scope, extraction_route) -> AssuranceBlock` | function | 207 | Compute internal assurance by delegating to the proved policy helpers. |
+-| `assurance_prerequisites(surface, consumer) -> tuple[str, ...]` | function | 255 | Derive every prerequisite before choosing an assurance outcome. |
+-| `AssuranceBlockV1` | class | 306 | Wire projection; only certification may confer evidence authority. |
+-| `AssuranceBlockV1.as_dict(self) -> dict[str, object]` | method | 350 | (no docstring) |
+-| `semantic_decision_for_band(band) -> SemanticDecision \| None` | function | 359 | (no docstring) |
+-| `AuthenticatedExecution` | class | 372 | (no docstring) |
+-| `AssuranceScope` | class | 387 | (no docstring) |
+-| `derive_assurance_scope(execution, *, consumer) -> AssuranceScope` | function | 519 | (no docstring) |
+-| `certify_result(execution, *, scope, evidence) -> AssuranceBlockV1` | function | 550 | (no docstring) |
++| `phase3_scope_ids() -> tuple[str, ...]` | function | 155 | The owner-approved 230-row correspondence denominator. |
++| `walk_snapshot_scope(adapted, decision, evidence) -> ValidatedScopeWalk` | function | 160 | Validate exact applicable/current sets; reject forged registry rows. |
++| `certify_snapshot(decision, *, scope, extraction_route) -> AssuranceBlock` | function | 210 | Compute internal assurance by delegating to the proved policy helpers. |
++| `assurance_prerequisites(surface, consumer) -> tuple[str, ...]` | function | 258 | Derive every prerequisite before choosing an assurance outcome. |
++| `AssuranceBlockV1` | class | 309 | Wire projection; only certification may confer evidence authority. |
++| `AssuranceBlockV1.as_dict(self) -> dict[str, object]` | method | 353 | (no docstring) |
++| `semantic_decision_for_band(band) -> SemanticDecision \| None` | function | 362 | (no docstring) |
++| `AuthenticatedExecution` | class | 375 | (no docstring) |
++| `AssuranceScope` | class | 390 | (no docstring) |
++| `derive_assurance_scope(execution, *, consumer) -> AssuranceScope` | function | 522 | (no docstring) |
++| `certify_result(execution, *, scope, evidence) -> AssuranceBlockV1` | function | 553 | (no docstring) |
+ 
+ ## gnd.assurance.evidence — `src/gnd/assurance/evidence.py`
+ Components: assurance.evidence
+diff --git a/dev/components/modules/model.md b/dev/components/modules/model.md
+index 63fd1dd26..200ca321e 100644
+--- a/dev/components/modules/model.md
++++ b/dev/components/modules/model.md
+@@ -35,6 +35,13 @@ Model documents as plain JSON values (evolve-loading follow-up, IK4-Q3, IKE-Q2).
+ | `json_document(document, *, refuse, encodable) -> dict[str, Any]` | function | 27 | The parsed model document as plain Python, in one walk over every value. |
+ | `model_wire(model)` | function | 111 | The authored-shape document of a loaded model, for re-entry into intake. |
+ 
++## gnd.model._guarded — `src/gnd/model/_guarded.py`
++Components: model.validation
++Guarded validation added by the guarded-rule milestones (GW0-GW1, GC1-GC3).
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++
+ ## gnd.model._includes — `src/gnd/model/_includes.py`
+ Components: model.loading
+ One resolver and admission guards for pinned version-5 model includes.
+@@ -69,6 +76,14 @@ Existing model operations section; historical facade retained.
+ | --- | --- | --- | --- |
+ | `compile_operation(operation, effects) -> list[dict[str, Any]]` | function | 63 | Standing obligations derivable from one operation's preconditions. |
+ 
++## gnd.model._parsing — `src/gnd/model/_parsing.py`
++Components: model.validation
++Bounded model-document parsing, shared by model loading and include resolution.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `parse_model_document(data, *, source) -> Any` | function | 25 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
++
+ ## gnd.model._paths — `src/gnd/model/_paths.py`
+ Components: model.loading
+ Historical confined reference paths and retained roots; shared by includes.
+@@ -96,22 +111,21 @@ Model loading with two-layer validation.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `yaml_stream_guard_error(path) -> str \| None` | function | 105 | Pre-load guard for untrusted YAML input (T-01-02), or None when safe. |
+-| `dynamic_subject_is_functional(subject, fact_types) -> bool \| None` | function | 2141 | Do the roles the SUBJECT BINDS determine at most one value? |
+-| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 3196 | Present legacy sugar and every explicit clause without changing model bytes. |
+-| `AggregateAnalysis` | class | 3358 | The one shared, total interpretation of a structured aggregate. |
+-| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3372 | Analyze an aggregate without assuming schema-valid input. |
+-| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3633 | Use the one aggregate policy walk with declared body-role primitives. |
+-| `body_components(rule) -> list[frozenset[str]]` | function | 3648 | The connected components of a rule body's join graph, canonically ordered. |
+-| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3708 | Fact type -> the fact types its rule reads. |
+-| `DerivationEdge` | class | 3727 | (no docstring) |
+-| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3735 | Keep every labelled atom edge, including duplicate and mixed edges. |
+-| `DerivationClassification` | class | 3759 | One structured fact type's stability under the declared operations. |
+-| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3772 | Return asserted leaves beneath one structured head, failing closed. |
+-| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3863 | Classify every structured fact type against every operation touch. |
+-| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3990 | SCC-condensed, dependency-first deterministic structured strata. |
+-| `semantic_validate(doc) -> list[ValidationIssue]` | function | 5105 | Run every layer-2 semantic rule over a parsed model document. |
+-| `parse_model_document(data, *, source) -> Any` | function | 5313 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
++| `yaml_stream_guard_error(path) -> str \| None` | function | 119 | Pre-load guard for untrusted YAML input (T-01-02), or None when safe. |
++| `dynamic_subject_is_functional(subject, fact_types) -> bool \| None` | function | 2155 | Do the roles the SUBJECT BINDS determine at most one value? |
++| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 2872 | Present legacy sugar and every explicit clause without changing model bytes. |
++| `AggregateAnalysis` | class | 3034 | The one shared, total interpretation of a structured aggregate. |
++| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3048 | Analyze an aggregate without assuming schema-valid input. |
++| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3309 | Use the one aggregate policy walk with declared body-role primitives. |
++| `body_components(rule) -> list[frozenset[str]]` | function | 3324 | The connected components of a rule body's join graph, canonically ordered. |
++| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3384 | Fact type -> the fact types its rule reads. |
++| `DerivationEdge` | class | 3403 | (no docstring) |
++| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3411 | Keep every labelled atom edge, including duplicate and mixed edges. |
++| `DerivationClassification` | class | 3435 | One structured fact type's stability under the declared operations. |
++| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3448 | Return asserted leaves beneath one structured head, failing closed. |
++| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3539 | Classify every structured fact type against every operation touch. |
++| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3666 | SCC-condensed, dependency-first deterministic structured strata. |
++| `semantic_validate(doc) -> list[ValidationIssue]` | function | 4784 | Run every layer-2 semantic rule over a parsed model document. |
+ 
+ ## gnd.model.flattening — `src/gnd/model/flattening.py`
+ Components: model.loading
+diff --git a/dev/components/modules/synth.md b/dev/components/modules/synth.md
+index fac903e3c..7023344fb 100644
+--- a/dev/components/modules/synth.md
++++ b/dev/components/modules/synth.md
+@@ -64,11 +64,11 @@ The two case kinds the three population labels do not name.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `frontier_codes_for(model) -> tuple[str, ...]` | function | 147 | Add source-only reasons without widening the pinned legacy frontier. |
+-| `reason_codes_by_family() -> dict[str, tuple[str, ...]]` | function | 175 | ``family -> the band-4 reason codes the family's OWN branch can emit``. |
+-| `no_subjects_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 305 | Populations that reach evaluation with an EMPTY subject set. |
+-| `unchecked_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 625 | One population per band-4 route THIS model reaches, asserting its code. |
+-| `enumerate_frontier(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 700 | Both frontier kinds for one model, in a stable order. |
++| `frontier_codes_for(model) -> tuple[str, ...]` | function | 152 | Add source-only reasons without widening the pinned legacy frontier. |
++| `reason_codes_by_family() -> dict[str, tuple[str, ...]]` | function | 180 | ``family -> the band-4 reason codes the family's OWN branch can emit``. |
++| `no_subjects_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 310 | Populations that reach evaluation with an EMPTY subject set. |
++| `unchecked_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 630 | One population per band-4 route THIS model reaches, asserting its code. |
++| `enumerate_frontier(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 705 | Both frontier kinds for one model, in a stable order. |
+ 
+ ## gnd.synth.guarded — `src/gnd/synth/guarded.py`
+ Components: synth.guarded
+diff --git a/dev/components/modules/tools.md b/dev/components/modules/tools.md
+index 58ff2693f..f14407fbe 100644
+--- a/dev/components/modules/tools.md
++++ b/dev/components/modules/tools.md
+@@ -24,6 +24,14 @@ Run a terminal agent with exactly one credential imported from an env file.
+ | `read_key(env_file, name) -> str` | function | 22 | (no docstring) |
+ | `main() -> int` | function | 42 | (no docstring) |
+ 
++## tools.build_ci_repair_successors — `tools/build_ci_repair_successors.py`
++Components: unassigned
++Write the 2026-11-16 main CI repair's chained successor rows from the current sources.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `main() -> int` | function | 75 | (no docstring) |
++
+ ## tools.build_composition_example — `tools/build_composition_example.py`
+ Components: unassigned
+ Build the composition how-to's sources over src/gnd/examples/composition/model.orm.yaml.
+@@ -35,6 +43,20 @@ Build the composition how-to's sources over src/gnd/examples/composition/model.o
+ | `conflict_sources() -> dict` | function | 130 | (no docstring) |
+ | `main(directory) -> None` | function | 140 | (no docstring) |
+ 
++## tools.build_expense_receipts_example — `tools/build_expense_receipts_example.py`
++Components: unassigned
++Build the expense receipts example: three documents, one checked claim.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `prov(quote)` | function | 37 | (no docstring) |
++| `anchored(role, quote)` | function | 42 | (no docstring) |
++| `date_rule(rule_id, bound_fact, op, quote)` | function | 83 | (no docstring) |
++| `dump(path, obj) -> bytes` | function | 164 | (no docstring) |
++| `gnd(run, *args, ok)` | function | 171 | (no docstring) |
++| `anchors_for(facts, text)` | function | 179 | (no docstring) |
++| `main(out)` | function | 194 | (no docstring) |
++
+ ## tools.build_growth_example — `tools/build_growth_example.py`
+ Components: unassigned
+ Build the growth how-to's two evolve proposals over src/gnd/examples/growth/model.orm.yaml.
+diff --git a/docs/bookrec/07-native.md b/docs/bookrec/07-native.md
+index f457d2f12..95faa1732 100644
+--- a/docs/bookrec/07-native.md
++++ b/docs/bookrec/07-native.md
+@@ -711,9 +711,9 @@ does not name is unknown, which is different from a list that is declared but em
+ ## Next steps
+ 
+ - Continue offline with [chapter 8](08-guarded-rules.md): add a guarded rule
+-  and prove it judges something. It does not need the PyRel environment.
++  and prove it judges something, without PyRel.
+ - Write rules for your own domain with
+-  [gnd-model-from-text](../agents/model-from-text.md), then build the same kind of app.
++  [gnd-model-from-text](../agents/model-from-text.md), then build a similar app.
+ - Drive your own coding assistant against the same model and checker. That is a
+   separate session contract you write for [`gnd exp run`](../agents/dev-session.md),
+   with your agent's policy in place of the stand-in's; the recorded sessions
+diff --git a/docs/bookrec/08-guarded-rules.md b/docs/bookrec/08-guarded-rules.md
+index 7e3b7b4c1..5c1bdd68f 100644
+--- a/docs/bookrec/08-guarded-rules.md
++++ b/docs/bookrec/08-guarded-rules.md
+@@ -21,7 +21,7 @@ Each step answers one question about a guarded rule:
+     `--guarded-diagnostics`, `--baseline-model` and `--guarded-cases` are on
+     `main` after 0.3.0 and are not in a published package yet. Install GND
+     from a checkout of the repository to run this chapter. `--rule-ids`,
+-    `--baseline` and `--allow-vacuous` have shipped since 0.2.0, as the
++    `--baseline` and `--allow-vacuous` are in published releases, as the
+     [release notes](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules)
+     record.
+ 
+diff --git a/docs/bookrec/09-suggested-rules.md b/docs/bookrec/09-suggested-rules.md
+index 04eae7bc8..2f0524b29 100644
+--- a/docs/bookrec/09-suggested-rules.md
++++ b/docs/bookrec/09-suggested-rules.md
+@@ -428,7 +428,7 @@ the expense context where one exists.
+ | GR-D4 (issue 95) | shared definitions, project-owned policies | [Two-team expense tutorial](../tutorials/shared-expense-policies.md) and [its commands](../how-to/shared-expense-policies-commands.md) |
+ | GR-D5 (issue 96) | accept rules with nothing to judge | [`--allow-vacuous` on the series export](#a-series-export); [Adopt rules with a baseline](../how-to/adopt-rules-with-a-baseline.md#accept-a-rule-that-has-nothing-to-judge-yet) |
+ | GR-D6 (issue 97) | label facts a program produced | [`source: tool-output` and `producer` on the series export](#a-series-export) |
+-| GR-D7 (issue 118) | a release that carries the rule checks | [Release notes, 0.2.0](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules) |
++| GR-D7 (issue 118) | a release that carries the rule checks | [Release notes](../release-notes.md#rule-checks-for-projects-that-already-break-their-rules) |
+ | GR-D8 (issue 179) | a failing and an active passing case per guarded rule | [Chapter 8: generate a failing and a passing case](08-guarded-rules.md#generate-failing-and-active-passing-cases) |
+ | GR-D9 (issue 180) | two rule editions on one population | [Chapter 8: compare two editions](08-guarded-rules.md#compare-two-editions-on-the-same-output) |
+ | GR-D10 (issue 181) | guarded rules from joined facts | [Ask the data for joined rules](#ask-the-data-for-joined-rules) |
+diff --git a/src/gnd/assurance/core.py b/src/gnd/assurance/core.py
+index 5b968ece4..fae320afc 100644
+--- a/src/gnd/assurance/core.py
++++ b/src/gnd/assurance/core.py
+@@ -115,6 +115,9 @@ def _phase3_target(row: Branch) -> bool:
+     # Phase 6 existential consequents likewise stay outside the frozen denominator.
+     if row.surface == "snapshot" and row.family == "guarded" and row.variant == "exists":
+         return False
++    # GC2 antecedent filters and GC3 disjunctive consequents are later guarded lanes too.
++    if row.surface == "snapshot" and row.family == "guarded" and row.variant in {"filtered", "any_of"}:
++        return False
+     if (
+         row.reason_code
+         in {
+diff --git a/src/gnd/model/_guarded.py b/src/gnd/model/_guarded.py
+new file mode 100644
+index 000000000..5b029753a
+--- /dev/null
++++ b/src/gnd/model/_guarded.py
+@@ -0,0 +1,408 @@
++"""Guarded validation added by the guarded-rule milestones (GW0-GW1, GC1-GC3).
++
++A separate home inside the ``gnd.model`` package so ``_validation`` stays under
++its RF6 size ceiling (main CI repair, 2026-11-16). The definitions below moved
++verbatim from ``gnd.model._validation``, which imports them back and registers
++them in ``_SEMANTIC_RULES`` in their original order. They call seven pinned
++``_validation`` helpers through :data:`_registered`, which ``_validation`` fills
++at import time, so this module never imports ``_validation`` back (the RF8
++graph check forbids the cycle, as for ``gnd.model._unattended``).
++"""
++
++from __future__ import annotations
++
++from collections.abc import Callable
++from typing import Any
++
++from gnd.atoms import atom_bind
++from gnd.errors import ValidationIssue
++from gnd.terms import (
++    DEFAULT_LIMITS,
++    MAX_MEMBERSHIP_ITEMS,
++    MEMBERSHIP_OPERATORS,
++    NUMERIC_PRIMITIVES,
++    analyze_term,
++    compile_membership,
++    membership_domain,
++    term_variables,
++    valid_duration,
++)
++from gnd.universe import supertype_parents as _supertype_parents
++
++#: The pinned ``_validation`` helpers the moved definitions call, registered by
++#: ``gnd.model._validation`` once they are defined.
++_registered: dict[str, Callable[..., Any]] = {}
++
++
++def _filter_derivation_term_issues(*args, **kwargs):
++    return _registered['_filter_derivation_term_issues'](*args, **kwargs)
++
++
++def _guarded_literal_matches_primitive(*args, **kwargs):
++    return _registered['_guarded_literal_matches_primitive'](*args, **kwargs)
++
++
++def _guarded_primitives_compatible(*args, **kwargs):
++    return _registered['_guarded_primitives_compatible'](*args, **kwargs)
++
++
++def _iter_guarded_atoms(*args, **kwargs):
++    return _registered['_iter_guarded_atoms'](*args, **kwargs)
++
++
++def _iter_guarded_constraints(*args, **kwargs):
++    return _registered['_iter_guarded_constraints'](*args, **kwargs)
++
++
++def _primitive_maps(*args, **kwargs):
++    return _registered['_primitive_maps'](*args, **kwargs)
++
++
++def _variable_name(*args, **kwargs):
++    return _registered['_variable_name'](*args, **kwargs)
++
++
++def _guarded_alternatives(consequent):
++    """Yield each single consequent and its document path suffix."""
++    if not isinstance(consequent, dict):
++        return
++    alternatives = consequent.get("any_of")
++    if isinstance(alternatives, list):
++        for index, alternative in enumerate(alternatives):
++            if isinstance(alternative, dict):
++                yield f".consequent.any_of[{index}]", alternative
++    else:
++        yield ".consequent", consequent
++
++
++def _iter_guarded_scopes(doc):
++    """Use the shared antecedent with one consequent's local variable scope."""
++    for path, constraint in _iter_guarded_constraints(doc):
++        for prefix, consequent in _guarded_alternatives(constraint.get("consequent")):
++            yield path, prefix, {**constraint, "consequent": consequent}
++
++
++def _iter_guarded_comparisons(consequent, where=None):
++    if isinstance(where, list):
++        for index, comparison in enumerate(where):
++            if isinstance(comparison, dict):
++                yield f".where[{index}]", comparison
++    for prefix, alternative in _guarded_alternatives(consequent):
++        direct = alternative.get("comparison")
++        if isinstance(direct, dict):
++            yield f"{prefix}.comparison", direct
++        exists = alternative.get("exists")
++        if isinstance(exists, dict) and isinstance(exists.get("where"), list):
++            for index, comparison in enumerate(exists["where"]):
++                if isinstance(comparison, dict):
++                    yield f"{prefix}.exists.where[{index}]", comparison
++
++
++def _iter_guarded_memberships(guard):
++    for path, comparison in _iter_guarded_comparisons(guard.get("consequent"), guard.get("where")):
++        right = comparison.get("right")
++        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
++            yield comparison.get("left"), right, path
++
++
++def _iter_guarded_comparison_terms(path, comparison):
++    if "left" in comparison:
++        yield f"{path}.left", comparison["left"]
++    if "right" in comparison:
++        right = comparison["right"]
++        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
++            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
++                yield f"{path}.right[{index}]", member
++        else:
++            yield f"{path}.right", right
++
++
++_GUARDED_LITERAL_DOMAIN_WORK = 100_000
++
++
++def _rule_guarded_literal_domain(doc: dict[str, Any]) -> list[ValidationIssue]:
++    """Diagnose literal bindings excluded by a declared role or object domain."""
++    from itertools import chain
++
++    from gnd.model_index import ModelIndex
++    from gnd.model_queries import _identifying_id, _resolve_reference
++    from gnd.semantic_ir import Scalar
++    from gnd.semantic_spec import scalar_identical, scalar_range_state
++    from gnd.values import canonical_scalar
++
++    guards = list(_iter_guarded_constraints(doc))
++    if not guards:
++        return []
++    fact_types = doc.get("fact_types")
++    object_types = doc.get("object_types")
++    if not isinstance(fact_types, list) or not isinstance(object_types, list):
++        return []
++    facts = [
++        dict(fact, roles=[role for role in fact["roles"] if isinstance(role, dict)])
++        for fact in fact_types
++        if isinstance(fact, dict) and isinstance(fact.get("roles"), list)
++    ]
++    objects = [
++        obj for obj in object_types if isinstance(obj, dict)
++        and isinstance(obj.get("subtype_of", []), list)
++        and isinstance(obj.get("reference", {}), dict)
++    ]
++    index = ModelIndex(None, {"fact_types": facts, "object_types": objects})
++    roles = index.role_object_types()
++    objects_by_id = index.object_types_by_id()
++    parents = _supertype_parents({"object_types": objects})
++    by_role: dict[tuple[str, str], list[tuple[str, dict]]] = {}
++    by_type: dict[str, list[tuple[str, dict]]] = {}
++    for position, domain in enumerate(doc["constraints"]):
++        if not isinstance(domain, dict) or domain.get("type") != "value":
++            continue
++        target = domain.get("object_type")
++        if not isinstance(target, str) or target not in objects_by_id:
++            continue
++        ref = domain.get("role_ref")
++        entry = (f"constraints[{position}]", domain)
++        if ref is None:
++            by_type.setdefault(target, []).append(entry)
++        elif isinstance(ref, dict):
++            fact, role = ref.get("fact_type"), ref.get("role")
++            if isinstance(fact, str) and isinstance(role, str):
++                by_role.setdefault((fact, role), []).append(entry)
++    if not by_type and not by_role:
++        return []
++
++    remaining = _GUARDED_LITERAL_DOMAIN_WORK
++    issues: list[ValidationIssue] = []
++    type_domains: dict[str, list[list[tuple[str, dict]]]] = {}
++    tested: dict[tuple[str, str, str], bool] = {}
++
++    def charge() -> None:
++        nonlocal remaining
++        remaining -= 1
++        if remaining < 0:
++            raise _GuardedLiteralDomainLimit
++
++    def domains_for_type(role_type: str) -> list[list[tuple[str, dict]]]:
++        if role_type not in type_domains:
++            pending = [role_type]
++            if by_type:
++                denoting = _resolve_reference(role_type, objects_by_id, parents, set(), _identifying_id)
++                if denoting is not None:
++                    pending.append(denoting)
++            seen = set()
++            while pending:
++                charge()
++                current = pending.pop()
++                if current not in seen:
++                    seen.add(current)
++                    pending.extend(parents.get(current, ()))
++            type_domains[role_type] = [
++                by_type[target] for target in sorted(seen) if target in by_type
++            ]
++        return type_domains[role_type]
++
++    def excluded(value: Any, raw: Scalar, domain: dict) -> bool:
++        allowed = domain.get("allowed")
++        if isinstance(allowed, list) and allowed:
++            for item in allowed:
++                charge()
++                scalar = canonical_scalar(item, None)
++                if not isinstance(scalar, Scalar) or scalar_identical(raw, scalar):
++                    return False
++            return True
++        ranges = [domain["range"]] if "range" in domain else domain.get("ranges")
++        if not isinstance(ranges, list) or not ranges:
++            return False
++        primitive = index.primitive(domain["object_type"], variant="truthy")
++        scalar = canonical_scalar(value, primitive)
++        if not isinstance(scalar, Scalar):
++            return False
++        for bounds in ranges:
++            charge()
++            if not isinstance(bounds, dict):
++                return False
++            lower, upper = bounds.get("min"), bounds.get("max")
++            minimum = canonical_scalar(lower, primitive) if lower is not None else None
++            maximum = canonical_scalar(upper, primitive) if upper is not None else None
++            lo, hi = bounds.get("min_inclusive", True), bounds.get("max_inclusive", True)
++            if (minimum is not None and not isinstance(minimum, Scalar)
++                or maximum is not None and not isinstance(maximum, Scalar)
++                or lower is not None and minimum is None or upper is not None and maximum is None
++                or type(lo) is not bool or type(hi) is not bool):
++                return False
++            if scalar_range_state(scalar, minimum, maximum, lo, hi) != 0:
++                return False
++        return True
++
++    def literals(guard):
++        sites = {}
++        for suffix, atom in _iter_guarded_atoms(guard):
++            if not isinstance(atom, dict) or not isinstance(atom.get("fact_type"), str):
++                continue
++            fact = atom["fact_type"]
++            for role, value in atom_bind(atom).items():
++                variable = _variable_name(value)
++                if variable is None:
++                    yield f"{suffix}.bind[{role}]", fact, role, value
++                elif suffix.startswith(".antecedent[") or ".exists.atoms[" in suffix:
++                    scope = "" if suffix.startswith(".antecedent[") else suffix.split(".exists.", 1)[0]
++                    sites.setdefault((scope, variable), set()).add((fact, role))
++        for left, right, prefix in _iter_guarded_memberships(guard):
++            variable = _variable_name(left)
++            scope = prefix.split(".exists.", 1)[0] if ".exists." in prefix else ""
++            roles_for_left = sorted(sites.get(("", variable), set()) | sites.get((scope, variable), set()))
++            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
++                if isinstance(member, dict) and set(member) in ({"date"}, {"duration_days"}):
++                    member = next(iter(member.values()))
++                for fact, role in roles_for_left:
++                    yield f"{prefix}.right[{index}]", fact, role, member
++
++    for ref, guard in guards:
++        for suffix, fact, role, value in literals(guard):
++            role_type = roles.get(fact, {}).get(role)
++            if role_type not in objects_by_id or _variable_name(value) is not None:
++                continue
++            if type(value) not in (bool, int, float, str):
++                continue
++            raw = canonical_scalar(value, None)
++            if not isinstance(raw, Scalar):
++                continue
++            path = f"{ref}{suffix}"
++            try:
++                domains = chain(
++                    by_role.get((fact, role), ()), chain.from_iterable(domains_for_type(role_type))
++                )
++                restricting = []
++                for domain_ref, domain in domains:
++                    charge()
++                    key = domain_ref, raw.identity_kind, raw.token
++                    if key not in tested:
++                        tested[key] = excluded(value, raw, domain)
++                    if tested[key]:
++                        restricting.append(domain_ref)
++            except _GuardedLiteralDomainLimit:
++                issues.append(ValidationIssue(
++                    path=path, severity="warning",
++                    rule_id="semantic:guarded-literal-domain-work-limit",
++                    message="Guarded literal domain validation reached its work limit.",
++                ))
++                return issues
++            if restricting:
++                issues.append(ValidationIssue(
++                    path=path, severity="warning",
++                    rule_id="semantic:guarded-literal-outside-domain",
++                    message=f"Literal lies outside the value domain declared by {', '.join(restricting)}.",
++                ))
++    return issues
++
++
++class _GuardedLiteralDomainLimit(Exception):
++    """The model-level domain lint budget was exhausted."""
++
++
++def _rule_guarded_filters(doc: dict[str, Any]) -> list[ValidationIssue]:
++    issues = []
++    guards = [(path, guard) for path, guard in _iter_guarded_constraints(doc)
++              if "negate" in guard or "where" in guard]
++    if not guards or not all(isinstance(doc.get(field, []), list)
++                             for field in ("fact_types", "object_types")):
++        return issues
++    role_types, primitives = _primitive_maps(doc)
++    for path, guard in guards:
++        scopes: dict[str, set[str]] = {}
++        for suffix, atom in _iter_guarded_atoms(guard):
++            if not suffix.startswith(".antecedent[") or not isinstance(atom, dict):
++                continue
++            for role, term in atom_bind(atom).items():
++                variable = _variable_name(term)
++                if variable is not None:
++                    object_type = role_types.get(str(atom.get("fact_type")), {}).get(str(role))
++                    choices = scopes.setdefault(variable, set())
++                    primitive = primitives.get(object_type or "")
++                    if primitive is not None:
++                        choices.add(primitive)
++        types = {
++            variable: next(iter(choices)) if len(choices) == 1 else "Number"
++            for variable, choices in scopes.items()
++            if choices and (len(choices) == 1 or choices <= NUMERIC_PRIMITIVES)
++        }
++        terms = []
++        for suffix, atom in _iter_guarded_atoms(guard):
++            if not suffix.startswith(".negate[") or not isinstance(atom, dict):
++                continue
++            fact_type = str(atom.get("fact_type"))
++            for role, term in atom_bind(atom).items():
++                location = f"{suffix}.bind[{role}]"
++                terms.append((location, term))
++                object_type = role_types.get(fact_type, {}).get(str(role))
++                primitive = primitives.get(object_type or "")
++                variable = _variable_name(term)
++                declared = scopes.get(variable, ())
++                literal_matches = (valid_duration(term) if primitive == "Duration"
++                                   else _guarded_literal_matches_primitive(primitive, term))
++                if primitive is not None and (
++                    (declared and any(not _guarded_primitives_compatible(primitive, bound) for bound in declared))
++                    or (variable is None and not literal_matches)
++                ):
++                    issues.append(ValidationIssue(
++                        path=f"{path}{location}", message="Negative binding has an incompatible primitive.",
++                        rule_id="semantic:guarded-binding-type",
++                    ))
++        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
++            terms.extend(_iter_guarded_comparison_terms(suffix, comparison))
++        for suffix, term in terms:
++            unbound = set(term_variables(term)) - scopes.keys()
++            if unbound:
++                issues.append(ValidationIssue(
++                    path=f"{path}{suffix}",
++                    message=f"Guarded filter variables require a positive binding: {sorted(unbound)}.",
++                    rule_id="semantic:guarded-filter-unbound",
++                ))
++        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
++            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
++                issues.extend(_membership_comparison_issues(f"{path}{suffix}", comparison, types))
++                continue
++            left = analyze_term(comparison.get("left"), types)
++            right = analyze_term(comparison.get("right"), types)
++            for side, term in (("left", left), ("right", right)):
++                if term.issue is not None and not (set(term.variables) - scopes.keys()):
++                    issues.append(ValidationIssue(
++                        path=f"{path}{suffix}.{side}", message="Invalid guarded filter comparison term.",
++                        rule_id=term.issue,
++                    ))
++            if (left.primitive and right.primitive
++                    and not _guarded_primitives_compatible(left.primitive, right.primitive)):
++                issues.append(ValidationIssue(
++                    path=f"{path}{suffix}", message="Guarded filter operands have incompatible types.",
++                    rule_id="semantic:term-comparison-type",
++                ))
++    return issues
++
++
++def _membership_comparison_issues(path, comparison, variable_primitives):
++    left = analyze_term(comparison.get("left"), variable_primitives, limits=DEFAULT_LIMITS)
++    if left.issue is not None:
++        yield ValidationIssue(path=f"{path}.left", message=f"membership term is invalid: {left.issue}", rule_id=left.issue)
++    right = comparison.get("right")
++    members = compile_membership(right)
++    domain = membership_domain(left.primitive)
++    if members is None or (domain is not None and domain != members.domain):
++        yield ValidationIssue(
++            path=f"{path}.right",
++            message="Membership requires a non-empty homogeneous list of compatible literals.",
++            rule_id="semantic:membership-list",
++        )
++    elif len(members.keys) < len(right):
++        yield ValidationIssue(
++            path=f"{path}.right",
++            message="Membership list contains duplicate values.",
++            severity="warning",
++            rule_id="semantic:membership-duplicate",
++        )
++
++
++def _rule_derivation_membership(doc: dict[str, Any]) -> list[ValidationIssue]:
++    return [
++        issue
++        for rule in ("semantic:membership-list", "semantic:membership-duplicate")
++        for issue in _filter_derivation_term_issues(doc, rule_id=rule)
++    ]
+diff --git a/src/gnd/model/_parsing.py b/src/gnd/model/_parsing.py
+new file mode 100644
+index 000000000..14af855ff
+--- /dev/null
++++ b/src/gnd/model/_parsing.py
+@@ -0,0 +1,58 @@
++"""Bounded model-document parsing, shared by model loading and include resolution.
++
++Moved verbatim from ``gnd.model._validation`` (main CI repair, 2026-11-16) so that
++module stays under its RF6 size ceiling. ``_validation`` and ``gnd.model``
++re-export both names, and ``parse_model_document`` keeps its public
++``gnd.model`` identity.
++"""
++
++from __future__ import annotations
++
++import json
++import re
++from pathlib import Path
++from typing import Any
++
++from ruamel.yaml import YAML
++
++from gnd.documents import MAX_YAML_EVENTS
++from gnd.errors import ModelLoadError
++from gnd.yaml_comments import configure_comment_scanner
++
++MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
++
++
++def parse_model_document(data: bytes, *, source: str | Path) -> Any:
++    """Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict
++    JSON for a ``.json`` source, otherwise the alias/event guard and then the
++    round-trip YAML reader. The document is returned unvalidated."""
++    from ruamel.yaml.events import AliasEvent
++
++    if len(data) > MAX_MODEL_BYTES:
++        raise ModelLoadError("model exceeds the 10 MiB input cap")
++    text = data.decode("utf-8")
++    if re.search(r"(?m)[|>][-+0-9]{0,2}[ \t]*(?:#.*)?$", text) is None:
++        text = text.rstrip()
++    doc = None
++    if Path(source).suffix == ".json" or text.lstrip().startswith("{"):
++        from gnd.errors import PopulationLoadError
++        from gnd.population import _parse_document_bytes
++
++        try:
++            doc = _parse_document_bytes(data, suffix=".json", source=str(source))
++        except PopulationLoadError as error:
++            from gnd.input_policy import InputRefusal
++
++            if (Path(source).suffix == ".json"
++                    or not isinstance(error.__cause__, json.JSONDecodeError)
++                    or isinstance(error.__cause__, InputRefusal)):
++                raise ModelLoadError("model JSON input refused") from error
++            # A YAML flow mapping may start with an unquoted key.
++    if doc is None:
++        for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(text), 1):
++            if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
++                raise ModelLoadError("model YAML alias/event guard refused input")
++        doc = configure_comment_scanner(YAML(typ="rt")).load(text)
++    return doc
++
++parse_model_document.__module__ = "gnd.model"
+diff --git a/src/gnd/model/_validation.py b/src/gnd/model/_validation.py
+index 7fe27bb33..c5f09ba8f 100644
+--- a/src/gnd/model/_validation.py
++++ b/src/gnd/model/_validation.py
+@@ -43,6 +43,7 @@
+ from ruamel.yaml import YAML
+ from ruamel.yaml.scalarbool import ScalarBoolean
+ 
++import gnd.model._guarded as _guarded_home
+ import gnd.model._induction as _induction_home
+ import gnd.model._unattended as _unattended_home
+ 
+@@ -61,6 +62,19 @@
+     issues_from_validation_error,  # historical compatibility export
+ )
+ from gnd.graphs import strongly_connected_components
++from gnd.model._guarded import (
++    _GUARDED_LITERAL_DOMAIN_WORK,
++    _guarded_alternatives,
++    _GuardedLiteralDomainLimit,
++    _iter_guarded_comparison_terms,
++    _iter_guarded_comparisons,
++    _iter_guarded_memberships,
++    _iter_guarded_scopes,
++    _membership_comparison_issues,
++    _rule_derivation_membership,
++    _rule_guarded_filters,
++    _rule_guarded_literal_domain,
++)
+ from gnd.model._induction import (
+     _induced_constraint_paths,
+     _induction_strings,
+@@ -98,8 +112,8 @@
+ #: Fixed pattern counting {Type} / {Type:role} placeholders in readings.
+ _PLACEHOLDER = re.compile(r"\{[^{}]+\}")
+ 
+-MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
+ from gnd.documents import MAX_YAML_EVENTS
++from gnd.model._parsing import MAX_MODEL_BYTES, parse_model_document
+ 
+ 
+ def yaml_stream_guard_error(path: str | Path) -> str | None:
+@@ -2351,26 +2365,6 @@ def _iter_guarded_atoms(constraint: Any):
+                 yield f"{prefix}.exists.atoms[{index}]", atom
+ 
+ 
+-def _guarded_alternatives(consequent):
+-    """Yield each single consequent and its document path suffix."""
+-    if not isinstance(consequent, dict):
+-        return
+-    alternatives = consequent.get("any_of")
+-    if isinstance(alternatives, list):
+-        for index, alternative in enumerate(alternatives):
+-            if isinstance(alternative, dict):
+-                yield f".consequent.any_of[{index}]", alternative
+-    else:
+-        yield ".consequent", consequent
+-
+-
+-def _iter_guarded_scopes(doc):
+-    """Use the shared antecedent with one consequent's local variable scope."""
+-    for path, constraint in _iter_guarded_constraints(doc):
+-        for prefix, consequent in _guarded_alternatives(constraint.get("consequent")):
+-            yield path, prefix, {**constraint, "consequent": consequent}
+-
+-
+ def _iter_guarded_consequent_terms(constraint: Any):
+     """Yield path and term for each single consequent's grounding check."""
+     consequent = constraint.get("consequent")
+@@ -2383,41 +2377,6 @@ def _iter_guarded_consequent_terms(constraint: Any):
+             yield from _iter_guarded_comparison_terms(path, comparison)
+ 
+ 
+-def _iter_guarded_comparisons(consequent, where=None):
+-    if isinstance(where, list):
+-        for index, comparison in enumerate(where):
+-            if isinstance(comparison, dict):
+-                yield f".where[{index}]", comparison
+-    for prefix, alternative in _guarded_alternatives(consequent):
+-        direct = alternative.get("comparison")
+-        if isinstance(direct, dict):
+-            yield f"{prefix}.comparison", direct
+-        exists = alternative.get("exists")
+-        if isinstance(exists, dict) and isinstance(exists.get("where"), list):
+-            for index, comparison in enumerate(exists["where"]):
+-                if isinstance(comparison, dict):
+-                    yield f"{prefix}.exists.where[{index}]", comparison
+-
+-
+-def _iter_guarded_memberships(guard):
+-    for path, comparison in _iter_guarded_comparisons(guard.get("consequent"), guard.get("where")):
+-        right = comparison.get("right")
+-        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
+-            yield comparison.get("left"), right, path
+-
+-
+-def _iter_guarded_comparison_terms(path, comparison):
+-    if "left" in comparison:
+-        yield f"{path}.left", comparison["left"]
+-    if "right" in comparison:
+-        right = comparison["right"]
+-        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
+-            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
+-                yield f"{path}.right[{index}]", member
+-        else:
+-            yield f"{path}.right", right
+-
+-
+ def _rule_guarded_term_ref(doc: dict[str, Any]) -> list[ValidationIssue]:
+     """Every guarded atom names a declared fact type and only its declared roles."""
+     issues: list[ValidationIssue] = []
+@@ -2464,188 +2423,6 @@ def _rule_guarded_role_claim(doc: dict[str, Any]) -> list[ValidationIssue]:
+     return issues
+ 
+ 
+-_GUARDED_LITERAL_DOMAIN_WORK = 100_000
+-
+-
+-def _rule_guarded_literal_domain(doc: dict[str, Any]) -> list[ValidationIssue]:
+-    """Diagnose literal bindings excluded by a declared role or object domain."""
+-    from itertools import chain
+-
+-    from gnd.model_index import ModelIndex
+-    from gnd.model_queries import _identifying_id, _resolve_reference
+-    from gnd.semantic_ir import Scalar
+-    from gnd.semantic_spec import scalar_identical, scalar_range_state
+-    from gnd.values import canonical_scalar
+-
+-    guards = list(_iter_guarded_constraints(doc))
+-    if not guards:
+-        return []
+-    fact_types = doc.get("fact_types")
+-    object_types = doc.get("object_types")
+-    if not isinstance(fact_types, list) or not isinstance(object_types, list):
+-        return []
+-    facts = [
+-        dict(fact, roles=[role for role in fact["roles"] if isinstance(role, dict)])
+-        for fact in fact_types
+-        if isinstance(fact, dict) and isinstance(fact.get("roles"), list)
+-    ]
+-    objects = [
+-        obj for obj in object_types if isinstance(obj, dict)
+-        and isinstance(obj.get("subtype_of", []), list)
+-        and isinstance(obj.get("reference", {}), dict)
+-    ]
+-    index = ModelIndex(None, {"fact_types": facts, "object_types": objects})
+-    roles = index.role_object_types()
+-    objects_by_id = index.object_types_by_id()
+-    parents = _supertype_parents({"object_types": objects})
+-    by_role: dict[tuple[str, str], list[tuple[str, dict]]] = {}
+-    by_type: dict[str, list[tuple[str, dict]]] = {}
+-    for position, domain in enumerate(doc["constraints"]):
+-        if not isinstance(domain, dict) or domain.get("type") != "value":
+-            continue
+-        target = domain.get("object_type")
+-        if not isinstance(target, str) or target not in objects_by_id:
+-            continue
+-        ref = domain.get("role_ref")
+-        entry = (f"constraints[{position}]", domain)
+-        if ref is None:
+-            by_type.setdefault(target, []).append(entry)
+-        elif isinstance(ref, dict):
+-            fact, role = ref.get("fact_type"), ref.get("role")
+-            if isinstance(fact, str) and isinstance(role, str):
+-                by_role.setdefault((fact, role), []).append(entry)
+-    if not by_type and not by_role:
+-        return []
+-
+-    remaining = _GUARDED_LITERAL_DOMAIN_WORK
+-    issues: list[ValidationIssue] = []
+-    type_domains: dict[str, list[list[tuple[str, dict]]]] = {}
+-    tested: dict[tuple[str, str, str], bool] = {}
+-
+-    def charge() -> None:
+-        nonlocal remaining
+-        remaining -= 1
+-        if remaining < 0:
+-            raise _GuardedLiteralDomainLimit
+-
+-    def domains_for_type(role_type: str) -> list[list[tuple[str, dict]]]:
+-        if role_type not in type_domains:
+-            pending = [role_type]
+-            if by_type:
+-                denoting = _resolve_reference(role_type, objects_by_id, parents, set(), _identifying_id)
+-                if denoting is not None:
+-                    pending.append(denoting)
+-            seen = set()
+-            while pending:
+-                charge()
+-                current = pending.pop()
+-                if current not in seen:
+-                    seen.add(current)
+-                    pending.extend(parents.get(current, ()))
+-            type_domains[role_type] = [
+-                by_type[target] for target in sorted(seen) if target in by_type
+-            ]
+-        return type_domains[role_type]
+-
+-    def excluded(value: Any, raw: Scalar, domain: dict) -> bool:
+-        allowed = domain.get("allowed")
+-        if isinstance(allowed, list) and allowed:
+-            for item in allowed:
+-                charge()
+-                scalar = canonical_scalar(item, None)
+-                if not isinstance(scalar, Scalar) or scalar_identical(raw, scalar):
+-                    return False
+-            return True
+-        ranges = [domain["range"]] if "range" in domain else domain.get("ranges")
+-        if not isinstance(ranges, list) or not ranges:
+-            return False
+-        primitive = index.primitive(domain["object_type"], variant="truthy")
+-        scalar = canonical_scalar(value, primitive)
+-        if not isinstance(scalar, Scalar):
+-            return False
+-        for bounds in ranges:
+-            charge()
+-            if not isinstance(bounds, dict):
+-                return False
+-            lower, upper = bounds.get("min"), bounds.get("max")
+-            minimum = canonical_scalar(lower, primitive) if lower is not None else None
+-            maximum = canonical_scalar(upper, primitive) if upper is not None else None
+-            lo, hi = bounds.get("min_inclusive", True), bounds.get("max_inclusive", True)
+-            if (minimum is not None and not isinstance(minimum, Scalar)
+-                or maximum is not None and not isinstance(maximum, Scalar)
+-                or lower is not None and minimum is None or upper is not None and maximum is None
+-                or type(lo) is not bool or type(hi) is not bool):
+-                return False
+-            if scalar_range_state(scalar, minimum, maximum, lo, hi) != 0:
+-                return False
+-        return True
+-
+-    def literals(guard):
+-        sites = {}
+-        for suffix, atom in _iter_guarded_atoms(guard):
+-            if not isinstance(atom, dict) or not isinstance(atom.get("fact_type"), str):
+-                continue
+-            fact = atom["fact_type"]
+-            for role, value in atom_bind(atom).items():
+-                variable = _variable_name(value)
+-                if variable is None:
+-                    yield f"{suffix}.bind[{role}]", fact, role, value
+-                elif suffix.startswith(".antecedent[") or ".exists.atoms[" in suffix:
+-                    scope = "" if suffix.startswith(".antecedent[") else suffix.split(".exists.", 1)[0]
+-                    sites.setdefault((scope, variable), set()).add((fact, role))
+-        for left, right, prefix in _iter_guarded_memberships(guard):
+-            variable = _variable_name(left)
+-            scope = prefix.split(".exists.", 1)[0] if ".exists." in prefix else ""
+-            roles_for_left = sorted(sites.get(("", variable), set()) | sites.get((scope, variable), set()))
+-            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
+-                if isinstance(member, dict) and set(member) in ({"date"}, {"duration_days"}):
+-                    member = next(iter(member.values()))
+-                for fact, role in roles_for_left:
+-                    yield f"{prefix}.right[{index}]", fact, role, member
+-
+-    for ref, guard in guards:
+-        for suffix, fact, role, value in literals(guard):
+-            role_type = roles.get(fact, {}).get(role)
+-            if role_type not in objects_by_id or _variable_name(value) is not None:
+-                continue
+-            if type(value) not in (bool, int, float, str):
+-                continue
+-            raw = canonical_scalar(value, None)
+-            if not isinstance(raw, Scalar):
+-                continue
+-            path = f"{ref}{suffix}"
+-            try:
+-                domains = chain(
+-                    by_role.get((fact, role), ()), chain.from_iterable(domains_for_type(role_type))
+-                )
+-                restricting = []
+-                for domain_ref, domain in domains:
+-                    charge()
+-                    key = domain_ref, raw.identity_kind, raw.token
+-                    if key not in tested:
+-                        tested[key] = excluded(value, raw, domain)
+-                    if tested[key]:
+-                        restricting.append(domain_ref)
+-            except _GuardedLiteralDomainLimit:
+-                issues.append(ValidationIssue(
+-                    path=path, severity="warning",
+-                    rule_id="semantic:guarded-literal-domain-work-limit",
+-                    message="Guarded literal domain validation reached its work limit.",
+-                ))
+-                return issues
+-            if restricting:
+-                issues.append(ValidationIssue(
+-                    path=path, severity="warning",
+-                    rule_id="semantic:guarded-literal-outside-domain",
+-                    message=f"Literal lies outside the value domain declared by {', '.join(restricting)}.",
+-                ))
+-    return issues
+-
+-
+-class _GuardedLiteralDomainLimit(Exception):
+-    """The model-level domain lint budget was exhausted."""
+-
+-
+ def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue]:
+     """Every guarded consequent variable is bound by its antecedent or exists atom."""
+     issues: list[ValidationIssue] = []
+@@ -2696,85 +2473,6 @@ def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue
+     return issues
+ 
+ 
+-def _rule_guarded_filters(doc: dict[str, Any]) -> list[ValidationIssue]:
+-    issues = []
+-    guards = [(path, guard) for path, guard in _iter_guarded_constraints(doc)
+-              if "negate" in guard or "where" in guard]
+-    if not guards or not all(isinstance(doc.get(field, []), list)
+-                             for field in ("fact_types", "object_types")):
+-        return issues
+-    role_types, primitives = _primitive_maps(doc)
+-    for path, guard in guards:
+-        scopes: dict[str, set[str]] = {}
+-        for suffix, atom in _iter_guarded_atoms(guard):
+-            if not suffix.startswith(".antecedent[") or not isinstance(atom, dict):
+-                continue
+-            for role, term in atom_bind(atom).items():
+-                variable = _variable_name(term)
+-                if variable is not None:
+-                    object_type = role_types.get(str(atom.get("fact_type")), {}).get(str(role))
+-                    choices = scopes.setdefault(variable, set())
+-                    primitive = primitives.get(object_type or "")
+-                    if primitive is not None:
+-                        choices.add(primitive)
+-        types = {
+-            variable: next(iter(choices)) if len(choices) == 1 else "Number"
+-            for variable, choices in scopes.items()
+-            if choices and (len(choices) == 1 or choices <= NUMERIC_PRIMITIVES)
+-        }
+-        terms = []
+-        for suffix, atom in _iter_guarded_atoms(guard):
+-            if not suffix.startswith(".negate[") or not isinstance(atom, dict):
+-                continue
+-            fact_type = str(atom.get("fact_type"))
+-            for role, term in atom_bind(atom).items():
+-                location = f"{suffix}.bind[{role}]"
+-                terms.append((location, term))
+-                object_type = role_types.get(fact_type, {}).get(str(role))
+-                primitive = primitives.get(object_type or "")
+-                variable = _variable_name(term)
+-                declared = scopes.get(variable, ())
+-                literal_matches = (valid_duration(term) if primitive == "Duration"
+-                                   else _guarded_literal_matches_primitive(primitive, term))
+-                if primitive is not None and (
+-                    (declared and any(not _guarded_primitives_compatible(primitive, bound) for bound in declared))
+-                    or (variable is None and not literal_matches)
+-                ):
+-                    issues.append(ValidationIssue(
+-                        path=f"{path}{location}", message="Negative binding has an incompatible primitive.",
+-                        rule_id="semantic:guarded-binding-type",
+-                    ))
+-        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
+-            terms.extend(_iter_guarded_comparison_terms(suffix, comparison))
+-        for suffix, term in terms:
+-            unbound = set(term_variables(term)) - scopes.keys()
+-            if unbound:
+-                issues.append(ValidationIssue(
+-                    path=f"{path}{suffix}",
+-                    message=f"Guarded filter variables require a positive binding: {sorted(unbound)}.",
+-                    rule_id="semantic:guarded-filter-unbound",
+-                ))
+-        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
+-            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+-                issues.extend(_membership_comparison_issues(f"{path}{suffix}", comparison, types))
+-                continue
+-            left = analyze_term(comparison.get("left"), types)
+-            right = analyze_term(comparison.get("right"), types)
+-            for side, term in (("left", left), ("right", right)):
+-                if term.issue is not None and not (set(term.variables) - scopes.keys()):
+-                    issues.append(ValidationIssue(
+-                        path=f"{path}{suffix}.{side}", message="Invalid guarded filter comparison term.",
+-                        rule_id=term.issue,
+-                    ))
+-            if (left.primitive and right.primitive
+-                    and not _guarded_primitives_compatible(left.primitive, right.primitive)):
+-                issues.append(ValidationIssue(
+-                    path=f"{path}{suffix}", message="Guarded filter operands have incompatible types.",
+-                    rule_id="semantic:term-comparison-type",
+-                ))
+-    return issues
+-
+-
+ def _guarded_nested_function_variables(term: Any) -> set[str]:
+     """Variables occurring below an exact-term function node."""
+     found: set[str] = set()
+@@ -2907,28 +2605,6 @@ def _guarded_literal_kinds_compatible(left: Any, right: Any) -> bool:
+     return isinstance(left, str) and isinstance(right, str)
+ 
+ 
+-def _membership_comparison_issues(path, comparison, variable_primitives):
+-    left = analyze_term(comparison.get("left"), variable_primitives, limits=DEFAULT_LIMITS)
+-    if left.issue is not None:
+-        yield ValidationIssue(path=f"{path}.left", message=f"membership term is invalid: {left.issue}", rule_id=left.issue)
+-    right = comparison.get("right")
+-    members = compile_membership(right)
+-    domain = membership_domain(left.primitive)
+-    if members is None or (domain is not None and domain != members.domain):
+-        yield ValidationIssue(
+-            path=f"{path}.right",
+-            message="Membership requires a non-empty homogeneous list of compatible literals.",
+-            rule_id="semantic:membership-list",
+-        )
+-    elif len(members.keys) < len(right):
+-        yield ValidationIssue(
+-            path=f"{path}.right",
+-            message="Membership list contains duplicate values.",
+-            severity="warning",
+-            rule_id="semantic:membership-duplicate",
+-        )
+-
+-
+ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
+     """Every guarded comparison has compatible resolved operand types."""
+     # Local import avoids the module-import cycle: popvalidate imports Model and
+@@ -4620,14 +4296,6 @@ def _rule_derivation_term_unbound(doc: dict[str, Any]) -> list[ValidationIssue]:
+     return _filter_derivation_term_issues(doc, rule_id="semantic:derivation-term-unbound")
+ 
+ 
+-def _rule_derivation_membership(doc: dict[str, Any]) -> list[ValidationIssue]:
+-    return [
+-        issue
+-        for rule in ("semantic:membership-list", "semantic:membership-duplicate")
+-        for issue in _filter_derivation_term_issues(doc, rule_id=rule)
+-    ]
+-
+-
+ def _rule_term_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
+     return _filter_derivation_term_issues(doc, rule_id="semantic:term-comparison-type")
+ 
+@@ -4988,6 +4656,17 @@ def record_conflicts(path, conflicts):
+ _unattended_home._constraint_walk = _iter_constraints
+ _unattended_home._provenance_walk = _iter_provenance_bearing
+ _unattended_home._provenance_label = _provenance_bearing_label
++# The GC/GW guarded validation additions live in gnd.model._guarded (RF6 size
++# ceiling) and call these pinned helpers through its registry.
++_guarded_home._registered.update(
++    _filter_derivation_term_issues=_filter_derivation_term_issues,
++    _guarded_literal_matches_primitive=_guarded_literal_matches_primitive,
++    _guarded_primitives_compatible=_guarded_primitives_compatible,
++    _iter_guarded_atoms=_iter_guarded_atoms,
++    _iter_guarded_constraints=_iter_guarded_constraints,
++    _primitive_maps=_primitive_maps,
++    _variable_name=_variable_name,
++)
+ 
+ 
+ _SEMANTIC_RULES = (
+@@ -5308,39 +4987,3 @@ def semantic_validate(doc: dict[str, Any]) -> list[ValidationIssue]:
+ DerivationClassification.__dict__['__eq__'].__module__ = 'gnd.model'
+ DerivationClassification.__dict__['__setattr__'].__module__ = 'gnd.model'
+ DerivationClassification.__dict__['__delattr__'].__module__ = 'gnd.model'
+-
+-
+-def parse_model_document(data: bytes, *, source: str | Path) -> Any:
+-    """Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict
+-    JSON for a ``.json`` source, otherwise the alias/event guard and then the
+-    round-trip YAML reader. The document is returned unvalidated."""
+-    from ruamel.yaml.events import AliasEvent
+-
+-    if len(data) > MAX_MODEL_BYTES:
+-        raise ModelLoadError("model exceeds the 10 MiB input cap")
+-    text = data.decode("utf-8")
+-    if re.search(r"(?m)[|>][-+0-9]{0,2}[ \t]*(?:#.*)?$", text) is None:
+-        text = text.rstrip()
+-    doc = None
+-    if Path(source).suffix == ".json" or text.lstrip().startswith("{"):
+-        from gnd.errors import PopulationLoadError
+-        from gnd.population import _parse_document_bytes
+-
+-        try:
+-            doc = _parse_document_bytes(data, suffix=".json", source=str(source))
+-        except PopulationLoadError as error:
+-            from gnd.input_policy import InputRefusal
+-
+-            if (Path(source).suffix == ".json"
+-                    or not isinstance(error.__cause__, json.JSONDecodeError)
+-                    or isinstance(error.__cause__, InputRefusal)):
+-                raise ModelLoadError("model JSON input refused") from error
+-            # A YAML flow mapping may start with an unquoted key.
+-    if doc is None:
+-        for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(text), 1):
+-            if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
+-                raise ModelLoadError("model YAML alias/event guard refused input")
+-        doc = configure_comment_scanner(YAML(typ="rt")).load(text)
+-    return doc
+-
+-parse_model_document.__module__ = "gnd.model"
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index b2b36e2f5..a1412725e 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -1623,6 +1623,7 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
+ | `semantic:op-modality-policy` | warning | D-03 extended to operation obligations: llm-inferred/common-sense + proposed + alethic ⇒ warn |
+ | `semantic:guarded-term-ref` | error | every guarded atom's `fact_type` resolves, and every `bind` key names a declared role of that fact type |
+ | `semantic:guarded-role-claim` | error | every guarded atom binds exactly the roles declared by its fact type; missing roles are refused |
++| `semantic:guarded-filter-unbound` | error | every variable in a guarded antecedent filter (`where`) is positively bound |
+ | `semantic:guarded-consequent-ground` | error | every `$`-variable in an atom, absence, or comparison consequent is introduced by an antecedent bind |
+ | `semantic:guarded-comparison-type` | error | guarded comparison operands have compatible primitive types after variable-role and literal resolution |
+ | `semantic:guarded-exists-range` | error | variables nested in exists.where exact functions are antecedent-bound or bound by a positive exists atom |
+@@ -1655,6 +1656,8 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
+ | `semantic:derivation-head-needs-round` | error | an exact-tier computed head is Integer-valued or wrapped in `round` |
+ | `semantic:derivation-float-head-unquantized` | error | a float-tier computed head is `round`-wrapped, or is `floor`/`ceil` (always Integer-valued) |
+ | `semantic:derivation-term-unbound` | error | every `where` variable is positively bound |
++| `semantic:membership-list` | error | the right side of a membership comparison is a non-empty, homogeneous list of literals compatible with the left term |
++| `semantic:membership-duplicate` | warning | a membership list contains no duplicate values |
+ | `semantic:term-comparison-type` | error | both `where` operands have compatible types |
+ | `semantic:derivation-head-unbound` | error | range restriction: every head variable is bound by a positive body atom |
+ | `semantic:derivation-negate-unbound` | error | safety: every negated variable is bound by a positive body atom |
+@@ -1677,6 +1680,8 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
+ | `semantic:unattended-u6` | error | under `source.mode: unattended` only: every sample row cites a span ("Unattended source") |
+ | `semantic:unattended-u7` | error | under `source.mode: unattended` only: every span is well formed and names a declared document ("Unattended source") |
+ | `semantic:unattended-u8` | error | under `source.mode: unattended` only: no `alethic` constraint from `sample`, `llm-inferred`, `common-sense` or `induced` ("Unattended source") |
++| `semantic:guarded-literal-domain-work-limit` | warning | guarded literal domain validation finished within its work limit |
++| `semantic:guarded-literal-outside-domain` | warning | a guarded literal lies inside the value domain its compared role declares |
+ 
+ Errors abort the load with a pointed message naming the offending element; warnings ride on the loaded model and are printed by `gnd validate` (exit 0 when only warnings exist).
+ 
+diff --git a/src/gnd/synth/frontier.py b/src/gnd/synth/frontier.py
+index c7dc3529f..b1ec56aed 100644
+--- a/src/gnd/synth/frontier.py
++++ b/src/gnd/synth/frontier.py
+@@ -11,7 +11,8 @@
+ which is what turns the undecided rate into a measurement of the frontier rather
+ than a residual. The route set is derived from the production semantic
+ registry's unchecked rows (:data:`BAND4_REASON_CODES`), with an explicit
+-Phase-6 guarded-exists exclusion to preserve the predecessor report contract.
++Phase-6 guarded-exists exclusion, and the matching GC2 filter and GC3
++disjunction exclusions, to preserve the predecessor report contract.
+ Other routes added later without a case still appear as missing cells.
+ 
+ Neither kind needs a new population label. D-10's three values stay three and
+@@ -112,6 +113,10 @@ def _constraint_band4_rows() -> tuple[Branch, ...]:
+         # but they are outside the frozen predecessor BAND4 report contract.
+         # Phase 6 does not claim synth/frontier coverage for this new lane.
+         and not (row.family == "guarded" and row.variant == "exists")
++        # GC2's antecedent filters and GC3's disjunctive consequents add their
++        # own refusals on the same terms: new guarded lanes outside the frozen
++        # predecessor report contract, with no synth/frontier coverage claimed.
++        and not (row.family == "guarded" and row.variant in {"filtered", "any_of"})
+         # Compiled standing obligations require explicit caller activation;
+         # the predecessor synth/measure lane uses ordinary snapshot checking.
+         and row.family != "compiled-subset"
+diff --git a/tests/support/rf9_ci_sources.py b/tests/support/rf9_ci_sources.py
+index 20b0e9582..176f94577 100644
+--- a/tests/support/rf9_ci_sources.py
++++ b/tests/support/rf9_ci_sources.py
+@@ -15,6 +15,8 @@
+     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/source-successors.json',
+     EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX1/source-successors.json',
+     EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json',
++    # Main CI repair (2026-11-16): guarded-rule and literature bodies recorded after the fact.
++    EVIDENCE.parents[4] / '.gnd-planning/maintenance/2026-11-16-main-ci-repair/source-successors.json',
+ )
+ 
+ 
+diff --git a/tests/test_atom_bind.py b/tests/test_atom_bind.py
+index 020a85cc7..fe8c55b1e 100644
+--- a/tests/test_atom_bind.py
++++ b/tests/test_atom_bind.py
+@@ -38,7 +38,14 @@
+                   # The MG5 unattended-source rules, split out of _validation (it reads no bind).
+                   "model/_unattended.py",
+                   # The CT2 composed-anchor check, split out of checker/_core (it reads no bind).
+-                  "checker/_composed.py")
++                  "checker/_composed.py",
++                  # LX1's flat re-entry bytes for a resolved include root (it reads no bind).
++                  "model/flattening.py",
++                  # The GW/GC guarded validation additions (CI repair 2026-11-16);
++                  # they read bind only through atom_bind.
++                  "model/_guarded.py",
++                  # The bounded model-document parser (CI repair 2026-11-16; it reads no bind).
++                  "model/_parsing.py")
+ 
+ #: `patterns.py` keeps the 28th raw read. It imports NOTHING from `gnd` -- a
+ #: boundary two reviewers enforced against an earlier draft and
+@@ -198,6 +205,8 @@ def test_every_consumer_reaches_the_binding_through_the_one_reader() -> None:
+     stopped reading bindings altogether."""
+     texts = {name: (REPO_ROOT / 'src/gnd' / name).read_text(encoding='utf-8') for name in BIND_CONSUMERS}
+     active = {name for name, text in texts.items() if 'atom_bind(' in text}
+-    assert active == {'model/_validation.py', 'model/_operations.py', 'checker/_core.py', 'model_verbalization.py'}
++    # model/_guarded.py holds guarded rules moved verbatim out of _validation (CI repair 2026-11-16).
++    assert active == {'model/_validation.py', 'model/_operations.py', 'checker/_core.py', 'model_verbalization.py',
++                      'model/_guarded.py'}
+     for name in active:
+         assert "from gnd.atoms import" in texts[name], name
+diff --git a/tests/test_doctor_uninstall.py b/tests/test_doctor_uninstall.py
+index 2daa0befc..ff0ae1e12 100644
+--- a/tests/test_doctor_uninstall.py
++++ b/tests/test_doctor_uninstall.py
+@@ -204,6 +204,20 @@
+         ".codex/skills/components/references/build.md",
+         ".codex/skills/components/references/reader-brief.md",
+         ".codex/skills/components/references/review.md",
++        # Later dev-tools deliveries: the components rules check, the
++        # process-phase review tool, and the handle-issue skill (PR 198).
++        ".claude/skills/components/references/rules.md",
++        ".claude/skills/components/scripts/rules_check.py",
++        ".claude/skills/process-phase/references/review-tool.md",
++        ".claude/skills/process-phase/scripts/review_tool.py",
++        ".claude/skills/handle-issue/SKILL.md",
++        ".claude/skills/handle-issue/agents/openai.yaml",
++        ".codex/skills/components/references/rules.md",
++        ".codex/skills/components/scripts/rules_check.py",
++        ".codex/skills/process-phase/references/review-tool.md",
++        ".codex/skills/process-phase/scripts/review_tool.py",
++        ".codex/skills/handle-issue/SKILL.md",
++        ".codex/skills/handle-issue/agents/openai.yaml",
+     }
+ )
+ 
+@@ -217,6 +231,7 @@
+     "process-milestone",
+     "start-milestone",
+     "components",
++    "handle-issue",
+ )
+ 
+ UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
+@@ -231,10 +246,12 @@
+ #: never adopt. ``process-phase`` is ours and equally unmanaged.
+ UNMANAGED_ROOT_ENTRIES: dict[str, frozenset[str]] = {
+     ".claude/skills": frozenset(
+-        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components"}
++        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components",
++         "handle-issue"}
+     ),
+     ".codex/skills": frozenset(
+-        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components"}
++        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components",
++         "handle-issue"}
+     ),
+ }
+ 
+diff --git a/tests/test_evolve_loading.py b/tests/test_evolve_loading.py
+index 5c25e2871..bf7920201 100644
+--- a/tests/test_evolve_loading.py
++++ b/tests/test_evolve_loading.py
+@@ -521,13 +521,20 @@ def counting(model, *, root, attach=False):
+                                         "reason": "binding"}],
+     "judgments/linked": ["return", 3, {"message": "invalid bound judgment input",
+                                        "reason": "binding"}],
++    # LX3 review (9e1c1d29): a changed catalog raises ReferenceHashMismatch, a
++    # subclass of ReferenceInputError, with the same message.
++    "witness/changed": ["raise", "ReferenceHashMismatch",
++                        "reference raw hash does not match declared sha256"],
++    "replay/changed": ["raise", "ReferenceHashMismatch",
++                       "reference raw hash does not match declared sha256"],
+ }
+ 
+ 
+ @pytest.mark.parametrize("key", sorted(H3_BEFORE))
+ def test_h3_every_homes_outcome_is_unchanged(tmp_path, monkeypatch, key):
+     """D6-A: adopting the helper changes no home's outcome, except the four
+-    rows IKE-Q3 ruled (discover and judgments on a missing or linked reference)."""
++    rows IKE-Q3 ruled (discover and judgments on a missing or linked reference)
++    and the two LX3 rows (witness and replay on a changed catalog)."""
+     from support import reference_homes
+ 
+     home, damage = key.split("/")
+diff --git a/tests/test_expense_receipts_example.py b/tests/test_expense_receipts_example.py
+index 1721ea742..ca1edb422 100644
+--- a/tests/test_expense_receipts_example.py
++++ b/tests/test_expense_receipts_example.py
+@@ -25,7 +25,8 @@ def _files(root: Path) -> list[str]:
+ 
+ 
+ def _gnd(*args: str) -> subprocess.CompletedProcess[str]:
+-    return subprocess.run([sys.executable, "-m", "gnd", *args], cwd=EXAMPLE, capture_output=True, text=True)
++    return subprocess.run([sys.executable, "-m", "gnd", *args], cwd=EXAMPLE, capture_output=True, text=True,
++                          check=False)
+ 
+ 
+ def _offenders(directory: str, tmp_path: Path) -> dict[str, list]:
+diff --git a/tests/test_guarded_diagnostics.py b/tests/test_guarded_diagnostics.py
+index 354b66f46..c42f9c281 100644
+--- a/tests/test_guarded_diagnostics.py
++++ b/tests/test_guarded_diagnostics.py
+@@ -116,11 +116,12 @@ def test_guarded_diagnostics_and_baseline_share_ratchet(tmp_path):
+ 
+ 
+ def test_literal_domain_work_exhaustion_is_visible(tmp_path, monkeypatch):
+-    from gnd.model import _validation
++    from gnd.model import _guarded, _validation
+ 
+     _write(tmp_path, ["antecedent_typo"])
+     model = json.loads((tmp_path / "model.orm.yaml").read_text())
+-    monkeypatch.setattr(_validation, "_GUARDED_LITERAL_DOMAIN_WORK", 1)
++    # The limit is read in its defining home, gnd.model._guarded (CI repair 2026-11-16).
++    monkeypatch.setattr(_guarded, "_GUARDED_LITERAL_DOMAIN_WORK", 1)
+     findings = _validation._rule_guarded_literal_domain(model)
+     assert len(findings) == 1
+     assert findings[0].rule_id == "semantic:guarded-literal-domain-work-limit"
+diff --git a/tests/test_mc1_guards.py b/tests/test_mc1_guards.py
+index ed3d32174..0c157b898 100644
+--- a/tests/test_mc1_guards.py
++++ b/tests/test_mc1_guards.py
+@@ -342,7 +342,18 @@ def test_R30_packaged_include_roots_resolve():
+     expected = {'expense/teams/engineering.orm.json', 'expense/teams/sales.orm.json',
+                 'expense/teams/sales-v2.orm.json',
+                 'literature/interop_fixture/checking.orm.json',
+-                'literature/interop_fixture/extraction.orm.json'}
++                'literature/interop_fixture/extraction.orm.json',
++                # LD1 competency examples and LD3 multipass reading (literature-depth).
++                'literature/depth_fixture/algorithms.orm.json',
++                'literature/depth_fixture/dynamics.orm.json',
++                'literature/depth_fixture/molecular.orm.json',
++                'literature/reading_fixture/reading.orm.json',
++                # The expense receipts chapter (PR 205): reading and checking roots.
++                'expense/receipts/checking.orm.json',
++                'expense/receipts/reading.orm.json'}
+     assert included == expected
+-    for relative in included:
++    # LD3's reading root pins the depth vocabulary, which reading.py places beside
++    # it in each run directory; it is not loadable where it is packaged.
++    staged = {'literature/reading_fixture/reading.orm.json'}
++    for relative in included - staged:
+         assert load_model(examples / relative)._included
+diff --git a/tests/test_model_v2.py b/tests/test_model_v2.py
+index 11753a7bc..b8ba885b8 100644
+--- a/tests/test_model_v2.py
++++ b/tests/test_model_v2.py
+@@ -502,8 +502,9 @@ def test_every_error_rule_added_by_this_phase_has_a_rejecting_case() -> None:
+     registered = {}
+     for rule in model_module._SEMANTIC_RULES:
+         source = inspect.getsource(rule)
+-        rule_id = re.findall('rule_id="([^"]+)"', source).pop()
+-        registered[rule_id] = 'severity="warning"' in source
++        # A rule may name several ids, or name them in a loop (GC1 membership).
++        for rule_id in re.findall('"(semantic:[^"]+)"', source):
++            registered[rule_id] = 'severity="warning"' in source
+     v2_error_rules = {rule_id for rule_id, is_warning in registered.items() if not is_warning and rule_id.startswith(('semantic:op-', 'semantic:imported-'))}
+     assert v2_error_rules <= covered, f'no rejecting case for {sorted(v2_error_rules - covered)}'
+ 
+diff --git a/tests/test_model_validation.py b/tests/test_model_validation.py
+index 24524876b..d5c183e4d 100644
+--- a/tests/test_model_validation.py
++++ b/tests/test_model_validation.py
+@@ -82,6 +82,14 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
+         },
+         "_rule_depends_on": {"semantic:depends-on-ref"},
+     }
++    # GC2's filter rule also reports two ids documented with their own rules.
++    shared = {
++        "_rule_guarded_filters": {"semantic:guarded-binding-type", "semantic:term-comparison-type"},
++    }
++    # GC1's membership rule names its two ids in a loop rather than as rule_id=.
++    indirect = {
++        "_rule_derivation_membership": ["semantic:membership-list", "semantic:membership-duplicate"],
++    }
+     multi = {
+         "_rule_derivation_unstratified": [
+             "semantic:derivation-unstratified",
+@@ -89,6 +97,11 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
+         ],
+         # MG5: one walk, eight named refusals, documented in rule order.
+         "_rule_unattended": [f"semantic:unattended-u{n}" for n in range(1, 9)],
++        # GW1: the literal-domain walk's work limit and its domain finding.
++        "_rule_guarded_literal_domain": [
++            "semantic:guarded-literal-domain-work-limit",
++            "semantic:guarded-literal-outside-domain",
++        ],
+     }
+     assert [rule.__name__ for rule in model_module._SEMANTIC_RULES[:5]] == [
+         "_rule_temporal_language", "_rule_id_unique", "_rule_role_ref",
+@@ -97,7 +110,16 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
+     seen_extra = set()
+     seen_multi = set()
+     for rule in model_module._SEMANTIC_RULES:
+-        identifiers = list(dict.fromkeys(re.findall(r'rule_id="([^\"]+)"', inspect.getsource(rule))))
++        source = inspect.getsource(rule)
++        identifiers = list(dict.fromkeys(re.findall(r'rule_id="([^\"]+)"', source)))
++        if rule.__name__ in shared:
++            assert shared[rule.__name__] <= set(identifiers)
++            identifiers = [i for i in identifiers if i not in shared[rule.__name__]]
++        if rule.__name__ in indirect:
++            assert identifiers == [] and all(f'"{i}"' in source for i in indirect[rule.__name__])
++            identifiers = indirect[rule.__name__]
++            registered.extend(identifiers)
++            continue
+         if rule.__name__ in extra:
+             assert set(identifiers) == extra[rule.__name__]
+             seen_extra.add(rule.__name__)
+diff --git a/tests/test_public_semantic_adapter.py b/tests/test_public_semantic_adapter.py
+index 38100fa82..845f023b6 100644
+--- a/tests/test_public_semantic_adapter.py
++++ b/tests/test_public_semantic_adapter.py
+@@ -38,7 +38,9 @@ def _immutable(value):
+         assert value.__dataclass_params__.frozen
+         for field in dataclasses.fields(value):
+             _immutable(getattr(value, field.name))
+-    elif isinstance(value, tuple):
++    elif isinstance(value, (tuple, frozenset)):
++        # GC2 added SnapshotIR.computed_available, a frozenset of names: immutable
++        # as long as every member is.
+         for item in value:
+             _immutable(item)
+     else:
+diff --git a/tests/test_public_semantic_guarded_join.py b/tests/test_public_semantic_guarded_join.py
+index c9ce0334e..c48a5bda0 100644
+--- a/tests/test_public_semantic_guarded_join.py
++++ b/tests/test_public_semantic_guarded_join.py
+@@ -135,9 +135,10 @@ def test_shared_variables_use_typed_identity(tmp_path: Path) -> None:
+         ),
+         (
+             "P2-152",
+-            "guarded_result",
+-            "else comparison_pair_state(left, right, constraint.operator)",
+-            "else 1",
++            # GC2 (b4e84af4) moved the comparison into guarded_pair_state.
++            "guarded_pair_state",
++            "return -1 if right is None else comparison_pair_state(left, right, operator)",
++            "return -1 if right is None else 1",
+         ),
+         ("P2-155", "guarded_atom_state", "return 0", "return 1"),
+         (
+diff --git a/tests/test_rf6_packages.py b/tests/test_rf6_packages.py
+index c510a8f54..ee8b7bfd5 100644
+--- a/tests/test_rf6_packages.py
++++ b/tests/test_rf6_packages.py
+@@ -84,15 +84,22 @@ def mc1_definition(module, name):
+     matches = [r for r in rows if (r['module'], r['name']) == (module, name)]
+     assert len(matches) <= 1
+     selected = matches[0] if matches else None
+-    successor_path = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json'
+-    successor = json.loads(successor_path.read_text())
+-    assert successor['predecessor'] == path.relative_to(ROOT).as_posix()
+-    assert successor['predecessor_sha256'] == hashlib.sha256(path.read_bytes()).hexdigest()
+-    for row in successor['successors']:
+-        if (row['module'], row['name']) == (module, name):
+-            assert selected is not None and row['home'] == selected['home'] and row['before'] == selected['after']
+-            assert row['reason']
+-            selected = {**selected, 'after': row['after'], 'reason': row['reason']}
++    # Each successor file names its predecessor by path and digest; the main CI
++    # repair (2026-11-16) chains after MC3.
++    chain = ('.gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json',
++             '.gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json')
++    predecessor = path
++    for successor_name in chain:
++        successor_path = ROOT / successor_name
++        successor = json.loads(successor_path.read_text())
++        assert successor['predecessor'] == predecessor.relative_to(ROOT).as_posix()
++        assert successor['predecessor_sha256'] == hashlib.sha256(predecessor.read_bytes()).hexdigest()
++        for row in successor['successors']:
++            if (row['module'], row['name']) == (module, name):
++                assert selected is not None and row['home'] == selected['home'] and row['before'] == selected['after']
++                assert row['reason']
++                selected = {**selected, 'after': row['after'], 'reason': row['reason']}
++        predecessor = successor_path
+     return selected
+ 
+ 
+@@ -156,6 +163,11 @@ def split_homes():
+         'model/_documents.py',
+         # CI repair (2026-11-06): the MG5 unattended-source rules, split out at the size ceiling.
+         'model/_unattended.py',
++        # LX1 (2026-11-15): flat re-entry bytes for a resolved include root.
++        'model/flattening.py',
++        # CI repair (2026-11-16): the GW/GC guarded validation additions and the
++        # bounded model-document parser, split out at the size ceiling.
++        'model/_guarded.py', 'model/_parsing.py',
+         'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py',
+         # CI repair (2026-11-06): the CT2 composed-anchor check, split out at the size ceiling.
+         'checker/_composed.py')}
+@@ -186,9 +198,31 @@ def check(m, c):
+         check({**model_sizes, '_validation.py': 5001}, checker_sizes)
+ 
+ 
++#: Package homes no gnd.model import reaches: LX1's flattening is imported
++#: lazily by extraction and witness only, so the measure and generation
++#: closures never read it. The extraction lane and the tree-wide provider scan do.
++LEAF_HOMES = {ROOT / 'src/gnd/model/flattening.py'}
++
++
+ def test_actual_source_observers_cover_all_package_homes():
+     from test_rf6_moves import assert_scanned
+-    assert_scanned(split_homes())
++    assert_scanned(split_homes() - LEAF_HOMES)
++
++
++def test_leaf_package_homes_are_read_by_the_extraction_and_provider_scans():
++    import test_measure_offline as scans
++    visited = set()
++    original = Path.read_text
++    def observe(path, *args, **kwargs):
++        visited.add(path)
++        return original(path, *args, **kwargs)
++    from unittest.mock import patch
++    with patch.object(Path, 'read_text', observe):
++        for run in (scans.test_no_network_library_is_reachable_from_the_extraction_lane,
++                    scans.test_no_provider_client_anywhere_in_the_package):
++            visited.clear()
++            run()
++            assert LEAF_HOMES <= visited, sorted(LEAF_HOMES - visited)
+ 
+ 
+ def test_source_observer_package_omission_is_red(monkeypatch):
+diff --git a/tests/test_v6_phase2_adapter_mutations.py b/tests/test_v6_phase2_adapter_mutations.py
+index a4aa228fe..08122dea9 100644
+--- a/tests/test_v6_phase2_adapter_mutations.py
++++ b/tests/test_v6_phase2_adapter_mutations.py
+@@ -12,8 +12,16 @@
+ from support import public_adapter_mutation_controls as controls
+ 
+ from gnd import semantic_adapter
++from gnd import values as scalar_values
+ from gnd.semantic_registry import IR_DIMENSIONS
+ 
++#: Dimensions whose mutation site lives in gnd.values since GW0.
++_VALUES_DIMENSIONS = frozenset({
++    "identity", "order", "order:Date", "order:DateTime:calendar", "order:DateTime:hour",
++    "order:DateTime:minute", "order:DateTime:second", "order:DateTime:microsecond",
++    "order:DateTime:offset-days", "order:DateTime:offset-seconds",
++})
++
+ _MUTATIONS = (
+     (
+         "identity",
+@@ -107,8 +115,8 @@
+     ),
+     (
+         "consequent",
+-        "consequent_kind=kind, antecedent=atoms",
+-        'consequent_kind="atom" if kind == "absence" else kind, antecedent=atoms',
++        "base = replace(base, consequent_kind=kind, variant=kind)",
++        'base = replace(base, consequent_kind="atom" if kind == "absence" else kind, variant=kind)',
+         "test_guard_consequents_and_variants_remain_distinct",
+     ),
+     (
+@@ -196,7 +204,13 @@ def test_each_dimension_has_a_failing_single_source_mutant(
+     monkeypatch,
+ ):
+     source = inspect.getsource(semantic_adapter)
+-    assert source.count(before) == 1, f"{dimension}: stale mutation site"
++    # GW0 (24c72d86) moved scalar identity and order into gnd.values, which the
++    # adapter reads as ``scalar_values``; those sites are mutated there.
++    values_source = inspect.getsource(scalar_values)
++    in_values = dimension in _VALUES_DIMENSIONS
++    site = values_source if in_values else source
++    assert site.count(before) == 1, f"{dimension}: stale mutation site"
++    assert (source if in_values else values_source).count(before) == 0, f"{dimension}: ambiguous site"
+     if test_name == 'test_datetime_coordinates_retain_every_instant_component':
+         import test_v6_phase2_adapter as current_controls
+         control_owner = current_controls
+@@ -206,10 +220,24 @@ def test_each_dimension_has_a_failing_single_source_mutant(
+     available = {"tmp_path": tmp_path, "monkeypatch": monkeypatch}
+     arguments = {name: available[name] for name in inspect.signature(control).parameters}
+     control(**arguments)
++    if in_values:
++        import gnd
++
++        mutant_values = types.ModuleType("gnd.values")
++        mutant_values.__dict__["__name__"] = "gnd.values"
++        exec(  # noqa: S102 -- repository source plus one fixed, local mutation only
++            compile(values_source.replace(before, after), f"<values mutant: {dimension}>", "exec"),
++            mutant_values.__dict__,
++        )
++        monkeypatch.setitem(sys.modules, "gnd.values", mutant_values)
++        monkeypatch.setattr(gnd, "values", mutant_values)
++        adapter_source = source
++    else:
++        adapter_source = source.replace(before, after)
+     mutant = types.ModuleType("gnd._adapter_mutant")
+     monkeypatch.setitem(sys.modules, mutant.__name__, mutant)
+     exec(  # noqa: S102 -- repository source plus one fixed, local mutation only
+-        compile(source.replace(before, after), f"<adapter mutant: {dimension}>", "exec"),
++        compile(adapter_source, f"<adapter mutant: {dimension}>", "exec"),
+         mutant.__dict__,
+     )
+     monkeypatch.setattr(control_owner, "adapter", mutant)
+diff --git a/tools/build_ci_repair_successors.py b/tools/build_ci_repair_successors.py
+new file mode 100644
+index 000000000..243ece249
+--- /dev/null
++++ b/tools/build_ci_repair_successors.py
+@@ -0,0 +1,167 @@
++"""Write the 2026-11-16 main CI repair's chained successor rows from the current sources.
++
++    uv run python tools/build_ci_repair_successors.py
++
++Each row's ``before`` is the digest the existing ledgers currently expect, read
++through the same helpers the pinning tests use, and ``after`` is the digest of
++the merged source. Nothing is typed by hand. The reasons name the phases that
++changed each body. Two files are written under
++``.gnd-planning/maintenance/2026-11-16-main-ci-repair/``:
++
++- ``source-successors.json``, chained after the compiled-snapshot-obligations CI
++  registry like every phase successor file (RF4 and RF6b rows);
++- ``definition-successors.json``, chained after MC3, for the two definitions
++  whose pins run through the model-composition chain.
++"""
++
++from __future__ import annotations
++
++import ast
++import hashlib
++import json
++import sys
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[1]
++OUT = ROOT / ".gnd-planning/maintenance/2026-11-16-main-ci-repair"
++CI = ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json"
++MC3 = ".gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json"
++
++GC1 = "GC1 (62c45016, 270303c0) literal set membership"
++GC2 = "GC2 (b4e84af4, 6ebd39a7) guarded antecedent filters"
++GC3 = "GC3 (20172ace, b89a1f00) disjunctive guarded consequents"
++GW0 = "GW0 (24c72d86) guarded antecedent and literal domain reports"
++LX = "LX3 review (9e1c1d29) catalog validation and mixed witness intake"
++LD2 = "LD2 (07a2bb06) time dimensions and exact decimal replay"
++
++DEFINITION_REASONS = {
++    "_rule_anchored_role_and_recogniser": LD2,
++    "_iter_guarded_atoms": f"{GC2}; {GC3}",
++    "_iter_guarded_consequent_terms": f"{GC1}; {GC2}; {GC3}",
++    "_rule_guarded_consequent_ground": f"{GC2}; {GC3}",
++    "_rule_guarded_exists_range": GC3,
++    "_rule_guarded_exists_where_bound": GC3,
++    "_rule_guarded_comparison_type": f"{GC1}; {GC3}",
++    "_rule_guarded_exists_where_type": f"{GC1}; {GC3}",
++    "_derivation_variable_primitives": GC1,
++    "_derivation_head_term_issues": GC1,
++    "_rule_term_non_finite_number": GC3,
++    "_rule_temporal_language": f"{GC1}; {GC2}; {GC3}",
++    "_load_model_no_follow": LX,
++    "_bind_at": LX,
++    "ConstraintVerdict": f"{GW0}; {GC3}",
++    "check_legacy": f"{GW0}; {GC2}; {GC3}",
++    "_correspondence_message": GC3,
++    "_family_message_guarded": f"{GC2}; {GC3}",
++}
++
++RF4_REASONS = {
++    "_phase3_target": ("This repair excludes GC2 filtered and GC3 any_of guarded rows from the frozen "
++                       "Phase 3 denominator, as Phase 6 excluded guarded exists."),
++}
++RF4_REASON = ("Literature interop LX1-LX4 and the LX3 review route witness, replay and "
++              "check through include roots and fixed reference catalogs.")
++
++
++def _dump(path: Path, document: dict) -> None:
++    path.parent.mkdir(parents=True, exist_ok=True)
++    path.write_text(json.dumps(document, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
++
++
++def _sha(path: str) -> str:
++    return hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
++
++
++def main() -> int:
++    sys.path.insert(0, str(ROOT / "tests"))
++    import test_rf4_peripheral as rf4
++    import test_rf6_packages as rf6
++    from support.rf9_ci_sources import body_successor, definition_successor
++
++    if any((OUT / name).exists() for name in ("source-successors.json", "definition-successors.json")):
++        if "--rewrite" not in sys.argv[1:]:
++            print("already recorded; pass --rewrite to rebuild this unmerged record", file=sys.stderr)
++            return 1
++        # Start from empty chained files so the ledgers read the predecessors' state.
++        for name, predecessor in (("source-successors.json", CI), ("definition-successors.json", MC3)):
++            _dump(OUT / name, {"schema_version": 1, "reason": "rebuilding", "predecessor": predecessor,
++                               "predecessor_sha256": _sha(predecessor), "successors": []})
++
++    rows, mc_rows = [], []
++    for row in rf6.inventory():
++        mc = rf6.mc1_definition(row["module"], row["name"])
++        home = mc["home"] if mc else rf6.homes().get((row["module"], row["name"]), row["module"])
++        path = rf4._source(home)
++        source = path.read_text()
++        nodes = [n for n in ast.parse(source).body
++                 if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name == row["name"]]
++        if len(nodes) != 1:
++            continue
++        node = nodes[0]
++        start = min([node.lineno] + [d.lineno for d in node.decorator_list])
++        body = "".join(source.splitlines(keepends=True)[start - 1:node.end_lineno])
++        actual = hashlib.sha256(body.encode()).hexdigest()
++        successor = definition_successor(row["module"], row["name"])
++        expected = successor["after"] if successor else row["sha256"]
++        if mc:
++            expected = mc["after"]
++        if actual == expected:
++            continue
++        entry = {"kind": "RF6b", "module": row["module"], "name": row["name"], "home": home,
++                 "before": expected, "after": actual,
++                 "reason": f"Body changed by {DEFINITION_REASONS[row['name']]}."}
++        if mc:
++            entry["home"] = mc["home"]
++            mc_rows.append(entry)
++        else:
++            entry["home"] = successor["home"] if successor else home
++            rows.append(entry)
++
++    for move in rf4.MOVES["names"]:
++        if move["name"].isupper():
++            continue
++        successor = body_successor("RF4", move["name"], move["old"])
++        after = rf4._definition(rf4._source(move["new"]).read_text(), move["name"])
++        if after is None:
++            continue
++        algorithm = hashlib.sha256(rf4._algorithm(after).encode()).hexdigest()
++        imports = rf4._import_bindings(after)
++        if successor:
++            before = successor["after"]
++        else:
++            path = "src/" + move["old"].replace(".", "/") + ".py"
++            import subprocess
++            original = subprocess.check_output(["git", "show", f"{rf4.BASE}:{path}"], cwd=ROOT, text=True)
++            node = rf4._definition(original, move["name"])
++            if node is None:
++                continue  # the test covers constants and aliases by identity
++            before = {"algorithm_sha256": hashlib.sha256(rf4._algorithm(node).encode()).hexdigest(),
++                      "imports": rf4._import_bindings(node)}
++        if before["algorithm_sha256"] == algorithm and before["imports"] == imports:
++            continue
++        current = rf4._source(move["new"]).read_text()
++        raw = ast.get_source_segment(current, after)
++        rows.append({"kind": "RF4", "old": move["old"], "name": move["name"], "home": move["new"],
++                     "before": before,
++                     "after": {"algorithm_sha256": algorithm, "imports": imports,
++                               "raw_sha256": hashlib.sha256(raw.encode()).hexdigest()},
++                     "reason": RF4_REASONS.get(move["name"], RF4_REASON)})
++
++    _dump(OUT / "source-successors.json", {
++        "schema_version": 1,
++        "reason": ("Main CI repair 2026-11-16: bodies changed by the guarded-rule and literature "
++                   "milestones without a recorded successor; each row names its phases."),
++        "predecessor": CI, "predecessor_sha256": _sha(CI), "successors": rows,
++    })
++    _dump(OUT / "definition-successors.json", {
++        "schema_version": 1,
++        "reason": ("Main CI repair 2026-11-16: two model-composition definitions changed again "
++                   "after MC3; each row names its phases."),
++        "predecessor": MC3, "predecessor_sha256": _sha(MC3), "successors": mc_rows,
++    })
++    print(f"{len(rows)} source successors, {len(mc_rows)} definition successors")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/tools/build_expense_receipts_example.py b/tools/build_expense_receipts_example.py
+index 48955a68d..880d78100 100644
+--- a/tools/build_expense_receipts_example.py
++++ b/tools/build_expense_receipts_example.py
+@@ -106,19 +106,23 @@ def date_rule(rule_id, bound_fact, op, quote):
+ 
+ DOCUMENTS = {
+     "approval": (
+-        "Travel approval TA-2026-031\n"
+-        "Trip T-114: A. Martin to Paris for the client workshop.\n"
+-        "Approved from 2026-03-02 to 2026-03-06.\n",
++        (
++            "Travel approval TA-2026-031\n"
++            "Trip T-114: A. Martin to Paris for the client workshop.\n"
++            "Approved from 2026-03-02 to 2026-03-06.\n"
++        ),
+         {"trip_starts_on": [{"trip": "T-114", "day": "2026-03-02"}],
+          "trip_ends_on": [{"trip": "T-114", "day": "2026-03-06"}]},
+     ),
+     "folio": (
+-        "Hotel Lumière, 12 rue des Lilas, Paris\n"
+-        "Folio 7781, guest A. Martin, 2026-03-02 to 2026-03-05\n"
+-        "R1 Hotel Lumière: room, 3 nights, 612.00 EUR\n"
+-        "R2 Spa Lumière: massage, charged to room, 95.00 EUR\n"
+-        "R3 Café Central (lobby café): breakfast, charged to room, 18.50 EUR\n"
+-        "R4 Taxi booked by the concierge, paid by card: 42.00 EUR\n",
++        (
++            "Hotel Lumière, 12 rue des Lilas, Paris\n"
++            "Folio 7781, guest A. Martin, 2026-03-02 to 2026-03-05\n"
++            "R1 Hotel Lumière: room, 3 nights, 612.00 EUR\n"
++            "R2 Spa Lumière: massage, charged to room, 95.00 EUR\n"
++            "R3 Café Central (lobby café): breakfast, charged to room, 18.50 EUR\n"
++            "R4 Taxi booked by the concierge, paid by card: 42.00 EUR\n"
++        ),
+         {"receipt_issued_by_vendor": [
+             {"receipt": "R1", "vendor": "Hotel Lumière"},
+             {"receipt": "R2", "vendor": "Spa Lumière"},
+@@ -127,11 +131,13 @@ def date_rule(rule_id, bound_fact, op, quote):
+         ]},
+     ),
+     "card": (
+-        "Corporate card statement, March 2026, lines claimed for trip T-114\n"
+-        "C1 2026-03-05 HTL LUMIERE PARIS 612.00 EUR\n"
+-        "C2 2026-03-04 SPA LUMIERE 95.00 EUR\n"
+-        "C3 2026-03-05 TAXI G7 42.00 EUR\n"
+-        "C4 2026-03-09 Café Central, Vienna 23.00 EUR\n",
++        (
++            "Corporate card statement, March 2026, lines claimed for trip T-114\n"
++            "C1 2026-03-05 HTL LUMIERE PARIS 612.00 EUR\n"
++            "C2 2026-03-04 SPA LUMIERE 95.00 EUR\n"
++            "C3 2026-03-05 TAXI G7 42.00 EUR\n"
++            "C4 2026-03-09 Café Central, Vienna 23.00 EUR\n"
++        ),
+         {"expense_paid_to_vendor": [
+             {"expense": "C1", "vendor": "HTL LUMIERE PARIS"},
+             {"expense": "C2", "vendor": "SPA LUMIERE"},
+@@ -163,7 +169,8 @@ def dump(path: Path, obj) -> bytes:
+ 
+ 
+ def gnd(run: Path, *args, ok=(0,)):
+-    proc = subprocess.run([sys.executable, "-m", "gnd", *args], cwd=run, capture_output=True, text=True)
++    proc = subprocess.run([sys.executable, "-m", "gnd", *args], cwd=run, capture_output=True, text=True,
++                          check=False)
+     if proc.returncode not in ok:
+         raise SystemExit(f"gnd {' '.join(args)} -> {proc.returncode}\n{proc.stdout}\n{proc.stderr}")
+     return proc
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index 8a7f72821..2d47b2646 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -714,6 +714,12 @@
+     "gnd.model._operations": {
+       "layer": "model"
+     },
++    "gnd.model._guarded": {
++      "layer": "model"
++    },
++    "gnd.model._parsing": {
++      "layer": "model"
++    },
+     "gnd.model._unattended": {
+       "layer": "model"
+     },

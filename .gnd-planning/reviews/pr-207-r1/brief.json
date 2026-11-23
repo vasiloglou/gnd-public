@@ -1,0 +1,31 @@
+{
+  "base": null,
+  "claims": [
+    "This PR fixes every failure of the default test lane on main at 3fe7b136.",
+    "Each repair uses the repository's own mechanism. No pin is loosened and no check is removed.",
+    "The unpinned GW/GC guarded validation code moves verbatim to gnd.model._guarded, and parse_model_document and MAX_MODEL_BYTES move to gnd.model._parsing; _validation re-exports every name.",
+    "gnd.synth.frontier and gnd.assurance.core._phase3_target keep the GC2 filtered and GC3 any_of guarded refusals out of the frozen band-4 frontier and the frozen Phase 3 assurance denominator, and every drifted golden reproduces unchanged."
+  ],
+  "created": "2026-11-23T22:30:22.983092+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/reviews/pr-207-r1/diff.patch",
+      "sha256": "16f4638214307f1c3415ad1bc187aba15028e7ee5ac47c9988ec8207d26385ea"
+    }
+  ],
+  "head": "7c4439dd4257a534a18348f011b626aa73aff385",
+  "left_out": [],
+  "notes": [],
+  "pr": {
+    "base": "68a311725bfb9bea395a33ab0e3c8d6e79eb17d6",
+    "head": "7df6c0c52adc468415819c12293597ee5c16b3ec",
+    "number": 207,
+    "title": "Fix the main test failures from the guarded-rule and literature merges",
+    "url": "https://github.com/vasiloglou/gnd-public/pull/207"
+  },
+  "question": "Does this change do what it sets out to do, and what does it break?",
+  "subject": "pr",
+  "version": 1
+}

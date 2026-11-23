@@ -10,7 +10,7 @@ filed for it.
 
 | Phase | Deliverable | State |
 |---|---|---|
-| PF1 | the packaged-skill inventory defined once; the install, uninstall and verification-fix tests import it and join the guard block. Repairs `tests/test_verification_fixes.py`, red on `main` today (5 failed) | [draft spec r1](notes/phase-PF1-spec.md) |
+| PF1 | the packaged-skill inventory defined once; the install, uninstall and verification-fix tests import it and join the guard block. Repairs `tests/test_verification_fixes.py`, red on `main` (5 failed) | done on `claude/pf1-inventory-pin`: [002-phase-PF1.md](002-phase-PF1.md); [spec r1](notes/phase-PF1-spec.md) owner-approved; pull request open, not merged |
 | PF2 | a recorded calibration of the standing "code fitted to its examples" review check, over planted and control diffs | outline in the plan |
 
 [Plan](notes/pins-and-review-check-plan.md).
@@ -20,4 +20,4 @@ Rulings (plan §10), all as proposed: D1 one baseline run on beast-3, D2
 plan, phase and close (panel waived for this milestone), D4 one pull request
 per phase, D5 the distribution-lane pin stays as a named exception.
 
-Next action: the owner's gate on the [PF1 spec](notes/phase-PF1-spec.md).
+Next action: the owner rules on PF1's open questions (OQ1 keeps or drops the out-of-spec commit) and merges its pull request; then PF2's spec.

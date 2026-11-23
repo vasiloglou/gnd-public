@@ -574,10 +574,10 @@ def _review_attempts(inputs, attempts, reviewer=None):
             except Exception as error:
                 raise ExampleError(f"reviewer failed at {name}") from error
             _plain(answer, "review receipt")
-            _need(isinstance(answer, dict) and set(answer) == {"decision", "basis"}
-                  and len(_canonical(answer, "review receipt")) <= inputs.limits.response_bytes,
-                  "invalid review receipt")
+            _need(isinstance(answer, dict) and set(answer) == {"decision", "basis"}, "invalid review receipt")
             receipt = {**answer, "excerpt_sha256": row["excerpt_sha256"], "facts_sha256": facts_sha256}
+            _need(len(_canonical(receipt, "review receipt")) <= inputs.limits.response_bytes,
+                  "invalid review receipt")
             receipts[name] = receipt
         _need(isinstance(receipt, dict) and receipt.get("decision") == "supported"
               and receipt.get("excerpt_sha256") == row["excerpt_sha256"]
@@ -839,7 +839,10 @@ def _retained_files(read, roster, files, max_bytes):
     retained = {}
     for stage_index in (1, 3):
         payload = _decode(artifacts[f"payload-{stage_index}.json"], max_bytes=max_bytes)
-        retained.update({row["section"]: row["response"] for row in payload["attempts"]})
+        rows = payload.get("attempts")
+        _need(isinstance(rows, list) and all(isinstance(row, dict) and isinstance(row.get("section"), str)
+                                             and "response" in row for row in rows), "invalid retained payload")
+        retained.update({row["section"]: row["response"] for row in rows})
     return artifacts, retained
 
 
@@ -886,8 +889,9 @@ def _caller_settings(manifest: dict) -> tuple[ReadingLimits, dict, dict]:
     budget, unavailable = settings["document_budget_bytes"], settings["unavailable"]
     _need((budget is None or type(budget) is int and 0 <= budget <= limits.max_budget)
           and isinstance(unavailable, list) and all(isinstance(name, str) for name in unavailable)
-          and settings["producer"] in ("live", "saved") and settings["reviewer"] in ("live", "saved", "none"),
-          "invalid caller run settings")
+          and settings["producer"] in ("live", "saved") and settings["reviewer"] in ("live", "saved", "none")
+          and type(manifest.get("budget_bytes")) is int and 0 <= manifest["budget_bytes"] <= limits.max_budget
+          and manifest.get("scenario") == "full", "invalid caller run settings")
     return limits, settings, steps
 
 

@@ -235,3 +235,65 @@ def test_t9_an_empty_live_run_replays(tmp_path):
     out = tmp_path / "run"
     report = reading.run(out, fixture=CALLER, producer=Empty())
     _same(report, reading.replay(out, fixture=CALLER))
+
+
+def test_r1_a_receipt_at_the_response_cap_replays(tmp_path):
+    root = _root(tmp_path, profile=_profile_review())
+    filler = 512 - len(canonical_json_bytes({"basis": "", "decision": "supported"}))
+
+    class Full:
+        def review(self, call):
+            return {"decision": "supported", "basis": "b" * filler}
+
+    limits = ReadingLimits(response_bytes=512)
+    answers = {name: {"outcome": "empty", "facts": {}, "proposal_keys": []} for name in ANSWERS}
+    answers["a-opening"] = {"outcome": "accepted", "proposal_keys": [],
+                            "facts": {"paper_title": [{"paper": "p", "title": "t"}]}}
+    out = tmp_path / "run"
+    try:
+        report = reading.run(out, fixture=root, producer=Producer(answers), reviewer=Full(), limits=limits)
+    except reading.ExampleError:
+        assert not out.exists()
+        return
+    _same(report, reading.replay(out, fixture=root))
+
+
+def _profile_review():
+    value = json.loads((CALLER / "profile.json").read_bytes())
+    value["review"] = True
+    return value
+
+
+@pytest.mark.parametrize("change", [{"budget_bytes": True}, {"scenario": "unavailable"}])
+def test_r2_top_level_settings_refuse_before_any_run_file(plain, tmp_path, monkeypatch, change):
+    out, _ = plain
+    copy = _copy(out, tmp_path)
+    _manifest(copy, lambda manifest: manifest.update(change))
+    monkeypatch.setattr(reading, "_read_run_file", lambda *_: pytest.fail("read a run file"))
+    with pytest.raises(reading.ExampleError):
+        reading.replay(copy, fixture=CALLER)
+
+
+def _rechain(run, name, raw):
+    """Replace one payload and re-pin it through the stage chain and the manifest."""
+    (run / name).write_bytes(raw)
+    manifest = json.loads((run / "run.json").read_bytes())
+    manifest["artifacts"][name] = sha256_hex(raw)
+    predecessor = None
+    for index in range(6):
+        stage = json.loads((run / f"stage-{index}.json").read_bytes())
+        stage["predecessor_sha256"] = predecessor
+        stage["payload_sha256"] = manifest["artifacts"][f"payload-{index}.json"]
+        stage_raw = canonical_json_bytes(stage)
+        (run / f"stage-{index}.json").write_bytes(stage_raw)
+        manifest["artifacts"][f"stage-{index}.json"] = predecessor = sha256_hex(stage_raw)
+    (run / "run.json").write_bytes(canonical_json_bytes(manifest))
+
+
+@pytest.mark.parametrize("payload", [{}, {"attempts": [1]}, {"attempts": [{"section": "a-opening"}]}])
+def test_r3_a_malformed_retained_payload_refuses(plain, tmp_path, payload):
+    out, _ = plain
+    copy = _copy(out, tmp_path)
+    _rechain(copy, "payload-1.json", canonical_json_bytes(payload))
+    with pytest.raises((reading.ExampleError, ArtifactError)):
+        reading.replay(copy, fixture=CALLER)

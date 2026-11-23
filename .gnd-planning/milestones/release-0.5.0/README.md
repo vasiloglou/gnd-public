@@ -6,6 +6,9 @@ by the owner's ruling of the same day, the release is cut after
 [reviewed-vocabulary-growth](../reviewed-vocabulary-growth/README.md) are
 merged. Nothing is bumped, built or published.
 
+The plan and its gate record describe those two milestones as they stood
+when the plan was approved. Their own READMEs give their current state.
+
 It will carry what merged after 0.4.0: include roots on more routes, the
 PyRel rules programs for literature-style models, aggregate COUNT
 certificates, and what those two milestones ship.

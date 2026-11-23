@@ -295,6 +295,25 @@ def test_T9_composition_layer_within_bound(case):
     assert elapsed < 5, elapsed
 
 
+# --- T9, route level: restored by reviewed-vocabulary-growth VG1 ---------
+#
+# The row IR1 withdrew (its spec, T9, prior row) is restored at the bound it
+# first named, now that the checker is no longer superlinear in object types
+# (VG1-C5). The composition-only T9 above stays beside it.
+
+
+def test_T9_route_level_judgments_check_at_1000_extra_types_within_bound(case):
+    edit_include(case, extra_types(1000))
+    repin(case, "checking.orm.json", "chronology")
+    bind(case, "checking.orm.json")
+    started = time.monotonic()
+    code, out = judge(case, "checking.orm.json")
+    elapsed = time.monotonic() - started
+    assert code in (0, 1), out
+    assert out["outcome"] in (0, 1)
+    assert elapsed < 20, elapsed
+
+
 # --- T12: references of an include root bind at --reference-root ----------
 
 

@@ -2233,7 +2233,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +54 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +55 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2480,13 +2480,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.query_index
-- does: Query detached model snapshots through a bounded content cache [ModelIndex].
-- verbs: model lookup, query model, cached models, detached snapshot, fact types, object types, role players, supertype closure, positional constraints, index_scope, independent_index_scope, cache invalidation
+- does: Query detached model snapshots through a bounded content cache [ModelIndex], and keep per-model universe tables (reference value types, denoting types, subtype children, kinds) that the checker's universe walks read.
+- verbs: model lookup, query model, cached models, detached snapshot, fact types, object types, role players, supertype closure, positional constraints, index_scope, independent_index_scope, cache invalidation, reference value type table, denoted by, subtype children, object type kind
 - status: canonical
 - modules: src/gnd/model_index.py
-- uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +39 more (graph.md)
-- tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
+- uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +40 more (graph.md)
+- tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
 
@@ -2715,7 +2715,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: adapt snapshot, canonical_scalar, typed scalar, rational identity, datetime coordinate, opaque refusal, adapt_constraint, adapt_snapshot, adapt_snapshot_observed, derived lineage, value origins, validation marker, input refusal, canonical scalar compatibility alias
 - status: canonical
 - modules: src/gnd/semantic_adapter.py
-- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
 - used_by: check.admission, check.snapshot_decision, discover.population_view, semantics.temporal_guards, semantics.witness_origins
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py, tests/test_public_adapter_derivation.py
 - checked: partial
@@ -2778,8 +2778,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - modules: src/gnd/universe.py
 - uses: check.constraint_families, model.atom_bindings, model.document, model.query_index, model.reference_resolution, model.scalar_identity
 - used_by: check.admission, check.applicability, check.population_structure, checker.evaluate, discover.candidates, discover.population_view, extract.reference_schemes, extract.vocabulary, model.extraction_vocabulary, model.population_sentences, model.reference_schemes, model.validation, … +5 more (graph.md)
-- tests: tests/test_rf3_core.py, tests/test_rf6_index.py, tests/test_checker_families.py, tests/test_popvalidate.py
-- notes: Also owns constraint shape/scope hooks dispatched through FAMILIES; layer-map placement is model despite the check area chosen by capability. Historical model, checker and popvalidate names remain compatibility aliases.
+- tests: tests/test_rf3_core.py, tests/test_rf6_index.py, tests/test_checker_families.py, tests/test_popvalidate.py, tests/test_vg1_object_type_scaling.py
+- notes: Also owns constraint shape/scope hooks dispatched through FAMILIES; layer-map placement is model despite the check area chosen by capability. Historical model, checker and popvalidate names remain compatibility aliases. The descendant, denoting and kind walks read model.query_index's per-model tables (VG1); resolve_reference_value_type stays the uncached definition those tables cache.
 
 
 ### model.scalar_identity

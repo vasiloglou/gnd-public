@@ -36,45 +36,9 @@ from typing import Any, NamedTuple
 import pytest
 from support.digests import sha256_bytes as _digest
 from support.rf5_sources import cli_sources
+from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT, EXPECTED_SKILL_NAMES
 
 from gnd import cli, install
-
-#: The packaged tree ships 48 files (measured, never derived — phase 02.1 took
-#: it from 29 to 33 with the gnd-extract / gnd-render-doc round-trip pair, plan
-#: 03-04 to 35 with gnd-codegen, plan 03-06 to 37 with gnd-conformance, and
-#: Phase 4 to 43 with gnd-model-evolve, gnd-model-from-code and
-#: gnd-review-panel, then the panel updater to 46; quick 260816-rjw to 48 with
-#: the two loop skills, SKILL.md only each; milestone v1.2 to 50 with
-#: gnd-new-project and the milestone-record contract reference).
-#: Duplicated deliberately: if a skill file is added, BOTH guards should fail
-#: and be updated as one decision.
-EXPECTED_SKILL_FILE_COUNT = 71  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued; AC1: the bounded COUNT membership contract
-
-#: The eighteen directory names the packaged tree carries. The installer discovers
-#: them by traversal and never by name (D-06/D-26); this literal exists so a
-#: test can say WHICH eighteen were placed, not so the installer can look them up.
-EXPECTED_SKILL_NAMES = frozenset(
-    {
-        "gnd-adopt",
-        "gnd-codegen",
-        "gnd-conformance",
-        "gnd-dev-session",
-        "gnd-extract",
-        "gnd-export",
-        "gnd-judge-fact-types",
-        "gnd-model-multivalued",
-        "gnd-model-evolve",
-        "gnd-model-from-code",
-        "gnd-model-from-text",
-        "gnd-new-project",
-        "gnd-orm-core",
-        "gnd-render-doc",
-        "gnd-review-panel",
-        "gnd-review-panel-light",
-        "gnd-solve",
-        "gnd-update-review-panel",
-    }
-)
 
 #: The top-level directory names GND owns inside a target root today. Discovered
 #: at runtime by the installer per D-06 — named here only so the tests can build

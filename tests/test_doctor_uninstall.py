@@ -39,38 +39,10 @@ from typing import Any, NamedTuple
 
 import pytest
 from support.digests import sha256_bytes as _digest
+from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT, EXPECTED_SKILL_NAMES
 
 from gnd import cli, install
 
-#: The packaged tree ships 59 files across 15 skills — the same duplicated guard
-#: ``tests/test_install.py`` keeps, for the same reason.
-EXPECTED_SKILL_FILE_COUNT = 71  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued; AC1: the bounded COUNT membership contract
-
-#: The fifteen packaged skill directories, which is the artifact set in symlink
-#: mode: one link per skill. Named rather than counted so a removal that drops
-#: one and gains another cannot cancel out.
-EXPECTED_SKILL_NAMES = frozenset(
-    {
-        "gnd-adopt",
-        "gnd-codegen",
-        "gnd-conformance",
-        "gnd-dev-session",
-        "gnd-extract",
-        "gnd-export",
-        "gnd-judge-fact-types",
-        "gnd-model-multivalued",
-        "gnd-model-evolve",
-        "gnd-model-from-code",
-        "gnd-model-from-text",
-        "gnd-new-project",
-        "gnd-orm-core",
-        "gnd-render-doc",
-        "gnd-review-panel",
-        "gnd-review-panel-light",
-        "gnd-solve",
-        "gnd-update-review-panel",
-    }
-)
 SAMPLE_SKILL = "gnd-orm-core"
 SAMPLE_FILE = "gnd-orm-core/SKILL.md"
 

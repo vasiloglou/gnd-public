@@ -2,8 +2,8 @@
 
 ## 1. Status
 
-**Draft r1, 2026-11-23, awaiting the plan gate and then its own owner gate.**
-No test file changes before both.
+**Owner-decided (2026-11-23): spec r1 approved as written, PF1-D1 (a) and
+PF1-D2 (a) (o).** Implementation is under way on `claude/pf1-inventory-pin`.
 
 ## 2. Provenance
 
@@ -113,8 +113,8 @@ fails the guard, so a stale exception cannot linger.
 
 | ID | Question | Readings and cost | Proposed |
 |---|---|---|---|
-| PF1-D1 | Where the guard lives | (a) a new file; (b) a test in `test_packaged_skills.py`. Same exit codes; (a) keeps the home file's job to defining the inventory | (a) |
-| PF1-D2 | Whether the guard also catches `EXPECTED_RELATIVE_LINK_COUNT` copies | (a) no: no copy exists in the default lane; (b) yes: wider, and `test_public_distribution_runtime.py:22` would need a second exception | (a) |
+| PF1-D1 | Where the guard lives | (a) a new file; (b) a test in `test_packaged_skills.py`. Same exit codes; (a) keeps the home file's job to defining the inventory | (a). **Ruled (a), owner, 2026-11-23 (o)** |
+| PF1-D2 | Whether the guard also catches `EXPECTED_RELATIVE_LINK_COUNT` copies | (a) no: no copy exists in the default lane; (b) yes: wider, and `test_public_distribution_runtime.py:22` would need a second exception | (a). **Ruled (a), owner, 2026-11-23 (o)** |
 
 Plan D1 and D5 are ruled at the plan gate.
 
@@ -142,3 +142,16 @@ names and one of 70 files). Two lines in each copy of `project.md`.
 ## 11. Approval instrument
 
 This prose.
+
+## 12. Owner gate
+
+- **Ruling:** owner approved spec r1, 2026-11-23, in the Code session that
+  wrote it: "Approve PF1 spec", answering "Approve the PF1 spec so PF1 can
+  start?". That answer is also the go-ahead to implement.
+- **Bytes:** sha256 `ebdcaa3ff96b1118c23b9815b2f9c4f48cc0e6c433ca2c627cc7c8c81b86bae0`, the spec as committed in PR 248 at `04945d39`.
+  Since then only the status line, the two ruling cells of §7 and this
+  section changed.
+- **Instrument:** this prose (§11). No review ran over the spec bytes; plan D3
+  selects one reviewer in a different tool for the phase diff.
+- **Rulings:** PF1-D1 (a), PF1-D2 (a). Plan D1 and D5 were ruled at the plan
+  gate (`../001-plan.md`).

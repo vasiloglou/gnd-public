@@ -354,7 +354,12 @@ from one reporter's unattended run; #228 was measured here on a synthetic
 model. A 0.6.0 release that carries reviewed-vocabulary-growth
 and growth-round-outcomes together answers all three.
 
-Decisions waiting for the owner: whether to cut 0.5.0 now; the rulings of the
+Status, 2026-11-23, later: the owner asked for the 0.5.0 release.
+[release-0.5.0](milestones/release-0.5.0/README.md) has plan r1 and the RW1
+draft spec; neither is reviewed or approved, and nothing is bumped or built.
+
+Decisions waiting for the owner: the plan-review instrument and §10 rulings of
+[release-0.5.0](milestones/release-0.5.0/notes/release-0.5.0-plan.md); the rulings of the
 reviewed-vocabulary-growth plan; D1–D6 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);
 D1–D5 of

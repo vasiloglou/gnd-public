@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**Approved by delegated ruling (auto=true), 2026-11-23** `(d)`. The owner
+**Approved by delegated ruling (auto=true), 2026-11-23; implemented, recorded in [003-phase-VG3.md](../003-phase-VG3.md)** `(d)`. The owner
 invoked `process-milestone reviewed-vocabulary-growth auto` on 2026-11-23,
 which delegates spec rulings within this milestone; this is the driving
 agent's ruling, not the owner's reading. The ruled bytes are this file's r1
@@ -225,3 +225,46 @@ About 120 source lines, 30 page lines, 350 test lines.
 ## 11. Approval instrument
 
 This prose (VG3-D3).
+
+## Implementation findings, recorded as they were found `(d)`
+
+2026-11-23, at `702496c8`.
+
+1. **`_cmd_validate` is pinned by its AST digest** (`tests/test_rf5_commands.py`,
+   the RF5 relocation pins). Printing the attribution line changes it. The
+   change is registered as an RF5 successor in
+   `evidence/VG3/source-successors.json`, chained after release-0.3.0 RN0's
+   row (its `before` is RN0's `after`, raw and algorithm digests), and
+   `tests/support/rf9_ci_sources.py` lists the file.
+2. **The MC3 raw-body pin had no successor path.**
+   `tests/test_mc3_source_observations.py` holds five command bodies,
+   `_cmd_validate` among them, to raw digests recorded once, so any later
+   change to one of them failed it. It now follows registered successor
+   rows from each recorded digest; its negative control, an unregistered
+   change, still fails.
+3. **The query-policy guard counts `row['fact_types']`** in
+   `commands/checking.py` as a model read. The attribution row's keys are
+   `object_type_count` and `fact_type_count`.
+4. **MC1's T44 asserted the behaviour D3 (a) changes**: an unattended root
+   raising U rules on an included anonymous constraint. Its claim is the
+   remapping of an anonymous included constraint; the constraint is now an
+   unconfirmed inferred `alethic` one, which U8 still refuses (D13), so the
+   claim keeps an issue to carry.
+5. **UG3's a13 test wraps `_iter_unattended_spans` with a one-argument
+   fake.** Its fake now passes the include set through.
+6. **A known red outside the phase.** Five tests of
+   `tests/test_ir3_pyrel_includes.py` (T3 ×4, T6) fail at `main`
+   `1f403b07` and at VG1's head `5427e8fe`, verified in those checkouts on
+   beast-3. VG3 changes no PyRel code and that file is not in its lane.
+7. **A test-authoring slip.** T2's owned constraints were first written as
+   top-level `mandatory` constraints, which the schema refuses at the top
+   level; they are top-level `value` constraints.
+8. **Review r1 (Codex), F1, reproduced and fixed at `01b76996`.** U7 read
+   `sample_spans` on included object types and constraints, which no rule
+   read before and which the span walk does not count. A malformed one
+   there refused a root 0.4.0 accepts (VG3-C10). Sample spans are read on
+   included fact types only.
+9. **Review r1, F2, reproduced and fixed at `01b76996`.** The `[id=…]`
+   selector pattern stopped at a newline, so an id holding one lost its
+   `includes[ID]:` prefix. `remap_issues` now matches each declared
+   element's whole selector text, longest first, and parses no id.

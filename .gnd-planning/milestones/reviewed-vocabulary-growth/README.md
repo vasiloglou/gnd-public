@@ -26,7 +26,7 @@ Plan r4 repairs the eight points its two returned reviews raised, tagged
 |---|---|---|
 | VG1 | `gnd check` cost about linear in the number of object types (#221) | done 2026-11-23: [record](002-phase-VG1.md), [spec](notes/phase-VG1-spec.md) (delegated approval, `auto=true`) |
 | VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | outline; D2 ruled (a), widen rule D-12 |
-| VG3 | an unattended root may include a reviewed vocabulary (#222) | outline; D3, D13 and D14 ruled (a) |
+| VG3 | an unattended root may include a reviewed vocabulary (#222) | done 2026-11-23: [record](003-phase-VG3.md), [spec](notes/phase-VG3-spec.md) (delegated approval, `auto=true`) |
 | VG4 | growth rounds on that root, and its first source document (#222) | outline; needs VG3 |
 | VG5 | one packaged example, the pages and the three issue replies | outline; needs VG1–VG4 |
 
@@ -51,4 +51,5 @@ writer at a time (plan §3).
 since 2026-11-23: spec rulings are delegated (`auto=true`); merge is not.
 VG2, VG4 and VG5 change `evolve/service.py` or `unattended-growth.md`, so by
 the plan's order (§3) they wait for GO1 of growth-round-outcomes, whose plan
-is not approved yet. VG3 changes neither file and runs next.
+has started in its own session. VG3 changed neither file and is done; VG2 starts when
+the milestone coordinator clears it after GO1 merges.

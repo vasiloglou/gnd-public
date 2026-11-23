@@ -52,6 +52,11 @@ the next one.
   `repin-include` on an unattended root under every policy
   (`evolve:unattended-repin`), where 0.4.0 refused it only under
   `--policy additive` ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
+- **A seeded growth example.** `src/gnd/examples/seeded_growth/` grows an
+  unattended root from a reviewed seed in two rounds, then validates, checks
+  and judges it; `unattended-growth.md` gains "Starting from a reviewed
+  vocabulary", and the include route list names `gnd coverage` and
+  `gnd evolve`.
 - **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message

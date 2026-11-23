@@ -1963,6 +1963,8 @@ above):
 | `gnd flatten` | writes the flat model and its flattening record (below) for any include root, temporal or not |
 | `gnd export pyrel` (default, `--rules duckdb`, `--rules lqp`) | exports the flat model and records the flattening record's SHA-256 and each pin ([PyRel page](https://github.com/vasiloglou/gnd-public/blob/main/docs/runtimes/pyrel.md)); the default mode still refuses temporal models |
 | `gnd judgments check` | receipts bind the root file's sha256 (`subject.model_sha256`), which commits to every include's pin; references bind under `--reference-root` as for any model. An include refusal reports `reason: "binding"` with the include code as `message` |
+| `gnd coverage` | the composed model |
+| `gnd evolve` (preview, apply, finalize) | the authored root as the candidate; included elements are read-only and owned constraints attach to included fact types (the gnd-model-evolve evolution contract, "Shared vocabulary evolution") |
 
 An include path that cannot be encoded as UTF-8 is refused `include:path`
 with the other path checks, on every route.

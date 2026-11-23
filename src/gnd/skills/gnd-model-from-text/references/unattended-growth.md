@@ -87,6 +87,30 @@ admits constraints it should have refused. The policy protects the facts it can 
 those. The cells are in the
 [evolution contract](../../gnd-model-evolve/references/evolution-contract.md#additive-policy).
 
+## Starting from a reviewed vocabulary
+
+A growth run can start from a vocabulary an owner has already reviewed, without restating its claims
+as unreviewed. Put the reviewed model in its own file (version 1 to 4, not unattended) and make the
+growth root a version-5 model with `source.mode: unattended` and `reviewer: none` that includes it by
+id, path and SHA-256. The root needs no document of its own while it holds nothing but the include;
+the first round declares one with a `source-document` add.
+
+What the rules ask of each side is stated once, in
+[Unattended source](../../gnd-orm-core/references/representation-format.md#an-unattended-root-that-includes-a-reviewed-model):
+the included elements keep their own source, status and modality; everything a round adds is the
+root's and keeps every rule. A round may add object types, fact types and constraints, and may attach
+constraints to an included fact type (`fact_type_constraints`); it cannot change, rename or delete an
+included element, and it cannot re-pin an include. `gnd validate` prints one `INCLUDE` line per
+include, naming what it carries. The new constraint's source follows
+[Evolve admission (D-12)](../../gnd-orm-core/references/provenance-and-modality.md#evolve-admission-d-12).
+
+The packaged example `src/gnd/examples/seeded_growth/` runs the whole path: a seed, an empty root,
+two rounds, then `gnd validate`, `gnd check` and `gnd judgments check`.
+
+When the vocabulary cannot be included (it is unattended itself, or nests includes), carry its claims
+into the root as `imported`, `proposed` and `deontic`, with the vocabulary file as the root's first
+document and a span on each element. Inside the growth model those claims then read as unreviewed.
+
 ## Evidence for Steps 3 to 7
 
 For each step: the text that licenses a proposal, what to propose, and what does not license

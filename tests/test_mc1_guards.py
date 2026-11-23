@@ -373,7 +373,9 @@ def test_R30_packaged_include_roots_resolve():
                 'literature/reading_fixture/reading.orm.json',
                 # The expense receipts chapter (PR 205): reading and checking roots.
                 'expense/receipts/checking.orm.json',
-                'expense/receipts/reading.orm.json'}
+                'expense/receipts/reading.orm.json',
+                # reviewed-vocabulary-growth VG5: an unattended root that includes a reviewed seed.
+                'seeded_growth/root.orm.yaml'}
     assert included == expected
     # LD3's reading root pins the depth vocabulary, which reading.py places beside
     # it in each run directory; it is not loadable where it is packaged.

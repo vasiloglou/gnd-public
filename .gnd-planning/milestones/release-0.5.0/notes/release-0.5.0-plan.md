@@ -1,8 +1,11 @@
 # Release 0.5.0
 
-r1, 2026-11-23. Milestone `release-0.5.0`, phase prefix `RW`. **Not reviewed
-and not approved.** No plan review has run: RW-D0 asks which instrument reads
-this plan, and until it runs the plan reads as unreviewed.
+r2, 2026-11-23. Milestone `release-0.5.0`, phase prefix `RW`. The standard
+GND panel reviewed r1 (SHA-256 `5a34615d…3391`, five of six seats). Section 11
+amends the r1 clauses below and records the owner's rulings of the same day;
+no review has read r2. The [plan gate](../001-plan-gate.md) records the review
+and the delegated ruling. **RW1 does not start until the two milestones of
+§11's RW-D2 ruling are merged.**
 
 Source: the owner's request of 2026-11-23 ("Release 0.5.0"), made after the
 three milestones merged since 0.4.0 were recorded as closed. Inspection
@@ -397,3 +400,118 @@ E1 prediction is in the RW1 spec.
 | RW-D14 | Run the prepare job on GitHub for an Ubuntu result? | Not unless the owner asks | Without it, only the macOS profile is observed |
 
 Open questions carried: none beyond the rows above.
+
+
+## 11. Amendments after the owner's rulings and the standard panel, 2026-11-23
+
+These rulings replace the corresponding r1 language above. The r1 wording is
+retained above and at commit `94eb80e0`. The
+[panel report](../evidence/plan-r1/PANEL-REVIEW.md) accounts for all fourteen
+concerns: two agreed groups and nine concerns from one seat each. Each was
+checked against the repository before its fix was written here.
+
+### Owner rulings
+
+- **RW-D0, RW-D8 and §8 (o).** On 2026-11-23 the owner selected the standard
+  GND panel for the plan and the close, delegated the milestone's approval
+  rulings (`auto=true`), and selected the `pyrel_oracle` lane to run once on
+  the commit the release is built from. Merge and each publication act keep
+  their separate owner authorization.
+- **RW-D2 (o).** The owner wrote on 2026-11-23, while the plan was under
+  review, that this release depends on the `literature-host-interfaces` and
+  `reviewed-vocabulary-growth` sessions ("I think you depend on" them, in the
+  owner's words). This replaces the r1 proposal
+  that no planned milestone gates the cut. As read here: **0.5.0 is cut after
+  both milestones are merged to main with their close records.** The reading
+  "in full, every mandatory phase" is this plan's, not the owner's words, and
+  the owner may narrow it to named phases. On 2026-11-23 both are at the plan
+  stage: [literature-host-interfaces](../../literature-host-interfaces/README.md)
+  is an outline r1 with four phases, and
+  [reviewed-vocabulary-growth](../../reviewed-vocabulary-growth/README.md)
+  is plan r3 with five phases, not approved. Consequences:
+  - RW1 does not start before both are merged. Its E1 would otherwise measure
+    a tree that the two milestones then change, and its notes would be
+    written twice.
+  - W7 grows by what the two milestones ship. Their changes enter the notes
+    reconciliation and the probe reconciliation below like every other
+    change. The headline block (RW1 spec D4) is chosen when RW1 starts.
+  - The roadmap in `.gnd-planning/PROJECT.md` paired reviewed-vocabulary-growth
+    with growth-round-outcomes for a 0.6.0 release. This ruling moves the
+    first into 0.5.0. growth-round-outcomes is not named: it does not gate the
+    cut, and it is in the release only if it is merged before the freeze.
+  - W17 and R2 still apply to every other change merged before the freeze.
+
+### Panel fixes
+
+- **Probe coverage (agreed, three seats).** W7 lists role-scoped value rules,
+  and r1's probe 3 had no such model. Probe 3 gains a role-scoped value
+  model: a packaged one if one exists, else an input under
+  `tests/fixtures/release-acceptance/0.5.0/`. The RW2 spec carries a
+  reconciliation table like RW1-C3's: each user-visible change on the freeze
+  commit since `v0.4.0` maps to an installed probe with its 0.4.0 control, or
+  to a stated reason for none. The RW3 dossier lists the rows without a probe
+  under "what was not measured".
+- **Freeze-time notes reconciliation (agreed, two seats).** RW1-C3 and the
+  RW2-C0 recheck read
+  `git diff v0.4.0 <commit> -- src docs README.md PYPI.md pyproject.toml LICENSE NOTICE .claude-plugin .codex-plugin .agents/plugins`
+  file by file, leaving out only this milestone's own version edits. RW2-C0
+  runs it at the exact commit the candidate is built from and appends the
+  rows RW1's table lacks.
+- **One candidate commit.** The order in RW2 is: the acceptance-probes pull
+  request and any preparation pull request merge first; the resulting main
+  commit is the freeze commit; RW2-C0 runs at it; both builds use it as
+  `SOURCE_COMMIT`. If main moves before the build, the freeze is void and
+  RW2-C0 runs again at the new commit.
+- **What probe 3 asserts.** An exit of 0 does not show the program holds the
+  rule. Probe 3 exports from the installed wheel in every mode the notes
+  advertise (the default mode and `--rules duckdb` and `--rules lqp` for an
+  include root; both rules targets for the other models) and asserts the
+  rule content of each program: the external-uniqueness requirement, the
+  not-checked line of an anchored rule, the role-scoped value requirement and
+  the recorded flattening digest. Where the notes say a mode refuses a model
+  (the default mode on a temporal root), it asserts that refusal. Each has
+  its 0.4.0 control.
+- **Publication order.** The stage runs: upload; the served-file comparison
+  and a fresh index install; the tag; the GitHub release; the pages pull
+  request; the issue comments. A failed comparison stops before the tag and
+  the release, as `docs/releasing.md` requires for announcements.
+- **§9.** The RW2 and RW3 gates include the structure guards of
+  `project.md`, with their summary lines in the records, because RW2 changes
+  a test and RW3 changes a page and a tool.
+- **RW3-C4 and RC-03.** `tools/release_text.py` pins the token-route sentence
+  of `docs/releasing.md` in its `STANDING` list, and
+  `tests/test_release_text.py` holds the same sentence in a fixture. RW3
+  edits all three together. That is a change to the publication helper, the
+  trigger RC-03 names, so the negative control for the receipts phrase lands
+  in the same phase. RW3's gate already names `tests/test_release_text.py`.
+- **E1 base.** The E1 base lane and the bumped lane run at the same commit,
+  the one the bump is applied to, named in the first RW1 ruling. The version
+  fields are the only difference between the two runs.
+- **The retired 0.3.0 controls (R11).** `tests/test_release_acceptance.py`
+  uses the 0.3.0 wheel in four places, and each is an availability assertion:
+
+  | Test | What it asserts on 0.3.0 | After RW2 |
+  |---|---|---|
+  | `test_installed_rv2_guarded_membership` | `gnd validate` refuses the guarded model, exit 3, with two schema rule ids | retired; the candidate's verdict and binding checks stay |
+  | `test_installed_rv2_composition_and_catalog` | the include and catalog features are unavailable | retired; the missing-decision, changed-catalog and manifest checks on the candidate stay |
+  | `test_installed_rv2_literature_assurance` | `assurance_report.py` is not in the package | retired; the report comparison and the mutated-population check stay |
+  | `test_installed_rv2_expense_receipts` | the receipts example directory is not in the package | retired; the findings comparison and the missing-decision refusal stay |
+
+  None gets a 0.4.0 replacement, because 0.4.0 has all four features and
+  `docs/releasing.md` keeps one control, against the release before the
+  candidate. The four new probes carry the 0.4.0 controls. RW2's spec repeats
+  this table with line numbers at its base commit.
+- **The oracle lane's environment.** On 2026-11-23 the tutorials runtime
+  environment on the planning machine imports `relationalai` and `duckdb`.
+  RW2 checks it again before the freeze. If it is absent then, the record
+  says so and RW2-C7 does not run; the lane is not reported as run.
+- **The headline reference in §2.** "RW1 D4" in §2 means decision D4 of the
+  RW1 spec, which picks the block `HEADLINE_BLOCK` requires. Plan decision
+  RW-D3 covers the notes shape. The seat that reported it as a typo read the
+  two as one decision.
+
+### Remaining decisions
+
+RW-D1, RW-D3 to RW-D7 and RW-D9 to RW-D14 follow the proposed readings,
+subject to the fixes above. RW-D10 and RW-D12 name owner acts and stay the
+owner's at publication time.

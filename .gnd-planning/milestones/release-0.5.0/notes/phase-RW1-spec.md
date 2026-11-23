@@ -2,10 +2,13 @@
 
 ## 1. Status
 
-**Draft r1, awaiting owner review.** Not implementable: the
-[plan](release-0.5.0-plan.md) is not approved, and this spec has no ruling.
-It needs two rulings: the first approves the E1 measurement, the second binds
-the handling E1 shows to be needed.
+**Draft r2, blocked; no ruling.** The [plan](release-0.5.0-plan.md) r2 is
+approved by delegated ruling ([plan gate](../001-plan-gate.md)). Its §11
+RW-D2 ruling holds this phase until literature-host-interfaces and
+reviewed-vocabulary-growth are merged. When they are, this spec is revised
+against main as it then is (the inventory, the notes outline, the headline)
+and gets its two rulings: the first approves the E1 measurement, the second
+binds the handling E1 shows to be needed.
 
 ## 2. Provenance
 
@@ -13,6 +16,9 @@ This spec derives from the plan r1 (unreviewed) and from the predecessor
 phase [RV1](../../release-0.4.0/005-phase-RV1.md) and
 [its spec](../../release-0.4.0/notes/phase-RV1-spec.md), whose method it
 repeats. No review has run over these bytes. The baseline is main `0bfded71`.
+r2 applies the plan's §11 at three sites, tagged `(p1)` for the panel round
+and `(o)` for the owner's ruling: the status line, the E1 base and the
+reconciliation scope.
 
 One thing differs from RV1 at the start: RV1 expected the bump to move
 nothing and measured 37 moved results. This spec expects movement and names
@@ -76,8 +82,9 @@ On the RW1 tree, all of the following hold:
   the version changes, and which generated outputs change bytes. Two runs on
   beast-3, six round-robin shards over C-sorted `tests/test_*.py`, default
   marker filter:
-  1. the base, exact `0bfded71` (or main as it is when the first ruling is
-     recorded; the commit is named in §12);
+  1. the base: the commit the bump is applied to, named in the first ruling
+     (p1). It is not `0bfded71`: main will have the two milestones of plan
+     RW-D2 by then (o);
   2. a scratch tree of the same commit with 0.5.0 in `pyproject.toml`, the
      lock line and the three manifests, and nothing else changed.
 - **Expected:** the base run has no failure and the two known
@@ -167,7 +174,8 @@ written as such in its block, as `docs/compatibility.md` requires (W19).
 ### Reconciliation table (filled at implementation)
 
 One row per user-visible change, not per pull request, built by reading
-`git diff v0.4.0 <base> -- src docs README.md PYPI.md` file by file. Changes
+`git diff v0.4.0 <base> -- src docs README.md PYPI.md pyproject.toml LICENSE NOTICE .claude-plugin .codex-plugin .agents/plugins`
+file by file, leaving out this phase's own version edits (p1). Changes
 that are tests only, planning only or internal get a reason instead of a
 note. The table goes into `evidence/RW1/notes-reconciliation.md`.
 
@@ -184,7 +192,7 @@ None is added. The heading carries "not published" while 0.5.0 is not in
 | D2 | If E1 moves a result or a recorded byte | (a) fix the comparison so the test reads the recorded version and no committed byte moves; (b) re-record that file with its digests listed. (a) is what RV1 did. Either way the owner sees the list first | open; proposed: (a) |
 | D3 | Opt-in lanes in E1 (plan RW-D8) | excluded from E1, or run on both trees. `pyrel_oracle` is RW2's question, not E1's | open; proposed: excluded |
 | D4 | The headline block for 0.5.0 | the PyRel rules block, linking `runtimes/pyrel.md`; or the include-roots block; or the COUNT block. The headline is what `HEADLINE_BLOCK` makes a test require | open; proposed: PyRel rules |
-| D5 | The base commit of E1 | `0bfded71`, or main when the first ruling is recorded. A later base includes whatever merged meanwhile | open; proposed: main at the ruling |
+| D5 | The base commit of E1 | `0bfded71`, or main when the first ruling is recorded. A later base includes whatever merged meanwhile | closed by plan §11 (p1): the commit the bump is applied to, for both runs |
 
 ## 8. Tests
 

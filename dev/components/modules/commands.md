@@ -75,7 +75,7 @@ Components: cli.evolve_command
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `add_parsers(subparsers, *, command)` | function | 163 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 174 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 175 | (no docstring) |
 
 ## gnd.commands.exp — `src/gnd/commands/exp.py`
 Components: cli.exp_command

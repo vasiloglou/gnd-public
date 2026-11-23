@@ -40,6 +40,10 @@ the next one.
   per include in its text output, and span diagnostics on included elements
   now carry the `includes[ID]:` prefix
   ([#222](https://github.com/vasiloglou/gnd-public/issues/222)).
+- **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
+  `gnd evolve apply` now parses each model text once per reader. Before, an
+  `apply` parsed the same two texts 22 times. Every preview, record, message
+  and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
 
 ## 0.4.0 (2026-11-17)
 

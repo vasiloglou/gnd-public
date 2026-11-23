@@ -963,7 +963,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
 - status: canonical
 - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.verbalization
+- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
 - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
@@ -1034,7 +1034,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Published preview claims or completed evolution claims, stdout diagnostics, and classified exit codes.
 - status: canonical
 - modules: src/gnd/evolve/cli_service.py
-- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading
+- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading, model.validation
 - used_by: cli.dispatch, cli.evolve_command, recovery.command
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_additive_policy.py, tests/test_evolve_shape_matches.py
@@ -1804,17 +1804,17 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.validation
-- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate]. The unattended rules exempt included elements from U2-U6 and keep U7 and U8 as the include rule says.
-- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
+- does: Parse bounded model bytes, remembering each parse for one public call inside a parse scope, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate, parse_scope]. The unattended rules exempt included elements from U2-U6 and keep U7 and U8 as the include rule says.
+- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage, parse once, parse scope, parse cache, parse_scoped, remembered document, write check
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
-- tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
+- used_by: evolve.command, evolve.service, extract.service, model.loading, model.operation_obligations, semantics.extensions
+- tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
 - checked: partial
-- notes: The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
+- notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
 
 
 ### model.json_document

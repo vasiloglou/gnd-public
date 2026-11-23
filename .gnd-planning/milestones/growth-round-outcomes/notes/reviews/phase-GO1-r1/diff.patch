@@ -1,0 +1,979 @@
+diff --git a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO1-spec.md b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO1-spec.md
+index 148ac22e..96e42320 100644
+--- a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO1-spec.md
++++ b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO1-spec.md
+@@ -1,21 +1,25 @@
+-# Phase GO1 · one parse per model text in `gnd evolve` · spec r2
++# Phase GO1 · one parse per model text in `gnd evolve` · spec r3
+ 
+ ## 1. Status
+ 
+-**Draft r2, awaiting its gate.** r1 was written by `start-milestone` on
+-2026-11-23. r2 applies the GO1 findings of the plan's panel round 1 (the
++**Draft r3, awaiting its gate.** r1 was written by `start-milestone` on
++2026-11-23. r2 applied the GO1 findings of the plan's panel round 1 (the
+ reader key, the snapshot of T3, the timed test outside the focused lane),
+-tagged `(p1)`. Under the owner's `auto` delegation for this milestone the
++tagged `(p1)`. r3 applies round 2's (the write check over the whole lane,
++the `.json` parse counts, the consequence of a failed T8), tagged `(p2)`,
++and derives from plan r4 (sha256 `b107bd36…7431`), approved in
++`001-plan-gate.md`. Under the owner's `auto` delegation for this milestone the
+ gate is a delegated ruling, recorded in the phase record.
+ 
+ ## 2. Provenance
+ 
+-- Derives from [plan r2](growth-round-outcomes-plan.md), Goal (GO1), §0
++- Derives from [plan r4](growth-round-outcomes-plan.md), Goal (GO1), §0
+   (R0.2, R0.3, R0.5), §1 (H1–H9, H22–H24), §2 (GO1), §4 (GO1-C1 to GO1-C6),
+-  §9 (the GO1 lane) and §10 (D6, D9). The plan is not reviewed and not
+-  approved.
++  §9 (the GO1 lane) and §10 (D6, D9). The plan is approved by delegated
++  ruling (auto=true) in `001-plan-gate.md`; D9 is ruled out of GO1.
+ - From [#228](https://github.com/vasiloglou/gnd-public/issues/228).
+-- r1 was offered to the plan's panel round 1 as context; no review has read r2.
++- r1 and r2 were offered to the plan's panel rounds as context; no review
++  has read r3.
+ - Every code citation was read at `548b9a1d`. Measurements were run on that
+   commit on 2026-11-23, in process, on one laptop under other load, once
+   each.
+@@ -37,7 +41,8 @@ gate is a delegated ruling, recorded in the phase record.
+ | plan R0.3, GO1-C2 | every record keeps its bytes | T2 |
+ | plan R0.5, GO1-C4 | keyed by content, alive for one call | §6; T4, T7 |
+ | GO1-C1 | at most 3 parses in `apply`, 2 in `preview`, the same at two sizes; 22 and 6 with the scope off | T1 |
+-| GO1-C3 | no remembered document differs at scope close | T3 |
++| GO1-C3; plan §2 GO1 (p2) | no remembered document differs at scope close, checked over the whole GO1 lane; loaded `Model`s hold nested references | §6 verify mode; T3 |
++| plan Goal, GO1-C1 (p2) | once per text and reader; a `.json` workspace too | T1 |
+ | GO1-C5 | `apply` with the scope at most 0.6 of `apply` without, at 604 object types | T8 |
+ | GO1-C6 | the #228 table measured again at the head | the experiment |
+ | plan §9 | the GO1 lane, the guard block, `uv run ruff check src tests tools` | §8, closing paragraph |
+@@ -124,6 +129,18 @@ def parse_scope() -> Iterator[None]:
+   as today.
+ - The scope is a `ContextVar`, as `index_scope` is, so it does not cross
+   threads or leak into a later call.
++- **Verify mode (p2).** A module-level switch, off by default, makes every
++  scope keep a type-preserving copy of each document it remembers
++  (`copy.deepcopy`, which keeps `CommentedMap`, dates and tags) and, when the
++  outermost scope exits, compare each remembered document with its copy by a
++  walk that compares type and value at every node. A difference raises an
++  `AssertionError` naming the source. The switch is set by an autouse fixture
++  in `tests/conftest.py`, so the check runs in every test that opens a scope,
++  the whole GO1 lane included, and not only in GO1's own cases. Shared
++  documents need the check because a loaded `Model` keeps the document's
++  nested lists and mappings: `_finish_model` copies only the top level
++  (`model/__init__.py:315`) and a frozen `Model` leaves nested content
++  mutable (`documents.py:40-41`). T8 turns the switch off.
+ 
+ ### `src/gnd/evolve/cli_service.py` and `service.py` (about 10 lines)
+ 
+@@ -135,6 +152,11 @@ def parse_scope() -> Iterator[None]:
+   `:2110`, `:2377`) open the scope too, for a library caller. It is
+   re-entrant, so the command-line path opens it once.
+ 
++### A home outside the plan's list
++
++`tests/conftest.py` gains the autouse fixture that switches verify mode on
++(p2). The plan's §3 GO1 row does not name it; the pull request says so.
++
+ ### What does not change
+ 
+ `_load_model_document` keeps its three calls and their order; each is now a
+@@ -168,9 +190,9 @@ manager that remembers nothing.
+ 
+ | # | Case | Expected |
+ |---|---|---|
+-| T1 | count calls that reach the real parser during one `preview` and one `apply`, at N = 10 and N = 40 | `preview` at most 2 and `apply` at most 3, equal at both sizes. Negative control: scope off, 6 and 22 |
++| T1 | count calls that reach the real parser during one `preview` and one `apply`, at N = 10 and N = 40, for a `model.orm.yaml` workspace and for a `model.orm.json` workspace (p2) | `preview` at most 2 and `apply` at most 3, equal at both sizes. For the `.json` workspace `apply` parses the current text under two readers, which is within the bound (p2). Negative control: scope off, 6 and 22 |
+ | T2 | scope on against scope off, for: the one-round proposal; a proposal the additive policy refuses; a D-12 refusal; an include root (the case of `tests/test_mc3_evolution.py`); a model named `model.orm.json`; a YAML model holding an unquoted date; a candidate that is not valid YAML | preview bytes, pending state, record, published model, stdout, stderr and exit equal in each pair |
+-| T3 | for every case of T2, a type-preserving snapshot of each remembered document when the scope closes against the same snapshot taken when the parser returned it: the round-trip YAML dump for a YAML document, which keeps dates and tags canonical JSON cannot spell, and canonical JSON for a JSON document (p1) | equal, including on the YAML-date case. Liveness: a test double that appends a key to the shared document makes this case fail |
++| T3 | verify mode on (the autouse fixture) for every case of T2, a type-preserving snapshot of each remembered document when the scope closes against the same snapshot taken when the parser returned it: the round-trip YAML dump for a YAML document, which keeps dates and tags canonical JSON cannot spell, and canonical JSON for a JSON document (p1) | equal, including on the YAML-date case. Liveness: a write into a nested list of a `Model` loaded in the scope, and a change of `1` to `True`, each make the scope close raise (p2) |
+ | T4 | preview, then the model file is rewritten, then `apply` | the refusal `apply` gives today for a model changed since its preview, same message and exit as with the scope off (the neighbouring stale case is `test_t3_populated_set_change_before_apply_is_stale`, `tests/test_evolve_additive_policy.py:788`) |
+ | T5 | inside one scope: the same bytes under `model.orm.json` and under `model.orm.yaml`; YAML-flow bytes that start with `{` and are not JSON, first under `model.orm.yaml` and then under `model.orm.json` (p1); a text over the 10 MiB cap twice; malformed YAML twice | two parses for the two names; the `.yaml` parse succeeds and the `.json` request is still refused as strict JSON; the cap refusal and the YAML refusal raised both times with the caller's label |
+ | T6 | `parse_model_document` twice outside any scope; twice inside nested scopes | two distinct objects; one object, and none remembered after the outer scope exits |
+@@ -190,7 +212,9 @@ Gate: the plan §9 GO1 lane with this file, the guard block of `project.md`,
+ Which test is which. T1 to T7 and T9 read no clock and are the required
+ regression gates. T8 compares two runs on one machine, is excluded from the
+ focused lane and is recorded; a ratio over 0.6 is a failed criterion stated
+-in the record (p1).
++in the record (p1) and stops GO1 for a ruling before its pull request (p2).
++The rest of the lane runs with verify mode on, so every existing evolve test
++is also a write check (p2).
+ 
+ ## 9. Out of scope for this phase
+ 
+@@ -207,7 +231,7 @@ in the record (p1).
+ 
+ ## 10. Size
+ 
+-Estimate at write time: about 45 source lines (`_parsing.py` +35,
++Estimate at write time: about 70 source lines (`_parsing.py` +60 with verify mode, `tests/conftest.py` +8,
+ `cli_service.py` and `service.py` about 10) and about 280 test lines in the
+ new file. The record states the measured figures.
+ 
+@@ -237,3 +261,57 @@ the same machine.
+   was chosen from the prototype before this sweep and does not move after
+   it; a bound the head misses is a failed criterion, not a reason to raise
+   the bound.
++
++## 12. Gate — delegated approval (auto=true)
++
++**Delegated approval (auto=true), 2026-11-23**, of this spec r3, sha256
++`601e8f46f18d333d5de63b51637e59038a892c6709b9b78573b12a016b4ddcb0` (the bytes
++above this section). Authorization: the owner's delegation of `auto` for
++growth-round-outcomes ("they should both start with /process-milestone
++auto"), recorded in `001-plan-gate.md`. This is an agent ruling under that
++delegation, not the owner's reading of the spec.
++
++- **Approval instrument:** this prose. GO1 is not one of the three shapes
++  for which corpus-first is the default (it adds no serialized format, exit
++  code or validation predicate); its expected answers are counts, byte
++  equality and refusal text, stated in §8.
++- **Spec review:** none. The plan's two full-panel rounds read r1 and r2 as
++  context; no reviewer has read r3. The diff review (D8, one reviewer in a
++  different tool) is the phase's review.
++- **Rulings:** GO1-D1 (a) [delegated]; GO1-D2 (a) [delegated]; GO1-D3 (b)
++  [delegated]; GO1-D4 (b) [delegated, as plan D9]; GO1-D5 0.6 [delegated].
++- **Compatibility:** no record, schema, flag, message or exit code changes
++  (R0.3); `tests/conftest.py` is a home outside the plan's list (§6).
++- **Budget:** one diff review round, a second only if the first blocks.
++- **Ordering, stated:** the ruling was taken at the coordinating session's
++  "GO GO1", before any GO1 code was written; this section was written after
++  the code was drafted. The approved bytes are the sha256 above, which the
++  code did not change.
++
++## 13. Implementation findings
++
++Recorded as found.
++
++1. The write check's first run over the existing lane reported a write on
++   `test_e2_each_value_outside_json_is_named[x: .nan-non-finite float]`. Not a
++   write: `NaN != NaN`. `_same` now treats two NaNs as the same value; T3's
++   second case parses `.nan` inside a checked scope.
++2. The size cap is checked before the key is hashed, so an oversized buffer is
++   refused without being hashed (standing rule 1, cap on the read).
++3. **Deviation from §6, stated.** §6 opens the scope on the three
++   `_cmd_evolve_*` handlers. Their bodies are pinned by the RF5 relocation
++   guard (`tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged`),
++   which went red on the decorators. The scope now opens one level up, on
++   `gnd.commands.evolve.handle`, the one dispatcher of `preview`, `apply` and
++   `finalize`, through the decorator `parse_scoped`; the command module
++   reaches it through its own domain service (`gnd.evolve.cli_service`
++   re-exports it), because the entry-point rule lets a command module import
++   only that service (`tests/test_rf5_review_regressions.py`). The three
++   service methods carry the decorator too, for library callers. Same
++   reading (a) of GO1-D1, same counts; `src/gnd/commands/evolve.py` is a
++   home outside the plan's list.
++4. Measured parse counts (T1): with the scope, `preview` 2 and `apply` 2 for
++   a YAML workspace at N = 10 and N = 40; without it, 6 and 22, as #228
++   measured. The bound of 3 holds with one to spare.
++5. With the write check on, the existing evolve lane (418 tests, seven
++   files) passed unchanged: no evolve path writes into a parsed document.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 0511b9e6..949d45dc 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -963,7 +963,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
+ - status: canonical
+ - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
+-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.verbalization
++- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
+ - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
+ - part_of: subsystem.evolve
+ - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
+@@ -1034,7 +1034,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - out: Published preview claims or completed evolution claims, stdout diagnostics, and classified exit codes.
+ - status: canonical
+ - modules: src/gnd/evolve/cli_service.py
+-- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading
++- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading, model.validation
+ - used_by: cli.dispatch, cli.evolve_command, recovery.command
+ - part_of: subsystem.evolve
+ - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_additive_policy.py, tests/test_evolve_shape_matches.py
+@@ -1804,17 +1804,17 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### model.validation
+-- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
+-- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
++- does: Parse bounded model bytes, remembering each parse for one public call inside a parse scope, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate, parse_scope].
++- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage, parse once, parse scope, parse cache, parse_scoped, remembered document, write check
+ - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
+ - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
+ - status: canonical
+ - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
+-- tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
++- used_by: evolve.command, evolve.service, extract.service, model.loading, model.operation_obligations, semantics.extensions
++- tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
+ - checked: partial
+-- notes: The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
++- notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
+ 
+ 
+ ### model.json_document
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index ee9fd5b3..d8fbef6d 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1664,7 +1664,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/discover/type_judgements.py -> src/gnd/input_policy.py`
+ 
+ ### evolve.command
+-- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading
++- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading, model.validation
+ - used_by: cli.dispatch, cli.evolve_command, recovery.command
+ 
+ #### evolve.command -> evolve.population_check
+@@ -1690,6 +1690,9 @@ Generated by `scripts/components_index.py`.
+ #### evolve.command -> model.loading
+ - `src/gnd/evolve/cli_service.py -> src/gnd/model/__init__.py`
+ 
++#### evolve.command -> model.validation
++- `src/gnd/evolve/cli_service.py -> src/gnd/model/_parsing.py`
++
+ ### evolve.policy
+ - uses: evolve.schema, model.document, model.query_index
+ - used_by: evolve.population_check, evolve.service
+@@ -1752,7 +1755,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/evolve/models.py -> src/gnd/model/_includes.py`
+ 
+ ### evolve.service
+-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.verbalization
++- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
+ - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
+ 
+ #### evolve.service -> conformance.report
+@@ -1805,6 +1808,9 @@ Generated by `scripts/components_index.py`.
+ #### evolve.service -> model.reference_binding
+ - `src/gnd/evolve/service.py -> src/gnd/references.py`
+ 
++#### evolve.service -> model.validation
++- `src/gnd/evolve/service.py -> src/gnd/model/_parsing.py`
++
+ #### evolve.service -> model.verbalization
+ - `src/gnd/evolve/service.py -> src/gnd/model_verbalization.py`
+ 
+@@ -4229,7 +4235,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.validation
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
++- used_by: evolve.command, evolve.service, extract.service, model.loading, model.operation_obligations, semantics.extensions
+ 
+ #### model.validation -> check.universe
+ - `src/gnd/model/_guarded.py -> src/gnd/universe.py`
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index 76e3a34f..12537b87 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -75,7 +75,7 @@ Components: cli.evolve_command
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ | `add_parsers(subparsers, *, command)` | function | 163 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 174 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 175 | (no docstring) |
+ 
+ ## gnd.commands.exp — `src/gnd/commands/exp.py`
+ Components: cli.exp_command
+diff --git a/dev/components/modules/evolve.md b/dev/components/modules/evolve.md
+index 33b95552..3a897ee9 100644
+--- a/dev/components/modules/evolve.md
++++ b/dev/components/modules/evolve.md
+@@ -138,26 +138,26 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `EvolutionError` | class(Exception) | 105 | A proposal, stage, CAS, or immutable evidence write was refused. |
+-| `EvolutionIncludeError` | class(EvolutionError) | 109 | An include input was refused, independent of user-supplied message text. |
+-| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 118 | (no docstring) |
+-| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 138 | An old evidence document that may be READ but cannot be finished. |
+-| `EvolutionOperationsGatedError` | class(EvolutionError) | 150 | An ORM+ v2 operation delta this tool deliberately does not own. |
+-| `EvolutionPolicyRefusedError` | class(EvolutionError) | 160 | The additive policy refused an operation at apply (MG2, exit 3). |
+-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1307 | Read one bounded, closed JSON evolution proposal. |
+-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1324 | Read one bounded, version-selected preview claim. |
+-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1341 | Read one bounded, version-selected staged intent. |
+-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1358 | Read one bounded pending-finalization claim. |
+-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1375 | Read one bounded, version-selected immutable record. |
+-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1392 | Read one bounded standalone conformance leaf for an explicit envelope. |
+-| `EvolutionService` | class | 1413 | Preview, apply, and finalize one explicit model evolution proposal. |
+-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1520 | Validate and bind a proposal without changing any publication leaf. |
+-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2035 | Report one staged pending finalization that has no completed record. |
+-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2089 | Refuse to start a *new* evolution over an incomplete published one. |
+-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2110 | Stage immutable evidence and publish only the candidate model CAS. |
+-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2368 | (no docstring) |
+-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2374 | (no docstring) |
+-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2377 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
++| `EvolutionError` | class(Exception) | 106 | A proposal, stage, CAS, or immutable evidence write was refused. |
++| `EvolutionIncludeError` | class(EvolutionError) | 110 | An include input was refused, independent of user-supplied message text. |
++| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 119 | (no docstring) |
++| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 139 | An old evidence document that may be READ but cannot be finished. |
++| `EvolutionOperationsGatedError` | class(EvolutionError) | 151 | An ORM+ v2 operation delta this tool deliberately does not own. |
++| `EvolutionPolicyRefusedError` | class(EvolutionError) | 161 | The additive policy refused an operation at apply (MG2, exit 3). |
++| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1308 | Read one bounded, closed JSON evolution proposal. |
++| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1325 | Read one bounded, version-selected preview claim. |
++| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1342 | Read one bounded, version-selected staged intent. |
++| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1359 | Read one bounded pending-finalization claim. |
++| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1376 | Read one bounded, version-selected immutable record. |
++| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1393 | Read one bounded standalone conformance leaf for an explicit envelope. |
++| `EvolutionService` | class | 1414 | Preview, apply, and finalize one explicit model evolution proposal. |
++| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1522 | Validate and bind a proposal without changing any publication leaf. |
++| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2037 | Report one staged pending finalization that has no completed record. |
++| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2091 | Refuse to start a *new* evolution over an incomplete published one. |
++| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2113 | Stage immutable evidence and publish only the candidate model CAS. |
++| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2371 | (no docstring) |
++| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2377 | (no docstring) |
++| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2381 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+ 
+ ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
+ Components: evolve.shape_matches
+diff --git a/dev/components/modules/model.md b/dev/components/modules/model.md
+index 10b592c5..2055ea66 100644
+--- a/dev/components/modules/model.md
++++ b/dev/components/modules/model.md
+@@ -83,7 +83,10 @@ Bounded model-document parsing, shared by model loading and include resolution.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `parse_model_document(data, *, source) -> Any` | function | 25 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
++| `set_parse_scope_verify(enabled) -> bool` | function | 46 | Switch the parse scope's write check on or off; return the old setting. |
++| `parse_scope() -> Iterator[None]` | function | 75 | Remember each document ``parse_model_document`` builds, for one public call. |
++| `parse_scoped(function) -> _F` | function | 98 | Run ``function`` inside a parse scope: the decorator ``gnd evolve`` uses. |
++| `parse_model_document(data, *, source) -> Any` | function | 107 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+ 
+ ## gnd.model._paths — `src/gnd/model/_paths.py`
+ Components: model.loading
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 89eac951..694424bd 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -26,6 +26,10 @@ the next one.
+ - **Unencodable include paths.** An include path that cannot be encoded as
+   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
+   error itself, and the PyRel export exited 70.
++- **`gnd evolve` parses each model text once.** One `gnd evolve preview` or
++  `gnd evolve apply` now parses each model text once per reader. Before, an
++  `apply` parsed the same two texts 22 times. Every preview, record, message
++  and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
+ 
+ ## 0.4.0 (2026-11-17)
+ 
+diff --git a/src/gnd/commands/evolve.py b/src/gnd/commands/evolve.py
+index 073d295d..04579c99 100644
+--- a/src/gnd/commands/evolve.py
++++ b/src/gnd/commands/evolve.py
+@@ -171,6 +171,7 @@ def add_parsers(subparsers, *, command: str | None = None):
+     return parsers
+ 
+ 
++@_handler_evolve_cli_service.parse_scoped  # GO1 (#228): one command parses each model text once per reader
+ def handle(args, parsers) -> int:
+     if args.command == "evolve":
+         if args.evolve_command == "preview":
+diff --git a/src/gnd/evolve/cli_service.py b/src/gnd/evolve/cli_service.py
+index ee035d89..3e7998a1 100644
+--- a/src/gnd/evolve/cli_service.py
++++ b/src/gnd/evolve/cli_service.py
+@@ -15,6 +15,9 @@ from gnd.exits import (
+     EXIT_NO_INPUT,
+ )
+ from gnd.model import ModelValidationError
++from gnd.model._parsing import (
++    parse_scoped as parse_scoped,  # noqa: PLC0414 -- GO1: gnd.commands.evolve opens its scope through this service
++)
+ 
+ 
+ class _EvolutionCLIError(Exception):
+diff --git a/src/gnd/evolve/service.py b/src/gnd/evolve/service.py
+index 05b5cfde..a2fca85f 100644
+--- a/src/gnd/evolve/service.py
++++ b/src/gnd/evolve/service.py
+@@ -26,6 +26,7 @@ from gnd.artifacts import (
+ from gnd.conformance.report import canonical as canonical_conformance
+ from gnd.conformance.service import run_conformance
+ from gnd.model import ModelLoadError, ModelValidationError
++from gnd.model._parsing import parse_scoped
+ from gnd.model_verbalization import render_model_verbalization
+ from gnd.safefs import (
+     InstallError,
+@@ -1517,6 +1518,7 @@ class EvolutionService:
+         )
+         return model, document, _validation_for(model, candidate)
+ 
++    @parse_scoped  # GO1: re-entrant, so the command line opens one scope
+     def preview(
+         self,
+         proposal: EvolutionProposal,
+@@ -2107,6 +2109,7 @@ class EvolutionService:
+             f"`gnd evolve finalize <model> {pending_path}` before starting a new evolution"
+         )
+ 
++    @parse_scoped
+     def apply(
+         self, preview: EvolutionPreview, *, check_population: str | None = None
+     ) -> EvolutionFinalizationState:
+@@ -2374,6 +2377,7 @@ class EvolutionService:
+     def final_record_file_sha256(self, record: EvolutionRecord) -> str:
+         return sha256_hex(canonical_json_bytes(record))
+ 
++    @parse_scoped
+     def finalize(self, state: EvolutionFinalizationState) -> EvolutionRecord:
+         """Complete exact post-CAS leaves and publish the immutable D-13 record last."""
+ 
+diff --git a/src/gnd/model/_parsing.py b/src/gnd/model/_parsing.py
+index 14af855f..88ebaad2 100644
+--- a/src/gnd/model/_parsing.py
++++ b/src/gnd/model/_parsing.py
+@@ -8,10 +8,17 @@ re-export both names, and ``parse_model_document`` keeps its public
+ 
+ from __future__ import annotations
+ 
++import copy
++import hashlib
+ import json
++import math
+ import re
++from collections.abc import Callable, Iterator
++from contextlib import contextmanager
++from contextvars import ContextVar
++from functools import wraps
+ from pathlib import Path
+-from typing import Any
++from typing import Any, TypeVar
+ 
+ from ruamel.yaml import YAML
+ 
+@@ -21,11 +28,100 @@ from gnd.yaml_comments import configure_comment_scanner
+ 
+ MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
+ 
++_F = TypeVar("_F", bound=Callable[..., Any])
++# One dict per outermost parse scope: (sha256, strict JSON) -> [document, copy or None].
++_PARSE_SCOPE: ContextVar[dict[tuple[str, bool], list[Any]] | None] = ContextVar(
++    "gnd_model_parse_scope", default=None
++)
++_VERIFY = False
++
++
++def _strict_json_source(source: str | Path) -> bool:
++    """True when the source name selects the strict JSON reader. It is the only
++    way the name changes a successful parse (GO1): any other name tries JSON for
++    text that starts with ``{`` and falls back to YAML."""
++    return Path(source).suffix == ".json"
++
++
++def set_parse_scope_verify(enabled: bool) -> bool:
++    """Switch the parse scope's write check on or off; return the old setting.
++
++    With the check on, every scope keeps a type-preserving copy of each document
++    it remembers and, when the outermost scope exits, raises AssertionError if a
++    remembered document no longer equals its copy. Tests switch it on; it is off
++    by default because the copy costs more than the parse it saves."""
++    global _VERIFY
++    previous, _VERIFY = _VERIFY, bool(enabled)
++    return previous
++
++
++def _same(left: Any, right: Any) -> bool:
++    """Equal type and value at every node: ``1`` and ``True`` differ here."""
++    if type(left) is not type(right):
++        return False
++    if isinstance(left, dict):
++        return list(left) == list(right) and all(_same(left[key], right[key]) for key in left)
++    if isinstance(left, (list, tuple)):
++        return len(left) == len(right) and all(map(_same, left, right))
++    if left == right or (isinstance(left, float) and math.isnan(left) and math.isnan(right)):
++        return True  # NaN is the one float unequal to itself
++    # A round-trip YAML node without value equality (a tagged scalar) is compared
++    # by its attributes, so a deep copy of an unchanged node is the same node.
++    state = getattr(left, "__dict__", None)
++    return state is not None and _same(state, getattr(right, "__dict__", None))
++
++
++@contextmanager
++def parse_scope() -> Iterator[None]:
++    """Remember each document ``parse_model_document`` builds, for one public call.
++
++    Keyed by the sha256 of the bytes and by whether the source name selects the
++    strict JSON reader. Re-entrant: an inner scope shares the outer one. Dropped
++    when the outermost scope exits. A parse that raises is not remembered. The
++    remembered document is shared by reference and must not be written to; the
++    write check of ``set_parse_scope_verify`` holds that in tests."""
++    if _PARSE_SCOPE.get() is not None:
++        yield
++        return
++    remembered: dict[tuple[str, bool], list[Any]] = {}
++    token = _PARSE_SCOPE.set(remembered)
++    try:
++        yield
++    finally:
++        _PARSE_SCOPE.reset(token)
++        changed = [key for key, (document, snapshot) in remembered.items()
++                   if snapshot is not None and not _same(document, snapshot)]
++        if changed:
++            raise AssertionError(f"a remembered model document was written to: {changed}")
++
++
++def parse_scoped(function: _F) -> _F:
++    """Run ``function`` inside a parse scope: the decorator ``gnd evolve`` uses."""
++    @wraps(function)
++    def run_scoped(*args: Any, **kwargs: Any) -> Any:
++        with parse_scope():
++            return function(*args, **kwargs)
++    return run_scoped  # type: ignore[return-value]
++
+ 
+ def parse_model_document(data: bytes, *, source: str | Path) -> Any:
+     """Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict
+     JSON for a ``.json`` source, otherwise the alias/event guard and then the
+-    round-trip YAML reader. The document is returned unvalidated."""
++    round-trip YAML reader. The document is returned unvalidated.
++
++    Inside a ``parse_scope`` the same bytes under the same reader return the
++    document already built, shared and not copied."""
++    remembered = _PARSE_SCOPE.get()
++    if remembered is None or len(data) > MAX_MODEL_BYTES:
++        return _parse_model_document(data, source=source)
++    key = (hashlib.sha256(data).hexdigest(), _strict_json_source(source))
++    if key not in remembered:
++        document = _parse_model_document(data, source=source)
++        remembered[key] = [document, copy.deepcopy(document) if _VERIFY else None]
++    return remembered[key][0]
++
++
++def _parse_model_document(data: bytes, *, source: str | Path) -> Any:
+     from ruamel.yaml.events import AliasEvent
+ 
+     if len(data) > MAX_MODEL_BYTES:
+@@ -34,7 +130,8 @@ def parse_model_document(data: bytes, *, source: str | Path) -> Any:
+     if re.search(r"(?m)[|>][-+0-9]{0,2}[ \t]*(?:#.*)?$", text) is None:
+         text = text.rstrip()
+     doc = None
+-    if Path(source).suffix == ".json" or text.lstrip().startswith("{"):
++    strict = _strict_json_source(source)
++    if strict or text.lstrip().startswith("{"):
+         from gnd.errors import PopulationLoadError
+         from gnd.population import _parse_document_bytes
+ 
+@@ -43,7 +140,7 @@ def parse_model_document(data: bytes, *, source: str | Path) -> Any:
+         except PopulationLoadError as error:
+             from gnd.input_policy import InputRefusal
+ 
+-            if (Path(source).suffix == ".json"
++            if (strict
+                     or not isinstance(error.__cause__, json.JSONDecodeError)
+                     or isinstance(error.__cause__, InputRefusal)):
+                 raise ModelLoadError("model JSON input refused") from error
+diff --git a/tests/conftest.py b/tests/conftest.py
+index d0bf3017..c24315a3 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -5,6 +5,7 @@ import sys
+ from pathlib import Path
+ from typing import Any
+ 
++import pytest
+ from test_public_distribution import (
+     package_probe as package_probe,  # noqa: PLC0414 -- pytest fixture export
+ )
+@@ -17,6 +18,19 @@ from gnd.population import Population, _stamp_validated_against
+ os.environ.pop("GND_DISCLOSURE", None)
+ 
+ 
++@pytest.fixture(autouse=True)
++def _parse_scope_write_check():
++    """GO1: every test that opens a model parse scope also checks that nothing
++    wrote into a remembered, shared document (``set_parse_scope_verify``)."""
++    from gnd.model._parsing import set_parse_scope_verify
++
++    previous = set_parse_scope_verify(True)
++    try:
++        yield
++    finally:
++        set_parse_scope_verify(previous)
++
++
+ def make_population(model: Model, /, **kwargs: Any) -> Population:
+     """Build a Population and stamp it as validated against ``model``.
+ 
+diff --git a/tests/test_go1_evolve_parse_once.py b/tests/test_go1_evolve_parse_once.py
+new file mode 100644
+index 00000000..52f3fb3a
+--- /dev/null
++++ b/tests/test_go1_evolve_parse_once.py
+@@ -0,0 +1,375 @@
++"""GO1: one `gnd evolve` command parses each model text once per reader (#228).
++
++Spec: .gnd-planning/milestones/growth-round-outcomes/notes/phase-GO1-spec.md
++(§8, T1-T8; T9 is the existing evolve lane, which runs with the scope's write
++check switched on by the autouse fixture in conftest.py). T1-T7 read no clock.
++T8 is the one timed case: it is marked `slow`, which the default lane excludes,
++and is run once for the phase record.
++"""
++
++from __future__ import annotations
++
++import contextlib
++import json
++import shutil
++import time
++from collections.abc import Callable, Iterator
++from pathlib import Path
++from typing import Any
++
++import pytest
++import test_evolve_additive_policy as policy
++import test_evolve_loading as loading
++import test_mc3_evolution as mc3
++import test_unattended_growth_guidance as growth
++import test_unattended_model_growth_acceptance as acceptance
++from ruamel.yaml import YAML
++from support.cli_runner import run_main
++
++from gnd.errors import ModelLoadError
++from gnd.model import _parsing
++
++# --- fixtures: the unattended seed grown by N groups, and one round of the acceptance replay ------
++
++
++def _bulk(n: int) -> tuple[bytes, dict[str, Any]]:
++    """A document and a reply of ``n`` groups: an entity, its reference value, one more value and a
++    binary fact type, each citing a span of the document. 3n object types, n fact types."""
++    lines, object_types, fact_types = [], [], []
++    for i in range(n):
++        tag = f"G{i:05d}"
++        lines.append(f"{tag} widget is named. {tag} code is kept. {tag} size is measured. "
++                     f"A widget-{tag} has a size-{tag}.")
++        object_types += [
++            acceptance._entity(f"w{i}", f"Widget{i}", f"w{i}_code", f"{tag} widget is"),
++            acceptance._value(f"w{i}_code", f"Widget{i}Code", "String", f"{tag} code is"),
++            acceptance._value(f"w{i}_size", f"Widget{i}Size", "Integer", f"{tag} size is"),
++        ]
++        fact_types.append(acceptance._fact(f"w{i}_has_size", f"{{Widget{i}}} has {{Widget{i}Size}}",
++                                           (f"w{i}", f"w{i}_size"), f"widget-{tag} has a size-{tag}"))
++    raw = ("\n".join(lines) + "\n").encode("utf-8")
++    return raw, {"document": "bulk.txt", "object_types": object_types, "fact_types": fact_types,
++                 "subtype_links": [], "constraints": []}
++
++
++def _grown_workspace(root: Path, n: int) -> dict[str, Path]:
++    """The acceptance replay's seed plus ``n`` groups, with round 1's proposal written."""
++    ws = acceptance._workspace(root)
++    if n:
++        raw, reply = _bulk(n)
++        grown = growth._translate(reply, raw)
++        yaml = YAML()
++        document = yaml.load(ws["model"].read_text(encoding="utf-8"))
++        document["source"]["documents"].append(grown["source"]["documents"][0])
++        document["object_types"].extend(grown["object_types"])
++        document["fact_types"].extend(grown["fact_types"])
++        with ws["model"].open("w", encoding="utf-8") as handle:
++            yaml.dump(document, handle)
++    raw = acceptance._document(1)
++    acceptance._declare(ws["model"], raw, "round-1.txt")
++    return acceptance._write_proposal(ws, "r1", acceptance._operations(acceptance.ROUND_1, raw))
++
++
++def _round(paths: dict[str, Path]) -> list[Any]:
++    """Preview (additive, shape report) then apply, as one host round runs them."""
++    return [run_main(policy._preview_argv(paths, "--policy", "additive", "--shape-report")),
++            run_main(policy._apply_argv(paths, "--policy", "additive"))]
++
++
++# --- switches: count real parses; run with the scope off -----------------------------------------
++
++
++@contextlib.contextmanager
++def _counting(monkeypatch: pytest.MonkeyPatch) -> Iterator[list[str]]:
++    """Record the source name of every call that reaches the real parser."""
++    calls: list[str] = []
++    real = _parsing._parse_model_document
++
++    def counted(data: bytes, *, source: Any) -> Any:
++        calls.append(str(source))
++        return real(data, source=source)
++
++    with monkeypatch.context() as patch:
++        patch.setattr(_parsing, "_parse_model_document", counted)
++        yield calls
++
++
++@contextlib.contextmanager
++def _scope_off(monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
++    """Every `gnd evolve` scope opening becomes a no-op: the behaviour before GO1."""
++    with monkeypatch.context() as patch:
++        patch.setattr(_parsing, "parse_scope", contextlib.nullcontext)
++        yield
++
++
++# --- T1: the parse count, at two sizes and for a .json workspace ---------------------------------
++
++
++@pytest.mark.parametrize("n", [10, 40])
++def test_t1_preview_and_apply_parse_a_bounded_number_of_times(tmp_path: Path,
++                                                              monkeypatch: pytest.MonkeyPatch, n: int) -> None:
++    counts = {}
++    for scope in ("on", "off"):
++        paths = _grown_workspace(tmp_path / scope, n)
++        with contextlib.ExitStack() as stack:
++            if scope == "off":
++                stack.enter_context(_scope_off(monkeypatch))
++            calls = stack.enter_context(_counting(monkeypatch))
++            result = run_main(policy._preview_argv(paths, "--policy", "additive", "--shape-report"))
++            assert result.returncode == 0, result.stderr.decode()
++            preview = len(calls)
++            result = run_main(policy._apply_argv(paths, "--policy", "additive"))
++            assert result.returncode == 0, result.stderr.decode()
++            counts[scope] = (preview, len(calls) - preview)
++    assert counts["on"][0] <= 2 and counts["on"][1] <= 3, counts
++    assert counts["off"] == (6, 22), counts  # negative control: the count #228 measured
++
++
++def test_t1_a_json_workspace_stays_within_the_bound(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
++    work, proposal = loading._orders(tmp_path, as_json=True)
++    with _counting(monkeypatch) as calls:
++        assert loading._preview(work, proposal, model="orders.json").returncode == 0
++        preview = list(calls)
++        assert loading._apply(work, proposal, model="orders.json").returncode == 0
++        apply = calls[len(preview):]
++    assert len(preview) <= 2, preview
++    # The before text is parsed once as strict JSON and once under the YAML name
++    # `_parse_model_text` gives it: two readers, within the bound.
++    assert len(apply) <= 3, apply
++
++
++def test_t1_the_count_does_not_depend_on_the_model_size(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
++    seen = []
++    for n in (10, 40):
++        paths = _grown_workspace(tmp_path / str(n), n)
++        with _counting(monkeypatch) as calls:
++            run_main(policy._preview_argv(paths, "--policy", "additive", "--shape-report"))
++            run_main(policy._apply_argv(paths, "--policy", "additive"))
++        seen.append(len(calls))
++    assert seen[0] == seen[1], seen
++
++
++# --- T2, T3: scope on and off give the same bytes; nothing writes into a shared document ---------
++
++
++def _tree(root: Path) -> dict[str, bytes]:
++    return {str(path.relative_to(root)): path.read_bytes() for path in sorted(root.rglob("*")) if path.is_file()}
++
++
++def _observed(root: Path, steps: Callable[[], list[Any]]) -> dict[str, Any]:
++    results = steps()
++    return {"exits": [r.returncode for r in results], "stdout": [r.stdout for r in results],
++            "stderr": [r.stderr for r in results], "tree": _tree(root)}
++
++
++def _same_with_scope_on_and_off(tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
++                                build: Callable[[Path], Callable[[], list[Any]]]) -> dict[str, Any]:
++    """Build the case at one path, run it with the scope off, rebuild it at the same path and run it
++    with the scope on (and its write check on): every exit, stream and file must be equal."""
++    root = tmp_path / "case"
++    observed = {}
++    for scope in ("off", "on"):
++        if root.exists():
++            shutil.rmtree(root)
++        steps = build(root)
++        with contextlib.ExitStack() as stack:
++            if scope == "off":
++                stack.enter_context(_scope_off(monkeypatch))
++            observed[scope] = _observed(root, steps)
++    assert observed["on"] == observed["off"]
++    return observed["on"]
++
++
++def _one_round(root: Path) -> Callable[[], list[Any]]:
++    paths = _grown_workspace(root, 3)
++    return lambda: _round(paths)
++
++
++def _policy_refusal(root: Path) -> Callable[[], list[Any]]:
++    refused = (policy._op("add", policy._constraint_locator(policy.POPULATED, None, "mandatory"),
++                          after=policy.NEW_CONSTRAINT),)
++    paths = policy._cli_workspace(root, refused)
++    return lambda: [run_main(policy._preview_argv(paths, "--policy", "additive")),
++                    run_main(policy._apply_argv(paths, "--policy", "additive"))]
++
++
++def _d12_refusal(root: Path) -> Callable[[], list[Any]]:
++    bad = dict(policy.NEW_CONSTRAINT, source="explicit", status="confirmed", modality="alethic")
++    paths = policy._cli_workspace(root, (policy._op("add", policy._constraint_locator(
++        policy.POPULATED, None, "mandatory"), after=bad),))
++    return lambda: [run_main(policy._preview_argv(paths, "--policy", "additive"))]
++
++
++def _include_root(root: Path) -> Callable[[], list[Any]]:
++    shutil.copytree(mc3.CORPUS, root)
++    return lambda: [mc3.preview(root), mc3.apply_cli(root)]
++
++
++def _json_model(root: Path) -> Callable[[], list[Any]]:
++    root.mkdir()
++    work, proposal = loading._orders(root, as_json=True)
++    return lambda: [loading._preview(work, proposal, model="orders.json"),
++                    loading._apply(work, proposal, model="orders.json")]
++
++
++def _yaml_date(root: Path) -> Callable[[], list[Any]]:
++    root.mkdir()
++    work = loading._staff(root, loading._with_source("x: 2024-01-01"))
++    proposal = loading._proposal(work)
++    return lambda: [loading._preview(work, proposal)]
++
++
++def _candidate_not_yaml(root: Path) -> Callable[[], list[Any]]:
++    root.mkdir()
++    work = loading._staff(root, loading.STAFF)
++    proposal = loading._proposal(work, candidate_text="object_types: [\n")
++    return lambda: [loading._preview(work, proposal)]
++
++
++T2_CASES = {"one-round": (_one_round, [0, 0]), "policy-refusal": (_policy_refusal, [3, 3]),
++            "d12-refusal": (_d12_refusal, [3]), "include-root": (_include_root, None),
++            "json-model": (_json_model, [0, 0]), "yaml-date": (_yaml_date, [3]),
++            "candidate-not-yaml": (_candidate_not_yaml, [3])}
++
++
++@pytest.mark.parametrize("case", sorted(T2_CASES))
++def test_t2_t3_scope_on_and_off_give_the_same_bytes(tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
++                                                   case: str) -> None:
++    build, exits = T2_CASES[case]
++    observed = _same_with_scope_on_and_off(tmp_path, monkeypatch, build)
++    if exits is not None:
++        assert observed["exits"] == exits, [s.decode() for s in observed["stderr"]]
++
++
++def test_t3_a_write_into_a_shared_document_fails_the_scope() -> None:
++    from gnd.model import load_model_bytes
++
++    data = (Path(__file__).parent / "fixtures" / "unattended" / "conforming.orm.yaml").read_bytes()
++    previous = _parsing.set_parse_scope_verify(True)
++    try:
++        with pytest.raises(AssertionError, match="written to"), _parsing.parse_scope():
++            model = load_model_bytes(data, source="model.orm.yaml")
++            # A frozen Model keeps the document's nested content: this is a write into it.
++            model.source["documents"].append({"sha256": "0" * 64, "label": "planted"})
++        with pytest.raises(AssertionError, match="written to"), _parsing.parse_scope():
++            document = _parsing.parse_model_document(b"version: 1\nflag: 1\n", source="m.orm.yaml")
++            document["flag"] = True  # equal to 1, but not the same value
++    finally:
++        _parsing.set_parse_scope_verify(previous)
++
++
++def test_t3_the_check_keeps_values_json_cannot_spell() -> None:
++    previous = _parsing.set_parse_scope_verify(True)
++    try:
++        with _parsing.parse_scope():
++            for text in (b"d: 2024-01-01\n", b"x: .nan\n", b"x: !foo 3\n", b"x: !!binary aGVsbG8=\n"):
++                _parsing.parse_model_document(text, source="m.orm.yaml")
++    finally:
++        _parsing.set_parse_scope_verify(previous)
++
++
++# --- T4: a model changed between preview and apply is refused as today ---------------------------
++
++
++def _changed_before_apply(root: Path) -> Callable[[], list[Any]]:
++    paths = _grown_workspace(root, 3)
++
++    def steps() -> list[Any]:
++        first = run_main(policy._preview_argv(paths, "--policy", "additive", "--shape-report"))
++        paths["model"].write_text(paths["model"].read_text(encoding="utf-8") + "# edited\n", encoding="utf-8")
++        return [first, run_main(policy._apply_argv(paths, "--policy", "additive"))]
++
++    return steps
++
++
++def test_t4_a_model_changed_after_preview_is_refused_as_today(tmp_path: Path,
++                                                              monkeypatch: pytest.MonkeyPatch) -> None:
++    observed = _same_with_scope_on_and_off(tmp_path, monkeypatch, _changed_before_apply)
++    assert observed["exits"][0] == 0 and observed["exits"][1] != 0
++
++
++# --- T5, T6: the lookup's branches -----------------------------------------------------------------
++
++
++def test_t5_the_reader_is_part_of_the_key() -> None:
++    flow = b"{version: 1, model_id: m}\n"  # YAML flow, not JSON
++    with _parsing.parse_scope():
++        assert _parsing.parse_model_document(flow, source="m.orm.yaml")["model_id"] == "m"
++        with pytest.raises(ModelLoadError, match="model JSON input refused"):
++            _parsing.parse_model_document(flow, source="m.orm.json")
++        strict = b'{"version": 1}\n'
++        assert (_parsing.parse_model_document(strict, source="a.orm.json")
++                is not _parsing.parse_model_document(strict, source="a.orm.yaml"))
++
++
++@pytest.mark.parametrize(("data", "message"), [
++    (b"x" * (_parsing.MAX_MODEL_BYTES + 1), "10 MiB input cap"),
++    (b"a: [\n", None),
++])
++def test_t5_a_refusal_is_not_remembered(data: bytes, message: str | None) -> None:
++    calls = []
++    real = _parsing._parse_model_document
++
++    def counted(raw: bytes, *, source: Any) -> Any:
++        calls.append(source)
++        return real(raw, source=source)
++
++    with pytest.MonkeyPatch.context() as patch, _parsing.parse_scope():
++        patch.setattr(_parsing, "_parse_model_document", counted)
++        for label in ("first.orm.yaml", "second.orm.yaml"):
++            with pytest.raises(Exception, match=message) as raised:
++                _parsing.parse_model_document(data, source=label)
++            assert not isinstance(raised.value, AssertionError)
++    assert calls == ["first.orm.yaml", "second.orm.yaml"]
++
++
++def test_t6_scopes_nest_and_end() -> None:
++    data = b"version: 1\n"
++    assert _parsing.parse_model_document(data, source="m.orm.yaml") is not _parsing.parse_model_document(
++        data, source="m.orm.yaml")
++    with _parsing.parse_scope():
++        outer = _parsing.parse_model_document(data, source="m.orm.yaml")
++        with _parsing.parse_scope():
++            assert _parsing.parse_model_document(data, source="m.orm.yaml") is outer
++        assert _parsing.parse_model_document(data, source="m.orm.yaml") is outer
++    assert _parsing._PARSE_SCOPE.get() is None
++    assert _parsing.parse_model_document(data, source="m.orm.yaml") is not outer
++
++
++# --- T7: two commands in one process share nothing ------------------------------------------------
++
++
++def test_t7_a_second_command_parses_again(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
++    first = _grown_workspace(tmp_path / "a", 3)
++    second = _grown_workspace(tmp_path / "b", 3)
++    assert first["model"].read_bytes() == second["model"].read_bytes()
++    with _counting(monkeypatch) as calls:
++        run_main(policy._preview_argv(first, "--policy", "additive"))
++        once = len(calls)
++        run_main(policy._preview_argv(second, "--policy", "additive"))
++    assert len(calls) == 2 * once and once > 0
++
++
++# --- T8: the time ratio at 604 object types, recorded (slow lane) --------------------------------
++
++
++@pytest.mark.slow
++def test_t8_apply_with_the_scope_costs_at_most_six_tenths(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
++    previous = _parsing.set_parse_scope_verify(False)
++    timings: dict[str, list[float]] = {"on": [], "off": []}
++    try:
++        for attempt in range(2):
++            for scope in ("off", "on"):
++                paths = _grown_workspace(tmp_path / f"{scope}{attempt}", 200)
++                assert run_main(policy._preview_argv(paths, "--policy", "additive", "--shape-report")).returncode == 0
++                with contextlib.ExitStack() as stack:
++                    if scope == "off":
++                        stack.enter_context(_scope_off(monkeypatch))
++                    start = time.perf_counter()
++                    assert run_main(policy._apply_argv(paths, "--policy", "additive")).returncode == 0
++                    timings[scope].append(time.perf_counter() - start)
++    finally:
++        _parsing.set_parse_scope_verify(previous)
++    ratio = min(timings["on"]) / min(timings["off"])
++    print(json.dumps({"apply_seconds": timings, "ratio": round(ratio, 3)}))
++    assert ratio <= 0.6, timings

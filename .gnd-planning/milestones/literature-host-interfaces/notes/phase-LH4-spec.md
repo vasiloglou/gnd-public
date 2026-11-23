@@ -2,9 +2,10 @@
 
 ## 1. Status
 
-Draft, 2026-11-23. Its gate, delegated by the owner's `/process-milestone
-literature-host-interfaces auto` (auto=true), follows the LH3 record and the
-milestone coordinator's ordering GO.
+owner-decided (2026-11-23) by **delegated approval (auto=true)**: see §7 and
+§12. Base commit `ce8d442a` (LH3's record), on
+`claude/literature-host-interfaces-admission`. Prior status: "Draft,
+2026-11-23".
 
 ## 2. Provenance
 
@@ -109,8 +110,8 @@ unreleased entry for the admission pair (LH3, LH4).
 
 | ID | Question | Proposed | What the other reading costs | Ruling |
 |---|---|---|---|---|
-| LH4-D1 | How a value is matched | By JSON equality: `"1"` and `1` differ; reasons are keyed by the value's canonical JSON text | Matching by string form admits a number where a string was declared | open |
-| LH4-D2 | The packaged stage names under rules | Keep `semantic-support` and `positive-own-findings` | Renaming breaks `test_li4`'s reading of a `/2` call over the packaged files for no gain | open |
+| LH4-D1 | How a value is matched | By JSON equality: `"1"` and `1` differ; reasons are keyed by the value's canonical JSON text | Matching by string form admits a number where a string was declared | as proposed (delegated, auto=true, 2026-11-23) |
+| LH4-D2 | The packaged stage names under rules | Keep `semantic-support` and `positive-own-findings` | Renaming breaks `test_li4`'s reading of a `/2` call over the packaged files for no gain | as proposed (delegated, auto=true, 2026-11-23) |
 
 ## 8. Tests
 
@@ -135,7 +136,7 @@ Verification-selection ledger:
 | plan §9 LH4 row | run | `uv run pytest -q tests/test_lh4_admission_rules.py tests/test_lh3_admission_shape.py tests/test_li4_assertions.py tests/test_li5_lineage.py --tb=short`, then `uv run python tools/run_tutorials.py --group literature`, exit 0 each | `assertion_admission.py`, the fixtures, the docs | any edit to those |
 | guard block | run | `project.md`'s twelve-file command | guarded inventories | any scanned file |
 | lint | run | `uv run ruff check` | the repository | any Python file |
-| component index | run | `python3 scripts/components_index.py changed --base <LH4 base> --strict` | `dev/components/` | a changed module |
+| component index | run | `python3 scripts/components_index.py changed --base ce8d442a --strict` | `dev/components/` | a changed module |
 | broad lanes | cadence | explicit request only | historical replays | none |
 
 ## 9. Out of scope for this phase
@@ -151,3 +152,25 @@ lines; the docs about 50 lines.
 ## 11. Approval instrument
 
 This prose.
+
+## 12. Gate
+
+Delegated approval (auto=true), 2026-11-23, under the owner's
+`/process-milestone literature-host-interfaces auto`. Instrument: this prose.
+Decisions: LH4-D1 and LH4-D2 as proposed (§7). Budget: one review round over
+the phase diff with the review helper (plan D13), a second only if the
+convergence rules call for it. Compatibility: the packaged call with no new
+argument keeps the H18 digests; `test_li4`, `test_li5` unedited. Ordering:
+the coordinator's GO for LH4 (2026-11-23) approves nothing. Spec bytes: the
+SHA-256 is recorded in the phase record.
+
+Implementability sweep, at `ce8d442a`:
+
+- §8's "LH3's fixture with a `claim_polarity` fact type added" is built in
+  the test module as a variant of `claims.orm.json`, so LH3's fixture and
+  its tests do not move.
+- `docs/literature/commands.md` has no admission example. The host passage
+  goes at the end of "Act 1. Lineage over the whole stack", where
+  admission is used, two sections away from literature-reading-reference's
+  LR2 paragraph (PR 244, after Act 2's anchor check).
+- Every other requirement maps to LH3's code.

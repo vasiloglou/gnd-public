@@ -2,14 +2,15 @@
 
 ## 1. Status
 
-**Draft, blocked, 2026-11-23 (brought to plan r6).** Implementable once the plan gate has ruled
-plan decisions D1, D3, D4, D5, D7 and D16, and the owner has approved this
-spec. No code may be written against it before both. D6 was ruled by the owner
-on 2026-11-22, as proposed `(o)`.
+owner-decided (2026-11-23) by **delegated approval (auto=true)**: see §7 and
+§12. Base commit `78934ee3` (the merge of PR 237, plan §3's start commit),
+where the whole-repository `uv run ruff check` exits 0 (measured 2026-11-23).
+Prior status: "Draft, blocked, 2026-11-23 (brought to plan r6)."
 
 ## 2. Provenance
 
-Derived from [plan r6](literature-host-interfaces-plan.md), Goal (LH1), §0,
+Derived from [plan r6](literature-host-interfaces-plan.md) (sha256
+`2dc760e5…1528`, approved in `001-plan-gate.md`), Goal (LH1), §0,
 §1 (H1–H11, H20–H25), §2 "LH1", §4 (LH1-C1 to LH1-C14) and §9. Written by
 `start-milestone` in the session that wrote the plan. Of the owner's rulings
 since r2 (D6, D9, D10, D14, D17), only D6 touches LH1, and it was ruled as
@@ -377,15 +378,16 @@ available" until LH2.
 ## 7. Decisions
 
 Plan decisions this spec depends on: D6, ruled by the owner on 2026-11-22 as
-proposed `(o)`; and D1, D3, D4, D5, D7 and D16, all open.
+proposed `(o)`; and D1, D3, D4, D5, D7 and D16, ruled by the owner as
+proposed at the plan gate on 2026-11-23 `(o)` (`001-plan-gate.md`).
 
 | ID | Question | Proposed | What the other reading costs | Ruling |
 |---|---|---|---|---|
-| LH1-D1 | A new argument over the packaged layout | Refuse | Allowing it needs a `/2` run built from packaged constants, a third branch with no user | open |
-| LH1-D2 | Profile keys | Closed set, all required, `null` or `false` for an undeclared step | Optional keys let a misspelt key skip a step silently | open |
-| LH1-D3 | How much of a response is checked on arrival | Shape, and fact-type names against the bundle's `covers`. Role names and value types are `verify`'s, after the loop; a wrong one refuses the run then, with exit 3 from the route | Checking rows on arrival re-implements the population loader (R0.7); not checking names on arrival moves that refusal to after the last call as well | open |
-| LH1-D4 | Stop reason of a source with no required question | `required-coverage-completed`, the global rule's answer | A fourth reason, `nothing-required`, extends the report's vocabulary | open |
-| LH1-D5 | The time bounds of T12 | `ReadingInputs` at each roster ceiling in under 10 s; a whole run at the roster ceiling with a producer that answers `empty` in under 90 s; a run with one source at the input ceiling, one response at the response ceiling and the budget at its ceiling in under 60 s; a route held past the timeout refuses within the timeout plus 2 s `(p1)`; a route with 16 MiB of output, and a `/2` run that retains a 64 MiB file, each in under 60 s `(p2)` | Looser bounds stop catching a quadratic walk at 4,096 rows | open |
+| LH1-D1 | A new argument over the packaged layout | Refuse | Allowing it needs a `/2` run built from packaged constants, a third branch with no user | as proposed (delegated, auto=true, 2026-11-23) |
+| LH1-D2 | Profile keys | Closed set, all required, `null` or `false` for an undeclared step | Optional keys let a misspelt key skip a step silently | as proposed (delegated, auto=true, 2026-11-23) |
+| LH1-D3 | How much of a response is checked on arrival | Shape, and fact-type names against the bundle's `covers`. Role names and value types are `verify`'s, after the loop; a wrong one refuses the run then, with exit 3 from the route | Checking rows on arrival re-implements the population loader (R0.7); not checking names on arrival moves that refusal to after the last call as well | as proposed (delegated, auto=true, 2026-11-23) |
+| LH1-D4 | Stop reason of a source with no required question | `required-coverage-completed`, the global rule's answer | A fourth reason, `nothing-required`, extends the report's vocabulary | as proposed (delegated, auto=true, 2026-11-23) |
+| LH1-D5 | The time bounds of T12 | `ReadingInputs` at each roster ceiling in under 10 s; a whole run at the roster ceiling with a producer that answers `empty` in under 90 s; a run with one source at the input ceiling, one response at the response ceiling and the budget at its ceiling in under 60 s; a route held past the timeout refuses within the timeout plus 2 s `(p1)`; a route with 16 MiB of output, and a `/2` run that retains a 64 MiB file, each in under 60 s `(p2)` | Looser bounds stop catching a quadratic walk at 4,096 rows | as proposed (delegated, auto=true, 2026-11-23) |
 
 ## 8. Tests
 
@@ -417,6 +419,22 @@ proposed `(o)`; and D1, D3, D4, D5, D7 and D16, all open.
 
 `test_ld3`, `test_ld4` and `test_ld5` run unedited (C9).
 
+Verification-selection ledger:
+
+| Obligation | Disposition | Command | Input boundary | Invalidation |
+|---|---|---|---|---|
+| plan §9 LH1 row: the direct tests and the consumers of `reading.py` | run | `uv run pytest -q tests/test_lh1_reading_host.py tests/test_ld3_reading_workflow.py tests/test_ld4_revision.py tests/test_ld5_verdict.py tests/test_li1_assurance_report.py --tb=short`, exit 0 | `reading.py`, `depth.py`, `reading_fixture/`, `depth_fixture/`, `tests/fixtures/lh1-reading/` | any edit to those, or to `gnd extract`, `verify`, `check` or `fidelity` |
+| `project.md` guard block (the phase edits files outside `.gnd-planning/`) | run | the twelve-file guard command of `project.md`, exit 0 | the guarded inventories, policies and pages | any source file the guards scan |
+| lint | run | `uv run ruff check`, exit 0 | the whole repository | any Python file |
+| component index | run | `python3 scripts/components_index.py changed --base 78934ee3 --strict`, exit 0 | `dev/components/`, the changed modules | a new, moved or edited module |
+| broad lanes (`evidence or census`) | cadence | `uv run pytest -q -m "evidence or census"`, on explicit owner request only | the historical replays | none selected by this phase |
+
+The focused row covers every consumer of `reading.py` the plan names (H10):
+`revision.py` through `test_ld4`, `assurance_report.py` through
+`test_li1_assurance_report`, and `test_ld5`. No other module imports
+`reading.py` (`grep -rn "literature.reading\|from .reading" src tests tools`,
+2026-11-23).
+
 Branch walk. §6.3's five rows: T11, T13, T17, T1, T19. The review branches:
 T18. Each step, declared and undeclared: T4, T5. Each omission cause, global
 and per document: the unedited `test_other_stop_reasons` and T7. Each route
@@ -444,3 +462,32 @@ budget) at this gate.
 
 This prose. No fixture corpus is authored before approval; the caller root
 of §6.7 is written in the phase, after the recorded packaged trees.
+
+## 12. Gate
+
+Delegated approval (auto=true), 2026-11-23, under the owner's
+`/process-milestone literature-host-interfaces auto`, which supersedes the
+plan gate's D15 ruling (phase by phase) for this milestone. Instrument: this
+prose. Decisions: LH1-D1 to LH1-D5 as proposed (§7). Budget: one review round
+over the phase diff with the review helper (plan D13), a second only if the
+convergence rules call for it. Compatibility: `test_ld3`, `test_ld4`,
+`test_ld5` unedited; `/1` runs byte-identical (T11). Spec bytes: the SHA-256 is
+recorded in the phase record (this line would move it).
+
+Implementability sweep, 2026-11-23, at `78934ee3`:
+
+- §6.3 step 6 moves `gnd extract` before the first producer call. Today it
+  runs inside `_public_results`, after the loop; the extraction's bytes do
+  not depend on the loop, so moving it keeps the `/1` bytes (T11 pins them).
+- `_recall` and `absence_status` read `CALIBRATION_FACTS`, the literal
+  `alternative_integrator` and the floor `[2, 2]`. `absence_status` is public
+  and `test_ld3` calls it with two arguments; the profile's gold keys, its
+  predicate and its floor reach it as keyword-only arguments whose defaults
+  are today's literals.
+- T12's response at the response ceiling and T20's 63 sections at 1 MiB each
+  build populations that `gnd verify` reads under its own caps, which this
+  phase may not widen (R0.7). Where a stable command's cap is lower than the
+  population a ceiling case would build, the case keeps the response size
+  with facts the stable command accepts (an `empty` outcome padded with
+  repeated `proposal_keys`), and the record says which cases do.
+- Every other requirement has a direct implementation in the design above.

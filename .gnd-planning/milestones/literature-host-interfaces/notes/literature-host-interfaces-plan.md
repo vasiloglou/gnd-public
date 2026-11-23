@@ -1,4 +1,4 @@
-# Literature host interfaces · plan r6
+# Literature host interfaces · plan r6, amended at close
 
 **Status: r6 draft, 2026-11-23. Not approved; r6's own bytes are not
 reviewed.** The owner selected the full GND review panel (D14, ruled `(o)`),
@@ -480,7 +480,9 @@ release, tag and publication.
   given (D15).
 - Each phase: spec, spec gate, code, focused gates, one independent reviewer
   over the diff (D13), refactoring review, record, commit.
-- One pull request from `claude/literature-host-interfaces` to `main`. Before
+- Two pull requests (close A2): the reading pair (LH1, LH2) from
+  `claude/literature-host-interfaces`, then the admission pair (LH3, LH4)
+  from `claude/literature-host-interfaces-admission`, each to `main`. Before
   it, `python3 scripts/components_index.py changed --base origin/main
   --strict` exits 0. Merge stays with the owner.
 
@@ -509,7 +511,7 @@ and D18 in r5. r6 adds none.
 | D1 | Where the producer protocol lives | In `reading.py`, until a second example uses it | A shared module now is a public home with one user |
 | D2 | Name and reach of the LH4 disposition | `policy-refused`, in the `/2` record only; `/1` keeps `fail` | Applying it to `/1` changes the packaged record's bytes and `test_li4`'s expectations |
 | D3 | The fixture-only steps on a caller root | Calibration, the conflict check and the absence scope are optional and declared in the profile; an undeclared step is `skipped`. The population label is profile data. A reviewer is optional, and a decision other than `supported` refuses the run | A reviewer that filters instead needs a ninth coverage state, which changes the row format #216 asks to keep |
-| D4 | Which caps become parameters, and their ceilings | Seven limits `(p1)`: roster cap (default 128, ceiling 4,096), largest budget (1 MiB, 64 MiB), per-file input (128 KiB, 8 MiB), response (128 KiB, today's effective bound, since a response cannot exceed the 128 KiB read of `responses.json`; ceiling 1 MiB), route timeout (30 s, 600 s), route output (1 MiB, 16 MiB), retained file (for `/2` runs only `(p2)`: derived from the run's own bounds and never less than 128 KiB, today's read of a run's own files; ceiling 64 MiB). The ceilings cannot all be reached together: at the 1 MiB response ceiling a retained file holds fewer than 64 eligible sections `(p2)`. A JSON file is decoded under its read cap. `document_budget` is a `run()` argument whose ceiling is the largest-budget limit | #216 names the first two only; with only those, a source over 128 KiB still refuses, a slow `gnd check` still stops the run at 30 s, and a live run can retain files its replay cannot read (H5) |
+| D4 | Which caps become parameters, and their ceilings | Seven limits `(p1)`: roster cap (default 128, ceiling 4,096), largest budget (1 MiB, 64 MiB), per-file input (128 KiB, 8 MiB), response (128 KiB, today's effective bound, since a response cannot exceed the 128 KiB read of `responses.json`; ceiling 1 MiB), route timeout (30 s, 600 s), route output (1 MiB, 16 MiB), retained file (for `/2` runs only `(p2)`: derived from the run's own bounds and never less than 128 KiB, today's read of a run's own files; ceiling 10 MiB, the repository's JSON read cap `gnd.input_policy.MAX_BYTES` (close A1)). The ceilings cannot all be reached together: at the 1 MiB response ceiling a retained file holds fewer than 10 eligible sections `(p2)` (close A1). A JSON file is decoded under its read cap. `document_budget` is a `run()` argument whose ceiling is the largest-budget limit | #216 names the first two only; with only those, a source over 128 KiB still refuses, a slow `gnd check` still stops the run at 30 s, and a live run can retain files its replay cannot read (H5) |
 | D5 | Manifest format of a caller run | `literature-reading-run/2` for any run that uses a new argument; `/1` unchanged otherwise | Optional keys in `/1` let an older reader accept a run it cannot re-derive |
 | D6 | What "the stop rule per document" means | **Ruled `(o)` 2026-11-22: as proposed.** A byte budget per source, enforced in the loop, and a stop reason per source in the report. A document whose required questions are resolved still gets its other scheduled reads | Ending a document at required coverage reads less, and changes which optional questions are answered; it could be a later switch |
 | D7 | A malformed response, or a producer that raises | Refuse the run with nothing written; a host that prefers to continue returns `refused` from its own producer | Recording it as `refused` reports a transport failure as the producer's verdict |
@@ -520,7 +522,7 @@ and D18 in r5. r6 adds none.
 | D12 | LH3: the record of a shaped call | `literature-assertion-admission/2`; the packaged call keeps `/1` | One format with optional keys makes `lineage_run.py:254` accept records it was not written for |
 | D13 | Phase diff reviewer | The review helper (`.claude/skills/process-phase/scripts/review_tool.py`, subject `phase`), one reviewer in a different tool | none; this is `project.md`'s default |
 | D14 | Plan-review instrument | **Ruled `(o)` 2026-11-23: the full GND panel** ("full"). Its first round read r4, its second r5 | none |
-| D15 | How the milestone runs | The owner selects: phase by phase with an owner gate on each spec, or `process-milestone … auto` | none |
+| D15 | How the milestone runs | The owner selects: phase by phase with an owner gate on each spec, or `process-milestone … auto`. Ruled at the plan gate as phase by phase; superseded on 2026-11-23 by the owner's `/process-milestone literature-host-interfaces auto` (close A3) | none |
 | D16 | LH1: which `verify` and `check` exits let a caller run complete | 0, 1, 2 and 4 are recorded and the run completes; the host gates on them; any other exit refuses (H24) `(p1)` | Requiring 0, as the packaged root does, refuses every run over a model with a constraint on a fact type not yet read (H23). Refusing on 1 only loses every producer call of a run whose extraction violates a constraint, which is a finding the host wants kept |
 | D17 | LH3: where following stops (opened by the D9 ruling) | **Ruled `(o)` 2026-11-23: as proposed.** The shape lists the entity types to follow, for example `quantity`; an instance of any other entity type is kept as a value in the row that names it, and its own facts are not copied | Not adopted: following every entity type. It needs no list, but one admitted claim then keeps its paper, the paper's authors, their other papers and so on: most of the population, whatever was judged. With an empty list the result is the reading D9 did not adopt |
 | D18 | LH3: the generic projection's row bound `(p1)` | A `max_rows` argument, default 16,384, ceiling 65,536, bounding attached and followed rows together; separate from `max_targets`. The packaged projection keeps `MAX_TARGETS` as its row bound, and `max_rows` without a shape refuses `(p2)` | Reusing `max_targets` as the row bound refuses 1,024 claims with two actors each (H19) |
@@ -611,3 +613,19 @@ sites are tagged `(p2)`.
 
 No ruling changed. The plan gate still rules D1–D5, D7, D8, D11–D13, D15, D16
 and D18.
+
+### 2026-11-23, close amendments
+
+Repairs the phase records named, applied at milestone close under the
+owner's delegated close ruling (auto=true). Prior wording is r6's.
+
+| Tag | Raised in | Site | Prior wording (r6) | Now |
+|---|---|---|---|---|
+| A1 | `003-phase-LH2.md`, refuted premise and open question Q1 | §10 D4 | "retained file (…; ceiling 64 MiB). The ceilings cannot all be reached together: at the 1 MiB response ceiling a retained file holds fewer than 64 eligible sections" | ceiling 10 MiB, `gnd.input_policy.MAX_BYTES`, which every JSON reader of the repository applies, so a larger retained file could never be read back; fewer than 10 eligible sections |
+| A2 | milestone README, "Deviation from plan §8" | §8 | "One pull request from `claude/literature-host-interfaces` to `main`." | two pull requests, the reading pair then the admission pair; the milestone-coordinator session relayed the owner's words "Accept the split" |
+| A3 | `002-phase-LH1.md`, Gate | §10 D15 | "The owner selects: phase by phase …" with the plan gate's phase-by-phase ruling | superseded by the owner's `/process-milestone literature-host-interfaces auto` |
+
+The other departures from the plan's letter are phase-level and recorded in
+the phase specs' findings: the LH1 size over the 400-line threshold, the
+`reasons` format of the LH4 rules, and the earlier `input:model` refusal of
+an edited include (close delta).

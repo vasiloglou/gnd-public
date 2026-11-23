@@ -1,0 +1,154 @@
+{
+  "base": "5265f476",
+  "claims": [
+    "VG5-C1: the example's proposals and judgment inputs rebuild byte-identically, and both rounds preview and apply with exit 0.",
+    "VG5-C2: the grown root passes gnd validate with both documents and --require-documents, gnd check over population.json, and gnd judgments check with the shipped policy and receipts, each exit 0.",
+    "VG5-C3: the include route list names every route that resolves an include root, gnd coverage and gnd evolve included.",
+    "The growth page's new section, the README and the three drafted replies state no rule or behaviour the code and the normative homes do not hold.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T22:31:57.806193+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG5-r1/diff.patch",
+      "sha256": "971502b5a6b9bc966630b0fd9c5e064317051320fdb4c811ea862cae4ff1e236"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/005-phase-VG4.md",
+      "sha256": "c70a1c5d3fcec4c0c48e2ea41cd91e3df1a325f1a48986c8f1dffdfd353c35b3"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/README.md",
+      "sha256": "1dff614aa1572fecb5972053e3aa1e1bd22250e1f9defed4f31301e0f6721114"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/issue-replies.md",
+      "sha256": "972f2af3dd59fe786220296a247569ab72237510085a9fcf83ae72f2ba612044"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG4-spec.md",
+      "sha256": "a54cdea8aace7b060159bcf33b20a48791e61dccf3da284b154bd6adc1e9f847"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/BRIEF.md",
+      "sha256": "96e79d60f7ae41c141153883bb7d8e1f2fdddcaa2332318e93b27d2355a664ca"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/FINDINGS.md",
+      "sha256": "b818ed63f51df43c0f2ffd242f4043b1ff15e06fd1b20e71596cc9fcc59d8bda"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/brief.json",
+      "sha256": "ba3fb0d0acd18cda25136c268e4ddbb73770d41ce5e7343202f2095a05a2b958"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/diff.patch",
+      "sha256": "4c2b80603f709d514f0cac1d39354f14473f24075f16baa9334d99d044023994"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/review.log",
+      "sha256": "28190a497dee7b37452778a7eb1c5565b352510f8dbee31863bf4dad2c7502c2"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/review.md",
+      "sha256": "c0d19198b87fdc71e65118072ec7d73860779d25f268188f563cb1bd1761ba93"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviews/phase-VG4-r1/run.json",
+      "sha256": "c1d0518c0d50eb850a3f7c5b7b582387487685f30b63bf257391fff3b572a82e"
+    },
+    {
+      "path": "dev/components/modules/tools.md",
+      "sha256": "d16bacb65023ebcccf9c501fee909522c2425ef44d5f839d116d59c3faabc930"
+    },
+    {
+      "path": "docs/agents/evolve.md",
+      "sha256": "f34f04039b56321a841c2e52c2f5e2c852c801b07f3cc538c91c3546322c5486"
+    },
+    {
+      "path": "docs/agents/model-from-text.md",
+      "sha256": "9932f7158d5669ef991df0b8ecc49e7150aafe1b02cc251e570e39a84fe4dbef"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "4597ed0f3ff17508bad97cea1240b879ab455817dea8377b3894ef677b92f4c0"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/README.md",
+      "sha256": "43aa2f437b0e8a977a51f229781a5dd4f40c29f4e14f0794e5265368ed24c35e"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/policy.json",
+      "sha256": "398aed89d9c2a02555489b1f6dfe8667bf262ee96f3d4a78d7d5c2cb36c184e8"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/population.json",
+      "sha256": "9f481316d8e86d297b1ba00505fae57e3274d531c9ab2d56f102e9a81ef77ad7"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/receipts.json",
+      "sha256": "8b10f217faa3f0e7e4375275a3c67b33e89e5d125038c1d48ea7704294feb360"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/root.orm.yaml",
+      "sha256": "5bc77662bebc77c7dbd2ccb7dbf712f21add117d4b4787547da1e026a24a147f"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/round-1.document.txt",
+      "sha256": "865f165cf4ebd95adbe10e8b18753c8be981df6558c18f6b18a991b25731d5b9"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/round-1.proposal.json",
+      "sha256": "2ca250e77a941120c7e655e6bdf570ee25da91bedba9c536f08f5217e9e5246a"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/round-2.document.txt",
+      "sha256": "6ed65c19e20d68329fa38de5632cf1093ba6d2b1f60c848ab33f1aa75e167d23"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/round-2.proposal.json",
+      "sha256": "a962864bbe733754e24ab1933c8ab17e26f9ede63fef868058b88f8c0c976d56"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/seed.orm.yaml",
+      "sha256": "69c31805fc53de4c2b6717bb10c00ecda1b4e8a523661ffc27428c8e5dc82457"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
+      "sha256": "3356dd23dae636f79c531d5e372719769e5c7cc7fc834afaaab7a13265832c06"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "7f1bed577edf597776e2110b26123cf6a54606d459925aadb0cc4a055e090282"
+    },
+    {
+      "path": "tests/test_mc1_guards.py",
+      "sha256": "77e89fbb24d01957631757ed2641c83d514df74e93e8d2332035e764c88adc92"
+    },
+    {
+      "path": "tests/test_packaged_skills.py",
+      "sha256": "5edc769a7e68cbfd520ee61e72549d774acd7464140cfae0b6fe88de7aec6409"
+    },
+    {
+      "path": "tests/test_vg5_seeded_growth_example.py",
+      "sha256": "6599886abd32161e8dd2e402b421c4c2a273b76815ebce5f2bacf83738bb3fdb"
+    },
+    {
+      "path": "tools/build_seeded_growth_example.py",
+      "sha256": "6ca03d5a5051ab77fbdd9c188f995a0876b22a7c79415b5b2c23064405efa397"
+    },
+    {
+      "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/phase-VG5-spec.md",
+      "sha256": "dde225e07de8faaf4931f0c72645b68534024d0c68eb4c6da6e9c6ee9753bec0"
+    }
+  ],
+  "head": "b36b446daa3b2a6ef10fef6301eb3281f809d11d",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the packaged example run exactly as its README and the growth page say, and does every page and reply state only what VG1 to VG4 shipped?",
+  "subject": "phase",
+  "version": 1
+}

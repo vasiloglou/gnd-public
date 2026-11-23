@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**Approved by delegated ruling (auto=true), 2026-11-23** `(d)`, under the
+**Approved by delegated ruling (auto=true), 2026-11-23; implemented, recorded in [006-phase-VG5.md](../006-phase-VG5.md)** `(d)`, under the
 owner's `process-milestone reviewed-vocabulary-growth auto` of 2026-11-23;
 the driving agent's ruling, not the owner's reading. Implementation needs
 VG1–VG4 in the branch (plan §3), GO1 on `main` and the milestone
@@ -130,3 +130,36 @@ About 150 builder lines, 10 example files, 80 page lines, 200 test lines.
 ## 11. Approval instrument
 
 This prose (VG5-D2).
+
+## Implementation findings, recorded as they were found `(d)`
+
+2026-11-23, at `b36b446d`. Re-read against VG2's and VG4's records before
+the first edit: round 2's `sample`, `proposed`, `deontic` constraint is
+what VG2 admits, and round 1's first-document add is what VG4 ships, so no
+criterion changed.
+
+1. **A receipt binds no reference identity for a model without references.**
+   The first build bound `{"identity_version": 1, "references": []}` and
+   `gnd judgments check` refused it as a stale subject: the check report
+   carries no `reference_binding` for such a model, and the subject must
+   equal it. The builder binds `null`.
+2. **Two inventories name the new files.** `tests/test_mc1_guards.py`
+   R30 lists every packaged include root (the new `root.orm.yaml` joins
+   it), and `tests/test_packaged_skills.py` pins the skill link graph (the
+   growth section's two citations join it as `VG5_GROWTH_EDGES`). These
+   are the inventories literature-reading-reference LR3 rebases over.
+3. **No cross-skill link from `gnd-orm-core` to `gnd-model-evolve`.** The
+   new `gnd evolve` route row first linked the evolution contract; that
+   edge is outside the pinned graph, so the row names the section in text.
+4. **T3 is narrower than its row.** It runs `gnd coverage` and `gnd evolve
+   preview` on the example root and shows `gnd codegen` refusing it; the
+   routes the list already named are exercised on include roots by IR1–IR3
+   and LX1–LX4, not again here.
+5. **Paths through a symlink.** `gnd evolve` refuses a workspace whose path
+   crosses a symlink (macOS `/var`); the tests copy the example under a
+   resolved path. The README's commands run from a copy of the folder.
+6. **Review r1 (Codex), F1, fixed at `0fc30381`.** The route list omitted
+   `gnd discover`, which resolves an include root; the row is added.
+7. **Review r1, F2, fixed at `0fc30381`.** T4 read a heading inside a fenced
+   block as a reply boundary; it uses the fence-aware reader, now in
+   `tests/support/markdown_sections.py`.

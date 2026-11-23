@@ -28,7 +28,7 @@ Plan r4 repairs the eight points its two returned reviews raised, tagged
 | VG2 | `gnd evolve` and the growth document agree on the sources of a new constraint (#218) | done 2026-11-23: [record](004-phase-VG2.md), [spec](notes/phase-VG2-spec.md) (delegated approval, `auto=true`) |
 | VG3 | an unattended root may include a reviewed vocabulary (#222) | done 2026-11-23: [record](003-phase-VG3.md), [spec](notes/phase-VG3-spec.md) (delegated approval, `auto=true`) |
 | VG4 | growth rounds on that root, and its first source document (#222) | done 2026-11-23: [record](005-phase-VG4.md), [spec](notes/phase-VG4-spec.md) (delegated approval, `auto=true`) |
-| VG5 | one packaged example, the pages and the three issue replies | [spec](notes/phase-VG5-spec.md) approved (delegated); needs VG2 and VG4 |
+| VG5 | one packaged example, the pages and the three issue replies | done 2026-11-23: [record](006-phase-VG5.md), [spec](notes/phase-VG5-spec.md) (delegated approval, `auto=true`) |
 
 [Plan](notes/reviewed-vocabulary-growth-plan.md). Listed in the
 [roadmap after 0.4.0](../../PROJECT.md#roadmap-after-040--planned-2026-11-21).
@@ -47,9 +47,7 @@ The roadmap of 2026-11-22 puts VG1 first, then GO1 of
 that milestone edits `evolve/service.py` and `unattended-growth.md` too, one
 writer at a time (plan §3).
 
-`process-milestone reviewed-vocabulary-growth auto` runs this milestone
-since 2026-11-23: spec rulings are delegated (`auto=true`); merge is not.
-VG2, VG4 and VG5 change `evolve/service.py` or `unattended-growth.md`, so by
-the plan's order (§3) they wait for GO1 of growth-round-outcomes, whose plan
-has started in its own session. VG3 changed neither file and is done; VG2 starts when
-the milestone coordinator clears it after GO1 merges.
+`process-milestone reviewed-vocabulary-growth auto` ran this milestone on
+2026-11-23 (spec rulings delegated; merge is not). All five phases are
+recorded. VG1 is in pull request 239; VG2–VG5 are in pull request 240. Next:
+the owner's merges, then the milestone close (its review instrument, D8).

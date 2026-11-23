@@ -126,16 +126,22 @@ def test_t1_preview_and_apply_parse_a_bounded_number_of_times(tmp_path: Path,
 
 
 def test_t1_a_json_workspace_stays_within_the_bound(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    work, proposal = loading._orders(tmp_path, as_json=True)
-    with _counting(monkeypatch) as calls:
-        assert loading._preview(work, proposal, model="orders.json").returncode == 0
-        preview = list(calls)
-        assert loading._apply(work, proposal, model="orders.json").returncode == 0
-        apply = calls[len(preview):]
-    assert len(preview) <= 2, preview
+    counts = {}
+    for scope in ("on", "off"):
+        (tmp_path / scope).mkdir()
+        work, proposal = loading._orders(tmp_path / scope, as_json=True)
+        with contextlib.ExitStack() as stack:
+            if scope == "off":
+                stack.enter_context(_scope_off(monkeypatch))
+            calls = stack.enter_context(_counting(monkeypatch))
+            assert loading._preview(work, proposal, model="orders.json").returncode == 0
+            preview = len(calls)
+            assert loading._apply(work, proposal, model="orders.json").returncode == 0
+            counts[scope] = (preview, len(calls) - preview)
     # The before text is parsed once as strict JSON and once under the YAML name
     # `_parse_model_text` gives it: two readers, within the bound.
-    assert len(apply) <= 3, apply
+    assert counts["on"][0] <= 2 and counts["on"][1] <= 3, counts
+    assert counts["off"][0] > counts["on"][0] and counts["off"][1] > counts["on"][1], counts
 
 
 def test_t1_the_count_does_not_depend_on_the_model_size(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -266,6 +272,57 @@ def test_t3_the_check_keeps_values_json_cannot_spell() -> None:
                 _parsing.parse_model_document(text, source="m.orm.yaml")
     finally:
         _parsing.set_parse_scope_verify(previous)
+
+
+def _written(text: bytes, write: Callable[[Any], None]) -> bool:
+    previous = _parsing.set_parse_scope_verify(True)
+    try:
+        with _parsing.parse_scope():
+            write(_parsing.parse_model_document(text, source="m.orm.yaml"))
+    except AssertionError:
+        return True
+    finally:
+        _parsing.set_parse_scope_verify(previous)
+    return False
+
+
+def _retag(document: Any) -> None:
+    from ruamel.yaml.tag import Tag
+
+    document["x"].yaml_set_ctag(Tag(suffix="!bar"))
+
+
+def _rekey(document: Any) -> None:
+    document[True] = document.pop(1)
+
+
+@pytest.mark.parametrize(("text", "write"), [(b"x: !foo {a: 1}\n", _retag), (b"1: value\n", _rekey)],
+                         ids=["tag", "key-type"])
+def test_t3_r1_the_check_sees_a_tag_or_key_type_change(text: bytes, write: Callable[[Any], None]) -> None:
+    """Diff review F1: a write that changes only a tag or a key's type is a write."""
+    assert _written(text, write)
+
+
+@pytest.mark.parametrize("text", [b"x: &a !foo abc\n", b"x: &a [1, 2]\n", b"x: !!set {1, 2}\n"])
+def test_t3_r1_an_unchanged_anchored_or_tagged_node_is_not_a_write(text: bytes) -> None:
+    """Diff review F2: no false positive on legal YAML that nothing wrote to."""
+    assert not _written(text, lambda document: None)
+
+
+def test_t6_r1_a_context_copied_from_a_closed_scope_does_not_reuse_it() -> None:
+    """Diff review F3: a closed scope stays closed in a copied context."""
+    from contextvars import copy_context
+
+    with _parsing.parse_scope():
+        first = _parsing.parse_model_document(b"version: 1\n", source="first.orm.yaml")
+        saved = copy_context()
+
+    @_parsing.parse_scoped
+    def second() -> Any:
+        return _parsing.parse_model_document(b"version: 1\n", source="second.orm.yaml")
+
+    assert saved.run(second) is not first
+    assert saved.run(lambda: _parsing.parse_model_document(b"version: 1\n", source="m.orm.yaml")) is not first
 
 
 # --- T4: a model changed between preview and apply is refused as today ---------------------------

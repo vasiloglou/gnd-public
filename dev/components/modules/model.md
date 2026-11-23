@@ -83,10 +83,10 @@ Bounded model-document parsing, shared by model loading and include resolution.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `set_parse_scope_verify(enabled) -> bool` | function | 46 | Switch the parse scope's write check on or off; return the old setting. |
-| `parse_scope() -> Iterator[None]` | function | 75 | Remember each document ``parse_model_document`` builds, for one public call. |
-| `parse_scoped(function) -> _F` | function | 98 | Run ``function`` inside a parse scope: the decorator ``gnd evolve`` uses. |
-| `parse_model_document(data, *, source) -> Any` | function | 107 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+| `set_parse_scope_verify(enabled) -> bool` | function | 57 | Switch the parse scope's write check on or off; return the old setting. |
+| `parse_scope() -> Iterator[None]` | function | 86 | Remember each document ``parse_model_document`` builds, for one public call. |
+| `parse_scoped(function) -> _F` | function | 112 | Run ``function`` inside a parse scope: the decorator ``gnd evolve`` uses. |
+| `parse_model_document(data, *, source) -> Any` | function | 121 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
 
 ## gnd.model._paths — `src/gnd/model/_paths.py`
 Components: model.loading

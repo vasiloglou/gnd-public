@@ -315,3 +315,19 @@ Recorded as found.
    measured. The bound of 3 holds with one to spare.
 5. With the write check on, the existing evolve lane (418 tests, seven
    files) passed unchanged: no evolve path writes into a parsed document.
+6. **Diff review round 1 (codex), three hardening findings, all reproduced and
+   fixed** (`notes/reviews/phase-GO1-r1/FINDINGS.md`). The write check's
+   snapshot was a deep copy compared by type and value; it missed a change of
+   only a tag or a key's type and raised on an unchanged anchored tagged
+   scalar. The snapshot is now the round-trip YAML writer's text, which keeps
+   tags, anchors, key types and comments; finding 1's NaN case needs no
+   special handling under it. A context copied while a scope was open reused
+   it after it closed; each scope now carries an `open` flag cleared on exit.
+7. **§6 restated.** "The scope ... does not cross threads" holds for a thread
+   started with `threading.Thread`, which starts with an empty context. A
+   context copied while a scope is open (`contextvars.copy_context`,
+   `asyncio.to_thread`) shares that scope until it closes, and nothing after.
+   No evolve path copies a context.
+8. **T8 and the round sweep** ran on the commit before the review repairs;
+   the repairs touch only the test-only write check and the scope's closing,
+   neither of which runs in T8 (the check is off there) beyond one flag.

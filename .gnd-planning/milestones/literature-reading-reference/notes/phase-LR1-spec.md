@@ -219,3 +219,47 @@ source lines, about 200 test lines. The record states the measured figures.
 
 This prose and the expected exits, references, row counts and field names
 of §8.
+
+## 12. Spec gate
+
+Delegated approval (`auto=true`), 2026-11-23. Authorization: the owner's
+milestone delegation recorded in [001-plan-gate.md](../001-plan-gate.md).
+Instrument: this prose (§11); no spec review was run, because none settles a
+concrete uncertainty the gate holds open, and the phase-diff review (one
+reviewer in a different tool, the owner's ruling) follows implementation.
+Budget: no paid call. Compatibility: `gnd verify` bytes unchanged (LR1-C5);
+the packaged `gnd-extract` reference page changes by one cell, and its
+manifest digest moves. The rulings of §7 are the gate's. The SHA-256 of these
+bytes is in the phase record. Implementation findings are appended below as
+§13.
+
+## 13. Implementation findings
+
+Appended after the gate; the gated bytes are the SHA-256 the phase record
+names.
+
+- **F1, `derivations` is `null`.** For a model that declares no derivation,
+  the report's `derivations` is `null`, not `[]`. The page's example first
+  read it as a list and raised `TypeError`. The page now says so in step 3,
+  and both the page block and `listing` read `report["derivations"] or []`.
+  T1 and T9 reach it.
+- **F2, `outcome` was not named.** T3 failed on the first draft: the prose
+  never named `outcome`, which the field list claims. The page now says the
+  report's `outcome` is `violated`. The test, not the page's draft, was the
+  authority.
+- **F3, the step order.** The page numbers its steps 1–6 with the runnable
+  example after them, where §6 drafted eight steps with the example as the
+  eighth; the content is the same.
+- **F4, affected consumers widened.** `tests/test_public_extraction_prose_policy.py`
+  and `tests/test_extract_guidelines.py` read `extraction-contract.md`, so
+  they join the lane.
+- **F5, review-driven changes (rounds 1 and 2).** The page's selection is
+  a function, `failed`, that the test reads from the page's block and
+  executes, and the runnable block's output is compared (`output=stdout`);
+  T3 compares the keys the page's code reads with the listed set; T5 pins
+  the markers; the section splitter is gone. Step 2 now says
+  `constraint_ref` addresses the composed model and maps it back through
+  `gnd flatten`'s record, and no longer lists witness shapes as a closed
+  set. T10 and T11 add a mandatory and a ring witness. §6's step 3 wording
+  ("the constraint's own `id` is at that address in the file that declares
+  it") was wrong for include roots; this finding refutes it.

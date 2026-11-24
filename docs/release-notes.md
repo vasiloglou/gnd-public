@@ -108,6 +108,11 @@ the next one.
   violating rows, from the JSON report, with a runnable example on the
   literature reading example's conflicting labels. `gnd verify` itself is
   unchanged ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+- **Where a quote may lie.** The anchor reference states the rule: a span
+  may lie anywhere in the document the sidecar names, and GND has no notion
+  of a section. The literature pages say what that means for a host that
+  shows its model one section at a time. No format changes
+  ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
 
 ## 0.4.0 (2026-11-17)
 

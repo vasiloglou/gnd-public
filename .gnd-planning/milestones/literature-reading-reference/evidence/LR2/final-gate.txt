@@ -1,0 +1,18 @@
+== lane: uv run pytest -q tests/test_lr2_quote_scope.py tests/test_anchor_sidecar_v2.py tests/test_ld3_reading_workflow.py tests/test_documentation_tutorials.py --tb=short
+exit=0
+158 passed in 143.03s (0:02:23)
+== guards (project.md guard block)
+exit=0
+679 passed, 2 deselected in 97.55s (0:01:37)
+== uv run ruff check
+All checks passed!
+exit=0
+== python3 scripts/components_index.py changed --base origin/main --strict
+changed against origin/main (11a7ebf): 119 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+exit=0
+== after the T5 fix: uv run pytest -q tests/test_lr2_quote_scope.py --tb=short
+exit=0
+5 passed in 0.91s
+== uv run ruff check (after fix)
+All checks passed!
+exit=0

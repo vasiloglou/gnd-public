@@ -8,7 +8,8 @@ someone else's claim, or deny it. Two fields may give two different
 methods the same name.
 
 GND 0.4.0 lets you build one checked ontology over many papers. The agent
-still does the reading. GND keeps each claim tied to its passage, refuses
+still does the reading. GND keeps each claim tied to its passage in the
+document version it was read from ([where a quote may lie](../reference/anchors.md#where-a-span-may-lie)), refuses
 to join names nobody decided, and proves or refuses every answer. This
 page follows one stack of sixteen papers from eleven fields through three
 acts.

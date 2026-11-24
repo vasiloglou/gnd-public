@@ -1,0 +1,78 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: employee
+  name: Employee
+  kind: entity
+  reference:
+    mode: popular
+    value_type: emp_nr
+- id: emp_nr
+  name: EmpNr
+  kind: value
+  primitive: Integer
+- id: employee_name
+  name: EmployeeName
+  kind: value
+  primitive: String
+- id: car
+  name: Car
+  kind: entity
+  reference:
+    mode: popular
+    value_type: reg
+- id: reg
+  name: Reg
+  kind: value
+  primitive: String
+fact_types:
+- id: employee_has_name
+  reading: '{Employee} has {EmployeeName}'
+  roles:
+  - object_type: employee
+    role_name: employee
+  - object_type: employee_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - employee
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: employee_drives_car
+  reading: '{Employee} drives {Car}'
+  roles:
+  - object_type: employee
+    role_name: employee
+  - object_type: car
+    role_name: car
+  constraints:
+  - type: uniqueness
+    roles:
+    - employee
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: An employee drives at most one car.
+  - type: uniqueness
+    roles:
+    - car
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A car has one driver.
+  - type: mandatory
+    role: car
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Every car has a driver.

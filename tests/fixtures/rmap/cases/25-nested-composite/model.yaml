@@ -1,0 +1,174 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: country
+  name: Country
+  kind: entity
+  reference:
+    mode: popular
+    value_type: country_code
+- id: country_code
+  name: CountryCode
+  kind: value
+  primitive: String
+- id: state
+  name: State
+  kind: entity
+  reference:
+    mode: external
+- id: state_code
+  name: StateCode
+  kind: value
+  primitive: String
+- id: district
+  name: District
+  kind: entity
+  reference:
+    mode: external
+- id: district_nr
+  name: DistrictNr
+  kind: value
+  primitive: Integer
+- id: seats
+  name: Seats
+  kind: value
+  primitive: Integer
+fact_types:
+- id: state_in_country
+  reading: '{State} is in {Country}'
+  roles:
+  - object_type: state
+    role_name: state
+  - object_type: country
+    role_name: country
+  constraints:
+  - type: uniqueness
+    roles:
+    - state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: state_has_code
+  reading: '{State} has {StateCode}'
+  roles:
+  - object_type: state
+    role_name: state
+  - object_type: state_code
+    role_name: code
+  constraints:
+  - type: uniqueness
+    roles:
+    - state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: district_in_state
+  reading: '{District} is in {State}'
+  roles:
+  - object_type: district
+    role_name: district
+  - object_type: state
+    role_name: state
+  constraints:
+  - type: uniqueness
+    roles:
+    - district
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: district
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: district_has_nr
+  reading: '{District} has {DistrictNr}'
+  roles:
+  - object_type: district
+    role_name: district
+  - object_type: district_nr
+    role_name: nr
+  constraints:
+  - type: uniqueness
+    roles:
+    - district
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: district
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: district_has_seats
+  reading: '{District} has {Seats}'
+  roles:
+  - object_type: district
+    role_name: district
+  - object_type: seats
+    role_name: seats
+  constraints:
+  - type: uniqueness
+    roles:
+    - district
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+constraints:
+- type: uniqueness
+  scope: external
+  role_refs:
+  - fact_type: state_in_country
+    role: country
+  - fact_type: state_has_code
+    role: code
+  preferred: true
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: State by country and code.
+- type: uniqueness
+  scope: external
+  role_refs:
+  - fact_type: district_in_state
+    role: state
+  - fact_type: district_has_nr
+    role: nr
+  preferred: true
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: District by state and number.

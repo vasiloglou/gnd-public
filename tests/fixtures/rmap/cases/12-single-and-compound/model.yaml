@@ -1,0 +1,52 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: employee
+  name: Employee
+  kind: entity
+  reference:
+    mode: popular
+    value_type: emp_nr
+- id: emp_nr
+  name: EmpNr
+  kind: value
+  primitive: Integer
+- id: department
+  name: Department
+  kind: entity
+  reference:
+    mode: popular
+    value_type: dept_code
+- id: dept_code
+  name: DeptCode
+  kind: value
+  primitive: String
+fact_types:
+- id: employee_works_in_department
+  reading: '{Employee} works in {Department}'
+  roles:
+  - object_type: employee
+    role_name: employee
+  - object_type: department
+    role_name: department
+  constraints:
+  - type: uniqueness
+    roles:
+    - employee
+    - department
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Recorded once.
+  - type: uniqueness
+    roles:
+    - employee
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: An employee works in one department.

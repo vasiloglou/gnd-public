@@ -1,0 +1,70 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: person_name
+  name: PersonName
+  kind: value
+  primitive: String
+- id: employee
+  name: Employee
+  kind: entity
+  subtype_of:
+  - person
+  inherits_reference: false
+  reference:
+    mode: popular
+    value_type: emp_nr
+- id: emp_nr
+  name: EmpNr
+  kind: value
+  primitive: Integer
+- id: salary
+  name: Salary
+  kind: value
+  primitive: Integer
+fact_types:
+- id: person_has_name
+  reading: '{Person} has {PersonName}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: person_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: employee_has_salary
+  reading: '{Employee} has {Salary}'
+  roles:
+  - object_type: employee
+    role_name: employee
+  - object_type: salary
+    role_name: salary
+  constraints:
+  - type: uniqueness
+    roles:
+    - employee
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

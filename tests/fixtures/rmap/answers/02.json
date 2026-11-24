@@ -1,0 +1,95 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "primary_key",
+    "country"
+   ],
+   "id": "fact_types/country_has_country_code/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "country"
+   ],
+   "id": "fact_types/country_has_country_code/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "country"
+   ],
+   "id": "fact_types/country_has_country_code/constraints/2",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "country"
+   ],
+   "id": "fact_types/country_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "country",
+    "country_code"
+   ],
+   "id": "country_has_country_code",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "country",
+    "name"
+   ],
+   "id": "country_has_name",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "country_code",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "country"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "country_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "country",
+   "primary_key": [
+    "country_code"
+   ],
+   "subject": [
+    "object_type",
+    "country"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

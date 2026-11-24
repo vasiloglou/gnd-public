@@ -1,0 +1,111 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "person_likes_color"
+   ],
+   "id": "person_likes_color",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "person_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "person",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "person"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_person_id",
+     "nullable": false,
+     "origin": [
+      "person_likes_color",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "color",
+     "nullable": false,
+     "origin": [
+      "person_likes_color",
+      "color"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "person_person_id"
+     ],
+     "name": "person_likes_color__person",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    }
+   ],
+   "name": "person_likes_color",
+   "primary_key": [
+    "person_person_id",
+    "color"
+   ],
+   "subject": [
+    "fact_type",
+    "person_likes_color"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

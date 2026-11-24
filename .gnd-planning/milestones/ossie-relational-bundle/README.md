@@ -20,9 +20,9 @@ itself reviewed.
 | Phase | Deliverable | State |
 |---|---|---|
 | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | done: [record](004-phase-OB1.md), [spec](notes/phase-OB1-spec.md); branch `claude/ossie-ob1-size-bounds` |
-| OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | ready to specify |
+| OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **recorded** ([record](008-phase-OB2.md)); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); two review rounds |
 | OB3 | Semantic model and mapping files, with the default per D2 | after OB2 (D2, D4, D6 ruled) |
 | OB4 | `--physical-binding FILE` | after OB3 (D7, D8 ruled) |
 | OB5 | Docs and skill | after OB4 |
 
-**Next action:** draft the OB2 spec. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first.
+**Next action:** the owner reviews the OB2 pull request and rules OB2-Q3 (a third review round or not); OB3 follows. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first.

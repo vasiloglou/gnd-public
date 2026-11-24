@@ -1,0 +1,189 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [],
+   "id": "fact_types/person_has_email/constraints/0",
+   "kind": "constraint",
+   "reason": "uniqueness-not-confirmed"
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/person_has_phone/constraints/0",
+   "kind": "constraint",
+   "reason": "uniqueness-not-confirmed"
+  },
+  {
+   "carried_as": [
+    "table",
+    "person_has_email"
+   ],
+   "id": "person_has_email",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "person_has_phone"
+   ],
+   "id": "person_has_phone",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "person_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "person",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "person"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_person_id",
+     "nullable": false,
+     "origin": [
+      "person_has_email",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "email",
+     "nullable": false,
+     "origin": [
+      "person_has_email",
+      "email"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "person_person_id"
+     ],
+     "name": "person_has_email__person",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    }
+   ],
+   "name": "person_has_email",
+   "primary_key": [
+    "person_person_id",
+    "email"
+   ],
+   "subject": [
+    "fact_type",
+    "person_has_email"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_person_id",
+     "nullable": false,
+     "origin": [
+      "person_has_phone",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "phone",
+     "nullable": false,
+     "origin": [
+      "person_has_phone",
+      "phone"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "person_person_id"
+     ],
+     "name": "person_has_phone__person",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    }
+   ],
+   "name": "person_has_phone",
+   "primary_key": [
+    "person_person_id",
+    "phone"
+   ],
+   "subject": [
+    "fact_type",
+    "person_has_phone"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": [
+  {
+   "detail": "",
+   "id": "fact_types/person_has_email/constraints/0",
+   "kind": "constraint",
+   "reason": "uniqueness-not-confirmed"
+  },
+  {
+   "detail": "",
+   "id": "fact_types/person_has_phone/constraints/0",
+   "kind": "constraint",
+   "reason": "uniqueness-not-confirmed"
+  }
+ ]
+}

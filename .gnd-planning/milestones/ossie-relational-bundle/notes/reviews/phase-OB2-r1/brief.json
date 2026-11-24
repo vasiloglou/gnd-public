@@ -1,0 +1,86 @@
+{
+  "base": "e7af6f50",
+  "claims": [
+    "map_model never raises for a model the loader admits, under both variants.",
+    "dispositions returns exactly one row for every fact type and every constraint.",
+    "The schema depends only on model content, not on declaration order of object types, fact types or constraints, nor on the path.",
+    "Placement follows rules 0 to 6 in order, with the 1:1 and subtype choices of the selected variant.",
+    "Mapping time grows linearly with the number of fact types and object types."
+  ],
+  "created": "2026-11-24T19:41:29.084261+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB2-r1/diff.patch",
+      "sha256": "392e5bb6c3239cdbf0114e7ec7bf2fd6137adff29bc81dd34f251717f7066ca8"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/evidence/OB2/dynamic-query-successor.json",
+      "sha256": "d44972038eacb7196b4ae582f9290de4ee648307676e8c1f1bb5a6211b2c4e0f"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/OB2-variant-measurement.md",
+      "sha256": "d999ed361e04bb61dd52543ad8f2921b813b7deea1fb8b684e463c3f915420be"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB2-spec.md",
+      "sha256": "41a2d1b90a32827208b3f3cd08cb6b23560e1ac2d8b712f941dce04ce6faf0fb"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "97001d43159039e40ee4129f6a6d45ebad753b94c5d37bc1b1a2832097f048b0"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "c5734e869ab621d4aff7fbe8b41575170a37f07f933c4d1c023ae279838920e6"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "390183f0d016cd83462673fe1d4e66d3e989a483de43dad977e6879df3322cc3"
+    },
+    {
+      "path": "dev/components/modules/tools.md",
+      "sha256": "79abbfdb0d1b9e7c9b422161f47c6f1cff1959ac8aeb55630e72bcf057843a72"
+    },
+    {
+      "path": "src/gnd/rmap.py",
+      "sha256": "9de80e962b0f149f7e40f4eed3b28dde51c0da11fbdd5206f6490438fed4fa5d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "fba6ac8fe6aa438564e7f12780d2a17ac45c4a34b9804ecdbde44570acabe176"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "088021597e220553ead03afc78054a9bed725a8cf06001602aeafb7544501fc8"
+    },
+    {
+      "path": "tests/support/rmap_large.py",
+      "sha256": "2ad02afe03b94e4e69fffec2f4a60276dfd75591864554b353c23f802adfb36b"
+    },
+    {
+      "path": "tests/test_rmap.py",
+      "sha256": "098a37afbe9e13af0b5bc2fb26d4ed2b649800793c154e85484171fae0732836"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "1a35d808a91363bbd4e605c350eadefccef31d75b232a1371a33b80bb0507fd2"
+    },
+    {
+      "path": "tools/rmap_variant_measurement.py",
+      "sha256": "c8cc82db8f552c884160adc51e798b1225b1dbd877c258d16c9f497bf88b358e"
+    },
+    {
+      "path": "tests/fixtures/rmap/answers/README.md",
+      "sha256": "84ae2427b49911355dfdb0ea472de54cc8f32286b4074897eba2262412edb2a1"
+    }
+  ],
+  "head": "af34a54e916997ae7f1bcba1258bbb90f9cca2df",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does gnd.rmap implement the approved OB2 spec (r1 with amendment r1.1) and the normative 'Relational mapping (Rmap)' section, and is there any model the loader admits for which it raises, depends on declaration order or path, places a fact type or constraint differently from the stated rules, or omits one from dispositions?",
+  "subject": "phase",
+  "version": 1
+}

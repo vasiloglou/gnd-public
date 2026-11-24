@@ -1,0 +1,181 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "course"
+   ],
+   "id": "fact_types/course_has_title/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "student"
+   ],
+   "id": "fact_types/student_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "student_takes_course"
+   ],
+   "id": "fact_types/student_takes_course/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "course",
+    "title"
+   ],
+   "id": "course_has_title",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "student",
+    "name"
+   ],
+   "id": "student_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "student_takes_course"
+   ],
+   "id": "student_takes_course",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "course_code",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "course"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "title",
+     "nullable": true,
+     "origin": [
+      "course_has_title",
+      "title"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "course",
+   "primary_key": [
+    "course_code"
+   ],
+   "subject": [
+    "object_type",
+    "course"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "student_nr",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "student"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "student_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "student",
+   "primary_key": [
+    "student_nr"
+   ],
+   "subject": [
+    "object_type",
+    "student"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "student_student_nr",
+     "nullable": false,
+     "origin": [
+      "student_takes_course",
+      "student"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "course_course_code",
+     "nullable": false,
+     "origin": [
+      "student_takes_course",
+      "course"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "student_student_nr"
+     ],
+     "name": "student_takes_course__student",
+     "target_columns": [
+      "student_nr"
+     ],
+     "target_table": "student"
+    },
+    {
+     "columns": [
+      "course_course_code"
+     ],
+     "name": "student_takes_course__course",
+     "target_columns": [
+      "course_code"
+     ],
+     "target_table": "course"
+    }
+   ],
+   "name": "student_takes_course",
+   "primary_key": [
+    "student_student_nr",
+    "course_course_code"
+   ],
+   "subject": [
+    "fact_type",
+    "student_takes_course"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

@@ -1,0 +1,67 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "implied",
+    "employee"
+   ],
+   "id": "fact_types/employee_works_in_department/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "employee"
+   ],
+   "id": "fact_types/employee_works_in_department/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "employee",
+    "department_dept_code"
+   ],
+   "id": "employee_works_in_department",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "emp_nr",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "employee"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "department_dept_code",
+     "nullable": true,
+     "origin": [
+      "employee_works_in_department",
+      "department"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "employee",
+   "primary_key": [
+    "emp_nr"
+   ],
+   "subject": [
+    "object_type",
+    "employee"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

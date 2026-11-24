@@ -1,0 +1,220 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/1",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/district_has_nr/constraints/0",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/district_has_nr/constraints/1",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/district_has_seats/constraints/0",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/district_in_state/constraints/0",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/district_in_state/constraints/1",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_has_code/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_has_code/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_in_country/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_in_country/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [],
+   "id": "district_has_nr",
+   "kind": "fact_type",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [],
+   "id": "district_has_seats",
+   "kind": "fact_type",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [],
+   "id": "district_in_state",
+   "kind": "fact_type",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "carried_as": [
+    "key",
+    "state",
+    "code"
+   ],
+   "id": "state_has_code",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "state",
+    "country_country_code"
+   ],
+   "id": "state_in_country",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "country_country_code",
+     "nullable": false,
+     "origin": [
+      "state_in_country",
+      "country"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "code",
+     "nullable": false,
+     "origin": [
+      "state_has_code",
+      "code"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "state",
+   "primary_key": [
+    "country_country_code",
+    "code"
+   ],
+   "subject": [
+    "object_type",
+    "state"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": [
+  {
+   "detail": "",
+   "id": "constraints/1",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "fact_types/district_has_nr/constraints/0",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "fact_types/district_has_nr/constraints/1",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "fact_types/district_has_seats/constraints/0",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "fact_types/district_in_state/constraints/0",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "fact_types/district_in_state/constraints/1",
+   "kind": "constraint",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "district_has_nr",
+   "kind": "fact_type",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "district_has_seats",
+   "kind": "fact_type",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "district_in_state",
+   "kind": "fact_type",
+   "reason": "identification-unmatchable"
+  },
+  {
+   "detail": "",
+   "id": "district",
+   "kind": "object_type",
+   "reason": "identification-unmatchable"
+  }
+ ]
+}

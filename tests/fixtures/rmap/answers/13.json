@@ -1,0 +1,83 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "unique_key",
+    "room_slot_lecturer",
+    "room_room_nr",
+    "slot_slot_code"
+   ],
+   "id": "fact_types/room_slot_lecturer/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "room_slot_lecturer"
+   ],
+   "id": "fact_types/room_slot_lecturer/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "room_slot_lecturer"
+   ],
+   "id": "room_slot_lecturer",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "room_room_nr",
+     "nullable": false,
+     "origin": [
+      "room_slot_lecturer",
+      "room"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "slot_slot_code",
+     "nullable": false,
+     "origin": [
+      "room_slot_lecturer",
+      "slot"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "lecturer_staff_nr",
+     "nullable": false,
+     "origin": [
+      "room_slot_lecturer",
+      "lecturer"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "room_slot_lecturer",
+   "primary_key": [
+    "slot_slot_code",
+    "lecturer_staff_nr"
+   ],
+   "subject": [
+    "fact_type",
+    "room_slot_lecturer"
+   ],
+   "unique_keys": [
+    [
+     "room_room_nr",
+     "slot_slot_code"
+    ]
+   ]
+  }
+ ],
+ "unmapped": []
+}

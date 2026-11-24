@@ -2526,7 +2526,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +40 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +41 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2538,7 +2538,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_queries.py
 - uses: (none)
-- used_by: check.universe, model.query_index, model.validation, semantics.extensions
+- used_by: check.universe, model.query_index, model.relational_mapping, model.validation, semantics.extensions
 - tests: tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py
 - notes: Both accepted variant names currently use strict inheritance semantics; callers still select their variant explicitly.
 
@@ -2576,6 +2576,19 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - checked: partial
 - notes: Also owns role-player multiset signatures used by discovery and evolution; equal primitives do not collapse distinct object-type ids.
 
+
+### model.relational_mapping
+- does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint [map_model; dispositions].
+- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, map_model, dispositions
+- status: canonical
+- modules: src/gnd/rmap.py
+- uses: model.query_index, model.reference_resolution
+- used_by: (none)
+- tests: tests/test_rmap.py
+- in: a loaded Model and an RmapVariant
+- out: RelationalSchema and Disposition rows
+- checked: partial
+- notes: Normative rules in representation-format.md, "Relational mapping (Rmap)". Direct identification comes from ModelIndex.reference_value_types. Composite identification is the Rmap's own selection: the preferred, confirmed alethic external uniqueness, indexed once per model. refscheme is not used, because it takes the first external uniqueness anchored on the entity whatever its status, and calling it per entity was quadratic (review r1 F1, F9).
 
 ### model.reference_binding
 - does: Expose invocation-bound reference-population intake through the historical references import surface.

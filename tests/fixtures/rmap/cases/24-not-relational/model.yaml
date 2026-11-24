@@ -1,0 +1,319 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: person_name
+  name: PersonName
+  kind: value
+  primitive: String
+- id: age
+  name: Age
+  kind: value
+  primitive: Integer
+- id: retirement_age
+  name: RetirementAge
+  kind: value
+  primitive: Integer
+- id: language
+  name: Language
+  kind: entity
+  reference:
+    mode: popular
+    value_type: language_code
+- id: language_code
+  name: LanguageCode
+  kind: value
+  primitive: String
+- id: adult
+  name: Adult
+  kind: entity
+  subtype_of:
+  - person
+  inherits_reference: true
+- id: minor
+  name: Minor
+  kind: entity
+  subtype_of:
+  - person
+  inherits_reference: true
+fact_types:
+- id: person_has_name
+  reading: '{Person} has {PersonName}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: person_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: anchored
+    role: name
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Names come from the document.
+- id: person_has_age
+  reading: '{Person} has {Age}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: age
+    role_name: age
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: person_has_retirement_age
+  reading: '{Person} has {RetirementAge}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: retirement_age
+    role_name: retirement_age
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: person_is_married
+  reading: '{Person} is married'
+  roles:
+  - object_type: person
+    role_name: person
+- id: person_is_widowed
+  reading: '{Person} is widowed'
+  roles:
+  - object_type: person
+    role_name: person
+- id: person_smokes
+  reading: '{Person} smokes'
+  roles:
+  - object_type: person
+    role_name: person
+- id: person_is_cancer_prone
+  reading: '{Person} is cancer prone'
+  roles:
+  - object_type: person
+    role_name: person
+- id: person_parent_of_person
+  reading: '{Person} is parent of {Person}'
+  roles:
+  - object_type: person
+    role_name: parent
+  - object_type: person
+    role_name: child
+  constraints:
+  - type: uniqueness
+    roles:
+    - parent
+    - child
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: ring
+    variant: acyclic
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Parenthood is acyclic.
+- id: person_speaks_language
+  reading: '{Person} speaks {Language}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: language
+    role_name: language
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    - language
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: frequency
+    scope: internal
+    roles:
+    - person
+    bound:
+      min: 1
+      max: 5
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: At most five languages each.
+constraints:
+- type: subset
+  subset_role_seq:
+  - fact_type: person_smokes
+    role: person
+  superset_role_seq:
+  - fact_type: person_is_cancer_prone
+    role: person
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Smokers are cancer prone.
+- type: equality
+  role_seq_a:
+  - fact_type: person_has_age
+    role: person
+  role_seq_b:
+  - fact_type: person_has_retirement_age
+    role: person
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Age and retirement age come together.
+- type: exclusion
+  role_seq_a:
+  - fact_type: person_is_married
+    role: person
+  role_seq_b:
+  - fact_type: person_is_widowed
+    role: person
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Not both married and widowed.
+- type: exclusive-or
+  role_seqs:
+  - - fact_type: person_is_married
+      role: person
+  - - fact_type: person_is_widowed
+      role: person
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Exactly one of married or widowed.
+- type: mandatory-disjunctive
+  role_refs:
+  - fact_type: person_has_age
+    role: person
+  - fact_type: person_has_name
+    role: person
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Each person has an age or a name.
+- type: value
+  object_type: age
+  range:
+    min: 0
+    min_inclusive: true
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Ages are non-negative.
+- type: value-comparison
+  operator: <=
+  role_a:
+    fact_type: person_has_age
+    role: age
+  role_b:
+    fact_type: person_has_retirement_age
+    role: retirement_age
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Age never exceeds retirement age.
+- type: cardinality
+  scope: object
+  object_type: person
+  bound:
+    max: 1000
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: At most 1000 people.
+- type: cardinality
+  scope: role
+  role_ref:
+    fact_type: person_smokes
+    role: person
+  bound:
+    max: 100
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: At most 100 smokers.
+- type: subtype-partition
+  supertype: person
+  subtypes:
+  - adult
+  - minor
+  exclusive: true
+  exhaustive: true
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Adults and minors partition persons.
+- type: textual
+  expression: Each Person who smokes is warned every year.
+  formal_language: natural
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Each smoker is warned yearly.
+- type: guarded
+  id: smokers_prone
+  antecedent:
+  - fact_type: person_smokes
+    bind:
+      person: $p
+  consequent:
+    atom:
+      fact_type: person_is_cancer_prone
+      bind:
+        person: $p
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Smokers are cancer prone (guarded).

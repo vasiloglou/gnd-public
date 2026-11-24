@@ -1,0 +1,159 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: country
+  name: Country
+  kind: entity
+  reference:
+    mode: popular
+    value_type: country_code
+- id: country_code
+  name: CountryCode
+  kind: value
+  primitive: String
+- id: country_name
+  name: CountryName
+  kind: value
+  primitive: String
+- id: state
+  name: State
+  kind: entity
+  reference:
+    mode: external
+- id: state_code
+  name: StateCode
+  kind: value
+  primitive: String
+- id: population
+  name: Population
+  kind: value
+  primitive: Integer
+- id: city
+  name: City
+  kind: entity
+  reference:
+    mode: popular
+    value_type: city_id
+- id: city_id
+  name: CityId
+  kind: value
+  primitive: Integer
+fact_types:
+- id: country_has_name
+  reading: '{Country} has {CountryName}'
+  roles:
+  - object_type: country
+    role_name: country
+  - object_type: country_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - country
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: state_in_country
+  reading: '{State} is in {Country}'
+  roles:
+  - object_type: state
+    role_name: state
+  - object_type: country
+    role_name: country
+  constraints:
+  - type: uniqueness
+    roles:
+    - state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: state_has_code
+  reading: '{State} has {StateCode}'
+  roles:
+  - object_type: state
+    role_name: state
+  - object_type: state_code
+    role_name: code
+  constraints:
+  - type: uniqueness
+    roles:
+    - state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: state_has_population
+  reading: '{State} has {Population}'
+  roles:
+  - object_type: state
+    role_name: state
+  - object_type: population
+    role_name: population
+  constraints:
+  - type: uniqueness
+    roles:
+    - state
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: city_in_state
+  reading: '{City} is in {State}'
+  roles:
+  - object_type: city
+    role_name: city
+  - object_type: state
+    role_name: state
+  constraints:
+  - type: uniqueness
+    roles:
+    - city
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: city
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+constraints:
+- type: uniqueness
+  scope: external
+  role_refs:
+  - fact_type: state_in_country
+    role: country
+  - fact_type: state_has_code
+    role: code
+  preferred: true
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: A state is identified by its country and code.

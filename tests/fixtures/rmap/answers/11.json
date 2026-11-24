@@ -1,0 +1,78 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "primary_key",
+    "supply"
+   ],
+   "id": "fact_types/supply/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "supply"
+   ],
+   "id": "supply",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "supplier_supplier_nr",
+     "nullable": false,
+     "origin": [
+      "supply",
+      "supplier"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "part_part_nr",
+     "nullable": false,
+     "origin": [
+      "supply",
+      "part"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "project_project_nr",
+     "nullable": false,
+     "origin": [
+      "supply",
+      "project"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "quantity",
+     "nullable": false,
+     "origin": [
+      "supply",
+      "quantity"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "supply",
+   "primary_key": [
+    "supplier_supplier_nr",
+    "part_part_nr",
+    "project_project_nr",
+    "quantity"
+   ],
+   "subject": [
+    "fact_type",
+    "supply"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

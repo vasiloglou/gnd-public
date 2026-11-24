@@ -959,6 +959,22 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | --- | --- | --- | --- |
 | `load_report_schema() -> dict[str, Any]` | function | 11 | The Draft 2020-12 schema describing this payload. |
 
+## gnd.rmap — `src/gnd/rmap.py`
+Components: model.relational_mapping
+Halpin's relational mapping (Rmap) of a loaded GND model.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `RmapVariant` | class(enum.Enum) | 34 | (no docstring) |
+| `Column` | class | 49 | (no docstring) |
+| `ForeignKey` | class | 57 | (no docstring) |
+| `Table` | class | 65 | (no docstring) |
+| `Unmapped` | class | 75 | (no docstring) |
+| `Disposition` | class | 83 | (no docstring) |
+| `RelationalSchema` | class | 91 | (no docstring) |
+| `map_model(model, *, variant) -> RelationalSchema` | function | 763 | Map one loaded model to its relational schema; never raises for an admitted model. |
+| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 768 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+
 ## gnd.safefs — `src/gnd/safefs.py`
 Components: infra.safe_filesystem
 Public filesystem seams; variants retain predecessor behavior.

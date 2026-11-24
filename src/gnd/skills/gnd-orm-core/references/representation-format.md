@@ -2029,6 +2029,139 @@ sidecar. The command uses the resolved model snapshot for verification. A missin
 a pair of forged artifacts with mutually consistent digests refuses in input
 band 3. The root and its includes are required to establish current binding.
 
+## Relational mapping (Rmap)
+
+`gnd.rmap.map_model(model)` maps a loaded model to a relational schema by
+Halpin's relational mapping procedure. The schema holds tables, typed columns
+with nullability, a primary key, unique keys and ordered foreign keys, plus a
+list of what it could not place, each with a closed reason.
+`gnd.rmap.dispositions(model, schema)` returns exactly one row for every fact
+type and every constraint, saying where it is carried or why it is not. The
+mapping never refuses a model the loader admits. This section is the rules'
+only home. The worked corpus is `tests/fixtures/rmap`.
+
+**Which uniqueness counts.** Only uniqueness constraints that are both
+`confirmed` and `alethic` place fact types and form keys. Any other
+uniqueness is listed with `uniqueness-not-confirmed`, and its fact type is
+placed as if that constraint were absent. A fact type's **effective
+uniqueness set** is built in three steps:
+1. Take its counting internal uniqueness constraints.
+2. If there are none, use one implied uniqueness spanning all roles, since a
+   fact is recorded once.
+3. Drop any uniqueness whose roles strictly include another's; it is
+   recorded as `implied`.
+
+Uniqueness constraints over the same roles form one key. That key is
+preferred if any of them is, and they all get the same disposition.
+
+**Placement.** Each fact type is placed by the first rule that applies.
+
+| Rule | Applies when | Result |
+|---|---|---|
+| 0 | `derivation: derived` with `storage` absent or `computed` | Not placed: `derived-computed`, and its constraints too |
+| 1 | A binary between an entity and the value type of its `popular` or `general` reference, with a single-role uniqueness on the value role | The entity's key column (`key`). It adds no column. |
+| 2 | Named by the external uniqueness that composes an entity's identification | Key columns of that entity's table (`key`) |
+| 3 | `objectified_as: O` | O's table. Its roles are matched to O's identifying components by the object type that plays them; matched roles are O's key (`key`), and any other role becomes a column. If O's identification cannot be resolved, O is keyed by the fact type's own primary uniqueness, and that key is O's key wherever O is referenced; the identification fact types are then placed by the later rules. |
+| 4 | Unary | A `Boolean` column named after the fact type, in its player's table. It is non-null, or nullable when absorbed from a subtype. |
+| 5 | A single-role uniqueness on role *r* | Columns in the table of *r*'s player (`columns`). The other roles become columns. |
+| 6 | Otherwise | A table named after the fact type (`table`), with one column or column group per role, keyed by its primary uniqueness |
+
+**Choosing r for a 1:1 (rule 5).** When more than one role has a single-role
+uniqueness, *r* is the one confirmed alethic mandatory role, if exactly one
+exists. Otherwise the variant decides:
+- `HALPIN` takes the role whose player id sorts first, then the earlier role
+  position.
+- `ALTERNATE` takes the role whose player plays more roles with a single-role
+  uniqueness (rule-0 fact types excluded), then the player id, then the
+  position.
+
+**Which object types get a table.**
+- **An entity:** when a rule 1, 2, 3, 4 or 5 placement lands on it, or when
+  it is `independent`.
+- **A value type:** when it is the player of *r* in a rule-5 placement.
+- **Subtypes.** Under `HALPIN`, a subtype with `inherits_reference: true` is
+  absorbed: its placements land in its root supertype's table, and their
+  columns are always nullable. Under `ALTERNATE`, such a subtype gets its own
+  table, keyed by the inherited key. That key is also a foreign key to its
+  first supertype's table, which therefore always gets a table.
+- **Otherwise there is no table.** A role played by an object type without a
+  table becomes plain value columns, with no foreign key. A role played by
+  an object type that has a table, value types included, is a foreign key
+  to it.
+
+**Keys and columns.**
+
+| Identification | Key columns |
+|---|---|
+| Value type | One column named after the value type id. Its origin is `("reference", id)`. |
+| `popular` or `general` reference | One column named after the reference value type id |
+| `unit-based` reference | `<id>_value`, typed `Number`. This is recognised before the general identification lookup, which does not resolve unit-based references. |
+| Composite | The **identifying** external uniqueness: `confirmed`, `alethic` and `preferred`, over binaries whose other roles are all played by the entity. If several qualify, the one with the smallest sorted role references wins, then the smaller `role_refs` sequence; declaration order never decides. An external uniqueness that references a rule-0 fact type identifies nothing. One column per component, in `role_refs` order. A value component is named after its role. An entity component is a group named `<role>_<key>`. Either kind is a foreign key when its player has a table. A composite inside a composite is not resolved. |
+| Inherited | A subtype with `inherits_reference: true` and no identification of its own is identified as its first supertype is, composite included. |
+| Unresolvable | The object type is listed as `identification-unmatchable`, and so is every fact type placed in it or needing its key, along with their constraints. |
+
+- **Primary key.** Rule 6 uses the `preferred` uniqueness if one exists.
+  Otherwise it uses the smallest one, with ties broken by the sorted
+  positions of its roles; declaration order never decides.
+- **Unique keys.** Every other effective uniqueness is a `unique_keys`
+  entry over its columns. This includes the uniqueness constraints of an
+  objectified fact type that are narrower than the key.
+- **External uniqueness.** An external uniqueness over the same roles as an
+  entity's identifying one is that entity's `primary_key`, whatever its
+  `role_refs` order. Any other is a `unique_keys` entry when all its columns
+  lie in one table. It is `spans-tables` when they do not. When a referenced
+  fact type is unmapped, the uniqueness takes that fact type's reason. Its
+  columns are in table order, each once. A unary role is held by its table's
+  key columns, not by the `Boolean` column.
+- **One key per column set.** Uniqueness constraints over the same set of
+  columns share one key and one disposition. A set equal to the primary
+  key's is the `primary_key`.
+- **Order.** Unique keys are ordered by the positions of their columns in
+  the table.
+- **Column names.** A role played by a value type gives a column named after
+  the role. A role played by an object type with key columns *k₁…kₙ* gives
+  the columns `<role>_<kᵢ>`.
+- **Column order.** Key columns come first. After them come placed columns,
+  by fact type id and then role position. An own table follows role order.
+  A name already taken in a table gets `_2`, `_3` and so on, in that order.
+- **Datatypes.** A column's `datatype` is its value type's resolved
+  primitive.
+- **Foreign keys** point at the target's primary key. They are named
+  `<from>__<to>`, then `__2` and so on, counted per pair, in column order.
+
+**Nullability.**
+- Key columns are never null.
+- Every column of a rule-6 table, and every rule-3 column, is non-null,
+  because a fact fills all its roles.
+- A rule-5 column is nullable unless a confirmed alethic mandatory covers *r*
+  and *r*'s player is not absorbed. That mandatory is then carried as
+  `not_null`.
+- **Not carried relationally** (`not-relational`, detail `mandatory`): any
+  other mandatory.
+- **Also `not-relational`, with their type as detail:** frequency, ring,
+  subset, equality, exclusion, exclusive-or, mandatory-disjunctive, value,
+  value-comparison, cardinality, subtype-partition, textual, guarded and
+  anchored constraints.
+
+**Disposition forms.**
+
+| Form | Meaning |
+|---|---|
+| `table` | A rule-6 fact type |
+| `columns` | A fact type that adds columns to an existing table |
+| `key` | A fact type that supplies key columns (rules 1 to 3) |
+| `placement` | The uniqueness that placed a rule-5 fact type |
+| `primary_key` | The uniqueness that is a key, or a uniqueness or mandatory on an identifying fact type |
+| `unique_key` | A uniqueness kept as a unique key |
+| `implied` | A uniqueness dropped from the effective set, or one on a unary |
+| `not_null` | A mandatory carried as non-null columns |
+
+Unmapped rows and dispositions are sorted by kind and then id, with ids
+compared as strings. The mapping depends only on the model's content. It
+does not depend on its path, or on the order of object types, fact types or
+constraints. The answer format the corpus uses is
+`tests/fixtures/rmap/answers/README.md`.
+
 ## Ossie interchange
 
 `gnd export ossie MODEL --out FILE` projects a standalone GND model to an

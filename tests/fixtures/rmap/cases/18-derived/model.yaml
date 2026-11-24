@@ -1,0 +1,105 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: person_name
+  name: PersonName
+  kind: value
+  primitive: String
+- id: age
+  name: Age
+  kind: value
+  primitive: Integer
+- id: birth_year
+  name: BirthYear
+  kind: value
+  primitive: Integer
+- id: nickname
+  name: Nickname
+  kind: value
+  primitive: String
+fact_types:
+- id: person_has_name
+  reading: '{Person} has {PersonName}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: person_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: person_has_age
+  reading: '{Person} has {Age}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: age
+    role_name: age
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  derivation: derived
+  derivation_rule: Age is computed from BirthYear.
+  storage: computed
+- id: person_has_birth_year
+  reading: '{Person} has {BirthYear}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: birth_year
+    role_name: birth_year
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  derivation: derived
+  derivation_rule: Copied from the registry.
+  storage: stored
+- id: person_has_nickname
+  reading: '{Person} has {Nickname}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: nickname
+    role_name: nickname
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  derivation: semiderived
+  derivation_rule: Defaults to the first name.

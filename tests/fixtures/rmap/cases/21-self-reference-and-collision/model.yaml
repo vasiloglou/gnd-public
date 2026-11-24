@@ -1,0 +1,73 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: person_name
+  name: PersonName
+  kind: value
+  primitive: String
+- id: manager_ref
+  name: ManagerRef
+  kind: value
+  primitive: String
+fact_types:
+- id: person_has_name
+  reading: '{Person} has {PersonName}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: person_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: person_reports_to_person
+  reading: '{Person} reports to {Person}'
+  roles:
+  - object_type: person
+    role_name: employee
+  - object_type: person
+    role_name: manager
+  constraints:
+  - type: uniqueness
+    roles:
+    - employee
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: person_has_manager_ref
+  reading: '{Person} has {ManagerRef}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: manager_ref
+    role_name: manager_person_id
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

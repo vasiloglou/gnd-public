@@ -1,0 +1,280 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "city"
+   ],
+   "id": "fact_types/city_in_state/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "not_null",
+    "city",
+    "state_country_country_code",
+    "state_code"
+   ],
+   "id": "fact_types/city_in_state/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "country"
+   ],
+   "id": "fact_types/country_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_has_code/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_has_code/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "state"
+   ],
+   "id": "fact_types/state_has_population/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_in_country/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "id": "fact_types/state_in_country/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "city",
+    "state_country_country_code",
+    "state_code"
+   ],
+   "id": "city_in_state",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "country",
+    "name"
+   ],
+   "id": "country_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "state",
+    "code"
+   ],
+   "id": "state_has_code",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "state",
+    "population"
+   ],
+   "id": "state_has_population",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "state",
+    "country_country_code"
+   ],
+   "id": "state_in_country",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "city_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "city"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "state_country_country_code",
+     "nullable": false,
+     "origin": [
+      "city_in_state",
+      "state"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "state_code",
+     "nullable": false,
+     "origin": [
+      "city_in_state",
+      "state"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "state_country_country_code",
+      "state_code"
+     ],
+     "name": "city__state",
+     "target_columns": [
+      "country_country_code",
+      "code"
+     ],
+     "target_table": "state"
+    }
+   ],
+   "name": "city",
+   "primary_key": [
+    "city_id"
+   ],
+   "subject": [
+    "object_type",
+    "city"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "country_code",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "country"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "country_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "country",
+   "primary_key": [
+    "country_code"
+   ],
+   "subject": [
+    "object_type",
+    "country"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "country_country_code",
+     "nullable": false,
+     "origin": [
+      "state_in_country",
+      "country"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "code",
+     "nullable": false,
+     "origin": [
+      "state_has_code",
+      "code"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "population",
+     "nullable": true,
+     "origin": [
+      "state_has_population",
+      "population"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "country_country_code"
+     ],
+     "name": "state__country",
+     "target_columns": [
+      "country_code"
+     ],
+     "target_table": "country"
+    }
+   ],
+   "name": "state",
+   "primary_key": [
+    "country_country_code",
+    "code"
+   ],
+   "subject": [
+    "object_type",
+    "state"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

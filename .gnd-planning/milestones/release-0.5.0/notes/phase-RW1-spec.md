@@ -2,7 +2,8 @@
 
 ## 1. Status
 
-**Draft r4, revised against main `c62a32b8`; no ruling yet.** The
+**r4, revised against main `c62a32b8`; first ruling recorded (§7), E1
+approved to run; no implementation before the second ruling.** The
 [plan](release-0.5.0-plan.md) is r3: r2 approved by delegated ruling
 ([plan gate](../001-plan-gate.md)), with §12 added. The three milestones the
 owner made this release wait for are merged and closed on main (§2). This
@@ -264,6 +265,18 @@ None is added. The heading carries "not published" while 0.5.0 is not in
 
 Rulings are appended below this line, each with its date, source and the
 SHA-256 of the spec bytes it covers.
+
+> **First ruling: delegated approval (auto=true), 2026-11-24.** Approved
+> draft r4 of this spec at SHA-256
+> c6139c66b2717f11d3b391c9b67636b8273a7cb2f63b4e2125577ea8af8e9365 (commit
+> `09335d8a`) for the E1 measurement only. Source: the owner's request
+> "Release 0.5.0" and the owner's selection of delegated approval on
+> 2026-11-23; the owner's two dependency rulings (plan §11 and §12) are met
+> on main at `c62a32b8`. Decisions: D1 0.5.0; D3 opt-in lanes excluded from
+> E1; D5 as closed. D2, D4 and D6 wait for the second ruling. Instrument:
+> this prose; no spec review was called for. Budget: two six-shard lanes on
+> beast-3. No implementation file changes under this ruling. This ruling is
+> not the owner's reading of the spec.
 
 ## 8. Tests
 

@@ -182,7 +182,10 @@ def test_artifact_reader_alias_is_identical():
     assert safefs.read_regular_file_bytes is artifacts.read_regular_file_bytes
 
 
-@pytest.mark.parametrize('dirty', ['checksum', 'meaning', 'unknown-id', 'invalid-json', 'wrong-types', 'duplicate-id', 'over-cap', 'duplicate-json-key', 'nonfinite-json', 'rows-type', 'missing-field', 'same-snippet', 'empty-file', 'empty-snippet', 'nonstring-new'])
+@pytest.mark.parametrize('dirty', ['checksum', 'meaning', 'unknown-id', 'invalid-json', 'wrong-types', 'duplicate-id', 'over-cap', 'duplicate-json-key', 'nonfinite-json', 'rows-type', 'missing-field', 'same-snippet', 'empty-file', 'empty-snippet', 'nonstring-new',
+                                   'added-rows-type', 'added-row-no-reason', 'added-row-extra-key', 'added-row-table-id',
+                                   'added-row-same-snippet', 'added-row-no-nodes', 'added-exempt-shape',
+                                   'added-exempt-table-node'])
 def test_mutation_retarget_refusals_are_named(monkeypatch, dirty):
     import json
     from pathlib import Path
@@ -223,6 +226,22 @@ def test_mutation_retarget_refusals_are_named(monkeypatch, dirty):
             data['rows'][0]['id'] = 'RF9-unknown-retarget'
         elif dirty == 'wrong-types':
             data['rows'][0]['after_old'] = []
+        elif dirty == 'added-rows-type':
+            data['added_rows'] = {}
+        elif dirty == 'added-row-no-reason':
+            del data['added_rows'][0]['reason']
+        elif dirty == 'added-row-extra-key':
+            data['added_rows'][0]['after_file'] = 'src/gnd/cli.py'
+        elif dirty == 'added-row-table-id':
+            data['added_rows'][0]['id'] = 'M-CLI-root-prog'
+        elif dirty == 'added-row-same-snippet':
+            data['added_rows'][0]['new'] = data['added_rows'][0]['old']
+        elif dirty == 'added-row-no-nodes':
+            data['added_rows'][0]['expect_red'] = []
+        elif dirty == 'added-exempt-shape':
+            data['added_exempt'][0] = {'node': data['added_exempt'][0]['node']}
+        elif dirty == 'added-exempt-table-node':
+            data['added_exempt'][0]['node'] = 'tests/test_rf1_cli_pins.py::test_cli_coverage'
         else:
             data['rows'].append(data['rows'][0])
         return json.dumps(data)

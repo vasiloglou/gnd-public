@@ -6,6 +6,7 @@ import tomllib
 from pathlib import Path
 
 import pytest
+from test_packaged_skills import EXPECTED_SKILL_NAMES
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -22,7 +23,7 @@ def check_bundle(root):
     version = tomllib.loads((root / 'pyproject.toml').read_text())['project']['version']
     canonical = root / 'src/gnd/skills'
     expected = {p.parent.name for p in canonical.glob('*/SKILL.md')}
-    assert len(expected) == 18
+    assert expected == EXPECTED_SKILL_NAMES
     assert not {'process-phase', 'plan-review-panel'} & expected
     for host in ['.claude-plugin', '.codex-plugin']:
         manifest = json.loads((root / host / 'plugin.json').read_text())

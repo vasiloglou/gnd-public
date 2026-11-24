@@ -47,7 +47,8 @@ The roadmap of 2026-11-22 puts VG1 first, then GO1 of
 that milestone edits `evolve/service.py` and `unattended-growth.md` too, one
 writer at a time (plan §3).
 
-`process-milestone reviewed-vocabulary-growth auto` ran this milestone on
-2026-11-23 (spec rulings delegated; merge is not). All five phases are
-recorded. VG1 is in pull request 239; VG2–VG5 are in pull request 240. Next:
-the owner's merges, then the milestone close (its review instrument, D8).
+**Closed 2026-11-23** ([close record](007-milestone-close.md)), by delegated
+approval over plan r6, after a panel-light close review (four of six seats,
+no blocking concern). VG1 merged in pull request 239, VG2–VG5 in pull
+request 240; nothing is released. The three issue replies are drafted in
+[notes/issue-replies.md](notes/issue-replies.md) for the owner to post.

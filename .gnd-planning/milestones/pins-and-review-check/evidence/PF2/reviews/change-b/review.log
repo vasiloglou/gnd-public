@@ -1,0 +1,657 @@
+Reading additional input from stdin...
+OpenAI Codex v0.163.0
+--------
+workdir: <repo>
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a20ac1-c624-76f1-8f5b-ffeb7e5b24c4
+--------
+user
+Read <repo>/.review-round/BRIEF.md and follow it.
+codex
+I’ll read the review brief and follow its scope and instructions.
+exec
+/bin/zsh -lc 'cat .review-round/BRIEF.md' in <repo>
+ succeeded in 0ms:
+# Review brief: a phase's diff
+
+You are an independent reviewer, working in a different tool from the one that produced
+this work. Nothing here asks you to agree with it. Answer from the files themselves, not
+from any summary of them, including this brief's.
+
+## The question
+
+Review this change for correctness and readiness to merge.
+
+## The change under review
+
+The work from `6b0a7e5a` to the working tree at `7125f82a52ed`. Its diff is `.review-round/diff.patch`.
+
+## What to read
+
+Paths are relative to the repository root, the directory you start in. Before you rely
+on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
+your answer: you are not reading the bytes this brief names.
+
+| File | SHA-256 |
+|---|---|
+| `.review-round/diff.patch` | `f3eb5e9ba9494b1af562585af0d6f2c918675abe3b414355688f544a2ad60e9b` |
+| `tests/test_project_version.py` | `7fc23a4b94dab0501b54867616dbd0a767891494c9c3c021300c851669d124f1` |
+| `tools/project_version.py` | `14712a9a35f1232a0521f310ee67d6043f51f71e4bb037ab4a2c9d1055bcd4ea` |
+
+You may read anything else in the repository that helps you answer.
+
+## A standing check: code fitted to its examples
+
+Whatever the question above, also look in the code this change adds or changes for a
+solution that handles the examples in its tests and fixtures, and not the whole class of
+input it is given:
+
+- a regular expression, string split, slice or index over structured text (JSON, YAML,
+  TOML, source code, paths, command lines) that a parser or an existing reader in this
+  repository already reads;
+- a pattern over output this project renders itself (a report, a table, a log line), where
+  the code could have been handed the data instead;
+- a pattern fitted to the fixtures: it matches every committed example and fails on a
+  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
+- a branch on one literal name, file or message, added to make one case pass;
+- a second matcher for something an existing helper already does.
+
+A regular expression is not a finding in itself: one that states the whole grammar of a
+flat token (an identifier, a version number, a hex digest) is the right tool. For each
+suspect, build a legal input that the tests and fixtures lack and run the code on it.
+Report a finding only with that input: what the code returned and what it should have
+returned. A suspicion with no breaking input is style: label it so. In your list of what
+you checked, name each matcher you tried and the input you tried it with.
+
+## Rules
+
+- Read only. Do not edit, create, stage, commit, push or post anything.
+- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
+  not print environment variables. If you need one, name it and go on without it.
+- A finding names its file and line and the consequence someone would observe. Run what
+  you can to show it; where you only read, say so.
+
+## What to return
+
+1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
+   consequence, and how to reproduce it. A finding with no observable consequence is
+   style: label it so.
+2. What you checked and found true.
+3. What you could not check, and why.
+4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+
+exec
+/bin/zsh -lc 'shasum -a 256 .review-round/diff.patch tests/test_project_version.py tools/project_version.py' in <repo>
+ succeeded in 0ms:
+f3eb5e9ba9494b1af562585af0d6f2c918675abe3b414355688f544a2ad60e9b  .review-round/diff.patch
+7fc23a4b94dab0501b54867616dbd0a767891494c9c3c021300c851669d124f1  tests/test_project_version.py
+14712a9a35f1232a0521f310ee67d6043f51f71e4bb037ab4a2c9d1055bcd4ea  tools/project_version.py
+
+exec
+/bin/zsh -lc 'git status --short && cat .review-round/diff.patch' in <repo>
+ succeeded in 81ms:
+?? .review-round/
+diff --git a/tests/test_project_version.py b/tests/test_project_version.py
+new file mode 100644
+index 00000000..d559e137
+--- /dev/null
++++ b/tests/test_project_version.py
+@@ -0,0 +1,18 @@
++"""Tests for tools/project_version.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.project_version import project_version
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def test_this_projects_version() -> None:
++    assert project_version(ROOT / "pyproject.toml") == "0.4.0"
++
++
++def test_a_minimal_pyproject(tmp_path: Path) -> None:
++    path = tmp_path / "pyproject.toml"
++    path.write_text('[project]\nname = "demo"\nversion = "1.2.3"\n', encoding="utf-8")
++    assert project_version(path) == "1.2.3"
+diff --git a/tools/project_version.py b/tools/project_version.py
+new file mode 100644
+index 00000000..c8e17cfe
+--- /dev/null
++++ b/tools/project_version.py
+@@ -0,0 +1,12 @@
++"""Read the project version from a pyproject.toml."""
++from __future__ import annotations
++
++import tomllib
++from pathlib import Path
++
++
++def project_version(path: str | Path) -> str | None:
++    """Return ``[project].version``, or None when the file declares none."""
++    with Path(path).open("rb") as handle:
++        version = tomllib.load(handle).get("project", {}).get("version")
++    return version if isinstance(version, str) else None
+
+exec
+/bin/zsh -lc "rg -n 'project_version|tomllib|pythonpath|pytest|credential-free' tools tests/conftest.py CONTRIBUTING.md .github pyproject.toml" in <repo>
+ succeeded in 0ms:
+CONTRIBUTING.md:9:uv run pytest -q tests/test_release_examples.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py
+tests/conftest.py:8:import pytest
+tests/conftest.py:10:    package_probe as package_probe,  # noqa: PLC0414 -- pytest fixture export
+tests/conftest.py:21:@pytest.fixture(autouse=True)
+pyproject.toml:73:# `pytest -m distribution`, never a green build message.
+pyproject.toml:76:[tool.pytest.ini_options]
+pyproject.toml:146:    # as the optional runtime extra makes `uv run pytest` honest without
+pyproject.toml:150:    "pytest==9.1.1",
+.github/workflows/development.yml:68:      - run: uv run pytest --collect-only -q
+.github/workflows/development.yml:70:        run: uv run pytest -q -raP tests/test_agent_cli.py tests/test_guarded_corpus.py tests/test_public_souffle_successors.py tests/test_v70_phase3_successors.py --tb=short
+.github/workflows/development.yml:71:      - run: uv run pytest -q -ra --tb=short
+.github/workflows/development.yml:101:        run: GND_CANDIDATE_DIR="$PWD/candidate" uv run pytest -q -o addopts='' tests/test_release_acceptance.py -s --tb=short
+.github/workflows/release.yml:54:        run: GND_CANDIDATE_DIR="$PWD/candidate" uv run pytest -q -o addopts='' tests/test_release_acceptance.py --tb=short
+tools/agent_with_env_key.py:3:The declared command adapter hands an agent only an allowlisted, credential-free
+tools/rf1_pins.py:15:Exit codes: 0 done (every row killed and the control green); 1 a pytest run
+tools/rf1_pins.py:50:def pytest_runtest_logreport(report):
+tools/rf1_pins.py:178:        [sys.executable, "-m", "pytest", "--collect-only", "-q", "-p", "no:cacheprovider", *tests],
+tools/rf1_pins.py:208:def _run_nodes(root: Path, nodes: list[str], pythonpath: Path, work: Path, env: dict, timeout: float) -> dict:
+tools/rf1_pins.py:215:    run_env["PYTHONPATH"] = os.pathsep.join(filter(None, [str(pythonpath), str(plugin_dir), env.get("PYTHONPATH", "")]))
+tools/rf1_pins.py:220:            [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-p", "rf1_outcomes", *nodes],
+tools/rf1_pins.py:286:            pythonpath = _copy_source(root, args.source, work)
+tools/rf1_pins.py:287:            target = pythonpath / Path(args.source).name / Path(row["file"]).relative_to(args.source)
+tools/rf1_pins.py:290:            outcomes = _run_nodes(root, row["expect_red"], pythonpath, work, env, args.timeout)
+tools/rf1_pins.py:324:    completed = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *PIN_FILES],
+tools/project_version.py:4:import tomllib
+tools/project_version.py:8:def project_version(path: str | Path) -> str | None:
+tools/project_version.py:11:        version = tomllib.load(handle).get("project", {}).get("version")
+tools/release_text.py:37:import tomllib
+tools/release_text.py:102:    return tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+tools/release_text.py:422:    except (ReleaseTextError, OSError, KeyError, tomllib.TOMLDecodeError) as error:
+tools/run_public_acceptance.py:18:import tomllib
+tools/run_public_acceptance.py:265:import importlib.metadata, json, pathlib, sys, pytest, gnd
+tools/run_public_acceptance.py:270:    @pytest.hookimpl(trylast=True)
+tools/run_public_acceptance.py:271:    def pytest_collection_modifyitems(self, session, config, items):
+tools/run_public_acceptance.py:274:        if rejected: config.hook.pytest_deselected(items=rejected)
+tools/run_public_acceptance.py:278:            raise pytest.UsageError('test origin refused')
+tools/run_public_acceptance.py:280:            raise pytest.UsageError('exact requested selection was not collected')
+tools/run_public_acceptance.py:281:    def pytest_runtest_logreport(self, report):
+tools/run_public_acceptance.py:286:code=pytest.main(['-q','-c',str(root/'pyproject.toml'),'--rootdir',str(root),
+tools/run_public_acceptance.py:287: '--confcutdir',str(root/'tests'),'-o','pythonpath=','--tb=short',*modules],plugins=[plugin])
+tools/run_public_acceptance.py:372:assert importlib.util.find_spec('pytest') is None
+tools/run_public_acceptance.py:386:    config = tomllib.loads(read_bytes(export / "pyproject.toml").decode())
+
+exec
+/bin/zsh -lc "nl -ba tools/project_version.py && nl -ba tests/test_project_version.py && sed -n '1,200p' pyproject.toml" in <repo>
+ succeeded in 0ms:
+     1	"""Read the project version from a pyproject.toml."""
+     2	from __future__ import annotations
+     3	
+     4	import tomllib
+     5	from pathlib import Path
+     6	
+     7	
+     8	def project_version(path: str | Path) -> str | None:
+     9	    """Return ``[project].version``, or None when the file declares none."""
+    10	    with Path(path).open("rb") as handle:
+    11	        version = tomllib.load(handle).get("project", {}).get("version")
+    12	    return version if isinstance(version, str) else None
+     1	"""Tests for tools/project_version.py."""
+     2	from __future__ import annotations
+     3	
+     4	from pathlib import Path
+     5	
+     6	from tools.project_version import project_version
+     7	
+     8	ROOT = Path(__file__).resolve().parents[1]
+     9	
+    10	
+    11	def test_this_projects_version() -> None:
+    12	    assert project_version(ROOT / "pyproject.toml") == "0.4.0"
+    13	
+    14	
+    15	def test_a_minimal_pyproject(tmp_path: Path) -> None:
+    16	    path = tmp_path / "pyproject.toml"
+    17	    path.write_text('[project]\nname = "demo"\nversion = "1.2.3"\n', encoding="utf-8")
+    18	    assert project_version(path) == "1.2.3"
+[project]
+# D-01: `gnd` has been taken on PyPI since 2022, so the DISTRIBUTION is
+# `get-nick-done`. The import package and the console script both stay `gnd` —
+# only the name users type after `uv tool install` changes.
+name = "get-nick-done"
+version = "0.4.0"
+description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+# Issue 175: without this key the wheel and sdist carry no long description and
+# the PyPI project page shows no text. PYPI.md is a short description written
+# for that page: every link in it is absolute, because PyPI does not resolve the
+# repository README's relative links or its image, and it names no version, so a
+# release does not edit it. tests/test_package_description.py holds both rules.
+readme = "PYPI.md"
+authors = [
+    { name = "Nikolaos Vasiloglou", email = "nvasil@gmail.com" }
+]
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+# D-18: the base install stays these three. Phase 2's synthetic-data stack
+# (polyfactory / faker / hypothesis) lands behind an optional extra when there is
+# something to put in it — do NOT scaffold an empty extra now. A fourth entry
+# here fails tests/test_packaged_skills.py::test_base_dependency_set_is_frozen,
+# which is the mechanical form of this policy.
+dependencies = [
+    "jsonschema==4.26.0",
+    "pydantic==2.13.4",
+    "ruamel-yaml==0.19.1",
+]
+
+# D-18: the base install above is deliberately untouched. Phase 2's synthetic-data
+# stack lands here, behind an OPTIONAL extra, so a user who only runs `gnd check`
+# never receives it. `faker` was cleared through the phase's blocking-human
+# package-legitimacy gate (02-02 Task 1) before being pinned: PyPI `Faker`, first
+# released 2010-12-23, 503 releases, repo github.com/joke2k/faker. Polyfactory and
+# Hypothesis are NOT installed — Polyfactory was refuted by measurement (D-17,
+# 0/8 ages in a declared 18..65 range; 8/8 distinct entities forcing zero-row
+# joins) and Hypothesis is deferred. Adding either here, or promoting faker into
+# [project.dependencies], fails tests/test_packaged_skills.py.
+[project.optional-dependencies]
+synth = ["faker==40.36.0"]
+
+[project.urls]
+Repository = "https://github.com/vasiloglou/gnd-public"
+Issues = "https://github.com/vasiloglou/gnd-public/issues"
+
+[project.scripts]
+# PKG-01. The generated wrapper wraps the call in `sys.exit()`, so `main`'s
+# existing `int` return IS the process exit code and the 0-4/64/70 band contract
+# in gnd/cli.py survives untouched. `python -m gnd` keeps working (D-03) as a
+# development convenience; this is the documented interface.
+gnd = "gnd.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.10.10,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# The ONLY key this project may set here, and it is mandatory: `uv_build` derives
+# the module name from the distribution name, so renaming to `get-nick-done`
+# (D-01) makes it look for `src/get_nick_done/`. Without this it fails loudly —
+# "Expected a Python module at: src/get_nick_done/__init__.py" — which is why
+# this key is safe to rely on where the include keys are not.
+#
+# Do NOT add `source-include`, `data`, or a `force-include` stanza here to get
+# the skills into the wheel. All three were measured and refuted: `source-include`
+# is sdist-only, `data.purelib` lands at the site-packages root rather than
+# `gnd/skills/`, and `force-include` is not a key this backend has. Worse, the
+# backend SILENTLY IGNORES unrecognised keys — a typo yields a clean
+# "Successfully built" and a skill-less wheel, which is exactly how this defect
+# shipped. The skill tree ships because it physically lives under the module
+# root at `src/gnd/skills/`; that is the whole mechanism. Verify artifacts with
+# `pytest -m distribution`, never a green build message.
+module-name = "gnd"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["fixtures"]
+addopts = "-m 'not derivation_oracle and not pyrel_oracle and not ossie_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
+markers = [
+  "proof: opt-in proof lane; not selected by the default public development gate",
+  "derivation_oracle: opt-in derivation_oracle lane; not selected by the default public development gate",
+  "ossie_oracle: opt-in pinned Ossie validator and parser lane",
+  "pyrel_oracle: opt-in pyrel_oracle lane; not selected by the default public development gate",
+  "distribution: opt-in distribution lane; not selected by the default public development gate",
+  "evidence: opt-in evidence lane; not selected by the default public development gate",
+  "census: opt-in census lane; not selected by the default public development gate",
+  "live: opt-in live lane; not selected by the default public development gate",
+  "network: opt-in network lane; not selected by the default public development gate",
+  "review_runner: opt-in review_runner lane; not selected by the default public development gate",
+  "slow: opt-in slow lane; not selected by the default public development gate",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# An experiment's retained attempts and its accepted candidate are EVIDENCE:
+# they record what a session actually produced, and reformatting them would
+# forge that record the same way editing a retained agent stream would. They are
+# excluded from linting because their bytes are not ours to change -- not
+# because their style is acceptable.
+#
+# This exemption deliberately does NOT cover the shipped product. The BookRec
+# package that ships lives at examples/bookrec/project/bookrec/, is copied from
+# the accepted gate candidate, and is linted like any other source here. If the
+# copy is dirty, the fix belongs in the session that produced it, never in a
+# post-hoc edit that would break the byte-for-byte copy claim.
+#
+# proof/v6/phase1/generated/ is the contract-carrying copy of the Phase 1 kernel.
+# Its bytes are produced by proof/v6/phase1/generate_proof_source.py, and they
+# are held to something far stricter than a linter: proof/v6/phase1/erasure.py
+# proves that erasing its contract-only calls returns it to
+# src/gnd/proof_kernel.py statement for statement, and that file IS linted. A
+# ruff autofix here would break that identity, which is the whole gate.
+#
+# .gnd-planning/ holds the scripts a milestone or maintenance pass retained as
+# evidence: probes, captures, census and re-record scripts. Records bind many of
+# them by SHA-256, and each one is the command a record says was run, so a lint
+# fix would change what the record points at. They are excluded for the same
+# reason as the experiment attempts above. A script that is meant to be reused
+# belongs under tools/ or tests/, where it is linted.
+#
+# scripts/components_index.py is delivered from dev-tools (.devtools.toml) and
+# bound by .devtools-receipt.json. A lint fix to it is made in dev-tools and
+# arrives through the sync, never by a local edit.
+extend-exclude = [
+    "**/EXP-*/runs/*/attempts/**",
+    "**/EXP-*/candidate/**",
+    "proof/v6/phase1/generated/**",
+    ".gnd-planning/**",
+    "scripts/components_index.py",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# This file is a byte copy of src/gnd/examples/expense/extension.py, which the
+# tutorial copies into the generated project (tests/test_expense_tutorial.py
+# compares the two). Beside its own `cli` package, isort reads `cli.reporting`
+# as first-party and wants the blank line before `gnd.api` removed; in
+# extension.py's directory the same bytes are sorted correctly.
+"src/gnd/examples/expense/project/cli/expense_cli.py" = ["I001"]
+
+[dependency-groups]
+dev = [
+    # A fresh detached checkout measured the default suite failing at
+    # test_measure_offline's synth-fixture setup. Keeping Faker in dev as well
+    # as the optional runtime extra makes `uv run pytest` honest without
+    # widening the three-package base install.
+    "duckdb==1.5.5",
+    "faker==40.36.0",
+    "pytest==9.1.1",
+    "ruff==0.16.2",
+]
+docs = [
+    "zensical==0.0.67",
+]
+
+codex
+All three hashes match the brief. The helper uses `tomllib`; I found no new matchers to challenge. I’m checking alternate TOML forms and missing-version behavior in memory to keep the review read-only.
+exec
+/bin/zsh -lc "sed -n '1,100p' CONTRIBUTING.md && sed -n '1,85p' tests/conftest.py && sed -n '80,115p' tools/release_text.py && git diff --check 6b0a7e5a -- tools/project_version.py tests/test_project_version.py" in <repo>
+ succeeded in 0ms:
+# Contributing
+
+Work from this repository alone with Python >=3.11 and uv 0.10.10:
+
+```sh
+uv sync --locked --group dev
+uv run gnd install --symlink --project --force
+uv run gnd doctor --project
+uv run pytest -q tests/test_release_examples.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py
+```
+
+Tracked installer links have no local receipt in a fresh clone. Adopt them once
+with --force; never overwrite modified links or maintain them manually. Both
+.codex and .claude roots contain the packaged links and real development-skill
+twins. Regenerate packaged links through gnd install, keep real twins identical.
+Ordinary development uses this checkout's editable package. Final acceptance
+will additionally exercise the exact installed candidate in a fresh target-only
+tree, with actual module/tool/link paths recorded.
+
+Use [start-milestone](.codex/skills/start-milestone/SKILL.md) to prepare or resume
+a milestone plan and its first draft phase spec in `.gnd-planning`. It checks
+obligation ownership, dependencies and implementability before execution; it does
+not approve the plan or run phases.
+
+Use [process-milestone](.codex/skills/process-milestone/SKILL.md) to execute or
+resume a whole named milestone through `process-phase` and its close gates.
+`process-milestone pyrel-applications auto=true` explicitly delegates approval
+rulings for that milestone; required reviews and verification still run, and
+merge/publication/certification keep their separate authorization.
+
+Numbered work follows the full [process-phase](.codex/skills/process-phase/SKILL.md)
+protocol: spec, owner gate, implementation, independent review, refactoring review,
+record and explicit-path commit. The [sample spec](docs/development/examples/phase-spec.md)
+and [sample record](docs/development/examples/phase-record.md) are non-authoritative
+exercises. Source-owned runtime units await explicit handoff; changes here do not
+silently transfer authority. Phase 3 final acceptance is pending.
+
+Run focused affected tests with the default lane exclusions. Historical broad,
+provider/native and certification lanes require separate selection. Never source
+repository .env files; optional live review needs trusted credentials and explicit
+selection. [Bootstrap history](docs/development/bootstrap.md) is historical;
+the old original-definition accounting runner is not release acceptance under r3.
+See [release preparation](docs/releasing.md) and [security reporting](SECURITY.md).
+
+## Owner-controlled contributions
+
+Contributions are by invitation. Only collaborators approved by `vasiloglou`
+receive write access. Public availability permits reading and forking; it does
+not grant permission to modify this repository.
+
+For all changes, including owner and coding-agent changes, use a topic branch and
+submit a pull request. Never push directly to main, force-push it, or delete it. Resolve
+review conversations before merging. `.github/CODEOWNERS` names `vasiloglou` for
+all files.
+
+While `vasiloglou` is the only collaborator, branch protection requires PRs with
+zero required approving reviews. GitHub prohibits authors from approving their
+own PRs, so the owner's explicit merge decision is the acceptance step. Coding
+agents may merge only with the owner's explicit authorization. Protection applies
+to administrators too, with no PR bypass. Cloud CI is not currently a required
+status check; run the focused checks applicable to a change and record results.
+
+Before granting another account write access, enable one required approving
+review and required code-owner review. Its PRs will then require `vasiloglou`'s
+recorded approval. PRs authored by `vasiloglou` will need another authorized code
+owner, or work must be authored through a separately controlled contributor/bot
+identity so `vasiloglou` can approve. Never create a shared reviewer identity or
+approve a PR through a token belonging to its author.
+
+For a public repository, use the collaborators-only interaction limit to prevent
+outside PRs, issues and comments. GitHub limits this setting to six months; renew
+it before its reported expiration. It cannot be enabled while the repository is
+private. Check the live settings before claiming restrictions are enforced.
+
+## Refactoring dependencies and compatibility
+
+The measured layer map is [tools/gnd_layers.json](tools/gnd_layers.json).
+Errors and schemas have infrastructure homes; documents, values and universe
+serve model data and lookup; extensions compute facts below checker and
+applicability. Registry descriptors live in branches. Runtime graph checks count
+lazy and literal dynamic imports as well as top-level imports. Add every new
+module to the map, preserve the clean-layer ratchet, and do not grow allowances.
+
+Old module names retain explicit aliases in the
+[shim inventory](.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md).
+Patch the defining module for moved algorithms and the actual public lookup seam
+for consumer wrappers. Move tests pin alias identity and source-scan coverage;
+retirement follows the approved plan's RF-D5 gate. Current source changes make
+old release evidence unavailable until its separately selected controls run.
+
+Peripheral dependency homes are public filesystem seams in safefs, the bounded
+runner in process, trusted adapters in agents, and the independent synth oracle
+package. Assurance follows _wire, core, inheritance, claims, evidence dependency
+order; transport carries receipts. Payload assembly lives in payloads, and
+export/witness services own their thin API wrappers. Old imports remain aliases.
+
+### Model query and constraint family homes
+
+Use gnd.model_index.ModelIndex.for_model(model) for detached model queries. Each
+request keys a bounded snapshot cache by current full model content, with unsafe
+"""Current P2 fixture registration only; no historical session/collection hooks."""
+
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
+import pytest
+from test_public_distribution import (
+    package_probe as package_probe,  # noqa: PLC0414 -- pytest fixture export
+)
+
+from gnd.model import Model
+from gnd.population import Population, _stamp_validated_against
+
+# NM2-C6: an operator's GND_DISCLOSURE never reaches a test or a fixture of any
+# scope; tests that need a mode set it with monkeypatch.
+os.environ.pop("GND_DISCLOSURE", None)
+
+
+@pytest.fixture(autouse=True)
+def _parse_scope_write_check():
+    """GO1: every test that opens a model parse scope also checks that nothing
+    wrote into a remembered, shared document (``set_parse_scope_verify``)."""
+    from gnd.model._parsing import set_parse_scope_verify
+
+    previous = set_parse_scope_verify(True)
+    try:
+        yield
+    finally:
+        set_parse_scope_verify(previous)
+
+
+def make_population(model: Model, /, **kwargs: Any) -> Population:
+    """Build a Population and stamp it as validated against ``model``.
+
+    Use ONLY when the population is deliberately not loadable — a shape layer 2
+    would reject, built to test a checker guard. Anything that can come from a
+    file must go through ``load_population(path, model=model)`` so that layer 2
+    actually runs.
+
+    The :class:`~gnd.model.Model` is **positional-only**: ``Population`` has a
+    field literally named ``model`` (the free-form header path string), so a
+    keyword parameter of the same name would collide with it. The ``/`` lets
+    ``make_population(model_obj, model="m.orm.yaml", ...)`` read naturally.
+    """
+    population = Population(**kwargs)
+    _stamp_validated_against(population, model)
+    return population
+
+
+# Exact original tests import local helpers through the tests namespace.
+# Include only this public checkout/sandbox root; installed gnd stays separately resolved.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    (PLUGINS, r"^not register the development checkout in the user's marketplace configuration\.$"),
+    ("docs/releasing.md", r"^were validated\. Every release through 0\.3\.0 \(0\.1\.0, 0\.2\.0 and 0\.3\.0\) was$"),
+    # The tag-only procedure quotes the heading form a tag-only version carries.
+    ("docs/releasing.md", r"^   `## X\.Y\.Z \(tagged YYYY-MM-DD, not published on PyPI\)`, and give in it the$"),
+    (SUPPORT, r"^\| [^|]+ \| Observed in Phase 3 acceptance of 0\.1\.0 \|$"),
+    (SUPPORT, rf"^\| [^|]+ \| Observed in release acceptance of the {VERSION} candidate built from `[0-9a-f]{{8}}` \|$"),
+    # A feature's first version stays true after later releases.
+    (None, rf"\bGND {VERSION} (?:and|or) later\b"),
+)
+
+COMPATIBILITY_START = "Distribution `get-nick-done`, import and CLI `gnd` remain stable."
+
+
+class ReleaseTextError(Exception):
+    """An input the tool cannot work from."""
+
+
+def version_key(version: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in version.split("."))
+
+
+def declared_version(root: Path) -> str:
+    return tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+
+
+def released_versions(root: Path) -> list[str]:
+    """The published versions, oldest first, from their one home in the tests."""
+    match = RELEASED_LINE.search((root / RELEASED_HOME).read_text(encoding="utf-8"))
+    if not match:
+        raise ReleaseTextError(f"{RELEASED_HOME} has no `RELEASED = {{...}}` line")
+    versions = re.findall(rf'"({VERSION})"', match.group(1))
+    return sorted(set(versions), key=version_key)
+
+
+def tagged_versions(root: Path) -> list[str]:
+    """The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`."""
+
+exec
+/bin/zsh -lc "python3 -B -c 'import io
+import runpy
+from pathlib import Path
+from unittest.mock import patch
+from tools.project_version import project_version
+
+suite = runpy.run_path(\"tests/test_project_version.py\")
+suite[\"test_this_projects_version\"]()
+print(\"PASS: supplied repository-version test\")
+files = {}
+def memory_write(path, text, encoding=None):
+    files[str(path)] = text.encode(encoding or \"utf-8\")
+    return len(text)
+def memory_open(path, mode=\"r\", *args, **kwargs):
+    assert mode == \"rb\", mode
+    return io.BytesIO(files[str(path)])
+with patch.object(Path, \"write_text\", memory_write), patch.object(Path, \"open\", memory_open):
+    suite[\"test_a_minimal_pyproject\"](Path(\"/in-memory\"))
+print(\"PASS: supplied minimal-pyproject test with in-memory filesystem seams\")
+cases = [
+    (\"quoted table/key and comment\", '\\''[\"project\"]\\n\"version\" = \\'\\''1.2.3\\'\\'' # comment\\n'\\'', \"1.2.3\"),
+    (\"dotted key\", '\\''project.version = \"1.2.3\"\\n'\\'', \"1.2.3\"),
+    (\"inline table\", '\\''project = {name = \"demo\", version = \"1.2.3\"}\\n'\\'', \"1.2.3\"),
+    (\"escaped value\", '\\''[project]\\nversion = \"\\\\u0031.2.3\"\\n'\\'', \"1.2.3\"),
+    (\"multiline string\", '\\''[project]\\nversion = \"\"\"\\n1.2.3\"\"\"\\n'\\'', \"1.2.3\"),
+    (\"tool version only\", '\\''[tool.demo]\\nversion = \"9.9.9\"\\n'\\'', None),
+    (\"dynamic version\", '\\''[project]\\nname = \"demo\"\\ndynamic = [\"version\"]\\n'\\'', None),
+    (\"no project table\", '\\''[build-system]\\nrequires = []\\n'\\'', None),
+    (\"empty document\", \"\", None),
+    (\"non-string version\", '\\''[project]\\nversion = 123\\n'\\'', None),
+]
+for name, source, expected in cases:
+    with patch.object(Path, \"open\", lambda *args, **kwargs: io.BytesIO(source.encode(\"utf-8\"))):
+        actual = project_version(\"in-memory.toml\")
+    assert actual == expected, (name, actual, expected)
+    print(f\"PASS: {name}: {actual"'!r}")
+print("All checks passed; no files created.")
+'"'" in <repo>
+ succeeded in 49ms:
+PASS: supplied repository-version test
+PASS: supplied minimal-pyproject test with in-memory filesystem seams
+PASS: quoted table/key and comment: '1.2.3'
+PASS: dotted key: '1.2.3'
+PASS: inline table: '1.2.3'
+PASS: escaped value: '1.2.3'
+PASS: multiline string: '1.2.3'
+PASS: tool version only: None
+PASS: dynamic version: None
+PASS: no project table: None
+PASS: empty document: None
+PASS: non-string version: None
+All checks passed; no files created.
+
+codex
+1. Findings: None. No correctness or merge-blocking issues found.
+
+2. Checked and found true:
+   - All three SHA-256 hashes match the brief.
+   - Both supplied test functions passed; the temporary-file test used in-memory filesystem seams.
+   - Additional checks passed for quoted keys, comments, dotted keys, inline tables, Unicode escapes, and multiline strings.
+   - Missing project/version declarations, dynamic versions, and non-string versions return `None`. Versions under tool tables are ignored.
+   - No new regexes, splits, slices, or structured-text matchers require counterexamples: the helper uses `tomllib`.
+   - `tomllib` is compatible with the declared Python minimum of 3.11.
+   - `git diff --check` passed.
+
+3. Not checked: Full pytest execution and real temporary-file writes, to honor the brief’s read-only restriction. No files were changed.
+
+VERDICT: APPROVE
+tokens used
+25,376
+1. Findings: None. No correctness or merge-blocking issues found.
+
+2. Checked and found true:
+   - All three SHA-256 hashes match the brief.
+   - Both supplied test functions passed; the temporary-file test used in-memory filesystem seams.
+   - Additional checks passed for quoted keys, comments, dotted keys, inline tables, Unicode escapes, and multiline strings.
+   - Missing project/version declarations, dynamic versions, and non-string versions return `None`. Versions under tool tables are ignored.
+   - No new regexes, splits, slices, or structured-text matchers require counterexamples: the helper uses `tomllib`.
+   - `tomllib` is compatible with the declared Python minimum of 3.11.
+   - `git diff --check` passed.
+
+3. Not checked: Full pytest execution and real temporary-file writes, to honor the brief’s read-only restriction. No files were changed.
+
+VERDICT: APPROVE

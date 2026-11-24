@@ -1,0 +1,1 @@
+{"format":"literature-reference-score/1","gold_facts":31,"recall_after":{"broad":[9,31],"targeted":[27,31]},"stages":{"broad":{"found":9,"outside_gold_scope":0,"precision":[9,10],"produced":10,"wrong_predicate":0},"targeted":{"found":18,"outside_gold_scope":0,"precision":[18,23],"produced":23,"wrong_predicate":2}}}

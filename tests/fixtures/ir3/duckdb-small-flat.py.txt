@@ -31,6 +31,7 @@ ROSTERS = {'component': 'String', 'component_name': 'String', 'area': 'String', 
 UNCHECKED = json.loads('[]')
 REFERENCE = json.loads('null')
 LIMIT = 1 << 20
+EXACT_FLOAT = 9007199254740992
 PLAN_REQUIRES = 0
 
 
@@ -40,6 +41,8 @@ def read_population(path):
     if len(raw) > LIMIT:
         raise ValueError('population larger than 1 MiB')
     document = json.loads(raw)
+    if not isinstance(document, dict):
+        raise ValueError('a population is a JSON object')
     if not isinstance(document.get('facts'), dict):
         raise KeyError('facts')
     header = document.setdefault('population', {})
@@ -59,16 +62,29 @@ def read_population(path):
         if head and head not in covers and document['facts'].get(head):
             raise ValueError(f'{head} lists derived facts but is not in covers; GND refuses that input')
     for fact_type, rows_ in document['facts'].items():
+        if not isinstance(rows_, list) or not all(isinstance(row, dict) for row in rows_):
+            raise ValueError(f'{fact_type}: a fact list is a JSON array of objects')
         seen = set()
         for row in rows_:
             for role, primitive in ROLES.get(fact_type, []):
                 check_cell(fact_type, role, primitive, row.get(role))
-            key = json.dumps(row, sort_keys=True)
+            if any(isinstance(v, float) and (v != v or abs(v) == float('inf')) for v in row.values()):
+                raise ValueError(f'{fact_type} holds a number that is not finite; GND refuses it')
+            # GND's identity: 1 and 1.0 are one number, so the row repeats a fact
+            key = json.dumps({r: ['number', *v.as_integer_ratio()] if isinstance(v, (int, float)) and not isinstance(v, bool)
+                              else v for r, v in row.items()}, sort_keys=True)
             if key in seen:
                 raise ValueError(f'duplicate rows in {fact_type}: PyRel relations are sets, so '
                                  'repeated facts cannot be checked here; GND reports them')
             seen.add(key)
     if REFERENCE:   # the candidate plus the embedded reference facts, as GND checks them
+        for fact_type, rows_ in REFERENCE['facts'].items():   # the same cell checks (D4, D6, finite)
+            for row in rows_:
+                for role, primitive in ROLES.get(fact_type, []):
+                    check_cell(fact_type, role, primitive, row.get(role))
+        for object_type, values in REFERENCE['instances'].items():
+            for value in values if object_type in ROSTERS else ():
+                check_cell('instances', object_type, ROSTERS[object_type], value)
         document['facts'].update(REFERENCE['facts'])
         for object_type, values in REFERENCE['instances'].items():
             document.setdefault('instances', {}).setdefault(object_type, []).extend(values)
@@ -80,13 +96,23 @@ def check_cell(fact_type, role, primitive, value):
     """GND refuses a cell of the wrong type (exit 3); so does this program, before PyRel sees it."""
     if isinstance(value, dict):
         raise ValueError(f'{fact_type}.{role} holds an opaque value; the rules programs do not check those')
+    if primitive == 'External':   # D4: an externally identified entity
+        if not isinstance(value, str):
+            raise ValueError(f'{fact_type}.{role} is {value!r}: GND accepts any scalar for an externally '
+                             'identified entity; the rules programs need strings')
+        return
     number = isinstance(value, (int, float)) and not isinstance(value, bool)
+    if isinstance(value, float) and (value != value or abs(value) == float('inf')):
+        raise ValueError(f'{fact_type}.{role} is {value!r}, a number that is not finite; GND refuses it')
     ok = {'String': isinstance(value, str), 'Boolean': isinstance(value, bool),
-          'Integer': number and isinstance(value, int), 'Float': number,
+          'Integer': number and isinstance(value, int), 'Float': number, 'Number': number,
           'Duration': number and isinstance(value, int) and 0 <= value <= 1_000_000,
           'Date': is_date(value)}[primitive]
     if not ok:
         raise ValueError(f'{fact_type}.{role} is {value!r}, which is not a valid {primitive}')
+    if primitive in ('Float', 'Number') and isinstance(value, int) and abs(value) > EXACT_FLOAT:   # D6
+        raise ValueError(f'{fact_type}.{role} is {value}, an integer beyond 2**53, which a {primitive} here '
+                         '(a binary float) cannot hold exactly; GND keeps it exact')
 
 
 def is_date(value):
@@ -264,6 +290,14 @@ def judge(parts, found, facts, computed=()):
         # the count requirements decide; the member listing supplies GND's witness (every member)
         low, high = bool(rows_of.get('min')), bool(rows_of.get('max'))
         return ('fail', sorted(members, key=canon)) if low or high else ('pass', None)
+    if info.get('external'):
+        # GND's shared-entity join: vacuous when it has no rows; else one line listing every
+        # referenced tuple that two join rows share (role_refs order)
+        if not rows_of['join']:
+            return 'vacuous', None
+        repeated = {json.dumps(list(row)): list(row) for row in rows_of.get('', [])}
+        witness = [repeated[k] for k in sorted(repeated)]
+        return ('fail', witness) if witness else ('pass', None)
     if family == 'derivation':
         # GND reports at most one missing and one extra fact, the first of each
         witness = [{label: first_row(rows_of[part], info['roles'])}
@@ -356,7 +390,7 @@ def state_lines(population, found, computed=None, derivations=True):
                 print(f'{name}  not checked  ({reason})')
                 unchecked = unchecked or rule['modality'] == 'alethic'
                 continue
-        if rule['family'] in GROUPED:
+        if rule['family'] in GROUPED or rule['info'].get('external'):
             verdict, witness = judge(parts, found, facts, computed)
             if verdict == 'vacuous':
                 print(f'{name}  vacuous  (no facts for it to apply to)')
@@ -375,7 +409,12 @@ def state_lines(population, found, computed=None, derivations=True):
             print(f'{name}  {status}  {json.dumps(hit, sort_keys=True)}')
         violated = violated or (bool(hits) and status == 'violated')
     for rule in UNCHECKED:
-        print(f"{rule['id']}  not checked  (textual rule: {rule['expression']})")
+        lists = rule.get('vacuous_if_empty')
+        if lists and all(not (found.get(f'computed:{ref}') if ref in computed else facts.get(ref)) for ref in lists):
+            print(f"{rule['id']}  vacuous  (no facts for it to apply to)")
+            vacuous = True
+            continue
+        print(f"{rule['id']}  not checked  ({rule['reason']})")
         unchecked = unchecked or rule['modality'] == 'alethic'
     return out, {'violated': violated, 'unchecked': unchecked, 'vacuous': vacuous}
 
@@ -431,7 +470,7 @@ def main(argv=None):
         return 64
     try:
         population = read_population(argv[0])
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError) as error:
         print(f'{argv[0]}: not a readable population ({type(error).__name__}: {error})', file=sys.stderr)
         return 3
     try:

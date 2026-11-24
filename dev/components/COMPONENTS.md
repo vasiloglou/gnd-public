@@ -50,7 +50,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd extract, extraction schema, shape only projection, extraction guidelines, gnd fidelity, gnd doccheck, document manifest
 - status: canonical
 - components: cli.extract_command, extract.service, cli.flatten_command, extract.flatten_service, extract.bundle, extract.projection, extract.guidelines, extract.manifest, cli.fidelity_command, fidelity.service, fidelity.match, fidelity.report, cli.doccheck_command, fidelity.doccheck
-- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +11 more (graph.md)
+- members_uses: cli.arguments, extract.reference_schemes, extract.scalar_identity, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.text_output, infra.verdict_prose, infra.version, … +10 more (graph.md)
 - notes: Three entry points share the manifest and bundle helpers: extract writes artifacts, fidelity matches extracted facts to source facts, doccheck validates rendered documents.
 
 ### subsystem.measure
@@ -462,7 +462,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Two files in the output directory and a command exit (0, 3, 11, 66, 74)
 - status: canonical
 - modules: src/gnd/extract/flatten_service.py
-- uses: extract.bundle, extract.service, infra.artifacts, infra.errors, infra.exit_codes, infra.text_output, install.skill_lifecycle, model.loading, synth.paths
+- uses: extract.bundle, extract.service, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem, infra.text_output, model.loading, synth.paths
 - used_by: cli.flatten_command
 - part_of: subsystem.extract
 - tests: tests/test_ir2_flatten.py
@@ -1047,7 +1047,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Ordered OperationOutcome rows; the preview's operation_outcomes field or the outcome report of a refused preview.
 - status: canonical
 - modules: src/gnd/evolve/outcomes.py
-- uses: evolve.schema
+- uses: evolve.schema, model.loading
 - used_by: discover.narrow, evolve.service
 - part_of: subsystem.evolve
 - tests: tests/test_go2_operation_outcomes.py
@@ -1062,7 +1062,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/evolve/summary.py
 - uses: evolve.schema, infra.input_policy
-- used_by: (none)
+- used_by: evolve.command
 - part_of: subsystem.evolve
 - tests: tests/test_go5_round_summary.py
 - notes: GO5 (#227, #228). Elements added come from the evolution record only. The fields are the evolution contract's "Round summary".
@@ -1075,7 +1075,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Published preview claims or completed evolution claims, stdout diagnostics, and classified exit codes.
 - status: canonical
 - modules: src/gnd/evolve/cli_service.py
-- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading, model.validation
+- uses: evolve.population_check, evolve.round_summary, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading, model.validation
 - used_by: cli.dispatch, cli.evolve_command, recovery.command
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_additive_policy.py, tests/test_evolve_shape_matches.py
@@ -1838,7 +1838,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +76 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +79 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1852,7 +1852,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: evolve.command, evolve.service, extract.service, model.loading, model.operation_obligations, semantics.extensions
+- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
 - checked: partial
 - notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
@@ -1999,7 +1999,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +74 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +75 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
@@ -2500,7 +2500,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/install.py
 - uses: infra.artifacts, infra.input_policy, infra.safe_filesystem, infra.version
-- used_by: cli.dispatch, cli.lifecycle_command, extract.flatten_service
+- used_by: cli.dispatch, cli.lifecycle_command
 - tests: tests/test_install.py, tests/test_doctor_uninstall.py, tests/test_packaged_skills.py, tests/test_rf4_peripheral.py, tests/test_public_packaged_invocation_guards.py
 - checked: partial
 - notes: Enumerates only packaged and receipt-owned names; filesystem mutation primitives are explicit aliases from gnd.safefs, while lifecycle policy remains here.
@@ -2619,7 +2619,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +17 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +18 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -3018,7 +3018,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/identity.py
 - uses: (none)
-- used_by: synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.value_domain
+- used_by: examples.literature_assertion_admission, synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.value_domain
 - tests: tests/test_poolfile.py, tests/test_synth_conforming.py
 - notes: The synthesis implementation is deliberately independent of checker identity code; listed tests exercise boolean and numeric identity through consumers.
 
@@ -3377,15 +3377,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### examples.literature_assertion_admission
-- does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements.
-- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest
-- in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root.
-- out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker.
+- does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements; with a shape, admit the instances of a caller-named assertion entity with their attached and followed facts.
+- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest, assertion shape, attached facts, followed entities, include root admission, admission rules, policy-refused, target cap
+- in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root; optionally a literature-assertion-shape/1 document and a row bound.
+- out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker (literature-assertion-admission/1, or /2 for a shaped call).
 - status: canonical
 - modules: src/gnd/examples/literature/assertion_admission.py
-- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors
+- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors, model.loading, model.validation, synth.identity
 - used_by: examples.literature_lineage
-- tests: tests/test_li4_assertions.py
+- tests: tests/test_li4_assertions.py, tests/test_lh3_admission_shape.py, tests/test_lh4_admission_rules.py
+- notes: The shape, the admission rules and the /2 record are described once, in src/gnd/examples/literature/README.md, "Admitting your own assertion entity".
 
 
 ### examples.literature_lineage
@@ -3812,7 +3813,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/depth.py
 - uses: infra.artifacts, infra.bounded_process, model.anchors
-- used_by: examples.literature_reading, examples.literature_revision, examples.literature_verdict
+- used_by: examples.literature_reading, examples.literature_reference_set, examples.literature_revision, examples.literature_verdict
 - tests: tests/test_ld1_competency_examples.py
 
 ### examples.literature_reading
@@ -3826,6 +3827,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: examples.literature_assurance, examples.literature_revision
 - tests: tests/test_ld3_reading_workflow.py, tests/test_lh1_reading_host.py, tests/test_lh2_reading_replay.py
 - notes: Release replay can provide its retained reading fixture and rooted vocabulary together. The protocol's one home is src/gnd/examples/literature/reading_fixture/README.md, "Drive it from your host".
+
+### examples.literature_reference_set
+- does: Build the literature reading reference set over the regression corpus's development documents without changing them, and score a reading run's produced facts against its labels at section grain.
+- verbs: reference set, reference recall, reference precision, labelled set, reading score, wrong predicate, gold facts, corpus overlay, section grain
+- in: The packaged corpus, answer key, gold populations and flat model; a reading run folder and the reference root.
+- out: The reference root's files by name; a literature-reference-score/1 document with per-pass produced, found, wrong-predicate and precision pairs and recall after each pass.
+- status: canonical
+- modules: src/gnd/examples/literature/reference_set.py
+- uses: examples.literature_depth, infra.artifacts, model.loading
+- used_by: (none)
+- tests: tests/test_lr3_reference_set.py
+- notes: The scoring rule's one home is src/gnd/examples/literature/reference_fixture/README.md. The recorded run was produced by tools/record_lr3_reference_run.py, which spends paid calls and is outside every gate; tests replay the run.
 
 ### examples.literature_revision
 - does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.

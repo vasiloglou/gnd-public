@@ -1,0 +1,310 @@
+diff --git a/.claude/skills/process-phase/references/project.md b/.claude/skills/process-phase/references/project.md
+index d756177b..20f85d24 100644
+--- a/.claude/skills/process-phase/references/project.md
++++ b/.claude/skills/process-phase/references/project.md
+@@ -134,7 +134,7 @@ skill text this repository wrote for itself, before the shared text replaced it.
+   The whole list takes about two minutes.
+ 
+   ```bash
+-  uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short
++  uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py tests/test_install.py tests/test_doctor_uninstall.py tests/test_verification_fixes.py tests/test_inventory_pin_home.py --tb=short
+   ```
+ 
+   `tests/test_gate_guard_list.py` reads this block: it fails when a named file
+diff --git a/.codex/skills/process-phase/references/project.md b/.codex/skills/process-phase/references/project.md
+index d756177b..20f85d24 100644
+--- a/.codex/skills/process-phase/references/project.md
++++ b/.codex/skills/process-phase/references/project.md
+@@ -134,7 +134,7 @@ skill text this repository wrote for itself, before the shared text replaced it.
+   The whole list takes about two minutes.
+ 
+   ```bash
+-  uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short
++  uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py tests/test_install.py tests/test_doctor_uninstall.py tests/test_verification_fixes.py tests/test_inventory_pin_home.py --tb=short
+   ```
+ 
+   `tests/test_gate_guard_list.py` reads this block: it fails when a named file
+diff --git a/.gnd-planning/milestones/pins-and-review-check/notes/phase-PF1-spec.md b/.gnd-planning/milestones/pins-and-review-check/notes/phase-PF1-spec.md
+index 1a32ed30..b6418187 100644
+--- a/.gnd-planning/milestones/pins-and-review-check/notes/phase-PF1-spec.md
++++ b/.gnd-planning/milestones/pins-and-review-check/notes/phase-PF1-spec.md
+@@ -2,8 +2,8 @@
+ 
+ ## 1. Status
+ 
+-**Draft r1, 2026-11-23, awaiting the plan gate and then its own owner gate.**
+-No test file changes before both.
++**Owner-decided (2026-11-23): spec r1 approved as written, PF1-D1 (a) and
++PF1-D2 (a) (o).** Implementation is under way on `claude/pf1-inventory-pin`.
+ 
+ ## 2. Provenance
+ 
+@@ -113,8 +113,8 @@ fails the guard, so a stale exception cannot linger.
+ 
+ | ID | Question | Readings and cost | Proposed |
+ |---|---|---|---|
+-| PF1-D1 | Where the guard lives | (a) a new file; (b) a test in `test_packaged_skills.py`. Same exit codes; (a) keeps the home file's job to defining the inventory | (a) |
+-| PF1-D2 | Whether the guard also catches `EXPECTED_RELATIVE_LINK_COUNT` copies | (a) no: no copy exists in the default lane; (b) yes: wider, and `test_public_distribution_runtime.py:22` would need a second exception | (a) |
++| PF1-D1 | Where the guard lives | (a) a new file; (b) a test in `test_packaged_skills.py`. Same exit codes; (a) keeps the home file's job to defining the inventory | (a). **Ruled (a), owner, 2026-11-23 (o)** |
++| PF1-D2 | Whether the guard also catches `EXPECTED_RELATIVE_LINK_COUNT` copies | (a) no: no copy exists in the default lane; (b) yes: wider, and `test_public_distribution_runtime.py:22` would need a second exception | (a). **Ruled (a), owner, 2026-11-23 (o)** |
+ 
+ Plan D1 and D5 are ruled at the plan gate.
+ 
+@@ -142,3 +142,16 @@ names and one of 70 files). Two lines in each copy of `project.md`.
+ ## 11. Approval instrument
+ 
+ This prose.
++
++## 12. Owner gate
++
++- **Ruling:** owner approved spec r1, 2026-11-23, in the Code session that
++  wrote it: "Approve PF1 spec", answering "Approve the PF1 spec so PF1 can
++  start?". That answer is also the go-ahead to implement.
++- **Bytes:** sha256 `ebdcaa3ff96b1118c23b9815b2f9c4f48cc0e6c433ca2c627cc7c8c81b86bae0`, the spec as committed in PR 248 at `04945d39`.
++  Since then only the status line, the two ruling cells of §7 and this
++  section changed.
++- **Instrument:** this prose (§11). No review ran over the spec bytes; plan D3
++  selects one reviewer in a different tool for the phase diff.
++- **Rulings:** PF1-D1 (a), PF1-D2 (a). Plan D1 and D5 were ruled at the plan
++  gate (`../001-plan.md`).
+diff --git a/tests/test_doctor_uninstall.py b/tests/test_doctor_uninstall.py
+index d15c8d0d..a9823541 100644
+--- a/tests/test_doctor_uninstall.py
++++ b/tests/test_doctor_uninstall.py
+@@ -39,38 +39,10 @@ from typing import Any, NamedTuple
+ 
+ import pytest
+ from support.digests import sha256_bytes as _digest
++from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT, EXPECTED_SKILL_NAMES
+ 
+ from gnd import cli, install
+ 
+-#: The packaged tree ships 59 files across 15 skills — the same duplicated guard
+-#: ``tests/test_install.py`` keeps, for the same reason.
+-EXPECTED_SKILL_FILE_COUNT = 71  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued; AC1: the bounded COUNT membership contract
+-
+-#: The fifteen packaged skill directories, which is the artifact set in symlink
+-#: mode: one link per skill. Named rather than counted so a removal that drops
+-#: one and gains another cannot cancel out.
+-EXPECTED_SKILL_NAMES = frozenset(
+-    {
+-        "gnd-adopt",
+-        "gnd-codegen",
+-        "gnd-conformance",
+-        "gnd-dev-session",
+-        "gnd-extract",
+-        "gnd-export",
+-        "gnd-judge-fact-types",
+-        "gnd-model-multivalued",
+-        "gnd-model-evolve",
+-        "gnd-model-from-code",
+-        "gnd-model-from-text",
+-        "gnd-new-project",
+-        "gnd-orm-core",
+-        "gnd-render-doc",
+-        "gnd-review-panel",
+-        "gnd-review-panel-light",
+-        "gnd-solve",
+-        "gnd-update-review-panel",
+-    }
+-)
+ SAMPLE_SKILL = "gnd-orm-core"
+ SAMPLE_FILE = "gnd-orm-core/SKILL.md"
+ 
+diff --git a/tests/test_install.py b/tests/test_install.py
+index c5af6da3..c4da2ddd 100644
+--- a/tests/test_install.py
++++ b/tests/test_install.py
+@@ -36,46 +36,10 @@ from typing import Any, NamedTuple
+ import pytest
+ from support.digests import sha256_bytes as _digest
+ from support.rf5_sources import cli_sources
++from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT, EXPECTED_SKILL_NAMES
+ 
+ from gnd import cli, install
+ 
+-#: The packaged tree ships 48 files (measured, never derived — phase 02.1 took
+-#: it from 29 to 33 with the gnd-extract / gnd-render-doc round-trip pair, plan
+-#: 03-04 to 35 with gnd-codegen, plan 03-06 to 37 with gnd-conformance, and
+-#: Phase 4 to 43 with gnd-model-evolve, gnd-model-from-code and
+-#: gnd-review-panel, then the panel updater to 46; quick 260816-rjw to 48 with
+-#: the two loop skills, SKILL.md only each; milestone v1.2 to 50 with
+-#: gnd-new-project and the milestone-record contract reference).
+-#: Duplicated deliberately: if a skill file is added, BOTH guards should fail
+-#: and be updated as one decision.
+-EXPECTED_SKILL_FILE_COUNT = 71  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued; AC1: the bounded COUNT membership contract
+-
+-#: The eighteen directory names the packaged tree carries. The installer discovers
+-#: them by traversal and never by name (D-06/D-26); this literal exists so a
+-#: test can say WHICH eighteen were placed, not so the installer can look them up.
+-EXPECTED_SKILL_NAMES = frozenset(
+-    {
+-        "gnd-adopt",
+-        "gnd-codegen",
+-        "gnd-conformance",
+-        "gnd-dev-session",
+-        "gnd-extract",
+-        "gnd-export",
+-        "gnd-judge-fact-types",
+-        "gnd-model-multivalued",
+-        "gnd-model-evolve",
+-        "gnd-model-from-code",
+-        "gnd-model-from-text",
+-        "gnd-new-project",
+-        "gnd-orm-core",
+-        "gnd-render-doc",
+-        "gnd-review-panel",
+-        "gnd-review-panel-light",
+-        "gnd-solve",
+-        "gnd-update-review-panel",
+-    }
+-)
+-
+ #: The top-level directory names GND owns inside a target root today. Discovered
+ #: at runtime by the installer per D-06 — named here only so the tests can build
+ #: a collision at a path GND *does* own, which is a different case from an
+diff --git a/tests/test_inventory_pin_home.py b/tests/test_inventory_pin_home.py
+new file mode 100644
+index 00000000..99dab780
+--- /dev/null
++++ b/tests/test_inventory_pin_home.py
+@@ -0,0 +1,101 @@
++"""The packaged-skill inventory has one home (pins-and-review-check PF1).
++
++The file count, skill names and file set used to be copied into four test
++files. A new packaged file was then counted in some copies and not others, and
++two of them sat red on main. ``tests/test_packaged_skills.py`` now defines the
++inventory and checks the packaged tree against it; every other test imports it.
++This file fails when a test module binds one of the inventory names again.
++"""
++from __future__ import annotations
++
++import ast
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[1]
++HOME = "tests/test_packaged_skills.py"
++NAMES = frozenset({"EXPECTED_SKILL_FILE_COUNT", "EXPECTED_SKILL_NAMES", "EXPECTED_SKILL_FILES"})
++#: Files allowed to bind an inventory name of their own, with the reason (plan D5).
++EXCEPTIONS = {
++    "tests/test_public_distribution_runtime.py": "pins the inventory of a released wheel, not of the tree",
++}
++
++
++def _bound_names(target: ast.expr) -> set[str]:
++    if isinstance(target, ast.Name):
++        return {target.id}
++    if isinstance(target, (ast.Tuple, ast.List)):
++        return set().union(*(_bound_names(element) for element in target.elts))
++    if isinstance(target, ast.Starred):
++        return _bound_names(target.value)
++    return set()
++
++
++_NEW_SCOPES = (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)
++
++
++def _module_scope(node: ast.AST):
++    """Every node in the module's own scope: nested blocks yes, function and class bodies no."""
++    for child in ast.iter_child_nodes(node):
++        if isinstance(child, _NEW_SCOPES):
++            continue
++        yield child
++        yield from _module_scope(child)
++
++
++def module_level_pins(source: str) -> set[str]:
++    """Inventory names bound in module scope by an assignment of any form."""
++    found: set[str] = set()
++    for node in _module_scope(ast.parse(source)):
++        if isinstance(node, ast.Assign):
++            targets = node.targets
++        elif isinstance(node, (ast.AnnAssign, ast.AugAssign, ast.NamedExpr)):
++            targets = [node.target]
++        else:
++            continue
++        for target in targets:
++            found |= _bound_names(target) & NAMES
++    return found
++
++
++def test_the_inventory_has_one_home() -> None:
++    offenders = {}
++    for path in sorted((ROOT / "tests").rglob("*.py")):
++        name = path.relative_to(ROOT).as_posix()
++        if name in (HOME, *EXCEPTIONS):
++            continue
++        pins = module_level_pins(path.read_text(encoding="utf-8"))
++        if pins:
++            offenders[name] = sorted(pins)
++    assert not offenders, (
++        f"import the packaged-skill inventory from {HOME} instead of defining it: {offenders}"
++    )
++    assert module_level_pins((ROOT / HOME).read_text(encoding="utf-8")) == NAMES
++
++
++def test_every_exception_still_exists() -> None:
++    missing = [name for name in EXCEPTIONS if not (ROOT / name).is_file()]
++    assert not missing, f"remove stale exceptions: {missing}"
++
++
++def test_the_guard_sees_every_assignment_form() -> None:
++    bound = [
++        "EXPECTED_SKILL_FILE_COUNT = 1",
++        "EXPECTED_SKILL_NAMES: frozenset[str] = frozenset()",
++        "OTHER, EXPECTED_SKILL_FILES = 1, set()",
++        "[EXPECTED_SKILL_NAMES, *REST] = [1, 2]",
++        "EXPECTED_SKILL_FILES |= {'a'}",
++        "if True:\n    EXPECTED_SKILL_FILE_COUNT = 1",
++        "try:\n    pass\nexcept ImportError:\n    EXPECTED_SKILL_NAMES = frozenset()",
++        "(EXPECTED_SKILL_FILE_COUNT := 1)",
++    ]
++    for source in bound:
++        assert module_level_pins(source), source
++    not_bound = [
++        "from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT",
++        "def f():\n    EXPECTED_SKILL_FILE_COUNT = 1",
++        "class C:\n    EXPECTED_SKILL_NAMES = frozenset()",
++        "assert len(found) == EXPECTED_SKILL_FILE_COUNT",
++        "OTHER_COUNT = 71",
++    ]
++    for source in not_bound:
++        assert not module_level_pins(source), source
+diff --git a/tests/test_public_built_inventory.py b/tests/test_public_built_inventory.py
+index 7336dbc1..b6292576 100644
+--- a/tests/test_public_built_inventory.py
++++ b/tests/test_public_built_inventory.py
+@@ -313,13 +313,12 @@ def test_public_built_surfaces_agree_with_current_inventory(
+         "sdist": _sdist_skill_files(sdist),
+         "wheel": _wheel_skill_files(wheel),
+     }
+-    assert len(EXPECTED_SKILL_FILES) == EXPECTED_SKILL_FILE_COUNT == 70
+-    assert len(EXPECTED_SKILL_NAMES) == 18
++    assert len(EXPECTED_SKILL_FILES) == EXPECTED_SKILL_FILE_COUNT
+     for label, entries in surfaces.items():
+         assert entries == EXPECTED_SKILL_FILES, _diff(label, entries)
+         assert _skill_names(entries) == EXPECTED_SKILL_NAMES
+-        assert len(entries) == 70
+-        assert len(_skill_names(entries)) == 18
++        assert len(entries) == EXPECTED_SKILL_FILE_COUNT
++        assert len(_skill_names(entries)) == len(EXPECTED_SKILL_NAMES)
+     assert surfaces["source"] == surfaces["sdist"] == surfaces["wheel"]
+ 
+ 
+diff --git a/tests/test_verification_fixes.py b/tests/test_verification_fixes.py
+index ef575323..7360fc12 100644
+--- a/tests/test_verification_fixes.py
++++ b/tests/test_verification_fixes.py
+@@ -11,11 +11,10 @@ from pathlib import Path
+ from typing import Any
+ 
+ import pytest
++from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT, EXPECTED_SKILL_FILES
+ 
+ from gnd import cli, install
+ 
+-EXPECTED_SKILL_FILES = frozenset(('gnd-judge-fact-types/SKILL.md', 'gnd-model-multivalued/SKILL.md', 'gnd-orm-core/references/type-evidence.schema.json', 'gnd-orm-core/references/type-judgements.schema.json', 'gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adopt/references/gsd-mapping.md', 'gnd-adopt/scripts/verify_migration.py', 'gnd-codegen/SKILL.md', 'gnd-codegen/references/architecture-contract.md', 'gnd-codegen/references/codegen-contract.md', 'gnd-conformance/SKILL.md', 'gnd-conformance/references/conformance-contract.md', 'gnd-dev-session/SKILL.md', 'gnd-dev-session/references/judgment-contract.md', 'gnd-dev-session/references/session-v7-contract.md', 'gnd-export/SKILL.md', 'gnd-export/references/export-contract.md', 'gnd-export/references/witness-contract.md', 'gnd-export/references/witness.schema.json', 'gnd-extract/SKILL.md', 'gnd-extract/references/extraction-contract.md', 'gnd-model-evolve/SKILL.md', 'gnd-model-evolve/references/evolution-contract.md', 'gnd-model-from-code/SKILL.md', 'gnd-model-from-code/references/recovery-contract.md', 'gnd-model-from-text/SKILL.md', 'gnd-model-from-text/USAGE.md', 'gnd-model-from-text/evals/README.md', 'gnd-model-from-text/evals/cases.json', 'gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md', 'gnd-model-from-text/evals/reviewability_checklist.md', 'gnd-model-from-text/examples/library_with_subtypes.dialogue.md', 'gnd-model-from-text/examples/library_with_subtypes.orm.yaml', 'gnd-model-from-text/examples/movie_catalog.dialogue.md', 'gnd-model-from-text/examples/movie_catalog.orm.yaml', 'gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md', 'gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml', 'gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md', 'gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml', 'gnd-model-from-text/references/csdp-workflow.md', 'gnd-model-from-text/references/dialogue-patterns.md', 'gnd-model-from-text/references/unattended-growth.md', 'gnd-model-from-text/scripts/validate_model.py', 'gnd-new-project/SKILL.md', 'gnd-orm-core/SKILL.md', 'gnd-orm-core/references/constraint-inference.md', 'gnd-orm-core/references/constraint-reference.md', 'gnd-orm-core/references/coverage-and-element-addressing.md', 'gnd-orm-core/references/halpin-posture.md', 'gnd-orm-core/references/milestone-record-format.md', 'gnd-orm-core/references/orm-meta.schema.json', 'gnd-orm-core/references/population-format.md', 'gnd-orm-core/references/population.schema.json', 'gnd-orm-core/references/provenance-and-modality.md', 'gnd-orm-core/references/representation-format.md', 'gnd-orm-core/references/steps.schema.json', 'gnd-orm-core/references/verbalization-patterns.md', 'gnd-render-doc/SKILL.md', 'gnd-render-doc/references/rendering-contract.md', 'gnd-review-panel-light/SKILL.md', 'gnd-review-panel/SKILL.md', 'gnd-review-panel/references/review-contract.md', 'gnd-solve/SKILL.md', 'gnd-update-review-panel/SKILL.md', 'gnd-update-review-panel/agents/openai.yaml', 'gnd-update-review-panel/scripts/update_harnesses.py'))
+-EXPECTED_SKILL_FILE_COUNT = 70
+ 
+ def _target(root: Path, *, runtime: str='claude', scope: str='project') -> Any:
+     return install.InstallTarget(runtime=runtime, scope=scope, root=root)

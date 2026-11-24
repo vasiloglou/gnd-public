@@ -1,0 +1,860 @@
+Reading additional input from stdin...
+OpenAI Codex v0.163.0
+--------
+workdir: <repo>
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a20ac3-044b-71b1-8a9b-4b99ef9ae29a
+--------
+user
+Read <repo>/.review-round/BRIEF.md and follow it.
+codex
+I’ll read the review brief and follow its scope and reporting requirements.
+exec
+/bin/zsh -lc 'cat .review-round/BRIEF.md' in <repo>
+ succeeded in 0ms:
+# Review brief: a phase's diff
+
+You are an independent reviewer, working in a different tool from the one that produced
+this work. Nothing here asks you to agree with it. Answer from the files themselves, not
+from any summary of them, including this brief's.
+
+## The question
+
+Review this change for correctness and readiness to merge.
+
+## The change under review
+
+The work from `6b0a7e5a` to the working tree at `045a83d94410`. Its diff is `.review-round/diff.patch`.
+
+## What to read
+
+Paths are relative to the repository root, the directory you start in. Before you rely
+on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
+your answer: you are not reading the bytes this brief names.
+
+| File | SHA-256 |
+|---|---|
+| `.review-round/diff.patch` | `df6055d84ddedb0754c020f5229fcfd0176fae0e09feac89955f99032ffd42b0` |
+| `tests/test_skill_of_file.py` | `d4fac10b176bd0378ff9f6bd83b3d4d604871ab633a0e0f8d0212bb03901d17a` |
+| `tools/skill_of_file.py` | `eb638597ef732f2bdd2bf6f38f5b1c4ccdd8efefc2dd9ff538798e4b666191f3` |
+
+You may read anything else in the repository that helps you answer.
+
+## A standing check: code fitted to its examples
+
+Whatever the question above, also look in the code this change adds or changes for a
+solution that handles the examples in its tests and fixtures, and not the whole class of
+input it is given:
+
+- a regular expression, string split, slice or index over structured text (JSON, YAML,
+  TOML, source code, paths, command lines) that a parser or an existing reader in this
+  repository already reads;
+- a pattern over output this project renders itself (a report, a table, a log line), where
+  the code could have been handed the data instead;
+- a pattern fitted to the fixtures: it matches every committed example and fails on a
+  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
+- a branch on one literal name, file or message, added to make one case pass;
+- a second matcher for something an existing helper already does.
+
+A regular expression is not a finding in itself: one that states the whole grammar of a
+flat token (an identifier, a version number, a hex digest) is the right tool. For each
+suspect, build a legal input that the tests and fixtures lack and run the code on it.
+Report a finding only with that input: what the code returned and what it should have
+returned. A suspicion with no breaking input is style: label it so. In your list of what
+you checked, name each matcher you tried and the input you tried it with.
+
+## Rules
+
+- Read only. Do not edit, create, stage, commit, push or post anything.
+- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
+  not print environment variables. If you need one, name it and go on without it.
+- A finding names its file and line and the consequence someone would observe. Run what
+  you can to show it; where you only read, say so.
+
+## What to return
+
+1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
+   consequence, and how to reproduce it. A finding with no observable consequence is
+   style: label it so.
+2. What you checked and found true.
+3. What you could not check, and why.
+4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+
+exec
+/bin/zsh -lc 'shasum -a 256 .review-round/diff.patch tests/test_skill_of_file.py tools/skill_of_file.py' in <repo>
+ succeeded in 0ms:
+df6055d84ddedb0754c020f5229fcfd0176fae0e09feac89955f99032ffd42b0  .review-round/diff.patch
+d4fac10b176bd0378ff9f6bd83b3d4d604871ab633a0e0f8d0212bb03901d17a  tests/test_skill_of_file.py
+eb638597ef732f2bdd2bf6f38f5b1c4ccdd8efefc2dd9ff538798e4b666191f3  tools/skill_of_file.py
+
+exec
+/bin/zsh -lc 'cat .review-round/diff.patch' in <repo>
+ succeeded in 0ms:
+diff --git a/tests/test_skill_of_file.py b/tests/test_skill_of_file.py
+new file mode 100644
+index 00000000..d7886359
+--- /dev/null
++++ b/tests/test_skill_of_file.py
+@@ -0,0 +1,22 @@
++"""Tests for tools/skill_of_file.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.skill_of_file import skill_of
++
++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
++
++
++def test_a_skill_md() -> None:
++    assert skill_of(SKILLS / "gnd-solve" / "SKILL.md", SKILLS) == "gnd-solve"
++
++
++def test_a_reference() -> None:
++    path = SKILLS / "gnd-orm-core" / "references" / "population-format.md"
++    assert skill_of(path, SKILLS) == "gnd-orm-core"
++
++
++def test_a_script() -> None:
++    path = SKILLS / "gnd-adopt" / "scripts" / "verify_migration.py"
++    assert skill_of(path, SKILLS) == "gnd-adopt"
+diff --git a/tools/skill_of_file.py b/tools/skill_of_file.py
+new file mode 100644
+index 00000000..1179a662
+--- /dev/null
++++ b/tools/skill_of_file.py
+@@ -0,0 +1,12 @@
++"""Name the packaged skill a file belongs to."""
++from __future__ import annotations
++
++from pathlib import Path
++
++
++def skill_of(path: str | Path, root: str | Path) -> str:
++    """Return the skill directory under ``root`` that holds ``path``."""
++    parts = Path(path).parts
++    if parts[-2] in ("references", "scripts"):
++        return parts[-3]
++    return parts[-2]
+
+exec
+/bin/zsh -lc 'cat CONTRIBUTING.md
+cat pyproject.toml' in <repo>
+ succeeded in 0ms:
+# Contributing
+
+Work from this repository alone with Python >=3.11 and uv 0.10.10:
+
+```sh
+uv sync --locked --group dev
+uv run gnd install --symlink --project --force
+uv run gnd doctor --project
+uv run pytest -q tests/test_release_examples.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py
+```
+
+Tracked installer links have no local receipt in a fresh clone. Adopt them once
+with --force; never overwrite modified links or maintain them manually. Both
+.codex and .claude roots contain the packaged links and real development-skill
+twins. Regenerate packaged links through gnd install, keep real twins identical.
+Ordinary development uses this checkout's editable package. Final acceptance
+will additionally exercise the exact installed candidate in a fresh target-only
+tree, with actual module/tool/link paths recorded.
+
+Use [start-milestone](.codex/skills/start-milestone/SKILL.md) to prepare or resume
+a milestone plan and its first draft phase spec in `.gnd-planning`. It checks
+obligation ownership, dependencies and implementability before execution; it does
+not approve the plan or run phases.
+
+Use [process-milestone](.codex/skills/process-milestone/SKILL.md) to execute or
+resume a whole named milestone through `process-phase` and its close gates.
+`process-milestone pyrel-applications auto=true` explicitly delegates approval
+rulings for that milestone; required reviews and verification still run, and
+merge/publication/certification keep their separate authorization.
+
+Numbered work follows the full [process-phase](.codex/skills/process-phase/SKILL.md)
+protocol: spec, owner gate, implementation, independent review, refactoring review,
+record and explicit-path commit. The [sample spec](docs/development/examples/phase-spec.md)
+and [sample record](docs/development/examples/phase-record.md) are non-authoritative
+exercises. Source-owned runtime units await explicit handoff; changes here do not
+silently transfer authority. Phase 3 final acceptance is pending.
+
+Run focused affected tests with the default lane exclusions. Historical broad,
+provider/native and certification lanes require separate selection. Never source
+repository .env files; optional live review needs trusted credentials and explicit
+selection. [Bootstrap history](docs/development/bootstrap.md) is historical;
+the old original-definition accounting runner is not release acceptance under r3.
+See [release preparation](docs/releasing.md) and [security reporting](SECURITY.md).
+
+## Owner-controlled contributions
+
+Contributions are by invitation. Only collaborators approved by `vasiloglou`
+receive write access. Public availability permits reading and forking; it does
+not grant permission to modify this repository.
+
+For all changes, including owner and coding-agent changes, use a topic branch and
+submit a pull request. Never push directly to main, force-push it, or delete it. Resolve
+review conversations before merging. `.github/CODEOWNERS` names `vasiloglou` for
+all files.
+
+While `vasiloglou` is the only collaborator, branch protection requires PRs with
+zero required approving reviews. GitHub prohibits authors from approving their
+own PRs, so the owner's explicit merge decision is the acceptance step. Coding
+agents may merge only with the owner's explicit authorization. Protection applies
+to administrators too, with no PR bypass. Cloud CI is not currently a required
+status check; run the focused checks applicable to a change and record results.
+
+Before granting another account write access, enable one required approving
+review and required code-owner review. Its PRs will then require `vasiloglou`'s
+recorded approval. PRs authored by `vasiloglou` will need another authorized code
+owner, or work must be authored through a separately controlled contributor/bot
+identity so `vasiloglou` can approve. Never create a shared reviewer identity or
+approve a PR through a token belonging to its author.
+
+For a public repository, use the collaborators-only interaction limit to prevent
+outside PRs, issues and comments. GitHub limits this setting to six months; renew
+it before its reported expiration. It cannot be enabled while the repository is
+private. Check the live settings before claiming restrictions are enforced.
+
+## Refactoring dependencies and compatibility
+
+The measured layer map is [tools/gnd_layers.json](tools/gnd_layers.json).
+Errors and schemas have infrastructure homes; documents, values and universe
+serve model data and lookup; extensions compute facts below checker and
+applicability. Registry descriptors live in branches. Runtime graph checks count
+lazy and literal dynamic imports as well as top-level imports. Add every new
+module to the map, preserve the clean-layer ratchet, and do not grow allowances.
+
+Old module names retain explicit aliases in the
+[shim inventory](.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md).
+Patch the defining module for moved algorithms and the actual public lookup seam
+for consumer wrappers. Move tests pin alias identity and source-scan coverage;
+retirement follows the approved plan's RF-D5 gate. Current source changes make
+old release evidence unavailable until its separately selected controls run.
+
+Peripheral dependency homes are public filesystem seams in safefs, the bounded
+runner in process, trusted adapters in agents, and the independent synth oracle
+package. Assurance follows _wire, core, inheritance, claims, evidence dependency
+order; transport carries receipts. Payload assembly lives in payloads, and
+export/witness services own their thin API wrappers. Old imports remain aliases.
+
+### Model query and constraint family homes
+
+Use gnd.model_index.ModelIndex.for_model(model) for detached model queries. Each
+request keys a bounded snapshot cache by current full model content, with unsafe
+canonical shapes bypassing the cache. Keep the existing strict/truthy primitive
+policy explicit. Raw serialization and deliberately retained domain traversal
+sites are individually listed in the RF6 query policy; additions need a reason
+and a current behavior control.
+
+Constraint adaptation, evaluation, witness projection, presentation, scope and
+shape selection use gnd.constraint_families.FAMILIES. Keep shared refusal and
+vacuity precedence outside family-specific algorithms. The production branch
+evidence registry remains a separate inventory. Preserve every historical import
+shim until a separately approved retirement after the first release following RF6.
+[project]
+# D-01: `gnd` has been taken on PyPI since 2022, so the DISTRIBUTION is
+# `get-nick-done`. The import package and the console script both stay `gnd` —
+# only the name users type after `uv tool install` changes.
+name = "get-nick-done"
+version = "0.4.0"
+description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+# Issue 175: without this key the wheel and sdist carry no long description and
+# the PyPI project page shows no text. PYPI.md is a short description written
+# for that page: every link in it is absolute, because PyPI does not resolve the
+# repository README's relative links or its image, and it names no version, so a
+# release does not edit it. tests/test_package_description.py holds both rules.
+readme = "PYPI.md"
+authors = [
+    { name = "Nikolaos Vasiloglou", email = "nvasil@gmail.com" }
+]
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+# D-18: the base install stays these three. Phase 2's synthetic-data stack
+# (polyfactory / faker / hypothesis) lands behind an optional extra when there is
+# something to put in it — do NOT scaffold an empty extra now. A fourth entry
+# here fails tests/test_packaged_skills.py::test_base_dependency_set_is_frozen,
+# which is the mechanical form of this policy.
+dependencies = [
+    "jsonschema==4.26.0",
+    "pydantic==2.13.4",
+    "ruamel-yaml==0.19.1",
+]
+
+# D-18: the base install above is deliberately untouched. Phase 2's synthetic-data
+# stack lands here, behind an OPTIONAL extra, so a user who only runs `gnd check`
+# never receives it. `faker` was cleared through the phase's blocking-human
+# package-legitimacy gate (02-02 Task 1) before being pinned: PyPI `Faker`, first
+# released 2010-12-23, 503 releases, repo github.com/joke2k/faker. Polyfactory and
+# Hypothesis are NOT installed — Polyfactory was refuted by measurement (D-17,
+# 0/8 ages in a declared 18..65 range; 8/8 distinct entities forcing zero-row
+# joins) and Hypothesis is deferred. Adding either here, or promoting faker into
+# [project.dependencies], fails tests/test_packaged_skills.py.
+[project.optional-dependencies]
+synth = ["faker==40.36.0"]
+
+[project.urls]
+Repository = "https://github.com/vasiloglou/gnd-public"
+Issues = "https://github.com/vasiloglou/gnd-public/issues"
+
+[project.scripts]
+# PKG-01. The generated wrapper wraps the call in `sys.exit()`, so `main`'s
+# existing `int` return IS the process exit code and the 0-4/64/70 band contract
+# in gnd/cli.py survives untouched. `python -m gnd` keeps working (D-03) as a
+# development convenience; this is the documented interface.
+gnd = "gnd.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.10.10,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# The ONLY key this project may set here, and it is mandatory: `uv_build` derives
+# the module name from the distribution name, so renaming to `get-nick-done`
+# (D-01) makes it look for `src/get_nick_done/`. Without this it fails loudly —
+# "Expected a Python module at: src/get_nick_done/__init__.py" — which is why
+# this key is safe to rely on where the include keys are not.
+#
+# Do NOT add `source-include`, `data`, or a `force-include` stanza here to get
+# the skills into the wheel. All three were measured and refuted: `source-include`
+# is sdist-only, `data.purelib` lands at the site-packages root rather than
+# `gnd/skills/`, and `force-include` is not a key this backend has. Worse, the
+# backend SILENTLY IGNORES unrecognised keys — a typo yields a clean
+# "Successfully built" and a skill-less wheel, which is exactly how this defect
+# shipped. The skill tree ships because it physically lives under the module
+# root at `src/gnd/skills/`; that is the whole mechanism. Verify artifacts with
+# `pytest -m distribution`, never a green build message.
+module-name = "gnd"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["fixtures"]
+addopts = "-m 'not derivation_oracle and not pyrel_oracle and not ossie_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
+markers = [
+  "proof: opt-in proof lane; not selected by the default public development gate",
+  "derivation_oracle: opt-in derivation_oracle lane; not selected by the default public development gate",
+  "ossie_oracle: opt-in pinned Ossie validator and parser lane",
+  "pyrel_oracle: opt-in pyrel_oracle lane; not selected by the default public development gate",
+  "distribution: opt-in distribution lane; not selected by the default public development gate",
+  "evidence: opt-in evidence lane; not selected by the default public development gate",
+  "census: opt-in census lane; not selected by the default public development gate",
+  "live: opt-in live lane; not selected by the default public development gate",
+  "network: opt-in network lane; not selected by the default public development gate",
+  "review_runner: opt-in review_runner lane; not selected by the default public development gate",
+  "slow: opt-in slow lane; not selected by the default public development gate",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# An experiment's retained attempts and its accepted candidate are EVIDENCE:
+# they record what a session actually produced, and reformatting them would
+# forge that record the same way editing a retained agent stream would. They are
+# excluded from linting because their bytes are not ours to change -- not
+# because their style is acceptable.
+#
+# This exemption deliberately does NOT cover the shipped product. The BookRec
+# package that ships lives at examples/bookrec/project/bookrec/, is copied from
+# the accepted gate candidate, and is linted like any other source here. If the
+# copy is dirty, the fix belongs in the session that produced it, never in a
+# post-hoc edit that would break the byte-for-byte copy claim.
+#
+# proof/v6/phase1/generated/ is the contract-carrying copy of the Phase 1 kernel.
+# Its bytes are produced by proof/v6/phase1/generate_proof_source.py, and they
+# are held to something far stricter than a linter: proof/v6/phase1/erasure.py
+# proves that erasing its contract-only calls returns it to
+# src/gnd/proof_kernel.py statement for statement, and that file IS linted. A
+# ruff autofix here would break that identity, which is the whole gate.
+#
+# .gnd-planning/ holds the scripts a milestone or maintenance pass retained as
+# evidence: probes, captures, census and re-record scripts. Records bind many of
+# them by SHA-256, and each one is the command a record says was run, so a lint
+# fix would change what the record points at. They are excluded for the same
+# reason as the experiment attempts above. A script that is meant to be reused
+# belongs under tools/ or tests/, where it is linted.
+#
+# scripts/components_index.py is delivered from dev-tools (.devtools.toml) and
+# bound by .devtools-receipt.json. A lint fix to it is made in dev-tools and
+# arrives through the sync, never by a local edit.
+extend-exclude = [
+    "**/EXP-*/runs/*/attempts/**",
+    "**/EXP-*/candidate/**",
+    "proof/v6/phase1/generated/**",
+    ".gnd-planning/**",
+    "scripts/components_index.py",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# This file is a byte copy of src/gnd/examples/expense/extension.py, which the
+# tutorial copies into the generated project (tests/test_expense_tutorial.py
+# compares the two). Beside its own `cli` package, isort reads `cli.reporting`
+# as first-party and wants the blank line before `gnd.api` removed; in
+# extension.py's directory the same bytes are sorted correctly.
+"src/gnd/examples/expense/project/cli/expense_cli.py" = ["I001"]
+
+[dependency-groups]
+dev = [
+    # A fresh detached checkout measured the default suite failing at
+    # test_measure_offline's synth-fixture setup. Keeping Faker in dev as well
+    # as the optional runtime extra makes `uv run pytest` honest without
+    # widening the three-package base install.
+    "duckdb==1.5.5",
+    "faker==40.36.0",
+    "pytest==9.1.1",
+    "ruff==0.16.2",
+]
+docs = [
+    "zensical==0.0.67",
+]
+
+exec
+/bin/zsh -lc 'find src/gnd/skills -maxdepth 3 -type d' in <repo>
+ succeeded in 0ms:
+src/gnd/skills
+src/gnd/skills/gnd-export
+src/gnd/skills/gnd-export/references
+src/gnd/skills/gnd-model-from-code
+src/gnd/skills/gnd-model-from-code/references
+src/gnd/skills/gnd-orm-core
+src/gnd/skills/gnd-orm-core/references
+src/gnd/skills/gnd-review-panel
+src/gnd/skills/gnd-review-panel/references
+src/gnd/skills/gnd-update-review-panel
+src/gnd/skills/gnd-update-review-panel/agents
+src/gnd/skills/gnd-update-review-panel/scripts
+src/gnd/skills/gnd-render-doc
+src/gnd/skills/gnd-render-doc/references
+src/gnd/skills/gnd-codegen
+src/gnd/skills/gnd-codegen/references
+src/gnd/skills/gnd-conformance
+src/gnd/skills/gnd-conformance/references
+src/gnd/skills/gnd-model-from-text
+src/gnd/skills/gnd-model-from-text/evals
+src/gnd/skills/gnd-model-from-text/evals/expected
+src/gnd/skills/gnd-model-from-text/evals/fixtures
+src/gnd/skills/gnd-model-from-text/references
+src/gnd/skills/gnd-model-from-text/examples
+src/gnd/skills/gnd-model-from-text/scripts
+src/gnd/skills/gnd-review-panel-light
+src/gnd/skills/gnd-extract
+src/gnd/skills/gnd-extract/references
+src/gnd/skills/gnd-dev-session
+src/gnd/skills/gnd-dev-session/references
+src/gnd/skills/gnd-judge-fact-types
+src/gnd/skills/gnd-model-multivalued
+src/gnd/skills/gnd-model-evolve
+src/gnd/skills/gnd-model-evolve/references
+src/gnd/skills/gnd-solve
+src/gnd/skills/gnd-adopt
+src/gnd/skills/gnd-adopt/references
+src/gnd/skills/gnd-adopt/scripts
+src/gnd/skills/gnd-new-project
+
+exec
+/bin/zsh -lc "nl -ba tools/skill_of_file.py
+nl -ba tests/test_skill_of_file.py
+rg --files -g AGENTS.md -g '*skill*' tools tests" in <repo>
+ succeeded in 0ms:
+     1	"""Name the packaged skill a file belongs to."""
+     2	from __future__ import annotations
+     3	
+     4	from pathlib import Path
+     5	
+     6	
+     7	def skill_of(path: str | Path, root: str | Path) -> str:
+     8	    """Return the skill directory under ``root`` that holds ``path``."""
+     9	    parts = Path(path).parts
+    10	    if parts[-2] in ("references", "scripts"):
+    11	        return parts[-3]
+    12	    return parts[-2]
+     1	"""Tests for tools/skill_of_file.py."""
+     2	from __future__ import annotations
+     3	
+     4	from pathlib import Path
+     5	
+     6	from tools.skill_of_file import skill_of
+     7	
+     8	SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
+     9	
+    10	
+    11	def test_a_skill_md() -> None:
+    12	    assert skill_of(SKILLS / "gnd-solve" / "SKILL.md", SKILLS) == "gnd-solve"
+    13	
+    14	
+    15	def test_a_reference() -> None:
+    16	    path = SKILLS / "gnd-orm-core" / "references" / "population-format.md"
+    17	    assert skill_of(path, SKILLS) == "gnd-orm-core"
+    18	
+    19	
+    20	def test_a_script() -> None:
+    21	    path = SKILLS / "gnd-adopt" / "scripts" / "verify_migration.py"
+    22	    assert skill_of(path, SKILLS) == "gnd-adopt"
+tools/skill_of_file.py
+tools/record_skill_sessions.py
+tests/test_ik6_skill_census.py
+tests/test_public_agents_skill_table.py
+tests/test_skill_of_file.py
+tests/test_judge_fact_types_skill.py
+tests/test_packaged_skills.py
+tests/test_public_packaged_import_skill_routes.py
+tests/test_public_book_skills.py
+tests/test_model_multivalued_skill.py
+tests/test_il6_skill_census.py
+tests/test_skill_prose_sync.py
+tests/fixtures/induced_knowledge/ik3-corpus/pops/noskill.yaml
+
+exec
+/bin/zsh -lc "rg -n 'skill_of\\(|skill_of_file|relative_to\\(.*skills|parts\\[-[23]\\]' tools tests src/gnd --glob '*.py'" in <repo>
+ succeeded in 0ms:
+tools/skill_of_file.py:7:def skill_of(path: str | Path, root: str | Path) -> str:
+tools/skill_of_file.py:10:    if parts[-2] in ("references", "scripts"):
+tools/skill_of_file.py:11:        return parts[-3]
+tools/skill_of_file.py:12:    return parts[-2]
+src/gnd/install.py:595:def _skill_of(relpath: str) -> tuple[str, str]:
+src/gnd/install.py:811:        _skill_of(rel)
+src/gnd/install.py:858:            skill, rest = _skill_of(rel)
+src/gnd/install.py:1035:        skill, rest = _skill_of(rel)
+src/gnd/install.py:1096:        skill, rest = _skill_of(rel)
+tests/test_skill_of_file.py:1:"""Tests for tools/skill_of_file.py."""
+tests/test_skill_of_file.py:6:from tools.skill_of_file import skill_of
+tests/test_skill_of_file.py:12:    assert skill_of(SKILLS / "gnd-solve" / "SKILL.md", SKILLS) == "gnd-solve"
+tests/test_skill_of_file.py:17:    assert skill_of(path, SKILLS) == "gnd-orm-core"
+tests/test_skill_of_file.py:22:    assert skill_of(path, SKILLS) == "gnd-adopt"
+
+codex
+The three file hashes match the brief. The helper uses fixed positions in the path and never uses `root`; I’m checking it against the packaged skill tree, including directories the new tests don’t cover.
+exec
+/bin/zsh -lc "sed -n '570,625p' src/gnd/install.py
+sed -n '1,180p' tests/conftest.py
+rg --files src/gnd/skills/gnd-model-from-text src/gnd/skills/gnd-update-review-panel" in <repo>
+ succeeded in 0ms:
+class ApplyResult(BaseModel):
+    """What :func:`apply` did, in numbers a test can assert on."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    #: Placed skill assets only. The manifest is NOT counted here — it is
+    #: installer metadata, and D-09 asks about the assets.
+    writes: int = 0
+    written: list[str] = Field(default_factory=list)
+    #: Records apply deliberately did not act on: ``modified`` (never destroy a
+    #: user edit), ``collided`` without force, and orphans whose bytes no longer
+    #: match what GND placed.
+    skipped: list[SkillFileState] = Field(default_factory=list)
+    #: Orphans removed: recorded by the receipt, byte-identical to what GND
+    #: placed, and no longer shipped by this version. Without this, install
+    #: could never converge with doctor after an upgrade that drops a file
+    #: (CR-04). Counted separately from ``writes`` so D-09's zero-write
+    #: idempotence claim keeps meaning exactly what it meant.
+    pruned: list[str] = Field(default_factory=list)
+    #: Collisions that BLOCKED a write. Empty under ``force``.
+    collisions: list[str] = Field(default_factory=list)
+    manifest_written: bool = False
+    manifest: Manifest | None = None
+
+
+def _skill_of(relpath: str) -> tuple[str, str]:
+    head, _, rest = relpath.partition("/")
+    if not rest:
+        raise InstallError(
+            f"'{relpath}' sits directly at the skills root. Every packaged asset must "
+            f"live under a skill directory, because the manifest is skill-keyed and "
+            f"both runtimes discover skills as directories."
+        )
+    return head, rest
+
+
+def _classify_file(
+    root: Path,
+    relpath: str,
+    packaged_digest: str | None,
+    recorded: ManifestFile | None,
+    *,
+    interrupted: bool = False,
+) -> SkillFileState:
+    dest = root.joinpath(*PurePosixPath(relpath).parts)
+    try:
+        info: os.stat_result | None = dest.lstat()
+    except (OSError, ValueError):
+        info = None
+    is_link = info is not None and stat.S_ISLNK(info.st_mode)
+
+    if info is None:
+        if recorded is None:
+            return SkillFileState(relpath=relpath, state="create")
+        return SkillFileState(
+            relpath=relpath, state="missing", detail="recorded by the manifest but absent on disk"
+"""Current P2 fixture registration only; no historical session/collection hooks."""
+
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
+import pytest
+from test_public_distribution import (
+    package_probe as package_probe,  # noqa: PLC0414 -- pytest fixture export
+)
+
+from gnd.model import Model
+from gnd.population import Population, _stamp_validated_against
+
+# NM2-C6: an operator's GND_DISCLOSURE never reaches a test or a fixture of any
+# scope; tests that need a mode set it with monkeypatch.
+os.environ.pop("GND_DISCLOSURE", None)
+
+
+@pytest.fixture(autouse=True)
+def _parse_scope_write_check():
+    """GO1: every test that opens a model parse scope also checks that nothing
+    wrote into a remembered, shared document (``set_parse_scope_verify``)."""
+    from gnd.model._parsing import set_parse_scope_verify
+
+    previous = set_parse_scope_verify(True)
+    try:
+        yield
+    finally:
+        set_parse_scope_verify(previous)
+
+
+def make_population(model: Model, /, **kwargs: Any) -> Population:
+    """Build a Population and stamp it as validated against ``model``.
+
+    Use ONLY when the population is deliberately not loadable — a shape layer 2
+    would reject, built to test a checker guard. Anything that can come from a
+    file must go through ``load_population(path, model=model)`` so that layer 2
+    actually runs.
+
+    The :class:`~gnd.model.Model` is **positional-only**: ``Population`` has a
+    field literally named ``model`` (the free-form header path string), so a
+    keyword parameter of the same name would collide with it. The ``/`` lets
+    ``make_population(model_obj, model="m.orm.yaml", ...)`` read naturally.
+    """
+    population = Population(**kwargs)
+    _stamp_validated_against(population, model)
+    return population
+
+
+# Exact original tests import local helpers through the tests namespace.
+# Include only this public checkout/sandbox root; installed gnd stays separately resolved.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+src/gnd/skills/gnd-update-review-panel/SKILL.md
+src/gnd/skills/gnd-model-from-text/SKILL.md
+src/gnd/skills/gnd-update-review-panel/scripts/update_harnesses.py
+src/gnd/skills/gnd-update-review-panel/agents/openai.yaml
+src/gnd/skills/gnd-model-from-text/scripts/validate_model.py
+src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+src/gnd/skills/gnd-model-from-text/references/dialogue-patterns.md
+src/gnd/skills/gnd-model-from-text/references/csdp-workflow.md
+src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml
+src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml
+src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml
+src/gnd/skills/gnd-model-from-text/examples/movie_catalog.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml
+src/gnd/skills/gnd-model-from-text/USAGE.md
+src/gnd/skills/gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md
+src/gnd/skills/gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md
+src/gnd/skills/gnd-model-from-text/evals/cases.json
+src/gnd/skills/gnd-model-from-text/evals/README.md
+src/gnd/skills/gnd-model-from-text/evals/reviewability_checklist.md
+src/gnd/skills/gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml
+
+exec
+/bin/zsh -lc 'python3 -B -m pytest -q -p no:cacheprovider tests/test_skill_of_file.py' in <repo>
+ exited 1 in 0ms:
+/opt/homebrew/opt/python@3.14/bin/python3.14: No module named pytest
+
+exec
+/bin/zsh -lc "python3 -B -c 'from pathlib import Path; from tools.skill_of_file import skill_of; root = Path(\"src/gnd/skills\").resolve(); files = sorted(p for p in root.rglob(\"*\") if p.is_file()); wrong = [(p.relative_to(root), skill_of(p, root)) for p in files if skill_of(p, root) "'!= p.relative_to(root).parts[0]]; print(f"Packaged file scan: {len(wrong)} wrong results / {len(files)} files"); [print(f"{path}: returned={actual!r}, expected={path.parts[0]!r}") for path, actual in wrong]; import runpy; tests = runpy.run_path("tests/test_skill_of_file.py"); [(fn(), print(name + ": PASS")) for name, fn in tests.items() if name.startswith("test_")]'"'" in <repo>
+ succeeded in 0ms:
+Packaged file scan: 15 wrong results / 71 files
+gnd-model-from-text/evals/README.md: returned='evals', expected='gnd-model-from-text'
+gnd-model-from-text/evals/cases.json: returned='evals', expected='gnd-model-from-text'
+gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml: returned='expected', expected='gnd-model-from-text'
+gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md: returned='synthetic_good_user', expected='gnd-model-from-text'
+gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md: returned='synthetic_good_user', expected='gnd-model-from-text'
+gnd-model-from-text/evals/reviewability_checklist.md: returned='evals', expected='gnd-model-from-text'
+gnd-model-from-text/examples/library_with_subtypes.dialogue.md: returned='examples', expected='gnd-model-from-text'
+gnd-model-from-text/examples/library_with_subtypes.orm.yaml: returned='examples', expected='gnd-model-from-text'
+gnd-model-from-text/examples/movie_catalog.dialogue.md: returned='examples', expected='gnd-model-from-text'
+gnd-model-from-text/examples/movie_catalog.orm.yaml: returned='examples', expected='gnd-model-from-text'
+gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md: returned='examples', expected='gnd-model-from-text'
+gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml: returned='examples', expected='gnd-model-from-text'
+gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md: returned='examples', expected='gnd-model-from-text'
+gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml: returned='examples', expected='gnd-model-from-text'
+gnd-update-review-panel/agents/openai.yaml: returned='agents', expected='gnd-update-review-panel'
+test_a_skill_md: PASS
+test_a_reference: PASS
+test_a_script: PASS
+
+exec
+/bin/zsh -lc 'ls -l .venv/bin/python .venv/bin/pytest' in <repo>
+ succeeded in 0ms:
+-rwxr-xr-x@ 1 nikolaosvasiloglou  wheel  533 Nov 23 18:31 .venv/bin/pytest
+lrwxr-xr-x@ 1 nikolaosvasiloglou  wheel   95 Nov 23 18:31 .venv/bin/python -> <home>/.local/share/uv/python/cpython-3.14-macos-aarch64-none/bin/python3.14
+
+exec
+/bin/zsh -lc "python3 -B -c 'from pathlib import Path; from tools.skill_of_file import skill_of; root = Path(\"src/gnd/skills\").resolve(); inputs = [(\"gnd-solve/references/nested/guide.md\", \"gnd-solve\"), (\"gnd-solve/scripts/nested/tool.py\", \"gnd-solve\"), (\"gnd-solve/references/references/guide.md\", \"gnd-solve\")]; [(print(f\"{rel}: returned={skill_of(root / rel, root)"'!r}, expected={expected!r}")) for rel, expected in inputs]'"'" in <repo>
+ succeeded in 0ms:
+gnd-solve/references/nested/guide.md: returned='nested', expected='gnd-solve'
+gnd-solve/scripts/nested/tool.py: returned='nested', expected='gnd-solve'
+gnd-solve/references/references/guide.md: returned='references', expected='gnd-solve'
+
+exec
+/bin/zsh -lc '.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_skill_of_file.py' in <repo>
+ exited 1 in 1392ms:
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<repo>/.venv/lib/python3.14/site-packages/pytest/__main__.py", line 9, in <module>
+    raise SystemExit(_console_main())
+                     ~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 253, in _console_main
+    code = _main(prog=_get_prog_name(sys.argv))
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 223, in _main
+    config = _prepareconfig(new_args, plugins, prog=prog)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 410, in _prepareconfig
+    config: Config = pluginmanager.hook.pytest_cmdline_parse(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pluginmanager=pluginmanager, args=args
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/helpconfig.py", line 124, in pytest_cmdline_parse
+    config = yield
+             ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1232, in pytest_cmdline_parse
+    self.parse(args)
+    ~~~~~~~~~~^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1605, in parse
+    self.hook.pytest_load_initial_conftests(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        early_config=self, args=args, parser=self._parser
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/warnings.py", line 129, in pytest_load_initial_conftests
+    return (yield)
+            ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 116, in _multicall
+    next(function_gen)  # first yield
+    ~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 170, in pytest_load_initial_conftests
+    capman.start_global_capturing()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 773, in start_global_capturing
+    self._global_capturing = _get_multicapture(self._method)
+                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 714, in _get_multicapture
+    return MultiCapture(in_=FDCapture(0), out=FDCapture(1), err=FDCapture(2))
+                                              ~~~~~~~~~^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 493, in __init__
+    TemporaryFile(buffering=0),
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 652, in TemporaryFile
+    prefix, suffix, dir, output_type = _sanitize_params(prefix, suffix, dir)
+                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 126, in _sanitize_params
+    dir = gettempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 316, in gettempdir
+    return _os.fsdecode(_gettempdir())
+                        ~~~~~~~~~~~^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 309, in _gettempdir
+    tempdir = _get_default_tempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 224, in _get_default_tempdir
+    raise FileNotFoundError(_errno.ENOENT,
+                            "No usable temporary directory found in %s" %
+                            dirlist)
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/', '/tmp', '/var/tmp', '/usr/tmp', '<repo>']
+
+exec
+/bin/zsh -lc '.venv/bin/python -B -m pytest -q -s -p no:cacheprovider tests/test_skill_of_file.py' in <repo>
+ succeeded in 3620ms:
+...
+3 passed in 0.46s
+
+codex
+F1 (P2) — [tools/skill_of_file.py:10](<repo>/tools/skill_of_file.py:10): Fixed-depth path indexing returns asset-directory names as skill names. `root` is unused. Scanning the existing packaged tree produced **15 incorrect results among 71 files**.
+
+Reproduce from the repository root:
+
+```python
+from pathlib import Path
+from tools.skill_of_file import skill_of
+
+root = Path("src/gnd/skills").resolve()
+print(skill_of(root / "gnd-update-review-panel/agents/openai.yaml", root))
+```
+
+This returns `"agents"`; it should return `"gnd-update-review-panel"`. Derive the skill from the path relative to `root`, with coverage for arbitrary descendant directories.
+
+What I checked:
+
+- All three SHA-256 hashes match the brief.
+- The focused pytest suite passes: **3 passed**.
+- Tested the `parts[-2]` fallback against existing `examples`, `agents`, and nested `evals/fixtures` paths. It returned `"examples"`, `"agents"`, and `"synthetic_good_user"` instead of their owning skills.
+- Tested the `"references"`/`"scripts"` branch and `parts[-3]` indexing with legal path inputs `gnd-solve/references/nested/guide.md`, `gnd-solve/scripts/nested/tool.py`, and `gnd-solve/references/references/guide.md`. Results were `"nested"`, `"nested"`, and `"references"`; all should be `"gnd-solve"`. These probes created no files.
+- Read the existing root-relative ownership helper, `src/gnd/install.py::_skill_of`.
+
+I did not run the broader repository suite; verification covered the changed tests and direct ownership probes. No files were changed.
+
+VERDICT: CHANGES_REQUESTED
+tokens used
+29,935
+F1 (P2) — [tools/skill_of_file.py:10](<repo>/tools/skill_of_file.py:10): Fixed-depth path indexing returns asset-directory names as skill names. `root` is unused. Scanning the existing packaged tree produced **15 incorrect results among 71 files**.
+
+Reproduce from the repository root:
+
+```python
+from pathlib import Path
+from tools.skill_of_file import skill_of
+
+root = Path("src/gnd/skills").resolve()
+print(skill_of(root / "gnd-update-review-panel/agents/openai.yaml", root))
+```
+
+This returns `"agents"`; it should return `"gnd-update-review-panel"`. Derive the skill from the path relative to `root`, with coverage for arbitrary descendant directories.
+
+What I checked:
+
+- All three SHA-256 hashes match the brief.
+- The focused pytest suite passes: **3 passed**.
+- Tested the `parts[-2]` fallback against existing `examples`, `agents`, and nested `evals/fixtures` paths. It returned `"examples"`, `"agents"`, and `"synthetic_good_user"` instead of their owning skills.
+- Tested the `"references"`/`"scripts"` branch and `parts[-3]` indexing with legal path inputs `gnd-solve/references/nested/guide.md`, `gnd-solve/scripts/nested/tool.py`, and `gnd-solve/references/references/guide.md`. Results were `"nested"`, `"nested"`, and `"references"`; all should be `"gnd-solve"`. These probes created no files.
+- Read the existing root-relative ownership helper, `src/gnd/install.py::_skill_of`.
+
+I did not run the broader repository suite; verification covered the changed tests and direct ownership probes. No files were changed.
+
+VERDICT: CHANGES_REQUESTED

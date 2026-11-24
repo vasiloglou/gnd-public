@@ -1,0 +1,1584 @@
+Reading additional input from stdin...
+OpenAI Codex v0.163.0
+--------
+workdir: <repo>
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a20ac1-c622-7983-8462-172f6fc1ffb9
+--------
+user
+Read <repo>/.review-round/BRIEF.md and follow it.
+codex
+I’ll read the review brief and follow its instructions.
+exec
+/bin/zsh -lc 'cat .review-round/BRIEF.md' in <repo>
+ succeeded in 0ms:
+# Review brief: a phase's diff
+
+You are an independent reviewer, working in a different tool from the one that produced
+this work. Nothing here asks you to agree with it. Answer from the files themselves, not
+from any summary of them, including this brief's.
+
+## The question
+
+Review this change for correctness and readiness to merge.
+
+## The change under review
+
+The work from `6b0a7e5a` to the working tree at `03a8eb226ba5`. Its diff is `.review-round/diff.patch`.
+
+## What to read
+
+Paths are relative to the repository root, the directory you start in. Before you rely
+on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
+your answer: you are not reading the bytes this brief names.
+
+| File | SHA-256 |
+|---|---|
+| `.review-round/diff.patch` | `bbe9bbdd11d343342320ac59121ef58069d642dc5d6731641f12aefc3af79565` |
+| `tests/test_skill_names.py` | `b9bf370b0d1b06d5388859260278a758823d313a8444f7975451ce35b832be11` |
+| `tools/skill_names.py` | `9d85ac85829eb7aa9ea7afab91acac8d5072cac218b19a9831afd27f69c26008` |
+
+You may read anything else in the repository that helps you answer.
+
+## A standing check: code fitted to its examples
+
+Whatever the question above, also look in the code this change adds or changes for a
+solution that handles the examples in its tests and fixtures, and not the whole class of
+input it is given:
+
+- a regular expression, string split, slice or index over structured text (JSON, YAML,
+  TOML, source code, paths, command lines) that a parser or an existing reader in this
+  repository already reads;
+- a pattern over output this project renders itself (a report, a table, a log line), where
+  the code could have been handed the data instead;
+- a pattern fitted to the fixtures: it matches every committed example and fails on a
+  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
+- a branch on one literal name, file or message, added to make one case pass;
+- a second matcher for something an existing helper already does.
+
+A regular expression is not a finding in itself: one that states the whole grammar of a
+flat token (an identifier, a version number, a hex digest) is the right tool. For each
+suspect, build a legal input that the tests and fixtures lack and run the code on it.
+Report a finding only with that input: what the code returned and what it should have
+returned. A suspicion with no breaking input is style: label it so. In your list of what
+you checked, name each matcher you tried and the input you tried it with.
+
+## Rules
+
+- Read only. Do not edit, create, stage, commit, push or post anything.
+- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
+  not print environment variables. If you need one, name it and go on without it.
+- A finding names its file and line and the consequence someone would observe. Run what
+  you can to show it; where you only read, say so.
+
+## What to return
+
+1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
+   consequence, and how to reproduce it. A finding with no observable consequence is
+   style: label it so.
+2. What you checked and found true.
+3. What you could not check, and why.
+4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+
+exec
+/bin/zsh -lc 'shasum -a 256 .review-round/diff.patch tests/test_skill_names.py tools/skill_names.py' in <repo>
+ succeeded in 0ms:
+bbe9bbdd11d343342320ac59121ef58069d642dc5d6731641f12aefc3af79565  .review-round/diff.patch
+b9bf370b0d1b06d5388859260278a758823d313a8444f7975451ce35b832be11  tests/test_skill_names.py
+9d85ac85829eb7aa9ea7afab91acac8d5072cac218b19a9831afd27f69c26008  tools/skill_names.py
+
+exec
+/bin/zsh -lc 'cat .review-round/diff.patch' in <repo>
+ succeeded in 0ms:
+diff --git a/tests/test_skill_names.py b/tests/test_skill_names.py
+new file mode 100644
+index 00000000..a68e6253
+--- /dev/null
++++ b/tests/test_skill_names.py
+@@ -0,0 +1,22 @@
++"""Tests for tools/skill_names.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.skill_names import skill_names
++
++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
++
++
++def test_every_packaged_skill_names_its_own_directory() -> None:
++    names = skill_names(SKILLS)
++    assert len(names) == 18
++    assert all(directory == name for directory, name in names.items())
++
++
++def test_a_skill_written_here(tmp_path: Path) -> None:
++    (tmp_path / "demo").mkdir()
++    (tmp_path / "demo" / "SKILL.md").write_text(
++        "---\nname: demo\ndescription: A demo skill.\n---\n\n# Demo\n", encoding="utf-8"
++    )
++    assert skill_names(tmp_path) == {"demo": "demo"}
+diff --git a/tools/skill_names.py b/tools/skill_names.py
+new file mode 100644
+index 00000000..8dcc29d2
+--- /dev/null
++++ b/tools/skill_names.py
+@@ -0,0 +1,18 @@
++"""Read the declared name of every skill under a skills root."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from gnd.exp.frontmatter import read_frontmatter
++
++
++def skill_name(path: str | Path) -> str | None:
++    """Return the ``name`` a SKILL.md declares in its frontmatter, or None."""
++    mapping, _body = read_frontmatter(path)
++    name = mapping.get("name")
++    return name if isinstance(name, str) else None
++
++
++def skill_names(root: str | Path) -> dict[str, str | None]:
++    """Map each skill directory under ``root`` to the name its SKILL.md declares."""
++    return {path.parent.name: skill_name(path) for path in sorted(Path(root).glob("*/SKILL.md"))}
+
+exec
+/bin/zsh -lc 'cat pyproject.toml CONTRIBUTING.md' in <repo>
+ succeeded in 0ms:
+[project]
+# D-01: `gnd` has been taken on PyPI since 2022, so the DISTRIBUTION is
+# `get-nick-done`. The import package and the console script both stay `gnd` —
+# only the name users type after `uv tool install` changes.
+name = "get-nick-done"
+version = "0.4.0"
+description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+# Issue 175: without this key the wheel and sdist carry no long description and
+# the PyPI project page shows no text. PYPI.md is a short description written
+# for that page: every link in it is absolute, because PyPI does not resolve the
+# repository README's relative links or its image, and it names no version, so a
+# release does not edit it. tests/test_package_description.py holds both rules.
+readme = "PYPI.md"
+authors = [
+    { name = "Nikolaos Vasiloglou", email = "nvasil@gmail.com" }
+]
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+# D-18: the base install stays these three. Phase 2's synthetic-data stack
+# (polyfactory / faker / hypothesis) lands behind an optional extra when there is
+# something to put in it — do NOT scaffold an empty extra now. A fourth entry
+# here fails tests/test_packaged_skills.py::test_base_dependency_set_is_frozen,
+# which is the mechanical form of this policy.
+dependencies = [
+    "jsonschema==4.26.0",
+    "pydantic==2.13.4",
+    "ruamel-yaml==0.19.1",
+]
+
+# D-18: the base install above is deliberately untouched. Phase 2's synthetic-data
+# stack lands here, behind an OPTIONAL extra, so a user who only runs `gnd check`
+# never receives it. `faker` was cleared through the phase's blocking-human
+# package-legitimacy gate (02-02 Task 1) before being pinned: PyPI `Faker`, first
+# released 2010-12-23, 503 releases, repo github.com/joke2k/faker. Polyfactory and
+# Hypothesis are NOT installed — Polyfactory was refuted by measurement (D-17,
+# 0/8 ages in a declared 18..65 range; 8/8 distinct entities forcing zero-row
+# joins) and Hypothesis is deferred. Adding either here, or promoting faker into
+# [project.dependencies], fails tests/test_packaged_skills.py.
+[project.optional-dependencies]
+synth = ["faker==40.36.0"]
+
+[project.urls]
+Repository = "https://github.com/vasiloglou/gnd-public"
+Issues = "https://github.com/vasiloglou/gnd-public/issues"
+
+[project.scripts]
+# PKG-01. The generated wrapper wraps the call in `sys.exit()`, so `main`'s
+# existing `int` return IS the process exit code and the 0-4/64/70 band contract
+# in gnd/cli.py survives untouched. `python -m gnd` keeps working (D-03) as a
+# development convenience; this is the documented interface.
+gnd = "gnd.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.10.10,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# The ONLY key this project may set here, and it is mandatory: `uv_build` derives
+# the module name from the distribution name, so renaming to `get-nick-done`
+# (D-01) makes it look for `src/get_nick_done/`. Without this it fails loudly —
+# "Expected a Python module at: src/get_nick_done/__init__.py" — which is why
+# this key is safe to rely on where the include keys are not.
+#
+# Do NOT add `source-include`, `data`, or a `force-include` stanza here to get
+# the skills into the wheel. All three were measured and refuted: `source-include`
+# is sdist-only, `data.purelib` lands at the site-packages root rather than
+# `gnd/skills/`, and `force-include` is not a key this backend has. Worse, the
+# backend SILENTLY IGNORES unrecognised keys — a typo yields a clean
+# "Successfully built" and a skill-less wheel, which is exactly how this defect
+# shipped. The skill tree ships because it physically lives under the module
+# root at `src/gnd/skills/`; that is the whole mechanism. Verify artifacts with
+# `pytest -m distribution`, never a green build message.
+module-name = "gnd"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["fixtures"]
+addopts = "-m 'not derivation_oracle and not pyrel_oracle and not ossie_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
+markers = [
+  "proof: opt-in proof lane; not selected by the default public development gate",
+  "derivation_oracle: opt-in derivation_oracle lane; not selected by the default public development gate",
+  "ossie_oracle: opt-in pinned Ossie validator and parser lane",
+  "pyrel_oracle: opt-in pyrel_oracle lane; not selected by the default public development gate",
+  "distribution: opt-in distribution lane; not selected by the default public development gate",
+  "evidence: opt-in evidence lane; not selected by the default public development gate",
+  "census: opt-in census lane; not selected by the default public development gate",
+  "live: opt-in live lane; not selected by the default public development gate",
+  "network: opt-in network lane; not selected by the default public development gate",
+  "review_runner: opt-in review_runner lane; not selected by the default public development gate",
+  "slow: opt-in slow lane; not selected by the default public development gate",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# An experiment's retained attempts and its accepted candidate are EVIDENCE:
+# they record what a session actually produced, and reformatting them would
+# forge that record the same way editing a retained agent stream would. They are
+# excluded from linting because their bytes are not ours to change -- not
+# because their style is acceptable.
+#
+# This exemption deliberately does NOT cover the shipped product. The BookRec
+# package that ships lives at examples/bookrec/project/bookrec/, is copied from
+# the accepted gate candidate, and is linted like any other source here. If the
+# copy is dirty, the fix belongs in the session that produced it, never in a
+# post-hoc edit that would break the byte-for-byte copy claim.
+#
+# proof/v6/phase1/generated/ is the contract-carrying copy of the Phase 1 kernel.
+# Its bytes are produced by proof/v6/phase1/generate_proof_source.py, and they
+# are held to something far stricter than a linter: proof/v6/phase1/erasure.py
+# proves that erasing its contract-only calls returns it to
+# src/gnd/proof_kernel.py statement for statement, and that file IS linted. A
+# ruff autofix here would break that identity, which is the whole gate.
+#
+# .gnd-planning/ holds the scripts a milestone or maintenance pass retained as
+# evidence: probes, captures, census and re-record scripts. Records bind many of
+# them by SHA-256, and each one is the command a record says was run, so a lint
+# fix would change what the record points at. They are excluded for the same
+# reason as the experiment attempts above. A script that is meant to be reused
+# belongs under tools/ or tests/, where it is linted.
+#
+# scripts/components_index.py is delivered from dev-tools (.devtools.toml) and
+# bound by .devtools-receipt.json. A lint fix to it is made in dev-tools and
+# arrives through the sync, never by a local edit.
+extend-exclude = [
+    "**/EXP-*/runs/*/attempts/**",
+    "**/EXP-*/candidate/**",
+    "proof/v6/phase1/generated/**",
+    ".gnd-planning/**",
+    "scripts/components_index.py",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# This file is a byte copy of src/gnd/examples/expense/extension.py, which the
+# tutorial copies into the generated project (tests/test_expense_tutorial.py
+# compares the two). Beside its own `cli` package, isort reads `cli.reporting`
+# as first-party and wants the blank line before `gnd.api` removed; in
+# extension.py's directory the same bytes are sorted correctly.
+"src/gnd/examples/expense/project/cli/expense_cli.py" = ["I001"]
+
+[dependency-groups]
+dev = [
+    # A fresh detached checkout measured the default suite failing at
+    # test_measure_offline's synth-fixture setup. Keeping Faker in dev as well
+    # as the optional runtime extra makes `uv run pytest` honest without
+    # widening the three-package base install.
+    "duckdb==1.5.5",
+    "faker==40.36.0",
+    "pytest==9.1.1",
+    "ruff==0.16.2",
+]
+docs = [
+    "zensical==0.0.67",
+]
+# Contributing
+
+Work from this repository alone with Python >=3.11 and uv 0.10.10:
+
+```sh
+uv sync --locked --group dev
+uv run gnd install --symlink --project --force
+uv run gnd doctor --project
+uv run pytest -q tests/test_release_examples.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py
+```
+
+Tracked installer links have no local receipt in a fresh clone. Adopt them once
+with --force; never overwrite modified links or maintain them manually. Both
+.codex and .claude roots contain the packaged links and real development-skill
+twins. Regenerate packaged links through gnd install, keep real twins identical.
+Ordinary development uses this checkout's editable package. Final acceptance
+will additionally exercise the exact installed candidate in a fresh target-only
+tree, with actual module/tool/link paths recorded.
+
+Use [start-milestone](.codex/skills/start-milestone/SKILL.md) to prepare or resume
+a milestone plan and its first draft phase spec in `.gnd-planning`. It checks
+obligation ownership, dependencies and implementability before execution; it does
+not approve the plan or run phases.
+
+Use [process-milestone](.codex/skills/process-milestone/SKILL.md) to execute or
+resume a whole named milestone through `process-phase` and its close gates.
+`process-milestone pyrel-applications auto=true` explicitly delegates approval
+rulings for that milestone; required reviews and verification still run, and
+merge/publication/certification keep their separate authorization.
+
+Numbered work follows the full [process-phase](.codex/skills/process-phase/SKILL.md)
+protocol: spec, owner gate, implementation, independent review, refactoring review,
+record and explicit-path commit. The [sample spec](docs/development/examples/phase-spec.md)
+and [sample record](docs/development/examples/phase-record.md) are non-authoritative
+exercises. Source-owned runtime units await explicit handoff; changes here do not
+silently transfer authority. Phase 3 final acceptance is pending.
+
+Run focused affected tests with the default lane exclusions. Historical broad,
+provider/native and certification lanes require separate selection. Never source
+repository .env files; optional live review needs trusted credentials and explicit
+selection. [Bootstrap history](docs/development/bootstrap.md) is historical;
+the old original-definition accounting runner is not release acceptance under r3.
+See [release preparation](docs/releasing.md) and [security reporting](SECURITY.md).
+
+## Owner-controlled contributions
+
+Contributions are by invitation. Only collaborators approved by `vasiloglou`
+receive write access. Public availability permits reading and forking; it does
+not grant permission to modify this repository.
+
+For all changes, including owner and coding-agent changes, use a topic branch and
+submit a pull request. Never push directly to main, force-push it, or delete it. Resolve
+review conversations before merging. `.github/CODEOWNERS` names `vasiloglou` for
+all files.
+
+While `vasiloglou` is the only collaborator, branch protection requires PRs with
+zero required approving reviews. GitHub prohibits authors from approving their
+own PRs, so the owner's explicit merge decision is the acceptance step. Coding
+agents may merge only with the owner's explicit authorization. Protection applies
+to administrators too, with no PR bypass. Cloud CI is not currently a required
+status check; run the focused checks applicable to a change and record results.
+
+Before granting another account write access, enable one required approving
+review and required code-owner review. Its PRs will then require `vasiloglou`'s
+recorded approval. PRs authored by `vasiloglou` will need another authorized code
+owner, or work must be authored through a separately controlled contributor/bot
+identity so `vasiloglou` can approve. Never create a shared reviewer identity or
+approve a PR through a token belonging to its author.
+
+For a public repository, use the collaborators-only interaction limit to prevent
+outside PRs, issues and comments. GitHub limits this setting to six months; renew
+it before its reported expiration. It cannot be enabled while the repository is
+private. Check the live settings before claiming restrictions are enforced.
+
+## Refactoring dependencies and compatibility
+
+The measured layer map is [tools/gnd_layers.json](tools/gnd_layers.json).
+Errors and schemas have infrastructure homes; documents, values and universe
+serve model data and lookup; extensions compute facts below checker and
+applicability. Registry descriptors live in branches. Runtime graph checks count
+lazy and literal dynamic imports as well as top-level imports. Add every new
+module to the map, preserve the clean-layer ratchet, and do not grow allowances.
+
+Old module names retain explicit aliases in the
+[shim inventory](.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md).
+Patch the defining module for moved algorithms and the actual public lookup seam
+for consumer wrappers. Move tests pin alias identity and source-scan coverage;
+retirement follows the approved plan's RF-D5 gate. Current source changes make
+old release evidence unavailable until its separately selected controls run.
+
+Peripheral dependency homes are public filesystem seams in safefs, the bounded
+runner in process, trusted adapters in agents, and the independent synth oracle
+package. Assurance follows _wire, core, inheritance, claims, evidence dependency
+order; transport carries receipts. Payload assembly lives in payloads, and
+export/witness services own their thin API wrappers. Old imports remain aliases.
+
+### Model query and constraint family homes
+
+Use gnd.model_index.ModelIndex.for_model(model) for detached model queries. Each
+request keys a bounded snapshot cache by current full model content, with unsafe
+canonical shapes bypassing the cache. Keep the existing strict/truthy primitive
+policy explicit. Raw serialization and deliberately retained domain traversal
+sites are individually listed in the RF6 query policy; additions need a reason
+and a current behavior control.
+
+Constraint adaptation, evaluation, witness projection, presentation, scope and
+shape selection use gnd.constraint_families.FAMILIES. Keep shared refusal and
+vacuity precedence outside family-specific algorithms. The production branch
+evidence registry remains a separate inventory. Preserve every historical import
+shim until a separately approved retirement after the first release following RF6.
+
+exec
+/bin/zsh -lc 'cat tools/skill_names.py tests/test_skill_names.py src/gnd/exp/frontmatter.py' in <repo>
+ succeeded in 0ms:
+"""Read the declared name of every skill under a skills root."""
+from __future__ import annotations
+
+from pathlib import Path
+
+from gnd.exp.frontmatter import read_frontmatter
+
+
+def skill_name(path: str | Path) -> str | None:
+    """Return the ``name`` a SKILL.md declares in its frontmatter, or None."""
+    mapping, _body = read_frontmatter(path)
+    name = mapping.get("name")
+    return name if isinstance(name, str) else None
+
+
+def skill_names(root: str | Path) -> dict[str, str | None]:
+    """Map each skill directory under ``root`` to the name its SKILL.md declares."""
+    return {path.parent.name: skill_name(path) for path in sorted(Path(root).glob("*/SKILL.md"))}
+"""Tests for tools/skill_names.py."""
+from __future__ import annotations
+
+from pathlib import Path
+
+from tools.skill_names import skill_names
+
+SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
+
+
+def test_every_packaged_skill_names_its_own_directory() -> None:
+    names = skill_names(SKILLS)
+    assert len(names) == 18
+    assert all(directory == name for directory, name in names.items())
+
+
+def test_a_skill_written_here(tmp_path: Path) -> None:
+    (tmp_path / "demo").mkdir()
+    (tmp_path / "demo" / "SKILL.md").write_text(
+        "---\nname: demo\ndescription: A demo skill.\n---\n\n# Demo\n", encoding="utf-8"
+    )
+    assert skill_names(tmp_path) == {"demo": "demo"}
+"""The ``---``-fenced YAML frontmatter reader/writer (plan 03-01).
+
+GND has never had a frontmatter parser (RESEARCH §1.3 item 7, grep-confirmed
+across ``src/gnd/``), and it may not grow one as a PACKAGE: ``pyproject.toml``
+freezes the base install at three dependencies and a fourth reds
+``tests/test_packaged_skills.py::test_base_dependency_set_is_frozen`` against
+``FROZEN_BASE_DEPENDENCIES = {"jsonschema", "pydantic", "ruamel-yaml"}`` (G-20).
+So this module is built on the already-pinned ``ruamel.yaml.YAML(typ="safe")``,
+the ``gnd.model`` idiom, and is deliberately small: split on the fences, load the
+block with the safe loader, demand a mapping.
+
+The prior art copied here is this repository's own ``.planning/**/*-PLAN.md``
+frontmatter — a flat mapping of scalars and short lists, read and written by
+hand. Nothing richer is needed and nothing richer is offered.
+
+The document is UNTRUSTED committed metadata, so both bounds that
+``gnd.extract.manifest`` and ``gnd.model`` apply are applied here:
+
+- :data:`MAX_DOCUMENT_BYTES` is checked by ``stat()`` BEFORE the read (T-03-03).
+  Reading and then measuring is not a cap — the hostile document is already
+  resident by the time its size is known.
+- the parse-event stream is walked for aliases before any node is constructed
+  (T-03-04). ``gnd.model.yaml_stream_guard_error``'s own docstring records why
+  the byte cap is not sufficient on its own: ruamel's safe loader expands
+  anchors without limit, so a well-under-cap billion-laughs block exhausts
+  memory during load. A 1 MB cap as the SOLE mitigation would be a bound that
+  cannot fail for the attack it exists to stop.
+"""
+
+from __future__ import annotations
+
+import io
+from pathlib import Path
+from typing import Any
+
+from ruamel.yaml import YAML, YAMLError
+
+from gnd.model import MAX_YAML_EVENTS
+
+__all__ = [
+    "MAX_DOCUMENT_BYTES",
+    "FrontmatterError",
+    "read_frontmatter",
+    "render_frontmatter",
+]
+
+#: Byte cap on a frontmatter-bearing document read. A SPEC.md or CONCLUSIONS.md
+#: carries a handful of ids, one-line questions and short prose — 1 MB is
+#: generous headroom, and the cap is what keeps a hostile 10 GB "spec" from
+#: being slurped before validation (the MAX_MANIFEST_BYTES posture, T-03-03).
+MAX_DOCUMENT_BYTES = 1 * 1024 * 1024
+
+#: The fence line. Exactly three dashes on a line of their own, the form this
+#: repository's own PLAN/SUMMARY documents already use.
+_FENCE = "---"
+
+
+class FrontmatterError(Exception):
+    """A document could not be read, was unfenced, or its block was not a mapping.
+
+    Loud by design. Returning an empty mapping for an unfenced document would
+    make a SPEC.md that declares nothing read as a spec with nothing wrong — the
+    gate-cannot-fail shape this phase exists to refuse.
+    """
+
+
+def _alias_issue(block: str) -> str | None:
+    """The ``gnd.model.yaml_stream_guard_error`` rule applied to a block STRING.
+
+    The shipped guard takes a path because it guards whole files; a frontmatter
+    block is a slice of one, so the rule (not the code) is what is reused. Same
+    two rejections, same budget constant imported from ``gnd.model`` so there is
+    one number rather than two that can drift.
+    """
+    from ruamel.yaml.events import AliasEvent
+
+    yaml = YAML(typ="safe")
+    for count, event in enumerate(yaml.parse(io.StringIO(block)), start=1):
+        if count > MAX_YAML_EVENTS:
+            return (
+                f"the frontmatter block exceeds the {MAX_YAML_EVENTS} parse-event "
+                f"budget for untrusted input"
+            )
+        if isinstance(event, AliasEvent):
+            return (
+                f"the frontmatter block uses an anchor/alias ('*{event.anchor}') — "
+                f"aliases are rejected for untrusted input (alias-amplification "
+                f"defense, T-03-04)"
+            )
+    return None
+
+
+def _split(text: str, path: Path) -> tuple[str, str]:
+    """The fenced block and the body, or raise :class:`FrontmatterError`."""
+    lines = text.splitlines(keepends=True)
+    if not lines or lines[0].strip() != _FENCE:
+        raise FrontmatterError(
+            f"{path} does not open with a '{_FENCE}' frontmatter fence; a document "
+            f"without declared frontmatter is refused, never read as an empty one"
+        )
+    for index in range(1, len(lines)):
+        if lines[index].strip() == _FENCE:
+            return "".join(lines[1:index]), "".join(lines[index + 1 :])
+    raise FrontmatterError(
+        f"{path} has no closing '{_FENCE}' fence; an unterminated frontmatter "
+        f"block is refused rather than read to end-of-file"
+    )
+
+
+def read_frontmatter(path: str | Path) -> tuple[dict[str, Any], str]:
+    """Return ``(mapping, body)`` for a fenced document, or raise.
+
+    Order is load-bearing: ``stat()`` cap, then read, then alias guard, then
+    parse. Every step before the parse exists because the document is untrusted.
+    """
+    file_path = Path(path)
+    try:
+        size = file_path.stat().st_size
+    except OSError as error:
+        raise FrontmatterError(f"{file_path} could not be read: {error}") from error
+    if size > MAX_DOCUMENT_BYTES:
+        raise FrontmatterError(
+            f"{file_path} is {size} bytes, over the {MAX_DOCUMENT_BYTES}-byte cap "
+            f"for untrusted frontmatter input (T-03-03)"
+        )
+    try:
+        text = file_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as error:
+        raise FrontmatterError(f"{file_path} could not be read: {error}") from error
+
+    block, body = _split(text, file_path)
+
+    try:
+        issue = _alias_issue(block)
+    except (YAMLError, ValueError, RecursionError) as error:
+        raise FrontmatterError(
+            f"{file_path} has an unparseable frontmatter block: {error}"
+        ) from error
+    if issue is not None:
+        raise FrontmatterError(f"{file_path}: {issue}")
+
+    try:
+        loaded = YAML(typ="safe").load(block)
+    except (YAMLError, ValueError, RecursionError) as error:
+        raise FrontmatterError(
+            f"{file_path} has an unparseable frontmatter block: {error}"
+        ) from error
+    if not isinstance(loaded, dict):
+        raise FrontmatterError(
+            f"{file_path}'s frontmatter block is {type(loaded).__name__}, not a "
+            f"mapping; a sequence, a scalar or an empty block declares no fields "
+            f"and is refused rather than coerced"
+        )
+    return dict(loaded), body
+
+
+def render_frontmatter(mapping: dict[str, Any], body: str) -> str:
+    """Render ``mapping`` as a fenced block above ``body``, byte-deterministically.
+
+    Keys are sorted and the result ends in a newline, so two renders of one
+    mapping agree to the byte regardless of the caller's insertion order (the
+    ``cli.py`` canonical-JSON discipline). ``gnd exp init`` writes a COMMITTED
+    artifact; a render that varied by key order would produce diff noise
+    indistinguishable from a real edit.
+    """
+    yaml = YAML(typ="safe")
+    yaml.default_flow_style = False
+    yaml.allow_unicode = True
+    yaml.width = 4096
+    stream = io.StringIO()
+    yaml.dump({key: mapping[key] for key in sorted(mapping)}, stream)
+    block = stream.getvalue()
+    if not block.endswith("\n"):
+        block += "\n"
+    if not body.endswith("\n"):
+        body += "\n"
+    return f"{_FENCE}\n{block}{_FENCE}\n\n{body}"
+
+exec
+/bin/zsh -lc "rg -n 'read_frontmatter|skill_names|skill_name\\(' src tools tests pyproject.toml CONTRIBUTING.md" in <repo>
+exec
+/bin/zsh -lc 'git status --short; git log -1 --oneline; rg --files tools src/gnd/skills | head -65' in <repo>
+ succeeded in 25ms:
+tools/skill_names.py:6:from gnd.exp.frontmatter import read_frontmatter
+tools/skill_names.py:9:def skill_name(path: str | Path) -> str | None:
+tools/skill_names.py:11:    mapping, _body = read_frontmatter(path)
+tools/skill_names.py:16:def skill_names(root: str | Path) -> dict[str, str | None]:
+tools/skill_names.py:18:    return {path.parent.name: skill_name(path) for path in sorted(Path(root).glob("*/SKILL.md"))}
+src/gnd/codegen/emit.py:46::func:`gnd.exp.frontmatter.read_frontmatter` DURING emission, so an unparseable
+src/gnd/codegen/emit.py:99:from gnd.exp.frontmatter import FrontmatterError, read_frontmatter, render_frontmatter
+src/gnd/codegen/emit.py:539:def _validated_skill_name(name: str) -> str:
+src/gnd/codegen/emit.py:549:def _skill_name(stem: str) -> str:
+src/gnd/codegen/emit.py:558:    return _validated_skill_name(f"gnd-{segment}")
+src/gnd/codegen/emit.py:589:    name = _validated_skill_name(skill_name) if skill_name is not None else _skill_name(stem)
+src/gnd/codegen/emit.py:590:    notes_name = _skill_name(stem)
+src/gnd/codegen/emit.py:980:    name = _validated_skill_name(skill_name) if skill_name is not None else _skill_name(stem)
+src/gnd/codegen/emit.py:981:    notes_name = _skill_name(stem)
+src/gnd/codegen/emit.py:1085:    because ``read_frontmatter`` guards a PATH (byte cap, then read, then alias
+src/gnd/codegen/emit.py:1092:            mapping, body = read_frontmatter(probe)
+src/gnd/codegen/emit.py:1113:        _validated_skill_name(expected_name)
+tests/test_public_agents_skill_table.py:16:def _packaged_skill_names() -> set[str]:
+tests/test_public_agents_skill_table.py:23:    packaged = _packaged_skill_names()
+tests/test_public_frontmatter_declarations.py:8:from gnd.exp.frontmatter import read_frontmatter
+tests/test_public_frontmatter_declarations.py:17:    Not ``yaml.safe_load`` over a hand-split file: ``read_frontmatter`` applies
+tests/test_public_frontmatter_declarations.py:22:    mapping, _body = read_frontmatter(path)
+src/gnd/exp/conclusions.py:65:from gnd.exp.frontmatter import FrontmatterError, read_frontmatter
+src/gnd/exp/conclusions.py:226:        mapping, _ = read_frontmatter(file_path)
+src/gnd/exp/spec.py:5:byte-capped read lives in :func:`~gnd.exp.frontmatter.read_frontmatter`,
+src/gnd/exp/spec.py:44:from gnd.exp.frontmatter import FrontmatterError, read_frontmatter
+src/gnd/exp/spec.py:264:    :func:`~gnd.exp.frontmatter.read_frontmatter` BEFORE the block is parsed, and
+src/gnd/exp/spec.py:269:        mapping, _ = read_frontmatter(file_path)
+tests/test_codegen_force.py:57:from gnd.exp.frontmatter import read_frontmatter
+tests/test_codegen_force.py:1721:    mapping, _body = read_frontmatter(out / "SKILL.md")
+src/gnd/exp/frontmatter.py:43:    "read_frontmatter",
+src/gnd/exp/frontmatter.py:110:def read_frontmatter(path: str | Path) -> tuple[dict[str, Any], str]:
+tests/test_install.py:1631:def test_no_installer_control_flow_branches_on_a_skill_name(tmp_path: Path) -> None:
+tests/test_public_built_inventory.py:112:def _skill_names(entries: set[str]) -> set[str]:
+tests/test_public_built_inventory.py:135:    assert _skill_names(entries) == EXPECTED_SKILL_NAMES, (
+tests/test_public_built_inventory.py:136:        f"the wheel ships skills {sorted(_skill_names(entries))}, expected "
+tests/test_public_built_inventory.py:151:    assert _skill_names(entries) == EXPECTED_SKILL_NAMES, (
+tests/test_public_built_inventory.py:152:        f"the sdist ships skills {sorted(_skill_names(entries))}, expected "
+tests/test_public_built_inventory.py:165:    assert _skill_names(entries) == EXPECTED_SKILL_NAMES, (
+tests/test_public_built_inventory.py:166:        f"the source tree holds skills {sorted(_skill_names(entries))}, expected "
+tests/test_public_built_inventory.py:320:        assert _skill_names(entries) == EXPECTED_SKILL_NAMES
+tests/test_public_built_inventory.py:322:        assert len(_skill_names(entries)) == 18
+tests/test_public_workflow_claim_routes.py:4:def test_render_doc_skill_names_the_constraint_blind_seed() -> None:
+tests/test_codegen_emit.py:42:from gnd.exp.frontmatter import read_frontmatter
+tests/test_codegen_emit.py:389:    mapping, body = read_frontmatter(root / "SKILL.md")
+tests/test_skill_names.py:1:"""Tests for tools/skill_names.py."""
+tests/test_skill_names.py:6:from tools.skill_names import skill_names
+tests/test_skill_names.py:11:def test_every_packaged_skill_names_its_own_directory() -> None:
+tests/test_skill_names.py:12:    names = skill_names(SKILLS)
+tests/test_skill_names.py:22:    assert skill_names(tmp_path) == {"demo": "demo"}
+tests/test_exp_frontmatter.py:22:    read_frontmatter,
+tests/test_exp_frontmatter.py:47:    mapping, body = read_frontmatter(_write(tmp_path / "SPEC.md", SPEC))
+tests/test_exp_frontmatter.py:69:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:78:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:101:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:108:        read_frontmatter(tmp_path / "absent.md")
+tests/test_exp_frontmatter.py:116:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:125:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:134:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:143:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:165:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:182:        read_frontmatter(path)
+tests/test_exp_frontmatter.py:197:    loaded, body = read_frontmatter(path)
+tests/support/planning_tree.py:11:from gnd.exp.frontmatter import FrontmatterError, read_frontmatter
+tests/support/planning_tree.py:61:    ``read_frontmatter`` returns a mapping and drops line numbers, so this
+tests/support/planning_tree.py:135:            mapping, _body = read_frontmatter(path)
+tests/test_doctor_uninstall.py:1585:def _packaged_skill_names() -> set[str]:
+tests/test_doctor_uninstall.py:1602:    packaged = _packaged_skill_names()
+tests/test_doctor_uninstall.py:1661:    packaged = _packaged_skill_names()
+tests/test_doctor_uninstall.py:1741:    assert "plan-review-panel" not in _packaged_skill_names(), (
+tests/test_doctor_uninstall.py:1786:        assert name not in _packaged_skill_names(), (
+tests/test_packaged_skills.py:201:    from gnd.exp.frontmatter import read_frontmatter
+tests/test_packaged_skills.py:208:        mapping, body = read_frontmatter(probe)
+tests/test_release_acceptance.py:88:            skill_names = {n.removeprefix('gnd/skills/') for n in names
+tests/test_release_acceptance.py:90:            assert skill_names == EXPECTED_SKILL_FILES
+
+ succeeded in 86ms:
+?? .review-round/
+03a8eb22 Add a tool that reads each skill's declared name
+tools/build_seeded_growth_example.py
+tools/record_pyrel_sessions.py
+tools/release_text.py
+tools/build_ci_repair_successors.py
+tools/accept_pyrel_applications_install.py
+tools/build_composition_example.py
+tools/run_gnd_review_panel.py
+tools/ilp_comparison.py
+tools/build_growth_example.py
+tools/render_replay.py
+tools/figures/hero.py
+tools/figures/svgkit.py
+tools/figures/README.md
+tools/figures/orm_diagrams.py
+tools/figures/build.py
+tools/measure_transition_cost.py
+tools/measure_incremental_evaluation.py
+tools/build_literature_example.py
+tools/measure_evaluation_sessions.py
+tools/ossie_consumer.py
+tools/check_installed_docs.py
+tools/mc1_model_census.py
+tools/openrouter_gateway.py
+tools/ossie_oracle.py
+tools/record_judge_sessions.py
+tools/gnd_layers.json
+tools/measure_pyrel_applications.py
+tools/gnd_entrypoints.json
+tools/run_public_acceptance.py
+tools/build_literature_lineage_model.py
+tools/build_expense_receipts_example.py
+tools/plan_app_bot.py
+tools/record_plan_apps.py
+tools/record_skill_sessions.py
+tools/rf1_pins.py
+tools/build_resolution_fixtures.py
+tools/check_docs.py
+tools/agent_with_env_key.py
+tools/skill_names.py
+tools/run_tutorials.py
+tools/gnd_arch.py
+src/gnd/skills/gnd-new-project/SKILL.md
+src/gnd/skills/gnd-model-from-text/SKILL.md
+src/gnd/skills/gnd-adopt/migration.schema.json
+src/gnd/skills/gnd-adopt/SKILL.md
+src/gnd/skills/gnd-model-from-text/scripts/validate_model.py
+src/gnd/skills/gnd-adopt/scripts/verify_migration.py
+src/gnd/skills/gnd-adopt/references/gsd-environment-cleanup.md
+src/gnd/skills/gnd-adopt/references/gsd-mapping.md
+src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml
+src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml
+src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml
+src/gnd/skills/gnd-model-from-text/examples/movie_catalog.dialogue.md
+src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml
+src/gnd/skills/gnd-model-from-text/USAGE.md
+src/gnd/skills/gnd-solve/SKILL.md
+src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+src/gnd/skills/gnd-model-from-text/references/dialogue-patterns.md
+src/gnd/skills/gnd-model-from-text/references/csdp-workflow.md
+src/gnd/skills/gnd-model-evolve/SKILL.md
+src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+src/gnd/skills/gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md
+
+exec
+/bin/zsh -lc 'ls -d .venv <home>/github-repos/gnd-public/.venv 2>/dev/null; command -v python python3 uv' in <repo>
+ exited 1 in 0ms:
+.venv
+<home>/github-repos/gnd-public/.venv
+/opt/homebrew/bin/python3
+/opt/homebrew/bin/uv
+
+exec
+/bin/zsh -lc "rg -n 'SKILL.md|frontmatter|name:' src/gnd/install.py src/gnd/doctor.py src/gnd/skill* docs/development | head -90" in <repo>
+exec
+/bin/zsh -lc "cat tests/test_public_frontmatter_declarations.py tests/test_public_agents_skill_table.py; sed -n '1,235p' tests/test_exp_frontmatter.py; sed -n '1,110p' tests/conftest.py" in <repo>
+ succeeded in 0ms:
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+from gnd.exp.frontmatter import read_frontmatter
+
+COMPLETED_FIELD = "requirements-completed"
+PHASES_ROOT = Path(__file__).parent
+pinning = pytest.mark.skipif(not PHASES_ROOT.is_dir(), reason="the public fixture parent is absent")
+
+def _frontmatter(path: Path) -> dict[str, Any]:
+    """The document's frontmatter through the SHIPPED reader.
+
+    Not ``yaml.safe_load`` over a hand-split file: ``read_frontmatter`` applies
+    the byte cap before the read and refuses anchors and aliases, and running
+    phase 3's own parser over this project's own artifacts is the dogfooding the
+    plan asked for.
+    """
+    mapping, _body = read_frontmatter(path)
+    return mapping
+
+
+def _declares(mapping: dict[str, Any], field: str) -> bool:
+    """Is ``field`` DECLARED — present with a value that is not empty?
+
+    ``requirements-completed: []`` is not a claim of completion, and treating it
+    as one would make the gate fire on a plan that completed nothing. Absent and
+    empty are the same state for this rule, and saying so once here is what keeps
+    the call sites from disagreeing about it.
+    """
+    value = mapping.get(field)
+    if value is None:
+        return False
+    if isinstance(value, (list, tuple, set, dict, str)):
+        return len(value) > 0
+    return bool(value)
+
+
+@pinning
+def test_a_body_mention_is_not_a_declaration(tmp_path):
+    """A grep-based gate would flag the closing plan's own prose.
+
+    ``03-07-PLAN.md`` writes ``requirements-completed`` ten times in its body
+    while explaining the rule, so a text scan cannot tell an explanation from a
+    declaration. This test builds both documents and asserts the reader
+    separates them — and asserts the NAIVE SCAN fires on both, so the test
+    cannot pass over a gate that stopped distinguishing anything.
+    """
+    body_only = tmp_path / "03-99-PLAN.md"
+    body_only.write_text(
+        "---\n"
+        "phase: 03-experiments-codegen-conformance\n"
+        "plan: 99\n"
+        "requirements: [EXP-01]\n"
+        "requirements-partial: [EXP-01]\n"
+        "---\n\n"
+        "This plan explains that only the closing plan may record\n"
+        "`requirements-completed`, and this plan is not it.\n",
+        encoding="utf-8",
+    )
+    declaring = tmp_path / "03-98-PLAN.md"
+    declaring.write_text(
+        "---\n"
+        "phase: 03-experiments-codegen-conformance\n"
+        "plan: 98\n"
+        "requirements: [EXP-01]\n"
+        "requirements-completed: [EXP-01]\n"
+        "---\n\nNo prose at all.\n",
+        encoding="utf-8",
+    )
+
+    assert not _declares(_frontmatter(body_only), COMPLETED_FIELD), (
+        "a body mention was read as a declaration — the gate is scanning text"
+    )
+    assert _declares(_frontmatter(declaring), COMPLETED_FIELD), (
+        "a real frontmatter declaration was not seen — the gate reads nothing"
+    )
+
+    # The negative control: the naive scan this gate replaces fires on BOTH, so
+    # the distinction above is a property of the reader and not of the fixtures.
+    naive = [
+        path.name
+        for path in (body_only, declaring)
+        if COMPLETED_FIELD in path.read_text(encoding="utf-8")
+    ]
+    assert naive == [body_only.name, declaring.name], (
+        f"the naive text scan did not fire on both documents ({naive}); the "
+        f"fixtures no longer demonstrate the difference the reader makes"
+    )
+
+
+@pinning
+def test_an_empty_completion_list_is_not_a_completion(tmp_path):
+    """``requirements-completed: []`` claims nothing, and must not be a finding.
+
+    Stated as its own test because the alternative reading — presence is the
+    declaration — makes the gate fire on a plan that completed nothing, and a
+    gate that fires on a compliant document is one somebody switches off.
+    """
+    empty = tmp_path / "03-97-PLAN.md"
+    empty.write_text(
+        "---\nphase: p\nplan: 97\nrequirements-completed: []\n---\n\nbody\n",
+        encoding="utf-8",
+    )
+    assert not _declares(_frontmatter(empty), COMPLETED_FIELD)
+from __future__ import annotations
+
+import re
+from importlib.resources import files
+from importlib.resources.abc import Traversable
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+AGENTS_MD = REPO_ROOT / "AGENTS.md"
+
+
+def _skills_root() -> Traversable:
+    return files('gnd') / 'skills'
+
+
+def _packaged_skill_names() -> set[str]:
+    return {entry.name for entry in _skills_root().iterdir() if entry.is_dir()}
+
+
+def test_agents_md_table_names_every_packaged_skill() -> None:
+    text = AGENTS_MD.read_text(encoding='utf-8')
+    listed = set(re.findall('\\]\\(src/gnd/skills/([a-z0-9-]+)/SKILL\\.md\\)', text))
+    packaged = _packaged_skill_names()
+    missing = sorted(packaged - listed)
+    extra = sorted(listed - packaged)
+    assert not missing and (not extra), f"AGENTS.md's skill table is not the packaged tree.\n  missing from the table ({len(missing)}): " + ', '.join(missing) + f'\n  listed but not packaged ({len(extra)}): ' + ', '.join(extra) + '\nThe table routes agents; a packaged skill it omits is a skill nobody is routed to (this is how gnd-new-project went missing), and a listed skill that does not ship is a route to nowhere.'
+
+
+
+
+
+
+
+
+
+
+
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+from gnd.exp.frontmatter import (
+    MAX_DOCUMENT_BYTES,
+    FrontmatterError,
+    read_frontmatter,
+    render_frontmatter,
+)
+
+SPEC = """---
+id: EXP-001-probe
+kind: codegen
+questions:
+  - id: Q1
+    text: Does the emitter agree with the model?
+---
+
+# EXP-001-probe
+
+Body prose the reader must hand back untouched.
+"""
+
+
+def _write(path: Path, text: str) -> Path:
+    path.write_text(text, encoding="utf-8")
+    return path
+
+
+def test_a_fenced_document_yields_its_mapping_and_its_body(tmp_path: Path) -> None:
+
+    mapping, body = read_frontmatter(_write(tmp_path / "SPEC.md", SPEC))
+
+    assert mapping["id"] == "EXP-001-probe"
+    assert mapping["kind"] == "codegen"
+    assert [q["id"] for q in mapping["questions"]] == ["Q1"]
+    assert "Body prose the reader must hand back untouched." in body
+    assert "kind: codegen" not in body, (
+        "the frontmatter block leaked into the body — a reader that hands the "
+        "fence back as prose makes every downstream body check meaningless"
+    )
+
+
+def test_a_document_with_no_opening_fence_is_refused(tmp_path: Path) -> None:
+
+
+
+
+
+
+    path = _write(tmp_path / "SPEC.md", "# EXP-001-probe\n\nNo frontmatter here.\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "frontmatter" in str(caught.value).lower()
+
+
+def test_a_document_with_no_closing_fence_is_refused(tmp_path: Path) -> None:
+
+    path = _write(tmp_path / "SPEC.md", "---\nid: EXP-001-probe\n\nbody\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "closing" in str(caught.value).lower() or "unterminated" in str(caught.value).lower()
+
+
+def test_a_document_over_the_byte_cap_is_refused_by_stat_before_any_read(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+
+
+
+
+
+
+
+    path = tmp_path / "SPEC.md"
+    path.write_bytes(b"---\nid: EXP-001-probe\n---\n" + b"x" * MAX_DOCUMENT_BYTES)
+
+    def _never(*args: object, **kwargs: object) -> str:
+        raise AssertionError("read_text was called — the cap did not precede the read")
+
+    monkeypatch.setattr(Path, "read_text", _never)
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert str(MAX_DOCUMENT_BYTES) in str(caught.value)
+
+
+def test_a_missing_document_is_refused_as_a_frontmatter_error(tmp_path: Path) -> None:
+
+    with pytest.raises(FrontmatterError):
+        read_frontmatter(tmp_path / "absent.md")
+
+
+def test_a_sequence_frontmatter_block_is_refused(tmp_path: Path) -> None:
+
+    path = _write(tmp_path / "SPEC.md", "---\n- one\n- two\n---\nbody\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "mapping" in str(caught.value).lower()
+
+
+def test_a_scalar_frontmatter_block_is_refused(tmp_path: Path) -> None:
+
+    path = _write(tmp_path / "SPEC.md", "---\njust a string\n---\nbody\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "mapping" in str(caught.value).lower()
+
+
+def test_an_empty_frontmatter_block_is_refused(tmp_path: Path) -> None:
+
+    path = _write(tmp_path / "SPEC.md", "---\n---\nbody\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "mapping" in str(caught.value).lower()
+
+
+def test_unparseable_yaml_in_the_block_is_refused(tmp_path: Path) -> None:
+
+    path = _write(tmp_path / "SPEC.md", "---\nid: [unclosed\n---\nbody\n")
+
+    with pytest.raises(FrontmatterError):
+        read_frontmatter(path)
+
+
+@pytest.mark.parametrize(
+    "hostile_value",
+    (
+        "9" * 10_000,
+        "[" * 2_000 + "0" + "]" * 2_000,
+    ),
+    ids=("long-integer", "deep-nesting"),
+)
+def test_non_yaml_parser_failures_are_normalized(
+    tmp_path: Path, hostile_value: str
+) -> None:
+
+
+    path = _write(
+        tmp_path / "SPEC.md",
+        f"---\nid: EXP-001-probe\nbomb: {hostile_value}\n---\nbody\n",
+    )
+
+    with pytest.raises(FrontmatterError, match="unparseable frontmatter"):
+        read_frontmatter(path)
+
+
+def test_an_anchor_alias_frontmatter_block_is_refused(tmp_path: Path) -> None:
+
+
+
+
+
+
+
+    path = _write(
+        tmp_path / "SPEC.md",
+        "---\na: &anchor [x, x]\nb: [*anchor, *anchor]\n---\nbody\n",
+    )
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "alias" in str(caught.value).lower()
+
+
+def test_render_round_trips_through_read(tmp_path: Path) -> None:
+
+    mapping = {
+        "id": "EXP-001-probe",
+        "kind": "codegen",
+        "title": "Probe",
+        "questions": [{"id": "Q1", "text": "Does the emitter agree with the model?"}],
+        "follows": [],
+    }
+    path = _write(tmp_path / "SPEC.md", render_frontmatter(mapping, "# Probe\n"))
+
+    loaded, body = read_frontmatter(path)
+    assert loaded == mapping
+    assert body.strip() == "# Probe"
+
+
+def test_two_renders_of_one_mapping_are_byte_identical(tmp_path: Path) -> None:
+
+
+
+
+
+    mapping = {"kind": "codegen", "id": "EXP-001-probe", "title": "Probe"}
+    first = render_frontmatter(mapping, "# Probe\n")
+    second = render_frontmatter(dict(reversed(list(mapping.items()))), "# Probe\n")
+
+    assert first == second, "two renders of one mapping disagreed byte for byte"
+    assert first.endswith("\n")
+    assert first.startswith("---\n")
+
+
+def test_render_sorts_its_keys(tmp_path: Path) -> None:
+
+    rendered = render_frontmatter({"z": 1, "a": 2, "m": 3}, "body\n")
+    block = rendered.split("---\n")[1]
+    keys = [line.split(":")[0] for line in block.splitlines() if line and not line[0].isspace()]
+    assert keys == sorted(keys)
+"""Current P2 fixture registration only; no historical session/collection hooks."""
+
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
+import pytest
+from test_public_distribution import (
+    package_probe as package_probe,  # noqa: PLC0414 -- pytest fixture export
+)
+
+from gnd.model import Model
+from gnd.population import Population, _stamp_validated_against
+
+# NM2-C6: an operator's GND_DISCLOSURE never reaches a test or a fixture of any
+# scope; tests that need a mode set it with monkeypatch.
+os.environ.pop("GND_DISCLOSURE", None)
+
+
+@pytest.fixture(autouse=True)
+def _parse_scope_write_check():
+    """GO1: every test that opens a model parse scope also checks that nothing
+    wrote into a remembered, shared document (``set_parse_scope_verify``)."""
+    from gnd.model._parsing import set_parse_scope_verify
+
+    previous = set_parse_scope_verify(True)
+    try:
+        yield
+    finally:
+        set_parse_scope_verify(previous)
+
+
+def make_population(model: Model, /, **kwargs: Any) -> Population:
+    """Build a Population and stamp it as validated against ``model``.
+
+    Use ONLY when the population is deliberately not loadable — a shape layer 2
+    would reject, built to test a checker guard. Anything that can come from a
+    file must go through ``load_population(path, model=model)`` so that layer 2
+    actually runs.
+
+    The :class:`~gnd.model.Model` is **positional-only**: ``Population`` has a
+    field literally named ``model`` (the free-form header path string), so a
+    keyword parameter of the same name would collide with it. The ``/`` lets
+    ``make_population(model_obj, model="m.orm.yaml", ...)`` read naturally.
+    """
+    population = Population(**kwargs)
+    _stamp_validated_against(population, model)
+    return population
+
+
+# Exact original tests import local helpers through the tests namespace.
+# Include only this public checkout/sandbox root; installed gnd stays separately resolved.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+ succeeded in 0ms:
+rg: src/gnd/doctor.py: No such file or directory (os error 2)
+src/gnd/install.py:719:    name: str,
+src/gnd/install.py:839:    ``gnd-orm-core/SKILL.md`` exists and no manifest records it, that is
+src/gnd/install.py:869:            recorded_skills = {name: manifest.skills[name] for name in manifest.link_entries()}
+src/gnd/install.py:922:def _link_target(skills_root: Traversable, name: str) -> Path:
+src/gnd/install.py:1090:            previous_skills = {name: manifest.skills[name] for name in manifest.link_entries()}
+src/gnd/skills/gnd-new-project/SKILL.md:2:name: gnd-new-project
+src/gnd/skills/gnd-new-project/SKILL.md:17:**Why the name:** a repository may already carry a `.planning/` directory
+src/gnd/skills/gnd-new-project/SKILL.md:44:- Authoring the model — [`../gnd-model-from-text/SKILL.md`](../gnd-model-from-text/SKILL.md)
+src/gnd/skills/gnd-new-project/SKILL.md:45:  (greenfield) or [`../gnd-model-from-code/SKILL.md`](../gnd-model-from-code/SKILL.md)
+src/gnd/skills/gnd-new-project/SKILL.md:49:- Walking the loop — [`../gnd-solve/SKILL.md`](../gnd-solve/SKILL.md)
+src/gnd/skills/gnd-new-project/SKILL.md:65:`milestone: <name>` in its frontmatter.
+src/gnd/skills/gnd-new-project/SKILL.md:111:[`../gnd-model-from-text/SKILL.md`](../gnd-model-from-text/SKILL.md) for a
+src/gnd/skills/gnd-new-project/SKILL.md:113:[`../gnd-model-from-code/SKILL.md`](../gnd-model-from-code/SKILL.md) for a
+src/gnd/skills/gnd-new-project/SKILL.md:114:brownfield codebase, or to [`../gnd-solve/SKILL.md`](../gnd-solve/SKILL.md)
+docs/development/architecture-audit.md:81:| YAML alias/size guard | population.py:392, model.py:72/4874, architecture.py:183, rai_import.py:105, exp/frontmatter.py:70 | Diverged; evolve/service.py:186 and export/souffle.py:61 load YAML with no guard | `yaml_input.safe_load(text, *, single_doc, comment_scanner, error)` | Low-medium |
+src/gnd/skills/gnd-export/SKILL.md:2:name: gnd-export
+src/gnd/skills/gnd-export/SKILL.md:39:[ORM core](../gnd-orm-core/SKILL.md). Each claim stays separate.
+src/gnd/skills/gnd-model-from-code/SKILL.md:2:name: gnd-model-from-code
+src/gnd/skills/gnd-model-from-code/SKILL.md:25:Read [`../gnd-orm-core/SKILL.md`](../gnd-orm-core/SKILL.md) when authoring the
+src/gnd/skills/gnd-model-from-code/SKILL.md:152:Routine fast-lane prototype recovery needs no station record. When this run is evidence-lane work -- a recovered-model publication worth milestone evidence -- after `gnd recovery verify` has reported, append the milestone record `NNN-model.md` and commit `feat(model): ...` with the `recovery verify` exit verbatim, staging by explicit path `model.orm.yaml`, `model.verbalization.txt`, `model.recovery.json`, and the record, only on the user's explicit go-ahead. The lane rule, record shape, staging discipline, and commit grammar have one home: [`../gnd-orm-core/references/milestone-record-format.md`](../gnd-orm-core/references/milestone-record-format.md). If `.gnd-planning/` is absent, offer [`../gnd-new-project/SKILL.md`](../gnd-new-project/SKILL.md) first. The record and the commit are the driving agent's acts; `gnd` itself never reads or writes `.gnd-planning/` and never touches git.
+src/gnd/skills/gnd-conformance/SKILL.md:2:name: gnd-conformance
+src/gnd/skills/gnd-conformance/SKILL.md:28:- Generating or regenerating the project — [`../gnd-codegen/SKILL.md`](../gnd-codegen/SKILL.md)
+src/gnd/skills/gnd-conformance/SKILL.md:30:- Authoring a model from a natural-language description — [`../gnd-model-from-text/SKILL.md`](../gnd-model-from-text/SKILL.md)
+src/gnd/skills/gnd-conformance/SKILL.md:31:- Changing an existing model — [`../gnd-model-evolve/SKILL.md`](../gnd-model-evolve/SKILL.md)
+src/gnd/skills/gnd-conformance/SKILL.md:32:- Recovering a model from a codebase that never had one — [`../gnd-model-from-code/SKILL.md`](../gnd-model-from-code/SKILL.md)
+src/gnd/skills/gnd-conformance/SKILL.md:33:- Extracting a population from a document — [`../gnd-extract/SKILL.md`](../gnd-extract/SKILL.md)
+src/gnd/skills/gnd-conformance/SKILL.md:34:- Looking up the ORM YAML spec or the population interchange format — [`../gnd-orm-core/SKILL.md`](../gnd-orm-core/SKILL.md)
+src/gnd/skills/gnd-conformance/SKILL.md:99:| the code fell behind a model that is right | [`../gnd-codegen/SKILL.md`](../gnd-codegen/SKILL.md) — regenerate | you invoke codegen; conformance never invokes it, and a drift finding is not permission to regenerate |
+src/gnd/skills/gnd-conformance/SKILL.md:100:| the **model** is what has to change | [`../gnd-model-evolve/SKILL.md`](../gnd-model-evolve/SKILL.md) — one owner-authorized evolution | evolution's staged proposal, acceptance, CAS, and change record stay four claims (D-24). Nothing here authorizes a model edit, and evolution does not regenerate code as a side effect |
+src/gnd/skills/gnd-conformance/SKILL.md:101:| this project never had a model to drift from | [`../gnd-model-from-code/SKILL.md`](../gnd-model-from-code/SKILL.md) — one-time recovery | **generated-project drift and brownfield recovery are different questions.** This command compares a tree against the `.gnd-codegen.json` that generated it; a project with no such record was never generated and cannot drift. 66 is that case, and 66 is not a conformance failure |
+src/gnd/skills/gnd-conformance/SKILL.md:102:| you want a second opinion on the finding | [`../gnd-review-panel/SKILL.md`](../gnd-review-panel/SKILL.md) — advisory panel | the panel is advisory: it never edits the reviewed artifact and never applies a fix (D-22). Its synthesis is its own claim and is never folded into this payload |
+src/gnd/skills/gnd-conformance/SKILL.md:130:A conformance run worth citing -- close evidence for an experiment, or a drift finding that changes what happens next -- is evidence-lane work: append the record `NNN-conformance.md` and commit `docs(conformance): ...` with band 0 or 13 verbatim (a drift finding is information, never translated into permission), staging by explicit path the `conformance.json` you redirected and the record, only on the user's explicit go-ahead. A routine fast-lane check needs no station record. The lane rule, record shape, staging discipline, and commit grammar have one home: [`../gnd-orm-core/references/milestone-record-format.md`](../gnd-orm-core/references/milestone-record-format.md). If `.gnd-planning/` is absent, offer [`../gnd-new-project/SKILL.md`](../gnd-new-project/SKILL.md) first. The record and the commit are the driving agent's acts; `gnd` itself never reads or writes `.gnd-planning/` and never touches git.
+src/gnd/skills/gnd-review-panel/SKILL.md:2:name: gnd-review-panel
+src/gnd/skills/gnd-review-panel/SKILL.md:15:4. **The complete fixed profile binds the reviewer model and supported effort.** Claude requests the rolling `opus` alias with `xhigh`; Codex requests `gpt-6-sol` with `xhigh`; Qwen requests the OpenRouter-only route `qwen/qwen3.8-max`; Gemini requests `gemini-3.1-pro-preview`; Kimi requests the managed `kimi-code/kimi-for-coding` alias; and the GLM seat runs the claude CLI requesting `glm-5.3` against `https://api.z.ai/api/anthropic`, bound by a fixed per-seat environment projection that removes every real Anthropic credential, maps `ZAI_API_KEY` to `ANTHROPIC_AUTH_TOKEN` for that seat only, and sets the base URL — a missing `ZAI_API_KEY` is that seat's ordinary auth-failure envelope, never a fallback. Qwen, Gemini, Kimi, and the GLM seat expose no supported per-run effort flag, so none is invented or claimed. Refresh the CLIs or this policy only through [`../gnd-update-review-panel/SKILL.md`](../gnd-update-review-panel/SKILL.md), which refuses a Qwen route not bound to `https://openrouter.ai/api/v1` and `OPENROUTER_API_KEY`; model-access failure remains a failure and never authorizes a provider or model downgrade.
+src/gnd/skills/gnd-review-panel/SKILL.md:38:- Asking whether generated code still matches its model — [`../gnd-conformance/SKILL.md`](../gnd-conformance/SKILL.md)
+src/gnd/skills/gnd-review-panel/SKILL.md:39:- Authoring or evolving a conceptual model — [`../gnd-model-from-text/SKILL.md`](../gnd-model-from-text/SKILL.md)
+src/gnd/skills/gnd-review-panel/SKILL.md:40:- Looking up the ORM YAML spec or the population format — [`../gnd-orm-core/SKILL.md`](../gnd-orm-core/SKILL.md)
+src/gnd/skills/gnd-review-panel/SKILL.md:41:- Updating reviewer CLIs or changing the fixed model/effort profile — [`../gnd-update-review-panel/SKILL.md`](../gnd-update-review-panel/SKILL.md); that maintainer workflow never runs a panel on your behalf
+src/gnd/skills/gnd-review-panel/SKILL.md:159:A panel run is evidence-lane work by construction -- it exists only when a decision justified independent readers. After `gnd review finalize` exits 0, append the milestone record `NNN-panel.md` and commit `docs(panel): ...` (the panel is advisory, D-22; at exit 16 there is no panel result to record as one), staging by explicit path `review-request.json`, the panel run directory, `synthesis.json`, `PANEL-REVIEW.md`, and the record, only on the user's explicit go-ahead. The lane rule, record shape, staging discipline, and commit grammar have one home: [`../gnd-orm-core/references/milestone-record-format.md`](../gnd-orm-core/references/milestone-record-format.md). If `.gnd-planning/` is absent, offer [`../gnd-new-project/SKILL.md`](../gnd-new-project/SKILL.md) first. The record and the commit are the driving agent's acts; `gnd` itself never reads or writes `.gnd-planning/` and never touches git.
+src/gnd/skills/gnd-model-multivalued/SKILL.md:2:name: gnd-model-multivalued
+src/gnd/skills/gnd-model-multivalued/SKILL.md:66:   file from [gnd-judge-fact-types](../gnd-judge-fact-types/SKILL.md).
+src/gnd/skills/gnd-model-multivalued/SKILL.md:125:  [gnd-model-evolve](../gnd-model-evolve/SKILL.md).
+src/gnd/skills/gnd-model-multivalued/SKILL.md:156:[gnd-model-evolve](../gnd-model-evolve/SKILL.md). The verdicts are inputs; each
+src/gnd/skills/gnd-adopt/SKILL.md:2:name: gnd-adopt
+src/gnd/skills/gnd-adopt/SKILL.md:35:Run [`../gnd-model-from-code/SKILL.md`](../gnd-model-from-code/SKILL.md)
+src/gnd/skills/gnd-adopt/SKILL.md:117:[`../gnd-new-project/SKILL.md`](../gnd-new-project/SKILL.md) first.
+src/gnd/skills/gnd-orm-core/SKILL.md:2:name: gnd-orm-core
+src/gnd/skills/gnd-orm-core/SKILL.md:21:| [`../gnd-new-project/SKILL.md`](../gnd-new-project/SKILL.md) | a repository is becoming a GND project and has no `.gnd-planning/` | a one-time scaffold — `.gnd-planning/` with its `PROJECT.md` and first milestone directory, committed. It never re-scaffolds, never writes a station record, and never touches a `.planning/` another framework owns |
+src/gnd/skills/gnd-orm-core/SKILL.md:22:| [`../gnd-model-from-text/SKILL.md`](../gnd-model-from-text/SKILL.md) | no model exists yet and the source is natural language | a new `model.orm.yaml` + verbalization. It never edits an existing model — that is evolution |
+src/gnd/skills/gnd-orm-core/SKILL.md:23:| [`../gnd-model-evolve/SKILL.md`](../gnd-model-evolve/SKILL.md) | one valid model must change | a staged proposal, an accepted blast-radius report, a model CAS, and an immutable change record — four separate claims. It never regenerates linked code; a conformance drift finding is information, not permission (D-24) |
+src/gnd/skills/gnd-orm-core/SKILL.md:24:| [`../gnd-adopt/SKILL.md`](../gnd-adopt/SKILL.md) | a GSD project is migrating to GND | a recovered model whose mapped requirements carry `imported` provenance, a verified `model.migration.json`, and a printed manual cleanup checklist. It never re-runs incrementally, never writes into `.planning/`, and never automates environment cleanup |
+src/gnd/skills/gnd-orm-core/SKILL.md:25:| [`../gnd-model-from-code/SKILL.md`](../gnd-model-from-code/SKILL.md) | no model exists and the only source is an existing codebase | a **one-time** recovered model, verbalization, and recovery report. There is no watcher, no background index, and no continuous code-to-model synchronization (D-14) |
+src/gnd/skills/gnd-orm-core/SKILL.md:26:| [`../gnd-review-panel/SKILL.md`](../gnd-review-panel/SKILL.md) | a plan, experiment outcome, or spec/results/delta bundle needs independent readers | an **advisory** `PANEL-REVIEW.md`. It never edits a reviewed artifact and never applies a fix (D-22) |
+src/gnd/skills/gnd-orm-core/SKILL.md:27:| [`../gnd-review-panel-light/SKILL.md`](../gnd-review-panel-light/SKILL.md) | the same independent review is wanted at `high` or `medium` supported per-run effort | the same **advisory** `PANEL-REVIEW.md`, roster, quorum, evidence, and no-fix boundary as the quality-first panel |
+src/gnd/skills/gnd-orm-core/SKILL.md:28:| [`../gnd-update-review-panel/SKILL.md`](../gnd-update-review-panel/SKILL.md) | the five active reviewer CLIs or their fixed model and prompt-transport policy must be refreshed | updated external harnesses plus a validated policy edit. It never runs a panel, changes credentials, or edits a reviewed artifact |
+src/gnd/skills/gnd-orm-core/SKILL.md:29:| [`../gnd-codegen/SKILL.md`](../gnd-codegen/SKILL.md) | a validated model must become a runnable project | a generated derived surface plus a digest record. It never authors or changes the model |
+src/gnd/skills/gnd-orm-core/SKILL.md:30:| [`../gnd-conformance/SKILL.md`](../gnd-conformance/SKILL.md) | a generated project may have fallen behind its model | a drift finding over the derived surface only. It writes nothing and licenses nothing about extension code |
+src/gnd/skills/gnd-orm-core/SKILL.md:31:| [`../gnd-dev-session/SKILL.md`](../gnd-dev-session/SKILL.md) | an agent must be driven against the verifier under a bounded, digest-pinned contract | session evidence under `runs/` and a closed experiment. It never merges the session outcome with a verifier verdict or a conformance result (D-24) and never regenerates anything |
+src/gnd/skills/gnd-orm-core/SKILL.md:32:| [`../gnd-extract/SKILL.md`](../gnd-extract/SKILL.md) | a document must become a population | an extracted population plus its digest-bound sidecar, checked by `gnd verify` |
+src/gnd/skills/gnd-orm-core/SKILL.md:33:| [`../gnd-render-doc/SKILL.md`](../gnd-render-doc/SKILL.md) | a population must become a document | a rendered document plus its digest-bound manifest, checked by `gnd doccheck` |
+src/gnd/skills/gnd-orm-core/SKILL.md:34:| [`../gnd-solve/SKILL.md`](../gnd-solve/SKILL.md) | you want the whole loop walked in order | nothing of its own — every claim belongs to the station skill that produced it. It never runs a sibling on your behalf and stops at an explicit user gate between steps |
+src/gnd/skills/gnd-orm-core/SKILL.md:35:| [`../gnd-judge-fact-types/SKILL.md`](../gnd-judge-fact-types/SKILL.md) | the fact-type family's evidence must be judged for duplicates of fact types the model already has | a `duplicates` judgements file that `gnd discover --duplicate-judgements` checks and renders. It never reads the population and never applies a proposal |
+src/gnd/skills/gnd-orm-core/SKILL.md:36:| [`../gnd-model-multivalued/SKILL.md`](../gnd-model-multivalued/SKILL.md) | the fact-type family's evidence has `multi_valued` groups to model | a `shapes` judgements file that `gnd discover --shape-judgements` checks and renders, proposing many-to-many fact types with a spanning uniqueness. It never reads the population and never applies a proposal |
+src/gnd/skills/gnd-orm-core/SKILL.md:37:| [`../gnd-export/SKILL.md`](../gnd-export/SKILL.md) | explicitly requested tuples need finite proof/replay or a finite Lean definitions with unproved obligations or standalone Souffle program | bounded derivation program export, explicit native execution, grounded witnesses and independent replay; never source truth, completeness or assurance |
+src/gnd/skills/gnd-dev-session/SKILL.md:2:name: gnd-dev-session
+src/gnd/skills/gnd-dev-session/SKILL.md:45:- Asking whether generated code still matches its model — [`../gnd-conformance/SKILL.md`](../gnd-conformance/SKILL.md)
+src/gnd/skills/gnd-dev-session/SKILL.md:46:- Generating or regenerating the agent project — [`../gnd-codegen/SKILL.md`](../gnd-codegen/SKILL.md)
+src/gnd/skills/gnd-dev-session/SKILL.md:47:- Independent readers over a closed outcome bundle — [`../gnd-review-panel/SKILL.md`](../gnd-review-panel/SKILL.md)
+src/gnd/skills/gnd-dev-session/SKILL.md:48:- Changing the model the session exposed as wrong — [`../gnd-model-evolve/SKILL.md`](../gnd-model-evolve/SKILL.md)
+src/gnd/skills/gnd-dev-session/SKILL.md:52:- Looking up the ORM YAML spec or the population format — [`../gnd-orm-core/SKILL.md`](../gnd-orm-core/SKILL.md)
+src/gnd/skills/gnd-dev-session/SKILL.md:361:evidence is produced by [`../gnd-conformance/SKILL.md`](../gnd-conformance/SKILL.md).
+src/gnd/skills/gnd-dev-session/SKILL.md:381:| accepted, and the experiment is `kind: codegen` | [`../gnd-conformance/SKILL.md`](../gnd-conformance/SKILL.md) — produce the close gate's evidence | the conformance result stays its own claim; it is never merged into `result.json` (D-24) |
+src/gnd/skills/gnd-dev-session/SKILL.md:382:| the outcome shows the MODEL must change | [`../gnd-model-evolve/SKILL.md`](../gnd-model-evolve/SKILL.md) — one owner-authorized evolution | session evidence is information, not permission; evolution never regenerates code as a side effect |
+src/gnd/skills/gnd-dev-session/SKILL.md:383:| not accepted: a **derived-file or generated-interface** defect | do **not** edit the derived file — evolve the model ([`../gnd-model-evolve/SKILL.md`](../gnd-model-evolve/SKILL.md)), regenerate through [`../gnd-codegen/SKILL.md`](../gnd-codegen/SKILL.md), then rerun focused verification | codegen refuses a hand-edited derived file at exit 11; the durable home for the change is the model, never the emitted bytes |
+src/gnd/skills/gnd-dev-session/SKILL.md:386:| the outcome bundle needs independent readers | [`../gnd-review-panel/SKILL.md`](../gnd-review-panel/SKILL.md) — advisory panel | the panel never edits the reviewed artifact and never applies a fix (D-22); its synthesis is its own claim |
+src/gnd/skills/gnd-dev-session/SKILL.md:427:An experiment material event is evidence-lane work. At `gnd exp close` exit 0, append `NNN-<lowercase experiment id>.md` and commit `feat(<lowercase experiment id>): ...`; for `EXP-001-contact-roster`, the worked forms are `004-exp-001-contact-roster.md` and `feat(exp-001-contact-roster): ...`. A retained terminal `gnd exp run` exit 15 disposition worth recording uses `docs(<lowercase experiment id>): ...`, with the disposition verbatim. A `gnd exp close` exit 14 is a refusal, not a terminal session outcome; record it only as a `docs` refusal that taught something, with the close exit verbatim. Stage by explicit path the experiment directory (`SPEC.md`, `session.contract.json`, `runs/`, `CONCLUSIONS.md`, `conformance.json` when present) and the record, only on the user's explicit go-ahead. The lane rule, record shape, staging discipline, and commit grammar have one home: [`../gnd-orm-core/references/milestone-record-format.md`](../gnd-orm-core/references/milestone-record-format.md). If `.gnd-planning/` is absent, offer [`../gnd-new-project/SKILL.md`](../gnd-new-project/SKILL.md) first. The record and the commit are the driving agent's acts; `gnd` itself never reads or writes `.gnd-planning/` and never touches git.
+src/gnd/skills/gnd-solve/SKILL.md:2:name: gnd-solve
+src/gnd/skills/gnd-solve/SKILL.md:53:references-only [`../gnd-orm-core/SKILL.md`](../gnd-orm-core/SKILL.md).
+src/gnd/skills/gnd-solve/SKILL.md:60:[`../gnd-new-project/SKILL.md`](../gnd-new-project/SKILL.md). It scaffolds the
+src/gnd/skills/gnd-solve/SKILL.md:68:- **Greenfield:** [`../gnd-model-from-text/SKILL.md`](../gnd-model-from-text/SKILL.md)
+src/gnd/skills/gnd-solve/SKILL.md:72:- **Brownfield:** [`../gnd-model-from-code/SKILL.md`](../gnd-model-from-code/SKILL.md)
+src/gnd/skills/gnd-solve/SKILL.md:86:[`../gnd-dev-session/SKILL.md`](../gnd-dev-session/SKILL.md). It decides when a
+src/gnd/skills/gnd-solve/SKILL.md:92:Owner: [`../gnd-codegen/SKILL.md`](../gnd-codegen/SKILL.md). The harness-owned
+src/gnd/skills/gnd-solve/SKILL.md:121:[`../gnd-dev-session/SKILL.md`](../gnd-dev-session/SKILL.md). The harness-owned
+src/gnd/skills/gnd-solve/SKILL.md:129:[`../gnd-conformance/SKILL.md`](../gnd-conformance/SKILL.md). The harness-owned
+src/gnd/skills/gnd-solve/SKILL.md:137:[`../gnd-model-evolve/SKILL.md`](../gnd-model-evolve/SKILL.md). Preview the
+src/gnd/skills/gnd-solve/SKILL.md:158:[`../gnd-review-panel/SKILL.md`](../gnd-review-panel/SKILL.md). Require a clean
+src/gnd/skills/gnd-solve/SKILL.md:183:[gnd-export](../gnd-export/SKILL.md). This route never runs that sibling;
+src/gnd/skills/gnd-render-doc/SKILL.md:2:name: gnd-render-doc
+src/gnd/skills/gnd-render-doc/SKILL.md:26:- Reading a document back into a population — [`../gnd-extract/SKILL.md`](../gnd-extract/SKILL.md)
+
+codex
+All three hashes match. The helper reuses the repository’s YAML frontmatter reader; I’m checking varied declarations and directory discovery while keeping the review read-only.
+exec
+/bin/zsh -lc '.venv/bin/python -B -m pytest -p no:cacheprovider -q tests/test_skill_names.py::test_every_packaged_skill_names_its_own_directory' in <repo>
+exec
+/bin/zsh -lc '.venv/bin/ruff check --no-cache tools/skill_names.py tests/test_skill_names.py' in <repo>
+ succeeded in 749ms:
+All checks passed!
+
+ exited 1 in 818ms:
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<repo>/.venv/lib/python3.14/site-packages/pytest/__main__.py", line 9, in <module>
+    raise SystemExit(_console_main())
+                     ~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 253, in _console_main
+    code = _main(prog=_get_prog_name(sys.argv))
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 223, in _main
+    config = _prepareconfig(new_args, plugins, prog=prog)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 410, in _prepareconfig
+    config: Config = pluginmanager.hook.pytest_cmdline_parse(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pluginmanager=pluginmanager, args=args
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/helpconfig.py", line 124, in pytest_cmdline_parse
+    config = yield
+             ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1232, in pytest_cmdline_parse
+    self.parse(args)
+    ~~~~~~~~~~^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1605, in parse
+    self.hook.pytest_load_initial_conftests(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        early_config=self, args=args, parser=self._parser
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/warnings.py", line 129, in pytest_load_initial_conftests
+    return (yield)
+            ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 116, in _multicall
+    next(function_gen)  # first yield
+    ~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 170, in pytest_load_initial_conftests
+    capman.start_global_capturing()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 773, in start_global_capturing
+    self._global_capturing = _get_multicapture(self._method)
+                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 714, in _get_multicapture
+    return MultiCapture(in_=FDCapture(0), out=FDCapture(1), err=FDCapture(2))
+                                              ~~~~~~~~~^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 493, in __init__
+    TemporaryFile(buffering=0),
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 652, in TemporaryFile
+    prefix, suffix, dir, output_type = _sanitize_params(prefix, suffix, dir)
+                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 126, in _sanitize_params
+    dir = gettempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 316, in gettempdir
+    return _os.fsdecode(_gettempdir())
+                        ~~~~~~~~~~~^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 309, in _gettempdir
+    tempdir = _get_default_tempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 224, in _get_default_tempdir
+    raise FileNotFoundError(_errno.ENOENT,
+                            "No usable temporary directory found in %s" %
+                            dirlist)
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/', '/tmp', '/var/tmp', '/usr/tmp', '<repo>']
+
+exec
+/bin/zsh -lc '.venv/bin/python -B -m pytest -s -p no:cacheprovider -q tests/test_skill_names.py::test_every_packaged_skill_names_its_own_directory' in <repo>
+exec
+/bin/zsh -lc ".venv/bin/python -B -c 'import gnd; from tools.skill_names import skill_names; print(\"gnd:\", gnd.__file__); names = skill_names(\"src/gnd/skills\"); print(\"packaged:\", len(names), \"matching:\", all(k == v for k, v in names.items())); print(\"discovery links:\", len(skill_names(\".codex/skills\")))'" in <repo>
+ succeeded in 1598ms:
+.
+1 passed in 0.22s
+
+ succeeded in 585ms:
+gnd: <repo>/src/gnd/__init__.py
+packaged: 18 matching: True
+discovery links: 27
+
+exec
+/bin/zsh -lc ".venv/bin/python -B -c 'from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
+from tools.skill_names import skill_name
+cases = [
+    (\"quoted-comment\", \"---\\n# comment\\nname: '\\''demo'\\'' # trailing comment\\n---\\nname: body-decoy\\n\", \"demo\"),
+    (\"flow-map\", \"---\\n{name: demo, metadata: {name: decoy}}\\n---\\n\", \"demo\"),
+    (\"folded-name\", \"---\\nname: >-\\n  demo\\ndescription: plain\\n---\\n\", \"demo\"),
+    (\"multiline-quote\", '\\''---\\nname: \"demo-\\n  skill\"\\n---\\n'\\'', \"demo- skill\"),
+    (\"absent-name\", \"---\\ndescription: demo\\n---\\nname: decoy\\n\", None),
+    (\"non-string\", \"---\\nname: 42\\n---\\n\", None),
+    (\"block-description-fence\", \"---\\ndescription: |\\n  ---\\n  A demo skill.\\nname: demo\\n---\\n\\n# Demo\\n\", \"demo\"),
+]
+for label, document, expected in cases:
+    with patch.object(Path, \"stat\", return_value=SimpleNamespace(st_size=len(document.encode()))), patch.object(Path, \"read_text\", return_value=document):
+        try:
+            result = skill_name(Path(\"/virtual/demo/SKILL.md\"))
+            print(label, repr(result), \"expected\", repr(expected), \"PASS\" if result == expected else \"FAIL\")
+        except Exception as error:
+            print(label, type(error).__name__, str(error))
+'" in <repo>
+ succeeded in 635ms:
+quoted-comment 'demo' expected 'demo' PASS
+flow-map 'demo' expected 'demo' PASS
+folded-name 'demo' expected 'demo' PASS
+multiline-quote 'demo- skill' expected 'demo- skill' PASS
+absent-name None expected None PASS
+non-string None expected None PASS
+block-description-fence None expected 'demo' FAIL
+
+codex
+I found a valid YAML case that returns the wrong name: an indented `---` inside a multiline description makes the reused reader stop early, so it misses a later `name: demo`. The packaged-skill test and lint pass. I’m confirming that reproduction against the YAML parser.
+exec
+/bin/zsh -lc ".venv/bin/python -B -c 'from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
+from ruamel.yaml import YAML
+from tools.skill_names import skill_name, skill_names
+from gnd.exp.frontmatter import read_frontmatter
+
+block = \"description: |\\n  ---\\n  A demo skill.\\nname: demo\\n\"
+document = \"---\\n\" + block + \"---\\n\\n# Demo\\n\"
+print(\"YAML mapping:\", YAML(typ=\"safe\").load(block))
+root = Path(\"/virtual/skills\")
+path = root / \"demo\" / \"SKILL.md\"
+with patch.object(Path, \"stat\", return_value=SimpleNamespace(st_size=len(document.encode()))), patch.object(Path, \"read_text\", return_value=document), patch.object(Path, \"glob\", return_value=iter([path])):
+    print(\"read_frontmatter mapping:\", read_frontmatter(path)[0])
+    print(\"skill_name:\", repr(skill_name(path)))
+    print(\"skill_names:\", skill_names(root))
+'" in <repo>
+ succeeded in 596ms:
+YAML mapping: {'description': '---\nA demo skill.\n', 'name': 'demo'}
+read_frontmatter mapping: {'description': ''}
+skill_name: None
+skill_names: {'demo': None}
+
+exec
+/bin/zsh -lc "nl -ba tools/skill_names.py; nl -ba src/gnd/exp/frontmatter.py | sed -n '90,110p'; git diff --check 6b0a7e5a; git status --short" in <repo>
+ succeeded in 142ms:
+     1	"""Read the declared name of every skill under a skills root."""
+     2	from __future__ import annotations
+     3	
+     4	from pathlib import Path
+     5	
+     6	from gnd.exp.frontmatter import read_frontmatter
+     7	
+     8	
+     9	def skill_name(path: str | Path) -> str | None:
+    10	    """Return the ``name`` a SKILL.md declares in its frontmatter, or None."""
+    11	    mapping, _body = read_frontmatter(path)
+    12	    name = mapping.get("name")
+    13	    return name if isinstance(name, str) else None
+    14	
+    15	
+    16	def skill_names(root: str | Path) -> dict[str, str | None]:
+    17	    """Map each skill directory under ``root`` to the name its SKILL.md declares."""
+    18	    return {path.parent.name: skill_name(path) for path in sorted(Path(root).glob("*/SKILL.md"))}
+    90	    return None
+    91	
+    92	
+    93	def _split(text: str, path: Path) -> tuple[str, str]:
+    94	    """The fenced block and the body, or raise :class:`FrontmatterError`."""
+    95	    lines = text.splitlines(keepends=True)
+    96	    if not lines or lines[0].strip() != _FENCE:
+    97	        raise FrontmatterError(
+    98	            f"{path} does not open with a '{_FENCE}' frontmatter fence; a document "
+    99	            f"without declared frontmatter is refused, never read as an empty one"
+   100	        )
+   101	    for index in range(1, len(lines)):
+   102	        if lines[index].strip() == _FENCE:
+   103	            return "".join(lines[1:index]), "".join(lines[index + 1 :])
+   104	    raise FrontmatterError(
+   105	        f"{path} has no closing '{_FENCE}' fence; an unterminated frontmatter "
+   106	        f"block is refused rather than read to end-of-file"
+   107	    )
+   108	
+   109	
+   110	def read_frontmatter(path: str | Path) -> tuple[dict[str, Any], str]:
+?? .review-round/
+
+codex
+F1 (P2) — [tools/skill_names.py:11](<repo>/tools/skill_names.py:11): A valid multiline description can hide the declared name.
+
+Reproduce with this `demo/SKILL.md`:
+
+```yaml
+---
+description: |
+  ---
+  A demo skill.
+name: demo
+---
+```
+
+`skill_name()` returns `None`; `skill_names()` returns `{"demo": None}`. Expected: `"demo"` and `{"demo": "demo"}`.
+
+The reused reader’s existing fence matcher (`src/gnd/exp/frontmatter.py:102`) strips indentation and mistakes description content for the closing fence. Confirmed by running the real parser with mocked filesystem reads: YAML correctly parses `name: demo`, while `read_frontmatter()` truncates the mapping. Fix the shared fence handling and add a regression test.
+
+What I checked and found true:
+
+- All three SHA-256 hashes match the brief.
+- The packaged-skill test passes: all 18 names match their directories.
+- Ruff and `git diff --check` pass.
+- Quoted names, comments, flow mappings, folded strings, multiline quoting, missing names, and non-string names behave as expected.
+- The `*/SKILL.md` glob discovers packaged skills and existing discovery links.
+- The fence matcher fails on the indented `---` input above; no new regex was introduced.
+
+What I could not check:
+
+- The temporary-directory test was not run because it creates files, contrary to the read-only brief. Synthetic parsing probes used in-memory mocks. No files were changed.
+
+VERDICT: CHANGES_REQUESTED
+tokens used
+43,997
+F1 (P2) — [tools/skill_names.py:11](<repo>/tools/skill_names.py:11): A valid multiline description can hide the declared name.
+
+Reproduce with this `demo/SKILL.md`:
+
+```yaml
+---
+description: |
+  ---
+  A demo skill.
+name: demo
+---
+```
+
+`skill_name()` returns `None`; `skill_names()` returns `{"demo": None}`. Expected: `"demo"` and `{"demo": "demo"}`.
+
+The reused reader’s existing fence matcher (`src/gnd/exp/frontmatter.py:102`) strips indentation and mistakes description content for the closing fence. Confirmed by running the real parser with mocked filesystem reads: YAML correctly parses `name: demo`, while `read_frontmatter()` truncates the mapping. Fix the shared fence handling and add a regression test.
+
+What I checked and found true:
+
+- All three SHA-256 hashes match the brief.
+- The packaged-skill test passes: all 18 names match their directories.
+- Ruff and `git diff --check` pass.
+- Quoted names, comments, flow mappings, folded strings, multiline quoting, missing names, and non-string names behave as expected.
+- The `*/SKILL.md` glob discovers packaged skills and existing discovery links.
+- The fence matcher fails on the indented `---` input above; no new regex was introduced.
+
+What I could not check:
+
+- The temporary-directory test was not run because it creates files, contrary to the read-only brief. Synthetic parsing probes used in-memory mocks. No files were changed.
+
+VERDICT: CHANGES_REQUESTED

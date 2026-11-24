@@ -117,10 +117,10 @@ GO2 (#227): an outcome for every operation of a proposal.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `locate_validation_issues(issues, candidate, operations) -> tuple[Refusals, bool]` | function | 132 | The operation each validation issue names, and whether every issue was located. |
-| `locate_d12_refusals(refusals, operations) -> tuple[Refusals, bool]` | function | 188 | The operation each D-12 refusal ``(host, constraint, message)`` names. |
-| `outcomes(operations, refused, *, gates_not_run) -> tuple[OperationOutcome, ...]` | function | 247 | One row per operation, in order: its refusal, ``dropped-with`` when it |
-| `gates_after(gate, *, policy, ran) -> tuple[str, ...]` | function | 297 | The gates the preview runs after ``gate`` (the policy only when one was |
+| `locate_validation_issues(issues, candidate, operations) -> tuple[Refusals, bool]` | function | 135 | The operation each validation issue names, and whether every issue was located. |
+| `locate_d12_refusals(refusals, operations) -> tuple[Refusals, bool]` | function | 194 | The operation each D-12 refusal ``(host, constraint, message)`` names. |
+| `outcomes(operations, refused, *, gates_not_run) -> tuple[OperationOutcome, ...]` | function | 324 | One row per operation, in order: its refusal, ``dropped-with`` when it |
+| `gates_after(gate, *, policy, ran) -> tuple[str, ...]` | function | 374 | The gates the preview runs after ``gate`` (the policy only when one was |
 
 ## gnd.evolve.policy — `src/gnd/evolve/policy.py`
 Components: evolve.policy

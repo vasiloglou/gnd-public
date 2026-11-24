@@ -5,6 +5,32 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: frontmatter fences
+
+- **An indented `---` is content.** The frontmatter reader behind experiment
+  specs, conclusions and generated `SKILL.md` files takes a fence only at
+  column 0, with nothing after it but spaces or tabs. An indented `---` in a
+  block scalar or a multi-line value no longer ends the block early and drops
+  the keys after it; a document whose only closing dashes are indented is
+  refused as unterminated.
+
+## Unreleased: the admission example from a host
+
+- **Your own assertion entity.** The literature admission example's
+  `admit()` takes a shape naming the assertion entity in your model and the
+  entity types to follow from it. An assertion is identified by its own
+  handle; every fact attached to an admitted assertion is kept, the facts of
+  the followed entities with them, and an include root is admitted with its
+  includes. `max_rows` bounds the rows read
+  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+- **Admission rules as data.** `rules` lists the requirements a reviewed
+  assertion must meet, in order, with a reason for each refused value. A
+  supported assertion that fails one is `policy-refused`; the packaged
+  comparison is now the default rules. `max_targets` (up to 1,024, the cap
+  of `gnd judgments check`) lowers the target cap. Such a call writes
+  `literature-assertion-admission/2`; the packaged call keeps its bytes
+  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+
 ## Unreleased: the reading example from a host
 
 - **A live producer over your own documents.** The literature reading
@@ -96,6 +122,22 @@ the next one.
   round reused, what the host dropped, what it proposed, each verdict's count
   and what the applied record added
   ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **Reading a failed verification.** The documents guide shows how to list
+  the constraints and derivations a `gnd verify` exit 1 failed, with the
+  violating rows, from the JSON report, with a runnable example on the
+  literature reading example's conflicting labels. `gnd verify` itself is
+  unchanged ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+- **Where a quote may lie.** The anchor reference states the rule: a span
+  may lie anywhere in the document the sidecar names, and GND has no notion
+  of a section. The literature pages say what that means for a host that
+  shows its model one section at a time. No format changes
+  ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+- **A reference recall and precision for the reading stages.** The
+  literature example ships a labelled reference set, built over the
+  regression corpus without changing it, and one recorded Claude Sonnet run
+  over it that replays with no producer calls: recall 27 of 31 after the
+  targeted pass. The literature page shows it beside the figures #226
+  reported ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
 
 ## 0.4.0 (2026-11-17)
 

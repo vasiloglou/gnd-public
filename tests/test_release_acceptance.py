@@ -84,11 +84,11 @@ def test_retained_candidate_identity(candidate):
             assert len(names) == len(set(names))
             assert sum(p.file_size for p in archive.infolist()) <= 12 * 1024 * 1024
             assert 'gnd/yaml_comments.py' in names
-            from test_packaged_skills import EXPECTED_SKILL_FILES
+            from test_packaged_skills import EXPECTED_SKILL_FILES, EXPECTED_SKILL_NAMES
             skill_names = {n.removeprefix('gnd/skills/') for n in names
                            if n.startswith('gnd/skills/') and not n.endswith('/')}
             assert skill_names == EXPECTED_SKILL_FILES
-            assert sum(n.endswith('/SKILL.md') for n in names) == 18
+            assert sum(n.endswith('/SKILL.md') for n in names) == len(EXPECTED_SKILL_NAMES)
             assert any(n.endswith('/LICENSE') for n in names)
             assert any(n.endswith('/NOTICE') for n in names)
             for domain in ['dispatch', 'release']:

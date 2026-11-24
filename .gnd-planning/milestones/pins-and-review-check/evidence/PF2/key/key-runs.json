@@ -1,0 +1,146 @@
+[
+ [
+  "K1",
+  "planted",
+  "quoted id",
+  "['director', 'movie_id', 'director_name', 'title', 'year', 'rating']"
+ ],
+ [
+  "K1",
+  "planted",
+  "id not the first key",
+  "['director', 'movie_id', 'director_name', 'title', 'year', 'rating']"
+ ],
+ [
+  "K1",
+  "planted",
+  "a comment after the id",
+  "['director', 'movie_id', 'director_name', 'title', 'year', 'rating']"
+ ],
+ [
+  "K2",
+  "planted",
+  "quoted name",
+  "{'demo': '\"demo\"'}"
+ ],
+ [
+  "K2",
+  "planted",
+  "a description that holds ---",
+  "{'demo': None}"
+ ],
+ [
+  "K2",
+  "planted",
+  "a comment after the name",
+  "{'demo': 'demo  # the skill'}"
+ ],
+ [
+  "K3",
+  "planted",
+  "gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md",
+  "'synthetic_good_user'"
+ ],
+ [
+  "K3",
+  "planted",
+  "gnd-model-from-text/examples/movie_catalog.orm.yaml",
+  "'examples'"
+ ],
+ [
+  "K3",
+  "planted",
+  "gnd-update-review-panel/agents/openai.yaml",
+  "'agents'"
+ ],
+ [
+  "K4",
+  "planted",
+  "a version in an earlier table",
+  "'9.9'"
+ ],
+ [
+  "K4",
+  "planted",
+  "no spaces around =",
+  "None"
+ ],
+ [
+  "K4",
+  "planted",
+  "single quotes",
+  "None"
+ ],
+ [
+  "K1",
+  "control",
+  "quoted id",
+  "['movie', 'director', 'movie_id', 'director_name', 'title', 'year', 'rating']"
+ ],
+ [
+  "K1",
+  "control",
+  "id not the first key",
+  "['movie', 'director', 'movie_id', 'director_name', 'title', 'year', 'rating']"
+ ],
+ [
+  "K1",
+  "control",
+  "a comment after the id",
+  "['movie', 'director', 'movie_id', 'director_name', 'title', 'year', 'rating']"
+ ],
+ [
+  "K2",
+  "control",
+  "quoted name",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "K2",
+  "control",
+  "a description that holds ---",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "K2",
+  "control",
+  "a comment after the name",
+  "{'demo': 'demo'}"
+ ],
+ [
+  "K3",
+  "control",
+  "gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md",
+  "'gnd-model-from-text'"
+ ],
+ [
+  "K3",
+  "control",
+  "gnd-model-from-text/examples/movie_catalog.orm.yaml",
+  "'gnd-model-from-text'"
+ ],
+ [
+  "K3",
+  "control",
+  "gnd-update-review-panel/agents/openai.yaml",
+  "'gnd-update-review-panel'"
+ ],
+ [
+  "K4",
+  "control",
+  "a version in an earlier table",
+  "'1.0'"
+ ],
+ [
+  "K4",
+  "control",
+  "no spaces around =",
+  "'1.0'"
+ ],
+ [
+  "K4",
+  "control",
+  "single quotes",
+  "'1.0'"
+ ]
+]

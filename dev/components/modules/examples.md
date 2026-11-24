@@ -187,9 +187,10 @@ Publish the positive contextual assertions selected by saved judgments.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `project(subject, targets) -> tuple[dict, dict]` | function | 100 | Project accepted positive occurrences and their original identity links. |
-| `admit(model, raw, policy, receipts, trusted_root, out) -> dict` | function | 183 | Check saved opinion bytes, project supported rows and publish one bound result. |
-| `main(argv) -> int` | function | 209 | (no docstring) |
+| `project(subject, targets, *, requirements, policy_status) -> tuple[dict, dict]` | function | 180 | Project accepted positive occurrences and their original identity links. |
+| `project_shaped(subject, targets, model, shape, max_rows, *, requirements) -> tuple[dict, dict]` | function | 310 | Admit the assertions of a caller-named entity type, with every attached and followed row they keep. |
+| `admit(model, raw, policy, receipts, trusted_root, out, *, shape, rules, max_targets, max_rows) -> d…` | function | 461 | Check saved opinion bytes, project supported rows and publish one bound result. |
+| `main(argv) -> int` | function | 541 | (no docstring) |
 
 ## gnd.examples.literature.assurance_report — `src/gnd/examples/literature/assurance_report.py`
 Components: examples.literature_assurance
@@ -300,11 +301,22 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | `SavedProducer` | class | 478 | Local saved-response adapter with observed invocation counts. |
 | `SavedProducer.produce(self, call) -> dict` | method | 485 | (no docstring) |
 | `affected_sections(sections, changed_keys) -> list[str]` | function | 490 | Return available earlier section IDs sharing a changed dependency key. |
-| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 761 | Read a run's optional coverage artifact using its external digest. |
-| `absence_status(artifacts, pins, *, facts, predicate, floor)` | function | 774 | Qualify the declared absence claim from four independently bound inputs. |
-| `run(out, *, budget, scenario, fixture, producer, reviewer, document_budget, unavailable, limits) ->…` | function | 1154 | Run the reading workflow over the packaged fixture or a caller's root, and retain its evidence. |
-| `replay(folder, *, fixture, vocabulary_fixture, expected_evidence_sha256) -> dict` | function | 1185 | Re-derive a reading result from retained evidence without invoking producers or reviewers. |
-| `main(argv) -> int` | function | 1225 | (no docstring) |
+| `read_coverage_rows(folder, expected_sha256) -> list[dict]` | function | 762 | Read a run's optional coverage artifact using its external digest. |
+| `absence_status(artifacts, pins, *, facts, predicate, floor)` | function | 775 | Qualify the declared absence claim from four independently bound inputs. |
+| `run(out, *, budget, scenario, fixture, producer, reviewer, document_budget, unavailable, limits) ->…` | function | 1155 | Run the reading workflow over the packaged fixture or a caller's root, and retain its evidence. |
+| `replay(folder, *, fixture, vocabulary_fixture, expected_evidence_sha256) -> dict` | function | 1186 | Re-derive a reading result from retained evidence without invoking producers or reviewers. |
+| `main(argv) -> int` | function | 1226 | (no docstring) |
+
+## gnd.examples.literature.reference_set — `src/gnd/examples/literature/reference_set.py`
+Components: examples.literature_reference_set
+A labelled reference set for the reading stages, and its scorer.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `build(corpus_root) -> dict[str, bytes]` | function | 53 | The reference root's files, by name, built from the packaged corpus. |
+| `build_root(out, corpus_root) -> None` | function | 128 | Write the reference root's built files into ``out``. |
+| `score(run, root) -> dict` | function | 152 | Score a reading run over the reference root against its labels. |
+| `main(argv) -> int` | function | 196 | (no docstring) |
 
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
 Components: examples.literature_revision

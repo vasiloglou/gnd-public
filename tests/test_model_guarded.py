@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import copy
-import inspect
 import json
-import re
 import subprocess
 import sys
 import time
@@ -15,6 +13,7 @@ import pytest
 from ruamel.yaml import YAML
 from ruamel.yaml.constructor import DuplicateKeyError
 from support.public_guarded_temporal_cases import P3_TEMPORAL_REJECTING_CASES
+from support.rule_source import keyword_literals, rule_id_arguments
 
 from gnd import model as model_module
 from gnd.model import ModelValidationError, load_model, semantic_validate
@@ -345,13 +344,13 @@ def test_every_registered_guarded_error_rule_has_a_rejecting_case() -> None:
     registered = set()
     advisory = set()
     for rule in model_module._SEMANTIC_RULES:
-        identifiers = set(re.findall('rule_id="([^"]+)"', inspect.getsource(rule)))
+        identifiers = set(rule_id_arguments(rule))
         if identifiers and next(iter(identifiers)).startswith('semantic:guarded-'):
             if rule.__name__ == "_rule_guarded_literal_domain":
-                assert 'severity="warning"' in inspect.getsource(rule)
+                assert keyword_literals(rule, "severity") == ["warning"]
                 advisory.update(identifiers)
             else:
-                assert 'severity="warning"' not in inspect.getsource(rule)
+                assert "warning" not in keyword_literals(rule, "severity")
                 registered.update(identifiers)
     assert advisory == {
         "semantic:guarded-literal-outside-domain", "semantic:guarded-literal-domain-work-limit",

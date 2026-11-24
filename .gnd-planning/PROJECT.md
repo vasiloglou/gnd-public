@@ -312,14 +312,14 @@ plan r2 and a first draft spec, not reviewed and not approved.
 |---|---|---|---|
 | [#214](https://github.com/vasiloglou/gnd-public/issues/214) | PyRel rules programs for literature-style models | Closed 2026-11-23: on `main` (PRs 220 and 223), not released | Ships in the 0.5.0 release |
 | [#217](https://github.com/vasiloglou/gnd-public/issues/217) | Judging a temporal include root | Closed 2026-11-23: on `main` (PR 220), not released | Ships in the 0.5.0 release |
-| [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Plan r4 approved 2026-11-23; the VG1 spec waits for its owner gate | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG1 |
-| [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Plan r4 approved 2026-11-23; D2 ruled (a) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG2, in place of the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
-| [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Plan r4 approved 2026-11-23; D3, D4, D13 and D14 ruled (a), D6 ruled as proposed | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG3–VG5 |
+| [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Delivered on `main` 2026-11-23 (PR 239), not released; milestone closed ([close](milestones/reviewed-vocabulary-growth/007-milestone-close.md)) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG1 |
+| [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Delivered on `main` 2026-11-23 (PR 240), not released; milestone closed ([close](milestones/reviewed-vocabulary-growth/007-milestone-close.md)) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG2, in place of the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
+| [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Delivered on `main` 2026-11-23 (PR 240), not released; milestone closed ([close](milestones/reviewed-vocabulary-growth/007-milestone-close.md)) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG3–VG5 |
 | [#228](https://github.com/vasiloglou/gnd-public/issues/228) | A growth round costs time in proportion to the whole model | Plan r2 and GO1 draft spec, not reviewed, not approved | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO1 |
 | [#227](https://github.com/vasiloglou/gnd-public/issues/227) | Growth rounds add almost nothing: whole-proposal outcomes, restated replies, no diagnostic | Plan r2, not reviewed, not approved; waits for rulings | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO2–GO5 |
 | [#216](https://github.com/vasiloglou/gnd-public/issues/216) | A public producer protocol for the reading example | Plan r6 approved 2026-11-23; the LH1 spec waits for its owner gate | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH1, LH2 |
 | [#215](https://github.com/vasiloglou/gnd-public/issues/215) | Model-generic assertion admission | Plan r6 approved 2026-11-23; LH3 and LH4 are outlines in the plan | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH3, LH4 |
-| [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Plan r2 and LR1 draft spec, not reviewed, not approved | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
+| [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Closed locally 2026-11-23 (auto); PRs 243, 244, 252 open, not merged | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
 
 Status, 2026-11-23: eight issues are open. #214 and #217 were closed as
 delivered on `main`; 0.4.0 still behaves as they describe until 0.5.0 is
@@ -348,9 +348,9 @@ approved r6 on 2026-11-23
 | Order | Work | Issues | Why here |
 |---|---|---|---|
 | any time | Release 0.5.0: include-root-routes, pyrel-rules-coverage and aggregate-count-certificates, all merged and unreleased | #214, #217 (closed) | Owner trigger. Nothing else waits for it, and it puts both fixes in a release |
-| 1 | reviewed-vocabulary-growth VG1 | #221 | No workaround: 265.74 s at 1,000 extra object types. The plan is approved; its spec waits for the owner's gate |
+| 1 | reviewed-vocabulary-growth VG1 | #221 | Done 2026-11-23 (PR 239) |
 | 2 | growth-round-outcomes GO1 | #228 | Small, internal, no ruling. Every growth round pays it: 42.6 s at 2,404 object types for one added fact type |
-| 3 | reviewed-vocabulary-growth VG2–VG5 | #218, #222 | The reporter has a workaround (the seed carried as imported, proposed, deontic). The plan's rulings were made on 2026-11-23; each phase needs its spec |
+| 3 | reviewed-vocabulary-growth VG2–VG5 | #218, #222 | Done 2026-11-23 (PR 240); milestone closed |
 | 4 | growth-round-outcomes GO2–GO5 | #227 | The reporter measured 2 elements added in 20 rounds. Waits for rulings D1–D5 of its plan |
 | 5 | literature-host-interfaces LH1–LH4 | #216, #215 | Working host-side workarounds for both |
 | 6 | literature-reading-reference LR1–LR3 | #226 | LR1 and LR2 can run at any time; LR3 needs LH1 and LH2 and an owner-selected producer and budget |
@@ -389,3 +389,28 @@ D1–D9 of
 and whether this order stands. Each of the three has its full plan and first
 spec; no plan review has read the last two. The owner approves a plan before
 any code.
+
+### Added 2026-11-23: pins-and-review-check
+
+[pins-and-review-check](milestones/pins-and-review-check/README.md) takes
+the work that pull requests
+[235](https://github.com/vasiloglou/gnd-public/pull/235),
+[246](https://github.com/vasiloglou/gnd-public/pull/246) and
+[247](https://github.com/vasiloglou/gnd-public/pull/247) left undone. No
+issue was filed for it. The owner approved plan r1 on 2026-11-23 with D1–D5
+as proposed ([plan gate](milestones/pins-and-review-check/001-plan.md)); no
+review has read it.
+
+| Order | Work | Source | Why here |
+|---|---|---|---|
+| any time | PF1: the packaged-skill inventory defined once; the install, uninstall and verification-fix tests import it and join the guard block | PR 247 | `tests/test_verification_fixes.py` fails 5 of 13 tests on `main`. Tests only; shares no file with the milestones above |
+| after PF1 | PF2: a recorded calibration of the standing "code fitted to its examples" review check | PRs 235, 246 | About eight paid `codex` reviews; nothing waits for it |
+
+Status, 2026-11-23, later: closed locally by delegated ruling
+([close](milestones/pins-and-review-check/004-close.md)). PF1 is
+[PR 250](https://github.com/vasiloglou/gnd-public/pull/250) and PF2 is
+[PR 253](https://github.com/vasiloglou/gnd-public/pull/253), stacked on the
+plan's [PR 248](https://github.com/vasiloglou/gnd-public/pull/248); none is
+merged. PF2 found a defect on `main` in `gnd.exp.frontmatter` (fixed in a
+separate pull request). PF1's baseline found 14 more tests red on `main`;
+PR 254 repaired them.

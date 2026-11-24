@@ -256,6 +256,74 @@ under `semantic-support` and `positive-own-findings`. A completed
 projection exits 0, including one with declined rows. Invalid,
 unavailable or stale inputs refuse at exit 3.
 
+### Admitting your own assertion entity
+
+A host whose model has its own assertion entity calls `admit()` with a
+shape:
+
+```python
+from gnd.examples.literature import assertion_admission as admission
+
+shape = {"format": "literature-assertion-shape/1", "assertion": "claim", "follow": ["quantity"]}
+record = admission.admit(model, raw, policy, receipts, evidence, out, shape=shape)
+```
+
+- **Identity.** An assertion is an instance of the named entity type,
+  identified by its own handle. Handles compare as the checker compares
+  values: `true` and `1` are two assertions, `"1"` and `1` are two, and `1`
+  and `1.0` are one. A type that objectifies a fact type is
+  refused (`shape:objectified-assertion`), so the packaged `assertion` stays
+  on the packaged shape above.
+- **Attached facts.** A fact type is attached when one of its roles is
+  played by the assertion type. Every attached row of an admitted assertion
+  is kept, except a row that also names an assertion that was not admitted.
+- **Followed facts.** For each instance of a type listed in `follow` that a
+  kept row names, the rows of every fact type that type plays a role in are
+  kept too, and the walk goes on from them. A type not listed is kept as a
+  value only; with an empty list nothing is followed. A row naming an
+  assertion that was not admitted is never kept, whichever way it is reached.
+  The admitted population's `covers` lists the attached and followed fact
+  types; other fact types are not copied.
+- **Judged unit.** Policy targets are attached rows. An assertion is
+  supported when at least one of its rows is a target and every target among
+  them is admitted; a target on any other fact type is refused. The
+  vocabulary and condition checks above apply to the packaged shape only:
+  in a shaped call no value means "absent".
+- **Bounds.** `max_rows` (default 16,384, at most 65,536) bounds the
+  attached and followed rows read; it needs a shape.
+- **Include roots.** A model that declares includes is admitted with its
+  includes copied beside it; each include path must be relative.
+- **Rules.** `rules` decides which supported assertions are admitted:
+
+  ```json
+  {"format": "literature-admission-rules/1", "requirements": [
+    {"id": "positive", "fact_type": "claim_polarity", "role": "polarity",
+     "admissible": ["asserts"], "reasons": [{"value": "negates", "reason": "negated"}]}]}
+  ```
+
+  An assertion satisfies a requirement when it has at least one row of the
+  named fact type and every such row's role value is admissible; values are
+  matched as JSON values, so `"1"` and `1` differ. Requirements are checked
+  in order, and the first one that fails gives the reason: the one declared
+  for the offending value, else the requirement's `id`. Under a shape a
+  requirement names an attached fact type; on the packaged shape it names
+  `assertion_statement`, and the packaged comparison is the default rules
+  (`DEFAULT_RULES`: polarity first, then attribution). A requirement naming
+  an unknown fact type or role is refused, never read as "no row matched".
+- **Statuses.** In a `/2` record a supported assertion that fails a rule is
+  `policy-refused` with that reason; an unsupported one is `fail`. A shaped
+  call with rules adds an `admission-rules` stage, one row per assertion.
+- **Target cap.** `max_targets` (1 to 1,024) refuses a policy with more
+  targets; 1,024 is `gnd judgments check`'s own cap, so a larger set is
+  admitted in several calls.
+- **Record.** A call with a shape, rules, `max_targets` or `max_rows` writes
+  `literature-assertion-admission/2`: the `/1` digests, the includes'
+  digests, `shape` (`caller` or `packaged`), `shape_sha256` (of the
+  canonical shape, `null` for the packaged one), `rules_sha256` (or
+  `null`), `max_targets` and `max_rows` (`null` on the packaged shape), with
+  one `semantic-support` row per assertion, keyed by its handle. The
+  packaged call with none of them keeps `/1`.
+
 ## Context-qualified lineage
 
 The [lineage fixtures](lineage/README.md) use saved-opinion admission
@@ -351,6 +419,13 @@ dimension-aware anchors and a fixed-scale decimal witness.
 The [multipass reading example](reading_fixture/README.md) shows how a
 targeted pass recovers a methods fact, records source coverage and
 replays completed stages without calling its producer.
+
+The reading example verifies two kinds of document: for the broad and
+targeted passes, the attempted sections of that pass joined with newlines,
+and for the reported conflict, `conflict.txt`. Each verification binds its
+document by digest in an extraction sidecar. The example writes no anchor
+sidecar, so it is not a model for anchoring quotes; see
+[where a span may lie](https://vasiloglou.github.io/gnd-public/reference/anchors/#where-a-span-may-lie).
 
 ## Semantic revision
 

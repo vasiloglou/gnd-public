@@ -1,0 +1,200 @@
+{
+  "base": "9abb436a",
+  "claims": [
+    "An accepted producer answer with any empty fact list refuses, and a question is supported only when its fact has at least one row; the packaged runs keep their bytes.",
+    "The amended plan, the close delta and the admission README now agree with one another and with the code.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T21:58:16.422831+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/reviews/close-repairs-r1/diff.patch",
+      "sha256": "730410af421f2fe0886130281aca62a979196d68fc2903a73f6cc28e594aa3bb"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/PANEL-REVIEW.md",
+      "sha256": "8cedf248637c78128d43cb5125ef1a52c4eeb54988f00f1642d94c42d769d4b3"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/request.json",
+      "sha256": "4a2aa46b3af3cbcc484d4cecbf26dcb29a5ad68271c05909d64cfe59fd80a879"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/claude/capability.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/claude/capability.stdout",
+      "sha256": "5ca3a9dac2026e56c221fdd34380c7d7d45ebbb51c1d01b7c17c75cb076a0be8"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/claude/envelope.json",
+      "sha256": "eaac99f261a862a39c29ad5353a1edfca48739fb714cdaaba76e9ba9b39a4929"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/claude/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/claude/stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/codex/capability.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/codex/capability.stdout",
+      "sha256": "df0d864ca2076f7654288c6a1e3394e3eaa2ea8f15021df2524efdd90c70986c"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/codex/envelope.json",
+      "sha256": "1bc6de14ee2f79acb5051b45c29972b26c09d4a6d773e9bd355daced39b9e24c"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/codex/response.json",
+      "sha256": "e117d3cf91a640c392c6d6e6ce101bedc950e05d92768104f0ec05789466447e"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/codex/stderr",
+      "sha256": "e480934de338fadb1aaacae77d7f08a884cba7204696d5cec75275baccd9ff28"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/codex/stdout",
+      "sha256": "f14b3d8d01d0aae2b10fdf94ac82c9b927f0a485c119fd447d75a9c734af2f06"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/gemini/capability.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/gemini/capability.stdout",
+      "sha256": "b5c6e1af180f48adb3700982e7b06e905f29d2965f047eaeebd0b5c4f676b632"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/gemini/envelope.json",
+      "sha256": "2198f1781dcbce95ad65cc867356bed7a76e55e066de183faf15c881ddc4548c"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/gemini/response.json",
+      "sha256": "0f3bce255e76dcea469d8c5befa947c1362104011dcca278171031201776b16c"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/gemini/stderr",
+      "sha256": "5a566fbdde7eca1c0d518cde0285da16e4061970888883844397ea2ffc920ec3"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/gemini/stdout",
+      "sha256": "bb3fc5b6ed4fc039bc47c263ac3f09c3af04956b470b53e54430a805ac6c4548"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/glm/capability.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/glm/capability.stdout",
+      "sha256": "5ca3a9dac2026e56c221fdd34380c7d7d45ebbb51c1d01b7c17c75cb076a0be8"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/glm/envelope.json",
+      "sha256": "237c9d6da40bd73b03e7b5d91592e443a8e46f9af86fdc61382f41fc546bbab6"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/glm/stderr",
+      "sha256": "84a7a92addfe6124967bec188da43c69300fa0c093fdc46484e5700bb5091db1"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/glm/stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/kimi/capability.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/kimi/capability.stdout",
+      "sha256": "38366cf8f3a746da0527b722bb8f017d5cdcecd16e6885148a05b19794ef0ca0"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/kimi/envelope.json",
+      "sha256": "c9da6bc2bb4345495c525cb197a677f702ea8ff488a24b8c26d69977d4cf8d86"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/kimi/response.json",
+      "sha256": "1bfda6c9ccaa18188d2055502632c2ad2f9127eff03e5be662a502c661a88ec4"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/kimi/stderr",
+      "sha256": "9b95295db7486694ef9d2b1e6ffd53d5dab86f65a79bf9b93e2e824c5bfc8582"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/kimi/stdout",
+      "sha256": "e989157b0215b87632895483a927ff279a58e5cc96a5e4a48fd0a2add783e037"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/qwen/capability.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/qwen/capability.stdout",
+      "sha256": "a8b68ecacf715b6c89ced11b02c8f25c46d35117f2eee5782882f2232a2d4c66"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/qwen/envelope.json",
+      "sha256": "0ae53a7fd268fe9586391973a325b3920b72ce489eada6375bd710b4bd585c39"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/qwen/response.json",
+      "sha256": "c2676ab9baf0ad8b8afdafc0f3ac693447044d53ab37962a3281cd847e28a2b9"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/qwen/stderr",
+      "sha256": "7f47e77adae01cdd6d9190bb3a010651b48c47bea02e862f28e3d21f16ac70ab"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/reviewers/qwen/stdout",
+      "sha256": "af866d361b070a6669be6e9a63344a5e961ba2192d0412a4b7b09d0cc0d78440"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/panel-run/run.json",
+      "sha256": "b8753de76a701cc9f1333b556afdfa62cdecbb146b97d9690b02092737bd10df"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/review-request.json",
+      "sha256": "ed12630bb4312fc126e48fda4db237a40ff13a82a1ff590c9e01a464f37aaaa5"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/evidence/close-review/synthesis.json",
+      "sha256": "809c577e09af0b0f98deb379a43c49f83838ce6cf8c49fbcc7ed5fe82110cd40"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/close-delta.md",
+      "sha256": "4dbf57b242d1daa83da3fa64c9fb85438ad86a59bdfb85af5918180b6ebef350"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-host-interfaces/notes/literature-host-interfaces-plan.md",
+      "sha256": "7ca294b7c2c3a9d0f2f17b98ba7b174ceeec478c46f1e4784f771169dd5189fb"
+    },
+    {
+      "path": "src/gnd/examples/literature/README.md",
+      "sha256": "beda40f0c783eb0f5f21448ff8c968247bc58fa02f64ad6c41707b7c89026073"
+    },
+    {
+      "path": "src/gnd/examples/literature/reading.py",
+      "sha256": "eab24386547692957fbc1df3a749d5d82251c5efccadc47b9fab03849e3bda22"
+    },
+    {
+      "path": "tests/test_lh1_reading_host.py",
+      "sha256": "b881d32975c3856123afedb63ab153fce8441743617984a8eac7377fbc198164"
+    }
+  ],
+  "head": "19a534665f001d0ab1bd058f12505def5baac4e8",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Do these close repairs resolve the close panel's findings (in PANEL-REVIEW.md) without breaking the reading and admission examples, and what input do they get wrong?",
+  "subject": "phase",
+  "version": 1
+}

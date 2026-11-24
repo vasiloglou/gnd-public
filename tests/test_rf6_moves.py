@@ -28,7 +28,8 @@ def test_primitive_move_aliases_and_bodies():
         if successor:
             assert successor['before_raw_sha256'] == row['body_sha256'] and successor['reason']
         expected = successor['after']['raw_sha256'] if successor else row['body_sha256']
-        assert hashlib.sha256(''.join(s.splitlines(keepends=True)[n.lineno-1:n.end_lineno])
+        from support.definition_source import definition_source
+        assert hashlib.sha256(definition_source(s, n, decorators=False)
                               .encode()).hexdigest() == expected
 
 

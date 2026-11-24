@@ -118,9 +118,8 @@ def test_original_definition_body_is_verbatim(row):
         assert definitions == []
         return
     assert len(definitions) == 1
-    node = definitions[0]
-    start = min([node.lineno] + [d.lineno for d in node.decorator_list])
-    body = ''.join(source.splitlines(keepends=True)[start-1:node.end_lineno])
+    from support.definition_source import definition_source
+    body = definition_source(source, definitions[0])
     from support.rf9_ci_sources import definition_successor
     successor = definition_successor(row['module'], row['name'])
     if successor:

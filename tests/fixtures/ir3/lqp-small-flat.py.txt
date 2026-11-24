@@ -35,6 +35,7 @@ ROSTERS = {'component': 'String', 'component_name': 'String', 'area': 'String', 
 UNCHECKED = json.loads('[]')
 REFERENCE = json.loads('null')
 LIMIT = 1 << 20
+EXACT_FLOAT = 9007199254740992
 PLAN_REQUIRES = 0
 
 
@@ -44,6 +45,8 @@ def read_population(path):
     if len(raw) > LIMIT:
         raise ValueError('population larger than 1 MiB')
     document = json.loads(raw)
+    if not isinstance(document, dict):
+        raise ValueError('a population is a JSON object')
     if not isinstance(document.get('facts'), dict):
         raise KeyError('facts')
     header = document.setdefault('population', {})
@@ -63,16 +66,29 @@ def read_population(path):
         if head and head not in covers and document['facts'].get(head):
             raise ValueError(f'{head} lists derived facts but is not in covers; GND refuses that input')
     for fact_type, rows_ in document['facts'].items():
+        if not isinstance(rows_, list) or not all(isinstance(row, dict) for row in rows_):
+            raise ValueError(f'{fact_type}: a fact list is a JSON array of objects')
         seen = set()
         for row in rows_:
             for role, primitive in ROLES.get(fact_type, []):
                 check_cell(fact_type, role, primitive, row.get(role))
-            key = json.dumps(row, sort_keys=True)
+            if any(isinstance(v, float) and (v != v or abs(v) == float('inf')) for v in row.values()):
+                raise ValueError(f'{fact_type} holds a number that is not finite; GND refuses it')
+            # GND's identity: 1 and 1.0 are one number, so the row repeats a fact
+            key = json.dumps({r: ['number', *v.as_integer_ratio()] if isinstance(v, (int, float)) and not isinstance(v, bool)
+                              else v for r, v in row.items()}, sort_keys=True)
             if key in seen:
                 raise ValueError(f'duplicate rows in {fact_type}: PyRel relations are sets, so '
                                  'repeated facts cannot be checked here; GND reports them')
             seen.add(key)
     if REFERENCE:   # the candidate plus the embedded reference facts, as GND checks them
+        for fact_type, rows_ in REFERENCE['facts'].items():   # the same cell checks (D4, D6, finite)
+            for row in rows_:
+                for role, primitive in ROLES.get(fact_type, []):
+                    check_cell(fact_type, role, primitive, row.get(role))
+        for object_type, values in REFERENCE['instances'].items():
+            for value in values if object_type in ROSTERS else ():
+                check_cell('instances', object_type, ROSTERS[object_type], value)
         document['facts'].update(REFERENCE['facts'])
         for object_type, values in REFERENCE['instances'].items():
             document.setdefault('instances', {}).setdefault(object_type, []).extend(values)
@@ -84,13 +100,23 @@ def check_cell(fact_type, role, primitive, value):
     """GND refuses a cell of the wrong type (exit 3); so does this program, before PyRel sees it."""
     if isinstance(value, dict):
         raise ValueError(f'{fact_type}.{role} holds an opaque value; the rules programs do not check those')
+    if primitive == 'External':   # D4: an externally identified entity
+        if not isinstance(value, str):
+            raise ValueError(f'{fact_type}.{role} is {value!r}: GND accepts any scalar for an externally '
+                             'identified entity; the rules programs need strings')
+        return
     number = isinstance(value, (int, float)) and not isinstance(value, bool)
+    if isinstance(value, float) and (value != value or abs(value) == float('inf')):
+        raise ValueError(f'{fact_type}.{role} is {value!r}, a number that is not finite; GND refuses it')
     ok = {'String': isinstance(value, str), 'Boolean': isinstance(value, bool),
-          'Integer': number and isinstance(value, int), 'Float': number,
+          'Integer': number and isinstance(value, int), 'Float': number, 'Number': number,
           'Duration': number and isinstance(value, int) and 0 <= value <= 1_000_000,
           'Date': is_date(value)}[primitive]
     if not ok:
         raise ValueError(f'{fact_type}.{role} is {value!r}, which is not a valid {primitive}')
+    if primitive in ('Float', 'Number') and isinstance(value, int) and abs(value) > EXACT_FLOAT:   # D6
+        raise ValueError(f'{fact_type}.{role} is {value}, an integer beyond 2**53, which a {primitive} here '
+                         '(a binary float) cannot hold exactly; GND keeps it exact')
 
 
 def is_date(value):
@@ -182,7 +208,11 @@ def main(argv=None):
         parser.error('enforcing requirements needs a population and --connection NAME '
                      '(a RelationalAI engine); DuckDB does not enforce require. '
                      'Use --compile to inspect, or the duckdb version of this program to check locally.')
-    population = read_population(args.population)
+    try:
+        population = read_population(args.population)
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError) as error:
+        print(f'{args.population}: not a readable population ({type(error).__name__}: {error})', file=sys.stderr)
+        return 3
     import warnings
     from relationalai.config import create_config
     # The direct LQP compiler lowers `where(D).require(C)` to `D and not C => Error("Requirements not met", ...)`.
@@ -198,14 +228,40 @@ def main(argv=None):
         print(f'PyRel execution failed: {type(error).__name__}: {error}', file=sys.stderr)
         return 70
     problems = [w for w in caught if 'Requirements not met' in str(w.message)]
+    return lqp_report(problems, population)
+
+
+def not_checked(population=None):
+    """Print each rule listed as not checked: (a must-rule is among them, a rule was vacuous).
+
+    With the population, a disconnected join over fact lists that are all empty is vacuous, as GND reports it
+    (its fact types are stated ones: the export refuses a disconnected join over a derived fact type here).
+    """
+    facts = (population or {}).get('facts', {})
+    must, vacuous = False, False
+    for rule in UNCHECKED:
+        lists = rule.get('vacuous_if_empty')
+        if population is not None and lists and not any(facts.get(ref) for ref in lists):
+            print(f"{rule['id']}  vacuous  (no facts for it to apply to)")
+            vacuous = True
+            continue
+        print(f"{rule['id']}  not checked  ({rule['reason']})")
+        must = must or rule['modality'] == 'alethic'
+    return must, vacuous
+
+
+def lqp_report(problems, population=None):
+    """The engine's violation reports, after the rules listed as not checked. Exit 1, 4, 2 or 0, as GND bands them."""
+    must_unchecked, vacuous = not_checked(population)
     for w in problems:
         print(f'violated  {w.message}')
     print(f'{len(problems)} requirement violation report(s) from the engine')
-    return 1 if problems else 0
+    return 1 if problems else 4 if must_unchecked else 2 if vacuous else 0
 
 
 def compile_only():
     """Show how PyRel compiled each requirement. Uses PyRel's front-end compiler (internal API, pinned version)."""
+    not_checked()
     from relationalai.config import Config
     from relationalai.semantics.frontend.front_compiler import FrontCompiler
     from relationalai.semantics.metamodel.rewriter import Walker

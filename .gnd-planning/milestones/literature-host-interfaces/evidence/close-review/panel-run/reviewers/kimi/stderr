@@ -1,0 +1,63 @@
+322c35f78263a8ad35f4a341f3eba11123225d9c9a928722516ae064cc6fcba7  .gnd-planning/milestones/literature-host-interfaces/notes/literature-host-interfaces-plan.md
+a938091fa6a3dd619623e586fcc3b4a804560b5c0df4e509f7f6cf58a7be5777  .gnd-planning/milestones/literature-host-interfaces/notes/close-results.md
+a9e480ee169e81463e37a8951c51d93d0c65edf0460ae05bc0dbe5999172bc34  .gnd-planning/milestones/literature-host-interfaces/notes/close-delta.md
+    1921 .gnd-planning/milestones/literature-host-interfaces/notes/close-delta.md
+    2747 .gnd-planning/milestones/literature-host-interfaces/notes/close-results.md
+    3555 .gnd-planning/milestones/literature-host-interfaces/notes/issue-replies.md
+   61950 .gnd-planning/milestones/literature-host-interfaces/notes/literature-host-interfaces-plan.md
+   35609 .gnd-planning/milestones/literature-host-interfaces/notes/phase-LH1-spec.md
+   13951 .gnd-planning/milestones/literature-host-interfaces/notes/phase-LH2-spec.md
+   14643 .gnd-planning/milestones/literature-host-interfaces/notes/phase-LH3-spec.md
+   11679 .gnd-planning/milestones/literature-host-interfaces/notes/phase-LH4-spec.md
+  146055 total
+    1248 src/gnd/examples/literature/reading.py
+     389 src/gnd/examples/literature/depth.py
+     956 src/gnd/examples/literature/assurance_report.py
+     560 src/gnd/examples/literature/assertion_admission.py
+     772 tests/test_lh1_reading_host.py
+     299 tests/test_lh2_reading_replay.py
+     379 tests/test_lh3_admission_shape.py
+     207 tests/test_lh4_admission_rules.py
+    4810 total
+001-plan-gate.md
+002-phase-LH1.md
+003-phase-LH2.md
+004-phase-LH3.md
+005-phase-LH4.md
+README.md
+notes
+ls: .gnd-planning/milestones/literature-host-interfaces/evidence: No such file or directory
+.gnd-planning/milestones/literature-host-interfaces/:
+001-plan-gate.md
+002-phase-LH1.md
+003-phase-LH2.md
+004-phase-LH3.md
+005-phase-LH4.md
+README.md
+notes
+close-delta.md
+close-results.md
+issue-replies.md
+literature-host-interfaces-plan.md
+phase-LH1-spec.md
+phase-LH2-spec.md
+phase-LH3-spec.md
+phase-LH4-spec.md
+reviews
+cad2bea4aa679310e154f98bcdad3e85e89cba581812ba703f059d737246d8b6  src/gnd/examples/literature/reading.py
+f50ff0cbd22f73cf151b5985eb207828111e0cbde06cd4213e7c9211b4a798f7  src/gnd/examples/literature/depth.py
+eb5bf73f97b9a7f400ae4c68348334fd8dfba932ceea5b585341f74da3d56078  src/gnd/examples/literature/assurance_report.py
+bc78375fb84d95f8497e519dce67ca8dd55a376764c0b03ad907b363e37856a6  src/gnd/examples/literature/assertion_admission.py
+c0db56071a7f2f5c17ff521949c748b3aaf7f5b2656950b698741ff1b19cc5fe  tests/test_lh1_reading_host.py
+84f9895071d52affdceff71defc02d8ff75f8c7cb6136d27832cd067ed8d7983  tests/test_lh2_reading_replay.py
+8196e84b454028c5cc2fddc5ff13626909e00ccff71642dcb3f2dee4ea80e366  tests/test_lh3_admission_shape.py
+4df73aaec6962b66d79d099cc5606341451132e5a64ffcea3700edc49d259547  tests/test_lh4_admission_rules.py
+phase-LH1-r1
+phase-LH1-r2
+phase-LH2-r1
+phase-LH3-r1
+phase-LH3-r2
+phase-LH4-r1
+9abb436a docs(milestone-close): Amend the plan and write the close inputs
+1856a995 docs(phase-LH4): Record phase LH4
+69873d1c docs(phase-LH4): Retain review round 1 and its findings ledger

@@ -96,6 +96,13 @@ LX2_FLATTENING_EDGE = (
     'gnd-export/references/witness-contract.md',
     '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record',
 )
+# reviewed-vocabulary-growth VG5: "Starting from a reviewed vocabulary" cites the two homes.
+VG5_GROWTH_EDGES = {
+    ('gnd-model-from-text/references/unattended-growth.md',
+     '../../gnd-orm-core/references/representation-format.md#an-unattended-root-that-includes-a-reviewed-model'),
+    ('gnd-model-from-text/references/unattended-growth.md',
+     '../../gnd-orm-core/references/provenance-and-modality.md#evolve-admission-d-12'),
+}
 
 
 def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
@@ -123,11 +130,11 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
             if resolved not in entries and resolved not in directories:
                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
-    expected = GC4_RELATIVE_LINKS | {LX2_FLATTENING_EDGE}
+    expected = GC4_RELATIVE_LINKS | {LX2_FLATTENING_EDGE} | VG5_GROWTH_EDGES
     missing = sorted(expected - edges)
     extra = sorted(edges - expected)
     assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
-    expected_count = GC4_RELATIVE_LINK_COUNT + 1
+    expected_count = GC4_RELATIVE_LINK_COUNT + 1 + len(VG5_GROWTH_EDGES)
     assert checked == expected_count, f'checked {checked} relative links, expected {expected_count}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
 
 def test_pep723_validator_sibling_schema_ships() -> None:

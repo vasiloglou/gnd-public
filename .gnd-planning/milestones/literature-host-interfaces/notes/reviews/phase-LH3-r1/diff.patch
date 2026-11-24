@@ -1,0 +1,1033 @@
+diff --git a/.gnd-planning/milestones/literature-host-interfaces/notes/phase-LH3-spec.md b/.gnd-planning/milestones/literature-host-interfaces/notes/phase-LH3-spec.md
+index 55191c11..96ea0cc6 100644
+--- a/.gnd-planning/milestones/literature-host-interfaces/notes/phase-LH3-spec.md
++++ b/.gnd-planning/milestones/literature-host-interfaces/notes/phase-LH3-spec.md
+@@ -205,3 +205,22 @@ as it judges the packaged example. Model structure is read with
+ `load_model_bytes` and, for an include root, `load_model_bytes_composed`
+ over the snapshot folder, as `judgments.py` reads it. Every other
+ requirement maps to the design above.
++
++## Implementation findings (2026-11-23)
++
++1. **The include paths are read from the model document.** `_include_paths`
++   parses the root with `gnd.model._parsing.parse_model_document`, the
++   parser `bytes_declare_includes` itself uses, rather than a second reader.
++   Nested includes are not copied; an include root whose include declares
++   includes of its own refuses through the judgment route.
++2. **The fixture's cases are built in the test module.** The model, its
++   include and the evidence are committed under `tests/fixtures/lh3-admission/`;
++   each case's population, policy and receipts are written by `_case()`
++   with `gnd.judgments.judgment_fact_digest` and `judgment_receipt_digest`,
++   so a case states its own verdicts. No separate builder script.
++3. **`venue`**, an entity that plays no role, was added to the include so
++   that `shape:no-attached-facts` has a case that can fail it.
++4. **T9's time bound.** The row ceiling run (1,024 claims, 65,536 rows,
++   1,024 receipts) is held to 60 s, not §8's 30 s: most of its time is the
++   stable `gnd judgments check` route, which this phase does not change.
++5. **T8 pins all four H18 digests**, not only the two populations.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 54061d44..c8264680 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1797,7 +1797,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +75 more (graph.md)
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +76 more (graph.md)
+ - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
+ - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
+ - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+@@ -1811,7 +1811,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
++- used_by: examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions
+ - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
+ - checked: partial
+ - notes: The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
+@@ -3336,15 +3336,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### examples.literature_assertion_admission
+-- does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements.
+-- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest
+-- in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root.
+-- out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker.
++- does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements; with a shape, admit the instances of a caller-named assertion entity with their attached and followed facts.
++- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest, assertion shape, attached facts, followed entities, include root admission
++- in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root; optionally a literature-assertion-shape/1 document and a row bound.
++- out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker (literature-assertion-admission/1, or /2 for a shaped call).
+ - status: canonical
+ - modules: src/gnd/examples/literature/assertion_admission.py
+-- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors
++- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors, model.loading, model.validation
+ - used_by: examples.literature_lineage
+-- tests: tests/test_li4_assertions.py
++- tests: tests/test_li4_assertions.py, tests/test_lh3_admission_shape.py
++- notes: The shape and the /2 record are described once, in src/gnd/examples/literature/README.md, "Admitting your own assertion entity".
+ 
+ 
+ ### examples.literature_lineage
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index b42859dd..9b8e67c9 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1881,7 +1881,7 @@ Generated by `scripts/components_index.py`.
+ - used_by: (none)
+ 
+ ### examples.literature_assertion_admission
+-- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors
++- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors, model.loading, model.validation
+ - used_by: examples.literature_lineage
+ 
+ #### examples.literature_assertion_admission -> examples.literature_assurance
+@@ -1899,6 +1899,13 @@ Generated by `scripts/components_index.py`.
+ #### examples.literature_assertion_admission -> model.anchors
+ - `src/gnd/examples/literature/assertion_admission.py -> src/gnd/anchors.py`
+ 
++#### examples.literature_assertion_admission -> model.loading
++- `src/gnd/examples/literature/assertion_admission.py -> src/gnd/model/__init__.py`
++- `src/gnd/examples/literature/assertion_admission.py -> src/gnd/model/_includes.py`
++
++#### examples.literature_assertion_admission -> model.validation
++- `src/gnd/examples/literature/assertion_admission.py -> src/gnd/model/_parsing.py`
++
+ ### examples.literature_assurance
+ - uses: examples.literature_reading
+ - used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
+@@ -3997,7 +4004,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.loading
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.service, evolve.command, evolve.schema, evolve.service, examples.literature_interop, examples.literature_lineage, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.service, evolve.command, evolve.schema, evolve.service, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ #### model.loading -> infra.artifacts
+ - `src/gnd/model/__init__.py -> src/gnd/artifacts.py`
+@@ -4235,7 +4242,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.validation
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: extract.service, model.loading, model.operation_obligations, semantics.extensions
++- used_by: examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions
+ 
+ #### model.validation -> check.universe
+ - `src/gnd/model/_guarded.py -> src/gnd/universe.py`
+diff --git a/dev/components/modules/examples.md b/dev/components/modules/examples.md
+index 0e266d3c..866e6b77 100644
+--- a/dev/components/modules/examples.md
++++ b/dev/components/modules/examples.md
+@@ -187,9 +187,10 @@ Publish the positive contextual assertions selected by saved judgments.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `project(subject, targets) -> tuple[dict, dict]` | function | 100 | Project accepted positive occurrences and their original identity links. |
+-| `admit(model, raw, policy, receipts, trusted_root, out) -> dict` | function | 183 | Check saved opinion bytes, project supported rows and publish one bound result. |
+-| `main(argv) -> int` | function | 209 | (no docstring) |
++| `project(subject, targets) -> tuple[dict, dict]` | function | 110 | Project accepted positive occurrences and their original identity links. |
++| `project_shaped(subject, targets, model, shape, max_rows) -> tuple[dict, dict]` | function | 212 | Admit the assertions of a caller-named entity type, with every attached and followed row they keep. |
++| `admit(model, raw, policy, receipts, trusted_root, out, *, shape, max_rows) -> dict` | function | 353 | Check saved opinion bytes, project supported rows and publish one bound result. |
++| `main(argv) -> int` | function | 402 | (no docstring) |
+ 
+ ## gnd.examples.literature.assurance_report — `src/gnd/examples/literature/assurance_report.py`
+ Components: examples.literature_assurance
+diff --git a/src/gnd/examples/literature/README.md b/src/gnd/examples/literature/README.md
+index b909b38d..f872b5d7 100644
+--- a/src/gnd/examples/literature/README.md
++++ b/src/gnd/examples/literature/README.md
+@@ -256,6 +256,47 @@ under `semantic-support` and `positive-own-findings`. A completed
+ projection exits 0, including one with declined rows. Invalid,
+ unavailable or stale inputs refuse at exit 3.
+ 
++### Admitting your own assertion entity
++
++A host whose model has its own assertion entity calls `admit()` with a
++shape:
++
++```python
++from gnd.examples.literature import assertion_admission as admission
++
++shape = {"format": "literature-assertion-shape/1", "assertion": "claim", "follow": ["quantity"]}
++record = admission.admit(model, raw, policy, receipts, evidence, out, shape=shape)
++```
++
++- **Identity.** An assertion is an instance of the named entity type,
++  identified by its own handle. A type that objectifies a fact type is
++  refused (`shape:objectified-assertion`), so the packaged `assertion` stays
++  on the packaged shape above.
++- **Attached facts.** A fact type is attached when one of its roles is
++  played by the assertion type. Every attached row of an admitted assertion
++  is kept, except a row that also names an assertion that was not admitted.
++- **Followed facts.** For each instance of a type listed in `follow` that a
++  kept row names, the rows of every fact type that type plays a role in are
++  kept too, and the walk goes on from them. A type not listed is kept as a
++  value only; with an empty list nothing is followed. A row naming an
++  assertion that was not admitted is never kept, whichever way it is reached.
++  The admitted population's `covers` lists the attached and followed fact
++  types; other fact types are not copied.
++- **Judged unit.** Policy targets are attached rows. An assertion is
++  supported when at least one of its rows is a target and every target among
++  them is admitted; a target on any other fact type is refused. The
++  vocabulary and condition checks above apply to the packaged shape only:
++  in a shaped call no value means "absent".
++- **Bounds.** `max_rows` (default 16,384, at most 65,536) bounds the
++  attached and followed rows read; it needs a shape. `gnd judgments check`
++  caps a policy at 1,024 targets.
++- **Include roots.** A model that declares includes is admitted with its
++  includes copied beside it; each include path must be relative.
++- **Record.** A shaped call writes `literature-assertion-admission/2`: the
++  `/1` digests, the includes' digests, `shape_sha256` (of the canonical
++  shape) and `max_rows`, with one `semantic-support` row per assertion,
++  keyed by its handle. The packaged call keeps `/1`.
++
+ ## Context-qualified lineage
+ 
+ The [lineage fixtures](lineage/README.md) use saved-opinion admission
+diff --git a/src/gnd/examples/literature/assertion_admission.py b/src/gnd/examples/literature/assertion_admission.py
+index 91d086ad..d137a517 100644
+--- a/src/gnd/examples/literature/assertion_admission.py
++++ b/src/gnd/examples/literature/assertion_admission.py
+@@ -5,10 +5,12 @@ from __future__ import annotations
+ import argparse
+ import asyncio
+ import json
++import math
+ import os
+ import sys
+ import tempfile
+-from pathlib import Path
++from collections import deque
++from pathlib import Path, PurePosixPath
+ from typing import Any
+ 
+ from gnd.anchors import read_regular_path, strict_json
+@@ -19,6 +21,9 @@ from gnd.process import ProcessLimits, run_bounded_process
+ from .assurance_report import Refusal
+ 
+ SCHEMA = "literature-assertion-admission/1"
++SHAPED_SCHEMA = "literature-assertion-admission/2"
++SHAPE_FORMAT = "literature-assertion-shape/1"
++MAX_ROWS, MAX_ROWS_CEILING = 16384, 65536
+ STATEMENT = "assertion_statement"
+ WORK = "assertion_names_work"
+ PASSAGE = "assertion_names_passage"
+@@ -80,12 +85,8 @@ def _targets(items: Any, count: int) -> dict[int, dict]:
+     return by_index
+ 
+ 
+-def _support(row: dict, target: dict | None) -> str | None:
+-    missing = row["condition"].strip().casefold() in ABSENT_CONDITIONS
+-    if row["qualification"] == "conditional" and missing:
+-        return "missing-condition"
+-    if row["qualification"] == "unqualified" and not missing:
+-        return "qualification-mismatch"
++def _target_reason(target: dict | None) -> str | None:
++    """Map one target's judgment to a support reason; None when it is admitted."""
+     if target is None:
+         return "missing"
+     if target["admitted"]:
+@@ -97,6 +98,15 @@ def _support(row: dict, target: dict | None) -> str | None:
+     return "approval-or-mechanical-floor"
+ 
+ 
++def _support(row: dict, target: dict | None) -> str | None:
++    missing = row["condition"].strip().casefold() in ABSENT_CONDITIONS
++    if row["qualification"] == "conditional" and missing:
++        return "missing-condition"
++    if row["qualification"] == "unqualified" and not missing:
++        return "qualification-mismatch"
++    return _target_reason(target)
++
++
+ def project(subject: Any, targets: Any) -> tuple[dict, dict]:
+     """Project accepted positive occurrences and their original identity links."""
+     if not isinstance(subject, dict) or not isinstance(subject.get("population"), dict):
+@@ -139,11 +149,171 @@ def project(subject: Any, targets: Any) -> tuple[dict, dict]:
+     }, stages
+ 
+ 
++def _shape(value: Any) -> tuple[str, tuple[str, ...]]:
++    if (not isinstance(value, dict) or set(value) != {"format", "assertion", "follow"}
++            or value["format"] != SHAPE_FORMAT or not isinstance(value["assertion"], str)
++            or not isinstance(value["follow"], list)
++            or not all(isinstance(name, str) for name in value["follow"])
++            or len(set(value["follow"])) != len(value["follow"]) or value["assertion"] in value["follow"]):
++        raise Refusal("shape:invalid")
++    return value["assertion"], tuple(value["follow"])
++
++
++def _max_rows(value: Any) -> int:
++    if value is None:
++        return MAX_ROWS
++    if type(value) is not int or not 1 <= value <= MAX_ROWS_CEILING:
++        raise Refusal("input:max-rows")
++    return value
++
++
++def _include_paths(model_bytes: bytes) -> list[str]:
++    """The relative paths of the includes a model root declares."""
++    from gnd.model._includes import bytes_declare_includes
++    from gnd.model._parsing import parse_model_document
++
++    if not bytes_declare_includes(model_bytes, source=MODEL):
++        return []
++    document = parse_model_document(model_bytes, source=MODEL)
++    paths = []
++    for entry in document.get("includes") or []:
++        path = entry.get("path") if isinstance(entry, dict) else None
++        parts = PurePosixPath(path).parts if isinstance(path, str) else ()
++        if (not parts or PurePosixPath(path).is_absolute() or ".." in parts or "\\" in path
++                or path in (MODEL, RAW, POLICY, RECEIPTS) or path in paths):
++            raise Refusal("input:include-path")
++        paths.append(path)
++    return paths
++
++
++def _model_document(snapshots: dict[str, bytes], includes: dict[str, bytes]) -> dict:
++    """The model the judgment route checks, as plain data, composed for an include root."""
++    from gnd.model import ModelLoadError, load_model_bytes, load_model_bytes_composed
++
++    with tempfile.TemporaryDirectory(prefix="gnd-assertion-model-") as folder:
++        root = Path(folder).resolve()
++        try:
++            if includes:
++                for name, raw in includes.items():
++                    (root / name).parent.mkdir(parents=True, exist_ok=True)
++                    (root / name).write_bytes(raw)
++                loaded = load_model_bytes_composed(snapshots[MODEL], source=MODEL, root=root, bind_references=False)
++            else:
++                loaded = load_model_bytes(snapshots[MODEL], source=MODEL)
++        except (ModelLoadError, ValueError, TypeError, OSError) as error:
++            raise Refusal("input:model") from error
++    return loaded.model_dump(mode="json", exclude_none=True)
++
++
++def _scalar(value: Any) -> bool:
++    return type(value) in (str, int, bool) or type(value) is float and math.isfinite(value)
++
++
++def project_shaped(subject: Any, targets: Any, model: dict, shape: Any, max_rows: int = MAX_ROWS) -> tuple[dict, dict]:
++    """Admit the assertions of a caller-named entity type, with every attached and followed row they keep."""
++    assertion, follow = _shape(shape)
++    kinds = {item["id"]: item["kind"] for item in model.get("object_types", [])}
++    if kinds.get(assertion) != "entity":
++        raise Refusal("shape:unknown-assertion")
++    if any(kinds.get(name) != "entity" for name in follow):
++        raise Refusal("shape:unknown-follow")
++    fact_types = model.get("fact_types", [])
++    if any(item.get("objectified_as") == assertion for item in fact_types):
++        raise Refusal("shape:objectified-assertion")
++    roles = {item["id"]: [(role["role_name"], role["object_type"]) for role in item["roles"]] for item in fact_types}
++    attached = [name for name, pairs in roles.items() if any(kind == assertion for _, kind in pairs)]
++    if not attached:
++        raise Refusal("shape:no-attached-facts")
++    followed = set(follow)
++    covers = [name for name, pairs in roles.items()
++              if name in attached or any(kind in followed for _, kind in pairs)]
++    if not isinstance(subject, dict) or not isinstance(subject.get("population"), dict):
++        raise Refusal("input:invalid-contextual-population")
++    facts = subject.get("facts")
++    if not isinstance(facts, dict):
++        raise Refusal("input:invalid-contextual-population")
++    rows = {}
++    for name in covers:
++        value = facts.get(name, [])
++        names = {role for role, _ in roles[name]}
++        if (not isinstance(value, list)
++                or not all(isinstance(row, dict) and set(row) == names and all(map(_scalar, row.values()))
++                           for row in value)):
++            raise Refusal("input:invalid-contextual-population")
++        rows[name] = value
++    if sum(map(len, rows.values())) > max_rows:
++        raise Refusal("input:row-cap")
++    if not isinstance(targets, list) or len(targets) > MAX_TARGETS:
++        raise Refusal("judgments:invalid-result")
++    seen, by_assertion, order = set(), {}, {}
++    holders = {name: [role for role, kind in roles[name] if kind == assertion] for name in covers}
++    for name in attached:
++        for row in rows[name]:
++            for role in holders[name]:
++                order.setdefault(row[role], len(order))
++    for item in targets:
++        if not isinstance(item, dict) or item.get("fact_type") not in roles:
++            raise Refusal("judgments:invalid-result")
++        name, index, judgments = item["fact_type"], item.get("index"), item.get("judgments")
++        if name not in attached:
++            raise Refusal("judgments:target-outside-shape")
++        if (type(index) is not int or not 0 <= index < len(rows[name]) or (name, index) in seen
++                or type(item.get("admitted")) is not bool or not isinstance(judgments, list) or len(judgments) > 32
++                or not all(isinstance(j, dict) and j.get("verdict") in ("approve", "reject", "abstain", "missing")
++                           for j in judgments)):
++            raise Refusal("judgments:invalid-result")
++        seen.add((name, index))
++        for role in holders[name]:
++            by_assertion.setdefault(rows[name][index][role], []).append(item)
++    reasons = {}
++    for handle in sorted(order, key=order.get):
++        found = by_assertion.get(handle)
++        reasons[handle] = "missing" if not found else next(
++            (reason for reason in map(_target_reason, found) if reason is not None), None)
++    admitted = {handle for handle, reason in reasons.items() if reason is None}
++    index = {}
++    for name in covers:
++        for position, row in enumerate(rows[name]):
++            for role, kind in roles[name]:
++                if kind in followed:
++                    index.setdefault((kind, row[role]), []).append((name, position))
++    kept, queue = set(), deque()
++
++    def keep(name, position):
++        row = rows[name][position]
++        if (name, position) in kept or any(row[role] not in admitted for role in holders[name]):
++            return
++        kept.add((name, position))
++        queue.extend((kind, row[role]) for role, kind in roles[name] if kind in followed)
++
++    for name in attached:
++        for position in range(len(rows[name])):
++            keep(name, position)
++    visited = set()
++    while queue:
++        instance = queue.popleft()
++        if instance in visited:
++            continue
++        visited.add(instance)
++        for name, position in index.get(instance, ()):
++            keep(name, position)
++    population = {
++        **({"format_version": subject["format_version"]} if "format_version" in subject else {}),
++        "population": {**subject["population"], "source": "tool-output", "producer": SHAPED_SCHEMA, "covers": covers},
++        "instances": {},
++        "facts": {name: [row for position, row in enumerate(rows[name]) if (name, position) in kept] for name in covers},
++    }
++    stages = {"semantic-support": [{"assertion": handle, "status": "pass" if reason is None else "fail",
++                                    "reason": reason} for handle, reason in reasons.items()]}
++    return population, stages
++
++
+ def _judgments(snapshots: dict[str, bytes], trusted_root: Path) -> tuple[dict, bytes]:
+     """Run the standard judgment route with the immutable input snapshot."""
+     with tempfile.TemporaryDirectory(prefix="gnd-assertions-") as folder:
+         cwd = Path(folder).resolve()
+         for name, raw in snapshots.items():
++            (cwd / name).parent.mkdir(parents=True, exist_ok=True)
+             (cwd / name).write_bytes(raw)
+         argv = (sys.executable, "-m", "gnd", "judgments", "check", MODEL, RAW,
+                 "--policy", POLICY, "--receipts", RECEIPTS, "--trusted-root", str(trusted_root.absolute()),
+@@ -180,24 +350,47 @@ def _verify_report_inputs(judgment: dict, snapshots: dict[str, bytes]) -> None:
+         raise Refusal("judgments:binding-mismatch")
+ 
+ 
+-def admit(model: Path, raw: Path, policy: Path, receipts: Path, trusted_root: Path, out: Path) -> dict:
+-    """Check saved opinion bytes, project supported rows and publish one bound result."""
++def admit(model: Path, raw: Path, policy: Path, receipts: Path, trusted_root: Path, out: Path, *,
++          shape: dict | None = None, max_rows: int | None = None) -> dict:
++    """Check saved opinion bytes, project supported rows and publish one bound result.
++
++    With ``shape`` (``{"format": SHAPE_FORMAT, "assertion": ENTITY, "follow": [ENTITY, ...]}``) the
++    assertions are the instances of a caller-named entity type, identified by their own handle, and a
++    ``literature-assertion-admission/2`` record is written; without it, the packaged shape and ``/1``.
++    """
+     out = out.absolute()
+     if out.exists() or out.is_symlink():
+         raise Refusal("output:exists")
++    if shape is None and max_rows is not None:
++        raise Refusal("input:max-rows")
++    if shape is not None:
++        _shape(shape)
++    rows_cap = _max_rows(max_rows)
+     snapshots = {
+         name: read_regular_path(path, label=name, max_bytes=(1 << 20) if name == POLICY else CAP)
+         for name, path in ((MODEL, model), (RAW, raw), (POLICY, policy), (RECEIPTS, receipts))
+     }
+-    judgment, report_raw = _judgments(snapshots, trusted_root)
++    includes = {}
++    if shape is not None:
++        base = Path(model).absolute().parent
++        includes = {path: read_regular_path(base / path, label="include", max_bytes=CAP)
++                    for path in _include_paths(snapshots[MODEL])}
++    judgment, report_raw = _judgments({**snapshots, **includes}, trusted_root)
+     subject = strict_json(snapshots[RAW], max_bytes=CAP, too_large="input:population-cap")
+-    population, stages = project(subject, judgment.get("targets"))
++    if shape is None:
++        population, stages = project(subject, judgment.get("targets"))
++    else:
++        population, stages = project_shaped(subject, judgment.get("targets"),
++                                            _model_document(snapshots, includes), shape, rows_cap)
+     admitted_raw = canonical_json_bytes(population)
+     record = {
+         "schema": SCHEMA, "model_sha256": sha256_hex(snapshots[MODEL]), "raw_sha256": sha256_hex(snapshots[RAW]),
+         "policy_sha256": sha256_hex(snapshots[POLICY]), "receipts_sha256": sha256_hex(snapshots[RECEIPTS]),
+         "judgment_report_sha256": sha256_hex(report_raw), "admitted_sha256": sha256_hex(admitted_raw), "stages": stages,
+     }
++    if shape is not None:
++        record.update({"schema": SHAPED_SCHEMA, "includes": {path: sha256_hex(raw) for path, raw in includes.items()},
++                       "shape_sha256": sha256_hex(canonical_json_bytes(shape)), "max_rows": rows_cap})
+     publish_directory_once(
+         out.parent, out.name, {RAW: snapshots[RAW], REPORT: report_raw, ADMITTED: admitted_raw,
+                                RECORD: canonical_json_bytes(record)},
+diff --git a/tests/fixtures/lh3-admission/claims.orm.json b/tests/fixtures/lh3-admission/claims.orm.json
+new file mode 100644
+index 00000000..ad30e7d2
+--- /dev/null
++++ b/tests/fixtures/lh3-admission/claims.orm.json
+@@ -0,0 +1,171 @@
++{
++  "version": 5,
++  "model_id": "urn:gnd-test:lh3-claims@1",
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [],
++  "fact_types": [
++    {
++      "id": "claim_passage",
++      "reading": "{Claim} is stated in {Passage}",
++      "roles": [
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        },
++        {
++          "role_name": "passage",
++          "object_type": "passage"
++        }
++      ]
++    },
++    {
++      "id": "claim_actor",
++      "reading": "{Claim} has actor {Note}",
++      "roles": [
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        },
++        {
++          "role_name": "actor",
++          "object_type": "note"
++        }
++      ]
++    },
++    {
++      "id": "claim_object",
++      "reading": "{Claim} has object {Note}",
++      "roles": [
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        },
++        {
++          "role_name": "object",
++          "object_type": "note"
++        }
++      ]
++    },
++    {
++      "id": "claim_condition",
++      "reading": "{Claim} holds under {Note}",
++      "roles": [
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        },
++        {
++          "role_name": "condition",
++          "object_type": "note"
++        }
++      ]
++    },
++    {
++      "id": "claim_quantity",
++      "reading": "{Claim} reports {Quantity}",
++      "roles": [
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        },
++        {
++          "role_name": "quantity",
++          "object_type": "quantity"
++        }
++      ]
++    },
++    {
++      "id": "claim_paper",
++      "reading": "{Claim} appears in {Paper}",
++      "roles": [
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        },
++        {
++          "role_name": "paper",
++          "object_type": "paper"
++        }
++      ]
++    },
++    {
++      "id": "claim_supports",
++      "reading": "{Claim} supports {Claim}",
++      "roles": [
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        },
++        {
++          "role_name": "other",
++          "object_type": "claim"
++        }
++      ]
++    },
++    {
++      "id": "quantity_value",
++      "reading": "{Quantity} has value {Note}",
++      "roles": [
++        {
++          "role_name": "quantity",
++          "object_type": "quantity"
++        },
++        {
++          "role_name": "value",
++          "object_type": "note"
++        }
++      ]
++    },
++    {
++      "id": "quantity_unit",
++      "reading": "{Quantity} has unit {Note}",
++      "roles": [
++        {
++          "role_name": "quantity",
++          "object_type": "quantity"
++        },
++        {
++          "role_name": "unit",
++          "object_type": "note"
++        }
++      ]
++    },
++    {
++      "id": "quantity_source",
++      "reading": "{Quantity} was measured in {Claim}",
++      "roles": [
++        {
++          "role_name": "quantity",
++          "object_type": "quantity"
++        },
++        {
++          "role_name": "claim",
++          "object_type": "claim"
++        }
++      ]
++    },
++    {
++      "id": "paper_title",
++      "reading": "{Paper} has title {Note}",
++      "roles": [
++        {
++          "role_name": "paper",
++          "object_type": "paper"
++        },
++        {
++          "role_name": "title",
++          "object_type": "note"
++        }
++      ]
++    }
++  ],
++  "includes": [
++    {
++      "id": "lh3-terms",
++      "path": "terms.orm.json",
++      "sha256": "05996ed42c345362ba99884466a7872bbfc11152f7290948c801c87e7dde3370"
++    }
++  ]
++}
+diff --git a/tests/fixtures/lh3-admission/evidence/passages.txt b/tests/fixtures/lh3-admission/evidence/passages.txt
+new file mode 100644
+index 00000000..ed17ec13
+--- /dev/null
++++ b/tests/fixtures/lh3-admission/evidence/passages.txt
+@@ -0,0 +1,2 @@
++Claim one reports a 12 percent gain under low noise.
++Claim two holds under three conditions.
+diff --git a/tests/fixtures/lh3-admission/terms.orm.json b/tests/fixtures/lh3-admission/terms.orm.json
+new file mode 100644
+index 00000000..73311e70
+--- /dev/null
++++ b/tests/fixtures/lh3-admission/terms.orm.json
+@@ -0,0 +1,66 @@
++{
++  "version": 2,
++  "source": {
++    "kind": "fixture"
++  },
++  "object_types": [
++    {
++      "id": "handle",
++      "name": "Handle",
++      "kind": "value",
++      "primitive": "String"
++    },
++    {
++      "id": "note",
++      "name": "Note",
++      "kind": "value",
++      "primitive": "String"
++    },
++    {
++      "id": "claim",
++      "name": "Claim",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "handle"
++      }
++    },
++    {
++      "id": "quantity",
++      "name": "Quantity",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "handle"
++      }
++    },
++    {
++      "id": "paper",
++      "name": "Paper",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "handle"
++      }
++    },
++    {
++      "id": "passage",
++      "name": "Passage",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "handle"
++      }
++    },
++    {
++      "id": "venue",
++      "name": "Venue",
++      "kind": "entity",
++      "reference": {
++        "mode": "popular",
++        "value_type": "handle"
++      }
++    }
++  ],
++  "fact_types": []
++}
+diff --git a/tests/test_lh3_admission_shape.py b/tests/test_lh3_admission_shape.py
+new file mode 100644
+index 00000000..b4c5cdaa
+--- /dev/null
++++ b/tests/test_lh3_admission_shape.py
+@@ -0,0 +1,300 @@
++"""LH3: admission over a caller-named assertion entity, identified by its own handle."""
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++import subprocess
++import sys
++import time
++from pathlib import Path
++
++import pytest
++
++from gnd.artifacts import canonical_json_bytes
++from gnd.examples.literature import assertion_admission as admission
++from gnd.examples.literature.assurance_report import Refusal
++from gnd.judgments import judgment_fact_digest, judgment_receipt_digest
++
++FIXTURE = Path(__file__).parent / "fixtures/lh3-admission"
++PACKAGED = Path(__file__).resolve().parents[1] / "src/gnd/examples/literature/assertions"
++SHAPE = {"format": admission.SHAPE_FORMAT, "assertion": "claim", "follow": ["quantity"]}
++H18 = {
++    "admitted.population.json": "6e45b93d",
++    "raw.population.json": "ea96584c",
++    "judgment-report.json": "3726a424",
++    "admission.json": "6d262018",
++}
++ROWS = {
++    "claim_passage": [{"claim": "c1", "passage": "p1"}, {"claim": "c2", "passage": "p1"},
++                      {"claim": "c3", "passage": "p2"}, {"claim": "c4", "passage": "p2"}],
++    "claim_actor": [{"claim": "c1", "actor": "Quartz"}, {"claim": "c1", "actor": "Slate"},
++                    {"claim": "c3", "actor": "Quartz"}, {"claim": "c4", "actor": "Basalt"}],
++    "claim_object": [{"claim": "c2", "object": "error rate"}, {"claim": "c3", "object": "noise"}],
++    "claim_condition": [{"claim": "c2", "condition": "low noise"}, {"claim": "c2", "condition": "trial A"},
++                        {"claim": "c2", "condition": "none"}],
++    "claim_quantity": [{"claim": "c1", "quantity": "q1"}, {"claim": "c3", "quantity": "q2"},
++                       {"claim": "c4", "quantity": "q1"}],
++    "claim_paper": [{"claim": "c1", "paper": "w1"}],
++    "claim_supports": [{"claim": "c1", "other": "c2"}, {"claim": "c1", "other": "c4"}],
++    "quantity_value": [{"quantity": "q1", "value": "12"}, {"quantity": "q2", "value": "3"}],
++    "quantity_unit": [{"quantity": "q1", "unit": "percent"}, {"quantity": "q2", "unit": "dB"}],
++    "quantity_source": [{"quantity": "q1", "claim": "c4"}, {"quantity": "q2", "claim": "c3"}],
++    "paper_title": [{"paper": "w1", "title": "Quartz study"}],
++}
++VERDICTS = {("claim_passage", 0): "approve", ("claim_passage", 1): "approve",
++            ("claim_passage", 2): "approve", ("claim_passage", 3): "reject"}
++
++
++def _sha(raw: bytes) -> str:
++    return hashlib.sha256(raw).hexdigest()
++
++
++def _case(tmp_path, *, rows=None, verdicts=None, name="case", model="claims.orm.json"):
++    """A caller's admission inputs: model and include, raw population, policy, saved receipts, evidence."""
++    root = tmp_path / name
++    root.mkdir()
++    for file in ("claims.orm.json", "terms.orm.json"):
++        shutil.copyfile(FIXTURE / file, root / file)
++    shutil.copytree(FIXTURE / "evidence", root / "evidence")
++    rows = ROWS if rows is None else rows
++    verdicts = VERDICTS if verdicts is None else verdicts
++    model_raw = (root / model).read_bytes()
++    population = {"population": {"covers": sorted(rows), "model": admission.MODEL,
++                                 "model_id": "urn:gnd-test:lh3-claims@1", "source": "fixture"},
++                  "instances": {}, "facts": rows}
++    raw = canonical_json_bytes(population)
++    (root / "raw.population.json").write_bytes(raw)
++    evidence = (root / "evidence/passages.txt").read_bytes()
++    receipts = []
++    for number, ((fact_type, index), verdict) in enumerate(verdicts.items()):
++        receipts.append({
++            "receipt_id": f"opinion-{number:04d}", "judge_id": "corpus-author", "verdict": verdict,
++            "trust": "consumer-pinned", "external_evidence": None,
++            "subject": {"model_sha256": _sha(model_raw), "population_sha256": _sha(raw), "reference_identity": None,
++                        "fact_type": fact_type, "index": index,
++                        "fact_sha256": judgment_fact_digest(fact_type, index, rows[fact_type][index])},
++            "sources": [{"path": "passages.txt", "sha256": _sha(evidence),
++                         "quote": {"start": 0, "end": 10, "sha256": _sha(evidence[:10])}}],
++        })
++    policy = json.loads((PACKAGED / "policy.json").read_bytes())
++    policy["targets"] = [{"fact_type": fact_type, "index": index} for fact_type, index in verdicts]
++    policy["trusted_receipts"] = [{"judge_id": "corpus-author", "receipt_sha256": judgment_receipt_digest(item)}
++                                  for item in receipts]
++    (root / "policy.json").write_bytes(canonical_json_bytes(policy))
++    (root / "receipts.json").write_bytes(canonical_json_bytes({"schema_version": 1, "receipts": receipts}))
++    return root
++
++
++def _admit(root, out=None, **kwargs):
++    out = out or root.parent / f"{root.name}-out"
++    record = admission.admit(root / "claims.orm.json", root / "raw.population.json", root / "policy.json",
++                             root / "receipts.json", root / "evidence", out, **kwargs)
++    return record, out
++
++
++def _admitted(out):
++    return json.loads((out / "admitted.population.json").read_bytes())
++
++
++def _refuses(call, reason):
++    with pytest.raises(Refusal) as caught:
++        call()
++    assert caught.value.reason == reason
++
++
++@pytest.fixture(scope="module")
++def shaped(tmp_path_factory):
++    root = _case(tmp_path_factory.mktemp("lh3"))
++    record, out = _admit(root, shape=SHAPE)
++    return root, record, out
++
++
++def test_t1_every_attached_and_followed_row_of_an_admitted_claim(shaped):
++    root, record, out = shaped
++    facts = _admitted(out)["facts"]
++    assert facts["claim_passage"] == ROWS["claim_passage"][:3]
++    assert facts["claim_actor"] == ROWS["claim_actor"][:3]
++    assert facts["claim_object"] == ROWS["claim_object"]
++    assert facts["claim_condition"] == ROWS["claim_condition"]
++    assert facts["claim_quantity"] == ROWS["claim_quantity"][:2]
++    assert facts["claim_paper"] == ROWS["claim_paper"]
++    assert facts["quantity_value"] == ROWS["quantity_value"]
++    assert facts["quantity_unit"] == ROWS["quantity_unit"]
++    assert all("c4" not in json.dumps(rows) for rows in facts.values())
++    assert record["schema"] == admission.SHAPED_SCHEMA
++    assert record["shape_sha256"] == _sha(canonical_json_bytes(SHAPE))
++    assert {row["assertion"]: row["status"] for row in record["stages"]["semantic-support"]} == {
++        "c1": "pass", "c2": "pass", "c3": "pass", "c4": "fail"}
++    check = root.parent / "check"
++    check.mkdir()
++    for file in ("terms.orm.json",):
++        shutil.copyfile(root / file, check / file)
++    shutil.copyfile(root / "claims.orm.json", check / admission.MODEL)
++    shutil.copyfile(out / "admitted.population.json", check / "admitted.population.json")
++    done = subprocess.run([sys.executable, "-m", "gnd", "check", admission.MODEL, "admitted.population.json"],
++                          cwd=check, capture_output=True, check=False)
++    assert done.returncode == 0, done.stdout.decode()[-600:]
++
++
++def test_t1_covers_lists_attached_and_followed_fact_types(shaped):
++    _, _, out = shaped
++    covers = _admitted(out)["population"]["covers"]
++    assert set(covers) == set(ROWS) - {"paper_title"}
++    assert "paper_title" not in _admitted(out)["facts"]
++
++
++def test_t2_an_entity_that_objectifies_a_fact_type_refuses(tmp_path):
++    out = tmp_path / "out"
++    shape = {"format": admission.SHAPE_FORMAT, "assertion": "assertion", "follow": []}
++    _refuses(lambda: admission.admit(PACKAGED / "model.orm.yaml", PACKAGED / "raw.population.json",
++                                     PACKAGED / "policy.json", PACKAGED / "receipts.json", PACKAGED / "evidence",
++                                     out, shape=shape), "shape:objectified-assertion")
++    assert not out.exists()
++
++
++def test_t3_support_is_every_target_admitted_and_at_least_one(tmp_path):
++    verdicts = {**VERDICTS, ("claim_actor", 1): "reject"}
++    del verdicts[("claim_passage", 2)]
++    record, out = _admit(_case(tmp_path, verdicts=verdicts), shape=SHAPE)
++    reasons = {row["assertion"]: row["reason"] for row in record["stages"]["semantic-support"]}
++    assert reasons == {"c1": "rejected", "c2": None, "c3": "missing", "c4": "rejected"}
++    facts = _admitted(out)["facts"]
++    assert facts["claim_condition"] == ROWS["claim_condition"]
++    assert facts["claim_passage"] == [ROWS["claim_passage"][1]]
++
++
++def test_t4_a_row_between_two_claims_needs_both_admitted(shaped):
++    _, _, out = shaped
++    assert _admitted(out)["facts"]["claim_supports"] == [{"claim": "c1", "other": "c2"}]
++
++
++def test_t5_an_include_root_admits_and_binds_its_include(shaped, tmp_path):
++    root, record, _ = shaped
++    assert record["includes"] == {"terms.orm.json": _sha((root / "terms.orm.json").read_bytes())}
++    edited = _case(tmp_path)
++    path = edited / "terms.orm.json"
++    path.write_bytes(path.read_bytes() + b"\n")
++    out = tmp_path / "out"
++    _refuses(lambda: _admit(edited, out, shape=SHAPE), "judgments:refused")
++    assert not out.exists()
++
++
++def _shape(**changes):
++    return {**SHAPE, **changes}
++
++
++REFUSALS = {
++    "shape-not-object": (["claim"], "shape:invalid"),
++    "shape-key-missing": ({"format": admission.SHAPE_FORMAT, "assertion": "claim"}, "shape:invalid"),
++    "shape-extra-key": (_shape(stop=True), "shape:invalid"),
++    "unknown-assertion": (_shape(assertion="author"), "shape:unknown-assertion"),
++    "value-type-assertion": (_shape(assertion="note"), "shape:unknown-assertion"),
++    "unknown-follow": (_shape(follow=["author"]), "shape:unknown-follow"),
++    "duplicate-follow": (_shape(follow=["quantity", "quantity"]), "shape:invalid"),
++    "no-attached-facts": (_shape(assertion="venue", follow=[]), "shape:no-attached-facts"),
++}
++
++
++@pytest.mark.parametrize("case", sorted(REFUSALS))
++def test_t6_a_shape_refusal_publishes_nothing(tmp_path, case):
++    shape, reason = REFUSALS[case]
++    root = _case(tmp_path)
++    out = tmp_path / "out"
++    _refuses(lambda: _admit(root, out, shape=shape), reason)
++    assert not out.exists()
++
++
++def test_t6_a_target_outside_the_shape_refuses(tmp_path):
++    verdicts = {**VERDICTS, ("quantity_value", 0): "approve"}
++    out = tmp_path / "out"
++    _refuses(lambda: _admit(_case(tmp_path, verdicts=verdicts), out, shape=SHAPE), "judgments:target-outside-shape")
++    assert not out.exists()
++
++
++def test_t6_an_include_path_outside_the_root_refuses(tmp_path):
++    root = _case(tmp_path)
++    model = json.loads((root / "claims.orm.json").read_bytes())
++    model["includes"][0]["path"] = "../terms.orm.json"
++    (root / "claims.orm.json").write_bytes(canonical_json_bytes(model))
++    out = tmp_path / "out"
++    _refuses(lambda: _admit(root, out, shape=SHAPE), "input:include-path")
++    assert not out.exists()
++
++
++@pytest.mark.parametrize("value", [0, 65537, True])
++def test_t6_max_rows_out_of_range_refuses(tmp_path, value):
++    out = tmp_path / "out"
++    _refuses(lambda: _admit(_case(tmp_path), out, shape=SHAPE, max_rows=value), "input:max-rows")
++    assert not out.exists()
++
++
++def test_t6_max_rows_without_a_shape_refuses(tmp_path):
++    out = tmp_path / "out"
++    _refuses(lambda: admission.admit(PACKAGED / "model.orm.yaml", PACKAGED / "raw.population.json",
++                                     PACKAGED / "policy.json", PACKAGED / "receipts.json", PACKAGED / "evidence",
++                                     out, max_rows=100), "input:max-rows")
++    assert not out.exists()
++
++
++def test_t7_the_value_none_is_ordinary(shaped):
++    _, _, out = shaped
++    assert {"claim": "c2", "condition": "none"} in _admitted(out)["facts"]["claim_condition"]
++
++
++def test_t8_the_packaged_call_keeps_its_bytes(tmp_path):
++    out = tmp_path / "packaged"
++    record = admission.admit(PACKAGED / "model.orm.yaml", PACKAGED / "raw.population.json",
++                             PACKAGED / "policy.json", PACKAGED / "receipts.json", PACKAGED / "evidence", out)
++    assert record["schema"] == admission.SCHEMA and "shape_sha256" not in record
++    for name, prefix in H18.items():
++        assert _sha((out / name).read_bytes()).startswith(prefix), name
++    reasons = {row["index"]: row["reason"] for row in record["stages"]["positive-own-findings"]}
++    assert [reasons[index] for index in (3, 4, 5, 6)] == ["negated", "baseline-comparison", "speculation",
++                                                           "cites-other-work"]
++
++
++def _wide(count, rows_per_claim):
++    rows = {name: [] for name in ROWS}
++    for number in range(count):
++        claim = f"c{number}"
++        rows["claim_passage"].append({"claim": claim, "passage": "p"})
++        rows["claim_quantity"].append({"claim": claim, "quantity": f"q{number}"})
++        rows["quantity_value"].append({"quantity": f"q{number}", "value": str(number)})
++        for extra in range(rows_per_claim):
++            rows["claim_actor"].append({"claim": claim, "actor": f"a{extra}"})
++    return rows
++
++
++def test_t9_the_row_ceiling_in_time_and_one_over_refuses(tmp_path):
++    count, per = 1024, 61
++    rows = _wide(count, per)
++    total = sum(len(value) for name, value in rows.items() if name != "paper_title")
++    assert total == admission.MAX_ROWS_CEILING
++    verdicts = {("claim_passage", index): "approve" for index in range(count)}
++    root = _case(tmp_path, rows=rows, verdicts=verdicts)
++    started = time.monotonic()
++    record, out = _admit(root, shape=SHAPE, max_rows=total)
++    assert time.monotonic() - started < 60
++    assert len(_admitted(out)["facts"]["claim_actor"]) == count * per
++    assert all(row["status"] == "pass" for row in record["stages"]["semantic-support"])
++    second = tmp_path / "again"
++    _refuses(lambda: _admit(root, second, shape=SHAPE, max_rows=total - 1), "input:row-cap")
++    assert not second.exists()
++
++
++def test_t10_shared_and_unlisted_entities(shaped):
++    _, _, out = shaped
++    facts = _admitted(out)["facts"]
++    assert facts["quantity_value"].count({"quantity": "q1", "value": "12"}) == 1
++    assert {"claim": "c4", "quantity": "q1"} not in facts["claim_quantity"]
++    assert facts["quantity_source"] == [{"quantity": "q2", "claim": "c3"}]
++    assert "paper_title" not in facts
++
++
++def test_t10_with_an_empty_follow_list_nothing_is_followed(tmp_path):
++    record, out = _admit(_case(tmp_path), shape=_shape(follow=[]))
++    facts = _admitted(out)["facts"]
++    assert "quantity_value" not in facts and "quantity_unit" not in facts
++    assert facts["claim_quantity"] == ROWS["claim_quantity"][:2]
++    assert record["schema"] == admission.SHAPED_SCHEMA

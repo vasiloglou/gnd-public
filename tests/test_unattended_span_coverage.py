@@ -271,9 +271,9 @@ def test_a13_the_walk_is_one_linear_pass(count: int, monkeypatch: pytest.MonkeyP
     calls = {"walk": 0, "span": 0}
     original_walk, original_span = unattended._iter_unattended_spans, unattended._span_issue
 
-    def walk(doc: dict[str, Any]):
+    def walk(doc: dict[str, Any], *included: Any):  # VG3 passes the include origin set
         calls["walk"] += 1
-        return original_walk(doc)
+        return original_walk(doc, *included)
 
     def span_issue(*args: Any, **kwargs: Any):
         calls["span"] += 1

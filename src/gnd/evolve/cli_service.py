@@ -322,6 +322,8 @@ def _evolve_service_exit(error: Exception) -> int:
         "candidate model media type",
         "operation audit actor/origin/time",
         "new llm-inferred constraints",
+        # VG2 (issue 218): the sample and common-sense D-12 refusal.
+        "new sample and common-sense constraints",
         "owner-approved user-supplied constraints",
         "new or changed constraints",
         # IK2 D-12 refusals for induced provenance (spec R-I1..R-I4).

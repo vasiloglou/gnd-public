@@ -25,6 +25,9 @@ from typing import TYPE_CHECKING
 
 from gnd.model._documents import ModelValueError as ModelValueError
 from gnd.model._documents import json_document as json_document
+from gnd.model._includes import include_attribution as include_attribution
+from gnd.model._includes import included_rows as included_rows
+from gnd.model._includes import remap_issues as remap_issues
 from gnd.model._induction import _induction_strings as _induction_strings
 from gnd.model._induction import (
     _rule_induced_confirmed_reviewed as _rule_induced_confirmed_reviewed,
@@ -297,12 +300,18 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
 
 
 def _model_warnings(doc, origins):
-    from gnd.model._includes import remap_issues
+    from gnd.model._includes import included_rows, remap_issues
+    from gnd.model._unattended import _INCLUDED
 
     issues = remap_issues(_layer1_structural(doc), origins)
     if issues:
         raise ModelValidationError(issues)
-    issues = remap_issues(semantic_validate(dict(doc)), origins)
+    # VG3: the unattended rules read which elements came from an include.
+    token = _INCLUDED.set(included_rows(doc, origins))
+    try:
+        issues = remap_issues(semantic_validate(dict(doc)), origins)
+    finally:
+        _INCLUDED.reset(token)
     errors = [issue for issue in issues if issue.severity == "error"]
     warnings = [issue for issue in issues if issue.severity == "warning"]
     if errors:

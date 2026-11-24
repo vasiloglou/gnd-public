@@ -122,6 +122,19 @@ Build the LI2 resolution fixtures under src/gnd/examples/literature/resolution/.
 | `write_mentions(root, vocabulary) -> None` | function | 336 | Fixture M: one document, two VampNet mentions with two senses (spec §6.5). |
 | `main(directory) -> None` | function | 372 | (no docstring) |
 
+## tools.build_seeded_growth_example — `tools/build_seeded_growth_example.py`
+Components: unassigned
+Build the seeded-growth example's proposals and judgment inputs.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `span(raw, quote) -> dict` | function | 54 | The span of QUOTE, which must occur exactly once in the document's canonical text. |
+| `proposal(text, proposal_id, operations) -> EvolutionProposal` | function | 75 | (no docstring) |
+| `rounds(root) -> tuple[EvolutionProposal, EvolutionProposal]` | function | 86 | (no docstring) |
+| `population() -> dict` | function | 112 | (no docstring) |
+| `judgments(model_bytes, population_bytes, evidence) -> tuple[dict, dict]` | function | 122 | A two-judge consumer-pinned policy and approving receipts for the first authorship fact. |
+| `main(directory) -> None` | function | 150 | (no docstring) |
+
 ## tools.check_docs — `tools/check_docs.py`
 Components: unassigned
 Check generated site's local links, assets and anchors (no external requests).

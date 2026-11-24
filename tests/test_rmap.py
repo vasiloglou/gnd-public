@@ -442,8 +442,9 @@ def test_r4_external_uniqueness_within_one_table_is_a_unique_key(tmp_path, varia
     document["constraints"] = [_k("uniqueness", scope="external", role_refs=[
         {"fact_type": "customer_has_phone", "role": "phone"}, {"fact_type": "customer_has_email", "role": "email"}])]
     schema, rows = _schema(tmp_path, document, variant)
-    assert _table(schema, "customer").unique_keys == (("phone", "email"),)
-    assert rows[("constraint", "constraints/0")].carried_as == ("unique_key", "customer", "phone", "email")
+    # Columns follow table order, not role_refs order (review r2 F3 changed this pin).
+    assert _table(schema, "customer").unique_keys == (("email", "phone"),)
+    assert rows[("constraint", "constraints/0")].carried_as == ("unique_key", "customer", "email", "phone")
 
 
 @pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
@@ -516,3 +517,136 @@ def test_r9_composite_identification_is_not_superlinear(tmp_path):
         assert len(schema.tables) == entities
         times[entities] = best
     assert times[400] / times[100] < 8  # linear about 4; quadratic about 16
+
+
+# --- Review round 2 regressions (notes/reviews/phase-OB2-r2, F1-F8) --------------------------
+
+
+def _with_states(document):
+    """Add case 14's Country, State and StateCode, with State's composite identification."""
+    states = _case("14")
+    known = {o["id"] for o in document["object_types"]}
+    document["object_types"] += [o for o in states["object_types"] if o["id"] not in known and o["id"] != "city"
+                                 and o["id"] != "city_id"]
+    document["fact_types"] += [f for f in states["fact_types"] if f["id"] in ("state_in_country", "state_has_code")]
+    document.setdefault("constraints", []).extend(states["constraints"])
+    return document
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r2_f1_unresolved_objectification_identification_falls_back(tmp_path, variant):
+    document = _with_states(_case("17"))
+    document["fact_types"].append(_ft("a_enrolment_in_state", "{Enrolment} in {State}",
+                                      [("enrolment", "enrolment"), ("state", "state")],
+                                      [_k("uniqueness", roles=["enrolment"]), _k("mandatory", role="enrolment")]))
+    enrolment_id = next(c for c in document["constraints"] if c["role_refs"][0]["fact_type"] == "enrolment_for_student")
+    enrolment_id["role_refs"][1] = {"fact_type": "a_enrolment_in_state", "role": "state"}
+    schema, rows = _schema(tmp_path, document, variant)
+    enrolment = _table(schema, "enrolment")
+    assert enrolment.primary_key == ("student_student_nr", "course_course_code")
+    index = document["constraints"].index(enrolment_id)
+    assert rows[("constraint", f"constraints/{index}")].reason == "identification-unmatchable"
+    assert rows[("fact_type", "a_enrolment_in_state")].carried_as[:2] == ("columns", "enrolment")
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r2_f2_tied_identifiers_ignore_declaration_order(tmp_path, variant):
+    document = _case("14")
+    duplicate = copy.deepcopy(document["constraints"][0])
+    duplicate["role_refs"].reverse()
+    document["constraints"].append(duplicate)
+    found = set()
+    for order in (lambda c: c, lambda c: list(reversed(c))):
+        doc = copy.deepcopy(document)
+        doc["constraints"] = order(doc["constraints"])
+        schema, rows = _schema(tmp_path, doc, variant)
+        found.add(_table(schema, "state").primary_key)
+        assert {rows[("constraint", f"constraints/{i}")].carried_as for i in (0, 1)} == {("primary_key", "state")}
+    assert len(found) == 1
+
+
+def _customer_with_phone(phones=1):
+    document = _case("01")
+    document["object_types"].append({"id": "phone", "name": "Phone", "kind": "value", "primitive": "String"})
+    document["constraints"] = []
+    for n in range(phones):
+        fid = "customer_has_phone" if phones == 1 else f"customer_has_phone_{n:05d}"
+        role = "phone" if phones == 1 else f"phone_{n:05d}"
+        document["fact_types"].append(_ft(fid, "{Customer} has {Phone}", [("customer", "customer"), ("phone", role)],
+                                          [_k("uniqueness", roles=["customer"])]))
+        document["constraints"].append(_k("uniqueness", scope="external", role_refs=[
+            {"fact_type": fid, "role": role}, {"fact_type": "customer_has_email", "role": "email"}]))
+    return document
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r2_f3_duplicate_external_uniqueness_is_one_key(tmp_path, variant):
+    document = _customer_with_phone()
+    duplicate = copy.deepcopy(document["constraints"][0])
+    duplicate["role_refs"].reverse()
+    document["constraints"].append(duplicate)
+    schema, rows = _schema(tmp_path, document, variant)
+    assert _table(schema, "customer").unique_keys == (("email", "phone"),)
+    assert rows[("constraint", "constraints/0")].carried_as == rows[("constraint", "constraints/1")].carried_as
+
+
+def test_r2_f4_alternate_subtype_inherits_a_composite_identifier(tmp_path):
+    document = _case("14")
+    document["object_types"].append({"id": "special_state", "name": "SpecialState", "kind": "entity",
+                                     "subtype_of": ["state"], "inherits_reference": True})
+    document["fact_types"].append(_ft("special_active", "{SpecialState} is active", [("special_state", "special_state")]))
+    schema, rows = _schema(tmp_path, document, "ALTERNATE")
+    special = _table(schema, "special_state")
+    assert special.primary_key == ("country_country_code", "code")
+    assert ("state", ("country_country_code", "code")) in {(f.target_table, f.columns) for f in special.foreign_keys}
+    assert rows[("fact_type", "special_active")].reason is None
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r2_f5_a_tabled_value_component_of_a_composite_key_is_a_foreign_key(tmp_path, variant):
+    document = _case("14")
+    document["object_types"].append({"id": "label", "name": "Label", "kind": "value", "primitive": "String"})
+    document["fact_types"].append(_ft("state_code_label", "{StateCode} has {Label}",
+                                      [("state_code", "code"), ("label", "label")], [_k("uniqueness", roles=["code"])]))
+    schema, _ = _schema(tmp_path, document, variant)
+    assert (("code",), "state_code") in {(f.columns, f.target_table) for f in _table(schema, "state").foreign_keys}
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r2_f6_identification_over_a_computed_fact_type_takes_its_reason(tmp_path, variant):
+    document = _case("14")
+    code = next(f for f in document["fact_types"] if f["id"] == "state_has_code")
+    code.update({"derivation": "derived", "derivation_rule": "Computed.", "storage": "computed"})
+    schema, rows = _schema(tmp_path, document, variant)
+    assert rows[("constraint", "constraints/0")].reason == "derived-computed"
+    assert all(c.origin[0] != "state_has_code" for t in schema.tables for c in t.columns)
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r2_f7_external_uniqueness_over_unary_roles_is_not_a_flag_key(tmp_path, variant):
+    document = _case("09")
+    document["fact_types"].append(_ft("other_flag", "{Person} is flagged", [("person", "subject")]))
+    document["constraints"] = [_k("uniqueness", scope="external", role_refs=[
+        {"fact_type": "person_smokes", "role": "person"}, {"fact_type": "other_flag", "role": "subject"}])]
+    schema, rows = _schema(tmp_path, document, variant)
+    assert _table(schema, "person").unique_keys == ()
+    assert rows[("constraint", "constraints/0")].carried_as == ("primary_key", "person")
+
+
+def test_r2_f8_external_unique_keys_are_not_quadratic(tmp_path):
+    from gnd.model import load_model
+    from gnd.rmap import map_model
+
+    times = {}
+    for phones in (1000, 4000):
+        path = tmp_path / f"p{phones}.json"
+        path.write_text(json.dumps(_customer_with_phone(phones)))
+        model = load_model(path)
+        best = float("inf")
+        for _ in range(3):
+            start = monotonic()
+            schema = map_model(model)
+            best = min(best, monotonic() - start)
+        assert len(_table(schema, "customer").unique_keys) == phones
+        times[phones] = best
+    assert times[4000] / times[1000] < 6  # linear about 4; quadratic about 16

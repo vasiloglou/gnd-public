@@ -114,9 +114,9 @@ class _Key:
     names: list[str]
     datatypes: list[str | None]
     origins: list[tuple[str, str]]
-    # For each key column: (role name, object type) of a composite component whose
-    # player has key columns of its own, else None.
-    components: list[tuple[str, str] | None] = field(default_factory=list)
+    # For each key column: the (fact type, role, player) of the composite component
+    # that holds it, else None. Each component is a foreign key when its player has a table.
+    components: list[tuple[str, str, str] | None] = field(default_factory=list)
 
 
 @dataclass
@@ -147,9 +147,21 @@ class _Mapper:
         # fact type id -> role name -> the columns that hold it (rules 3, 5 and 6).
         self.role_cols: dict[str, dict[str, list[str]]] = {}
         self.tables: dict[str, dict[str, Any]] = {}
+        # Rule 0: derived fact types with no stored extension are not placed.
+        self.derived: set[str] = {
+            str(f.get("id")) for f in self.facts
+            if f.get("derivation") == "derived" and f.get("storage") in (None, "computed")
+        }
+        # Objectifications keyed by their fact type's own uniqueness (A5 fallback).
+        self.objectified: dict[str, dict[str, Any]] = {
+            str(f.get("objectified_as")): f for f in self.facts if f.get("objectified_as")
+        }
+        self.fallback: set[str] = set()
         # Preferred, confirmed alethic external uniqueness per anchored entity, built once.
-        self.identifiers: dict[str, tuple[int, list[tuple[str, str]]]] = {}
-        for index, constraint in enumerate(self.top):
+        # A tie on the role set is broken by the role_refs sequence itself, so declaration
+        # order never decides (review r2 F2). Computed fact types identify nothing (r2 F6).
+        self.identifiers: dict[str, list[tuple[str, str]]] = {}
+        for constraint in self.top:
             if (
                 constraint.get("type") == "uniqueness"
                 and constraint.get("scope") == "external"
@@ -158,10 +170,10 @@ class _Mapper:
             ):
                 refs = self.refs(constraint)
                 anchor = self.anchor(refs)
-                if anchor is not None:
+                if anchor is not None and not any(fact in self.derived for fact, _ in refs):
                     current = self.identifiers.get(anchor)
-                    if current is None or sorted(refs) < sorted(current[1]):
-                        self.identifiers[anchor] = (index, refs)
+                    if current is None or (sorted(refs), refs) < (sorted(current), current):
+                        self.identifiers[anchor] = refs
 
     # -- identification -------------------------------------------------------------
 
@@ -172,7 +184,9 @@ class _Mapper:
 
     def identity(self, oid: str) -> tuple[str, Any]:
         if oid not in self._identity:
+            self._identity[oid] = ("unmatchable", oid)  # a re-entrant request is unmatchable
             obj = self.objects.get(oid, {})
+            parents = obj.get("subtype_of") or []
             if obj.get("kind") == "value":
                 self._identity[oid] = ("value", oid)
             elif (obj.get("reference") or {}).get("mode") == "unit-based":
@@ -184,13 +198,13 @@ class _Mapper:
             elif oid in self.identifiers:
                 # The preferred, confirmed alethic external uniqueness anchored on oid
                 # (review r1 F1: never the first one declared, never a deontic one).
-                _, refs = self.identifiers[oid]
                 self._identity[oid] = ("composite", [
                     {"fact_type": fact, "role": role, "object_type": self.role_players[fact][role]}
-                    for fact, role in refs
+                    for fact, role in self.identifiers[oid]
                 ])
-            else:
-                self._identity[oid] = ("unmatchable", oid)
+            elif parents and obj.get("inherits_reference"):
+                # An inheriting subtype is identified as its first supertype is (review r2 F4).
+                self._identity[oid] = self.identity(str(parents[0]))
         return self._identity[oid]
 
     def refs(self, constraint: dict[str, Any]) -> list[tuple[str, str]]:
@@ -220,28 +234,50 @@ class _Mapper:
         elif kind == "direct":
             result = _Key([str(payload)], [self.primitive(str(payload))], [("reference", oid)], [None])
         elif kind == "composite":
-            result = _Key([], [], [], [])
-            for entry in payload:
-                role, player = str(entry["role"]), str(entry["object_type"])
-                origin = (str(entry["fact_type"]), role)
-                if self.objects.get(player, {}).get("kind") == "value":
-                    result.names.append(role)
-                    result.datatypes.append(self.primitive(player))
-                    result.origins.append(origin)
-                    result.components.append(None)
-                    continue
-                inner = self.key(player) if self.identity(player)[0] != "composite" else None
-                if inner is None:  # a composite inside a composite is not resolved
-                    result = None
-                    break
-                for name, datatype in zip(inner.names, inner.datatypes):
-                    result.names.append(f"{role}_{name}")
-                    result.datatypes.append(datatype)
-                    result.origins.append(origin)
-                    result.components.append((role, player))
+            result = self.components_key(
+                [(str(e["fact_type"]), str(e["role"]), str(e["object_type"])) for e in payload],
+                nested=False,
+            )
         else:
             result = None
+        if result is None and oid in self.objectified:
+            # A5: an objectification whose identification does not resolve is keyed by
+            # its fact type's effective uniqueness (S8), for every use of its key (r2 F1).
+            fact = self.objectified[oid]
+            fid = str(fact.get("id"))
+            players = self.players(fact)
+            key_roles = self.primary(fact, self.effective(fact), self.roles(fact))
+            result = self.components_key([(fid, role, players[role]) for role in key_roles], nested=True)
+            if result is not None:
+                self.fallback.add(oid)
         self._keys[oid] = result
+        return result
+
+    def components_key(self, components: list[tuple[str, str, str]], *, nested: bool) -> _Key | None:
+        """Key columns from (fact type, role, player) components, in the given order.
+
+        A value component is one column named after its role; an entity component is a
+        group ``<role>_<key>``. Each component records its player, so that it becomes a
+        foreign key when that player has a table (review r2 F5). Unless ``nested``, a
+        composite inside a composite is not resolved.
+        """
+        result = _Key([], [], [], [])
+        for fact_type, role, player in components:
+            origin = (fact_type, role)
+            if self.objects.get(player, {}).get("kind") == "value":
+                result.names.append(role)
+                result.datatypes.append(self.primitive(player))
+                result.origins.append(origin)
+                result.components.append((fact_type, role, player))
+                continue
+            inner = self.key(player) if nested or self.identity(player)[0] != "composite" else None
+            if inner is None:
+                return None
+            for name, datatype in zip(inner.names, inner.datatypes):
+                result.names.append(f"{role}_{name}")
+                result.datatypes.append(datatype)
+                result.origins.append(origin)
+                result.components.append((fact_type, role, player))
         return result
 
     # -- the effective uniqueness set -----------------------------------------------
@@ -299,11 +335,7 @@ class _Mapper:
         return self.owner_of(oid) != oid
 
     def run(self) -> RelationalSchema:
-        derived = set()
-        for fact in self.facts:
-            fid = str(fact.get("id"))
-            if fact.get("derivation") == "derived" and fact.get("storage") in (None, "computed"):
-                derived.add(fid)
+        derived = self.derived
 
         functional_count: dict[str, int] = defaultdict(int)
         effective: dict[str, list[tuple[int, tuple[str, ...]]]] = {}
@@ -319,8 +351,9 @@ class _Mapper:
 
         # Composite identification components (rule 2): fact type id -> entity.
         components: dict[str, str] = {}
-        for oid, (_, refs) in sorted(self.identifiers.items()):
-            if self.identity(oid)[0] == "composite":
+        for oid, refs in sorted(self.identifiers.items()):
+            # Only an identification that resolves names key columns (review r2 F1).
+            if self.identity(oid)[0] == "composite" and self.key(oid) is not None and oid not in self.fallback:
                 for fact_type, _role in refs:
                     components.setdefault(fact_type, oid)
 
@@ -415,7 +448,7 @@ class _Mapper:
         unusable: set[str] = set()  # object types whose identification is unmatchable
 
         def new_table(name, subject):
-            tables[name] = {"subject": subject, "columns": [], "names": set(), "pk": [], "uks": [], "fks": [], "groups": []}
+            tables[name] = {"subject": subject, "columns": [], "names": set(), "pk": [], "uks": {}, "fks": [], "groups": [], "position": {}}
             return tables[name]
 
         def add_column(table, base, datatype, nullable, origin):
@@ -424,25 +457,22 @@ class _Mapper:
                 n += 1
                 name = f"{base}_{n}"
             table["names"].add(name)
+            table["position"][name] = len(table["columns"])
             table["columns"].append(Column(name, datatype, nullable, origin))
             return name
 
-        objectified_targets = {str(f.get("objectified_as")) for f in self.facts if f.get("objectified_as")}
         # Object-type tables with their key columns first (A2).
         for oid in sorted(tabled):
             if oid in self.fact_by_id:
                 continue
             key = self.key(oid)
-            if key is None and oid in objectified_targets:
-                key = None  # keyed by the objectified fact type below (A5)
-            elif key is None:
+            if key is None:
                 unusable.add(oid)
                 continue
             table = new_table(oid, ("object_type", oid))
-            if key is not None:
-                names = [add_column(table, n, d, False, o) for n, d, o in zip(key.names, key.datatypes, key.origins)]
-                table["pk"] = names
-                self.add_component_groups(table, names, key)
+            names = [add_column(table, n, d, False, o) for n, d, o in zip(key.names, key.datatypes, key.origins)]
+            table["pk"] = names
+            self.add_component_groups(table, names, key)
             supers = self.objects.get(oid, {}).get("subtype_of") or []
             if (
                 self.variant is RmapVariant.ALTERNATE
@@ -527,7 +557,7 @@ class _Mapper:
                 suffix = "" if counts[target] == 1 else f"__{counts[target]}"
                 fks.append(ForeignKey(f"{name}__{target}{suffix}", tuple(columns), target, tuple(tables[target]["pk"])))
             position = {c.name: i for i, c in enumerate(t["columns"])}
-            uks = sorted((tuple(u) for u in t["uks"]), key=lambda u: [position[c] for c in u])
+            uks = sorted((tuple(u) for u in t["uks"].values()), key=lambda u: [position[c] for c in u])
             built.append(Table(name, t["subject"], tuple(t["columns"]), tuple(t["pk"]), tuple(uks), tuple(fks)))
 
         for oid in sorted(unusable):
@@ -540,12 +570,12 @@ class _Mapper:
         return RelationalSchema(self.variant, tuple(built), unmapped, carried)
 
     def add_component_groups(self, table, names, key: _Key) -> None:
-        """Foreign-key groups for composite components played by entities."""
-        groups: dict[tuple[str, str], list[str]] = {}
+        """Foreign-key groups for composite components, one per (fact type, role)."""
+        groups: dict[tuple[str, str, str], list[str]] = {}
         for name, component in zip(names, key.components):
             if component is not None:
                 groups.setdefault(component, []).append(name)
-        for (role, player), columns in groups.items():
+        for (_fact, _role, player), columns in groups.items():
             table["groups"].append((tuple(columns), player))
 
     def role_columns(self, table, role, player, origin, nullable, add_column) -> list[str]:
@@ -563,13 +593,17 @@ class _Mapper:
         fid = str(fact.get("id"))
         oid = str(fact.get("objectified_as"))
         key = self.key(oid)
-        if key is None:  # keyed by the fact type's effective uniqueness (S8)
-            columns = {r: self.role_columns(table, r, players[r], (fid, r), False, add_column) for r in roles}
-            eff = self.effective(fact)
-            pk_roles = self.primary(fact, eff, roles)
-            table["pk"] = [c for r in pk_roles for c in columns[r]]
+        if oid in self.fallback:  # keyed by the fact type's effective uniqueness (S8)
+            by_role: dict[str, list[str]] = defaultdict(list)
+            for name, (_fact, role) in zip(table["pk"], key.origins):
+                by_role[role].append(name)
+            columns = {
+                r: by_role[r] if r in by_role else self.role_columns(table, r, players[r], (fid, r), False, add_column)
+                for r in roles
+            }
             self.role_cols[fid] = columns
-            self.carried[("fact_type", fid)] = ("key", oid, *table["pk"])
+            extra = [c for r in roles if r not in by_role for c in columns[r]]
+            self.carried[("fact_type", fid)] = ("columns", oid, *extra) if extra else ("key", oid, *table["pk"])
             return
         by_player: dict[str, list[str]] = defaultdict(list)
         for name, origin in zip(table["pk"], key.origins):
@@ -671,11 +705,12 @@ class _Mapper:
         return self.unique_key(tables[p.owner], p.owner, cols)
 
     def unique_key(self, table, name, cols) -> tuple[str, ...]:
-        if cols == table["pk"]:
+        """One key per column set: a later uniqueness over the same columns shares it (r2 F3, F8)."""
+        columns = frozenset(cols)
+        if columns == frozenset(table["pk"]):
             return ("primary_key", name)
-        if cols not in table["uks"]:
-            table["uks"].append(cols)
-        return ("unique_key", name, *cols)
+        existing = table["uks"].setdefault(columns, list(cols))
+        return ("unique_key", name, *existing)
 
     def location(self, fact_type: str, role: str) -> tuple[str, list[str]] | None:
         """The table and columns that hold one role of a placed fact type."""
@@ -689,7 +724,8 @@ class _Mapper:
                 return p.owner, list(table["pk"])
             return (p.owner, list(columns[role])) if role in columns else None
         if p.rule == 4:
-            return p.owner, list(self.carried[("fact_type", fact_type)][2:])
+            # A unary role is played by the row's own object: its key, not the flag (r2 F7).
+            return p.owner, list(table["pk"])
         if self.owner_of(self.role_players[fact_type][role]) == p.owner:
             return p.owner, list(table["pk"])
         return p.owner, list(self.carried[("fact_type", fact_type)][2:])
@@ -697,9 +733,16 @@ class _Mapper:
     def external(self, constraint, index, address, tables) -> None:
         refs = self.refs(constraint)
         anchor = self.anchor(refs)
-        if anchor is not None and self.identifiers.get(anchor, (None,))[0] == index:
+        identifying = self.identifiers.get(anchor) if anchor is not None else None
+        if identifying is not None and set(identifying) == set(refs):
+            # The identifier, or a duplicate over the same roles: one key (review r2 F2).
             owner = self.owner_of(anchor)
-            if self.identity(anchor)[0] == "composite" and self.key(anchor) is not None and owner in tables:
+            if (
+                self.identity(anchor)[0] == "composite"
+                and self.key(anchor) is not None
+                and anchor not in self.fallback
+                and owner in tables
+            ):
                 self.carried[address] = ("primary_key", owner)
             else:
                 self.unmapped[address] = ("identification-unmatchable", "")
@@ -708,7 +751,9 @@ class _Mapper:
         places = [self.location(fact_type, role) for fact_type, role in refs]
         if all(place is not None for place in places) and len({place[0] for place in places}) == 1:
             table_name = places[0][0]
-            cols = [c for _, columns in places for c in columns]
+            position = tables[table_name]["position"]
+            # Columns in table order, each once: role_refs order never shapes the key (r2 F3).
+            cols = sorted({c for _, columns in places for c in columns}, key=position.__getitem__)
             self.carried[address] = self.unique_key(tables[table_name], table_name, cols)
             return
         reasons = {self.unmapped[("fact_type", f)][0] for f, _ in refs if ("fact_type", f) in self.unmapped}

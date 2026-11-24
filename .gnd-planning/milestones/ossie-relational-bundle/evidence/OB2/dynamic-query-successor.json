@@ -122,7 +122,7 @@
   [
    "src/gnd/rmap.py",
    "_Key",
-   "list[tuple[str, str] | None]",
+   "list[tuple[str, str, str] | None]",
    1
   ],
   [
@@ -134,8 +134,14 @@
   [
    "src/gnd/rmap.py",
    "_Key",
+   "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "_Key",
    "tuple[str, str]",
-   2
+   1
   ],
   [
    "src/gnd/rmap.py",
@@ -147,7 +153,7 @@
    "src/gnd/rmap.py",
    "__init__",
    "dict[str, Any]",
-   4
+   5
   ],
   [
    "src/gnd/rmap.py",
@@ -165,7 +171,7 @@
    "src/gnd/rmap.py",
    "__init__",
    "dict[str, dict[str, Any]]",
-   2
+   3
   ],
   [
    "src/gnd/rmap.py",
@@ -188,6 +194,12 @@
   [
    "src/gnd/rmap.py",
    "__init__",
+   "dict[str, list[tuple[str, str]]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
    "dict[str, str | None]",
    1
   ],
@@ -195,12 +207,6 @@
    "src/gnd/rmap.py",
    "__init__",
    "dict[str, str]",
-   1
-  ],
-  [
-   "src/gnd/rmap.py",
-   "__init__",
-   "dict[str, tuple[int, list[tuple[str, str]]]]",
    1
   ],
   [
@@ -248,8 +254,8 @@
   [
    "src/gnd/rmap.py",
    "__init__",
-   "tuple[int, list[tuple[str, str]]]",
-   1
+   "set[str]",
+   2
   ],
   [
    "src/gnd/rmap.py",
@@ -278,7 +284,7 @@
   [
    "src/gnd/rmap.py",
    "add_component_groups",
-   "dict[tuple[str, str], list[str]]",
+   "dict[tuple[str, str, str], list[str]]",
    1
   ],
   [
@@ -290,7 +296,7 @@
   [
    "src/gnd/rmap.py",
    "add_component_groups",
-   "tuple[str, str]",
+   "tuple[str, str, str]",
    1
   ],
   [
@@ -427,6 +433,24 @@
   ],
   [
    "src/gnd/rmap.py",
+   "components_key",
+   "list[tuple[str, str, str]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "components_key",
+   "self.objects.get(player, {})",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "components_key",
+   "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
    "constraint_dispositions",
    "effective.get(fid, ())",
    1
@@ -536,7 +560,7 @@
   [
    "src/gnd/rmap.py",
    "external",
-   "self.identifiers.get(anchor, (None,))",
+   "self.identifiers.get(anchor)",
    1
   ],
   [
@@ -549,7 +573,7 @@
    "src/gnd/rmap.py",
    "external",
    "tables[table_name]",
-   1
+   2
   ],
   [
    "src/gnd/rmap.py",
@@ -596,13 +620,19 @@
   [
    "src/gnd/rmap.py",
    "key",
+   "players[role]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "key",
    "self._keys[oid]",
    1
   ],
   [
    "src/gnd/rmap.py",
    "key",
-   "self.objects.get(player, {})",
+   "self.objectified[oid]",
    1
   ],
   [
@@ -621,13 +651,13 @@
    "src/gnd/rmap.py",
    "location",
    "self.carried['fact_type', fact_type]",
-   2
+   1
   ],
   [
    "src/gnd/rmap.py",
    "location",
    "self.carried['fact_type', fact_type][2:]",
-   2
+   1
   ],
   [
    "src/gnd/rmap.py",
@@ -686,6 +716,18 @@
   [
    "src/gnd/rmap.py",
    "objectify",
+   "by_role[r]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "objectify",
+   "by_role[role]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "objectify",
    "columns[r]",
    3
   ],
@@ -699,13 +741,13 @@
    "src/gnd/rmap.py",
    "objectify",
    "dict[str, list[str]]",
-   2
+   3
   ],
   [
    "src/gnd/rmap.py",
    "objectify",
    "list[str]",
-   4
+   5
   ],
   [
    "src/gnd/rmap.py",
@@ -972,6 +1014,6 @@
    1
   ]
  ],
- "result_distinct_rows": 8124,
- "result_occurrences": 10104
+ "result_distinct_rows": 8131,
+ "result_occurrences": 10114
 }

@@ -546,3 +546,25 @@ changed. The rules the repairs change are now in the normative section.
 | RR9 | The role-to-column map is a real dictionary, not text split back apart. The constraint index is passed in rather than parsed out of the address. | — (AGENTS.md, "General solutions") |
 
 **The repaired bytes are not re-reviewed.**
+
+## 15. Review round 2 (Codex, read-only) and its repairs
+
+The owner asked for a second round over the round-1 repairs ("Re-review,
+then PR"). [review.md](reviews/phase-OB2-r2/review.md) requested changes,
+with eight findings, from base `af34a54e`. Each was reproduced as a
+regression test (14 tests) and shown failing on the pre-repair code before
+any fix. The ledger is [FINDINGS.md](reviews/phase-OB2-r2/FINDINGS.md). No
+approved corpus answer changed, and the variant measurement is unchanged
+(4 of 66 models differ; same totals).
+
+| # | Change | Departs from |
+|---|---|---|
+| RR10 | An objectification's fallback key (A5) is its key wherever it is referenced; its identification fact types are then placed by later rules (F1). | A5 |
+| RR11 | Identifier ties break on the `role_refs` sequence after the sorted references; any confirmed external uniqueness over the identifier's roles is the `primary_key` (F2). | RR1 |
+| RR12 | External unique-key columns are in table order, each once, and uniqueness constraints over one column set share one key and one disposition (F3, F8). The R4 pin moved from (`phone`, `email`) to (`email`, `phone`). | RR4 |
+| RR13 | An inheriting subtype is identified as its first supertype, composite included (F4). | §6.3 |
+| RR14 | A value component of a composite key is a foreign key when its value type has a table (F5). | RR7 |
+| RR15 | An external uniqueness that references a rule-0 fact type identifies nothing and takes that fact type's reason (F6). | RR1 |
+| RR16 | A unary role is held by its table's key columns, not the Boolean column (F7). | RR4 |
+
+**The round-2 repaired bytes are not reviewed.**

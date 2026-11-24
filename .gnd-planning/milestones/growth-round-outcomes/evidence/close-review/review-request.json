@@ -1,0 +1,31 @@
+{
+ "delta": {
+  "media_type": "text/markdown",
+  "path": ".gnd-planning/milestones/growth-round-outcomes/notes/close-delta.md",
+  "sha256": "5027bf86ed659c498e324ef8795873157c164983516d2de8adfeaaf0e6f45310"
+ },
+ "kind": "spec-results-delta",
+ "results": {
+  "media_type": "text/markdown",
+  "path": ".gnd-planning/milestones/growth-round-outcomes/notes/close-results.md",
+  "sha256": "1e667b42cf2ecdbbceca8e74071e0c12864d195e1f17bd9e102798d9e7a8560c"
+ },
+ "rubric": {
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if the delivered code does not do what the plan's goal and criteria claim, or a claimed result is not supported by the code, tests and records at this commit. \"No concerns, and here is what I checked\" is a valid answer.",
+   "The spec is the approved plan r4; rulings D7 and D8 are the owner's and are not re-argued. Check whether each criterion GO1-C1 to GO5-C4 is met by the code in src/gnd/model/_parsing.py, src/gnd/evolve/outcomes.py, service.py, cli_service.py, models.py, summary.py, src/gnd/discover/narrow.py and src/gnd/commands/evolve.py, by the pages unattended-growth.md and the evolution contract, and by the tests tests/test_go1_evolve_parse_once.py, test_go2_operation_outcomes.py, test_go3_narrowed_proposal.py, test_unattended_growth_guidance.py and test_go5_round_summary.py, as close-results.md claims.",
+   "Check the delta: is every listed departure true of the code, justified, and recorded where it says; is any departure from the plan missing from it? D4 refutes part of GO5-C1: check that its reasoning holds against src/gnd/evolve/policy.py.",
+   "close-delta.md names code no reviewer has read (commit ff67e11d: narrow.py, summary.py, tests/support/markdown_sections.py). Read that code especially.",
+   "Look for an input the change claims to handle that gets a wrong outcome or escapes as an exception other than the refusals each API names: proposals whose operations depend on each other in any order, validation issue paths, D-12 refusals, outcome lists a host passes back, round files, unbound artifacts, and Markdown edits of the guarded page.",
+   "Every regular expression, string split, slice and special-case branch the milestone added handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads.",
+   "Every concern's evidence must quote one of the three named artifacts; cite code and tests by path and line in the observation."
+  ],
+  "name": "growth-round-outcomes milestone close"
+ },
+ "schema_version": 1,
+ "spec": {
+  "media_type": "text/markdown",
+  "path": ".gnd-planning/milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md",
+  "sha256": "b107bd366101719a7cc997a6d5d4212dea5dc80f5d121c4dec3fc8b669007431"
+ }
+}

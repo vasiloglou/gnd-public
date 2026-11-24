@@ -21,8 +21,8 @@ itself reviewed.
 |---|---|---|
 | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | done: [record](004-phase-OB1.md), [spec](notes/phase-OB1-spec.md); branch `claude/ossie-ob1-size-bounds` |
 | OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **recorded** ([record](008-phase-OB2.md)); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); two review rounds |
-| OB3 | Semantic model and mapping files, with the default per D2 | [spec r1](notes/phase-OB3-spec.md) approved ([gate](009-OB3-spec-gate.md)); [corpus](../../../tests/fixtures/ossie_relational/README.md) and amendment r1.1 awaiting the corpus gate |
+| OB3 | Semantic model and mapping files, with the default per D2 | [spec r1](notes/phase-OB3-spec.md) and [corpus](../../../tests/fixtures/ossie_relational/README.md) with amendment r1.1 approved ([spec gate](009-OB3-spec-gate.md), [corpus gate](010-OB3-corpus-gate.md)); implementation waits for #264, #266 and #270 to merge (E1) |
 | OB4 | `--physical-binding FILE` | after OB3 (D7, D8 ruled) |
 | OB5 | Docs and skill | after OB4 |
 
-**Next action:** the OB3 corpus gate. Per E1, OB3 implementation then waits for PRs #264, #266 and #270 to merge. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.
+**Next action:** the owner merges PRs #264, #266 and #270; OB3 implementation then starts from main. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.

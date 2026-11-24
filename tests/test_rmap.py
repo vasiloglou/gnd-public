@@ -84,6 +84,7 @@ def test_t8_public_surface():
     assert [member.name for member in rmap.RmapVariant] == ["HALPIN", "ALTERNATE"]
     assert set(rmap.UnmappedReason.__args__) == {
         "derived-computed", "uniqueness-not-confirmed", "identification-unmatchable", "spans-tables", "not-relational",
+        "unbound", "extension-role", "not-in-binding",  # OB4 G13: a physical binding run only
     }
     for cls in (rmap.Column, rmap.ForeignKey, rmap.Table, rmap.Unmapped, rmap.RelationalSchema, rmap.Disposition):
         assert dataclasses.is_dataclass(cls) and cls.__dataclass_params__.frozen
@@ -694,7 +695,7 @@ def test_ob3_t16_role_and_identification_records_are_literal(tmp_path):
     assert Identification("country", "direct", ("country_code",), (None,), "country") in schema.identifications
     assert Identification("state_code", "value", ("state_code",), (None,), None) in schema.identifications
     schema, _ = _schema(tmp_path, _case("15"))
-    assert Identification("student", "direct", ("person_id",), (None,), "person") in schema.identifications
+    assert Identification("student", "direct", ("person_id",), (None,), "person", absorbed=True) in schema.identifications
     assert RolePlacement("student_has_gpa", "student", "person", ("person_id",)) in schema.roles
 
 

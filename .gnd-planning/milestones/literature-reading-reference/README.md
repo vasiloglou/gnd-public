@@ -11,9 +11,9 @@ Plan r4, 2026-11-23, for
 |---|---|---|
 | LR1 | A host can see why `gnd verify` fails a source: which constraint or derivation, on which rows | done locally: [record](002-phase-LR1.md); pull request open, merge is the owner's |
 | LR2 | The pages say where a quote may lie: anywhere in the document the anchor sidecar names | done locally: [record](003-phase-LR2.md); pull request open, merge is the owner's |
-| LR3 | A labelled reference set for the reading stages, with a recorded recall and precision | outline; needs LH1 and LH2 of [literature-host-interfaces](../literature-host-interfaces/README.md) merged on `main`, D3 ruled by the owner: Sonnet, USD 50 ([ruling](004-ruling-D3.md)) |
+| LR3 | A labelled reference set for the reading stages, with a recorded recall and precision | done locally: [record](005-phase-LR3.md); pull request open, merge is the owner's |
 
-[Plan](notes/literature-reading-reference-plan.md).
+[Plan](notes/literature-reading-reference-plan.md). **Closed locally** on 2026-11-23: [006-milestone-close.md](006-milestone-close.md). Nothing is merged or released; the #226 reply is drafted, not posted.
 
 Rulings: D6 and the phase-diff review are the owner's ("Full panel, both";
 "Review helper, both"). D1, D2, D4, D5, D7, D8 and D9 are delegated rulings.

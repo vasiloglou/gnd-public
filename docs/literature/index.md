@@ -316,6 +316,32 @@ section. At 1 of 2, the same absence would be reported as unavailable.
 Every pass is saved with its inputs, so the whole run replays later
 without calling the reading agent again.
 
+### How much does the reading find?
+
+A reference set ships with the example: the twelve development papers of
+the literature corpus, with 31 labelled facts. One recorded run of the
+reading stages over it, with Claude Sonnet as the reading agent, gives:
+
+| Run | Recall | Precision |
+|---|---|---|
+| This set, after the broad pass | 9 of 31 | 9 of 10 |
+| This set, after the targeted pass | 27 of 31 | 18 of 23 (targeted rows) |
+| Issue #226, 20 papers, broad pass (best model) | 29 of 101 | 15 to 38 % |
+| Issue #226, targeted pass (best model) | 30 of 100 | 10 to 20 % |
+
+**A figure here is a measurement of one run.** It names its producer, its
+settings and its set, and says nothing about other papers or models. The
+set's papers are short paraphrases written to state their claims plainly,
+and its rule scores a fact by the section it was read from, while #226
+scored quotes; the two rows are a point of comparison, not a ranking. The
+[reference set](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/literature/reference_fixture/README.md#the-scoring-rule)
+holds the scoring rule, the settings and the run, which replays without
+calling the reading agent.
+
+Both passes use one prompt that asks no question; the rows differ only in
+which sections were read. This section's figures are reproduced by the
+reference set's replay, not by the commands page.
+
 ### Change the vocabulary, and see what goes stale
 
 Suppose the team decides to split the whale senses after the release has

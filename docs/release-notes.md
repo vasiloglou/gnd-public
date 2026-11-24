@@ -113,6 +113,12 @@ the next one.
   of a section. The literature pages say what that means for a host that
   shows its model one section at a time. No format changes
   ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+- **A reference recall and precision for the reading stages.** The
+  literature example ships a labelled reference set, built over the
+  regression corpus without changing it, and one recorded Claude Sonnet run
+  over it that replays with no producer calls: recall 27 of 31 after the
+  targeted pass. The literature page shows it beside the figures #226
+  reported ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
 
 ## 0.4.0 (2026-11-17)
 

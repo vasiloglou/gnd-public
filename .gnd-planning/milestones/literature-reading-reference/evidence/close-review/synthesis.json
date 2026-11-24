@@ -1,0 +1,379 @@
+{
+ "schema_version": 1,
+ "run_sha256": "01db1810bb3dc40be6349acc024c006890bd1c91f966de15ab01c46986e2c885",
+ "summary": "Milestone close over plan r4 with amendments A1-A5, close-results.md and close-delta.md. Four of six seats succeeded (Claude, Codex, Qwen, GLM); Gemini and Kimi returned no schema-valid response. All four voted revise. GLM found every criterion met; Qwen read the three records inline only. Two concerns reached agreement: LR3-C1's per-source licence is a single note (Claude, Codex, GLM), and the close records are not exhaustive (Claude, Qwen). Marked blocking: the reply's misstatement of the misses and its merge wording (Claude), the licence (Codex), and the Close row's missing gate citations (Qwen). The driving agent confirmed that two labels' work identifiers lie only in section p1, that anchors were keyed without the document, and that both passes share one prompt. Claude and GLM share one CLI codebase.",
+ "agreed_concerns": [
+  {
+   "group_id": "lr3-c1-licence-per-source",
+   "severity": "medium",
+   "title": "LR3-C1 asks for a licence per source; the set ships one set-wide note, and the delta does not record it",
+   "summary": "labels.json carries one licence string; no source has its own licence entry.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-c1-licence-per-source"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr3-per-source-licence"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr3-c1-licence-per-source-departure-unrecorded"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "close-records-incomplete",
+   "severity": "medium",
+   "title": "The close records omit departures and evidence: the D4 scorer, the unreviewed final repairs, the three stacked PRs, the release notes and skill citation, LR1-C3's partial result",
+   "summary": "close-delta claims to list every departure and does not; close-results' Close row cites no gate.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "delta-missing-d4-scorer"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "unreviewed-final-repairs-unlisted"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "three-prs-stacking-unrecorded"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "release-notes-and-skill-citation-unevidenced"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-c3-residual-vs-no-relaxation"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-gates-not-cited"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "reply-wrong-predicate-misses"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "reply-stale-merge-state"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "labels-unreachable-at-section-grain"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "stage-figures-not-stage-behaviour"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "wrong-predicate-value-collision"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "bespoke-corpus-reader"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "index-commands-claim"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "lr3-cross-document-match"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "lr3-all-bytes-claim"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "measurement-missing-match-rules"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "measurement-omits-settings-and-set"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "owner-d3-selection-not-cited"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-scope-and-identity",
+   "rank": 1,
+   "title": "Give each label every section of its document that holds one of its values, key anchors by document, and say both passes share one prompt",
+   "action": "Label scope: the anchored sections plus every section of the same document whose text holds one of the fact's values (normalized); anchors keyed by document; rescore and update the page, README and reply; state that both passes use one prompt with no question.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "labels-unreachable-at-section-grain"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr3-cross-document-match"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "stage-figures-not-stage-behaviour"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "labels-unreachable-at-section-grain",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr3-cross-document-match",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "stage-figures-not-stage-behaviour",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-licence",
+   "rank": 2,
+   "title": "Record a licence per source",
+   "action": "labels.json gets a per-source licence (the repository's licence, with the work each paraphrases) and T1 checks each.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-c1-licence-per-source"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr3-per-source-licence"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr3-c1-licence-per-source-departure-unrecorded"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-c1-licence-per-source",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr3-per-source-licence",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr3-c1-licence-per-source-departure-unrecorded",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-reply",
+   "rank": 3,
+   "title": "Correct the reply's misses and its merge wording",
+   "action": "Say which misses are which, and that all three answers are in open PRs, none merged or released.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "reply-wrong-predicate-misses"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "reply-stale-merge-state"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "reply-wrong-predicate-misses",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "reply-stale-merge-state",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-close-records",
+   "rank": 4,
+   "title": "Make close-results and close-delta complete",
+   "action": "Cite the gates at the branch head, add the missing delta rows, mark LR1-C3 met in part, report wrong-predicate counts, settings, the D3 ruling and the probe.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "delta-missing-d4-scorer"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "unreviewed-final-repairs-unlisted"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "three-prs-stacking-unrecorded"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "release-notes-and-skill-citation-unevidenced"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-c3-residual-vs-no-relaxation"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-gates-not-cited"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "measurement-missing-match-rules"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "measurement-omits-settings-and-set"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "owner-d3-selection-not-cited"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "delta-missing-d4-scorer",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "unreviewed-final-repairs-unlisted",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "three-prs-stacking-unrecorded",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "release-notes-and-skill-citation-unevidenced",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-c3-residual-vs-no-relaxation",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-gates-not-cited",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "measurement-missing-match-rules",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "measurement-omits-settings-and-set",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "owner-d3-selection-not-cited",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-hardening",
+   "rank": 5,
+   "title": "Check the corpus digests in build(), correct the bytes wording, exempt the section from the commands-page claim, state the wrong-predicate rule's limit",
+   "action": "build() checks document, model and key digests against corpus.json; README says a 7,708-byte budget and 7,662 section bytes; index.md says this figure is reproduced by the reference set's replay; README states that wrong predicate compares values, not role names.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "bespoke-corpus-reader"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr3-all-bytes-claim"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "index-commands-claim"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "wrong-predicate-value-collision"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "bespoke-corpus-reader",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr3-all-bytes-claim",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "index-commands-claim",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "wrong-predicate-value-collision",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  }
+ ]
+}

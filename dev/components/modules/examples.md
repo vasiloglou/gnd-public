@@ -307,6 +307,17 @@ Replay a bounded literature reading run with typed coverage and fidelity.
 | `replay(folder, *, fixture, vocabulary_fixture, expected_evidence_sha256) -> dict` | function | 1186 | Re-derive a reading result from retained evidence without invoking producers or reviewers. |
 | `main(argv) -> int` | function | 1226 | (no docstring) |
 
+## gnd.examples.literature.reference_set — `src/gnd/examples/literature/reference_set.py`
+Components: examples.literature_reference_set
+A labelled reference set for the reading stages, and its scorer.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `build(corpus_root) -> dict[str, bytes]` | function | 53 | The reference root's files, by name, built from the packaged corpus. |
+| `build_root(out, corpus_root) -> None` | function | 128 | Write the reference root's built files into ``out``. |
+| `score(run, root) -> dict` | function | 152 | Score a reading run over the reference root against its labels. |
+| `main(argv) -> int` | function | 196 | (no docstring) |
+
 ## gnd.examples.literature.revision — `src/gnd/examples/literature/revision.py`
 Components: examples.literature_revision
 Publish and replay the literature semantic revision example offline.

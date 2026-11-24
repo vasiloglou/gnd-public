@@ -319,7 +319,7 @@ plan r2 and a first draft spec, not reviewed and not approved.
 | [#227](https://github.com/vasiloglou/gnd-public/issues/227) | Growth rounds add almost nothing: whole-proposal outcomes, restated replies, no diagnostic | Plan r2, not reviewed, not approved; waits for rulings | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO2–GO5 |
 | [#216](https://github.com/vasiloglou/gnd-public/issues/216) | A public producer protocol for the reading example | Plan r6 approved 2026-11-23; the LH1 spec waits for its owner gate | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH1, LH2 |
 | [#215](https://github.com/vasiloglou/gnd-public/issues/215) | Model-generic assertion admission | Plan r6 approved 2026-11-23; LH3 and LH4 are outlines in the plan | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH3, LH4 |
-| [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Plan r2 and LR1 draft spec, not reviewed, not approved | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
+| [#226](https://github.com/vasiloglou/gnd-public/issues/226) | A reference recall for literature reading, quote scope, why `verify` fails | Closed locally 2026-11-23 (auto); PRs 243, 244, 252 open, not merged | [literature-reading-reference](milestones/literature-reading-reference/README.md) LR1–LR3 |
 
 Status, 2026-11-23: eight issues are open. #214 and #217 were closed as
 delivered on `main`; 0.4.0 still behaves as they describe until 0.5.0 is

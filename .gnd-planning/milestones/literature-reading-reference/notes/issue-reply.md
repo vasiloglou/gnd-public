@@ -1,15 +1,16 @@
-# Draft reply to #226 (interim, requests 3 and 2)
+# Draft reply to #226 (all three requests)
 
-Status: interim draft, written in phase LR2 on 2026-11-23. The owner posts
-it; nothing here is posted. The final draft, with request 1's figures, is
-written at milestone close after LR3. Update this draft's merge status when
-the pull requests merge.
+Status: draft, first written in phase LR2 on 2026-11-23 and completed in
+phase LR3 the same day. The owner posts it; nothing here is posted. Update
+the merge status before posting: on 2026-11-23 the three phases are in pull
+requests 243 (LR1), 244 (LR2) and the LR3 pull request, none merged and none
+released.
 
 ---
 
-Thanks for the detailed measurements. Two of your three requests have
-answers on `main` once the open pull requests for them merge; neither is in
-a release yet.
+Thanks for the detailed measurements. All three requests have answers in
+open pull requests (243, 244 and 252); none is merged or released yet, and
+the text below describes them as they will be once merged.
 
 **3. Why `verify` reports a failure, by constraint and row.** The JSON
 report already carries this. The documents guide now has a section,
@@ -35,7 +36,22 @@ GND's anchor check does not make. The anchor reference states the rule, and
 an anchor still shows where a value occurs, not that the text supports the
 claim.
 
-**1. A reference recall and precision.** Not yet. It needs the host
-producer interface that is being built now, and a recorded run over a
-labelled set. We will follow up here with the figures and the settings that
-produced them.
+**1. A reference recall and precision.** Once merged, the literature
+example ships a reference set: the twelve development papers of the regression corpus
+with 31 labelled facts, and one recorded run of the reading stages over it
+with Claude Sonnet as the reading agent. After the broad pass it found 9 of
+31 facts (precision 9 of 10); after the targeted pass, 27 of 31 (precision
+of the targeted rows 18 of 23). Of the four misses, one fact was never
+produced, one was the right pair of names under another predicate, and two
+named the work by the source's id rather than the paper's identifier. Both
+passes used one prompt and no question, so the two rows differ only in
+which sections were read. The run cost USD 0.29 and replays with no model call;
+the record names the model, the CLI flags and the prompt.
+
+Please read those figures as a measurement of one run on this set, not as
+what you should get. The papers are short paraphrases written to state their
+claims plainly, and the set scores a fact by the section it was read from,
+while you scored quotes, so the two are not directly comparable and the run
+does not say where your gap comes from. What it gives you is a labelled set
+your own producer can run over, scored the same way
+(`reference_set.score(your_run)`), next to this one.

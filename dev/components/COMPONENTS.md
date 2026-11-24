@@ -2571,7 +2571,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/refscheme.py
 - uses: check.universe, model.extraction_scope, model.query_index
-- used_by: discover.fact_types, discover.type_evidence, evolve.shape_matches, extract.guidelines, extract.reference_schemes, extract.vocabulary, model.extraction_vocabulary, model.relational_mapping, model.verbalization
+- used_by: discover.fact_types, discover.type_evidence, evolve.shape_matches, extract.guidelines, extract.reference_schemes, extract.vocabulary, model.extraction_vocabulary, model.verbalization
 - tests: tests/test_evolve_shape_matches.py
 - checked: partial
 - notes: Also owns role-player multiset signatures used by discovery and evolution; equal primitives do not collapse distinct object-type ids.
@@ -2582,13 +2582,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, map_model, dispositions
 - status: canonical
 - modules: src/gnd/rmap.py
-- uses: model.query_index, model.reference_resolution, model.reference_schemes
+- uses: model.query_index, model.reference_resolution
 - used_by: (none)
 - tests: tests/test_rmap.py
 - in: a loaded Model and an RmapVariant
 - out: RelationalSchema and Disposition rows
 - checked: partial
-- notes: Normative rules in representation-format.md, "Relational mapping (Rmap)". Uses ModelIndex.reference_value_types for direct identification and refscheme only for composites (the per-entity refscheme call was quadratic).
+- notes: Normative rules in representation-format.md, "Relational mapping (Rmap)". Direct identification comes from ModelIndex.reference_value_types. Composite identification is the Rmap's own selection: the preferred, confirmed alethic external uniqueness, indexed once per model. refscheme is not used, because it takes the first external uniqueness anchored on the entity whatever its status, and calling it per entity was quadratic (review r1 F1, F9).
 
 ### model.reference_binding
 - does: Expose invocation-bound reference-population intake through the historical references import surface.

@@ -521,3 +521,25 @@ supersedes them.
 | IF8 | **The D5 measurement** ([OB2-variant-measurement.md](OB2-variant-measurement.md)): 4 of 66 models differ between the variants. Three are the D5 corpus cases (07, 08, 15). In the census, only `library_with_subtypes` differs: 1 table and 4 nullable columns under HALPIN, against 3 tables and 1 nullable column under ALTERNATE. | Input to the D5 gate. |
 | IF9 | T3's reordered copy of a census model with version-4 reference populations cannot load away from its `references/` folder. | T3 copies the model's folder, so it skips no census model. |
 | IF10 | `tests/test_li0_witness_wire.py` scans fixture models. | It joins the focused gate. |
+
+## 14. Review round 1 (Codex, read-only) and its repairs
+
+[review.md](reviews/phase-OB2-r1/review.md) requested changes, with nine
+findings. Each was reproduced as a regression test (R1–R9) and shown
+failing on the pre-repair code (15 of 15 red) before any fix. The ledger is
+[FINDINGS.md](reviews/phase-OB2-r1/FINDINGS.md). No approved corpus answer
+changed. The rules the repairs change are now in the normative section.
+
+| # | Change | Departs from |
+|---|---|---|
+| RR1 | Composite identification is the Rmap's own selection: the external uniqueness that is confirmed, alethic and `preferred`, anchored on the entity, with the smallest sorted role references winning a tie. `refscheme.reference_identity` is no longer used. It takes the first external uniqueness anchored on the entity whatever its status (F1), and calling it per entity was quadratic (F9). | Spec §6 reuse table ("reuse refscheme, never re-implemented"). **The owner sees this at the D5 gate.** |
+| RR2 | Duplicate uniqueness constraints form one key, preferred if any is, and share one disposition. | A1's `implied` for duplicates (IF7) |
+| RR3 | Unique keys are sorted by column position. | — |
+| RR4 | An external uniqueness within one table is a unique key; one over an unmapped fact type takes that fact type's reason. | §6.3 |
+| RR5 | An objectified uniqueness narrower than the key is a unique key. | A5 |
+| RR6 | Under ALTERNATE, an inheriting subtype's supertype always gets a table. | S7 |
+| RR7 | A role played by a value type that has a table is a foreign key. | §6.3 |
+| RR8 | An absorbed unary column is nullable. | rule 4 |
+| RR9 | The role-to-column map is a real dictionary, not text split back apart. The constraint index is passed in rather than parsed out of the address. | — (AGENTS.md, "General solutions") |
+
+**The repaired bytes are not re-reviewed.**

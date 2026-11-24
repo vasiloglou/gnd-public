@@ -2048,8 +2048,11 @@ uniqueness set** is built in three steps:
 1. Take its counting internal uniqueness constraints.
 2. If there are none, use one implied uniqueness spanning all roles, since a
    fact is recorded once.
-3. Drop any uniqueness whose roles strictly include another's, and any that
-   repeats another's roles. A dropped one is recorded as `implied`.
+3. Drop any uniqueness whose roles strictly include another's; it is
+   recorded as `implied`.
+
+Uniqueness constraints over the same roles form one key. That key is
+preferred if any of them is, and they all get the same disposition.
 
 **Placement.** Each fact type is placed by the first rule that applies.
 
@@ -2059,7 +2062,7 @@ uniqueness set** is built in three steps:
 | 1 | A binary between an entity and the value type of its `popular` or `general` reference, with a single-role uniqueness on the value role | The entity's key column (`key`). It adds no column. |
 | 2 | Named by the external uniqueness that composes an entity's identification | Key columns of that entity's table (`key`) |
 | 3 | `objectified_as: O` | O's table. Its roles are matched to O's identifying components by the object type that plays them; matched roles are O's key (`key`), and any other role becomes a column. If O's identification cannot be resolved, O is keyed by the fact type's own primary uniqueness. |
-| 4 | Unary | A non-null `Boolean` column named after the fact type, in its player's table |
+| 4 | Unary | A `Boolean` column named after the fact type, in its player's table. It is non-null, or nullable when absorbed from a subtype. |
 | 5 | A single-role uniqueness on role *r* | Columns in the table of *r*'s player (`columns`). The other roles become columns. |
 | 6 | Otherwise | A table named after the fact type (`table`), with one column or column group per role, keyed by its primary uniqueness |
 
@@ -2079,10 +2082,12 @@ exists. Otherwise the variant decides:
 - **Subtypes.** Under `HALPIN`, a subtype with `inherits_reference: true` is
   absorbed: its placements land in its root supertype's table, and their
   columns are always nullable. Under `ALTERNATE`, such a subtype gets its own
-  table, keyed by the inherited key, which is also a foreign key to its
-  first supertype's table.
+  table, keyed by the inherited key. That key is also a foreign key to its
+  first supertype's table, which therefore always gets a table.
 - **Otherwise there is no table.** A role played by an object type without a
-  table becomes plain value columns, with no foreign key.
+  table becomes plain value columns, with no foreign key. A role played by
+  an object type that has a table, value types included, is a foreign key
+  to it.
 
 **Keys and columns.**
 
@@ -2091,15 +2096,21 @@ exists. Otherwise the variant decides:
 | Value type | One column named after the value type id. Its origin is `("reference", id)`. |
 | `popular` or `general` reference | One column named after the reference value type id |
 | `unit-based` reference | `<id>_value`, typed `Number`. This is recognised before the general identification lookup, which does not resolve unit-based references. |
-| Composite (a preferred external uniqueness) | One column per component, in `role_refs` order. A value component is named after its role. An entity component is a group named `<role>_<key>` and is a foreign key when its player has a table. A composite inside a composite is not resolved. |
+| Composite | The **identifying** external uniqueness: `confirmed`, `alethic` and `preferred`, over binaries whose other roles are all played by the entity. If several qualify, the one with the smallest sorted role references wins, and declaration order never decides. One column per component, in `role_refs` order. A value component is named after its role. An entity component is a group named `<role>_<key>`, and a foreign key when its player has a table. A composite inside a composite is not resolved. |
 | Unresolvable | The object type is listed as `identification-unmatchable`, and so is every fact type placed in it or needing its key, along with their constraints. |
 
 - **Primary key.** Rule 6 uses the `preferred` uniqueness if one exists.
   Otherwise it uses the smallest one, with ties broken by the sorted
-  positions of its roles; declaration order never decides. Every other
-  effective uniqueness whose columns lie in one table is a `unique_keys`
-  entry. An external uniqueness that is not an identification and spans
-  tables is listed as `spans-tables`.
+  positions of its roles; declaration order never decides.
+- **Unique keys.** Every other effective uniqueness is a `unique_keys`
+  entry over its columns. This includes the uniqueness constraints of an
+  objectified fact type that are narrower than the key.
+- **External uniqueness.** An external uniqueness that does not identify an
+  entity is a `unique_keys` entry when all its columns lie in one table. It
+  is `spans-tables` when they do not. When a referenced fact type is
+  unmapped, the uniqueness takes that fact type's reason.
+- **Order.** Unique keys are ordered by the positions of their columns in
+  the table.
 - **Column names.** A role played by a value type gives a column named after
   the role. A role played by an object type with key columns *k₁…kₙ* gives
   the columns `<role>_<kᵢ>`.

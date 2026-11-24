@@ -147,7 +147,7 @@
    "src/gnd/rmap.py",
    "__init__",
    "dict[str, Any]",
-   3
+   4
   ],
   [
    "src/gnd/rmap.py",
@@ -158,13 +158,31 @@
   [
    "src/gnd/rmap.py",
    "__init__",
+   "dict[str, _Placed]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
    "dict[str, dict[str, Any]]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
+   "dict[str, dict[str, list[str]]]",
    1
   ],
   [
    "src/gnd/rmap.py",
    "__init__",
    "dict[str, dict[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
+   "dict[str, list[str]]",
    1
   ],
   [
@@ -177,6 +195,12 @@
    "src/gnd/rmap.py",
    "__init__",
    "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
+   "dict[str, tuple[int, list[tuple[str, str]]]]",
    1
   ],
   [
@@ -206,6 +230,30 @@
   [
    "src/gnd/rmap.py",
    "__init__",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
+   "list[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
+   "self.identifiers.get(anchor)",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
+   "tuple[int, list[tuple[str, str]]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "__init__",
    "tuple[str, ...]",
    1
   ],
@@ -219,7 +267,7 @@
    "src/gnd/rmap.py",
    "__init__",
    "tuple[str, str]",
-   3
+   4
   ],
   [
    "src/gnd/rmap.py",
@@ -247,6 +295,24 @@
   ],
   [
    "src/gnd/rmap.py",
+   "anchor",
+   "list[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "anchor",
+   "self.role_players.get(fact_type, {})",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "anchor",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
    "build",
    "columns_by_role[r]",
    1
@@ -256,18 +322,6 @@
    "build",
    "counts[target]",
    2
-  ],
-  [
-   "src/gnd/rmap.py",
-   "build",
-   "dict[str, Any]",
-   1
-  ],
-  [
-   "src/gnd/rmap.py",
-   "build",
-   "dict[str, dict[str, Any]]",
-   1
   ],
   [
    "src/gnd/rmap.py",
@@ -320,6 +374,18 @@
   [
    "src/gnd/rmap.py",
    "build",
+   "players[roles[0]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "position[c]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
    "self.objects.get(oid, {})",
    1
   ],
@@ -363,7 +429,7 @@
    "src/gnd/rmap.py",
    "constraint_dispositions",
    "effective.get(fid, ())",
-   2
+   1
   ],
   [
    "src/gnd/rmap.py",
@@ -434,37 +500,67 @@
   [
    "src/gnd/rmap.py",
    "effective",
-   "list[tuple[int, tuple[str, ...]]]",
-   3
-  ],
-  [
-   "src/gnd/rmap.py",
-   "effective",
-   "set[tuple[str, ...]]",
+   "dict[tuple[str, ...], bool]",
    1
   ],
   [
    "src/gnd/rmap.py",
    "effective",
-   "tuple[int, tuple[str, ...]]",
-   3
+   "found.get(roles, False)",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "effective",
+   "list[tuple[tuple[str, ...], bool]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "effective",
+   "sets[roles]",
+   1
   ],
   [
    "src/gnd/rmap.py",
    "effective",
    "tuple[str, ...]",
-   4
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "effective",
+   "tuple[tuple[str, ...], bool]",
+   1
   ],
   [
    "src/gnd/rmap.py",
    "external",
-   "self.fact_by_id.get(fact_type)",
+   "self.identifiers.get(anchor, (None,))",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "external",
+   "self.unmapped['fact_type', f]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "external",
+   "tables[table_name]",
    1
   ],
   [
    "src/gnd/rmap.py",
    "identity",
    "self._identity[oid]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "identity",
+   "self.identifiers[oid]",
    1
   ],
   [
@@ -477,6 +573,18 @@
    "src/gnd/rmap.py",
    "identity",
    "self.objects.get(oid, {})",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "identity",
+   "self.role_players[fact]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "identity",
+   "self.role_players[fact][role]",
    1
   ],
   [
@@ -495,6 +603,66 @@
    "src/gnd/rmap.py",
    "key",
    "self.objects.get(player, {})",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "columns[role]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "self.carried['fact_type', fact_type]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "self.carried['fact_type', fact_type][2:]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "self.placed.get(fact_type)",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "self.role_cols.get(fact_type, {})",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "self.role_players[fact_type]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "self.role_players[fact_type][role]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "self.tables[p.owner]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "location",
+   "tuple[str, list[str]]",
    1
   ],
   [
@@ -519,7 +687,7 @@
    "src/gnd/rmap.py",
    "objectify",
    "columns[r]",
-   1
+   3
   ],
   [
    "src/gnd/rmap.py",
@@ -531,13 +699,13 @@
    "src/gnd/rmap.py",
    "objectify",
    "dict[str, list[str]]",
-   1
+   2
   ],
   [
    "src/gnd/rmap.py",
    "objectify",
    "list[str]",
-   3
+   4
   ],
   [
    "src/gnd/rmap.py",
@@ -626,12 +794,6 @@
   [
    "src/gnd/rmap.py",
    "primary",
-   "constraints[i]",
-   1
-  ],
-  [
-   "src/gnd/rmap.py",
-   "primary",
    "position[x]",
    2
   ],
@@ -645,6 +807,24 @@
    "src/gnd/rmap.py",
    "primitive",
    "self._primitive[value_type]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "refs",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "refs",
+   "list[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "refs",
+   "tuple[str, str]",
    1
   ],
   [
@@ -669,12 +849,6 @@
    "src/gnd/rmap.py",
    "roles",
    "list[str]",
-   1
-  ],
-  [
-   "src/gnd/rmap.py",
-   "run",
-   "dict[str, _Placed]",
    1
   ],
   [
@@ -716,6 +890,12 @@
   [
    "src/gnd/rmap.py",
    "run",
+   "self.objects.get(pending.pop(), {})",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "run",
    "set[str]",
    1
   ],
@@ -751,6 +931,24 @@
   ],
   [
    "src/gnd/rmap.py",
+   "uc_roles",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "uc_roles",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "unique_key",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
    "uniqueness",
    "columns[r]",
    1
@@ -758,20 +956,14 @@
   [
    "src/gnd/rmap.py",
    "uniqueness",
-   "roles_of[index]",
-   1
-  ],
-  [
-   "src/gnd/rmap.py",
-   "uniqueness",
-   "self.carried['_roles', fid]",
+   "self.role_cols[fid]",
    1
   ],
   [
    "src/gnd/rmap.py",
    "uniqueness",
    "tables[p.owner]",
-   1
+   2
   ],
   [
    "src/gnd/rmap.py",
@@ -780,6 +972,6 @@
    1
   ]
  ],
- "result_distinct_rows": 8092,
- "result_occurrences": 10068
+ "result_distinct_rows": 8124,
+ "result_occurrences": 10104
 }

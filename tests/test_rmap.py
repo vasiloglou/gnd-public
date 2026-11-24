@@ -355,3 +355,164 @@ def test_t7_precedence_pins(case, fact, expected):
     model = load_model(CORPUS / "cases" / case / "model.yaml")
     (row,) = [r for r in dispositions(model, map_model(model)) if r.kind == "fact_type" and r.id == fact]
     assert row.carried_as == expected
+
+
+# --- Review round 1 regressions (notes/reviews/phase-OB2-r1, F1-F9) --------------------------
+
+
+def _case(number):
+    from ruamel.yaml import YAML
+
+    (case,) = [c for c in CASES if c.startswith(number)]
+    return YAML(typ="safe").load((CORPUS / "cases" / case / "model.yaml").read_text())
+
+
+def _schema(tmp_path, document, variant="HALPIN", name="m.json"):
+    from gnd.model import load_model
+    from gnd.rmap import RmapVariant, dispositions, map_model
+
+    path = tmp_path / name
+    path.write_text(json.dumps(document))
+    model = load_model(path)
+    schema = map_model(model, variant=RmapVariant[variant])
+    return schema, {(d.kind, d.id): d for d in dispositions(model, schema)}
+
+
+def _table(schema, name):
+    (table,) = [t for t in schema.tables if t.name == name]
+    return table
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r1_identification_uses_the_preferred_confirmed_external_uniqueness(tmp_path, variant):
+    document = _case("14")
+    document["fact_types"][3]["constraints"].append(_k("mandatory", role="state"))
+    document["constraints"].append(_k("uniqueness", scope="external", role_refs=[
+        {"fact_type": "state_in_country", "role": "country"}, {"fact_type": "state_has_population", "role": "population"}]))
+    for order in (lambda c: c, lambda c: list(reversed(c))):
+        variant_doc = copy.deepcopy(document)
+        variant_doc["constraints"] = order(variant_doc["constraints"])
+        schema, _ = _schema(tmp_path, variant_doc, variant)
+        assert _table(schema, "state").primary_key == ("country_country_code", "code")
+    deontic = copy.deepcopy(_case("14"))
+    deontic["constraints"][0]["modality"] = "deontic"
+    schema, rows = _schema(tmp_path, deontic, variant)
+    assert "state" not in {t.name for t in schema.tables}
+    assert rows[("constraint", "constraints/0")].reason == "uniqueness-not-confirmed"
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r2_a_preferred_duplicate_keeps_its_preference(tmp_path, variant):
+    document = _case("13")
+    constraints = document["fact_types"][0]["constraints"]
+    for c in constraints:
+        c.pop("preferred", None)
+    constraints.append(_k("uniqueness", roles=["slot", "lecturer"], preferred=True))
+    keys = set()
+    for order in (lambda c: c, lambda c: list(reversed(c))):
+        doc = copy.deepcopy(document)
+        doc["fact_types"][0]["constraints"] = order(doc["fact_types"][0]["constraints"])
+        schema, _ = _schema(tmp_path, doc, variant)
+        keys.add(_table(schema, "room_slot_lecturer").primary_key)
+    assert keys == {("slot_slot_code", "lecturer_staff_nr")}
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r3_unique_key_order_ignores_declaration_order(tmp_path, variant):
+    document = _case("13")
+    constraints = document["fact_types"][0]["constraints"]
+    constraints[0]["preferred"] = True
+    constraints[1].pop("preferred", None)
+    constraints.append(_k("uniqueness", roles=["room", "lecturer"]))
+    found = set()
+    for order in (lambda c: c, lambda c: list(reversed(c))):
+        doc = copy.deepcopy(document)
+        doc["fact_types"][0]["constraints"] = order(doc["fact_types"][0]["constraints"])
+        schema, _ = _schema(tmp_path, doc, variant)
+        found.add(_table(schema, "room_slot_lecturer").unique_keys)
+    assert len(found) == 1
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r4_external_uniqueness_within_one_table_is_a_unique_key(tmp_path, variant):
+    document = _case("01")
+    document["object_types"].append({"id": "phone", "name": "Phone", "kind": "value", "primitive": "String"})
+    document["fact_types"].append(_ft("customer_has_phone", "{Customer} has {Phone}",
+                                      [("customer", "customer"), ("phone", "phone")], [_k("uniqueness", roles=["customer"])]))
+    document["constraints"] = [_k("uniqueness", scope="external", role_refs=[
+        {"fact_type": "customer_has_phone", "role": "phone"}, {"fact_type": "customer_has_email", "role": "email"}])]
+    schema, rows = _schema(tmp_path, document, variant)
+    assert _table(schema, "customer").unique_keys == (("phone", "email"),)
+    assert rows[("constraint", "constraints/0")].carried_as == ("unique_key", "customer", "phone", "email")
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r5_objectified_uniqueness_narrower_than_the_key_is_a_unique_key(tmp_path, variant):
+    document = _case("17")
+    objectified = next(f for f in document["fact_types"] if f["id"] == "student_enrolled_in_course")
+    objectified["constraints"].append(_k("uniqueness", roles=["student"]))
+    schema, rows = _schema(tmp_path, document, variant)
+    assert ("student_student_nr",) in _table(schema, "enrolment").unique_keys
+    assert rows[("constraint", "fact_types/student_enrolled_in_course/constraints/1")].carried_as == (
+        "unique_key", "enrolment", "student_student_nr")
+
+
+def test_r6_alternate_subtype_keeps_its_supertype_foreign_key(tmp_path):
+    document = _case("15")
+    document["fact_types"] = [f for f in document["fact_types"] if f["id"] == "student_has_gpa"]
+    schema, _ = _schema(tmp_path, document, "ALTERNATE")
+    student = _table(schema, "student")
+    assert [(f.target_table, f.columns) for f in student.foreign_keys] == [("person", ("person_id",))]
+    assert _table(schema, "person").primary_key == ("person_id",)
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_r7_a_role_played_by_a_tabled_value_type_is_a_foreign_key(tmp_path, variant):
+    document = _case("20")
+    document["object_types"].append({"id": "tag", "name": "Tag", "kind": "value", "primitive": "String"})
+    document["fact_types"].append(_ft("entry_tag", "{Entry} tagged {Tag}", [("entry", "entry"), ("tag", "tag")]))
+    schema, _ = _schema(tmp_path, document, variant)
+    assert [(f.columns, f.target_table) for f in _table(schema, "entry_tag").foreign_keys] == [(("entry",), "entry")]
+
+
+def test_r8_an_absorbed_unary_is_nullable(tmp_path):
+    document = _case("15")
+    document["fact_types"].append(_ft("student_active", "{Student} is active", [("student", "student")]))
+    schema, _ = _schema(tmp_path, document, "HALPIN")
+    (column,) = [c for c in _table(schema, "person").columns if c.name == "student_active"]
+    assert column.nullable
+
+
+def _composite_model(entities):
+    objects = [{"id": "code", "name": "Code", "kind": "value", "primitive": "String"},
+               {"id": "nr", "name": "Nr", "kind": "value", "primitive": "Integer"}]
+    facts, constraints = [], []
+    for e in range(entities):
+        eid = f"x{e:05d}"
+        objects.append({"id": eid, "name": f"X{e:05d}", "kind": "entity", "reference": {"mode": "external"}})
+        for value in ("code", "nr"):
+            facts.append(_ft(f"{eid}_has_{value}", f"{{X{e:05d}}} has {{{value.title()}}}", [(eid, eid), (value, value)],
+                             [_k("uniqueness", roles=[eid]), _k("mandatory", role=eid)]))
+        constraints.append(_k("uniqueness", scope="external", preferred=True, role_refs=[
+            {"fact_type": f"{eid}_has_code", "role": "code"}, {"fact_type": f"{eid}_has_nr", "role": "nr"}]))
+    return {"version": 1, "source": {"kind": "text-conversation", "confidence": "standard", "mode": "guided"},
+            "object_types": objects, "fact_types": facts, "constraints": constraints}
+
+
+def test_r9_composite_identification_is_not_superlinear(tmp_path):
+    from gnd.model import load_model
+    from gnd.rmap import map_model
+
+    times = {}
+    for entities in (100, 400):
+        path = tmp_path / f"c{entities}.json"
+        path.write_text(json.dumps(_composite_model(entities)))
+        model = load_model(path)
+        best = float("inf")
+        for _ in range(3):
+            start = monotonic()
+            schema = map_model(model)
+            best = min(best, monotonic() - start)
+        assert len(schema.tables) == entities
+        times[entities] = best
+    assert times[400] / times[100] < 8  # linear about 4; quadratic about 16

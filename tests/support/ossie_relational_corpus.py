@@ -56,6 +56,10 @@ def load_yaml(path: Path):
     return YAML(typ="safe", pure=True).load(path.read_text(encoding="utf-8"))
 
 
+def load_yaml_bytes(data: bytes):
+    return YAML(typ="safe", pure=True).load(data.decode("utf-8"))
+
+
 def extension_data(payload) -> str:
     """Canonical JSON without its trailing newline."""
     from gnd.artifacts import canonical_json_bytes

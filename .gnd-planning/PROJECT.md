@@ -388,6 +388,13 @@ request 250, neither merged), so RW1 is still held. The
 [release plan](milestones/release-0.5.0/notes/release-0.5.0-plan.md) §12
 records the ruling and a default-lane baseline of `main`.
 
+Status, 2026-11-24: pins-and-review-check is merged and closed, and RW1 of
+release-0.5.0 started: its spec is revised against `c62a32b8` and the
+version bump's effect was measured once (E1). The owner then ruled that the
+release also waits for ossie-relational-bundle (pull requests 264 and 266,
+not merged), so RW1 is held before its second ruling and nothing is bumped.
+The release plan's §13 records it.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

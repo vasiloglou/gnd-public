@@ -1,0 +1,17 @@
+{
+ "schema_version": 1,
+ "reason": "Loader single parse (2026-11-24, growth-round-outcomes D9, plan H9): load_model parsed each model's root bytes twice.",
+ "predecessor": ".gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json",
+ "predecessor_sha256": "0ac0dec4e11b08f49440d37181ce14668dcaae55dca5b845f3497836cecd80d8",
+ "successors": [
+  {
+   "kind": "RF6b",
+   "module": "gnd.model",
+   "name": "load_model_bytes",
+   "home": "gnd.model",
+   "before": "82e33d3c4d6ddbc49ec0a2196632a3d38a66aa311bf6153ff99a8511734bb595",
+   "after": "d134c53e6a6384544769abe8a7b9a234a1cb3a6621b249fa188be2220743e60e",
+   "reason": "D9: the body after the parse moved verbatim to _load_model_document, which _load_model_at calls with the document it already parsed instead of parsing the same bytes again; load_model_bytes keeps its behaviour, refusals and messages."
+  }
+ ]
+}

@@ -85,9 +85,11 @@ def mc1_definition(module, name):
     assert len(matches) <= 1
     selected = matches[0] if matches else None
     # Each successor file names its predecessor by path and digest; the main CI
-    # repair (2026-11-16) chains after MC3.
+    # repair (2026-11-16) chains after MC3, and the loader single parse
+    # (2026-11-24, D9) after the repair.
     chain = ('.gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json',
-             '.gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json')
+             '.gnd-planning/maintenance/2026-11-16-main-ci-repair/definition-successors.json',
+             '.gnd-planning/maintenance/2026-11-24-loader-single-parse/definition-successors.json')
     predecessor = path
     for successor_name in chain:
         successor_path = ROOT / successor_name

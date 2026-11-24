@@ -425,3 +425,29 @@ def test_review_f6_renderer_defect_is_not_an_input_error(monkeypatch: pytest.Mon
     monkeypatch.setattr(mv, "render_rule_verbalizations", broken)
     with pytest.raises(ValueError, match="renderer defect"):
         api.verbalize_rules(str(BOOKREC))
+
+
+# The index cache is keyed on canonical (sorted) content; rows keep document order.
+
+
+def _reverse_binds(value):
+    if isinstance(value, dict):
+        items = list(value.items())
+        if "bind" in value and isinstance(value["bind"], dict):
+            items = [(k, dict(reversed(list(v.items()))) if k == "bind" else v) for k, v in items]
+        return {key: _reverse_binds(item) for key, item in items}
+    if isinstance(value, list):
+        return [_reverse_binds(item) for item in value]
+    return value
+
+
+def test_key_order_twins_render_their_own_rule_text(tmp_path: Path) -> None:
+    document = _document(BOOKREC)
+    first = load_model(str(_write(tmp_path, document, "first.orm.json")))
+    twin = load_model(str(_write(tmp_path, _reverse_binds(document), "twin.orm.json")))
+    ModelIndex.for_model(first)  # index the first spelling before the twin is rendered
+    full = render_model_verbalization(twin)
+    rendered = [result for result in render_rule_verbalizations(twin) if result.status == "rendered"]
+    assert rendered
+    for result in rendered:
+        assert _parity(_line(full, result.fact_type), result.text), result.fact_type

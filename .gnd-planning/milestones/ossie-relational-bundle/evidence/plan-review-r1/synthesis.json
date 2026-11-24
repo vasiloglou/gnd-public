@@ -1,0 +1,667 @@
+{
+ "schema_version": 1,
+ "run_sha256": "c4276ed9b988236047a4aaaa9874906be2451608bfa4b34b5a0b2128d0bcd0e5",
+ "summary": "Four of six seats succeeded at effort high (qwen and glm timed out); claude, codex and kimi asked for revision and gemini blocked. All four confirmed the section 1.2 baseline claims. Strongest agreement: predicate 1 contradicts the proposed D2(a) default (4 seats), the Rmap tie-break rules are underspecified (3), and wrong exit codes (usage 64, collision 11), the D5/OB2 cycle, the import caps and the unowned I3 members (2 each).",
+ "agreed_concerns": [
+  {
+   "group_id": "g-usage-exit",
+   "severity": "high",
+   "title": "New usage refusals pin exit 2; GND's usage band is 64",
+   "summary": "Two reviewers: OB1-C4 and \u00a72.1 expect exit 2 for usage errors, but gnd.exits sets EXIT_USAGE = 64 and exit 2 means vacuous.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "usage-exit-code-2"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "usage-exit-2-vs-band-64"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "g-predicate1-d2",
+   "severity": "high",
+   "title": "Completion predicate 1 contradicts the proposed D2(a) five-file default",
+   "summary": "Four reviewers: predicate 1 says a run with no new flag behaves exactly as today, but D2(a) makes five files the default. Codex adds that the D2(b) fallback has no opt-in flag on the command surface.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "predicate1-contradicts-d2a"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "predicate-1-contradicts-d2a"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "predicate-1-vs-d2a"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d2-no-opt-in"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "g-collision-exit",
+   "severity": "medium",
+   "title": "The collision exit is 11, not 10",
+   "summary": "Two reviewers: \u00a75 gives exit 10 for an output collision; gnd.exits sets EXIT_COLLISION = 11.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "collision-exit-10"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "collision-exit-code"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "g-d5-ob2-cycle",
+   "severity": "high",
+   "title": "D5 and OB2 form a decision cycle",
+   "summary": "Two reviewers: OB2 is blocked on D5, but D5 is settled by measurement in OB2, and no metric is named.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d5-ob2-cycle"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d5-ob2-cycle"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "g-import-caps",
+   "severity": "high",
+   "title": "An import read flag alone does not admit large documents",
+   "summary": "Two reviewers: besides the read cap, guard_yaml, JSON decoding, _bounded_model's model-size and loss-size caps and MAX_MODEL_BYTES all bind; the plan names only the read.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "import-caps-beyond-read"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "import-cap-closure"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "g-rmap-determinism",
+   "severity": "high",
+   "title": "Rmap tie-break rules are underspecified",
+   "summary": "Three reviewers: 1:1 absorption has no rule when both or neither role is mandatory; primary-key choice among several candidate keys, unary fact types and compound reference schemes are undefined; the OB2 corpus does not name the discriminating fixtures.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rmap-rules-ambiguous"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "one-to-one-direction"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "primary-key-selection"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "ambiguous-rmap-1-1-absorption"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini"
+   ]
+  },
+  {
+   "group_id": "g-i3-unowned",
+   "severity": "high",
+   "title": "Issue 3 binding members have no owning criterion",
+   "summary": "Two reviewers: sql_type, targets, roles, extension_roles (and unique_keys on the binding path) are requested by I3 but OB4-C1 covers only datasets, fields, PKs and relationships.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "i3-requests-unowned"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "i3-properties-missing-ob4"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "gemini"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "rmap-refusal-breaks-default"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "source-cap-limits-large-export"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "required-source-expression"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "d8-normalization-underspecified"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "rmap-overlapping-placement"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "composite-fk-splitting"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "population-byte-equality"
+  },
+  {
+   "reviewer_id": "gemini",
+   "concern_id": "i2-constraints-missing-ob3"
+  },
+  {
+   "reviewer_id": "gemini",
+   "concern_id": "ob1-specified-before-d3"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "f-usage-exit",
+   "rank": 1,
+   "title": "New usage refusals pin exit 2; GND's usage band is 64",
+   "action": "Change OB1-C4, \u00a72.1 and the OB1 spec to expect exit 64 (EXIT_USAGE).",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "usage-exit-code-2"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "usage-exit-2-vs-band-64"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "usage-exit-code-2",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "usage-exit-2-vs-band-64",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "f-predicate1-d2",
+   "rank": 2,
+   "title": "Completion predicate 1 contradicts the proposed D2(a) five-file default",
+   "action": "Rewrite predicate 1 per D2 ruling: under (a) the three legacy files are byte-identical and two new files are added, and only --ontology-only equals today; under (b) name the opt-in flag, its outputs and its acceptance checks in \u00a72.1.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "predicate1-contradicts-d2a"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "predicate-1-contradicts-d2a"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "predicate-1-vs-d2a"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d2-no-opt-in"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "predicate1-contradicts-d2a",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "predicate-1-contradicts-d2a",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "predicate-1-vs-d2a",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d2-no-opt-in",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "f-collision-exit",
+   "rank": 3,
+   "title": "The collision exit is 11, not 10",
+   "action": "Correct \u00a75 to exit 11 (EXIT_COLLISION) and assert the constant in OB3 tests.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "collision-exit-10"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "collision-exit-code"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "collision-exit-10",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "collision-exit-code",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "f-d5-ob2-cycle",
+   "rank": 4,
+   "title": "D5 and OB2 form a decision cycle",
+   "action": "Unblock OB2 from D5: OB2 measures both variants as an early criterion with a named metric, and D5 is ruled at a gate inside OB2 before OB3.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d5-ob2-cycle"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d5-ob2-cycle"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d5-ob2-cycle",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d5-ob2-cycle",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "f-import-caps",
+   "rank": 5,
+   "title": "An import read flag alone does not admit large documents",
+   "action": "List every import-side cap the flag changes or keeps, state whether the restored model must fit MAX_MODEL_BYTES, and test a document above 10 MiB at each boundary.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "import-caps-beyond-read"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "import-cap-closure"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "import-caps-beyond-read",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "import-cap-closure",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "f-rmap-determinism",
+   "rank": 6,
+   "title": "Rmap tie-break rules are underspecified",
+   "action": "State deterministic tie-breaks or closed refusals for symmetric 1:1, multiple candidate keys, unary fact types and compound identification, and add a fixture for each to OB2-C2.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rmap-rules-ambiguous"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "one-to-one-direction"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "primary-key-selection"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "ambiguous-rmap-1-1-absorption"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rmap-rules-ambiguous",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "one-to-one-direction",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "primary-key-selection",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "ambiguous-rmap-1-1-absorption",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini"
+   ]
+  },
+  {
+   "fix_id": "f-i3-unowned",
+   "rank": 7,
+   "title": "Issue 3 binding members have no owning criterion",
+   "action": "Add OB4 criteria for sql_type (to Field.datatype), targets, roles, extension_roles and the source of unique_keys, or rule an explicit deferral.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "i3-requests-unowned"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "i3-properties-missing-ob4"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "i3-requests-unowned",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "i3-properties-missing-ob4",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "gemini"
+   ]
+  },
+  {
+   "fix_id": "f-div-8",
+   "rank": 8,
+   "title": "Bound the source cap for issue 1",
+   "action": "Add a decision on MAX_MODEL_BYTES for export and measure the output-to-source ratio in OB1-C2; say whether I1 is fixed for a source above 10 MiB.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "source-cap-limits-large-export"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "source-cap-limits-large-export",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "f-div-9",
+   "rank": 9,
+   "title": "Give overlapping placement a precedence",
+   "action": "State which Rmap placement wins when a fact type has both a single-role and a compound uniqueness, with a fixture.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rmap-overlapping-placement"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "rmap-overlapping-placement",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "f-div-10",
+   "rank": 10,
+   "title": "Represent composite foreign keys",
+   "action": "Let a binding group columns into one ordered reference so each DDL foreign key gives one relationship; add a composite-key fixture.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "composite-fk-splitting"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "composite-fk-splitting",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "f-div-11",
+   "rank": 11,
+   "title": "Define Dataset.source and Field.expression on the Rmap path",
+   "action": "Fix deterministic values for the required core-spec members and the value-type to datatype map.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "required-source-expression"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "required-source-expression",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "f-div-12",
+   "rank": 12,
+   "title": "Decide an Rmap refusal on the default path",
+   "action": "Define 'total' for D2 and what a refusal does outside the census (list in the extension or refuse the run).",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rmap-refusal-breaks-default"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "rmap-refusal-breaks-default",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "f-div-13",
+   "rank": 13,
+   "title": "Narrow D6's equality claim",
+   "action": "State which bytes are population-independent and the expected differences in loss report, identity and mapping.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "population-byte-equality"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "population-byte-equality",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "f-div-14",
+   "rank": 14,
+   "title": "Own the unrepresentable-construct listing",
+   "action": "Add an OB3 criterion that every unrepresentable constraint, not only every fact type, is listed in the GND extension.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "i2-constraints-missing-ob3"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "i2-constraints-missing-ob3",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "gemini"
+   ]
+  },
+  {
+   "fix_id": "f-div-15",
+   "rank": 15,
+   "title": "Pin role-name normalization",
+   "action": "Name NFKC, the character class, and refusal of names that normalize to empty; add hostile Unicode cases.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d8-normalization-underspecified"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d8-normalization-underspecified",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "f-div-16",
+   "rank": 16,
+   "title": "Mark OB1 blocked on D3",
+   "action": "Show OB1 as blocked until D3 is ruled.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "ob1-specified-before-d3"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "ob1-specified-before-d3",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "gemini"
+   ]
+  }
+ ]
+}

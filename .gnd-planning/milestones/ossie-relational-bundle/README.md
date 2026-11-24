@@ -21,8 +21,8 @@ itself reviewed.
 |---|---|---|
 | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | **merged** (PR #266): [record](004-phase-OB1.md), [spec](notes/phase-OB1-spec.md) |
 | OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **merged** (PR #270): [record](008-phase-OB2.md); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); two review rounds |
-| OB3 | Semantic model and mapping files, with the default per D2 | [spec r1](notes/phase-OB3-spec.md) and [corpus](../../../tests/fixtures/ossie_relational/README.md) with amendment r1.1 approved ([spec gate](009-OB3-spec-gate.md), [corpus gate](010-OB3-corpus-gate.md)); implementation next |
+| OB3 | Semantic model and mapping files, with the default per D2 | **recorded** ([record](011-phase-OB3.md)); one review round; four questions for the owner (OB3-Q1 to Q4); not pushed |
 | OB4 | `--physical-binding FILE` | after OB3 (D7, D8 ruled) |
 | OB5 | Docs and skill | after OB4 |
 
-**Next action:** OB3 implementation, red harness first. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.
+**Next action:** the owner rules OB3-Q1 to OB3-Q4 and decides on a pull request for OB3; OB4 follows. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.

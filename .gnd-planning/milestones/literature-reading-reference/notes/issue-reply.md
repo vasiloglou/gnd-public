@@ -1,11 +1,11 @@
-# Draft reply to #226 (all three requests)
+# Reply to #226 (all three requests)
 
-Status: draft, first written in phase LR2 on 2026-11-23, completed in
+Status: posted. First written in phase LR2 on 2026-11-23, completed in
 phase LR3 the same day, and updated for the merged state on 2026-11-23. The
-owner posts it; nothing here is posted. On 2026-11-23 the three phases are
-merged on `main` (PRs 243, 244 and 252; `main` at `2a2d1ee4`) and are in no
-release. If a release ships them before this is posted, name it in the first
-paragraph.
+text below the line was posted by the owner's instruction on 2026-11-23 as
+https://github.com/vasiloglou/gnd-public/issues/226#issuecomment-7118566523,
+and #226 was then closed as completed. At posting, the three phases were
+merged on `main` (PRs 243, 244 and 252) and in no release.
 
 ---
 

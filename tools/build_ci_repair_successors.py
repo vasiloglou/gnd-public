@@ -76,6 +76,7 @@ def main() -> int:
     sys.path.insert(0, str(ROOT / "tests"))
     import test_rf4_peripheral as rf4
     import test_rf6_packages as rf6
+    from support.definition_source import definition_source
     from support.rf9_ci_sources import body_successor, definition_successor
 
     if any((OUT / name).exists() for name in ("source-successors.json", "definition-successors.json")):
@@ -97,9 +98,7 @@ def main() -> int:
                  if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name == row["name"]]
         if len(nodes) != 1:
             continue
-        node = nodes[0]
-        start = min([node.lineno] + [d.lineno for d in node.decorator_list])
-        body = "".join(source.splitlines(keepends=True)[start - 1:node.end_lineno])
+        body = definition_source(source, nodes[0])
         actual = hashlib.sha256(body.encode()).hexdigest()
         successor = definition_successor(row["module"], row["name"])
         expected = successor["after"] if successor else row["sha256"]

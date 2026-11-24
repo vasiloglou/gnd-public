@@ -94,8 +94,13 @@ def test_existing_export_bytes_are_stable(monkeypatch):
     model = BASE.relative_to(Path.cwd())
     embedded = render_pyrel(Path("tests/fixtures/pyrel-oracle/basics.orm.yaml"))
     assert sha256(embedded.encode()).hexdigest() == "60a263a116a50f60070fa7d4c5b8affbc8d34ae163e4e4d7e8ef0476df82ea6f"
-    assert sha256(render(model, "duckdb").encode()).hexdigest() == "301dad52b7f7ff16d62d2dbc6dbfe64a7437dc43b6cf6cca5d1c5e5b1e527d8d"
-    assert sha256(render(model, "lqp").encode()).hexdigest() == "53f6066965cb41f5581ac4ebc0de4e7bb32966419b55a912d2e61b43c43591af"
+    # The two rules programs were pinned at GC4 and held through IR3 (6aacb928). The
+    # pyrel-rules-coverage milestone then changed the program every model gets, on
+    # purpose, in RP2 (6e04fe7f), RP1 (1350db9a), RP3 (33bd03db) and its close
+    # (825078c8); these are the bytes since that close. The embedded program above
+    # did not change.
+    assert sha256(render(model, "duckdb").encode()).hexdigest() == "68bfe280d721a8fde82e06f0f537c5d19be603da000d8885108bb8980055c4c4"
+    assert sha256(render(model, "lqp").encode()).hexdigest() == "2c99fa4e3c59cf9048c2d67c4304fe329be1e90bae62bbcc572db9f628403e2a"
 
 
 def test_readable_rules_refuse_function_shaped_antecedent_filters(tmp_path):

@@ -12,7 +12,6 @@ successfully but carries a WARNING-severity issue (``Model.warnings``).
 
 from __future__ import annotations
 
-import inspect
 import re
 from pathlib import Path
 
@@ -20,6 +19,7 @@ import pytest
 from pydantic import ValidationError as PydanticValidationError
 from ruamel.yaml import YAML
 from support.cli_runner import run_gnd_text as _run_cli
+from support.rule_source import rule_id_arguments, semantic_literals
 
 from gnd import model as model_module
 from gnd.model import (
@@ -87,6 +87,7 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
         "_rule_guarded_filters": {"semantic:guarded-binding-type", "semantic:term-comparison-type"},
     }
     # GC1's membership rule names its two ids in a loop rather than as rule_id=.
+    # The list is every semantic id the rule's source holds, in order.
     indirect = {
         "_rule_derivation_membership": ["semantic:membership-list", "semantic:membership-duplicate"],
     }
@@ -110,13 +111,12 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
     seen_extra = set()
     seen_multi = set()
     for rule in model_module._SEMANTIC_RULES:
-        source = inspect.getsource(rule)
-        identifiers = list(dict.fromkeys(re.findall(r'rule_id="([^\"]+)"', source)))
+        identifiers = rule_id_arguments(rule)
         if rule.__name__ in shared:
             assert shared[rule.__name__] <= set(identifiers)
             identifiers = [i for i in identifiers if i not in shared[rule.__name__]]
         if rule.__name__ in indirect:
-            assert identifiers == [] and all(f'"{i}"' in source for i in indirect[rule.__name__])
+            assert identifiers == [] and semantic_literals(rule) == indirect[rule.__name__]
             identifiers = indirect[rule.__name__]
             registered.extend(identifiers)
             continue

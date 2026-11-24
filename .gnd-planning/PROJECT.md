@@ -312,9 +312,9 @@ plan r2 and a first draft spec, not reviewed and not approved.
 |---|---|---|---|
 | [#214](https://github.com/vasiloglou/gnd-public/issues/214) | PyRel rules programs for literature-style models | Closed 2026-11-23: on `main` (PRs 220 and 223), not released | Ships in the 0.5.0 release |
 | [#217](https://github.com/vasiloglou/gnd-public/issues/217) | Judging a temporal include root | Closed 2026-11-23: on `main` (PR 220), not released | Ships in the 0.5.0 release |
-| [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Plan r4 approved 2026-11-23; the VG1 spec waits for its owner gate | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG1 |
-| [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Plan r4 approved 2026-11-23; D2 ruled (a) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG2, in place of the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
-| [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Plan r4 approved 2026-11-23; D3, D4, D13 and D14 ruled (a), D6 ruled as proposed | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG3–VG5 |
+| [#221](https://github.com/vasiloglou/gnd-public/issues/221) | `gnd check` cost in the number of object types | Delivered on `main` 2026-11-23 (PR 239), not released; milestone closed ([close](milestones/reviewed-vocabulary-growth/007-milestone-close.md)) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG1 |
+| [#218](https://github.com/vasiloglou/gnd-public/issues/218) | `evolve` and the growth document disagree on constraint sources | Delivered on `main` 2026-11-23 (PR 240), not released; milestone closed ([close](milestones/reviewed-vocabulary-growth/007-milestone-close.md)) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG2, in place of the [maintenance pass](maintenance/2026-11-21-evolve-constraint-sources/README.md) |
+| [#222](https://github.com/vasiloglou/gnd-public/issues/222) | Unattended growth from a reviewed vocabulary | Delivered on `main` 2026-11-23 (PR 240), not released; milestone closed ([close](milestones/reviewed-vocabulary-growth/007-milestone-close.md)) | [reviewed-vocabulary-growth](milestones/reviewed-vocabulary-growth/README.md) VG3–VG5 |
 | [#228](https://github.com/vasiloglou/gnd-public/issues/228) | A growth round costs time in proportion to the whole model | Plan r2 and GO1 draft spec, not reviewed, not approved | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO1 |
 | [#227](https://github.com/vasiloglou/gnd-public/issues/227) | Growth rounds add almost nothing: whole-proposal outcomes, restated replies, no diagnostic | Plan r2, not reviewed, not approved; waits for rulings | [growth-round-outcomes](milestones/growth-round-outcomes/README.md) GO2–GO5 |
 | [#216](https://github.com/vasiloglou/gnd-public/issues/216) | A public producer protocol for the reading example | Plan r6 approved 2026-11-23; the LH1 spec waits for its owner gate | [literature-host-interfaces](milestones/literature-host-interfaces/README.md) LH1, LH2 |
@@ -348,9 +348,9 @@ approved r6 on 2026-11-23
 | Order | Work | Issues | Why here |
 |---|---|---|---|
 | any time | Release 0.5.0: include-root-routes, pyrel-rules-coverage and aggregate-count-certificates, all merged and unreleased | #214, #217 (closed) | Owner trigger. Nothing else waits for it, and it puts both fixes in a release |
-| 1 | reviewed-vocabulary-growth VG1 | #221 | No workaround: 265.74 s at 1,000 extra object types. The plan is approved; its spec waits for the owner's gate |
+| 1 | reviewed-vocabulary-growth VG1 | #221 | Done 2026-11-23 (PR 239) |
 | 2 | growth-round-outcomes GO1 | #228 | Small, internal, no ruling. Every growth round pays it: 42.6 s at 2,404 object types for one added fact type |
-| 3 | reviewed-vocabulary-growth VG2–VG5 | #218, #222 | The reporter has a workaround (the seed carried as imported, proposed, deontic). The plan's rulings were made on 2026-11-23; each phase needs its spec |
+| 3 | reviewed-vocabulary-growth VG2–VG5 | #218, #222 | Done 2026-11-23 (PR 240); milestone closed |
 | 4 | growth-round-outcomes GO2–GO5 | #227 | The reporter measured 2 elements added in 20 rounds. Waits for rulings D1–D5 of its plan |
 | 5 | literature-host-interfaces LH1–LH4 | #216, #215 | Working host-side workarounds for both |
 | 6 | literature-reading-reference LR1–LR3 | #226 | LR1 and LR2 can run at any time; LR3 needs LH1 and LH2 and an owner-selected producer and budget |

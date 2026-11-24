@@ -1,0 +1,171 @@
+{
+  "version": 5,
+  "model_id": "urn:gnd-test:lh3-claims@1",
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [],
+  "fact_types": [
+    {
+      "id": "claim_passage",
+      "reading": "{Claim} is stated in {Passage}",
+      "roles": [
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        },
+        {
+          "role_name": "passage",
+          "object_type": "passage"
+        }
+      ]
+    },
+    {
+      "id": "claim_actor",
+      "reading": "{Claim} has actor {Note}",
+      "roles": [
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        },
+        {
+          "role_name": "actor",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "claim_object",
+      "reading": "{Claim} has object {Note}",
+      "roles": [
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        },
+        {
+          "role_name": "object",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "claim_condition",
+      "reading": "{Claim} holds under {Note}",
+      "roles": [
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        },
+        {
+          "role_name": "condition",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "claim_quantity",
+      "reading": "{Claim} reports {Quantity}",
+      "roles": [
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        },
+        {
+          "role_name": "quantity",
+          "object_type": "quantity"
+        }
+      ]
+    },
+    {
+      "id": "claim_paper",
+      "reading": "{Claim} appears in {Paper}",
+      "roles": [
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        },
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        }
+      ]
+    },
+    {
+      "id": "claim_supports",
+      "reading": "{Claim} supports {Claim}",
+      "roles": [
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        },
+        {
+          "role_name": "other",
+          "object_type": "claim"
+        }
+      ]
+    },
+    {
+      "id": "quantity_value",
+      "reading": "{Quantity} has value {Note}",
+      "roles": [
+        {
+          "role_name": "quantity",
+          "object_type": "quantity"
+        },
+        {
+          "role_name": "value",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "quantity_unit",
+      "reading": "{Quantity} has unit {Note}",
+      "roles": [
+        {
+          "role_name": "quantity",
+          "object_type": "quantity"
+        },
+        {
+          "role_name": "unit",
+          "object_type": "note"
+        }
+      ]
+    },
+    {
+      "id": "quantity_source",
+      "reading": "{Quantity} was measured in {Claim}",
+      "roles": [
+        {
+          "role_name": "quantity",
+          "object_type": "quantity"
+        },
+        {
+          "role_name": "claim",
+          "object_type": "claim"
+        }
+      ]
+    },
+    {
+      "id": "paper_title",
+      "reading": "{Paper} has title {Note}",
+      "roles": [
+        {
+          "role_name": "paper",
+          "object_type": "paper"
+        },
+        {
+          "role_name": "title",
+          "object_type": "note"
+        }
+      ]
+    }
+  ],
+  "includes": [
+    {
+      "id": "lh3-terms",
+      "path": "terms.orm.json",
+      "sha256": "05996ed42c345362ba99884466a7872bbfc11152f7290948c801c87e7dde3370"
+    }
+  ]
+}

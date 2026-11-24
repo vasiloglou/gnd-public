@@ -2,9 +2,10 @@
 
 ## 1. Status
 
-Draft, 2026-11-23. Its gate, delegated by the owner's `/process-milestone
-literature-host-interfaces auto` (auto=true), follows the LH2 record and the
-milestone coordinator's ordering GO.
+owner-decided (2026-11-23) by **delegated approval (auto=true)**: see §7 and
+§12. Base commit `f82490cb` (LH2's record), on the branch
+`claude/literature-host-interfaces-admission`, the second of the two pull
+requests. Prior status: "Draft, 2026-11-23".
 
 ## 2. Provenance
 
@@ -134,9 +135,9 @@ types. LH4 adds the rules, `max_targets` and the policy stage.
 
 | ID | Question | Proposed | What the other reading costs | Ruling |
 |---|---|---|---|---|
-| LH3-D1 | How the shape reaches `admit()` | A keyword argument holding the shape document | A file path needs a second reader and a size cap for one small object | open |
-| LH3-D2 | The stage table of a `/2` record | One row per assertion, keyed by its handle | One row per target row repeats an assertion's verdict across its rows | open |
-| LH3-D3 | `instances` in the admitted population | `{}`, as the packaged projection writes | Copying the subject's instances needs their format, which no caller has asked for | open |
+| LH3-D1 | How the shape reaches `admit()` | A keyword argument holding the shape document | A file path needs a second reader and a size cap for one small object | as proposed (delegated, auto=true, 2026-11-23) |
+| LH3-D2 | The stage table of a `/2` record | One row per assertion, keyed by its handle | One row per target row repeats an assertion's verdict across its rows | as proposed (delegated, auto=true, 2026-11-23) |
+| LH3-D3 | `instances` in the admitted population | `{}`, as the packaged projection writes | Copying the subject's instances needs their format, which no caller has asked for | as proposed (delegated, auto=true, 2026-11-23) |
 
 ## 8. Tests
 
@@ -166,7 +167,7 @@ Verification-selection ledger:
 | plan §9 LH3 row | run | `uv run pytest -q tests/test_lh3_admission_shape.py tests/test_li4_assertions.py tests/test_li5_lineage.py --tb=short`, exit 0 | `assertion_admission.py`, the fixtures | any edit to those, or to `gnd judgments check` |
 | guard block | run | `project.md`'s twelve-file command, exit 0 | guarded inventories | any scanned file |
 | lint | run | `uv run ruff check`, exit 0 | the repository | any Python file |
-| component index | run | `python3 scripts/components_index.py changed --base <LH3 base> --strict`, exit 0 | `dev/components/` | a changed module |
+| component index | run | `python3 scripts/components_index.py changed --base f82490cb --strict`, exit 0 | `dev/components/` | a changed module |
 | broad lanes | cadence | explicit request only | historical replays | none |
 
 ## 9. Out of scope for this phase
@@ -184,3 +185,42 @@ lines.
 ## 11. Approval instrument
 
 This prose.
+
+## 12. Gate
+
+Delegated approval (auto=true), 2026-11-23, under the owner's
+`/process-milestone literature-host-interfaces auto`. Instrument: this prose.
+Decisions: LH3-D1 to LH3-D3 as proposed (§7). Budget: one review round over
+the phase diff with the review helper (plan D13), a second only if the
+convergence rules call for it. Compatibility: the packaged call's H18
+digests; `lineage_run.py`'s imports and call; `test_li4` and `test_li5`
+unedited. Ordering: the milestone coordinator's GO for LH3 (2026-11-23)
+approves nothing; the README edit stays inside the admission section.
+Spec bytes: the SHA-256 is recorded in the phase record.
+
+Implementability sweep, at `f82490cb`: receipts for the fixture are built
+with `gnd.judgments.judgment_fact_digest` and `judgment_receipt_digest`, as
+`test_li4` builds its variants, so `gnd judgments check` judges the fixture
+as it judges the packaged example. Model structure is read with
+`load_model_bytes` and, for an include root, `load_model_bytes_composed`
+over the snapshot folder, as `judgments.py` reads it. Every other
+requirement maps to the design above.
+
+## Implementation findings (2026-11-23)
+
+1. **The include paths are read from the model document.** `_include_paths`
+   parses the root with `gnd.model._parsing.parse_model_document`, the
+   parser `bytes_declare_includes` itself uses, rather than a second reader.
+   Nested includes are not copied; an include root whose include declares
+   includes of its own refuses through the judgment route.
+2. **The fixture's cases are built in the test module.** The model, its
+   include and the evidence are committed under `tests/fixtures/lh3-admission/`;
+   each case's population, policy and receipts are written by `_case()`
+   with `gnd.judgments.judgment_fact_digest` and `judgment_receipt_digest`,
+   so a case states its own verdicts. No separate builder script.
+3. **`venue`**, an entity that plays no role, was added to the include so
+   that `shape:no-attached-facts` has a case that can fail it.
+4. **T9's time bound.** The row ceiling run (1,024 claims, 65,536 rows,
+   1,024 receipts) is held to 60 s, not §8's 30 s: most of its time is the
+   stable `gnd judgments check` route, which this phase does not change.
+5. **T8 pins all four H18 digests**, not only the two populations.

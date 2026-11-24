@@ -111,15 +111,36 @@ def test_T2_default_export_of_the_temporal_root_refuses_as_temporal(case, tmp_pa
     assert "include:" not in text
 
 
+def unchecked(program: str):
+    """The rules a rules program lists as not checked, read from its syntax tree."""
+    for node in ast.parse(program).body:
+        if isinstance(node, ast.Assign) and [getattr(t, "id", None) for t in node.targets] == ["UNCHECKED"]:
+            (argument,) = node.value.args
+            return json.loads(ast.literal_eval(argument))
+    raise AssertionError("the program has no UNCHECKED list")
+
+
 @pytest.mark.parametrize("mode", ["duckdb", "lqp"])
 @pytest.mark.parametrize("name", ["extraction.orm.json", "checking.orm.json"])
-def test_T3_rules_modes_reach_the_flat_models_refusal(case, tmp_path, mode, name):
+def test_T3_rules_modes_reach_the_flat_models_outcome(case, tmp_path, mode, name):
+    """A rules mode gives an include root what it gives the root's flat model.
+
+    At IR3 that outcome was a refusal, exit 3 naming the anchored rule
+    ``paper_names_parent_method#0``. Since RP2 of pyrel-rules-coverage (6e04fe7f)
+    a rules program lists an anchored rule as not checked and exits 0, so the
+    shared outcome is now that listing."""
     code, text = export(case / name, tmp_path / "root.py", mode)
     flat_path, _ = write_flat(case, name)
     flat_code, flat_text = export(flat_path, tmp_path / "flat.py", mode)
-    assert (code, flat_code) == (3, 3)
-    assert "paper_names_parent_method#0: family 'anchored'" in text
-    assert text == flat_text
+    assert (code, flat_code) == (0, 0), (text, flat_text)
+    root_program = (tmp_path / "root.py").read_text()
+    flat_program = (tmp_path / "flat.py").read_text()
+    assert [rule["id"] for rule in unchecked(root_program)] == ["paper_names_parent_method#0"]
+    assert unchecked(root_program) == unchecked(flat_program)
+    assert CONSTANT_LINES.sub("", root_program) == CONSTANT_LINES.sub("", flat_program)
+    assert root_program != flat_program
+    report = "1 rule(s) are not checked (listed in the program)"
+    assert report in text and report in flat_text
 
 
 # --- T4, T5: the program records the flattening -----------------------------
@@ -162,7 +183,11 @@ def test_T5_a_repinned_include_changes_the_recorded_digest(case, tmp_path):
 # --- T6: models without includes keep their exact program bytes -------------
 #
 # The goldens were produced by the base code at 68e426ca, with the case folder
-# replaced by "<case>".
+# replaced by "<case>", and all three still matched at IR3 (6aacb928). The two
+# rules programs were recorded again after the pyrel-rules-coverage milestone
+# changed the program every model gets (RP2 6e04fe7f, RP1 1350db9a, RP3 33bd03db,
+# close 825078c8): they are that close's bytes, and nothing since has changed
+# them. The default program's golden is the original.
 
 
 def _include_free_programs(case, tmp_path):

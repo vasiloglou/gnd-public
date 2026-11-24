@@ -17,6 +17,10 @@ PHASE_SUCCESSORS = (
     EVIDENCE.parents[4] / '.gnd-planning/milestones/literature-interop/evidence/LX4/source-successors.json',
     # Main CI repair (2026-11-16): guarded-rule and literature bodies recorded after the fact.
     EVIDENCE.parents[4] / '.gnd-planning/maintenance/2026-11-16-main-ci-repair/source-successors.json',
+    # reviewed-vocabulary-growth VG2 (2026-11-23): the sample and common-sense D-12 refusal's exit.
+    EVIDENCE.parents[4] / '.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG2/source-successors.json',
+    # reviewed-vocabulary-growth VG3 (2026-11-23): the include attribution line of gnd validate.
+    EVIDENCE.parents[4] / '.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3/source-successors.json',
 )
 
 

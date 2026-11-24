@@ -21,12 +21,14 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from functools import wraps
 from threading import RLock
+from types import MappingProxyType
 from typing import Any, Literal
 
 from gnd import artifacts
+from gnd import input_policy as _rf7_input
 from gnd.address import positional_constraint_ref
 from gnd.documents import Model
-from gnd.model_queries import primitive_for
+from gnd.model_queries import _identifying_id, _resolve_reference, _supertype_parents, primitive_for
 
 _CACHE: OrderedDict[str, ModelIndex] = OrderedDict()
 _LOCK = RLock()
@@ -105,6 +107,8 @@ class ModelIndex:
     _document: dict[str, Any] = field(repr=False, compare=False)
     _facts: dict[str, dict[str, Any]] = field(init=False, repr=False, compare=False)
     _objects: dict[str, dict[str, Any]] = field(init=False, repr=False, compare=False)
+    #: The universe tables (VG1), built on first use: name -> read-only table.
+    _tables: dict[str, Any] = field(init=False, repr=False, compare=False)
 
     def __post_init__(self) -> None:
         document = deepcopy(self._document)
@@ -118,6 +122,7 @@ class ModelIndex:
                    if isinstance(row, dict) and row.get('id') is not None}
         object.__setattr__(self, '_facts', facts)
         object.__setattr__(self, '_objects', objects)
+        object.__setattr__(self, '_tables', {})
 
     @classmethod
     def for_model(cls, model: Model) -> ModelIndex:
@@ -272,6 +277,120 @@ class ModelIndex:
                 seen.add(parent)
                 pending.extend(parents.get(parent, []))
         return frozenset(seen)
+
+    # --- the universe tables (VG1) -------------------------------------------
+    # Read by the checker's three universe walks (gnd.universe). Each is built
+    # once per index and kept; a returned mapping is a read-only view, so no
+    # caller can write into the shared cache.
+    #
+    # The tables are built from the canonical JSON form of the document, the
+    # bytes the cache key is a digest of, so two models that share a key share
+    # tables that are right for both. The rows of the first model to reach the
+    # cache are not: a str-enum ``kind`` and the plain string share a key and
+    # differ under ``str()`` (VG1 review r1, F1).
+
+    def _table(self, name: str, build) -> Any:
+        table = self._tables.get(name)
+        if table is None:
+            table = self._tables.setdefault(name, build())
+        return table
+
+    def _canonical(self) -> dict[str, Any]:
+        def build() -> dict[str, Any]:
+            if self.digest is None:
+                return self._document  # uncacheable, so never shared with another model
+            try:
+                return _rf7_input.loads(artifacts.canonical_json_bytes(self._document))
+            except (ValueError, RecursionError):
+                # Over the routed reader's 10 MB or 64-level caps: the cached rows,
+                # as before VG1 (a residual the VG1 record names).
+                return self._document
+        return self._table('canonical', build)
+
+    def _canonical_objects(self) -> dict[str, dict[str, Any]]:
+        """The last row of each id, as ``object_map`` reads live rows."""
+        return {str(row.get('id')): row for row in self._canonical().get('object_types') or []
+                if isinstance(row, dict) and row.get('id') is not None}
+
+    def reference_value_types(self) -> MappingProxyType[str, str | None]:
+        """object-type id -> the value type that denotes it, or None.
+
+        A cache of ``gnd.universe.resolve_reference_value_type``, which stays the
+        definition: built by the same walk (``_resolve_reference`` with
+        ``_identifying_id``) over the same last-duplicate object map and one
+        supertype map, once per object type.
+        """
+        def build() -> MappingProxyType[str, str | None]:
+            objects = self._canonical_objects()
+            parents = _supertype_parents(self._canonical())
+            table: dict[str, str | None] = {}
+            for identifier in objects:
+                try:
+                    table[identifier] = _resolve_reference(identifier, objects, parents, set(), _identifying_id)
+                except (AttributeError, TypeError):
+                    # A shape only a model built in code can hold (a reference that is
+                    # not a mapping): not resolvable. The base walk raised here only
+                    # for a type it was not asked to skip (VG1 review r1, F2).
+                    table[identifier] = None
+            return MappingProxyType(table)
+        return self._table('reference', build)
+
+    def denoted_by(self, value_type_ids: Any) -> set[str]:
+        """Object types whose resolved value type is one of ``value_type_ids`` (a new set)."""
+        def build() -> MappingProxyType[str, frozenset[str]]:
+            inverse: dict[str, set[str]] = {}
+            for identifier, value_type in self.reference_value_types().items():
+                if value_type is not None:
+                    inverse.setdefault(value_type, set()).add(identifier)
+            return MappingProxyType({key: frozenset(value) for key, value in inverse.items()})
+        inverse = self._table('denoted', build)
+        result: set[str] = set()
+        for value_type in value_type_ids:
+            result.update(inverse.get(value_type, ()))
+        return result
+
+    def subtype_children(self) -> MappingProxyType[str, frozenset[str]]:
+        """Declared id -> the ids that name it in ``subtype_of`` (direct children).
+
+        The edges are those of ``_supertype_parents``: the last row of a
+        duplicate id declares its supertypes.
+        """
+        def build() -> MappingProxyType[str, frozenset[str]]:
+            children: dict[str, set[str]] = {}
+            for identifier, supertypes in _supertype_parents(self._canonical()).items():
+                for supertype in supertypes:
+                    children.setdefault(supertype, set()).add(identifier)
+            return MappingProxyType({key: frozenset(value) for key, value in children.items()})
+        return self._table('children', build)
+
+    def descendants(self, identifier: Any) -> set[str]:
+        """``identifier`` and every transitive subtype of it, cycle-safe (a new set).
+
+        Follows :meth:`subtype_children` downward. It reaches exactly the least
+        set containing ``identifier`` that admits a declared type as soon as one
+        of its supertypes is in it, which is the fixpoint
+        ``gnd.universe._descendant_closure`` computed before VG1.
+        """
+        children = self.subtype_children()
+        members = {identifier}
+        pending = [identifier]
+        while pending:
+            for child in children.get(pending.pop(), ()):
+                if child not in members:
+                    members.add(child)
+                    pending.append(child)
+        return members
+
+    def kind(self, identifier: Any) -> str | None:
+        """The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None."""
+        def build() -> MappingProxyType[str, str | None]:
+            kinds: dict[str, str | None] = {}
+            for row in self._canonical().get('object_types') or []:
+                if isinstance(row, dict):
+                    value = row.get('kind')
+                    kinds.setdefault(str(row.get('id')), str(value) if value is not None else None)
+            return MappingProxyType(kinds)
+        return self._table('kind', build).get(identifier) if isinstance(identifier, str) else None
 
     def primitive(self, identifier: str, *, variant: Literal['truthy', 'strict']) -> str | None:
         return primitive_for(identifier, self._objects, variant=variant)

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "kind": "spec-results-delta",
+  "spec": {
+    "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/reviewed-vocabulary-growth-plan.md",
+    "sha256": "362557f3ea689ae326171b1b4dbf6a4704cf21146a68ca91b3a7d31f57b4ba7c",
+    "media_type": "text/markdown"
+  },
+  "results": {
+    "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/close-results.md",
+    "sha256": "cdb97e75c6bc107fe01c4df547695728b3a6c9964b0e701bd548498902f1e522",
+    "media_type": "text/markdown"
+  },
+  "delta": {
+    "path": ".gnd-planning/milestones/reviewed-vocabulary-growth/notes/close-delta.md",
+    "sha256": "cb271d8c1dd955a817af1637e2424f663c53d00f658960ff75a281ea2b0be89f",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "reviewed-vocabulary-growth milestone close",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Does every goal predicate in the plan have evidence in the results that would fail if the predicate were false? Read the phase records 002-phase-VG1.md, 003-phase-VG3.md, 004-phase-VG2.md, 005-phase-VG4.md, 006-phase-VG5.md and the tests they cite before judging.",
+      "Do the shipped code paths (src/gnd/model_index.py and src/gnd/universe.py; src/gnd/model/_unattended.py, src/gnd/model/_includes.py, src/gnd/commands/checking.py; src/gnd/evolve/service.py, src/gnd/evolve/_includes.py, src/gnd/evolve/cli_service.py) behave as the results and delta say, in particular for models without the unattended mode or without includes, which must be unchanged?",
+      "Do the pages (representation-format.md 'Unattended source' and 'Model includes', provenance-and-modality.md 'Evolve admission (D-12)', evolution-contract.md, unattended-growth.md 'Starting from a reviewed vocabulary') state what the code does, each rule in one home?",
+      "Is every open question raised in the milestone's records dispositioned in the results (closed, carried with an owner, or an accepted residual), and is any disposition wrong?",
+      "Are the close amendments in plan section 11 each supported by the record that raised them, with the prior wording kept?",
+      "Every concern's evidence must cite one of the three named files; name the record, code or test line in the observation."
+    ]
+  }
+}

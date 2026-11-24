@@ -1,6 +1,13 @@
 # Drafted replies to #216 and #215
 
-Drafted at milestone close for the owner to post (plan §5). Not posted.
+Drafted at milestone close for the owner to post (plan §5). Posted on the
+owner's request on 2026-11-23 (comments on #216 and #215 at 23:44 UTC), with
+the text below unchanged; both issues were closed as completed on
+2026-11-24.
+
+This note previously read "Not posted." `006-milestone-close.md` cites this
+file's digest as it was then (sha256 `cb18a957…d3a2`); only this note has
+changed since.
 
 ## #216: drive the reading example from a host
 

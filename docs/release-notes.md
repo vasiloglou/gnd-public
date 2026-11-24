@@ -5,6 +5,15 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: frontmatter fences
+
+- **An indented `---` is content.** The frontmatter reader behind experiment
+  specs, conclusions and generated `SKILL.md` files takes a fence only at
+  column 0, with nothing after it but spaces or tabs. An indented `---` in a
+  block scalar or a multi-line value no longer ends the block early and drops
+  the keys after it; a document whose only closing dashes are indented is
+  refused as unterminated.
+
 ## Unreleased: the admission example from a host
 
 - **Your own assertion entity.** The literature admission example's
@@ -94,6 +103,41 @@ the next one.
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message
   and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
+- **An outcome for every operation.** `gnd evolve preview --operation-outcomes`
+  names each operation `admitted`, refused by the policy, validation or D-12,
+  `dropped-with` a refused one, or `unassessed`. When a gate refuses the
+  proposal, `--outcome-report FILE` receives the same rows; the refusal and
+  its exit are unchanged. Without the option nothing changes
+  ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **What a reply carries for an element the model has.** "The reply
+  shape" in `unattended-growth.md` now says a reply names an element the
+  model already has, its own or included, by id only, and routes rows for an
+  existing fact type to `open_questions`, since the additive policy refuses
+  a changed sample row ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **The admitted part of a round.** `gnd.discover.narrow.narrow_proposal`
+  turns a proposal and its operation outcomes into a new proposal of the
+  operations no gate refused, which is previewed and applied like any other;
+  `apply` stays whole ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **One summary per round.** `gnd evolve summary ROUND_FILE` prints what a
+  round reused, what the host dropped, what it proposed, each verdict's count
+  and what the applied record added
+  ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **Reading a failed verification.** The documents guide shows how to list
+  the constraints and derivations a `gnd verify` exit 1 failed, with the
+  violating rows, from the JSON report, with a runnable example on the
+  literature reading example's conflicting labels. `gnd verify` itself is
+  unchanged ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+- **Where a quote may lie.** The anchor reference states the rule: a span
+  may lie anywhere in the document the sidecar names, and GND has no notion
+  of a section. The literature pages say what that means for a host that
+  shows its model one section at a time. No format changes
+  ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+- **A reference recall and precision for the reading stages.** The
+  literature example ships a labelled reference set, built over the
+  regression corpus without changing it, and one recorded Claude Sonnet run
+  over it that replays with no producer calls: recall 27 of 31 after the
+  targeted pass. The literature page shows it beside the figures #226
+  reported ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
 
 ## 0.4.0 (2026-11-17)
 

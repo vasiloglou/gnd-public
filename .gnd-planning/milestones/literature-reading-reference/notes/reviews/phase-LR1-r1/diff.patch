@@ -1,0 +1,207 @@
+diff --git a/.gnd-planning/milestones/literature-reading-reference/notes/phase-LR1-spec.md b/.gnd-planning/milestones/literature-reading-reference/notes/phase-LR1-spec.md
+index 4ea14a64..94100169 100644
+--- a/.gnd-planning/milestones/literature-reading-reference/notes/phase-LR1-spec.md
++++ b/.gnd-planning/milestones/literature-reading-reference/notes/phase-LR1-spec.md
+@@ -219,3 +219,37 @@ source lines, about 200 test lines. The record states the measured figures.
+ 
+ This prose and the expected exits, references, row counts and field names
+ of §8.
++
++## 12. Spec gate
++
++Delegated approval (`auto=true`), 2026-11-23. Authorization: the owner's
++milestone delegation recorded in [001-plan-gate.md](../001-plan-gate.md).
++Instrument: this prose (§11); no spec review was run, because none settles a
++concrete uncertainty the gate holds open, and the phase-diff review (one
++reviewer in a different tool, the owner's ruling) follows implementation.
++Budget: no paid call. Compatibility: `gnd verify` bytes unchanged (LR1-C5);
++the packaged `gnd-extract` reference page changes by one cell, and its
++manifest digest moves. The rulings of §7 are the gate's. The SHA-256 of these
++bytes is in the phase record. Implementation findings are appended below as
++§13.
++
++## 13. Implementation findings
++
++Appended after the gate; the gated bytes are the SHA-256 the phase record
++names.
++
++- **F1, `derivations` is `null`.** For a model that declares no derivation,
++  the report's `derivations` is `null`, not `[]`. The page's example first
++  read it as a list and raised `TypeError`. The page now says so in step 3,
++  and both the page block and `listing` read `report["derivations"] or []`.
++  T1 and T9 reach it.
++- **F2, `outcome` was not named.** T3 failed on the first draft: the prose
++  never named `outcome`, which the field list claims. The page now says the
++  report's `outcome` is `violated`. The test, not the page's draft, was the
++  authority.
++- **F3, the step order.** The page numbers its steps 1–6 with the runnable
++  example after them, where §6 drafted eight steps with the example as the
++  eighth; the content is the same.
++- **F4, affected consumers widened.** `tests/test_public_extraction_prose_policy.py`
++  and `tests/test_extract_guidelines.py` read `extraction-contract.md`, so
++  they join the lane.
+diff --git a/dev/components/modules/tools.md b/dev/components/modules/tools.md
+index de5a96a6..8e74ac5b 100644
+--- a/dev/components/modules/tools.md
++++ b/dev/components/modules/tools.md
+@@ -571,4 +571,4 @@ Execute explicitly marked, trusted repository tutorial blocks as written.
+ | `require_runtime(lane, python, env) -> dict` | function | 83 | (no docstring) |
+ | `run_pages(pages, cwd, python, lane, *, receipts, group) -> int` | function | 122 | (no docstring) |
+ | `groups(root) -> dict[str, list[Path]]` | function | 200 | (no docstring) |
+-| `main()` | function | 233 | (no docstring) |
++| `main()` | function | 234 | (no docstring) |
+diff --git a/docs/guides/documents.md b/docs/guides/documents.md
+index 9f3b3983..1cb65b8f 100644
+--- a/docs/guides/documents.md
++++ b/docs/guides/documents.md
+@@ -71,6 +71,81 @@ malformed, or stale sidecars produce input refusal at band `3`. Read the
+ was authored directly and never extracted, explicitly use `--no-extraction`;
+ the report records that the extraction path was skipped.
+ 
++## Reading a failed verification
++
++Exit `1` means at least one alethic constraint or derivation failed. To see
++which ones, and on which rows, run the same command with `--format json`;
++the report's `outcome` is then `violated`. A model that includes another
++file needs that file at the path its `includes` entry names, next to the
++model.
++
++1. The failing constraints are the entries of `verdicts` whose `verdict` is
++   `fail` and whose `modality` is `alethic`.
++2. Each one says where the constraint is declared in `constraint_ref`:
++   `fact_types[<fact type>].constraints[<n>]` for a constraint written inside
++   a fact type, `constraints[<n>]` for one at the top level. The
++   constraint's own `id` is at that address in the file that declares it,
++   which for an included vocabulary is the included file. `constraint_type`
++   names its kind, `message` says what it requires and what broke it, and
++   `offending_facts` lists the violating rows, one object per row with its
++   role values.
++3. The failing derivations are the entries of `derivations` whose `verdict`
++   is `fail`. Each names itself in `derivation_ref` and lists what went
++   wrong in `findings`. `derivations` is `null` for a model that declares
++   none.
++4. A `warning` verdict is a deontic violation. It is reported and does not
++   change the exit.
++5. A model can mark roles as sensitive. Then `message` holds a marker and
++   `offending_facts` holds one marker row, in place of the values. Whether
++   you can see the values (`--unredacted`, or `GND_DISCLOSURE=internal`) is
++   set by the [disclosure mode](../reference/disclosure.md).
++6. The text output (without `--format json`) prints the same constraints and
++   messages, but not the rows.
++
++The packaged literature reading example writes a population with two labels
++for one subject, which breaks a uniqueness constraint. These steps list it:
++
++<!-- gnd-run expect=0 -->
++```python
++import json
++import shutil
++import subprocess
++import sys
++from importlib.resources import files
++
++# The literature reading example writes a population that breaks one rule.
++subprocess.run([sys.executable, "-m", "gnd.examples.literature.reading", "run", "--out", "run"],
++               capture_output=True, check=True)
++# The model includes a vocabulary file; both go in the same folder.
++example = files("gnd").joinpath("examples", "literature")
++for part, name in (("reading_fixture", "reading.orm.json"), ("depth_fixture", "vocabulary.orm.json")):
++    shutil.copyfile(example.joinpath(part, name), f"run/{name}")
++
++done = subprocess.run(["gnd", "verify", "run/reading.orm.json", "run/reported-conflict.population.json",
++                       "--no-extraction", "--format", "json"], capture_output=True, text=True)
++report = json.loads(done.stdout)
++print("exit:", done.returncode, report["outcome"])
++failed = [v for v in report["verdicts"] if v["verdict"] == "fail" and v["modality"] == "alethic"]
++failed += [d for d in report["derivations"] or [] if d["verdict"] == "fail"]
++for entry in failed:
++    print(entry.get("constraint_ref") or entry["derivation_ref"], entry.get("constraint_type", "derivation"))
++    for row in entry.get("offending_facts", entry.get("findings", [])):
++        print("  ", row)
++```
++
++```text
++exit: 1 violated
++fact_types[subject_label].constraints[0] uniqueness
++   {'subject': 'alanine-in-vacuum', 'label': 'Alanine dipeptide observation'}
++   {'subject': 'alanine-in-vacuum', 'label': 'Conflicting reported label'}
++```
++
++The constraint at `fact_types[subject_label].constraints[0]` in the
++vocabulary is `subject_has_one_label`. Which side is wrong, the data or the
++constraint, is yours to judge: the report shows the rule and the rows. A
++passing report is still not proof that the extraction is faithful; see the
++[extraction contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-extract/references/extraction-contract.md#5-failure-semantics).
++
+ ## Bind important values to source spans
+ 
+ An `anchored` constraint checks whether populated role values have witnesses
+diff --git a/docs/literature/commands.md b/docs/literature/commands.md
+index 22e84463..a73e4863 100644
+--- a/docs/literature/commands.md
++++ b/docs/literature/commands.md
+@@ -338,6 +338,10 @@ conflicting labels, verify and check exits: {'check': 1, 'verify': 1}
+ absence: {'below_floor_status': 'unavailable', 'status': 'qualified'} recall {'high': [2, 2], 'low': [1, 2]}
+ ```
+ 
++The conflicting labels exit `1` on purpose. To see which constraint they break,
++and on which rows, follow
++[Reading a failed verification](../guides/documents.md#reading-a-failed-verification).
++
+ Then list what the run says about each question:
+ 
+ <!-- gnd-run expect=0 output=stdout -->
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 89eac951..25c351f2 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -26,6 +26,11 @@ the next one.
+ - **Unencodable include paths.** An include path that cannot be encoded as
+   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
+   error itself, and the PyRel export exited 70.
++- **Reading a failed verification.** The documents guide shows how to list
++  the constraints and derivations a `gnd verify` exit 1 failed, with the
++  violating rows, from the JSON report, with a runnable example on the
++  literature reading example's conflicting labels. `gnd verify` itself is
++  unchanged ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+ 
+ ## 0.4.0 (2026-11-17)
+ 
+diff --git a/src/gnd/skills/gnd-extract/references/extraction-contract.md b/src/gnd/skills/gnd-extract/references/extraction-contract.md
+index bff706f1..7286fdc7 100644
+--- a/src/gnd/skills/gnd-extract/references/extraction-contract.md
++++ b/src/gnd/skills/gnd-extract/references/extraction-contract.md
+@@ -142,7 +142,7 @@ text and do not render it.
+ | The sidecar has an unknown field, a missing digest, or an unsafe path | `extraction:sidecar-invalid`, state `failed` | 3 | fix the sidecar against §3 |
+ | A recorded digest does not match the file bytes | `extraction:binding-mismatch`, state `failed` | 3 | recompute digests after the last write and rewrite the sidecar |
+ | The header disagrees with the model | `extraction:header-mismatch`, state `failed` | 3 | re-copy `header_template` verbatim (§4) |
+-| The checker found an alethic violation | verdicts on the checker channel, state `ran` | 1 | REPORT IT — the document describes a world that violates the model |
++| The checker found an alethic violation | verdicts on the checker channel, state `ran` | 1 | REPORT IT — the document describes a world that violates the model; to list the failing constraints and their rows, see [Reading a failed verification](https://vasiloglou.github.io/gnd-public/guides/documents/#reading-a-failed-verification) |
+ | The population is vacuous | state `ran` | 2 | report it; a document that supports no facts is a finding |
+ | The checker could not decide | state `ran` | 4 | report it |
+ | Everything held | state `ran` | 0 | report it |
+diff --git a/tests/test_documentation_tutorials.py b/tests/test_documentation_tutorials.py
+index c24844da..36185d5c 100644
+--- a/tests/test_documentation_tutorials.py
++++ b/tests/test_documentation_tutorials.py
+@@ -91,7 +91,7 @@ def test_installed_origin_uses_path_components(tmp_path):
+         installed_docs.check_origin(str(root / 'src/gnd/__init__.py'), venv, root)
+ 
+ 
+-@pytest.mark.parametrize('group', ['shared-expenses', 'quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'induced', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision', 'why-not', 'disclosure'])
++@pytest.mark.parametrize('group', ['shared-expenses', 'quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'induced', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision', 'why-not', 'disclosure', 'failed-verification'])
+ def test_documented_learning_path(group, tmp_path):
+     pages = runner.groups(ROOT)[group]
+     assert pages
+diff --git a/tools/run_tutorials.py b/tools/run_tutorials.py
+index 04ed5018..cafa0953 100644
+--- a/tools/run_tutorials.py
++++ b/tools/run_tutorials.py
+@@ -213,6 +213,7 @@ def groups(root: Path) -> dict[str, list[Path]]:
+         'disclosure': [root / 'docs/how-to/disclosure-mode.md', root / 'docs/reference/disclosure.md'],
+         'growth': [root / 'docs/how-to/grow-a-model.md'],
+         'compose': [root / 'docs/how-to/compose-documents.md'],
++        'failed-verification': [root / 'docs/guides/documents.md'],
+         'rule-check': [root / 'docs/how-to/adopt-rules-with-a-baseline.md'],
+         'type-judgements': [root / 'docs/how-to/judge-induced-fact-types.md'],
+         'agent-install': [root / 'docs/agents/install.md'],

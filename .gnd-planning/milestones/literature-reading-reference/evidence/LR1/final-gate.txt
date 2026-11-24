@@ -1,0 +1,12 @@
+== lane: uv run pytest -q tests/test_lr1_verify_failure_listing.py tests/test_verify_cli.py tests/test_ld3_reading_workflow.py tests/test_documentation_tutorials.py tests/test_public_extraction_prose_policy.py tests/test_extract_guidelines.py --tb=short
+exit=0
+183 passed in 200.90s (0:03:20)
+== guards (project.md guard block)
+exit=0
+679 passed, 2 deselected in 108.60s (0:01:48)
+== uv run ruff check
+All checks passed!
+exit=0
+== python3 scripts/components_index.py changed --base origin/main --strict
+changed against origin/main (11a7ebf): 106 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+exit=0

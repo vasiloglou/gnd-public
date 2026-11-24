@@ -107,7 +107,7 @@ SURFACES: Mapping[str, Surface] = {
     "gnd verbalize model": Surface("every-mode", note="reviews the caller's own model and authored samples"),
     **_rows("value-free", [f"gnd {leaf}" for leaf in (
         "codegen", "conformance", "coverage", "doctor", "evolve apply",
-        "evolve finalize", "evolve preview", "exp author-expectation", "exp close", "exp init",
+        "evolve finalize", "evolve preview", "evolve summary", "exp author-expectation", "exp close", "exp init",
         "exp validate", "export lean-compile", "export lean-verify", "export pyrel",
         "export souffle-verify", "extract", "flatten", "import ilp-rules", "import mined-rules",
         "import rai-orm", "install", "recovery inventory", "recovery verify", "review finalize",

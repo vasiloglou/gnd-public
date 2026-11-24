@@ -88,6 +88,47 @@ def _reject_constant(name):
     raise ValueError(f"non-finite JSON constant {name}")
 
 
+def _check_row(where: str, row, seen: set) -> None:
+    """One mutation row, from the table or added by the ledger: its keys, its
+    strings, its node list, and an id no earlier row has."""
+    if not isinstance(row, dict) or set(row) != ROW_KEYS:
+        raise _invalid(f"{where}: expected exactly the keys {sorted(ROW_KEYS)}")
+    if not all(isinstance(row[key], str) and row[key] for key in ("id", "file", "old")) or not isinstance(row["new"], str):
+        raise _invalid(f"{where}: id, file and old must be non-empty strings and new a string")
+    if row["old"] == row["new"]:
+        raise _invalid(f"{where}: old and new are equal")
+    nodes = row["expect_red"]
+    if not isinstance(nodes, list) or not nodes or not all(isinstance(node, str) and node for node in nodes):
+        raise _invalid(f"{where}: expect_red must be a non-empty list of node ids")
+    if row["id"] in seen:
+        raise _invalid(f"{where}: duplicate id {row['id']!r}")
+    seen.add(row["id"])
+
+
+def _add_from_ledger(data: dict, ledger: dict, seen: set) -> None:
+    """Append the rows and exemptions the ledger adds for pin nodes that did not
+    exist when the table was frozen. An added row is a table row plus a reason;
+    an added exemption is a table exemption. Neither can replace a table entry."""
+    added, excused = ledger.get('added_rows', []), ledger.get('added_exempt', [])
+    if not isinstance(added, list) or not isinstance(excused, list):
+        raise TypeError('added_rows and added_exempt must be lists')
+    for index, entry in enumerate(added):
+        if not isinstance(entry, dict) or not isinstance(entry.get('reason'), str) or not entry['reason']:
+            raise ValueError('an added mutation row needs a reason')
+        row = {key: value for key, value in entry.items() if key != 'reason'}
+        _check_row(f'mutation ledger: added_rows[{index}]', row, seen)
+        data['rows'].append(row)
+    nodes = {item['node'] for item in data['exempt']}
+    for item in excused:
+        if (not isinstance(item, dict) or set(item) != {'node', 'reason'}
+                or not all(isinstance(item[key], str) and item[key] for key in ('node', 'reason'))):
+            raise ValueError('an added exemption must be a {node, reason} object')
+        if item['node'] in nodes:
+            raise ValueError('an added exemption repeats a node')
+        nodes.add(item['node'])
+        data['exempt'].append(item)
+
+
 def load_table(path: Path) -> dict:
     try:
         with path.open("rb") as stream:
@@ -114,19 +155,7 @@ def load_table(path: Path) -> dict:
         raise _invalid(f"{path}: rows must be a non-empty list")
     seen = set()
     for index, row in enumerate(rows):
-        where = f"{path}: rows[{index}]"
-        if not isinstance(row, dict) or set(row) != ROW_KEYS:
-            raise _invalid(f"{where}: expected exactly the keys {sorted(ROW_KEYS)}")
-        if not all(isinstance(row[key], str) and row[key] for key in ("id", "file", "old")) or not isinstance(row["new"], str):
-            raise _invalid(f"{where}: id, file and old must be non-empty strings and new a string")
-        if row["old"] == row["new"]:
-            raise _invalid(f"{where}: old and new are equal")
-        nodes = row["expect_red"]
-        if not isinstance(nodes, list) or not nodes or not all(isinstance(node, str) and node for node in nodes):
-            raise _invalid(f"{where}: expect_red must be a non-empty list of node ids")
-        if row["id"] in seen:
-            raise _invalid(f"{where}: duplicate id {row['id']!r}")
-        seen.add(row["id"])
+        _check_row(f"{path}: rows[{index}]", row, seen)
     if path.resolve() == (ROOT / DEFAULT_TABLE).resolve():
         retarget_path = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json'
         if retarget_path.is_file():
@@ -155,6 +184,7 @@ def load_table(path: Path) -> dict:
                     original['file'] = row['after_file']
                     original['old'] = row['after_old']
                     original['new'] = row['after_new']
+                _add_from_ledger(data, retarget, seen)
             except (OSError, ValueError, KeyError, TypeError) as error:
                 raise _invalid(f'invalid mutation retarget: {error}') from None
     return data

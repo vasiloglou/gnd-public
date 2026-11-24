@@ -10,10 +10,28 @@ import pytest
 from support.cli_runner import run_main
 from support.repository import REPO_ROOT
 from support.rf5_sources import HOMES
+from test_packaged_skills import EXPECTED_SKILL_FILE_COUNT
 
 CORPUS = REPO_ROOT / 'tests/fixtures/rf5-handlers'
 CASES = json.loads((CORPUS / 'cases.json').read_text())
-ANSWERS = json.loads((CORPUS / 'answers.json').read_text())
+#: Tokens an answer may hold for a value the repository defines once, filled in
+#: before the comparison. The observed output is compared as it is.
+ANSWER_TOKENS = {'<skill-file-count>': str(EXPECTED_SKILL_FILE_COUNT)}
+
+
+def _filled(value):
+    if isinstance(value, str):
+        for token, text in ANSWER_TOKENS.items():
+            value = value.replace(token, text)
+        return value
+    if isinstance(value, dict):
+        return {key: _filled(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_filled(item) for item in value]
+    return value
+
+
+ANSWERS = _filled(json.loads((CORPUS / 'answers.json').read_text()))
 
 
 def observe(case, tmp_path, monkeypatch):

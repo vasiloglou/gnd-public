@@ -1,0 +1,52 @@
+diff --git a/tests/test_skill_names.py b/tests/test_skill_names.py
+new file mode 100644
+index 00000000..a68e6253
+--- /dev/null
++++ b/tests/test_skill_names.py
+@@ -0,0 +1,22 @@
++"""Tests for tools/skill_names.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.skill_names import skill_names
++
++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
++
++
++def test_every_packaged_skill_names_its_own_directory() -> None:
++    names = skill_names(SKILLS)
++    assert len(names) == 18
++    assert all(directory == name for directory, name in names.items())
++
++
++def test_a_skill_written_here(tmp_path: Path) -> None:
++    (tmp_path / "demo").mkdir()
++    (tmp_path / "demo" / "SKILL.md").write_text(
++        "---\nname: demo\ndescription: A demo skill.\n---\n\n# Demo\n", encoding="utf-8"
++    )
++    assert skill_names(tmp_path) == {"demo": "demo"}
+diff --git a/tools/skill_names.py b/tools/skill_names.py
+new file mode 100644
+index 00000000..8dcc29d2
+--- /dev/null
++++ b/tools/skill_names.py
+@@ -0,0 +1,18 @@
++"""Read the declared name of every skill under a skills root."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from gnd.exp.frontmatter import read_frontmatter
++
++
++def skill_name(path: str | Path) -> str | None:
++    """Return the ``name`` a SKILL.md declares in its frontmatter, or None."""
++    mapping, _body = read_frontmatter(path)
++    name = mapping.get("name")
++    return name if isinstance(name, str) else None
++
++
++def skill_names(root: str | Path) -> dict[str, str | None]:
++    """Map each skill directory under ``root`` to the name its SKILL.md declares."""
++    return {path.parent.name: skill_name(path) for path in sorted(Path(root).glob("*/SKILL.md"))}

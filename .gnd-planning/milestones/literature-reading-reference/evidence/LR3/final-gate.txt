@@ -1,0 +1,17 @@
+== lane at aec93739 (origin/main f7fad6a1 merged): uv run pytest -q tests/test_lr3_reference_set.py tests/test_ld3_reading_workflow.py tests/test_ld4_revision.py tests/test_ld5_verdict.py tests/test_li1_literature_corpus.py tests/test_li1_assurance_report.py tests/test_lh1_reading_host.py tests/test_lh2_reading_replay.py tests/test_lh3_admission_shape.py tests/test_lh4_admission_rules.py tests/test_lr1_verify_failure_listing.py tests/test_lr2_quote_scope.py tests/test_documentation_tutorials.py --tb=short
+exit=0
+475 passed in 860.62s (0:14:20)
+== guards (project.md guard block)
+exit=0
+679 passed, 2 deselected in 224.52s (0:03:44)
+== uv run ruff check
+All checks passed!
+exit=0
+== python3 scripts/components_index.py changed --base origin/main --strict
+fail: stale or missing: dev/components/modules/examples.md (run `python3 scripts/components_index.py write`)
+fail: stale or missing: dev/components/modules/tools.md (run `python3 scripts/components_index.py write`)
+changed against origin/main (f7fad6a): 170 file(s) differ; 2 to fix, 0 warning(s), 0 to reread
+exit=1
+== after python3 scripts/components_index.py write: python3 scripts/components_index.py changed --base origin/main --strict
+changed against origin/main (f7fad6a): 172 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+exit=0

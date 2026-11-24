@@ -1,0 +1,80 @@
+{
+  "base": "04945d39",
+  "claims": [],
+  "created": "2026-11-23T23:11:39.782207+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r2/diff.patch",
+      "sha256": "4d67ea3eabb41a330ed2053ae9d7a7a9dbeb492fce94ffcbc9dba23eea954fcd"
+    },
+    {
+      "path": ".claude/skills/process-phase/references/project.md",
+      "sha256": "108f227dbd18635b725576b050e118e9adaa6ffa3c6e5393f85aadc4a5e6b749"
+    },
+    {
+      "path": ".codex/skills/process-phase/references/project.md",
+      "sha256": "108f227dbd18635b725576b050e118e9adaa6ffa3c6e5393f85aadc4a5e6b749"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/phase-PF1-spec.md",
+      "sha256": "56e53126d6962b48f588c7198aad72da3184ec7cead51334e24950cf48d96703"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/BRIEF.md",
+      "sha256": "01cc467ae7dc3f0959f5b68c0abeb4c7851f7542fb2b70f88e58c9d48a66d14c"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/FINDINGS.md",
+      "sha256": "0b466dafff3ddeeda0c64fedcb83871c3254fa10dcbdd2a194189ea8801d189d"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/brief.json",
+      "sha256": "442b7a9b0b21ae6c68bd18fa49dd8097b0b7d0ec06892b0eb18879a1a9126ac4"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/diff.patch",
+      "sha256": "81ccf20cfac978a52439224c4c5e144385544f9d32f456c48bc088fffd646f1a"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/review.log",
+      "sha256": "5154d7e54f66ee5357027d5311d6cccf7ecbecc3d35e0b567d20d774a9a71c81"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/review.md",
+      "sha256": "5ac61f542b957eef869a9c62c982c22faec062a82c15edcf8663ededc89dd1d7"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/run.json",
+      "sha256": "183eff4f7766942b1d407dfc63c000c67c1ab13564fa8fdc12ae93e6aeb2168e"
+    },
+    {
+      "path": "tests/test_doctor_uninstall.py",
+      "sha256": "95964bc20e62394655ad629badbea316d4ca163fef5d82a8bd220e706d493f99"
+    },
+    {
+      "path": "tests/test_install.py",
+      "sha256": "9fbbb5d182efb1f216cf340b0dac6ab4aeb2bc0affbc9e921758403aaf8a02f8"
+    },
+    {
+      "path": "tests/test_inventory_pin_home.py",
+      "sha256": "ab405a9bca1c8d884d5b2cb913f70ce9c223bd3244ca01450b5360d8bfeb9c59"
+    },
+    {
+      "path": "tests/test_public_built_inventory.py",
+      "sha256": "ac6cba98edf0aa5766a6251ea081683b66f04076c19107b6192b70f25c8f8cd7"
+    },
+    {
+      "path": "tests/test_verification_fixes.py",
+      "sha256": "0f88507ab2a9d84dd37add178320f14587ba2758153dec5e8962706f9b5e2bcf"
+    }
+  ],
+  "head": "02c6bef1db68f6344484ee7735c21ddbe5e7d9ff",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Round 2. Round 1 (notes/reviews/phase-PF1-r1/review.md) found F1-F3 in tests/test_inventory_pin_home.py; commit 'Catch every binding of an inventory name, by the grammar' rewrote the guard around the grammar's binding sites. Refute: (1) inventory_bindings reports every binding of EXPECTED_SKILL_FILE_COUNT, EXPECTED_SKILL_NAMES or EXPECTED_SKILL_FILES in any scope and by any binding form Python 3.11-3.13 has, except an import of that name from test_packaged_skills; (2) it reports nothing that binds no such name; (3) F1-F3 are fixed without a regression. F4 (inline 18 in tests/test_development_scaffold.py and tests/test_marketplace_plugins.py) is deferred to the owner and need not be re-reported.",
+  "subject": "phase",
+  "version": 1
+}

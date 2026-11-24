@@ -145,5 +145,52 @@
       "after_old": "message=f\"{consumer} does not support temporal models in Phase 1\"\n",
       "after_new": "message=f\"{consumer} does not support temporal models in Phase 1 (rf1)\"\n"
     }
+  ],
+  "added_rows": [
+    {
+      "id": "M-CLI-root-prog-later-parsers",
+      "file": "src/gnd/cli.py",
+      "old": "    parser = _BandSafeParser(\n        prog=\"gnd\",\n",
+      "new": "    parser = _BandSafeParser(\n        prog=\"gnd-rf1\",\n",
+      "expect_red": [
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd compose]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd discover]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve summary]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export ilp]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export ossie]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd flatten]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd import ilp-rules]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd import mined-rules]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd import ossie]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd replay-count]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd verbalize model]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd why-not]",
+        "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd witness-count]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd compose]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd discover]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve summary]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd export ilp]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd export ossie]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd flatten]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd import ilp-rules]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd import mined-rules]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd import ossie]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd replay-count]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd verbalize model]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd why-not]",
+        "tests/test_rf1_cli_pins.py::test_cli_help[gnd witness-count]"
+      ],
+      "reason": "The table's M-CLI-root-prog row names the help and exit-probe nodes of the 52 parsers RF1 walked. Twelve parsers were added after the table was frozen, and no row named their 24 nodes; the same mutation of the root program name reaches each of them."
+    }
+  ],
+  "added_exempt": [
+    {
+      "node": "tests/test_rf1_cli_pins.py::test_mc3_cli_successor_rejects_missing_or_changed_flag[metavar]",
+      "reason": "its subject is the successor comparison in the test file itself, which it damages in memory; no change to src/gnd can make it fail"
+    },
+    {
+      "node": "tests/test_rf1_cli_pins.py::test_mc3_cli_successor_rejects_missing_or_changed_flag[remove]",
+      "reason": "its subject is the successor comparison in the test file itself, which it damages in memory; no change to src/gnd can make it fail"
+    }
   ]
 }

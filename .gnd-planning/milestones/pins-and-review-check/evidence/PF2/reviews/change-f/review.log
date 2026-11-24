@@ -1,0 +1,1188 @@
+Reading additional input from stdin...
+OpenAI Codex v0.163.0
+--------
+workdir: <repo>
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a20ac3-044b-7e02-ab8f-495ce95fda00
+--------
+user
+Read <repo>/.review-round/BRIEF.md and follow it.
+codex
+I’ll read the review brief and follow its scope and reporting requirements.
+exec
+/bin/zsh -lc 'cat .review-round/BRIEF.md' in <repo>
+ succeeded in 0ms:
+# Review brief: a phase's diff
+
+You are an independent reviewer, working in a different tool from the one that produced
+this work. Nothing here asks you to agree with it. Answer from the files themselves, not
+from any summary of them, including this brief's.
+
+## The question
+
+Review this change for correctness and readiness to merge.
+
+## The change under review
+
+The work from `6b0a7e5a` to the working tree at `d939514b4648`. Its diff is `.review-round/diff.patch`.
+
+## What to read
+
+Paths are relative to the repository root, the directory you start in. Before you rely
+on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
+your answer: you are not reading the bytes this brief names.
+
+| File | SHA-256 |
+|---|---|
+| `.review-round/diff.patch` | `526bd626c733dc7d183d7f63135d10a1dc881871d2c13bc5bcc20723a8178bdb` |
+| `tests/test_model_type_ids.py` | `bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391` |
+| `tools/model_type_ids.py` | `045c7eb13412f308d8a5f7fd409938f031e6c44b6754be5bb278c99071476c44` |
+
+You may read anything else in the repository that helps you answer.
+
+## A standing check: code fitted to its examples
+
+Whatever the question above, also look in the code this change adds or changes for a
+solution that handles the examples in its tests and fixtures, and not the whole class of
+input it is given:
+
+- a regular expression, string split, slice or index over structured text (JSON, YAML,
+  TOML, source code, paths, command lines) that a parser or an existing reader in this
+  repository already reads;
+- a pattern over output this project renders itself (a report, a table, a log line), where
+  the code could have been handed the data instead;
+- a pattern fitted to the fixtures: it matches every committed example and fails on a
+  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
+- a branch on one literal name, file or message, added to make one case pass;
+- a second matcher for something an existing helper already does.
+
+A regular expression is not a finding in itself: one that states the whole grammar of a
+flat token (an identifier, a version number, a hex digest) is the right tool. For each
+suspect, build a legal input that the tests and fixtures lack and run the code on it.
+Report a finding only with that input: what the code returned and what it should have
+returned. A suspicion with no breaking input is style: label it so. In your list of what
+you checked, name each matcher you tried and the input you tried it with.
+
+## Rules
+
+- Read only. Do not edit, create, stage, commit, push or post anything.
+- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
+  not print environment variables. If you need one, name it and go on without it.
+- A finding names its file and line and the consequence someone would observe. Run what
+  you can to show it; where you only read, say so.
+
+## What to return
+
+1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
+   consequence, and how to reproduce it. A finding with no observable consequence is
+   style: label it so.
+2. What you checked and found true.
+3. What you could not check, and why.
+4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+
+exec
+/bin/zsh -lc 'shasum -a 256 .review-round/diff.patch tests/test_model_type_ids.py tools/model_type_ids.py' in <repo>
+ succeeded in 0ms:
+526bd626c733dc7d183d7f63135d10a1dc881871d2c13bc5bcc20723a8178bdb  .review-round/diff.patch
+bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391  tests/test_model_type_ids.py
+045c7eb13412f308d8a5f7fd409938f031e6c44b6754be5bb278c99071476c44  tools/model_type_ids.py
+
+exec
+/bin/zsh -lc 'cat .review-round/diff.patch' in <repo>
+ succeeded in 0ms:
+diff --git a/tests/test_model_type_ids.py b/tests/test_model_type_ids.py
+new file mode 100644
+index 00000000..22ae15a9
+--- /dev/null
++++ b/tests/test_model_type_ids.py
+@@ -0,0 +1,21 @@
++"""Tests for tools/model_type_ids.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.model_type_ids import object_type_ids
++
++EXAMPLES = Path(__file__).resolve().parents[1] / "src/gnd/skills/gnd-model-from-text/examples"
++
++
++def test_movie_catalog_ids_in_file_order() -> None:
++    assert object_type_ids(EXAMPLES / "movie_catalog.orm.yaml") == [
++        "movie", "director", "movie_id", "director_name", "title", "year", "rating",
++    ]
++
++
++def test_library_ids_in_file_order() -> None:
++    assert object_type_ids(EXAMPLES / "library_with_subtypes.orm.yaml") == [
++        "library_item", "book_item", "periodical_item", "book_type", "author", "patron",
++        "item_id", "author_name", "patron_id", "title", "issue_number",
++    ]
+diff --git a/tools/model_type_ids.py b/tools/model_type_ids.py
+new file mode 100644
+index 00000000..63534e81
+--- /dev/null
++++ b/tools/model_type_ids.py
+@@ -0,0 +1,14 @@
++"""List the object-type ids a GND model file declares, in file order."""
++from __future__ import annotations
++
++import re
++from pathlib import Path
++
++_ID = re.compile(r"^  - id: (\w+)$", re.MULTILINE)
++
++
++def object_type_ids(path: str | Path) -> list[str]:
++    """Return the ids of the model's object types, in the order the file declares them."""
++    text = Path(path).read_text(encoding="utf-8")
++    section = text.split("\nobject_types:\n", 1)[1].split("\nfact_types:", 1)[0]
++    return _ID.findall(section)
+
+exec
+/bin/zsh -lc "rg -n 'def (load|read).*model|yaml.safe_load|object_types:|fact_types:' src/gnd/model* src/gnd/loader* pyproject.toml src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml" in <repo>
+ exited 1 in 0ms:
+zsh:1: no matches found: src/gnd/loader*
+
+exec
+/bin/zsh -lc 'cat tools/model_type_ids.py tests/test_model_type_ids.py CONTRIBUTING.md' in <repo>
+ succeeded in 0ms:
+"""List the object-type ids a GND model file declares, in file order."""
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+_ID = re.compile(r"^  - id: (\w+)$", re.MULTILINE)
+
+
+def object_type_ids(path: str | Path) -> list[str]:
+    """Return the ids of the model's object types, in the order the file declares them."""
+    text = Path(path).read_text(encoding="utf-8")
+    section = text.split("\nobject_types:\n", 1)[1].split("\nfact_types:", 1)[0]
+    return _ID.findall(section)
+"""Tests for tools/model_type_ids.py."""
+from __future__ import annotations
+
+from pathlib import Path
+
+from tools.model_type_ids import object_type_ids
+
+EXAMPLES = Path(__file__).resolve().parents[1] / "src/gnd/skills/gnd-model-from-text/examples"
+
+
+def test_movie_catalog_ids_in_file_order() -> None:
+    assert object_type_ids(EXAMPLES / "movie_catalog.orm.yaml") == [
+        "movie", "director", "movie_id", "director_name", "title", "year", "rating",
+    ]
+
+
+def test_library_ids_in_file_order() -> None:
+    assert object_type_ids(EXAMPLES / "library_with_subtypes.orm.yaml") == [
+        "library_item", "book_item", "periodical_item", "book_type", "author", "patron",
+        "item_id", "author_name", "patron_id", "title", "issue_number",
+    ]
+# Contributing
+
+Work from this repository alone with Python >=3.11 and uv 0.10.10:
+
+```sh
+uv sync --locked --group dev
+uv run gnd install --symlink --project --force
+uv run gnd doctor --project
+uv run pytest -q tests/test_release_examples.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py
+```
+
+Tracked installer links have no local receipt in a fresh clone. Adopt them once
+with --force; never overwrite modified links or maintain them manually. Both
+.codex and .claude roots contain the packaged links and real development-skill
+twins. Regenerate packaged links through gnd install, keep real twins identical.
+Ordinary development uses this checkout's editable package. Final acceptance
+will additionally exercise the exact installed candidate in a fresh target-only
+tree, with actual module/tool/link paths recorded.
+
+Use [start-milestone](.codex/skills/start-milestone/SKILL.md) to prepare or resume
+a milestone plan and its first draft phase spec in `.gnd-planning`. It checks
+obligation ownership, dependencies and implementability before execution; it does
+not approve the plan or run phases.
+
+Use [process-milestone](.codex/skills/process-milestone/SKILL.md) to execute or
+resume a whole named milestone through `process-phase` and its close gates.
+`process-milestone pyrel-applications auto=true` explicitly delegates approval
+rulings for that milestone; required reviews and verification still run, and
+merge/publication/certification keep their separate authorization.
+
+Numbered work follows the full [process-phase](.codex/skills/process-phase/SKILL.md)
+protocol: spec, owner gate, implementation, independent review, refactoring review,
+record and explicit-path commit. The [sample spec](docs/development/examples/phase-spec.md)
+and [sample record](docs/development/examples/phase-record.md) are non-authoritative
+exercises. Source-owned runtime units await explicit handoff; changes here do not
+silently transfer authority. Phase 3 final acceptance is pending.
+
+Run focused affected tests with the default lane exclusions. Historical broad,
+provider/native and certification lanes require separate selection. Never source
+repository .env files; optional live review needs trusted credentials and explicit
+selection. [Bootstrap history](docs/development/bootstrap.md) is historical;
+the old original-definition accounting runner is not release acceptance under r3.
+See [release preparation](docs/releasing.md) and [security reporting](SECURITY.md).
+
+## Owner-controlled contributions
+
+Contributions are by invitation. Only collaborators approved by `vasiloglou`
+receive write access. Public availability permits reading and forking; it does
+not grant permission to modify this repository.
+
+For all changes, including owner and coding-agent changes, use a topic branch and
+submit a pull request. Never push directly to main, force-push it, or delete it. Resolve
+review conversations before merging. `.github/CODEOWNERS` names `vasiloglou` for
+all files.
+
+While `vasiloglou` is the only collaborator, branch protection requires PRs with
+zero required approving reviews. GitHub prohibits authors from approving their
+own PRs, so the owner's explicit merge decision is the acceptance step. Coding
+agents may merge only with the owner's explicit authorization. Protection applies
+to administrators too, with no PR bypass. Cloud CI is not currently a required
+status check; run the focused checks applicable to a change and record results.
+
+Before granting another account write access, enable one required approving
+review and required code-owner review. Its PRs will then require `vasiloglou`'s
+recorded approval. PRs authored by `vasiloglou` will need another authorized code
+owner, or work must be authored through a separately controlled contributor/bot
+identity so `vasiloglou` can approve. Never create a shared reviewer identity or
+approve a PR through a token belonging to its author.
+
+For a public repository, use the collaborators-only interaction limit to prevent
+outside PRs, issues and comments. GitHub limits this setting to six months; renew
+it before its reported expiration. It cannot be enabled while the repository is
+private. Check the live settings before claiming restrictions are enforced.
+
+## Refactoring dependencies and compatibility
+
+The measured layer map is [tools/gnd_layers.json](tools/gnd_layers.json).
+Errors and schemas have infrastructure homes; documents, values and universe
+serve model data and lookup; extensions compute facts below checker and
+applicability. Registry descriptors live in branches. Runtime graph checks count
+lazy and literal dynamic imports as well as top-level imports. Add every new
+module to the map, preserve the clean-layer ratchet, and do not grow allowances.
+
+Old module names retain explicit aliases in the
+[shim inventory](.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md).
+Patch the defining module for moved algorithms and the actual public lookup seam
+for consumer wrappers. Move tests pin alias identity and source-scan coverage;
+retirement follows the approved plan's RF-D5 gate. Current source changes make
+old release evidence unavailable until its separately selected controls run.
+
+Peripheral dependency homes are public filesystem seams in safefs, the bounded
+runner in process, trusted adapters in agents, and the independent synth oracle
+package. Assurance follows _wire, core, inheritance, claims, evidence dependency
+order; transport carries receipts. Payload assembly lives in payloads, and
+export/witness services own their thin API wrappers. Old imports remain aliases.
+
+### Model query and constraint family homes
+
+Use gnd.model_index.ModelIndex.for_model(model) for detached model queries. Each
+request keys a bounded snapshot cache by current full model content, with unsafe
+canonical shapes bypassing the cache. Keep the existing strict/truthy primitive
+policy explicit. Raw serialization and deliberately retained domain traversal
+sites are individually listed in the RF6 query policy; additions need a reason
+and a current behavior control.
+
+Constraint adaptation, evaluation, witness projection, presentation, scope and
+shape selection use gnd.constraint_families.FAMILIES. Keep shared refusal and
+vacuity precedence outside family-specific algorithms. The production branch
+evidence registry remains a separate inventory. Preserve every historical import
+shim until a separately approved retirement after the first release following RF6.
+
+exec
+/bin/zsh -lc "rg --files -g AGENTS.md -g '*model*' tools tests src/gnd | head -80" in <repo>
+ succeeded in 0ms:
+src/gnd/model_identity.py
+src/gnd/model_index.py
+src/gnd/model_queries.py
+src/gnd/model_verbalization.py
+src/gnd/evolve/models.py
+tools/build_literature_lineage_model.py
+tools/model_type_ids.py
+tools/mc1_model_census.py
+src/gnd/skills/gnd-model-from-text/scripts/validate_model.py
+src/gnd/examples/staffing/model.orm.yaml
+src/gnd/examples/approvals/model.orm.yaml
+src/gnd/examples/expense/model.orm.json
+src/gnd/examples/growth/model.orm.yaml
+src/gnd/examples/disclosure/model.orm.yaml
+src/gnd/examples/plan_apps/clinic/model.orm.json
+src/gnd/examples/bookrec/model.orm.yaml
+src/gnd/examples/plan_apps/access/model.orm.json
+src/gnd/examples/composition/model.orm.yaml
+src/gnd/examples/type_judgements/duplicates/model.orm.yaml
+src/gnd/examples/plan_apps/trip/model.orm.json
+src/gnd/examples/type_judgements/multi-valued/model.orm.yaml
+src/gnd/examples/plan_apps/lease/model.orm.json
+src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json
+src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json
+src/gnd/examples/expense/project/model.orm.json
+src/gnd/examples/plan_apps/course/model.orm.json
+src/gnd/examples/release_governance/policy/model.orm.json
+tests/test_unattended_model_growth_acceptance.py
+tests/test_model_type_ids.py
+tests/test_v61_phase4_model.py
+tests/test_model_multivalued_skill.py
+src/gnd/examples/release_governance/approval-proof/model.orm.json
+src/gnd/examples/release_governance/dependencies/model.orm.json
+src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml
+src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json
+src/gnd/examples/release/model.orm.json
+src/gnd/examples/refunds/model.orm.yaml
+src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml
+src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml
+src/gnd/examples/quoted_claims/model.orm.json
+src/gnd/examples/dispatch/model.orm.json
+src/gnd/examples/rule_check/model.orm.yaml
+src/gnd/examples/literature/model.orm.yaml
+tests/fixtures/public-lean-successors/dispatch/base/model.orm.json
+tests/test_model_validation.py
+tests/test_model_verbalization.py
+tests/test_model_evolution.py
+tests/test_mc1_model_includes.py
+tests/test_model_parse_line_endings.py
+tests/test_model_guarded.py
+tests/fixtures/public-semantic-partition/model.orm.yaml
+tests/test_model_v2.py
+tests/test_model_identity.py
+tests/test_rof3_model_identity.py
+tests/fixtures/pyrel-rules-plans/refused-dispatch-ops/model.orm.json
+tests/fixtures/v70-phase2/model.orm.yaml
+tests/fixtures/type-judgements/round-two/model.orm.yaml
+tests/fixtures/type-judgements/multi-valued/model.orm.yaml
+src/gnd/examples/literature/count_fixture/model.orm.yaml
+tests/fixtures/pyrel-rules-coverage/rp3/reference/model.orm.json
+tests/fixtures/public-generated-examples/bookrec/model.orm.yaml
+tests/fixtures/public-phase1-trace/fixtures/c01/model.orm.yaml
+tests/fixtures/public-generated-examples/expense/model.orm.yaml
+src/gnd/examples/literature/lineage/model.orm.yaml
+src/gnd/examples/literature/resolution/model.orm.yaml
+tests/fixtures/public-walk-floor/session/model.orm.yaml
+tests/fixtures/public-launch-phase-3/measurement/02-corpus/movie/faker/conforming/model.orm.conforming.seed1.meta.json
+tests/fixtures/public-launch-phase-3/measurement/02-corpus/movie/faker/conforming/model.orm.conforming.seed1.json
+tests/fixtures/ilp_learners/il4/model.orm.yaml
+tests/fixtures/public-binding-reports/reports/current-v5-wrong-model.json
+tests/fixtures/public-binding-reports/reports/current-v5-same-version-different-model.json
+tests/fixtures/rf1-pins/goldens/sem-diff/ex_expense_model.orm.json_ex_expense_currency.orm.json.json
+tests/fixtures/rf1-pins/goldens/sem-diff/ex_bookrec_model.orm.yaml_ex_bookrec_strict.orm.yaml.json
+tests/fixtures/rf1-pins/goldens/sem-diff/ex_bookrec_model.orm.yaml_ex_bookrec_complete.orm.yaml.json
+tests/fixtures/public-binding-reports/reports/models/same-version-different-model.orm.yaml
+tests/fixtures/public-applicability/c01/model.orm.yaml
+tests/fixtures/public-launch-phase-3/measurement/02-corpus/movie/llm-proposed/conforming/model.orm.conforming.seed1.meta.json
+tests/fixtures/public-launch-phase-3/measurement/02-corpus/movie/llm-proposed/conforming/model.orm.conforming.seed1.json
+tests/fixtures/v70-phase3/model.orm.yaml
+tests/fixtures/v70-phase3/join-model.orm.yaml
+
+exec
+/bin/zsh -lc "cat src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml; rg -n 'pytest|python|yaml' pyproject.toml; ls -d .venv /usr/bin/python* 2>/dev/null" in <repo>
+ succeeded in 0ms:
+# examples/movie_catalog.orm.yaml
+# Reference solution for the canonical small text-first CSDP run.
+# See movie_catalog.dialogue.md for the full dialogue this YAML traces back to.
+# GND form: every active constraint carries an explicit modality per the D-03 policy
+# (all constraints here are confirmed -> alethic).
+
+version: 1
+
+source:
+  kind: text-conversation
+  session_id: movie_catalog_demo
+  started_at: "2026-05-14T10:00:00Z"
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: movie_id }
+    provenance:
+      origin: csdp-step-1
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "Each movie has a unique numeric ID, we generate them on creation."
+
+  - id: director
+    name: Director
+    kind: entity
+    reference: { mode: general, value_type: director_name }
+    provenance:
+      origin: csdp-step-1
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "Directors are identified by their full name — we don't have a separate ID system for them."
+
+  - id: movie_id
+    name: MovieId
+    kind: value
+    primitive: Integer
+
+  - id: director_name
+    name: DirectorName
+    kind: value
+    primitive: String
+
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+    provenance:
+      origin: csdp-step-1
+      rationale: "Declared value type for the movie title role (roles may only reference declared object types)."
+
+  - id: year
+    name: Year
+    kind: value
+    primitive: Integer
+
+  - id: rating
+    name: Rating
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: title, role_name: title }]
+    sample_population:
+      - { movie: 1, title: "The Departed" }
+      - { movie: 2, title: "Inception" }
+      - { movie: 3, title: "Parasite" }
+    provenance: { csdp_step: 1, dialogue_turn: 4 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 18, user_quote: "Each Movie has one canonical title in our catalog." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 24, user_quote: "Yes." } }
+
+  - id: movie_directed_by_director
+    reading: "{Movie} directed by {Director}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: director, role_name: director }]
+    sample_population:
+      - { movie: 1, director: "Martin Scorsese" }
+      - { movie: 2, director: "Christopher Nolan" }
+      - { movie: 3, director: "Bong Joon-ho" }
+    provenance: { csdp_step: 1, dialogue_turn: 5 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 20, user_quote: "We pick one director for co-directed films. So yes, one Director per Movie." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 25, user_quote: "Yes. We don't catalog Movies without a director credit." } }
+
+  - id: movie_released_in_year
+    reading: "{Movie} released in {Year}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: year, role_name: year }]
+    sample_population:
+      - { movie: 1, year: 2006 }
+      - { movie: 2, year: 2010 }
+      - { movie: 3, year: 2019 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 22, user_quote: "Yes." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 26, user_quote: "Required." } }
+
+  - id: movie_has_rating
+    reading: "{Movie} has rating {Rating}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: rating, role_name: rating }]
+    sample_population:
+      - { movie: 1, rating: "R" }
+      - { movie: 2, rating: "PG-13" }
+      - { movie: 3, rating: "R" }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 23, user_quote: "Yes." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 27, user_quote: "Required." } }
+
+constraints:
+  - type: value
+    object_type: rating
+    allowed: ['G', 'PG', 'PG-13', 'R', 'NC-17']
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "MPAA rating system; user specified the full allowed set."
+    provenance:
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "MPAA ratings only — we use the five-tier system: G, PG, PG-13, R, NC-17."
+
+  - type: value
+    object_type: year
+    range: { min: 1888, max: 2100, min_inclusive: true, max_inclusive: true }
+    source: llm-inferred
+    status: confirmed
+    modality: alethic
+    rationale: "1888 is the year the first known movie was made; 2100 is a generous upper cap (user-extended from current_year). Alethic is permitted here per D-03 because the user confirmed the constraint at Step 6d."
+    provenance:
+      llm_prompt_id: movie-year-range
+      rationale_world_fact: "Roundhay Garden Scene (1888) is widely cited as the first surviving motion picture; 2100 covers any plausible upcoming release."
+      reviewed_at_step_6d: true
+      csdp_step: 6
+      dialogue_turn: 32
+      user_quote: "Use 2100 as a far-future cap rather than current_year."
+
+rejected_proposals:
+  - type: uniqueness
+    status: rejected
+    scope: external
+    role_refs:
+      - { fact_type: movie_directed_by_director, role: director }
+      - { fact_type: movie_released_in_year, role: year }
+    source: common-sense
+    rationale: "Soft heuristic: same Director doesn't typically direct two movies in the same year."
+    rejection_reason: "User cited Steven Soderbergh as a counter-example: 'Soderbergh directed two movies in 2018... he's done several.'"
+    rejected_at: "2026-05-14"
+    provenance:
+      library_entry: director-year-uniqueness
+      matched_pattern: "director/movie/year role combination"
+      csdp_step: 6
+      dialogue_turn: 35
+17:requires-python = ">=3.11"
+28:    "ruamel-yaml==0.19.1",
+50:# in gnd/cli.py survives untouched. `python -m gnd` keeps working (D-03) as a
+73:# `pytest -m distribution`, never a green build message.
+76:[tool.pytest.ini_options]
+146:    # as the optional runtime extra makes `uv run pytest` honest without
+150:    "pytest==9.1.1",
+.venv
+/usr/bin/python3
+
+exec
+/bin/zsh -lc "rg -n 'def (load|read).*model|yaml.safe_load|def load_document' src/gnd tools/mc1_model_census.py tools/build_literature_lineage_model.py pyproject.toml" in <repo>
+ succeeded in 0ms:
+src/gnd/witness/flattening.py:103:def load_flat_model(projection: WitnessProjection):
+src/gnd/witness/count_membership.py:100:def read_snapshot(model, population, request_digest, limits):
+src/gnd/population.py:549:def load_population(path: str | Path, *, model: Model | None = None) -> Population:
+src/gnd/synth/poolfile.py:403:def load_pool(path: str | Path, model: Model) -> Pool:
+src/gnd/model/__init__.py:290:def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+src/gnd/model/__init__.py:368:def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path,
+src/gnd/model/__init__.py:433:def load_model(path: str | Path) -> Model:
+src/gnd/model/__init__.py:665:def load_model_bytes_bound(
+src/gnd/measure/labels.py:331:def read_population(manifest: LabelManifest, entry: dict[str, Any], model: Any) -> Any:
+src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-01.jsonl:140:{"type": "assistant", "message": {"model": "claude-opus-5-5", "content": [{"type": "tool_use", "id": "toolu_01KmmY2xkyW73pwd2Y24cEM2", "name": "Bash", "input": {"command": "SP=<tmp> && <repo>/.venv/bin/python -I - \"$SP/model.src.yaml\" references/catalog.pop.json model.orm.json <<'EOF'\nimport sys, json, hashlib, yaml\nsrc, ref, out = sys.argv[1:]\nm = yaml.safe_load(open(src))\nfor op in m[\"operations\"]:\n    if op[\"id\"] == \"record_grade\":\n        op.pop(\"preconditions\")\nm[\"reference_populations\"][0][\"sha256\"] = hashlib.sha256(open(ref,\"rb\").read()).hexdigest()\nopen(out,\"w\").write(json.dumps(m, indent=2, ensure_ascii=False) + \"\\n\")\nEOF\ngnd validate model.orm.json; echo \"exit=$?\"", "description": "Convert model to JSON with catalogue hash and validate"}, "caller": {"type": "direct"}}]}}
+src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-01.jsonl:148:{"type": "assistant", "message": {"model": "claude-opus-5-5", "content": [{"type": "tool_use", "id": "toolu_011ouafC4dWjT8sGuEhbqCmX", "name": "Write", "input": {"file_path": "<tmp>", "content": "import hashlib\nimport json\nimport sys\n\nimport yaml\n\nsrc, ref, out = sys.argv[1:]\nm = yaml.safe_load(open(src))\nm[\"reference_populations\"][0][\"sha256\"] = hashlib.sha256(open(ref, \"rb\").read()).hexdigest()\nwith open(out, \"w\") as f:\n    f.write(json.dumps(m, indent=2, ensure_ascii=False) + \"\\n\")\n"}, "caller": {"type": "direct"}}]}}
+src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-01.jsonl:329:{"duration_api_ms": 424232, "stop_reason": "end_turn", "session_id": "f248082d-8a92-49f3-aa5e-e0659ffad13e", "total_cost_usd": 2.9175429999999998, "usage": {"input_tokens": 76, "cache_creation_input_tokens": 138261, "cache_read_input_tokens": 4690255, "output_tokens": 43655, "output_tokens_details": {"thinking_tokens": 10736}, "server_tool_use": {"web_search_requests": 0, "web_fetch_requests": 0}, "service_tier": "standard", "cache_creation": {"ephemeral_1h_input_tokens": 138261, "ephemeral_5m_input_tokens": 0}, "inference_geo": "global", "iterations": [{"input_tokens": 2, "output_tokens": 1193, "cache_read_input_tokens": 160435, "cache_creation_input_tokens": 2120, "cache_creation": {"ephemeral_5m_input_tokens": 0, "ephemeral_1h_input_tokens": 2120}, "type": "message"}], "speed": "standard", "fallback_credit": null}, "modelUsage": {"claude-opus-5-5[1m]": {"inputTokens": 76, "outputTokens": 43655, "cacheReadInputTokens": 4690255, "cacheCreationInputTokens": 138261, "webSearchRequests": 0, "costUSD": 2.9175429999999998, "contextWindow": 1000000, "maxOutputTokens": 128000, "thinkingTokens": 10736, "canonicalModel": "claude-opus-5-5", "provider": "firstParty", "costBasis": "list"}}, "permission_denials": [{"tool_name": "Bash", "tool_use_id": "toolu_011M7scKke1NWpH9ixrfnWwm", "tool_input": {"command": "cd <repo>/src/gnd/skills/gnd-orm-core/references && grep -n -A25 \"^### .*[Ff]requency\" constraint-reference.md | head -60; grep -n -B2 -A12 \"variant\" constraint-reference.md | head -50; grep -rn \"reference_populations\" ../../../../../tests/fixtures 2>/dev/null | head -5", "description": "Look up frequency and ring syntax, reference-population fixtures"}}, {"tool_name": "Bash", "tool_use_id": "toolu_012QXzZgwGZgoxDQBfMharCN", "tool_input": {"command": "cd <repo>/tests/fixtures/reference-corpus/dispatch && ls -R; cat model.orm.yaml; find . -name \"*.json\" -exec cat {} \\;", "description": "Inspect a reference-population fixture model"}}, {"tool_name": "Bash", "tool_use_id": "toolu_01KmmY2xkyW73pwd2Y24cEM2", "tool_input": {"command": "SP=<tmp> && <repo>/.venv/bin/python -I - \"$SP/model.src.yaml\" references/catalog.pop.json model.orm.json <<'EOF'\nimport sys, json, hashlib, yaml\nsrc, ref, out = sys.argv[1:]\nm = yaml.safe_load(open(src))\nfor op in m[\"operations\"]:\n    if op[\"id\"] == \"record_grade\":\n        op.pop(\"preconditions\")\nm[\"reference_populations\"][0][\"sha256\"] = hashlib.sha256(open(ref,\"rb\").read()).hexdigest()\nopen(out,\"w\").write(json.dumps(m, indent=2, ensure_ascii=False) + \"\\n\")\nEOF\ngnd validate model.orm.json; echo \"exit=$?\"", "description": "Convert model to JSON with catalogue hash and validate"}}, {"tool_name": "Bash", "tool_use_id": "toolu_015odL8Q197iXEkiFYGx6faN", "tool_input": {"command": "<repo>/.venv/bin/python -I <tmp> <tmp> <workspace>/references/catalog.pop.json <workspace>/model.orm.json", "description": "Build model.orm.json with the catalogue hash"}}, {"tool_name": "Bash", "tool_use_id": "toolu_014xGoGwQ1utLrxBxYN65kY4", "tool_input": {"command": "shasum -a 256 <workspace>/references/catalog.pop.json", "description": "Hash the catalogue reference file"}}, {"tool_name": "Bash", "tool_use_id": "toolu_0151CtfDH4e4q72oEncG3H6V", "tool_input": {"command": "openssl dgst -sha256 <workspace>/references/catalog.pop.json", "description": "Compute SHA-256 of the catalogue file"}}, {"tool_name": "Bash", "tool_use_id": "toolu_01Ht4mcAKVbWQo8nwyNE6eYG", "tool_input": {"command": "gnd validate <workspace>/model.orm.json; echo \"exit=$?\"", "description": "Validate the model with the bound catalogue"}}], "terminal_reason": "completed", "fast_mode_state": "off", "fast_mode_disabled_reason": "sdk_opt_in_required", "subagent_stats": {"spawned": 0, "requested": {"background": 0, "foreground": 0, "unset": 0}, "started_in_background": 0, "max_depth": 0, "spawned_by_subagents": 0, "completed": 0, "failed": 0, "killed": {"parent": 0, "user": 0, "system": 0}, "refused": {"depth_limit": 0, "concurrency_limit": 0, "budget": 0}, "by_type": {}}, "safety_stops": 0, "is_error": false, "num_turns": 57, "subtype": "success", "api_error_status": null, "result": "I built the registrar model from `rules.md`. `gnd validate` passes on the full model (exit 0, no warnings), so both structural and semantic layers were checked.\n\nI didn't ask which CSDP mode you wanted. Your file is a complete description, so I ran One-shot mode. If you want to go through the open questions below one at a time, say so and I'll switch to Guided.\n\n**Files** (in the working directory):\n- `model.orm.json`: the model, named the way `rules.md` asked (the skill's default name is `model.orm.yaml`).\n- `references/catalog.pop.json`: the spring catalogue as a fixed reference population, tied to the model by its SHA-256.\n- `model.verbalization.txt`: the whole model in plain sentences for the registrar to review, with the open questions listed.\n\n**What's in it:** 9 fact types and 5 operations (enroll, drop a course, drop a term, record a grade, admit a student). Every rule in your file is in the model as a hard constraint:\n- Prerequisites are checked through the whole chain. A derived \"requires\" relation follows prerequisites of prerequisites, so CS340 also needs CS101 and MATH120.\n- A student can't enroll in a course they've already passed.\n- At most 6 courses per term.\n- At most 18 credits per term. This uses a derived per-term credit total.\n- One grade per course, and a recorded grade never changes.\n- Only courses offered that term can be taken.\n\n**Tested on Maya's history:**\n- **Breaking case:** enrolled in CS340, CS230 and CS250 in spring, 21 credits in total. The checker caught all four problems: missing MATH220 and STAT210, CS230 already passed, CS250 not offered in spring, and the credit cap.\n- **Legal case:** MATH220, STAT210 and PHIL101, 10 credits. Zero failures. The run exits 2 rather than 0 only because there are no grades yet, so the one-grade rule had nothing to check.\n\n**Things to know:**\n- **`gnd` bug:** my first version of the credit total crashed `gnd check` with an internal error (exit 70). I changed how it's derived to work around it. The catch is that a population now has to state each student's credit total for the 18-credit rule to run. If it leaves the total out, the check reports \"indeterminate\" rather than passing, so nothing slips through silently. This is worth reporting upstream.\n- **Downstream tools:** `gnd synth` and `gnd codegen` don't accept a model with a fixed catalogue. If you need them, the catalogue can be turned into ordinary facts instead.\n- **My own inferences are advisory only.** These are: prerequisites can't form a loop, every course has one title and one credit value, and every graded course counts as passed. None of them can fail a check until you confirm them.\n\n**Questions for the registrar:**\n1. If an operation changes something it didn't declare, should that be a warning or a hard failure? It has to be stated either way, so I set warning for every operation.\n2. Recording a grade removes the enrollment, so \"enrolled\" means \"currently registered\". I chose this so that \"no enrolling in a passed course\" doesn't clash with keeping grades forever. Is that right?\n3. Can a grade be a fail? As written, every recorded grade marks the course as passed.\n4. Are students identified by name, or do they have a student number?\n5. Terms are just \"spring\" and \"fall\", with no year. Should a term carry a year?", "ttft_ms": 2146, "type": "result", "duration_ms": 429083, "uuid": "17d63e4a-a426-45a9-a81c-6ee00839527c", "ttft_stream_ms": 1593, "time_to_request_ms": 33, "first_content_frame_ms": 1593, "queued_turn_count": 0, "result_index": 0}
+src/gnd/export/pyrel_runtime.py:955:def load_document(path: Path, *, max_bytes: int = 16_777_216) -> dict[str, Any]:
+src/gnd/export/ilp_service.py:542:def load_mined_inputs(model_path: Path, population_path: Path, *,
+
+exec
+/bin/zsh -lc "rg -n 'object_types|fact_types' src/gnd/documents.py src/gnd/schema* src/gnd/model_index.py | head -100; git status --short" in <repo>
+ succeeded in 96ms:
+src/gnd/documents.py:55:    object_types: list[dict[str, Any]]
+src/gnd/documents.py:56:    fact_types: list[dict[str, Any]]
+src/gnd/documents.py:133:        for fact_type in model.fact_types
+src/gnd/model_index.py:117:        for row in document.get('fact_types') or []:
+src/gnd/model_index.py:121:        objects = {str(row.get('id')): row for row in document.get('object_types') or []
+src/gnd/model_index.py:180:        return {str(row.get('id')): row for row in model.object_types or []
+src/gnd/model_index.py:189:        } for ft in model.fact_types or [] if ft.get('id') is not None}
+src/gnd/model_index.py:199:        return [str(ft.get('id')) for ft in model.fact_types
+src/gnd/model_index.py:203:    def fact_types(self) -> tuple[dict[str, Any], ...]:
+src/gnd/model_index.py:204:        return tuple(deepcopy(self._document.get('fact_types') or []))
+src/gnd/model_index.py:206:    def iter_fact_types(self) -> Iterator[dict[str, Any]]:
+src/gnd/model_index.py:207:        return iter(self.fact_types)
+src/gnd/model_index.py:209:    def iter_fact_types_shared(self) -> Iterator[dict[str, Any]]:
+src/gnd/model_index.py:214:        Public callers use ``iter_fact_types`` / ``fact_types``, which return detached copies.
+src/gnd/model_index.py:216:        return iter(self._document.get('fact_types') or [])
+src/gnd/model_index.py:218:    def role_object_types(self) -> dict[str, dict[str, str]]:
+src/gnd/model_index.py:225:            for ft in self._document.get('fact_types') or [] if ft.get('id') is not None
+src/gnd/model_index.py:231:                for ft in self._document.get('fact_types') or []
+src/gnd/model_index.py:235:        return [str(ft.get('id')) for ft in self._document.get('fact_types') or []
+src/gnd/model_index.py:240:        for fact_type in model.fact_types:
+src/gnd/model_index.py:259:    def object_types_by_id(self) -> dict[str, dict[str, Any]]:
+src/gnd/model_index.py:271:                   for row in self._document.get('object_types') or [] if isinstance(row, dict)}
+src/gnd/model_index.py:312:        return {str(row.get('id')): row for row in self._canonical().get('object_types') or []
+src/gnd/model_index.py:388:            for row in self._canonical().get('object_types') or []:
+src/gnd/model_index.py:404:        ``iter_fact_types_shared`` gives. One linear pass, with no per-constraint
+src/gnd/model_index.py:407:        for fact_type in self._document.get('fact_types') or []:
+src/gnd/model_index.py:414:        for fact_type in self._document.get('fact_types') or []:
+src/gnd/schema/orm-meta.schema.json:5:  "description": "Draft 2020-12 meta-schema for model.orm.yaml — the complete Halpin ORM 2 constraint vocabulary: uniqueness (internal/external), mandatory, mandatory-disjunctive, value (enum/range/ranges/role-scope hybrid), frequency (internal/external), ring (all variants), subset, equality, exclusion, exclusive-or, value-comparison (intra- and cross-fact-type), cardinality (object/role), subtype-partition, textual — plus GND's conditional guarded extension and subtyping on object types. Constraint placement follows the source spec: single-fact-type constraints live inline under fact_types[].constraints; cross-fact-type and object-type-scope constraints live top-level under constraints. GND divergences from the RAI source spec: (1) `modality` is REQUIRED on every ACTIVE constraint, never defaulted (D-03); (2) rejected_proposals entries are schema-light and modality is NOT required there — they are archived proposals preserved to prevent re-proposal, not active constraints. Optional top-level `model_id` (D-06): a stable, opaque identifier for this model. A population header may declare the same field; when both are present and differ, the population was written for a different model and is rejected at load (exit 3). It is OPTIONAL for backward compatibility, compared as an opaque string, and never dereferenced to a path or opened. Version 2 (ORM+) adds one optional top-level section, `operations`: named state transitions carrying parameters, conjunctive positive-atom preconditions, create/assert/retract effects, old-versus-new dynamic value rules, and a REQUIRED, never-defaulted `frame.modality`. `operations` present implies `version: 2`, `version: 3`, `version: 4` or `version: 5`; a version-2 document with no `operations` is behaviourally a version-1 document. Default snapshot checking ignores `operations`; explicit compiled-operation checking is defined in representation-format.md. Threat note (T-01-06): derivation_rule, textual expression, and value-comparison operands are typed as plain strings; the validator never interprets or executes them. Model includes (version 5) are defined in representation-format.md, section Model includes (version 5).",
+src/gnd/schema/orm-meta.schema.json:28:    "object_types": {
+src/gnd/schema/orm-meta.schema.json:34:    "fact_types": {
+src/gnd/schema/orm-meta.schema.json:85:          "fact_types"
+src/gnd/schema/orm-meta.schema.json:103:          "fact_types": {
+src/gnd/schema/orm-meta.schema.json:227:          "object_types",
+src/gnd/schema/orm-meta.schema.json:228:          "fact_types"
+?? .review-round/
+
+codex
+All three hashes match the brief. The helper parses YAML using fixed text delimiters and a line regex; I’ll test valid YAML variations against the repository’s model loader to see whether they produce incorrect results.
+exec
+/bin/zsh -lc "sed -n '1,125p' src/gnd/documents.py; sed -n '260,370p' src/gnd/model/__init__.py; sed -n '1,100p' src/gnd/schema/orm-meta.schema.json; sed -n '76,105p' pyproject.toml; nl -ba tools/model_type_ids.py" in <repo>
+ succeeded in 0ms:
+"""RF3 shared dependency home; algorithms retain predecessor semantics."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_serializer
+
+from gnd.errors import ValidationIssue
+
+
+class DeonticNote(BaseModel):
+    """A retained top-level deontic note from the ORM document."""
+
+    text: str
+    rationale: str | None = None
+
+
+@dataclass(frozen=True)
+class ElementOrigin:
+    origin: str
+    composed_address: str
+    original_address: str
+    element_id: str | None
+
+
+@dataclass(frozen=True)
+class IncludedFile:
+    id: str
+    path: str
+    sha256: str
+    version: int
+    model_id: str | None
+    source: dict[str, Any] | None
+    raw: bytes = field(default=b"", repr=False, compare=False)
+
+
+class Model(BaseModel):
+    """A loaded, validated ORM conceptual model."""
+
+    # Attribute assignment is the common mutation path and should fail
+    # immediately. Nested dictionaries/lists remain mutable, so Population's
+    # validation marker also binds a digest of current model content.
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    version: int
+    #: D-06: a stable, OPAQUE identifier for this model. Optional for backward
+    #: compatibility — every model authored before the field existed has None,
+    #: and the population header cross-check simply does not run for those. It
+    #: is never resolved to a path and never opened (T-01.1-01); the
+    #: unforgeable runtime proof that a population was validated against THIS
+    #: model is ``Population.validated_against`` (D-02), not this string.
+    model_id: str | None = None
+    source: dict[str, Any] = Field(default_factory=dict)
+    object_types: list[dict[str, Any]]
+    fact_types: list[dict[str, Any]]
+    constraints: list[dict[str, Any]] = Field(default_factory=list)
+    #: ORM+ v2 state transitions, raw dicts like every other section. A v1
+    #: document loads with ``operations: []`` and is byte-identical to what it
+    #: loaded before v2 existed. Every downstream consumer feature-detects on
+    #: THIS list being non-empty, never on ``version``: a ``version: 2``
+    #: document that declares no operations must behave exactly like a v1 one,
+    #: and a version test would silently make it behave differently.
+    operations: list[dict[str, Any]] = Field(default_factory=list)
+    reference_populations: list[dict[str, Any]] = Field(default_factory=list)
+    includes: list[dict[str, Any]] = Field(default_factory=list)
+    fact_type_constraints: list[dict[str, Any]] = Field(default_factory=list)
+    _provenance: tuple[ElementOrigin, ...] = PrivateAttr(default=())
+    _included: tuple[IncludedFile, ...] = PrivateAttr(default=())
+    _authored_sha256: str | None = PrivateAttr(default=None)
+    _references: Any = PrivateAttr(default=None)
+    rejected_proposals: list[dict[str, Any]] = Field(default_factory=list)
+    #: Trace-compiled obligations, keyed by operation id (B2). A SIDE TABLE
+    #: rather than an ``operation["compiled"]`` key, which is what the plan and
+    #: the phase spec first described.
+    #:
+    #: The attachment was tried and reproduced a defect: ``operations_digest``
+    #: is taken over the operations section, so writing into those dicts moved
+    #: the digest and every committed steps.json stopped matching its own model.
+    #: Stripping the key back out before hashing would have worked only if no
+    #: author could ever write one -- and ``$defs.operation`` does not set
+    #: ``additionalProperties: false``, so an authored ``compiled:`` key is legal
+    #: YAML that the digest would then silently ignore. A private attribute has
+    #: neither problem: the loaded section stays exactly as authored, and there
+    #: is nothing for a key to collide with.
+    _compiled: dict[str, list[dict[str, Any]]] = PrivateAttr(default_factory=dict)
+
+    def model_dump(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        document = super().model_dump(*args, **kwargs)
+        if not self.reference_populations:
+            document.pop("reference_populations", None)
+        return document
+
+    @model_serializer(mode="wrap")
+    def _omit_empty_include_fields(self, handler):
+        document = handler(self)
+        for name in ("includes", "fact_type_constraints"):
+            if not getattr(self, name):
+                document.pop(name, None)
+        return document
+
+    def compiled_obligations(self, operation_id: str) -> list[dict[str, Any]]:
+        """The compiled and retained obligations of one operation, in order."""
+        return self._compiled.get(str(operation_id), [])
+
+    deontic_notes: list[DeonticNote] = Field(default_factory=list)
+    warnings: list[ValidationIssue] = Field(default_factory=list)
+
+
+DeonticNote.__module__ = 'gnd.model'
+
+Model.__module__ = 'gnd.model'
+
+
+MAX_YAML_EVENTS = 1_000_000  # parse-event budget for untrusted YAML
+
+
+def structured_derivation_ids(model: Model) -> tuple[str, ...]:
+    """Ids of fact types whose ``derivation_rule`` is the structured object
+    form, in declared order.
+
+    The ONE published home for the "does this fact type carry a machine-shaped
+    rule" predicate (v5.0 Phase 3, standing rule 4): the report-version
+    selector, codegen's constructor non-emission, conformance's expected
+    surface and synth's refusal all consume this function, never a private
+from gnd.model._validation import derivation_dependency_edges as derivation_dependency_edges
+from gnd.model._validation import derivation_strata as derivation_strata
+from gnd.model._validation import dynamic_subject_is_functional as dynamic_subject_is_functional
+from gnd.model._validation import files as files
+from gnd.model._validation import is_function_term as is_function_term
+from gnd.model._validation import issues_from_validation_error as issues_from_validation_error
+from gnd.model._validation import iter_derivation_clauses as iter_derivation_clauses
+from gnd.model._validation import json as json
+from gnd.model._validation import math as math
+from gnd.model._validation import re as re
+from gnd.model._validation import semantic_validate as semantic_validate
+from gnd.model._validation import structured_derivation_ids as structured_derivation_ids
+from gnd.model._validation import term_variables as term_variables
+from gnd.model._validation import verbalize as verbalize
+from gnd.model._validation import yaml_stream_guard_error as yaml_stream_guard_error
+
+if TYPE_CHECKING:
+    from gnd.population import Population
+
+import hashlib
+import os
+import weakref
+from contextlib import contextmanager as contextmanager
+from typing import Literal
+
+from gnd import artifacts
+from gnd.model._validation import parse_model_document as parse_model_document
+from gnd.values import reference_model_digest
+
+
+def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+    """Validate one immutable bounded buffer; source is diagnostic metadata."""
+    doc = parse_model_document(data, source=source)
+    from gnd.model._includes import _refuse, declares_includes, parse_declarations
+
+    if declares_includes(doc):
+        if "includes" not in doc:
+            parse_declarations(doc)
+        _refuse("unresolved")
+    return _finish_model(doc)
+
+
+def _model_warnings(doc, origins):
+    from gnd.model._includes import included_rows, remap_issues
+    from gnd.model._unattended import _INCLUDED
+
+    issues = remap_issues(_layer1_structural(doc), origins)
+    if issues:
+        raise ModelValidationError(issues)
+    # VG3: the unattended rules read which elements came from an include.
+    token = _INCLUDED.set(included_rows(doc, origins))
+    try:
+        issues = remap_issues(semantic_validate(dict(doc)), origins)
+    finally:
+        _INCLUDED.reset(token)
+    errors = [issue for issue in issues if issue.severity == "error"]
+    warnings = [issue for issue in issues if issue.severity == "warning"]
+    if errors:
+        raise ModelValidationError(errors, warnings)
+    return warnings
+
+
+def _finish_model(doc, origins=(), included=(), *, _warnings=None, _references_validated=False) -> Model:
+    warnings = _model_warnings(doc, origins) if _warnings is None else _warnings
+    model = Model.model_validate({**dict(doc), "warnings": warnings})
+
+    model._provenance = origins
+    model._included = included
+    if not _references_validated:
+        validate_declarations(model)
+    _attach_compiled_obligations(model)
+    return model
+
+
+
+def _load_model_at(data, *, source, descriptor, historical=None, analysis=False):
+    from gnd.model._includes import CompositionView, _refuse, compose, declares_includes
+
+    doc = parse_model_document(data, source=source)
+    if declares_includes(doc):
+        issues = [] if analysis else None
+        doc, origins, included = compose(doc, descriptor=descriptor, source=source,
+                                         historical=historical, issues=issues)
+        if analysis:
+            warnings = []
+            try:
+                warnings = _model_warnings(doc, origins)
+                _validate_reference_document(doc)
+            except ModelValidationError as error:
+                issues.extend(error.issues)
+            except ReferenceInputError as error:
+                issues.append(ValidationIssue(path='$.reference_populations', message=str(error),
+                                              rule_id='evolve:reference-ownership'))
+            if issues:
+                return CompositionView(doc, origins, included, tuple(issues))
+            model = _finish_model(doc, origins, included, _warnings=warnings, _references_validated=True)
+        else:
+            model = _finish_model(doc, origins, included)
+        model._authored_sha256 = hashlib.sha256(data).hexdigest()
+        return CompositionView(doc, origins, included, (), model) if analysis else model
+    if historical is not None:
+        _refuse('declaration')
+    model = load_model_bytes(data, source=source)
+    if model.reference_populations:
+        model._authored_sha256 = hashlib.sha256(data).hexdigest()
+    return CompositionView(doc, (), (), (), model) if analysis else model
+
+
+def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path,
+                              bind_references: bool = True) -> Model:
+    """Resolve the authored model and bind references under one retained root.
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/orm-meta.schema.json",
+  "title": "GND ORM conceptual model (full D-01 vocabulary)",
+  "description": "Draft 2020-12 meta-schema for model.orm.yaml — the complete Halpin ORM 2 constraint vocabulary: uniqueness (internal/external), mandatory, mandatory-disjunctive, value (enum/range/ranges/role-scope hybrid), frequency (internal/external), ring (all variants), subset, equality, exclusion, exclusive-or, value-comparison (intra- and cross-fact-type), cardinality (object/role), subtype-partition, textual — plus GND's conditional guarded extension and subtyping on object types. Constraint placement follows the source spec: single-fact-type constraints live inline under fact_types[].constraints; cross-fact-type and object-type-scope constraints live top-level under constraints. GND divergences from the RAI source spec: (1) `modality` is REQUIRED on every ACTIVE constraint, never defaulted (D-03); (2) rejected_proposals entries are schema-light and modality is NOT required there — they are archived proposals preserved to prevent re-proposal, not active constraints. Optional top-level `model_id` (D-06): a stable, opaque identifier for this model. A population header may declare the same field; when both are present and differ, the population was written for a different model and is rejected at load (exit 3). It is OPTIONAL for backward compatibility, compared as an opaque string, and never dereferenced to a path or opened. Version 2 (ORM+) adds one optional top-level section, `operations`: named state transitions carrying parameters, conjunctive positive-atom preconditions, create/assert/retract effects, old-versus-new dynamic value rules, and a REQUIRED, never-defaulted `frame.modality`. `operations` present implies `version: 2`, `version: 3`, `version: 4` or `version: 5`; a version-2 document with no `operations` is behaviourally a version-1 document. Default snapshot checking ignores `operations`; explicit compiled-operation checking is defined in representation-format.md. Threat note (T-01-06): derivation_rule, textual expression, and value-comparison operands are typed as plain strings; the validator never interprets or executes them. Model includes (version 5) are defined in representation-format.md, section Model includes (version 5).",
+  "type": "object",
+  "required": [
+    "version"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object"
+    },
+    "object_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/object_type"
+      }
+    },
+    "fact_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fact_type"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/top_level_constraint"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    },
+    "rejected_proposals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/rejected_proposal"
+      }
+    },
+    "deontic_notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "reference_populations": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "path",
+          "sha256",
+          "fact_types"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "sha256": {
+            "type": "string",
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["fixtures"]
+addopts = "-m 'not derivation_oracle and not pyrel_oracle and not ossie_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
+markers = [
+  "proof: opt-in proof lane; not selected by the default public development gate",
+  "derivation_oracle: opt-in derivation_oracle lane; not selected by the default public development gate",
+  "ossie_oracle: opt-in pinned Ossie validator and parser lane",
+  "pyrel_oracle: opt-in pyrel_oracle lane; not selected by the default public development gate",
+  "distribution: opt-in distribution lane; not selected by the default public development gate",
+  "evidence: opt-in evidence lane; not selected by the default public development gate",
+  "census: opt-in census lane; not selected by the default public development gate",
+  "live: opt-in live lane; not selected by the default public development gate",
+  "network: opt-in network lane; not selected by the default public development gate",
+  "review_runner: opt-in review_runner lane; not selected by the default public development gate",
+  "slow: opt-in slow lane; not selected by the default public development gate",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# An experiment's retained attempts and its accepted candidate are EVIDENCE:
+# they record what a session actually produced, and reformatting them would
+# forge that record the same way editing a retained agent stream would. They are
+# excluded from linting because their bytes are not ours to change -- not
+# because their style is acceptable.
+#
+# This exemption deliberately does NOT cover the shipped product. The BookRec
+# package that ships lives at examples/bookrec/project/bookrec/, is copied from
+# the accepted gate candidate, and is linted like any other source here. If the
+     1	"""List the object-type ids a GND model file declares, in file order."""
+     2	from __future__ import annotations
+     3	
+     4	import re
+     5	from pathlib import Path
+     6	
+     7	_ID = re.compile(r"^  - id: (\w+)$", re.MULTILINE)
+     8	
+     9	
+    10	def object_type_ids(path: str | Path) -> list[str]:
+    11	    """Return the ids of the model's object types, in the order the file declares them."""
+    12	    text = Path(path).read_text(encoding="utf-8")
+    13	    section = text.split("\nobject_types:\n", 1)[1].split("\nfact_types:", 1)[0]
+    14	    return _ID.findall(section)
+
+exec
+/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_model_type_ids.py' in <repo>
+ exited 1 in 1103ms:
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<repo>/.venv/lib/python3.14/site-packages/pytest/__main__.py", line 9, in <module>
+    raise SystemExit(_console_main())
+                     ~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 253, in _console_main
+    code = _main(prog=_get_prog_name(sys.argv))
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 223, in _main
+    config = _prepareconfig(new_args, plugins, prog=prog)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 410, in _prepareconfig
+    config: Config = pluginmanager.hook.pytest_cmdline_parse(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pluginmanager=pluginmanager, args=args
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/helpconfig.py", line 124, in pytest_cmdline_parse
+    config = yield
+             ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1232, in pytest_cmdline_parse
+    self.parse(args)
+    ~~~~~~~~~~^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1605, in parse
+    self.hook.pytest_load_initial_conftests(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        early_config=self, args=args, parser=self._parser
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/warnings.py", line 129, in pytest_load_initial_conftests
+    return (yield)
+            ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 116, in _multicall
+    next(function_gen)  # first yield
+    ~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 170, in pytest_load_initial_conftests
+    capman.start_global_capturing()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 773, in start_global_capturing
+    self._global_capturing = _get_multicapture(self._method)
+                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 714, in _get_multicapture
+    return MultiCapture(in_=FDCapture(0), out=FDCapture(1), err=FDCapture(2))
+                                              ~~~~~~~~~^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 493, in __init__
+    TemporaryFile(buffering=0),
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 652, in TemporaryFile
+    prefix, suffix, dir, output_type = _sanitize_params(prefix, suffix, dir)
+                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 126, in _sanitize_params
+    dir = gettempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 316, in gettempdir
+    return _os.fsdecode(_gettempdir())
+                        ~~~~~~~~~~~^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 309, in _gettempdir
+    tempdir = _get_default_tempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 224, in _get_default_tempdir
+    raise FileNotFoundError(_errno.ENOENT,
+                            "No usable temporary directory found in %s" %
+                            dirlist)
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/', '/tmp', '/var/tmp', '/usr/tmp', '<repo>']
+
+exec
+/bin/zsh -lc "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -c 'from unittest.mock import patch
+from gnd.model import load_model_bytes
+from tools.model_type_ids import object_type_ids
+
+base = \"version: 1\\nobject_types:\\n  - id: title\\n    name: Title\\n    kind: value\\n    primitive: String\\nfact_types: []\\n\"
+cases = {
+    \"quoted ID\": base.replace(\"id: title\", '\\''id: \"title\"'\\''),
+    \"object_types first\": base.replace(\"version: 1\\n\", \"\") + \"version: 1\\n\",
+    \"header comment\": base.replace(\"object_types:\", \"object_types: # declared types\"),
+    \"indentless sequence\": base.replace(\"  - id:\", \"- id:\").replace(\"    \", \"  \"),
+    \"empty types\": \"version: 1\\nobject_types: []\\nfact_types: []\\n\",
+    \"reordered section with later IDs\": base.replace(\"version: 1\\n\", \"version: 1\\nfact_types: []\\n\").removesuffix(\"fact_types: []\\n\") + \"source:\\n  entries:\\n  - id: metadata\\n\",
+}
+for name, text in cases.items():
+    try:
+        model = load_model_bytes(text.encode(), source=\"probe.orm.yaml\")
+        expected = [row[\"id\"] for row in model.object_types]
+    except Exception as error:
+        print(name, \"MODEL REJECTED\", type(error).__name__, str(error)[:300])
+        continue
+    with patch(\"pathlib.Path.read_text\", return_value=text):
+        try:
+            actual = object_type_ids(\"probe.orm.yaml\")
+        except Exception as error:
+            actual = f\"{type(error).__name__}: {error}\"
+    print(name, \"expected=\", repr(expected), \"actual=\", repr(actual))
+'" in <repo>
+exec
+/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -s -p no:cacheprovider tests/test_model_type_ids.py' in <repo>
+ succeeded in 1440ms:
+quoted ID expected= ['title'] actual= []
+object_types first expected= ['title'] actual= 'IndexError: list index out of range'
+header comment expected= ['title'] actual= 'IndexError: list index out of range'
+indentless sequence expected= ['title'] actual= []
+empty types expected= [] actual= 'IndexError: list index out of range'
+reordered section with later IDs expected= ['title'] actual= ['title', 'metadata']
+
+ succeeded in 3282ms:
+..
+2 passed in 0.27s
+
+codex
+All three SHA-256 hashes match the brief.
+
+1. **F1 — P2: Section splitting rejects valid models and can include unrelated IDs.** At `tools/model_type_ids.py:13`, the exact delimiters assume particular YAML formatting and section order. Reproduction: use this valid model:
+
+   ```yaml
+   object_types:
+     - id: title
+       name: Title
+       kind: value
+       primitive: String
+   version: 1
+   fact_types: []
+   ```
+
+   The repository’s `load_model_bytes` accepts it and yields `['title']`; `object_type_ids` raises `IndexError` because `object_types` starts the file. An inline header comment and `object_types: []` also cause `IndexError`. Moving `fact_types` before `object_types` allows matching IDs from later sections into the result: a subsequent `source.entries` item with `id: metadata` produces `['title', 'metadata']`, expected `['title']`. Read the YAML structure through the existing parser.
+
+2. **F2 — P2: The ID regex silently drops legal declarations.** At `tools/model_type_ids.py:7`, `_ID` requires an unquoted ID and exactly two spaces before the list item. Reproduction: place `version: 1` first in the model above, then change `id: title` to `id: "title"`. The helper returns `[]`, expected `['title']`. An indentless YAML sequence also returns `[]`. Both variants pass `load_model_bytes`. Extract IDs from parsed object-type rows.
+
+What I checked and found true:
+
+- Both committed tests pass: **2 passed**.
+- Tested `_ID` with quoted IDs and indentless sequences.
+- Tested the first split and `[1]` access with a first-position section, inline header comment, and empty list.
+- Tested the second split with reordered sections and a later metadata ID.
+- All six counterexamples were accepted by the repository’s model loader. Helper inputs were supplied through an in-memory `Path.read_text` mock; no files were changed.
+
+Limits: Review covered the complete two-file diff and focused checks; the broader suite was not run.
+
+VERDICT: CHANGES_REQUESTED
+tokens used
+53,975
+All three SHA-256 hashes match the brief.
+
+1. **F1 — P2: Section splitting rejects valid models and can include unrelated IDs.** At `tools/model_type_ids.py:13`, the exact delimiters assume particular YAML formatting and section order. Reproduction: use this valid model:
+
+   ```yaml
+   object_types:
+     - id: title
+       name: Title
+       kind: value
+       primitive: String
+   version: 1
+   fact_types: []
+   ```
+
+   The repository’s `load_model_bytes` accepts it and yields `['title']`; `object_type_ids` raises `IndexError` because `object_types` starts the file. An inline header comment and `object_types: []` also cause `IndexError`. Moving `fact_types` before `object_types` allows matching IDs from later sections into the result: a subsequent `source.entries` item with `id: metadata` produces `['title', 'metadata']`, expected `['title']`. Read the YAML structure through the existing parser.
+
+2. **F2 — P2: The ID regex silently drops legal declarations.** At `tools/model_type_ids.py:7`, `_ID` requires an unquoted ID and exactly two spaces before the list item. Reproduction: place `version: 1` first in the model above, then change `id: title` to `id: "title"`. The helper returns `[]`, expected `['title']`. An indentless YAML sequence also returns `[]`. Both variants pass `load_model_bytes`. Extract IDs from parsed object-type rows.
+
+What I checked and found true:
+
+- Both committed tests pass: **2 passed**.
+- Tested `_ID` with quoted IDs and indentless sequences.
+- Tested the first split and `[1]` access with a first-position section, inline header comment, and empty list.
+- Tested the second split with reordered sections and a later metadata ID.
+- All six counterexamples were accepted by the repository’s model loader. Helper inputs were supplied through an in-memory `Path.read_text` mock; no files were changed.
+
+Limits: Review covered the complete two-file diff and focused checks; the broader suite was not run.
+
+VERDICT: CHANGES_REQUESTED

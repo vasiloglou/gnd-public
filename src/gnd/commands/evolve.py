@@ -69,6 +69,17 @@ def _register_evolve(subparsers):
         help="list existing fact types with the same role players as each added one (advice only)",
     )
     evolve_preview_parser.add_argument(
+        "--operation-outcomes",
+        action="store_true",
+        help="name an outcome for every operation of the proposal (admitted, refused and why, or unassessed)",
+    )
+    evolve_preview_parser.add_argument(
+        "--outcome-report",
+        default=None,
+        metavar="FILE",
+        help="when the preview is refused, write every operation's outcome to FILE beneath ROOT; requires --operation-outcomes",
+    )
+    evolve_preview_parser.add_argument(
         "--check-population",
         default=None,
         metavar="FILE",
@@ -157,7 +168,28 @@ def _register_evolve(subparsers):
     )
     _add_format_argument(evolve_finalize_parser)
 
-    return {'evolve_apply_parser': evolve_apply_parser, 'evolve_finalize_parser': evolve_finalize_parser, 'evolve_parser': evolve_parser, 'evolve_preview_parser': evolve_preview_parser}
+    evolve_summary_parser = evolve_subparsers.add_parser(
+        "summary",
+        help="print one JSON summary of a growth round",
+        description=(
+            "Read the host's ROUND_FILE and, when the round produced them, its "
+            "proposal, its preview or outcome report, and the evolution record "
+            "of the applied round; print one gnd-round-summary JSON document. "
+            "Each artifact must bind the one before it. Writes no file."
+        ),
+    )
+    evolve_summary_parser.add_argument("round_file", metavar="ROUND_FILE", help="the host's gnd-round JSON file")
+    evolve_summary_parser.add_argument("--proposal", metavar="FILE", help="the round's evolution proposal")
+    evolve_summary_artifact = evolve_summary_parser.add_mutually_exclusive_group()
+    evolve_summary_artifact.add_argument("--preview", metavar="FILE", help="the round's preview")
+    evolve_summary_artifact.add_argument(
+        "--outcome-report", metavar="FILE", help="the outcome report of the round's refused preview"
+    )
+    evolve_summary_parser.add_argument(
+        "--record", metavar="FILE", help="the evolution record of the applied round; requires --preview"
+    )
+
+    return {'evolve_apply_parser': evolve_apply_parser, 'evolve_finalize_parser': evolve_finalize_parser, 'evolve_parser': evolve_parser, 'evolve_preview_parser': evolve_preview_parser, 'evolve_summary_parser': evolve_summary_parser}
 
 
 def add_parsers(subparsers, *, command: str | None = None):
@@ -187,6 +219,8 @@ def handle(args, parsers) -> int:
                 shape_report=args.shape_report,
                 check_population=args.check_population,
                 previous_include=args.previous_include,
+                operation_outcomes=args.operation_outcomes,
+                outcome_report=args.outcome_report,
             )
         if args.evolve_command == "apply":
             return _handler_evolve_cli_service._cmd_evolve_apply(
@@ -199,6 +233,14 @@ def handle(args, parsers) -> int:
                 policy=args.policy,
                 populated=args.populated,
                 check_population=args.check_population,
+            )
+        if args.evolve_command == "summary":
+            return _handler_evolve_cli_service._cmd_evolve_summary(
+                args.round_file,
+                proposal=args.proposal,
+                preview=args.preview,
+                outcome_report=args.outcome_report,
+                record=args.record,
             )
         return _handler_evolve_cli_service._cmd_evolve_finalize(
             args.model,

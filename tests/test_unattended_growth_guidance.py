@@ -304,3 +304,171 @@ def test_ug4_the_guard_can_fail(old: str | None, new: str | None, suffix: str) -
         assert old in text, old
         text = text.replace(old, new, 1)
     assert _drift(text + suffix)
+
+
+# --- GO4 (#227): what a reply carries for an element the model already has ------------------------
+# Spec: .gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md (§8, T1-T3).
+
+
+#: Each rule as a whole statement, so an edit that reverses, deletes or narrows
+#: any part of it is a missing statement (review r1, F1). Compared with the
+#: whitespace of the page's blocks collapsed, so reflowing a line changes nothing.
+_PROSE_RULE = ("An object type or fact type the model already has, its own or included, is named by its id "
+               "wherever a field takes an id and is never repeated in `object_types` or `fact_types`.")
+_ELEMENT_RULES = ("New elements only, in the model's own element shapes;",
+                  ("An element the model already has, its own or included, is named by its id where a field "
+                   "takes an id and is not repeated here; the host drops a repeated one and logs it"))
+_ROWS_RULES = ("Rows for a new fact type only, one entry per sample row;",
+               ("Rows the document gives for a fact type the model already has are an `open_questions` entry: "
+                "the additive policy refuses a changed sample row (`fact_types.modify` in the evolution "
+                "contract's additive matrix)"))
+_REUSE_RULE = ("The two readings say the same thing: drop the added fact type, name the existing id wherever a "
+               "field took the added one, and make its rows an `open_questions` entry, since the additive policy "
+               "refuses a changed sample row on a fact type the model already has")
+_OLD_WORDING = ("ids that already exist are reused", "write its facts against the existing one")
+
+
+def _reply_rule_problems(text: str) -> list[str]:
+    from support.markdown_sections import markdown_blocks, section_blocks
+
+    section = section_blocks(text, "The reply shape")
+    rows = {row[0]: " | ".join(row[1:]) for block in section if block.kind == "table" for row in block.rows if row}
+    elements, sample_rows = rows.get("`object_types`, `fact_types`", ""), rows.get("`rows`", "")
+    prose = " ".join(block.text for block in section if block.kind == "paragraph")
+    reuse = " ".join(block.text for block in section_blocks(text, "Acting on a shape match")
+                     if block.kind == "paragraph")
+    problems = []
+    if not all(rule in elements for rule in _ELEMENT_RULES):
+        problems.append("the element row does not say a reply repeats no element the model has")
+    if not all(rule in sample_rows for rule in _ROWS_RULES):
+        problems.append("the rows row does not route rows for an existing fact type to open_questions")
+    if _PROSE_RULE not in prose:
+        problems.append("the reply-shape prose does not state the rule")
+    if _REUSE_RULE not in reuse:
+        problems.append("reusing a shape match does not route the rows to open_questions")
+    rendered = " ".join(block.text if block.kind != "table" else " ".join(map(" ".join, block.rows))
+                        for block in markdown_blocks(text) if block.kind != "fence")
+    problems.extend(f"the page keeps the old wording {old!r}" for old in _OLD_WORDING if old in rendered)
+    examples = [block for block in section if block.kind == "fence" and block.info.split()[:1] == ["json"]]
+    if len(examples) != 1:
+        return [*problems, "the reply shape has no single JSON example"]
+    example = json.loads(examples[0].text)
+    added = {entry["id"] for entry in example["fact_types"] + example["derived_fact_types"]}
+    hosts = {entry["host"] for entry in example["constraints"]} - {"model"}
+    if not hosts - added:
+        problems.append("the example names no fact type the model already has")
+    return problems
+
+
+def test_go4_t1_the_reply_shape_states_the_rule_and_shows_it() -> None:
+    assert _reply_rule_problems(REFERENCE.read_text(encoding="utf-8")) == []
+
+
+@pytest.mark.parametrize(("old", "new"), [
+    ("is not repeated here", "is repeated here"),
+    ("New elements only, in the model's own element shapes", "The model's own element shapes, ids that already exist are reused"),
+    ("Rows for a new fact type only", "Rows for a new fact type only"),
+    ("are an `open_questions` entry: the additive policy refuses", "are appended: the additive policy refuses"),
+    ("is never repeated in\n`object_types` or `fact_types`", "may be repeated in\n`object_types` or `fact_types`"),
+    ('{"host": "policy_has_holder"', '{"host": "policy_expires_on_expiry_date"'),
+    # review r1, F1: a reversed, deleted or narrowed rule
+    ("are an `open_questions` entry:", "are not an `open_questions` entry:"),
+    ("is named by its id wherever a field takes an id and ", ""),
+    ("its own or included, is named by its id where", "is named by its id where"),
+    ("Rows for a new fact type only", "Rows for any fact type"),
+    ("and make its rows an\n  `open_questions` entry", "and write its facts against the existing one, not an\n  `open_questions` entry"),
+], ids=["element-row", "old-wording", "noop-control", "rows-row", "prose", "example", "reversed", "id-only-deleted",
+        "own-or-included-deleted", "any-fact-type", "reuse-bullet"])
+def test_go4_t2_the_guard_fails_when_the_rule_is_removed(old: str, new: str) -> None:
+    text = REFERENCE.read_text(encoding="utf-8")
+    assert old in text
+    problems = _reply_rule_problems(text.replace(old, new, 1))
+    assert bool(problems) == (old != new), problems
+
+
+@pytest.mark.parametrize("example", ["growth", "seeded_growth"])
+def test_go4_t3_the_packaged_examples_repeat_no_existing_element(example: str) -> None:
+    """GO4-C3: no round adds an element its before-model already has, and none
+    changes an existing fact type (a restated fact type with rows would)."""
+    from gnd.evolve import read_evolution_proposal_document
+    from gnd.model import parse_model_document
+
+    directory = REPO_ROOT / "src/gnd/examples" / example
+    first = directory / ("model.orm.yaml" if example == "growth" else "root.orm.yaml")
+    before = parse_model_document(first.read_bytes(), source=first)
+    for name in ("round-1.proposal.json", "round-2.proposal.json"):
+        proposal = read_evolution_proposal_document(json.loads((directory / name).read_text(encoding="utf-8")))
+        existing = {(collection, entry.get("id")) for collection in ("object_types", "fact_types")
+                    for entry in before.get(collection) or []}
+        for operation in proposal.operations:
+            locator = operation.locator
+            if getattr(locator, "collection", None) in ("object_types", "fact_types"):
+                key = (locator.collection, locator.element_id)
+                assert operation.kind.value == "add" and key not in existing, (name, operation.reference())
+        before = parse_model_document(proposal.candidate_model.text.encode("utf-8"), source=first)
+
+
+def _commented(text: str, start: str, end: str) -> str:
+    """TEXT with the lines from the one holding START to the one holding END inside an HTML comment."""
+    lines = text.splitlines(keepends=True)
+    first = next(i for i, line in enumerate(lines) if start in line)
+    last = next(i for i in range(first, len(lines)) if end in lines[i])
+    return "".join([*lines[:first], "<!--\n", *lines[first:last + 1], "-->\n", *lines[last + 1:]])
+
+
+def test_go4_r1_f2_hidden_rules_are_missing_and_equivalent_markdown_is_read() -> None:
+    """Review r1, F2: a rule inside an HTML comment is not on the page; legal
+    spellings of the same Markdown read the same."""
+    text = REFERENCE.read_text(encoding="utf-8")
+    hidden = _commented(text, "| `object_types`, `fact_types` |", "| `rows` |")
+    assert _reply_rule_problems(hidden)
+    tight = "\n".join(line.replace("| ", "|").replace(" |", "|") if line.startswith("| `") else line
+                      for line in text.splitlines())
+    closed = text.replace("## The reply shape\n", "## The reply shape ##\n", 1)
+    tilde = text.replace("```json\n{\n  \"document\": \"policy.txt\"", "~~~json\n{\n  \"document\": \"policy.txt\"", 1)
+    tilde = tilde.replace("\n}\n```\n\n| Field |", "\n}\n~~~\n\n| Field |", 1)
+    reflowed = text.replace("is never repeated in\n`object_types`", "is never repeated in `object_types`", 1)
+    for variant in (tight, closed, tilde, reflowed):
+        assert variant != text
+        assert _reply_rule_problems(variant) == []
+
+
+
+def test_go4_r2_inline_comments_hide_a_rule_and_a_tab_closed_heading_reads() -> None:
+    """GO3-GO5 review r1, F3 and F6: an inline HTML comment, in a table cell or
+    in prose, hides the rule; a closing run after a tab is still a heading;
+    ``<!--`` inside a code span is literal text."""
+    text = REFERENCE.read_text(encoding="utf-8")
+    cell = "New elements only, in the model's own element shapes;"
+    assert _reply_rule_problems(text.replace(cell, f"<!-- {cell} -->", 1))
+    opening, closing = "A reply carries only what the document adds.", "the reply names them and repeats neither."
+    assert opening in text and closing in text
+    assert _reply_rule_problems(text.replace(opening, f"visible <!-- {opening}", 1).replace(
+        closing, f"{closing} -->", 1))
+    assert _reply_rule_problems(text.replace("## The reply shape\n", "## The reply shape\t##\n", 1)) == []
+    from support.markdown_sections import markdown_blocks
+
+    assert [block.text for block in markdown_blocks("a `<!--` b\n\nc --> d\n")] == ["a `<!--` b", "c --> d"]
+
+
+def test_go4_close_the_example_links_only_a_subtype_it_adds() -> None:
+    """Close review (codex, go4-orphaned-subtype): a subtype link sets fields on its
+    subtype, so the subtype must be one the reply adds; on an existing type the
+    link would be a change the additive policy refuses."""
+    from support.markdown_sections import section_blocks
+
+    (block,) = [b for b in section_blocks(REFERENCE.read_text(encoding="utf-8"), "The reply shape")
+                if b.kind == "fence" and b.info.split()[:1] == ["json"]]
+    example = json.loads(block.text)
+    added = {entry["id"] for entry in example["object_types"]}
+    assert {link["subtype"] for link in example["subtype_links"]} <= added
+
+
+def test_go4_close_a_code_span_may_continue_onto_the_next_line() -> None:
+    """Close review (codex, go4-multiline-code-span): ``<!--`` inside a code span that
+    continues onto the paragraph's next line is literal text, not a comment."""
+    from support.markdown_sections import markdown_blocks
+
+    assert [b.text for b in markdown_blocks("see `note\n<!-- x` here\n\nrule stays\n")] == [
+        "see `note <!-- x` here", "rule stays"]
+    assert [b.text for b in markdown_blocks("a `open\n\n<!-- hidden -->\nshown\n")] == ["a `open", "shown"]

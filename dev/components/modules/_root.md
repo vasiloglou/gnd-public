@@ -698,34 +698,34 @@ Detached model query snapshots with a bounded, content-keyed cache.
 | `scoped(function)` | function | 54 | Run ``function`` inside an index scope: the decorator public entry points use. |
 | `index_scope() -> Iterator[None]` | function | 64 | Reuse one ModelIndex per Model object for the duration of one public call. |
 | `independent_index_scope(model) -> Iterator[ModelIndex \| None]` | function | 77 | Own a fresh call scope even under a caller-held outer index scope. |
-| `cache_info() -> dict[str, int]` | function | 97 | (no docstring) |
-| `ModelIndex` | class | 103 | A retained snapshot: queries return detached values, never writable cache state. |
-| `ModelIndex.for_model(cls, model) -> ModelIndex` | method | 128 | (no docstring) |
-| `ModelIndex.object_map(model) -> dict[str, dict[str, Any]]` | method | 178 | Compatibility lookup retains live rows and historical malformed errors. |
-| `ModelIndex.role_map(model) -> dict[str, dict[str, str]]` | method | 184 | (no docstring) |
-| `ModelIndex.constraint_roles(constraint) -> list[str]` | method | 192 | The role names a fact-type constraint spans (uniqueness, frequency), in declared order. |
-| `ModelIndex.scope_facts(model, targets) -> list[str]` | method | 198 | (no docstring) |
-| `ModelIndex.fact_types(self) -> tuple[dict[str, Any], ...]` | method | 203 | (no docstring) |
-| `ModelIndex.iter_fact_types(self) -> Iterator[dict[str, Any]]` | method | 206 | (no docstring) |
-| `ModelIndex.iter_fact_types_shared(self) -> Iterator[dict[str, Any]]` | method | 209 | Internal readers only: the index's own fact-type rows, not copied. |
-| `ModelIndex.role_object_types(self) -> dict[str, dict[str, str]]` | method | 218 | (no docstring) |
-| `ModelIndex.fact_type_roles(self) -> dict[str, set[str]]` | method | 228 | (no docstring) |
-| `ModelIndex.facts_for_objects(self, identifiers) -> list[str]` | method | 234 | (no docstring) |
-| `ModelIndex.legacy_fact_type(model, identifier) -> dict[str, Any] \| None` | method | 239 | (no docstring) |
-| `ModelIndex.legacy_role_type(model, fact_type_id, role_name) -> str \| None` | method | 246 | (no docstring) |
-| `ModelIndex.fact_type(self, identifier) -> dict[str, Any] \| None` | method | 253 | (no docstring) |
-| `ModelIndex.object_type(self, identifier) -> dict[str, Any] \| None` | method | 256 | (no docstring) |
-| `ModelIndex.object_types_by_id(self) -> dict[str, dict[str, Any]]` | method | 259 | (no docstring) |
-| `ModelIndex.role_object_type(self, fact_type_id, role_name) -> str \| None` | method | 262 | (no docstring) |
-| `ModelIndex.supertype_closure(self, identifier) -> frozenset[str]` | method | 269 | (no docstring) |
-| `ModelIndex.reference_value_types(self) -> MappingProxyType[str, str \| None]` | method | 315 | object-type id -> the value type that denotes it, or None. |
-| `ModelIndex.denoted_by(self, value_type_ids) -> set[str]` | method | 338 | Object types whose resolved value type is one of ``value_type_ids`` (a new set). |
-| `ModelIndex.subtype_children(self) -> MappingProxyType[str, frozenset[str]]` | method | 352 | Declared id -> the ids that name it in ``subtype_of`` (direct children). |
-| `ModelIndex.descendants(self, identifier) -> set[str]` | method | 366 | ``identifier`` and every transitive subtype of it, cycle-safe (a new set). |
-| `ModelIndex.kind(self, identifier) -> str \| None` | method | 384 | The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None. |
-| `ModelIndex.primitive(self, identifier, *, variant) -> str \| None` | method | 395 | (no docstring) |
-| `ModelIndex.iter_constraints_shared(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| No…` | method | 398 | Internal readers only: ``iter_constraints`` refs and order, rows not copied. |
-| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 413 | (no docstring) |
+| `cache_info() -> dict[str, int]` | function | 112 | (no docstring) |
+| `ModelIndex` | class | 118 | A retained snapshot: queries return detached values, never writable cache state. |
+| `ModelIndex.for_model(cls, model) -> ModelIndex` | method | 143 | (no docstring) |
+| `ModelIndex.object_map(model) -> dict[str, dict[str, Any]]` | method | 197 | Compatibility lookup retains live rows and historical malformed errors. |
+| `ModelIndex.role_map(model) -> dict[str, dict[str, str]]` | method | 203 | (no docstring) |
+| `ModelIndex.constraint_roles(constraint) -> list[str]` | method | 211 | The role names a fact-type constraint spans (uniqueness, frequency), in declared order. |
+| `ModelIndex.scope_facts(model, targets) -> list[str]` | method | 217 | (no docstring) |
+| `ModelIndex.fact_types(self) -> tuple[dict[str, Any], ...]` | method | 222 | (no docstring) |
+| `ModelIndex.iter_fact_types(self) -> Iterator[dict[str, Any]]` | method | 225 | (no docstring) |
+| `ModelIndex.iter_fact_types_shared(self) -> Iterator[dict[str, Any]]` | method | 228 | Internal readers only: the index's own fact-type rows, not copied. |
+| `ModelIndex.role_object_types(self) -> dict[str, dict[str, str]]` | method | 237 | (no docstring) |
+| `ModelIndex.fact_type_roles(self) -> dict[str, set[str]]` | method | 247 | (no docstring) |
+| `ModelIndex.facts_for_objects(self, identifiers) -> list[str]` | method | 253 | (no docstring) |
+| `ModelIndex.legacy_fact_type(model, identifier) -> dict[str, Any] \| None` | method | 258 | (no docstring) |
+| `ModelIndex.legacy_role_type(model, fact_type_id, role_name) -> str \| None` | method | 265 | (no docstring) |
+| `ModelIndex.fact_type(self, identifier) -> dict[str, Any] \| None` | method | 272 | (no docstring) |
+| `ModelIndex.object_type(self, identifier) -> dict[str, Any] \| None` | method | 275 | (no docstring) |
+| `ModelIndex.object_types_by_id(self) -> dict[str, dict[str, Any]]` | method | 278 | (no docstring) |
+| `ModelIndex.role_object_type(self, fact_type_id, role_name) -> str \| None` | method | 281 | (no docstring) |
+| `ModelIndex.supertype_closure(self, identifier) -> frozenset[str]` | method | 288 | (no docstring) |
+| `ModelIndex.reference_value_types(self) -> MappingProxyType[str, str \| None]` | method | 334 | object-type id -> the value type that denotes it, or None. |
+| `ModelIndex.denoted_by(self, value_type_ids) -> set[str]` | method | 357 | Object types whose resolved value type is one of ``value_type_ids`` (a new set). |
+| `ModelIndex.subtype_children(self) -> MappingProxyType[str, frozenset[str]]` | method | 371 | Declared id -> the ids that name it in ``subtype_of`` (direct children). |
+| `ModelIndex.descendants(self, identifier) -> set[str]` | method | 385 | ``identifier`` and every transitive subtype of it, cycle-safe (a new set). |
+| `ModelIndex.kind(self, identifier) -> str \| None` | method | 403 | The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None. |
+| `ModelIndex.primitive(self, identifier, *, variant) -> str \| None` | method | 414 | (no docstring) |
+| `ModelIndex.iter_constraints_shared(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| No…` | method | 417 | Internal readers only: ``iter_constraints`` refs and order, rows not copied. |
+| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 432 | (no docstring) |
 
 ## gnd.model_queries — `src/gnd/model_queries.py`
 Components: model.reference_resolution

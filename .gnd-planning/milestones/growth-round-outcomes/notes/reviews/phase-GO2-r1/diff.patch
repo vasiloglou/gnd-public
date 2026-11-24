@@ -1,0 +1,2229 @@
+diff --git a/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json b/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json
+new file mode 100644
+index 00000000..13bd7f88
+--- /dev/null
++++ b/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json
+@@ -0,0 +1,408 @@
++{
++  "schema_version": 1,
++  "reason": "growth-round-outcomes GO2 (#227): the outcome rows, the outcome report, the locator of refusals and the collecting D-12 walk (whose five candidates move from _enforce_d12 to _d12_refusals).",
++  "predecessor": ".gnd-planning/milestones/aggregate-count-certificates/evidence/main-integration/dynamic-query-successor.json",
++  "predecessor_sha256": "fc65e04450470357bbb281bc55e7e58014a746e1cecb8d19ff967cd25b5f83bb",
++  "removed": [
++    [
++      "src/gnd/evolve/service.py",
++      "_enforce_d12",
++      "Counter[tuple[str | None, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_enforce_d12",
++      "before_counts[rendered]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_enforce_d12",
++      "claimable[predecessor]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_enforce_d12",
++      "leftover[rendered]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_enforce_d12",
++      "tuple[str | None, str]",
++      1
++    ]
++  ],
++  "added": [
++    [
++      "src/gnd/evolve/cli_service.py",
++      "_evolve_outcome_target",
++      "tuple[Path, Path, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/cli_service.py",
++      "_evolve_write_outcome_report",
++      "tuple[Path, Path, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "<module>",
++      "Literal['admitted', 'refused-by-policy', 'refused-by-validation', 'refused-by-d12', 'dropped-with', 'unassessed']",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "<module>",
++      "Literal['current-model', 'include-ownership', 'operations-gate', 'candidate-validation', 'semantic-validation', 'replay-equality', 'd12', 'policy']",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "<module>",
++      "tuple[str, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "EvolutionOutcomeReport",
++      "tuple[OperationOutcome, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "EvolutionPreview",
++      "tuple[OperationOutcome, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "OperationOutcome",
++      "tuple[OutcomeGate, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "_EvolutionPreviewV3",
++      "tuple[OperationOutcome, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "_outcomes_cover",
++      "tuple[Any, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/models.py",
++      "_outcomes_cover",
++      "tuple[OperationOutcome, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "<module>",
++      "dict[int, tuple[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "<module>",
++      "tuple[str, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "__init__",
++      "Sequence[EvolutionOperation]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "__init__",
++      "dict[tuple[str | None, str], list[int]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "__init__",
++      "dict[tuple[str, str], int]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "__init__",
++      "dict[tuple[str, str], list[int]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "__init__",
++      "list[int]",
++      2
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "__init__",
++      "tuple[str | None, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "__init__",
++      "tuple[str, str]",
++      2
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_added_element",
++      "tuple[str, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_depends_on",
++      "list[tuple[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_depends_on",
++      "set[tuple[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_depends_on",
++      "tuple[str, str]",
++      3
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_locate_path",
++      "candidate.get(collection)",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_locate_path",
++      "constraints[int(step.group(1))]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_locate_path",
++      "entries[int(position)]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "for_constraint",
++      "self.constraints.get((host if isinstance(host, str) else None, digest), [])",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "for_element",
++      "self.element[key]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "for_element",
++      "self.touching.get(key, [])",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "gates_after",
++      "Iterable[str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "gates_after",
++      "OUTCOME_GATES[OUTCOME_GATES.index(gate) + 1:]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "gates_after",
++      "tuple[str, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_d12_refusals",
++      "Iterable[tuple[Any, Any, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_d12_refusals",
++      "Sequence[EvolutionOperation]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_d12_refusals",
++      "message[:512]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_d12_refusals",
++      "tuple[Any, Any, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_d12_refusals",
++      "tuple[Refusals, bool]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_validation_issues",
++      "Iterable[Any]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_validation_issues",
++      "Sequence[EvolutionOperation]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_validation_issues",
++      "detail[:512]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "locate_validation_issues",
++      "tuple[Refusals, bool]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "outcomes",
++      "Sequence[EvolutionOperation]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "outcomes",
++      "Sequence[str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "outcomes",
++      "refused.get(index, (None, ''))",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "outcomes",
++      "set[tuple[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "outcomes",
++      "tuple[OperationOutcome, ...]",
++      1
++    ],
++    [
++      "src/gnd/evolve/outcomes.py",
++      "outcomes",
++      "tuple[str, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "Counter[tuple[str | None, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "before_counts[rendered]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "claimable[predecessor]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "dict[str, Any]",
++      2
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "leftover[rendered]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "list[tuple[Any, Any, str]]",
++      2
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "tuple[Any, Any, str]",
++      2
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_d12_refusals",
++      "tuple[str | None, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_outcome_refusal",
++      "dict[int, tuple[str, str]]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_outcome_refusal",
++      "list[str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_outcome_refusal",
++      "tuple[str, str]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_validation_issues",
++      "list[Any]",
++      1
++    ],
++    [
++      "src/gnd/evolve/service.py",
++      "_validation_issues",
++      "set[int]",
++      1
++    ]
++  ],
++  "result_distinct_rows": 7917,
++  "result_occurrences": 9844
++}
+diff --git a/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json b/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json
+new file mode 100644
+index 00000000..33b56963
+--- /dev/null
++++ b/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json
+@@ -0,0 +1,18 @@
++{
++  "schema_version": 1,
++  "reason": "growth-round-outcomes GO2 (#227): an operation is dropped with a refused one when its fact type's role players include an object type the refused operation adds; the roles are read from the operation's own `after` document, which no Model or ModelIndex holds when the candidate is refused.",
++  "predecessor": ".gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json",
++  "predecessor_sha256": "8ecdf9575ee946d9e276fc8c96d68d403148b57c4880bbb9ef46747523577737",
++  "removed": [],
++  "added": [
++    [
++      "src/gnd/evolve/outcomes.py",
++      "_depends_on",
++      "after.get('roles')",
++      1
++    ]
++  ],
++  "result_distinct_rows": 294,
++  "result_occurrences": 362,
++  "original_metric_current": 305
++}
+diff --git a/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/source-successors.json b/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/source-successors.json
+new file mode 100644
+index 00000000..8ad975ea
+--- /dev/null
++++ b/.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/source-successors.json
+@@ -0,0 +1,38 @@
++{
++ "schema_version": 1,
++ "reason": "growth-round-outcomes GO2 (#227): the evolve preview handler takes --operation-outcomes and --outcome-report, and apply replays the outcomes setting from the reviewed preview.",
++ "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
++ "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
++ "successors": [
++  {
++   "kind": "RF5",
++   "old": "gnd.cli",
++   "name": "_cmd_evolve_preview",
++   "home": "gnd.evolve.cli_service",
++   "before": {
++    "raw_sha256": "1eaa2bfbb5a00ebcabe0213c790bca5b8400fd4c092e4d0d16d7022070067853",
++    "algorithm_sha256": "8d1e5da054985a61e065387474e375e6dc3a63911510e8b266a8151009098956"
++   },
++   "after": {
++    "raw_sha256": "db8013fa1a9592328e85ff1e6faea34ec8fc5528400a89078ac255ab9e46506c",
++    "algorithm_sha256": "2311c31444a4c3c44c7fb78e7d2f1b6e684e336d2b8a2f70841ad57ca8949545"
++   },
++   "reason": "GO2 (#227): optional operation_outcomes and outcome_report keywords; the outcome target is resolved before the service runs, the flag is passed to the preview, and a refused preview writes its outcome report before the unchanged refusal. Without those options the handler is unchanged."
++  },
++  {
++   "kind": "RF5",
++   "old": "gnd.cli",
++   "name": "_cmd_evolve_apply",
++   "home": "gnd.evolve.cli_service",
++   "before": {
++    "raw_sha256": "6810a4052158f583b02a794a6f139d118ec1df9c49eecda240e64835a0b4e2b4",
++    "algorithm_sha256": "e2338595413cc00d97acf1f25531dfb5fc79e5bedf2af6573d9940611ad5ad4d"
++   },
++   "after": {
++    "raw_sha256": "15f0e87ecdf433f1c15e5b7e2cb918aed992b7ae76cbb86d38578a85a914fe97",
++    "algorithm_sha256": "5ecd05037476abc82e95da60e2c0d2fc76965e8966041f50af14c6658b4f6d76"
++   },
++   "reason": "GO2 (#227): the fresh preview is rebuilt with operation_outcomes exactly when the reviewed preview carries them, as for the shape report; every other line unchanged."
++  }
++ ]
++}
+diff --git a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO2-spec.md b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO2-spec.md
+index 66f7f90c..e483934b 100644
+--- a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO2-spec.md
++++ b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO2-spec.md
+@@ -278,3 +278,32 @@ take precedence where they differ.
+ (the bytes above this subsection); r1's approval (§12) is retained as
+ history. Rulings unchanged; the amendment adds no decision. Same budget and
+ the same start condition.
++
++## 14. Implementation findings
++
++Recorded as found, at code written from `8fea6da5`.
++
++1. **Pinned handlers.** `_cmd_evolve_preview` and `_cmd_evolve_apply` are
++   pinned by the RF5 relocation guard; their changes are recorded as
++   successors in `evidence/GO2/source-successors.json`, chained in
++   `tests/support/rf9_ci_sources.py` (the route VG2 and VG3 used).
++2. **Pinned help.** The `gnd evolve preview` help and tree are pinned by
++   `tests/test_rf1_cli_pins.py`; its reference parser gains the two options
++   after `--shape-report`, where the production parser declares them.
++3. **Query inventories.** One counted roles read
++   (`after.get('roles')` in `_depends_on`: the roles of an operation's own
++   `after`, held by no Model when the candidate is refused) is recorded in
++   `evidence/GO2/query-successor.json`; every new dynamic subscript and
++   annotation is recorded in `evidence/GO2/dynamic-query-successor.json`,
++   which also moves `_enforce_d12`'s five candidates to `_d12_refusals`.
++4. **Gate order.** The draft listed the gates with `operations-gate` first;
++   the preview reads the current model first, then include ownership, then
++   the operations gate. `OUTCOME_GATES` follows the code.
++5. **Fixtures.** An `imported` constraint needs anchor fields that
++   validation refuses before D-12 runs, so T3's D-12 rows are `explicit`,
++   `llm-inferred`, `sample` and `common-sense` (VG2's two); `user-supplied`
++   with `proposed` is refused by semantic validation (`semantic:status-source`),
++   which T2's validation case covers.
++6. **Homes outside the spec's list:** `tests/support/rf9_ci_sources.py`,
++   `tests/support/pyrel_application_successors.py`,
++   `tests/test_rf1_cli_pins.py`, `tools/gnd_layers.json` (the new module).
+diff --git a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md
+index 408948cb..22305ee7 100644
+--- a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md
++++ b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md
+@@ -76,7 +76,7 @@ policy refuses them.
+ - The `rows` row: "Rows for a new fact type only. Rows the document gives
+   for a fact type the model already has are an `open_questions` entry: the
+   additive policy refuses a changed sample row
+-  ([evolution contract](../../gnd-model-evolve/references/evolution-contract.md), the additive matrix)."
++  (the evolution contract's additive matrix, `../../gnd-model-evolve/references/evolution-contract.md` from the page)."
+ - The example: one constraint whose `host` is a fact type the model is
+   assumed to hold (`policy_has_holder`), stated in one sentence above the
+   example, beside the new fact type it already shows.
+@@ -135,3 +135,19 @@ reading of the spec. No spec review ran (optional, omitted).
+   "GO" to "READY GO4". A spec approved now is re-read against `main` at
+   that start; a change on `main` that moves a cited line or a premise
+   amends this spec before code, with the prior wording retained.
++
++## 13. Amendment r2 (2026-11-23)
++
++The quoted page text in §6 carried a markdown link written relative to the
++page it will land in, `unattended-growth.md`; from this note it pointed
++nowhere and `tests/test_development_scaffold.py` refused it. r2 writes the
++same target as a code span. Prior wording, retained in words (the scaffold
++guard reads link syntax even inside a code span): a markdown link with the
++text "evolution contract" to `../../gnd-model-evolve/references/evolution-contract.md`,
++followed by ", the additive matrix", in parentheses.
++The page itself gets the working link when GO4 edits it. No ruling changes.
++
++### Gate of r2
++
++**Delegated approval (auto=true), 2026-11-23**, of spec r2, sha256 `ad48ad7794a279428478b59b906802a110dc97dfb93b338721951bcf49f5ee62`
++(the bytes above this subsection). r1's approval (§12) is retained as history.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 95730153..c624740a 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -64,11 +64,11 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### subsystem.evolve
+ - does: Preview, apply and finalize explicit model changes with blast-radius review and linked conformance evidence.
+-- verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal, additive policy, check population
++- verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal, additive policy, check population, operation outcomes, outcome report
+ - status: canonical
+-- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.schema
++- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.operation_outcomes, evolve.schema
+ - members_uses: checker.evaluate, cli.arguments, conformance.report, conformance.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.address, model.document, … +9 more (graph.md)
+-- flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.population_check -> evolve.policy -> evolve.shape_matches -> evolve.schema
++- flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.population_check -> evolve.policy -> evolve.shape_matches -> evolve.operation_outcomes -> evolve.schema
+ - notes: Apply writes staged evidence before one model compare-and-swap. Finalize reruns conformance on linked projects.
+ 
+ ### subsystem.recovery
+@@ -963,7 +963,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
+ - status: canonical
+ - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
+-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
++- uses: conformance.report, conformance.service, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
+ - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
+ - part_of: subsystem.evolve
+ - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
+@@ -979,7 +979,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/evolve/models.py
+ - uses: infra.errors, infra.input_policy, model.loading
+-- used_by: discover.fact_types, discover.output, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
++- used_by: discover.fact_types, discover.output, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
+ - part_of: subsystem.evolve
+ - tests: tests/test_model_evolution.py, tests/test_public_evolution_version_graph.py, tests/test_public_evolution_legacy_readers.py, tests/test_evolve_shape_matches.py, tests/test_evolve_additive_policy.py
+ - checked: partial
+@@ -1027,6 +1027,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - notes: This is structural advice; the evolution service does not use it to decide policy refusal, breaking status, or blast radius.
+ 
+ 
++### evolve.operation_outcomes
++- does: Name an outcome for every operation of a proposal: locate validation, D-12 and policy refusals on their operations and drop the dependents of a refused one [outcomes, locate_validation_issues, locate_d12_refusals].
++- verbs: operation outcomes, per-operation verdict, admitted, refused by policy, refused by validation, refused by d12, dropped with, unassessed, gates not run, outcome report, locate refusal, issue path, dependent operations
++- in: A proposal's operations, validation issues with the candidate document, D-12 refusals, additive-policy issues.
++- out: Ordered OperationOutcome rows; the preview's operation_outcomes field or the outcome report of a refused preview.
++- status: canonical
++- modules: src/gnd/evolve/outcomes.py
++- uses: evolve.schema
++- used_by: evolve.service
++- part_of: subsystem.evolve
++- tests: tests/test_go2_operation_outcomes.py
++- notes: GO2 (#227). Read by nothing that decides a refusal: the printed refusal and its exit are those of the preview without outcomes. The verdict words have one home in the evolution contract's "Operation outcomes".
++
++
+ ### evolve.command
+ - does: Run file-based evolution preview, apply, and finalize commands with reviewed identity checks and exact breaking acceptance.
+ - verbs: evolve preview command, evolve apply command, evolve finalize command, reviewed preview, interactive acceptance, blast radius digest, workspace paths, records root, claim output, preview collision, policy arguments, retry apply, exit code, check-population option
+@@ -3614,8 +3628,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - offending facts: checker.evaluate, examples.session_agents
+ - opaque values: model.population_sentences, semantics.extensions, semantics.temporal_guards
+ - openai compatible: agent.declared_adapter, exp.adapter_policy
++- operation outcomes: evolve.operation_outcomes, subsystem.evolve
+ - oracle abstention: synth.guarded, synth.prediction
+ - oscillation: exp.service, exp.session_runtime
++- outcome report: evolve.operation_outcomes, subsystem.evolve
+ - output collision: cli.export_command, extract.flatten_service, review.command
+ - output directory: cli.codegen_command, cli.flatten_command, codegen.service, synth.paths
+ - output format: cli.arguments, cli.conformance_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.verify_command
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index e483e450..7ef66a8c 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1693,6 +1693,13 @@ Generated by `scripts/components_index.py`.
+ #### evolve.command -> model.validation
+ - `src/gnd/evolve/cli_service.py -> src/gnd/model/_parsing.py`
+ 
++### evolve.operation_outcomes
++- uses: evolve.schema
++- used_by: evolve.service
++
++#### evolve.operation_outcomes -> evolve.schema
++- `src/gnd/evolve/outcomes.py -> src/gnd/evolve/models.py`
++
+ ### evolve.policy
+ - uses: evolve.schema, model.document, model.query_index
+ - used_by: evolve.population_check, evolve.service
+@@ -1742,7 +1749,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### evolve.schema
+ - uses: infra.errors, infra.input_policy, model.loading
+-- used_by: discover.fact_types, discover.output, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
++- used_by: discover.fact_types, discover.output, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
+ 
+ #### evolve.schema -> infra.errors
+ - `src/gnd/evolve/models.py -> src/gnd/errors.py`
+@@ -1755,7 +1762,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/evolve/models.py -> src/gnd/model/_includes.py`
+ 
+ ### evolve.service
+-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
++- uses: conformance.report, conformance.service, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
+ - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
+ 
+ #### evolve.service -> conformance.report
+@@ -1764,6 +1771,9 @@ Generated by `scripts/components_index.py`.
+ #### evolve.service -> conformance.service
+ - `src/gnd/evolve/service.py -> src/gnd/conformance/service.py`
+ 
++#### evolve.service -> evolve.operation_outcomes
++- `src/gnd/evolve/service.py -> src/gnd/evolve/outcomes.py`
++
+ #### evolve.service -> evolve.policy
+ - `src/gnd/evolve/service.py -> src/gnd/evolve/policy.py`
+ 
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index 5c4ecaa2..6a4ce20c 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -74,8 +74,8 @@ Components: cli.evolve_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 163 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 175 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 174 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 186 | (no docstring) |
+ 
+ ## gnd.commands.exp — `src/gnd/commands/exp.py`
+ Components: cli.exp_command
+diff --git a/dev/components/modules/evolve.md b/dev/components/modules/evolve.md
+index bdc216ba..792d67c6 100644
+--- a/dev/components/modules/evolve.md
++++ b/dev/components/modules/evolve.md
+@@ -80,31 +80,46 @@ Closed evidence models for staged ORM evolution.
+ | `BlastRadiusReport` | class(_ClosedFrozenModel) | 789 | (no docstring) |
+ | `EvolutionPolicyGapError` | class(Exception) | 878 | A locator kind the additive policy has no rule for (UG3, exit 3 by type). |
+ | `PolicyIssue` | class(_ClosedFrozenModel) | 890 | One operation the additive policy refused, by index, locator and cell. |
+-| `PopulationAdmission` | class(_ClosedFrozenModel) | 920 | One populated-constraint operation the supplied population cleared (UG2). |
+-| `PopulationCheckRecord` | class(_ClosedFrozenModel) | 928 | What a `--check-population` admission rested on: digests and ids only (UG2). |
+-| `ShapeMember` | class(_ClosedFrozenModel) | 946 | One fact type in a shape group: its id and readings (MG3). |
+-| `ShapeAdded` | class(ShapeMember) | 954 | A fact type the proposal adds, with the operation that adds it. |
+-| `ShapeReference` | class(_ClosedFrozenModel) | 960 | How one entity role player is identified, from ``reference_identity``. |
+-| `ShapeGroup` | class(_ClosedFrozenModel) | 974 | Every fact type sharing one role-player signature with an added one. |
+-| `EvolutionPreview` | class(_ClosedFrozenModel) | 1035 | (no docstring) |
+-| `EvolutionPreview.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1058 | (no docstring) |
+-| `EvolutionPreview.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1076 | (no docstring) |
+-| `EvolutionIntent` | class(_ClosedFrozenModel) | 1209 | Normalized staged intent selected by its enclosing schema version. |
+-| `EvolutionIntent.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1229 | (no docstring) |
+-| `EvolutionIntent.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1245 | (no docstring) |
+-| `EvolutionFinalizationState` | class(_ClosedFrozenModel) | 1272 | Durable identity required to finish exact post-CAS leaves. |
+-| `CASEvidence` | class(_ClosedFrozenModel) | 1317 | (no docstring) |
+-| `LinkedProjectConformance` | class(_LinkedProjectConformanceBase) | 1386 | Normalized conformance leaf; its caller owns the wire-version choice. |
+-| `AffectedCodeEvidence` | class(_ClosedFrozenModel) | 1413 | (no docstring) |
+-| `EvolutionRecord` | class(_EvolutionRecordBase) | 1480 | (no docstring) |
+-| `EvolutionRecord.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1485 | (no docstring) |
+-| `EvolutionRecord.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1503 | (no docstring) |
+-| `read_evolution_proposal_document(document) -> EvolutionProposal` | function | 1541 | Read one proposal after selecting its closed wire graph by envelope version. |
+-| `read_evolution_preview_document(document) -> EvolutionPreview` | function | 1547 | Read one preview after selecting its closed wire graph by envelope version. |
+-| `read_evolution_intent_document(document) -> EvolutionIntent` | function | 1553 | Read one staged intent through its explicit enclosing version. |
+-| `read_evolution_finalization_state_document(document) -> EvolutionFinalizationState` | function | 1559 | Read one pending-finalization claim through its closed envelope. |
+-| `read_evolution_record_document(document) -> EvolutionRecord` | function | 1575 | Read one record after selecting its nested conformance graph by version. |
+-| `read_linked_project_conformance_document(document, *, envelope_version) -> LinkedProjectConformance` | function | 1581 | Read a standalone leaf using only its caller-supplied envelope version. |
++| `OperationOutcome` | class(_ClosedFrozenModel) | 928 | One operation's outcome (GO2). ``detail`` names ids, rule ids and verdict |
++| `OutcomeRefusal` | class(_ClosedFrozenModel) | 961 | The refusal that stopped a preview (GO2): its gate, its exit and its |
++| `EvolutionOutcomeReport` | class(_ClosedFrozenModel) | 970 | GO2: the outcome of every operation of a proposal no preview was written |
++| `read_evolution_outcome_report_document(document) -> EvolutionOutcomeReport` | function | 988 | The closed reader of an outcome report: any other JSON is a named refusal. |
++| `PopulationAdmission` | class(_ClosedFrozenModel) | 1010 | One populated-constraint operation the supplied population cleared (UG2). |
++| `PopulationCheckRecord` | class(_ClosedFrozenModel) | 1018 | What a `--check-population` admission rested on: digests and ids only (UG2). |
++| `ShapeMember` | class(_ClosedFrozenModel) | 1036 | One fact type in a shape group: its id and readings (MG3). |
++| `ShapeAdded` | class(ShapeMember) | 1044 | A fact type the proposal adds, with the operation that adds it. |
++| `ShapeReference` | class(_ClosedFrozenModel) | 1050 | How one entity role player is identified, from ``reference_identity``. |
++| `ShapeGroup` | class(_ClosedFrozenModel) | 1064 | Every fact type sharing one role-player signature with an added one. |
++| `EvolutionPreview` | class(_ClosedFrozenModel) | 1126 | (no docstring) |
++| `EvolutionPreview.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1150 | (no docstring) |
++| `EvolutionPreview.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1168 | (no docstring) |
++| `EvolutionIntent` | class(_ClosedFrozenModel) | 1305 | Normalized staged intent selected by its enclosing schema version. |
++| `EvolutionIntent.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1325 | (no docstring) |
++| `EvolutionIntent.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1341 | (no docstring) |
++| `EvolutionFinalizationState` | class(_ClosedFrozenModel) | 1368 | Durable identity required to finish exact post-CAS leaves. |
++| `CASEvidence` | class(_ClosedFrozenModel) | 1413 | (no docstring) |
++| `LinkedProjectConformance` | class(_LinkedProjectConformanceBase) | 1482 | Normalized conformance leaf; its caller owns the wire-version choice. |
++| `AffectedCodeEvidence` | class(_ClosedFrozenModel) | 1509 | (no docstring) |
++| `EvolutionRecord` | class(_EvolutionRecordBase) | 1576 | (no docstring) |
++| `EvolutionRecord.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1581 | (no docstring) |
++| `EvolutionRecord.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1599 | (no docstring) |
++| `read_evolution_proposal_document(document) -> EvolutionProposal` | function | 1637 | Read one proposal after selecting its closed wire graph by envelope version. |
++| `read_evolution_preview_document(document) -> EvolutionPreview` | function | 1643 | Read one preview after selecting its closed wire graph by envelope version. |
++| `read_evolution_intent_document(document) -> EvolutionIntent` | function | 1649 | Read one staged intent through its explicit enclosing version. |
++| `read_evolution_finalization_state_document(document) -> EvolutionFinalizationState` | function | 1655 | Read one pending-finalization claim through its closed envelope. |
++| `read_evolution_record_document(document) -> EvolutionRecord` | function | 1671 | Read one record after selecting its nested conformance graph by version. |
++| `read_linked_project_conformance_document(document, *, envelope_version) -> LinkedProjectConformance` | function | 1677 | Read a standalone leaf using only its caller-supplied envelope version. |
++
++## gnd.evolve.outcomes — `src/gnd/evolve/outcomes.py`
++Components: evolve.operation_outcomes
++GO2 (#227): an outcome for every operation of a proposal.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `locate_validation_issues(issues, candidate, operations) -> tuple[Refusals, bool]` | function | 79 | The operation each validation issue names, and whether every issue was located. |
++| `locate_d12_refusals(refusals, operations) -> tuple[Refusals, bool]` | function | 130 | The operation each D-12 refusal ``(host, constraint, message)`` names. |
++| `outcomes(operations, refused, *, gates_not_run) -> tuple[OperationOutcome, ...]` | function | 177 | One row per operation, in order: its refusal, ``dropped-with`` when it |
++| `gates_after(gate, *, policy, ran) -> tuple[str, ...]` | function | 210 | The gates the preview runs after ``gate`` (the policy only when one was |
+ 
+ ## gnd.evolve.policy — `src/gnd/evolve/policy.py`
+ Components: evolve.policy
+@@ -138,26 +153,29 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `EvolutionError` | class(Exception) | 106 | A proposal, stage, CAS, or immutable evidence write was refused. |
+-| `EvolutionIncludeError` | class(EvolutionError) | 110 | An include input was refused, independent of user-supplied message text. |
+-| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 119 | (no docstring) |
+-| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 139 | An old evidence document that may be READ but cannot be finished. |
+-| `EvolutionOperationsGatedError` | class(EvolutionError) | 151 | An ORM+ v2 operation delta this tool deliberately does not own. |
+-| `EvolutionPolicyRefusedError` | class(EvolutionError) | 161 | The additive policy refused an operation at apply (MG2, exit 3). |
+-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1320 | Read one bounded, closed JSON evolution proposal. |
+-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1337 | Read one bounded, version-selected preview claim. |
+-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1354 | Read one bounded, version-selected staged intent. |
+-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1371 | Read one bounded pending-finalization claim. |
+-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1388 | Read one bounded, version-selected immutable record. |
+-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1405 | Read one bounded standalone conformance leaf for an explicit envelope. |
+-| `EvolutionService` | class | 1426 | Preview, apply, and finalize one explicit model evolution proposal. |
+-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1534 | Validate and bind a proposal without changing any publication leaf. |
+-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2049 | Report one staged pending finalization that has no completed record. |
+-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2103 | Refuse to start a *new* evolution over an incomplete published one. |
+-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2125 | Stage immutable evidence and publish only the candidate model CAS. |
+-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2383 | (no docstring) |
+-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2389 | (no docstring) |
+-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2393 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
++| `EvolutionError` | class(Exception) | 110 | A proposal, stage, CAS, or immutable evidence write was refused. |
++| `EvolutionIncludeError` | class(EvolutionError) | 114 | An include input was refused, independent of user-supplied message text. |
++| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 123 | (no docstring) |
++| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 143 | An old evidence document that may be READ but cannot be finished. |
++| `EvolutionOperationsGatedError` | class(EvolutionError) | 155 | An ORM+ v2 operation delta this tool deliberately does not own. |
++| `EvolutionPolicyRefusedError` | class(EvolutionError) | 165 | The additive policy refused an operation at apply (MG2, exit 3). |
++| `OutcomeRefusalPending` | class | 407 | What a refused preview knows about each operation (GO2), carried on the |
++| `OutcomeRefusalPending.report(self, *, exit_code, message) -> EvolutionOutcomeReport` | method | 419 | (no docstring) |
++| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1424 | Read one bounded, closed JSON evolution proposal. |
++| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1441 | Read one bounded, version-selected preview claim. |
++| `read_evolution_outcome_report(path, *, anchor, relative) -> EvolutionOutcomeReport` | function | 1458 | Read one bounded outcome report (GO2); any other document is refused. |
++| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1475 | Read one bounded, version-selected staged intent. |
++| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1492 | Read one bounded pending-finalization claim. |
++| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1509 | Read one bounded, version-selected immutable record. |
++| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1526 | Read one bounded standalone conformance leaf for an explicit envelope. |
++| `EvolutionService` | class | 1547 | Preview, apply, and finalize one explicit model evolution proposal. |
++| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1655 | Validate and bind a proposal without changing any publication leaf. |
++| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2199 | Report one staged pending finalization that has no completed record. |
++| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2253 | Refuse to start a *new* evolution over an incomplete published one. |
++| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2275 | Stage immutable evidence and publish only the candidate model CAS. |
++| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2533 | (no docstring) |
++| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2539 | (no docstring) |
++| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2543 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+ 
+ ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
+ Components: evolve.shape_matches
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 109a4524..5b5a0544 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -77,6 +77,12 @@ the next one.
+   `gnd evolve apply` now parses each model text once per reader. Before, an
+   `apply` parsed the same two texts 22 times. Every preview, record, message
+   and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
++- **An outcome for every operation.** `gnd evolve preview --operation-outcomes`
++  names each operation `admitted`, refused by the policy, validation or D-12,
++  `dropped-with` a refused one, or `unassessed`. When a gate refuses the
++  proposal, `--outcome-report FILE` receives the same rows; the refusal and
++  its exit are unchanged. Without the option nothing changes
++  ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+ 
+ ## 0.4.0 (2026-11-17)
+ 
+diff --git a/src/gnd/commands/evolve.py b/src/gnd/commands/evolve.py
+index 04579c99..fac63ad3 100644
+--- a/src/gnd/commands/evolve.py
++++ b/src/gnd/commands/evolve.py
+@@ -68,6 +68,17 @@ def _register_evolve(subparsers):
+         action="store_true",
+         help="list existing fact types with the same role players as each added one (advice only)",
+     )
++    evolve_preview_parser.add_argument(
++        "--operation-outcomes",
++        action="store_true",
++        help="name an outcome for every operation of the proposal (admitted, refused and why, or unassessed)",
++    )
++    evolve_preview_parser.add_argument(
++        "--outcome-report",
++        default=None,
++        metavar="FILE",
++        help="when the preview is refused, write every operation's outcome to FILE beneath ROOT; requires --operation-outcomes",
++    )
+     evolve_preview_parser.add_argument(
+         "--check-population",
+         default=None,
+@@ -187,6 +198,8 @@ def handle(args, parsers) -> int:
+                 shape_report=args.shape_report,
+                 check_population=args.check_population,
+                 previous_include=args.previous_include,
++                operation_outcomes=args.operation_outcomes,
++                outcome_report=args.outcome_report,
+             )
+         if args.evolve_command == "apply":
+             return _handler_evolve_cli_service._cmd_evolve_apply(
+diff --git a/src/gnd/evolve/__init__.py b/src/gnd/evolve/__init__.py
+index 6ee30721..cc08ce0f 100644
+--- a/src/gnd/evolve/__init__.py
++++ b/src/gnd/evolve/__init__.py
+@@ -17,6 +17,7 @@ from .models import (
+     EvolutionOperation,
+     EvolutionOperationAudit,
+     EvolutionOperationKind,
++    EvolutionOutcomeReport,
+     EvolutionPolicyGapError,
+     EvolutionPreview,
+     EvolutionProposal,
+@@ -26,6 +27,8 @@ from .models import (
+     LinkedProject,
+     LinkedProjectConformance,
+     ModelIdentityLocator,
++    OperationOutcome,
++    OutcomeRefusal,
+     PolicyIssue,
+     PopulationAdmission,
+     PopulationCheckRecord,
+@@ -45,6 +48,7 @@ from .models import (
+     conformance_payload_sha256,
+     read_evolution_finalization_state_document,
+     read_evolution_intent_document,
++    read_evolution_outcome_report_document,
+     read_evolution_preview_document,
+     read_evolution_proposal_document,
+     read_evolution_record_document,
+@@ -61,6 +65,7 @@ from .service import (
+     EvolutionService,
+     read_evolution_finalization_state,
+     read_evolution_intent,
++    read_evolution_outcome_report,
+     read_evolution_preview,
+     read_evolution_proposal,
+     read_evolution_record,
+@@ -89,6 +94,7 @@ __all__ = [
+     "EvolutionOperationAudit",
+     "EvolutionOperationKind",
+     "EvolutionOperationsGatedError",
++    "EvolutionOutcomeReport",
+     "EvolutionPolicyGapError",
+     "EvolutionPolicyRefusedError",
+     "EvolutionPreview",
+@@ -101,6 +107,8 @@ __all__ = [
+     "LinkedProject",
+     "LinkedProjectConformance",
+     "ModelIdentityLocator",
++    "OperationOutcome",
++    "OutcomeRefusal",
+     "PolicyIssue",
+     "PopulationAdmission",
+     "PopulationCheckRecord",
+@@ -122,6 +130,8 @@ __all__ = [
+     "read_evolution_finalization_state_document",
+     "read_evolution_intent",
+     "read_evolution_intent_document",
++    "read_evolution_outcome_report",
++    "read_evolution_outcome_report_document",
+     "read_evolution_preview",
+     "read_evolution_preview_document",
+     "read_evolution_proposal",
+diff --git a/src/gnd/evolve/cli_service.py b/src/gnd/evolve/cli_service.py
+index ba43bb8a..85050fcb 100644
+--- a/src/gnd/evolve/cli_service.py
++++ b/src/gnd/evolve/cli_service.py
+@@ -532,6 +532,44 @@ def _evolve_population_relative(workspace: Path, value: str | None) -> str | Non
+     return os.path.abspath(value)
+ 
+ 
++def _evolve_outcome_target(
++    workspace_path: str, preview_path: str, operation_outcomes: bool, outcome_report: str | None
++) -> tuple[Path, Path, str] | None:
++    """Where a refused preview's outcome report goes (GO2): a workspace path the
++    CLI confines as it confines ``--out``, never the preview path itself."""
++
++    if outcome_report is None:
++        return None
++    if not operation_outcomes:
++        raise _EvolutionCLIError(3, "--outcome-report requires --operation-outcomes")
++    workspace = _evolve_workspace(workspace_path)
++    target, relative = _evolve_workspace_path(
++        workspace, outcome_report, label="outcome report output", required=False
++    )
++    preview, _preview_relative = _evolve_workspace_path(
++        workspace, preview_path, label="preview output", required=False
++    )
++    if target == preview:
++        raise _EvolutionCLIError(3, "--outcome-report must not be the preview output path")
++    return workspace, target, relative
++
++
++def _evolve_write_outcome_report(error: Exception, target: tuple[Path, Path, str] | None) -> None:
++    """Write the outcome report of a refused preview (GO2), with the exit and
++    message the refusal prints. A failure to write it is reported and changes
++    neither the refusal nor its exit."""
++
++    pending = getattr(error, "outcome_refusal", None)
++    if target is None or pending is None:
++        return
++    workspace, path, relative = target
++    try:
++        report = pending.report(exit_code=_evolve_error_exit(error), message=str(error))
++        _evolve_publish_preview(workspace, path, relative, _evolve_json_bytes(report))
++    except Exception as write_error:  # noqa: BLE001 -- the refusal below is the result
++        print(f"outcome report not written: {write_error}", file=sys.stderr)
++
++
+ def _evolve_fail(error: Exception, *, stage: str) -> int:
+     exit_code = _evolve_error_exit(error)
+     print(f"EVOLUTION {stage.upper()} REFUSED ({exit_code}): {error}", file=sys.stderr)
+@@ -607,17 +645,25 @@ def _cmd_evolve_preview(
+     shape_report: bool = False,
+     check_population: str | None = None,
+     previous_include: list[str] | None = None,
++    operation_outcomes: bool = False,
++    outcome_report: str | None = None,
+ ) -> int:
+     """Validate one proposal through ``EvolutionService.preview`` and publish its claim.
+ 
+     Under ``--policy additive`` the preview is published even when the policy
+     refuses operations, so the issues are reviewable; the exit is then 3.
++
++    With ``--operation-outcomes`` (GO2) the preview names an outcome per
++    operation; a refused preview writes the outcome report to
++    ``--outcome-report`` and exits exactly as without it.
+     """
+ 
+     from gnd.evolve import EvolutionIncludeAnalysis, EvolutionService, read_evolution_proposal
+ 
++    report_target = None
+     try:
+         _evolve_policy_arguments(policy, populated, check_population)
++        report_target = _evolve_outcome_target(workspace_path, preview_path, operation_outcomes, outcome_report)
+         workspace = _evolve_workspace(workspace_path)
+         model, _model_relative = _evolve_workspace_path(
+             workspace, model_path, label="model", required=True
+@@ -646,6 +692,7 @@ def _cmd_evolve_preview(
+             preview = service.preview(
+                 proposal, policy=policy, populated=populated or (), shape_report=shape_report,
+                 check_population=population_relative, previous_includes=history,
++                operation_outcomes=operation_outcomes,
+             )
+         except EvolutionIncludeAnalysis as error:
+             from gnd.evolve._includes import exclude_input_outputs
+@@ -684,6 +731,7 @@ def _cmd_evolve_preview(
+             return 3
+         return 0
+     except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
++        _evolve_write_outcome_report(error, report_target)
+         return _evolve_fail(error, stage="preview")
+ 
+ def _cmd_evolve_apply(
+@@ -826,6 +874,7 @@ def _cmd_evolve_apply(
+             check_population=population_relative,
+             expected_population_sha256=_reviewed_population_sha256(reviewed),
+             previous_includes=history,
++            operation_outcomes=reviewed.operation_outcomes is not None,
+         )
+         if reviewed != fresh:
+             raise _EvolutionCLIError(
+diff --git a/src/gnd/evolve/models.py b/src/gnd/evolve/models.py
+index e16ca81a..5538055f 100644
+--- a/src/gnd/evolve/models.py
++++ b/src/gnd/evolve/models.py
+@@ -872,7 +872,7 @@ _POLICY_FIELDS = ("policy", "populated_args", "populated", "policy_issues")
+ #: shape report's one (MG3) and the population check's one (UG2), under the
+ #: same rule.
+ _OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches", "population_check",
+-                            "before_includes", "candidate_includes")
++                            "before_includes", "candidate_includes", "operation_outcomes")
+ 
+ 
+ class EvolutionPolicyGapError(Exception):
+@@ -900,6 +900,96 @@ class PolicyIssue(_ClosedFrozenModel):
+     detail: NonEmptyString
+ 
+ 
++#: GO2 (#227): what one preview says about each operation of a proposal. The
++#: evolution contract's preview section is the home of these words.
++OperationVerdict = Literal[
++    "admitted",
++    "refused-by-policy",
++    "refused-by-validation",
++    "refused-by-d12",
++    "dropped-with",
++    "unassessed",
++]
++#: The preview's gates in the order it runs them (GO2). An outcome row names
++#: the ones that did not run over its operation.
++OutcomeGate = Literal[
++    "current-model",
++    "include-ownership",
++    "operations-gate",
++    "candidate-validation",
++    "semantic-validation",
++    "replay-equality",
++    "d12",
++    "policy",
++]
++OUTCOME_GATES: tuple[str, ...] = OutcomeGate.__args__  # type: ignore[attr-defined]
++
++
++class OperationOutcome(_ClosedFrozenModel):
++    """One operation's outcome (GO2). ``detail`` names ids, rule ids and verdict
++    words only, as `PolicyIssue.detail` does, so a preview stays value-free."""
++
++    operation_index: int = Field(ge=0)
++    operation_id: StableId
++    reference: NonEmptyString
++    verdict: OperationVerdict
++    detail: str = Field(default="", max_length=512)
++    gates_not_run: tuple[OutcomeGate, ...] = ()
++
++    @model_validator(mode="after")
++    def _gates_match_verdict(self) -> OperationOutcome:
++        if (self.verdict == "unassessed") != bool(self.gates_not_run):
++            raise ValueError("gates_not_run is set exactly when the verdict is unassessed")
++        if list(self.gates_not_run) != sorted(set(self.gates_not_run), key=OUTCOME_GATES.index):
++            raise ValueError("gates_not_run must be unique and in gate order")
++        return self
++
++
++def _outcomes_cover(outcomes: tuple[OperationOutcome, ...], operations: tuple[Any, ...] | None) -> None:
++    """Rows are the operations in order: one row each, with its id and reference."""
++    if [row.operation_index for row in outcomes] != list(range(len(outcomes))):
++        raise ValueError("operation_outcomes must hold one row per operation, in order")
++    if operations is None:
++        return
++    if len(outcomes) != len(operations):
++        raise ValueError("operation_outcomes must hold one row per operation, in order")
++    for row, operation in zip(outcomes, operations, strict=True):
++        if (row.operation_id, row.reference) != (operation.operation_id, operation.locator.reference()):
++            raise ValueError("operation_outcomes names an operation the proposal does not carry")
++
++
++class OutcomeRefusal(_ClosedFrozenModel):
++    """The refusal that stopped a preview (GO2): its gate, its exit and its
++    message exactly as `gnd evolve preview` printed it."""
++
++    gate: OutcomeGate
++    exit: int = Field(ge=1, le=255)
++    message: NonEmptyString
++
++
++class EvolutionOutcomeReport(_ClosedFrozenModel):
++    """GO2: the outcome of every operation of a proposal no preview was written
++    for. Its own type, so `apply` refuses it where a preview is due."""
++
++    schema_version: Literal[1] = 1
++    kind: Literal["evolution-outcome-report"] = "evolution-outcome-report"
++    proposal_id: StableId
++    proposal_sha256: Sha256String
++    before_model: CommittedText
++    refusal: OutcomeRefusal
++    operation_outcomes: tuple[OperationOutcome, ...]
++
++    @model_validator(mode="after")
++    def _rows_in_order(self) -> EvolutionOutcomeReport:
++        _outcomes_cover(self.operation_outcomes, None)
++        return self
++
++
++def read_evolution_outcome_report_document(document: Any) -> EvolutionOutcomeReport:
++    """The closed reader of an outcome report: any other JSON is a named refusal."""
++    return EvolutionOutcomeReport.model_validate(document)
++
++
+ #: The population check's outcome per constraint operation (UG2). The checker's
+ #: five verdict words, spelled as `gnd.checker` spells them, plus three of the
+ #: check's own: a populated subject with no fact in the population, a subject
+@@ -1030,6 +1120,7 @@ class _EvolutionPreviewV3(_EvolutionPreviewV2):
+     population_check: PopulationCheckRecord | None = None
+     before_includes: tuple[IncludeSnapshot, ...] | None = None
+     candidate_includes: tuple[IncludeSnapshot, ...] | None = None
++    operation_outcomes: tuple[OperationOutcome, ...] | None = None
+ 
+ 
+ class EvolutionPreview(_ClosedFrozenModel):
+@@ -1052,6 +1143,7 @@ class EvolutionPreview(_ClosedFrozenModel):
+     population_check: PopulationCheckRecord | None = None
+     before_includes: tuple[IncludeSnapshot, ...] | None = None
+     candidate_includes: tuple[IncludeSnapshot, ...] | None = None
++    operation_outcomes: tuple[OperationOutcome, ...] | None = None
+     preview_sha256: Sha256String
+ 
+     @classmethod
+@@ -1126,6 +1218,10 @@ class EvolutionPreview(_ClosedFrozenModel):
+                 raise ValueError("populated_args must be a subset of populated")
+         if self.shape_matches is not None:
+             _check_shape_matches(self.shape_matches, self.proposal)
++        if self.operation_outcomes is not None:
++            if self.schema_version != EVOLUTION_SCHEMA_VERSION:
++                raise ValueError("operation_outcomes require the current preview version")
++            _outcomes_cover(self.operation_outcomes, self.proposal.operations)
+         if self.population_check is not None:
+             if self.policy is None:
+                 raise ValueError("population_check requires policy")
+@@ -1619,6 +1715,7 @@ __all__ = [
+     "EvolutionOperation",
+     "EvolutionOperationAudit",
+     "EvolutionOperationKind",
++    "EvolutionOutcomeReport",
+     "EvolutionPolicyGapError",
+     "EvolutionPreview",
+     "EvolutionProposal",
+@@ -1626,6 +1723,8 @@ __all__ = [
+     "LinkedProject",
+     "LinkedProjectConformance",
+     "ModelIdentityLocator",
++    "OperationOutcome",
++    "OutcomeRefusal",
+     "PolicyIssue",
+     "ProjectLocator",
+     "RoleLocator",
+@@ -1642,6 +1741,7 @@ __all__ = [
+     "conformance_payload_sha256",
+     "read_evolution_finalization_state_document",
+     "read_evolution_intent_document",
++    "read_evolution_outcome_report_document",
+     "read_evolution_preview_document",
+     "read_evolution_proposal_document",
+     "read_evolution_record_document",
+diff --git a/src/gnd/evolve/outcomes.py b/src/gnd/evolve/outcomes.py
+new file mode 100644
+index 00000000..1c432faa
+--- /dev/null
++++ b/src/gnd/evolve/outcomes.py
+@@ -0,0 +1,215 @@
++"""GO2 (#227): an outcome for every operation of a proposal.
++
++One walk maps each refusal a preview's gates produce (a validation issue, a
++D-12 refusal, an additive-policy issue) to the operation that caused it, then
++drops with it every later operation that depends on an element it adds. The
++verdict words and the outcome report are defined in the evolution contract's
++preview section; ``OperationOutcome`` and ``EvolutionOutcomeReport`` in
++``models`` are their one schema.
++"""
++
++from __future__ import annotations
++
++import re
++from collections.abc import Iterable, Sequence
++from typing import Any
++
++from .models import (
++    OUTCOME_GATES,
++    ConstraintLocator,
++    ElementLocator,
++    EvolutionOperation,
++    EvolutionOperationKind,
++    OperationOutcome,
++    RoleLocator,
++    canonical_sha256,
++)
++
++#: The validator's issue path: ``$.<collection>[<index>]`` or
++#: ``$.<collection>[id=<id>]``, then the rest of the path. This is the whole
++#: grammar of the head the validators write (`ValidationIssue.path`); the rest
++#: is read only for a ``.constraints[<index>]`` step.
++_PATH_HEAD = re.compile(r"\$\.([a-z_]+)\[(?:(\d+)|id=([^\]]+))\]")
++_CONSTRAINT_STEP = re.compile(r"\.constraints\[(\d+)\]")
++
++Refusals = dict[int, tuple[str, str]]
++
++
++class _Index:
++    """Which operation touches which element, built once per proposal."""
++
++    def __init__(self, operations: Sequence[EvolutionOperation]) -> None:
++        self.operations = operations
++        self.element: dict[tuple[str, str], int] = {}
++        self.touching: dict[tuple[str, str], list[int]] = {}
++        self.constraints: dict[tuple[str | None, str], list[int]] = {}
++        for index, operation in enumerate(operations):
++            locator = operation.locator
++            if isinstance(locator, ElementLocator):
++                key = (locator.collection, locator.element_id)
++                self.element.setdefault(key, index)
++                self.touching.setdefault(key, []).append(index)
++            elif isinstance(locator, RoleLocator):
++                self.touching.setdefault(("fact_types", locator.fact_type_id), []).append(index)
++            elif isinstance(locator, ConstraintLocator):
++                host = None if locator.host == "model" else locator.host_id
++                if operation.after is not None:
++                    self.constraints.setdefault((host, canonical_sha256(operation.after)), []).append(index)
++                if host is not None:
++                    self.touching.setdefault(("fact_types", host), []).append(index)
++
++    def for_element(self, collection: str, element_id: Any) -> int | None:
++        if not isinstance(element_id, str):
++            return None
++        key = (collection, element_id)
++        if key in self.element:
++            return self.element[key]
++        touching = self.touching.get(key, [])
++        return touching[0] if len(touching) == 1 else None
++
++    def for_constraint(self, host: Any, constraint: Any) -> int | None:
++        try:
++            digest = canonical_sha256(constraint)
++        except Exception:  # noqa: BLE001 -- a value canonical JSON cannot spell is unlocatable
++            return None
++        found = self.constraints.get((host if isinstance(host, str) else None, digest), [])
++        return found[0] if len(found) == 1 else None
++
++
++def locate_validation_issues(
++    issues: Iterable[Any], candidate: Any, operations: Sequence[EvolutionOperation]
++) -> tuple[Refusals, bool]:
++    """The operation each validation issue names, and whether every issue was located.
++
++    ``candidate`` is the parsed candidate document (or ``None`` when it does
++    not parse). An issue is located through the element its path names: the
++    operation that adds or modifies that element, or, for a constraint step,
++    the operation whose ``after`` is that constraint."""
++    index = _Index(operations)
++    refused: Refusals = {}
++    complete = True
++    for issue in issues:
++        found = _locate_path(str(getattr(issue, "path", "")), candidate, index)
++        if found is None:
++            complete = False
++            continue
++        detail = f"{getattr(issue, 'rule_id', 'validation')} at {issue.path}"
++        refused.setdefault(found, ("refused-by-validation", detail[:512]))
++    return refused, complete
++
++
++def _locate_path(path: str, candidate: Any, index: _Index) -> int | None:
++    head = _PATH_HEAD.match(path)
++    if head is None:
++        return None
++    collection, position, element_id = head.group(1), head.group(2), head.group(3)
++    element = None
++    if isinstance(candidate, dict):
++        entries = candidate.get(collection)
++        if isinstance(entries, list):
++            if position is not None and int(position) < len(entries):
++                element = entries[int(position)]
++            elif element_id is not None:
++                element = next((e for e in entries if isinstance(e, dict) and e.get("id") == element_id), None)
++    if element_id is None and isinstance(element, dict):
++        element_id = element.get("id")
++    step = _CONSTRAINT_STEP.match(path, head.end())
++    if collection == "constraints" and isinstance(element, dict):
++        return index.for_constraint(None, element)
++    if step is not None and collection == "fact_types" and isinstance(element, dict):
++        constraints = element.get("constraints")
++        if isinstance(constraints, list) and int(step.group(1)) < len(constraints):
++            found = index.for_constraint(element_id, constraints[int(step.group(1))])
++            if found is not None:
++                return found
++    if collection in ("object_types", "fact_types"):
++        return index.for_element(collection, element_id)
++    return None
++
++
++def locate_d12_refusals(
++    refusals: Iterable[tuple[Any, Any, str]], operations: Sequence[EvolutionOperation]
++) -> tuple[Refusals, bool]:
++    """The operation each D-12 refusal ``(host, constraint, message)`` names."""
++    index = _Index(operations)
++    refused: Refusals = {}
++    complete = True
++    for host, constraint, message in refusals:
++        found = index.for_constraint(host, constraint)
++        if found is None:
++            complete = False
++            continue
++        refused.setdefault(found, ("refused-by-d12", message[:512]))
++    return refused, complete
++
++
++def _added_element(operation: EvolutionOperation) -> tuple[str, str] | None:
++    locator = operation.locator
++    if isinstance(locator, ElementLocator) and operation.kind is EvolutionOperationKind.ADD:
++        return locator.collection, locator.element_id
++    return None
++
++
++def _depends_on(operation: EvolutionOperation, gone: set[tuple[str, str]]) -> tuple[str, str] | None:
++    """The refused element this operation needs, if any (GO2-D5: from locators
++    and ``after`` values, never the candidate)."""
++    locator = operation.locator
++    needed: list[tuple[str, str]] = []
++    if isinstance(locator, ConstraintLocator) and locator.host != "model" and locator.host_id:
++        needed.append(("fact_types", locator.host_id))
++    if isinstance(locator, RoleLocator):
++        needed.append(("fact_types", locator.fact_type_id))
++    after = operation.after if isinstance(operation.after, dict) else {}
++    for role in after.get("roles") or []:
++        if isinstance(role, dict) and isinstance(role.get("object_type"), str):
++            needed.append(("object_types", role["object_type"]))
++    if isinstance(locator, RoleLocator) and isinstance(after.get("object_type"), str):
++        needed.append(("object_types", after["object_type"]))
++    for parent in after.get("subtype_of") or []:
++        if isinstance(parent, str):
++            needed.append(("object_types", parent))
++    reference = after.get("reference")
++    if isinstance(reference, dict) and isinstance(reference.get("value_type"), str):
++        needed.append(("object_types", reference["value_type"]))
++    return next((key for key in needed if key in gone), None)
++
++
++def outcomes(
++    operations: Sequence[EvolutionOperation],
++    refused: Refusals,
++    *,
++    gates_not_run: Sequence[str] = (),
++) -> tuple[OperationOutcome, ...]:
++    """One row per operation, in order: its refusal, ``dropped-with`` when it
++    needs an element a refused operation adds, otherwise ``admitted`` when
++    every gate ran over it, or ``unassessed`` naming the gates that did not."""
++    gone: set[tuple[str, str]] = set()
++    rows = []
++    gates = tuple(sorted(set(gates_not_run), key=OUTCOME_GATES.index))
++    for index, operation in enumerate(operations):
++        verdict, detail = refused.get(index, (None, ""))
++        if verdict is None:
++            needed = _depends_on(operation, gone)
++            if needed is not None:
++                verdict, detail = "dropped-with", f"{needed[0]}[{needed[1]}] is refused"
++        if verdict is not None:
++            added = _added_element(operation)
++            if added is not None:
++                gone.add(added)
++            rows.append(OperationOutcome(
++                operation_index=index, operation_id=operation.operation_id,
++                reference=operation.locator.reference(), verdict=verdict, detail=detail))
++            continue
++        rows.append(OperationOutcome(
++            operation_index=index, operation_id=operation.operation_id,
++            reference=operation.locator.reference(),
++            verdict="unassessed" if gates else "admitted", gates_not_run=gates))
++    return tuple(rows)
++
++
++def gates_after(gate: str, *, policy: bool, ran: Iterable[str] = ()) -> tuple[str, ...]:
++    """The gates the preview runs after ``gate`` (the policy only when one was
++    requested), less those the outcome pass ran itself."""
++    later = OUTCOME_GATES[OUTCOME_GATES.index(gate) + 1:]
++    done = set(ran)
++    return tuple(g for g in later if g not in done and (policy or g != "policy"))
+diff --git a/src/gnd/evolve/service.py b/src/gnd/evolve/service.py
+index b7554d51..73ec564b 100644
+--- a/src/gnd/evolve/service.py
++++ b/src/gnd/evolve/service.py
+@@ -37,6 +37,7 @@ from gnd.safefs import (
+     atomic_write as _atomic_write,
+ )
+ 
++from . import outcomes as _outcomes
+ from .models import (
+     EVOLUTION_READ_ONLY_PENDING,
+     EVOLUTION_SCHEMA_VERSION,
+@@ -51,6 +52,7 @@ from .models import (
+     EvolutionIntent,
+     EvolutionOperation,
+     EvolutionOperationKind,
++    EvolutionOutcomeReport,
+     EvolutionPreview,
+     EvolutionProposal,
+     EvolutionRecord,
+@@ -58,6 +60,7 @@ from .models import (
+     LinkedProject,
+     LinkedProjectConformance,
+     ModelIdentityLocator,
++    OutcomeRefusal,
+     PolicyIssue,
+     PopulationAdmission,
+     PopulationCheckRecord,
+@@ -70,6 +73,7 @@ from .models import (
+     canonical_sha256,
+     read_evolution_finalization_state_document,
+     read_evolution_intent_document,
++    read_evolution_outcome_report_document,
+     read_evolution_preview_document,
+     read_evolution_proposal_document,
+     read_evolution_record_document,
+@@ -400,7 +404,98 @@ def _without_review(constraint: dict[str, Any]) -> dict[str, Any]:
+     return stripped
+ 
+ 
++class OutcomeRefusalPending:
++    """What a refused preview knows about each operation (GO2), carried on the
++    refusal as ``outcome_refusal``; the CLI adds the printed exit and message."""
++
++    __slots__ = ("before_model", "gate", "operation_outcomes", "proposal")
++
++    def __init__(self, gate, operation_outcomes, before_model, proposal) -> None:
++        self.gate = gate
++        self.operation_outcomes = operation_outcomes
++        self.before_model = before_model
++        self.proposal = proposal
++
++    def report(self, *, exit_code: int, message: str) -> EvolutionOutcomeReport:
++        return EvolutionOutcomeReport(
++            proposal_id=self.proposal.proposal_id,
++            proposal_sha256=self.proposal.proposal_sha256,
++            before_model=self.before_model,
++            refusal=OutcomeRefusal(gate=self.gate, exit=exit_code, message=message),
++            operation_outcomes=self.operation_outcomes,
++        )
++
++
++def _validation_issues(error: BaseException) -> list[Any]:
++    """The issues of the ModelValidationError a refusal was raised from, if any."""
++    seen: set[int] = set()
++    current: BaseException | None = error
++    while current is not None and id(current) not in seen:
++        seen.add(id(current))
++        if isinstance(current, ModelValidationError):
++            return list(current.issues)
++        current = current.__cause__ or current.__context__
++    return []
++
++
++def _outcome_refusal(error, stage, proposal, before_text, before_document, *, model_path, policy) -> OutcomeRefusalPending:
++    """GO2: locate what can be located after a refusal at ``stage``.
++
++    A candidate-validation refusal is located by its issues' paths; D-12 then
++    runs over the parsed candidate as well (GO2-D2), since it reads documents
++    only. A D-12 refusal collects every D-12 refusal. Every other gate refuses
++    the proposal whole: each operation is ``unassessed``."""
++    from gnd.model import parse_model_document
++
++    operations = proposal.operations
++    refused: dict[int, tuple[str, str]] = {}
++    ran: list[str] = []
++    gate = stage
++    if stage in ("candidate-validation", "d12"):
++        candidate = None
++        try:
++            text = proposal.candidate_model.text
++            candidate = parse_model_document(text.encode("utf-8"), source=model_path)
++        except Exception:  # noqa: BLE001 -- a candidate that does not parse locates nothing
++            candidate = None
++        if stage == "candidate-validation":
++            issues = _validation_issues(error)
++            if issues:
++                located, _complete = _outcomes.locate_validation_issues(issues, candidate, operations)
++                refused.update(located)
++                if not any(str(issue.rule_id).startswith("jsonschema:") for issue in issues):
++                    gate = "semantic-validation"
++        if isinstance(candidate, dict) and isinstance(before_document, dict):
++            try:
++                d12 = _d12_refusals(before_document, _json_document(candidate, label="candidate model"))
++            except Exception:  # noqa: BLE001 -- a value D-12 cannot read leaves D-12 unrun
++                d12 = None
++            if d12 is not None:
++                located, _complete = _outcomes.locate_d12_refusals(d12, operations)
++                for index, verdict in located.items():
++                    refused.setdefault(index, verdict)
++                ran.append("d12")
++    gates = _outcomes.gates_after(gate, policy=policy, ran=ran)
++    return OutcomeRefusalPending(
++        gate=stage if stage != "candidate-validation" else gate,
++        operation_outcomes=_outcomes.outcomes(operations, refused, gates_not_run=gates),
++        before_model=CommittedText.from_text(before_text, media_type="application/yaml"),
++        proposal=proposal,
++    )
++
++
+ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
++    """Rule D-12 (provenance-and-modality.md): raise the first refusal, as always."""
++    refusals = _d12_refusals(before, candidate)
++    if refusals:
++        raise EvolutionError(refusals[0][2])
++
++
++def _d12_refusals(before: dict[str, Any], candidate: dict[str, Any]) -> list[tuple[Any, Any, str]]:
++    """Every D-12 refusal, in the order ``_enforce_d12`` has always met them, as
++    ``(host, constraint, message)`` (GO2). A refused constraint consumes nothing,
++    so collecting past the first refusal leaves every earlier verdict as it was."""
++    refusals: list[tuple[Any, Any, str]] = []
+     before_hosted = [
+         (host, canonical_json_text(item), item) for host, item in _constraints(before, hosted=True)
+     ]
+@@ -428,9 +523,10 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
+ 
+     for host, rendered, constraint in candidates:
+         if _contains_audit_key(constraint.get("provenance", {})):
+-            raise EvolutionError(
++            refusals.append((host, constraint, (
+                 "operation audit actor/origin/time fields cannot enter constraint provenance"
+-            )
++            )))
++            continue
+         if before_counts[rendered]:
+             before_counts[rendered] -= 1
+             continue
+@@ -442,13 +538,14 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
+         if not isinstance(provenance, dict):
+             provenance = {}
+         if source != "induced" and "induction" in provenance:
+-            raise EvolutionError("provenance.induction is allowed only under source induced (D-12)")
++            refusals.append((host, constraint, "provenance.induction is allowed only under source induced (D-12)"))
++            continue
+         if source == "induced":
+             if (status, modality) == ("proposed", "deontic"):
+                 if "reviewed_in" in provenance:
+-                    raise EvolutionError(
++                    refusals.append((host, constraint, (
+                         "new induced constraints cannot carry provenance.reviewed_in (D-12)"
+-                    )
++                    )))
+                 continue
+             if status == "confirmed":
+                 reviewed_in = provenance.get("reviewed_in")
+@@ -456,33 +553,40 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
+                 if isinstance(reviewed_in, str) and reviewed_in.strip() and claimable[predecessor]:
+                     claimable[predecessor] -= 1
+                     continue
+-                raise EvolutionError(
++                refusals.append((host, constraint, (
+                     "induced constraints become confirmed only as a reviewed status change "
+                     "of an existing proposed induced constraint (D-12)"
+-                )
+-            raise EvolutionError("new induced constraints must be proposed/deontic (D-12)")
++                )))
++                continue
++            refusals.append((host, constraint, "new induced constraints must be proposed/deontic (D-12)"))
++            continue
+         if source == "llm-inferred":
+             if (status, modality) != ("proposed", "deontic"):
+-                raise EvolutionError(
++                refusals.append((host, constraint, (
+                     "new llm-inferred constraints must remain proposed/deontic (D-12)"
+-                )
++                )))
++                continue
+         elif source in ("sample", "common-sense"):
+             # VG2 (issue 218): row evidence and library evidence, as the growth
+             # document has the host write them; never confirmed, never alethic.
+             if (status, modality) != ("proposed", "deontic"):
+-                raise EvolutionError(
++                refusals.append((host, constraint, (
+                     "new sample and common-sense constraints must be proposed/deontic (D-12)"
+-                )
++                )))
++                continue
+         elif source == "user-supplied":
+             if status != "confirmed":
+-                raise EvolutionError(
++                refusals.append((host, constraint, (
+                     "owner-approved user-supplied constraints must be confirmed (D-12)"
+-                )
++                )))
++                continue
+         else:
+-            raise EvolutionError(
++            refusals.append((host, constraint, (
+                 "new or changed constraints must be llm-inferred/proposed/deontic "
+                 "or user-supplied/confirmed (D-12)"
+-            )
++            )))
++            continue
++    return refusals
+ 
+ 
+ def _json_ready(value: Any) -> Any:
+@@ -1351,6 +1455,23 @@ def read_evolution_preview(
+     )
+ 
+ 
++def read_evolution_outcome_report(
++    path: str | Path,
++    *,
++    anchor: str | Path | None = None,
++    relative: str | None = None,
++) -> EvolutionOutcomeReport:
++    """Read one bounded outcome report (GO2); any other document is refused."""
++
++    return _read_evolution_claim(
++        path,
++        label="evolution outcome report",
++        reader=read_evolution_outcome_report_document,
++        anchor=anchor,
++        relative=relative,
++    )
++
++
+ def read_evolution_intent(
+     path: str | Path,
+     *,
+@@ -1542,9 +1663,15 @@ class EvolutionService:
+         check_population: str | None = None,
+         expected_population_sha256: str | None = None,
+         previous_includes=None,
++        operation_outcomes: bool = False,
+     ) -> EvolutionPreview:
+         """Validate and bind a proposal without changing any publication leaf.
+ 
++        With ``operation_outcomes=True`` (GO2) the preview carries one outcome
++        row per operation; when a gate refuses the proposal after the current
++        model's bytes are read, the refusal raised is unchanged and carries
++        ``outcome_refusal`` (gate, rows, before model) for the outcome report.
++
+         With ``policy="additive"`` the preview also carries the additive
+         policy's verdict (MG2): ``populated_args``, the effective ``populated``
+         set and ``policy_issues``. Issues do not raise here; the preview is
+@@ -1604,42 +1731,56 @@ class EvolutionService:
+         # a refusal.
+         from ._includes import enforce_ownership, provided_history
+ 
+-        history = _include_input(provided_history, proposal, previous_includes)
+-        before_loaded_model, before_document = _load_model_document(
+-            before_bytes,
+-            label="current model",
+-            model_path=self._model_path,
+-            historical=history,
+-        )
+-
+-        # Before the CANDIDATE is validated, deliberately. The gate reads only
+-        # the current model and the proposal's declared locators, so its answer
+-        # never depends on the candidate -- and running it later would make its
+-        # commonest case unreachable. Renaming a fact type an operation
+-        # references cannot produce a VALID candidate without also editing that
+-        # operation, which is itself gated; checking the candidate's form first
+-        # would therefore answer "your candidate is invalid, go fix the
+-        # operations", sending the author straight into the other half of the
+-        # same gate.
+-        if before_loaded_model.includes:
+-            if proposal.linked_projects:
+-                raise EvolutionIncludeError('include:unsupported-route: linked project evolution')
+-            _include_input(enforce_ownership, before_loaded_model, before_document, proposal.operations)
+-        _enforce_operations_gate(before_document, proposal)
+-
+-        placed: list[tuple[int, str | None, list[Any], Any]] = []
+-        if before_loaded_model.includes:
+-            candidate_model, candidate_document, validation, declared_document = self._include_candidate(
+-                proposal, before_loaded_model, before_document, placed)
+-        else:
+-            candidate_model, candidate_document, validation = self._validated_candidate(
+-                proposal.candidate_model,
+-                declared_references=before_loaded_model.reference_populations,
++        stage = "current-model"
++        before_document = None
++        try:
++            history = _include_input(provided_history, proposal, previous_includes)
++            before_loaded_model, before_document = _load_model_document(
++                before_bytes,
++                label="current model",
++                model_path=self._model_path,
++                historical=history,
+             )
+-            declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
+-            if declared_document != candidate_document:
+-                raise EvolutionError("declared operations do not equal the canonical candidate model")
+-        _enforce_d12(before_document, candidate_document)
++
++            # Before the CANDIDATE is validated, deliberately. The gate reads only
++            # the current model and the proposal's declared locators, so its answer
++            # never depends on the candidate -- and running it later would make its
++            # commonest case unreachable. Renaming a fact type an operation
++            # references cannot produce a VALID candidate without also editing that
++            # operation, which is itself gated; checking the candidate's form first
++            # would therefore answer "your candidate is invalid, go fix the
++            # operations", sending the author straight into the other half of the
++            # same gate.
++            stage = "include-ownership"
++            if before_loaded_model.includes:
++                if proposal.linked_projects:
++                    raise EvolutionIncludeError('include:unsupported-route: linked project evolution')
++                _include_input(enforce_ownership, before_loaded_model, before_document, proposal.operations)
++            stage = "operations-gate"
++            _enforce_operations_gate(before_document, proposal)
++
++            stage = "candidate-validation"
++            placed: list[tuple[int, str | None, list[Any], Any]] = []
++            if before_loaded_model.includes:
++                candidate_model, candidate_document, validation, declared_document = self._include_candidate(
++                    proposal, before_loaded_model, before_document, placed)
++            else:
++                candidate_model, candidate_document, validation = self._validated_candidate(
++                    proposal.candidate_model,
++                    declared_references=before_loaded_model.reference_populations,
++                )
++                stage = "replay-equality"
++                declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
++                if declared_document != candidate_document:
++                    raise EvolutionError("declared operations do not equal the canonical candidate model")
++            stage = "d12"
++            _enforce_d12(before_document, candidate_document)
++        except EvolutionError as error:
++            if operation_outcomes:
++                error.outcome_refusal = _outcome_refusal(
++                    error, stage, proposal, before_text, before_document,
++                    model_path=self._model_path, policy=policy is not None)
++            raise
+         # After the gate (18), candidate validation, replay equality and D-12
+         # (all 3), so a preview written with issues is otherwise valid (spec D6).
+         # The population option is judged here, after every proposal refusal
+@@ -1669,6 +1810,14 @@ class EvolutionService:
+             if shape_report
+             else {}
+         )
++        # GO2: read by nothing below; a policy issue is its operation's refusal.
++        outcome_values = (
++            {"operation_outcomes": _outcomes.outcomes(proposal.operations, {
++                issue.operation_index: ("refused-by-policy", issue.cell)
++                for issue in policy_values.get("policy_issues") or ()})}
++            if operation_outcomes
++            else {}
++        )
+ 
+         verbalization_text = render_model_verbalization(candidate_model)
+         before_verbalization_text = render_model_verbalization(before_loaded_model)
+@@ -1704,6 +1853,7 @@ class EvolutionService:
+             # digest body, so a policy-free preview keeps its digest (MG-R1).
+             **policy_values,
+             **shape_values,
++            **outcome_values,
+             **(_include_snapshot_values(before_loaded_model, candidate_model)
+                if before_loaded_model.includes else {}),
+         }
+diff --git a/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md b/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+index dad533f3..65539147 100644
+--- a/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
++++ b/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+@@ -221,7 +221,8 @@ the policy existed; `accepted_blast_radius_sha256` keeps writing `null`. Readers
+ are unchanged. Under `--shape-report` the preview carries one more optional field, `shape_matches`
+ ("Shape report" below), omitted by the same rule. Under `--check-population` it carries
+ `population_check` ("Population check" below), omitted by the same rule; a GND reader older than
+-that field refuses a preview that carries it.
++that field refuses a preview that carries it. Under `--operation-outcomes` it carries
++`operation_outcomes` ("Operation outcomes" below), omitted by the same rule.
+ 
+ ### Additive policy
+ 
+@@ -396,6 +397,39 @@ Preview, apply and finalize parse every model as `gnd validate` does, including
+ timestamp, binary, a set, a non-finite float, a non-core tag or a non-string key) exits `3`, and the
+ refusal names the value's path.
+ 
++### Operation outcomes
++
++`gnd evolve preview --operation-outcomes` names an outcome for every operation of the proposal,
++one row per operation in proposal order: `operation_index`, `operation_id`, the locator
++`reference`, a `verdict`, a value-free `detail` (ids, a rule id or the gate's fixed refusal text,
++never a constraint or sample value) and `gates_not_run`.
++
++| `verdict` | Meaning |
++|---|---|
++| `admitted` | Every gate ran over the operation and none refused it |
++| `refused-by-policy` | The additive policy refused it; `detail` is its matrix cell, the same row as in `policy_issues` |
++| `refused-by-validation` | A validation issue's path names an element this operation adds or changes; `detail` is the rule id and path |
++| `refused-by-d12` | D-12 refused the constraint this operation adds or changes; `detail` is the D-12 refusal |
++| `dropped-with` | It needs an element a refused operation adds (a constraint's host, a role player, a supertype, a reference value type) |
++| `unassessed` | A gate that would read it did not run, or a refusal could not be tied to an operation; `gates_not_run` names the gates, in the preview's order: `current-model`, `include-ownership`, `operations-gate`, `candidate-validation`, `semantic-validation`, `replay-equality`, `d12`, `policy` |
++
++When the preview is written, the rows are in `operation_outcomes` and every refusal is the
++policy's. When a gate refuses the proposal after the current model is read, no preview is
++written, the refusal and its exit are exactly as without the option, and `--outcome-report FILE`
++(beneath `ROOT`, never the `--out` path; requires `--operation-outcomes`) receives an
++`evolution-outcome-report` document: `schema_version` `1`, `kind`, `proposal_id`,
++`proposal_sha256`, `before_model` (as the preview has it), `refusal` (`gate`, `exit`, `message`
++as printed) and `operation_outcomes`. A candidate-validation refusal is tied to operations through
++its issues' paths, and D-12 then runs over the parsed candidate too, so its refusals are named in
++the same report. Every other gate refuses the proposal whole: each operation is `unassessed`.
++`admitted` in a report means every gate ran; with no policy requested the policy is not counted.
++A refusal before the current model is read (a stale model identity, an incomplete evolution)
++writes no report.
++
++`apply` refuses a report given as its preview (exit `3`). It takes no outcome option; it rebuilds
++the rows exactly when the reviewed preview carries `operation_outcomes`, so an edited row exits
++`11`. A preview made without the option is byte-identical to one made before it existed.
++
+ ### BlastRadiusEntry
+ 
+ Each unique stable `reference` appears once with:
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index 50e2a5e9..7884c3ee 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -18,6 +18,7 @@ QUERY_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/query-successor.json',
+     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/query-successor.json',
+     ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json',
++    ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json',
+ ]
+ 
+ 
+@@ -155,6 +156,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/pyrel-rules-coverage/evidence/close/dynamic-query-successor.json',
+     # AC1's delta, re-chained after pyrel-rules-coverage at the main integration (AC1's own file is history)
+     ROOT / '.gnd-planning/milestones/aggregate-count-certificates/evidence/main-integration/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/support/rf9_ci_sources.py b/tests/support/rf9_ci_sources.py
+index 297a528b..b950a79e 100644
+--- a/tests/support/rf9_ci_sources.py
++++ b/tests/support/rf9_ci_sources.py
+@@ -21,6 +21,8 @@ PHASE_SUCCESSORS = (
+     EVIDENCE.parents[4] / '.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG2/source-successors.json',
+     # reviewed-vocabulary-growth VG3 (2026-11-23): the include attribution line of gnd validate.
+     EVIDENCE.parents[4] / '.gnd-planning/milestones/reviewed-vocabulary-growth/evidence/VG3/source-successors.json',
++    # growth-round-outcomes GO2 (2026-11-23): the outcome options of evolve preview and apply.
++    EVIDENCE.parents[4] / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/source-successors.json',
+ )
+ 
+ 
+diff --git a/tests/test_go2_operation_outcomes.py b/tests/test_go2_operation_outcomes.py
+new file mode 100644
+index 00000000..9b9e6058
+--- /dev/null
++++ b/tests/test_go2_operation_outcomes.py
+@@ -0,0 +1,305 @@
++"""GO2: an outcome for every operation of a proposal (#227).
++
++Spec: .gnd-planning/milestones/growth-round-outcomes/notes/phase-GO2-spec.md (§8, T1-T10).
++Verdicts are walked from the verdict table, one committed case per word (GO2-C2),
++not from the code.
++"""
++
++from __future__ import annotations
++
++import json
++import time
++from pathlib import Path
++from typing import Any
++
++import pytest
++import test_evolve_additive_policy as policy
++from support.cli_runner import run_main
++
++from gnd.evolve import EvolutionError, EvolutionOutcomeReport, read_evolution_outcome_report
++from gnd.evolve import outcomes as _outcomes
++
++TEXT = policy.BASE.read_text(encoding="utf-8")
++HOST = "order_ships_to_region"
++
++
++def _op(kind: str, locator: Any, after: Any = None, oid: str = "op", before: Any = None) -> Any:
++    return policy._op(kind, locator, after=after, before=before, operation_id=oid)
++
++
++ADD_OBJECT = _op("add", policy._element("object_types", "region"), policy.NEW_OBJECT, "op-object")
++ADD_FACT = _op("add", policy._element("fact_types", HOST), policy.NEW_FACT, "op-fact")
++
++
++def _constraint(oid: str = "op-constraint", **changes: Any) -> Any:
++    body = {**policy.NEW_CONSTRAINT, **changes}
++    if "roles" in changes:
++        body.pop("role")
++    return _op("add", policy._constraint_locator(HOST, None, body["type"]), body, oid)
++
++
++def _invalid_object(object_id: str, oid: str) -> Any:
++    """A value type with no primitive: refused by the structural layer at its own path."""
++    return _op("add", policy._element("object_types", object_id),
++               {"id": object_id, "name": object_id.title(), "kind": "value"}, oid)
++
++
++def _refused(tmp_path: Path, operations: tuple[Any, ...], **options: Any) -> Any:
++    with pytest.raises(EvolutionError) as caught:
++        policy._service(tmp_path, TEXT).preview(policy._proposal(TEXT, operations),
++                                                operation_outcomes=True, **options)
++    return caught.value
++
++
++def _rows(pending: Any) -> list[tuple[str, tuple[str, ...]]]:
++    return [(row.verdict, row.gates_not_run) for row in pending.operation_outcomes]
++
++
++# --- T1 (GO2-C1): four operations, one refused by validation -------------------------------------
++
++
++def _four(tmp_path: Path) -> dict[str, Path]:
++    return policy._cli_workspace(tmp_path, (ADD_OBJECT, ADD_FACT, _invalid_object("bad", "op-bad"),
++                                            _constraint(status="confirmed")))
++
++
++def test_t1_the_report_names_all_four_and_the_refusal_is_unchanged(tmp_path: Path) -> None:
++    plain = _four(tmp_path / "plain")
++    without = run_main(policy._preview_argv(plain))
++    paths = _four(tmp_path / "with")
++    report = paths["workspace"] / "outcomes.json"
++    result = run_main([*policy._preview_argv(paths), "--operation-outcomes", "--outcome-report", str(report)])
++    assert result.returncode == without.returncode == 3
++    assert result.stderr.replace(b"/with/", b"/plain/") == without.stderr
++    assert not paths["preview"].exists()
++    document = read_evolution_outcome_report(report)
++    assert isinstance(document, EvolutionOutcomeReport)
++    assert document.refusal.exit == 3 and document.refusal.gate == "candidate-validation"
++    assert f"EVOLUTION PREVIEW REFUSED (3): {document.refusal.message}".encode() in result.stderr
++    rows = [(row.operation_id, row.verdict) for row in document.operation_outcomes]
++    assert rows == [("op-object", "unassessed"), ("op-fact", "unassessed"), ("op-bad", "refused-by-validation"),
++                    ("op-constraint", "unassessed")]
++    # The structural layer failed, so the semantic layer and the replay did not run; D-12 ran (GO2-D2).
++    assert document.operation_outcomes[0].gates_not_run == ("semantic-validation", "replay-equality")
++    assert document.before_model.sha256 == json.loads(paths["proposal"].read_text())["expected_model_sha256"]
++
++
++def test_t1_the_report_is_written_only_when_asked(tmp_path: Path) -> None:
++    paths = _four(tmp_path)
++    assert run_main([*policy._preview_argv(paths), "--operation-outcomes"]).returncode == 3
++    assert sorted(p.name for p in paths["workspace"].iterdir()) == ["model.orm.yaml", "model.verbalization.txt",
++                                                                    "proposal.json", "records"]
++    result = run_main([*policy._preview_argv(paths), "--outcome-report", str(paths["workspace"] / "o.json")])
++    assert result.returncode == 3 and b"--outcome-report requires --operation-outcomes" in result.stderr
++    result = run_main([*policy._preview_argv(paths), "--operation-outcomes", "--outcome-report", str(paths["preview"])])
++    assert result.returncode == 3 and b"must not be the preview output path" in result.stderr
++
++
++# --- T2 (GO2-C2): one case per verdict word, and two faults ---------------------------------------
++
++
++def test_t2_admitted(tmp_path: Path) -> None:
++    preview = policy._service(tmp_path, TEXT).preview(
++        policy._proposal(TEXT, (ADD_OBJECT, ADD_FACT)), operation_outcomes=True)
++    assert [row.verdict for row in preview.operation_outcomes] == ["admitted", "admitted"]
++
++
++def test_t2_refused_by_policy_in_the_preview(tmp_path: Path) -> None:
++    refused = _op("add", policy._constraint_locator(policy.POPULATED, None, "mandatory"), policy.NEW_CONSTRAINT, "op-p")
++    preview = policy._service(tmp_path, TEXT).preview(
++        policy._proposal(TEXT, (ADD_OBJECT, refused)), policy="additive", operation_outcomes=True)
++    assert [(r.verdict, r.detail) for r in preview.operation_outcomes] == [
++        ("admitted", ""), ("refused-by-policy", "constraint.populated.add")]
++    assert [issue.operation_index for issue in preview.policy_issues] == [1]
++
++
++def test_t2_refused_by_validation_and_dropped_with(tmp_path: Path) -> None:
++    broken = dict(policy.NEW_FACT, roles=[{"object_type": "nowhere", "role_name": "region"},
++                                          {"object_type": "order", "role_name": "order"}])
++    fact = _op("add", policy._element("fact_types", HOST), broken, "op-fact")
++    error = _refused(tmp_path, (ADD_OBJECT, fact, _constraint(status="confirmed")))
++    assert error.outcome_refusal.gate == "semantic-validation"
++    assert [row.verdict for row in error.outcome_refusal.operation_outcomes] == [
++        "unassessed", "refused-by-validation", "dropped-with"]
++    assert error.outcome_refusal.operation_outcomes[2].detail == f"fact_types[{HOST}] is refused"
++
++
++def test_t2_unassessed_names_the_gates_not_run(tmp_path: Path) -> None:
++    error = _refused(tmp_path, (ADD_OBJECT, _invalid_object("bad", "op-bad")), policy="additive")
++    assert _rows(error.outcome_refusal)[0] == (
++        "unassessed", ("semantic-validation", "replay-equality", "policy"))
++
++
++def test_t2_two_faults_in_two_operations_are_both_named(tmp_path: Path) -> None:
++    error = _refused(tmp_path, (_invalid_object("bad", "op-1"), ADD_OBJECT, _invalid_object("worse", "op-3")))
++    assert [row.verdict for row in error.outcome_refusal.operation_outcomes] == [
++        "refused-by-validation", "unassessed", "refused-by-validation"]
++    error = _refused(tmp_path / "d12", (ADD_OBJECT, ADD_FACT, _constraint("op-c1", source="explicit"),
++                                        _constraint("op-c2", type="uniqueness", roles=["order"], source="explicit")))
++    assert [row.verdict for row in error.outcome_refusal.operation_outcomes] == [
++        "admitted", "admitted", "refused-by-d12", "refused-by-d12"]
++
++
++def test_t2_the_printed_refusal_is_the_first_as_today(tmp_path: Path) -> None:
++    operations = (ADD_OBJECT, ADD_FACT, _constraint("op-c1", source="explicit"),
++                  _constraint("op-c2", type="uniqueness", roles=["order"], source="llm-inferred",
++                              rationale="r", provenance={"rationale_world_fact": "x"}))
++    with pytest.raises(EvolutionError) as without:
++        policy._service(tmp_path / "a", TEXT).preview(policy._proposal(TEXT, operations))
++    error = _refused(tmp_path / "b", operations)
++    assert str(error) == str(without.value)
++    assert type(error) is type(without.value)
++
++
++# --- T3 (GO2-C7, VG2): every D-12 family on the right row ------------------------------------------
++
++
++@pytest.mark.parametrize(("changes", "message"), [
++    ({"source": "explicit"}, "new or changed constraints must be"),
++    ({"source": "llm-inferred", "status": "confirmed", "rationale": "r",
++      "provenance": {"rationale_world_fact": "x"}}, "new llm-inferred constraints"),
++    ({"source": "sample", "status": "confirmed", "rationale": "r", "provenance": {"spans": []}},
++     "new sample and common-sense constraints"),
++    ({"source": "common-sense", "status": "proposed", "modality": "alethic", "rationale": "r",
++      "provenance": {"library_entry": "x"}}, "new sample and common-sense constraints"),
++], ids=["explicit", "llm-inferred", "sample", "common-sense"])
++def test_t3_each_d12_refusal_is_located(tmp_path: Path, changes: dict[str, Any], message: str) -> None:
++    error = _refused(tmp_path, (ADD_OBJECT, ADD_FACT, _constraint(**changes)))
++    assert str(error).startswith(message)
++    assert error.outcome_refusal.gate == "d12"
++    rows = error.outcome_refusal.operation_outcomes
++    assert [row.verdict for row in rows] == ["admitted", "admitted", "refused-by-d12"]
++    assert rows[2].detail.startswith(message)
++
++
++def test_t3_a_d12_refusal_under_a_policy_leaves_the_rest_unassessed(tmp_path: Path) -> None:
++    error = _refused(tmp_path, (ADD_OBJECT, ADD_FACT, _constraint(source="explicit")), policy="additive")
++    assert _rows(error.outcome_refusal) == [("unassessed", ("policy",)), ("unassessed", ("policy",)),
++                                            ("refused-by-d12", ())]
++
++
++# --- whole-proposal refusals (T2, spec r2 item 2) ---------------------------------------------------
++
++
++def test_t2_a_gated_proposal_is_refused_whole(tmp_path: Path) -> None:
++    import test_model_v2 as v2
++
++    before_text = v2.OPERATIONS_MODEL.read_text(encoding="utf-8")
++    document = v2._operations_doc()
++    referenced = next(ft for ft in document["fact_types"] if ft["id"] == "work_item_has_state")
++    renamed = dict(referenced, id="work_item_in_state")
++    proposal, _ = v2._proposal(before_text, document, (
++        policy._op("rename", policy._element("fact_types", "work_item_has_state"), before=referenced, after=renamed),))
++    with pytest.raises(EvolutionError) as caught:
++        v2._service(tmp_path / "ws", before_text).preview(proposal, operation_outcomes=True)
++    pending = caught.value.outcome_refusal
++    assert pending.gate == "operations-gate"
++    assert _rows(pending) == [("unassessed", ("candidate-validation", "semantic-validation",
++                                              "replay-equality", "d12"))]
++
++
++def test_t2_vg4_repin_on_an_unattended_root_is_refused_whole(tmp_path: Path) -> None:
++    import test_vg4_seeded_growth_rounds as vg4
++
++    root = vg4.cases.write(tmp_path / "ws")
++    with pytest.raises(EvolutionError, match="evolve:unattended-repin: ") as caught:
++        vg4._service(root).preview(vg4._proposal(root, (vg4._repin(root),), replay=False), operation_outcomes=True)
++    pending = caught.value.outcome_refusal
++    assert pending.gate == "include-ownership"
++    assert [row.verdict for row in pending.operation_outcomes] == ["unassessed"]
++
++
++# --- T4 (GO2-C3): a preview without outcomes keeps its bytes -----------------------------------------
++
++
++def test_t4_without_the_flag_nothing_changes(tmp_path: Path) -> None:
++    proposal = policy._proposal(TEXT, (ADD_OBJECT, ADD_FACT))
++    plain = policy._service(tmp_path / "a", TEXT).preview(proposal)
++    with_outcomes = policy._service(tmp_path / "b", TEXT).preview(proposal, operation_outcomes=True)
++    plain_document = plain.model_dump(mode="json")
++    assert "operation_outcomes" not in plain_document
++    outcome_document = with_outcomes.model_dump(mode="json")
++    assert [row["verdict"] for row in outcome_document.pop("operation_outcomes")] == ["admitted", "admitted"]
++    assert {k: v for k, v in outcome_document.items() if k != "preview_sha256"} == {
++        k: v for k, v in plain_document.items() if k != "preview_sha256"}
++    assert plain.proposal_sha256 == with_outcomes.proposal_sha256
++
++
++# --- T5, T7 (GO2-C5, C6): apply and the outcomes ------------------------------------------------------
++
++
++def test_t5_apply_refuses_an_outcome_report(tmp_path: Path) -> None:
++    paths = _four(tmp_path)
++    report = paths["workspace"] / "outcomes.json"
++    run_main([*policy._preview_argv(paths), "--operation-outcomes", "--outcome-report", str(report)])
++    result = run_main(policy._apply_argv({**paths, "preview": report}))
++    assert result.returncode == 3, result.stderr
++    assert b"is malformed" in result.stderr
++
++
++def test_t7_apply_replays_the_outcomes_setting(tmp_path: Path) -> None:
++    paths = policy._cli_workspace(tmp_path / "a", (ADD_OBJECT, ADD_FACT))
++    assert run_main([*policy._preview_argv(paths), "--operation-outcomes"]).returncode == 0
++    assert json.loads(paths["preview"].read_text())["operation_outcomes"]
++    assert run_main(policy._apply_argv(paths)).returncode == 0
++    from gnd.evolve import canonical_sha256
++
++    paths = policy._cli_workspace(tmp_path / "b", (ADD_OBJECT, ADD_FACT))
++    assert run_main([*policy._preview_argv(paths), "--operation-outcomes"]).returncode == 0
++    document = json.loads(paths["preview"].read_text())
++    document["operation_outcomes"][0]["detail"] = "edited"
++    document["preview_sha256"] = canonical_sha256({k: v for k, v in document.items() if k != "preview_sha256"})
++    paths["preview"].write_text(json.dumps(document, indent=2, sort_keys=True) + "\n")
++    result = run_main(policy._apply_argv(paths))
++    assert result.returncode == 11, result.stderr
++
++
++# --- T6 (GO2-C4): value-free ----------------------------------------------------------------------
++
++
++def test_t6_no_constraint_value_reaches_an_outcome(tmp_path: Path) -> None:
++    secret = "SECRET-VALUE-7731"
++    value = _op("add", policy._constraint_locator(None, None, "value"),
++                {"type": "value", "object_type": "region", "allowed": [secret], "source": "explicit",
++                 "status": "confirmed", "modality": "alethic", "rationale": "r",
++                 "provenance": {"user_quote": secret}}, "op-value")
++    error = _refused(tmp_path, (ADD_OBJECT, value))
++    text = json.dumps([row.model_dump(mode="json") for row in error.outcome_refusal.operation_outcomes])
++    assert secret not in text and "refused-by-d12" in text
++
++
++# --- T8: the report reader is total ----------------------------------------------------------------
++
++
++@pytest.mark.parametrize("payload", [
++    b"[" * 10_000 + b"]" * 10_000,
++    b'{"schema_version": ' + b"9" * 5_000 + b"}",
++    b'{"schema_version": NaN}',
++    b'{"schema_version": 1, "kind": "evolution-outcome-report", "extra": 1}',
++    b'{"a": "' + b"x" * (11 * 1024 * 1024) + b'"}',
++    b"not json",
++], ids=["deep", "long-int", "nan", "extra-key", "oversize", "not-json"])
++def test_t8_a_hostile_report_is_a_named_refusal(tmp_path: Path, payload: bytes) -> None:
++    path = tmp_path / "report.json"
++    path.write_bytes(payload)
++    with pytest.raises(EvolutionError):
++        read_evolution_outcome_report(path, anchor=tmp_path, relative="report.json")
++
++
++# --- T9: the locator is linear -----------------------------------------------------------------------
++
++
++def test_t9_the_locator_over_two_thousand_operations_and_issues() -> None:
++    from gnd.errors import ValidationIssue
++
++    n = 2_000
++    operations = tuple(_op("add", policy._element("object_types", f"t{i}"),
++                           {"id": f"t{i}", "name": f"T{i}", "kind": "value"}, f"op-{i}") for i in range(n))
++    candidate = {"object_types": [operation.after for operation in operations]}
++    issues = [ValidationIssue(path=f"$.object_types[{i}]", message="m", rule_id="jsonschema:required")
++              for i in range(n)]
++    start = time.perf_counter()
++    refused, complete = _outcomes.locate_validation_issues(issues, candidate, operations)
++    rows = _outcomes.outcomes(operations, refused)
++    assert time.perf_counter() - start < 1.0
++    assert complete and len(refused) == n and {row.verdict for row in rows} == {"refused-by-validation"}
+diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
+index 71488285..e4af2650 100644
+--- a/tests/test_rf1_cli_pins.py
++++ b/tests/test_rf1_cli_pins.py
+@@ -368,7 +368,14 @@ def _flatten_successor():
+ 
+ 
+ def _include_preview_successor():
+-    """Restore the frozen predecessor, then add MC3's one literal repeatable flag."""
++    """MC3's successor, then GO2's two outcome options (growth-round-outcomes, #227)."""
++    return _include_preview_reference(outcomes=True)
++
++
++def _include_preview_reference(*, outcomes):
++    """Restore the frozen predecessor, then add MC3's one literal repeatable flag;
++    with ``outcomes``, also GO2's --operation-outcomes and --outcome-report,
++    declared right after --shape-report as the production parser declares them."""
+     base = copy.deepcopy(json.loads(golden_path('cli', 'tree').read_text())['subcommands']['evolve']['subcommands']['preview'])
+     old = CHECK_POPULATION_SUCCESSOR['preview']
+     base['actions'].insert(old['action_index'], copy.deepcopy(old['action']))
+@@ -385,6 +392,21 @@ def _include_preview_successor():
+                            help='authenticate old bytes for a repinned include from PATH beneath ROOT; repeatable')
+     reference._actions.append(format_action)
+     reference._optionals._group_actions.append(format_action)
++    if outcomes:
++        added = [
++            reference.add_argument(
++                '--operation-outcomes', action='store_true',
++                help='name an outcome for every operation of the proposal (admitted, refused and why, or unassessed)'),
++            reference.add_argument(
++                '--outcome-report', default=None, metavar='FILE',
++                help='when the preview is refused, write every operation\'s outcome to FILE beneath ROOT; '
++                     'requires --operation-outcomes'),
++        ]
++        for container in (reference._actions, reference._optionals._group_actions):
++            for action in added:
++                container.remove(action)
++            anchor = next(i for i, action in enumerate(container) if '--shape-report' in action.option_strings)
++            container[anchor + 1:anchor + 1] = added
+     after = _walk(reference, ('gnd', 'evolve', 'preview'), {})
+     after['listed_help'] = base['listed_help']
+     def probe(argv):
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index 50f0a313..94b8c49d 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -385,6 +385,10 @@
+       "lane": "evolve",
+       "layer": "lanes"
+     },
++    "gnd.evolve.outcomes": {
++      "lane": "evolve",
++      "layer": "lanes"
++    },
+     "gnd.evolve.policy": {
+       "lane": "evolve",
+       "layer": "lanes"

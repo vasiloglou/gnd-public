@@ -18,6 +18,7 @@ QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/query-successor.json',
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/query-successor.json',
     ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json',
+    ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json',
 ]
 
 
@@ -155,6 +156,8 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/pyrel-rules-coverage/evidence/close/dynamic-query-successor.json',
     # AC1's delta, re-chained after pyrel-rules-coverage at the main integration (AC1's own file is history)
     ROOT / '.gnd-planning/milestones/aggregate-count-certificates/evidence/main-integration/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO3-GO5/dynamic-query-successor.json',
 ]
 
 

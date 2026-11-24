@@ -419,6 +419,18 @@ Record Claude Code running a GND judgement skill over its fixture, every run kep
 | `finish(out, skill) -> int` | function | 280 | The leak search, then the manifest. On a hit the run folder is removed and only results.json stays. |
 | `main() -> int` | function | 299 | (no docstring) |
 
+## tools.record_lr3_reference_run — `tools/record_lr3_reference_run.py`
+Components: unassigned
+Record LR3's one live reading run over the literature reference set.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `SpendError` | class(RuntimeError) | 84 | (no docstring) |
+| `ClaudeCliProducer` | class | 88 | A reading producer that asks Claude Sonnet through the ``claude`` CLI, one call per section. |
+| `ClaudeCliProducer.produce(self, call) -> dict` | method | 124 | (no docstring) |
+| `record(out, root, *, command) -> dict` | function | 144 | (no docstring) |
+| `main(argv) -> int` | function | 172 | (no docstring) |
+
 ## tools.record_plan_apps — `tools/record_plan_apps.py`
 Components: unassigned
 Record real models answering the five plan apps' questions, every run kept.
@@ -526,14 +538,14 @@ RF1 characterization-pin tool (code-refactoring milestone, phase RF1).
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `ToolError` | class(Exception) | 57 | (no docstring) |
-| `load_table(path) -> dict` | function | 91 | (no docstring) |
-| `validate_rows(root, source, rows) -> None` | function | 163 | (no docstring) |
-| `collect(root, tests, env, source) -> set[str]` | function | 174 | (no docstring) |
-| `validate_coverage(rows, exempt, collected) -> None` | function | 186 | (no docstring) |
-| `mutate(args) -> int` | function | 255 | (no docstring) |
-| `capture(args) -> int` | function | 315 | (no docstring) |
-| `merge(args) -> int` | function | 333 | (no docstring) |
-| `main(argv) -> int` | function | 370 | (no docstring) |
+| `load_table(path) -> dict` | function | 132 | (no docstring) |
+| `validate_rows(root, source, rows) -> None` | function | 193 | (no docstring) |
+| `collect(root, tests, env, source) -> set[str]` | function | 204 | (no docstring) |
+| `validate_coverage(rows, exempt, collected) -> None` | function | 216 | (no docstring) |
+| `mutate(args) -> int` | function | 285 | (no docstring) |
+| `capture(args) -> int` | function | 345 | (no docstring) |
+| `merge(args) -> int` | function | 363 | (no docstring) |
+| `main(argv) -> int` | function | 400 | (no docstring) |
 
 ## tools.run_gnd_review_panel — `tools/run_gnd_review_panel.py`
 Components: unassigned
@@ -584,4 +596,4 @@ Execute explicitly marked, trusted repository tutorial blocks as written.
 | `require_runtime(lane, python, env) -> dict` | function | 83 | (no docstring) |
 | `run_pages(pages, cwd, python, lane, *, receipts, group) -> int` | function | 122 | (no docstring) |
 | `groups(root) -> dict[str, list[Path]]` | function | 200 | (no docstring) |
-| `main()` | function | 233 | (no docstring) |
+| `main()` | function | 234 | (no docstring) |

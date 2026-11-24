@@ -1,0 +1,31 @@
+{
+ "schema_version": 1,
+ "kind": "spec-results-delta",
+ "spec": {
+  "path": ".gnd-planning/milestones/literature-reading-reference/notes/literature-reading-reference-plan.md",
+  "sha256": "6dcf10929081330322d385c83cc3c21347a7ab6bc54c270ed44663eef7654098",
+  "media_type": "text/markdown"
+ },
+ "results": {
+  "path": ".gnd-planning/milestones/literature-reading-reference/notes/close-results.md",
+  "sha256": "2d9c6857c29b5c5af905260cfb2ac584a1b385853fa2f42d7027a060f0615ffd",
+  "media_type": "text/markdown"
+ },
+ "delta": {
+  "path": ".gnd-planning/milestones/literature-reading-reference/notes/close-delta.md",
+  "sha256": "5bba9edce2a805b0fec692dee0eee352b1903b3f388f1c26c7d2b2bb19edcb2f",
+  "media_type": "text/markdown"
+ },
+ "rubric": {
+  "name": "literature-reading-reference milestone close",
+  "criteria": [
+   "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if the delivered code or pages do not do what the plan's goal predicates and criteria claim, or a claimed result is not supported by the code, tests and records at this commit. \"No concerns, and here is what I checked\" is a valid answer.",
+   "The spec is the approved plan (r4) with its close amendments A1 to A5 in section 13; rows tagged (o) and the owner rulings quoted in section 8 are not re-argued. Check whether each goal predicate and each criterion LR1-C1 to LR3-C6 is met by docs/guides/documents.md, docs/reference/anchors.md, docs/literature/index.md, docs/literature/commands.md, src/gnd/examples/literature/reference_set.py, src/gnd/examples/literature/reference_fixture/, tools/record_lr3_reference_run.py and the tests tests/test_lr1_verify_failure_listing.py, tests/test_lr2_quote_scope.py and tests/test_lr3_reference_set.py, as close-results.md claims.",
+   "Check the delta: is every listed departure true, justified and recorded where it says; is any departure from the plan missing?",
+   "close-results.md says the last repair of each phase was read by no reviewer (LR1 60306a5c, LR2 45551cf1, LR3 aec93739). Read that code and those pages especially.",
+   "Check that the pages, the reference set README and notes/issue-reply.md state nothing the code, the recorded run or GND does not do, and present no figure as a claim about other corpora or models.",
+   "Every regular expression, string split, slice and special-case branch the milestone added handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads.",
+   "Every concern's evidence must quote one of the three named artifacts; cite code and tests by path and line in the observation."
+  ]
+ }
+}

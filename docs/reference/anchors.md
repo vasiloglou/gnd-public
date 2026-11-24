@@ -50,6 +50,16 @@ derivation rule, constraints, sample population and dependencies. The
 [constraint reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md)
 gives the matching rules.
 
+## Where a span may lie
+
+A span may lie anywhere in the document whose SHA-256 is `document_sha256`.
+GND has no notion of a section, or of the part of the document a model was
+shown. `block_id` and `unit_id` can record that for you, and GND does not
+check them. Which document a sidecar names is the producer's choice: a span
+outside it cannot bind, and is refused with `anchor:binding-mismatch`. The
+limit at the top of this page still holds: a bound span shows where a value
+occurs, not that the text supports the fact.
+
 ## Versions 1 and 2
 
 The two versions have the same keys and still bind one population to one

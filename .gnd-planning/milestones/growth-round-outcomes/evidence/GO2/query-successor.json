@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reason": "growth-round-outcomes GO2 (#227): a validation issue at a fact type's `.roles[i]` is tied to the operation that changed that role, so the locator reads the role's name from the candidate document's own entry; the candidate is the refused document, which no Model or ModelIndex holds. (r1 repair: the dependency walk that read `after.get('roles')` became one total walk over the `after` value.)",
+  "predecessor": ".gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json",
+  "predecessor_sha256": "8ecdf9575ee946d9e276fc8c96d68d403148b57c4880bbb9ef46747523577737",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_locate_path",
+      "element.get('roles')",
+      1
+    ]
+  ],
+  "result_distinct_rows": 294,
+  "result_occurrences": 362,
+  "original_metric_current": 305
+}

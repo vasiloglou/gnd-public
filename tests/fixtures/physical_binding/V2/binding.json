@@ -1,0 +1,54 @@
+{
+  "schema": "gnd-physical-binding/1",
+  "tables": {
+    "uni.student": {
+      "columns": {
+        "nr": {
+          "sql_type": "INTEGER",
+          "targets": [{"kind": "identifier", "object_type": "student"}]
+        },
+        "full_name": {"sql_type": "VARCHAR(200)"}
+      },
+      "primary_key": ["nr"]
+    },
+    "uni.course": {
+      "columns": {
+        "cd": {
+          "sql_type": "VARCHAR(10)",
+          "targets": [{"kind": "identifier", "object_type": "course"}]
+        },
+        "title": {"sql_type": "TEXT"}
+      },
+      "primary_key": ["cd"]
+    },
+    "uni.enrolled": {
+      "columns": {
+        "student_nr": {
+          "sql_type": "INTEGER",
+          "targets": [{"kind": "reference", "object_type": "student"}],
+          "references": {"table": "uni.student", "columns": ["nr"]}
+        },
+        "course_cd": {
+          "sql_type": "VARCHAR(10)",
+          "targets": [{"kind": "reference", "object_type": "course"}],
+          "references": {"table": "uni.course", "columns": ["cd"]}
+        }
+      },
+      "primary_key": ["student_nr", "course_cd"]
+    }
+  },
+  "roles": {
+    "student_has_name": {
+      "student": ["uni.student.nr"],
+      "name": ["uni.student.full_name"]
+    },
+    "course_has_title": {
+      "course": ["uni.course.cd"],
+      "title": ["uni.course.title"]
+    },
+    "student_takes_course": {
+      "student": [{"table": "uni.enrolled", "column": "student_nr"}],
+      "course": [{"table": "uni.enrolled", "column": "course_cd"}]
+    }
+  }
+}

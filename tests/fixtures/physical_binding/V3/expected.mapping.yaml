@@ -1,0 +1,91 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_mapping
+ontology_ref:
+  name: gnd_model
+  iri: ./ontology.yaml
+semantic_model_ref:
+  name: gnd_model_relational
+  iri: ./ontology.yaml.semantic_model.yaml
+concept_mappings:
+- concept: Country
+  object_mappings:
+  - expression: '"COUNTRY"."CD"'
+  link_mappings:
+  - object_mapping:
+      expression: '"COUNTRY"."CD"'
+    children:
+    - object_mapping:
+        concept: CountryName
+        expression: '"COUNTRY"."NAME"'
+      relationship: country_has_name
+- concept: State
+  object_mappings:
+  - referent_mappings:
+    - relationship: state_in_country
+      referent_mappings:
+      - relationship: gnd_reference
+        expression: '"STATE"."COUNTRY_CD"'
+    - relationship: state_has_code
+      expression: '"STATE"."STATE_CD"'
+  link_mappings:
+  - object_mapping:
+      referent_mappings:
+      - relationship: state_in_country
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"STATE"."COUNTRY_CD"'
+      - relationship: state_has_code
+        expression: '"STATE"."STATE_CD"'
+    children:
+    - object_mapping:
+        concept: Country
+        expression: '"STATE"."COUNTRY_CD"'
+      relationship: state_in_country
+  - object_mapping:
+      referent_mappings:
+      - relationship: state_in_country
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"STATE"."COUNTRY_CD"'
+      - relationship: state_has_code
+        expression: '"STATE"."STATE_CD"'
+    children:
+    - object_mapping:
+        concept: StateCode
+        expression: '"STATE"."STATE_CD"'
+      relationship: state_has_code
+  - object_mapping:
+      referent_mappings:
+      - relationship: state_in_country
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"STATE"."COUNTRY_CD"'
+      - relationship: state_has_code
+        expression: '"STATE"."STATE_CD"'
+    children:
+    - object_mapping:
+        concept: Population
+        expression: '"STATE"."POP"'
+      relationship: state_has_population
+- concept: City
+  object_mappings:
+  - expression: '"CITY"."ID"'
+  link_mappings:
+  - object_mapping:
+      expression: '"CITY"."ID"'
+    children:
+    - object_mapping:
+        concept: State
+        referent_mappings:
+        - relationship: state_in_country
+          referent_mappings:
+          - relationship: gnd_reference
+            expression: '"CITY"."ST_COUNTRY_CD"'
+        - relationship: state_has_code
+          expression: '"CITY"."ST_CD"'
+      relationship: city_in_state
+custom_extensions:
+- vendor_name: GND
+  data: '{"binding_sha256":"986dde1a053893706631264a1a23399b0d5910b609e4950ec49e457302e17eba","concepts":[],"dispositions":[{"carried_as":["primary_key","state"],"id":"constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","city"],"id":"fact_types/city_in_state/constraints/0","kind":"constraint","reason":null},{"carried_as":[],"id":"fact_types/city_in_state/constraints/1","kind":"constraint","reason":"not-relational"},{"carried_as":["primary_key","country"],"id":"fact_types/country_has_name/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","state"],"id":"fact_types/state_has_code/constraints/0","kind":"constraint","reason":null},{"carried_as":[],"id":"fact_types/state_has_code/constraints/1","kind":"constraint","reason":"not-relational"},{"carried_as":["primary_key","state"],"id":"fact_types/state_has_population/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","state"],"id":"fact_types/state_in_country/constraints/0","kind":"constraint","reason":null},{"carried_as":[],"id":"fact_types/state_in_country/constraints/1","kind":"constraint","reason":"not-relational"},{"carried_as":["columns","city","id","st_country_cd","st_cd"],"id":"city_in_state","kind":"fact_type","reason":null},{"carried_as":["columns","country","cd","name"],"id":"country_has_name","kind":"fact_type","reason":null},{"carried_as":["columns","state","country_cd","state_cd"],"id":"state_has_code","kind":"fact_type","reason":null},{"carried_as":["columns","state","country_cd","state_cd","pop"],"id":"state_has_population","kind":"fact_type","reason":null},{"carried_as":["columns","state","country_cd","state_cd"],"id":"state_in_country","kind":"fact_type","reason":null}],"extension_roles":[],"model_identity":"sha256:9385a7e650141519876cd379a9d0842699b1fc14ca6eac51e06838ebe7844537","ontology_sha256":"4d6e3d1ddc063f9fd4496d046f13b0bb85a0abb9b491f289f3b08fde579a75dc","schema":"gnd-ossie-relational/1","semantic_model_sha256":"8650bbecca6f33807921ed27eda8e7893fe24050388ffafca493027f2e15c6f3"}'

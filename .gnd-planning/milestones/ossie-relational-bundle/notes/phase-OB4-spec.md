@@ -2,9 +2,10 @@
 
 ## 1. Status
 
-**Draft r1, 2026-11-24, awaiting owner review.** Not reviewed. No code and no
-fixture is written. Step 2 has to rule on decisions G1–G18 (§7) and the
-approval instrument (§11).
+**r1 approved 2026-11-24 with G1–G18 as proposed**
+([spec gate](../013-OB4-spec-gate.md)). The corpus, the schema file and
+amendment r1.1 (§13) are authored and **await the corpus gate**. No reader
+code is written. Not reviewed.
 
 ## 2. Provenance
 
@@ -425,3 +426,49 @@ Estimate:
 ## 12. Implementation findings
 
 None yet.
+
+## 13. Amendment r1.1: rules settled while authoring the corpus (2026-11-24)
+
+The owner approved r1 (sha256 `f79b3979…7b8a`; [gate](../013-OB4-spec-gate.md)) with
+G1–G18 as proposed. Under G18, authoring the corpus came next. Writing the
+bindings, their expected files and the refusal table by hand forced the
+rules below, which r1 left open or got wrong. **They are unapproved**: the
+owner sees them at the corpus gate, together with the stories in
+[tests/fixtures/physical_binding](../../../../tests/fixtures/physical_binding/README.md)
+and the format in
+[physical-binding.schema.json](../../../../src/gnd/schema/physical-binding.schema.json).
+§1–§12 are unchanged, except where a row says it supersedes them.
+
+| # | Rule | Why | Case |
+|---|---|---|---|
+| K1 | **Foreign-key columns pair with `references.columns` in the table's column order.** This supersedes §6.3 and plan §2.4 ("each column's position in `references.columns`"). `binding:reference-group` is then a size mismatch only. | Every column of a group carries the same `references` block, so nothing in it says which referenced column a given column matches. | V3 |
+| K2 | **`binding:role-name` moves into step 5, before `binding:unknown-role`.** This supersedes §6.7's step 6. | A role name that normalizes to nothing, or like another, cannot be looked up, so it has to be judged before the lookup. | refusals |
+| K3 | **A home table's key columns match the identifier by role, not by position.** For a composite identifier, the column of each identifying relationship is the one its component role is bound to in the home table. | The primary key's column order need not be the ontology's `identify_by` order. | V3 |
+| K4 | **`binding:key-role`, defined.** A primary-key column of a home table is bound to a role that is neither played by the home object type (or a subtype or supertype of it) nor a component of its identifier. | r1's wording, "a role that is not part of what identifies the home object type", would refuse the subject role of every ordinary fact type. | refusals |
+| K5 | **`binding:incompatible-keys`, defined.** One column is bound, in `roles`, to roles played by two object types that are neither the same nor related by subtyping. | r1's wording could not be tested. A column holds objects of one type. | refusals |
+| K6 | **Dispositions on a binding run.** A bound fact type is `columns`, its table, then the columns of its roles in role order, each once. A uniqueness is compared with the keys as a set of columns. A `unique_key` row lists its columns in table column order. | r1 named the outcomes, not their spelling. | all |
+| K7 | **The extension on a binding run** always carries `extension_roles` and `concepts`, empty or not. `extension_roles` rows are `{fact_type, role, table, columns}`, with the model's role name, sorted by fact type and role. | A reader can tell a binding run by the members alone. | V4 |
+| K8 | **A table's foreign keys are ordered by their first column's position.** Relationship names use the table names as written, dots included. | r1 left the order open. | V2 |
+| K9 | **Seven valid cases, not six.** V4 shows the unbound and extension-only fact types. The derived unique key moved to a new V7, over model 13. This supersedes §8's table. | Model 14 has no uniqueness beyond its keys, so nothing could be derived in V4. | V4, V7 |
+| K10 | **The refusal table's format**: 50 rows, each a `base` with an RFC 6902 `patch`, or `raw` text, or a `generate` kind. A 5,000-digit integer is `binding:syntax`, not `binding:schema`. | Measured: the existing reader refuses it while parsing. | refusals |
+| K11 | **The schema file is written now**, at its packaged home, and is part of the corpus gate. It is the format, and the corpus is checked against it. | A valid binding cannot be told from an invalid one without it. | all |
+| K12 | **Targets are optional everywhere.** A role is bound by `roles` alone; a `role` or `reference` target only has to agree when present. | V2 and V5 bind roles with no `role` target. | V2, V5 |
+| K13 | **Known limit: surrogate keys.** A role played by an entity needs columns that hold the entity's identifying values. A table that points at another only through a generated id has none. That fact type then cannot be bound: left out, it is listed as `unbound`; bound to the id column, it is refused with `binding:role-arity`. Likewise a table whose primary key is a generated id is no object type's home, so that object type gets no object mapping. The foreign key itself still becomes a relationship. | Mapping through a join would need Ossie to define how an expression reaches a second dataset, which the pinned spec does not. Delivered schemas often use surrogate keys, so **this may matter to the reporter**: D10 should ask. | — |
+
+**Authoring checks run (no reader exists):**
+- The packaged schema is a valid Draft 2020-12 schema, and accepts the seven
+  valid bindings.
+- The pinned Ossie schemas accept all fourteen expected files, which were
+  already in the exporter's YAML form as written.
+- Each expected semantic model equals its binding's tables: names, sorted
+  order, field order, keys, raw SQL types and foreign-key groups.
+- Each expected mapping passes OB3's cross-checks against today's real
+  ontology export, and lists every fact type and constraint of its model
+  exactly once, with the carried fact types exactly the link-mapped ones.
+- All 50 refusal rows are classified by step: the syntax rows do not parse
+  with the existing bounded reader, the schema rows parse and fail the
+  schema, and the other rows pass the schema.
+- **The checker can fail.** Sixteen deliberate breakages of copied files
+  were each caught.
+- **Not checked, because it needs the reader:** the datatype each SQL type
+  maps to, and which rule id each row of steps 5 and 6 actually produces.

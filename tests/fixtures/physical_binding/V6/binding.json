@@ -1,0 +1,23 @@
+{
+  "schema": "gnd-physical-binding/1",
+  "tables": {
+    "cust": {
+      "columns": {
+        "cust_id": {
+          "sql_type": "integer",
+          "targets": [{"kind": "identifier", "object_type": "customer"}]
+        },
+        "email_addr": {
+          "sql_type": "character varying (320)"
+        }
+      },
+      "primary_key": ["cust_id"]
+    }
+  },
+  "roles": {
+    "customer_has_email": {
+      "CUSTOMER ": ["cust.cust_id"],
+      "Ｅ－Mail": ["cust.email_addr"]
+    }
+  }
+}

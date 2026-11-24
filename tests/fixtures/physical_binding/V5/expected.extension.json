@@ -1,0 +1,38 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:3d8b5332edd068a5eb943cde351331b4c0f0535dd919f509982178b74c2c87a0",
+ "ontology_sha256": "227809e2b10b4c6dcefc5f1f47e091c74ddffa34a42f0ee5c72377270dfbe1f3",
+ "semantic_model_sha256": "9c4663ebb9628cd322c19a88ecf6ae97b892d7d2e02efa0b65ecd951240faa10",
+ "binding_sha256": "1d9a67e5a4756bde0d2870c5b02a7de28f824beda766c6e572d729c937fad7af",
+ "dispositions": [
+  {
+   "kind": "constraint",
+   "id": "fact_types/room_slot_lecturer/constraints/0",
+   "carried_as": [],
+   "reason": "not-in-binding"
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/room_slot_lecturer/constraints/1",
+   "carried_as": [
+    "primary_key",
+    "timetable"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "fact_type",
+   "id": "room_slot_lecturer",
+   "carried_as": [
+    "columns",
+    "timetable",
+    "room_no",
+    "slot_cd",
+    "staff_no"
+   ],
+   "reason": null
+  }
+ ],
+ "concepts": [],
+ "extension_roles": []
+}

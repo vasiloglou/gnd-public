@@ -1,0 +1,38 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_relational
+datasets:
+- name: timetable
+  source: timetable
+  primary_key:
+  - slot_cd
+  - staff_no
+  unique_keys:
+  - - room_no
+    - staff_no
+  fields:
+  - name: room_no
+    expression:
+      sql: '"ROOM_NO"'
+    datatype: Integer
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"INTEGER"}'
+  - name: slot_cd
+    expression:
+      sql: '"SLOT_CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(12)"}'
+  - name: staff_no
+    expression:
+      sql: '"STAFF_NO"'
+    datatype: Integer
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"INTEGER"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'

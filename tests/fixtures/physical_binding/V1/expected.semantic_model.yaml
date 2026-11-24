@@ -1,0 +1,27 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_relational
+datasets:
+- name: cust
+  source: cust
+  primary_key:
+  - cust_id
+  fields:
+  - name: cust_id
+    expression:
+      sql: '"CUST_ID"'
+    datatype: Integer
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"INTEGER"}'
+  - name: email_addr
+    expression:
+      sql: '"EMAIL_ADDR"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(320)"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'

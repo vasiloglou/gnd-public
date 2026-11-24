@@ -34,6 +34,6 @@ Two files are shared with
 `evolve/service.py` and `unattended-growth.md`. One writer at a time, in the
 roadmap's order: VG1, then GO1, then VG2–VG5, then GO2–GO5 (plan §3).
 
-Next action: the owner reviews and merges the GO2–GO5 pull request; then the milestone close (the full
-panel's close review, the question sweep and plan repairs). The last review repairs of GO3–GO5 are
-unreviewed until that close review.
+Closed locally on 2026-11-23: [007-milestone-close.md](007-milestone-close.md), a delegated
+ruling (auto=true) after the full panel's close review. Next action: the owner reviews and merges
+pull request 261 and posts the replies in [notes/issue-replies.md](notes/issue-replies.md).

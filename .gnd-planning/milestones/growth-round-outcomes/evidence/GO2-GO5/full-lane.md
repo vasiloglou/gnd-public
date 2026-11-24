@@ -30,3 +30,11 @@ ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loa
 FAILED tests/test_rule_verbalization.py::test_t3_parity_and_t3b_mutation_control
 FAILED tests/test_why_not_anonymity.py::test_added_files_name_no_downstream_application
 ```
+
+## Again at the close head
+
+Run on beast-3 the same way at `32a50ed7` (head only, after the GO3–GO5
+review repairs, the RF1 mutation-ledger fix and the close-review repairs), for
+the close review's concern that the cited lane predated the head:
+**20,509 passed; 4 failed or errored, the same four as on base** (the list
+above). No head-only failure.

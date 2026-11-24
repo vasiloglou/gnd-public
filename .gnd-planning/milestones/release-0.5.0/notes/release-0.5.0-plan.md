@@ -1,14 +1,15 @@
 # Release 0.5.0
 
-r3, 2026-11-23. Milestone `release-0.5.0`, phase prefix `RW`. The standard
+r4, 2026-11-24. Milestone `release-0.5.0`, phase prefix `RW`. The standard
 GND panel reviewed r1 (SHA-256 `5a34615d…3391`, five of six seats). Section 11
-amends the r1 clauses below and records the owner's rulings of the same day.
+amends the r1 clauses below and records the owner's rulings of 2026-11-23.
 The [plan gate](../001-plan-gate.md) records the review and the delegated
-ruling over r2 (SHA-256 `c1c846bd…1999`). r3 adds §12, a later owner ruling
-and what was observed on main, and changes this paragraph; every other byte
-is r2's. No review has read r2 or r3. **RW1 does not start until
-pins-and-review-check is merged (§12). The two milestones of §11's RW-D2
-ruling are merged.**
+ruling over r2 (SHA-256 `c1c846bd…1999`). r3 (SHA-256 `6ca712ec…3c6c`) added
+§12; r4 adds §13, a further owner ruling, and changes this paragraph; every
+other byte is r3's. No review has read r2, r3 or r4. **The release is cut
+after ossie-relational-bundle is merged (§13). RW1 has its first ruling and
+its E1 measurement, and is held before its second ruling. The milestones of
+§11 and §12 are merged.**
 
 Source: the owner's request of 2026-11-23 ("Release 0.5.0"), made after the
 three milestones merged since 0.4.0 were recorded as closed. Inspection
@@ -591,3 +592,44 @@ Consequences for the clauses above:
   is revised.
 - **W5 and W7** grow by what the two milestones and the pull requests merged
   since `0bfded71` ship. RW1's revision recounts them.
+
+## 13. A fourth dependency, 2026-11-24 (r4)
+
+This section adds to §11 and §12 and replaces none of them. The r3 bytes are
+at commit `6a1b6daf`, merged to main as pull request 256 on the owner's word.
+
+### What main holds
+
+pins-and-review-check is merged and closed on main
+([004-close.md](../../pins-and-review-check/004-close.md)), observed at
+`c62a32b8`. With it, every milestone named in §11 and §12 is on main, and
+RW1 started on 2026-11-24: its spec was revised against `c62a32b8`, its first
+ruling approved the E1 measurement, and E1 ran at `cfe5f00e`
+([RW1 spec](phase-RW1-spec.md) §12).
+
+### Owner ruling
+
+- **RW-D2, extended again (o).** While E1 ran, the owner wrote: "I also want
+  you to wait for 'Milestone planning for GND issues' before the release so
+  that I can include it". That is the title of the session whose pull
+  request 264 plans the ossie-relational-bundle milestone: Ossie size bounds
+  as parameters (OB1, pull request 266), a relational mapping library (OB2),
+  semantic-model and mapping files (OB3), a physical binding (OB4), and docs
+  and skill (OB5). Its plan r2 is approved by the owner; neither pull request
+  is merged. As read here: **0.5.0 is cut after ossie-relational-bundle is
+  merged to main with its close record.** That reading is this plan's; the
+  owner may narrow it to named phases.
+- **RW1 is held where it stands.** §11 gave the reason for the first two
+  milestones and it applies again: the bump's measurement and the notes would
+  be made on a tree that five phases then change. The first ruling and the
+  E1 results stay in the spec as a measurement of `cfe5f00e`. Before the
+  second ruling, E1 runs again at the commit the bump is then applied to,
+  and the spec is revised against that main. No file outside `.gnd-planning/`
+  has been changed by RW1.
+- The other reading, finishing RW1 now and folding the new milestone's notes
+  in at the freeze (RW2-C0), was not taken. It would leave main at 0.5.0,
+  unpublished, for the length of a five-phase milestone (R3), and the
+  headline (RW1 spec D4) would be chosen before the release's largest change
+  exists. The owner can ask for it.
+- The owner named no other milestone. Anything else merged before the freeze
+  is in the release, with a note, as §11 says.

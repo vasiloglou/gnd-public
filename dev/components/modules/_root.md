@@ -584,13 +584,14 @@ RF7 shared JSON, YAML and ISO datetime input restrictions.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `InputRefusal` | class(json.JSONDecodeError) | 58 | Keep domain diagnostic messages independent of synthetic locations. |
-| `JSONDecoder` | class(json.JSONDecoder) | 65 | Native decoder interface with one duplicate/finite/depth policy. |
-| `JSONDecoder.raw_decode(self, text, idx)` | method | 96 | (no docstring) |
-| `loads(raw, **kwargs)` | function | 102 | Decode with native numeric types or caller hooks; refuse unsafe syntax. |
-| `load(handle, **kwargs)` | function | 107 | Apply the byte cap to the read, before decoding or constructing nodes. |
-| `guard_yaml(raw, *, max_bytes, max_events, max_depth)` | function | 113 | Reject amplification and over-budget input before constructing YAML nodes. |
-| `parse_datetime(value)` | function | 137 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
+| `require_byte_bound(name, value)` | function | 17 | Refuse a caller-raised byte bound outside 1..MAX_BYTES_CEILING (ValueError). |
+| `InputRefusal` | class(json.JSONDecodeError) | 69 | Keep domain diagnostic messages independent of synthetic locations. |
+| `JSONDecoder` | class(json.JSONDecoder) | 76 | Native decoder interface with one duplicate/finite/depth policy. |
+| `JSONDecoder.raw_decode(self, text, idx)` | method | 108 | (no docstring) |
+| `loads(raw, *, max_bytes, **kwargs)` | function | 114 | Decode with native numeric types or caller hooks; refuse unsafe syntax. |
+| `load(handle, **kwargs)` | function | 124 | Apply the byte cap to the read, before decoding or constructing nodes. |
+| `guard_yaml(raw, *, max_bytes, max_events, max_depth)` | function | 130 | Reject amplification and over-budget input before constructing YAML nodes. |
+| `parse_datetime(value)` | function | 154 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
 
 ## gnd.install — `src/gnd/install.py`
 Components: install.skill_lifecycle
@@ -755,7 +756,7 @@ Bounded, offline import of the pinned Apache Ossie ontology dialect.
 | --- | --- | --- | --- |
 | `OssieImportError` | class(ValueError) | 49 | A value-free refusal at a documented import boundary. |
 | `OssieImportResult` | class | 58 | (no docstring) |
-| `plan_ossie_import(path) -> OssieImportResult` | function | 652 | Admit one standalone ontology or bound bundle without network access. |
+| `plan_ossie_import(path, *, max_input_bytes) -> OssieImportResult` | function | 652 | Admit one standalone ontology or bound bundle without network access. |
 
 ## gnd.output — `src/gnd/output.py`
 Components: infra.text_output

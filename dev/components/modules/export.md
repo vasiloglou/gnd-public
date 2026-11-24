@@ -243,9 +243,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 46 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 51 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 423 | Render three deterministic artifacts from one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 50 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 55 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict, max_output_bytes) -> OssieArtifacts` | function | 427 | Render three deterministic artifacts from one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie

@@ -1,0 +1,780 @@
+{
+ "src/gnd/examples/approvals/model.orm.yaml::json": {
+  "document": "904f660db1b4b66ef210f33ff0fbb8fafa197d3727bdcf7bff1dd3fe672840cc",
+  "loss_report": "b54567ca15d8fffc4a76aa01e86a3fff0f0b24815325e2ee0e43dd220a654c90",
+  "sidecar": "48ea944e57e4797c5f7257c69f12166a66858329fe96df528ebd495df804688b",
+  "sizes": [
+   1982,
+   23220,
+   32403
+  ]
+ },
+ "src/gnd/examples/approvals/model.orm.yaml::yaml": {
+  "document": "af70356cfc2f61a666da35e2ef411fd3ebb0d2830600093d7950e0d7e55ac843",
+  "loss_report": "116e0203403e2eada6a5593471c359c8b4342a25a65ad914294a674844bd464a",
+  "sidecar": "f4f3c9759bbaa40cb33e249305ce3d6bb26c604a3320a2b0fe4a0459623ac091",
+  "sizes": [
+   2033,
+   23220,
+   32403
+  ]
+ },
+ "src/gnd/examples/bookrec/complete.orm.yaml::json": {
+  "document": "668b7791fae0112954d9f4bf1324e1d9d28bdf24740cb0d3178930fd29c098c5",
+  "loss_report": "dd51ab63c02b48c4e5b2b35184ec168b7c2a053647017f21b8c23b9615641778",
+  "sidecar": "4866bb5124054ef1e8f6bf47de9816a021072628296904773cb9736c3a3f1046",
+  "sizes": [
+   1578,
+   17255,
+   25339
+  ]
+ },
+ "src/gnd/examples/bookrec/complete.orm.yaml::yaml": {
+  "document": "7dd48028ea63c29b5ba8d4b7226d9a6637243635db06e1ea31f6a6ddfdd28d2b",
+  "loss_report": "9daf0bea33f428f9fd7327ace8da62c73e44db1e942449286d05b491ef2fdd14",
+  "sidecar": "0d98317d88affae6d5c273952234131a72216f864720034d3a1612a32ec4e354",
+  "sizes": [
+   1661,
+   17255,
+   25339
+  ]
+ },
+ "src/gnd/examples/bookrec/model.orm.yaml::json": {
+  "document": "5da17ab5018d22c9e6c1a066117a704a67995e1e364d8776e7f0a8b5aaa8ce98",
+  "loss_report": "6a14c8a6ae28d9f34e7f6bfda57743589cc96afe4d6c20969af65577664f8758",
+  "sidecar": "cca7b6a5bd5d3cee149e6f3ce297aec7e7853424e6aee6c805af1115b55c8d75",
+  "sizes": [
+   1330,
+   11661,
+   17130
+  ]
+ },
+ "src/gnd/examples/bookrec/model.orm.yaml::yaml": {
+  "document": "a4077463f410392cd5c876a7db36bf725ca93e027da5b976ae5a2374fd027782",
+  "loss_report": "e8aa4a6cfe709c9b038bb739639a905142ba7814cb286b28e0f0fc1f563d3d0b",
+  "sidecar": "777ae8e59f9545fd6bf74cc8f9ddca8c72374e6c8b3043ff6ebdb17ebb957764",
+  "sizes": [
+   1391,
+   11661,
+   17130
+  ]
+ },
+ "src/gnd/examples/bookrec/strict.orm.yaml::json": {
+  "document": "5da17ab5018d22c9e6c1a066117a704a67995e1e364d8776e7f0a8b5aaa8ce98",
+  "loss_report": "3e853a1b9e2708a182ebb38374719b836eb663bbcee49ec14548da320594fa4c",
+  "sidecar": "8d79c63b7c09a164402861c27ff0143f577ac5662e6a249a256e72f7f636c11d",
+  "sizes": [
+   1330,
+   11630,
+   17129
+  ]
+ },
+ "src/gnd/examples/bookrec/strict.orm.yaml::yaml": {
+  "document": "a4077463f410392cd5c876a7db36bf725ca93e027da5b976ae5a2374fd027782",
+  "loss_report": "26d67607ddc918f516c6960df7bb8e4165b8cde9546e1990406df18a397ea2d9",
+  "sidecar": "43e2286667f5e709569159a961f9a4a94bb9f21669e5a8d4cbbbba99256ec2d3",
+  "sizes": [
+   1391,
+   11630,
+   17129
+  ]
+ },
+ "src/gnd/examples/composition/model.orm.yaml::json": {
+  "document": "6d7de8beb30ecbd3214312deb3ae68a9a4bcb096332774ae2321e915409056f7",
+  "loss_report": "3f8129b3ba422379a92d1100c2d4faf1ba414f90ddc6eb41ba31f905930461e4",
+  "sidecar": "4b705ecfad0e6253f704538df1e0dbd925bf9a0925d505d9ae76f7bc3c996c34",
+  "sizes": [
+   755,
+   6586,
+   9509
+  ]
+ },
+ "src/gnd/examples/composition/model.orm.yaml::yaml": {
+  "document": "133d8bbd35614bcf69655af8c0570419507b53db7fb9a3ccee5d945b4c35699c",
+  "loss_report": "f2f594d7f30cfd36a7ab2984eabb7187491712d386ba1b787a2bb007111b5acf",
+  "sidecar": "b1714d7179306342dc3e51a8f5765f74e752520e0251bfafae44bd06e671409a",
+  "sizes": [
+   786,
+   6586,
+   9509
+  ]
+ },
+ "src/gnd/examples/disclosure/model.orm.yaml::json": {
+  "document": "3f6ae05e5d6228ac22692d816a41099f0672df55aa2af29766878880e3f77fb1",
+  "loss_report": "48464d8e7c83eb955870a92ac1bfd4bf21a31c78ca60300417114d41077c19a5",
+  "sidecar": "5991835f059ed3c34e4e7221edee237c844936af40779bb0e4d2061de17c2738",
+  "sizes": [
+   391,
+   2864,
+   4079
+  ]
+ },
+ "src/gnd/examples/disclosure/model.orm.yaml::yaml": {
+  "document": "16cfd8a2cd5e34d883499d5ec4e657bf131fd34ca745b0549de09116ec426cf4",
+  "loss_report": "b9e8388919790e99dd36df5c44d80b2603ade9da72dccc27fb8ba7cabce25404",
+  "sidecar": "b206533e8b339d69cbc8f838e8d3bc18a164564e30db7013c0be77cf19521817",
+  "sizes": [
+   399,
+   2864,
+   4079
+  ]
+ },
+ "src/gnd/examples/dispatch/model.orm.json::json": {
+  "document": "5a10470e394b4701a5f8114e36da38d1b7288d49af7063e9aef0316f56f7f835",
+  "loss_report": "684ed29a95b6bf76687f5457fab959e8414c5e2a524a2a4051c1b89ef2fd7006",
+  "sidecar": "185aedb6985b0c41e5ec97756e649ad964d1f77f940a30feb02c96a57cad2b4b",
+  "sizes": [
+   1641,
+   15186,
+   22630
+  ]
+ },
+ "src/gnd/examples/dispatch/model.orm.json::yaml": {
+  "document": "2e16b0b885222ffc63f2a6767090601514d7677f174234f8c122cd3984899136",
+  "loss_report": "d1e69dea74a45f70dbbe98a17274fc85ff591e269c1f90fd533b975d5cd6a614",
+  "sidecar": "ddfc8b7793008c6e9abd7d3f0953a3ef72cd3f61f41588c152010b562bb07b64",
+  "sizes": [
+   1719,
+   15186,
+   22630
+  ]
+ },
+ "src/gnd/examples/expense/currency.orm.json::json": {
+  "document": "dcdcbf60b3133ba773c5e54bc45e605be4715c07bb4ce2ef769e88bc522014ab",
+  "loss_report": "ef46ef4b15a802bf99926e9ae7a25fc1b7573074f22a72941b2bdfc910d644be",
+  "sidecar": "e597de98de37d802aea207aa956aba0bcf310c1f47cfc617378af807b03cfa7c",
+  "sizes": [
+   1791,
+   31510,
+   43296
+  ]
+ },
+ "src/gnd/examples/expense/currency.orm.json::yaml": {
+  "document": "73f17db06af9fd62ffcbcea8489ee28a1e074ec2b45527bf5e021e5abee4a415",
+  "loss_report": "d4bd163a3f510d7d9b74d10333347120b7f72b98c069d9060ff8f486c55b4107",
+  "sidecar": "56019c310c0d18a1df4af17d05ae8f72acb5c54ff1c35614d9cb4e890ab2e17a",
+  "sizes": [
+   1855,
+   31510,
+   43296
+  ]
+ },
+ "src/gnd/examples/expense/model.orm.json::json": {
+  "document": "42527b6162824ba54fda53d5b0587d1497dc7f55364eee4429df854c1a0b2ff3",
+  "loss_report": "b68330430a4181b49c1588f6c6ef49f695c6201b5abfd65a0db1ff2455396a93",
+  "sidecar": "2bbe2c155664b422babd9c07ef69816eabeb63a5d47e2b52f4aeb4074c3712d9",
+  "sizes": [
+   1520,
+   27918,
+   38595
+  ]
+ },
+ "src/gnd/examples/expense/model.orm.json::yaml": {
+  "document": "cddfd1df42d76d80eb2bbbbfe4af32a0bbf93473be2139e0e88a66373ebfff0a",
+  "loss_report": "e106d78347ee17e62cc5658bb1734f663ba50d07a53eb8a6342de94b55c32e49",
+  "sidecar": "8e88dc953a8b5c554017ab3be73db1bf42e67b2b18b66c24ba73c2e4c7f6dc35",
+  "sizes": [
+   1574,
+   27918,
+   38595
+  ]
+ },
+ "src/gnd/examples/expense/project/model.orm.json::json": {
+  "document": "42527b6162824ba54fda53d5b0587d1497dc7f55364eee4429df854c1a0b2ff3",
+  "loss_report": "b68330430a4181b49c1588f6c6ef49f695c6201b5abfd65a0db1ff2455396a93",
+  "sidecar": "2bbe2c155664b422babd9c07ef69816eabeb63a5d47e2b52f4aeb4074c3712d9",
+  "sizes": [
+   1520,
+   27918,
+   38595
+  ]
+ },
+ "src/gnd/examples/expense/project/model.orm.json::yaml": {
+  "document": "cddfd1df42d76d80eb2bbbbfe4af32a0bbf93473be2139e0e88a66373ebfff0a",
+  "loss_report": "e106d78347ee17e62cc5658bb1734f663ba50d07a53eb8a6342de94b55c32e49",
+  "sidecar": "8e88dc953a8b5c554017ab3be73db1bf42e67b2b18b66c24ba73c2e4c7f6dc35",
+  "sizes": [
+   1574,
+   27918,
+   38595
+  ]
+ },
+ "src/gnd/examples/expense/teams/engineering.orm.json::json": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/engineering.orm.json::yaml": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales-v2.orm.json::json": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales-v2.orm.json::yaml": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales.orm.json::json": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales.orm.json::yaml": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v1.orm.json::json": {
+  "document": "3860ceb623b2aa0e73c628f0e62340f620c17c596174ba4f5ebb76d5cfe479b3",
+  "loss_report": "0a7a40763167c1a5a689fbf1685342f75019c70e15d3dc85e504a4a437202923",
+  "sidecar": "d28ee99c9721c3888834b0e0ba71218ec3e152579b00253d49caff47825cd870",
+  "sizes": [
+   1745,
+   20088,
+   27586
+  ]
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v1.orm.json::yaml": {
+  "document": "da3039f7bc6c83dc333fad0b767ecb4e3b0a9e9cfd2430b9a1ff686eda16192c",
+  "loss_report": "ce3e20b77826845896c97faf766127022ab5661070b4fdec14ac59589d16633f",
+  "sidecar": "453d535a75c8384235639ae1bb0920d87fb4fc9970e4aaaa4a02de9c7cd6fc9a",
+  "sizes": [
+   1808,
+   20088,
+   27586
+  ]
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v2.orm.json::json": {
+  "document": "3d2065bf2b9416f2b8f650451332bf306056813a534e230f0daa41334b384fef",
+  "loss_report": "9c369e68fbbda7da874b92bf51070860d4c28393bb3b8ecd5e58fd2908413c45",
+  "sidecar": "d12e6723de26891126d2cf1a605e832331f1fd06392ab078c9e86a4cb0cf75b2",
+  "sizes": [
+   1772,
+   20146,
+   27586
+  ]
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v2.orm.json::yaml": {
+  "document": "d7be9c8f748babec52bc5fe5a9096f62b568dcee2da0ba2132b46c55783f9636",
+  "loss_report": "7b67a6bd1c5553910740bf1061644d42ea150677b939686690c6ef98adb54aed",
+  "sidecar": "4993286c34805e227c896b7a4ff5d15f0d54e18a9a2fd79f2d35123d27c64450",
+  "sizes": [
+   1835,
+   20146,
+   27586
+  ]
+ },
+ "src/gnd/examples/growth/model.orm.yaml::json": {
+  "document": "dcfbfaaa2f5980b8ff0d32e346a4bfda1555802f114c8c54d9b8a9029dc66ec5",
+  "loss_report": "60412bd40b4db56968131b1020f4ce86a76c2ecbcfe09af15d0cab93cbc2d026",
+  "sidecar": "6711570c40d838aa75d10619e4aa7a12cffe95ad616e9771fc3e416107707c44",
+  "sizes": [
+   1115,
+   4995,
+   8232
+  ]
+ },
+ "src/gnd/examples/growth/model.orm.yaml::yaml": {
+  "document": "f3189445d15d95eec63437524df92b3e5cc50cb402f14a1541ba3d53f05a77fa",
+  "loss_report": "155ded17a2fb15ab368194fd2160ddf708fb89d831885861e3dd5cf117c3ea88",
+  "sidecar": "75bd7d37d26f0a70b6f79bfcd5e2d39c5725907118c68697d91e3f0ac50750b7",
+  "sizes": [
+   1146,
+   4995,
+   8232
+  ]
+ },
+ "src/gnd/examples/plan_apps/access/model.orm.json::json": {
+  "document": "0a5a682b552ecc973dc79200aa2331a4eb5fee4bf43a21980e47b510f1349f0f",
+  "loss_report": "d56129fdf5a94696fdc49c743a23ac8d1e2a8fbac63b36b6def37705454f8b02",
+  "sidecar": "b5574846d524e637a190778b44eec93b3dae7249e281e19ab15c98fc6266bf0b",
+  "sizes": [
+   1452,
+   18238,
+   26090
+  ]
+ },
+ "src/gnd/examples/plan_apps/access/model.orm.json::yaml": {
+  "document": "07650e9eff7ff092ae8f51e53d6f1c96f2fde4270d3091ab5df730b1e9bba0ea",
+  "loss_report": "b2637752f39a3684096a2be3e400d7f0ed9aed918e1c4303cddd0e8e70918e55",
+  "sidecar": "baff4116399dc35b1e7cc2fc8f3aafd80b7fe0643cd6aba1907c83147761a64f",
+  "sizes": [
+   1519,
+   18238,
+   26090
+  ]
+ },
+ "src/gnd/examples/plan_apps/clinic/model.orm.json::json": {
+  "document": "02584e96da1921c7600298457147ae5f3da5b1f9257998d48115c19806645f85",
+  "loss_report": "c19288277043570d5a431db56a80b80ffed4cc7ed899777dc485ce17b5328468",
+  "sidecar": "d9aabbbbf1f0500f069db1bbf994cfcda9a12f894b92e1309f66aae8bccedc75",
+  "sizes": [
+   1614,
+   19357,
+   28050
+  ]
+ },
+ "src/gnd/examples/plan_apps/clinic/model.orm.json::yaml": {
+  "document": "67ff4c0a975e597164589ba2adc270e477627488f216a7bdaa9f59319a05c7f8",
+  "loss_report": "8a8f1b38e0ce68c693170e6fbba17ace448823faad2f49cc4c54d7fcb66102c3",
+  "sidecar": "debdc5933d53ad16cf42679a2092e8985b68918c21236d1bd1a38ac36df0603e",
+  "sizes": [
+   1690,
+   19357,
+   28050
+  ]
+ },
+ "src/gnd/examples/plan_apps/course/model.orm.json::json": {
+  "document": "15904aff3606a7e68acf3d5195794cc89be0157f91e1efc8ba08fd258692b9fd",
+  "loss_report": "506f4408e1b5404bde1bab6b655a8b4983ecfea41c60d4152ff827c402665748",
+  "sidecar": "34a674601a80b6f88c929fbb913304c90db33fb21b9b3d33aba47cd105257c5c",
+  "sizes": [
+   2351,
+   32659,
+   47425
+  ]
+ },
+ "src/gnd/examples/plan_apps/course/model.orm.json::yaml": {
+  "document": "76999488f672a4642b704820fe7ee62873877db5d8779f376489d7f5ea2e6c1b",
+  "loss_report": "bd56939fee5e4dacaade02eb994c4226b1edefaa82b62da8d3e3b35c2113a7ff",
+  "sidecar": "206ba1045e68d0be6bb69bccd8cb3d52f55af75aa11caea4738417044fc38a91",
+  "sizes": [
+   2452,
+   32659,
+   47425
+  ]
+ },
+ "src/gnd/examples/plan_apps/lease/model.orm.json::json": {
+  "document": "002977dbef6a8a089f901aa3b9b9a1371ec13d32e90fc533482bc76b8d607ceb",
+  "loss_report": "2fed521e009bf163cb732f94e418dbc208a63bfb4791a74a2dfb8b4939217fbf",
+  "sidecar": "ce5c1eb8549d6b459c254014aa041df072c99664a3868a94d924b28260b14ca9",
+  "sizes": [
+   1020,
+   15863,
+   23198
+  ]
+ },
+ "src/gnd/examples/plan_apps/lease/model.orm.json::yaml": {
+  "document": "703fccb046e3af3e40942aa2720de84b7b896e5bf25e5eb71f8aac11c948705b",
+  "loss_report": "10d369a4403ff4a2e5fcf61e75624f2acbe8113d29869602900c4894ea5bbe02",
+  "sidecar": "1443a34249e21f6fcd507eb579554122492d8b256665db32932195054a9081bd",
+  "sizes": [
+   1068,
+   15863,
+   23198
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json::json": {
+  "document": "15904aff3606a7e68acf3d5195794cc89be0157f91e1efc8ba08fd258692b9fd",
+  "loss_report": "23b6e7e319a01001b423b468a5ef575da5ed8c5d42b3eb2ead1f90450c6bd708",
+  "sidecar": "850af8a1f0ec0eae8af8ac145292ec5f7f1ce25da97d2dde0d16a43637c58a37",
+  "sizes": [
+   2351,
+   32777,
+   47527
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json::yaml": {
+  "document": "76999488f672a4642b704820fe7ee62873877db5d8779f376489d7f5ea2e6c1b",
+  "loss_report": "baf364bd0e56b78e65f781ad3df8c8a6466c650a254c88c3f5a03dec0099a76a",
+  "sidecar": "38b3069503c2f66f61df8fff99ae47eb4ab1f23b09bcd2a6f98c46a745ec21fc",
+  "sizes": [
+   2452,
+   32777,
+   47527
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json::json": {
+  "document": "15904aff3606a7e68acf3d5195794cc89be0157f91e1efc8ba08fd258692b9fd",
+  "loss_report": "fa0a2efe22e34c4e0786e7ceed69936552c4dce984834d37b9454ee22ec0d154",
+  "sidecar": "234fce440984faad630a8ac04357947f70a9687872393c8a1ffe8072473c05af",
+  "sizes": [
+   2351,
+   32769,
+   47527
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json::yaml": {
+  "document": "76999488f672a4642b704820fe7ee62873877db5d8779f376489d7f5ea2e6c1b",
+  "loss_report": "be18beb7d8171f67b618452fa75ba14abd23a733e8327aae9ff358eda4357f82",
+  "sidecar": "a5f00f6acf6d6323c0e6635110d85373c7d4a11ac1b44c3afdf39e492a77623a",
+  "sizes": [
+   2452,
+   32769,
+   47527
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml::json": {
+  "document": "f8c3841726dd40366c377a7123c3dcbd087d8fdd499b30cc0ece9c643a3a965d",
+  "loss_report": "6d6c7eb60aa4ad1c9cd164c01b7bc6820004148adfeff329fd35a0b52c30523c",
+  "sidecar": "fa3dc102477b96e065c91566d1fa6e8bf3752a563ddb8681618bf38967823d3c",
+  "sizes": [
+   2948,
+   42384,
+   59236
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml::yaml": {
+  "document": "3db47ff423f084f3cf9116b01610957a28c4afa3325070e5dd7099438bcfac83",
+  "loss_report": "c371189645522f142fbfeb3702ab0106ae2654b412a5c1fcea3f41730a5e255a",
+  "sidecar": "1fd50d2a54d70861f4be980af61d921d3fc2c026ac534b0b35454a01db912b27",
+  "sizes": [
+   3064,
+   42384,
+   59236
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json::json": {
+  "document": "54aa94af3f3f2ec3496481101aca38719d6f1d06087bead09defc571a3db15b8",
+  "loss_report": "148a9044d47835e1073b053cc5859fcd23d79c05a835a57e1dc7172e03068687",
+  "sidecar": "5b4406257f529caabe318cce0385b99d3de9a2b9acce752e305b195fd75f6447",
+  "sizes": [
+   2651,
+   48338,
+   70201
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json::yaml": {
+  "document": "5ba445e9642e408569e4ed354377bcaa1a7f259cc9cd6977c781798c13a90947",
+  "loss_report": "3e5837372d801d1afe4f9e0ecb7355652ac08f2441a96cd2ac4716cebfcb22eb",
+  "sidecar": "7d24f6db084f7387647530d4f1016cb4244a8472f044d7cfcf81f166ade68ca2",
+  "sizes": [
+   2760,
+   48338,
+   70201
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml::json": {
+  "document": "3c82d66a1183c0f4c9837e65abd523b8dc23aa056b8f3d41a9a1b9ca819aabf5",
+  "loss_report": "89e53c7f84e0fa8baa572dd9bc5537523ebbe2da469117fc1ed17c21d7e8b814",
+  "sidecar": "7d2af8ad0817793b2f4dcceba551a19fe55fcc9eeceb6525c4a6dc56397de84f",
+  "sizes": [
+   2997,
+   40229,
+   65960
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml::yaml": {
+  "document": "aae0c9a99b92df54140dd7b593960466e9e3f791096ccd793f454cbe33719587",
+  "loss_report": "3a0074910958302a9a32b2041de4443f3e05fea6f50a466a98108178a9f8eb62",
+  "sidecar": "e13beb283f11af05d942a1059111e50c98ada7be3ce549962fbd4cc506bd62d1",
+  "sizes": [
+   3142,
+   40229,
+   65960
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml::json": {
+  "document": "5d274681682773cd3724cd1cb9eadfb3f51c06ca3832ecaf1dd9894d5650e2a7",
+  "loss_report": "46202a16924c6a3974bcc23907ea657ced7bed11ae05d843993ae3b74adf6acd",
+  "sidecar": "f1bb5f1d2f17f8587c2552014ed824653e2b625fbd3523445347283c7f0c034a",
+  "sizes": [
+   2318,
+   38961,
+   58712
+  ]
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml::yaml": {
+  "document": "dce009d760203ffe16282bb437bce897007f4a7f2033a6b8b5275e7e513eb2e8",
+  "loss_report": "0323b14042bc124c46e605d7e8aae2577d512cde55f7e18d221ff7a45b61570d",
+  "sidecar": "d39a48895e9366cfe87d8af3782b259f93948c311198add8eb1c3d418a0f4a3d",
+  "sizes": [
+   2425,
+   38961,
+   58712
+  ]
+ },
+ "src/gnd/examples/plan_apps/trip/model.orm.json::json": {
+  "document": "a5550c1ba341bd2aa1d74ee06cbe3d1eafeb07b856f3d819a4c8bf6af1314a18",
+  "loss_report": "e9a97cf0e34c22cabe563b663ddf479fbe4978487108b2921115dc845a63c9b2",
+  "sidecar": "1a48ecb406dbf88e5afc46651db632f58be2b628114a03a180db3199e65e80fd",
+  "sizes": [
+   2943,
+   27260,
+   40266
+  ]
+ },
+ "src/gnd/examples/plan_apps/trip/model.orm.json::yaml": {
+  "document": "495e58a4571ad247d969ad1a4f5237139d4330abb8593cc757e1d28108afbb40",
+  "loss_report": "a8385c22ede6996b30fa1d78b430098ea8233264a0f5d320f8e0d75c7a5e61e8",
+  "sidecar": "3388568c2db4b39d92f46d838600cc6e7dc9712ba8dd8cca3d96c8ac3638a9bf",
+  "sizes": [
+   3087,
+   27260,
+   40266
+  ]
+ },
+ "src/gnd/examples/quoted_claims/model.orm.json::json": {
+  "document": "b05559ca49fe2b55f34e51b3556289d8c0f07c11f9f59da3d7d69cf245356b61",
+  "loss_report": "0d3b1eaa21c53c8389d8c95aecc9999e2788a28a9edd79a4cd9995a9bfab66a9",
+  "sidecar": "56aba55c0107e4f3b8db28f328007f9de895c10c53ffbaf3302f87b84ae595c5",
+  "sizes": [
+   797,
+   5578,
+   8305
+  ]
+ },
+ "src/gnd/examples/quoted_claims/model.orm.json::yaml": {
+  "document": "c0380153d5b43156abdca2f7f249486dfa9668b76eadd43fbbc31f69ffd8ec90",
+  "loss_report": "235588ed73203ca97837385adb5b39fa5e22e2e2a8aa2782e4365bcc558ef3ff",
+  "sidecar": "1d06a79946fb659dbec34bc0b2d0db9c5f6804e42fa0abbbf61d16114a26525b",
+  "sizes": [
+   833,
+   5578,
+   8305
+  ]
+ },
+ "src/gnd/examples/refunds/model.orm.yaml::json": {
+  "document": "e9893b1078bb0eff8bc8e9cfa7e9c675b6e683bfb913cca524d1e1f8a107307c",
+  "loss_report": "9ce2327d47c63e33af842fd6c996f0ecb3c7c9667138762fd6a9746c137f79bb",
+  "sidecar": "42b864c4335b264da8d8a5310a56e74e060de07bcd66bde6ab0c7301907cb143",
+  "sizes": [
+   1244,
+   6727,
+   9926
+  ]
+ },
+ "src/gnd/examples/refunds/model.orm.yaml::yaml": {
+  "document": "03da43dccefdccc6ce64c9d422563b21803b7ac534f7ec693105905e29139955",
+  "loss_report": "565743c68b0e6bdca3b6d84d3cc4dd0c8425a3231463ac191adce04f4ed54547",
+  "sidecar": "9c9abc02745ab91044312dd2a4e5cc26c1cf14a6f347b858ebdc14cb71044e41",
+  "sizes": [
+   1278,
+   6727,
+   9926
+  ]
+ },
+ "src/gnd/examples/release/model.orm.json::json": {
+  "document": "f5bef501733c7aa3a3451f0a5a4dfaa10028c57630427b25d36931b855af10d7",
+  "loss_report": "6fb547bac6ce75bd4e790397c7895817e1efc5993f0de7e6472685e4f585c775",
+  "sidecar": "c7d48a4334334c088ad016c0c2e188210d28a86fafd045d3b628bd5bd3ff5237",
+  "sizes": [
+   1601,
+   15117,
+   22630
+  ]
+ },
+ "src/gnd/examples/release/model.orm.json::yaml": {
+  "document": "725820b4fbf4f6c8834af36290bccbaccb445916558b27d6f2bf2df6d0a7828d",
+  "loss_report": "ffbcfc5d09909b5c26541acf45548e4d6d02acaf34c0c8b9c9854b333d7d2281",
+  "sidecar": "4e3b0c71228224c77564423ca200e2bd80df2210147d7a843591c2d484cbed7e",
+  "sizes": [
+   1679,
+   15117,
+   22630
+  ]
+ },
+ "src/gnd/examples/release_governance/approval-proof/model.orm.json::json": {
+  "document": "a8fb79edf658824ed24bf8738202b2f21843db780e386eb48664e8fb790f04ba",
+  "loss_report": "651536cd6b66767c5531a883cb8bb5ddff8c33d355ac1ff02fc1d3006803819f",
+  "sidecar": "064d259e336a3f0191f62e9ea63f5880c4b0297347ae94007f59360cd69951a1",
+  "sizes": [
+   407,
+   5458,
+   7808
+  ]
+ },
+ "src/gnd/examples/release_governance/approval-proof/model.orm.json::yaml": {
+  "document": "19e0238f7536d0b1760c856254ebf78a47975988bc1c50cd5ce47b578995d781",
+  "loss_report": "f9bf341721d044f7b9b6e604264efccf5282badc8a80c14d88c049a9864f210f",
+  "sidecar": "e09158305a04f33a491db47f286e1db9f1144bfe52c63ebf44109cc7ca17eb6f",
+  "sizes": [
+   438,
+   5458,
+   7808
+  ]
+ },
+ "src/gnd/examples/release_governance/dependencies/model.orm.json::json": {
+  "document": "7e51fa9cf40bc6cb9858212078bf46620765ac1d1f1d9a2c8f9dfa7356e724ed",
+  "loss_report": "6307865713a5dff4985c6c3ae67699144d9b273f6e753537d1bd0c734e74be81",
+  "sidecar": "93b0e32fe42494155e18dc72ce37fb27bd2e9c20a21862c982505b5e489dead5",
+  "sizes": [
+   1217,
+   14455,
+   21819
+  ]
+ },
+ "src/gnd/examples/release_governance/dependencies/model.orm.json::yaml": {
+  "document": "b3ecfd6eedd59ad83f201b40f4ee6fd30b3a24d35e65396d4f99ec1e50ad6c8b",
+  "loss_report": "21b93d876e7715c8e87ec28e5ba1402df593ceaf4a248612f90cbfc40f86bc22",
+  "sidecar": "628c85e858e56b22791a906c2e4499cc1406c018e0647b4cc01fab0a9267a298",
+  "sizes": [
+   1299,
+   14455,
+   21819
+  ]
+ },
+ "src/gnd/examples/release_governance/policy/model.orm.json::json": {
+  "document": "880b481fb08fe0d3d1dd0978543efd8252686ff51f783f74cdbd49a77ee5ea31",
+  "loss_report": "81f8ff3b9be2718f24ade1f71d18762e591c4516f4f9ca19972e35b17ae2d053",
+  "sidecar": "06e8c076fd0804ed741d07f9b5003d3d71c8b80e9063c84bf745141ff24a644b",
+  "sizes": [
+   674,
+   6124,
+   8790
+  ]
+ },
+ "src/gnd/examples/release_governance/policy/model.orm.json::yaml": {
+  "document": "4851db8511b280e1967da368d2fde74fae9fe6277fe1db2e1d29a1bd65eb99cc",
+  "loss_report": "1e31bfafa79fde28aea40ce2c0531a74a1b73544f8f33c472bfa6a6c52ffc1f7",
+  "sidecar": "18f63a457cf100c4cbc8bfcea92ad2ed22606ff57e30ac9bb52af519389a12e4",
+  "sizes": [
+   699,
+   6124,
+   8790
+  ]
+ },
+ "src/gnd/examples/rule_check/model.orm.yaml::json": {
+  "document": "cf07a1079a4f21f499bc4904478b17f819068a601003873dcaea5de2154bc48f",
+  "loss_report": "42ad6a2a1047526a87fcc9bb6ba5e42e2f11c16aa8b7f65310dfb7dc81fae348",
+  "sidecar": "6d8880dadf9845c398b4086e30244291bfac941836b68badb1cbe362855da224",
+  "sizes": [
+   1113,
+   9674,
+   13322
+  ]
+ },
+ "src/gnd/examples/rule_check/model.orm.yaml::yaml": {
+  "document": "a65b1bc2a8149111152f2236c37adbe4a929bc7e5fec0768d7f6c31044c89885",
+  "loss_report": "ee25634a0f9cc4c8e3eca541939a5ebbeb713bef15f29899a0e4c1ed53c93411",
+  "sidecar": "eeb5688095dd7ec1a1beb1c6dff5c24adf7d246130be4bb2895ce0855a4599ce",
+  "sizes": [
+   1153,
+   9674,
+   13322
+  ]
+ },
+ "src/gnd/examples/staffing/model.orm.yaml::json": {
+  "document": "377483870cbf986c18a5e4034d1c7f8734944c441591dcc62e12086adc38922f",
+  "loss_report": "c8587910f27b13b09dbab5dec1ea0b18fc238ef12e22bfbe93db8b0f0c2dd3ae",
+  "sidecar": "c6d27093611a1492de9cf04ec789c4f0e4e871dae8db2dceace606c09376ff77",
+  "sizes": [
+   1542,
+   6274,
+   9641
+  ]
+ },
+ "src/gnd/examples/staffing/model.orm.yaml::yaml": {
+  "document": "dadac861a225f65fc6de7278858dc176e5323e266893873c0f9821948cd2a35e",
+  "loss_report": "c854b1ecc0b8fd1e138c784047b14ffe502c83c04448b7ee05f46d0ab50b58dc",
+  "sidecar": "4134e458d23dc71c1ac82ba87b629e9c5604868abbfced7e5b254348f435199f",
+  "sizes": [
+   1612,
+   6274,
+   9641
+  ]
+ },
+ "src/gnd/examples/type_judgements/duplicates/model.orm.yaml::json": {
+  "document": "878d34009b9d8c12cab08ce2147bb459806d4d1c90c02dd9090d670821a33bb5",
+  "loss_report": "eab03f06446dc113d02691e3aad71a05f7800d4ccb783890e95c28aacb4fa514",
+  "sidecar": "4775d6fa0716caa6556a036ff75c382bc948061b2c2da3da93a882c6b534c737",
+  "sizes": [
+   853,
+   4836,
+   6951
+  ]
+ },
+ "src/gnd/examples/type_judgements/duplicates/model.orm.yaml::yaml": {
+  "document": "3458ae22ea068cc0eb564759314185cefe55b58e2d701534081bc01b521af282",
+  "loss_report": "8574d87c79bc68bccc7a870c00cb6278968ec69d6a8d33109f7dad7419784f22",
+  "sidecar": "65182f273d15ed4a9c0e38019f88a4f5fd405b78a862a9c68cc2a5c2b1598cab",
+  "sizes": [
+   880,
+   4836,
+   6951
+  ]
+ },
+ "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml::json": {
+  "document": "42b70a8a4ebbb683972598e628679d7bec953b35ff79ade83a9ff6f70164a5cb",
+  "loss_report": "5d06a69c3066c57b890d41f7bca8dfae725807b18e9eeb0e46f6cf426c4e8053",
+  "sidecar": "3a30c6309b0c27b1fff83b460a6d3bd847d359a93559501177a1f317efdf9c33",
+  "sizes": [
+   845,
+   6742,
+   9471
+  ]
+ },
+ "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml::yaml": {
+  "document": "f60b9128e060168b1d05d852e502ed35fd4767d166f217c3ad53255e6a1a514f",
+  "loss_report": "1341788bb5637bcbf7f10fb61176a8be692eb34ac30e873c55f67425e595289f",
+  "sidecar": "124b069ad78b1c90b8ce81bee54569e9e3581d54fd2d367d0d70cb1d8b3fedc0",
+  "sizes": [
+   872,
+   6742,
+   9471
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml::json": {
+  "document": "34c19228e13e0f688c0c83d77b241befc1e5bfd87c049b64aba9cf2d83cb672b",
+  "loss_report": "2a19dc3f636094caf40d7733ab05b7ef114a138107094f8d9ecfb84dbb70bc44",
+  "sidecar": "a84c2d8a8a6ccb2952e0ece7cf45641af02d87acee4c9d9f109b44492f2ed134",
+  "sizes": [
+   2315,
+   20675,
+   28654
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml::yaml": {
+  "document": "458d522d3aa62535923f205c56af81b592fbe5f40f6593bad97cf6d7bb585ace",
+  "loss_report": "4988f18428340f8746d7a343f2a073a3341e26ad1ca40d247d8a5304218b1b5f",
+  "sidecar": "3a22fec26f4b563e100c90f0472648cb8dab884edc41001e241b9325f035ee03",
+  "sizes": [
+   2370,
+   20675,
+   28654
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml::json": {
+  "document": "b77d550f85a17da0cae3aa544701588607f0b729dab9d3aa98e0aa767b43de10",
+  "loss_report": "0685a93a7396c48c144beda327bac6c54cc87660355c05e22775eacd59311e38",
+  "sidecar": "9071159c43f15450125d38c94be4ac8583a614ab4d9d427bd7ad8b96004f0502",
+  "sizes": [
+   1568,
+   18030,
+   29140
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml::yaml": {
+  "document": "bac40411b40c67314011c54fb0f7a488b8da5bcc39f0535ebf788659d853fe45",
+  "loss_report": "ca7942715e33fddea45eb8bde4b1b9755ebe0ee7f5a19ff615b281f54da99209",
+  "sidecar": "14c66b211f895858765a8fc46074d2ae00be1a75e45c60cc5215960c4cea5d95",
+  "sizes": [
+   1620,
+   18030,
+   29140
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml::json": {
+  "document": "51fda9801b069750ac2f0c1b5b7ac15e510fb6a0f8b32a5bc17551e81b7187dd",
+  "loss_report": "675b3be7076e5b8f11cba1703b9a64b3d8b5042013f0e44bf5b0be0a7b61b9da",
+  "sidecar": "93afd3747a2c77f740f1bda094c2c29d4fcd68c7fdd72da1492423143ab47796",
+  "sizes": [
+   1807,
+   16793,
+   23666
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml::yaml": {
+  "document": "ad0d2615e74e9a78dc20cefe7ff9ba154f4174a86693ac6d6d890a4accea30b1",
+  "loss_report": "a8051bc7c8584563fcd24c0e5ccfbc23eadf37c0986d7489f02b6d5fc4188742",
+  "sidecar": "71d04e7235dec9d6622a2f049d134b3ec434e62d355a59cb76d5e3f15660ec60",
+  "sizes": [
+   1870,
+   16793,
+   23666
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml::json": {
+  "document": "cacddfee01d22c3a3fb27e5a85c86f21875786bed0da4295d99bd4aa3187e23a",
+  "loss_report": "e72e9a902e3f1569ff3d2bae6141fd86aee6df8fc21a2768fb1ca94432a20d32",
+  "sidecar": "85ad898f9487fe648c83291ccfeed97f1debf9b974ba19c94764fa1367e1862e",
+  "sizes": [
+   2054,
+   21534,
+   30299
+  ]
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml::yaml": {
+  "document": "3fab1c9df93b6fc52b6debfe857963aecb8d23db6dd3a9cfc3ac3265741c2b93",
+  "loss_report": "8ece18553aacf2b207435cdcdf826a3987a5cd9b82eae44e50ed13329bf2dbc9",
+  "sidecar": "1cf7dfb1a49dae803e2f5044d49e0ae8aaaf8be9caca10cadda53d274afb8af4",
+  "sizes": [
+   2126,
+   21534,
+   30299
+  ]
+ }
+}

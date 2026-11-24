@@ -18,7 +18,7 @@ from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes
 from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
-from gnd.input_policy import MAX_BYTES, guard_yaml, loads
+from gnd.input_policy import MAX_BYTES_CEILING, guard_yaml, loads, require_byte_bound
 from gnd.model import (
     MAX_MODEL_BYTES,
     iter_derivation_clauses,
@@ -41,6 +41,10 @@ _ALIAS = re.compile(r"[A-Za-z_][A-Za-z0-9_]*\Z")
 _PLACEHOLDER = re.compile(r"\{([^{}]+)\}")
 _NATIVE_LITERAL = ("native", "projected-with-source-spelling", None)
 _POPULATION_REFUSAL = "population:out-of-scope"
+#: Largest size of each written artifact unless the caller raises it (OB1). Equal to
+#: ``input_policy.MAX_BYTES`` today but deliberately not an alias of that input cap.
+DEFAULT_MAX_OUTPUT_BYTES = 10 * 1024 * 1024
+MAX_OUTPUT_BYTES_CEILING = MAX_BYTES_CEILING
 
 
 class OssieInputError(ValueError):
@@ -420,8 +424,19 @@ def _metadata(document, mapped):
     return rows, dict(elements), refused
 
 
-def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) -> OssieArtifacts:
-    """Render three deterministic artifacts from one bounded, admitted model read."""
+def render_ossie(
+    model_path: Path,
+    *,
+    output_format: str,
+    strict: bool = False,
+    max_output_bytes: int = DEFAULT_MAX_OUTPUT_BYTES,
+) -> OssieArtifacts:
+    """Render three deterministic artifacts from one bounded, admitted model read.
+
+    Every artifact must fit in ``max_output_bytes``; otherwise the whole export is
+    refused with ``ossie:output-size`` and nothing is returned to publish.
+    """
+    require_byte_bound("max_output_bytes", max_output_bytes)
     document, model = _read_model(model_path)
     ontology, mapped = _ontology(document, model)
     _schema().validate(ontology)
@@ -465,7 +480,7 @@ def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) 
         )
     except (ModelIdentityError, UnicodeEncodeError, ValueError) as error:
         raise OssieInputError("model has no encodable interchange identity") from error
-    if max(len(data), len(sidecar), len(report)) > MAX_BYTES:
+    if max(len(data), len(sidecar), len(report)) > max_output_bytes:
         raise OssieInputError("ossie:output-size")
     from gnd.redaction import RedactionPolicy
 

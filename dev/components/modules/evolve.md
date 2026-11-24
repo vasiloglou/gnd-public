@@ -192,10 +192,10 @@ GO5 (#227): one summary per growth round that a host can log and compare.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `RoundFileError` | class(ValueError) | 36 | A round file or a round artifact the summary refuses, by name. |
-| `ReusedElement` | class(_ClosedFrozenModel) | 40 | (no docstring) |
-| `HostDrop` | class(_ClosedFrozenModel) | 45 | Something the host dropped before the proposal; GND reports it, never judges it. |
-| `RoundFile` | class(_ClosedFrozenModel) | 53 | ``gnd-round/1``: what the host knows about a round that no artifact holds. |
-| `RoundSummary` | class(_ClosedFrozenModel) | 70 | ``gnd-round-summary/1``. |
-| `read_round_file(path) -> RoundFile` | function | 87 | Read one round file: bounded, strict JSON (no NaN, duplicate key or deep |
-| `round_summary(round_file, *, proposal, preview, report, record) -> RoundSummary` | function | 113 | The round's summary. Artifacts are bound to each other before anything |
+| `RoundFileError` | class(ValueError) | 39 | A round file or a round artifact the summary refuses, by name. |
+| `ReusedElement` | class(_ClosedFrozenModel) | 43 | (no docstring) |
+| `HostDrop` | class(_ClosedFrozenModel) | 48 | Something the host dropped before the proposal; GND reports it, never judges it. |
+| `RoundFile` | class(_ClosedFrozenModel) | 56 | ``gnd-round/1``: what the host knows about a round that no artifact holds. |
+| `RoundSummary` | class(_ClosedFrozenModel) | 73 | ``gnd-round-summary/1``. |
+| `read_round_file(path) -> RoundFile` | function | 90 | Read one round file: bounded, strict JSON (no NaN, duplicate key or deep |
+| `round_summary(round_file, *, proposal, preview, report, record) -> RoundSummary` | function | 116 | The round's summary. Artifacts are bound to each other before anything |

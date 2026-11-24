@@ -1,21 +1,21 @@
 All 49 SHA-256 hashes match the brief. Six issues reproduced.
 
-1. **F1 — Narrowing trusts row positions without checking operation identities.** [narrow.py:48](src/gnd/discover/narrow.py:48)  
+1. **F1 — Narrowing trusts row positions without checking operation identities.** `src/gnd/discover/narrow.py:48`  
    Create two independent additions, `op-object` and `op-color`. Supply a normally validated report with matching proposal/before hashes, but rows `(0, op-color, refused-by-validation)` and `(1, op-object, admitted)`, including their corresponding references. Narrowing keeps `op-color` and drops `op-object`. It should refuse the mismatched row identities by name; checking length alone permits both keeping a refused operation and dropping an admitted one.
 
-2. **F2 — Summary accepts incomplete outcomes and miscounts the round.** [summary.py:142](src/gnd/evolve/summary.py:142)  
+2. **F2 — Summary accepts incomplete outcomes and miscounts the round.** `src/gnd/evolve/summary.py:142`  
    Give a two-operation proposal a validated, correctly hash-bound report with `operation_outcomes=[]`. The summary returns `proposed.total=2`, `outcomes={}`. The command handler also returns exit **0** with this inconsistent summary. It should refuse incomplete coverage before counting.
 
-3. **F3 — Inline HTML comments still satisfy the guidance guard.** [markdown_sections.py:132](tests/support/markdown_sections.py:132)  
+3. **F3 — Inline HTML comments still satisfy the guidance guard.** `tests/support/markdown_sections.py:132`  
    Replace `New elements only, in the model's own element shapes;` in its table cell with `<!-- New elements only, in the model's own element shapes; -->`. `_reply_rule_problems` returns `[]`, although the required text is hidden. Prefixing the prose rule with `visible <!--` and closing its comment also passes. Comment handling recognizes only lines starting with `<!--`; table cells bypass it.
 
-4. **F4 — Summary bindings do not identify every artifact read.** [summary.py:158](src/gnd/evolve/summary.py:158)  
+4. **F4 — Summary bindings do not identify every artifact read.** `src/gnd/evolve/summary.py:158`  
    Two validated reports differing only in `refusal.message` have different canonical SHA-256 hashes but produce identical bindings: only the proposal hash and report gate appear. A saved summary cannot identify which report was read. By inspection, `record_preview_sha256` similarly identifies the preview rather than the record; the record’s own identity is omitted.
 
-5. **F5 — Host reasons are changed rather than reported verbatim.** [summary.py:50](src/gnd/evolve/summary.py:50)  
+5. **F5 — Host reasons are changed rather than reported verbatim.** `src/gnd/evolve/summary.py:50`  
    Read a round file whose host-drop reason is `"  host reason\n"`. Both the reader and CLI summary produce `"host reason"`. `NonEmptyString` strips whitespace, losing the host’s original text.
 
-6. **F6 — Equivalent tab-separated closed headings break the guard.** [markdown_sections.py:93](tests/support/markdown_sections.py:93)  
+6. **F6 — Equivalent tab-separated closed headings break the guard.** `tests/support/markdown_sections.py:93`  
    Change the heading to `## The reply shape\t##`. `_reply_rule_problems` raises `AssertionError: no heading 'The reply shape' outside a fenced block`. This legal equivalent heading should pass; splitting only on spaces leaves the closing hashes attached.
 
 What passed:

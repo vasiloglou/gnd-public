@@ -290,6 +290,11 @@ def _ossie_successor(command):
             "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
             help="largest size in bytes of each written file (default 10485760; at most 268435456)",
         )
+        # ossie-relational-bundle OB3 (D2 a): the declared opt-out of the relational files.
+        ossie.add_argument(
+            "--ontology-only", action="store_true",
+            help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
+        )
     else:
         ossie.add_argument(
             "--max-input-bytes", type=_byte_bound, default=None, metavar="N",

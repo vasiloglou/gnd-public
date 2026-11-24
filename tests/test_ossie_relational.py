@@ -10,7 +10,6 @@ import json
 from pathlib import Path
 
 import pytest
-
 from support import ossie_relational_corpus as corpus
 
 ROOT = Path(__file__).resolve().parents[1]

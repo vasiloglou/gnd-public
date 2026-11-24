@@ -7,6 +7,7 @@ from gnd import input_policy as _rf7_input
 from gnd import model as model_module
 from gnd.disclosure import resolve
 from gnd.errors import ModelValidationError, PopulationLoadError, ReferenceHashMismatch
+from gnd.model._parsing import parse_scoped
 from gnd.witness.flattening import (
     StaleWitnessBinding,
     load_flat_model,
@@ -168,6 +169,7 @@ def _replay_projected(projection, model_path, population_path, certificate, **op
     ).model_dump(mode="json")
 
 
+@parse_scoped  # one witness command parses each model text once per reader
 def rooted_witness_result(model_path, population_path, targets_path, *, reference_root=None,
                           flat_model=None, flattening_record=None):
     """Produce finite witnesses, authenticating model origins for a rooted include model."""
@@ -257,6 +259,7 @@ def replay_result(model_path, population_path, certificate_path, *, reference_ro
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
+@parse_scoped
 def rooted_replay_result(model_path, population_path, certificate_path, *, reference_root=None,
                          flat_model=None, flattening_record=None):
     """Replay a finite proof with an independent local inference kernel."""
@@ -294,6 +297,7 @@ def _input_errors():
             model_module.ModelLoadError, PopulationLoadError, ArtifactError)
 
 
+@parse_scoped
 def composed_witness_result(model_path, population_path, targets_path, *, composition,
                             flat_model=None, flattening_record=None):
     """Produce a composed witness whose base nodes name their source facts."""
@@ -331,6 +335,7 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
+@parse_scoped
 def composed_replay_result(model_path, population_path, certificate_path, *, composition,
                            flat_model=None, flattening_record=None):
     """Replay a witness against the composition record it binds."""
@@ -409,6 +414,7 @@ def _why_not_envelope(exit_code, status, reason, *, explanation=None, work=None)
 _WHY_NOT_EXITS = {"blocked": 0, "derived": 0, "unsupported": 2, "unavailable": 4}
 
 
+@parse_scoped
 def why_not_result(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
     """Explain why a derived fact type, or one claimed row of it, is not derived."""
     from ruamel.yaml.error import YAMLError

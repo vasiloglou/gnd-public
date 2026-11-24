@@ -1,0 +1,1492 @@
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/KEY-SHA256SUMS b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/KEY-SHA256SUMS
+new file mode 100644
+index 00000000..a376bd7f
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/KEY-SHA256SUMS
+@@ -0,0 +1,5 @@
++3c8b789cf61ccc5c193774c393350dc6600d51c9f6e5206639d22fe9ab79f830  key/ANSWER-KEY.md
++9cc6dd3636f6a238956e873a44f80e05e3516bfd90f2a553393d863604b043c6  key/branch-map.json
++d57859ec0c917bcbff7d05fb485912edfe31e01682f7362b7acabad5288254d5  key/key-runs.json
++9c9366963301b04b6ff2569b21a9cceff7d39a86f6ec1d80403e95fe32b5647b  gen/make_corpus.py
++02379cdf61ef260da345ae6a9afc800ae627c6d155fb172b8126d52778c6bdc1  gen/run_key.py
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-a/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-a/BRIEF.md
+new file mode 100644
+index 00000000..09d48ab9
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-a/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `fe8b819de649`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `407ad163ab6eb2cab925637653d5e9690747337a3deac40420ffd429fe4c9395` |
++| `tests/test_skill_names.py` | `b9bf370b0d1b06d5388859260278a758823d313a8444f7975451ce35b832be11` |
++| `tools/skill_names.py` | `434552a2632a728940c4418351aea97679d7c350aea5dc3ac0ff7cac1069f283` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-a/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-a/brief.json
+new file mode 100644
+index 00000000..b674a6e9
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-a/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:35.374959+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "407ad163ab6eb2cab925637653d5e9690747337a3deac40420ffd429fe4c9395"
++    },
++    {
++      "path": "tests/test_skill_names.py",
++      "sha256": "b9bf370b0d1b06d5388859260278a758823d313a8444f7975451ce35b832be11"
++    },
++    {
++      "path": "tools/skill_names.py",
++      "sha256": "434552a2632a728940c4418351aea97679d7c350aea5dc3ac0ff7cac1069f283"
++    }
++  ],
++  "head": "fe8b819de649b766f37562b7272b28f56f40c1ec",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-b/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-b/BRIEF.md
+new file mode 100644
+index 00000000..c7154809
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-b/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `7125f82a52ed`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `f3eb5e9ba9494b1af562585af0d6f2c918675abe3b414355688f544a2ad60e9b` |
++| `tests/test_project_version.py` | `7fc23a4b94dab0501b54867616dbd0a767891494c9c3c021300c851669d124f1` |
++| `tools/project_version.py` | `14712a9a35f1232a0521f310ee67d6043f51f71e4bb037ab4a2c9d1055bcd4ea` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-b/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-b/brief.json
+new file mode 100644
+index 00000000..3d839e44
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-b/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:36.361780+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "f3eb5e9ba9494b1af562585af0d6f2c918675abe3b414355688f544a2ad60e9b"
++    },
++    {
++      "path": "tests/test_project_version.py",
++      "sha256": "7fc23a4b94dab0501b54867616dbd0a767891494c9c3c021300c851669d124f1"
++    },
++    {
++      "path": "tools/project_version.py",
++      "sha256": "14712a9a35f1232a0521f310ee67d6043f51f71e4bb037ab4a2c9d1055bcd4ea"
++    }
++  ],
++  "head": "7125f82a52edef179ff7258bae4f933f13f9a443",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-c/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-c/BRIEF.md
+new file mode 100644
+index 00000000..08cecb87
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-c/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `03a8eb226ba5`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `bbe9bbdd11d343342320ac59121ef58069d642dc5d6731641f12aefc3af79565` |
++| `tests/test_skill_names.py` | `b9bf370b0d1b06d5388859260278a758823d313a8444f7975451ce35b832be11` |
++| `tools/skill_names.py` | `9d85ac85829eb7aa9ea7afab91acac8d5072cac218b19a9831afd27f69c26008` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-c/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-c/brief.json
+new file mode 100644
+index 00000000..23228ffa
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-c/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:37.094528+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "bbe9bbdd11d343342320ac59121ef58069d642dc5d6731641f12aefc3af79565"
++    },
++    {
++      "path": "tests/test_skill_names.py",
++      "sha256": "b9bf370b0d1b06d5388859260278a758823d313a8444f7975451ce35b832be11"
++    },
++    {
++      "path": "tools/skill_names.py",
++      "sha256": "9d85ac85829eb7aa9ea7afab91acac8d5072cac218b19a9831afd27f69c26008"
++    }
++  ],
++  "head": "03a8eb226ba5049495c1579d1d986897aa651417",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-d/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-d/BRIEF.md
+new file mode 100644
+index 00000000..df35bde7
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-d/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `7e75231f96cd`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `073351b86f75840e9ace423da605270c5ec50fbee0d981b54e971b711062b3e8` |
++| `tests/test_model_type_ids.py` | `bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391` |
++| `tools/model_type_ids.py` | `ca05de75be912ac16d0743733d9a54884f8f2aaf1dea95b5bf747e6a62eae9f1` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-d/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-d/brief.json
+new file mode 100644
+index 00000000..8a53b49b
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-d/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:38.447856+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "073351b86f75840e9ace423da605270c5ec50fbee0d981b54e971b711062b3e8"
++    },
++    {
++      "path": "tests/test_model_type_ids.py",
++      "sha256": "bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391"
++    },
++    {
++      "path": "tools/model_type_ids.py",
++      "sha256": "ca05de75be912ac16d0743733d9a54884f8f2aaf1dea95b5bf747e6a62eae9f1"
++    }
++  ],
++  "head": "7e75231f96cdcbe58a8285821facc3140b39dffd",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-e/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-e/BRIEF.md
+new file mode 100644
+index 00000000..49c5e452
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-e/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `91a875b827f0`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `19205ac748dd1d417e3cf44bc129ef6fa2b1077737e58499afc8fcc2b18d098b` |
++| `tests/test_skill_of_file.py` | `d4fac10b176bd0378ff9f6bd83b3d4d604871ab633a0e0f8d0212bb03901d17a` |
++| `tools/skill_of_file.py` | `abeb95254f239d716e90098cd765e5ad183818b5185df6c06533fe5134ea6abf` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-e/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-e/brief.json
+new file mode 100644
+index 00000000..939302a2
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-e/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:40.557700+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "19205ac748dd1d417e3cf44bc129ef6fa2b1077737e58499afc8fcc2b18d098b"
++    },
++    {
++      "path": "tests/test_skill_of_file.py",
++      "sha256": "d4fac10b176bd0378ff9f6bd83b3d4d604871ab633a0e0f8d0212bb03901d17a"
++    },
++    {
++      "path": "tools/skill_of_file.py",
++      "sha256": "abeb95254f239d716e90098cd765e5ad183818b5185df6c06533fe5134ea6abf"
++    }
++  ],
++  "head": "91a875b827f085e67d347dec5fae8cf0da34864a",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-f/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-f/BRIEF.md
+new file mode 100644
+index 00000000..5597135c
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-f/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `d939514b4648`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `526bd626c733dc7d183d7f63135d10a1dc881871d2c13bc5bcc20723a8178bdb` |
++| `tests/test_model_type_ids.py` | `bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391` |
++| `tools/model_type_ids.py` | `045c7eb13412f308d8a5f7fd409938f031e6c44b6754be5bb278c99071476c44` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-f/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-f/brief.json
+new file mode 100644
+index 00000000..1a007bfa
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-f/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:41.947232+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "526bd626c733dc7d183d7f63135d10a1dc881871d2c13bc5bcc20723a8178bdb"
++    },
++    {
++      "path": "tests/test_model_type_ids.py",
++      "sha256": "bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391"
++    },
++    {
++      "path": "tools/model_type_ids.py",
++      "sha256": "045c7eb13412f308d8a5f7fd409938f031e6c44b6754be5bb278c99071476c44"
++    }
++  ],
++  "head": "d939514b4648b902e5c7b136a8fab4ffa7e3c1ab",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-g/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-g/BRIEF.md
+new file mode 100644
+index 00000000..5534e726
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-g/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `045a83d94410`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `df6055d84ddedb0754c020f5229fcfd0176fae0e09feac89955f99032ffd42b0` |
++| `tests/test_skill_of_file.py` | `d4fac10b176bd0378ff9f6bd83b3d4d604871ab633a0e0f8d0212bb03901d17a` |
++| `tools/skill_of_file.py` | `eb638597ef732f2bdd2bf6f38f5b1c4ccdd8efefc2dd9ff538798e4b666191f3` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-g/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-g/brief.json
+new file mode 100644
+index 00000000..a363c6ae
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-g/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:46.737289+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "df6055d84ddedb0754c020f5229fcfd0176fae0e09feac89955f99032ffd42b0"
++    },
++    {
++      "path": "tests/test_skill_of_file.py",
++      "sha256": "d4fac10b176bd0378ff9f6bd83b3d4d604871ab633a0e0f8d0212bb03901d17a"
++    },
++    {
++      "path": "tools/skill_of_file.py",
++      "sha256": "eb638597ef732f2bdd2bf6f38f5b1c4ccdd8efefc2dd9ff538798e4b666191f3"
++    }
++  ],
++  "head": "045a83d9441022905d4a2a79659b98ee3014052c",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-h/BRIEF.md b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-h/BRIEF.md
+new file mode 100644
+index 00000000..899e372f
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-h/BRIEF.md
+@@ -0,0 +1,67 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Review this change for correctness and readiness to merge.
++
++## The change under review
++
++The work from `6b0a7e5a` to the working tree at `63b3e6e582a9`. Its diff is `.review-round/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.review-round/diff.patch` | `40fb9121508324c65f4be37fc3c548a840ca62f2fb97e3c7939db6b55e9db6f5` |
++| `tests/test_project_version.py` | `7fc23a4b94dab0501b54867616dbd0a767891494c9c3c021300c851669d124f1` |
++| `tools/project_version.py` | `09aaf0ed665bb1bd9a9d085af3c0e5842a6001a8566fe37bd242229c5a66dcd8` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-h/brief.json b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-h/brief.json
+new file mode 100644
+index 00000000..0f0f229c
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/briefs/change-h/brief.json
+@@ -0,0 +1,28 @@
++{
++  "base": "6b0a7e5a",
++  "claims": [],
++  "created": "2026-11-23T23:32:47.977945+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".review-round/diff.patch",
++      "sha256": "40fb9121508324c65f4be37fc3c548a840ca62f2fb97e3c7939db6b55e9db6f5"
++    },
++    {
++      "path": "tests/test_project_version.py",
++      "sha256": "7fc23a4b94dab0501b54867616dbd0a767891494c9c3c021300c851669d124f1"
++    },
++    {
++      "path": "tools/project_version.py",
++      "sha256": "09aaf0ed665bb1bd9a9d085af3c0e5842a6001a8566fe37bd242229c5a66dcd8"
++    }
++  ],
++  "head": "63b3e6e582a9061d0a5e69481567b771303854f4",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Review this change for correctness and readiness to merge.",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-a.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-a.patch
+new file mode 100644
+index 00000000..f7e0b1ee
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-a.patch
+@@ -0,0 +1,52 @@
++diff --git a/tests/test_skill_names.py b/tests/test_skill_names.py
++new file mode 100644
++index 00000000..a68e6253
++--- /dev/null
+++++ b/tests/test_skill_names.py
++@@ -0,0 +1,22 @@
+++"""Tests for tools/skill_names.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.skill_names import skill_names
+++
+++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
+++
+++
+++def test_every_packaged_skill_names_its_own_directory() -> None:
+++    names = skill_names(SKILLS)
+++    assert len(names) == 18
+++    assert all(directory == name for directory, name in names.items())
+++
+++
+++def test_a_skill_written_here(tmp_path: Path) -> None:
+++    (tmp_path / "demo").mkdir()
+++    (tmp_path / "demo" / "SKILL.md").write_text(
+++        "---\nname: demo\ndescription: A demo skill.\n---\n\n# Demo\n", encoding="utf-8"
+++    )
+++    assert skill_names(tmp_path) == {"demo": "demo"}
++diff --git a/tools/skill_names.py b/tools/skill_names.py
++new file mode 100644
++index 00000000..9db02c28
++--- /dev/null
+++++ b/tools/skill_names.py
++@@ -0,0 +1,18 @@
+++"""Read the declared name of every skill under a skills root."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++
+++def skill_name(path: str | Path) -> str | None:
+++    """Return the ``name`` a SKILL.md declares in its frontmatter, or None."""
+++    header = Path(path).read_text(encoding="utf-8").split("---")[1]
+++    for line in header.splitlines():
+++        if line.startswith("name:"):
+++            return line.split(":")[1].strip()
+++    return None
+++
+++
+++def skill_names(root: str | Path) -> dict[str, str | None]:
+++    """Map each skill directory under ``root`` to the name its SKILL.md declares."""
+++    return {path.parent.name: skill_name(path) for path in sorted(Path(root).glob("*/SKILL.md"))}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-b.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-b.patch
+new file mode 100644
+index 00000000..1b5171f0
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-b.patch
+@@ -0,0 +1,42 @@
++diff --git a/tests/test_project_version.py b/tests/test_project_version.py
++new file mode 100644
++index 00000000..d559e137
++--- /dev/null
+++++ b/tests/test_project_version.py
++@@ -0,0 +1,18 @@
+++"""Tests for tools/project_version.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.project_version import project_version
+++
+++ROOT = Path(__file__).resolve().parents[1]
+++
+++
+++def test_this_projects_version() -> None:
+++    assert project_version(ROOT / "pyproject.toml") == "0.4.0"
+++
+++
+++def test_a_minimal_pyproject(tmp_path: Path) -> None:
+++    path = tmp_path / "pyproject.toml"
+++    path.write_text('[project]\nname = "demo"\nversion = "1.2.3"\n', encoding="utf-8")
+++    assert project_version(path) == "1.2.3"
++diff --git a/tools/project_version.py b/tools/project_version.py
++new file mode 100644
++index 00000000..c8e17cfe
++--- /dev/null
+++++ b/tools/project_version.py
++@@ -0,0 +1,12 @@
+++"""Read the project version from a pyproject.toml."""
+++from __future__ import annotations
+++
+++import tomllib
+++from pathlib import Path
+++
+++
+++def project_version(path: str | Path) -> str | None:
+++    """Return ``[project].version``, or None when the file declares none."""
+++    with Path(path).open("rb") as handle:
+++        version = tomllib.load(handle).get("project", {}).get("version")
+++    return version if isinstance(version, str) else None
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-c.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-c.patch
+new file mode 100644
+index 00000000..65b86e8e
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-c.patch
+@@ -0,0 +1,52 @@
++diff --git a/tests/test_skill_names.py b/tests/test_skill_names.py
++new file mode 100644
++index 00000000..a68e6253
++--- /dev/null
+++++ b/tests/test_skill_names.py
++@@ -0,0 +1,22 @@
+++"""Tests for tools/skill_names.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.skill_names import skill_names
+++
+++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
+++
+++
+++def test_every_packaged_skill_names_its_own_directory() -> None:
+++    names = skill_names(SKILLS)
+++    assert len(names) == 18
+++    assert all(directory == name for directory, name in names.items())
+++
+++
+++def test_a_skill_written_here(tmp_path: Path) -> None:
+++    (tmp_path / "demo").mkdir()
+++    (tmp_path / "demo" / "SKILL.md").write_text(
+++        "---\nname: demo\ndescription: A demo skill.\n---\n\n# Demo\n", encoding="utf-8"
+++    )
+++    assert skill_names(tmp_path) == {"demo": "demo"}
++diff --git a/tools/skill_names.py b/tools/skill_names.py
++new file mode 100644
++index 00000000..8dcc29d2
++--- /dev/null
+++++ b/tools/skill_names.py
++@@ -0,0 +1,18 @@
+++"""Read the declared name of every skill under a skills root."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from gnd.exp.frontmatter import read_frontmatter
+++
+++
+++def skill_name(path: str | Path) -> str | None:
+++    """Return the ``name`` a SKILL.md declares in its frontmatter, or None."""
+++    mapping, _body = read_frontmatter(path)
+++    name = mapping.get("name")
+++    return name if isinstance(name, str) else None
+++
+++
+++def skill_names(root: str | Path) -> dict[str, str | None]:
+++    """Map each skill directory under ``root`` to the name its SKILL.md declares."""
+++    return {path.parent.name: skill_name(path) for path in sorted(Path(root).glob("*/SKILL.md"))}
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-d.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-d.patch
+new file mode 100644
+index 00000000..610677fe
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-d.patch
+@@ -0,0 +1,44 @@
++diff --git a/tests/test_model_type_ids.py b/tests/test_model_type_ids.py
++new file mode 100644
++index 00000000..22ae15a9
++--- /dev/null
+++++ b/tests/test_model_type_ids.py
++@@ -0,0 +1,21 @@
+++"""Tests for tools/model_type_ids.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.model_type_ids import object_type_ids
+++
+++EXAMPLES = Path(__file__).resolve().parents[1] / "src/gnd/skills/gnd-model-from-text/examples"
+++
+++
+++def test_movie_catalog_ids_in_file_order() -> None:
+++    assert object_type_ids(EXAMPLES / "movie_catalog.orm.yaml") == [
+++        "movie", "director", "movie_id", "director_name", "title", "year", "rating",
+++    ]
+++
+++
+++def test_library_ids_in_file_order() -> None:
+++    assert object_type_ids(EXAMPLES / "library_with_subtypes.orm.yaml") == [
+++        "library_item", "book_item", "periodical_item", "book_type", "author", "patron",
+++        "item_id", "author_name", "patron_id", "title", "issue_number",
+++    ]
++diff --git a/tools/model_type_ids.py b/tools/model_type_ids.py
++new file mode 100644
++index 00000000..1bee1029
++--- /dev/null
+++++ b/tools/model_type_ids.py
++@@ -0,0 +1,11 @@
+++"""List the object-type ids a GND model file declares, in file order."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from gnd.model import load_model
+++
+++
+++def object_type_ids(path: str | Path) -> list[str]:
+++    """Return the ids of the model's object types, in the order the file declares them."""
+++    return [object_type["id"] for object_type in load_model(path).object_types]
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-e.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-e.patch
+new file mode 100644
+index 00000000..09263fbd
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-e.patch
+@@ -0,0 +1,43 @@
++diff --git a/tests/test_skill_of_file.py b/tests/test_skill_of_file.py
++new file mode 100644
++index 00000000..d7886359
++--- /dev/null
+++++ b/tests/test_skill_of_file.py
++@@ -0,0 +1,22 @@
+++"""Tests for tools/skill_of_file.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.skill_of_file import skill_of
+++
+++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
+++
+++
+++def test_a_skill_md() -> None:
+++    assert skill_of(SKILLS / "gnd-solve" / "SKILL.md", SKILLS) == "gnd-solve"
+++
+++
+++def test_a_reference() -> None:
+++    path = SKILLS / "gnd-orm-core" / "references" / "population-format.md"
+++    assert skill_of(path, SKILLS) == "gnd-orm-core"
+++
+++
+++def test_a_script() -> None:
+++    path = SKILLS / "gnd-adopt" / "scripts" / "verify_migration.py"
+++    assert skill_of(path, SKILLS) == "gnd-adopt"
++diff --git a/tools/skill_of_file.py b/tools/skill_of_file.py
++new file mode 100644
++index 00000000..34050621
++--- /dev/null
+++++ b/tools/skill_of_file.py
++@@ -0,0 +1,9 @@
+++"""Name the packaged skill a file belongs to."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++
+++def skill_of(path: str | Path, root: str | Path) -> str:
+++    """Return the skill directory under ``root`` that holds ``path``."""
+++    return Path(path).relative_to(root).parts[0]
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-f.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-f.patch
+new file mode 100644
+index 00000000..85f078fc
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-f.patch
+@@ -0,0 +1,47 @@
++diff --git a/tests/test_model_type_ids.py b/tests/test_model_type_ids.py
++new file mode 100644
++index 00000000..22ae15a9
++--- /dev/null
+++++ b/tests/test_model_type_ids.py
++@@ -0,0 +1,21 @@
+++"""Tests for tools/model_type_ids.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.model_type_ids import object_type_ids
+++
+++EXAMPLES = Path(__file__).resolve().parents[1] / "src/gnd/skills/gnd-model-from-text/examples"
+++
+++
+++def test_movie_catalog_ids_in_file_order() -> None:
+++    assert object_type_ids(EXAMPLES / "movie_catalog.orm.yaml") == [
+++        "movie", "director", "movie_id", "director_name", "title", "year", "rating",
+++    ]
+++
+++
+++def test_library_ids_in_file_order() -> None:
+++    assert object_type_ids(EXAMPLES / "library_with_subtypes.orm.yaml") == [
+++        "library_item", "book_item", "periodical_item", "book_type", "author", "patron",
+++        "item_id", "author_name", "patron_id", "title", "issue_number",
+++    ]
++diff --git a/tools/model_type_ids.py b/tools/model_type_ids.py
++new file mode 100644
++index 00000000..63534e81
++--- /dev/null
+++++ b/tools/model_type_ids.py
++@@ -0,0 +1,14 @@
+++"""List the object-type ids a GND model file declares, in file order."""
+++from __future__ import annotations
+++
+++import re
+++from pathlib import Path
+++
+++_ID = re.compile(r"^  - id: (\w+)$", re.MULTILINE)
+++
+++
+++def object_type_ids(path: str | Path) -> list[str]:
+++    """Return the ids of the model's object types, in the order the file declares them."""
+++    text = Path(path).read_text(encoding="utf-8")
+++    section = text.split("\nobject_types:\n", 1)[1].split("\nfact_types:", 1)[0]
+++    return _ID.findall(section)
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-g.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-g.patch
+new file mode 100644
+index 00000000..49c15e06
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-g.patch
+@@ -0,0 +1,46 @@
++diff --git a/tests/test_skill_of_file.py b/tests/test_skill_of_file.py
++new file mode 100644
++index 00000000..d7886359
++--- /dev/null
+++++ b/tests/test_skill_of_file.py
++@@ -0,0 +1,22 @@
+++"""Tests for tools/skill_of_file.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.skill_of_file import skill_of
+++
+++SKILLS = Path(__file__).resolve().parents[1] / "src" / "gnd" / "skills"
+++
+++
+++def test_a_skill_md() -> None:
+++    assert skill_of(SKILLS / "gnd-solve" / "SKILL.md", SKILLS) == "gnd-solve"
+++
+++
+++def test_a_reference() -> None:
+++    path = SKILLS / "gnd-orm-core" / "references" / "population-format.md"
+++    assert skill_of(path, SKILLS) == "gnd-orm-core"
+++
+++
+++def test_a_script() -> None:
+++    path = SKILLS / "gnd-adopt" / "scripts" / "verify_migration.py"
+++    assert skill_of(path, SKILLS) == "gnd-adopt"
++diff --git a/tools/skill_of_file.py b/tools/skill_of_file.py
++new file mode 100644
++index 00000000..1179a662
++--- /dev/null
+++++ b/tools/skill_of_file.py
++@@ -0,0 +1,12 @@
+++"""Name the packaged skill a file belongs to."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++
+++def skill_of(path: str | Path, root: str | Path) -> str:
+++    """Return the skill directory under ``root`` that holds ``path``."""
+++    parts = Path(path).parts
+++    if parts[-2] in ("references", "scripts"):
+++        return parts[-3]
+++    return parts[-2]
+diff --git a/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-h.patch b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-h.patch
+new file mode 100644
+index 00000000..47af849f
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/evidence/PF2/corpus/change-h.patch
+@@ -0,0 +1,43 @@
++diff --git a/tests/test_project_version.py b/tests/test_project_version.py
++new file mode 100644
++index 00000000..d559e137
++--- /dev/null
+++++ b/tests/test_project_version.py
++@@ -0,0 +1,18 @@
+++"""Tests for tools/project_version.py."""
+++from __future__ import annotations
+++
+++from pathlib import Path
+++
+++from tools.project_version import project_version
+++
+++ROOT = Path(__file__).resolve().parents[1]
+++
+++
+++def test_this_projects_version() -> None:
+++    assert project_version(ROOT / "pyproject.toml") == "0.4.0"
+++
+++
+++def test_a_minimal_pyproject(tmp_path: Path) -> None:
+++    path = tmp_path / "pyproject.toml"
+++    path.write_text('[project]\nname = "demo"\nversion = "1.2.3"\n', encoding="utf-8")
+++    assert project_version(path) == "1.2.3"
++diff --git a/tools/project_version.py b/tools/project_version.py
++new file mode 100644
++index 00000000..b0bc4496
++--- /dev/null
+++++ b/tools/project_version.py
++@@ -0,0 +1,13 @@
+++"""Read the project version from a pyproject.toml."""
+++from __future__ import annotations
+++
+++import re
+++from pathlib import Path
+++
+++_VERSION = re.compile(r'^version = "([^"]+)"', re.MULTILINE)
+++
+++
+++def project_version(path: str | Path) -> str | None:
+++    """Return ``[project].version``, or None when the file declares none."""
+++    match = _VERSION.search(Path(path).read_text(encoding="utf-8"))
+++    return match.group(1) if match else None
+diff --git a/.gnd-planning/milestones/pins-and-review-check/notes/phase-PF2-spec.md b/.gnd-planning/milestones/pins-and-review-check/notes/phase-PF2-spec.md
+new file mode 100644
+index 00000000..da885396
+--- /dev/null
++++ b/.gnd-planning/milestones/pins-and-review-check/notes/phase-PF2-spec.md
+@@ -0,0 +1,202 @@
++# Phase PF2 · does the standing review check find code fitted to its examples · spec r1
++
++## 1. Status
++
++**Approved r1 by delegated ruling (auto=true), 2026-11-23 (§12).** No
++reviewer runs before the corpus diffs, the briefs and the answer key's hash
++are committed (PF2-C1, PF2-D4).
++
++## 2. Provenance
++
++- Derives from [plan r1](pins-and-review-check-plan.md) (owner-approved,
++  `../001-plan.md`): Goal (PF2), R0.2, R0.4, §1 H8–H11, §2 PF2, §4 PF2-C1 to
++  C4, §6, §9 PF2 row, §10 D2 and D3.
++- Sources: [PR 235](https://github.com/vasiloglou/gnd-public/pull/235) and
++  [PR 246](https://github.com/vasiloglou/gnd-public/pull/246), "Not
++  established": no review round had run with the standing check.
++- Code read at `origin/main` `6b0a7e5a`. No review has read these bytes.
++- PF1's two review rounds used the same brief and did report fitted code in
++  PF1's own guard (record `../002-phase-PF1.md`). That is one anecdote on a
++  diff whose author knew the rule; PF2 measures it on a corpus built for it.
++
++## 3. Obligations
++
++| Source | Obligation | Discharged in |
++|---|---|---|
++| plan PF2-C1 | corpus, answer key and briefs committed before any reviewer runs | §6 "Order"; record |
++| plan PF2-C2 | every diff has a review or a recorded failure to run | §6 "Runs"; record |
++| plan PF2-C3 | planted found, planted missed, false findings on controls, with the limits | §6 "Grading"; §6 "Limits"; record |
++| plan PF2-C4 | each miss names the brief sentence it bears on, or none | §6 "Grading"; record |
++| plan R0.2 | no edit to the brief, `standing-rules.md` or `review_tool.py` | §9; a dev-tools proposal is drafted only |
++| plan R0.4 | the experiment's limits stated before it runs; answer key kept from the reviewer | §6 "Blindness", "Limits" |
++| plan D2 (a) | `codex`, about eight diffs, one run each | §6 "Runs" |
++| H10 | the brief's subjects and options | §6: `--subject phase --base`, no `--claim` |
++
++## 4. The standing rules, bound to this phase
++
++- **R0.2 dev-tools files are not edited here.** PF2 runs
++  `.claude/skills/process-phase/scripts/review_tool.py` as delivered on
++  `main` and changes nothing it reads.
++- **R0.4 limits first.** §6 "Limits" is written before any run.
++- **General solutions (`AGENTS.md`).** The controls reuse the repository's own
++  readers (`gnd.model.load_model`, `gnd.exp.frontmatter.read_frontmatter`,
++  `tomllib`, `pathlib`), so a control is the rule's own example of a fix.
++- **Totality, caps, validation order, one walk, measurement.** PF2 adds no
++  code to the repository; the corpus lives on scratch branches in a
++  scratch clone. Inapplicable, except measurement: the grading is a
++  measurement and is pre-registered in §6.
++
++## 5. Goal
++
++A committed evidence directory
++`.gnd-planning/milestones/pins-and-review-check/evidence/PF2/` holds the
++corpus (eight diffs), the answer key, eight briefs, eight retained reviews
++(or failures to run) and a grading table. The record reports planted found
++with a breaking input, planted missed, and false findings on controls, each
++reproduced by running the corpus code.
++
++## 6. Design
++
++### Corpus
++
++Four capabilities, each written twice: a **planted** version fitted to its
++examples and a **control** that solves the class with the repository's own
++reader. Both versions of a capability use the same module and test names,
++the same docstring and tests that pass, so the names give nothing away. Each
++is one commit adding `tools/<module>.py` and `tests/test_<module>.py` on top
++of `origin/main`.
++
++| Capability | Module | Planted (class of `standing-rules.md`) | Control |
++|---|---|---|---|
++| K1 object-type ids of a YAML model | `model_type_ids` | a regular expression over the YAML text, fitted to the examples' block style | `gnd.model.load_model(path).object_types` |
++| K2 the `name` in a SKILL.md frontmatter | `skill_names` | string splits on `---` and `:` | `gnd.exp.frontmatter.read_frontmatter` |
++| K3 the skill a packaged file belongs to | `skill_of_file` | path parts by position, with a branch on the literal parent names the tests use (`references`, `scripts`) | `Path.relative_to(root).parts[0]` |
++| K4 the project version from `pyproject.toml` | `project_version` | a regular expression for the first `version = "..."` line | `tomllib`, `["project"]["version"]` |
++
++### Answer key (written first, kept from the reviewer)
++
++For each planted version: the defect class and at least one breaking input,
++**run** against the planted code and against the control, with both
++outputs. For each control: the same inputs, showing it returns the right
++answer. This is the liveness proof: every planted defect can be found, and
++every control can be passed clean.
++
++### Blindness
++
++Reviews run in a scratch clone of `origin/main` under the session
++scratchpad, one worktree of that clone per diff. `origin/main` does not hold
++this milestone's planning files, the answer key, or the other version of the
++capability. The answer key stays in the scratchpad until every run has
++ended, then is copied into the evidence directory with the reviews.
++
++### Runs
++
++Per diff: `review_tool.py brief --subject phase --base <origin/main>` with no
++`--file` and no `--claim`, and the same neutral question for all eight:
++"Review this change for correctness and readiness to merge." Then
++`review_tool.py run --reviewer codex --wait`. Four at a time. A run that
++fails is recorded with its log and is not retried more than once.
++
++### Grading (pre-registered)
++
++- **Found:** the review reports, for the planted version, an input that makes
++  the planted code return a wrong result when I run it. Any such input
++  counts, not only the answer key's.
++- **Missed:** no such input. A suspicion without an input, or one labelled
++  style, is a miss and is noted as "suspected".
++- **False finding:** on a control, a reported fitted-code finding whose input,
++  when run, gets the right answer. If the input does break the control, it is
++  a **true finding on a control**, and that control is reported as flawed.
++- Other findings (not about fitted code) are listed and not graded.
++- For each miss, the record names the brief sentence that should have led to
++  it, or says none does (PF2-C4).
++
++### Limits (stated before the runs)
++
++- Eight diffs, one reviewer, one run each: no rate generalises from this.
++  It can show that the check finds some planted defects, or that it misses
++  them; it cannot estimate a rate.
++- The same assistant wrote the planted defects, the controls and the grading.
++  The answer key is fixed before the runs, but the defects reflect one
++  author's idea of fitted code.
++- The reviewer can read `AGENTS.md` on `main`, which states the rule. That
++  is the real setting the check works in, not a leak.
++- Codex output is not deterministic; a second run could differ.
++
++### Order
++
++1. This spec's gate. 2. Build the corpus and answer key in the scratch clone;
++run the answer key. 3. Commit the corpus diffs and the briefs to the
++evidence directory. 4. Run the eight reviews. 5. Copy the answer key and
++reviews in, sanitized for local paths. 6. Grade by running each reported
++input.
++
++## 7. Decisions
++
++| ID | Question | Readings and cost | Proposed |
++|---|---|---|---|
++| PF2-D1 | The question in each brief | (a) neutral, the same for all; (b) name the fitted-code class. (b) measures the question, not the standing check | (a). **Ruled (a), delegated (auto=true), 2026-11-23** |
++| PF2-D2 | Where the reviews run | (a) a scratch clone of `origin/main`, blind; (b) this branch: the reviewer could read the plan and answer key | (a). **Ruled (a), delegated (auto=true), 2026-11-23** |
++| PF2-D3 | A finding on a control that reproduces | (a) a true finding, the control flawed; (b) ignore. (b) hides a real defect | (a). **Ruled (a), delegated (auto=true), 2026-11-23** |
++| PF2-D4 | Commit step 3 before the runs while the answer key is still private | (a) commit the diffs and briefs first, the key after the runs, with a hash of the key committed in step 3; (b) commit everything after. (a) proves the key was fixed first | (a). **Ruled (a), delegated (auto=true), 2026-11-23** |
++
++## 8. Tests
++
++PF2 adds no repository test. Its checks are the experiment's:
++
++| ID | Check | Expected |
++|---|---|---|
++| E1 | each corpus diff's own tests, in its clone | exit 0 for all eight |
++| E2 | the answer key's breaking inputs on each planted version | a wrong result for each |
++| E3 | the same inputs on each control | the right result for each |
++| E4 | the key's sha256 committed before the runs equals the key committed after | equal |
++| E5 | every reported input of every review, run | graded per §6 |
++
++## 9. Out of scope for this phase
++
++- Editing the brief, `standing-rules.md` or `review_tool.py` (R0.2). A miss the
++  brief explains becomes a drafted proposal to dev-tools, not sent.
++- Any change to `src/` or `tests/` of this repository.
++- A second reviewer or a second run of a diff.
++
++## 10. Size
++
++Eight small corpus diffs (about 30 source and 30 test lines each), outside
++the repository. In the repository: the evidence directory and the record.
++
++## 11. Approval instrument
++
++This prose, under the delegation (auto=true).
++
++## 12. Gate
++
++**Delegated approval (auto=true), 2026-11-23.** Authorization: the owner's
++`process-milestone pins-and-review-check auto` of 2026-11-23, this milestone
++only. This is an agent ruling under that delegation, not the owner's reading.
++Bytes: spec r1 above this section as drafted, sha256 `1e469abfc507cb93f8b00fdcf1b539a6b032c5ec896093408b1d7e7f49218a30`; the status line
++and the four ruling cells changed with this gate. Instrument: this prose
++(§11); no review of the spec. Rulings: PF2-D1 to D4 (a). Budget: eight
++`codex` runs, one each, one retry for a run that fails (plan D2, ruled by the
++owner). Implementability sweep: the scratch clone of `origin/main` carries
++`review_tool.py`; a `phase` brief needs only `--base`; E1–E5 can each be run.
++
++## Implementation findings, recorded as they were found
++
++1. **A cloned corpus leaks through refs.** A clone of this worktree carried
++   its remote-tracking refs and the checked-out PF branch, which hold the
++   plan. The clone's remote and branch were removed and pruned before any
++   brief was written (no ref mentions the milestone afterwards), and the
++   corpus branches were renamed from `corpus/K*-planted|control` to the
++   neutral `change-a`..`change-h` by a seeded shuffle
++   (`key/branch-map.json`).
++2. **The corpus scripts name the versions.** `make_corpus.py` and
++   `run_key.py` were held back with the key and only their sha256 was
++   committed before the runs (`KEY-SHA256SUMS`, commit `36ca151e`); all five
++   hashes check after the runs (E4).
++3. **One answer-key input was invalid YAML.** The first K1 input
++   ("four-space list indent") made the control raise `ParserError`: the
++   input was wrong, not the control. It was replaced before the key was
++   hashed by "a comment after the id".
++4. **Result:** planted found 4 of 4 with inputs that reproduce; 0 false
++   findings on controls; 2 true findings on controls, one of them a defect
++   on `main` in `gnd.exp.frontmatter._split` (`evidence/PF2/GRADING.md`).

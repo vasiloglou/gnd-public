@@ -1,23 +1,21 @@
 # Pins and the review check
 
-Plan r1, 2026-11-23: **approved by the owner** on 2026-11-23 with D1–D5 as
-proposed ([plan gate](001-plan.md)); no review has read it. It covers the
-work left undone by
-[PR 235](https://github.com/vasiloglou/gnd-public/pull/235),
+Plan r1 (owner-approved, [plan gate](001-plan.md)), amended at close (c1).
+**Closed locally on 2026-11-23** by delegated ruling under the owner's
+`process-milestone pins-and-review-check auto`
+([close record](004-close.md)). Nothing is merged. It covers the work left
+undone by [PR 235](https://github.com/vasiloglou/gnd-public/pull/235),
 [PR 246](https://github.com/vasiloglou/gnd-public/pull/246) and
-[PR 247](https://github.com/vasiloglou/gnd-public/pull/247). No issue was
-filed for it.
+[PR 247](https://github.com/vasiloglou/gnd-public/pull/247).
 
 | Phase | Deliverable | State |
 |---|---|---|
-| PF1 | the packaged-skill inventory defined once; the install, uninstall and verification-fix tests import it and join the guard block. Repairs `tests/test_verification_fixes.py`, red on `main` (5 failed) | done on `claude/pf1-inventory-pin`: [002-phase-PF1.md](002-phase-PF1.md); [spec r1](notes/phase-PF1-spec.md) owner-approved; pull request open, not merged |
-| PF2 | a recorded calibration of the standing "code fitted to its examples" review check, over planted and control diffs | outline in the plan |
+| PF1 | the packaged-skill inventory defined once, guarded over every binding; the install, uninstall and verification-fix tests import it and join the guard block; `tests/test_verification_fixes.py`, red on `main`, repaired | [record](002-phase-PF1.md); [PR 250](https://github.com/vasiloglou/gnd-public/pull/250), not merged |
+| PF2 | the standing fitted-code review check on eight blind runs: 4 of 4 planted defects found, 0 false findings on controls | [record](003-phase-PF2.md), [grading](evidence/PF2/GRADING.md); [PR 253](https://github.com/vasiloglou/gnd-public/pull/253), not merged |
 
-[Plan](notes/pins-and-review-check-plan.md).
+[Plan](notes/pins-and-review-check-plan.md). Merge order: PR 248 (plan), then
+250, then 253.
 
-Rulings (plan §10), all as proposed: D1 one baseline run on beast-3, D2
-`codex` over about eight diffs, D3 one reviewer in a different tool for
-plan, phase and close (panel waived for this milestone), D4 one pull request
-per phase, D5 the distribution-lane pin stays as a named exception.
-
-Next action: the owner rules on PF1's open questions (OQ1 keeps or drops the out-of-spec commit) and merges its pull request; then PF2's spec.
+Carried to the owner (close record sweep): OQ2 inline count copies outside
+any name guard; OQ4 the frontmatter fence defect
+in `gnd.exp.frontmatter`, being fixed in a separate session.

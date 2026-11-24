@@ -1,0 +1,1225 @@
+Reading additional input from stdin...
+OpenAI Codex v0.163.0
+--------
+workdir: <repo>
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a20ac1-c622-7382-a2fd-39243726402c
+--------
+user
+Read <repo>/.review-round/BRIEF.md and follow it.
+codex
+I’ll read the review brief and follow its scope and reporting requirements.
+exec
+/bin/zsh -lc 'cat .review-round/BRIEF.md' in <repo>
+ succeeded in 0ms:
+# Review brief: a phase's diff
+
+You are an independent reviewer, working in a different tool from the one that produced
+this work. Nothing here asks you to agree with it. Answer from the files themselves, not
+from any summary of them, including this brief's.
+
+## The question
+
+Review this change for correctness and readiness to merge.
+
+## The change under review
+
+The work from `6b0a7e5a` to the working tree at `7e75231f96cd`. Its diff is `.review-round/diff.patch`.
+
+## What to read
+
+Paths are relative to the repository root, the directory you start in. Before you rely
+on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
+your answer: you are not reading the bytes this brief names.
+
+| File | SHA-256 |
+|---|---|
+| `.review-round/diff.patch` | `073351b86f75840e9ace423da605270c5ec50fbee0d981b54e971b711062b3e8` |
+| `tests/test_model_type_ids.py` | `bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391` |
+| `tools/model_type_ids.py` | `ca05de75be912ac16d0743733d9a54884f8f2aaf1dea95b5bf747e6a62eae9f1` |
+
+You may read anything else in the repository that helps you answer.
+
+## A standing check: code fitted to its examples
+
+Whatever the question above, also look in the code this change adds or changes for a
+solution that handles the examples in its tests and fixtures, and not the whole class of
+input it is given:
+
+- a regular expression, string split, slice or index over structured text (JSON, YAML,
+  TOML, source code, paths, command lines) that a parser or an existing reader in this
+  repository already reads;
+- a pattern over output this project renders itself (a report, a table, a log line), where
+  the code could have been handed the data instead;
+- a pattern fitted to the fixtures: it matches every committed example and fails on a
+  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
+- a branch on one literal name, file or message, added to make one case pass;
+- a second matcher for something an existing helper already does.
+
+A regular expression is not a finding in itself: one that states the whole grammar of a
+flat token (an identifier, a version number, a hex digest) is the right tool. For each
+suspect, build a legal input that the tests and fixtures lack and run the code on it.
+Report a finding only with that input: what the code returned and what it should have
+returned. A suspicion with no breaking input is style: label it so. In your list of what
+you checked, name each matcher you tried and the input you tried it with.
+
+## Rules
+
+- Read only. Do not edit, create, stage, commit, push or post anything.
+- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
+  not print environment variables. If you need one, name it and go on without it.
+- A finding names its file and line and the consequence someone would observe. Run what
+  you can to show it; where you only read, say so.
+
+## What to return
+
+1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
+   consequence, and how to reproduce it. A finding with no observable consequence is
+   style: label it so.
+2. What you checked and found true.
+3. What you could not check, and why.
+4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+
+exec
+/bin/zsh -lc 'shasum -a 256 .review-round/diff.patch tests/test_model_type_ids.py tools/model_type_ids.py' in <repo>
+ succeeded in 0ms:
+073351b86f75840e9ace423da605270c5ec50fbee0d981b54e971b711062b3e8  .review-round/diff.patch
+bd1d739ce00b797e2398e56777cebefe0a59d0e8c80ee402cc8933f72f9e2391  tests/test_model_type_ids.py
+ca05de75be912ac16d0743733d9a54884f8f2aaf1dea95b5bf747e6a62eae9f1  tools/model_type_ids.py
+
+exec
+/bin/zsh -lc 'git status --short; cat .review-round/diff.patch' in <repo>
+ succeeded in 5ms:
+?? .review-round/
+diff --git a/tests/test_model_type_ids.py b/tests/test_model_type_ids.py
+new file mode 100644
+index 00000000..22ae15a9
+--- /dev/null
++++ b/tests/test_model_type_ids.py
+@@ -0,0 +1,21 @@
++"""Tests for tools/model_type_ids.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.model_type_ids import object_type_ids
++
++EXAMPLES = Path(__file__).resolve().parents[1] / "src/gnd/skills/gnd-model-from-text/examples"
++
++
++def test_movie_catalog_ids_in_file_order() -> None:
++    assert object_type_ids(EXAMPLES / "movie_catalog.orm.yaml") == [
++        "movie", "director", "movie_id", "director_name", "title", "year", "rating",
++    ]
++
++
++def test_library_ids_in_file_order() -> None:
++    assert object_type_ids(EXAMPLES / "library_with_subtypes.orm.yaml") == [
++        "library_item", "book_item", "periodical_item", "book_type", "author", "patron",
++        "item_id", "author_name", "patron_id", "title", "issue_number",
++    ]
+diff --git a/tools/model_type_ids.py b/tools/model_type_ids.py
+new file mode 100644
+index 00000000..1bee1029
+--- /dev/null
++++ b/tools/model_type_ids.py
+@@ -0,0 +1,11 @@
++"""List the object-type ids a GND model file declares, in file order."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from gnd.model import load_model
++
++
++def object_type_ids(path: str | Path) -> list[str]:
++    """Return the ids of the model's object types, in the order the file declares them."""
++    return [object_type["id"] for object_type in load_model(path).object_types]
+
+exec
+/bin/zsh -lc "rg -n 'def load_model|class Model|object_types|include' src/gnd/model.py" in <repo>
+ exited 2 in 0ms:
+rg: src/gnd/model.py: IO error for operation on src/gnd/model.py: No such file or directory (os error 2)
+
+exec
+/bin/zsh -lc "cat tools/model_type_ids.py tests/test_model_type_ids.py; rg -n 'pytest|pythonpath|requires-python|PyYAML' pyproject.toml; rg --files tools tests | head -60; cat CONTRIBUTING.md" in <repo>
+ succeeded in 0ms:
+"""List the object-type ids a GND model file declares, in file order."""
+from __future__ import annotations
+
+from pathlib import Path
+
+from gnd.model import load_model
+
+
+def object_type_ids(path: str | Path) -> list[str]:
+    """Return the ids of the model's object types, in the order the file declares them."""
+    return [object_type["id"] for object_type in load_model(path).object_types]
+"""Tests for tools/model_type_ids.py."""
+from __future__ import annotations
+
+from pathlib import Path
+
+from tools.model_type_ids import object_type_ids
+
+EXAMPLES = Path(__file__).resolve().parents[1] / "src/gnd/skills/gnd-model-from-text/examples"
+
+
+def test_movie_catalog_ids_in_file_order() -> None:
+    assert object_type_ids(EXAMPLES / "movie_catalog.orm.yaml") == [
+        "movie", "director", "movie_id", "director_name", "title", "year", "rating",
+    ]
+
+
+def test_library_ids_in_file_order() -> None:
+    assert object_type_ids(EXAMPLES / "library_with_subtypes.orm.yaml") == [
+        "library_item", "book_item", "periodical_item", "book_type", "author", "patron",
+        "item_id", "author_name", "patron_id", "title", "issue_number",
+    ]
+17:requires-python = ">=3.11"
+73:# `pytest -m distribution`, never a green build message.
+76:[tool.pytest.ini_options]
+146:    # as the optional runtime extra makes `uv run pytest` honest without
+150:    "pytest==9.1.1",
+tools/build_seeded_growth_example.py
+tools/record_pyrel_sessions.py
+tools/release_text.py
+tools/build_ci_repair_successors.py
+tools/accept_pyrel_applications_install.py
+tools/build_composition_example.py
+tools/run_gnd_review_panel.py
+tools/ilp_comparison.py
+tools/build_growth_example.py
+tools/render_replay.py
+tools/figures/hero.py
+tools/figures/svgkit.py
+tools/figures/README.md
+tools/figures/orm_diagrams.py
+tools/figures/build.py
+tools/measure_transition_cost.py
+tools/measure_incremental_evaluation.py
+tools/build_literature_example.py
+tools/measure_evaluation_sessions.py
+tools/ossie_consumer.py
+tools/check_installed_docs.py
+tools/mc1_model_census.py
+tools/openrouter_gateway.py
+tools/ossie_oracle.py
+tools/record_judge_sessions.py
+tools/gnd_layers.json
+tools/measure_pyrel_applications.py
+tools/gnd_entrypoints.json
+tools/run_public_acceptance.py
+tools/build_literature_lineage_model.py
+tools/build_expense_receipts_example.py
+tools/plan_app_bot.py
+tools/record_plan_apps.py
+tools/record_skill_sessions.py
+tools/rf1_pins.py
+tools/build_resolution_fixtures.py
+tools/check_docs.py
+tools/agent_with_env_key.py
+tools/model_type_ids.py
+tools/run_tutorials.py
+tools/gnd_arch.py
+tests/test_ld3_reading_workflow.py
+tests/test_public_snapshot_source_counterexamples.py
+tests/test_public_evolution_drift_readers.py
+tests/test_public_agents_skill_table.py
+tests/test_vg5_seeded_growth_example.py
+tests/test_plan_app_recordings.py
+tests/test_incremental_session_measurement.py
+tests/test_public_assurance_inheritance.py
+tests/test_reference_transition_text.py
+tests/test_synth_derivation_refusal.py
+tests/test_expense_pyrel_application.py
+tests/test_public_planning_frontmatter_local.py
+tests/test_li1_literature_corpus.py
+tests/test_rf6_query_policy.py
+tests/test_growth_example.py
+tests/test_agent_cli.py
+tests/test_v70_phase6_adversarial.py
+tests/test_rof4_accept_identities.py
+tests/test_extract_cli.py
+# Contributing
+
+Work from this repository alone with Python >=3.11 and uv 0.10.10:
+
+```sh
+uv sync --locked --group dev
+uv run gnd install --symlink --project --force
+uv run gnd doctor --project
+uv run pytest -q tests/test_release_examples.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py
+```
+
+Tracked installer links have no local receipt in a fresh clone. Adopt them once
+with --force; never overwrite modified links or maintain them manually. Both
+.codex and .claude roots contain the packaged links and real development-skill
+twins. Regenerate packaged links through gnd install, keep real twins identical.
+Ordinary development uses this checkout's editable package. Final acceptance
+will additionally exercise the exact installed candidate in a fresh target-only
+tree, with actual module/tool/link paths recorded.
+
+Use [start-milestone](.codex/skills/start-milestone/SKILL.md) to prepare or resume
+a milestone plan and its first draft phase spec in `.gnd-planning`. It checks
+obligation ownership, dependencies and implementability before execution; it does
+not approve the plan or run phases.
+
+Use [process-milestone](.codex/skills/process-milestone/SKILL.md) to execute or
+resume a whole named milestone through `process-phase` and its close gates.
+`process-milestone pyrel-applications auto=true` explicitly delegates approval
+rulings for that milestone; required reviews and verification still run, and
+merge/publication/certification keep their separate authorization.
+
+Numbered work follows the full [process-phase](.codex/skills/process-phase/SKILL.md)
+protocol: spec, owner gate, implementation, independent review, refactoring review,
+record and explicit-path commit. The [sample spec](docs/development/examples/phase-spec.md)
+and [sample record](docs/development/examples/phase-record.md) are non-authoritative
+exercises. Source-owned runtime units await explicit handoff; changes here do not
+silently transfer authority. Phase 3 final acceptance is pending.
+
+Run focused affected tests with the default lane exclusions. Historical broad,
+provider/native and certification lanes require separate selection. Never source
+repository .env files; optional live review needs trusted credentials and explicit
+selection. [Bootstrap history](docs/development/bootstrap.md) is historical;
+the old original-definition accounting runner is not release acceptance under r3.
+See [release preparation](docs/releasing.md) and [security reporting](SECURITY.md).
+
+## Owner-controlled contributions
+
+Contributions are by invitation. Only collaborators approved by `vasiloglou`
+receive write access. Public availability permits reading and forking; it does
+not grant permission to modify this repository.
+
+For all changes, including owner and coding-agent changes, use a topic branch and
+submit a pull request. Never push directly to main, force-push it, or delete it. Resolve
+review conversations before merging. `.github/CODEOWNERS` names `vasiloglou` for
+all files.
+
+While `vasiloglou` is the only collaborator, branch protection requires PRs with
+zero required approving reviews. GitHub prohibits authors from approving their
+own PRs, so the owner's explicit merge decision is the acceptance step. Coding
+agents may merge only with the owner's explicit authorization. Protection applies
+to administrators too, with no PR bypass. Cloud CI is not currently a required
+status check; run the focused checks applicable to a change and record results.
+
+Before granting another account write access, enable one required approving
+review and required code-owner review. Its PRs will then require `vasiloglou`'s
+recorded approval. PRs authored by `vasiloglou` will need another authorized code
+owner, or work must be authored through a separately controlled contributor/bot
+identity so `vasiloglou` can approve. Never create a shared reviewer identity or
+approve a PR through a token belonging to its author.
+
+For a public repository, use the collaborators-only interaction limit to prevent
+outside PRs, issues and comments. GitHub limits this setting to six months; renew
+it before its reported expiration. It cannot be enabled while the repository is
+private. Check the live settings before claiming restrictions are enforced.
+
+## Refactoring dependencies and compatibility
+
+The measured layer map is [tools/gnd_layers.json](tools/gnd_layers.json).
+Errors and schemas have infrastructure homes; documents, values and universe
+serve model data and lookup; extensions compute facts below checker and
+applicability. Registry descriptors live in branches. Runtime graph checks count
+lazy and literal dynamic imports as well as top-level imports. Add every new
+module to the map, preserve the clean-layer ratchet, and do not grow allowances.
+
+Old module names retain explicit aliases in the
+[shim inventory](.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md).
+Patch the defining module for moved algorithms and the actual public lookup seam
+for consumer wrappers. Move tests pin alias identity and source-scan coverage;
+retirement follows the approved plan's RF-D5 gate. Current source changes make
+old release evidence unavailable until its separately selected controls run.
+
+Peripheral dependency homes are public filesystem seams in safefs, the bounded
+runner in process, trusted adapters in agents, and the independent synth oracle
+package. Assurance follows _wire, core, inheritance, claims, evidence dependency
+order; transport carries receipts. Payload assembly lives in payloads, and
+export/witness services own their thin API wrappers. Old imports remain aliases.
+
+### Model query and constraint family homes
+
+Use gnd.model_index.ModelIndex.for_model(model) for detached model queries. Each
+request keys a bounded snapshot cache by current full model content, with unsafe
+canonical shapes bypassing the cache. Keep the existing strict/truthy primitive
+policy explicit. Raw serialization and deliberately retained domain traversal
+sites are individually listed in the RF6 query policy; additions need a reason
+and a current behavior control.
+
+Constraint adaptation, evaluation, witness projection, presentation, scope and
+shape selection use gnd.constraint_families.FAMILIES. Keep shared refusal and
+vacuity precedence outside family-specific algorithms. The production branch
+evidence registry remains a separate inventory. Preserve every historical import
+shim until a separately approved retirement after the first release following RF6.
+
+exec
+/bin/zsh -lc "rg -n 'def load_model|class Model|def object_types' src/gnd/model src/gnd; sed -n '70,118p' pyproject.toml; cat tests/conftest.py" in <repo>
+ succeeded in 0ms:
+src/gnd/model/__init__.py:290:def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+src/gnd/model/__init__.py:368:def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path,
+src/gnd/model/__init__.py:433:def load_model(path: str | Path) -> Model:
+src/gnd/model/__init__.py:665:def load_model_bytes_bound(
+src/gnd/model/_documents.py:13:class ModelValueError(ValueError):
+src/gnd/model/__init__.py:290:def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+src/gnd/model/__init__.py:368:def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path,
+src/gnd/model/__init__.py:433:def load_model(path: str | Path) -> Model:
+src/gnd/model/__init__.py:665:def load_model_bytes_bound(
+src/gnd/model/_documents.py:13:class ModelValueError(ValueError):
+src/gnd/model_index.py:103:class ModelIndex:
+src/gnd/model_index.py:259:    def object_types_by_id(self) -> dict[str, dict[str, Any]]:
+src/gnd/recovery/report.py:314:class ModeledElementEvidence(_ClosedFrozenModel):
+src/gnd/documents.py:38:class Model(BaseModel):
+src/gnd/values.py:232:class ModelIdentityError(ValueError):
+src/gnd/evolve/models.py:307:class ModelIdentityLocator(_ClosedFrozenModel):
+src/gnd/errors.py:9:class ModelLoadError(Exception):
+src/gnd/errors.py:35:class ModelValidationError(Exception):
+src/gnd/export/pyrel_runtime.py:62:class ModelIndex:
+src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/turn-01.jsonl:51:{"type": "assistant", "message": {"model": "claude-haiku-5-5", "content": [{"type": "tool_use", "id": "toolu_01PHuDUr4mmSvRJgLLVana98", "name": "Grep", "input": {"pattern": "class ConstraintLocator|class ModelIdentityLocator|class EvolutionProposal\\b|class EvolutionOperation\\b", "path": "<repo>", "glob": "*.py", "output_mode": "content", "-n": true}, "caller": {"type": "direct"}}]}}
+# "Successfully built" and a skill-less wheel, which is exactly how this defect
+# shipped. The skill tree ships because it physically lives under the module
+# root at `src/gnd/skills/`; that is the whole mechanism. Verify artifacts with
+# `pytest -m distribution`, never a green build message.
+module-name = "gnd"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["fixtures"]
+addopts = "-m 'not derivation_oracle and not pyrel_oracle and not ossie_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
+markers = [
+  "proof: opt-in proof lane; not selected by the default public development gate",
+  "derivation_oracle: opt-in derivation_oracle lane; not selected by the default public development gate",
+  "ossie_oracle: opt-in pinned Ossie validator and parser lane",
+  "pyrel_oracle: opt-in pyrel_oracle lane; not selected by the default public development gate",
+  "distribution: opt-in distribution lane; not selected by the default public development gate",
+  "evidence: opt-in evidence lane; not selected by the default public development gate",
+  "census: opt-in census lane; not selected by the default public development gate",
+  "live: opt-in live lane; not selected by the default public development gate",
+  "network: opt-in network lane; not selected by the default public development gate",
+  "review_runner: opt-in review_runner lane; not selected by the default public development gate",
+  "slow: opt-in slow lane; not selected by the default public development gate",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# An experiment's retained attempts and its accepted candidate are EVIDENCE:
+# they record what a session actually produced, and reformatting them would
+# forge that record the same way editing a retained agent stream would. They are
+# excluded from linting because their bytes are not ours to change -- not
+# because their style is acceptable.
+#
+# This exemption deliberately does NOT cover the shipped product. The BookRec
+# package that ships lives at examples/bookrec/project/bookrec/, is copied from
+# the accepted gate candidate, and is linted like any other source here. If the
+# copy is dirty, the fix belongs in the session that produced it, never in a
+# post-hoc edit that would break the byte-for-byte copy claim.
+#
+# proof/v6/phase1/generated/ is the contract-carrying copy of the Phase 1 kernel.
+# Its bytes are produced by proof/v6/phase1/generate_proof_source.py, and they
+# are held to something far stricter than a linter: proof/v6/phase1/erasure.py
+# proves that erasing its contract-only calls returns it to
+# src/gnd/proof_kernel.py statement for statement, and that file IS linted. A
+# ruff autofix here would break that identity, which is the whole gate.
+#
+# .gnd-planning/ holds the scripts a milestone or maintenance pass retained as
+# evidence: probes, captures, census and re-record scripts. Records bind many of
+# them by SHA-256, and each one is the command a record says was run, so a lint
+"""Current P2 fixture registration only; no historical session/collection hooks."""
+
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
+import pytest
+from test_public_distribution import (
+    package_probe as package_probe,  # noqa: PLC0414 -- pytest fixture export
+)
+
+from gnd.model import Model
+from gnd.population import Population, _stamp_validated_against
+
+# NM2-C6: an operator's GND_DISCLOSURE never reaches a test or a fixture of any
+# scope; tests that need a mode set it with monkeypatch.
+os.environ.pop("GND_DISCLOSURE", None)
+
+
+@pytest.fixture(autouse=True)
+def _parse_scope_write_check():
+    """GO1: every test that opens a model parse scope also checks that nothing
+    wrote into a remembered, shared document (``set_parse_scope_verify``)."""
+    from gnd.model._parsing import set_parse_scope_verify
+
+    previous = set_parse_scope_verify(True)
+    try:
+        yield
+    finally:
+        set_parse_scope_verify(previous)
+
+
+def make_population(model: Model, /, **kwargs: Any) -> Population:
+    """Build a Population and stamp it as validated against ``model``.
+
+    Use ONLY when the population is deliberately not loadable — a shape layer 2
+    would reject, built to test a checker guard. Anything that can come from a
+    file must go through ``load_population(path, model=model)`` so that layer 2
+    actually runs.
+
+    The :class:`~gnd.model.Model` is **positional-only**: ``Population`` has a
+    field literally named ``model`` (the free-form header path string), so a
+    keyword parameter of the same name would collide with it. The ``/`` lets
+    ``make_population(model_obj, model="m.orm.yaml", ...)`` read naturally.
+    """
+    population = Population(**kwargs)
+    _stamp_validated_against(population, model)
+    return population
+
+
+# Exact original tests import local helpers through the tests namespace.
+# Include only this public checkout/sandbox root; installed gnd stays separately resolved.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+exec
+/bin/zsh -lc "rg --files src/gnd/model; rg -n 'object_types:' src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml; ls -d .venv /usr/bin/python* 2>/dev/null" in <repo>
+ succeeded in 0ms:
+src/gnd/model/_operations.py
+src/gnd/model/_validation.py
+src/gnd/model/_induction.py
+src/gnd/model/__init__.py
+src/gnd/model/_paths.py
+src/gnd/model/_unattended.py
+src/gnd/model/flattening.py
+src/gnd/model/_includes.py
+src/gnd/model/_parsing.py
+src/gnd/model/_guarded.py
+src/gnd/model/_documents.py
+src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml:17:object_types:
+src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml:16:object_types:
+.venv
+/usr/bin/python3
+
+exec
+/bin/zsh -lc "sed -n '290,460p' src/gnd/model/__init__.py; sed -n '1,115p' src/gnd/documents.py; sed -n '1,90p' src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml" in <repo>
+ succeeded in 0ms:
+def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+    """Validate one immutable bounded buffer; source is diagnostic metadata."""
+    doc = parse_model_document(data, source=source)
+    from gnd.model._includes import _refuse, declares_includes, parse_declarations
+
+    if declares_includes(doc):
+        if "includes" not in doc:
+            parse_declarations(doc)
+        _refuse("unresolved")
+    return _finish_model(doc)
+
+
+def _model_warnings(doc, origins):
+    from gnd.model._includes import included_rows, remap_issues
+    from gnd.model._unattended import _INCLUDED
+
+    issues = remap_issues(_layer1_structural(doc), origins)
+    if issues:
+        raise ModelValidationError(issues)
+    # VG3: the unattended rules read which elements came from an include.
+    token = _INCLUDED.set(included_rows(doc, origins))
+    try:
+        issues = remap_issues(semantic_validate(dict(doc)), origins)
+    finally:
+        _INCLUDED.reset(token)
+    errors = [issue for issue in issues if issue.severity == "error"]
+    warnings = [issue for issue in issues if issue.severity == "warning"]
+    if errors:
+        raise ModelValidationError(errors, warnings)
+    return warnings
+
+
+def _finish_model(doc, origins=(), included=(), *, _warnings=None, _references_validated=False) -> Model:
+    warnings = _model_warnings(doc, origins) if _warnings is None else _warnings
+    model = Model.model_validate({**dict(doc), "warnings": warnings})
+
+    model._provenance = origins
+    model._included = included
+    if not _references_validated:
+        validate_declarations(model)
+    _attach_compiled_obligations(model)
+    return model
+
+
+
+def _load_model_at(data, *, source, descriptor, historical=None, analysis=False):
+    from gnd.model._includes import CompositionView, _refuse, compose, declares_includes
+
+    doc = parse_model_document(data, source=source)
+    if declares_includes(doc):
+        issues = [] if analysis else None
+        doc, origins, included = compose(doc, descriptor=descriptor, source=source,
+                                         historical=historical, issues=issues)
+        if analysis:
+            warnings = []
+            try:
+                warnings = _model_warnings(doc, origins)
+                _validate_reference_document(doc)
+            except ModelValidationError as error:
+                issues.extend(error.issues)
+            except ReferenceInputError as error:
+                issues.append(ValidationIssue(path='$.reference_populations', message=str(error),
+                                              rule_id='evolve:reference-ownership'))
+            if issues:
+                return CompositionView(doc, origins, included, tuple(issues))
+            model = _finish_model(doc, origins, included, _warnings=warnings, _references_validated=True)
+        else:
+            model = _finish_model(doc, origins, included)
+        model._authored_sha256 = hashlib.sha256(data).hexdigest()
+        return CompositionView(doc, origins, included, (), model) if analysis else model
+    if historical is not None:
+        _refuse('declaration')
+    model = load_model_bytes(data, source=source)
+    if model.reference_populations:
+        model._authored_sha256 = hashlib.sha256(data).hexdigest()
+    return CompositionView(doc, (), (), (), model) if analysis else model
+
+
+def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path,
+                              bind_references: bool = True) -> Model:
+    """Resolve the authored model and bind references under one retained root.
+
+    ``bind_references=False`` composes and authenticates the includes under
+    ``root`` but leaves declared reference populations unbound, for a caller
+    that binds them itself under another root (``gnd judgments check
+    --reference-root``). Composition and validation are the same either way.
+    """
+    return _composed_view(data, source=source, root=root, bind_references=bind_references)
+
+
+def _composed_view(data, *, source, root, historical=None, analysis=False,
+                   bind_references=True):
+    with retained_root(root) as descriptor:
+        result = _load_model_at(data, source=source, descriptor=descriptor,
+                                historical=historical, analysis=analysis)
+        model = result.model if analysis else result
+        if model is None:
+            return result
+        if bind_references and model.reference_populations:
+            try:
+                model._references = _bind_at(model, descriptor)
+            except ReferenceHashMismatch:
+                raise
+            except Exception as error:
+                raise ReferenceInputError(str(error), model=model) from error
+        return result
+
+
+def _load_model_bytes_captured(data, *, source, candidate=False):
+    from gnd.model._includes import _refuse, guard_bytes, include_reason
+
+    try:
+        guard_bytes(data, source=source, route='captured-proposal-input')
+    except ModelValidationError as error:
+        if include_reason(error) != 'include:unsupported-route':
+            raise
+        if candidate:
+            return load_model_bytes_composed(data, source=source, root=Path(source).parent)
+        model = _load_model_no_follow(Path(source))
+        if model._authored_sha256 != hashlib.sha256(data).hexdigest():
+            _refuse('hash-mismatch')
+        return model
+    return load_model_bytes(data, source=source)
+
+def _load_model_no_follow(path: Path) -> Model:
+    """Strict path intake for consumers whose contract forbids symlink traversal."""
+    from gnd import artifacts
+
+    with retained_root(path.parent) as descriptor:
+        data, _ = artifacts.read_regular_bounded_at(
+            descriptor, path.name, max_bytes=MAX_MODEL_BYTES
+        )
+        model = _load_model_at(data, source=path, descriptor=descriptor)
+        if model.reference_populations:
+            try:
+                model._references = _bind_at(model, descriptor)
+            except ReferenceHashMismatch:
+                raise
+            except Exception as error:
+                raise ReferenceInputError(str(error), model=model) from error
+        return model
+
+
+def load_model(path: str | Path) -> Model:
+    """Read model and reference bytes beneath a single retained directory."""
+
+    from gnd import artifacts
+
+    path = Path(path)
+    if hasattr(os, "O_NOFOLLOW") and hasattr(os, "O_DIRECTORY"):
+        try:
+            return _load_model_no_follow(path)
+        except (OSError, artifacts.ArtifactError):
+            # Only reference-free models retain the historical symlink route.
+            pass
+    import stat
+
+    if not stat.S_ISREG(path.stat().st_mode):
+        raise ModelLoadError("model path is not a regular file")
+    with path.open("rb") as handle:
+        data = handle.read(MAX_MODEL_BYTES + 1)
+    from gnd.model._includes import _refuse, declares_includes
+    if declares_includes(parse_model_document(data, source=path)):
+        _refuse("unreadable", "$.includes")
+    model = load_model_bytes(data, source=path)
+    if model.reference_populations:
+        raise ReferenceInputError(
+            "safe reference descriptor traversal is unavailable or refused the model path",
+            model=model,
+        )
+    return model
+"""RF3 shared dependency home; algorithms retain predecessor semantics."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_serializer
+
+from gnd.errors import ValidationIssue
+
+
+class DeonticNote(BaseModel):
+    """A retained top-level deontic note from the ORM document."""
+
+    text: str
+    rationale: str | None = None
+
+
+@dataclass(frozen=True)
+class ElementOrigin:
+    origin: str
+    composed_address: str
+    original_address: str
+    element_id: str | None
+
+
+@dataclass(frozen=True)
+class IncludedFile:
+    id: str
+    path: str
+    sha256: str
+    version: int
+    model_id: str | None
+    source: dict[str, Any] | None
+    raw: bytes = field(default=b"", repr=False, compare=False)
+
+
+class Model(BaseModel):
+    """A loaded, validated ORM conceptual model."""
+
+    # Attribute assignment is the common mutation path and should fail
+    # immediately. Nested dictionaries/lists remain mutable, so Population's
+    # validation marker also binds a digest of current model content.
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    version: int
+    #: D-06: a stable, OPAQUE identifier for this model. Optional for backward
+    #: compatibility — every model authored before the field existed has None,
+    #: and the population header cross-check simply does not run for those. It
+    #: is never resolved to a path and never opened (T-01.1-01); the
+    #: unforgeable runtime proof that a population was validated against THIS
+    #: model is ``Population.validated_against`` (D-02), not this string.
+    model_id: str | None = None
+    source: dict[str, Any] = Field(default_factory=dict)
+    object_types: list[dict[str, Any]]
+    fact_types: list[dict[str, Any]]
+    constraints: list[dict[str, Any]] = Field(default_factory=list)
+    #: ORM+ v2 state transitions, raw dicts like every other section. A v1
+    #: document loads with ``operations: []`` and is byte-identical to what it
+    #: loaded before v2 existed. Every downstream consumer feature-detects on
+    #: THIS list being non-empty, never on ``version``: a ``version: 2``
+    #: document that declares no operations must behave exactly like a v1 one,
+    #: and a version test would silently make it behave differently.
+    operations: list[dict[str, Any]] = Field(default_factory=list)
+    reference_populations: list[dict[str, Any]] = Field(default_factory=list)
+    includes: list[dict[str, Any]] = Field(default_factory=list)
+    fact_type_constraints: list[dict[str, Any]] = Field(default_factory=list)
+    _provenance: tuple[ElementOrigin, ...] = PrivateAttr(default=())
+    _included: tuple[IncludedFile, ...] = PrivateAttr(default=())
+    _authored_sha256: str | None = PrivateAttr(default=None)
+    _references: Any = PrivateAttr(default=None)
+    rejected_proposals: list[dict[str, Any]] = Field(default_factory=list)
+    #: Trace-compiled obligations, keyed by operation id (B2). A SIDE TABLE
+    #: rather than an ``operation["compiled"]`` key, which is what the plan and
+    #: the phase spec first described.
+    #:
+    #: The attachment was tried and reproduced a defect: ``operations_digest``
+    #: is taken over the operations section, so writing into those dicts moved
+    #: the digest and every committed steps.json stopped matching its own model.
+    #: Stripping the key back out before hashing would have worked only if no
+    #: author could ever write one -- and ``$defs.operation`` does not set
+    #: ``additionalProperties: false``, so an authored ``compiled:`` key is legal
+    #: YAML that the digest would then silently ignore. A private attribute has
+    #: neither problem: the loaded section stays exactly as authored, and there
+    #: is nothing for a key to collide with.
+    _compiled: dict[str, list[dict[str, Any]]] = PrivateAttr(default_factory=dict)
+
+    def model_dump(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        document = super().model_dump(*args, **kwargs)
+        if not self.reference_populations:
+            document.pop("reference_populations", None)
+        return document
+
+    @model_serializer(mode="wrap")
+    def _omit_empty_include_fields(self, handler):
+        document = handler(self)
+        for name in ("includes", "fact_type_constraints"):
+            if not getattr(self, name):
+                document.pop(name, None)
+        return document
+
+    def compiled_obligations(self, operation_id: str) -> list[dict[str, Any]]:
+        """The compiled and retained obligations of one operation, in order."""
+        return self._compiled.get(str(operation_id), [])
+
+    deontic_notes: list[DeonticNote] = Field(default_factory=list)
+    warnings: list[ValidationIssue] = Field(default_factory=list)
+
+
+DeonticNote.__module__ = 'gnd.model'
+
+Model.__module__ = 'gnd.model'
+
+
+MAX_YAML_EVENTS = 1_000_000  # parse-event budget for untrusted YAML
+# examples/movie_catalog.orm.yaml
+# Reference solution for the canonical small text-first CSDP run.
+# See movie_catalog.dialogue.md for the full dialogue this YAML traces back to.
+# GND form: every active constraint carries an explicit modality per the D-03 policy
+# (all constraints here are confirmed -> alethic).
+
+version: 1
+
+source:
+  kind: text-conversation
+  session_id: movie_catalog_demo
+  started_at: "2026-05-14T10:00:00Z"
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: movie_id }
+    provenance:
+      origin: csdp-step-1
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "Each movie has a unique numeric ID, we generate them on creation."
+
+  - id: director
+    name: Director
+    kind: entity
+    reference: { mode: general, value_type: director_name }
+    provenance:
+      origin: csdp-step-1
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "Directors are identified by their full name — we don't have a separate ID system for them."
+
+  - id: movie_id
+    name: MovieId
+    kind: value
+    primitive: Integer
+
+  - id: director_name
+    name: DirectorName
+    kind: value
+    primitive: String
+
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+    provenance:
+      origin: csdp-step-1
+      rationale: "Declared value type for the movie title role (roles may only reference declared object types)."
+
+  - id: year
+    name: Year
+    kind: value
+    primitive: Integer
+
+  - id: rating
+    name: Rating
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: title, role_name: title }]
+    sample_population:
+      - { movie: 1, title: "The Departed" }
+      - { movie: 2, title: "Inception" }
+      - { movie: 3, title: "Parasite" }
+    provenance: { csdp_step: 1, dialogue_turn: 4 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 18, user_quote: "Each Movie has one canonical title in our catalog." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 24, user_quote: "Yes." } }
+
+  - id: movie_directed_by_director
+    reading: "{Movie} directed by {Director}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: director, role_name: director }]
+    sample_population:
+      - { movie: 1, director: "Martin Scorsese" }
+      - { movie: 2, director: "Christopher Nolan" }
+      - { movie: 3, director: "Bong Joon-ho" }
+    provenance: { csdp_step: 1, dialogue_turn: 5 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 20, user_quote: "We pick one director for co-directed films. So yes, one Director per Movie." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 25, user_quote: "Yes. We don't catalog Movies without a director credit." } }
+
+  - id: movie_released_in_year
+
+exec
+/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_model_type_ids.py' in <repo>
+ exited 1 in 952ms:
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<repo>/.venv/lib/python3.14/site-packages/pytest/__main__.py", line 9, in <module>
+    raise SystemExit(_console_main())
+                     ~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 253, in _console_main
+    code = _main(prog=_get_prog_name(sys.argv))
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 223, in _main
+    config = _prepareconfig(new_args, plugins, prog=prog)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 410, in _prepareconfig
+    config: Config = pluginmanager.hook.pytest_cmdline_parse(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pluginmanager=pluginmanager, args=args
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/helpconfig.py", line 124, in pytest_cmdline_parse
+    config = yield
+             ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1232, in pytest_cmdline_parse
+    self.parse(args)
+    ~~~~~~~~~~^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/config/__init__.py", line 1605, in parse
+    self.hook.pytest_load_initial_conftests(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        early_config=self, args=args, parser=self._parser
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/warnings.py", line 129, in pytest_load_initial_conftests
+    return (yield)
+            ^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 116, in _multicall
+    next(function_gen)  # first yield
+    ~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 170, in pytest_load_initial_conftests
+    capman.start_global_capturing()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 773, in start_global_capturing
+    self._global_capturing = _get_multicapture(self._method)
+                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 714, in _get_multicapture
+    return MultiCapture(in_=FDCapture(0), out=FDCapture(1), err=FDCapture(2))
+                                              ~~~~~~~~~^^^
+  File "<repo>/.venv/lib/python3.14/site-packages/_pytest/capture.py", line 493, in __init__
+    TemporaryFile(buffering=0),
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 652, in TemporaryFile
+    prefix, suffix, dir, output_type = _sanitize_params(prefix, suffix, dir)
+                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 126, in _sanitize_params
+    dir = gettempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 316, in gettempdir
+    return _os.fsdecode(_gettempdir())
+                        ~~~~~~~~~~~^^
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 309, in _gettempdir
+    tempdir = _get_default_tempdir()
+  File "<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/tempfile.py", line 224, in _get_default_tempdir
+    raise FileNotFoundError(_errno.ENOENT,
+                            "No usable temporary directory found in %s" %
+                            dirlist)
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/', '/tmp', '/var/tmp', '/usr/tmp', '<repo>']
+
+codex
+All three hashes match. The helper uses the existing model loader and adds no text matchers. Pytest’s default output capture needs a writable temporary directory; I’ll rerun with capture disabled to keep the review read-only.
+exec
+/bin/zsh -lc "rg -n 'def read_regular_bounded_at|return .*data|return data' src/gnd/artifacts.py; sed -n '1,150p' src/gnd/model/_parsing.py; rg -n 'def compose|object_types|sorted\\(' src/gnd/model/_includes.py" in <repo>
+ succeeded in 0ms:
+228:    return hashlib.sha256(data).hexdigest()
+275:        return data
+609:    return data, LeafSnapshot(
+705:    return data, snapshot
+708:def read_regular_bounded_at(
+925:        return data, snapshot
+"""Bounded model-document parsing, shared by model loading and include resolution.
+
+Moved verbatim from ``gnd.model._validation`` (main CI repair, 2026-11-16) so that
+module stays under its RF6 size ceiling. ``_validation`` and ``gnd.model``
+re-export both names, and ``parse_model_document`` keeps its public
+``gnd.model`` identity.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
+from functools import wraps
+from pathlib import Path
+from typing import Any, TypeVar
+
+from ruamel.yaml import YAML
+
+from gnd.documents import MAX_YAML_EVENTS
+from gnd.errors import ModelLoadError
+from gnd.yaml_comments import configure_comment_scanner
+
+MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
+
+#: The two block scalar styles, as the YAML reader's scalar events name them.
+_BLOCK_STYLES = ("|", ">")
+
+_F = TypeVar("_F", bound=Callable[..., Any])
+
+
+class _Scope:
+    """One outermost parse scope: (sha256, strict JSON) -> [document, snapshot or None].
+
+    ``open`` turns False when the scope exits, so a context copied while it was
+    open (``contextvars.copy_context``, ``asyncio.to_thread``) cannot reuse it
+    afterwards: it sees no scope and opens its own."""
+
+    __slots__ = ("documents", "open")
+
+    def __init__(self) -> None:
+        self.documents: dict[tuple[str, bool], list[Any]] = {}
+        self.open = True
+
+
+_PARSE_SCOPE: ContextVar[_Scope | None] = ContextVar("gnd_model_parse_scope", default=None)
+_VERIFY = False
+
+
+def _strict_json_source(source: str | Path) -> bool:
+    """True when the source name selects the strict JSON reader. It is the only
+    way the name changes a successful parse (GO1): any other name tries JSON for
+    text that starts with ``{`` and falls back to YAML."""
+    return Path(source).suffix == ".json"
+
+
+def set_parse_scope_verify(enabled: bool) -> bool:
+    """Switch the parse scope's write check on or off; return the old setting.
+
+    With the check on, every scope keeps a snapshot of each document it
+    remembers and, when the outermost scope exits, raises AssertionError if the
+    document's snapshot then differs. Tests switch it on; it is off by default
+    because the snapshot costs more than the parse it saves."""
+    global _VERIFY
+    previous, _VERIFY = _VERIFY, bool(enabled)
+    return previous
+
+
+def _snapshot(document: Any) -> str:
+    """The document as the round-trip YAML writer spells it: every key and value
+    with its type, tag, anchor and comment, so any write into it changes this
+    text and an unchanged document gives the same text twice."""
+    import io
+
+    stream = io.StringIO()
+    YAML(typ="rt").dump(document, stream)
+    return stream.getvalue()
+
+
+def _active() -> _Scope | None:
+    scope = _PARSE_SCOPE.get()
+    return scope if scope is not None and scope.open else None
+
+
+@contextmanager
+def parse_scope() -> Iterator[None]:
+    """Remember each document ``parse_model_document`` builds, for one public call.
+
+    Keyed by the sha256 of the bytes and by whether the source name selects the
+    strict JSON reader. Re-entrant: an inner scope shares the outer one. Dropped
+    when the outermost scope exits, also for contexts copied from it. A parse
+    that raises is not remembered. The remembered document is shared by
+    reference and must not be written to; the write check of
+    ``set_parse_scope_verify`` holds that in tests."""
+    if _active() is not None:
+        yield
+        return
+    scope = _Scope()
+    token = _PARSE_SCOPE.set(scope)
+    try:
+        yield
+    finally:
+        _PARSE_SCOPE.reset(token)
+        scope.open = False
+        remembered, scope.documents = scope.documents, {}
+        changed = [key for key, (document, snapshot) in remembered.items()
+                   if snapshot is not None and _snapshot(document) != snapshot]
+        if changed:
+            raise AssertionError(f"a remembered model document was written to: {changed}")
+
+
+def parse_scoped(function: _F) -> _F:
+    """Run ``function`` inside a parse scope: the decorator ``gnd evolve`` uses."""
+    @wraps(function)
+    def run_scoped(*args: Any, **kwargs: Any) -> Any:
+        with parse_scope():
+            return function(*args, **kwargs)
+    return run_scoped  # type: ignore[return-value]
+
+
+def parse_model_document(data: bytes, *, source: str | Path) -> Any:
+    """Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict
+    JSON for a ``.json`` source, otherwise the alias/event guard and then the
+    round-trip YAML reader. The document is returned unvalidated.
+
+    Inside a ``parse_scope`` the same bytes under the same reader return the
+    document already built, shared and not copied."""
+    scope = _active()
+    if scope is None or len(data) > MAX_MODEL_BYTES:
+        return _parse_model_document(data, source=source)
+    key = (hashlib.sha256(data).hexdigest(), _strict_json_source(source))
+    if key not in scope.documents:
+        document = _parse_model_document(data, source=source)
+        scope.documents[key] = [document, _snapshot(document) if _VERIFY else None]
+    return scope.documents[key][0]
+
+
+def _parse_model_document(data: bytes, *, source: str | Path) -> Any:
+    from ruamel.yaml.events import AliasEvent, ScalarEvent
+
+    if len(data) > MAX_MODEL_BYTES:
+        raise ModelLoadError("model exceeds the 10 MiB input cap")
+    text = data.decode("utf-8")
+    doc = None
+    strict = _strict_json_source(source)
+    if strict or text.lstrip().startswith("{"):
+        from gnd.errors import PopulationLoadError
+        from gnd.population import _parse_document_bytes
+147:    result.setdefault('object_types', [])
+182:def compose(document: object, *, descriptor: int, source: str | Path, historical=None, issues=None):
+277:            'object_type_count': len(doc.get('object_types') or []),
+293:    # ``$.object_types[id=X]`` (plan H17). The selector is matched as the whole
+298:        for section in ('$.fact_types', '$.object_types'):
+
+exec
+/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -m pytest -q -s -p no:cacheprovider tests/test_model_type_ids.py' in <repo>
+ succeeded in 2094ms:
+..
+2 passed in 0.41s
+
+exec
+/bin/zsh -lc "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -c 'import json
+from pathlib import Path
+from unittest.mock import patch
+from tools.model_type_ids import object_type_ids
+
+variants = {
+    '\\''flow, quoting, comments, Unicode text'\\'': b'\\'''\\'''\\''version: 1
+object_types: [{name: \"Zeta\", kind: value, primitive: String, id: '\\''zeta'\\''},
+               {kind: value, id: \"alpha\", name: \"Caf\\\\u00e9\", primitive: String}] # comment
+fact_types: []
+'\\'''\\'''\\'',
+    '\\''multiline scalar id and reordered keys'\\'': b'\\'''\\'''\\''fact_types: []
+object_types:
+  - name: Zeta
+    primitive: String
+    kind: value
+    id: >-
+      zeta
+  - id: alpha
+    name: Alpha
+    kind: value
+    primitive: String
+version: 1
+'\\'''\\'''\\'',
+    '\\''JSON representation'\\'': json.dumps({'\\''version'\\'': 1, '\\''object_types'\\'': [
+        {'\\''id'\\'': '\\''zeta'\\'', '\\''name'\\'': '\\''Zeta'\\'', '\\''kind'\\'': '\\''value'\\'', '\\''primitive'\\'': '\\''String'\\''},
+        {'\\''id'\\'': '\\''alpha'\\'', '\\''name'\\'': '\\''Alpha'\\'', '\\''kind'\\'': '\\''value'\\'', '\\''primitive'\\'': '\\''String'\\''}],
+        '\\''fact_types'\\'': []}).encode(),
+}
+for label, data in variants.items():
+    with patch('\\''gnd.artifacts.read_regular_bounded_at'\\'', return_value=(data, None)):
+        actual = object_type_ids(Path('\\''in-memory.orm.yaml'\\''))
+    assert actual == ['\\''zeta'\\'', '\\''alpha'\\''], (label, actual)
+    print(label + '\\'': '\\'' + repr(actual))
+'" in <repo>
+ succeeded in 700ms:
+flow, quoting, comments, Unicode text: ['zeta', 'alpha']
+multiline scalar id and reordered keys: ['zeta', 'alpha']
+JSON representation: ['zeta', 'alpha']
+
+codex
+1. Findings: None.
+
+2. Checked and found true:
+   - All three SHA-256 hashes match the brief.
+   - Both added tests pass: `2 passed`.
+   - The helper uses the existing model parser and preserves declaration order.
+   - Additional in-memory inputs passed: flow YAML with quoting, comments and Unicode; reordered keys with a multiline scalar ID; and JSON. Each returned `['zeta', 'alpha']` in declaration order.
+   - No new regex, split, slice, text matcher, or fixture-specific branch requires a counterexample.
+
+3. Limitations:
+   - Ran focused tests, not the full repository suite.
+   - Additional inputs used a mocked filesystem-read seam with the real loader and validation.
+   - Default pytest capture was blocked by the read-only environment; rerunning with capture and cache disabled succeeded.
+   - No files were changed.
+
+VERDICT: APPROVE
+tokens used
+33,016
+1. Findings: None.
+
+2. Checked and found true:
+   - All three SHA-256 hashes match the brief.
+   - Both added tests pass: `2 passed`.
+   - The helper uses the existing model parser and preserves declaration order.
+   - Additional in-memory inputs passed: flow YAML with quoting, comments and Unicode; reordered keys with a multiline scalar ID; and JSON. Each returned `['zeta', 'alpha']` in declaration order.
+   - No new regex, split, slice, text matcher, or fixture-specific branch requires a counterexample.
+
+3. Limitations:
+   - Ran focused tests, not the full repository suite.
+   - Additional inputs used a mocked filesystem-read seam with the real loader and validation.
+   - Default pytest capture was blocked by the read-only environment; rerunning with capture and cache disabled succeeded.
+   - No files were changed.
+
+VERDICT: APPROVE

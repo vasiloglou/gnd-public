@@ -1,0 +1,28 @@
+{
+  "base": "6b0a7e5a",
+  "claims": [],
+  "created": "2026-11-23T23:32:37.094528+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".review-round/diff.patch",
+      "sha256": "bbe9bbdd11d343342320ac59121ef58069d642dc5d6731641f12aefc3af79565"
+    },
+    {
+      "path": "tests/test_skill_names.py",
+      "sha256": "b9bf370b0d1b06d5388859260278a758823d313a8444f7975451ce35b832be11"
+    },
+    {
+      "path": "tools/skill_names.py",
+      "sha256": "9d85ac85829eb7aa9ea7afab91acac8d5072cac218b19a9831afd27f69c26008"
+    }
+  ],
+  "head": "03a8eb226ba5049495c1579d1d986897aa651417",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Review this change for correctness and readiness to merge.",
+  "subject": "phase",
+  "version": 1
+}

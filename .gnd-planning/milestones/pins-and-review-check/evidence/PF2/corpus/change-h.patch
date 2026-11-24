@@ -1,0 +1,43 @@
+diff --git a/tests/test_project_version.py b/tests/test_project_version.py
+new file mode 100644
+index 00000000..d559e137
+--- /dev/null
++++ b/tests/test_project_version.py
+@@ -0,0 +1,18 @@
++"""Tests for tools/project_version.py."""
++from __future__ import annotations
++
++from pathlib import Path
++
++from tools.project_version import project_version
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def test_this_projects_version() -> None:
++    assert project_version(ROOT / "pyproject.toml") == "0.4.0"
++
++
++def test_a_minimal_pyproject(tmp_path: Path) -> None:
++    path = tmp_path / "pyproject.toml"
++    path.write_text('[project]\nname = "demo"\nversion = "1.2.3"\n', encoding="utf-8")
++    assert project_version(path) == "1.2.3"
+diff --git a/tools/project_version.py b/tools/project_version.py
+new file mode 100644
+index 00000000..b0bc4496
+--- /dev/null
++++ b/tools/project_version.py
+@@ -0,0 +1,13 @@
++"""Read the project version from a pyproject.toml."""
++from __future__ import annotations
++
++import re
++from pathlib import Path
++
++_VERSION = re.compile(r'^version = "([^"]+)"', re.MULTILINE)
++
++
++def project_version(path: str | Path) -> str | None:
++    """Return ``[project].version``, or None when the file declares none."""
++    match = _VERSION.search(Path(path).read_text(encoding="utf-8"))
++    return match.group(1) if match else None

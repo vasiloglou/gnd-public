@@ -1,0 +1,28 @@
+{
+  "base": "6b0a7e5a",
+  "claims": [],
+  "created": "2026-11-23T23:32:40.557700+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".review-round/diff.patch",
+      "sha256": "19205ac748dd1d417e3cf44bc129ef6fa2b1077737e58499afc8fcc2b18d098b"
+    },
+    {
+      "path": "tests/test_skill_of_file.py",
+      "sha256": "d4fac10b176bd0378ff9f6bd83b3d4d604871ab633a0e0f8d0212bb03901d17a"
+    },
+    {
+      "path": "tools/skill_of_file.py",
+      "sha256": "abeb95254f239d716e90098cd765e5ad183818b5185df6c06533fe5134ea6abf"
+    }
+  ],
+  "head": "91a875b827f085e67d347dec5fae8cf0da34864a",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Review this change for correctness and readiness to merge.",
+  "subject": "phase",
+  "version": 1
+}

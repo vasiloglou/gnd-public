@@ -6,9 +6,13 @@ OB2 corpus gate before any gnd.rmap code existed.
 
 from __future__ import annotations
 
+import copy
 import dataclasses
 import json
+import shutil
+import sys
 from pathlib import Path
+from time import monotonic
 
 import pytest
 
@@ -83,3 +87,271 @@ def test_t8_public_surface():
     }
     for cls in (rmap.Column, rmap.ForeignKey, rmap.Table, rmap.Unmapped, rmap.RelationalSchema, rmap.Disposition):
         assert dataclasses.is_dataclass(cls) and cls.__dataclass_params__.frozen
+
+
+# --- T1-T5, T7 -------------------------------------------------------------------------------
+
+
+CENSUS = (ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS0/revised/census.txt").read_text().splitlines()
+
+
+def _all_model_paths():
+    found = set()
+    for base in (ROOT / "src/gnd", ROOT / "tests/fixtures"):
+        for pattern in ("*.orm.yaml", "*.orm.json"):
+            found.update(base.rglob(pattern))
+    found.update((CORPUS / "cases").glob("*/model.yaml"))  # A14
+    return sorted(found)
+
+
+def _loaded(path):
+    from gnd.model import load_model
+
+    try:
+        return load_model(path)
+    except Exception:  # noqa: BLE001 -- only models the loader admits are in scope (spec §4 rule 1)
+        return None
+
+
+def test_t1_every_admitted_model_maps_under_both_variants():
+    from gnd.rmap import RmapVariant, dispositions, map_model
+
+    mapped = 0
+    for path in _all_model_paths():
+        model = _loaded(path)
+        if model is None:
+            continue
+        for variant in RmapVariant:
+            dispositions(model, map_model(model, variant=variant))
+        mapped += 1
+    assert mapped >= 400  # 443 on 2026-11-24; a collapse of the scan fails here
+
+
+def _k(typ, **kw):
+    return {"type": typ, **kw, "source": "explicit", "status": "confirmed", "modality": "alethic",
+            "provenance": {"user_quote": "adversarial"}}
+
+
+def _ft(i, reading, roles, cons=(), **kw):
+    return {"id": i, "reading": reading, "roles": [{"object_type": o, "role_name": r} for o, r in roles],
+            **({"constraints": list(cons)} if cons else {}), **kw}
+
+
+def _adversarial():
+    from ruamel.yaml import YAML
+
+    src = {"kind": "text-conversation", "confidence": "standard", "mode": "guided"}
+    cycle = {"version": 1, "source": src, "object_types": [
+        {"id": "a", "name": "A", "kind": "entity", "reference": {"mode": "external"}},
+        {"id": "b", "name": "B", "kind": "entity", "reference": {"mode": "external"}},
+        {"id": "code", "name": "Code", "kind": "value", "primitive": "String"}],
+        "fact_types": [
+            _ft("a_has_b", "{A} has {B}", [("a", "a"), ("b", "b")], [_k("uniqueness", roles=["a"]), _k("mandatory", role="a")]),
+            _ft("a_has_code", "{A} has {Code}", [("a", "a"), ("code", "code")], [_k("uniqueness", roles=["a"]), _k("mandatory", role="a")]),
+            _ft("b_has_a", "{B} has {A}", [("b", "b"), ("a", "a")], [_k("uniqueness", roles=["b"]), _k("mandatory", role="b")]),
+            _ft("b_has_code", "{B} has {Code}", [("b", "b"), ("code", "code")], [_k("uniqueness", roles=["b"]), _k("mandatory", role="b")])],
+        "constraints": [
+            _k("uniqueness", scope="external", preferred=True,
+               role_refs=[{"fact_type": "a_has_b", "role": "b"}, {"fact_type": "a_has_code", "role": "code"}]),
+            _k("uniqueness", scope="external", preferred=True,
+               role_refs=[{"fact_type": "b_has_a", "role": "a"}, {"fact_type": "b_has_code", "role": "code"}])]}
+    # Regression (found 2026-11-24): an identifiable objectification one of whose roles is
+    # played by an unmatchable entity raised AttributeError before the guard covered rule 3.
+    visit = YAML(typ="safe").load((CORPUS / "cases/25-nested-composite/model.yaml").read_text())
+    visit["object_types"] += [
+        {"id": "visit", "name": "Visit", "kind": "entity", "reference": {"mode": "external"}},
+        {"id": "person", "name": "Person", "kind": "entity", "reference": {"mode": "popular", "value_type": "person_id"}},
+        {"id": "person_id", "name": "PersonId", "kind": "value", "primitive": "Integer"},
+        {"id": "visit_nr", "name": "VisitNr", "kind": "value", "primitive": "Integer"}]
+    visit["fact_types"] += [
+        _ft("person_visits_district", "{Person} visits {District}", [("person", "person"), ("district", "district")],
+            [_k("uniqueness", roles=["person", "district"])], objectified_as="visit"),
+        _ft("visit_by_person", "{Visit} by {Person}", [("visit", "visit"), ("person", "person")],
+            [_k("uniqueness", roles=["visit"]), _k("mandatory", role="visit")]),
+        _ft("visit_has_nr", "{Visit} has {VisitNr}", [("visit", "visit"), ("visit_nr", "nr")],
+            [_k("uniqueness", roles=["visit"]), _k("mandatory", role="visit")])]
+    visit["constraints"].append(_k("uniqueness", scope="external", preferred=True, role_refs=[
+        {"fact_type": "visit_by_person", "role": "person"}, {"fact_type": "visit_has_nr", "role": "nr"}]))
+    return {"cycle": (cycle, {"a", "b"}), "objectified-unmatchable-role": (visit, {"district"})}
+
+
+@pytest.mark.parametrize("name", ["cycle", "objectified-unmatchable-role"])
+def test_t1b_adversarial_models_return_with_unmatchable_rows(tmp_path, name):
+    from gnd.model import load_model
+    from gnd.rmap import RmapVariant, dispositions, map_model
+
+    document, unmatchable = _adversarial()[name]
+    path = tmp_path / "model.json"
+    path.write_text(json.dumps(document))
+    model = load_model(path)
+    for variant in RmapVariant:
+        schema = map_model(model, variant=variant)
+        dispositions(model, schema)
+        listed = {u.id for u in schema.unmapped if u.kind == "object_type"}
+        assert unmatchable <= listed
+        assert all(u.reason == "identification-unmatchable" for u in schema.unmapped if u.kind == "object_type")
+    if name == "objectified-unmatchable-role":
+        assert ("fact_type", "person_visits_district") in {(u.kind, u.id) for u in schema.unmapped}
+
+
+def _census_and_corpus():
+    paths = [ROOT / p for p in CENSUS] + sorted((CORPUS / "cases").glob("*/model.yaml"))
+    return [(p, m) for p in paths if (m := _loaded(p)) is not None]
+
+
+def test_t2_dispositions_partition_every_fact_type_and_constraint():
+    from gnd.rmap import RmapVariant, dispositions, map_model
+
+    for path, model in _census_and_corpus():
+        expected = {("fact_type", str(f["id"])) for f in model.fact_types}
+        for f in model.fact_types:
+            expected |= {("constraint", f"fact_types/{f['id']}/constraints/{i}") for i, _ in enumerate(f.get("constraints") or ())}
+        expected |= {("constraint", f"constraints/{i}") for i, _ in enumerate(model.constraints or ())}
+        for variant in RmapVariant:
+            rows = dispositions(model, map_model(model, variant=variant))
+            keys = [(r.kind, r.id) for r in rows]
+            assert len(keys) == len(set(keys)) and set(keys) == expected, path
+            assert all((r.reason is None) == bool(r.carried_as) for r in rows), path
+
+
+def _reversed(document):
+    """Object types, fact types and both constraint lists in reversed order; roles kept."""
+    out = copy.deepcopy(document)
+    out["object_types"] = list(reversed(out["object_types"]))
+    out["fact_types"] = list(reversed(out["fact_types"]))
+    for fact in out["fact_types"]:
+        if fact.get("constraints"):
+            fact["constraints"] = list(reversed(fact["constraints"]))
+    if out.get("constraints"):
+        out["constraints"] = list(reversed(out["constraints"]))
+    return out
+
+
+def _readdress(model, schema):
+    """Unmapped rows with constraint addresses replaced by their (owner, reversed index)."""
+    sizes = {str(f["id"]): len(f.get("constraints") or ()) for f in model.fact_types}
+    top = len(model.constraints or ())
+
+    def flip(identifier):
+        parts = identifier.split("/")
+        if parts[0] == "constraints":
+            return f"constraints/{top - 1 - int(parts[1])}"
+        return f"fact_types/{parts[1]}/constraints/{sizes[parts[1]] - 1 - int(parts[3])}"
+
+    return sorted((u.kind, flip(u.id) if u.kind == "constraint" else u.id, u.reason, u.detail) for u in schema.unmapped)
+
+
+def test_t3_order_and_path_independence(tmp_path):
+    from gnd.model import json_document, load_model, parse_model_document
+    from gnd.rmap import RmapVariant, map_model
+
+    for index, (path, model) in enumerate(_census_and_corpus()):
+        document = json_document(parse_model_document(path.read_bytes(), source=path))
+        if "includes" in document:
+            continue
+        # Copy the model's folder: version-4 reference populations live beside it.
+        home = tmp_path / f"m{index}"
+        shutil.copytree(path.parent, home, ignore=shutil.ignore_patterns("*.orm.*", "model.yaml", "__pycache__"))
+        moved = home / "reordered.json"
+        moved.write_text(json.dumps(_reversed(document)))
+        reordered = load_model(moved)
+        for variant in RmapVariant:
+            first, second = map_model(model, variant=variant), map_model(reordered, variant=variant)
+            assert first.tables == second.tables, path
+            assert _readdress(model, first) == sorted(
+                (u.kind, u.id, u.reason, u.detail) for u in second.unmapped
+            ), path
+
+
+def test_t3b_primary_key_tie_break_ignores_declaration_order(tmp_path):
+    from ruamel.yaml import YAML
+
+    from gnd.model import load_model
+    from gnd.rmap import map_model
+
+    document = YAML(typ="safe").load((CORPUS / "cases/13-candidate-keys/model.yaml").read_text())
+    for constraint in document["fact_types"][0]["constraints"]:
+        constraint.pop("preferred", None)
+    keys = set()
+    for order in (lambda c: c, lambda c: list(reversed(c))):
+        variant = copy.deepcopy(document)
+        variant["fact_types"][0]["constraints"] = order(variant["fact_types"][0]["constraints"])
+        path = tmp_path / "m.json"
+        path.write_text(json.dumps(variant))
+        (table,) = map_model(load_model(path)).tables
+        keys.add(table.primary_key)
+    assert keys == {("room_room_nr", "slot_slot_code")}
+
+
+def _timed(scale):
+    sys.path.insert(0, str(ROOT / "tests"))
+    from support.rmap_large import large_rmap_model
+
+    from gnd.model import load_model
+    from gnd.rmap import dispositions, map_model
+
+    return large_rmap_model, load_model, map_model, dispositions
+
+
+@pytest.fixture(scope="module")
+def large_models(tmp_path_factory):
+    large_rmap_model, load_model, _, _ = _timed(1)
+    root = tmp_path_factory.mktemp("rmap-large")
+    models = {}
+    for scale in (1, 5):
+        path = root / f"x{scale}.json"
+        path.write_text(json.dumps(large_rmap_model(1400 * scale, 4500 * scale)))
+        models[scale] = load_model(path)
+    return models
+
+
+def _best(model, repeats=3):
+    _, _, map_model, dispositions = _timed(1)
+    best = float("inf")
+    for _ in range(repeats):
+        start = monotonic()
+        dispositions(model, map_model(model))
+        best = min(best, monotonic() - start)
+    return best
+
+
+def test_t4_reporter_scale_time_bound(large_models):
+    """1,400 entities and 4,500 fact types. Measured 0.067 s on 2026-11-24; bound 30x that."""
+    assert _best(large_models[1]) < 2.0
+
+
+def test_t4b_growth_is_not_quadratic(large_models):
+    """5x the size (10x exceeds MAX_MODEL_BYTES). Linear is about 5, quadratic about 25.
+
+    Measured 5.47 after the fix; 27.2 before it (spec finding).
+    """
+    assert _best(large_models[5]) / _best(large_models[1]) < 12
+
+
+def test_t5_variant_measurement_covers_census_and_corpus(tmp_path):
+    sys.path.insert(0, str(ROOT / "tools"))
+    import rmap_variant_measurement as measurement
+
+    data = measurement.rows()
+    assert len(data) == len(CENSUS) + len(CASES)
+    assert all(row.get("HALPIN", {}).get("agrees", "yes") == "yes" for row in data if row["origin"] == "corpus")
+    text = measurement.render(data)
+    assert text.count("\n| `") == len(data)
+
+
+@pytest.mark.parametrize(
+    "case, fact, expected",
+    [
+        ("02-popular-reference-fact", "country_has_country_code", ("key", "country", "country_code")),  # 1 over 5
+        ("12-single-and-compound", "employee_works_in_department", ("columns", "employee", "department_dept_code")),  # 5 over 6
+        ("17-objectification", "student_enrolled_in_course", ("key", "enrolment", "student_student_nr", "course_course_code")),  # 3 over 6
+        ("18-derived", "person_has_age", ()),  # 0 over 5
+    ],
+)
+def test_t7_precedence_pins(case, fact, expected):
+    from gnd.model import load_model
+    from gnd.rmap import dispositions, map_model
+
+    model = load_model(CORPUS / "cases" / case / "model.yaml")
+    (row,) = [r for r in dispositions(model, map_model(model)) if r.kind == "fact_type" and r.id == fact]
+    assert row.carried_as == expected

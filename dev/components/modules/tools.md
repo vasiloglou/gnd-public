@@ -547,6 +547,15 @@ RF1 characterization-pin tool (code-refactoring milestone, phase RF1).
 | `merge(args) -> int` | function | 363 | (no docstring) |
 | `main(argv) -> int` | function | 400 | (no docstring) |
 
+## tools.rmap_variant_measurement — `tools/rmap_variant_measurement.py`
+Components: unassigned
+OB2-C5: compare the two Rmap variants over the export census and the corpus (D5 input).
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `rows() -> list[dict]` | function | 39 | (no docstring) |
+| `render(data) -> str` | function | 59 | (no docstring) |
+
 ## tools.run_gnd_review_panel — `tools/run_gnd_review_panel.py`
 Components: unassigned
 Run the GND review panel with credentials from the trusted Codex env file.

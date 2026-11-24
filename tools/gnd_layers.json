@@ -832,6 +832,9 @@
     "gnd.report_schema": {
       "layer": "infrastructure"
     },
+    "gnd.rmap": {
+      "layer": "model"
+    },
     "gnd.review": {
       "lane": "review",
       "layer": "lanes"

@@ -506,3 +506,18 @@ supersedes them.
   constraint appears exactly once; lists are sorted; keys name existing
   columns; foreign keys target an existing primary key.
 - `tests/test_li0_witness_wire.py` passes after A13.
+
+## 13. Implementation findings (recorded during OB2)
+
+| # | Finding | Effect |
+|---|---|---|
+| IF1 | **A guard that went quiet.** Derived fact types got no unmapped row. `dispositions()` hid the gap by defaulting a missing row to `not-relational`, and case 18's answer key caught it. | Derived rows are written. A missing row now raises as an internal invariant violation, so T2 can no longer pass by default. |
+| IF2 | **Totality defect.** An identifiable objectification with a role played by an unmatchable entity raised `AttributeError`, because the guard covered only rules 5 and 6. | The guard covers rules 3, 5 and 6. T1b keeps the model as a regression case. |
+| IF3 | **Quadratic time.** At 5× the reporter's scale, the time ratio was 27.2 (quadratic predicts 25). `refscheme.reference_identity` → `universe.resolve_reference_value_type` rebuilds a map of every object type on each call, and the Rmap called it once per entity. `build()` also scanned every fact type once per table. | Direct identification now uses `ModelIndex.reference_value_types()`, which is documented as a cache of the same resolver; `refscheme` is called only for composites. The per-table scan is precomputed. Measured after the fix: 0.067 s at 1×, ratio 5.47. |
+| IF4 | T4b at 10× cannot load: the generated model exceeds `MAX_MODEL_BYTES`. | T4b runs at 5× and asserts a ratio under 12 (linear is about 5, quadratic about 25). |
+| IF5 | **Rule 1 also gives the entity a table.** S7 and A4 list rules 2, 4 and 5. Under that wording, an entity whose only fact type is its explicit reference would have no table for its `key` disposition to point at. | Implemented with rules 1–5 giving a table. No corpus answer changes (case 02 has a table anyway). **The owner sees this at the D5 gate.** |
+| IF6 | **RF6 query policy.** The first `rmap.py` read `.fact_types`, `fact.get("roles")` and `constraint.get("roles")` directly, which turned 7 guard tests red. | All model reads go through `ModelIndex`: `iter_fact_types_shared`, `role_object_types` and `constraint_roles`. The 129 syntax-level dynamic-subscript candidates of the new module are recorded as a counted delta in `evidence/OB2/dynamic-query-successor.json`, chained after GO3-GO5. That is a census only; no query exception is widened. |
+| IF7 | A uniqueness that repeats another's roles, and a uniqueness on a unary, are recorded as `implied`. | Stated in the normative section. |
+| IF8 | **The D5 measurement** ([OB2-variant-measurement.md](OB2-variant-measurement.md)): 4 of 66 models differ between the variants. Three are the D5 corpus cases (07, 08, 15). In the census, only `library_with_subtypes` differs: 1 table and 4 nullable columns under HALPIN, against 3 tables and 1 nullable column under ALTERNATE. | Input to the D5 gate. |
+| IF9 | T3's reordered copy of a census model with version-4 reference populations cannot load away from its `references/` folder. | T3 copies the model's folder, so it skips no census model. |
+| IF10 | `tests/test_li0_witness_wire.py` scans fixture models. | It joins the focused gate. |

@@ -1,0 +1,52 @@
+{
+  "base": "04945d39",
+  "claims": [],
+  "created": "2026-11-23T22:58:48.118283+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/reviews/phase-PF1-r1/diff.patch",
+      "sha256": "81ccf20cfac978a52439224c4c5e144385544f9d32f456c48bc088fffd646f1a"
+    },
+    {
+      "path": ".claude/skills/process-phase/references/project.md",
+      "sha256": "108f227dbd18635b725576b050e118e9adaa6ffa3c6e5393f85aadc4a5e6b749"
+    },
+    {
+      "path": ".codex/skills/process-phase/references/project.md",
+      "sha256": "108f227dbd18635b725576b050e118e9adaa6ffa3c6e5393f85aadc4a5e6b749"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/phase-PF1-spec.md",
+      "sha256": "56e53126d6962b48f588c7198aad72da3184ec7cead51334e24950cf48d96703"
+    },
+    {
+      "path": "tests/test_doctor_uninstall.py",
+      "sha256": "95964bc20e62394655ad629badbea316d4ca163fef5d82a8bd220e706d493f99"
+    },
+    {
+      "path": "tests/test_install.py",
+      "sha256": "9fbbb5d182efb1f216cf340b0dac6ab4aeb2bc0affbc9e921758403aaf8a02f8"
+    },
+    {
+      "path": "tests/test_inventory_pin_home.py",
+      "sha256": "27d672998dc33455954a34f8fb2b2842a157e545fbc10087a144218af1a2a2f3"
+    },
+    {
+      "path": "tests/test_public_built_inventory.py",
+      "sha256": "ac6cba98edf0aa5766a6251ea081683b66f04076c19107b6192b70f25c8f8cd7"
+    },
+    {
+      "path": "tests/test_verification_fixes.py",
+      "sha256": "0f88507ab2a9d84dd37add178320f14587ba2758153dec5e8962706f9b5e2bcf"
+    }
+  ],
+  "head": "c1ecb8c156c2ec2c89e76f10f4b397f2dee7efa2",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Refute PF1's claims: (1) the packaged-skill inventory (EXPECTED_SKILL_FILE_COUNT, EXPECTED_SKILL_NAMES, EXPECTED_SKILL_FILES) is defined only in tests/test_packaged_skills.py, apart from the named distribution-runtime exception; (2) tests/test_inventory_pin_home.py fails for every way a test module can bind one of those names in module scope, and for no other code; (3) no assertion was weakened: each test in the three edited files still checks what it checked before, against the same values; (4) the guard block edit keeps both project.md copies identical and test_gate_guard_list green. Also judge the out-of-spec commit c1ecb8c1 (inline 70 and 18 in tests/test_public_built_inventory.py): is it correct, and are there other inline restatements of the inventory the name guard cannot see?",
+  "subject": "phase",
+  "version": 1
+}

@@ -2,8 +2,8 @@
 
 ## 1. Status
 
-**Draft r1, 2026-11-23, awaiting the plan gate and then its own owner gate.**
-No test file changes before both.
+**Owner-decided (2026-11-23): spec r1 approved as written, PF1-D1 (a) and
+PF1-D2 (a) (o).** Implementation is under way on `claude/pf1-inventory-pin`.
 
 ## 2. Provenance
 
@@ -113,8 +113,8 @@ fails the guard, so a stale exception cannot linger.
 
 | ID | Question | Readings and cost | Proposed |
 |---|---|---|---|
-| PF1-D1 | Where the guard lives | (a) a new file; (b) a test in `test_packaged_skills.py`. Same exit codes; (a) keeps the home file's job to defining the inventory | (a) |
-| PF1-D2 | Whether the guard also catches `EXPECTED_RELATIVE_LINK_COUNT` copies | (a) no: no copy exists in the default lane; (b) yes: wider, and `test_public_distribution_runtime.py:22` would need a second exception | (a) |
+| PF1-D1 | Where the guard lives | (a) a new file; (b) a test in `test_packaged_skills.py`. Same exit codes; (a) keeps the home file's job to defining the inventory | (a). **Ruled (a), owner, 2026-11-23 (o)** |
+| PF1-D2 | Whether the guard also catches `EXPECTED_RELATIVE_LINK_COUNT` copies | (a) no: no copy exists in the default lane; (b) yes: wider, and `test_public_distribution_runtime.py:22` would need a second exception | (a). **Ruled (a), owner, 2026-11-23 (o)** |
 
 Plan D1 and D5 are ruled at the plan gate.
 
@@ -142,3 +142,66 @@ names and one of 70 files). Two lines in each copy of `project.md`.
 ## 11. Approval instrument
 
 This prose.
+
+## 12. Owner gate
+
+- **Ruling:** owner approved spec r1, 2026-11-23, in the Code session that
+  wrote it: "Approve PF1 spec", answering "Approve the PF1 spec so PF1 can
+  start?". That answer is also the go-ahead to implement.
+- **Bytes:** sha256 `ebdcaa3ff96b1118c23b9815b2f9c4f48cc0e6c433ca2c627cc7c8c81b86bae0`, the spec as committed in PR 248 at `04945d39`.
+  Since then only the status line, the two ruling cells of §7 and this
+  section changed.
+- **Instrument:** this prose (§11). No review ran over the spec bytes; plan D3
+  selects one reviewer in a different tool for the phase diff.
+- **Rulings:** PF1-D1 (a), PF1-D2 (a). Plan D1 and D5 were ruled at the plan
+  gate (`../001-plan.md`).
+
+## Implementation findings, recorded as they were found
+
+1. **Baseline (D1), before any edit.** The default lane at `04945d39` on
+   beast-3, six shards: 20,077 passed, 19 failed, 2 errors, 13 skipped. The
+   2 errors are the known `tests/test_public_optional.py` pair. 5 failures
+   are `tests/test_verification_fixes.py`, the inventory copy (H12),
+   repaired here. The other 14 are not inventory copies and reproduce
+   locally on the PF1 head, so they are red on `main`, listed in the record
+   and not repaired (D1): `test_guarded_clause_exports.py` (1),
+   `test_ir3_pyrel_includes.py` (5), `test_rf1_pin_harness.py` (1),
+   `test_rf4_peripheral.py` (6) and `test_rf5_handler_pins.py` (1).
+2. **A premise of H1 was incomplete.** `tests/test_install.py` said its copy
+   was "Duplicated deliberately: if a skill file is added, BOTH guards should
+   fail and be updated as one decision." The plan read the duplication as
+   accidental. The import keeps the intent: an added file still fails
+   `tests/test_packaged_skills.py`'s tree check, once, and that is the one
+   decision. It removes the outcome the duplication produced, four copies
+   that drifted apart.
+3. **A copy need not be a name.** T5 failed at the base:
+   `tests/test_public_built_inventory.py:316` and `:321` compared the
+   imported inventory with the inline literals `70` and `18`. The name
+   guard cannot see an inline literal. Fixed in its own commit, outside §3's
+   listed homes, for the owner's ruling. The reviewer found two more inline
+   `18`s (round 1, F4): `tests/test_development_scaffold.py:200` and
+   `tests/test_marketplace_plugins.py:25`. They are deferred (record, open
+   questions).
+4. **The first guard enumerated statement types, and that was the wrong
+   axis.** Review round 1 reproduced three faults (F1–F3), and round 2 three
+   more (parameters, type parameters, one alias excusing another). The guard
+   now covers the binding constructs of the language reference, section
+   4.2.1, in any scope, and exempts an import alias by alias. A copy in a
+   function or class body now counts, which T2 previously listed as not
+   bound; that row of §8 is superseded (r1 F1 repair).
+
+## Amendment a1 — delegated approval (auto=true), 2026-11-23
+
+- **Authorization:** the owner invoked `process-milestone pins-and-review-check
+  auto` on 2026-11-23, delegating plan, spec and close rulings for this
+  milestone only. This is an agent ruling under that delegation, not the
+  owner's reading.
+- **Ruling (PF1 record OQ1):** keep commit `c1ecb8c1`. §3's homes for PF1
+  gain `tests/test_public_built_inventory.py`. Prior wording kept: §3 of the
+  plan lists PF1's homes without it.
+- **Why:** the change is R0.1 applied to the one remaining copy the phase found
+  (an inline `70` and `18` beside the imported inventory). Round 1's
+  reviewer judged it correct, and without it the distribution lane stays red
+  at 71 files. It removes no check: the agreement assertions remain and read
+  the imported values.
+- **Bytes amended:** the spec above this section, sha256 `9b02046bf9f712c19f51e2166d9b10b4a26af30c711e1dd146fad222e556b83d`.

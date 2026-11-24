@@ -523,13 +523,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.arguments
 - does: Validate shared CLI flags, duplicate options and usage exit 64 [_BandSafeParser; _StoreOnce].
-- verbs: parse arguments, command line, usage errors, exit bands, positive integer, finite timeout, repeated flags, duplicate options, output format, hidden unredacted, _BandSafeParser, _StoreOnce
+- verbs: parse arguments, command line, usage errors, exit bands, positive integer, byte bound, finite timeout, repeated flags, duplicate options, output format, hidden unredacted, _BandSafeParser, _StoreOnce
 - in: argv strings and argparse parsers
 - out: validated values or usage refusal
 - status: canonical
 - modules: src/gnd/commands/_arguments.py
-- uses: infra.exit_codes
-- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, cli.synth_command, … +1 more (graph.md)
+- uses: infra.exit_codes, infra.input_policy
+- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.export_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, … +2 more (graph.md)
 - tests: tests/test_rf5_commands.py
 
 
@@ -647,7 +647,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/export.py
-- uses: export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
+- uses: cli.arguments, export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
 - used_by: cli.dispatch
 - tests: tests/test_pyrel_export.py, tests/test_rf5_commands.py
 
@@ -1634,7 +1634,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### export.ossie
 - does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, and count the fact types that declare redact [render_ossie].
-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes
 - in: standalone model path and output format
 - out: ontology, sidecar and loss report bytes
 - status: canonical
@@ -2274,7 +2274,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +56 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +57 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2708,7 +2708,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.ossie_import
 - does: Read a pinned Apache Ossie ontology or bound GND bundle offline and produce an admitted ORM model and a per-pointer loss report.
-- verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, plan_ossie_import
+- verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, input size bound, max input bytes, plan_ossie_import
 - status: canonical
 - modules: src/gnd/ossie_import.py
 - uses: infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.scalar_identity

@@ -619,3 +619,136 @@ def test_issue_169_the_command_notes_the_count_and_never_a_name_or_value(tmp_pat
         assert hidden not in noted, hidden
     assert export("none", fact_types=(), roles=()) == ""
     assert export("one", roles=()).startswith("note: 1 fact type declares `redact`. ")
+
+
+# --- OB1: the output bound is a parameter (ossie-relational-bundle) ---------------
+
+OB1_BASELINE = json.loads((ROOT / "tests/fixtures/ossie_ob1_baseline.json").read_bytes())
+ONE_ARTIFACT = ("document", "sidecar", "loss_report")
+
+
+def _baseline_entry(bundle):
+    entry = {name: hashlib.sha256(getattr(bundle, name)).hexdigest() for name in ONE_ARTIFACT}
+    entry["sizes"] = [len(getattr(bundle, name)) for name in ONE_ARTIFACT]
+    return entry
+
+
+@pytest.mark.parametrize("relative", CENSUS)
+@pytest.mark.parametrize("encoding", ("yaml", "json"))
+def test_ob1_t1_default_bound_is_byte_identical_to_baseline(relative, encoding):
+    """T1: without the flag every census export equals the 1926e895 baseline."""
+    expected = OB1_BASELINE[f"{relative}::{encoding}"]
+    try:
+        actual = _baseline_entry(render_ossie(ROOT / relative, output_format=encoding))
+    except Exception as error:  # noqa: BLE001 -- the baseline records refusals by type and text
+        actual = {"refused": f"{type(error).__name__}: {error}"}
+    assert actual == expected
+
+
+def test_ob1_baseline_covers_the_census():
+    assert set(OB1_BASELINE) == {f"{path}::{fmt}" for path in CENSUS for fmt in ("yaml", "json")}
+
+
+@pytest.fixture(scope="module")
+def large_source(tmp_path_factory):
+    from support.ossie_large import write_large_model
+
+    return write_large_model(tmp_path_factory.mktemp("ob1") / "large.orm.json")
+
+
+def _export_argv(model, out, *extra):
+    return ["export", "ossie", str(model), "--out", str(out), "--format", "json", *extra]
+
+
+def test_ob1_t2_t5_large_model_exports_with_raised_bound(large_source, tmp_path, capsys):
+    """T2 and T5: an artifact above 10 MiB publishes with --max-output-bytes 33554432."""
+    out = tmp_path / "large.json"
+    start = monotonic()
+    assert cli.main(_export_argv(large_source, out, "--max-output-bytes", "33554432")) == 0
+    elapsed = monotonic() - start
+    capsys.readouterr()
+    document = out.read_bytes()
+    sidecar = json.loads(Path(str(out) + ".gnd.json").read_bytes())
+    report_bytes = Path(str(out) + ".loss.json").read_bytes()
+    assert len(report_bytes) > 10 * 1024 * 1024 >= len(document)
+    ONTOLOGY.validate(json.loads(document))
+    report = json.loads(report_bytes)
+    REPORT.validate(report)
+    digest = hashlib.sha256(document).hexdigest()
+    assert sidecar["document_sha256"] == report["document_sha256"] == digest
+    # The source stays far below MAX_MODEL_BYTES: the ratio OB1-C2 records.
+    assert large_source.stat().st_size * 4 < len(report_bytes) < large_source.stat().st_size * 8
+    assert large_source.stat().st_size < MAX_MODEL_BYTES
+    assert elapsed < 30.0
+
+
+def test_ob1_t2b_large_model_is_refused_at_the_default(large_source, tmp_path, capsys):
+    out = tmp_path / "large.json"
+    assert cli.main(_export_argv(large_source, out)) == 3
+    assert "ossie:output-size" in capsys.readouterr().err
+    assert not list(tmp_path.iterdir())
+
+
+def _largest_by(tmp_path, artifact):
+    """A model whose named artifact is strictly the largest of the three."""
+    path = _synthetic(tmp_path)
+    document = json.loads(path.read_bytes())
+    if artifact == "document":
+        # A native name is written into the ontology and only pointed at elsewhere.
+        document["object_types"][0]["name"] = "E" + "x" * 50_000
+        document["fact_types"][0]["reading"] = "{" + "E" + "x" * 50_000 + "} has {Elapsed}"
+    elif artifact == "sidecar":
+        # An extension value is copied into the sidecar and nowhere else.
+        document["fact_types"][0]["constraints"][0]["provenance"]["user_quote"] = "q" * 50_000
+    path.write_text(json.dumps(document))
+    bundle = render_ossie(path, output_format="json", max_output_bytes=MAX_MODEL_BYTES)
+    sizes = {name: len(getattr(bundle, name)) for name in ONE_ARTIFACT}
+    assert max(sizes, key=sizes.get) == artifact and sorted(sizes.values())[-2] < sizes[artifact]
+    return path, sizes[artifact]
+
+
+@pytest.mark.parametrize("artifact", ONE_ARTIFACT)
+def test_ob1_t3_each_artifact_is_bounded(tmp_path, artifact, capsys):
+    """T3 and T3a: the bound applies to whichever artifact is largest, at size - 1 and at size."""
+    source, size = _largest_by(tmp_path, artifact)
+    refused = tmp_path / "refused"
+    refused.mkdir()
+    assert cli.main(_export_argv(source, refused / "o.json", "--max-output-bytes", str(size - 1))) == 3
+    assert "ossie:output-size" in capsys.readouterr().err
+    assert not list(refused.iterdir())
+    published = tmp_path / "published"
+    published.mkdir()
+    assert cli.main(_export_argv(source, published / "o.json", "--max-output-bytes", str(size))) == 0
+    assert sorted(p.name for p in published.iterdir()) == ["o.json", "o.json.gnd.json", "o.json.loss.json"]
+
+
+def test_ob1_t3b_strict_refusal_precedes_the_size_refusal(tmp_path, capsys):
+    model = ROOT / "src/gnd/examples/growth/model.orm.yaml"
+    argv = _export_argv(model, tmp_path / "o.json", "--strict", "--max-output-bytes", "1")
+    assert cli.main(argv) == 3
+    err = capsys.readouterr().err
+    assert "population:out-of-scope" in err and "ossie:output-size" not in err
+    assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize("value", ("0", "-1", "1.5", "abc", "268435457", "", "0x10"))
+def test_ob1_t4_invalid_bound_is_a_usage_error(tmp_path, value, capsys):
+    model = ROOT / "src/gnd/examples/refunds/model.orm.yaml"
+    with pytest.raises(SystemExit) as caught:
+        cli.main(_export_argv(model, tmp_path / "o.json", "--max-output-bytes", value))
+    assert caught.value.code == 64
+    assert "--max-output-bytes" in capsys.readouterr().err
+    assert not list(tmp_path.iterdir())
+
+
+def test_ob1_t4b_ceiling_is_admitted(tmp_path, capsys):
+    model = ROOT / "src/gnd/examples/refunds/model.orm.yaml"
+    assert cli.main(_export_argv(model, tmp_path / "o.json", "--max-output-bytes", "268435456")) == 0
+    capsys.readouterr()
+
+
+@pytest.mark.parametrize("value", (0, -1, 268435457, True, 1.5, "10"))
+def test_ob1_library_bound_is_validated(value):
+    with pytest.raises(ValueError, match="max_output_bytes"):
+        render_ossie(ROOT / "src/gnd/examples/refunds/model.orm.yaml", output_format="json",
+                     max_output_bytes=value)

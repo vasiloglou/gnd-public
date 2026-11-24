@@ -3,7 +3,7 @@
 Planning opened 2026-11-24 from the owner's issue file, which holds three
 Ossie export issues not yet filed on GitHub.
 
-**Status:** plan r2, **approved by the owner on 2026-11-24** ([plan gate](002-plan-gate.md), sha256 `52d946a4…6e1d`), with D1–D11 ruled as proposed. Nothing is implemented, and no phase spec is approved.
+**Status:** plan r2, **approved by the owner on 2026-11-24** ([plan gate](002-plan-gate.md), sha256 `52d946a4…6e1d`), with D1–D11 ruled as proposed. OB1 is implemented and recorded; OB2 is next.
 
 The maintained light panel reviewed r1 at effort high:
 
@@ -19,10 +19,10 @@ itself reviewed.
 
 | Phase | Deliverable | State |
 |---|---|---|
-| OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | spec r2 drafted; awaiting its spec gate |
+| OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | done: [record](004-phase-OB1.md), [spec](notes/phase-OB1-spec.md); branch `claude/ossie-ob1-size-bounds` |
 | OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | ready to specify |
 | OB3 | Semantic model and mapping files, with the default per D2 | after OB2 (D2, D4, D6 ruled) |
 | OB4 | `--physical-binding FILE` | after OB3 (D7, D8 ruled) |
 | OB5 | Docs and skill | after OB4 |
 
-**Next action:** the OB1 spec gate (and, in parallel, drafting the OB2 spec). D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first.
+**Next action:** draft the OB2 spec. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first.

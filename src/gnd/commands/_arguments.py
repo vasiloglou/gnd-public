@@ -39,6 +39,18 @@ def _positive_int(value: str) -> int:
         raise argparse.ArgumentTypeError("must be a positive integer")
     return parsed
 
+def _byte_bound(value: str) -> int:
+    """Argparse converter for a caller-raised byte bound (Ossie export and import, OB1)."""
+    from gnd.input_policy import MAX_BYTES_CEILING
+
+    try:
+        parsed = int(value, 10)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"{value!r} is not an integer number of bytes") from None
+    if not 1 <= parsed <= MAX_BYTES_CEILING:
+        raise argparse.ArgumentTypeError(f"must be from 1 to {MAX_BYTES_CEILING} bytes")
+    return parsed
+
 def _positive_finite_float(value: str) -> float:
     """Argparse converter for positive finite wall-clock tightenings."""
 

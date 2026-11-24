@@ -2,8 +2,9 @@
 
 ## 1. Status
 
-**Draft r2, 2026-11-24, awaiting owner review.** Not reviewed. Blocked on the
-plan gate and on D3. No code is written.
+**owner-decided (2026-11-24).** r2 (sha256 `068f24c4…3824`) was approved at the
+[OB1 spec gate](../003-OB1-spec-gate.md). This r2.1 adds only this status line
+and §12, the implementation findings; §1–§11 are the approved bytes.
 
 ## 2. Provenance
 
@@ -208,3 +209,17 @@ fixture builders. The baseline digest file is data.
 
 This prose. No fixture corpus is needed, because T1's answer key is the
 captured baseline digests.
+
+## 12. Implementation findings (r2.1, recorded during OB1)
+
+| # | Finding | Effect |
+|---|---|---|
+| IF1 | **Refuted premise (plan §1.2).** "No test covers this branch" was false. `tests/test_ossie_import.py::test_export_bounds_all_import_envelopes` already covered `ossie:output-size`, by patching `gnd.export.ossie.MAX_BYTES`. | That test and `test_restored_output_size_caps` were moved to the new parameters (`max_output_bytes`, `max_bytes`) with their assertions unchanged. |
+| IF2 | **A sixth import cap.** `input_policy.JSONDecoder.raw_decode` re-checks `_text` at the default 10 MiB, after `loads` has checked it. | `JSONDecoder` takes `max_bytes`, and `loads` passes it on. T6 failed with `report-syntax` until this was fixed. |
+| IF3 | **T6b is unreachable for two caps.** The YAML guard and the JSON decode caps equal the read cap N over the same bytes, so neither can bind before the read. | Those two caps are covered by T6, which fails unless both move (IF2 shows it). T6b keeps the reachable `loss-size` cap, using the flights fixture at N = its size. |
+| IF4 | **T6a's rule.** On a large bundle, the file above 10 MiB is the loss report, so the default refusal is `report-input-size`, not `input-size`. | T6a asserts `report-input-size`. |
+| IF5 | **T6c by seam.** A restored model above 10 MiB needs a foreign source of about 5.5 MB, which takes minutes to build. | T6c lowers `ossie_import.MAX_BYTES` and passes a large N. The kept cap still refuses, which shows it is independent of the flag. |
+| IF6 | **Ceiling home.** `ossie_import` (layer `entry`) does not import the export lane. | The ceiling is `input_policy.MAX_BYTES_CEILING`, and `MAX_OUTPUT_BYTES_CEILING` names it in the export. |
+| IF7 | **Missed affected consumers.** `tests/test_rf1_cli_pins.py` pins the CLI help text and exit probes, and `tests/test_rf7_input_policy.py` lowers `MAX_BYTES` through the module seam. | The CLI pins declare both new flags as successors. Defaults in `input_policy` resolve `MAX_BYTES` at call time (review finding F1). Both files join the gate. |
+| IF8 | **Baseline path.** `tests/data/` does not exist in this repository. | The baseline is at `tests/fixtures/ossie_ob1_baseline.json`. |
+| IF9 | **Measured ratio (OB1-C2, for D11).** A 5,000-fact model of 1.83 MB gives a 10.95 MB JSON loss report (about 6×), a 7.34 MB sidecar and a 0.87 MB ontology. The export takes about 3 s; the import about 7 s (JSON) and 8.5 s (YAML). | At this ratio, a 32 MiB export needs a source of about 5.3 MB, within `MAX_MODEL_BYTES`. The reporter's models differ in shape, so this is an estimate only. |

@@ -2,9 +2,12 @@
 
 ## 1. Status
 
-**Draft r1, 2026-11-24, awaiting owner review.** Not reviewed. No code and no
-fixture is written. Step 2 has to rule on decisions S1–S11 (§7) and the
-approval instrument (§11).
+**Implemented, 2026-11-24.** The owner approved r1 with S1–S11 as proposed
+([spec gate](../005-OB2-spec-gate.md)), the corpus and amendment r1.1
+([corpus gate](../006-OB2-corpus-gate.md)), and D5 = HALPIN together with
+deviations IF5 and RR1 ([D5 gate](../007-OB2-D5-gate.md)). §13 and §14
+record what implementation and review changed. The text below §1 is kept as
+written at each gate.
 
 ## 2. Provenance
 

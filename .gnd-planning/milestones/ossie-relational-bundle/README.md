@@ -20,9 +20,9 @@ itself reviewed.
 | Phase | Deliverable | State |
 |---|---|---|
 | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | spec r2 drafted; awaiting its spec gate |
-| OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | [spec r1](notes/phase-OB2-spec.md) approved ([gate](005-OB2-spec-gate.md)); [corpus](../../../tests/fixtures/rmap/README.md) and amendment r1.1 awaiting the corpus gate |
+| OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **recorded** ([record](008-phase-OB2.md)); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); not pushed |
 | OB3 | Semantic model and mapping files, with the default per D2 | after OB2 (D2, D4, D6 ruled) |
 | OB4 | `--physical-binding FILE` | after OB3 (D7, D8 ruled) |
 | OB5 | Docs and skill | after OB4 |
 
-**Next action:** the OB1 spec gate (and, in parallel, drafting the OB2 spec). D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first.
+**Next action:** the owner decides whether OB2 gets a second review round (OB2-Q3) and a pull request; OB3 follows. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first.

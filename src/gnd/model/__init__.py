@@ -289,7 +289,12 @@ from gnd.values import reference_model_digest
 
 def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
     """Validate one immutable bounded buffer; source is diagnostic metadata."""
-    doc = parse_model_document(data, source=source)
+    return _load_model_document(parse_model_document(data, source=source))
+
+
+def _load_model_document(doc) -> Model:
+    """``load_model_bytes`` after the parse, for a caller that already parsed
+    the same bytes under the same source (D9: one parse per load)."""
     from gnd.model._includes import _refuse, declares_includes, parse_declarations
 
     if declares_includes(doc):
@@ -359,7 +364,7 @@ def _load_model_at(data, *, source, descriptor, historical=None, analysis=False)
         return CompositionView(doc, origins, included, (), model) if analysis else model
     if historical is not None:
         _refuse('declaration')
-    model = load_model_bytes(data, source=source)
+    model = _load_model_document(doc)
     if model.reference_populations:
         model._authored_sha256 = hashlib.sha256(data).hexdigest()
     return CompositionView(doc, (), (), (), model) if analysis else model

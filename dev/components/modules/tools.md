@@ -526,14 +526,14 @@ RF1 characterization-pin tool (code-refactoring milestone, phase RF1).
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `ToolError` | class(Exception) | 57 | (no docstring) |
-| `load_table(path) -> dict` | function | 91 | (no docstring) |
-| `validate_rows(root, source, rows) -> None` | function | 163 | (no docstring) |
-| `collect(root, tests, env, source) -> set[str]` | function | 174 | (no docstring) |
-| `validate_coverage(rows, exempt, collected) -> None` | function | 186 | (no docstring) |
-| `mutate(args) -> int` | function | 255 | (no docstring) |
-| `capture(args) -> int` | function | 315 | (no docstring) |
-| `merge(args) -> int` | function | 333 | (no docstring) |
-| `main(argv) -> int` | function | 370 | (no docstring) |
+| `load_table(path) -> dict` | function | 132 | (no docstring) |
+| `validate_rows(root, source, rows) -> None` | function | 193 | (no docstring) |
+| `collect(root, tests, env, source) -> set[str]` | function | 204 | (no docstring) |
+| `validate_coverage(rows, exempt, collected) -> None` | function | 216 | (no docstring) |
+| `mutate(args) -> int` | function | 285 | (no docstring) |
+| `capture(args) -> int` | function | 345 | (no docstring) |
+| `merge(args) -> int` | function | 363 | (no docstring) |
+| `main(argv) -> int` | function | 400 | (no docstring) |
 
 ## tools.run_gnd_review_panel — `tools/run_gnd_review_panel.py`
 Components: unassigned

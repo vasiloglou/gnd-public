@@ -153,6 +153,15 @@ def test_mutation_table_rows_of_their_own():
     assert required and [node for node in required if node not in sole] == []
 
 
+def test_mutation_table_covers_every_pin_node():
+    """RF1-C1 for the pins added since RF1: each collected pin node is named by a
+    mutation row or excused with a reason. The mutate command refuses to start
+    otherwise, and until this test nothing ran that check, so twelve parsers'
+    help and exit-probe nodes went without a row."""
+    table = tool.load_table(ROOT / tool.DEFAULT_TABLE)
+    tool.validate_coverage(table["rows"], table["exempt"], _collect(list(tool.PIN_FILES)))
+
+
 # --- T-NORM ------------------------------------------------------------------
 
 

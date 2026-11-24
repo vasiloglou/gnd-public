@@ -698,13 +698,15 @@ def _cmd_evolve_preview(
             from gnd.evolve._includes import exclude_input_outputs
             from gnd.evolve.service import _include_input
 
-            _include_input(exclude_input_outputs, model, error.inputs, (preview_file,))
+            outputs = (preview_file,) if report_target is None else (preview_file, report_target[1])
+            _include_input(exclude_input_outputs, model, error.inputs, outputs)
             from gnd.evolve.service import _include_claim_cap
             from gnd.verbalize import line_text
 
             rendered = _evolve_json_bytes(error.radius)
             _include_claim_cap(rendered)
             _evolve_publish_preview(workspace, preview_file, preview_relative, rendered)
+            _evolve_write_outcome_report(error, report_target)
             if output_format == 'json':
                 print(rendered.decode('utf-8'), end='')
             else:

@@ -123,26 +123,32 @@
     [
       "src/gnd/evolve/outcomes.py",
       "__init__",
+      "dict[Any, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[str, dict[Any, Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
       "dict[tuple[str | None, str], list[int]]",
       1
     ],
     [
       "src/gnd/evolve/outcomes.py",
       "__init__",
-      "dict[tuple[str, str], int]",
-      1
-    ],
-    [
-      "src/gnd/evolve/outcomes.py",
-      "__init__",
       "dict[tuple[str, str], list[int]]",
-      1
+      2
     ],
     [
       "src/gnd/evolve/outcomes.py",
       "__init__",
       "list[int]",
-      2
+      3
     ],
     [
       "src/gnd/evolve/outcomes.py",
@@ -164,26 +170,8 @@
     ],
     [
       "src/gnd/evolve/outcomes.py",
-      "_depends_on",
-      "list[tuple[str, str]]",
-      1
-    ],
-    [
-      "src/gnd/evolve/outcomes.py",
-      "_depends_on",
-      "set[tuple[str, str]]",
-      1
-    ],
-    [
-      "src/gnd/evolve/outcomes.py",
-      "_depends_on",
-      "tuple[str, str]",
-      3
-    ],
-    [
-      "src/gnd/evolve/outcomes.py",
-      "_locate_path",
-      "candidate.get(collection)",
+      "_entries",
+      "list[Any]",
       1
     ],
     [
@@ -195,7 +183,49 @@
     [
       "src/gnd/evolve/outcomes.py",
       "_locate_path",
+      "roles[int(role.group(1))]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "list[tuple[str, str]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "tuple[str, str]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "dict[Any, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
       "entries[int(position)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "self.candidate.get(collection)",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "self.ids[collection]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "self.ids[collection].get(element_id)",
       1
     ],
     [
@@ -207,13 +237,13 @@
     [
       "src/gnd/evolve/outcomes.py",
       "for_element",
-      "self.element[key]",
+      "self.body.get((collection, element_id), [])",
       1
     ],
     [
       "src/gnd/evolve/outcomes.py",
       "for_element",
-      "self.touching.get(key, [])",
+      "self.roles.get((element_id, role_name), [])",
       1
     ],
     [
@@ -303,8 +333,32 @@
     [
       "src/gnd/evolve/outcomes.py",
       "outcomes",
-      "refused.get(index, (None, ''))",
+      "dependents.get(key, ())",
       1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "dict[int, tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "dict[tuple[str, str], list[int]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "list[int]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "operations[index]",
+      2
     ],
     [
       "src/gnd/evolve/outcomes.py",
@@ -322,6 +376,12 @@
       "src/gnd/evolve/outcomes.py",
       "outcomes",
       "tuple[str, str]",
+      4
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "verdicts.get(index, (None, ''))",
       1
     ],
     [
@@ -403,6 +463,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7917,
-  "result_occurrences": 9844
+  "result_distinct_rows": 7927,
+  "result_occurrences": 9863
 }

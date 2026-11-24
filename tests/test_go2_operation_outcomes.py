@@ -16,7 +16,12 @@ import pytest
 import test_evolve_additive_policy as policy
 from support.cli_runner import run_main
 
-from gnd.evolve import EvolutionError, EvolutionOutcomeReport, read_evolution_outcome_report
+from gnd.evolve import (
+    EvolutionError,
+    EvolutionOutcomeReport,
+    RoleLocator,
+    read_evolution_outcome_report,
+)
 from gnd.evolve import outcomes as _outcomes
 
 TEXT = policy.BASE.read_text(encoding="utf-8")
@@ -303,3 +308,101 @@ def test_t9_the_locator_over_two_thousand_operations_and_issues() -> None:
     rows = _outcomes.outcomes(operations, refused)
     assert time.perf_counter() - start < 1.0
     assert complete and len(refused) == n and {row.verdict for row in rows} == {"refused-by-validation"}
+
+
+# --- Diff review r1 (notes/reviews/phase-GO2-r1/FINDINGS.md): one case per finding ---------------
+
+
+def test_r1_f1_a_non_list_value_in_after_is_still_a_validation_refusal(tmp_path: Path) -> None:
+    operations = (ADD_OBJECT, _op("add", policy._element("fact_types", HOST), dict(policy.NEW_FACT, roles=1), "op-fact"))
+    error = _refused(tmp_path, operations)
+    rows = error.outcome_refusal.operation_outcomes
+    assert rows[1].verdict == "refused-by-validation"
+    weird = _op("add", policy._element("object_types", "odd"), {"id": "odd", "subtype_of": 1, "subtypes": {"a": 2}}, "odd")
+    assert _outcomes._needs(weird) == []
+
+
+def test_r1_f2_a_refused_embedded_constraint_refuses_its_fact_type(tmp_path: Path) -> None:
+    embedded = {**policy.NEW_CONSTRAINT, "source": "explicit"}
+    fact = _op("add", policy._element("fact_types", HOST), dict(policy.NEW_FACT, constraints=[embedded]), "op-fact")
+    error = _refused(tmp_path, (ADD_OBJECT, fact))
+    assert error.outcome_refusal.gate == "d12"
+    assert [row.verdict for row in error.outcome_refusal.operation_outcomes] == ["admitted", "refused-by-d12"]
+
+
+def _issue(path: str) -> Any:
+    from gnd.errors import ValidationIssue
+
+    return ValidationIssue(path=path, message="m", rule_id="semantic:probe")
+
+
+def test_r1_f3_an_issue_is_pinned_on_the_role_operation_not_on_its_host() -> None:
+    role = {"object_type": "missing", "role_name": "extra"}
+    operations = (ADD_FACT, _op("add", RoleLocator(fact_type_id=HOST, role_name="extra"), role, "op-role"))
+    candidate = {"fact_types": [dict(policy.NEW_FACT, roles=[*policy.NEW_FACT["roles"], role])]}
+    refused, complete = _outcomes.locate_validation_issues([_issue("$.fact_types[0].roles[2].object_type")],
+                                                           candidate, operations)
+    assert complete and list(refused) == [1]
+
+
+def test_r1_f3_two_changes_to_one_element_locate_nothing() -> None:
+    first = _op("modify", policy._element("object_types", "note"), {"id": "note", "name": "Note"}, "m1",
+                before={"id": "note"})
+    second = _op("modify", policy._element("object_types", "note"), {"id": "note", "name": 3}, "m2",
+                 before={"id": "note"})
+    refused, complete = _outcomes.locate_validation_issues([_issue("$.object_types[id=note].name")],
+                                                           {"object_types": [{"id": "note"}]}, (first, second))
+    assert refused == {} and not complete
+
+
+def test_r1_f4_an_added_operation_is_located() -> None:
+    operation = _op("add", policy._element("operations", "ship"), {"id": "ship"}, "op-ship")
+    refused, complete = _outcomes.locate_validation_issues(
+        [_issue("$.operations[0]")], {"operations": [{"id": "ship"}]}, (ADD_OBJECT, operation))
+    assert complete and list(refused) == [1]
+
+
+def test_r1_f5_a_dependent_before_its_refused_role_player_is_dropped(tmp_path: Path) -> None:
+    operations = (ADD_FACT, _invalid_object("region", "op-object"))
+    error = _refused(tmp_path, operations)
+    assert [row.verdict for row in error.outcome_refusal.operation_outcomes] == [
+        "dropped-with", "refused-by-validation"]
+    chain = (_op("add", policy._element("fact_types", "f2"), {"id": "f2", "roles": [{"object_type": "o2"}]}, "a"),
+             _op("add", policy._element("object_types", "o2"), {"id": "o2", "subtype_of": ["o1"]}, "b"),
+             _op("add", policy._element("object_types", "o1"), {"id": "o1"}, "c"))
+    rows = _outcomes.outcomes(chain, {2: ("refused-by-validation", "x")})
+    assert [row.verdict for row in rows] == ["dropped-with", "dropped-with", "refused-by-validation"]
+
+
+def test_r1_f6_a_value_constraint_on_a_refused_object_type_is_dropped() -> None:
+    value = {"type": "value", "object_type": "region", "values": ["north"], "source": "user-supplied"}
+    operations = (_invalid_object("region", "op-object"),
+                  _op("add", policy._constraint_locator(None, None, "value"), value, "op-value"))
+    rows = _outcomes.outcomes(operations, {0: ("refused-by-validation", "x")})
+    assert [row.verdict for row in rows] == ["refused-by-validation", "dropped-with"]
+
+
+def test_r1_f7_an_include_analysis_refusal_writes_the_requested_report(tmp_path: Path) -> None:
+    import shutil
+
+    import test_mc3_evolution as mc3
+
+    work = tmp_path / "workspace"
+    shutil.copytree(mc3.CORPUS, work)
+    result = mc3.preview(work, "repin-only.proposal.json", "--operation-outcomes",
+                         "--outcome-report", str(work / "outcomes.json"))
+    assert result.returncode == 3, result.stderr
+    report = read_evolution_outcome_report(work / "outcomes.json", anchor=work, relative="outcomes.json")
+    assert report.refusal.exit == 3 and len(report.operation_outcomes) >= 1
+
+
+def test_r1_f8_id_paths_are_linear() -> None:
+    n = 20_000
+    operations = tuple(_op("add", policy._element("object_types", f"t{i}"),
+                           {"id": f"t{i}", "name": f"T{i}", "kind": "value"}, f"op-{i}") for i in range(n))
+    candidate = {"object_types": [operation.after for operation in operations]}
+    issues = [_issue(f"$.object_types[id=t{i}]") for i in range(n)]
+    start = time.perf_counter()
+    refused, complete = _outcomes.locate_validation_issues(issues, candidate, operations)
+    assert time.perf_counter() - start < 1.0
+    assert complete and len(refused) == n

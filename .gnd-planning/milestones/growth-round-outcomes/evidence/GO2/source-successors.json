@@ -14,10 +14,10 @@
     "algorithm_sha256": "8d1e5da054985a61e065387474e375e6dc3a63911510e8b266a8151009098956"
    },
    "after": {
-    "raw_sha256": "db8013fa1a9592328e85ff1e6faea34ec8fc5528400a89078ac255ab9e46506c",
-    "algorithm_sha256": "2311c31444a4c3c44c7fb78e7d2f1b6e684e336d2b8a2f70841ad57ca8949545"
+    "raw_sha256": "b6620b91ef9c1bdc7d9977351a231a24d8146aad308d766cd3cd3742523af0a9",
+    "algorithm_sha256": "f606701c126de04f3d8d6ca83d5728a077d63a021f2bdf357cf4ceb0b6be9be2"
    },
-   "reason": "GO2 (#227): optional operation_outcomes and outcome_report keywords; the outcome target is resolved before the service runs, the flag is passed to the preview, and a refused preview writes its outcome report before the unchanged refusal. Without those options the handler is unchanged."
+   "reason": "GO2 (#227): optional operation_outcomes and outcome_report keywords; the outcome target is resolved before the service runs, the flag is passed to the preview, and a refused preview writes its outcome report before the unchanged refusal. Without those options the handler is unchanged. An include-analysis refusal also writes the outcome report after its radius, and the report path joins the outputs the include inputs must not be (r1 F7)."
   },
   {
    "kind": "RF5",

@@ -408,10 +408,10 @@ never a constraint or sample value) and `gates_not_run`.
 |---|---|
 | `admitted` | Every gate ran over the operation and none refused it |
 | `refused-by-policy` | The additive policy refused it; `detail` is its matrix cell, the same row as in `policy_issues` |
-| `refused-by-validation` | A validation issue's path names an element this operation adds or changes; `detail` is the rule id and path |
-| `refused-by-d12` | D-12 refused the constraint this operation adds or changes; `detail` is the D-12 refusal |
-| `dropped-with` | It needs an element a refused operation adds (a constraint's host, a role player, a supertype, a reference value type) |
-| `unassessed` | A gate that would read it did not run, or a refusal could not be tied to an operation; `gates_not_run` names the gates, in the preview's order: `current-model`, `include-ownership`, `operations-gate`, `candidate-validation`, `semantic-validation`, `replay-equality`, `d12`, `policy` |
+| `refused-by-validation` | A validation issue's path names an element this operation adds or changes, the only operation that changed that element's entry (or, for a `.roles[i]` path, that role); `detail` is the rule id and path |
+| `refused-by-d12` | D-12 refused a constraint this operation adds or changes, on its own or inside a fact type's `after`; `detail` is the D-12 refusal |
+| `dropped-with` | It needs an element a refused or dropped operation adds, wherever in the proposal that operation stands: its host fact type, or any element its `after` names under `object_type`, `value_type`, `supertype`, `subtype_of`, `subtypes`, `objectified_as` or `fact_type` |
+| `unassessed` | A gate that would read it did not run, or a refusal could not be tied to one operation (two operations changed the element and nothing tells them apart); `gates_not_run` names the gates, in the preview's order: `current-model`, `include-ownership`, `operations-gate`, `candidate-validation`, `semantic-validation`, `replay-equality`, `d12`, `policy` |
 
 When the preview is written, the rows are in `operation_outcomes` and every refusal is the
 policy's. When a gate refuses the proposal after the current model is read, no preview is
@@ -421,7 +421,7 @@ written, the refusal and its exit are exactly as without the option, and `--outc
 `proposal_sha256`, `before_model` (as the preview has it), `refusal` (`gate`, `exit`, `message`
 as printed) and `operation_outcomes`. A candidate-validation refusal is tied to operations through
 its issues' paths, and D-12 then runs over the parsed candidate too, so its refusals are named in
-the same report. Every other gate refuses the proposal whole: each operation is `unassessed`.
+the same report. An include-analysis refusal writes its radius to `--out` and the report too. Every other gate refuses the proposal whole: each operation is `unassessed`.
 `admitted` in a report means every gate ran; with no policy requested the policy is not counted.
 A refusal before the current model is read (a stale model identity, an incomplete evolution)
 writes no report.

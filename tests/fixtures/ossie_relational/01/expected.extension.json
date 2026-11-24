@@ -1,0 +1,39 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:a7ba3beb78500b8cd0df756186803ad58ac6b73bebf4d6f9f20f669324b1fc6a",
+ "ontology_sha256": "3a8e457fc09ffb17f8d5c95e4f3a2933c6578df311f682df22bec0db8dbeaa1b",
+ "semantic_model_sha256": "19ed6c36bc50eaeafe0b224b8c4e67cab4cd341a68473f15e1b23e350c91c4d5",
+ "rmap_variant": "halpin",
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "customer"
+   ],
+   "id": "fact_types/customer_has_email/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "not_null",
+    "customer",
+    "email"
+   ],
+   "id": "fact_types/customer_has_email/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "customer",
+    "email"
+   ],
+   "id": "customer_has_email",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "concepts": []
+}

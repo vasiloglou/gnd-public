@@ -1,0 +1,69 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_relational
+datasets:
+- name: course
+  source: course
+  primary_key:
+  - course_code
+  fields:
+  - name: course_code
+    expression:
+      sql: '"COURSE_CODE"'
+    datatype: String
+  - name: title
+    expression:
+      sql: '"TITLE"'
+    datatype: String
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"logical"}'
+- name: student
+  source: student
+  primary_key:
+  - student_nr
+  fields:
+  - name: student_nr
+    expression:
+      sql: '"STUDENT_NR"'
+    datatype: Integer
+  - name: name
+    expression:
+      sql: '"NAME"'
+    datatype: String
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"logical"}'
+- name: student_takes_course
+  source: student_takes_course
+  primary_key:
+  - student_student_nr
+  - course_course_code
+  fields:
+  - name: student_student_nr
+    expression:
+      sql: '"STUDENT_STUDENT_NR"'
+    datatype: Integer
+  - name: course_course_code
+    expression:
+      sql: '"COURSE_COURSE_CODE"'
+    datatype: String
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"logical"}'
+relationships:
+- name: student_takes_course__student
+  from: student_takes_course
+  to: student
+  from_columns:
+  - student_student_nr
+  to_columns:
+  - student_nr
+- name: student_takes_course__course
+  from: student_takes_course
+  to: course
+  from_columns:
+  - course_course_code
+  to_columns:
+  - course_code

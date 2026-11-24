@@ -1,0 +1,66 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:361bf77ed7acc260ae97e0c01442d6bf5e55afe18f0789f3a606c0a228cc90b1",
+ "ontology_sha256": "1e709f7a62ad6cdb26143f34efbbc9a1dd43fbe9ac18338fd76874d63a739ded",
+ "semantic_model_sha256": "0ec16eca169704948bd9cc4147a1648d37216ce3125978f28f692e293ffa5016",
+ "rmap_variant": "halpin",
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "course"
+   ],
+   "id": "fact_types/course_has_title/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "student"
+   ],
+   "id": "fact_types/student_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "student_takes_course"
+   ],
+   "id": "fact_types/student_takes_course/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "course",
+    "title"
+   ],
+   "id": "course_has_title",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "student",
+    "name"
+   ],
+   "id": "student_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "student_takes_course"
+   ],
+   "id": "student_takes_course",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "concepts": []
+}

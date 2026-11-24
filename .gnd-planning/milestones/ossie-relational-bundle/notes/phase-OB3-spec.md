@@ -2,9 +2,10 @@
 
 ## 1. Status
 
-**Draft r1, 2026-11-24, awaiting owner review.** Not reviewed. No code and no
-fixture is written. Step 2 has to rule on decisions E1–E16 (§7) and the
-approval instrument (§11).
+**r1 approved 2026-11-24 with E1–E16 as proposed**
+([spec gate](../009-OB3-spec-gate.md)). The corpus and amendment r1.1 (§14)
+are authored and **await the corpus gate**. No renderer code is written.
+Not reviewed.
 
 ## 2. Provenance
 
@@ -364,3 +365,51 @@ None yet.
 | H2 | `model_identity` changes when a `sample_population` is added (case 01). | D6's "expected differences" include the mapping's `model_identity`; T9 asserts it. |
 | H3 | The upstream mapping schema `$ref`s the ontology and core-spec through `main` branch URLs, not the pinned commit. | §6.7: an offline registry maps exactly those URLs to the vendored files. |
 | H4 | Upstream says parser and converter support for standalone mapping documents "is not yet available"; the validator does cross-check them. | T11 uses the validator only. |
+
+## 14. Amendment r1.1: rules settled while authoring the corpus (2026-11-24)
+
+The owner approved r1 (sha256 `fa034f27…9484`; [gate](../009-OB3-spec-gate.md))
+with E1–E16 as proposed. Under E2, authoring the corpus came next. Writing
+the expected files by hand forced the rules below, which r1 left open or got
+wrong. **They are unapproved**: the owner sees them at the corpus gate,
+together with the stories in
+[tests/fixtures/ossie_relational](../../../../tests/fixtures/ossie_relational/README.md).
+§1–§13 are unchanged, except where a row says it supersedes them.
+
+| # | Rule | Why | Case |
+|---|---|---|---|
+| B1 | **A value-type concept never gets an object mapping**, even when the Rmap gives it a table. This supersedes §6.4's "value type or simple identifier". | The pinned `ontology.json` says of `object_mappings`: "Valid only when the concept is an entity type". | all |
+| B2 | **`render_ossie` needs OUT's basename.** It gains `document_name: str`, which the two `iri` values are built from. The corpus assumes `ontology.yaml`. This amends §6.2. | E13 makes each `iri` the referenced file's basename, which the library could not know. | all |
+| B3 | An extension's `data` is the canonical JSON of its payload **without the trailing newline**, for the mapping's extension and for each dataset's `{"source_kind":"logical"}`. | A trailing newline inside a YAML string forces an escaped, double-quoted scalar. | all |
+| B4 | **Member order.** Semantic model: `version`, `name`, `datasets`, `relationships`. Dataset: `name`, `source`, `primary_key`, `unique_keys`, `fields`, `custom_extensions`. Field: `name`, `expression`, `datatype`, `custom_extensions`. Relationship: `name`, `from`, `to`, `from_columns`, `to_columns`. Mapping: `version`, `name`, `ontology_ref`, `semantic_model_ref`, `concept_mappings`, `custom_extensions`. Concept mapping: `concept`, `object_mappings`, `link_mappings`. Link mapping: `object_mapping`, `relationship`, `children`. Object mapping: `concept`, then `expression` or `referent_mappings`. Referent mapping: `relationship`, then `expression` or `referent_mappings`. | YAML output keeps insertion order, and T1 compares bytes. | all |
+| B5 | **Empty lists are omitted**: `relationships`, `primary_key`, `unique_keys`, `children`, `object_mappings`. The extension's `dispositions` and `concepts` are always present. | Several of these have `minItems: 1` in the pinned schemas. | 01, 09 |
+| B6 | **Order.** Concept mappings follow the ontology's component order. A concept's link mappings follow the order of its relationships in the ontology. | r1 ordered concept mappings only. | 04, 18 |
+| B7 | **`gnd_reference` gets no link mapping.** It is the ontology's spelling of a simple identifier and has no fact type. A nested referent mapping names it to reach an entity component's identifier. | Otherwise totality (§6.5) would count a relationship no fact type stands behind. | 01, 14 |
+| B8 | **Referent mappings follow the ontology's `identify_by` order.** Each component's columns are found by its fact type id, never by position. | The Rmap orders key columns by `role_refs`; `identify_by` has its own order. They agree in the corpus but need not. | 14, 17 |
+| B9 | **A root object mapping never names `concept`; every node below it does.** | Upstream resolves the root to the concept being mapped, and a lower node to the role's concept; naming it below the root is what its examples do. | all |
+| B10 | **Identification fact types are link-mapped like any carried fact type** (the Rmap's `key` dispositions). | They are carried, so §6.5 requires a tree for each. | 14, 17 |
+| B11 | **An absorbed subtype's link trees root at the supertype table's key.** | The subtype has no table; its columns are in its owner's. | 15 |
+| B12 | **A third file per case**, `expected.extension.json`: the mapping's extension, pretty-printed. T1 also asserts that the string in the mapping parses to it. | The canonical JSON string is folded by the YAML dumper and is not readable at a gate. | all |
+| B13 | **The corpus checker** `tests/support/ossie_relational_corpus.py` is authoring tooling. It renders nothing: it writes the extension string from `expected.extension.json` and checks the cases. T1 reuses its YAML helper. | The checks of §8 T2–T4 have to exist before the renderer, to check the hand-derived files. | — |
+| B14 | **Long strings are folded** by the ontology's YAML dumper, which leaves a trailing space on the folded line. OB3 keeps the dumper's settings (E14). | Changing the width would change the ontology's bytes for models with long readings. | 09 |
+
+**Authoring checks run (no renderer exists):**
+- The hand-written semantic models and mapping bodies were already in the
+  dumper's form, except case 09's long `CASE WHEN` line (B14).
+- The pinned core-spec accepts all seven semantic models, and the upstream
+  `ontology/mapping.json` (sha256 `936118ca7753676c069d1fa615c8dced7e9a9499ab185cc2ddbe8d1c2d4404f3`,
+  read at the pinned commit, not yet vendored) accepts all seven mappings,
+  with its cross-document `$ref`s resolved offline to the vendored files.
+- Each semantic model equals the owner-approved OB2 answer for its case:
+  tables, columns, datatypes, keys and foreign keys.
+- Each mapping passes the cross-checks of T3 and the totality check of T4
+  against today's real ontology export.
+- **The checker can fail.** Thirteen deliberate breakages of copied files
+  were each caught: an undeclared field, reversed referents, a missing link,
+  a link for a derived fact type, a binary named at level 1, a wrong child
+  concept, a dropped foreign key, a changed datatype, a reversed key, a
+  stale digest, an unlisted absorbed subtype, an unknown schema member, and
+  a file not in dumper form.
+- **Not run:** the upstream validator (T11's opt-in oracle lane). Whether it
+  accepts quoted, uppercased identifiers and the `CASE WHEN` expression is
+  therefore unconfirmed.

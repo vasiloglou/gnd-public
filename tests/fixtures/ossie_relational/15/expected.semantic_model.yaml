@@ -1,0 +1,25 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_relational
+datasets:
+- name: person
+  source: person
+  primary_key:
+  - person_id
+  fields:
+  - name: person_id
+    expression:
+      sql: '"PERSON_ID"'
+    datatype: Integer
+  - name: name
+    expression:
+      sql: '"NAME"'
+    datatype: String
+  - name: gpa
+    expression:
+      sql: '"GPA"'
+    datatype: Float
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"logical"}'

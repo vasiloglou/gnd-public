@@ -1,0 +1,165 @@
+{
+ "schema_version": 1,
+ "run_sha256": "41e334a981bd90730819b35c4127619a82a2d2eac94affe55aafaee96a9fbdf3",
+ "summary": "Four of six seats returned schema-valid reviews of the close bundle (codex, qwen, kimi, glm), each asking for revision; claude and gemini returned malformed output and contribute no opinion. Two groups have two supporters: the close record's missing gate citations, and the new Markdown reader under the GO4 guard (unread, and wrong on a multi-line code span). Eleven concerns have one supporter each, three of them rated blocking: the page example's orphaned subtype link, an empty round's null counts, and the full lane predating the head.",
+ "agreed_concerns": [
+  {
+   "group_id": "close-gate-citations",
+   "severity": "low",
+   "title": "The close record must cite the guard, lint and component-index runs",
+   "summary": "The completion predicate names the structure and inventory guards, both ruff runs and the component-index check; close-results.md cites only the focused lane.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-results-omit-non-pytest-gates"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-record-missing-gate-citations"
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "markdown-reader",
+   "severity": "medium",
+   "title": "The GO4 guard rests on a new Markdown reader no reviewer had read, and it misreads a multi-line code span",
+   "summary": "tests/support/markdown_sections.py carried comment state across lines but not code-span state, so `<!--` inside a code span that continues onto the next line was read as a comment.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go4-multiline-code-span"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "markdown-sections-unreviewed-new-reader"
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "qwen"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "codex",
+   "concern_id": "go4-orphaned-subtype"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "go5-empty-counts"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-results-green-evidence-predates-head"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "d4-refutation-contradicts-go2-preview-verdicts"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "d7-substitutes-ruled-diff-review"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "d8-omits-conftest-autouse-fixture"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "go1-c5-ratio-indistinguishable-from-prototype"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "gr-out-close-go4c2-count"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "go3-narrow-before-model-json-escape"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "go5-summary-row-reference-unchecked"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "markdown-reader",
+   "rank": 1,
+   "title": "The GO4 guard rests on a new Markdown reader no reviewer had read, and it misreads a multi-line code span",
+   "action": "Carry an open code span across the paragraph's lines; this panel is the reader's review; add a regression case.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go4-multiline-code-span"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "markdown-sections-unreviewed-new-reader"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "go4-multiline-code-span",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "markdown-sections-unreviewed-new-reader",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "markdown-sections-unreviewed-new-reader",
+     "evidence_index": 1
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "close-gate-citations",
+   "rank": 2,
+   "title": "The close record must cite the guard, lint and component-index runs",
+   "action": "The close record cites each gate command, its exit and output, at the close head.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-results-omit-non-pytest-gates"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-record-missing-gate-citations"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-results-omit-non-pytest-gates",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-results-omit-non-pytest-gates",
+     "evidence_index": 1
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-record-missing-gate-citations",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  }
+ ]
+}

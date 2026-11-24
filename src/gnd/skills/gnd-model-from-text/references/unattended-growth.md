@@ -279,7 +279,8 @@ already holds `party` and `policy_has_holder`: the reply names them and repeats 
   "document": "policy.txt",
   "object_types": [
     {"id": "policy", "name": "Policy", "kind": "entity",
-     "reference": {"mode": "popular", "value_type": "policy_no"}, "quote": "Policy P-17"}
+     "reference": {"mode": "popular", "value_type": "policy_no"}, "quote": "Policy P-17"},
+    {"id": "insurer", "name": "Insurer", "kind": "entity", "quote": "An insurer is a kind of party"}
   ],
   "fact_types": [
     {"id": "policy_expires_on_expiry_date", "reading": "{Policy} expires on {ExpiryDate}",

@@ -449,3 +449,26 @@ def test_go4_r2_inline_comments_hide_a_rule_and_a_tab_closed_heading_reads() -> 
     from support.markdown_sections import markdown_blocks
 
     assert [block.text for block in markdown_blocks("a `<!--` b\n\nc --> d\n")] == ["a `<!--` b", "c --> d"]
+
+
+def test_go4_close_the_example_links_only_a_subtype_it_adds() -> None:
+    """Close review (codex, go4-orphaned-subtype): a subtype link sets fields on its
+    subtype, so the subtype must be one the reply adds; on an existing type the
+    link would be a change the additive policy refuses."""
+    from support.markdown_sections import section_blocks
+
+    (block,) = [b for b in section_blocks(REFERENCE.read_text(encoding="utf-8"), "The reply shape")
+                if b.kind == "fence" and b.info.split()[:1] == ["json"]]
+    example = json.loads(block.text)
+    added = {entry["id"] for entry in example["object_types"]}
+    assert {link["subtype"] for link in example["subtype_links"]} <= added
+
+
+def test_go4_close_a_code_span_may_continue_onto_the_next_line() -> None:
+    """Close review (codex, go4-multiline-code-span): ``<!--`` inside a code span that
+    continues onto the paragraph's next line is literal text, not a comment."""
+    from support.markdown_sections import markdown_blocks
+
+    assert [b.text for b in markdown_blocks("see `note\n<!-- x` here\n\nrule stays\n")] == [
+        "see `note <!-- x` here", "rule stays"]
+    assert [b.text for b in markdown_blocks("a `open\n\n<!-- hidden -->\nshown\n")] == ["a `open", "shown"]

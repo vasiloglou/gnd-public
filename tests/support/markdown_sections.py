@@ -103,14 +103,26 @@ def _fence_run(line: str) -> tuple[str, int] | None:
     return (marker, run) if len(line) - len(stripped) <= 3 and run >= 3 else None
 
 
+def _closing_run(line: str, start: int, run: int) -> int:
+    """Where a backtick run of exactly RUN characters starts at or after START, or -1."""
+    close = line.find("`" * run, start)
+    while close >= 0 and (line[close + run:close + run + 1] == "`" or (close and line[close - 1] == "`")):
+        close = line.find("`" * run, close + 1)
+    return close
+
+
 def _without_comments(lines: list[str]) -> list[str]:
     """LINES with every HTML comment removed, inline or spanning lines, except
-    inside a fence or a code span, where ``<!--`` is literal text."""
+    inside a fence or a code span (which may continue onto the paragraph's next
+    lines), where ``<!--`` is literal text."""
     out: list[str] = []
     fence: tuple[str, int] | None = None
     in_comment = False
+    code = 0  # the backtick run of a code span still open from an earlier line of the paragraph
     for line in lines:
-        opened = _fence_run(line) if not in_comment else None
+        if not line.strip():
+            code = 0  # a blank line ends the paragraph, and with it an unclosed span
+        opened = _fence_run(line) if not in_comment and not code else None
         if fence is not None:
             out.append(line)
             if opened and opened[0] == fence[0] and opened[1] >= fence[1] \
@@ -123,7 +135,13 @@ def _without_comments(lines: list[str]) -> list[str]:
             continue
         kept, i = [], 0
         while i < len(line):
-            if in_comment:
+            if code:
+                close = _closing_run(line, i, code)
+                stop = len(line) if close < 0 else close + code
+                kept.append(line[i:stop])
+                code = code if close < 0 else 0
+                i = stop
+            elif in_comment:
                 end = line.find("-->", i)
                 if end < 0:
                     i = len(line)
@@ -131,11 +149,10 @@ def _without_comments(lines: list[str]) -> list[str]:
                 in_comment, i = False, end + 3
             elif line[i] == "`":
                 run = len(line) - len(line[i:].lstrip("`")) - i
-                close = line.find("`" * run, i + run)
-                while close >= 0 and line[close + run:close + run + 1] == "`":
-                    close = line.find("`" * run, close + run + 1)
+                close = _closing_run(line, i + run, run)
                 stop = len(line) if close < 0 else close + run
                 kept.append(line[i:stop])
+                code = run if close < 0 else 0
                 i = stop
             elif line.startswith("<!--", i):
                 in_comment, i = True, i + 4

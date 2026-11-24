@@ -220,3 +220,17 @@ def test_r1_f1_rows_must_be_the_proposals_operations_in_order() -> None:
                                 reference=go2.ADD_OBJECT.locator.reference(), verdict="admitted"))
     with pytest.raises(ValueError, match="not this proposal's operations"):
         narrow_proposal(proposal, _bare_report(proposal, swapped))
+
+
+def test_close_a_before_model_json_cannot_spell_is_refused_by_name(tmp_path: Path) -> None:
+    """Close review (glm): a YAML-only value in the before model is a named refusal, not ModelValueError."""
+    dated = TEXT.replace("source: { kind: fixture }", "source: { kind: fixture, captured: 2026-11-23 }", 1)
+    assert dated != TEXT
+    proposal = policy._proposal(TEXT, (go2.ADD_OBJECT,))
+    rows = (OperationOutcome(operation_index=0, operation_id="op-object", reference=go2.ADD_OBJECT.locator.reference(),
+                             verdict="admitted"),)
+    report = _bare_report(proposal, rows, before=dated)
+    proposal = proposal.model_copy(update={"expected_model_sha256": report.before_model.sha256})
+    report = report.model_copy(update={"proposal_sha256": proposal.proposal_sha256})
+    with pytest.raises(ValueError, match="cannot be replayed"):
+        narrow_proposal(proposal, report)

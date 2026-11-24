@@ -142,6 +142,7 @@ def round_summary(
             else report.operation_outcomes if report is not None else None)
     if rows is not None and (len(rows) != len(proposal.operations) or any(
         row.operation_index != position or row.operation_id != operation.operation_id
+        or row.reference != operation.locator.reference()
         for position, (row, operation) in enumerate(zip(rows, proposal.operations, strict=True))
     )):
         raise RoundFileError("the outcome rows are not the proposal's operations, one per operation in order")
@@ -149,8 +150,12 @@ def round_summary(
     operations = proposal.operations if proposal is not None else ()
     by_kind = Counter(operation.kind.value for operation in operations)
     by_collection = Counter(_collection(operation) for operation in operations)
-    outcomes = None if rows is None else dict(sorted(Counter(row.verdict for row in rows).items()))
-    shapes = None if preview is None or preview.shape_matches is None else len(preview.shape_matches)
+    # A round with no proposal is zero in every count (GO5-C2); a proposal whose
+    # preview carries no outcomes or no shape report leaves that count null.
+    outcomes = ({} if proposal is None else None) if rows is None else dict(
+        sorted(Counter(row.verdict for row in rows).items()))
+    shapes = ((0 if proposal is None else None) if preview is None or preview.shape_matches is None
+              else len(preview.shape_matches))
     added: dict[str, list[str]] = {"object_types": [], "fact_types": [], "constraints": []}
     for operation in record.operations if record is not None else ():
         if operation.kind is not EvolutionOperationKind.ADD:

@@ -458,8 +458,9 @@ at most 1 MiB, closed): `schema_version` `1`, `round`, `document`, `reused` (row
 `object_types` or `fact_types`, and `id`, each once) and `host_drops` (rows of `kind`, `id` and
 `reason`, the host's text, reported exactly as written and never judged). The summary carries `round`, `document`,
 `reused` (ids by collection), `host_drops`, `proposed` (`total`, `by_kind`, `by_collection`; zero
-without a proposal), `outcomes` (count per verdict; `null` when the preview or report carries
-none), `shape_matches` (the preview's group count, or `null`), `added` (element ids by
+without a proposal), `outcomes` (count per verdict; `{}` without a proposal, `null` when the
+round's preview or report carries none), `shape_matches` (the preview's group count; `0` without a
+proposal, `null` when the preview carries no shape report), `added` (element ids by
 collection, and constraint operation ids, from the `add` operations of the evolution record only:
 a round previewed and not applied adds nothing), `narrowed_from` (the original `proposal_id` of a
 narrowed round) and `bindings`, each artifact read by its own identity: `round_file_sha256`,

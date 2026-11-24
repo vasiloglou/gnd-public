@@ -419,3 +419,14 @@ from locators or from the candidate, which faults one pass can collect, and
 the outcome report's fields and file name (p1); GO3, whether the narrowed
 proposal keeps the original operation ids; GO5, the summary's schema and
 whether it is a file `apply` writes or a command's output.
+
+## 11. Close amendments (2026-11-23)
+
+Made at the milestone close under the delegated ruling (auto=true) of
+`001-plan-gate.md`; the r4 text above is kept as it was approved.
+
+| ID | Amends | Amendment | Raised in |
+|---|---|---|---|
+| A1 | §10 D3 reading (a), "rows for it go against the existing id when the document has new ones" | Refuted: the additive policy refuses a changed sample row on an existing fact type (`fact_types.modify`). A reply names an existing element by id only, and rows for an existing fact type are an `open_questions` entry; "Acting on a shape match" says the same for a reused fact type | `notes/phase-GO4-spec.md` r2 and §14; `005-phase-GO4.md`; close review (codex, `go4-orphaned-subtype`) for the example |
+| A2 | §4 GO5-C1, "a committed round with a known mix (one admitted, one `refused-by-policy`, one `dropped-with`, one host drop, one reused id, one shape match)" | The known-mix round has one admitted operation more and no `dropped-with` row: a `dropped-with` row needs a refused addition, the additive policy refuses no element addition, and every other refusal writes no preview and so no shape matches. `dropped-with` is counted in its own case over an outcome report | `notes/phase-GO5-spec.md` §13.1; `006-phase-GO5.md`; checked by the close review against `src/gnd/evolve/policy.py` |
+| A3 | §4 GO5-C2, "the empty one reports zero in every count" | Unchanged; the code now meets it: a round with no proposal reports `outcomes` `{}` and `shape_matches` `0` (it reported `null`) | close review (codex, `go5-empty-counts`) |

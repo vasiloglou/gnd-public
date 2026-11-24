@@ -284,3 +284,24 @@ def test_r1_f5_host_text_is_reported_verbatim(tmp_path: Path) -> None:
     drops = [{"kind": " fact_type", "id": "x ", "reason": "  host reason\n"}]
     summary = round_summary(read_round_file(_round_file(tmp_path, host_drops=drops, document=" round 1.txt ")))
     assert [drop.model_dump() for drop in summary.host_drops] == drops and summary.document == " round 1.txt "
+
+
+# --- Close review (notes/close-review disposition) ------------------------------------------------
+
+
+def test_close_an_empty_round_is_zero_in_every_count(tmp_path: Path) -> None:
+    summary = round_summary(read_round_file(_round_file(tmp_path)))
+    assert summary.outcomes == {} and summary.shape_matches == 0
+    proposal = policy._proposal(go2.TEXT, (go2.ADD_OBJECT,))
+    preview = policy._service(tmp_path / "plain", go2.TEXT).preview(proposal)
+    assert round_summary(read_round_file(_round_file(tmp_path)), proposal=proposal, preview=preview).outcomes is None
+
+
+def test_close_a_row_with_another_operations_reference_is_refused(tmp_path: Path) -> None:
+    from gnd.evolve import OperationOutcome
+
+    proposal = policy._proposal(go2.TEXT, (go2.ADD_OBJECT,))
+    rows = (OperationOutcome(operation_index=0, operation_id="op-object", reference="object_types[elsewhere]",
+                             verdict="unassessed", gates_not_run=("policy",)),)
+    with pytest.raises(RoundFileError, match="not the proposal's operations"):
+        round_summary(read_round_file(_round_file(tmp_path)), proposal=proposal, report=_report_with(proposal, rows))

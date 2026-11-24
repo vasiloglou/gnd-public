@@ -63,7 +63,10 @@ def narrow_proposal(
     if not kept:
         return None, reasons
 
-    before = _before_document(outcomes.before_model)
+    try:
+        before = _before_document(outcomes.before_model)
+    except ValueError as error:
+        raise ValueError(f"the outcomes' before model cannot be replayed: {error}") from None
     narrowed = EvolutionProposal(
         schema_version=proposal.schema_version,
         proposal_id=f"{proposal.proposal_id}-narrowed",

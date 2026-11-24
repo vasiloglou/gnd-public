@@ -469,6 +469,21 @@ def _encode(document, output_format: str) -> bytes:
     raise OssieInputError("unsupported Ossie output format")
 
 
+#: RFC 3986 section 2.3: the characters a URI reference may carry unencoded anywhere.
+_UNRESERVED = frozenset(b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
+
+
+def _relative_iri(file_name: str) -> str:
+    """A sibling file as a relative reference: every UTF-8 byte outside the unreserved
+    set is percent-encoded, so `#`, `?`, `%` and `/` stay part of the name. Written
+    here, not with urllib, which this package does not import outside its adapters."""
+    encoded = "".join(
+        chr(byte) if byte in _UNRESERVED else f"%{byte:02X}"
+        for byte in file_name.encode("utf-8", "surrogateescape")
+    )
+    return "./" + encoded
+
+
 def _relational(model, view, data: bytes, identity: str, *, output_format: str, document_name: str):
     """The semantic model and mapping for the ontology bytes ``data`` (OB3)."""
     schema = map_model(model, variant=RmapVariant.HALPIN)  # D5
@@ -485,9 +500,9 @@ def _relational(model, view, data: bytes, identity: str, *, output_format: str, 
         dispositions(model, schema),
         view,
         name=f"{view.name}_mapping",
-        ontology_iri=f"./{document_name}",
+        ontology_iri=_relative_iri(document_name),
         semantic_model_name=semantic_name,
-        semantic_model_iri=f"./{semantic_file}",
+        semantic_model_iri=_relative_iri(semantic_file),
         bindings={
             "model_identity": identity,
             "ontology_sha256": hashlib.sha256(data).hexdigest(),

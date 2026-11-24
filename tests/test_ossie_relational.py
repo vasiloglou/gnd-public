@@ -478,3 +478,109 @@ def test_relational_files_are_the_same_in_every_disclosure_mode():
     assert (customer.semantic_model, customer.mapping) == (unset.semantic_model, unset.mapping)
     assert b"country_country_code" in customer.semantic_model
     assert disclosure.SURFACES["gnd export ossie"].kind == "every-mode"
+
+
+# --- Review round 1 regressions (notes/reviews/phase-OB3-r1, F1-F4) -----------------------------
+
+_ONE = {"source": "explicit", "status": "confirmed", "modality": "alethic", "provenance": {"user_quote": "one"}}
+
+
+def test_r1_f1_composite_object_mapping_reads_the_renamed_key_columns(tmp_path):
+    """Two identifying components with one role name: the second key column is `code_2`."""
+    document = corpus.load_yaml(corpus.rmap_case("14"))
+    document["fact_types"] = [f for f in document["fact_types"] if f["id"] in ("state_in_country", "state_has_code")]
+    scope = document["fact_types"][0]
+    scope["roles"][1] = {"object_type": "country_code", "role_name": "code"}
+    scope["reading"] = "{State} is in {CountryCode}"
+    document["constraints"][0]["role_refs"][0]["role"] = "code"
+    bundle = _render_document(tmp_path, document)
+    ontology, semantic, mapping = (json.loads(part) for part in (bundle.document, bundle.semantic_model, bundle.mapping))
+    state = next(d for d in semantic["datasets"] if d["name"] == "state")
+    assert state["primary_key"] == ["code", "code_2"]
+    entry = next(e for e in mapping["concept_mappings"] if e["concept"] == "State")
+    assert entry["object_mappings"] == [{"referent_mappings": [
+        {"relationship": "state_in_country", "expression": '"STATE"."CODE"'},
+        {"relationship": "state_has_code", "expression": '"STATE"."CODE_2"'},
+    ]}]
+    corpus.cross_check(ontology, semantic, mapping)
+
+
+@pytest.mark.parametrize("roles", (33, 250))
+def test_r1_f2_a_high_arity_fact_type_is_listed_not_nested(tmp_path, roles):
+    document = corpus.load_yaml(MODEL_01)
+    reading = " ".join(["{Customer}", *("{Email}" for _ in range(roles - 1))])
+    document["fact_types"].append({
+        "id": "wide", "reading": reading,
+        "roles": [{"object_type": "customer", "role_name": "r0"},
+                  *({"object_type": "email", "role_name": f"r{n}"} for n in range(1, roles))],
+    })
+    for output_format in ("json", "yaml"):
+        path = tmp_path / "model.json"
+        path.write_text(json.dumps(document))
+        from gnd.export.ossie import render_ossie
+
+        bundle = render_ossie(path, output_format=output_format)
+        load = json.loads if output_format == "json" else corpus.load_yaml_bytes
+        mapping = load(bundle.mapping)
+        payload = json.loads(mapping["custom_extensions"][0]["data"])
+        assert payload["unmapped_links"] == [{"fact_type": "wide", "reason": "arity-over-limit"}]
+        assert len(next(d for d in load(bundle.semantic_model)["datasets"] if d["name"] == "wide")["fields"]) == roles
+
+
+def test_r1_f2_the_arity_limit_itself_is_mapped(tmp_path):
+    from gnd.export.ossie_relational import MAX_LINK_ARITY
+
+    assert MAX_LINK_ARITY == 32
+    document = corpus.load_yaml(MODEL_01)
+    document["fact_types"] = [{
+        "id": "wide", "reading": " ".join(["{Customer}", *("{Email}" for _ in range(MAX_LINK_ARITY - 1))]),
+        "roles": [{"object_type": "customer", "role_name": "r0"},
+                  *({"object_type": "email", "role_name": f"r{n}"} for n in range(1, MAX_LINK_ARITY))],
+    }]
+    bundle = _render_document(tmp_path, document)
+    mapping = json.loads(bundle.mapping)
+    assert "unmapped_links" not in json.loads(mapping["custom_extensions"][0]["data"])
+    assert corpus.cross_check(json.loads(bundle.document), json.loads(bundle.semantic_model), mapping) == ["wide"]
+
+
+def test_r1_f3_relationship_names_are_unique_in_the_document(tmp_path):
+    """`a -> b__c` and `a__b -> c` would both be named `a__b__c`."""
+    def label(name):
+        return name.title().replace("_", "")
+
+    def entity(name):
+        return [{"id": name, "name": label(name), "kind": "entity", "independent": True,
+                 "reference": {"mode": "popular", "value_type": f"{name}_id"}},
+                {"id": f"{name}_id", "name": label(name) + "Id", "kind": "value", "primitive": "Integer"}]
+
+    def link(fid, source, target):
+        return {"id": fid, "reading": "{" + label(source) + "} to {" + label(target) + "}",
+                "roles": [{"object_type": source, "role_name": "source"}, {"object_type": target, "role_name": "target"}],
+                "constraints": [{"type": "uniqueness", "roles": ["source"], **_ONE}]}
+
+    document = corpus.load_yaml(MODEL_01)
+    document["object_types"] = [o for name in ("a", "a__b", "b__c", "c") for o in entity(name)]
+    document["fact_types"] = [link("first", "a", "b__c"), link("second", "a__b", "c")]
+    for reverse in (False, True):
+        if reverse:
+            document["fact_types"].reverse()
+            document["object_types"].reverse()
+        bundle = _render_document(tmp_path, document)
+        semantic = json.loads(bundle.semantic_model)
+        names = [r["name"] for r in semantic["relationships"]]
+        assert names == ["a__b__c", "a__b__c__2"]
+        assert [(r["from"], r["to"]) for r in semantic["relationships"]] == [("a", "b__c"), ("a__b", "c")]
+        corpus.cross_check(json.loads(bundle.document), semantic, json.loads(bundle.mapping))
+
+
+@pytest.mark.parametrize("name", ("report#1.json", "a b?.json", "50%2F.json", "naïve.json", "plain.json"))
+def test_r1_f4_references_are_iris_of_the_written_file_names(name):
+    from urllib.parse import unquote, urlsplit
+
+    from gnd.export.ossie import render_ossie
+
+    mapping = json.loads(render_ossie(MODEL_01, output_format="json", document_name=name).mapping)
+    for reference, written in ((mapping["ontology_ref"], name), (mapping["semantic_model_ref"], f"{name}.semantic_model.json")):
+        parts = urlsplit(reference["iri"])
+        assert (parts.scheme, parts.netloc, parts.query, parts.fragment) == ("", "", "", "")
+        assert parts.path.startswith("./") and unquote(parts.path[2:]) == written

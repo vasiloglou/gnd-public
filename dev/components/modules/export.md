@@ -245,7 +245,7 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 | --- | --- | --- | --- |
 | `OssieInputError` | class(ValueError) | 57 | The source cannot be exported with the selected policy. |
 | `OssieArtifacts` | class | 62 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name) -> …` | function | 501 | Render the deterministic artifacts of one bounded, admitted model read. |
+| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name) -> …` | function | 516 | Render the deterministic artifacts of one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -265,11 +265,11 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OntologyView` | class | 61 | What the mapping reads from the ontology the same export run built. |
-| `extension_data(payload) -> str` | function | 77 | An extension's ``data``: canonical JSON without its trailing newline. |
-| `build_semantic_model(schema, name) -> dict[str, Any]` | function | 92 | One dataset per table, one field per column, one relationship per foreign key. |
-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 217 | Map the ontology's concepts and relationships onto the semantic model. |
-| `validate_relational(semantic_model, mapping) -> None` | function | 304 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+| `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
+| `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
+| `build_semantic_model(schema, name) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
+| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 225 | Map the ontology's concepts and relationships onto the semantic model. |
+| `validate_relational(semantic_model, mapping) -> None` | function | 312 | Check both documents against the pinned schemas; a failure is a renderer defect. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules

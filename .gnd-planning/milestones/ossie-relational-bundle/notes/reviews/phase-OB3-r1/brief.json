@@ -1,0 +1,135 @@
+{
+  "base": "39e3d4c3",
+  "claims": [
+    "Every relational file the export writes validates against the vendored core-spec and mapping.json, with cross-document refs resolved offline; validation never opens a connection.",
+    "Every expression names a declared dataset.field; every link mapping names a relationship declared on its concept (or one it extends) at the level its arity calls for; every referent mapping follows the ontology's identify_by. Where the ontology identifies an object type differently from its key columns, nothing is guessed: the fact type is listed in unmapped_links and the concept in concepts with identification-differs.",
+    "Every fact type and constraint of the model appears exactly once in the extension's dispositions; every carried fact type is named by exactly one link tree or listed in unmapped_links.",
+    "The ontology, sidecar and loss report bytes are identical with and without --ontology-only, and equal the OB1 baseline; a collision on any of the five paths exits 11 and publishes nothing; --max-output-bytes bounds each of the five files.",
+    "The Rmap accepts a composite identifier only when every component binary is functional on the entity (E3 a), and RelationalSchema.roles and .identifications are correct for every carried fact type and identified object type under both variants.",
+    "Quoting and uppercasing identifiers (E5) is one rule over the whole identifier grammar, with no reserved-word list; render time is linear in model size."
+  ],
+  "created": "2026-11-24T22:41:07.288953+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB3-r1/diff.patch",
+      "sha256": "44eb540fdad0cd27410f009e507aff7e8b0e1644250cb9740e1756fe8bb760cb"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json",
+      "sha256": "338ec79ac043db3c05084e42b72e21b1e4be8b0706825898412772a511533521"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/OB3-rmap-measurement-after-E3.md",
+      "sha256": "42ac0a7dce19ca5763184806e206d9c0d3e3734ac02bf8303af8a40592fc8f38"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB3-spec.md",
+      "sha256": "d7247d6251301e1c9c9badf8d18816bca48e2c2917011e763984545f8efe2e61"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "1b6a35c22699db7bfbeb1e7edd6f93ce96bc60bb67c2b069fa668c248b9ca80f"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "719877448380209f8cac0a005386e141cd213bd8a38e52f4f3b1b4b427947140"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "55ac16d307800994ad5548c5df55b2e0676b1b5083eebf6cef3e5c3c4e209731"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "eb36505316b05d8a155563827ad3be2dc4242344cde3c415d48db8435f21eb5f"
+    },
+    {
+      "path": "dev/components/modules/export.md",
+      "sha256": "b5760197b7950d38c9a37c0077124a95568a291309d25fc858a7d640d8d6701f"
+    },
+    {
+      "path": "dev/components/modules/tools.md",
+      "sha256": "310b0631ce0714430778f9340ab69db2caa79db2c06d2156f1faafa99083f555"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "e7889c3bf66d89ad1dda40e5c87221a1c05d8d00f20695107d9b9e2863d31845"
+    },
+    {
+      "path": "src/gnd/commands/export.py",
+      "sha256": "746f27147042a4cd45d884093e2dcc5700fd8dfa13d8f1bfa427b5a12df26110"
+    },
+    {
+      "path": "src/gnd/export/ossie.py",
+      "sha256": "f1aae1625cb7474aeb090f849d552dd38d65a6a08e7283cae48921a004b65fc9"
+    },
+    {
+      "path": "src/gnd/export/ossie_relational.py",
+      "sha256": "56125b14b9b3b978cd2d54a779fa192cf0db52ec4c522a181cec165ef8dd8d6e"
+    },
+    {
+      "path": "src/gnd/rmap.py",
+      "sha256": "e1cc9b5a0731d07449818aa574c5ecd52bce6aa4c388959dd662c6825da276ed"
+    },
+    {
+      "path": "src/gnd/schema/ossie/PINNED.json",
+      "sha256": "e8c51162cb925bd4ada873d71edd0924483a6d3ce1fbe66f8d33eb6739c38f9d"
+    },
+    {
+      "path": "src/gnd/schema/ossie/mapping.json",
+      "sha256": "936118ca7753676c069d1fa615c8dced7e9a9499ab185cc2ddbe8d1c2d4404f3"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "e94b15ef76556c23086b40d0d9f797ce9e3af7fd8ec4834d39908604c6d104a4"
+    },
+    {
+      "path": "tests/fixtures/ossie_relational/README.md",
+      "sha256": "fbeb0ef9ddea5d2ce7f398ea6eb0b6b12aec0f20c29509a696e5360974357c3c"
+    },
+    {
+      "path": "tests/support/ossie_relational_corpus.py",
+      "sha256": "c013b99b72e9e79a3b79010718b22ae9975394e5985903a9657c19a93c83a102"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "ef9e746b6c8f7dd1135ed72d251c8d7960940e6c889f05084b9e83873d7918aa"
+    },
+    {
+      "path": "tests/test_ossie_export.py",
+      "sha256": "e244b53c8125fe2f36f0290b3f69f9b94bcfb4fd51ecdb97d6b54cf04e7e492a"
+    },
+    {
+      "path": "tests/test_ossie_external_oracle.py",
+      "sha256": "6e789feeab73c07d5de52f7ed169eb29494450f29493b63dc12041b4cffc7293"
+    },
+    {
+      "path": "tests/test_ossie_relational.py",
+      "sha256": "1e58e5977069b28bc7f1356f211e76ba9b74a9b135faee220894884058712218"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "1b695b0a94f045f774c10f4092507e15ffcd0321e99a8e90e6b8d51557fac5e3"
+    },
+    {
+      "path": "tests/test_rmap.py",
+      "sha256": "7aab62ed9a7f3c22b8e749d739a89335e9714ec54103fa1582dcddffc7039ce0"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "b17d243ee86bcf1c6df4b114efbf4900836c02c5b9f618fdf7a050803985ef15"
+    },
+    {
+      "path": "tools/ossie_oracle.py",
+      "sha256": "7190dd76a08571575054ec7a3cf56fb1d641f6a56b0bc2743a05fbf27e0bc1a8"
+    }
+  ],
+  "head": "5f6873857ff1c1be2cadf75943ca700dee6adb57",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the OB3 implementation (gnd.export.ossie_relational, the wiring in gnd.export.ossie and gnd.commands.export, and the Rmap changes E3 and E4) implement the approved OB3 spec (r1 with amendment r1.1, sections 6, 7 and 14) and the normative 'Semantic model and mapping' subsection, and is there any model gnd export ossie admits for which the default run raises, writes a semantic model or mapping the pinned schemas or the documents' own cross references reject, names a field, relationship or concept that is not declared, omits a fact type or constraint from the GND extension, changes the three legacy files, or produces bytes that depend on the run or the source path?",
+  "subject": "phase",
+  "version": 1
+}

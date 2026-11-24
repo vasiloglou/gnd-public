@@ -488,11 +488,23 @@
   ],
   [
    "src/gnd/rmap.py",
+   "build",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "tables[owner]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
    "functional_on",
    "self.fact_by_id[fact_type]",
    1
   ]
  ],
- "result_distinct_rows": 8190,
- "result_occurrences": 10185
+ "result_distinct_rows": 8191,
+ "result_occurrences": 10187
 }

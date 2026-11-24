@@ -2128,6 +2128,8 @@ exists. Otherwise the variant decides:
   primitive.
 - **Foreign keys** point at the target's primary key. They are named
   `<from>__<to>`, then `__2` and so on, counted per pair, in column order.
+  A name is unique in the whole schema: tables are named in sorted order,
+  and a name already taken by another pair takes the next number.
 
 **Nullability.**
 - Key columns are never null.
@@ -2284,7 +2286,8 @@ and exits 0.
 **The mapping.** Its `name` is the ontology's `name` followed by `_mapping`.
 `ontology_ref` and `semantic_model_ref` each carry the referenced document's
 `name` and an `iri` of `./` and that file's name, so the three files resolve
-from one directory. Concept mappings follow the ontology's component order,
+from one directory. The file name is percent-encoded, every character
+outside the unreserved set, so a `#`, `?` or `%` in it stays part of the name. Concept mappings follow the ontology's component order,
 and a concept appears only when it has an object mapping or a link mapping.
 
 - **Object mappings.** An entity type with a table of its own gets one,
@@ -2302,6 +2305,8 @@ and a concept appears only when it has an object mapping or a link mapping.
   role, and the last node names the relationship. Every node below the root
   names its `concept`. Trees are not shared between fact types. The
   generated `gnd_reference` relationship has no fact type and no tree.
+  A tree nests one level per role, so a fact type with more than 32 roles
+  has no tree; it keeps its table and is listed as `arity-over-limit`.
 - **NULL.** A NULL in a mapping expression yields no object and so no link.
   Ossie does not define this; it is GND's reading. A unary fact type is a
   Boolean flag, so its tree is one root node whose expressions are
@@ -2321,14 +2326,14 @@ newline, under the schema id `gnd-ossie-relational/1`:
 | `rmap_variant` | `halpin` |
 | `dispositions` | Every row of the Rmap's one walk: each fact type and each constraint, with `carried_as` or a `reason` |
 | `concepts` | Entity concepts with a table and no object mapping, each with a reason: `subtype-absorbed` or `identification-differs` |
-| `unmapped_links` | Present only when not empty: carried fact types with no link mapping, each with the reason `identification-differs` |
+| `unmapped_links` | Present only when not empty: carried fact types with no link mapping, each with the reason `identification-differs` or `arity-over-limit` |
 
 `identification-differs` means the ontology does not identify an object type
 the way its key columns do, so no object mapping for it can be written. That
 is the case for a unit-based reference, for an objectification keyed by its
 own fact type, and for a subtype that inherits through several supertypes.
 Every fact type the Rmap carries is therefore either named by exactly one
-link tree or listed in `unmapped_links`. `--strict` does not refuse any of
+link tree or listed in `unmapped_links`, with one of those two reasons. `--strict` does not refuse any of
 these: they are listed, not refused.
 
 ### Import a pinned ontology

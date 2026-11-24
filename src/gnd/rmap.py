@@ -107,6 +107,8 @@ class RolePlacement:
 class Identification:
     """How an object type's key columns arise, one entry per key column.
 
+    ``columns`` are the key columns of ``table`` as that table names them, or the
+    key's own names when the object type has no table.
     ``kind`` is ``value``, ``direct`` (a popular or general reference), ``unit``,
     ``composite`` or ``fallback`` (an objectification keyed by its fact type's own
     uniqueness). ``components`` names, for each key column, the (fact type, role) of
@@ -595,6 +597,7 @@ class _Mapper:
 
         # Foreign keys, named per (from, to) pair in column order (A11).
         built: list[Table] = []
+        key_names: set[str] = set()  # unique in the schema, not only per table pair (OB3 r1 F3)
         for name in sorted(tables):
             t = tables[name]
             counts: dict[str, int] = defaultdict(int)
@@ -603,9 +606,14 @@ class _Mapper:
                 target = self.owner_of(player)
                 if target not in tables or not tables[target]["pk"]:
                     continue
-                counts[target] += 1
-                suffix = "" if counts[target] == 1 else f"__{counts[target]}"
-                fks.append(ForeignKey(f"{name}__{target}{suffix}", tuple(columns), target, tuple(tables[target]["pk"])))
+                while True:
+                    counts[target] += 1
+                    suffix = "" if counts[target] == 1 else f"__{counts[target]}"
+                    key_name = f"{name}__{target}{suffix}"
+                    if key_name not in key_names:
+                        break
+                key_names.add(key_name)
+                fks.append(ForeignKey(key_name, tuple(columns), target, tuple(tables[target]["pk"])))
             position = {c.name: i for i, c in enumerate(t["columns"])}
             uks = sorted((tuple(u) for u in t["uks"].values()), key=lambda u: [position[c] for c in u])
             built.append(Table(name, t["subject"], tuple(t["columns"]), tuple(t["pk"]), tuple(uks), tuple(fks)))
@@ -633,10 +641,12 @@ class _Mapper:
             kind = "fallback" if oid in self.fallback else self.identity(oid)[0]
             grouped = kind in ("composite", "fallback")
             owner = self.owner_of(oid)
+            held = owner in tables
             identifications.append(Identification(
-                oid, kind, tuple(key.names),  # type: ignore[arg-type]
+                # The table's own key columns: a name taken twice was renamed (OB3 r1 F1).
+                oid, kind, tuple(tables[owner]["pk"] if held else key.names),  # type: ignore[arg-type]
                 tuple(origin if grouped else None for origin in key.origins),
-                owner if owner in tables else None,
+                owner if held else None,
             ))
         return RelationalSchema(
             self.variant, tuple(built), unmapped,

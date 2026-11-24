@@ -30,6 +30,7 @@ from gnd.rmap import Disposition, Identification, RelationalSchema, RolePlacemen
 __all__ = [
     "DATATYPES",
     "EXTENSION_SCHEMA",
+    "MAX_LINK_ARITY",
     "OntologyView",
     "build_mapping",
     "build_semantic_model",
@@ -41,6 +42,11 @@ VERSION = "0.3.0.dev0"
 VENDOR = "GND"
 EXTENSION_SCHEMA = "gnd-ossie-relational/1"
 _UPSTREAM = "https://raw.githubusercontent.com/apache/ossie/main/"
+
+#: A link mapping nests one level per role. A fact type with more roles than this is
+#: listed, not nested: the bound keeps every mapping document shallow enough for a
+#: recursive reader, whatever arity the model admits.
+MAX_LINK_ARITY = 32
 
 #: GND value primitive -> Ossie core-spec data type (OB3 E6). ``Opaque`` keeps the
 #: primitive in the field's ``GND`` extension.
@@ -190,10 +196,12 @@ class _Mapping:
             node["referent_mappings"] = referents
         return node
 
-    def link_tree(self, fact_type: str, carried_as: tuple[str, ...]) -> dict[str, Any] | None:
+    def link_tree(self, fact_type: str, carried_as: tuple[str, ...]) -> dict[str, Any] | str:
         """One tree per fact type: a node per role in the relationship's order, the
-        last one naming the relationship. None when a role's objects cannot be mapped."""
+        last one naming the relationship. Otherwise the reason there is no tree."""
         _, order, players = self.view.relations[fact_type]
+        if len(order) > MAX_LINK_ARITY:
+            return "arity-over-limit"
         # A unary is a Boolean flag: a row is a link only where the flag is true.
         flag = self.reference(carried_as[1], carried_as[2]) if len(order) == 1 else None
 
@@ -206,7 +214,7 @@ class _Mapping:
             node = self.object_mapping(
                 players[role], placement.table, placement.columns, named=level > 0, wrap=wrap)
             if node is None:
-                return None
+                return "identification-differs"
             nodes.append({"object_mapping": node})
         nodes[-1]["relationship"] = fact_type
         for parent, child in itertools.pairwise(nodes):
@@ -239,8 +247,8 @@ def build_mapping(
         if fact_type not in carried:
             continue
         tree = mapper.link_tree(fact_type, carried[fact_type])
-        if tree is None:
-            unmapped_links.append({"fact_type": fact_type, "reason": "identification-differs"})
+        if isinstance(tree, str):
+            unmapped_links.append({"fact_type": fact_type, "reason": tree})
         else:
             trees.setdefault(owner, []).append(tree)
 

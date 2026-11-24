@@ -1,0 +1,2873 @@
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json b/.gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json
+new file mode 100644
+index 00000000..191fdafb
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json
+@@ -0,0 +1,498 @@
++{
++ "schema_version": 1,
++ "reason": "ossie-relational-bundle OB3: the new gnd.export.ossie_relational module (annotations, per-table and per-role maps), the Rmap's public role and identification records, and the relational wiring in gnd.export.ossie and the export command. Syntax census only; no model-query exception is widened.",
++ "predecessor": ".gnd-planning/milestones/ossie-relational-bundle/evidence/OB2/dynamic-query-successor.json",
++ "predecessor_sha256": "99fa5512704547be8fb40a46e72fb111731f151b1bacd0cd8b6617abc93a0dbe",
++ "removed": [
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "components[owner]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "fact['constraints'][j]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "indexes[owner]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "names[oid]",
++   2
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "names[owner]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "names[parent]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "objects[oid]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "role_positions[role_name]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "role_types[order[0]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "role_types_by_fact[fact['id']]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_ontology",
++   "{'Duration': 'Integer', 'Number': 'Decimal'}.get(primitive, primitive)",
++   1
++  ]
++ ],
++ "added": [
++  [
++   "src/gnd/export/ossie.py",
++   "_inherit_identifiers",
++   "identification[parent]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "components[owner]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "fact['constraints'][j]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "indexes[owner]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "names[oid]",
++   3
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "names[owner]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "names[parent]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "objects[oid]",
++   2
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "role_positions[role_name]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "role_types[order[0]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "role_types_by_fact[fact['id']]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie.py",
++   "_project",
++   "{'Duration': 'Integer', 'Number': 'Decimal'}.get(primitive, primitive)",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "<module>",
++   "dict[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "OntologyView",
++   "Mapping[str, str]",
++   3
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "OntologyView",
++   "Mapping[str, tuple[str, Any]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "OntologyView",
++   "Mapping[str, tuple[str, tuple[str, ...], Mapping[str, str]]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "OntologyView",
++   "tuple[str, ...]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "OntologyView",
++   "tuple[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "OntologyView",
++   "tuple[str, tuple[str, ...], Mapping[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "__init__",
++   "dict[str, Identification]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "__init__",
++   "dict[tuple[str, str], RolePlacement]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "__init__",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "_extension",
++   "dict[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "_extension",
++   "list[dict[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "_validators",
++   "tuple[Draft202012Validator, Draft202012Validator]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "Mapping[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "Sequence[Disposition]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "carried[fact_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "dict[str, Any]",
++   4
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "dict[str, list[dict[str, Any]]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "list[dict[str, Any]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "mapper.identifications.get(object_type)",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "trees[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "view.kinds[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_semantic_model",
++   "DATATYPES[column.datatype]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_semantic_model",
++   "dict[str, Any]",
++   4
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "dict[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "nodes[-1]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "players[role]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "self.placements[fact_type, role]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "self.view.relations[fact_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "tuple[str, ...]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "object_mapping",
++   "Callable[[str], str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "object_mapping",
++   "Sequence[str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "object_mapping",
++   "dict[str, Any]",
++   2
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "object_mapping",
++   "self.identifications[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "object_mapping",
++   "self.view.concepts[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "object_mapping",
++   "self.view.kinds[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "Callable[[str], str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "Sequence[str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "by_fact[relationship]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "dict[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "dict[str, tuple[str, list[str]]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "list[dict[str, Any]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "list[str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "self.identifications.get(object_type)",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "self.view.identification.get(object_type)",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "self.view.kinds[player]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "self.view.relations[relationship]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "self.view.relations[relationship][2][role]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "referents",
++   "tuple[str, list[str]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "validate_relational",
++   "Mapping[str, Any]",
++   2
++  ],
++  [
++   "src/gnd/rmap.py",
++   "Identification",
++   "Literal['value', 'direct', 'unit', 'composite', 'fallback']",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "Identification",
++   "tuple[str, ...]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "Identification",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "Identification",
++   "tuple[tuple[str, str] | None, ...]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "RelationalSchema",
++   "tuple[Identification, ...]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "RelationalSchema",
++   "tuple[RolePlacement, ...]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "RolePlacement",
++   "tuple[str, ...]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "functional_on",
++   "self.fact_by_id[fact_type]",
++   1
++  ]
++ ],
++ "result_distinct_rows": 8190,
++ "result_occurrences": 10185
++}
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/notes/OB3-rmap-measurement-after-E3.md b/.gnd-planning/milestones/ossie-relational-bundle/notes/OB3-rmap-measurement-after-E3.md
+new file mode 100644
+index 00000000..f232293e
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/notes/OB3-rmap-measurement-after-E3.md
+@@ -0,0 +1,78 @@
++# OB2 variant measurement (OB2-C5, input to D5)
++
++Generated by `uv run python tools/rmap_variant_measurement.py`. Each cell is HALPIN / ALTERNATE.
++`agrees` compares table names and disposition counts with the approved answer for that variant
++(T6 asserts full equality).
++
++| Model | Origin | Tables | Unmapped fact types | Foreign keys | Nullable columns | Agrees |
++|---|---|---|---|---|---|---|
++| `src/gnd/examples/approvals/model.orm.yaml` | census | 1 / 1 | 0 / 0 | 0 / 0 | 4 / 4 |  |
++| `src/gnd/examples/bookrec/complete.orm.yaml` | census | 5 / 5 | 2 / 2 | 5 / 5 | 0 / 0 |  |
++| `src/gnd/examples/bookrec/model.orm.yaml` | census | 5 / 5 | 0 / 0 | 5 / 5 | 0 / 0 |  |
++| `src/gnd/examples/bookrec/strict.orm.yaml` | census | 5 / 5 | 0 / 0 | 5 / 5 | 0 / 0 |  |
++| `src/gnd/examples/composition/model.orm.yaml` | census | 2 / 2 | 1 / 1 | 1 / 1 | 1 / 1 |  |
++| `src/gnd/examples/disclosure/model.orm.yaml` | census | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 |  |
++| `src/gnd/examples/dispatch/model.orm.json` | census | 8 / 8 | 1 / 1 | 8 / 8 | 0 / 0 |  |
++| `src/gnd/examples/expense/currency.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 |  |
++| `src/gnd/examples/expense/model.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 |  |
++| `src/gnd/examples/expense/project/model.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 |  |
++| `src/gnd/examples/expense/teams/engineering.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 2 / 2 |  |
++| `src/gnd/examples/expense/teams/sales-v2.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 |  |
++| `src/gnd/examples/expense/teams/sales.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 |  |
++| `src/gnd/examples/expense/teams/shared/expense-v1.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 2 / 2 |  |
++| `src/gnd/examples/expense/teams/shared/expense-v2.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 2 / 2 |  |
++| `src/gnd/examples/growth/model.orm.yaml` | census | 2 / 2 | 1 / 1 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/access/model.orm.json` | census | 4 / 4 | 1 / 1 | 5 / 5 | 1 / 1 |  |
++| `src/gnd/examples/plan_apps/clinic/model.orm.json` | census | 5 / 5 | 1 / 1 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/course/model.orm.json` | census | 6 / 6 | 2 / 2 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/lease/model.orm.json` | census | 4 / 4 | 0 / 0 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json` | census | 6 / 6 | 2 / 2 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json` | census | 6 / 6 | 2 / 2 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml` | census | 7 / 7 | 2 / 2 | 9 / 9 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json` | census | 9 / 9 | 1 / 1 | 3 / 3 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml` | census | 10 / 10 | 2 / 2 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml` | census | 7 / 7 | 2 / 2 | 9 / 9 | 0 / 0 |  |
++| `src/gnd/examples/plan_apps/trip/model.orm.json` | census | 8 / 8 | 3 / 3 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/quoted_claims/model.orm.json` | census | 3 / 3 | 1 / 1 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/refunds/model.orm.yaml` | census | 3 / 3 | 0 / 0 | 2 / 2 | 1 / 1 |  |
++| `src/gnd/examples/release/model.orm.json` | census | 8 / 8 | 1 / 1 | 8 / 8 | 0 / 0 |  |
++| `src/gnd/examples/release_governance/approval-proof/model.orm.json` | census | 1 / 1 | 0 / 0 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/release_governance/dependencies/model.orm.json` | census | 3 / 3 | 6 / 6 | 3 / 3 | 0 / 0 |  |
++| `src/gnd/examples/release_governance/policy/model.orm.json` | census | 3 / 3 | 0 / 0 | 3 / 3 | 0 / 0 |  |
++| `src/gnd/examples/rule_check/model.orm.yaml` | census | 4 / 4 | 0 / 0 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/staffing/model.orm.yaml` | census | 6 / 6 | 0 / 0 | 5 / 5 | 0 / 0 |  |
++| `src/gnd/examples/type_judgements/duplicates/model.orm.yaml` | census | 3 / 3 | 0 / 0 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/examples/type_judgements/multi-valued/model.orm.yaml` | census | 3 / 3 | 0 / 0 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml` | census | 1 / 3 | 0 / 0 | 0 / 2 | 4 / 1 |  |
++| `src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml` | census | 1 / 1 | 0 / 0 | 0 / 0 | 0 / 0 |  |
++| `src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml` | census | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 |  |
++| `src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml` | census | 3 / 3 | 3 / 3 | 2 / 2 | 0 / 0 |  |
++| `tests/fixtures/rmap/cases/01-functional-binary/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 0 / 0 | yes / yes |
++| `tests/fixtures/rmap/cases/02-popular-reference-fact/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/03-general-reference/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/04-many-to-many/model.yaml` | corpus | 3 / 3 | 0 / 0 | 2 / 2 | 2 / 2 | yes / yes |
++| `tests/fixtures/rmap/cases/05-no-uniqueness/model.yaml` | corpus | 2 / 2 | 0 / 0 | 1 / 1 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/06-one-to-one-one-mandatory/model.yaml` | corpus | 2 / 2 | 0 / 0 | 1 / 1 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/07-one-to-one-both-mandatory/model.yaml` | corpus | 2 / 1 | 0 / 0 | 1 / 0 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/08-one-to-one-neither-mandatory/model.yaml` | corpus | 2 / 1 | 0 / 0 | 1 / 0 | 2 / 2 | yes / yes |
++| `tests/fixtures/rmap/cases/09-unary/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 0 / 0 | yes / yes |
++| `tests/fixtures/rmap/cases/10-ternary-n-minus-one/model.yaml` | corpus | 2 / 2 | 0 / 0 | 1 / 1 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/11-quaternary-spanning/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 0 / 0 | yes / yes |
++| `tests/fixtures/rmap/cases/12-single-and-compound/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/13-candidate-keys/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 0 / 0 | yes / yes |
++| `tests/fixtures/rmap/cases/14-external-identification/model.yaml` | corpus | 3 / 3 | 0 / 0 | 2 / 2 | 2 / 2 | yes / yes |
++| `tests/fixtures/rmap/cases/15-subtype-inherits/model.yaml` | corpus | 1 / 2 | 0 / 0 | 0 / 1 | 2 / 2 | yes / yes |
++| `tests/fixtures/rmap/cases/16-subtype-own-identifier/model.yaml` | corpus | 2 / 2 | 0 / 0 | 0 / 0 | 2 / 2 | yes / yes |
++| `tests/fixtures/rmap/cases/17-objectification/model.yaml` | corpus | 3 / 3 | 0 / 0 | 2 / 2 | 3 / 3 | yes / yes |
++| `tests/fixtures/rmap/cases/18-derived/model.yaml` | corpus | 1 / 1 | 1 / 1 | 0 / 0 | 3 / 3 | yes / yes |
++| `tests/fixtures/rmap/cases/19-unconfirmed-uniqueness/model.yaml` | corpus | 3 / 3 | 0 / 0 | 2 / 2 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/20-value-type-table/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/21-self-reference-and-collision/model.yaml` | corpus | 1 / 1 | 0 / 0 | 1 / 1 | 3 / 3 | yes / yes |
++| `tests/fixtures/rmap/cases/22-entity-without-table/model.yaml` | corpus | 2 / 2 | 0 / 0 | 1 / 1 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/23-unit-based/model.yaml` | corpus | 1 / 1 | 0 / 0 | 0 / 0 | 1 / 1 | yes / yes |
++| `tests/fixtures/rmap/cases/24-not-relational/model.yaml` | corpus | 3 / 3 | 0 / 0 | 3 / 3 | 3 / 3 | yes / yes |
++| `tests/fixtures/rmap/cases/25-nested-composite/model.yaml` | corpus | 1 / 1 | 3 / 3 | 0 / 0 | 0 / 0 | yes / yes |
++
++**Total** (all mapped models): 194 / 195 | 38 / 38 | 91 / 92 | 57 / 54.
++
++Models whose metrics differ between the variants: 4 of 66.
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB3-spec.md b/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB3-spec.md
+index 42346c98..99bb6b56 100644
+--- a/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB3-spec.md
++++ b/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB3-spec.md
+@@ -2,10 +2,11 @@
+ 
+ ## 1. Status
+ 
+-**r1 approved 2026-11-24 with E1–E16 as proposed**
+-([spec gate](../009-OB3-spec-gate.md)). The corpus and amendment r1.1 (§14)
+-are authored and **await the corpus gate**. No renderer code is written.
+-Not reviewed.
++**Implemented, 2026-11-24.** The owner approved r1 with E1–E16 as proposed
++([spec gate](../009-OB3-spec-gate.md)) and the corpus with amendment r1.1
++([corpus gate](../010-OB3-corpus-gate.md)). §12 records what implementation
++found, including two departures for the owner (IF1, IF2). The text below §1
++is kept as written at each gate.
+ 
+ ## 2. Provenance
+ 
+@@ -353,9 +354,26 @@ the shape `review-convergence.md` defaults to corpus first.
+    not exist.
+ 4. Each implementation commit names the cases it turns green.
+ 
+-## 12. Implementation findings
++## 12. Implementation findings (recorded during OB3)
+ 
+-None yet.
++Rows marked **owner** depart from an approved rule and are put to the owner
++with the phase record.
++
++| # | Finding | Effect |
++|---|---|---|
++| IF1 | **A model that maps to no table cannot have a semantic model.** The pinned core-spec requires at least one dataset. Two scanned models map to none (their fact types are all derived or unmapped). The first render failed schema validation on them. | Such a run writes the ontology's three files, prints a note on standard error and exits 0. **Owner:** this departs from predicate 2 ("a run with no new flag writes ... plus the two files") for these models. |
++| IF2 | **`unmapped_links`.** A carried fact type whose roles cannot be object-mapped (E3 b) has to be listed somewhere, and §6.6 had only `concepts`. | The extension gains `unmapped_links`, present only when not empty, so no approved corpus byte changes. **Owner:** a member §6.6 did not name. |
++| IF3 | **`identification-differs` in practice.** Over the 422 scanned models the export maps, it lists 16 fact types in 14 models and 2 concepts. Three causes: a unit-based reference (the ontology declares no identifier for it), an objectification keyed by its own fact type, and a subtype inheriting through several supertypes (the ontology inherits only through one). | Stated in the normative text. No guess is written for any of them. |
++| IF4 | **E3 (a) on the census.** One census model changes, equally under both variants: `reference_scheme_elicitation` loses the `task` table (4 to 3 tables; 3 fact types become `identification-unmatchable`). The two literature examples keep their `assertion` table, because it is an objectification and falls back to its fact type's key. Totals move from 195 / 196 tables and 35 / 35 unmapped to 194 / 195 and 38 / 38. | [OB3-rmap-measurement-after-E3.md](OB3-rmap-measurement-after-E3.md). The models that differ between the variants are the same four, so the D5 ruling stands on the same comparison. OB2's own measurement file is history and is not rewritten. |
++| IF5 | **The Rmap needed a second public record.** E4 named `roles`. Building referent mappings by fact type (B8) and comparing identifications with the ontology (E3 b) also need each object type's key structure and owning table. | `RelationalSchema.identifications` (`Identification`: kind, key columns, the component fact type and role per column, the owning table), beside `roles` (`RolePlacement`). T16 pins both. |
++| IF6 | **§6.2's signature changed.** `render_relational` would have needed the YAML encoder, which lives in `ossie.py`, which imports the renderer. | `ossie_relational` builds documents only (`build_semantic_model`, `build_mapping`, `validate_relational`); `ossie.py` encodes all five files through one `_encode` and computes the digests. |
++| IF7 | **Entities without a table** (S7: only ever a role player) get no object mapping and are not listed in `concepts`, which holds only entities that have a table. A **value-type owner** of a relationship gets link mappings and no object mapping (B1). | Stated in the normative text. |
++| IF8 | **One existing test changed.** OB1's per-artifact bound test asserted three published files. | It now passes `--ontology-only`: it is about the three legacy artifacts. T8 covers the relational files, with a model where the mapping is the largest file and one where the semantic model is. |
++| IF9 | **E16 measured.** Of 3,157 fields over the scanned models, none has a name over 128 characters. | The residual stays recorded; no rename. |
++| IF10 | **T10 measured.** At 1,400 entities and 4,500 fact types the five files render in 3.3 s, against 2.6 s for the ontology's three; the ratio to one fifth of that scale is 5.1 (linear). | T10's bound is 60 s and a ratio under 12. |
++| IF11 | **T11 is written and not run.** `OssieOracle.validate` gains a `schema` argument, and `test_external_relational_census` validates the semantic model and the mapping of every census model with the pinned validator. | The opt-in oracle lane needs the owner's request. Until it runs, upstream acceptance of quoted identifiers and of `CASE WHEN` is unconfirmed. |
++| IF12 | **RF6.** The new module and the wiring add 70 dynamic-subscript rows and remove 11. | `evidence/OB3/dynamic-query-successor.json`, chained after OB2's. A census only; no query exception is widened, and the renderer reads the model only through `gnd.rmap` and the ontology view. |
++| IF13 | **The disclosure table** already classes `gnd export ossie` as every-mode. | Its row now names the ids the two new files carry, and a test holds the two files equal in customer mode. |
+ 
+ ## 13. Harvest findings (measured while writing this spec)
+ 
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 75224ab2..a6a6625b 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -642,7 +642,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### cli.export_command
+ - does: Dispatch Lean, Souffle, PyRel, ILP and Ossie exports with target specific input checks [handle].
+-- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, output collision, dispatch handler
++- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, ontology only, five file group, semantic model file, mapping file, output collision, dispatch handler
+ - in: argparse subparsers or a parsed command namespace
+ - out: registered parsers or the selected command exit code
+ - status: canonical
+@@ -1633,16 +1633,29 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### export.ossie
+-- does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, and count the fact types that declare redact [render_ossie].
+-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes
+-- in: standalone model path and output format
+-- out: ontology, sidecar and loss report bytes
++- does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, encode and bind the semantic model and mapping of the same run, and count the fact types that declare redact [render_ossie].
++- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view
++- in: standalone model path, output format, and whether to add the relational files
++- out: ontology, sidecar and loss report bytes, and semantic model and mapping bytes or None
+ - status: canonical
+ - modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
+-- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity, model.scalar_terms
++- uses: export.ossie_relational, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
+ - used_by: cli.export_command
+-- tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py
+-- notes: The three output artifacts use the importer's input size cap.
++- tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py, tests/test_ossie_relational.py
++- notes: Every artifact of a run is bounded by max_output_bytes. _project returns the ontology with the OntologyView the mapping reads, so the mapping never recomputes concept names, role order or identify_by. A model that maps to no table gets no relational files.
++
++
++### export.ossie_relational
++- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational].
++- verbs: ossie semantic model, ossie mapping, dataset, field, relationship, concept mapping, object mapping, referent mapping, link mapping, quoted identifier, datatype map, custom extension, identification differs, subtype absorbed, unmapped links, validate against pinned schemas, offline schema registry
++- in: a RelationalSchema, its dispositions and the OntologyView of the same export run
++- out: semantic model and mapping documents (dicts)
++- status: canonical
++- modules: src/gnd/export/ossie_relational.py
++- uses: infra.artifacts, infra.input_policy, model.relational_mapping
++- used_by: export.ossie
++- tests: tests/test_ossie_relational.py
++- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection.
+ 
+ 
+ ### export.pyrel_emit
+@@ -1999,7 +2012,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +75 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +76 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+ - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
+@@ -2274,7 +2287,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/input_policy.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +57 more (graph.md)
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +58 more (graph.md)
+ - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
+ - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
+ 
+@@ -2579,14 +2592,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### model.relational_mapping
+ - does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint [map_model; dispositions].
+-- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, map_model, dispositions
++- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, identification record, functional identifier component, map_model, dispositions
+ - status: canonical
+ - modules: src/gnd/rmap.py
+ - uses: model.query_index, model.reference_resolution
+-- used_by: (none)
++- used_by: export.ossie, export.ossie_relational
+ - tests: tests/test_rmap.py
+ - in: a loaded Model and an RmapVariant
+-- out: RelationalSchema and Disposition rows
++- out: RelationalSchema (tables, role placements, identifications) and Disposition rows
+ - checked: partial
+ - notes: Normative rules in representation-format.md, "Relational mapping (Rmap)". Direct identification comes from ModelIndex.reference_value_types. Composite identification is the Rmap's own selection: the preferred, confirmed alethic external uniqueness, indexed once per model. refscheme is not used, because it takes the first external uniqueness anchored on the entity whatever its status, and calling it per entity was quadratic (review r1 F1, F9).
+ 
+@@ -2710,7 +2723,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### tools.ossie_oracle
+ - does: Run pinned Ossie tools in isolated subprocesses and compare converter declarations with the exported ontology.
+-- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology
++- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology, validate with a chosen pinned schema, semantic model and mapping validation
+ - status: canonical
+ - modules: tools/ossie_oracle.py, tools/ossie_consumer.py
+ - uses: (none)
+@@ -3736,6 +3749,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - resume session: exp.service, exp.session_store
+ - reviewed preview: cli.evolve_command, evolve.command
+ - reviewer timeout: cli.review_command, review.command
++- role columns: export.ilp_neutral, model.relational_mapping
+ - role players: extract.guidelines, model.query_index
+ - round summary: cli.evolve_command, evolve.round_summary
+ - round trip: exp.frontmatter, infra.yaml_comments
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 89b8b548..4072a3fa 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -2964,9 +2964,12 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/export/ilp_amie.py -> src/gnd/terms.py`
+ 
+ ### export.ossie
+-- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity, model.scalar_terms
++- uses: export.ossie_relational, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
+ - used_by: cli.export_command
+ 
++#### export.ossie -> export.ossie_relational
++- `src/gnd/export/ossie.py -> src/gnd/export/ossie_relational.py`
++
+ #### export.ossie -> export.pyrel_rules
+ - `src/gnd/export/ossie_formulas.py -> src/gnd/export/pyrel_rules.py`
+ 
+@@ -2992,12 +2995,28 @@ Generated by `scripts/components_index.py`.
+ #### export.ossie -> model.query_index
+ - `src/gnd/export/ossie.py -> src/gnd/model_index.py`
+ 
++#### export.ossie -> model.relational_mapping
++- `src/gnd/export/ossie.py -> src/gnd/rmap.py`
++
+ #### export.ossie -> model.scalar_identity
+ - `src/gnd/export/ossie.py -> src/gnd/values.py`
+ 
+ #### export.ossie -> model.scalar_terms
+ - `src/gnd/export/ossie.py -> src/gnd/terms.py`
+ 
++### export.ossie_relational
++- uses: infra.artifacts, infra.input_policy, model.relational_mapping
++- used_by: export.ossie
++
++#### export.ossie_relational -> infra.artifacts
++- `src/gnd/export/ossie_relational.py -> src/gnd/artifacts.py`
++
++#### export.ossie_relational -> infra.input_policy
++- `src/gnd/export/ossie_relational.py -> src/gnd/input_policy.py`
++
++#### export.ossie_relational -> model.relational_mapping
++- `src/gnd/export/ossie_relational.py -> src/gnd/rmap.py`
++
+ ### export.popper
+ - uses: export.ilp_neutral, infra.exit_codes
+ - used_by: export.ilasp, export.ilp_prompt, export.learner_registry, export.ruleset
+@@ -3521,7 +3540,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_reference_set, examples.literature_revision, examples.literature_verdict, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.flatten_service, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_reference_set, examples.literature_revision, examples.literature_verdict, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.ossie_relational, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.flatten_service, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+@@ -3552,7 +3571,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.input_policy
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.ossie_relational, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
+ 
+ ### infra.output
+ - uses: infra.text_output
+@@ -4286,7 +4305,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.relational_mapping
+ - uses: model.query_index, model.reference_resolution
+-- used_by: (none)
++- used_by: export.ossie, export.ossie_relational
+ 
+ #### model.relational_mapping -> model.query_index
+ - `src/gnd/rmap.py -> src/gnd/model_index.py`
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index c169c800..2651c097 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -965,15 +965,17 @@ Halpin's relational mapping (Rmap) of a loaded GND model.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `RmapVariant` | class(enum.Enum) | 34 | (no docstring) |
+-| `Column` | class | 49 | (no docstring) |
+-| `ForeignKey` | class | 57 | (no docstring) |
+-| `Table` | class | 65 | (no docstring) |
+-| `Unmapped` | class | 75 | (no docstring) |
+-| `Disposition` | class | 83 | (no docstring) |
+-| `RelationalSchema` | class | 91 | (no docstring) |
+-| `map_model(model, *, variant) -> RelationalSchema` | function | 763 | Map one loaded model to its relational schema; never raises for an admitted model. |
+-| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 768 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
++| `RmapVariant` | class(enum.Enum) | 36 | (no docstring) |
++| `Column` | class | 51 | (no docstring) |
++| `ForeignKey` | class | 59 | (no docstring) |
++| `Table` | class | 67 | (no docstring) |
++| `Unmapped` | class | 77 | (no docstring) |
++| `Disposition` | class | 85 | (no docstring) |
++| `RolePlacement` | class | 93 | The table and columns that hold one role of a carried fact type. |
++| `Identification` | class | 107 | How an object type's key columns arise, one entry per key column. |
++| `RelationalSchema` | class | 126 | (no docstring) |
++| `map_model(model, *, variant) -> RelationalSchema` | function | 837 | Map one loaded model to its relational schema; never raises for an admitted model. |
++| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 842 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+ 
+ ## gnd.safefs — `src/gnd/safefs.py`
+ Components: infra.safe_filesystem
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index c65461e8..ac004a83 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -92,8 +92,8 @@ Components: cli.export_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 200 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 229 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 219 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 248 | (no docstring) |
+ 
+ ## gnd.commands.extract — `src/gnd/commands/extract.py`
+ Components: cli.extract_command
+diff --git a/dev/components/modules/export.md b/dev/components/modules/export.md
+index 001ac304..277e2342 100644
+--- a/dev/components/modules/export.md
++++ b/dev/components/modules/export.md
+@@ -243,9 +243,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `OssieInputError` | class(ValueError) | 50 | The source cannot be exported with the selected policy. |
+-| `OssieArtifacts` | class | 55 | (no docstring) |
+-| `render_ossie(model_path, *, output_format, strict, max_output_bytes) -> OssieArtifacts` | function | 427 | Render three deterministic artifacts from one bounded, admitted model read. |
++| `OssieInputError` | class(ValueError) | 57 | The source cannot be exported with the selected policy. |
++| `OssieArtifacts` | class | 62 | (no docstring) |
++| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name) -> …` | function | 501 | Render the deterministic artifacts of one bounded, admitted model read. |
+ 
+ ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
+ Components: export.ossie
+@@ -259,6 +259,18 @@ Place the reviewed subset of requirement and derivation shapes in Ossie scopes.
+ | `ProjectedRelation.token(self, position) -> str` | method | 68 | (no docstring) |
+ | `place_formulas(document, ontology, components, relations, mapped, fact_types)` | function | 267 | Mutate the ontology and disposition index only after a complete group lowers. |
+ 
++## gnd.export.ossie_relational — `src/gnd/export/ossie_relational.py`
++Components: export.ossie_relational
++Build the Ossie semantic model and mapping that accompany an exported ontology.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `OntologyView` | class | 61 | What the mapping reads from the ontology the same export run built. |
++| `extension_data(payload) -> str` | function | 77 | An extension's ``data``: canonical JSON without its trailing newline. |
++| `build_semantic_model(schema, name) -> dict[str, Any]` | function | 92 | One dataset per table, one field per column, one relationship per foreign key. |
++| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 217 | Map the ontology's concepts and relationships onto the semantic model. |
++| `validate_relational(semantic_model, mapping) -> None` | function | 304 | Check both documents against the pinned schemas; a failure is a renderer defect. |
++
+ ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
+ Components: export.pyrel_rules
+ Render a model's rules as a readable PyRel program, as requirements.
+diff --git a/dev/components/modules/tools.md b/dev/components/modules/tools.md
+index 270cb1c3..7015d4f2 100644
+--- a/dev/components/modules/tools.md
++++ b/dev/components/modules/tools.md
+@@ -384,9 +384,9 @@ Run the pinned standalone Ossie validator and parser without runtime dependencie
+ | --- | --- | --- | --- |
+ | `OssieOracle` | class | 26 | (no docstring) |
+ | `OssieOracle.check_pins(self) -> None` | method | 29 | (no docstring) |
+-| `OssieOracle.validate(self, path) -> subprocess.CompletedProcess[str]` | method | 48 | (no docstring) |
+-| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 57 | (no docstring) |
+-| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 139 | Emit PyRel source in the isolated process, without executing that source. |
++| `OssieOracle.validate(self, path, schema) -> subprocess.CompletedProcess[str]` | method | 48 | Run the pinned validator; ``schema`` is a path inside the pinned ossie checkout. |
++| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 58 | (no docstring) |
++| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 140 | Emit PyRel source in the isolated process, without executing that source. |
+ 
+ ## tools.plan_app_bot — `tools/plan_app_bot.py`
+ Components: unassigned
+diff --git a/docs/reference/disclosure.md b/docs/reference/disclosure.md
+index 650a271b..a34aefc1 100644
+--- a/docs/reference/disclosure.md
++++ b/docs/reference/disclosure.md
+@@ -125,7 +125,7 @@ Do not route them to a customer.
+ | `gnd doccheck` | the population values a rendered document misses | Its input is your own rendering case. |
+ | `gnd compose`, `gnd.api.compose` | the caller's own composed population; the composition record carries no value | Its inputs are your own populations; refusals name sources and indexes, never values. |
+ | `gnd verbalize model`, `gnd.api.verbalize_model` | the caller's complete model review, including authored sample populations | Its input is your own model; it takes no supplied population. |
+-| `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A `redact` declaration withholds population values from reports. It does not change the export, which prints a note counting the fact types that declare it. |
++| `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; the model's object-type, fact-type and role ids, as table and column names in the semantic model and mapping; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A `redact` declaration withholds population values from reports. It does not change the export, which prints a note counting the fact types that declare it. |
+ | `gnd import ossie` | whatever model content the ontology and its sidecar carry | Its inputs are your own files. |
+ 
+ ## Child processes
+diff --git a/src/gnd/commands/export.py b/src/gnd/commands/export.py
+index aa658f70..035617f5 100644
+--- a/src/gnd/commands/export.py
++++ b/src/gnd/commands/export.py
+@@ -77,6 +77,7 @@ def _cmd_export_ossie(
+     output_format: str,
+     strict: bool,
+     max_output_bytes: int | None = None,
++    ontology_only: bool = False,
+ ) -> int:
+     from gnd.artifacts import ArtifactError
+     from gnd.errors import ModelLoadError, ModelValidationError
+@@ -89,6 +90,8 @@ def _cmd_export_ossie(
+             output_format=output_format,
+             strict=strict,
+             max_output_bytes=DEFAULT_MAX_OUTPUT_BYTES if max_output_bytes is None else max_output_bytes,
++            relational=not ontology_only,
++            document_name=Path(out).name,
+         )
+     except FileNotFoundError as error:
+         print(f"missing input: {error}", file=sys.stderr)
+@@ -103,12 +106,19 @@ def _cmd_export_ossie(
+         print(f"Ossie export failed: {error}", file=sys.stderr)
+         return EXIT_INTERNAL
+ 
++    # One create-once group; the ontology is written last, as the commit marker.
++    group = [
++        (Path(loss_report or out + ".loss.json"), bundle.loss_report),
++        (Path(out + ".gnd.json"), bundle.sidecar),
++    ]
++    if bundle.semantic_model is not None and bundle.mapping is not None:
++        group += [
++            (Path(f"{out}.semantic_model.{output_format}"), bundle.semantic_model),
++            (Path(f"{out}.mapping.{output_format}"), bundle.mapping),
++        ]
++    group.append((Path(out), bundle.document))
+     try:
+-        publish_new_files([
+-            (Path(loss_report or out + ".loss.json"), bundle.loss_report),
+-            (Path(out + ".gnd.json"), bundle.sidecar),
+-            (Path(out), bundle.document),
+-        ])
++        publish_new_files(group)
+     except FileExistsError as error:
+         print(f"output exists: {error}", file=sys.stderr)
+         return EXIT_COLLISION
+@@ -116,6 +126,11 @@ def _cmd_export_ossie(
+         print(f"Ossie output failure: {error}", file=sys.stderr)
+         return EXIT_IO
+     print(f"Exported Ossie ontology to {out}")
++    if bundle.semantic_model is not None:
++        print(f"Exported Ossie semantic model and mapping to {out}.semantic_model.{output_format} "
++              f"and {out}.mapping.{output_format}")
++    elif not ontology_only:
++        print("note: the model maps to no table, so no semantic model or mapping is written.", file=sys.stderr)
+     if bundle.redacted_fact_types:
+         # Issue 169, owner ruling of 2026-11-11: `redact` withholds population values
+         # from reports and does not change an export of the model's own text.
+@@ -193,6 +208,10 @@ def _register_export(subparsers):
+         "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
+         help="largest size in bytes of each written file (default 10485760; at most 268435456)",
+     )
++    ossie_parser.add_argument(
++        "--ontology-only", action="store_true",
++        help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
++    )
+ 
+     return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
+ 
+@@ -231,7 +250,8 @@ def handle(args, parsers) -> int:
+         if args.export_target == "ossie":
+             return _cmd_export_ossie(args.model, args.out, loss_report=args.loss_report,
+                                      output_format=args.format, strict=args.strict,
+-                                     max_output_bytes=args.max_output_bytes)
++                                     max_output_bytes=args.max_output_bytes,
++                                     ontology_only=args.ontology_only)
+         if args.export_target == "ilp":
+             from gnd.export.ilp_service import _cmd_export_ilp
+ 
+diff --git a/src/gnd/export/ossie.py b/src/gnd/export/ossie.py
+index 8563a603..23fbf616 100644
+--- a/src/gnd/export/ossie.py
++++ b/src/gnd/export/ossie.py
+@@ -18,6 +18,12 @@ from ruamel.yaml.error import YAMLError
+ 
+ from gnd.artifacts import canonical_json_bytes
+ from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
++from gnd.export.ossie_relational import (
++    OntologyView,
++    build_mapping,
++    build_semantic_model,
++    validate_relational,
++)
+ from gnd.input_policy import MAX_BYTES_CEILING, guard_yaml, loads, require_byte_bound
+ from gnd.model import (
+     MAX_MODEL_BYTES,
+@@ -29,6 +35,7 @@ from gnd.model import (
+ from gnd.model._documents import ModelValueError
+ from gnd.model._includes import guard_document
+ from gnd.model_index import ModelIndex
++from gnd.rmap import RmapVariant, dispositions, map_model
+ from gnd.safefs import NotRegularFileError, open_regular
+ from gnd.terms import guarded_clause_refusal, where_uses_membership
+ from gnd.values import ModelIdentityError, model_identity
+@@ -60,6 +67,9 @@ class OssieArtifacts:
+     #: export carries their readings, constraints and provenance text unchanged
+     #: (issue 169); the command says so with this count and no name or value.
+     redacted_fact_types: int = 0
++    #: The Ossie semantic model and mapping (OB3), or ``None`` for an ontology-only run.
++    semantic_model: bytes | None = None
++    mapping: bytes | None = None
+ 
+ 
+ @lru_cache(maxsize=1)
+@@ -181,7 +191,7 @@ def _relationship(fact, names, order, role_types):
+     return result, inverse
+ 
+ 
+-def _add_references(objects, components, names, functional_links, constraints, mapped, indexes):
++def _add_references(objects, components, names, functional_links, constraints, mapped, indexes, identification):
+     # Pre-index composite UC candidates by their shared identifying entity.
+     composite = {}
+     for i, constraint in enumerate(constraints):
+@@ -234,16 +244,18 @@ def _add_references(objects, components, names, functional_links, constraints, m
+                 }
+             )
+             component["identify_by"] = [key]
++            identification[oid] = ("simple", key)
+             mapped[path] = _NATIVE_LITERAL
+             mapped[(*path, "value_type")] = _NATIVE_LITERAL
+         elif mode == "external" and oid in composite:
+             _, index, links = composite[oid]
+             component["identify_by"] = links
++            identification[oid] = ("composite", tuple(links))
+             mapped[path] = _NATIVE_LITERAL
+             mapped[("constraints", index)] = _NATIVE_LITERAL
+ 
+ 
+-def _inherit_identifiers(objects, components, indexes, mapped):
++def _inherit_identifiers(objects, components, indexes, mapped, identification):
+     parents = {oid: tuple(obj.get("subtype_of") or ()) for oid, obj in objects.items()}
+     try:
+         order = list(TopologicalSorter(parents).static_order())
+@@ -265,11 +277,18 @@ def _inherit_identifiers(objects, components, indexes, mapped):
+         own_names = {relationship["name"] for relationship in child.get("relationships", ())}
+         if inherited and not child.get("identify_by") and own_names.isdisjoint(inherited):
+             child["identify_by"] = list(inherited)
++            identification[oid] = identification[parent]
+             direct.add(oid)
+             mapped[("object_types", indexes[oid], "inherits_reference")] = _NATIVE_LITERAL
+ 
+ 
+ def _ontology(document, model):
++    ontology, mapped, _view = _project(document, model)
++    return ontology, mapped
++
++
++def _project(document, model):
++    """The ontology, its loss dispositions, and the view the relational mapping reads."""
+     index = ModelIndex.for_model(model)
+     objects = index.object_types_by_id()
+     # Role name -> object type per fact type, in declared role order.
+@@ -313,6 +332,8 @@ def _ontology(document, model):
+ 
+     functional_links = {}
+     projected_relations = {}
++    identification = {}
++    relations = {}
+     for i, fact in enumerate(fact_types):
+         role_types = role_types_by_fact[fact["id"]]
+         order, multiplicity, constraints = _role_order(fact, role_types)
+@@ -330,6 +351,7 @@ def _ontology(document, model):
+             dict(role_types),
+             relationship,
+         )
++        relations[fact["id"]] = (owner, tuple(order), dict(role_types))
+         source = ("fact_types", i)
+         for path in (source, (*source, "reading"), (*source, "roles")):
+             mapped[path] = _NATIVE_LITERAL
+@@ -363,9 +385,10 @@ def _ontology(document, model):
+         document.get("constraints", ()),
+         mapped,
+         indexes,
++        identification,
+     )
+ 
+-    _inherit_identifiers(objects, components, indexes, mapped)
++    _inherit_identifiers(objects, components, indexes, mapped, identification)
+ 
+     ontology = {
+         "version": _VERSION,
+@@ -375,7 +398,14 @@ def _ontology(document, model):
+     if document.get("model_id"):
+         mapped[("model_id",)] = _copy(("name",))
+     place_formulas(document, ontology, components, projected_relations, mapped, fact_types)
+-    return ontology, mapped
++    view = OntologyView(
++        name=ontology["name"],
++        concepts={oid: names[oid] for oid in components},
++        kinds={oid: objects[oid]["kind"] for oid in components},
++        identification=identification,
++        relations=relations,
++    )
++    return ontology, mapped, view
+ 
+ 
+ def _metadata(document, mapped):
+@@ -424,21 +454,72 @@ def _metadata(document, mapped):
+     return rows, dict(elements), refused
+ 
+ 
++def _encode(document, output_format: str) -> bytes:
++    """One Ossie document in the run's format; every exported document uses this."""
++    if output_format == "json":
++        return canonical_json_bytes(document)
++    if output_format == "yaml":
++        yaml = YAML(typ="safe", pure=True)
++        yaml.version = (1, 1)
++        yaml.default_flow_style = False
++        yaml.sort_base_mapping_type_on_output = False
++        stream = StringIO()
++        yaml.dump(document, stream)
++        return stream.getvalue().encode("utf-8")
++    raise OssieInputError("unsupported Ossie output format")
++
++
++def _relational(model, view, data: bytes, identity: str, *, output_format: str, document_name: str):
++    """The semantic model and mapping for the ontology bytes ``data`` (OB3)."""
++    schema = map_model(model, variant=RmapVariant.HALPIN)  # D5
++    if not schema.tables:
++        # The pinned core-spec requires at least one dataset. A model that maps to no
++        # table has no relational files; the run then writes the ontology's three.
++        return None, None
++    semantic_name = f"{view.name}_relational"
++    semantic_file = f"{document_name}.semantic_model.{output_format}"
++    semantic = build_semantic_model(schema, semantic_name)
++    semantic_bytes = _encode(semantic, output_format)
++    mapping = build_mapping(
++        schema,
++        dispositions(model, schema),
++        view,
++        name=f"{view.name}_mapping",
++        ontology_iri=f"./{document_name}",
++        semantic_model_name=semantic_name,
++        semantic_model_iri=f"./{semantic_file}",
++        bindings={
++            "model_identity": identity,
++            "ontology_sha256": hashlib.sha256(data).hexdigest(),
++            "semantic_model_sha256": hashlib.sha256(semantic_bytes).hexdigest(),
++        },
++    )
++    validate_relational(semantic, mapping)
++    return semantic_bytes, _encode(mapping, output_format)
++
++
+ def render_ossie(
+     model_path: Path,
+     *,
+     output_format: str,
+     strict: bool = False,
+     max_output_bytes: int = DEFAULT_MAX_OUTPUT_BYTES,
++    relational: bool = True,
++    document_name: str | None = None,
+ ) -> OssieArtifacts:
+-    """Render three deterministic artifacts from one bounded, admitted model read.
++    """Render the deterministic artifacts of one bounded, admitted model read.
++
++    The ontology, its sidecar and its loss report always. With ``relational``, also
++    the semantic model and the mapping; ``document_name`` is the file name the
++    ontology will have, which the mapping's references are built from (default
++    ``ontology.<format>``).
+ 
+     Every artifact must fit in ``max_output_bytes``; otherwise the whole export is
+     refused with ``ossie:output-size`` and nothing is returned to publish.
+     """
+     require_byte_bound("max_output_bytes", max_output_bytes)
+     document, model = _read_model(model_path)
+-    ontology, mapped = _ontology(document, model)
++    ontology, mapped, view = _project(document, model)
+     _schema().validate(ontology)
+     incompatible = {}
+     for index, constraint in enumerate(document.get("constraints", ())):
+@@ -457,18 +538,7 @@ def render_ossie(
+         raise OssieInputError(_POPULATION_REFUSAL)
+     if strict and incompatible:
+         raise OssieInputError(next(iter(incompatible.values())))
+-    if output_format == "json":
+-        data = canonical_json_bytes(ontology)
+-    elif output_format == "yaml":
+-        yaml = YAML(typ="safe", pure=True)
+-        yaml.version = (1, 1)
+-        yaml.default_flow_style = False
+-        yaml.sort_base_mapping_type_on_output = False
+-        stream = StringIO()
+-        yaml.dump(ontology, stream)
+-        data = stream.getvalue().encode("utf-8")
+-    else:
+-        raise OssieInputError("unsupported Ossie output format")
++    data = _encode(ontology, output_format)
+     try:
+         identity = model_identity(model)
+         binding = {"model_identity": identity, "document_sha256": hashlib.sha256(data).hexdigest()}
+@@ -480,9 +550,16 @@ def render_ossie(
+         )
+     except (ModelIdentityError, UnicodeEncodeError, ValueError) as error:
+         raise OssieInputError("model has no encodable interchange identity") from error
+-    if max(len(data), len(sidecar), len(report)) > max_output_bytes:
++    semantic_model = mapping = None
++    if relational:
++        semantic_model, mapping = _relational(
++            model, view, data, identity,
++            output_format=output_format, document_name=document_name or f"ontology.{output_format}",
++        )
++    artifacts = (data, sidecar, report, semantic_model, mapping)
++    if max(len(artifact) for artifact in artifacts if artifact is not None) > max_output_bytes:
+         raise OssieInputError("ossie:output-size")
+     from gnd.redaction import RedactionPolicy
+ 
+     declared = {row.fact_type for row in RedactionPolicy.from_model(model).declarations}
+-    return OssieArtifacts(data, sidecar, report, len(declared))
++    return OssieArtifacts(data, sidecar, report, len(declared), semantic_model, mapping)
+diff --git a/src/gnd/export/ossie_relational.py b/src/gnd/export/ossie_relational.py
+new file mode 100644
+index 00000000..d9e3df9e
+--- /dev/null
++++ b/src/gnd/export/ossie_relational.py
+@@ -0,0 +1,308 @@
++"""Build the Ossie semantic model and mapping that accompany an exported ontology.
++
++The normative rules have one home: "Semantic model and mapping" under "Ossie
++interchange" in ``gnd-orm-core/references/representation-format.md``. This module
++turns a :class:`gnd.rmap.RelationalSchema` into an Ossie core-spec semantic model,
++and maps the ontology's concepts and relationships onto it. It builds documents
++only; :func:`gnd.export.ossie.render_ossie` encodes and binds them.
++
++Nothing here refuses a model. A fact type the relational layer cannot express is
++listed in the mapping's ``GND`` extension with a closed reason.
++"""
++
++from __future__ import annotations
++
++import itertools
++from collections.abc import Callable, Mapping, Sequence
++from dataclasses import dataclass
++from functools import lru_cache
++from importlib.resources import files
++from typing import Any
++
++from jsonschema import Draft202012Validator
++from referencing import Registry, Resource
++from referencing.jsonschema import DRAFT202012
++
++from gnd.artifacts import canonical_json_bytes
++from gnd.input_policy import loads
++from gnd.rmap import Disposition, Identification, RelationalSchema, RolePlacement
++
++__all__ = [
++    "DATATYPES",
++    "EXTENSION_SCHEMA",
++    "OntologyView",
++    "build_mapping",
++    "build_semantic_model",
++    "extension_data",
++    "validate_relational",
++]
++
++VERSION = "0.3.0.dev0"
++VENDOR = "GND"
++EXTENSION_SCHEMA = "gnd-ossie-relational/1"
++_UPSTREAM = "https://raw.githubusercontent.com/apache/ossie/main/"
++
++#: GND value primitive -> Ossie core-spec data type (OB3 E6). ``Opaque`` keeps the
++#: primitive in the field's ``GND`` extension.
++DATATYPES: dict[str, str] = {
++    "String": "String",
++    "Integer": "Integer",
++    "Float": "Float",
++    "Boolean": "Boolean",
++    "Date": "Date",
++    "DateTime": "DateTime",
++    "Number": "Decimal",
++    "Binary": "Opaque",
++    "Duration": "Opaque",
++}
++
++
++@dataclass(frozen=True)
++class OntologyView:
++    """What the mapping reads from the ontology the same export run built.
++
++    ``identification`` gives, per object type id, how the ontology identifies it:
++    ``("simple", relationship)`` or ``("composite", (relationship, ...))`` in
++    ``identify_by`` order. ``relations`` gives, per fact type id, the concept that
++    owns its relationship and its roles in the relationship's order.
++    """
++
++    name: str
++    concepts: Mapping[str, str]  # object type id -> concept, in component order
++    kinds: Mapping[str, str]  # object type id -> "entity" | "value"
++    identification: Mapping[str, tuple[str, Any]]
++    relations: Mapping[str, tuple[str, tuple[str, ...], Mapping[str, str]]]
++
++
++def extension_data(payload: Any) -> str:
++    """An extension's ``data``: canonical JSON without its trailing newline."""
++    return canonical_json_bytes(payload).decode("utf-8").removesuffix("\n")
++
++
++def _quoted(identifier: str) -> str:
++    """One SQL identifier, quoted and uppercased, so that it matches the regular
++    identifier of the same spelling and never reads as a keyword (OB3 E5)."""
++    return '"' + identifier.upper().replace('"', '""') + '"'
++
++
++def _extension(payload: Any) -> list[dict[str, str]]:
++    return [{"vendor_name": VENDOR, "data": extension_data(payload)}]
++
++
++def build_semantic_model(schema: RelationalSchema, name: str) -> dict[str, Any]:
++    """One dataset per table, one field per column, one relationship per foreign key."""
++    datasets = []
++    relationships = []
++    for table in schema.tables:
++        dataset: dict[str, Any] = {"name": table.name, "source": table.name}
++        if table.primary_key:
++            dataset["primary_key"] = list(table.primary_key)
++        if table.unique_keys:
++            dataset["unique_keys"] = [list(key) for key in table.unique_keys]
++        fields = []
++        for column in table.columns:
++            field: dict[str, Any] = {"name": column.name, "expression": {"sql": _quoted(column.name)}}
++            if column.datatype is not None:
++                field["datatype"] = DATATYPES[column.datatype]
++                if field["datatype"] == "Opaque":
++                    field["custom_extensions"] = _extension({"gnd_primitive": column.datatype})
++            fields.append(field)
++        dataset["fields"] = fields
++        dataset["custom_extensions"] = _extension({"source_kind": "logical"})
++        datasets.append(dataset)
++        relationships += [
++            {
++                "name": key.name,
++                "from": table.name,
++                "to": key.target_table,
++                "from_columns": list(key.columns),
++                "to_columns": list(key.target_columns),
++            }
++            for key in table.foreign_keys
++        ]
++    document: dict[str, Any] = {"version": VERSION, "name": name, "datasets": datasets}
++    if relationships:
++        document["relationships"] = relationships
++    return document
++
++
++class _Mapping:
++    def __init__(self, schema: RelationalSchema, view: OntologyView) -> None:
++        self.view = view
++        self.tables = {table.name for table in schema.tables}
++        self.identifications: dict[str, Identification] = {i.object_type: i for i in schema.identifications}
++        self.placements: dict[tuple[str, str], RolePlacement] = {(p.fact_type, p.role): p for p in schema.roles}
++
++    def referents(
++        self, object_type: str, table: str, columns: Sequence[str], wrap: Callable[[str], str]
++    ) -> list[dict[str, Any]] | None:
++        """Referent mappings that find one object of an entity type from ``columns`` of
++        ``table``, or None when the ontology does not identify it as the Rmap does."""
++        rmap = self.identifications.get(object_type)
++        ontology = self.view.identification.get(object_type)
++        if rmap is None or ontology is None or len(columns) != len(rmap.columns):
++            return None
++        form, payload = ontology
++        if rmap.kind == "direct" and form == "simple":
++            return [{"relationship": payload, "expression": wrap(self.reference(table, columns[0]))}]
++        if rmap.kind != "composite" or form != "composite":
++            return None
++        by_fact: dict[str, tuple[str, list[str]]] = {}
++        for column, component in zip(columns, rmap.components):
++            assert component is not None
++            by_fact.setdefault(component[0], (component[1], []))[1].append(column)
++        if set(by_fact) != set(payload):
++            return None
++        result = []
++        for relationship in payload:  # the ontology's identify_by order
++            role, held = by_fact[relationship]
++            player = self.view.relations[relationship][2][role]
++            if self.view.kinds[player] == "value":
++                result.append({"relationship": relationship, "expression": wrap(self.reference(table, held[0]))})
++                continue
++            nested = self.referents(player, table, held, wrap)
++            if nested is None:
++                return None
++            result.append({"relationship": relationship, "referent_mappings": nested})
++        return result
++
++    @staticmethod
++    def reference(table: str, column: str) -> str:
++        return f"{_quoted(table)}.{_quoted(column)}"
++
++    def object_mapping(
++        self, object_type: str, table: str, columns: Sequence[str], *,
++        named: bool, wrap: Callable[[str], str] = str,
++    ) -> dict[str, Any] | None:
++        """How ``columns`` of ``table`` give one object of ``object_type``."""
++        node: dict[str, Any] = {"concept": self.view.concepts[object_type]} if named else {}
++        if self.view.kinds[object_type] == "value":
++            if len(columns) != 1:
++                return None
++            node["expression"] = wrap(self.reference(table, columns[0]))
++            return node
++        referents = self.referents(object_type, table, columns, wrap)
++        if referents is None:
++            return None
++        if self.identifications[object_type].kind == "direct":
++            node["expression"] = referents[0]["expression"]
++        else:
++            node["referent_mappings"] = referents
++        return node
++
++    def link_tree(self, fact_type: str, carried_as: tuple[str, ...]) -> dict[str, Any] | None:
++        """One tree per fact type: a node per role in the relationship's order, the
++        last one naming the relationship. None when a role's objects cannot be mapped."""
++        _, order, players = self.view.relations[fact_type]
++        # A unary is a Boolean flag: a row is a link only where the flag is true.
++        flag = self.reference(carried_as[1], carried_as[2]) if len(order) == 1 else None
++
++        def wrap(expression: str) -> str:
++            return expression if flag is None else f"CASE WHEN {flag} THEN {expression} END"
++
++        nodes = []
++        for level, role in enumerate(order):
++            placement = self.placements[(fact_type, role)]
++            node = self.object_mapping(
++                players[role], placement.table, placement.columns, named=level > 0, wrap=wrap)
++            if node is None:
++                return None
++            nodes.append({"object_mapping": node})
++        nodes[-1]["relationship"] = fact_type
++        for parent, child in itertools.pairwise(nodes):
++            parent["children"] = [child]
++        return nodes[0]
++
++
++def build_mapping(
++    schema: RelationalSchema,
++    dispositions: Sequence[Disposition],
++    view: OntologyView,
++    *,
++    name: str,
++    ontology_iri: str,
++    semantic_model_name: str,
++    semantic_model_iri: str,
++    bindings: Mapping[str, str],
++) -> dict[str, Any]:
++    """Map the ontology's concepts and relationships onto the semantic model.
++
++    ``bindings`` are the digests and identity the ``GND`` extension carries. Every
++    disposition is listed there, so a reader can check from the file alone that each
++    fact type and constraint is carried or has a reason.
++    """
++    mapper = _Mapping(schema, view)
++    trees: dict[str, list[dict[str, Any]]] = {}
++    unmapped_links = []
++    carried = {d.id: d.carried_as for d in dispositions if d.kind == "fact_type" and d.reason is None}
++    for fact_type, (owner, _order, _players) in view.relations.items():  # the ontology's relationship order
++        if fact_type not in carried:
++            continue
++        tree = mapper.link_tree(fact_type, carried[fact_type])
++        if tree is None:
++            unmapped_links.append({"fact_type": fact_type, "reason": "identification-differs"})
++        else:
++            trees.setdefault(owner, []).append(tree)
++
++    concept_mappings = []
++    concepts = []
++    for object_type, concept in view.concepts.items():
++        entry: dict[str, Any] = {"concept": concept}
++        identification = mapper.identifications.get(object_type)
++        table = identification.table if identification is not None else None
++        if view.kinds[object_type] == "entity" and table is not None:
++            if table != object_type:
++                concepts.append({"concept": concept, "reason": "subtype-absorbed"})
++            else:
++                node = mapper.object_mapping(object_type, table, identification.columns, named=False)
++                if node is None:
++                    concepts.append({"concept": concept, "reason": "identification-differs"})
++                else:
++                    entry["object_mappings"] = [node]
++        if object_type in trees:
++            entry["link_mappings"] = trees[object_type]
++        if len(entry) > 1:
++            concept_mappings.append(entry)
++
++    payload: dict[str, Any] = {
++        "schema": EXTENSION_SCHEMA,
++        **bindings,
++        "rmap_variant": schema.variant.value,
++        "dispositions": [
++            {"kind": d.kind, "id": d.id, "carried_as": list(d.carried_as), "reason": d.reason}
++            for d in dispositions
++        ],
++        "concepts": concepts,
++    }
++    if unmapped_links:
++        payload["unmapped_links"] = sorted(unmapped_links, key=lambda row: row["fact_type"])
++    return {
++        "version": VERSION,
++        "name": name,
++        "ontology_ref": {"name": view.name, "iri": ontology_iri},
++        "semantic_model_ref": {"name": semantic_model_name, "iri": semantic_model_iri},
++        "concept_mappings": concept_mappings,
++        "custom_extensions": _extension(payload),
++    }
++
++
++@lru_cache(maxsize=1)
++def _validators() -> tuple[Draft202012Validator, Draft202012Validator]:
++    root = files("gnd").joinpath("schema", "ossie")
++    core = loads(root.joinpath("core-spec.json").read_bytes())
++    ontology = loads(root.joinpath("ontology.json").read_bytes())
++    mapping = loads(root.joinpath("mapping.json").read_bytes())
++    # The pinned schemas reference each other through upstream URLs. Registry() refuses
++    # any retrieval that is not registered here, so validation never opens a connection.
++    registry = Registry().with_resources([
++        (_UPSTREAM + "core-spec/ossie-schema.json", Resource.from_contents(core, default_specification=DRAFT202012)),
++        (_UPSTREAM + "ontology/ontology.json", Resource.from_contents(ontology, default_specification=DRAFT202012)),
++    ])
++    return Draft202012Validator(core, registry=registry), Draft202012Validator(mapping, registry=registry)
++
++
++def validate_relational(semantic_model: Mapping[str, Any], mapping: Mapping[str, Any]) -> None:
++    """Check both documents against the pinned schemas; a failure is a renderer defect."""
++    semantic_validator, mapping_validator = _validators()
++    semantic_validator.validate(semantic_model)
++    mapping_validator.validate(mapping)
+diff --git a/src/gnd/rmap.py b/src/gnd/rmap.py
+index 24509670..a4660d82 100644
+--- a/src/gnd/rmap.py
++++ b/src/gnd/rmap.py
+@@ -21,8 +21,10 @@ __all__ = [
+     "Column",
+     "Disposition",
+     "ForeignKey",
++    "Identification",
+     "RelationalSchema",
+     "RmapVariant",
++    "RolePlacement",
+     "Table",
+     "Unmapped",
+     "UnmappedReason",
+@@ -87,11 +89,48 @@ class Disposition:
+     reason: UnmappedReason | None
+ 
+ 
++@dataclass(frozen=True)
++class RolePlacement:
++    """The table and columns that hold one role of a carried fact type.
++
++    A unary role, and the subject role of a functional fact type, are held by their
++    table's key columns: the row is the object that plays the role.
++    """
++
++    fact_type: str
++    role: str
++    table: str
++    columns: tuple[str, ...]
++
++
++@dataclass(frozen=True)
++class Identification:
++    """How an object type's key columns arise, one entry per key column.
++
++    ``kind`` is ``value``, ``direct`` (a popular or general reference), ``unit``,
++    ``composite`` or ``fallback`` (an objectification keyed by its fact type's own
++    uniqueness). ``components`` names, for each key column, the (fact type, role) of
++    the composite or fallback component that holds it, else ``None``. ``table`` is
++    the table that holds the object type's own rows: its own, its supertype's when it
++    is absorbed, or ``None`` when it has no table.
++    """
++
++    object_type: str
++    kind: Literal["value", "direct", "unit", "composite", "fallback"]
++    columns: tuple[str, ...]
++    components: tuple[tuple[str, str] | None, ...]
++    table: str | None
++
++
+ @dataclass(frozen=True)
+ class RelationalSchema:
+     variant: RmapVariant
+     tables: tuple[Table, ...]
+     unmapped: tuple[Unmapped, ...]
++    # Every role of every carried fact type, sorted by (fact type, role).
++    roles: tuple[RolePlacement, ...] = ()
++    # Every object type whose identification resolves, sorted by id.
++    identifications: tuple[Identification, ...] = ()
+     # The one walk's result, keyed by (kind, id); read by dispositions().
+     _carried: tuple[tuple[tuple[str, str], tuple[str, ...]], ...] = field(default=(), repr=False, compare=False)
+ 
+@@ -170,7 +209,12 @@ class _Mapper:
+             ):
+                 refs = self.refs(constraint)
+                 anchor = self.anchor(refs)
+-                if anchor is not None and not any(fact in self.derived for fact, _ in refs):
++                if (
++                    anchor is not None
++                    and not any(fact in self.derived for fact, _ in refs)
++                    # OB3 E3: each component is functional on the identified entity.
++                    and all(self.functional_on(fact, role) for fact, role in refs)
++                ):
+                     current = self.identifiers.get(anchor)
+                     if current is None or (sorted(refs), refs) < (sorted(current), current):
+                         self.identifiers[anchor] = refs
+@@ -210,6 +254,12 @@ class _Mapper:
+     def refs(self, constraint: dict[str, Any]) -> list[tuple[str, str]]:
+         return [(str(r.get("fact_type")), str(r.get("role"))) for r in constraint.get("role_refs") or ()]
+ 
++    def functional_on(self, fact_type: str, component_role: str) -> bool:
++        """Whether a binary's other role carries a confirmed alethic single-role uniqueness."""
++        fact = self.fact_by_id[fact_type]
++        (subject,) = [role for role in self.roles(fact) if role != component_role]
++        return any(roles == (subject,) for roles, _ in self.effective(fact))
++
+     def anchor(self, refs: list[tuple[str, str]]) -> str | None:
+         """The one object type every referenced binary's other role is played by, else None."""
+         anchors = set()
+@@ -567,7 +617,31 @@ class _Mapper:
+             for (kind, ident), (reason, detail) in sorted(self.unmapped.items())
+         )
+         carried = tuple(sorted(self.carried.items()))
+-        return RelationalSchema(self.variant, tuple(built), unmapped, carried)
++        roles = []
++        for fact in self.facts:
++            fid = str(fact.get("id"))
++            if ("fact_type", fid) not in self.carried:
++                continue
++            for role in self.roles(fact):
++                table_name, columns = self.location(fid, role)
++                roles.append(RolePlacement(fid, role, table_name, tuple(columns)))
++        identifications = []
++        for oid in sorted(self.objects):
++            key = self.key(oid)
++            if key is None:
++                continue
++            kind = "fallback" if oid in self.fallback else self.identity(oid)[0]
++            grouped = kind in ("composite", "fallback")
++            owner = self.owner_of(oid)
++            identifications.append(Identification(
++                oid, kind, tuple(key.names),  # type: ignore[arg-type]
++                tuple(origin if grouped else None for origin in key.origins),
++                owner if owner in tables else None,
++            ))
++        return RelationalSchema(
++            self.variant, tuple(built), unmapped,
++            tuple(sorted(roles, key=lambda r: (r.fact_type, r.role))), tuple(identifications), carried,
++        )
+ 
+     def add_component_groups(self, table, names, key: _Key) -> None:
+         """Foreign-key groups for composite components, one per (fact type, role)."""
+diff --git a/src/gnd/schema/ossie/PINNED.json b/src/gnd/schema/ossie/PINNED.json
+index b44c3512..16c30d7d 100644
+--- a/src/gnd/schema/ossie/PINNED.json
++++ b/src/gnd/schema/ossie/PINNED.json
+@@ -7,5 +7,9 @@
+   "core_reference": {
+     "upstream_path": "core-spec/ossie-schema.json",
+     "sha256": "729ef2ce7e8bc4c3c50fef8e1aa106ee9356add13e67cf38f97772314afea950"
++  },
++  "mapping_reference": {
++    "upstream_path": "ontology/mapping.json",
++    "sha256": "936118ca7753676c069d1fa615c8dced7e9a9499ab185cc2ddbe8d1c2d4404f3"
+   }
+ }
+diff --git a/src/gnd/schema/ossie/mapping.json b/src/gnd/schema/ossie/mapping.json
+new file mode 100644
+index 00000000..09070f6a
+--- /dev/null
++++ b/src/gnd/schema/ossie/mapping.json
+@@ -0,0 +1,63 @@
++{
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "$id": "https://github.com/apache/ossie/ontology/mapping.json",
++  "title": "Apache Ossie Mapping Specification",
++  "description": "JSON Schema for validating a standalone Apache Ossie mapping document: the constructs of one semantic model mapped onto one ontology, as its own document rather than embedded inside the ontology's ontology_mappings.",
++  "type": "object",
++  "properties": {
++    "version": {
++      "type": "string",
++      "const": "0.3.0.dev0",
++      "description": "Mapping specification version"
++    },
++    "name": {
++      "type": "string",
++      "minLength": 1,
++      "description": "Unique identifier for this mapping"
++    },
++    "description": {
++      "type": "string",
++      "description": "Human-readable description of this mapping"
++    },
++    "ontology_ref": {
++      "$ref": "#/$defs/DocumentReference",
++      "description": "Reference to the ontology document this mapping targets"
++    },
++    "semantic_model_ref": {
++      "$ref": "#/$defs/DocumentReference",
++      "description": "Reference to the semantic model document this mapping draws from"
++    },
++    "concept_mappings": {
++      "type": "array",
++      "items": {
++        "$ref": "https://raw.githubusercontent.com/apache/ossie/main/ontology/ontology.json#/$defs/ConceptMapping"
++      },
++      "description": "Maps logical model constructs to some concept and its relationships in the referenced ontology"
++    },
++    "custom_extensions": {
++      "$ref": "https://raw.githubusercontent.com/apache/ossie/main/core-spec/ossie-schema.json#/$defs/SemanticModel/properties/custom_extensions"
++    }
++  },
++  "required": ["version", "name", "ontology_ref", "semantic_model_ref", "concept_mappings"],
++  "additionalProperties": false,
++  "$defs": {
++    "DocumentReference": {
++      "type": "object",
++      "description": "Reference to another Ossie document by its logical name, with an iri saying where to resolve it from",
++      "properties": {
++        "name": {
++          "type": "string",
++          "minLength": 1,
++          "description": "Must equal the referenced document's own 'name'; carries this reference's checkable identity regardless of location"
++        },
++        "iri": {
++          "type": "string",
++          "minLength": 1,
++          "description": "Where to resolve the referenced document from: a relative reference resolved against the mapping document's own location or base IRI, or an absolute IRI"
++        }
++      },
++      "required": ["name"],
++      "additionalProperties": false
++    }
++  }
++}
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index ad523874..b70c46f7 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -2096,7 +2096,7 @@ exists. Otherwise the variant decides:
+ | Value type | One column named after the value type id. Its origin is `("reference", id)`. |
+ | `popular` or `general` reference | One column named after the reference value type id |
+ | `unit-based` reference | `<id>_value`, typed `Number`. This is recognised before the general identification lookup, which does not resolve unit-based references. |
+-| Composite | The **identifying** external uniqueness: `confirmed`, `alethic` and `preferred`, over binaries whose other roles are all played by the entity. If several qualify, the one with the smallest sorted role references wins, then the smaller `role_refs` sequence; declaration order never decides. An external uniqueness that references a rule-0 fact type identifies nothing. One column per component, in `role_refs` order. A value component is named after its role. An entity component is a group named `<role>_<key>`. Either kind is a foreign key when its player has a table. A composite inside a composite is not resolved. |
++| Composite | The **identifying** external uniqueness: `confirmed`, `alethic` and `preferred`, over binaries whose other roles are all played by the entity, each of them functional on the entity (a confirmed alethic uniqueness on the entity's role alone). If several qualify, the one with the smallest sorted role references wins, then the smaller `role_refs` sequence; declaration order never decides. An external uniqueness that references a rule-0 fact type identifies nothing. One column per component, in `role_refs` order. A value component is named after its role. An entity component is a group named `<role>_<key>`. Either kind is a foreign key when its player has a table. A composite inside a composite is not resolved. |
+ | Inherited | A subtype with `inherits_reference: true` and no identification of its own is identified as its first supertype is, composite included. |
+ | Unresolvable | The object type is listed as `identification-unmatchable`, and so is every fact type placed in it or needing its key, along with their constraints. |
+ 
+@@ -2239,6 +2239,98 @@ companions. Exit codes are 0 on success, 3 on input or strict-policy refusal,
+ 11 on output collision, 66 on missing input, 70 on an internal rendering
+ failure and 74 on an I/O refusal.
+ 
++### Semantic model and mapping
++
++By default the export also writes Ossie's relational layer, in the run's
++format (`yaml` or `json`):
++
++| File | Content |
++|---|---|
++| `FILE.semantic_model.<format>` | An Ossie core-spec semantic model: the tables of the [relational mapping](#relational-mapping-rmap), under the `HALPIN` variant |
++| `FILE.mapping.<format>` | An Ossie mapping document, under the pinned `ontology/mapping.json`, from the ontology's concepts and relationships to the semantic model's datasets and fields |
++
++`--ontology-only` writes neither, and the run is then the three-file run in
++every respect. The ontology, sidecar and loss report have the same bytes
++either way. The five files are one create-once group, published in the
++order loss report, sidecar, semantic model, mapping, ontology; a collision on
++any of the five paths exits 11 and publishes nothing. `--max-output-bytes`
++bounds each of the five. The pinned core-spec requires at least one
++dataset, so a model that maps to no table gets no semantic model and no
++mapping: the run writes the other three files, says so on standard error
++and exits 0.
++
++**The semantic model.** Its `name` is the ontology's `name` followed by
++`_relational`.
++
++| Rmap | Semantic model |
++|---|---|
++| Table | One dataset, in table order. `name` and `source` are the table name. A `GND` extension holds `{"source_kind":"logical"}`: the name is one GND chose, not a table that exists. |
++| Column | One field, in column order: `name` is the column name and `expression.sql` is that name, quoted. |
++| Primary key, unique keys | `primary_key` and `unique_keys` |
++| Foreign key | One relationship, in table order and then foreign-key order: `from` is the table that holds the key, `to` the table it references, with `from_columns` and `to_columns` in key order |
++
++- **Datatypes.** String, Integer, Float, Boolean, Date and DateTime map to
++  themselves, and Number to Decimal. Binary and Duration map to `Opaque`,
++  with the primitive in a `GND` extension on the field as
++  `{"gnd_primitive": …}`. A column with no primitive has no `datatype`.
++- **Identifiers in expressions** are written quoted and uppercased, with an
++  embedded quote doubled: `"CUSTOMER"."EMAIL"` names field `email` of
++  dataset `customer`. Ossie compares a regular identifier by its uppercased
++  form, so the quoted form names the same field and never reads as a
++  keyword.
++- **No population.** No file of the relational layer holds a row, a model
++  identity or a digest, except the mapping's extension below.
++
++**The mapping.** Its `name` is the ontology's `name` followed by `_mapping`.
++`ontology_ref` and `semantic_model_ref` each carry the referenced document's
++`name` and an `iri` of `./` and that file's name, so the three files resolve
++from one directory. Concept mappings follow the ontology's component order,
++and a concept appears only when it has an object mapping or a link mapping.
++
++- **Object mappings.** An entity type with a table of its own gets one,
++  over that table's key columns. With a one-relationship identifier it is
++  one `expression`. With a composite identifier it is `referent_mappings`,
++  one per relationship of the ontology's `identify_by`, in that order; each
++  takes its columns by the identifying fact type, never by position. A
++  value component is an `expression`. An entity component nests that
++  entity's own referent mappings, down to the `gnd_reference` relationship of
++  a simple identifier. A value type never gets an object mapping.
++- **Link mappings.** Every fact type the Rmap carries gets one tree, under
++  the concept that owns its relationship, in that concept's relationship
++  order. The tree has one node per role, in the relationship's role order.
++  Each node maps the objects of its role from the columns that hold the
++  role, and the last node names the relationship. Every node below the root
++  names its `concept`. Trees are not shared between fact types. The
++  generated `gnd_reference` relationship has no fact type and no tree.
++- **NULL.** A NULL in a mapping expression yields no object and so no link.
++  Ossie does not define this; it is GND's reading. A unary fact type is a
++  Boolean flag, so its tree is one root node whose expressions are
++  `CASE WHEN <flag> THEN <key column> END`.
++- **Absorbed subtypes.** A subtype absorbed into its supertype's table has
++  no object mapping, because no column says which rows are its own. Its
++  fact types are still link-mapped, rooted at the supertype table's key.
++
++**The `GND` extension.** The mapping carries one custom extension with
++`vendor_name: GND`. Its `data` is canonical JSON, without the trailing
++newline, under the schema id `gnd-ossie-relational/1`:
++
++| Member | Value |
++|---|---|
++| `model_identity` | The model's canonical identity. It changes with a `sample_population`; nothing else in the two files does. |
++| `ontology_sha256`, `semantic_model_sha256` | The bare hexadecimal SHA-256 of the exact ontology and semantic-model bytes of the same run |
++| `rmap_variant` | `halpin` |
++| `dispositions` | Every row of the Rmap's one walk: each fact type and each constraint, with `carried_as` or a `reason` |
++| `concepts` | Entity concepts with a table and no object mapping, each with a reason: `subtype-absorbed` or `identification-differs` |
++| `unmapped_links` | Present only when not empty: carried fact types with no link mapping, each with the reason `identification-differs` |
++
++`identification-differs` means the ontology does not identify an object type
++the way its key columns do, so no object mapping for it can be written. That
++is the case for a unit-based reference, for an objectification keyed by its
++own fact type, and for a subtype that inherits through several supertypes.
++Every fact type the Rmap carries is therefore either named by exactly one
++link tree or listed in `unmapped_links`. `--strict` does not refuse any of
++these: they are listed, not refused.
++
+ ### Import a pinned ontology
+ 
+ `gnd import ossie FILE --out MODEL` accepts an Ossie ontology in JSON or
+diff --git a/tests/fixtures/ossie_relational/README.md b/tests/fixtures/ossie_relational/README.md
+index 7f645ce3..a417f599 100644
+--- a/tests/fixtures/ossie_relational/README.md
++++ b/tests/fixtures/ossie_relational/README.md
+@@ -53,8 +53,9 @@ for; the carried fact types are exactly the link-mapped ones; and the
+ extension's digests are right.
+ 
+ ```bash
+-uv run python -m tests.support.ossie_relational_corpus --mapping-schema PATH/TO/mapping.json
++uv run python -m tests.support.ossie_relational_corpus
+ ```
+ 
+-`mapping.json` is Ossie's `ontology/mapping.json` at the pinned commit. OB3
+-vendors it; until then the check takes its path.
++It reads Ossie's `ontology/mapping.json` as vendored at the pinned commit
++(`src/gnd/schema/ossie/mapping.json`). `tests/test_ossie_relational.py` holds
++the same cases against the renderer.
+diff --git a/tests/support/ossie_relational_corpus.py b/tests/support/ossie_relational_corpus.py
+index 19467b7d..4b94f5b4 100644
+--- a/tests/support/ossie_relational_corpus.py
++++ b/tests/support/ossie_relational_corpus.py
+@@ -9,7 +9,7 @@ before any renderer existed. This module does not render them. It only:
+ - checks each case against the pinned schemas, the real ontology export, and the
+   owner-approved OB2 Rmap answer (``check``).
+ 
+-Run: ``uv run python -m tests.support.ossie_relational_corpus --mapping-schema PATH``
++Run: ``uv run python -m tests.support.ossie_relational_corpus``
+ """
+ 
+ from __future__ import annotations
+@@ -17,7 +17,6 @@ from __future__ import annotations
+ import argparse
+ import hashlib
+ import json
+-import re
+ import sys
+ from io import StringIO
+ from pathlib import Path
+@@ -34,11 +33,9 @@ SCHEMAS = ROOT / "src/gnd/schema/ossie"
+ UPSTREAM = "https://raw.githubusercontent.com/apache/ossie/main/"
+ OUT_NAME = "ontology.yaml"  # the corpus convention for OUT's basename
+ 
+-# The whole grammar of an expression the corpus writes: a quoted, uppercased
+-# dataset.field, optionally inside CASE WHEN <flag> THEN <key> END.
+-_REF = r'"([A-Z][A-Z0-9_]*)"\."([A-Z][A-Z0-9_]*)"'
+-_PLAIN = re.compile(_REF)
+-_UNARY = re.compile(f"CASE WHEN {_REF} THEN {_REF} END")
++# The two shapes of expression the export writes, with each quoted identifier
++# replaced by a placeholder: dataset.field, optionally inside a unary's CASE WHEN.
++_SHAPES = {"?.?": 1, "CASE WHEN ?.? THEN ?.? END": 2}
+ 
+ 
+ def dump_yaml(document) -> bytes:
+@@ -56,6 +53,10 @@ def load_yaml(path: Path):
+     return YAML(typ="safe", pure=True).load(path.read_text(encoding="utf-8"))
+ 
+ 
++def load_yaml_bytes(data: bytes):
++    return YAML(typ="safe", pure=True).load(data.decode("utf-8"))
++
++
+ def extension_data(payload) -> str:
+     """Canonical JSON without its trailing newline."""
+     from gnd.artifacts import canonical_json_bytes
+@@ -95,13 +96,143 @@ def _validators(mapping_schema: Path):
+     )
+ 
+ 
+-def _expression_fields(expression: str) -> list[tuple[str, str]]:
+-    plain = _PLAIN.fullmatch(expression)
+-    if plain:
+-        return [(plain[1], plain[2])]
+-    unary = _UNARY.fullmatch(expression)
+-    assert unary, f"expression outside the corpus grammar: {expression!r}"
+-    return [(unary[1], unary[2]), (unary[3], unary[4])]
++def quoted_identifiers(expression: str) -> tuple[list[str], str]:
++    """Lex SQL quoted identifiers: the names, and the text with each replaced by ``?``.
++
++    Inside quotes a doubled quote is one quote character; an unclosed quote fails.
++    """
++    names, shape, position = [], [], 0
++    while position < len(expression):
++        if expression[position] != '"':
++            shape.append(expression[position])
++            position += 1
++            continue
++        name, position = [], position + 1
++        while True:
++            assert position < len(expression), f"unclosed identifier in {expression!r}"
++            if expression[position] != '"':
++                name.append(expression[position])
++                position += 1
++            elif expression[position + 1:position + 2] == '"':
++                name.append('"')
++                position += 2
++            else:
++                position += 1
++                break
++        names.append("".join(name))
++        shape.append("?")
++    return names, "".join(shape)
++
++
++def expression_fields(expression: str) -> list[tuple[str, str]]:
++    """The (dataset, field) pairs an exported expression names."""
++    names, shape = quoted_identifiers(expression)
++    assert shape in _SHAPES, f"expression outside the export's grammar: {expression!r}"
++    return [(names[i], names[i + 1]) for i in range(0, len(names), 2)]
++
++
++def cross_check(ontology, semantic, mapping) -> list[str]:
++    """Check a mapping against its ontology and semantic model, from the documents alone.
++
++    Returns the relationships its link mappings name, in document order.
++    """
++    names = [d["name"] for d in semantic["datasets"]]
++    assert len(names) == len(set(names)), "duplicate dataset name"
++    fields = {}
++    for dataset in semantic["datasets"]:
++        own = [f["name"] for f in dataset["fields"]]
++        assert len(own) == len(set(own)), f"duplicate field in {dataset['name']}"
++        fields[dataset["name"]] = set(own)
++        for key in [dataset.get("primary_key", []), *dataset.get("unique_keys", [])]:
++            assert set(key) <= set(own), (dataset["name"], key)
++        for field in dataset["fields"]:
++            assert quoted_identifiers(field["expression"]["sql"]) == ([field["name"].upper()], "?")
++    related = [r["name"] for r in semantic.get("relationships", [])]
++    assert len(related) == len(set(related)), "duplicate relationship name"
++    for r in semantic.get("relationships", []):
++        assert set(r["from_columns"]) <= fields[r["from"]] and set(r["to_columns"]) <= fields[r["to"]], r["name"]
++        assert len(r["from_columns"]) == len(r["to_columns"]), r["name"]
++
++    assert mapping["ontology_ref"]["name"] == ontology["name"]
++    assert mapping["semantic_model_ref"]["name"] == semantic["name"]
++    declared = {(d.upper(), f.upper()) for d, own in fields.items() for f in own}
++    components = {c["concept"]: c for c in ontology["ontology"]}
++
++    def ancestors(concept):
++        seen, pending = [], [concept]
++        while pending:
++            current = pending.pop(0)
++            if current in components and current not in seen:
++                seen.append(current)
++                pending += components[current].get("extends", [])
++        return seen
++
++    def relationship(concept, name):
++        for owner in ancestors(concept):
++            for candidate in components[owner].get("relationships", []):
++                if candidate["name"] == name:
++                    return candidate
++        raise AssertionError(f"{name} is not declared on {concept}")
++
++    def identify_by(concept):
++        for owner in ancestors(concept):
++            if components[owner].get("identify_by"):
++                return components[owner]["identify_by"]
++        return []
++
++    def check_referents(node, concept):
++        listed = [referent["relationship"] for referent in node["referent_mappings"]]
++        assert listed == identify_by(concept), (concept, listed)
++        for referent in node["referent_mappings"]:
++            target = relationship(concept, referent["relationship"])["roles"][-1]["concept"]
++            check_object(referent, target, nested=True)
++
++    def check_object(node, concept, nested=False):
++        assert ("expression" in node) != ("referent_mappings" in node)
++        if "expression" in node:
++            for field in expression_fields(node["expression"]):
++                assert field in declared, field
++            entity = components[concept]["type"] == "EntityType"
++            # A bare expression finds an entity only through a one-relationship identifier.
++            assert nested or not entity or len(identify_by(concept)) == 1, concept
++            return
++        check_referents(node, concept)
++
++    linked = []
++
++    def check_link(node, concept, level, prefix):
++        if level > 1:
++            object_concept = node["object_mapping"]["concept"]
++        else:
++            object_concept = concept
++            assert "concept" not in node["object_mapping"]
++        check_object(node["object_mapping"], object_concept)
++        if "relationship" in node:
++            roles = relationship(concept, node["relationship"]).get("roles", [])
++            assert len(roles) + 1 == level, node["relationship"]
++            assert [*prefix, object_concept][1:] == [role["concept"] for role in roles]
++            linked.append(node["relationship"])
++        for child in node.get("children", []):
++            check_link(child, concept, level + 1, [*prefix, object_concept])
++
++    mapped_concepts = [entry["concept"] for entry in mapping["concept_mappings"]]
++    order = [c["concept"] for c in ontology["ontology"]]
++    assert mapped_concepts == [c for c in order if c in set(mapped_concepts)]
++    for entry in mapping["concept_mappings"]:
++        concept = entry["concept"]
++        if "object_mappings" in entry:
++            assert components[concept]["type"] == "EntityType", concept
++        for node in entry.get("object_mappings", []):
++            check_object(node, concept)
++        own = [r["name"] for r in components[concept].get("relationships", [])]
++        named = []
++        for node in entry.get("link_mappings", []):
++            before = len(linked)
++            check_link(node, concept, 1, [])
++            assert len(linked) == before + 1, "one fact type per tree"
++            named.append(linked[-1])
++        assert named == [name for name in own if name in set(named)], "ontology relationship order"
++    return linked
+ 
+ 
+ def check(number: str, mapping_schema: Path) -> None:
+@@ -117,7 +248,7 @@ def check(number: str, mapping_schema: Path) -> None:
+     mapping = load_yaml(directory / "expected.mapping.yaml")
+     payload = json.loads((directory / "expected.extension.json").read_text(encoding="utf-8"))
+     answer = json.loads((RMAP / "answers" / f"{number}.json").read_text(encoding="utf-8"))
+-    ontology_bytes = render_ossie(model_path, output_format="yaml").document
++    ontology_bytes = render_ossie(model_path, output_format="yaml", relational=False).document
+     ontology = YAML(typ="safe", pure=True).load(ontology_bytes.decode("utf-8"))
+ 
+     # 1. The files are in the exporter's own YAML form, byte for byte.
+@@ -159,78 +290,12 @@ def check(number: str, mapping_schema: Path) -> None:
+     assert semantic["name"] == ontology["name"] + "_relational"
+     assert mapping["name"] == ontology["name"] + "_mapping"
+ 
+-    # 5. Every expression names a declared dataset.field.
+-    declared = {(d["name"].upper(), f["name"].upper()) for d in semantic["datasets"] for f in d["fields"]}
++    # 5, 6. Expressions name declared fields; links and referents name the ontology's
++    # relationships at the right level.
++    linked = cross_check(ontology, semantic, mapping)
+     components = {c["concept"]: c for c in ontology["ontology"]}
+-
+-    def ancestors(concept):
+-        seen, pending = [], [concept]
+-        while pending:
+-            current = pending.pop(0)
+-            if current in components and current not in seen:
+-                seen.append(current)
+-                pending += components[current].get("extends", [])
+-        return seen
+-
+-    def relationship(concept, name):
+-        for owner in ancestors(concept):
+-            for candidate in components[owner].get("relationships", []):
+-                if candidate["name"] == name:
+-                    return candidate
+-        raise AssertionError(f"{name} is not declared on {concept}")
+-
+-    def identify_by(concept):
+-        for owner in ancestors(concept):
+-            if components[owner].get("identify_by"):
+-                return components[owner]["identify_by"]
+-        return []
+-
+-    def check_object(node, concept):
+-        if "expression" in node:
+-            for field in _expression_fields(node["expression"]):
+-                assert field in declared, field
+-            return
+-        names = [referent["relationship"] for referent in node["referent_mappings"]]
+-        assert names == identify_by(concept), (concept, names)
+-        for referent in node["referent_mappings"]:
+-            target = relationship(concept, referent["relationship"])["roles"][-1]["concept"]
+-            check_object(referent, target)
+-
+-    # 6. Each link node names a relationship of its concept at the level its arity calls for.
+-    linked = []
+-
+-    def check_link(node, concept, level, prefix):
+-        object_concept = concept
+-        if level > 1:
+-            object_concept = node["object_mapping"]["concept"]
+-        else:
+-            assert "concept" not in node["object_mapping"]
+-        check_object(node["object_mapping"], object_concept)
+-        if "relationship" in node:
+-            declared_relationship = relationship(concept, node["relationship"])
+-            roles = declared_relationship.get("roles", [])
+-            assert len(roles) + 1 == level, node["relationship"]
+-            assert [*prefix, object_concept][1:] == [role["concept"] for role in roles]
+-            linked.append(node["relationship"])
+-        for child in node.get("children", []):
+-            check_link(child, concept, level + 1, [*prefix, object_concept])
+-
++    order = list(components)
+     mapped_concepts = [entry["concept"] for entry in mapping["concept_mappings"]]
+-    order = [c["concept"] for c in ontology["ontology"]]
+-    assert mapped_concepts == [c for c in order if c in mapped_concepts]
+-    for entry in mapping["concept_mappings"]:
+-        concept = entry["concept"]
+-        assert components[concept]["type"] == "EntityType"
+-        for node in entry.get("object_mappings", []):
+-            check_object(node, concept)
+-        own = [r["name"] for r in components[concept].get("relationships", [])]
+-        named = []
+-        for node in entry.get("link_mappings", []):
+-            before = len(linked)
+-            check_link(node, concept, 1, [])
+-            assert len(linked) == before + 1, "one fact type per tree"
+-            named.append(linked[-1])
+-        assert named == [name for name in own if name in named], "ontology relationship order"
+ 
+     # 7. Totality: the carried fact types are exactly the link-mapped relationships.
+     carried = [d["id"] for d in answer["dispositions"] if d["kind"] == "fact_type" and d["reason"] is None]
+@@ -256,7 +321,7 @@ def check(number: str, mapping_schema: Path) -> None:
+ 
+ def main(argv=None) -> int:
+     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+-    parser.add_argument("--mapping-schema", type=Path, required=True)
++    parser.add_argument("--mapping-schema", type=Path, default=SCHEMAS / "mapping.json")
+     parser.add_argument("--assemble", action="store_true")
+     arguments = parser.parse_args(argv)
+     for number in cases():
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index d90a439b..8dc6439a 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -159,6 +159,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO3-GO5/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB2/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_ossie_export.py b/tests/test_ossie_export.py
+index ea179297..5fc0c7f3 100644
+--- a/tests/test_ossie_export.py
++++ b/tests/test_ossie_export.py
+@@ -201,6 +201,12 @@ def test_vendored_ontology_bytes_match_os0_pin():
+     assert (
+         pin["sha256"] == hashlib.sha256(bundle.joinpath("ontology.json").read_bytes()).hexdigest()
+     )
++    # OB3: the mapping schema is vendored from the same commit. OS0 predates it, so its
++    # digest is pinned here against the vendored bytes.
++    mapping = pin["mapping_reference"]
++    assert mapping["upstream_path"] == "ontology/mapping.json"
++    assert mapping["sha256"] == hashlib.sha256(bundle.joinpath("mapping.json").read_bytes()).hexdigest()
++    assert mapping["sha256"] == "936118ca7753676c069d1fa615c8dced7e9a9499ab185cc2ddbe8d1c2d4404f3"
+ 
+ 
+ def test_cli_loss_and_strict_policy(tmp_path, capsys):
+@@ -713,12 +719,15 @@ def test_ob1_t3_each_artifact_is_bounded(tmp_path, artifact, capsys):
+     source, size = _largest_by(tmp_path, artifact)
+     refused = tmp_path / "refused"
+     refused.mkdir()
+-    assert cli.main(_export_argv(source, refused / "o.json", "--max-output-bytes", str(size - 1))) == 3
++    # OB3 (D2 a): the three legacy artifacts are the --ontology-only run. The relational
++    # files' own bound is tests/test_ossie_relational.py T8.
++    only = "--ontology-only"
++    assert cli.main(_export_argv(source, refused / "o.json", only, "--max-output-bytes", str(size - 1))) == 3
+     assert "ossie:output-size" in capsys.readouterr().err
+     assert not list(refused.iterdir())
+     published = tmp_path / "published"
+     published.mkdir()
+-    assert cli.main(_export_argv(source, published / "o.json", "--max-output-bytes", str(size))) == 0
++    assert cli.main(_export_argv(source, published / "o.json", only, "--max-output-bytes", str(size))) == 0
+     assert sorted(p.name for p in published.iterdir()) == ["o.json", "o.json.gnd.json", "o.json.loss.json"]
+ 
+ 
+diff --git a/tests/test_ossie_external_oracle.py b/tests/test_ossie_external_oracle.py
+index ce01eeb6..c8272f05 100644
+--- a/tests/test_ossie_external_oracle.py
++++ b/tests/test_ossie_external_oracle.py
+@@ -52,6 +52,23 @@ def test_external_census(oracle, tmp_path, relative):
+         assert result.returncode == 0, result.stdout + result.stderr
+ 
+ 
++@pytest.mark.parametrize("relative", sorted(set(CENSUS) - INCLUDE_ROOTS))
++def test_external_relational_census(oracle, tmp_path, relative):
++    """OB3 T11: the pinned validator accepts the semantic model, and the mapping cross-checked
++    against the ontology and semantic model its references resolve to."""
++    bundle = render_ossie(ROOT / relative, output_format="yaml", document_name="ontology.yaml")
++    if bundle.semantic_model is None:  # a model that maps to no table has no relational files
++        return
++    (tmp_path / "ontology.yaml").write_bytes(bundle.document)
++    semantic = tmp_path / "ontology.yaml.semantic_model.yaml"
++    mapping = tmp_path / "ontology.yaml.mapping.yaml"
++    semantic.write_bytes(bundle.semantic_model)
++    mapping.write_bytes(bundle.mapping)
++    for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
++        result = oracle.validate(path, schema)
++        assert result.returncode == 0, result.stdout + result.stderr
++
++
+ def test_external_refusal_is_live(oracle, tmp_path):
+     document = {
+         "version": "0.3.0.dev0",
+diff --git a/tests/test_ossie_relational.py b/tests/test_ossie_relational.py
+new file mode 100644
+index 00000000..9cd51da4
+--- /dev/null
++++ b/tests/test_ossie_relational.py
+@@ -0,0 +1,480 @@
++"""OB3: the Ossie semantic model and mapping against their owner-approved corpus.
++
++The corpus (tests/fixtures/ossie_relational) and its hand-derived expected files were
++approved at the OB3 corpus gate before any renderer existed.
++"""
++
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++import pytest
++from support import ossie_relational_corpus as corpus
++
++ROOT = Path(__file__).resolve().parents[1]
++CASES = corpus.cases()
++
++
++def _render(number, output_format="yaml"):
++    from gnd.export.ossie import render_ossie
++
++    return render_ossie(
++        corpus.rmap_case(number), output_format=output_format, document_name=f"ontology.{output_format}"
++    )
++
++
++@pytest.mark.parametrize("number", CASES)
++def test_t1_yaml_equals_the_approved_files(number):
++    bundle = _render(number)
++    directory = corpus.CORPUS / number
++    assert bundle.semantic_model == (directory / "expected.semantic_model.yaml").read_bytes()
++    assert bundle.mapping == (directory / "expected.mapping.yaml").read_bytes()
++
++
++@pytest.mark.parametrize("number", CASES)
++def test_t1_extension_parses_to_the_readable_copy(number):
++    mapping = corpus.load_yaml_bytes(_render(number).mapping)
++    (extension,) = mapping["custom_extensions"]
++    expected = json.loads((corpus.CORPUS / number / "expected.extension.json").read_text(encoding="utf-8"))
++    assert json.loads(extension["data"]) == expected
++
++
++@pytest.mark.parametrize("number", CASES)
++def test_t1_json_equals_the_approved_structure(number):
++    bundle = _render(number, "json")
++    directory = corpus.CORPUS / number
++    semantic = json.loads(bundle.semantic_model)
++    mapping = json.loads(bundle.mapping)
++    assert semantic == corpus.load_yaml(directory / "expected.semantic_model.yaml")
++    expected = corpus.load_yaml(directory / "expected.mapping.yaml")
++    # The JSON run names JSON files and binds the JSON bytes, so those members differ.
++    assert mapping["ontology_ref"]["iri"] == "./ontology.json"
++    assert mapping["semantic_model_ref"]["iri"] == "./ontology.json.semantic_model.json"
++    for document in (mapping, expected):
++        document.pop("ontology_ref"), document.pop("semantic_model_ref")
++    actual_payload = json.loads(mapping.pop("custom_extensions")[0]["data"])
++    expected_payload = json.loads(expected.pop("custom_extensions")[0]["data"])
++    for key in ("ontology_sha256", "semantic_model_sha256"):
++        actual_payload.pop(key), expected_payload.pop(key)
++    assert mapping == expected
++    assert actual_payload == expected_payload
++
++
++# --- T2-T5: every model the export admits ------------------------------------------------------
++
++
++def _model_paths():
++    found = set()
++    for base in (ROOT / "src/gnd", ROOT / "tests/fixtures"):
++        for pattern in ("*.orm.yaml", "*.orm.json"):
++            found.update(base.rglob(pattern))
++    found.update((corpus.RMAP / "cases").glob("*/model.yaml"))
++    return sorted(found)
++
++
++@pytest.fixture(scope="module")
++def exported():
++    """(path, format) -> bundle for every scanned model the export admits."""
++    from gnd.export.ossie import render_ossie
++
++    bundles = {}
++    for path in _model_paths():
++        for output_format in ("json", "yaml"):
++            try:
++                bundles[(path, output_format)] = render_ossie(path, output_format=output_format)
++            except Exception:  # noqa: BLE001 -- a refused model has no export to check
++                break
++    assert len(bundles) >= 800  # 844 on 2026-11-24; a collapse of the scan fails here
++    return bundles
++
++
++def _documents(bundle, output_format):
++    load = json.loads if output_format == "json" else corpus.load_yaml_bytes
++    return load(bundle.document), load(bundle.semantic_model), load(bundle.mapping)
++
++
++def test_t2_pinned_schemas_accept_every_relational_file(exported):
++    from gnd.export.ossie_relational import validate_relational
++
++    checked = 0
++    for (_path, output_format), bundle in exported.items():
++        if bundle.semantic_model is None:
++            continue
++        _ontology, semantic, mapping = _documents(bundle, output_format)
++        validate_relational(semantic, mapping)
++        checked += 1
++    assert checked >= 800
++
++
++def test_t2_validation_is_offline_and_can_fail():
++    import jsonschema
++
++    from gnd.export.ossie_relational import validate_relational
++
++    semantic = corpus.load_yaml(corpus.CORPUS / "01" / "expected.semantic_model.yaml")
++    mapping = corpus.load_yaml(corpus.CORPUS / "01" / "expected.mapping.yaml")
++    validate_relational(semantic, mapping)
++    with pytest.raises(jsonschema.ValidationError):
++        validate_relational({**semantic, "datasets": []}, mapping)
++    broken = json.loads(json.dumps(mapping))
++    # ConceptMapping lives in ontology.json, behind the mapping schema's upstream $ref.
++    broken["concept_mappings"][0]["link_mappings"][0]["object_mapping"] = {}
++    with pytest.raises(jsonschema.ValidationError):
++        validate_relational(semantic, broken)
++
++
++def test_t3_cross_checks_hold_for_every_model(exported):
++    for (path, output_format), bundle in exported.items():
++        if output_format != "json" or bundle.semantic_model is None:
++            continue
++        try:
++            corpus.cross_check(*_documents(bundle, output_format))
++        except AssertionError as error:
++            raise AssertionError(f"{path}: {error}") from error
++
++
++def test_t4_one_walk_lists_every_fact_type_and_constraint(exported):
++    from gnd.model import load_model_bytes
++    from gnd.model_index import ModelIndex
++
++    reasons = set()
++    for (path, output_format), bundle in exported.items():
++        if output_format != "json" or bundle.semantic_model is None:
++            continue
++        ontology, semantic, mapping = _documents(bundle, output_format)
++        payload = json.loads(mapping["custom_extensions"][0]["data"])
++        model = load_model_bytes(path.read_bytes(), source=path)  # as the export reads it
++        expected = []
++        for fact in ModelIndex.for_model(model).iter_fact_types_shared():
++            expected.append(("fact_type", fact["id"]))
++            expected += [("constraint", f"fact_types/{fact['id']}/constraints/{i}")
++                         for i, _ in enumerate(fact.get("constraints") or ())]
++        expected += [("constraint", f"constraints/{i}") for i, _ in enumerate(model.constraints or ())]
++        listed = [(row["kind"], row["id"]) for row in payload["dispositions"]]
++        assert sorted(listed) == sorted(expected), path
++        assert all(bool(row["carried_as"]) != (row["reason"] is not None) for row in payload["dispositions"]), path
++        carried = {row["id"] for row in payload["dispositions"] if row["kind"] == "fact_type" and row["reason"] is None}
++        linked = corpus.cross_check(ontology, semantic, mapping)
++        unlinked = [row["fact_type"] for row in payload.get("unmapped_links", [])]
++        assert len(linked) == len(set(linked)) and not set(linked) & set(unlinked), path
++        assert set(linked) | set(unlinked) == carried, path
++        reasons.update(row["reason"] for row in payload.get("unmapped_links", []))
++        reasons.update(row["reason"] for row in payload["concepts"])
++    assert reasons == {"identification-differs", "subtype-absorbed"}
++
++
++def test_t5_bytes_do_not_depend_on_the_run_or_the_path(tmp_path):
++    import shutil
++
++    from gnd.export.ossie import render_ossie
++
++    for number in CASES:
++        source = corpus.rmap_case(number)
++        moved = tmp_path / number / "elsewhere" / "renamed.yaml"
++        moved.parent.mkdir(parents=True)
++        shutil.copyfile(source, moved)
++        for output_format in ("yaml", "json"):
++            first = render_ossie(source, output_format=output_format)
++            assert render_ossie(source, output_format=output_format) == first
++            assert render_ossie(moved, output_format=output_format) == first
++
++
++# --- T6-T9: the command ------------------------------------------------------------------------
++
++OB1_BASELINE = json.loads((ROOT / "tests/fixtures/ossie_ob1_baseline.json").read_bytes())
++LEGACY = ("document", "sidecar", "loss_report")
++MODEL_01 = corpus.rmap_case("01")
++
++
++@pytest.mark.parametrize("key", sorted(OB1_BASELINE))
++def test_t6_ontology_only_equals_the_ob1_baseline(key):
++    """The default run's legacy files are checked by test_ossie_export's OB1 T1."""
++    import hashlib
++
++    from gnd.export.ossie import render_ossie
++
++    relative, _, output_format = key.partition("::")
++    try:
++        bundle = render_ossie(ROOT / relative, output_format=output_format, relational=False)
++        actual = {name: hashlib.sha256(getattr(bundle, name)).hexdigest() for name in LEGACY}
++        actual["sizes"] = [len(getattr(bundle, name)) for name in LEGACY]
++        assert bundle.semantic_model is None and bundle.mapping is None
++    except Exception as error:  # noqa: BLE001 -- the baseline records refusals by type and text
++        actual = {"refused": f"{type(error).__name__}: {error}"}
++    assert actual == OB1_BASELINE[key]
++
++
++def _argv(model, out, *extra):
++    return ["export", "ossie", str(model), "--out", str(out), *extra]
++
++
++@pytest.mark.parametrize("output_format", ("yaml", "json"))
++def test_t6_command_writes_five_files_and_ontology_only_three(tmp_path, output_format, capsys):
++    from gnd import cli
++
++    five, three = tmp_path / "five", tmp_path / "three"
++    five.mkdir(), three.mkdir()
++    name = f"o.{output_format}"
++    assert cli.main(_argv(MODEL_01, five / name, "--format", output_format)) == 0
++    assert cli.main(_argv(MODEL_01, three / name, "--format", output_format, "--ontology-only")) == 0
++    legacy = [name, f"{name}.gnd.json", f"{name}.loss.json"]
++    relational = [f"{name}.mapping.{output_format}", f"{name}.semantic_model.{output_format}"]
++    assert sorted(p.name for p in three.iterdir()) == sorted(legacy)
++    assert sorted(p.name for p in five.iterdir()) == sorted(legacy + relational)
++    for leaf in legacy:
++        assert (five / leaf).read_bytes() == (three / leaf).read_bytes()
++    load = json.loads if output_format == "json" else corpus.load_yaml_bytes
++    mapping = load((five / relational[0]).read_bytes())
++    assert mapping["ontology_ref"]["iri"] == f"./{name}"
++    assert mapping["semantic_model_ref"]["iri"] == f"./{relational[1]}"
++    assert "semantic model and mapping" in capsys.readouterr().out
++
++
++@pytest.mark.parametrize("leaf", ("o.yaml", "o.yaml.gnd.json", "o.yaml.loss.json",
++                                  "o.yaml.semantic_model.yaml", "o.yaml.mapping.yaml"))
++def test_t7_a_collision_on_any_path_publishes_nothing(tmp_path, leaf):
++    from gnd import cli
++
++    (tmp_path / leaf).write_text("occupied")
++    assert cli.main(_argv(MODEL_01, tmp_path / "o.yaml")) == 11
++    assert [p.name for p in tmp_path.iterdir()] == [leaf]
++    assert (tmp_path / leaf).read_text() == "occupied"
++
++
++def test_t7_ontology_only_ignores_the_relational_paths(tmp_path):
++    from gnd import cli
++
++    (tmp_path / "o.yaml.mapping.yaml").write_text("occupied")
++    assert cli.main(_argv(MODEL_01, tmp_path / "o.yaml", "--ontology-only")) == 0
++
++
++def _largest(tmp_path, artifact):
++    """A model whose named relational artifact is strictly the largest of the five."""
++    from gnd.export.ossie import render_ossie
++
++    long = "x" * 4000
++    document = corpus.load_yaml(MODEL_01)
++    if artifact == "mapping":
++        # A unary's id is its flag column, its relationship and its disposition.
++        document["fact_types"] = [{"id": f"flag_{long}", "reading": "{Customer} is flagged",
++                                   "roles": [{"object_type": "customer", "role_name": "customer"}]}]
++    else:
++        # A referenced key column is named four times per reference in the semantic model
++        # (field, expression, and both sides of the relationship), and twice in the mapping.
++        modality = {"source": "explicit", "status": "confirmed", "modality": "alethic",
++                    "provenance": {"user_quote": "one"}}
++        document["object_types"] += [
++            {"id": "target", "name": "Target", "kind": "entity", "independent": True,
++             "reference": {"mode": "popular", "value_type": f"id_{long}"}},
++            {"id": f"id_{long}", "name": "TargetId", "kind": "value", "primitive": "Integer"},
++        ]
++        document["fact_types"] = [
++            {"id": f"f{n}", "reading": "{Customer} points at {Target}",
++             "roles": [{"object_type": "customer", "role_name": "customer"},
++                       {"object_type": "target", "role_name": f"r{n}"}],
++             "constraints": [{"type": "uniqueness", "roles": ["customer"], **modality}]}
++            for n in range(3)
++        ]
++    path = tmp_path / "model.json"
++    path.write_text(json.dumps(document))
++    # The mapping names its sibling files, so its size depends on the output name.
++    bundle = render_ossie(path, output_format="json", document_name="o.json")
++    sizes = {name: len(getattr(bundle, name)) for name in (*LEGACY, "semantic_model", "mapping")}
++    assert max(sizes, key=sizes.get) == artifact and sorted(sizes.values())[-2] < sizes[artifact], sizes
++    return path, sizes[artifact]
++
++
++@pytest.mark.parametrize("artifact", ("semantic_model", "mapping"))
++def test_t8_the_output_bound_covers_the_relational_files(tmp_path, artifact, capsys):
++    from gnd import cli
++
++    source, size = _largest(tmp_path, artifact)
++    refused, published = tmp_path / "refused", tmp_path / "published"
++    refused.mkdir(), published.mkdir()
++    assert cli.main(_argv(source, refused / "o.json", "--format", "json", "--max-output-bytes", str(size - 1))) == 3
++    assert "ossie:output-size" in capsys.readouterr().err
++    assert not list(refused.iterdir())
++    assert cli.main(_argv(source, published / "o.json", "--format", "json", "--max-output-bytes", str(size))) == 0
++    assert len(list(published.iterdir())) == 5
++    # Without the relational files the same bound minus one is enough.
++    assert cli.main(_argv(source, refused / "o.json", "--format", "json", "--ontology-only",
++                          "--max-output-bytes", str(size - 1))) == 0
++
++
++def test_t9_a_sample_population_changes_only_the_identity(tmp_path):
++    from gnd.export.ossie import render_ossie
++
++    document = corpus.load_yaml(MODEL_01)
++    plain, populated = tmp_path / "plain.json", tmp_path / "populated.json"
++    plain.write_text(json.dumps(document))
++    document["fact_types"][0]["sample_population"] = [{"customer": 1, "email": "a@example.org"}]
++    populated.write_text(json.dumps(document))
++    without, with_rows = (render_ossie(path, output_format="yaml") for path in (plain, populated))
++    assert with_rows.semantic_model == without.semantic_model
++    assert with_rows.document == without.document
++    assert b"example.org" not in with_rows.semantic_model + with_rows.mapping
++    payloads = []
++    for bundle in (without, with_rows):
++        mapping = corpus.load_yaml_bytes(bundle.mapping)
++        payloads.append(json.loads(mapping.pop("custom_extensions")[0]["data"]))
++        payloads.append(mapping)
++    assert payloads[1] == payloads[3]
++    assert payloads[0].pop("model_identity") != payloads[2].pop("model_identity")
++    assert payloads[0] == payloads[2]
++    rows = json.loads(with_rows.loss_report)["dispositions"]
++    assert any(row["reason"] == "population:out-of-scope" for row in rows)
++    assert not any(row["reason"] == "population:out-of-scope" for row in json.loads(without.loss_report)["dispositions"])
++
++
++def test_no_table_means_no_relational_files(tmp_path, capsys):
++    """Core-spec requires a dataset, so a model that maps to no table writes three files."""
++    from gnd import cli
++    from gnd.export.ossie import render_ossie
++
++    document = corpus.load_yaml(MODEL_01)
++    document["fact_types"] = []
++    path = tmp_path / "model.json"
++    path.write_text(json.dumps(document))
++    bundle = render_ossie(path, output_format="yaml")
++    assert bundle.semantic_model is None and bundle.mapping is None
++    assert bundle.document == render_ossie(path, output_format="yaml", relational=False).document
++    out = tmp_path / "out"
++    out.mkdir()
++    assert cli.main(_argv(path, out / "o.yaml")) == 0
++    assert sorted(p.name for p in out.iterdir()) == ["o.yaml", "o.yaml.gnd.json", "o.yaml.loss.json"]
++    assert "maps to no table" in capsys.readouterr().err
++
++
++# --- T10: time ---------------------------------------------------------------------------------
++
++
++def test_t10_render_time_is_bounded_and_not_quadratic(tmp_path):
++    from time import monotonic
++
++    from support.rmap_large import large_rmap_model
++
++    from gnd.export.ossie import render_ossie
++
++    times = {}
++    for scale in (1, 5):
++        path = tmp_path / f"large{scale}.json"
++        path.write_text(json.dumps(large_rmap_model(280 * scale, 900 * scale), separators=(",", ":")))
++        best = float("inf")
++        for _ in range(2):
++            start = monotonic()
++            bundle = render_ossie(path, output_format="json", max_output_bytes=268435456)
++            best = min(best, monotonic() - start)
++        assert bundle.mapping is not None
++        times[scale] = best
++    # 1,400 entities and 4,500 fact types (the reporter's scale): 3.3 s for the five files and
++    # 2.6 s for the ontology's three, measured on 2026-11-24; the ratio to one fifth was 5.1.
++    assert times[5] < 60
++    assert times[5] / times[1] < 12  # linear about 5; quadratic about 25
++
++
++# --- T13-T16: the decisions ---------------------------------------------------------------------
++
++
++def _render_document(tmp_path, document, name="model.json"):
++    from gnd.export.ossie import render_ossie
++
++    path = tmp_path / name
++    path.write_text(json.dumps(document))
++    return render_ossie(path, output_format="json")
++
++
++def test_t13_an_identifier_needs_functional_components(tmp_path):
++    """E3 (a): a component that is not single-valued for the entity identifies nothing."""
++    document = corpus.load_yaml(corpus.rmap_case("14"))
++    code = next(f for f in document["fact_types"] if f["id"] == "state_has_code")
++    code["constraints"] = [c for c in code["constraints"] if c["type"] != "uniqueness"]
++    bundle = _render_document(tmp_path, document)
++    semantic, mapping = json.loads(bundle.semantic_model), json.loads(bundle.mapping)
++    assert "state" not in [d["name"] for d in semantic["datasets"]]
++    payload = json.loads(mapping["custom_extensions"][0]["data"])
++    rows = {(row["kind"], row["id"]): row for row in payload["dispositions"]}
++    assert rows[("fact_type", "state_has_population")]["reason"] == "identification-unmatchable"
++    assert "State" not in [entry["concept"] for entry in mapping["concept_mappings"]]
++    # The ontology agrees: it declares no identifier for State either.
++    state = next(c for c in json.loads(bundle.document)["ontology"] if c["concept"] == "State")
++    assert "identify_by" not in state
++
++
++def test_t13_identification_differs_is_listed_not_guessed(tmp_path):
++    """E3 (b): a unit-based entity has a key column but no identifier in the ontology."""
++    bundle = _render_document(tmp_path, corpus.load_yaml(corpus.rmap_case("23")))
++    mapping = json.loads(bundle.mapping)
++    payload = json.loads(mapping["custom_extensions"][0]["data"])
++    assert payload["unmapped_links"] == [{"fact_type": "person_has_height", "reason": "identification-differs"}]
++    linked = corpus.cross_check(json.loads(bundle.document), json.loads(bundle.semantic_model), mapping)
++    assert "person_has_height" not in linked
++
++
++def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
++    """E5: `order` and `select` are legal names; quoted and uppercased they are not keywords."""
++    document = corpus.load_yaml(MODEL_01)
++    document["object_types"] += [
++        {"id": "select", "name": "Select", "kind": "entity", "independent": True,
++         "reference": {"mode": "popular", "value_type": "order"}},
++        {"id": "order", "name": "Order", "kind": "value", "primitive": "Integer"},
++    ]
++    document["fact_types"].append({
++        "id": "from", "reading": "{Customer} from {Select}",
++        "roles": [{"object_type": "customer", "role_name": "where"}, {"object_type": "select", "role_name": "group"}],
++        "constraints": [{"type": "uniqueness", "roles": ["where"], "source": "explicit", "status": "confirmed",
++                         "modality": "alethic", "provenance": {"user_quote": "one"}}],
++    })
++    bundle = _render_document(tmp_path, document)
++    ontology, semantic, mapping = (json.loads(part) for part in (bundle.document, bundle.semantic_model, bundle.mapping))
++    corpus.cross_check(ontology, semantic, mapping)
++    customer = next(d for d in semantic["datasets"] if d["name"] == "customer")
++    assert {"name": "group_order", "expression": {"sql": '"GROUP_ORDER"'}, "datatype": "Integer"} in customer["fields"]
++    select = next(e for e in mapping["concept_mappings"] if e["concept"] == "Select")
++    assert select["object_mappings"] == [{"expression": '"SELECT"."ORDER"'}]
++    links = next(e for e in mapping["concept_mappings"] if e["concept"] == "Customer")["link_mappings"]
++    assert links[-1]["children"] == [{
++        "object_mapping": {"concept": "Select", "expression": '"CUSTOMER"."GROUP_ORDER"'}, "relationship": "from"}]
++
++
++def test_t14_quoting_escapes_an_embedded_quote():
++    from gnd.export.ossie_relational import _quoted
++
++    assert _quoted('a"b') == '"A""B"'
++    assert corpus.quoted_identifiers(_quoted('a"b') + "." + _quoted("c")) == (['A"B', "C"], "?.?")
++
++
++def test_t15_the_datatype_map_covers_every_primitive(tmp_path):
++    from importlib.resources import files
++
++    from gnd.export.ossie_relational import DATATYPES
++
++    schema = json.loads(files("gnd").joinpath("schema", "orm-meta.schema.json").read_bytes())
++    core = json.loads(files("gnd").joinpath("schema", "ossie", "core-spec.json").read_bytes())
++    assert set(DATATYPES) == set(schema["$defs"]["object_type"]["properties"]["primitive"]["enum"])
++    assert set(DATATYPES.values()) <= set(core["$defs"]["DataType"]["enum"])
++    assert DATATYPES == {
++        "String": "String", "Integer": "Integer", "Float": "Float", "Boolean": "Boolean", "Date": "Date",
++        "DateTime": "DateTime", "Number": "Decimal", "Binary": "Opaque", "Duration": "Opaque",
++    }
++    document = corpus.load_yaml(MODEL_01)
++    document["object_types"][2]["primitive"] = "Duration"
++    document["version"] = 3  # temporal primitives need model version 3
++    semantic = json.loads(_render_document(tmp_path, document).semantic_model)
++    (email,) = [f for f in semantic["datasets"][0]["fields"] if f["name"] == "email"]
++    assert email["datatype"] == "Opaque"
++    assert email["custom_extensions"] == [{"vendor_name": "GND", "data": '{"gnd_primitive":"Duration"}'}]
++
++
++def test_relational_files_are_the_same_in_every_disclosure_mode():
++    """Plan §5: the new files are classed like the other Ossie surfaces (every-mode, RN0-K1)."""
++    from gnd import disclosure
++    from gnd.export.ossie import render_ossie
++
++    source = corpus.rmap_case("14")
++    unset = render_ossie(source, output_format="yaml")
++    with disclosure.invocation("customer"):
++        customer = render_ossie(source, output_format="yaml")
++    assert (customer.semantic_model, customer.mapping) == (unset.semantic_model, unset.mapping)
++    assert b"country_country_code" in customer.semantic_model
++    assert disclosure.SURFACES["gnd export ossie"].kind == "every-mode"
+diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
+index 21a8342f..b6a37323 100644
+--- a/tests/test_rf1_cli_pins.py
++++ b/tests/test_rf1_cli_pins.py
+@@ -290,6 +290,11 @@ def _ossie_successor(command):
+             "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
+             help="largest size in bytes of each written file (default 10485760; at most 268435456)",
+         )
++        # ossie-relational-bundle OB3 (D2 a): the declared opt-out of the relational files.
++        ossie.add_argument(
++            "--ontology-only", action="store_true",
++            help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
++        )
+     else:
+         ossie.add_argument(
+             "--max-input-bytes", type=_byte_bound, default=None, metavar="N",
+diff --git a/tests/test_rmap.py b/tests/test_rmap.py
+index 662ffb43..65c05fcf 100644
+--- a/tests/test_rmap.py
++++ b/tests/test_rmap.py
+@@ -650,3 +650,60 @@ def test_r2_f8_external_unique_keys_are_not_quadratic(tmp_path):
+         assert len(_table(schema, "customer").unique_keys) == phones
+         times[phones] = best
+     assert times[4000] / times[1000] < 6  # linear about 4; quadratic about 16
++
++
++# --- OB3 additions to the public surface (OB3 spec E3, E4) -------------------------------------
++
++
++@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
++def test_ob3_t16_roles_cover_every_role_of_every_carried_fact_type(variant):
++    """E4: one placement per role, in columns that exist in the named table."""
++    from gnd.model import load_model
++    from gnd.model_index import ModelIndex
++    from gnd.rmap import RmapVariant, dispositions, map_model
++
++    for case in CASES:
++        model = load_model(CORPUS / "cases" / case / "model.yaml")
++        schema = map_model(model, variant=RmapVariant[variant])
++        carried = {d.id for d in dispositions(model, schema) if d.kind == "fact_type" and d.reason is None}
++        expected = sorted(
++            (fact, role) for fact, roles in ModelIndex.for_model(model).role_object_types().items()
++            if fact in carried for role in roles
++        )
++        assert [(p.fact_type, p.role) for p in schema.roles] == expected, case
++        columns = {t.name: {c.name for c in t.columns} for t in schema.tables}
++        for placement in schema.roles:
++            assert placement.columns and set(placement.columns) <= columns[placement.table], (case, placement)
++        for identification in schema.identifications:
++            assert len(identification.columns) == len(identification.components)
++            assert identification.table is None or identification.table in columns
++            if identification.table == identification.object_type:
++                assert _table(schema, identification.table).primary_key == identification.columns
++
++
++def test_ob3_t16_role_and_identification_records_are_literal(tmp_path):
++    schema, _ = _schema(tmp_path, _case("14"))
++    from gnd.rmap import Identification, RolePlacement
++
++    assert RolePlacement("city_in_state", "state", "city", ("state_country_country_code", "state_code")) in schema.roles
++    assert RolePlacement("state_in_country", "state", "state", ("country_country_code", "code")) in schema.roles
++    assert Identification(
++        "state", "composite", ("country_country_code", "code"),
++        (("state_in_country", "country"), ("state_has_code", "code")), "state",
++    ) in schema.identifications
++    assert Identification("country", "direct", ("country_code",), (None,), "country") in schema.identifications
++    assert Identification("state_code", "value", ("state_code",), (None,), None) in schema.identifications
++    schema, _ = _schema(tmp_path, _case("15"))
++    assert Identification("student", "direct", ("person_id",), (None,), "person") in schema.identifications
++    assert RolePlacement("student_has_gpa", "student", "person", ("person_id",)) in schema.roles
++
++
++@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
++def test_ob3_e3_a_composite_identifier_needs_functional_components(tmp_path, variant):
++    document = _case("14")
++    code = next(f for f in document["fact_types"] if f["id"] == "state_has_code")
++    code["constraints"] = [c for c in code["constraints"] if c["type"] != "uniqueness"]
++    schema, rows = _schema(tmp_path, document, variant)
++    assert "state" not in {t.name for t in schema.tables}
++    assert ("object_type", "state") in {(u.kind, u.id) for u in schema.unmapped}
++    assert rows[("constraint", "constraints/0")].reason == "identification-unmatchable"
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index a112c88c..a69c2fac 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -532,6 +532,10 @@
+       "lane": "export",
+       "layer": "lanes"
+     },
++    "gnd.export.ossie_relational": {
++      "lane": "export",
++      "layer": "lanes"
++    },
+     "gnd.export.pyrel_rules": {
+       "lane": "export",
+       "layer": "lanes"
+diff --git a/tools/ossie_oracle.py b/tools/ossie_oracle.py
+index 5186ffe3..53acd47e 100644
+--- a/tools/ossie_oracle.py
++++ b/tools/ossie_oracle.py
+@@ -45,12 +45,13 @@ class OssieOracle:
+         schema = self.root / "ossie/ontology/ontology.json"
+         assert hashlib.sha256(schema.read_bytes()).hexdigest() == SCHEMA_SHA256
+ 
+-    def validate(self, path: Path) -> subprocess.CompletedProcess[str]:
++    def validate(self, path: Path, schema: str = "ontology/ontology.json") -> subprocess.CompletedProcess[str]:
++        """Run the pinned validator; ``schema`` is a path inside the pinned ossie checkout."""
+         return self._run(
+             self.root / "a/bin/python",
+             self.root / "ossie/validation/validate.py",
+             "--schema",
+-            self.root / "ossie/ontology/ontology.json",
++            self.root / "ossie" / schema,
+             path,
+         )
+ 

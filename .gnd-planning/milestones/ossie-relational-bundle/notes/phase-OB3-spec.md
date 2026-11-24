@@ -431,3 +431,26 @@ together with the stories in
 - **Not run:** the upstream validator (T11's opt-in oracle lane). Whether it
   accepts quoted, uppercased identifiers and the `CASE WHEN` expression is
   therefore unconfirmed.
+
+## 15. Review round 1 (Codex, read-only) and its repairs
+
+[review.md](reviews/phase-OB3-r1/review.md) requested changes, with five
+findings, over base `39e3d4c3`. Four were reproduced as regression tests
+(8 tests red on the pre-repair code; two more are passing controls) and
+fixed. The fifth is IF1, which is the owner's. The ledger is
+[FINDINGS.md](reviews/phase-OB3-r1/FINDINGS.md). No approved corpus file
+changed.
+
+| # | Change | Departs from |
+|---|---|---|
+| RR1 | `Identification.columns` are the owning table's own key columns, so a key column renamed on a name collision is read under its real name (F1). | IF5 |
+| RR2 | **A link mapping nests at most 32 levels.** A fact type with more roles keeps its table and is listed in `unmapped_links` as `arity-over-limit` (F2). The bound keeps the document shallow enough for any recursive reader, whatever arity the model admits. | §6.5 ("no reason of its own except the two of E3 and E9"). **Owner.** |
+| RR3 | **Foreign-key names are unique in the whole schema**, not only per table pair: tables are named in sorted order, and a name already taken takes the next number (F3). No corpus answer has such a collision. | OB2 A11. **Owner.** |
+| RR4 | Each `iri` percent-encodes the file name, every character outside the unreserved set (F4). | E13 |
+
+**Open for the owner (F5 / IF1).** A model that maps to no table writes
+three files and no relational listing. The alternatives are to accept that,
+or to refuse such an export unless `--ontology-only` is given.
+
+**The repaired bytes are not re-reviewed.**
+

@@ -20,7 +20,7 @@ from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes
 from gnd.errors import ModelLoadError, ModelValidationError
-from gnd.input_policy import MAX_BYTES, MAX_DEPTH, guard_yaml, loads
+from gnd.input_policy import MAX_BYTES, MAX_DEPTH, guard_yaml, loads, require_byte_bound
 from gnd.model import json_document, load_model_bytes
 from gnd.model._documents import ModelValueError
 from gnd.safefs import open_regular
@@ -60,10 +60,10 @@ class OssieImportResult:
     loss_report: bytes
 
 
-def _read(path: Path, rule: str, *, optional: bool = False) -> bytes | None:
+def _read(path: Path, rule: str, *, max_bytes: int, optional: bool = False) -> bytes | None:
     try:
         with open(open_regular(path), "rb") as stream:
-            data = stream.read(MAX_BYTES + 1)
+            data = stream.read(max_bytes + 1)
     except FileNotFoundError:
         if optional:
             try:
@@ -75,18 +75,18 @@ def _read(path: Path, rule: str, *, optional: bool = False) -> bytes | None:
         raise OssieImportError(rule) from None
     except (OSError, ValueError):
         raise OssieImportError(rule) from None
-    if len(data) > MAX_BYTES:
+    if len(data) > max_bytes:
         raise OssieImportError(f"{rule}-size")
     return data
 
 
-def _parse(data: bytes, rule: str, *, yaml: bool = False):
+def _parse(data: bytes, rule: str, *, max_bytes: int, yaml: bool = False):
     try:
         if yaml:
-            guard_yaml(data)
+            guard_yaml(data, max_bytes=max_bytes)
             document = json_document(YAML(typ="safe").load(data))
         else:
-            document = loads(data)
+            document = loads(data, max_bytes=max_bytes)
         # JSON permits escapes for isolated UTF-16 surrogates. The wire format is UTF-8.
         for part in json.JSONEncoder(ensure_ascii=False).iterencode(document):
             part.encode("utf-8")
@@ -624,7 +624,7 @@ def _foreign(document, graph, digest):
     return result, _foreign_rows(document, projected)
 
 
-def _loss_report_bytes(digest, source_identity, identity_verified, rows) -> bytes:
+def _loss_report_bytes(digest, source_identity, identity_verified, rows, *, max_bytes: int) -> bytes:
     # Serialize each row once and cap the total before a foreign tree can
     # amplify to a large report through repeated pointer prefixes.
     empty = canonical_json_bytes({
@@ -639,7 +639,7 @@ def _loss_report_bytes(digest, source_identity, identity_verified, rows) -> byte
     result.extend(b'"dispositions":[')
     for i, row in enumerate(rows):
         data = canonical_json_bytes(row).rstrip()
-        if len(result) + len(data) + len(suffix) + 2 > 2 * MAX_BYTES:
+        if len(result) + len(data) + len(suffix) + 2 > 2 * max_bytes:
             raise OssieImportError("loss-size")
         if i:
             result.extend(b",")
@@ -649,25 +649,37 @@ def _loss_report_bytes(digest, source_identity, identity_verified, rows) -> byte
     return bytes(result)
 
 
-def plan_ossie_import(path: Path) -> OssieImportResult:
-    """Admit one standalone ontology or bound bundle without network access."""
-    raw = _read(path, "input")
+def plan_ossie_import(path: Path, *, max_input_bytes: int = MAX_BYTES) -> OssieImportResult:
+    """Admit one standalone ontology or bound bundle without network access.
+
+    ``max_input_bytes`` bounds each of the three input files, the YAML and JSON
+    parse of each, and (doubled) the import loss report (OB1). The restored model
+    keeps its fixed ``model-size`` cap: it must load as a model anyway.
+    """
+    require_byte_bound("max_input_bytes", max_input_bytes)
+    raw = _read(path, "input", max_bytes=max_input_bytes)
     assert raw is not None
-    ontology = _parse(raw, "syntax", yaml=path.suffix.lower() != ".json")
+    ontology = _parse(raw, "syntax", max_bytes=max_input_bytes, yaml=path.suffix.lower() != ".json")
     _schema_check(ontology, _schemas()[0], "schema")
     graph = _NameGraph(ontology)
     digest = hashlib.sha256(raw).hexdigest()
-    sidecar_raw = _read(path.with_name(path.name + ".gnd.json"), "sidecar-input", optional=True)
+    sidecar_raw = _read(
+        path.with_name(path.name + ".gnd.json"), "sidecar-input", max_bytes=max_input_bytes, optional=True
+    )
     source_identity = None
     require_identity = False
     if sidecar_raw is None:
         model, rows = _foreign(ontology, graph, digest)
     else:
-        sidecar = _parse(sidecar_raw, "sidecar-syntax")
+        sidecar = _parse(sidecar_raw, "sidecar-syntax", max_bytes=max_input_bytes)
         _binding(sidecar, digest)
         source_identity = sidecar["model_identity"]
-        report_raw = _read(path.with_name(path.name + ".loss.json"), "report-input", optional=True)
-        report = _parse(report_raw, "report-syntax") if report_raw is not None else None
+        report_raw = _read(
+            path.with_name(path.name + ".loss.json"), "report-input", max_bytes=max_input_bytes, optional=True
+        )
+        report = (
+            _parse(report_raw, "report-syntax", max_bytes=max_input_bytes) if report_raw is not None else None
+        )
         if report_raw is not None:
             _schema_check(report, _schemas()[1], "report-schema")
             if any(report[key] != sidecar[key] for key in ("model_identity", "document_sha256")):
@@ -677,5 +689,6 @@ def plan_ossie_import(path: Path) -> OssieImportResult:
         require_identity = report is not None and all(row["disposition"] != "refused" for row in rows)
     model_bytes, identity_verified = _bounded_model(model, source_identity, require_identity=require_identity)
     return OssieImportResult(
-        model_bytes, _loss_report_bytes(digest, source_identity, identity_verified, rows)
+        model_bytes,
+        _loss_report_bytes(digest, source_identity, identity_verified, rows, max_bytes=max_input_bytes),
     )

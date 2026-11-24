@@ -621,17 +621,20 @@ _cmd_check_batch.__module__ = "gnd.cli"
 
 from pathlib import PurePosixPath, PureWindowsPath
 
-from gnd.commands._arguments import _add_format_argument, _add_unredacted_argument
+from gnd.commands._arguments import _add_format_argument, _add_unredacted_argument, _byte_bound
 
 
-def _cmd_import_ossie(model: str, out: str, loss_report: str | None) -> int:
+def _cmd_import_ossie(model: str, out: str, loss_report: str | None, max_input_bytes: int | None = None) -> int:
     from gnd.artifacts import ArtifactError
     from gnd.exits import EXIT_ILL_FORMED
+    from gnd.input_policy import MAX_BYTES
     from gnd.ossie_import import OssieImportError, plan_ossie_import
     from gnd.safefs import publish_new_files
 
     try:
-        result = plan_ossie_import(Path(model))
+        result = plan_ossie_import(
+            Path(model), max_input_bytes=MAX_BYTES if max_input_bytes is None else max_input_bytes
+        )
     except OssieImportError as error:
         print(error.rule_id, file=sys.stderr)
         return EXIT_ILL_FORMED
@@ -750,6 +753,10 @@ def _register_import(subparsers):
     ossie_import_parser.add_argument("model", help="path to the source Ossie JSON or YAML ontology")
     ossie_import_parser.add_argument("--out", required=True, help="new GND ORM model path")
     ossie_import_parser.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
+    ossie_import_parser.add_argument(
+        "--max-input-bytes", type=_byte_bound, default=None, metavar="N",
+        help="largest size in bytes of each input file (default 10485760; at most 268435456)",
+    )
 
     return {'import_parser': import_parser, 'rai_import_parser': rai_import_parser,
             'ilp_import_parser': ilp_import_parser, 'mined_import_parser': mined_import_parser,
@@ -1142,7 +1149,7 @@ def handle(args, parsers) -> int:
         )
 
     if args.command == "import" and args.import_command == "ossie":
-        return _cmd_import_ossie(args.model, args.out, args.loss_report)
+        return _cmd_import_ossie(args.model, args.out, args.loss_report, args.max_input_bytes)
 
     if args.command == "import":
         source_artifact = args.source_artifact

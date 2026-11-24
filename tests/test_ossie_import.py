@@ -9,6 +9,7 @@ import json
 import re
 from collections import Counter
 from pathlib import Path
+from time import monotonic
 
 import pytest
 from support.cli_runner import run_main
@@ -275,14 +276,18 @@ def test_import_pins_offline_core_reference():
     )
 
 
-def test_export_bounds_all_import_envelopes(bundle, monkeypatch):
+def test_export_bounds_all_import_envelopes(bundle):
     from gnd.export import ossie
 
     path, sidecar, report = bundle
     assert max(path.stat().st_size, sidecar.stat().st_size) < report.stat().st_size
-    monkeypatch.setattr(ossie, "MAX_BYTES", report.stat().st_size - 1)
+    # OB1: the bound is the max_output_bytes parameter, no longer the shared input cap.
     with pytest.raises(ossie.OssieInputError, match="ossie:output-size"):
-        render_ossie(path.with_name("source.orm.json"), output_format="json")
+        render_ossie(
+            path.with_name("source.orm.json"),
+            output_format="json",
+            max_output_bytes=report.stat().st_size - 1,
+        )
 
 
 def test_reference_cycle_and_inherited_identifier(bundle, tmp_path):
@@ -420,7 +425,7 @@ def test_restored_output_size_caps(monkeypatch):
     with pytest.raises(OssieImportError, match="ossie-import:model-size"):
         ossie_import._bounded_model({"description": oversized}, None, require_identity=False)
     with pytest.raises(OssieImportError, match="ossie-import:loss-size"):
-        ossie_import._loss_report_bytes("0" * 64, None, False, [{"pointer": "/" + oversized}])
+        ossie_import._loss_report_bytes("0" * 64, None, False, [{"pointer": "/" + oversized}], max_bytes=256)
 
 
 def test_refuses_sidecar_header_and_deep_pointer(bundle):
@@ -531,3 +536,104 @@ def test_the_reference_names_the_import_report_schema_and_its_reasons(tmp_path):
     for disposition, reason in pairs | {("refused", reason) for reason in reasons}:
         assert f"| `{disposition}` | `{reason}` |" in section, (disposition, reason)
 
+
+
+# --- OB1: --max-input-bytes (ossie-relational-bundle) ------------------------------
+
+LARGE_BOUND = 32 * 1024 * 1024
+
+
+@pytest.fixture(scope="module")
+def large_bundles(tmp_path_factory):
+    """The OB1-C2 export, written as JSON and YAML bundles above the 10 MiB default."""
+    from support.ossie_large import write_large_model
+
+    root = tmp_path_factory.mktemp("ob1-import")
+    source = write_large_model(root / "large.orm.json")
+    bundles = {}
+    for encoding in ("json", "yaml"):
+        out = root / f"large.{encoding}"
+        exported = render_ossie(source, output_format=encoding, max_output_bytes=LARGE_BOUND)
+        out.write_bytes(exported.document)
+        sidecar, report = _companions(out)
+        sidecar.write_bytes(exported.sidecar)
+        report.write_bytes(exported.loss_report)
+        assert len(exported.loss_report) > 10 * 1024 * 1024
+        bundles[encoding] = out
+    return source, bundles
+
+
+@pytest.mark.parametrize("encoding", ("json", "yaml"))
+def test_ob1_t6_large_bundle_round_trips_with_raised_bound(large_bundles, encoding):
+    """T6: the read, YAML guard and both JSON decoder caps move with the flag."""
+    source, bundles = large_bundles
+    start = monotonic()
+    result = plan_ossie_import(bundles[encoding], max_input_bytes=LARGE_BOUND)
+    assert monotonic() - start < 60.0
+    assert json.loads(result.model) == json.loads(source.read_bytes())
+
+
+@pytest.mark.parametrize("encoding", ("json", "yaml"))
+def test_ob1_t6a_large_bundle_is_refused_at_the_default(large_bundles, encoding):
+    _, bundles = large_bundles
+    _assert_refusal(bundles[encoding], "report-input-size")
+
+
+def test_ob1_t6b_loss_size_moves_with_the_bound(tmp_path):
+    """T6b: the read passes at N = the file's size and the doubled report cap binds first."""
+    size = FLIGHTS.stat().st_size
+    with pytest.raises(OssieImportError) as caught:
+        plan_ossie_import(FLIGHTS, max_input_bytes=size)
+    assert caught.value.rule_id == "ossie-import:loss-size"
+    report = plan_ossie_import(FLIGHTS).loss_report
+    assert len(report) > 2 * size
+    assert plan_ossie_import(FLIGHTS, max_input_bytes=-(-len(report) // 2)).loss_report == report
+
+
+def test_ob1_t6c_model_size_cap_is_kept(monkeypatch):
+    """T6c: the restored-model cap does not move with --max-input-bytes."""
+    from gnd import ossie_import
+
+    expected = plan_ossie_import(FLIGHTS).model
+    monkeypatch.setattr(ossie_import, "MAX_BYTES", len(expected) - 1)
+    with pytest.raises(OssieImportError) as caught:
+        plan_ossie_import(FLIGHTS, max_input_bytes=LARGE_BOUND)
+    assert caught.value.rule_id == "ossie-import:model-size"
+
+
+@pytest.mark.parametrize("value", ("0", "-1", "1.5", "abc", "268435457", "", "0x10"))
+def test_ob1_t6d_invalid_input_bound_is_a_usage_error(tmp_path, value, capsys):
+    from gnd import cli
+
+    with pytest.raises(SystemExit) as caught:
+        cli.main(["import", "ossie", str(FLIGHTS), "--out", str(tmp_path / "m.json"),
+                  "--max-input-bytes", value])
+    assert caught.value.code == 64
+    assert "--max-input-bytes" in capsys.readouterr().err
+    assert not list(tmp_path.iterdir())
+
+
+def test_ob1_cli_import_threads_the_bound(tmp_path, capsys):
+    from gnd import cli
+
+    size = FLIGHTS.stat().st_size
+    argv = ["import", "ossie", str(FLIGHTS), "--out", str(tmp_path / "m.json")]
+    assert cli.main([*argv, "--max-input-bytes", str(size)]) == 3
+    assert "ossie-import:loss-size" in capsys.readouterr().err
+    assert cli.main(argv) == 0
+
+
+def test_ob1_t6e_loads_default_cap_is_unchanged():
+    from gnd.input_policy import MAX_BYTES, loads
+
+    padded = b'"' + b"x" * (MAX_BYTES - 1) + b'"'
+    assert len(padded) == MAX_BYTES + 1
+    with pytest.raises(ValueError, match="byte cap"):
+        loads(padded)
+    assert loads(padded, max_bytes=MAX_BYTES + 1) == "x" * (MAX_BYTES - 1)
+
+
+@pytest.mark.parametrize("value", (0, -1, 268435457, True, 1.5, "10"))
+def test_ob1_library_input_bound_is_validated(value):
+    with pytest.raises(ValueError, match="max_input_bytes"):
+        plan_ossie_import(FLIGHTS, max_input_bytes=value)

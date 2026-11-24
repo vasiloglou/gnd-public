@@ -92,7 +92,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
 - status: canonical
 - components: cli.witness_command, witness.command, witness.count_membership, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, … +3 more (graph.md)
+- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, … +4 more (graph.md)
 - notes: Production evaluates through the checker; replay does not search for a fixpoint.
 
 ### subsystem.review_panel
@@ -523,13 +523,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.arguments
 - does: Validate shared CLI flags, duplicate options and usage exit 64 [_BandSafeParser; _StoreOnce].
-- verbs: parse arguments, command line, usage errors, exit bands, positive integer, finite timeout, repeated flags, duplicate options, output format, hidden unredacted, _BandSafeParser, _StoreOnce
+- verbs: parse arguments, command line, usage errors, exit bands, positive integer, byte bound, finite timeout, repeated flags, duplicate options, output format, hidden unredacted, _BandSafeParser, _StoreOnce
 - in: argv strings and argparse parsers
 - out: validated values or usage refusal
 - status: canonical
 - modules: src/gnd/commands/_arguments.py
-- uses: infra.exit_codes
-- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, cli.synth_command, … +1 more (graph.md)
+- uses: infra.exit_codes, infra.input_policy
+- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.export_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, … +2 more (graph.md)
 - tests: tests/test_rf5_commands.py
 
 
@@ -647,7 +647,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/export.py
-- uses: export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
+- uses: cli.arguments, export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
 - used_by: cli.dispatch
 - tests: tests/test_pyrel_export.py, tests/test_rf5_commands.py
 
@@ -1634,7 +1634,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### export.ossie
 - does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, and count the fact types that declare redact [render_ossie].
-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes
 - in: standalone model path and output format
 - out: ontology, sidecar and loss report bytes
 - status: canonical
@@ -1852,7 +1852,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions
+- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions, witness.service
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
 - checked: partial
 - notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
@@ -2274,7 +2274,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +56 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +57 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2721,7 +2721,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.ossie_import
 - does: Read a pinned Apache Ossie ontology or bound GND bundle offline and produce an admitted ORM model and a per-pointer loss report.
-- verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, plan_ossie_import
+- verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, input size bound, max input bytes, plan_ossie_import
 - status: canonical
 - modules: src/gnd/ossie_import.py
 - uses: infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.scalar_identity
@@ -3195,7 +3195,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
 - status: canonical
 - modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py, src/gnd/witness/flattening.py
-- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
+- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.validation, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
 - used_by: cli.api, witness.command, witness.replay
 - part_of: subsystem.witness
 - tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py

@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+from gnd.commands._arguments import _byte_bound
 from gnd.exits import EXIT_COLLISION, EXIT_ILL_FORMED, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT
 
 
@@ -68,14 +69,27 @@ def _cmd_export_pyrel_rules(model_path: str, out_path: str, *, target: str) -> i
 
 
 
-def _cmd_export_ossie(model: str, out: str, *, loss_report: str | None, output_format: str, strict: bool) -> int:
+def _cmd_export_ossie(
+    model: str,
+    out: str,
+    *,
+    loss_report: str | None,
+    output_format: str,
+    strict: bool,
+    max_output_bytes: int | None = None,
+) -> int:
     from gnd.artifacts import ArtifactError
     from gnd.errors import ModelLoadError, ModelValidationError
-    from gnd.export.ossie import OssieInputError, render_ossie
+    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, OssieInputError, render_ossie
     from gnd.safefs import publish_new_files
 
     try:
-        bundle = render_ossie(Path(model), output_format=output_format, strict=strict)
+        bundle = render_ossie(
+            Path(model),
+            output_format=output_format,
+            strict=strict,
+            max_output_bytes=DEFAULT_MAX_OUTPUT_BYTES if max_output_bytes is None else max_output_bytes,
+        )
     except FileNotFoundError as error:
         print(f"missing input: {error}", file=sys.stderr)
         return EXIT_NO_INPUT
@@ -175,6 +189,10 @@ def _register_export(subparsers):
     ossie_parser.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
     ossie_parser.add_argument("--format", choices=("yaml", "json"), default="yaml", help="ontology format (default: yaml)")
     ossie_parser.add_argument("--strict", action="store_true", help="refuse any export with a refused disposition")
+    ossie_parser.add_argument(
+        "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
+        help="largest size in bytes of each written file (default 10485760; at most 268435456)",
+    )
 
     return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
 
@@ -212,7 +230,8 @@ def handle(args, parsers) -> int:
     if args.command == "export":
         if args.export_target == "ossie":
             return _cmd_export_ossie(args.model, args.out, loss_report=args.loss_report,
-                                     output_format=args.format, strict=args.strict)
+                                     output_format=args.format, strict=args.strict,
+                                     max_output_bytes=args.max_output_bytes)
         if args.export_target == "ilp":
             from gnd.export.ilp_service import _cmd_export_ilp
 

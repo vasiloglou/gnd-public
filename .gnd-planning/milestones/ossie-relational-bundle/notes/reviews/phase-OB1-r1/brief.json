@@ -1,0 +1,97 @@
+{
+  "base": "a7847f2b",
+  "claims": [
+    "Without --max-output-bytes, every census export is byte-identical to the 1926e895 baseline.",
+    "Every artifact the export writes is bounded by --max-output-bytes; above the bound the run exits 3 with ossie:output-size and publishes nothing.",
+    "An invalid --max-output-bytes or --max-input-bytes exits 64 before any read.",
+    "With --max-input-bytes N, gnd import ossie moves its read, YAML guard, JSON decode and loss-size caps to N (2N for loss-size) and keeps the model-size cap.",
+    "input_policy.loads and JSONDecoder keep their 10 MiB default for every other caller."
+  ],
+  "created": "2026-11-24T18:52:27.340128+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB1-r1/diff.patch",
+      "sha256": "7eb6a7b43392e1ea39dd8a06fcbd6b6fb6326f1eadc49d0cbab0a525d348a50e"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "57fb1b0972d9051d9e3dcc366d6302f1a4aa30dfb29f1c73d5734ca743bfd0f4"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "16c2c94bf5d5455d16e51fbeb65038d53ffe5bf305711d6f0bd3c6a6294989d1"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "605af08337237dd405212a5182e63192b9ef6510cacd147fba366e8545061648"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "434218d6e7828ac164fe047be546718f9a21c83e1ac7681617e69113d3e8e091"
+    },
+    {
+      "path": "dev/components/modules/export.md",
+      "sha256": "87e5a4073a192612ac5c8a3b32d787d33c0f57910ae7027aacb793c60ba47500"
+    },
+    {
+      "path": "src/gnd/commands/_arguments.py",
+      "sha256": "69d0943f858d1bdb16b79578a5aaf285e34ad967e66351526d4d55f0415e61ab"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "sha256": "993f6d4a198a0207f04f55d813fcf3db20f783436526876568529f9a0d5bb4bd"
+    },
+    {
+      "path": "src/gnd/commands/export.py",
+      "sha256": "76a6a1bf27315b9b9266f645dbd57a8dd71cfd30b6e074a5fd99770f5c9a5ae1"
+    },
+    {
+      "path": "src/gnd/export/ossie.py",
+      "sha256": "828a9443bcbb91eeefc5fc52f7a002b381465d5dca3d3247d0fc9f51f869c508"
+    },
+    {
+      "path": "src/gnd/input_policy.py",
+      "sha256": "e6c83e8374eaa1c1b7f290847090d6a9c33cc9440558bcdb2f0e5c54688dde38"
+    },
+    {
+      "path": "src/gnd/ossie_import.py",
+      "sha256": "a7152fc9fe0686c243c747e56fe0b8347cbd34878c4645dc64775688add7262f"
+    },
+    {
+      "path": "tests/test_ossie_export.py",
+      "sha256": "1137a0893c380365c8d87b3b84926ecec08fd9c2df24761012f70a3b510be416"
+    },
+    {
+      "path": "tests/test_ossie_import.py",
+      "sha256": "251f6d613bd72e66d1b23539c1fa7085ce3b273de30d4c1a18e2da1e4344e5a5"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "798f7fc8e8504ac0814907af22c7c2157bd2269fbe49ff43c263b5bd45be5bbf"
+    },
+    {
+      "path": "tests/fixtures/ossie_ob1_baseline.json",
+      "sha256": "2380653ac758335f73d51f48446ea0137a498d7604d4cb4f36c75e3225b02835"
+    },
+    {
+      "path": "tests/support/ossie_large.py",
+      "sha256": "223322bc505b56563d1bc7726a44d63ab9011ed44da6b0ef7aed4f7f3b642f20"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB1-spec.md",
+      "sha256": "068f24c4f1368ff0d0c2a5749be953ba1128b58cb1db809465dc1a77c1413824"
+    }
+  ],
+  "head": "a7847f2bf736190f7ef5ea0538e1fe89fa724579",
+  "left_out": [],
+  "notes": [
+    "new: tests/fixtures/ossie_ob1_baseline.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/support/ossie_large.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Does this diff implement the approved OB1 spec's size bounds correctly and completely, and can any legal input make an export or import publish, refuse or round-trip differently from what the spec states?",
+  "subject": "phase",
+  "version": 1
+}

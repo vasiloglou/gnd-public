@@ -10,6 +10,15 @@ from ruamel.yaml import YAML
 from ruamel.yaml.events import AliasEvent, CollectionEndEvent, CollectionStartEvent
 
 MAX_BYTES = 10 * 1024 * 1024
+#: The largest byte bound a caller may raise a size limit to (ossie-relational-bundle D3).
+MAX_BYTES_CEILING = 256 * 1024 * 1024
+
+
+def require_byte_bound(name, value):
+    """Refuse a caller-raised byte bound outside 1..MAX_BYTES_CEILING (ValueError)."""
+    if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= MAX_BYTES_CEILING:
+        raise ValueError(f"{name} must be an integer from 1 to {MAX_BYTES_CEILING}")
+    return value
 MAX_DEPTH = 64
 _DATETIME = re.compile(
     r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-5][0-9]'
@@ -17,15 +26,17 @@ _DATETIME = re.compile(
 )
 
 
-def _text(raw):
+def _text(raw, max_bytes=None):
+    # Resolved per call, so the module cap stays the one seam for every default caller.
+    max_bytes = MAX_BYTES if max_bytes is None else max_bytes
     if isinstance(raw, (bytes, bytearray)):
-        if len(raw) > MAX_BYTES:
+        if len(raw) > max_bytes:
             raise ValueError('JSON input exceeds byte cap')
         # Preserve the standard decoder's UTF BOM/encoding interpretation.
         raw = bytes(raw).decode(json.detect_encoding(raw), 'surrogatepass')
     if not isinstance(raw, str):
         raise TypeError('JSON input must be str, bytes or bytearray')
-    if len(raw.encode('utf-8', 'surrogatepass')) > MAX_BYTES:
+    if len(raw.encode('utf-8', 'surrogatepass')) > max_bytes:
         raise ValueError('JSON input exceeds byte cap')
     return raw
 
@@ -65,7 +76,8 @@ class InputRefusal(json.JSONDecodeError):
 class JSONDecoder(json.JSONDecoder):
     """Native decoder interface with one duplicate/finite/depth policy."""
 
-    def __init__(self, **kwargs):
+    def __init__(self, *, max_bytes=None, **kwargs):
+        self._max_bytes = max_bytes
         pairs_hook = kwargs.pop('object_pairs_hook', None)
         object_hook = kwargs.pop('object_hook', None)
         float_hook = kwargs.pop('parse_float', None) or float
@@ -94,14 +106,19 @@ class JSONDecoder(json.JSONDecoder):
                          parse_constant=constant, **kwargs)
 
     def raw_decode(self, text, idx=0):
-        text = _text(text)
+        text = _text(text, self._max_bytes)
         _depth(text, idx)
         return super().raw_decode(text, idx)
 
 
-def loads(raw, **kwargs):
-    """Decode with native numeric types or caller hooks; refuse unsafe syntax."""
-    return JSONDecoder(**kwargs).decode(_text(raw))
+def loads(raw, *, max_bytes=None, **kwargs):
+    """Decode with native numeric types or caller hooks; refuse unsafe syntax.
+
+    ``max_bytes`` bounds the encoded input (default: :data:`MAX_BYTES`, read at
+    call time); callers that admit larger documents pass their own bound, at most
+    :data:`MAX_BYTES_CEILING`.
+    """
+    return JSONDecoder(max_bytes=max_bytes, **kwargs).decode(_text(raw, max_bytes))
 
 
 def load(handle, **kwargs):

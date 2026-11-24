@@ -1,0 +1,868 @@
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 77b39f10..769285cf 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -523,13 +523,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### cli.arguments
+ - does: Validate shared CLI flags, duplicate options and usage exit 64 [_BandSafeParser; _StoreOnce].
+-- verbs: parse arguments, command line, usage errors, exit bands, positive integer, finite timeout, repeated flags, duplicate options, output format, hidden unredacted, _BandSafeParser, _StoreOnce
++- verbs: parse arguments, command line, usage errors, exit bands, positive integer, byte bound, finite timeout, repeated flags, duplicate options, output format, hidden unredacted, _BandSafeParser, _StoreOnce
+ - in: argv strings and argparse parsers
+ - out: validated values or usage refusal
+ - status: canonical
+ - modules: src/gnd/commands/_arguments.py
+-- uses: infra.exit_codes
+-- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, cli.synth_command, … +1 more (graph.md)
++- uses: infra.exit_codes, infra.input_policy
++- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.export_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, … +2 more (graph.md)
+ - tests: tests/test_rf5_commands.py
+ 
+ 
+@@ -647,7 +647,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - out: registered parsers or the selected command exit code
+ - status: canonical
+ - modules: src/gnd/commands/export.py
+-- uses: export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
++- uses: cli.arguments, export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
+ - used_by: cli.dispatch
+ - tests: tests/test_pyrel_export.py, tests/test_rf5_commands.py
+ 
+@@ -1634,7 +1634,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### export.ossie
+ - does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, and count the fact types that declare redact [render_ossie].
+-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count
++- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes
+ - in: standalone model path and output format
+ - out: ontology, sidecar and loss report bytes
+ - status: canonical
+@@ -2274,7 +2274,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/input_policy.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +56 more (graph.md)
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +57 more (graph.md)
+ - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
+ - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
+ 
+@@ -2708,7 +2708,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### model.ossie_import
+ - does: Read a pinned Apache Ossie ontology or bound GND bundle offline and produce an admitted ORM model and a per-pointer loss report.
+-- verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, plan_ossie_import
++- verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, input size bound, max input bytes, plan_ossie_import
+ - status: canonical
+ - modules: src/gnd/ossie_import.py
+ - uses: infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.scalar_identity
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 98f3cd18..6c4e74fd 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -739,12 +739,15 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/api.py -> src/gnd/witness/service.py`
+ 
+ ### cli.arguments
+-- uses: infra.exit_codes
+-- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, cli.synth_command, cli.verify_command
++- uses: infra.exit_codes, infra.input_policy
++- used_by: cli.checking_command, cli.conformance_command, cli.discover_command, cli.dispatch, cli.evolve_command, cli.exp_command, cli.export_command, cli.fidelity_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.solve_command, cli.synth_command, cli.verify_command
+ 
+ #### cli.arguments -> infra.exit_codes
+ - `src/gnd/commands/_arguments.py -> src/gnd/exits.py`
+ 
++#### cli.arguments -> infra.input_policy
++- `src/gnd/commands/_arguments.py -> src/gnd/input_policy.py`
++
+ ### cli.checking_command
+ - uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.ossie_import, model.rai_import
+ - used_by: cli.dispatch
+@@ -1060,9 +1063,12 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/commands/exp.py -> src/gnd/commands/_output.py`
+ 
+ ### cli.export_command
+-- uses: export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
++- uses: cli.arguments, export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
+ - used_by: cli.dispatch
+ 
++#### cli.export_command -> cli.arguments
++- `src/gnd/commands/export.py -> src/gnd/commands/_arguments.py`
++
+ #### cli.export_command -> export.command
+ - `src/gnd/commands/export.py -> src/gnd/export/lean_cli.py`
+ - `src/gnd/commands/export.py -> src/gnd/export/souffle_cli.py`
+@@ -3546,7 +3552,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.input_policy
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
+ 
+ ### infra.output
+ - uses: infra.text_output
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 8278c410..891ec7fd 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -584,13 +584,13 @@ RF7 shared JSON, YAML and ISO datetime input restrictions.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `InputRefusal` | class(json.JSONDecodeError) | 58 | Keep domain diagnostic messages independent of synthetic locations. |
+-| `JSONDecoder` | class(json.JSONDecoder) | 65 | Native decoder interface with one duplicate/finite/depth policy. |
+-| `JSONDecoder.raw_decode(self, text, idx)` | method | 96 | (no docstring) |
+-| `loads(raw, **kwargs)` | function | 102 | Decode with native numeric types or caller hooks; refuse unsafe syntax. |
+-| `load(handle, **kwargs)` | function | 107 | Apply the byte cap to the read, before decoding or constructing nodes. |
+-| `guard_yaml(raw, *, max_bytes, max_events, max_depth)` | function | 113 | Reject amplification and over-budget input before constructing YAML nodes. |
+-| `parse_datetime(value)` | function | 137 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
++| `InputRefusal` | class(json.JSONDecodeError) | 60 | Keep domain diagnostic messages independent of synthetic locations. |
++| `JSONDecoder` | class(json.JSONDecoder) | 67 | Native decoder interface with one duplicate/finite/depth policy. |
++| `JSONDecoder.raw_decode(self, text, idx)` | method | 99 | (no docstring) |
++| `loads(raw, *, max_bytes, **kwargs)` | function | 105 | Decode with native numeric types or caller hooks; refuse unsafe syntax. |
++| `load(handle, **kwargs)` | function | 114 | Apply the byte cap to the read, before decoding or constructing nodes. |
++| `guard_yaml(raw, *, max_bytes, max_events, max_depth)` | function | 120 | Reject amplification and over-budget input before constructing YAML nodes. |
++| `parse_datetime(value)` | function | 144 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
+ 
+ ## gnd.install — `src/gnd/install.py`
+ Components: install.skill_lifecycle
+@@ -755,7 +755,7 @@ Bounded, offline import of the pinned Apache Ossie ontology dialect.
+ | --- | --- | --- | --- |
+ | `OssieImportError` | class(ValueError) | 49 | A value-free refusal at a documented import boundary. |
+ | `OssieImportResult` | class | 58 | (no docstring) |
+-| `plan_ossie_import(path) -> OssieImportResult` | function | 652 | Admit one standalone ontology or bound bundle without network access. |
++| `plan_ossie_import(path, *, max_input_bytes) -> OssieImportResult` | function | 652 | Admit one standalone ontology or bound bundle without network access. |
+ 
+ ## gnd.output — `src/gnd/output.py`
+ Components: infra.text_output
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index 63933e5e..c65461e8 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -29,8 +29,8 @@ Components: cli.checking_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 1082 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 1117 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 1089 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 1124 | (no docstring) |
+ 
+ ## gnd.commands.codegen — `src/gnd/commands/codegen.py`
+ Components: cli.codegen_command
+@@ -92,8 +92,8 @@ Components: cli.export_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 182 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 211 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 200 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 229 | (no docstring) |
+ 
+ ## gnd.commands.extract — `src/gnd/commands/extract.py`
+ Components: cli.extract_command
+diff --git a/dev/components/modules/export.md b/dev/components/modules/export.md
+index e72a18b7..001ac304 100644
+--- a/dev/components/modules/export.md
++++ b/dev/components/modules/export.md
+@@ -243,9 +243,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `OssieInputError` | class(ValueError) | 46 | The source cannot be exported with the selected policy. |
+-| `OssieArtifacts` | class | 51 | (no docstring) |
+-| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 423 | Render three deterministic artifacts from one bounded, admitted model read. |
++| `OssieInputError` | class(ValueError) | 50 | The source cannot be exported with the selected policy. |
++| `OssieArtifacts` | class | 55 | (no docstring) |
++| `render_ossie(model_path, *, output_format, strict, max_output_bytes) -> OssieArtifacts` | function | 427 | Render three deterministic artifacts from one bounded, admitted model read. |
+ 
+ ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
+ Components: export.ossie
+diff --git a/src/gnd/commands/_arguments.py b/src/gnd/commands/_arguments.py
+index 0df73e74..ed29bcfa 100644
+--- a/src/gnd/commands/_arguments.py
++++ b/src/gnd/commands/_arguments.py
+@@ -39,6 +39,18 @@ def _positive_int(value: str) -> int:
+         raise argparse.ArgumentTypeError("must be a positive integer")
+     return parsed
+ 
++def _byte_bound(value: str) -> int:
++    """Argparse converter for a caller-raised byte bound (Ossie export and import, OB1)."""
++    from gnd.input_policy import MAX_BYTES_CEILING
++
++    try:
++        parsed = int(value, 10)
++    except ValueError:
++        raise argparse.ArgumentTypeError(f"{value!r} is not an integer number of bytes") from None
++    if not 1 <= parsed <= MAX_BYTES_CEILING:
++        raise argparse.ArgumentTypeError(f"must be from 1 to {MAX_BYTES_CEILING} bytes")
++    return parsed
++
+ def _positive_finite_float(value: str) -> float:
+     """Argparse converter for positive finite wall-clock tightenings."""
+ 
+diff --git a/src/gnd/commands/checking.py b/src/gnd/commands/checking.py
+index 03f9c98a..186ee52b 100644
+--- a/src/gnd/commands/checking.py
++++ b/src/gnd/commands/checking.py
+@@ -621,17 +621,20 @@ _cmd_check_batch.__module__ = "gnd.cli"
+ 
+ from pathlib import PurePosixPath, PureWindowsPath
+ 
+-from gnd.commands._arguments import _add_format_argument, _add_unredacted_argument
++from gnd.commands._arguments import _add_format_argument, _add_unredacted_argument, _byte_bound
+ 
+ 
+-def _cmd_import_ossie(model: str, out: str, loss_report: str | None) -> int:
++def _cmd_import_ossie(model: str, out: str, loss_report: str | None, max_input_bytes: int | None = None) -> int:
+     from gnd.artifacts import ArtifactError
+     from gnd.exits import EXIT_ILL_FORMED
++    from gnd.input_policy import MAX_BYTES
+     from gnd.ossie_import import OssieImportError, plan_ossie_import
+     from gnd.safefs import publish_new_files
+ 
+     try:
+-        result = plan_ossie_import(Path(model))
++        result = plan_ossie_import(
++            Path(model), max_input_bytes=MAX_BYTES if max_input_bytes is None else max_input_bytes
++        )
+     except OssieImportError as error:
+         print(error.rule_id, file=sys.stderr)
+         return EXIT_ILL_FORMED
+@@ -750,6 +753,10 @@ def _register_import(subparsers):
+     ossie_import_parser.add_argument("model", help="path to the source Ossie JSON or YAML ontology")
+     ossie_import_parser.add_argument("--out", required=True, help="new GND ORM model path")
+     ossie_import_parser.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
++    ossie_import_parser.add_argument(
++        "--max-input-bytes", type=_byte_bound, default=None, metavar="N",
++        help="largest size in bytes of each input file (default 10485760; at most 268435456)",
++    )
+ 
+     return {'import_parser': import_parser, 'rai_import_parser': rai_import_parser,
+             'ilp_import_parser': ilp_import_parser, 'mined_import_parser': mined_import_parser,
+@@ -1142,7 +1149,7 @@ def handle(args, parsers) -> int:
+         )
+ 
+     if args.command == "import" and args.import_command == "ossie":
+-        return _cmd_import_ossie(args.model, args.out, args.loss_report)
++        return _cmd_import_ossie(args.model, args.out, args.loss_report, args.max_input_bytes)
+ 
+     if args.command == "import":
+         source_artifact = args.source_artifact
+diff --git a/src/gnd/commands/export.py b/src/gnd/commands/export.py
+index eb05783e..aa658f70 100644
+--- a/src/gnd/commands/export.py
++++ b/src/gnd/commands/export.py
+@@ -3,6 +3,7 @@ from __future__ import annotations
+ import sys
+ from pathlib import Path
+ 
++from gnd.commands._arguments import _byte_bound
+ from gnd.exits import EXIT_COLLISION, EXIT_ILL_FORMED, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT
+ 
+ 
+@@ -68,14 +69,27 @@ def _cmd_export_pyrel_rules(model_path: str, out_path: str, *, target: str) -> i
+ 
+ 
+ 
+-def _cmd_export_ossie(model: str, out: str, *, loss_report: str | None, output_format: str, strict: bool) -> int:
++def _cmd_export_ossie(
++    model: str,
++    out: str,
++    *,
++    loss_report: str | None,
++    output_format: str,
++    strict: bool,
++    max_output_bytes: int | None = None,
++) -> int:
+     from gnd.artifacts import ArtifactError
+     from gnd.errors import ModelLoadError, ModelValidationError
+-    from gnd.export.ossie import OssieInputError, render_ossie
++    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, OssieInputError, render_ossie
+     from gnd.safefs import publish_new_files
+ 
+     try:
+-        bundle = render_ossie(Path(model), output_format=output_format, strict=strict)
++        bundle = render_ossie(
++            Path(model),
++            output_format=output_format,
++            strict=strict,
++            max_output_bytes=DEFAULT_MAX_OUTPUT_BYTES if max_output_bytes is None else max_output_bytes,
++        )
+     except FileNotFoundError as error:
+         print(f"missing input: {error}", file=sys.stderr)
+         return EXIT_NO_INPUT
+@@ -175,6 +189,10 @@ def _register_export(subparsers):
+     ossie_parser.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
+     ossie_parser.add_argument("--format", choices=("yaml", "json"), default="yaml", help="ontology format (default: yaml)")
+     ossie_parser.add_argument("--strict", action="store_true", help="refuse any export with a refused disposition")
++    ossie_parser.add_argument(
++        "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
++        help="largest size in bytes of each written file (default 10485760; at most 268435456)",
++    )
+ 
+     return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
+ 
+@@ -212,7 +230,8 @@ def handle(args, parsers) -> int:
+     if args.command == "export":
+         if args.export_target == "ossie":
+             return _cmd_export_ossie(args.model, args.out, loss_report=args.loss_report,
+-                                     output_format=args.format, strict=args.strict)
++                                     output_format=args.format, strict=args.strict,
++                                     max_output_bytes=args.max_output_bytes)
+         if args.export_target == "ilp":
+             from gnd.export.ilp_service import _cmd_export_ilp
+ 
+diff --git a/src/gnd/export/ossie.py b/src/gnd/export/ossie.py
+index 7b55b81e..a9ac5cd6 100644
+--- a/src/gnd/export/ossie.py
++++ b/src/gnd/export/ossie.py
+@@ -18,7 +18,7 @@ from ruamel.yaml.error import YAMLError
+ 
+ from gnd.artifacts import canonical_json_bytes
+ from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
+-from gnd.input_policy import MAX_BYTES, guard_yaml, loads
++from gnd.input_policy import MAX_BYTES_CEILING, guard_yaml, loads
+ from gnd.model import (
+     MAX_MODEL_BYTES,
+     iter_derivation_clauses,
+@@ -41,6 +41,10 @@ _ALIAS = re.compile(r"[A-Za-z_][A-Za-z0-9_]*\Z")
+ _PLACEHOLDER = re.compile(r"\{([^{}]+)\}")
+ _NATIVE_LITERAL = ("native", "projected-with-source-spelling", None)
+ _POPULATION_REFUSAL = "population:out-of-scope"
++#: Largest size of each written artifact unless the caller raises it (OB1). Equal to
++#: ``input_policy.MAX_BYTES`` today but deliberately not an alias of that input cap.
++DEFAULT_MAX_OUTPUT_BYTES = 10 * 1024 * 1024
++MAX_OUTPUT_BYTES_CEILING = MAX_BYTES_CEILING
+ 
+ 
+ class OssieInputError(ValueError):
+@@ -420,8 +424,22 @@ def _metadata(document, mapped):
+     return rows, dict(elements), refused
+ 
+ 
+-def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) -> OssieArtifacts:
+-    """Render three deterministic artifacts from one bounded, admitted model read."""
++def render_ossie(
++    model_path: Path,
++    *,
++    output_format: str,
++    strict: bool = False,
++    max_output_bytes: int = DEFAULT_MAX_OUTPUT_BYTES,
++) -> OssieArtifacts:
++    """Render three deterministic artifacts from one bounded, admitted model read.
++
++    Every artifact must fit in ``max_output_bytes``; otherwise the whole export is
++    refused with ``ossie:output-size`` and nothing is returned to publish.
++    """
++    if isinstance(max_output_bytes, bool) or not isinstance(max_output_bytes, int) or not (
++        1 <= max_output_bytes <= MAX_OUTPUT_BYTES_CEILING
++    ):
++        raise ValueError(f"max_output_bytes must be an integer from 1 to {MAX_OUTPUT_BYTES_CEILING}")
+     document, model = _read_model(model_path)
+     ontology, mapped = _ontology(document, model)
+     _schema().validate(ontology)
+@@ -465,7 +483,7 @@ def render_ossie(model_path: Path, *, output_format: str, strict: bool = False)
+         )
+     except (ModelIdentityError, UnicodeEncodeError, ValueError) as error:
+         raise OssieInputError("model has no encodable interchange identity") from error
+-    if max(len(data), len(sidecar), len(report)) > MAX_BYTES:
++    if max(len(data), len(sidecar), len(report)) > max_output_bytes:
+         raise OssieInputError("ossie:output-size")
+     from gnd.redaction import RedactionPolicy
+ 
+diff --git a/src/gnd/input_policy.py b/src/gnd/input_policy.py
+index a14bd76b..6380d100 100644
+--- a/src/gnd/input_policy.py
++++ b/src/gnd/input_policy.py
+@@ -10,6 +10,8 @@ from ruamel.yaml import YAML
+ from ruamel.yaml.events import AliasEvent, CollectionEndEvent, CollectionStartEvent
+ 
+ MAX_BYTES = 10 * 1024 * 1024
++#: The largest byte bound a caller may raise a size limit to (ossie-relational-bundle D3).
++MAX_BYTES_CEILING = 256 * 1024 * 1024
+ MAX_DEPTH = 64
+ _DATETIME = re.compile(
+     r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-5][0-9]'
+@@ -17,15 +19,15 @@ _DATETIME = re.compile(
+ )
+ 
+ 
+-def _text(raw):
++def _text(raw, max_bytes=MAX_BYTES):
+     if isinstance(raw, (bytes, bytearray)):
+-        if len(raw) > MAX_BYTES:
++        if len(raw) > max_bytes:
+             raise ValueError('JSON input exceeds byte cap')
+         # Preserve the standard decoder's UTF BOM/encoding interpretation.
+         raw = bytes(raw).decode(json.detect_encoding(raw), 'surrogatepass')
+     if not isinstance(raw, str):
+         raise TypeError('JSON input must be str, bytes or bytearray')
+-    if len(raw.encode('utf-8', 'surrogatepass')) > MAX_BYTES:
++    if len(raw.encode('utf-8', 'surrogatepass')) > max_bytes:
+         raise ValueError('JSON input exceeds byte cap')
+     return raw
+ 
+@@ -65,7 +67,8 @@ class InputRefusal(json.JSONDecodeError):
+ class JSONDecoder(json.JSONDecoder):
+     """Native decoder interface with one duplicate/finite/depth policy."""
+ 
+-    def __init__(self, **kwargs):
++    def __init__(self, *, max_bytes=MAX_BYTES, **kwargs):
++        self._max_bytes = max_bytes
+         pairs_hook = kwargs.pop('object_pairs_hook', None)
+         object_hook = kwargs.pop('object_hook', None)
+         float_hook = kwargs.pop('parse_float', None) or float
+@@ -94,14 +97,18 @@ class JSONDecoder(json.JSONDecoder):
+                          parse_constant=constant, **kwargs)
+ 
+     def raw_decode(self, text, idx=0):
+-        text = _text(text)
++        text = _text(text, self._max_bytes)
+         _depth(text, idx)
+         return super().raw_decode(text, idx)
+ 
+ 
+-def loads(raw, **kwargs):
+-    """Decode with native numeric types or caller hooks; refuse unsafe syntax."""
+-    return JSONDecoder(**kwargs).decode(_text(raw))
++def loads(raw, *, max_bytes=MAX_BYTES, **kwargs):
++    """Decode with native numeric types or caller hooks; refuse unsafe syntax.
++
++    ``max_bytes`` bounds the encoded input; callers that admit larger documents
++    pass their own bound, at most :data:`MAX_BYTES_CEILING`.
++    """
++    return JSONDecoder(max_bytes=max_bytes, **kwargs).decode(_text(raw, max_bytes))
+ 
+ 
+ def load(handle, **kwargs):
+diff --git a/src/gnd/ossie_import.py b/src/gnd/ossie_import.py
+index 5af346a4..85c869ef 100644
+--- a/src/gnd/ossie_import.py
++++ b/src/gnd/ossie_import.py
+@@ -20,7 +20,7 @@ from ruamel.yaml.error import YAMLError
+ 
+ from gnd.artifacts import canonical_json_bytes
+ from gnd.errors import ModelLoadError, ModelValidationError
+-from gnd.input_policy import MAX_BYTES, MAX_DEPTH, guard_yaml, loads
++from gnd.input_policy import MAX_BYTES, MAX_BYTES_CEILING, MAX_DEPTH, guard_yaml, loads
+ from gnd.model import json_document, load_model_bytes
+ from gnd.model._documents import ModelValueError
+ from gnd.safefs import open_regular
+@@ -60,10 +60,10 @@ class OssieImportResult:
+     loss_report: bytes
+ 
+ 
+-def _read(path: Path, rule: str, *, optional: bool = False) -> bytes | None:
++def _read(path: Path, rule: str, *, max_bytes: int, optional: bool = False) -> bytes | None:
+     try:
+         with open(open_regular(path), "rb") as stream:
+-            data = stream.read(MAX_BYTES + 1)
++            data = stream.read(max_bytes + 1)
+     except FileNotFoundError:
+         if optional:
+             try:
+@@ -75,18 +75,18 @@ def _read(path: Path, rule: str, *, optional: bool = False) -> bytes | None:
+         raise OssieImportError(rule) from None
+     except (OSError, ValueError):
+         raise OssieImportError(rule) from None
+-    if len(data) > MAX_BYTES:
++    if len(data) > max_bytes:
+         raise OssieImportError(f"{rule}-size")
+     return data
+ 
+ 
+-def _parse(data: bytes, rule: str, *, yaml: bool = False):
++def _parse(data: bytes, rule: str, *, max_bytes: int, yaml: bool = False):
+     try:
+         if yaml:
+-            guard_yaml(data)
++            guard_yaml(data, max_bytes=max_bytes)
+             document = json_document(YAML(typ="safe").load(data))
+         else:
+-            document = loads(data)
++            document = loads(data, max_bytes=max_bytes)
+         # JSON permits escapes for isolated UTF-16 surrogates. The wire format is UTF-8.
+         for part in json.JSONEncoder(ensure_ascii=False).iterencode(document):
+             part.encode("utf-8")
+@@ -624,7 +624,7 @@ def _foreign(document, graph, digest):
+     return result, _foreign_rows(document, projected)
+ 
+ 
+-def _loss_report_bytes(digest, source_identity, identity_verified, rows) -> bytes:
++def _loss_report_bytes(digest, source_identity, identity_verified, rows, *, max_bytes: int) -> bytes:
+     # Serialize each row once and cap the total before a foreign tree can
+     # amplify to a large report through repeated pointer prefixes.
+     empty = canonical_json_bytes({
+@@ -639,7 +639,7 @@ def _loss_report_bytes(digest, source_identity, identity_verified, rows) -> byte
+     result.extend(b'"dispositions":[')
+     for i, row in enumerate(rows):
+         data = canonical_json_bytes(row).rstrip()
+-        if len(result) + len(data) + len(suffix) + 2 > 2 * MAX_BYTES:
++        if len(result) + len(data) + len(suffix) + 2 > 2 * max_bytes:
+             raise OssieImportError("loss-size")
+         if i:
+             result.extend(b",")
+@@ -649,25 +649,40 @@ def _loss_report_bytes(digest, source_identity, identity_verified, rows) -> byte
+     return bytes(result)
+ 
+ 
+-def plan_ossie_import(path: Path) -> OssieImportResult:
+-    """Admit one standalone ontology or bound bundle without network access."""
+-    raw = _read(path, "input")
++def plan_ossie_import(path: Path, *, max_input_bytes: int = MAX_BYTES) -> OssieImportResult:
++    """Admit one standalone ontology or bound bundle without network access.
++
++    ``max_input_bytes`` bounds each of the three input files, the YAML and JSON
++    parse of each, and (doubled) the import loss report (OB1). The restored model
++    keeps its fixed ``model-size`` cap: it must load as a model anyway.
++    """
++    if isinstance(max_input_bytes, bool) or not isinstance(max_input_bytes, int) or not (
++        1 <= max_input_bytes <= MAX_BYTES_CEILING
++    ):
++        raise ValueError(f"max_input_bytes must be an integer from 1 to {MAX_BYTES_CEILING}")
++    raw = _read(path, "input", max_bytes=max_input_bytes)
+     assert raw is not None
+-    ontology = _parse(raw, "syntax", yaml=path.suffix.lower() != ".json")
++    ontology = _parse(raw, "syntax", max_bytes=max_input_bytes, yaml=path.suffix.lower() != ".json")
+     _schema_check(ontology, _schemas()[0], "schema")
+     graph = _NameGraph(ontology)
+     digest = hashlib.sha256(raw).hexdigest()
+-    sidecar_raw = _read(path.with_name(path.name + ".gnd.json"), "sidecar-input", optional=True)
++    sidecar_raw = _read(
++        path.with_name(path.name + ".gnd.json"), "sidecar-input", max_bytes=max_input_bytes, optional=True
++    )
+     source_identity = None
+     require_identity = False
+     if sidecar_raw is None:
+         model, rows = _foreign(ontology, graph, digest)
+     else:
+-        sidecar = _parse(sidecar_raw, "sidecar-syntax")
++        sidecar = _parse(sidecar_raw, "sidecar-syntax", max_bytes=max_input_bytes)
+         _binding(sidecar, digest)
+         source_identity = sidecar["model_identity"]
+-        report_raw = _read(path.with_name(path.name + ".loss.json"), "report-input", optional=True)
+-        report = _parse(report_raw, "report-syntax") if report_raw is not None else None
++        report_raw = _read(
++            path.with_name(path.name + ".loss.json"), "report-input", max_bytes=max_input_bytes, optional=True
++        )
++        report = (
++            _parse(report_raw, "report-syntax", max_bytes=max_input_bytes) if report_raw is not None else None
++        )
+         if report_raw is not None:
+             _schema_check(report, _schemas()[1], "report-schema")
+             if any(report[key] != sidecar[key] for key in ("model_identity", "document_sha256")):
+@@ -677,5 +692,6 @@ def plan_ossie_import(path: Path) -> OssieImportResult:
+         require_identity = report is not None and all(row["disposition"] != "refused" for row in rows)
+     model_bytes, identity_verified = _bounded_model(model, source_identity, require_identity=require_identity)
+     return OssieImportResult(
+-        model_bytes, _loss_report_bytes(digest, source_identity, identity_verified, rows)
++        model_bytes,
++        _loss_report_bytes(digest, source_identity, identity_verified, rows, max_bytes=max_input_bytes),
+     )
+diff --git a/tests/test_ossie_export.py b/tests/test_ossie_export.py
+index 54d1b5f9..ea179297 100644
+--- a/tests/test_ossie_export.py
++++ b/tests/test_ossie_export.py
+@@ -619,3 +619,136 @@ def test_issue_169_the_command_notes_the_count_and_never_a_name_or_value(tmp_pat
+         assert hidden not in noted, hidden
+     assert export("none", fact_types=(), roles=()) == ""
+     assert export("one", roles=()).startswith("note: 1 fact type declares `redact`. ")
++
++
++# --- OB1: the output bound is a parameter (ossie-relational-bundle) ---------------
++
++OB1_BASELINE = json.loads((ROOT / "tests/fixtures/ossie_ob1_baseline.json").read_bytes())
++ONE_ARTIFACT = ("document", "sidecar", "loss_report")
++
++
++def _baseline_entry(bundle):
++    entry = {name: hashlib.sha256(getattr(bundle, name)).hexdigest() for name in ONE_ARTIFACT}
++    entry["sizes"] = [len(getattr(bundle, name)) for name in ONE_ARTIFACT]
++    return entry
++
++
++@pytest.mark.parametrize("relative", CENSUS)
++@pytest.mark.parametrize("encoding", ("yaml", "json"))
++def test_ob1_t1_default_bound_is_byte_identical_to_baseline(relative, encoding):
++    """T1: without the flag every census export equals the 1926e895 baseline."""
++    expected = OB1_BASELINE[f"{relative}::{encoding}"]
++    try:
++        actual = _baseline_entry(render_ossie(ROOT / relative, output_format=encoding))
++    except Exception as error:  # noqa: BLE001 -- the baseline records refusals by type and text
++        actual = {"refused": f"{type(error).__name__}: {error}"}
++    assert actual == expected
++
++
++def test_ob1_baseline_covers_the_census():
++    assert set(OB1_BASELINE) == {f"{path}::{fmt}" for path in CENSUS for fmt in ("yaml", "json")}
++
++
++@pytest.fixture(scope="module")
++def large_source(tmp_path_factory):
++    from support.ossie_large import write_large_model
++
++    return write_large_model(tmp_path_factory.mktemp("ob1") / "large.orm.json")
++
++
++def _export_argv(model, out, *extra):
++    return ["export", "ossie", str(model), "--out", str(out), "--format", "json", *extra]
++
++
++def test_ob1_t2_t5_large_model_exports_with_raised_bound(large_source, tmp_path, capsys):
++    """T2 and T5: an artifact above 10 MiB publishes with --max-output-bytes 33554432."""
++    out = tmp_path / "large.json"
++    start = monotonic()
++    assert cli.main(_export_argv(large_source, out, "--max-output-bytes", "33554432")) == 0
++    elapsed = monotonic() - start
++    capsys.readouterr()
++    document = out.read_bytes()
++    sidecar = json.loads(Path(str(out) + ".gnd.json").read_bytes())
++    report_bytes = Path(str(out) + ".loss.json").read_bytes()
++    assert len(report_bytes) > 10 * 1024 * 1024 >= len(document)
++    ONTOLOGY.validate(json.loads(document))
++    report = json.loads(report_bytes)
++    REPORT.validate(report)
++    digest = hashlib.sha256(document).hexdigest()
++    assert sidecar["document_sha256"] == report["document_sha256"] == digest
++    # The source stays far below MAX_MODEL_BYTES: the ratio OB1-C2 records.
++    assert large_source.stat().st_size * 4 < len(report_bytes) < large_source.stat().st_size * 8
++    assert large_source.stat().st_size < MAX_MODEL_BYTES
++    assert elapsed < 30.0
++
++
++def test_ob1_t2b_large_model_is_refused_at_the_default(large_source, tmp_path, capsys):
++    out = tmp_path / "large.json"
++    assert cli.main(_export_argv(large_source, out)) == 3
++    assert "ossie:output-size" in capsys.readouterr().err
++    assert not list(tmp_path.iterdir())
++
++
++def _largest_by(tmp_path, artifact):
++    """A model whose named artifact is strictly the largest of the three."""
++    path = _synthetic(tmp_path)
++    document = json.loads(path.read_bytes())
++    if artifact == "document":
++        # A native name is written into the ontology and only pointed at elsewhere.
++        document["object_types"][0]["name"] = "E" + "x" * 50_000
++        document["fact_types"][0]["reading"] = "{" + "E" + "x" * 50_000 + "} has {Elapsed}"
++    elif artifact == "sidecar":
++        # An extension value is copied into the sidecar and nowhere else.
++        document["fact_types"][0]["constraints"][0]["provenance"]["user_quote"] = "q" * 50_000
++    path.write_text(json.dumps(document))
++    bundle = render_ossie(path, output_format="json", max_output_bytes=MAX_MODEL_BYTES)
++    sizes = {name: len(getattr(bundle, name)) for name in ONE_ARTIFACT}
++    assert max(sizes, key=sizes.get) == artifact and sorted(sizes.values())[-2] < sizes[artifact]
++    return path, sizes[artifact]
++
++
++@pytest.mark.parametrize("artifact", ONE_ARTIFACT)
++def test_ob1_t3_each_artifact_is_bounded(tmp_path, artifact, capsys):
++    """T3 and T3a: the bound applies to whichever artifact is largest, at size - 1 and at size."""
++    source, size = _largest_by(tmp_path, artifact)
++    refused = tmp_path / "refused"
++    refused.mkdir()
++    assert cli.main(_export_argv(source, refused / "o.json", "--max-output-bytes", str(size - 1))) == 3
++    assert "ossie:output-size" in capsys.readouterr().err
++    assert not list(refused.iterdir())
++    published = tmp_path / "published"
++    published.mkdir()
++    assert cli.main(_export_argv(source, published / "o.json", "--max-output-bytes", str(size))) == 0
++    assert sorted(p.name for p in published.iterdir()) == ["o.json", "o.json.gnd.json", "o.json.loss.json"]
++
++
++def test_ob1_t3b_strict_refusal_precedes_the_size_refusal(tmp_path, capsys):
++    model = ROOT / "src/gnd/examples/growth/model.orm.yaml"
++    argv = _export_argv(model, tmp_path / "o.json", "--strict", "--max-output-bytes", "1")
++    assert cli.main(argv) == 3
++    err = capsys.readouterr().err
++    assert "population:out-of-scope" in err and "ossie:output-size" not in err
++    assert not list(tmp_path.iterdir())
++
++
++@pytest.mark.parametrize("value", ("0", "-1", "1.5", "abc", "268435457", "", "0x10"))
++def test_ob1_t4_invalid_bound_is_a_usage_error(tmp_path, value, capsys):
++    model = ROOT / "src/gnd/examples/refunds/model.orm.yaml"
++    with pytest.raises(SystemExit) as caught:
++        cli.main(_export_argv(model, tmp_path / "o.json", "--max-output-bytes", value))
++    assert caught.value.code == 64
++    assert "--max-output-bytes" in capsys.readouterr().err
++    assert not list(tmp_path.iterdir())
++
++
++def test_ob1_t4b_ceiling_is_admitted(tmp_path, capsys):
++    model = ROOT / "src/gnd/examples/refunds/model.orm.yaml"
++    assert cli.main(_export_argv(model, tmp_path / "o.json", "--max-output-bytes", "268435456")) == 0
++    capsys.readouterr()
++
++
++@pytest.mark.parametrize("value", (0, -1, 268435457, True, 1.5, "10"))
++def test_ob1_library_bound_is_validated(value):
++    with pytest.raises(ValueError, match="max_output_bytes"):
++        render_ossie(ROOT / "src/gnd/examples/refunds/model.orm.yaml", output_format="json",
++                     max_output_bytes=value)
+diff --git a/tests/test_ossie_import.py b/tests/test_ossie_import.py
+index 35286a80..584ae470 100644
+--- a/tests/test_ossie_import.py
++++ b/tests/test_ossie_import.py
+@@ -9,6 +9,7 @@ import json
+ import re
+ from collections import Counter
+ from pathlib import Path
++from time import monotonic
+ 
+ import pytest
+ from support.cli_runner import run_main
+@@ -275,14 +276,18 @@ def test_import_pins_offline_core_reference():
+     )
+ 
+ 
+-def test_export_bounds_all_import_envelopes(bundle, monkeypatch):
++def test_export_bounds_all_import_envelopes(bundle):
+     from gnd.export import ossie
+ 
+     path, sidecar, report = bundle
+     assert max(path.stat().st_size, sidecar.stat().st_size) < report.stat().st_size
+-    monkeypatch.setattr(ossie, "MAX_BYTES", report.stat().st_size - 1)
++    # OB1: the bound is the max_output_bytes parameter, no longer the shared input cap.
+     with pytest.raises(ossie.OssieInputError, match="ossie:output-size"):
+-        render_ossie(path.with_name("source.orm.json"), output_format="json")
++        render_ossie(
++            path.with_name("source.orm.json"),
++            output_format="json",
++            max_output_bytes=report.stat().st_size - 1,
++        )
+ 
+ 
+ def test_reference_cycle_and_inherited_identifier(bundle, tmp_path):
+@@ -420,7 +425,7 @@ def test_restored_output_size_caps(monkeypatch):
+     with pytest.raises(OssieImportError, match="ossie-import:model-size"):
+         ossie_import._bounded_model({"description": oversized}, None, require_identity=False)
+     with pytest.raises(OssieImportError, match="ossie-import:loss-size"):
+-        ossie_import._loss_report_bytes("0" * 64, None, False, [{"pointer": "/" + oversized}])
++        ossie_import._loss_report_bytes("0" * 64, None, False, [{"pointer": "/" + oversized}], max_bytes=256)
+ 
+ 
+ def test_refuses_sidecar_header_and_deep_pointer(bundle):
+@@ -531,3 +536,98 @@ def test_the_reference_names_the_import_report_schema_and_its_reasons(tmp_path):
+     for disposition, reason in pairs | {("refused", reason) for reason in reasons}:
+         assert f"| `{disposition}` | `{reason}` |" in section, (disposition, reason)
+ 
++
++
++# --- OB1: --max-input-bytes (ossie-relational-bundle) ------------------------------
++
++LARGE_BOUND = 32 * 1024 * 1024
++
++
++@pytest.fixture(scope="module")
++def large_bundles(tmp_path_factory):
++    """The OB1-C2 export, written as JSON and YAML bundles above the 10 MiB default."""
++    from support.ossie_large import write_large_model
++
++    root = tmp_path_factory.mktemp("ob1-import")
++    source = write_large_model(root / "large.orm.json")
++    bundles = {}
++    for encoding in ("json", "yaml"):
++        out = root / f"large.{encoding}"
++        exported = render_ossie(source, output_format=encoding, max_output_bytes=LARGE_BOUND)
++        out.write_bytes(exported.document)
++        sidecar, report = _companions(out)
++        sidecar.write_bytes(exported.sidecar)
++        report.write_bytes(exported.loss_report)
++        assert len(exported.loss_report) > 10 * 1024 * 1024
++        bundles[encoding] = out
++    return source, bundles
++
++
++@pytest.mark.parametrize("encoding", ("json", "yaml"))
++def test_ob1_t6_large_bundle_round_trips_with_raised_bound(large_bundles, encoding):
++    """T6: the read, YAML guard and both JSON decoder caps move with the flag."""
++    source, bundles = large_bundles
++    start = monotonic()
++    result = plan_ossie_import(bundles[encoding], max_input_bytes=LARGE_BOUND)
++    assert monotonic() - start < 60.0
++    assert json.loads(result.model) == json.loads(source.read_bytes())
++
++
++@pytest.mark.parametrize("encoding", ("json", "yaml"))
++def test_ob1_t6a_large_bundle_is_refused_at_the_default(large_bundles, encoding):
++    _, bundles = large_bundles
++    _assert_refusal(bundles[encoding], "report-input-size")
++
++
++def test_ob1_t6b_loss_size_moves_with_the_bound(tmp_path):
++    """T6b: the read passes at N = the file's size and the doubled report cap binds first."""
++    size = FLIGHTS.stat().st_size
++    with pytest.raises(OssieImportError) as caught:
++        plan_ossie_import(FLIGHTS, max_input_bytes=size)
++    assert caught.value.rule_id == "ossie-import:loss-size"
++    report = plan_ossie_import(FLIGHTS).loss_report
++    assert len(report) > 2 * size
++    assert plan_ossie_import(FLIGHTS, max_input_bytes=-(-len(report) // 2)).loss_report == report
++
++
++def test_ob1_t6c_model_size_cap_is_kept(monkeypatch):
++    """T6c: the restored-model cap does not move with --max-input-bytes."""
++    from gnd import ossie_import
++
++    expected = plan_ossie_import(FLIGHTS).model
++    monkeypatch.setattr(ossie_import, "MAX_BYTES", len(expected) - 1)
++    with pytest.raises(OssieImportError) as caught:
++        plan_ossie_import(FLIGHTS, max_input_bytes=LARGE_BOUND)
++    assert caught.value.rule_id == "ossie-import:model-size"
++
++
++@pytest.mark.parametrize("value", ("0", "-1", "1.5", "abc", "268435457", "", "0x10"))
++def test_ob1_t6d_invalid_input_bound_is_a_usage_error(tmp_path, value, capsys):
++    from gnd import cli
++
++    with pytest.raises(SystemExit) as caught:
++        cli.main(["import", "ossie", str(FLIGHTS), "--out", str(tmp_path / "m.json"),
++                  "--max-input-bytes", value])
++    assert caught.value.code == 64
++    assert "--max-input-bytes" in capsys.readouterr().err
++    assert not list(tmp_path.iterdir())
++
++
++def test_ob1_cli_import_threads_the_bound(tmp_path, capsys):
++    from gnd import cli
++
++    size = FLIGHTS.stat().st_size
++    argv = ["import", "ossie", str(FLIGHTS), "--out", str(tmp_path / "m.json")]
++    assert cli.main([*argv, "--max-input-bytes", str(size)]) == 3
++    assert "ossie-import:loss-size" in capsys.readouterr().err
++    assert cli.main(argv) == 0
++
++
++def test_ob1_t6e_loads_default_cap_is_unchanged():
++    from gnd.input_policy import MAX_BYTES, loads
++
++    padded = b'"' + b"x" * (MAX_BYTES - 1) + b'"'
++    assert len(padded) == MAX_BYTES + 1
++    with pytest.raises(ValueError, match="byte cap"):
++        loads(padded)
++    assert loads(padded, max_bytes=MAX_BYTES + 1) == "x" * (MAX_BYTES - 1)
+diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
+index 1c8ae24a..21a8342f 100644
+--- a/tests/test_rf1_cli_pins.py
++++ b/tests/test_rf1_cli_pins.py
+@@ -282,6 +282,19 @@ def _ossie_successor(command):
+     if command == "export":
+         ossie.add_argument("--format", choices=("yaml", "json"), default="yaml", help="ontology format (default: yaml)")
+         ossie.add_argument("--strict", action="store_true", help="refuse any export with a refused disposition")
++    # ossie-relational-bundle OB1: the declared size-bound successors.
++    from gnd.commands._arguments import _byte_bound
++
++    if command == "export":
++        ossie.add_argument(
++            "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
++            help="largest size in bytes of each written file (default 10485760; at most 268435456)",
++        )
++    else:
++        ossie.add_argument(
++            "--max-input-bytes", type=_byte_bound, default=None, metavar="N",
++            help="largest size in bytes of each input file (default 10485760; at most 268435456)",
++        )
+     leaf = _walk(ossie, ("gnd", command, "ossie"), {})
+     leaf["listed_help"] = help_text
+     choices.append("ossie")

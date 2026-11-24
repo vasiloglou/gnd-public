@@ -94,6 +94,21 @@ def independent_index_scope(model: Model) -> Iterator[ModelIndex | None]:
         _SCOPE.reset(token)
 
 
+def _key_order_digest(document: Any) -> str:
+    """Digest of every mapping's key sequence, in document order (the cache's order part)."""
+    shape: list[Any] = []
+    pending = [document]
+    while pending:
+        item = pending.pop()
+        if isinstance(item, dict):
+            shape.append(list(item))
+            pending.extend(reversed(list(item.values())))
+        elif isinstance(item, list):
+            shape.append(len(item))
+            pending.extend(reversed(item))
+    return hashlib.sha256(repr(shape).encode()).hexdigest()
+
+
 def cache_info() -> dict[str, int]:
     with _LOCK:
         return {'size': len(_CACHE), 'limit': _LIMIT}
@@ -163,13 +178,17 @@ class ModelIndex:
             key = hashlib.sha256(artifacts.canonical_json_bytes(document)).hexdigest()
         except (ValueError, TypeError, OverflowError, RecursionError):
             return cls(None, document)
+        # The canonical digest sorts keys, but shared rows keep the document's own
+        # key order and renderers iterate them. Two models equal up to key order
+        # therefore get separate entries, so no output depends on which one came first.
+        entry = f'{key}:{_key_order_digest(document)}'
         with _LOCK:
-            cached = _CACHE.get(key)
+            cached = _CACHE.get(entry)
             if cached is not None:
-                _CACHE.move_to_end(key)
+                _CACHE.move_to_end(entry)
                 return cached
             built = cls(key, document)
-            _CACHE[key] = built
+            _CACHE[entry] = built
             while len(_CACHE) > _LIMIT:
                 _CACHE.popitem(last=False)
             return built

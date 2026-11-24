@@ -2262,8 +2262,16 @@ pinned Flights example carries verifiable Apache Ossie provenance for its
 projected multiplicities. Multiplicity declarations from unversioned
 foreign inputs are reported as refusals.
 
-The reader validates with vendored schemas and caps each input at 10 MiB.
-Export applies the same limit to its three artifacts. The import command
+The reader validates with vendored schemas and caps each input file at 10
+MiB unless `--max-input-bytes N` sets another bound. The bound applies to the
+read and the parse of the ontology, the sidecar and the loss report, and twice
+N bounds the import loss report it writes. The restored model keeps its fixed
+10 MiB cap (`ossie-import:model-size`). Export caps each artifact it writes at
+10 MiB unless `--max-output-bytes N` sets another bound. An artifact above the
+bound refuses the whole export with `ossie:output-size`, exit 3, and nothing
+is written: no file is truncated. Either N is a whole number of bytes from 1
+to 268435456 (256 MiB); any other value is a usage error, exit 64, before any
+input is read. The import command
 publishes a JSON model and `MODEL.loss.json` together, or uses the report
 path given by `--loss-report`. The report names its source digest and
 available source model identity, and records one disposition per tracked

@@ -282,6 +282,19 @@ def _ossie_successor(command):
     if command == "export":
         ossie.add_argument("--format", choices=("yaml", "json"), default="yaml", help="ontology format (default: yaml)")
         ossie.add_argument("--strict", action="store_true", help="refuse any export with a refused disposition")
+    # ossie-relational-bundle OB1: the declared size-bound successors.
+    from gnd.commands._arguments import _byte_bound
+
+    if command == "export":
+        ossie.add_argument(
+            "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
+            help="largest size in bytes of each written file (default 10485760; at most 268435456)",
+        )
+    else:
+        ossie.add_argument(
+            "--max-input-bytes", type=_byte_bound, default=None, metavar="N",
+            help="largest size in bytes of each input file (default 10485760; at most 268435456)",
+        )
     leaf = _walk(ossie, ("gnd", command, "ossie"), {})
     leaf["listed_help"] = help_text
     choices.append("ossie")

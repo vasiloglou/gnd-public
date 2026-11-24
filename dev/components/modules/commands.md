@@ -29,8 +29,8 @@ Components: cli.checking_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 1082 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 1117 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 1089 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 1124 | (no docstring) |
 
 ## gnd.commands.codegen — `src/gnd/commands/codegen.py`
 Components: cli.codegen_command
@@ -92,8 +92,8 @@ Components: cli.export_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 182 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 211 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 200 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 229 | (no docstring) |
 
 ## gnd.commands.extract — `src/gnd/commands/extract.py`
 Components: cli.extract_command

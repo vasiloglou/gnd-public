@@ -379,6 +379,19 @@ def execute(row: dict, tmp_path: Path, monkeypatch, *, measurement: dict | None 
             return wrapped
 
         monkeypatch.setattr(sys.modules[__name__], "save", timed(save, "fixture"))
+        # The parse scope's write check (switched on for every test by conftest.py)
+        # snapshots each remembered model document; that is the test harness's
+        # work, not the witness layer's, so it is timed as fixture work. A
+        # snapshot taken inside a timed intake is already counted there.
+        from gnd.model import _parsing
+
+        snapshot = _parsing._snapshot
+        fixture_snapshot = timed(snapshot, "fixture")
+
+        def harness_snapshot(document):
+            return snapshot(document) if depths["intake"] else fixture_snapshot(document)
+
+        monkeypatch.setattr(_parsing, "_snapshot", harness_snapshot)
         for module, name in (
             (model_intake, "load_model_bytes"),
             # bind/resolve paths look up the defining module, not the alias.

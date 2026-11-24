@@ -971,8 +971,8 @@ Halpin's relational mapping (Rmap) of a loaded GND model.
 | `Unmapped` | class | 75 | (no docstring) |
 | `Disposition` | class | 83 | (no docstring) |
 | `RelationalSchema` | class | 91 | (no docstring) |
-| `map_model(model, *, variant) -> RelationalSchema` | function | 718 | Map one loaded model to its relational schema; never raises for an admitted model. |
-| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 723 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+| `map_model(model, *, variant) -> RelationalSchema` | function | 763 | Map one loaded model to its relational schema; never raises for an admitted model. |
+| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 768 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
 
 ## gnd.safefs — `src/gnd/safefs.py`
 Components: infra.safe_filesystem

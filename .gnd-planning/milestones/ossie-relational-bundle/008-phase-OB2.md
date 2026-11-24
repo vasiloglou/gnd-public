@@ -11,35 +11,37 @@ gates:
     exit: "n/a -- ruling"
   - command: "ruling: owner ruled D5 = HALPIN and accepted IF5 and RR1 (007-OB2-D5-gate.md)"
     exit: "n/a -- ruling"
+  - command: "ruling: owner directed a second review round, then a PR (Re-review, then PR)"
+    exit: "n/a -- ruling"
   - command: "uv run pytest -q tests/test_rmap.py tests/test_li0_witness_wire.py --tb=short"
     exit: 0
-    output: "96 passed in 38.69s"
+    output: "110 passed in 45.19s"
     note: "plan §9 OB2 row, plus test_li0_witness_wire, which scans fixture models (spec IF10)"
   - command: "the project.md structure and inventory guard block (16 files)"
     exit: 1
-    output: "1 failed, 865 passed, 2 deselected in 122.31s (0:02:02)"
+    output: "1 failed, 865 passed, 2 deselected in 121.60s (0:02:01)"
     note: "the one failure, tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap, is the known red (see Gate)"
   - command: "uv run ruff check"
     exit: 0
     output: "All checks passed!"
   - command: "python3 scripts/components_index.py changed --base a7847f2b --strict"
     exit: 0
-    output: "changed against a7847f2b (a7847f2): 106 file(s) differ; 0 to fix, 0 warning(s), 0 to reread"
+    output: "changed against a7847f2b (a7847f2): 115 file(s) differ; 0 to fix, 0 warning(s), 0 to reread"
 slow_cadence:
   command: "uv run pytest -q -m \"evidence or census\""
   trigger: "explicit owner request or separately scoped CI selection"
   reason: "the broad controls are outside this phase's impact closure; T1 and T5 already map every census model"
 evidence:
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB2-spec.md
-    sha256: 80ef7b68e6ae0bb9c07590201d8a07c8273e995d2a3018a29eb279e8b8676743
+    sha256: 35891e4c041216a9f205f3ff539db418794c929721bc3590a2f383412b48f63d
   - path: .gnd-planning/milestones/ossie-relational-bundle/007-OB2-D5-gate.md
     sha256: 769a582738383a1e115b9e41b7becff992afa2669938cc34f63c8f1175e611eb
   - path: src/gnd/rmap.py
-    sha256: 414a891733d63d1b5ef4040fc2552e0ab0f04110e89e0f1a79c70d752adbc67e
+    sha256: 699da0b19e1d062705a60653f9d46dd1f4a257f887efa79a4cfdeded9b1ac639
   - path: src/gnd/skills/gnd-orm-core/references/representation-format.md
-    sha256: dd67d53b65fdac6f2b53443f39365621f52768d4a57fe2012e5ccb7a6d0f786f
+    sha256: 13cbfe65c72c5d301af2ae63aeb1ba7a20d055cf2d0514664462bf50a77cafac
   - path: tests/test_rmap.py
-    sha256: 5c893a4cc219bed7c8dea00daefa3db48f32173c01dec232c3f8972f0de18d89
+    sha256: c64494b0209b037aef03c05bfca501416426dcb092962e53cc0894c9e5771773
   - path: tests/support/rmap_large.py
     sha256: 2ad02afe03b94e4e69fffec2f4a60276dfd75591864554b353c23f802adfb36b
   - path: tests/fixtures/rmap/README.md
@@ -54,7 +56,7 @@ evidence:
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/OB2-variant-measurement.md
     sha256: 90d7d0d39feb384c427b59911245d16fadb2a6d2d7109f39e909179a270ab36d
   - path: .gnd-planning/milestones/ossie-relational-bundle/evidence/OB2/dynamic-query-successor.json
-    sha256: deaa829cc2a4442849fca747d8cbff2fa4a5936a88364981c344a086506aedb4
+    sha256: 99fa5512704547be8fb40a46e72fb111731f151b1bacd0cd8b6617abc93a0dbe
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB2-r1/review.md
     sha256: 8ecc9256423dc0158b32c834b64a0157f3ec9641ab0dbeeff46d9c9469824c93
     note: "sanitized; the reviewer's original bytes are 50e188ef9302c5992a6de9ed1dc047bcaf5717aa1554cdb7b9bfc4f00de0af8b, bound by run.json"
@@ -62,6 +64,13 @@ evidence:
     sha256: 26941c7f96caefc9e67fce2c3f803d55d25111e2d3b7adf2993e99f6e802bbd9
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB2-r1/FINDINGS.md
     sha256: 7d0f36b01140df8ea85d12876b5e4e84aeb6f87cf099825a991e0f1e0a7c534e
+  - path: .gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB2-r2/review.md
+    sha256: 78f774e204c57c6eb13ead4379bf2ad78eeceadf7662d11c94a71876ae79fd67
+    note: "sanitized; the reviewer's original bytes are f1a1b819a2ffa0d02979ea7867e5f6b3e5313f6f2f9f8fbd25eedd767fe8e6d4, bound by run.json"
+  - path: .gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB2-r2/SANITIZATION.md
+    sha256: 80d86d5a613ff7691781959bf02e465f701c49f6c18519d045ae6a10b9848bd6
+  - path: .gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB2-r2/FINDINGS.md
+    sha256: 9f30eb372d2993c6de80b79c17df3a73f57972902575fdfca3de63020d8e18d4
 ---
 
 # Phase OB2: the Halpin relational mapping (`gnd.rmap`)
@@ -115,8 +124,9 @@ layout.
 ## Review
 
 There was one reviewer, Codex, run through `review_tool.py` with a read-only
-sandbox and effort high, over base `e7af6f50` to head `af34a54e`. **One
-reviewer is one reviewer.**
+sandbox and effort high, in two rounds. **One reviewer is one reviewer.**
+
+### Round 1, base `e7af6f50` to head `af34a54e`
 
 | Item | Value |
 |---|---|
@@ -139,7 +149,40 @@ reviewer is one reviewer.**
 All 15 regression tests were shown failing on the pre-repair bytes before
 any fix. The repairs are commit `4b50f740`.
 
-**The repaired bytes are not reviewed.** No second round ran.
+### Round 2, base `af34a54e` to head `24f28413`
+
+The owner asked for it ("Re-review, then PR").
+
+| Item | Value |
+|---|---|
+| Review | [review.md](notes/reviews/phase-OB2-r2/review.md), sha256 `f1a1b819…e6d4` as written, `78f774e2…fd67` after path sanitization ([SANITIZATION.md](notes/reviews/phase-OB2-r2/SANITIZATION.md)) |
+| Verdict | CHANGES_REQUESTED, with eight findings |
+| Ledger | [FINDINGS.md](notes/reviews/phase-OB2-r2/FINDINGS.md) |
+
+| Id | Class | Reproduced | Disposition |
+|---|---|---|---|
+| F1 | blocking | yes (crash) | fixed: the A5 fallback key is the objectification's key everywhere (RR10) |
+| F2 | blocking | yes | fixed: identifier ties break on the `role_refs` sequence (RR11) |
+| F3 | blocking | yes | fixed: one key per column set, columns in table order (RR12) |
+| F4 | blocking | yes | fixed: an inheriting subtype inherits a composite identifier (RR13) |
+| F5 | hardening | yes | fixed: a tabled value component is a foreign key (RR14) |
+| F6 | blocking | yes | fixed: a computed fact type identifies nothing (RR15) |
+| F7 | blocking | yes | fixed: a unary role is held by the key columns (RR16) |
+| F8 | blocking | yes (ratio 6.6 at 4×) | fixed: unique keys indexed by column set (RR12) |
+
+All 14 regression tests were shown failing on the pre-repair bytes before
+any fix. One earlier pin, R4, changed with F3: its unique key's column
+order moved from `role_refs` order to table order. The repairs are commit
+`171665e8`. No approved corpus answer changed, and the variant measurement
+is byte-identical.
+
+The reviewer also confirmed: 63 declaration reversals and 25 path moves
+equal; all 66 measurement rows reproduced; its matcher probes (addresses,
+role names with digits, answer file names) found no breaking input.
+
+**The round-2 repaired bytes are not reviewed.** Round 1 found nine
+findings and round 2 eight, all in edge combinations of identification,
+external uniqueness and subtypes; the rounds are not yet converging to zero.
 
 ## Refactoring review
 
@@ -187,23 +230,23 @@ The plan is not edited here; these go to the milestone-close amendment.
 | OB1-Q1 | Carried: should `guard_yaml`'s default `max_bytes` resolve `MAX_BYTES` at call time? OB2 reads no YAML itself. | OB5 or the close sweep |
 | OB2-Q1 | Should `export/ossie.py` take its "confirmed alethic" decisions from `gnd.rmap.dispositions` instead of its own predicate? | OB3 |
 | OB2-Q2 | Should `refscheme.reference_identity` honour `preferred` and confirmation, and cache its value-type map, for its other callers? | milestone close sweep, or a separate issue |
-| OB2-Q3 | Should the repaired Rmap bytes (`4b50f740`) get a second review round before OB3 builds on them? | owner, before OB3 |
+| OB2-Q3 | Round 2 ran (owner: "Re-review, then PR"). Should the round-2 repairs (`171665e8`) get a third round, or should OB3's own tests be the next instrument? | owner, before OB3 |
 
 ## Boundary
 
 - **Size** (spec §10 estimated about 450 source, 120 normative and 350 test
   lines):
-  - `rmap.py`: 741 lines, about 1.6× the estimate, from the composite
-    identifier index (RR1), external and objectified unique keys (RR4, RR5)
-    and the ALTERNATE supertype tables (RR6).
+  - `rmap.py`: 786 lines, about 1.7× the estimate, from the composite
+    identifier index (RR1), external and objectified unique keys (RR4, RR5),
+    the ALTERNATE supertype tables (RR6) and the round-2 repairs (RR10–RR16).
   - Normative section: 126 lines.
-  - Tests: `test_rmap.py` 518 lines, plus a 42-line generator; the
+  - Tests: `test_rmap.py` 652 lines, plus a 42-line generator; the
     measurement tool is 94 lines.
   - Corpus: 25 cases with stories and 28 answer files.
 - **Not done:** no Ossie semantic model or mapping files (OB3), no physical
   binding (OB4), no docs or skill (OB5), no DDL, no CLI.
 - **Not run:** the opt-in oracle lane, and the evidence and census lanes.
-- **Not pushed.** This branch has no pull request; opening one is the
-  owner's call. It is cut from the planning branch, not from OB1.
+- **Pull request.** The owner directed a PR after round 2. The branch is
+  cut from the planning branch (PR #264), not from OB1.
 - **Approval:** this record approves nothing beyond OB2. Merge is the
   owner's.

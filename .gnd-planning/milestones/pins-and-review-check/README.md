@@ -16,6 +16,6 @@ undone by [PR 235](https://github.com/vasiloglou/gnd-public/pull/235),
 [Plan](notes/pins-and-review-check-plan.md). Merge order: PR 248 (plan), then
 250, then 253.
 
-Carried to the owner (close record sweep): OQ2 two inline `== 18` counts;
-OQ3 14 tests red on `main` in five files; OQ4 the frontmatter fence defect
+Carried to the owner (close record sweep): OQ2 inline count copies outside
+any name guard; OQ4 the frontmatter fence defect
 in `gnd.exp.frontmatter`, being fixed in a separate session.

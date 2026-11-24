@@ -65,8 +65,8 @@ arrangement only.
 | plan §10, PF1 | none beyond D1 and D5 | closed: both ruled at the plan gate and applied |
 | plan §10, PF2 | the corpus and the wording that counts as "names a breaking input" | closed: PF2 spec §6 Corpus and Grading |
 | PF1 OQ1 | keep `c1ecb8c1`? | closed: kept, delegated ruling, PF1 spec amendment a1 |
-| PF1 OQ2 | inline `== 18` in `tests/test_development_scaffold.py:200` and `tests/test_marketplace_plugins.py:25` | **carried** to the owner: a maintenance pass (plan C4) |
-| PF1 OQ3 | 14 default-lane tests red on `main` in five files | **carried** to the owner; a session to diagnose them is proposed |
+| PF1 OQ2 | inline `== 18` in `tests/test_development_scaffold.py:200` and `tests/test_marketplace_plugins.py:25`; PR 254 shows one more copy, the recorded install output `placed 71 file(s)` in `tests/fixtures/rf5-handlers/answers.json` | **carried** to the owner: a maintenance pass (plan C4). No name guard sees a literal in a test or a fixture |
+| PF1 OQ3 | 14 default-lane tests red on `main` in five files | **closed outside this milestone**: [PR 254](https://github.com/vasiloglou/gnd-public/pull/254), merged on `main` on 2026-11-23, repaired all 19 (these 14 and the 5 inventory ones). PF1's branch merged `main` and keeps its import over PR 254's literal 71 in `tests/test_verification_fixes.py` and `tests/test_public_built_inventory.py`; gates green on the merge (`4ac609d6`) |
 | PF2 OQ4 | `gnd.exp.frontmatter._split` takes an indented `---` as the closing fence | **carried**: a separate session started at the owner's request on 2026-11-23 fixes it with a regression test in its own pull request |
 | PF1 refuted premise | the duplication was deliberate | closed: plan C1 |
 | PF1 and PF2 reviews | repaired bytes with no review opinion (PF1 round-2 repair; PF2 evidence repairs) | closed: read by the close review below |
@@ -107,7 +107,7 @@ only; an agent ruling under that delegation, not the owner's reading. The
 milestone is **closed locally**: both phases are recorded, the exit gates are
 green at `b140554b`, the close review ran and its findings are repaired, and
 the plan as amended (c1, sha256 `3ebf67e2…5859`) is approved. Carried to the
-owner: OQ2, OQ3, OQ4. Not covered by the delegation and still the owner's:
+owner: OQ2 and OQ4; OQ3 was closed on `main` by PR 254. Not covered by the delegation and still the owner's:
 merging PRs 248, 250 and 253, in that order.
 
 ## Boundary -- what this result did NOT establish
@@ -116,5 +116,5 @@ merging PRs 248, 250 and 253, in that order.
   or subtler fitted code.
 - That no test restates the inventory: inline literals are outside any name
   guard (OQ2).
-- The cause of the 14 reds of OQ3, or a fix for OQ4.
+- A fix for OQ4 (a separate session owns it); OQ3's repair is PR 254's, not this milestone's.
 - Merge, release or publication.

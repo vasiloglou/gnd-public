@@ -412,4 +412,5 @@ Status, 2026-11-23, later: closed locally by delegated ruling
 [PR 253](https://github.com/vasiloglou/gnd-public/pull/253), stacked on the
 plan's [PR 248](https://github.com/vasiloglou/gnd-public/pull/248); none is
 merged. PF2 found a defect on `main` in `gnd.exp.frontmatter` (fixed in a
-separate pull request) and PF1's baseline found 14 tests red on `main`.
+separate pull request). PF1's baseline found 14 more tests red on `main`;
+PR 254 repaired them.

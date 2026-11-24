@@ -486,11 +486,14 @@ def _run(case: dict[str, Any], b: dict[str, Any], monkeypatch: pytest.MonkeyPatc
     if branch == "B11":
         import gnd.model as model_module
 
-        read = model_module.load_model_bytes
+        # The hook runs after the model's bytes are read and parsed, before its
+        # references bind: the loader's validation step (D9: it no longer goes
+        # through load_model_bytes, which would parse the bytes again).
+        read = model_module._load_model_document
         old_hash = refs[0]["sha256"]
         fired = []
 
-        def replace_after_read(data: bytes, *, source: Any) -> Any:
+        def replace_after_read(document: Any) -> Any:
             if not fired:
                 fired.append(True)
                 if n == "model-parent-swap":
@@ -504,9 +507,9 @@ def _run(case: dict[str, Any], b: dict[str, Any], monkeypatch: pytest.MonkeyPatc
                     other = root / "other.yaml"
                     other.write_text("version: 1\nobject_types: []\nfact_types: []\n")
                     other.replace(root / "model.orm.yaml")
-            return read(data, source=source)
+            return read(document)
 
-        monkeypatch.setattr(model_module, "load_model_bytes", replace_after_read)
+        monkeypatch.setattr(model_module, "_load_model_document", replace_after_read)
         result = _validate(b)
         assert fired
         assert result["exit_code"] in {0, 3}

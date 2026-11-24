@@ -381,6 +381,13 @@ both are merged; this replaces the "any time" row of the order above and the
 r1 and approved by delegated ruling, and a blocked RW1 draft spec; nothing is
 bumped or built. Merges and each publication act stay with the owner.
 
+Status, 2026-11-23, later still: both of those milestones are merged and
+closed on `main` (`c227c004`). The owner then ruled that the release also
+waits for pins-and-review-check (plan on pull request 248, PF1 on pull
+request 250, neither merged), so RW1 is still held. The
+[release plan](milestones/release-0.5.0/notes/release-0.5.0-plan.md) §12
+records the ruling and a default-lane baseline of `main`.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

@@ -1,11 +1,14 @@
 # Release 0.5.0
 
-r2, 2026-11-23. Milestone `release-0.5.0`, phase prefix `RW`. The standard
+r3, 2026-11-23. Milestone `release-0.5.0`, phase prefix `RW`. The standard
 GND panel reviewed r1 (SHA-256 `5a34615d…3391`, five of six seats). Section 11
-amends the r1 clauses below and records the owner's rulings of the same day;
-no review has read r2. The [plan gate](../001-plan-gate.md) records the review
-and the delegated ruling. **RW1 does not start until the two milestones of
-§11's RW-D2 ruling are merged.**
+amends the r1 clauses below and records the owner's rulings of the same day.
+The [plan gate](../001-plan-gate.md) records the review and the delegated
+ruling over r2 (SHA-256 `c1c846bd…1999`). r3 adds §12, a later owner ruling
+and what was observed on main, and changes this paragraph; every other byte
+is r2's. No review has read r2 or r3. **RW1 does not start until
+pins-and-review-check is merged (§12). The two milestones of §11's RW-D2
+ruling are merged.**
 
 Source: the owner's request of 2026-11-23 ("Release 0.5.0"), made after the
 three milestones merged since 0.4.0 were recorded as closed. Inspection
@@ -515,3 +518,76 @@ checked against the repository before its fix was written here.
 RW-D1, RW-D3 to RW-D7 and RW-D9 to RW-D14 follow the proposed readings,
 subject to the fixes above. RW-D10 and RW-D12 name owner acts and stay the
 owner's at publication time.
+
+## 12. The dependency met and extended, 2026-11-23 (r3)
+
+This section adds to §11 and replaces none of it. The r2 bytes are at commit
+`9c5c1155`.
+
+### What main holds
+
+Observed at main `e223609b` with `git log --first-parent` and `git ls-tree`:
+
+| Milestone | Merged as | Close record |
+|---|---|---|
+| literature-host-interfaces | PR 241 (`a0270591`), PR 245 (`f7fad6a1`) | [006-milestone-close.md](../../literature-host-interfaces/006-milestone-close.md) |
+| reviewed-vocabulary-growth | PR 239 (`7952ee9e`), PR 240 (`8fea6da5`), PR 251 (`c227c004`) | [007-milestone-close.md](../../reviewed-vocabulary-growth/007-milestone-close.md) |
+
+The RW-D2 ruling of §11, as read there, is met.
+
+### Owner ruling
+
+- **RW-D2, extended (o).** After the dependency was reported met, the
+  owner wrote "also wait for pins-and-review-check". As read
+  here: **0.5.0 is cut after pins-and-review-check is merged to main with its
+  close record**, the reading §11 gave the first two. That reading is this
+  plan's; the owner may narrow it to PF1. On 2026-11-23 the milestone's plan
+  r1 is approved by the owner and is on pull request 248, PF1 (one home for
+  the packaged-skill inventory) is done on pull request 250, and PF2 (a
+  calibration of the standing review check) is an outline. Neither pull
+  request is merged.
+- RW1 stays held. Nothing is bumped, measured under a ruling, or built.
+- The owner named no other milestone. growth-round-outcomes has GO1 on main
+  and GO2 to GO5 open; literature-reading-reference has pull requests 243,
+  244 and 252 open. Under §11 neither gates the cut, and each is in the
+  release only if it is merged before the freeze. Whether either should gate
+  is asked of the owner with this amendment and is not ruled.
+
+### Baseline of main (observed; not E1)
+
+W10 said no full default lane was recorded on current main. One ran on
+2026-11-23 at `c227c004`, before any RW1 ruling, to learn the state of main:
+[e1-shards.sh](../evidence/RW1/e1-shards.sh) `c227c004 base` on beast-3 (uv
+0.13.7, Python 3.13.18, six shards). Result: 20,339 passed, 19 failed, 2
+errors. The two errors are RC-02's. The 19 failures:
+
+| File | Failed |
+|---|---|
+| `tests/test_rf4_peripheral.py` | 6 |
+| `tests/test_verification_fixes.py` | 5 |
+| `tests/test_ir3_pyrel_includes.py` | 5 |
+| `tests/test_rf1_pin_harness.py` | 1 |
+| `tests/test_guarded_clause_exports.py` | 1 |
+| `tests/test_rf5_handler_pins.py` | 1 |
+
+Pull request 254 (`e223609b`), from another session, repaired the same 19
+and reports 20,358 passed, 0 failed and 2 errors on its own run. That run is
+its claim and was not repeated here. This run is not E1: E1's two lanes run
+at the commit the bump is applied to, after the first RW1 ruling.
+
+Consequences for the clauses above:
+
+- **R9 happened before RW1.** Six of the 19 came from this release's own
+  content: pyrel-rules-coverage (PR 223) changed the rules programs, and
+  five include-root tests of PR 220 and one export digest still pinned the
+  old bytes and the old exit. Each merge was green on its own branch. RW2-C0's lane at the freeze commit
+  is the control, and it stays.
+- **RW1 spec §6.** Its expected base result ("no failure") was written
+  without a measurement. The revised spec takes the base as measured.
+- **W11, C3 and RW-D13.** `uv run ruff check` exits 0 at `e223609b`
+  (observed, 2026-11-23). The 198 findings of W11 are gone, so RW1-C7's
+  search for the ten added since 0.4.0 has no subject. The lint gate of each
+  phase is the `project.md` gate, exit 0, unless findings return before RW1
+  is revised.
+- **W5 and W7** grow by what the two milestones and the pull requests merged
+  since `0bfded71` ship. RW1's revision recounts them.

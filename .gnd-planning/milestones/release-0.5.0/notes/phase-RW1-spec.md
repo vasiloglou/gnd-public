@@ -2,11 +2,14 @@
 
 ## 1. Status
 
-**Draft r2, blocked; no ruling.** The [plan](release-0.5.0-plan.md) r2 is
-approved by delegated ruling ([plan gate](../001-plan-gate.md)). Its §11
-RW-D2 ruling holds this phase until literature-host-interfaces and
-reviewed-vocabulary-growth are merged. When they are, this spec is revised
-against main as it then is (the inventory, the notes outline, the headline)
+**Draft r3, blocked; no ruling.** The [plan](release-0.5.0-plan.md) r2 is
+approved by delegated ruling ([plan gate](../001-plan-gate.md)); r3 of the
+plan adds §12. The §11 RW-D2 ruling held this phase until
+literature-host-interfaces and reviewed-vocabulary-growth were merged, and
+both are on main at `c227c004`. The owner's ruling in plan §12 (o) now holds
+it until pins-and-review-check is merged too. When it is, this spec is
+revised against main as it then is (the inventory, the notes outline, the
+headline, and E1's expected base result, which plan §12 shows to be wrong)
 and gets its two rulings: the first approves the E1 measurement, the second
 binds the handling E1 shows to be needed.
 
@@ -18,7 +21,8 @@ phase [RV1](../../release-0.4.0/005-phase-RV1.md) and
 repeats. No review has run over these bytes. The baseline is main `0bfded71`.
 r2 applies the plan's §11 at three sites, tagged `(p1)` for the panel round
 and `(o)` for the owner's ruling: the status line, the E1 base and the
-reconciliation scope.
+reconciliation scope. r3 changes the status line only; every other section
+still describes main at `0bfded71`.
 
 One thing differs from RV1 at the start: RV1 expected the bump to move
 nothing and measured 37 moved results. This spec expects movement and names

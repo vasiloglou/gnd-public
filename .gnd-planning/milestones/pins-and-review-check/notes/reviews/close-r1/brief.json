@@ -1,0 +1,52 @@
+{
+  "base": null,
+  "claims": [],
+  "created": "2026-11-23T23:49:10.458477+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/004-close.md",
+      "sha256": "3f5a55846b153032b724fc4d5e4570f9716bdbfb83d3d4a73f08da1bce3e8b9b"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/pins-and-review-check-plan.md",
+      "sha256": "d0d8480b16260286288d87aabe9271c788d7191ae82f109a7ccb891b8e293171"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/001-plan.md",
+      "sha256": "2703940b163cba5d9718ca9b824c753303d3e66fa32abb9a204cbad14b8b81a4"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/002-phase-PF1.md",
+      "sha256": "0496a47620d8506abf2262ec96e685dbfc6694d02369c4f062531202ccc4d9bb"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/003-phase-PF2.md",
+      "sha256": "854574ba753cbcacae8b6a20a491978d28912e15e8074f2a924f57749d8824b0"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/phase-PF1-spec.md",
+      "sha256": "465e08f5f33de6fbf235b48823fae63f34ed29d1a17c7069352b1df7fef71062"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/notes/phase-PF2-spec.md",
+      "sha256": "22a35a72552c6d32ea7a1f6b7dd4801ecc60fa14e7ec605730ae458a323b30cc"
+    },
+    {
+      "path": ".gnd-planning/milestones/pins-and-review-check/evidence/PF2/GRADING.md",
+      "sha256": "d2487cacd2320259e47b5ea8178c28af196658e1095ba27df9d860c791b0c9ba"
+    },
+    {
+      "path": "tests/test_inventory_pin_home.py",
+      "sha256": "baa30ed6a5961376f0a0b7c13fe6dd86b15364154e2363f651dc39f1fe581985"
+    }
+  ],
+  "head": "b34cf3d2689b1fea670e1bdae60ecd539b8a468c",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Refute the close of pins-and-review-check. (1) Does each exit predicate in 004-close.md hold, with evidence in the records? (2) Is every open question raised in the plan, the two phase records and the two specs dispositioned in the sweep, and is each disposition honest? (3) Does plan amendment c1 repair every refuted premise and plan-level finding the phases raised, with the prior wording kept? (4) Read the bytes no reviewer has read: PF1's round-2 guard repair (tests/test_inventory_pin_home.py: does it miss a binding, or flag a non-binding?) and PF2's evidence repairs (gen/grade.py and GRADING.md: does every grade follow, does every reported input run?). (5) Does any claim overstate its evidence?",
+  "subject": "close",
+  "version": 1
+}

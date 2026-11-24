@@ -406,4 +406,10 @@ review has read it.
 | any time | PF1: the packaged-skill inventory defined once; the install, uninstall and verification-fix tests import it and join the guard block | PR 247 | `tests/test_verification_fixes.py` fails 5 of 13 tests on `main`. Tests only; shares no file with the milestones above |
 | after PF1 | PF2: a recorded calibration of the standing "code fitted to its examples" review check | PRs 235, 246 | About eight paid `codex` reviews; nothing waits for it |
 
-The PF1 spec waits for its owner gate.
+Status, 2026-11-23, later: closed locally by delegated ruling
+([close](milestones/pins-and-review-check/004-close.md)). PF1 is
+[PR 250](https://github.com/vasiloglou/gnd-public/pull/250) and PF2 is
+[PR 253](https://github.com/vasiloglou/gnd-public/pull/253), stacked on the
+plan's [PR 248](https://github.com/vasiloglou/gnd-public/pull/248); none is
+merged. PF2 found a defect on `main` in `gnd.exp.frontmatter` (fixed in a
+separate pull request) and PF1's baseline found 14 tests red on `main`.

@@ -1,0 +1,324 @@
+{
+ "src/gnd/examples/approvals/model.orm.yaml::json": {
+  "mapping": "9ba96d30ad44cd5b616e4c963ae11d075d53eb707d96a7a7898fa09b8bfd35f5",
+  "semantic_model": "5eec30936a8fd8e4df085cbbb59c52dd838d8ecede9a67a9e5b70fbdd257f745"
+ },
+ "src/gnd/examples/approvals/model.orm.yaml::yaml": {
+  "mapping": "ee29a0015881b20b4d3d78008df97935671faa30f0a6f00e03ca84699f51b9d0",
+  "semantic_model": "c80a6e9ab86358ede61eac4fbd732468334971224e6642e1ba0c4e54d09186cc"
+ },
+ "src/gnd/examples/bookrec/complete.orm.yaml::json": {
+  "mapping": "9218159411c726425c0d2ec11885a16008b25e7f7927c18062babedc6e494e4a",
+  "semantic_model": "1c9e316e172d3bc2cd35a128dd4115715a82e22701588157d1d289fdf0790ed8"
+ },
+ "src/gnd/examples/bookrec/complete.orm.yaml::yaml": {
+  "mapping": "2556cae7b51dee56880d84db4c0eb0e7719283ed7f0af3c3dcced784b9c8c005",
+  "semantic_model": "7bfe999f0d237d98a3bcc2c17fa36052b710de20503b5b5d5063a5a5fc86f9f8"
+ },
+ "src/gnd/examples/bookrec/model.orm.yaml::json": {
+  "mapping": "685b9cdb973aa1f831d128c59b03feb572949ced6ea2dbe1f1ef19ceb73e0ccc",
+  "semantic_model": "1c9e316e172d3bc2cd35a128dd4115715a82e22701588157d1d289fdf0790ed8"
+ },
+ "src/gnd/examples/bookrec/model.orm.yaml::yaml": {
+  "mapping": "41f9e199765770a7d0e6c005e3750b513a8f067ee725aea5e9608ca2a40e1cb2",
+  "semantic_model": "7bfe999f0d237d98a3bcc2c17fa36052b710de20503b5b5d5063a5a5fc86f9f8"
+ },
+ "src/gnd/examples/bookrec/strict.orm.yaml::json": {
+  "mapping": "20887c88dc1b94eb4717a431a915d711d2382aa8766c8b5a1a6351c4d88e3086",
+  "semantic_model": "1c9e316e172d3bc2cd35a128dd4115715a82e22701588157d1d289fdf0790ed8"
+ },
+ "src/gnd/examples/bookrec/strict.orm.yaml::yaml": {
+  "mapping": "6fe3c5bf9e788cbf6b53deafa2b164f16dd6dd2c04f80a31a0f2c1e02eb4d3e5",
+  "semantic_model": "7bfe999f0d237d98a3bcc2c17fa36052b710de20503b5b5d5063a5a5fc86f9f8"
+ },
+ "src/gnd/examples/composition/model.orm.yaml::json": {
+  "mapping": "19e39b414e0e8c1dc54dabc329a5e03d011c98d68d9942ecd8ad0d757a9299ec",
+  "semantic_model": "ab61f9fe686e4f100ad349c8cbb5cd8c94c584b6415d46f3cde36867d4537234"
+ },
+ "src/gnd/examples/composition/model.orm.yaml::yaml": {
+  "mapping": "31b69e4c34802e60ba5672c19002f16d06ca1989a692295c9c06053643480b9e",
+  "semantic_model": "caabf5dcc6575058b802ac5f737a6c8945ee4f7b329bf7e31f453d550e511ef7"
+ },
+ "src/gnd/examples/disclosure/model.orm.yaml::json": {
+  "mapping": "c8ce932d55258bf56c8098662243a04b34f7053610cfbfe555606fbfc4098c96",
+  "semantic_model": "c7daaea85fe30c6b4bd2808831e9c92a1f7d18a59d1e1cd32bc3b0b693022efe"
+ },
+ "src/gnd/examples/disclosure/model.orm.yaml::yaml": {
+  "mapping": "bed5839fa8b20d34aa87889246b64df37f27169a305ff04984e02541de7f7913",
+  "semantic_model": "8d98a21bec8580dc11b6ebcc116a58abde91a99a2dd5f36899ec36304656b1de"
+ },
+ "src/gnd/examples/dispatch/model.orm.json::json": {
+  "mapping": "5b34bd726d406dbdd49df9ad71d8f9f70a9025a5a3c4946022dd76ae0880bedf",
+  "semantic_model": "f5adfaae7a13e1ef65609501625213c865529283ea6fce58d58a50b0c159f3bd"
+ },
+ "src/gnd/examples/dispatch/model.orm.json::yaml": {
+  "mapping": "6e31ca82a319561d4baef13c9dd468c871827f4782296513745aa98c103ba1f5",
+  "semantic_model": "d33abad7342c3d21d2d1cc377a0e06f212a7e27e4b0b2be51cdc498077a8ed02"
+ },
+ "src/gnd/examples/expense/currency.orm.json::json": {
+  "mapping": "f8c0d4b0e2156c7919ccf1f45c108ad3a75b6740ce594173539db287dc160c7b",
+  "semantic_model": "5ffcf4475ac4e66a381d5483da57e0329cabd079f4d9c3cbf58b5e11c2891270"
+ },
+ "src/gnd/examples/expense/currency.orm.json::yaml": {
+  "mapping": "13331d70d4fa2143224bfeaa7b15e1716fc485e48c977be1c3158d6f403f4874",
+  "semantic_model": "8186e041823766984dba2fcace8c2364942d6d48f61cd73336343eb7aa4341b9"
+ },
+ "src/gnd/examples/expense/model.orm.json::json": {
+  "mapping": "500d8c64c355a99d3623a12b4a466c61bdc9e112c3144da1ccf60994e55d79f9",
+  "semantic_model": "1151da966b9ab5c8b43b5e33b7f81730a424961b88fb83526983c42f5daa24f0"
+ },
+ "src/gnd/examples/expense/model.orm.json::yaml": {
+  "mapping": "cdf19d34ee49a977e649cf3fa26f5b115ad458e861824f178b6bdfc84b9b7030",
+  "semantic_model": "ca92dcb3527ff22faedd02bcface6de9f06051d3f16a22aad91a27de0bb29295"
+ },
+ "src/gnd/examples/expense/project/model.orm.json::json": {
+  "mapping": "500d8c64c355a99d3623a12b4a466c61bdc9e112c3144da1ccf60994e55d79f9",
+  "semantic_model": "1151da966b9ab5c8b43b5e33b7f81730a424961b88fb83526983c42f5daa24f0"
+ },
+ "src/gnd/examples/expense/project/model.orm.json::yaml": {
+  "mapping": "cdf19d34ee49a977e649cf3fa26f5b115ad458e861824f178b6bdfc84b9b7030",
+  "semantic_model": "ca92dcb3527ff22faedd02bcface6de9f06051d3f16a22aad91a27de0bb29295"
+ },
+ "src/gnd/examples/expense/teams/engineering.orm.json::json": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/engineering.orm.json::yaml": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales-v2.orm.json::json": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales-v2.orm.json::yaml": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales.orm.json::json": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/sales.orm.json::yaml": {
+  "refused": "ModelValidationError: model validation failed: $: include:unsupported-route: export.ossie"
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v1.orm.json::json": {
+  "mapping": "5bfe95a96a13a3174dbf0c14a790decb67d38a63064aa7e7d0fb43382151a757",
+  "semantic_model": "e36a8850661688b98c0b633e5d0049714720d48538a77c776f13bd687f991fcf"
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v1.orm.json::yaml": {
+  "mapping": "62224e99fe8582a75c2fcb581b99cbc3c397a961c6025ba7d3223d06cbef8f9f",
+  "semantic_model": "04541307ef950db695ad0ad106e96c26206e85450a24316ae5797a0d43dea9fd"
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v2.orm.json::json": {
+  "mapping": "c889a1265e51ba3d0eb9001d94a4e8ef24d426c51f59a8a8be47d0eb6a0e030e",
+  "semantic_model": "acb814769d6bdb54f69f201049c25b06787e20e170707a7c50afd9fb9d3e9fd6"
+ },
+ "src/gnd/examples/expense/teams/shared/expense-v2.orm.json::yaml": {
+  "mapping": "058780d2526cb424c12a3aaaf2372731900583b89edbdbadbb506f3ab92962a2",
+  "semantic_model": "deead2d92e590e4ecce1f5c422211e30a1c3e2317e652d7a1b212423a74de75e"
+ },
+ "src/gnd/examples/growth/model.orm.yaml::json": {
+  "mapping": "522fcff6da5ac9c405a3d97c79701eb9c44fb7757f2e14fed26ac176d1357061",
+  "semantic_model": "3fa86fad9acbf5f36c00f72d2286f715aa962eb599e248c5f606ce3fcc1be689"
+ },
+ "src/gnd/examples/growth/model.orm.yaml::yaml": {
+  "mapping": "771e6a2a1f35d68611285e01e9a50e86fab4c806c22a44ae2663b0b47c3ae8ee",
+  "semantic_model": "1b7313f31df7970c41337e806e56b11552667085809dfd5b178899064b7c329a"
+ },
+ "src/gnd/examples/plan_apps/access/model.orm.json::json": {
+  "mapping": "0f57a0b847b448b27f89bdbc54fbd0e52afaa83354526aa8b896f73a96fca7aa",
+  "semantic_model": "7ee635438c1f34c47b07468242d1ff08540cfd2b23aeb33efd2e53b1e1f64214"
+ },
+ "src/gnd/examples/plan_apps/access/model.orm.json::yaml": {
+  "mapping": "f5efef440676c97aa342b39bbfc6d026f2f6b0b59ec62645b3742041aec871c9",
+  "semantic_model": "9d0187fa6bc7a09d37d2a1af739a5218cb7257bd1eccd860f667832c03ccc292"
+ },
+ "src/gnd/examples/plan_apps/clinic/model.orm.json::json": {
+  "mapping": "3fa346f5b30a92dc33b747bb7fbe08f04d333e1cb11c526322953a49aa9b390b",
+  "semantic_model": "327c451b88793295d0bee8f5085321ca87ef99363d3145a8690466f05a90e4e8"
+ },
+ "src/gnd/examples/plan_apps/clinic/model.orm.json::yaml": {
+  "mapping": "a134d60419f143eef9670ef9ca7e38b4f6d7bd70926ae7f5955e31638a53949a",
+  "semantic_model": "0b90135793630af2eff6d42858cb4c959b9c8a0d1c8ef91010d28aa995d69c23"
+ },
+ "src/gnd/examples/plan_apps/course/model.orm.json::json": {
+  "mapping": "17007de98684f35bfd770c25c2c515b1ee8312cf4324ca7a08d979e6d82bf385",
+  "semantic_model": "8cae1dafb4bea0a9c883ea645d6605ba8376766f08494fb7fed5a742224bca4b"
+ },
+ "src/gnd/examples/plan_apps/course/model.orm.json::yaml": {
+  "mapping": "22276a4cf0dc54adee5cfd549b925d71472455da048bdf053926ed8ad1e1749e",
+  "semantic_model": "0d66dbcdee0782c1a661d75854b355ee262bc1b7e4176255a67170974a0a0235"
+ },
+ "src/gnd/examples/plan_apps/lease/model.orm.json::json": {
+  "mapping": "e81c4f9926cbc8f018d0d796a3b91740c5d6210499e3194df0af910d8e0cae91",
+  "semantic_model": "c9d2a3511d17789e9c3b3fff0a330a4f6532d84e95e2017160b2ea7c958e73c2"
+ },
+ "src/gnd/examples/plan_apps/lease/model.orm.json::yaml": {
+  "mapping": "f0cf8aac223756990691b86ed014395205b99d955d1ca59cf92362e1585b0e3d",
+  "semantic_model": "af8688cca800a1c0f8d8b9de54517c8b0c1563981af0f716f91cdaa6c9b4ab7a"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json::json": {
+  "mapping": "928edaef79b59d86ddd23b20bd791f3b16214d2c91a2600516513b9daafed62f",
+  "semantic_model": "8cae1dafb4bea0a9c883ea645d6605ba8376766f08494fb7fed5a742224bca4b"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json::yaml": {
+  "mapping": "bc730a89b78f0e51590870b0c12b0c46d2c891feb9a0d966c069ee227aee1fa9",
+  "semantic_model": "0d66dbcdee0782c1a661d75854b355ee262bc1b7e4176255a67170974a0a0235"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json::json": {
+  "mapping": "02e96b4051febb9bbdc5b78c382ff864751624baee127ac87b9a3bbb4c682915",
+  "semantic_model": "8cae1dafb4bea0a9c883ea645d6605ba8376766f08494fb7fed5a742224bca4b"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json::yaml": {
+  "mapping": "86f6ff4bac96249acf0b7fdcf88a76da211557d0844170a3260472d71ba78f1b",
+  "semantic_model": "0d66dbcdee0782c1a661d75854b355ee262bc1b7e4176255a67170974a0a0235"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml::json": {
+  "mapping": "9dcedebe1b2859c648c86f0fdd1e9a36a2f444a5dcae0ed65c229a02d0ee2646",
+  "semantic_model": "03639ad88b32653d05227ebcdddd7a69496ddec368d2877832c15df53b2f7ccc"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml::yaml": {
+  "mapping": "0305692068f95bbdef6d783c138e76c42d60e682b0cc117d6bab3d536e984164",
+  "semantic_model": "847d2958be695fb3041e20425fd94f99876ad2289cb642b8479c2eddf2aa1a1f"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json::json": {
+  "mapping": "a9bccff5de9f67f4521c889e56a8941719ff74546f14c3b3d51e9a9c41de4375",
+  "semantic_model": "94622d139ec1729a432e543fb80ab3a92bbd053f8897c336329577e355fb7667"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json::yaml": {
+  "mapping": "3229ef0c11a0c9fa31a1a43f6ea1ca94b9baa783aa8cc8876df7af980882914f",
+  "semantic_model": "367bec5b6b5af8640b40e911b08e2a94c153ff48de4756069835b5a7405eca92"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml::json": {
+  "mapping": "e5f976ffe12de463231d2286d1d1def3a6ff501113c272be843fbc1188752297",
+  "semantic_model": "0f08b73724d034b21acb8a15d5644b2ac78e4d8fca8350811a58e24b79a45e4c"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml::yaml": {
+  "mapping": "93c45e03d698bfc4adbee87aee2f2946f3a1da54923d71dc070e6f33c882904b",
+  "semantic_model": "a1a9fffdd7ae0758f5d97ce0eb2e392fd0dbdeef9bb1205854f46597917e55ef"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml::json": {
+  "mapping": "ecd10cf52a318854bae390c61e3193633fea53c8ca71d7543e637e118356b023",
+  "semantic_model": "38d28857f8819b0eb617f81e5674c936bf637e42d9438467ca933ac52ba8cd4e"
+ },
+ "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml::yaml": {
+  "mapping": "0f0760a0b9584dbb877d5055bea4ea3783d7c405ba36dc98bab8b0446e7fa865",
+  "semantic_model": "78e44161aa504eed6f13d0ea1d3c8d847fe63ba8844653961093b4127e1fe4f5"
+ },
+ "src/gnd/examples/plan_apps/trip/model.orm.json::json": {
+  "mapping": "b634e81609ab736e0716efe6aa7349309413ce39ba1055ac50f8982e632badac",
+  "semantic_model": "91c093d73af214676db96207cdcdc753a48b6531a8ed31ed8cf0efe1b60a1824"
+ },
+ "src/gnd/examples/plan_apps/trip/model.orm.json::yaml": {
+  "mapping": "288ebc82f3aa1425fce7470e0f4790033a3f2604865631ca9be8b9983f1172e1",
+  "semantic_model": "08d35ef0e2f9d45b0fc2c7912e0d5b2070ba5a6596a99085ad6934718760831e"
+ },
+ "src/gnd/examples/quoted_claims/model.orm.json::json": {
+  "mapping": "c028fcdddfbfc9cecf939afc3bf3304400427e1f754638464f6b265ff0d57bce",
+  "semantic_model": "e1fbbccb1019ee5a2b1fcdb3fd4995e916e18158c3a65812c36044307b10168e"
+ },
+ "src/gnd/examples/quoted_claims/model.orm.json::yaml": {
+  "mapping": "5a3f0c3c9a50c3be007daf5ea111823e021f8a2d0181ec5db152d302e50fa962",
+  "semantic_model": "211fe5ce3f7964768f2caa0ccf2ef3a5cc283d2e0e1162c95f3b845c4d30a269"
+ },
+ "src/gnd/examples/refunds/model.orm.yaml::json": {
+  "mapping": "a1d4b1e12877d6dcc5c2e1dd8fbbaabcac9844301d359673981d487b45e7fa51",
+  "semantic_model": "40ec88b881a1440965f5eb8e161284a3f21298196795f22451e720dab4804c8b"
+ },
+ "src/gnd/examples/refunds/model.orm.yaml::yaml": {
+  "mapping": "921bc767050e2a53e1b2d152310f45803fd4a72174e38d6f5a8bfc85c186c3af",
+  "semantic_model": "917e79e47cc59bf819a8d82007e9f78a5592e7fd6bce7d6704a89e813b6fce2f"
+ },
+ "src/gnd/examples/release/model.orm.json::json": {
+  "mapping": "5e893baf4f3b42cd008af341f6690d969b85fef4bf6edc0cf2192dd46960f901",
+  "semantic_model": "5d81d5789136c37cc1548a32205b91b079ab3b3f1715dfc23e88930e564cbda6"
+ },
+ "src/gnd/examples/release/model.orm.json::yaml": {
+  "mapping": "b0a4f9a4d1429677f1628cb49d24ddce1f62e81e3c7cc97ce1ee542de6e08fa2",
+  "semantic_model": "76dd77338639f5bd2a2e0ad8ef6a57be3fd5108f584335c4d48e996d95e2c67b"
+ },
+ "src/gnd/examples/release_governance/approval-proof/model.orm.json::json": {
+  "mapping": "f21a8054996e956e528aca04b6b171d788ae83cce98540352bbe8893c54612fa",
+  "semantic_model": "8d2920bbc043ede68d585ddc977e341866d4801622360ec0c3cc6f22323b16fc"
+ },
+ "src/gnd/examples/release_governance/approval-proof/model.orm.json::yaml": {
+  "mapping": "2a41817166aabe06992fb01d44a718972cc11614a8b3c048783660c88a7fd78e",
+  "semantic_model": "9124cf46a2d75fa4e12fa3de1b557b1da404e08708395a44e93ae9a6e97b5512"
+ },
+ "src/gnd/examples/release_governance/dependencies/model.orm.json::json": {
+  "mapping": "d61e39ca171cae6e96371453a2215ce0962d74e719ac21b01cf36292c8490b32",
+  "semantic_model": "c7363e5071d385478472479eec0b9d53e65c4a2bd55e5b0043f9df300280c426"
+ },
+ "src/gnd/examples/release_governance/dependencies/model.orm.json::yaml": {
+  "mapping": "cfb2edf51bf2c8b5e77cfa5809980593a1dae3cdc5606d6e6fa7924e6d72b81c",
+  "semantic_model": "85c097020bc2354f94243b50f2c930eef9f7c3f1dd08b293abc3840699178d10"
+ },
+ "src/gnd/examples/release_governance/policy/model.orm.json::json": {
+  "mapping": "dc5a9d23400ee1b6ffe96e2c95a5b9b4ddc4cbd951b6552c0755675e35eb307c",
+  "semantic_model": "db1dae03b3f954ad0794e4d4f6a1a92681ae62a66dc9edd3d9df88a1f5805f80"
+ },
+ "src/gnd/examples/release_governance/policy/model.orm.json::yaml": {
+  "mapping": "e96f8e36a2b3b88ffa48467133f6b79fe2f656bdf56b245c20708152e53b660b",
+  "semantic_model": "418dd8c78376312964bb5e9484bec5e4899197428b2929348e4ea8a474ebd0fd"
+ },
+ "src/gnd/examples/rule_check/model.orm.yaml::json": {
+  "mapping": "6bc3f5ada6e32f99c59f716ea84fa16a840c48f30fc0eb2ab21d86e4f0a7347b",
+  "semantic_model": "a0fb099fc516811fe10de18bbd141c5ef8a3682692bf3bc40ec3bbc0edf04278"
+ },
+ "src/gnd/examples/rule_check/model.orm.yaml::yaml": {
+  "mapping": "d4f149ded7ac381d052a76cd9f69c4b942a17cd2b31d61ad17a7bc7d65f3a973",
+  "semantic_model": "2eab3551054b91e5f521ec740131eef8e2ab50feaa66a51517ee3938d18ef6ae"
+ },
+ "src/gnd/examples/staffing/model.orm.yaml::json": {
+  "mapping": "f9b0f97d68fcf21341c7432c088e64d617cc0fafecc6a4d424b991eca5cb7548",
+  "semantic_model": "17c553c2cfed56a41fd7c46e383e23bd3e97ee0d495c27372142fd43738a235a"
+ },
+ "src/gnd/examples/staffing/model.orm.yaml::yaml": {
+  "mapping": "286009016c5bd46594d4520c2cdb5d07ad9f1cd54e98539ccc0f4b961df6b183",
+  "semantic_model": "c8e15d72dce2c53f78fca9d0e89ec391c5303c16288093129be95477f44f829e"
+ },
+ "src/gnd/examples/type_judgements/duplicates/model.orm.yaml::json": {
+  "mapping": "827c1d460a41396dece79d2376aff8e844e5f40d75a18db1c85ca8dd4301c67c",
+  "semantic_model": "9ce0d9ec1ed729455ffbabf25355d856fa66a86aabb0d5c5e2e678c7a54e037a"
+ },
+ "src/gnd/examples/type_judgements/duplicates/model.orm.yaml::yaml": {
+  "mapping": "da15854f031c17bfecc4f274f55e7ce0583a4fb653d444fe05f6445fc3539f95",
+  "semantic_model": "a09583c12c6aa22bbfa26c31b2ed719262f5b0b0247d1f159f506ba499d42ef6"
+ },
+ "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml::json": {
+  "mapping": "8f85123ddc24afdc768776bd4c0e4a98c7cae12b0f05c432cb8b3064a7767d7a",
+  "semantic_model": "55dff8cb3197660212f3333fa7146b34fe47b595b1a500a596cdd0140862fa5e"
+ },
+ "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml::yaml": {
+  "mapping": "992c8eab3b5bba77236bf6110d3e0b6ca3a7cc4d3839d5a16f1028dbf8817d06",
+  "semantic_model": "20245de72402ac22caecc9621c88ef1655cc3718281d1d3ab866c657db91e8e2"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml::json": {
+  "mapping": "468f87c7c8afefce2018203410c0dfe4ad8dd1cec037eea4c966a8bc27db8591",
+  "semantic_model": "e0b4083721b2fd2c15eb3e52678312283111fcabd5c916be30daf39344f5c502"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml::yaml": {
+  "mapping": "5673b1e4af4d8d95583fdc3e9f4aadad73063d92c1cf046199536d4db87d4943",
+  "semantic_model": "2c72b057500b284ab41e210551c73ac91fce4547414019dcd3bf9caa1b620f55"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml::json": {
+  "mapping": "2004b7cd5a7315b85f86b073f6e3e76e6dbde90050c596995721273fd96e787f",
+  "semantic_model": "1e74e433b2a81c6711282b1532a47b656673dee5f381932d0843af0a15e7a93e"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml::yaml": {
+  "mapping": "52aaed4d96387cd9b3402323a40d7ac964845636087cf2e5b3f1cfbb1dd05928",
+  "semantic_model": "4171cd1869172120673a37d16c93829c7bfcbb64c8660ab96600d50dd822cb74"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml::json": {
+  "mapping": "8736c090422600f84cd8b1aaea46b3d9abbded2b1513e249858bfc71a7b074ba",
+  "semantic_model": "757169d0391cdb79b83bea46decac7685dda5ac013aa6a7916371e6a716ac5fd"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml::yaml": {
+  "mapping": "e17fc02e4f3a67fc98b8f746f4290b901649be8cf637eedd4459d79ac27b220e",
+  "semantic_model": "d7de8e70da9ca6b746e7315a5de545c183b0d4b630dd582f7542bf420174af86"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml::json": {
+  "mapping": "c9c725bb12ed6df3506cbb9b36d574cbfcfd2d1e0c2690ca3c6b88772d825b12",
+  "semantic_model": "d512071ac4f7ad7adb8fe2436c8668863204ea7f894b415d70d4c54060a9d7fb"
+ },
+ "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml::yaml": {
+  "mapping": "826f5610a5e488924358a7038d9cd1ffed7be61c91532ece924a1b8e663a1678",
+  "semantic_model": "14ff8f463c98df302756348f9a77bd395ecb71cd0d761a9539fe63bdd5431c4a"
+ }
+}

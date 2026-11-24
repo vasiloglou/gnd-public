@@ -1,16 +1,17 @@
 # Draft reply to #226 (all three requests)
 
-Status: draft, first written in phase LR2 on 2026-11-23 and completed in
-phase LR3 the same day. The owner posts it; nothing here is posted. Update
-the merge status before posting: on 2026-11-23 the three phases are in pull
-requests 243 (LR1), 244 (LR2) and the LR3 pull request, none merged and none
-released.
+Status: draft, first written in phase LR2 on 2026-11-23, completed in
+phase LR3 the same day, and updated for the merged state on 2026-11-23. The
+owner posts it; nothing here is posted. On 2026-11-23 the three phases are
+merged on `main` (PRs 243, 244 and 252; `main` at `2a2d1ee4`) and are in no
+release. If a release ships them before this is posted, name it in the first
+paragraph.
 
 ---
 
-Thanks for the detailed measurements. All three requests have answers in
-open pull requests (243, 244 and 252); none is merged or released yet, and
-the text below describes them as they will be once merged.
+Thanks for the detailed measurements. All three requests are answered on
+`main` (pull requests 243, 244 and 252). They are not in a release yet, so
+to use them now, install GND from `main`.
 
 **3. Why `verify` reports a failure, by constraint and row.** The JSON
 report already carries this. The documents guide now has a section,
@@ -36,9 +37,9 @@ GND's anchor check does not make. The anchor reference states the rule, and
 an anchor still shows where a value occurs, not that the text supports the
 claim.
 
-**1. A reference recall and precision.** Once merged, the literature
-example ships a reference set: the twelve development papers of the regression corpus
-with 31 labelled facts, and one recorded run of the reading stages over it
+**1. A reference recall and precision.** The literature example now has a
+reference set: the twelve development papers of the regression corpus, with
+31 labelled facts, and one recorded run of the reading stages over it
 with Claude Sonnet as the reading agent. After the broad pass it found 9 of
 31 facts (precision 9 of 10); after the targeted pass, 27 of 31 (precision
 of the targeted rows 18 of 23). Of the four misses, one fact was never

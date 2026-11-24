@@ -57,14 +57,19 @@ One round is one document, in four moves.
    is a preview option only; `apply` rejects it (exit 64). The shape report is advice: for each added fact type it lists existing fact types
    over the same role players. Deciding that two readings mean the same thing is the host's
    ([acting on a shape match](#acting-on-a-shape-match)).
+   To log the round, `gnd evolve summary ROUND_FILE --proposal P --preview V --record D` prints
+   what it reused, dropped, proposed, admitted and added (the fields are the evolution
+   contract's "Round summary").
 
 ### Acting on a shape match
 
 For each existing fact type the report names beside an added one, the host does one of three
 things and logs which:
 
-- **Reuse the existing id.** The two readings say the same thing: drop the added fact type and
-  write its facts against the existing one.
+- **Reuse the existing id.** The two readings say the same thing: drop the added fact type,
+  name the existing id wherever a field took the added one, and make its rows an
+  `open_questions` entry, since the additive policy refuses a changed sample row on a fact
+  type the model already has ([the reply shape](#the-reply-shape)).
 - **Keep both, with the reason.** The readings differ ("is returned via" is not "arrives via"):
   say why in the added fact type's `provenance.rationale`.
 - **Keep both, and record the doubt** in `open_questions`, for the consolidation round to
@@ -263,12 +268,19 @@ failure this file exists to prevent. The reply is a proposal the host translates
 offsets and no provenance fields of the model's: the host owns the mapping, GND does not
 read the reply, and `gnd validate --document` is the only gate.
 
+A reply carries only what the document adds. An object type or fact type the model already has,
+its own or included, is named by its id wherever a field takes an id and is never repeated in
+`object_types` or `fact_types`. Restating it costs the tokens of a reply twice over, and a
+restated fact type with rows is a change the additive policy refuses. In the example the model
+already holds `party` and `policy_has_holder`: the reply names them and repeats neither.
+
 ```json
 {
   "document": "policy.txt",
   "object_types": [
     {"id": "policy", "name": "Policy", "kind": "entity",
-     "reference": {"mode": "popular", "value_type": "policy_no"}, "quote": "Policy P-17"}
+     "reference": {"mode": "popular", "value_type": "policy_no"}, "quote": "Policy P-17"},
+    {"id": "insurer", "name": "Insurer", "kind": "entity", "quote": "An insurer is a kind of party"}
   ],
   "fact_types": [
     {"id": "policy_expires_on_expiry_date", "reading": "{Policy} expires on {ExpiryDate}",
@@ -286,7 +298,11 @@ read the reply, and `gnd validate --document` is the only gate.
     {"host": "policy_expires_on_expiry_date", "basis": "text-cue",
      "constraint": {"type": "uniqueness", "roles": ["policy"]},
      "cue": "exactly one", "quote": "Each policy has exactly one expiry date",
-     "rationale": "The text gives each policy one expiry date."}
+     "rationale": "The text gives each policy one expiry date."},
+    {"host": "policy_has_holder", "basis": "text-cue",
+     "constraint": {"type": "mandatory", "role": "policy"},
+     "cue": "Every policy has", "quote": "Every policy has a holder",
+     "rationale": "The text gives every policy a holder."}
   ],
   "derived_fact_types": [
     {"id": "policy_is_dated", "reading": "{Policy} is dated",
@@ -307,8 +323,8 @@ read the reply, and `gnd validate --document` is the only gate.
 | Field | Rule |
 |---|---|
 | `quote` | A verbatim excerpt of the document. The host searches the NFC text; no match, or more than one without a `quote_occurrence` (0-based), drops the entry and logs it |
-| `object_types`, `fact_types` | The model's own element shapes, ids that already exist are reused, `quote` becomes `provenance.spans` |
-| `rows` | One entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once) |
+| `object_types`, `fact_types` | New elements only, in the model's own element shapes; `quote` becomes `provenance.spans`. An element the model already has, its own or included, is named by its id where a field takes an id and is not repeated here; the host drops a repeated one and logs it |
+| `rows` | Rows for a new fact type only, one entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once). Rows the document gives for a fact type the model already has are an `open_questions` entry: the additive policy refuses a changed sample row (`fact_types.modify` in the evolution contract's additive matrix) |
 | `subtype_links` | Sets `subtype_of` and `inherits_reference` on the subtype, appends the span to its `provenance.spans`, puts `rationale` in `provenance.rationale` |
 | `constraints` | `host` is a fact type id, or `model` for a top-level constraint. `constraint` is the constraint body as the [constraint reference](../../gnd-orm-core/references/constraint-reference.md) gives it, without `source`, `status`, `modality` or `provenance`. The host writes those: `text-cue` is `llm-inferred` with `rationale_world_fact` set to `cue`, `rows` is `sample`, `library` is `common-sense` with `library_entry`; always `proposed` and `deontic` |
 | `derived_fact_types` | The model's fact type shape with `derivation: derived`, `storage: computed` and a structured `derivation_rule`, the object form that `representation-format.md` defines under derived fact types. `quote` is the sentence that defines the term and becomes `provenance.spans`; `rationale` goes to `provenance.rationale`. No `rows`: its facts follow from the rule, so it holds no sample. A rule the grammar cannot express is an `open_questions` entry, never a string rule |

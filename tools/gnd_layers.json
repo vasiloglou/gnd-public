@@ -335,6 +335,10 @@
       "lane": "discover",
       "layer": "lanes"
     },
+    "gnd.discover.narrow": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
     "gnd.discover.output": {
       "lane": "discover",
       "layer": "lanes"
@@ -385,6 +389,10 @@
       "lane": "evolve",
       "layer": "lanes"
     },
+    "gnd.evolve.outcomes": {
+      "lane": "evolve",
+      "layer": "lanes"
+    },
     "gnd.evolve.policy": {
       "lane": "evolve",
       "layer": "lanes"
@@ -398,6 +406,10 @@
       "layer": "lanes"
     },
     "gnd.evolve.shapes": {
+      "lane": "evolve",
+      "layer": "lanes"
+    },
+    "gnd.evolve.summary": {
       "lane": "evolve",
       "layer": "lanes"
     },

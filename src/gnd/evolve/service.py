@@ -37,6 +37,7 @@ from gnd.safefs import (
     atomic_write as _atomic_write,
 )
 
+from . import outcomes as _outcomes
 from .models import (
     EVOLUTION_READ_ONLY_PENDING,
     EVOLUTION_SCHEMA_VERSION,
@@ -51,6 +52,7 @@ from .models import (
     EvolutionIntent,
     EvolutionOperation,
     EvolutionOperationKind,
+    EvolutionOutcomeReport,
     EvolutionPreview,
     EvolutionProposal,
     EvolutionRecord,
@@ -58,6 +60,7 @@ from .models import (
     LinkedProject,
     LinkedProjectConformance,
     ModelIdentityLocator,
+    OutcomeRefusal,
     PolicyIssue,
     PopulationAdmission,
     PopulationCheckRecord,
@@ -70,6 +73,7 @@ from .models import (
     canonical_sha256,
     read_evolution_finalization_state_document,
     read_evolution_intent_document,
+    read_evolution_outcome_report_document,
     read_evolution_preview_document,
     read_evolution_proposal_document,
     read_evolution_record_document,
@@ -400,7 +404,98 @@ def _without_review(constraint: dict[str, Any]) -> dict[str, Any]:
     return stripped
 
 
+class OutcomeRefusalPending:
+    """What a refused preview knows about each operation (GO2), carried on the
+    refusal as ``outcome_refusal``; the CLI adds the printed exit and message."""
+
+    __slots__ = ("before_model", "gate", "operation_outcomes", "proposal")
+
+    def __init__(self, gate, operation_outcomes, before_model, proposal) -> None:
+        self.gate = gate
+        self.operation_outcomes = operation_outcomes
+        self.before_model = before_model
+        self.proposal = proposal
+
+    def report(self, *, exit_code: int, message: str) -> EvolutionOutcomeReport:
+        return EvolutionOutcomeReport(
+            proposal_id=self.proposal.proposal_id,
+            proposal_sha256=self.proposal.proposal_sha256,
+            before_model=self.before_model,
+            refusal=OutcomeRefusal(gate=self.gate, exit=exit_code, message=message),
+            operation_outcomes=self.operation_outcomes,
+        )
+
+
+def _validation_issues(error: BaseException) -> list[Any]:
+    """The issues of the ModelValidationError a refusal was raised from, if any."""
+    seen: set[int] = set()
+    current: BaseException | None = error
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        if isinstance(current, ModelValidationError):
+            return list(current.issues)
+        current = current.__cause__ or current.__context__
+    return []
+
+
+def _outcome_refusal(error, stage, proposal, before_text, before_document, *, model_path, policy) -> OutcomeRefusalPending:
+    """GO2: locate what can be located after a refusal at ``stage``.
+
+    A candidate-validation refusal is located by its issues' paths; D-12 then
+    runs over the parsed candidate as well (GO2-D2), since it reads documents
+    only. A D-12 refusal collects every D-12 refusal. Every other gate refuses
+    the proposal whole: each operation is ``unassessed``."""
+    from gnd.model import parse_model_document
+
+    operations = proposal.operations
+    refused: dict[int, tuple[str, str]] = {}
+    ran: list[str] = []
+    gate = stage
+    if stage in ("candidate-validation", "d12"):
+        candidate = None
+        try:
+            text = proposal.candidate_model.text
+            candidate = parse_model_document(text.encode("utf-8"), source=model_path)
+        except Exception:  # noqa: BLE001 -- a candidate that does not parse locates nothing
+            candidate = None
+        if stage == "candidate-validation":
+            issues = _validation_issues(error)
+            if issues:
+                located, _complete = _outcomes.locate_validation_issues(issues, candidate, operations)
+                refused.update(located)
+                if not any(str(issue.rule_id).startswith("jsonschema:") for issue in issues):
+                    gate = "semantic-validation"
+        if isinstance(candidate, dict) and isinstance(before_document, dict):
+            try:
+                d12 = _d12_refusals(before_document, _json_document(candidate, label="candidate model"))
+            except Exception:  # noqa: BLE001 -- a value D-12 cannot read leaves D-12 unrun
+                d12 = None
+            if d12 is not None:
+                located, _complete = _outcomes.locate_d12_refusals(d12, operations)
+                for index, verdict in located.items():
+                    refused.setdefault(index, verdict)
+                ran.append("d12")
+    gates = _outcomes.gates_after(gate, policy=policy, ran=ran)
+    return OutcomeRefusalPending(
+        gate=stage if stage != "candidate-validation" else gate,
+        operation_outcomes=_outcomes.outcomes(operations, refused, gates_not_run=gates),
+        before_model=CommittedText.from_text(before_text, media_type="application/yaml"),
+        proposal=proposal,
+    )
+
+
 def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
+    """Rule D-12 (provenance-and-modality.md): raise the first refusal, as always."""
+    refusals = _d12_refusals(before, candidate)
+    if refusals:
+        raise EvolutionError(refusals[0][2])
+
+
+def _d12_refusals(before: dict[str, Any], candidate: dict[str, Any]) -> list[tuple[Any, Any, str]]:
+    """Every D-12 refusal, in the order ``_enforce_d12`` has always met them, as
+    ``(host, constraint, message)`` (GO2). A refused constraint consumes nothing,
+    so collecting past the first refusal leaves every earlier verdict as it was."""
+    refusals: list[tuple[Any, Any, str]] = []
     before_hosted = [
         (host, canonical_json_text(item), item) for host, item in _constraints(before, hosted=True)
     ]
@@ -428,9 +523,10 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
 
     for host, rendered, constraint in candidates:
         if _contains_audit_key(constraint.get("provenance", {})):
-            raise EvolutionError(
+            refusals.append((host, constraint, (
                 "operation audit actor/origin/time fields cannot enter constraint provenance"
-            )
+            )))
+            continue
         if before_counts[rendered]:
             before_counts[rendered] -= 1
             continue
@@ -442,13 +538,14 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
         if not isinstance(provenance, dict):
             provenance = {}
         if source != "induced" and "induction" in provenance:
-            raise EvolutionError("provenance.induction is allowed only under source induced (D-12)")
+            refusals.append((host, constraint, "provenance.induction is allowed only under source induced (D-12)"))
+            continue
         if source == "induced":
             if (status, modality) == ("proposed", "deontic"):
                 if "reviewed_in" in provenance:
-                    raise EvolutionError(
+                    refusals.append((host, constraint, (
                         "new induced constraints cannot carry provenance.reviewed_in (D-12)"
-                    )
+                    )))
                 continue
             if status == "confirmed":
                 reviewed_in = provenance.get("reviewed_in")
@@ -456,33 +553,40 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
                 if isinstance(reviewed_in, str) and reviewed_in.strip() and claimable[predecessor]:
                     claimable[predecessor] -= 1
                     continue
-                raise EvolutionError(
+                refusals.append((host, constraint, (
                     "induced constraints become confirmed only as a reviewed status change "
                     "of an existing proposed induced constraint (D-12)"
-                )
-            raise EvolutionError("new induced constraints must be proposed/deontic (D-12)")
+                )))
+                continue
+            refusals.append((host, constraint, "new induced constraints must be proposed/deontic (D-12)"))
+            continue
         if source == "llm-inferred":
             if (status, modality) != ("proposed", "deontic"):
-                raise EvolutionError(
+                refusals.append((host, constraint, (
                     "new llm-inferred constraints must remain proposed/deontic (D-12)"
-                )
+                )))
+                continue
         elif source in ("sample", "common-sense"):
             # VG2 (issue 218): row evidence and library evidence, as the growth
             # document has the host write them; never confirmed, never alethic.
             if (status, modality) != ("proposed", "deontic"):
-                raise EvolutionError(
+                refusals.append((host, constraint, (
                     "new sample and common-sense constraints must be proposed/deontic (D-12)"
-                )
+                )))
+                continue
         elif source == "user-supplied":
             if status != "confirmed":
-                raise EvolutionError(
+                refusals.append((host, constraint, (
                     "owner-approved user-supplied constraints must be confirmed (D-12)"
-                )
+                )))
+                continue
         else:
-            raise EvolutionError(
+            refusals.append((host, constraint, (
                 "new or changed constraints must be llm-inferred/proposed/deontic "
                 "or user-supplied/confirmed (D-12)"
-            )
+            )))
+            continue
+    return refusals
 
 
 def _json_ready(value: Any) -> Any:
@@ -1351,6 +1455,23 @@ def read_evolution_preview(
     )
 
 
+def read_evolution_outcome_report(
+    path: str | Path,
+    *,
+    anchor: str | Path | None = None,
+    relative: str | None = None,
+) -> EvolutionOutcomeReport:
+    """Read one bounded outcome report (GO2); any other document is refused."""
+
+    return _read_evolution_claim(
+        path,
+        label="evolution outcome report",
+        reader=read_evolution_outcome_report_document,
+        anchor=anchor,
+        relative=relative,
+    )
+
+
 def read_evolution_intent(
     path: str | Path,
     *,
@@ -1542,8 +1663,14 @@ class EvolutionService:
         check_population: str | None = None,
         expected_population_sha256: str | None = None,
         previous_includes=None,
+        operation_outcomes: bool = False,
     ) -> EvolutionPreview:
         """Validate and bind a proposal without changing any publication leaf.
+
+        With ``operation_outcomes=True`` (GO2) the preview carries one outcome
+        row per operation; when a gate refuses the proposal after the current
+        model's bytes are read, the refusal raised is unchanged and carries
+        ``outcome_refusal`` (gate, rows, before model) for the outcome report.
 
         With ``policy="additive"`` the preview also carries the additive
         policy's verdict (MG2): ``populated_args``, the effective ``populated``
@@ -1604,42 +1731,56 @@ class EvolutionService:
         # a refusal.
         from ._includes import enforce_ownership, provided_history
 
-        history = _include_input(provided_history, proposal, previous_includes)
-        before_loaded_model, before_document = _load_model_document(
-            before_bytes,
-            label="current model",
-            model_path=self._model_path,
-            historical=history,
-        )
-
-        # Before the CANDIDATE is validated, deliberately. The gate reads only
-        # the current model and the proposal's declared locators, so its answer
-        # never depends on the candidate -- and running it later would make its
-        # commonest case unreachable. Renaming a fact type an operation
-        # references cannot produce a VALID candidate without also editing that
-        # operation, which is itself gated; checking the candidate's form first
-        # would therefore answer "your candidate is invalid, go fix the
-        # operations", sending the author straight into the other half of the
-        # same gate.
-        if before_loaded_model.includes:
-            if proposal.linked_projects:
-                raise EvolutionIncludeError('include:unsupported-route: linked project evolution')
-            _include_input(enforce_ownership, before_loaded_model, before_document, proposal.operations)
-        _enforce_operations_gate(before_document, proposal)
-
-        placed: list[tuple[int, str | None, list[Any], Any]] = []
-        if before_loaded_model.includes:
-            candidate_model, candidate_document, validation, declared_document = self._include_candidate(
-                proposal, before_loaded_model, before_document, placed)
-        else:
-            candidate_model, candidate_document, validation = self._validated_candidate(
-                proposal.candidate_model,
-                declared_references=before_loaded_model.reference_populations,
+        stage = "current-model"
+        before_document = None
+        try:
+            history = _include_input(provided_history, proposal, previous_includes)
+            before_loaded_model, before_document = _load_model_document(
+                before_bytes,
+                label="current model",
+                model_path=self._model_path,
+                historical=history,
             )
-            declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
-            if declared_document != candidate_document:
-                raise EvolutionError("declared operations do not equal the canonical candidate model")
-        _enforce_d12(before_document, candidate_document)
+
+            # Before the CANDIDATE is validated, deliberately. The gate reads only
+            # the current model and the proposal's declared locators, so its answer
+            # never depends on the candidate -- and running it later would make its
+            # commonest case unreachable. Renaming a fact type an operation
+            # references cannot produce a VALID candidate without also editing that
+            # operation, which is itself gated; checking the candidate's form first
+            # would therefore answer "your candidate is invalid, go fix the
+            # operations", sending the author straight into the other half of the
+            # same gate.
+            stage = "include-ownership"
+            if before_loaded_model.includes:
+                if proposal.linked_projects:
+                    raise EvolutionIncludeError('include:unsupported-route: linked project evolution')
+                _include_input(enforce_ownership, before_loaded_model, before_document, proposal.operations)
+            stage = "operations-gate"
+            _enforce_operations_gate(before_document, proposal)
+
+            stage = "candidate-validation"
+            placed: list[tuple[int, str | None, list[Any], Any]] = []
+            if before_loaded_model.includes:
+                candidate_model, candidate_document, validation, declared_document = self._include_candidate(
+                    proposal, before_loaded_model, before_document, placed)
+            else:
+                candidate_model, candidate_document, validation = self._validated_candidate(
+                    proposal.candidate_model,
+                    declared_references=before_loaded_model.reference_populations,
+                )
+                stage = "replay-equality"
+                declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
+                if declared_document != candidate_document:
+                    raise EvolutionError("declared operations do not equal the canonical candidate model")
+            stage = "d12"
+            _enforce_d12(before_document, candidate_document)
+        except EvolutionError as error:
+            if operation_outcomes:
+                error.outcome_refusal = _outcome_refusal(
+                    error, stage, proposal, before_text, before_document,
+                    model_path=self._model_path, policy=policy is not None)
+            raise
         # After the gate (18), candidate validation, replay equality and D-12
         # (all 3), so a preview written with issues is otherwise valid (spec D6).
         # The population option is judged here, after every proposal refusal
@@ -1667,6 +1808,14 @@ class EvolutionService:
         shape_values = (
             {"shape_matches": shape_matches(before_loaded_model, candidate_model, proposal)}
             if shape_report
+            else {}
+        )
+        # GO2: read by nothing below; a policy issue is its operation's refusal.
+        outcome_values = (
+            {"operation_outcomes": _outcomes.outcomes(proposal.operations, {
+                issue.operation_index: ("refused-by-policy", issue.cell)
+                for issue in policy_values.get("policy_issues") or ()})}
+            if operation_outcomes
             else {}
         )
 
@@ -1704,6 +1853,7 @@ class EvolutionService:
             # digest body, so a policy-free preview keeps its digest (MG-R1).
             **policy_values,
             **shape_values,
+            **outcome_values,
             **(_include_snapshot_values(before_loaded_model, candidate_model)
                if before_loaded_model.includes else {}),
         }

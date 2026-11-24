@@ -1,0 +1,3 @@
+{"schema_version": 1, "round": "known-mix", "document": "notes.txt",
+ "reused": [{"collection": "fact_types", "id": "customer_places_order"}],
+ "host_drops": [{"kind": "fact_type", "id": "order_has_note", "reason": "no constraint and no open question"}]}

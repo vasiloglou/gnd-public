@@ -1,0 +1,468 @@
+{
+  "schema_version": 1,
+  "reason": "growth-round-outcomes GO2 (#227): the outcome rows, the outcome report, the locator of refusals and the collecting D-12 walk (whose five candidates move from _enforce_d12 to _d12_refusals).",
+  "predecessor": ".gnd-planning/milestones/aggregate-count-certificates/evidence/main-integration/dynamic-query-successor.json",
+  "predecessor_sha256": "fc65e04450470357bbb281bc55e7e58014a746e1cecb8d19ff967cd25b5f83bb",
+  "removed": [
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "Counter[tuple[str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "before_counts[rendered]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "claimable[predecessor]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "leftover[rendered]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "tuple[str | None, str]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/evolve/cli_service.py",
+      "_evolve_outcome_target",
+      "tuple[Path, Path, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/cli_service.py",
+      "_evolve_write_outcome_report",
+      "tuple[Path, Path, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "<module>",
+      "Literal['admitted', 'refused-by-policy', 'refused-by-validation', 'refused-by-d12', 'dropped-with', 'unassessed']",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "<module>",
+      "Literal['current-model', 'include-ownership', 'operations-gate', 'candidate-validation', 'semantic-validation', 'replay-equality', 'd12', 'policy']",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "<module>",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "EvolutionOutcomeReport",
+      "tuple[OperationOutcome, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "EvolutionPreview",
+      "tuple[OperationOutcome, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "OperationOutcome",
+      "tuple[OutcomeGate, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "_EvolutionPreviewV3",
+      "tuple[OperationOutcome, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "_outcomes_cover",
+      "tuple[Any, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "_outcomes_cover",
+      "tuple[OperationOutcome, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "<module>",
+      "dict[int, tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "<module>",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "Sequence[EvolutionOperation]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[Any, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[str, dict[Any, Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[tuple[str | None, str], list[int]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[tuple[str, str], list[int]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "list[int]",
+      3
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "tuple[str | None, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "tuple[str, str]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_added_element",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_entries",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_locate_path",
+      "constraints[int(step.group(1))]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_locate_path",
+      "roles[int(role.group(1))]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "list[tuple[str, str]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "tuple[str, str]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "dict[Any, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "entries[int(position)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "self.candidate.get(collection)",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "self.ids[collection]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "entry",
+      "self.ids[collection].get(element_id)",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "for_constraint",
+      "self.constraints.get((host if isinstance(host, str) else None, digest), [])",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "for_element",
+      "self.body.get((collection, element_id), [])",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "for_element",
+      "self.roles.get((element_id, role_name), [])",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "gates_after",
+      "Iterable[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "gates_after",
+      "OUTCOME_GATES[OUTCOME_GATES.index(gate) + 1:]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "gates_after",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_d12_refusals",
+      "Iterable[tuple[Any, Any, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_d12_refusals",
+      "Sequence[EvolutionOperation]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_d12_refusals",
+      "message[:512]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_d12_refusals",
+      "tuple[Any, Any, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_d12_refusals",
+      "tuple[Refusals, bool]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_validation_issues",
+      "Iterable[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_validation_issues",
+      "Sequence[EvolutionOperation]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_validation_issues",
+      "detail[:512]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "locate_validation_issues",
+      "tuple[Refusals, bool]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "Sequence[EvolutionOperation]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "Sequence[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "dependents.get(key, ())",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "dict[int, tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "dict[tuple[str, str], list[int]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "list[int]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "operations[index]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "set[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "tuple[OperationOutcome, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "tuple[str, str]",
+      4
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "outcomes",
+      "verdicts.get(index, (None, ''))",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "Counter[tuple[str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "before_counts[rendered]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "claimable[predecessor]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "leftover[rendered]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "list[tuple[Any, Any, str]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "tuple[Any, Any, str]",
+      2
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_d12_refusals",
+      "tuple[str | None, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_outcome_refusal",
+      "dict[int, tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_outcome_refusal",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_outcome_refusal",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_validation_issues",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_validation_issues",
+      "set[int]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7927,
+  "result_occurrences": 9863
+}

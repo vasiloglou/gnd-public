@@ -103,6 +103,25 @@ the next one.
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message
   and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
+- **An outcome for every operation.** `gnd evolve preview --operation-outcomes`
+  names each operation `admitted`, refused by the policy, validation or D-12,
+  `dropped-with` a refused one, or `unassessed`. When a gate refuses the
+  proposal, `--outcome-report FILE` receives the same rows; the refusal and
+  its exit are unchanged. Without the option nothing changes
+  ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **What a reply carries for an element the model has.** "The reply
+  shape" in `unattended-growth.md` now says a reply names an element the
+  model already has, its own or included, by id only, and routes rows for an
+  existing fact type to `open_questions`, since the additive policy refuses
+  a changed sample row ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **The admitted part of a round.** `gnd.discover.narrow.narrow_proposal`
+  turns a proposal and its operation outcomes into a new proposal of the
+  operations no gate refused, which is previewed and applied like any other;
+  `apply` stays whole ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **One summary per round.** `gnd evolve summary ROUND_FILE` prints what a
+  round reused, what the host dropped, what it proposed, each verdict's count
+  and what the applied record added
+  ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
 - **Reading a failed verification.** The documents guide shows how to list
   the constraints and derivations a `gnd verify` exit 1 failed, with the
   violating rows, from the JSON report, with a runnable example on the

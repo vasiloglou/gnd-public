@@ -1,0 +1,174 @@
+diff --git a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md
+index 22305ee7..0c95d9d9 100644
+--- a/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md
++++ b/.gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md
+@@ -151,3 +151,18 @@ The page itself gets the working link when GO4 edits it. No ruling changes.
+ 
+ **Delegated approval (auto=true), 2026-11-23**, of spec r2, sha256 `ad48ad7794a279428478b59b906802a110dc97dfb93b338721951bcf49f5ee62`
+ (the bytes above this subsection). r1's approval (§12) is retained as history.
++
++## 14. Implementation findings
++
++1. VG5 (on `main` at `8fea6da5`) added "Starting from a reviewed
++   vocabulary": on a seeded root an element the model already has may be
++   an included one. The rule says "its own or included".
++2. The packaged examples ship proposals, not replies, so T3 reads the
++   proposals of `growth` and `seeded_growth`: no `add` names an element the
++   round's before-model has, and no element operation is other than `add`.
++3. `tests/test_packaged_skills.py` pins the number of relative links in the
++   packaged skills (248). The new `rows` row cites the matrix by name, not
++   by a second link, so the pin does not move.
++4. The guard reads the section by its heading and the table rows by their
++   first cell; the example is loaded with `json`, as the existing guidance
++   test does.
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 5b5a0544..919da62c 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -83,6 +83,11 @@ the next one.
+   proposal, `--outcome-report FILE` receives the same rows; the refusal and
+   its exit are unchanged. Without the option nothing changes
+   ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
++- **What a reply carries for an element the model has.** "The reply
++  shape" in `unattended-growth.md` now says a reply names an element the
++  model already has, its own or included, by id only, and routes rows for an
++  existing fact type to `open_questions`, since the additive policy refuses
++  a changed sample row ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+ 
+ ## 0.4.0 (2026-11-17)
+ 
+diff --git a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+index 9864e0b8..46a95399 100644
+--- a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
++++ b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+@@ -263,6 +263,12 @@ failure this file exists to prevent. The reply is a proposal the host translates
+ offsets and no provenance fields of the model's: the host owns the mapping, GND does not
+ read the reply, and `gnd validate --document` is the only gate.
+ 
++A reply carries only what the document adds. An object type or fact type the model already has,
++its own or included, is named by its id wherever a field takes an id and is never repeated in
++`object_types` or `fact_types`. Restating it costs the tokens of a reply twice over, and a
++restated fact type with rows is a change the additive policy refuses. In the example the model
++already holds `party` and `policy_has_holder`: the reply names them and repeats neither.
++
+ ```json
+ {
+   "document": "policy.txt",
+@@ -286,7 +292,11 @@ read the reply, and `gnd validate --document` is the only gate.
+     {"host": "policy_expires_on_expiry_date", "basis": "text-cue",
+      "constraint": {"type": "uniqueness", "roles": ["policy"]},
+      "cue": "exactly one", "quote": "Each policy has exactly one expiry date",
+-     "rationale": "The text gives each policy one expiry date."}
++     "rationale": "The text gives each policy one expiry date."},
++    {"host": "policy_has_holder", "basis": "text-cue",
++     "constraint": {"type": "mandatory", "role": "policy"},
++     "cue": "Every policy has", "quote": "Every policy has a holder",
++     "rationale": "The text gives every policy a holder."}
+   ],
+   "derived_fact_types": [
+     {"id": "policy_is_dated", "reading": "{Policy} is dated",
+@@ -307,8 +317,8 @@ read the reply, and `gnd validate --document` is the only gate.
+ | Field | Rule |
+ |---|---|
+ | `quote` | A verbatim excerpt of the document. The host searches the NFC text; no match, or more than one without a `quote_occurrence` (0-based), drops the entry and logs it |
+-| `object_types`, `fact_types` | The model's own element shapes, ids that already exist are reused, `quote` becomes `provenance.spans` |
+-| `rows` | One entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once) |
++| `object_types`, `fact_types` | New elements only, in the model's own element shapes; `quote` becomes `provenance.spans`. An element the model already has, its own or included, is named by its id where a field takes an id and is not repeated here; the host drops a repeated one and logs it |
++| `rows` | Rows for a new fact type only, one entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once). Rows the document gives for a fact type the model already has are an `open_questions` entry: the additive policy refuses a changed sample row (`fact_types.modify` in the evolution contract's additive matrix) |
+ | `subtype_links` | Sets `subtype_of` and `inherits_reference` on the subtype, appends the span to its `provenance.spans`, puts `rationale` in `provenance.rationale` |
+ | `constraints` | `host` is a fact type id, or `model` for a top-level constraint. `constraint` is the constraint body as the [constraint reference](../../gnd-orm-core/references/constraint-reference.md) gives it, without `source`, `status`, `modality` or `provenance`. The host writes those: `text-cue` is `llm-inferred` with `rationale_world_fact` set to `cue`, `rows` is `sample`, `library` is `common-sense` with `library_entry`; always `proposed` and `deontic` |
+ | `derived_fact_types` | The model's fact type shape with `derivation: derived`, `storage: computed` and a structured `derivation_rule`, the object form that `representation-format.md` defines under derived fact types. `quote` is the sentence that defines the term and becomes `provenance.spans`; `rationale` goes to `provenance.rationale`. No `rows`: its facts follow from the rule, so it holds no sample. A rule the grammar cannot express is an `open_questions` entry, never a string rule |
+diff --git a/tests/test_unattended_growth_guidance.py b/tests/test_unattended_growth_guidance.py
+index 62ef06f8..749174e3 100644
+--- a/tests/test_unattended_growth_guidance.py
++++ b/tests/test_unattended_growth_guidance.py
+@@ -304,3 +304,89 @@ def test_ug4_the_guard_can_fail(old: str | None, new: str | None, suffix: str) -
+         assert old in text, old
+         text = text.replace(old, new, 1)
+     assert _drift(text + suffix)
++
++
++# --- GO4 (#227): what a reply carries for an element the model already has ------------------------
++# Spec: .gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md (§8, T1-T3).
++
++
++def _section(text: str, heading: str) -> list[str]:
++    """The lines of one ``## heading`` section, by its heading line."""
++    lines = text.splitlines()
++    start = lines.index(f"## {heading}") + 1
++    end = next((i for i in range(start, len(lines)) if lines[i].startswith("## ")), len(lines))
++    return lines[start:end]
++
++
++def _table_rows(lines: list[str]) -> dict[str, str]:
++    """A markdown table's rows by their first cell; a row is one line of `|`-separated cells."""
++    rows = {}
++    for line in lines:
++        if line.startswith("| ") and not line.startswith("|---"):
++            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
++            rows[cells[0]] = " | ".join(cells[1:])
++    return rows
++
++
++def _reply_rule_problems(text: str) -> list[str]:
++    section = _section(text, "The reply shape")
++    rows = _table_rows(section)
++    elements, sample_rows = rows.get("`object_types`, `fact_types`", ""), rows.get("`rows`", "")
++    prose = "\n".join(line for line in section if not line.startswith("|"))
++    problems = []
++    if "New elements only" not in elements or "is not repeated here" not in elements:
++        problems.append("the element row does not say a reply repeats no element the model has")
++    if "ids that already exist are reused" in elements:
++        problems.append("the element row keeps the old, ambiguous wording")
++    if "`open_questions` entry" not in sample_rows or "fact_types.modify" not in sample_rows:
++        problems.append("the rows row does not route rows for an existing fact type to open_questions")
++    if "is never repeated in\n`object_types` or `fact_types`" not in prose:
++        problems.append("the reply-shape prose does not state the rule")
++    block = prose.split("```json\n", 1)[1].split("\n```", 1)[0]
++    example = json.loads(block)
++    added = {entry["id"] for entry in example["fact_types"] + example["derived_fact_types"]}
++    hosts = {entry["host"] for entry in example["constraints"]} - {"model"}
++    if not hosts - added:
++        problems.append("the example names no fact type the model already has")
++    return problems
++
++
++def test_go4_t1_the_reply_shape_states_the_rule_and_shows_it() -> None:
++    assert _reply_rule_problems(REFERENCE.read_text(encoding="utf-8")) == []
++
++
++@pytest.mark.parametrize(("old", "new"), [
++    ("is not repeated here", "is repeated here"),
++    ("New elements only, in the model's own element shapes", "The model's own element shapes, ids that already exist are reused"),
++    ("Rows for a new fact type only", "Rows for a new fact type only"),
++    ("are an `open_questions` entry: the additive policy refuses", "are appended: the additive policy refuses"),
++    ("is never repeated in\n`object_types` or `fact_types`", "may be repeated in\n`object_types` or `fact_types`"),
++    ('{"host": "policy_has_holder"', '{"host": "policy_expires_on_expiry_date"'),
++], ids=["element-row", "old-wording", "noop-control", "rows-row", "prose", "example"])
++def test_go4_t2_the_guard_fails_when_the_rule_is_removed(old: str, new: str) -> None:
++    text = REFERENCE.read_text(encoding="utf-8")
++    assert old in text
++    problems = _reply_rule_problems(text.replace(old, new, 1))
++    assert bool(problems) == (old != new), problems
++
++
++@pytest.mark.parametrize("example", ["growth", "seeded_growth"])
++def test_go4_t3_the_packaged_examples_repeat_no_existing_element(example: str) -> None:
++    """GO4-C3: no round adds an element its before-model already has, and none
++    changes an existing fact type (a restated fact type with rows would)."""
++    from gnd.evolve import read_evolution_proposal_document
++    from gnd.model import parse_model_document
++
++    directory = REPO_ROOT / "src/gnd/examples" / example
++    first = directory / ("model.orm.yaml" if example == "growth" else "root.orm.yaml")
++    before = parse_model_document(first.read_bytes(), source=first)
++    for name in ("round-1.proposal.json", "round-2.proposal.json"):
++        proposal = read_evolution_proposal_document(json.loads((directory / name).read_text(encoding="utf-8")))
++        existing = {(collection, entry.get("id")) for collection in ("object_types", "fact_types")
++                    for entry in before.get(collection) or []}
++        for operation in proposal.operations:
++            locator = operation.locator
++            if getattr(locator, "collection", None) in ("object_types", "fact_types"):
++                key = (locator.collection, locator.element_id)
++                assert operation.kind.value == "add" and key not in existing, (name, operation.reference())
++        before = parse_model_document(proposal.candidate_model.text.encode("utf-8"), source=first)

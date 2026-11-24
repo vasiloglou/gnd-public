@@ -20,7 +20,7 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 64  # OS1 and OS3 add one Ossie leaf each; include-root-routes IR2 adds `gnd flatten`; AC1 adds two COUNT membership leaves.
+EXPECTED_PARSERS = 65  # OS1 and OS3 add one Ossie leaf each; include-root-routes IR2 adds `gnd flatten`; AC1 adds two COUNT membership leaves; GO5 adds `gnd evolve summary`.
 COUNT_CLI_PATHS = {"gnd", "gnd witness-count", "gnd replay-count"}
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
@@ -368,7 +368,14 @@ def _flatten_successor():
 
 
 def _include_preview_successor():
-    """Restore the frozen predecessor, then add MC3's one literal repeatable flag."""
+    """MC3's successor, then GO2's two outcome options (growth-round-outcomes, #227)."""
+    return _include_preview_reference(outcomes=True)
+
+
+def _include_preview_reference(*, outcomes):
+    """Restore the frozen predecessor, then add MC3's one literal repeatable flag;
+    with ``outcomes``, also GO2's --operation-outcomes and --outcome-report,
+    declared right after --shape-report as the production parser declares them."""
     base = copy.deepcopy(json.loads(golden_path('cli', 'tree').read_text())['subcommands']['evolve']['subcommands']['preview'])
     old = CHECK_POPULATION_SUCCESSOR['preview']
     base['actions'].insert(old['action_index'], copy.deepcopy(old['action']))
@@ -385,6 +392,21 @@ def _include_preview_successor():
                            help='authenticate old bytes for a repinned include from PATH beneath ROOT; repeatable')
     reference._actions.append(format_action)
     reference._optionals._group_actions.append(format_action)
+    if outcomes:
+        added = [
+            reference.add_argument(
+                '--operation-outcomes', action='store_true',
+                help='name an outcome for every operation of the proposal (admitted, refused and why, or unassessed)'),
+            reference.add_argument(
+                '--outcome-report', default=None, metavar='FILE',
+                help='when the preview is refused, write every operation\'s outcome to FILE beneath ROOT; '
+                     'requires --operation-outcomes'),
+        ]
+        for container in (reference._actions, reference._optionals._group_actions):
+            for action in added:
+                container.remove(action)
+            anchor = next(i for i, action in enumerate(container) if '--shape-report' in action.option_strings)
+            container[anchor + 1:anchor + 1] = added
     after = _walk(reference, ('gnd', 'evolve', 'preview'), {})
     after['listed_help'] = base['listed_help']
     def probe(argv):
@@ -394,6 +416,43 @@ def _include_preview_successor():
         return {'exit': caught.value.code, 'stdout': out.getvalue(), 'stderr': err.getvalue()}
     return {'tree': after, 'help': reference.format_help(),
             'exit_probe': {'help': probe(['--help']), 'unknown_flag': probe(['--rf1-unknown-flag'])}}
+
+
+ROUND_SUMMARY_PATHS = {"gnd evolve", "gnd evolve summary"}
+
+
+def _round_summary_successor(base):
+    """GO5's `gnd evolve summary` leaf (growth-round-outcomes, #227): the frozen
+    `gnd evolve` group with one more choice, and the leaf as the production
+    parser declares it. Returns the reference parsers by path."""
+    evolve = base["subcommands"]["evolve"]
+    root = cli._BandSafeParser(prog=evolve["prog"], description=evolve["description"])
+    children = root.add_subparsers(dest="evolve_command", required=True)
+    for name in evolve["actions"][-1]["choices"]:
+        children.add_parser(name, help=evolve["subcommands"][name]["listed_help"])
+    leaf = children.add_parser(
+        "summary",
+        help="print one JSON summary of a growth round",
+        description=(
+            "Read the host's ROUND_FILE and, when the round produced them, its "
+            "proposal, its preview or outcome report, and the evolution record "
+            "of the applied round; print one gnd-round-summary JSON document. "
+            "Each artifact must bind the one before it. Writes no file."
+        ),
+    )
+    leaf.add_argument("round_file", metavar="ROUND_FILE", help="the host's gnd-round JSON file")
+    leaf.add_argument("--proposal", metavar="FILE", help="the round's evolution proposal")
+    artifact = leaf.add_mutually_exclusive_group()
+    artifact.add_argument("--preview", metavar="FILE", help="the round's preview")
+    artifact.add_argument("--outcome-report", metavar="FILE",
+                          help="the outcome report of the round's refused preview")
+    leaf.add_argument("--record", metavar="FILE",
+                      help="the evolution record of the applied round; requires --preview")
+    parsers = {}
+    observed = _walk(root, ("gnd", "evolve"), parsers)
+    evolve["actions"][-1] = observed["actions"][-1]
+    evolve["subcommands"]["summary"] = observed["subcommands"]["summary"]
+    return {path: parsers[path] for path in ROUND_SUMMARY_PATHS}
 
 
 def _guarded_workflows_check_successor():
@@ -539,11 +598,17 @@ def test_cli_tree(tree):
     expected["actions"] = flattened["actions"]
     expected["subcommands"]["flatten"] = flattened["subcommands"]["flatten"]
     _count_cli_successor(expected)   # AC1's two leaves go on top of the root that already lists flatten
+    _round_summary_successor(expected)   # GO5's leaf goes on top of the evolve group as amended above
     _assert_successor("cli", "tree", tree[0], expected)
 
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path in ROUND_SUMMARY_PATHS:
+        parser = _round_summary_successor(json.loads(golden_path("cli", "tree").read_text()))[path]
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": parser.format_help()})
+        return
     if path in COUNT_CLI_PATHS:
         parser = _count_cli_successor(_flatten_successor()["tree"])[path]
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -599,6 +664,14 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path in ROUND_SUMMARY_PATHS:
+        observed = {
+            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
+        }
+        parser = _round_summary_successor(json.loads(golden_path("cli", "tree").read_text()))[path]
+        _assert_successor("cli-exit", path, observed, _guarded_successor_probe(parser))
+        return
     if path in COUNT_CLI_PATHS:
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},

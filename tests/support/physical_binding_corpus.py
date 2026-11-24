@@ -18,7 +18,7 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator
 
-from tests.support import ossie_relational_corpus as relational
+from . import ossie_relational_corpus as relational
 
 ROOT = Path(__file__).resolve().parents[2]
 CORPUS = ROOT / "tests/fixtures/physical_binding"

@@ -408,9 +408,9 @@ never a constraint or sample value) and `gates_not_run`.
 |---|---|
 | `admitted` | Every gate ran over the operation and none refused it |
 | `refused-by-policy` | The additive policy refused it; `detail` is its matrix cell, the same row as in `policy_issues` |
-| `refused-by-validation` | A validation issue's path names an element this operation adds or changes, the only operation that changed that element's entry (or, for a `.roles[i]` path, that role); `detail` is the rule id and path |
+| `refused-by-validation` | A validation issue's path names an element this operation adds or changes, the only operation that changed that element's entry (for a role step, by position or name, that role; for a constraint step, that constraint, never an operation that changed only its host); `detail` is the rule id and path |
 | `refused-by-d12` | D-12 refused a constraint this operation adds or changes, on its own or inside a fact type's `after`; `detail` is the D-12 refusal |
-| `dropped-with` | It needs an element a refused or dropped operation adds, wherever in the proposal that operation stands: its host fact type, or any element its `after` names under `object_type`, `value_type`, `supertype`, `subtype_of`, `subtypes`, `objectified_as` or `fact_type` |
+| `dropped-with` | It needs an element a refused or dropped operation adds, wherever in the proposal that operation stands: its host fact type, or any element its `after` names under `object_type`, `value_type`, `supertype`, `subtype_of`, `subtypes`, `objectified_as`, `fact_type` or `depends_on`, read only where the meta-schema declares that property (never inside a sample row or provenance) |
 | `unassessed` | A gate that would read it did not run, or a refusal could not be tied to one operation (two operations changed the element and nothing tells them apart); `gates_not_run` names the gates, in the preview's order: `current-model`, `include-ownership`, `operations-gate`, `candidate-validation`, `semantic-validation`, `replay-equality`, `d12`, `policy` |
 
 When the preview is written, the rows are in `operation_outcomes` and every refusal is the
@@ -429,6 +429,42 @@ writes no report.
 `apply` refuses a report given as its preview (exit `3`). It takes no outcome option; it rebuilds
 the rows exactly when the reviewed preview carries `operation_outcomes`, so an edited row exits
 `11`. A preview made without the option is byte-identical to one made before it existed.
+
+### Narrowing a proposal
+
+`apply` stays whole: a reviewed preview is applied exactly as reviewed. A host that wants the part
+of a round no gate refused calls `gnd.discover.narrow.narrow_proposal(proposal, outcomes)` with the
+proposal and its preview or outcome report carrying `operation_outcomes`. It keeps the operations
+whose verdict is `admitted` or `unassessed`, drops the `refused-*` and `dropped-with` ones, and
+re-runs the `dropped-with` closure over what is kept, so it is total over any outcome list. The
+kept operations keep their ids and are replayed over the outcomes' `before_model`; the new proposal
+has `proposal_id` `<original>-narrowed` and `narrowed_from` (`proposal_id`, `proposal_sha256`).
+`narrowed_from` is omitted when unset, so every other proposal keeps its bytes and
+`proposal_sha256`. It returns `None` when nothing is kept, and one value-free line per dropped
+operation (`<index> <operation_id> <verdict>`). Refused, in this order: anything but a proposal
+and a preview or outcome report; outcomes of another proposal (`proposal_sha256` differs); a
+preview with no `operation_outcomes`; a `before_model` whose sha256 is not the proposal's
+`expected_model_sha256`; rows that do not cover the proposal's operations. Narrowing writes nothing: the narrowed proposal is previewed and applied
+like any other, and once it is applied the original preview's `apply` is refused as stale (exit
+`11`).
+
+### Round summary
+
+`gnd evolve summary ROUND_FILE [--proposal FILE] [--preview FILE | --outcome-report FILE]
+[--record FILE]` prints one `gnd-round-summary` JSON document (`schema_version` `1`) and writes
+no file; `apply` is unchanged. `ROUND_FILE` is the host's `gnd-round/1` document (strict JSON,
+at most 1 MiB, closed): `schema_version` `1`, `round`, `document`, `reused` (rows of `collection`,
+`object_types` or `fact_types`, and `id`, each once) and `host_drops` (rows of `kind`, `id` and
+`reason`, the host's text, reported and never judged). The summary carries `round`, `document`,
+`reused` (ids by collection), `host_drops`, `proposed` (`total`, `by_kind`, `by_collection`; zero
+without a proposal), `outcomes` (count per verdict; `null` when the preview or report carries
+none), `shape_matches` (the preview's group count, or `null`), `added` (element ids by
+collection, and constraint operation ids, from the `add` operations of the evolution record only:
+a round previewed and not applied adds nothing), `narrowed_from` (the original `proposal_id` of a
+narrowed round) and `bindings` (the sha256 of each artifact read). With outcomes, `proposed.total`
+equals their sum. Each artifact must bind the one before it: a preview or report needs its
+proposal and must carry its `proposal_sha256`; a record needs the preview it applied and must
+carry its `preview_sha256` and `proposal_sha256`. A refusal exits `3` and prints nothing to stdout.
 
 ### BlastRadiusEntry
 

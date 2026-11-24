@@ -307,3 +307,14 @@ Recorded as found, at code written from `8fea6da5`.
 6. **Homes outside the spec's list:** `tests/support/rf9_ci_sources.py`,
    `tests/support/pyrel_application_successors.py`,
    `tests/test_rf1_cli_pins.py`, `tools/gnd_layers.json` (the new module).
+7. **Diff review r1 (`reviews/phase-GO2-r1/FINDINGS.md`).** Eight findings,
+   all reproduced and fixed in `9bf8bf3e`. Three restate this spec's design:
+   `dropped-with` is a closure over the whole proposal, not over the
+   operations before the refused one; its needs are read by one total walk
+   of the `after` value over every key the ORM meta-schema uses to name an
+   element, replacing the four named shapes of §6; and an issue is tied to
+   an operation only when exactly one operation changed its element (or,
+   through a `.roles[i]` step, its role), otherwise the row stays
+   `unassessed`. Item 3's counted read moves with it: the roles read is now
+   `element.get('roles')` in `_locate_path`, the role name of a candidate
+   entry.

@@ -155,3 +155,25 @@ reading of the spec. No spec review ran (optional, omitted).
   "GO" to "READY GO5". A spec approved now is re-read against `main` at
   that start; a change on `main` that moves a cited line or a premise
   amends this spec before code, with the prior wording retained.
+
+## 13. Implementation findings
+
+Recorded as found, at code written from `9bf8bf3e`.
+
+1. **T2's mix is not one round (refuted premise).** A `dropped-with` row
+   needs a refused addition, and the additive policy refuses no element
+   addition (`policy.py`: an element `add` is admitted), so a `dropped-with`
+   row comes only from a refused candidate, which writes no preview and so
+   no shape matches. The known-mix fixture is one round with 2 `admitted`,
+   1 `refused-by-policy` and 1 shape match; `dropped-with` has its own case
+   over an outcome report (`test_t2_a_dropped_with_row_is_counted`). The
+   fixture's README states both.
+2. **A preview and a report, not both.** The summary refuses a round given
+   both; the command makes them mutually exclusive (argparse, exit 64, as
+   every usage error of this CLI).
+3. **`added` includes constraints** by operation id (a constraint has no
+   element id), under `added.constraints`.
+4. **Pinned help.** `tests/test_rf1_cli_pins.py` gains the `summary` leaf
+   and the `gnd evolve` choice as a successor; the parser count is 65.
+5. **Homes outside the spec's list:** `tests/test_rf1_cli_pins.py`,
+   `tools/gnd_layers.json`, `dev/components/COMPONENTS.md`.

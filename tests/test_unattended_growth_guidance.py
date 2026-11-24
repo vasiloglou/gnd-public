@@ -310,40 +310,49 @@ def test_ug4_the_guard_can_fail(old: str | None, new: str | None, suffix: str) -
 # Spec: .gnd-planning/milestones/growth-round-outcomes/notes/phase-GO4-spec.md (§8, T1-T3).
 
 
-def _section(text: str, heading: str) -> list[str]:
-    """The lines of one ``## heading`` section, by its heading line."""
-    lines = text.splitlines()
-    start = lines.index(f"## {heading}") + 1
-    end = next((i for i in range(start, len(lines)) if lines[i].startswith("## ")), len(lines))
-    return lines[start:end]
-
-
-def _table_rows(lines: list[str]) -> dict[str, str]:
-    """A markdown table's rows by their first cell; a row is one line of `|`-separated cells."""
-    rows = {}
-    for line in lines:
-        if line.startswith("| ") and not line.startswith("|---"):
-            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-            rows[cells[0]] = " | ".join(cells[1:])
-    return rows
+#: Each rule as a whole statement, so an edit that reverses, deletes or narrows
+#: any part of it is a missing statement (review r1, F1). Compared with the
+#: whitespace of the page's blocks collapsed, so reflowing a line changes nothing.
+_PROSE_RULE = ("An object type or fact type the model already has, its own or included, is named by its id "
+               "wherever a field takes an id and is never repeated in `object_types` or `fact_types`.")
+_ELEMENT_RULES = ("New elements only, in the model's own element shapes;",
+                  ("An element the model already has, its own or included, is named by its id where a field "
+                   "takes an id and is not repeated here; the host drops a repeated one and logs it"))
+_ROWS_RULES = ("Rows for a new fact type only, one entry per sample row;",
+               ("Rows the document gives for a fact type the model already has are an `open_questions` entry: "
+                "the additive policy refuses a changed sample row (`fact_types.modify` in the evolution "
+                "contract's additive matrix)"))
+_REUSE_RULE = ("The two readings say the same thing: drop the added fact type, name the existing id wherever a "
+               "field took the added one, and make its rows an `open_questions` entry, since the additive policy "
+               "refuses a changed sample row on a fact type the model already has")
+_OLD_WORDING = ("ids that already exist are reused", "write its facts against the existing one")
 
 
 def _reply_rule_problems(text: str) -> list[str]:
-    section = _section(text, "The reply shape")
-    rows = _table_rows(section)
+    from support.markdown_sections import markdown_blocks, section_blocks
+
+    section = section_blocks(text, "The reply shape")
+    rows = {row[0]: " | ".join(row[1:]) for block in section if block.kind == "table" for row in block.rows if row}
     elements, sample_rows = rows.get("`object_types`, `fact_types`", ""), rows.get("`rows`", "")
-    prose = "\n".join(line for line in section if not line.startswith("|"))
+    prose = " ".join(block.text for block in section if block.kind == "paragraph")
+    reuse = " ".join(block.text for block in section_blocks(text, "Acting on a shape match")
+                     if block.kind == "paragraph")
     problems = []
-    if "New elements only" not in elements or "is not repeated here" not in elements:
+    if not all(rule in elements for rule in _ELEMENT_RULES):
         problems.append("the element row does not say a reply repeats no element the model has")
-    if "ids that already exist are reused" in elements:
-        problems.append("the element row keeps the old, ambiguous wording")
-    if "`open_questions` entry" not in sample_rows or "fact_types.modify" not in sample_rows:
+    if not all(rule in sample_rows for rule in _ROWS_RULES):
         problems.append("the rows row does not route rows for an existing fact type to open_questions")
-    if "is never repeated in\n`object_types` or `fact_types`" not in prose:
+    if _PROSE_RULE not in prose:
         problems.append("the reply-shape prose does not state the rule")
-    block = prose.split("```json\n", 1)[1].split("\n```", 1)[0]
-    example = json.loads(block)
+    if _REUSE_RULE not in reuse:
+        problems.append("reusing a shape match does not route the rows to open_questions")
+    rendered = " ".join(block.text if block.kind != "table" else " ".join(map(" ".join, block.rows))
+                        for block in markdown_blocks(text) if block.kind != "fence")
+    problems.extend(f"the page keeps the old wording {old!r}" for old in _OLD_WORDING if old in rendered)
+    examples = [block for block in section if block.kind == "fence" and block.info.split()[:1] == ["json"]]
+    if len(examples) != 1:
+        return [*problems, "the reply shape has no single JSON example"]
+    example = json.loads(examples[0].text)
     added = {entry["id"] for entry in example["fact_types"] + example["derived_fact_types"]}
     hosts = {entry["host"] for entry in example["constraints"]} - {"model"}
     if not hosts - added:
@@ -362,7 +371,14 @@ def test_go4_t1_the_reply_shape_states_the_rule_and_shows_it() -> None:
     ("are an `open_questions` entry: the additive policy refuses", "are appended: the additive policy refuses"),
     ("is never repeated in\n`object_types` or `fact_types`", "may be repeated in\n`object_types` or `fact_types`"),
     ('{"host": "policy_has_holder"', '{"host": "policy_expires_on_expiry_date"'),
-], ids=["element-row", "old-wording", "noop-control", "rows-row", "prose", "example"])
+    # review r1, F1: a reversed, deleted or narrowed rule
+    ("are an `open_questions` entry:", "are not an `open_questions` entry:"),
+    ("is named by its id wherever a field takes an id and ", ""),
+    ("its own or included, is named by its id where", "is named by its id where"),
+    ("Rows for a new fact type only", "Rows for any fact type"),
+    ("and make its rows an\n  `open_questions` entry", "and write its facts against the existing one, not an\n  `open_questions` entry"),
+], ids=["element-row", "old-wording", "noop-control", "rows-row", "prose", "example", "reversed", "id-only-deleted",
+        "own-or-included-deleted", "any-fact-type", "reuse-bullet"])
 def test_go4_t2_the_guard_fails_when_the_rule_is_removed(old: str, new: str) -> None:
     text = REFERENCE.read_text(encoding="utf-8")
     assert old in text
@@ -390,3 +406,29 @@ def test_go4_t3_the_packaged_examples_repeat_no_existing_element(example: str) -
                 key = (locator.collection, locator.element_id)
                 assert operation.kind.value == "add" and key not in existing, (name, operation.reference())
         before = parse_model_document(proposal.candidate_model.text.encode("utf-8"), source=first)
+
+
+def _commented(text: str, start: str, end: str) -> str:
+    """TEXT with the lines from the one holding START to the one holding END inside an HTML comment."""
+    lines = text.splitlines(keepends=True)
+    first = next(i for i, line in enumerate(lines) if start in line)
+    last = next(i for i in range(first, len(lines)) if end in lines[i])
+    return "".join([*lines[:first], "<!--\n", *lines[first:last + 1], "-->\n", *lines[last + 1:]])
+
+
+def test_go4_r1_f2_hidden_rules_are_missing_and_equivalent_markdown_is_read() -> None:
+    """Review r1, F2: a rule inside an HTML comment is not on the page; legal
+    spellings of the same Markdown read the same."""
+    text = REFERENCE.read_text(encoding="utf-8")
+    hidden = _commented(text, "| `object_types`, `fact_types` |", "| `rows` |")
+    assert _reply_rule_problems(hidden)
+    tight = "\n".join(line.replace("| ", "|").replace(" |", "|") if line.startswith("| `") else line
+                      for line in text.splitlines())
+    closed = text.replace("## The reply shape\n", "## The reply shape ##\n", 1)
+    tilde = text.replace("```json\n{\n  \"document\": \"policy.txt\"", "~~~json\n{\n  \"document\": \"policy.txt\"", 1)
+    tilde = tilde.replace("\n}\n```\n\n| Field |", "\n}\n~~~\n\n| Field |", 1)
+    reflowed = text.replace("is never repeated in\n`object_types`", "is never repeated in `object_types`", 1)
+    for variant in (tight, closed, tilde, reflowed):
+        assert variant != text
+        assert _reply_rule_problems(variant) == []
+

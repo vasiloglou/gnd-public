@@ -406,3 +406,65 @@ def test_r1_f8_id_paths_are_linear() -> None:
     refused, complete = _outcomes.locate_validation_issues(issues, candidate, operations)
     assert time.perf_counter() - start < 1.0
     assert complete and len(refused) == n
+
+
+# --- Diff review r2 (notes/reviews/phase-GO2-r2/FINDINGS.md) -------------------------------------
+
+
+def test_r2_f1_a_named_role_step_is_pinned_on_the_role_operation() -> None:
+    role = {"object_type": "missing", "role_name": "region"}
+    operations = (ADD_OBJECT, ADD_FACT,
+                  _op("modify", RoleLocator(fact_type_id=HOST, role_name="region"), role, "op-role",
+                      before=policy.NEW_FACT["roles"][1]))
+    candidate = {"fact_types": [dict(policy.NEW_FACT, roles=[policy.NEW_FACT["roles"][0], role])]}
+    refused, complete = _outcomes.locate_validation_issues(
+        [_issue(f"$.fact_types[id={HOST}].roles[region]")], candidate, operations)
+    assert complete and list(refused) == [2]
+
+
+def test_r2_f2_a_sample_row_is_not_a_reference() -> None:
+    fact = _op("add", policy._element("fact_types", "order_is_flagged"),
+               {"id": "order_is_flagged", "reading": "{Order} is flagged",
+                "roles": [{"object_type": "order", "role_name": "object_type"}],
+                "sample_population": [{"object_type": "bad"}],
+                "provenance": {"fact_type": "bad", "object_type": "bad"}}, "op-fact")
+    assert _outcomes._needs(fact) == [("object_types", "order")]
+    rows = _outcomes.outcomes((_invalid_object("bad", "op-bad"), fact), {0: ("refused-by-validation", "x")},
+                              gates_not_run=("semantic-validation",))
+    assert [row.verdict for row in rows] == ["refused-by-validation", "unassessed"]
+
+
+def test_r2_f3_depends_on_is_a_dependency() -> None:
+    broken = _op("add", policy._element("fact_types", "broken"), {"id": "broken", "roles": 1}, "op-broken")
+    dependent = _op("add", policy._element("fact_types", "dependent"),
+                    dict(policy.NEW_FACT, id="dependent", depends_on=["broken"]), "op-dependent")
+    assert ("fact_types", "broken") in _outcomes._needs(dependent)
+    rows = _outcomes.outcomes((broken, dependent), {0: ("refused-by-validation", "x")})
+    assert [row.verdict for row in rows] == ["refused-by-validation", "dropped-with"]
+
+
+def test_r2_f4_an_unlocated_constraint_issue_never_blames_its_host() -> None:
+    good = {"type": "uniqueness", "roles": ["order"], "source": "user-supplied", "status": "confirmed"}
+    bad = dict(good, source="not_a_source")
+    host = {"id": "order_has_amount", "reading": "{Order} has {Amount} always", "constraints": [good]}
+    locator = policy._constraint_locator("order_has_amount", None, "uniqueness")
+    operations = (_op("modify", policy._element("fact_types", "order_has_amount"), host, "innocent-reading",
+                      before=dict(host, reading="{Order} has {Amount}")),
+                  _op("add", locator, bad, "bad-first"), _op("add", locator, good, "restore-good"),
+                  _op("add", locator, bad, "bad-last"))
+    candidate = {"fact_types": [dict(host, constraints=[bad])]}
+    refused, complete = _outcomes.locate_validation_issues(
+        [_issue("$.fact_types[0].constraints[0].source")], candidate, operations)
+    assert refused == {} and not complete
+
+
+def test_r2_f5_the_constraint_index_is_linear() -> None:
+    n = 40_000
+    body = dict(policy.NEW_CONSTRAINT)
+    locator = policy._constraint_locator(HOST, None, body["type"])
+    operation = _op("add", locator, body, "c")
+    operations = [operation.model_copy(update={"operation_id": f"c{i}"}) for i in range(n)]
+    start = time.perf_counter()
+    index = _outcomes._Index(operations)
+    assert time.perf_counter() - start < 1.0
+    assert len(index.constraints[(HOST, _outcomes.canonical_sha256(body))]) == n

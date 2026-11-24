@@ -40,6 +40,14 @@ Bounded discovery of guards over a binary relation and classifier.
 | `guard_key(core) -> str \| None` | function | 143 | Identity of a joined candidate shape, modulo variable names and atom order. |
 | `generate(view, settings, *, eligible, redacted)` | function | 260 | Compute candidates and independent support before the discovery checker. |
 
+## gnd.discover.narrow — `src/gnd/discover/narrow.py`
+Components: discover.narrow
+GO3 (#227): the part of a proposal no gate refused, as a new proposal.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `narrow_proposal(proposal, outcomes) -> tuple[EvolutionProposal \| None, tuple[str, ...]]` | function | 28 | Keep the operations GO2 did not refuse; return the narrowed proposal, or |
+
 ## gnd.discover.output — `src/gnd/discover/output.py`
 Components: discover.output
 The two outputs of ``gnd discover``: the evolve proposal and the report (IK4 §6).

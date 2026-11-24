@@ -88,6 +88,14 @@ the next one.
   model already has, its own or included, by id only, and routes rows for an
   existing fact type to `open_questions`, since the additive policy refuses
   a changed sample row ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **The admitted part of a round.** `gnd.discover.narrow.narrow_proposal`
+  turns a proposal and its operation outcomes into a new proposal of the
+  operations no gate refused, which is previewed and applied like any other;
+  `apply` stays whole ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+- **One summary per round.** `gnd evolve summary ROUND_FILE` prints what a
+  round reused, what the host dropped, what it proposed, each verdict's count
+  and what the applied record added
+  ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
 
 ## 0.4.0 (2026-11-17)
 

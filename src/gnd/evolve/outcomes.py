@@ -10,6 +10,7 @@ preview section; ``OperationOutcome`` and ``EvolutionOutcomeReport`` in
 
 from __future__ import annotations
 
+import functools
 import re
 from collections.abc import Iterable, Mapping, Sequence
 from typing import Any
@@ -31,7 +32,9 @@ from .models import (
 #: is read only for a ``.constraints[<index>]`` or ``.roles[<index>]`` step.
 _PATH_HEAD = re.compile(r"\$\.([a-z_]+)\[(?:(\d+)|id=([^\]]+))\]")
 _CONSTRAINT_STEP = re.compile(r"\.constraints\[(\d+)\]")
-_ROLE_STEP = re.compile(r"\.roles\[(\d+)\]")
+#: A role step names its role by position or by ``role_name``, which the
+#: meta-schema's identifier grammar (``^[a-z][a-z0-9_]*$``) keeps apart from a position.
+_ROLE_STEP = re.compile(r"\.roles\[(?:(\d+)|([a-z][a-z0-9_]*))\]")
 
 Refusals = dict[int, tuple[str, str]]
 
@@ -73,7 +76,7 @@ class _Index:
         except Exception:  # noqa: BLE001 -- a value canonical JSON cannot spell is unlocatable
             return
         found = self.constraints.setdefault((host, digest), [])
-        if index not in found:
+        if not found or found[-1] != index:  # indices arrive in order: one check, not a scan
             found.append(index)
 
     def for_element(self, collection: str, element_id: Any, role_name: Any = None) -> int | None:
@@ -170,16 +173,19 @@ def _locate_path(path: str, document: _Candidate, index: _Index) -> int | None:
     if collection == "fact_types" and isinstance(element, dict):
         step = _CONSTRAINT_STEP.match(path, head.end())
         if step is not None:
+            # A constraint's issue is the constraint's: it is never pinned on
+            # an operation that changed only the host around it.
             constraints = element.get("constraints")
             if isinstance(constraints, list) and int(step.group(1)) < len(constraints):
-                found = index.for_constraint(element_id, constraints[int(step.group(1))])
-                if found is not None:
-                    return found
+                return index.for_constraint(element_id, constraints[int(step.group(1))])
+            return None
         role = _ROLE_STEP.match(path, head.end())
         if role is not None:
+            position, role_name = role.group(1), role.group(2)
             roles = element.get("roles")
-            if isinstance(roles, list) and int(role.group(1)) < len(roles) and isinstance(roles[int(role.group(1))], dict):
-                role_name = roles[int(role.group(1))].get("role_name")
+            if position is not None and isinstance(roles, list) and int(position) < len(roles):
+                entry = roles[int(position)]
+                role_name = entry.get("role_name") if isinstance(entry, dict) else None
     if collection in _ELEMENT_COLLECTIONS:
         return index.for_element(collection, element_id, role_name)
     return None
@@ -208,38 +214,109 @@ def _added_element(operation: EvolutionOperation) -> tuple[str, str] | None:
     return None
 
 
-#: Keys whose string value (or list of strings) names a model element, as the
-#: ORM meta-schema spells them; read at any depth of an ``after`` value.
-_OBJECT_TYPE_KEYS = frozenset({"object_type", "value_type", "supertype", "subtype_of", "subtypes", "objectified_as"})
-_FACT_TYPE_KEYS = frozenset({"fact_type"})
+#: The meta-schema properties whose value names a model element (a string or
+#: a list of strings). They are read only where the meta-schema declares them,
+#: so a sample row or a provenance entry, free-form there, is never read.
+_REFERENCE_PROPERTIES = {
+    "object_type": "object_types", "value_type": "object_types", "supertype": "object_types",
+    "subtype_of": "object_types", "subtypes": "object_types", "objectified_as": "object_types",
+    "fact_type": "fact_types", "depends_on": "fact_types",
+}
+#: The meta-schema node an operation's ``after`` value is, by its locator.
+_AFTER_SCHEMA = {
+    "object_types": "object_type", "fact_types": "fact_type", "operations": "operation",
+    "role": "role", "model": "top_level_constraint", "hosted": "inline_constraint",
+}
+
+
+@functools.cache
+def _schema() -> _Schema:
+    from gnd.model import _load_meta_schema
+
+    return _Schema(_load_meta_schema())
+
+
+class _Schema:
+    """The meta-schema's property and item nodes, every ``$ref``, ``allOf``,
+    ``anyOf`` and ``oneOf`` arm merged, computed once per node."""
+
+    def __init__(self, document: dict[str, Any]) -> None:
+        self.definitions = document.get("$defs", {})
+        self._properties: dict[int, dict[str, list[Any]]] = {}
+        self._items: dict[int, list[Any]] = {}
+
+    def node(self, name: str) -> Any:
+        return self.definitions.get(name, {})
+
+    def _arms(self, node: Any) -> list[Any]:
+        arms, stack, seen = [], [node], set()
+        while stack:
+            current = stack.pop()
+            if not isinstance(current, dict) or id(current) in seen:
+                continue
+            seen.add(id(current))
+            arms.append(current)
+            reference = current.get("$ref")
+            if isinstance(reference, str) and reference.startswith("#/$defs/"):
+                stack.append(self.definitions.get(reference.removeprefix("#/$defs/")))
+            for key in ("allOf", "anyOf", "oneOf"):
+                stack.extend(current.get(key) or ())
+        return arms
+
+    def properties(self, node: Any) -> dict[str, list[Any]]:
+        if id(node) not in self._properties:
+            merged: dict[str, list[Any]] = {}
+            for arm in self._arms(node):
+                for key, value in (arm.get("properties") or {}).items():
+                    merged.setdefault(key, []).append(value)
+            self._properties[id(node)] = merged
+        return self._properties[id(node)]
+
+    def items(self, node: Any) -> list[Any]:
+        if id(node) not in self._items:
+            self._items[id(node)] = [arm["items"] for arm in self._arms(node) if isinstance(arm.get("items"), dict)]
+        return self._items[id(node)]
 
 
 def _needs(operation: EvolutionOperation) -> list[tuple[str, str]]:
     """Every element this operation needs (GO2-D5: from its locator and its
-    ``after`` value, never the candidate). Total over arbitrary JSON."""
+    ``after`` value, never the candidate). The ``after`` value is walked
+    beside its meta-schema node; total over arbitrary JSON."""
     locator = operation.locator
     needed: list[tuple[str, str]] = []
     if isinstance(locator, ConstraintLocator) and locator.host != "model" and locator.host_id:
         needed.append(("fact_types", locator.host_id))
     if isinstance(locator, RoleLocator):
         needed.append(("fact_types", locator.fact_type_id))
-    stack = [operation.after]
+    if isinstance(locator, ElementLocator):
+        root = _AFTER_SCHEMA.get(locator.collection)
+    elif isinstance(locator, RoleLocator):
+        root = _AFTER_SCHEMA["role"]
+    elif isinstance(locator, ConstraintLocator):
+        root = _AFTER_SCHEMA["model" if locator.host == "model" else "hosted"]
+    else:
+        root = None
+    schema = _schema()
+    stack = [] if root is None else [(operation.after, schema.node(root))]
     while stack:
-        value = stack.pop()
+        value, node = stack.pop()
         if isinstance(value, (list, tuple)):
-            stack.extend(reversed(value))
+            stack.extend((item, child) for item in reversed(value) for child in schema.items(node))
             continue
         if not isinstance(value, Mapping):
             continue
+        declared = schema.properties(node)
         for key, item in value.items():
-            collection = ("object_types" if key in _OBJECT_TYPE_KEYS
-                          else "fact_types" if key in _FACT_TYPE_KEYS else None)
+            children = declared.get(key)
+            if not children:
+                continue
+            collection = _REFERENCE_PROPERTIES.get(key)
             if collection is not None and isinstance(item, str):
                 needed.append((collection, item))
             elif collection is not None and isinstance(item, (list, tuple)):
                 needed.extend((collection, name) for name in item if isinstance(name, str))
             if isinstance(item, (Mapping, list, tuple)):
-                stack.append(item)
+                stack.extend((item, child) for child in children)
     added = _added_element(operation)
     return [key for key in needed if key != added]
 

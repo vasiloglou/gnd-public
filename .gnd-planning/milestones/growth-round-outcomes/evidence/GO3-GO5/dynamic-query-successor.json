@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "reason": "growth-round-outcomes GO2 review repairs (the outcome locator's schema walk and candidate maps), GO3 (#227, narrow_proposal) and GO5 (#227, the round summary and gnd evolve summary): their annotations and dynamic subscripts.",
+  "predecessor": ".gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json",
+  "predecessor_sha256": "22be8a72405e832944814221d07b3211400a8c1276625030256a0bef5a5b4fb3",
+  "removed": [
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_locate_path",
+      "roles[int(role.group(1))]",
+      2
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/discover/narrow.py",
+      "_before_document",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/narrow.py",
+      "narrow_proposal",
+      "tuple[EvolutionProposal | None, tuple[str, ...]]",
+      1
+    ],
+    [
+      "src/gnd/discover/narrow.py",
+      "narrow_proposal",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[int, dict[str, list[Any]]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[int, list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "dict[str, list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "__init__",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_arms",
+      "current.get(key)",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_arms",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_arms",
+      "self.definitions.get(reference.removeprefix('#/$defs/'))",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_constraint",
+      "found[-1]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_locate_path",
+      "roles[int(position)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "_AFTER_SCHEMA.get(locator.collection)",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "_AFTER_SCHEMA['model' if locator.host == 'model' else 'hosted']",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "_REFERENCE_PROPERTIES.get(key)",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "_needs",
+      "declared.get(key)",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "items",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "items",
+      "self._items[id(node)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "node",
+      "self.definitions.get(name, {})",
+      1
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "properties",
+      "dict[str, list[Any]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "properties",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/evolve/outcomes.py",
+      "properties",
+      "self._properties[id(node)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "ReusedElement",
+      "Literal['object_types', 'fact_types']",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundFile",
+      "tuple[HostDrop, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundFile",
+      "tuple[ReusedElement, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundSummary",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundSummary",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundSummary",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundSummary",
+      "dict[str, tuple[str, ...]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundSummary",
+      "tuple[HostDrop, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "RoundSummary",
+      "tuple[str, ...]",
+      2
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "round_summary",
+      "added[locator.collection]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "round_summary",
+      "dict[str, list[str]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "round_summary",
+      "list[str]",
+      2
+    ],
+    [
+      "src/gnd/evolve/summary.py",
+      "round_summary",
+      "reused[item.collection]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7962,
+  "result_occurrences": 9904
+}

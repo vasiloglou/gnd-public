@@ -613,6 +613,13 @@ class LinkedProject(_ClosedFrozenModel):
         return document
 
 
+class NarrowedFrom(_ClosedFrozenModel):
+    """GO3 (#227): the proposal a narrowed proposal was cut from, by id and sha256."""
+
+    proposal_id: StableId
+    proposal_sha256: Sha256String
+
+
 class _EvolutionProposalV1(_ClosedFrozenModel):
     schema_version: Literal[LEGACY_EVOLUTION_SCHEMA_VERSION] = (
         LEGACY_EVOLUTION_SCHEMA_VERSION
@@ -625,6 +632,7 @@ class _EvolutionProposalV1(_ClosedFrozenModel):
     audit: EvolutionOperationAudit
     linked_projects: tuple[_LinkedProjectV1, ...] = ()
     artifacts: tuple[ArtifactLocator, ...] = ()
+    narrowed_from: NarrowedFrom | None = None
 
 
 class _EvolutionProposalV2(_ClosedFrozenModel):
@@ -637,6 +645,7 @@ class _EvolutionProposalV2(_ClosedFrozenModel):
     audit: EvolutionOperationAudit
     linked_projects: tuple[_LinkedProjectV2, ...] = ()
     artifacts: tuple[ArtifactLocator, ...] = ()
+    narrowed_from: NarrowedFrom | None = None
 
 
 class _EvolutionProposalV3(_EvolutionProposalV2):
@@ -654,6 +663,9 @@ class EvolutionProposal(_ClosedFrozenModel):
     audit: EvolutionOperationAudit
     linked_projects: tuple[LinkedProject, ...] = ()
     artifacts: tuple[ArtifactLocator, ...] = ()
+    #: GO3: set only on a narrowed proposal and omitted from the document when
+    #: unset, so every other proposal keeps its bytes and ``proposal_sha256``.
+    narrowed_from: NarrowedFrom | None = None
 
     @classmethod
     def model_validate(cls, obj: Any, *args: Any, **kwargs: Any) -> Self:
@@ -680,6 +692,8 @@ class EvolutionProposal(_ClosedFrozenModel):
     @model_serializer(mode="wrap")
     def _serialize_wire_version(self, handler):
         document = handler(self)
+        if self.narrowed_from is None:
+            document.pop("narrowed_from", None)
         for project in document["linked_projects"]:
             if self.schema_version == LEGACY_EVOLUTION_SCHEMA_VERSION:
                 project.pop("locator", None)
@@ -1723,6 +1737,7 @@ __all__ = [
     "LinkedProject",
     "LinkedProjectConformance",
     "ModelIdentityLocator",
+    "NarrowedFrom",
     "OperationOutcome",
     "OutcomeRefusal",
     "PolicyIssue",

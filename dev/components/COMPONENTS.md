@@ -66,7 +66,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - does: Preview, apply and finalize explicit model changes with blast-radius review and linked conformance evidence.
 - verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal, additive policy, check population, operation outcomes, outcome report
 - status: canonical
-- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.operation_outcomes, evolve.schema
+- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.operation_outcomes, evolve.round_summary, evolve.schema
 - members_uses: checker.evaluate, cli.arguments, conformance.report, conformance.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.address, model.document, … +9 more (graph.md)
 - flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.population_check -> evolve.policy -> evolve.shape_matches -> evolve.operation_outcomes -> evolve.schema
 - notes: Apply writes staged evidence before one model compare-and-swap. Finalize reruns conformance on linked projects.
@@ -317,9 +317,22 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/discover/output.py
 - uses: discover.candidates, evolve.schema, evolve.service
-- used_by: discover.service, export.ilp_service
+- used_by: discover.narrow, discover.service, export.ilp_service
 - tests: tests/test_discover.py, tests/test_discover_type_judgements.py, tests/test_evolve_additive_policy.py
 - notes: The shared builder selects included_fact_type for owned additions on verified included hosts and retains the authored includes declaration; ILP uses the same replay. add_operations and proposal construction are also reused by the ILP import lane.
+
+
+### discover.narrow
+- does: Cut a proposal down to the operations no gate refused, as a new proposal that is previewed and applied like any other [narrow_proposal].
+- verbs: narrow proposal, narrowed proposal, admitted part of a proposal, partial apply, drop refused operations, narrowed_from, keep unassessed operations, outcome report, operation outcomes, dependents closure
+- in: An EvolutionProposal and its preview or outcome report carrying operation_outcomes.
+- out: The narrowed EvolutionProposal (or none when nothing is kept) and one value-free reason per dropped operation.
+- status: canonical
+- modules: src/gnd/discover/narrow.py
+- uses: discover.output, evolve.operation_outcomes, evolve.service, model.loading
+- used_by: (none)
+- tests: tests/test_go3_narrowed_proposal.py
+- notes: GO3 (#227). Writes nothing: apply stays whole. The dependents closure is GO2's, re-run over the kept set. The contract is the evolution contract's "Narrowing a proposal".
 
 
 ### discover.fact_types
@@ -964,7 +977,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
 - uses: conformance.report, conformance.service, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
-- used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
+- used_by: discover.narrow, discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
 - checked: partial
@@ -979,7 +992,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/evolve/models.py
 - uses: infra.errors, infra.input_policy, model.loading
-- used_by: discover.fact_types, discover.output, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
+- used_by: discover.fact_types, discover.output, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.round_summary, evolve.service, evolve.shape_matches, examples.expense_evolution
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_public_evolution_version_graph.py, tests/test_public_evolution_legacy_readers.py, tests/test_evolve_shape_matches.py, tests/test_evolve_additive_policy.py
 - checked: partial
@@ -1035,10 +1048,24 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/evolve/outcomes.py
 - uses: evolve.schema
-- used_by: evolve.service
+- used_by: discover.narrow, evolve.service
 - part_of: subsystem.evolve
 - tests: tests/test_go2_operation_outcomes.py
 - notes: GO2 (#227). Read by nothing that decides a refusal: the printed refusal and its exit are those of the preview without outcomes. The verdict words have one home in the evolution contract's "Operation outcomes".
+
+
+### evolve.round_summary
+- does: Summarize one growth round from the host's round file and the round's proposal, preview or outcome report and evolution record [round_summary, read_round_file].
+- verbs: round summary, growth round, round file, reused ids, host drops, operations proposed, verdict counts, elements added, shape matches, gnd evolve summary, gnd-round, gnd-round-summary
+- in: A gnd-round/1 file, and optionally the round's EvolutionProposal, EvolutionPreview or EvolutionOutcomeReport, and EvolutionRecord.
+- out: A gnd-round-summary/1 document; refusals of an unbound artifact or a hostile round file by name.
+- status: canonical
+- modules: src/gnd/evolve/summary.py
+- uses: evolve.schema, infra.input_policy
+- used_by: (none)
+- part_of: subsystem.evolve
+- tests: tests/test_go5_round_summary.py
+- notes: GO5 (#227, #228). Elements added come from the evolution record only. The fields are the evolution contract's "Round summary".
 
 
 ### evolve.command
@@ -1811,7 +1838,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +75 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +76 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -2247,7 +2274,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +55 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +56 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -3628,10 +3655,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - offending facts: checker.evaluate, examples.session_agents
 - opaque values: model.population_sentences, semantics.extensions, semantics.temporal_guards
 - openai compatible: agent.declared_adapter, exp.adapter_policy
-- operation outcomes: evolve.operation_outcomes, subsystem.evolve
+- operation outcomes: discover.narrow, evolve.operation_outcomes, subsystem.evolve
 - oracle abstention: synth.guarded, synth.prediction
 - oscillation: exp.service, exp.session_runtime
-- outcome report: evolve.operation_outcomes, subsystem.evolve
+- outcome report: discover.narrow, evolve.operation_outcomes, subsystem.evolve
 - output collision: cli.export_command, extract.flatten_service, review.command
 - output directory: cli.codegen_command, cli.flatten_command, codegen.service, synth.paths
 - output format: cli.arguments, cli.conformance_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.verify_command
@@ -3709,6 +3736,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - scalar identity: extract.scalar_identity, model.scalar_identity, synth.identity
 - scalar terms: model.atom_bindings, model.scalar_terms
 - session contract: cli.exp_command, exp.schema, subsystem.experiment
+- shape matches: evolve.round_summary, evolve.shape_matches
 - shape report: cli.evolve_command, evolve.shape_matches
 - sidecar: export.ossie, synth.provenance
 - sidecar binding: export.verification, measure.service
@@ -3750,7 +3778,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - value domain: discover.candidates, discover.population_view, synth.value_domain
 - variable binding: model.scalar_terms, synth.guarded
 - verbalize model: cli.checking_command, export.ilp_prompt, model.verbalization
-- verdict counts: check.evaluation_feedback, checker.reports
+- verdict counts: check.evaluation_feedback, checker.reports, evolve.round_summary
 - version dispatch: exp.schema, exp.session_profile
 - version probe: agent.invocation, examples.session_agents
 - violating cases: cli.synth_command, subsystem.synth

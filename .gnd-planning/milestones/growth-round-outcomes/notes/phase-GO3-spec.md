@@ -169,3 +169,22 @@ reading of the spec. No spec review ran (optional, omitted).
 first-document add exactly as `preview` does. No amendment: the approved r1
 bytes (§12) stand. T1 gains a case on a seeded unattended root with no
 `documents` key, read from VG4's fixtures at GO3's start.
+
+## 14. Implementation findings
+
+Recorded as found, at code written from `9bf8bf3e`.
+
+1. **Refusal order.** §8 T5 lists another proposal's outcomes, a moved
+   before model and a dict in place of a model. A dict cannot be asked for
+   its `proposal_sha256`, so the type refusals come first; then another
+   proposal's outcomes, a preview with no `operation_outcomes`, the before
+   model, and rows that do not cover the proposal's operations. The
+   contract states that order.
+2. **`narrowed_from` on every reader.** The field is declared on the v1 and
+   v2 readers too (v3 inherits v2), so a narrowed proposal of any schema
+   version reads back; it is omitted when unset by the proposal's own
+   serializer, which the preview's embedded proposal also uses.
+3. **No new query rows.** The module reads only the evolve models and
+   GO2's closure.
+4. **Homes outside the spec's list:** `src/gnd/evolve/__init__.py` (the
+   export), `tools/gnd_layers.json`, `dev/components/COMPONENTS.md`.

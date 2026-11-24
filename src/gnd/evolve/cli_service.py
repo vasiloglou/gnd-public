@@ -736,6 +736,39 @@ def _cmd_evolve_preview(
         _evolve_write_outcome_report(error, report_target)
         return _evolve_fail(error, stage="preview")
 
+def _cmd_evolve_summary(
+    round_file: str,
+    *,
+    proposal: str | None = None,
+    preview: str | None = None,
+    outcome_report: str | None = None,
+    record: str | None = None,
+) -> int:
+    """GO5 (#227): print one round summary; see the evolution contract, "Round summary"."""
+    from gnd.evolve import (
+        EvolutionError,
+        read_evolution_outcome_report,
+        read_evolution_preview,
+        read_evolution_proposal,
+        read_evolution_record,
+    )
+    from gnd.evolve.summary import RoundFileError, read_round_file, round_summary
+
+    try:
+        summary = round_summary(
+            read_round_file(round_file),
+            proposal=None if proposal is None else read_evolution_proposal(proposal),
+            preview=None if preview is None else read_evolution_preview(preview),
+            report=None if outcome_report is None else read_evolution_outcome_report(outcome_report),
+            record=None if record is None else read_evolution_record(record),
+        )
+    except (RoundFileError, EvolutionError) as error:
+        print(f"EVOLUTION SUMMARY REFUSED (3): {error}", file=sys.stderr)
+        return 3
+    sys.stdout.write(_evolve_json_bytes(summary).decode("utf-8"))
+    return 0
+
+
 def _cmd_evolve_apply(
     model_path: str,
     proposal_path: str,

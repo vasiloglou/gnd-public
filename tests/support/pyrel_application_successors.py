@@ -157,6 +157,7 @@ DYNAMIC_SUCCESSORS = [
     # AC1's delta, re-chained after pyrel-rules-coverage at the main integration (AC1's own file is history)
     ROOT / '.gnd-planning/milestones/aggregate-count-certificates/evidence/main-integration/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO3-GO5/dynamic-query-successor.json',
 ]
 
 

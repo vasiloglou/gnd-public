@@ -57,14 +57,19 @@ One round is one document, in four moves.
    is a preview option only; `apply` rejects it (exit 64). The shape report is advice: for each added fact type it lists existing fact types
    over the same role players. Deciding that two readings mean the same thing is the host's
    ([acting on a shape match](#acting-on-a-shape-match)).
+   To log the round, `gnd evolve summary ROUND_FILE --proposal P --preview V --record D` prints
+   what it reused, dropped, proposed, admitted and added (the fields are the evolution
+   contract's "Round summary").
 
 ### Acting on a shape match
 
 For each existing fact type the report names beside an added one, the host does one of three
 things and logs which:
 
-- **Reuse the existing id.** The two readings say the same thing: drop the added fact type and
-  write its facts against the existing one.
+- **Reuse the existing id.** The two readings say the same thing: drop the added fact type,
+  name the existing id wherever a field took the added one, and make its rows an
+  `open_questions` entry, since the additive policy refuses a changed sample row on a fact
+  type the model already has ([the reply shape](#the-reply-shape)).
 - **Keep both, with the reason.** The readings differ ("is returned via" is not "arrives via"):
   say why in the added fact type's `provenance.rationale`.
 - **Keep both, and record the doubt** in `open_questions`, for the consolidation round to

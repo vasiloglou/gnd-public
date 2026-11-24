@@ -1,0 +1,34 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_mapping
+ontology_ref:
+  name: gnd_model
+  iri: ./ontology.yaml
+semantic_model_ref:
+  name: gnd_model_relational
+  iri: ./ontology.yaml.semantic_model.yaml
+concept_mappings:
+- concept: Person
+  object_mappings:
+  - expression: '"PERSON"."PERSON_ID"'
+  link_mappings:
+  - object_mapping:
+      expression: '"PERSON"."PERSON_ID"'
+    children:
+    - object_mapping:
+        concept: PersonName
+        expression: '"PERSON"."NAME"'
+      relationship: person_has_name
+- concept: Student
+  link_mappings:
+  - object_mapping:
+      expression: '"PERSON"."PERSON_ID"'
+    children:
+    - object_mapping:
+        concept: Gpa
+        expression: '"PERSON"."GPA"'
+      relationship: student_has_gpa
+custom_extensions:
+- vendor_name: GND
+  data: '{"concepts":[{"concept":"Student","reason":"subtype-absorbed"}],"dispositions":[{"carried_as":["placement","person"],"id":"fact_types/person_has_name/constraints/0","kind":"constraint","reason":null},{"carried_as":["placement","person"],"id":"fact_types/student_has_gpa/constraints/0","kind":"constraint","reason":null},{"carried_as":["columns","person","name"],"id":"person_has_name","kind":"fact_type","reason":null},{"carried_as":["columns","person","gpa"],"id":"student_has_gpa","kind":"fact_type","reason":null}],"model_identity":"sha256:0976015851a211453c994953dc0d0d3e54daac8e5ece2c8be8c76529212ac5d5","ontology_sha256":"ed2e9462fa0083d7fb7abb87d6e99d024413673cc6c2192111b9b683b57cb39b","rmap_variant":"halpin","schema":"gnd-ossie-relational/1","semantic_model_sha256":"9d823e3b5909f75b64165bdc36929a65fd4653bd713cdff67e6d11a6412d8ece"}'

@@ -1,0 +1,79 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_relational
+datasets:
+- name: city
+  source: city
+  primary_key:
+  - city_id
+  fields:
+  - name: city_id
+    expression:
+      sql: '"CITY_ID"'
+    datatype: Integer
+  - name: state_country_country_code
+    expression:
+      sql: '"STATE_COUNTRY_COUNTRY_CODE"'
+    datatype: String
+  - name: state_code
+    expression:
+      sql: '"STATE_CODE"'
+    datatype: String
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"logical"}'
+- name: country
+  source: country
+  primary_key:
+  - country_code
+  fields:
+  - name: country_code
+    expression:
+      sql: '"COUNTRY_CODE"'
+    datatype: String
+  - name: name
+    expression:
+      sql: '"NAME"'
+    datatype: String
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"logical"}'
+- name: state
+  source: state
+  primary_key:
+  - country_country_code
+  - code
+  fields:
+  - name: country_country_code
+    expression:
+      sql: '"COUNTRY_COUNTRY_CODE"'
+    datatype: String
+  - name: code
+    expression:
+      sql: '"CODE"'
+    datatype: String
+  - name: population
+    expression:
+      sql: '"POPULATION"'
+    datatype: Integer
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"logical"}'
+relationships:
+- name: city__state
+  from: city
+  to: state
+  from_columns:
+  - state_country_country_code
+  - state_code
+  to_columns:
+  - country_country_code
+  - code
+- name: state__country
+  from: state
+  to: country
+  from_columns:
+  - country_country_code
+  to_columns:
+  - country_code

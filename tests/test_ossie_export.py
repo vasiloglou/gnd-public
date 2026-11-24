@@ -201,6 +201,12 @@ def test_vendored_ontology_bytes_match_os0_pin():
     assert (
         pin["sha256"] == hashlib.sha256(bundle.joinpath("ontology.json").read_bytes()).hexdigest()
     )
+    # OB3: the mapping schema is vendored from the same commit. OS0 predates it, so its
+    # digest is pinned here against the vendored bytes.
+    mapping = pin["mapping_reference"]
+    assert mapping["upstream_path"] == "ontology/mapping.json"
+    assert mapping["sha256"] == hashlib.sha256(bundle.joinpath("mapping.json").read_bytes()).hexdigest()
+    assert mapping["sha256"] == "936118ca7753676c069d1fa615c8dced7e9a9499ab185cc2ddbe8d1c2d4404f3"
 
 
 def test_cli_loss_and_strict_policy(tmp_path, capsys):
@@ -713,12 +719,15 @@ def test_ob1_t3_each_artifact_is_bounded(tmp_path, artifact, capsys):
     source, size = _largest_by(tmp_path, artifact)
     refused = tmp_path / "refused"
     refused.mkdir()
-    assert cli.main(_export_argv(source, refused / "o.json", "--max-output-bytes", str(size - 1))) == 3
+    # OB3 (D2 a): the three legacy artifacts are the --ontology-only run. The relational
+    # files' own bound is tests/test_ossie_relational.py T8.
+    only = "--ontology-only"
+    assert cli.main(_export_argv(source, refused / "o.json", only, "--max-output-bytes", str(size - 1))) == 3
     assert "ossie:output-size" in capsys.readouterr().err
     assert not list(refused.iterdir())
     published = tmp_path / "published"
     published.mkdir()
-    assert cli.main(_export_argv(source, published / "o.json", "--max-output-bytes", str(size))) == 0
+    assert cli.main(_export_argv(source, published / "o.json", only, "--max-output-bytes", str(size))) == 0
     assert sorted(p.name for p in published.iterdir()) == ["o.json", "o.json.gnd.json", "o.json.loss.json"]
 
 

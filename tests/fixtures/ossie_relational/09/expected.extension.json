@@ -1,0 +1,20 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:f5b6bcfe2bf10072f0a4a3369bb696c8366628c7ab023afdf370d059f4ee6868",
+ "ontology_sha256": "11dfe562c055616436628246def4ea574602b25e7cbaa011ea771acf593aeee6",
+ "semantic_model_sha256": "ac9e9164b542eb71223cf0f496bcc0a4e0d4390211e83caa496076f9d3fe6bd6",
+ "rmap_variant": "halpin",
+ "dispositions": [
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "person_smokes"
+   ],
+   "id": "person_smokes",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "concepts": []
+}

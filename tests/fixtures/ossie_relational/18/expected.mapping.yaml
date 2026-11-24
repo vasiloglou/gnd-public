@@ -1,0 +1,39 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_mapping
+ontology_ref:
+  name: gnd_model
+  iri: ./ontology.yaml
+semantic_model_ref:
+  name: gnd_model_relational
+  iri: ./ontology.yaml.semantic_model.yaml
+concept_mappings:
+- concept: Person
+  object_mappings:
+  - expression: '"PERSON"."PERSON_ID"'
+  link_mappings:
+  - object_mapping:
+      expression: '"PERSON"."PERSON_ID"'
+    children:
+    - object_mapping:
+        concept: PersonName
+        expression: '"PERSON"."NAME"'
+      relationship: person_has_name
+  - object_mapping:
+      expression: '"PERSON"."PERSON_ID"'
+    children:
+    - object_mapping:
+        concept: BirthYear
+        expression: '"PERSON"."BIRTH_YEAR"'
+      relationship: person_has_birth_year
+  - object_mapping:
+      expression: '"PERSON"."PERSON_ID"'
+    children:
+    - object_mapping:
+        concept: Nickname
+        expression: '"PERSON"."NICKNAME"'
+      relationship: person_has_nickname
+custom_extensions:
+- vendor_name: GND
+  data: '{"concepts":[],"dispositions":[{"carried_as":[],"id":"fact_types/person_has_age/constraints/0","kind":"constraint","reason":"derived-computed"},{"carried_as":["placement","person"],"id":"fact_types/person_has_birth_year/constraints/0","kind":"constraint","reason":null},{"carried_as":["placement","person"],"id":"fact_types/person_has_name/constraints/0","kind":"constraint","reason":null},{"carried_as":["placement","person"],"id":"fact_types/person_has_nickname/constraints/0","kind":"constraint","reason":null},{"carried_as":[],"id":"person_has_age","kind":"fact_type","reason":"derived-computed"},{"carried_as":["columns","person","birth_year"],"id":"person_has_birth_year","kind":"fact_type","reason":null},{"carried_as":["columns","person","name"],"id":"person_has_name","kind":"fact_type","reason":null},{"carried_as":["columns","person","nickname"],"id":"person_has_nickname","kind":"fact_type","reason":null}],"model_identity":"sha256:0e909740301e9442293cd67e2ab108e932e0cb641b1d8c0eaf86d8b8a9c90fa8","ontology_sha256":"c1ca3122b8f8f6efd9e8e51230a4b7e19137b7fde4b90da6c8ed74c63dd0f7b8","rmap_variant":"halpin","schema":"gnd-ossie-relational/1","semantic_model_sha256":"94ec3f40ddf6d41127d5ddf50951576cc528f63c26fa109d129d2e2070b22bf8"}'

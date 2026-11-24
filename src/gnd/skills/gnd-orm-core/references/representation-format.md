@@ -2096,7 +2096,7 @@ exists. Otherwise the variant decides:
 | Value type | One column named after the value type id. Its origin is `("reference", id)`. |
 | `popular` or `general` reference | One column named after the reference value type id |
 | `unit-based` reference | `<id>_value`, typed `Number`. This is recognised before the general identification lookup, which does not resolve unit-based references. |
-| Composite | The **identifying** external uniqueness: `confirmed`, `alethic` and `preferred`, over binaries whose other roles are all played by the entity. If several qualify, the one with the smallest sorted role references wins, then the smaller `role_refs` sequence; declaration order never decides. An external uniqueness that references a rule-0 fact type identifies nothing. One column per component, in `role_refs` order. A value component is named after its role. An entity component is a group named `<role>_<key>`. Either kind is a foreign key when its player has a table. A composite inside a composite is not resolved. |
+| Composite | The **identifying** external uniqueness: `confirmed`, `alethic` and `preferred`, over binaries whose other roles are all played by the entity, each of them functional on the entity (a confirmed alethic uniqueness on the entity's role alone). If several qualify, the one with the smallest sorted role references wins, then the smaller `role_refs` sequence; declaration order never decides. An external uniqueness that references a rule-0 fact type identifies nothing. One column per component, in `role_refs` order. A value component is named after its role. An entity component is a group named `<role>_<key>`. Either kind is a foreign key when its player has a table. A composite inside a composite is not resolved. |
 | Inherited | A subtype with `inherits_reference: true` and no identification of its own is identified as its first supertype is, composite included. |
 | Unresolvable | The object type is listed as `identification-unmatchable`, and so is every fact type placed in it or needing its key, along with their constraints. |
 
@@ -2128,6 +2128,8 @@ exists. Otherwise the variant decides:
   primitive.
 - **Foreign keys** point at the target's primary key. They are named
   `<from>__<to>`, then `__2` and so on, counted per pair, in column order.
+  A name is unique in the whole schema: tables are named in sorted order,
+  and a name already taken by another pair takes the next number.
 
 **Nullability.**
 - Key columns are never null.
@@ -2238,6 +2240,101 @@ entries. An interruption before the ontology appears can leave uncommitted
 companions. Exit codes are 0 on success, 3 on input or strict-policy refusal,
 11 on output collision, 66 on missing input, 70 on an internal rendering
 failure and 74 on an I/O refusal.
+
+### Semantic model and mapping
+
+By default the export also writes Ossie's relational layer, in the run's
+format (`yaml` or `json`):
+
+| File | Content |
+|---|---|
+| `FILE.semantic_model.<format>` | An Ossie core-spec semantic model: the tables of the [relational mapping](#relational-mapping-rmap), under the `HALPIN` variant |
+| `FILE.mapping.<format>` | An Ossie mapping document, under the pinned `ontology/mapping.json`, from the ontology's concepts and relationships to the semantic model's datasets and fields |
+
+`--ontology-only` writes neither, and the run is then the three-file run in
+every respect. The ontology, sidecar and loss report have the same bytes
+either way. The five files are one create-once group, published in the
+order loss report, sidecar, semantic model, mapping, ontology; a collision on
+any of the five paths exits 11 and publishes nothing. `--max-output-bytes`
+bounds each of the five. The pinned core-spec requires at least one
+dataset, so a model that maps to no table gets no semantic model and no
+mapping: the run writes the other three files, says so on standard error
+and exits 0.
+
+**The semantic model.** Its `name` is the ontology's `name` followed by
+`_relational`.
+
+| Rmap | Semantic model |
+|---|---|
+| Table | One dataset, in table order. `name` and `source` are the table name. A `GND` extension holds `{"source_kind":"logical"}`: the name is one GND chose, not a table that exists. |
+| Column | One field, in column order: `name` is the column name and `expression.sql` is that name, quoted. |
+| Primary key, unique keys | `primary_key` and `unique_keys` |
+| Foreign key | One relationship, in table order and then foreign-key order: `from` is the table that holds the key, `to` the table it references, with `from_columns` and `to_columns` in key order |
+
+- **Datatypes.** String, Integer, Float, Boolean, Date and DateTime map to
+  themselves, and Number to Decimal. Binary and Duration map to `Opaque`,
+  with the primitive in a `GND` extension on the field as
+  `{"gnd_primitive": …}`. A column with no primitive has no `datatype`.
+- **Identifiers in expressions** are written quoted and uppercased, with an
+  embedded quote doubled: `"CUSTOMER"."EMAIL"` names field `email` of
+  dataset `customer`. Ossie compares a regular identifier by its uppercased
+  form, so the quoted form names the same field and never reads as a
+  keyword.
+- **No population.** No file of the relational layer holds a row, a model
+  identity or a digest, except the mapping's extension below.
+
+**The mapping.** Its `name` is the ontology's `name` followed by `_mapping`.
+`ontology_ref` and `semantic_model_ref` each carry the referenced document's
+`name` and an `iri` of `./` and that file's name, so the three files resolve
+from one directory. The file name is percent-encoded, every character
+outside the unreserved set, so a `#`, `?` or `%` in it stays part of the name. Concept mappings follow the ontology's component order,
+and a concept appears only when it has an object mapping or a link mapping.
+
+- **Object mappings.** An entity type with a table of its own gets one,
+  over that table's key columns. With a one-relationship identifier it is
+  one `expression`. With a composite identifier it is `referent_mappings`,
+  one per relationship of the ontology's `identify_by`, in that order; each
+  takes its columns by the identifying fact type, never by position. A
+  value component is an `expression`. An entity component nests that
+  entity's own referent mappings, down to the `gnd_reference` relationship of
+  a simple identifier. A value type never gets an object mapping.
+- **Link mappings.** Every fact type the Rmap carries gets one tree, under
+  the concept that owns its relationship, in that concept's relationship
+  order. The tree has one node per role, in the relationship's role order.
+  Each node maps the objects of its role from the columns that hold the
+  role, and the last node names the relationship. Every node below the root
+  names its `concept`. Trees are not shared between fact types. The
+  generated `gnd_reference` relationship has no fact type and no tree.
+  A tree nests one level per role, so a fact type with more than 32 roles
+  has no tree; it keeps its table and is listed as `arity-over-limit`.
+- **NULL.** A NULL in a mapping expression yields no object and so no link.
+  Ossie does not define this; it is GND's reading. A unary fact type is a
+  Boolean flag, so its tree is one root node whose expressions are
+  `CASE WHEN <flag> THEN <key column> END`.
+- **Absorbed subtypes.** A subtype absorbed into its supertype's table has
+  no object mapping, because no column says which rows are its own. Its
+  fact types are still link-mapped, rooted at the supertype table's key.
+
+**The `GND` extension.** The mapping carries one custom extension with
+`vendor_name: GND`. Its `data` is canonical JSON, without the trailing
+newline, under the schema id `gnd-ossie-relational/1`:
+
+| Member | Value |
+|---|---|
+| `model_identity` | The model's canonical identity. It changes with a `sample_population`; nothing else in the two files does. |
+| `ontology_sha256`, `semantic_model_sha256` | The bare hexadecimal SHA-256 of the exact ontology and semantic-model bytes of the same run |
+| `rmap_variant` | `halpin` |
+| `dispositions` | Every row of the Rmap's one walk: each fact type and each constraint, with `carried_as` or a `reason` |
+| `concepts` | Entity concepts with a table and no object mapping, each with a reason: `subtype-absorbed` or `identification-differs` |
+| `unmapped_links` | Present only when not empty: carried fact types with no link mapping, each with the reason `identification-differs` or `arity-over-limit` |
+
+`identification-differs` means the ontology does not identify an object type
+the way its key columns do, so no object mapping for it can be written. That
+is the case for a unit-based reference, for an objectification keyed by its
+own fact type, and for a subtype that inherits through several supertypes.
+Every fact type the Rmap carries is therefore either named by exactly one
+link tree or listed in `unmapped_links`, with one of those two reasons. `--strict` does not refuse any of
+these: they are listed, not refused.
 
 ### Import a pinned ontology
 

@@ -243,9 +243,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 50 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 55 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict, max_output_bytes) -> OssieArtifacts` | function | 427 | Render three deterministic artifacts from one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 57 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 62 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name) -> …` | function | 516 | Render the deterministic artifacts of one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -258,6 +258,18 @@ Place the reviewed subset of requirement and derivation shapes in Ossie scopes.
 | `ProjectedRelation.path(self) -> str` | method | 65 | (no docstring) |
 | `ProjectedRelation.token(self, position) -> str` | method | 68 | (no docstring) |
 | `place_formulas(document, ontology, components, relations, mapped, fact_types)` | function | 267 | Mutate the ontology and disposition index only after a complete group lowers. |
+
+## gnd.export.ossie_relational — `src/gnd/export/ossie_relational.py`
+Components: export.ossie_relational
+Build the Ossie semantic model and mapping that accompany an exported ontology.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
+| `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
+| `build_semantic_model(schema, name) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
+| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 225 | Map the ontology's concepts and relationships onto the semantic model. |
+| `validate_relational(semantic_model, mapping) -> None` | function | 312 | Check both documents against the pinned schemas; a failure is a renderer defect. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules

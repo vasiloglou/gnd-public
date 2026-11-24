@@ -1,0 +1,22 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_mapping
+ontology_ref:
+  name: gnd_model
+  iri: ./ontology.yaml
+semantic_model_ref:
+  name: gnd_model_relational
+  iri: ./ontology.yaml.semantic_model.yaml
+concept_mappings:
+- concept: Person
+  object_mappings:
+  - expression: '"PERSON"."PERSON_ID"'
+  link_mappings:
+  - object_mapping:
+      expression: CASE WHEN "PERSON"."PERSON_SMOKES" THEN "PERSON"."PERSON_ID" 
+        END
+    relationship: person_smokes
+custom_extensions:
+- vendor_name: GND
+  data: '{"concepts":[],"dispositions":[{"carried_as":["columns","person","person_smokes"],"id":"person_smokes","kind":"fact_type","reason":null}],"model_identity":"sha256:f5b6bcfe2bf10072f0a4a3369bb696c8366628c7ab023afdf370d059f4ee6868","ontology_sha256":"11dfe562c055616436628246def4ea574602b25e7cbaa011ea771acf593aeee6","rmap_variant":"halpin","schema":"gnd-ossie-relational/1","semantic_model_sha256":"ac9e9164b542eb71223cf0f496bcc0a4e0d4390211e83caa496076f9d3fe6bd6"}'

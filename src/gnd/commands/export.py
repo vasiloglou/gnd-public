@@ -77,6 +77,7 @@ def _cmd_export_ossie(
     output_format: str,
     strict: bool,
     max_output_bytes: int | None = None,
+    ontology_only: bool = False,
 ) -> int:
     from gnd.artifacts import ArtifactError
     from gnd.errors import ModelLoadError, ModelValidationError
@@ -89,6 +90,8 @@ def _cmd_export_ossie(
             output_format=output_format,
             strict=strict,
             max_output_bytes=DEFAULT_MAX_OUTPUT_BYTES if max_output_bytes is None else max_output_bytes,
+            relational=not ontology_only,
+            document_name=Path(out).name,
         )
     except FileNotFoundError as error:
         print(f"missing input: {error}", file=sys.stderr)
@@ -103,12 +106,19 @@ def _cmd_export_ossie(
         print(f"Ossie export failed: {error}", file=sys.stderr)
         return EXIT_INTERNAL
 
+    # One create-once group; the ontology is written last, as the commit marker.
+    group = [
+        (Path(loss_report or out + ".loss.json"), bundle.loss_report),
+        (Path(out + ".gnd.json"), bundle.sidecar),
+    ]
+    if bundle.semantic_model is not None and bundle.mapping is not None:
+        group += [
+            (Path(f"{out}.semantic_model.{output_format}"), bundle.semantic_model),
+            (Path(f"{out}.mapping.{output_format}"), bundle.mapping),
+        ]
+    group.append((Path(out), bundle.document))
     try:
-        publish_new_files([
-            (Path(loss_report or out + ".loss.json"), bundle.loss_report),
-            (Path(out + ".gnd.json"), bundle.sidecar),
-            (Path(out), bundle.document),
-        ])
+        publish_new_files(group)
     except FileExistsError as error:
         print(f"output exists: {error}", file=sys.stderr)
         return EXIT_COLLISION
@@ -116,6 +126,11 @@ def _cmd_export_ossie(
         print(f"Ossie output failure: {error}", file=sys.stderr)
         return EXIT_IO
     print(f"Exported Ossie ontology to {out}")
+    if bundle.semantic_model is not None:
+        print(f"Exported Ossie semantic model and mapping to {out}.semantic_model.{output_format} "
+              f"and {out}.mapping.{output_format}")
+    elif not ontology_only:
+        print("note: the model maps to no table, so no semantic model or mapping is written.", file=sys.stderr)
     if bundle.redacted_fact_types:
         # Issue 169, owner ruling of 2026-11-11: `redact` withholds population values
         # from reports and does not change an export of the model's own text.
@@ -193,6 +208,10 @@ def _register_export(subparsers):
         "--max-output-bytes", type=_byte_bound, default=None, metavar="N",
         help="largest size in bytes of each written file (default 10485760; at most 268435456)",
     )
+    ossie_parser.add_argument(
+        "--ontology-only", action="store_true",
+        help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
+    )
 
     return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
 
@@ -231,7 +250,8 @@ def handle(args, parsers) -> int:
         if args.export_target == "ossie":
             return _cmd_export_ossie(args.model, args.out, loss_report=args.loss_report,
                                      output_format=args.format, strict=args.strict,
-                                     max_output_bytes=args.max_output_bytes)
+                                     max_output_bytes=args.max_output_bytes,
+                                     ontology_only=args.ontology_only)
         if args.export_target == "ilp":
             from gnd.export.ilp_service import _cmd_export_ilp
 

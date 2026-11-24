@@ -18,6 +18,12 @@ from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes
 from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
+from gnd.export.ossie_relational import (
+    OntologyView,
+    build_mapping,
+    build_semantic_model,
+    validate_relational,
+)
 from gnd.input_policy import MAX_BYTES_CEILING, guard_yaml, loads, require_byte_bound
 from gnd.model import (
     MAX_MODEL_BYTES,
@@ -29,6 +35,7 @@ from gnd.model import (
 from gnd.model._documents import ModelValueError
 from gnd.model._includes import guard_document
 from gnd.model_index import ModelIndex
+from gnd.rmap import RmapVariant, dispositions, map_model
 from gnd.safefs import NotRegularFileError, open_regular
 from gnd.terms import guarded_clause_refusal, where_uses_membership
 from gnd.values import ModelIdentityError, model_identity
@@ -60,6 +67,9 @@ class OssieArtifacts:
     #: export carries their readings, constraints and provenance text unchanged
     #: (issue 169); the command says so with this count and no name or value.
     redacted_fact_types: int = 0
+    #: The Ossie semantic model and mapping (OB3), or ``None`` for an ontology-only run.
+    semantic_model: bytes | None = None
+    mapping: bytes | None = None
 
 
 @lru_cache(maxsize=1)
@@ -181,7 +191,7 @@ def _relationship(fact, names, order, role_types):
     return result, inverse
 
 
-def _add_references(objects, components, names, functional_links, constraints, mapped, indexes):
+def _add_references(objects, components, names, functional_links, constraints, mapped, indexes, identification):
     # Pre-index composite UC candidates by their shared identifying entity.
     composite = {}
     for i, constraint in enumerate(constraints):
@@ -234,16 +244,18 @@ def _add_references(objects, components, names, functional_links, constraints, m
                 }
             )
             component["identify_by"] = [key]
+            identification[oid] = ("simple", key)
             mapped[path] = _NATIVE_LITERAL
             mapped[(*path, "value_type")] = _NATIVE_LITERAL
         elif mode == "external" and oid in composite:
             _, index, links = composite[oid]
             component["identify_by"] = links
+            identification[oid] = ("composite", tuple(links))
             mapped[path] = _NATIVE_LITERAL
             mapped[("constraints", index)] = _NATIVE_LITERAL
 
 
-def _inherit_identifiers(objects, components, indexes, mapped):
+def _inherit_identifiers(objects, components, indexes, mapped, identification):
     parents = {oid: tuple(obj.get("subtype_of") or ()) for oid, obj in objects.items()}
     try:
         order = list(TopologicalSorter(parents).static_order())
@@ -265,11 +277,18 @@ def _inherit_identifiers(objects, components, indexes, mapped):
         own_names = {relationship["name"] for relationship in child.get("relationships", ())}
         if inherited and not child.get("identify_by") and own_names.isdisjoint(inherited):
             child["identify_by"] = list(inherited)
+            identification[oid] = identification[parent]
             direct.add(oid)
             mapped[("object_types", indexes[oid], "inherits_reference")] = _NATIVE_LITERAL
 
 
 def _ontology(document, model):
+    ontology, mapped, _view = _project(document, model)
+    return ontology, mapped
+
+
+def _project(document, model):
+    """The ontology, its loss dispositions, and the view the relational mapping reads."""
     index = ModelIndex.for_model(model)
     objects = index.object_types_by_id()
     # Role name -> object type per fact type, in declared role order.
@@ -313,6 +332,8 @@ def _ontology(document, model):
 
     functional_links = {}
     projected_relations = {}
+    identification = {}
+    relations = {}
     for i, fact in enumerate(fact_types):
         role_types = role_types_by_fact[fact["id"]]
         order, multiplicity, constraints = _role_order(fact, role_types)
@@ -330,6 +351,7 @@ def _ontology(document, model):
             dict(role_types),
             relationship,
         )
+        relations[fact["id"]] = (owner, tuple(order), dict(role_types))
         source = ("fact_types", i)
         for path in (source, (*source, "reading"), (*source, "roles")):
             mapped[path] = _NATIVE_LITERAL
@@ -363,9 +385,10 @@ def _ontology(document, model):
         document.get("constraints", ()),
         mapped,
         indexes,
+        identification,
     )
 
-    _inherit_identifiers(objects, components, indexes, mapped)
+    _inherit_identifiers(objects, components, indexes, mapped, identification)
 
     ontology = {
         "version": _VERSION,
@@ -375,7 +398,14 @@ def _ontology(document, model):
     if document.get("model_id"):
         mapped[("model_id",)] = _copy(("name",))
     place_formulas(document, ontology, components, projected_relations, mapped, fact_types)
-    return ontology, mapped
+    view = OntologyView(
+        name=ontology["name"],
+        concepts={oid: names[oid] for oid in components},
+        kinds={oid: objects[oid]["kind"] for oid in components},
+        identification=identification,
+        relations=relations,
+    )
+    return ontology, mapped, view
 
 
 def _metadata(document, mapped):
@@ -424,21 +454,87 @@ def _metadata(document, mapped):
     return rows, dict(elements), refused
 
 
+def _encode(document, output_format: str) -> bytes:
+    """One Ossie document in the run's format; every exported document uses this."""
+    if output_format == "json":
+        return canonical_json_bytes(document)
+    if output_format == "yaml":
+        yaml = YAML(typ="safe", pure=True)
+        yaml.version = (1, 1)
+        yaml.default_flow_style = False
+        yaml.sort_base_mapping_type_on_output = False
+        stream = StringIO()
+        yaml.dump(document, stream)
+        return stream.getvalue().encode("utf-8")
+    raise OssieInputError("unsupported Ossie output format")
+
+
+#: RFC 3986 section 2.3: the characters a URI reference may carry unencoded anywhere.
+_UNRESERVED = frozenset(b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
+
+
+def _relative_iri(file_name: str) -> str:
+    """A sibling file as a relative reference: every UTF-8 byte outside the unreserved
+    set is percent-encoded, so `#`, `?`, `%` and `/` stay part of the name. Written
+    here, not with urllib, which this package does not import outside its adapters."""
+    encoded = "".join(
+        chr(byte) if byte in _UNRESERVED else f"%{byte:02X}"
+        for byte in file_name.encode("utf-8", "surrogateescape")
+    )
+    return "./" + encoded
+
+
+def _relational(model, view, data: bytes, identity: str, *, output_format: str, document_name: str):
+    """The semantic model and mapping for the ontology bytes ``data`` (OB3)."""
+    schema = map_model(model, variant=RmapVariant.HALPIN)  # D5
+    if not schema.tables:
+        # The pinned core-spec requires at least one dataset. A model that maps to no
+        # table has no relational files; the run then writes the ontology's three.
+        return None, None
+    semantic_name = f"{view.name}_relational"
+    semantic_file = f"{document_name}.semantic_model.{output_format}"
+    semantic = build_semantic_model(schema, semantic_name)
+    semantic_bytes = _encode(semantic, output_format)
+    mapping = build_mapping(
+        schema,
+        dispositions(model, schema),
+        view,
+        name=f"{view.name}_mapping",
+        ontology_iri=_relative_iri(document_name),
+        semantic_model_name=semantic_name,
+        semantic_model_iri=_relative_iri(semantic_file),
+        bindings={
+            "model_identity": identity,
+            "ontology_sha256": hashlib.sha256(data).hexdigest(),
+            "semantic_model_sha256": hashlib.sha256(semantic_bytes).hexdigest(),
+        },
+    )
+    validate_relational(semantic, mapping)
+    return semantic_bytes, _encode(mapping, output_format)
+
+
 def render_ossie(
     model_path: Path,
     *,
     output_format: str,
     strict: bool = False,
     max_output_bytes: int = DEFAULT_MAX_OUTPUT_BYTES,
+    relational: bool = True,
+    document_name: str | None = None,
 ) -> OssieArtifacts:
-    """Render three deterministic artifacts from one bounded, admitted model read.
+    """Render the deterministic artifacts of one bounded, admitted model read.
+
+    The ontology, its sidecar and its loss report always. With ``relational``, also
+    the semantic model and the mapping; ``document_name`` is the file name the
+    ontology will have, which the mapping's references are built from (default
+    ``ontology.<format>``).
 
     Every artifact must fit in ``max_output_bytes``; otherwise the whole export is
     refused with ``ossie:output-size`` and nothing is returned to publish.
     """
     require_byte_bound("max_output_bytes", max_output_bytes)
     document, model = _read_model(model_path)
-    ontology, mapped = _ontology(document, model)
+    ontology, mapped, view = _project(document, model)
     _schema().validate(ontology)
     incompatible = {}
     for index, constraint in enumerate(document.get("constraints", ())):
@@ -457,18 +553,7 @@ def render_ossie(
         raise OssieInputError(_POPULATION_REFUSAL)
     if strict and incompatible:
         raise OssieInputError(next(iter(incompatible.values())))
-    if output_format == "json":
-        data = canonical_json_bytes(ontology)
-    elif output_format == "yaml":
-        yaml = YAML(typ="safe", pure=True)
-        yaml.version = (1, 1)
-        yaml.default_flow_style = False
-        yaml.sort_base_mapping_type_on_output = False
-        stream = StringIO()
-        yaml.dump(ontology, stream)
-        data = stream.getvalue().encode("utf-8")
-    else:
-        raise OssieInputError("unsupported Ossie output format")
+    data = _encode(ontology, output_format)
     try:
         identity = model_identity(model)
         binding = {"model_identity": identity, "document_sha256": hashlib.sha256(data).hexdigest()}
@@ -480,9 +565,16 @@ def render_ossie(
         )
     except (ModelIdentityError, UnicodeEncodeError, ValueError) as error:
         raise OssieInputError("model has no encodable interchange identity") from error
-    if max(len(data), len(sidecar), len(report)) > max_output_bytes:
+    semantic_model = mapping = None
+    if relational:
+        semantic_model, mapping = _relational(
+            model, view, data, identity,
+            output_format=output_format, document_name=document_name or f"ontology.{output_format}",
+        )
+    artifacts = (data, sidecar, report, semantic_model, mapping)
+    if max(len(artifact) for artifact in artifacts if artifact is not None) > max_output_bytes:
         raise OssieInputError("ossie:output-size")
     from gnd.redaction import RedactionPolicy
 
     declared = {row.fact_type for row in RedactionPolicy.from_model(model).declarations}
-    return OssieArtifacts(data, sidecar, report, len(declared))
+    return OssieArtifacts(data, sidecar, report, len(declared), semantic_model, mapping)

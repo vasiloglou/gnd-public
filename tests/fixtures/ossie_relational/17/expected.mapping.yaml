@@ -1,0 +1,100 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_mapping
+ontology_ref:
+  name: gnd_model
+  iri: ./ontology.yaml
+semantic_model_ref:
+  name: gnd_model_relational
+  iri: ./ontology.yaml.semantic_model.yaml
+concept_mappings:
+- concept: Student
+  object_mappings:
+  - expression: '"STUDENT"."STUDENT_NR"'
+  link_mappings:
+  - object_mapping:
+      expression: '"STUDENT"."STUDENT_NR"'
+    children:
+    - object_mapping:
+        concept: StudentName
+        expression: '"STUDENT"."NAME"'
+      relationship: student_has_name
+  - object_mapping:
+      expression: '"ENROLMENT"."STUDENT_STUDENT_NR"'
+    children:
+    - object_mapping:
+        concept: Course
+        expression: '"ENROLMENT"."COURSE_COURSE_CODE"'
+      relationship: student_enrolled_in_course
+- concept: Course
+  object_mappings:
+  - expression: '"COURSE"."COURSE_CODE"'
+  link_mappings:
+  - object_mapping:
+      expression: '"COURSE"."COURSE_CODE"'
+    children:
+    - object_mapping:
+        concept: CourseTitle
+        expression: '"COURSE"."TITLE"'
+      relationship: course_has_title
+- concept: Enrolment
+  object_mappings:
+  - referent_mappings:
+    - relationship: enrolment_for_student
+      referent_mappings:
+      - relationship: gnd_reference
+        expression: '"ENROLMENT"."STUDENT_STUDENT_NR"'
+    - relationship: enrolment_for_course
+      referent_mappings:
+      - relationship: gnd_reference
+        expression: '"ENROLMENT"."COURSE_COURSE_CODE"'
+  link_mappings:
+  - object_mapping:
+      referent_mappings:
+      - relationship: enrolment_for_student
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"ENROLMENT"."STUDENT_STUDENT_NR"'
+      - relationship: enrolment_for_course
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"ENROLMENT"."COURSE_COURSE_CODE"'
+    children:
+    - object_mapping:
+        concept: Student
+        expression: '"ENROLMENT"."STUDENT_STUDENT_NR"'
+      relationship: enrolment_for_student
+  - object_mapping:
+      referent_mappings:
+      - relationship: enrolment_for_student
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"ENROLMENT"."STUDENT_STUDENT_NR"'
+      - relationship: enrolment_for_course
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"ENROLMENT"."COURSE_COURSE_CODE"'
+    children:
+    - object_mapping:
+        concept: Course
+        expression: '"ENROLMENT"."COURSE_COURSE_CODE"'
+      relationship: enrolment_for_course
+  - object_mapping:
+      referent_mappings:
+      - relationship: enrolment_for_student
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"ENROLMENT"."STUDENT_STUDENT_NR"'
+      - relationship: enrolment_for_course
+        referent_mappings:
+        - relationship: gnd_reference
+          expression: '"ENROLMENT"."COURSE_COURSE_CODE"'
+    children:
+    - object_mapping:
+        concept: Grade
+        expression: '"ENROLMENT"."GRADE"'
+      relationship: enrolment_has_grade
+custom_extensions:
+- vendor_name: GND
+  data: '{"concepts":[],"dispositions":[{"carried_as":["primary_key","enrolment"],"id":"constraints/0","kind":"constraint","reason":null},{"carried_as":["placement","course"],"id":"fact_types/course_has_title/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","enrolment"],"id":"fact_types/enrolment_for_course/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","enrolment"],"id":"fact_types/enrolment_for_course/constraints/1","kind":"constraint","reason":null},{"carried_as":["primary_key","enrolment"],"id":"fact_types/enrolment_for_student/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","enrolment"],"id":"fact_types/enrolment_for_student/constraints/1","kind":"constraint","reason":null},{"carried_as":["placement","enrolment"],"id":"fact_types/enrolment_has_grade/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","enrolment"],"id":"fact_types/student_enrolled_in_course/constraints/0","kind":"constraint","reason":null},{"carried_as":["placement","student"],"id":"fact_types/student_has_name/constraints/0","kind":"constraint","reason":null},{"carried_as":["columns","course","title"],"id":"course_has_title","kind":"fact_type","reason":null},{"carried_as":["key","enrolment","course_course_code"],"id":"enrolment_for_course","kind":"fact_type","reason":null},{"carried_as":["key","enrolment","student_student_nr"],"id":"enrolment_for_student","kind":"fact_type","reason":null},{"carried_as":["columns","enrolment","grade"],"id":"enrolment_has_grade","kind":"fact_type","reason":null},{"carried_as":["key","enrolment","student_student_nr","course_course_code"],"id":"student_enrolled_in_course","kind":"fact_type","reason":null},{"carried_as":["columns","student","name"],"id":"student_has_name","kind":"fact_type","reason":null}],"model_identity":"sha256:5f66c7ac252054d0a355e5aae53ad0aba8290db3939f8274f4dd4def9f191343","ontology_sha256":"025c0d1afa0eae45892400044bf39be67fcd325b2dc153e9be642b037f958e56","rmap_variant":"halpin","schema":"gnd-ossie-relational/1","semantic_model_sha256":"59efb5b54f5fa31902f0748e0a52b9ae6a15ab088759e28b52e9240c9acef50e"}'

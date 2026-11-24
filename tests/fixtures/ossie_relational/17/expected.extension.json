@@ -1,0 +1,152 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:5f66c7ac252054d0a355e5aae53ad0aba8290db3939f8274f4dd4def9f191343",
+ "ontology_sha256": "025c0d1afa0eae45892400044bf39be67fcd325b2dc153e9be642b037f958e56",
+ "semantic_model_sha256": "59efb5b54f5fa31902f0748e0a52b9ae6a15ab088759e28b52e9240c9acef50e",
+ "rmap_variant": "halpin",
+ "dispositions": [
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "course"
+   ],
+   "id": "fact_types/course_has_title/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_course/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_course/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_student/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_student/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_has_grade/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/student_enrolled_in_course/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "student"
+   ],
+   "id": "fact_types/student_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "course",
+    "title"
+   ],
+   "id": "course_has_title",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "enrolment",
+    "course_course_code"
+   ],
+   "id": "enrolment_for_course",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "enrolment",
+    "student_student_nr"
+   ],
+   "id": "enrolment_for_student",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "enrolment",
+    "grade"
+   ],
+   "id": "enrolment_has_grade",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "enrolment",
+    "student_student_nr",
+    "course_course_code"
+   ],
+   "id": "student_enrolled_in_course",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "student",
+    "name"
+   ],
+   "id": "student_has_name",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "concepts": []
+}

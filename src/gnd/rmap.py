@@ -21,8 +21,10 @@ __all__ = [
     "Column",
     "Disposition",
     "ForeignKey",
+    "Identification",
     "RelationalSchema",
     "RmapVariant",
+    "RolePlacement",
     "Table",
     "Unmapped",
     "UnmappedReason",
@@ -88,10 +90,49 @@ class Disposition:
 
 
 @dataclass(frozen=True)
+class RolePlacement:
+    """The table and columns that hold one role of a carried fact type.
+
+    A unary role, and the subject role of a functional fact type, are held by their
+    table's key columns: the row is the object that plays the role.
+    """
+
+    fact_type: str
+    role: str
+    table: str
+    columns: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class Identification:
+    """How an object type's key columns arise, one entry per key column.
+
+    ``columns`` are the key columns of ``table`` as that table names them, or the
+    key's own names when the object type has no table.
+    ``kind`` is ``value``, ``direct`` (a popular or general reference), ``unit``,
+    ``composite`` or ``fallback`` (an objectification keyed by its fact type's own
+    uniqueness). ``components`` names, for each key column, the (fact type, role) of
+    the composite or fallback component that holds it, else ``None``. ``table`` is
+    the table that holds the object type's own rows: its own, its supertype's when it
+    is absorbed, or ``None`` when it has no table.
+    """
+
+    object_type: str
+    kind: Literal["value", "direct", "unit", "composite", "fallback"]
+    columns: tuple[str, ...]
+    components: tuple[tuple[str, str] | None, ...]
+    table: str | None
+
+
+@dataclass(frozen=True)
 class RelationalSchema:
     variant: RmapVariant
     tables: tuple[Table, ...]
     unmapped: tuple[Unmapped, ...]
+    # Every role of every carried fact type, sorted by (fact type, role).
+    roles: tuple[RolePlacement, ...] = ()
+    # Every object type whose identification resolves, sorted by id.
+    identifications: tuple[Identification, ...] = ()
     # The one walk's result, keyed by (kind, id); read by dispositions().
     _carried: tuple[tuple[tuple[str, str], tuple[str, ...]], ...] = field(default=(), repr=False, compare=False)
 
@@ -170,7 +211,12 @@ class _Mapper:
             ):
                 refs = self.refs(constraint)
                 anchor = self.anchor(refs)
-                if anchor is not None and not any(fact in self.derived for fact, _ in refs):
+                if (
+                    anchor is not None
+                    and not any(fact in self.derived for fact, _ in refs)
+                    # OB3 E3: each component is functional on the identified entity.
+                    and all(self.functional_on(fact, role) for fact, role in refs)
+                ):
                     current = self.identifiers.get(anchor)
                     if current is None or (sorted(refs), refs) < (sorted(current), current):
                         self.identifiers[anchor] = refs
@@ -209,6 +255,12 @@ class _Mapper:
 
     def refs(self, constraint: dict[str, Any]) -> list[tuple[str, str]]:
         return [(str(r.get("fact_type")), str(r.get("role"))) for r in constraint.get("role_refs") or ()]
+
+    def functional_on(self, fact_type: str, component_role: str) -> bool:
+        """Whether a binary's other role carries a confirmed alethic single-role uniqueness."""
+        fact = self.fact_by_id[fact_type]
+        (subject,) = [role for role in self.roles(fact) if role != component_role]
+        return any(roles == (subject,) for roles, _ in self.effective(fact))
 
     def anchor(self, refs: list[tuple[str, str]]) -> str | None:
         """The one object type every referenced binary's other role is played by, else None."""
@@ -545,6 +597,7 @@ class _Mapper:
 
         # Foreign keys, named per (from, to) pair in column order (A11).
         built: list[Table] = []
+        key_names: set[str] = set()  # unique in the schema, not only per table pair (OB3 r1 F3)
         for name in sorted(tables):
             t = tables[name]
             counts: dict[str, int] = defaultdict(int)
@@ -553,9 +606,14 @@ class _Mapper:
                 target = self.owner_of(player)
                 if target not in tables or not tables[target]["pk"]:
                     continue
-                counts[target] += 1
-                suffix = "" if counts[target] == 1 else f"__{counts[target]}"
-                fks.append(ForeignKey(f"{name}__{target}{suffix}", tuple(columns), target, tuple(tables[target]["pk"])))
+                while True:
+                    counts[target] += 1
+                    suffix = "" if counts[target] == 1 else f"__{counts[target]}"
+                    key_name = f"{name}__{target}{suffix}"
+                    if key_name not in key_names:
+                        break
+                key_names.add(key_name)
+                fks.append(ForeignKey(key_name, tuple(columns), target, tuple(tables[target]["pk"])))
             position = {c.name: i for i, c in enumerate(t["columns"])}
             uks = sorted((tuple(u) for u in t["uks"].values()), key=lambda u: [position[c] for c in u])
             built.append(Table(name, t["subject"], tuple(t["columns"]), tuple(t["pk"]), tuple(uks), tuple(fks)))
@@ -567,7 +625,33 @@ class _Mapper:
             for (kind, ident), (reason, detail) in sorted(self.unmapped.items())
         )
         carried = tuple(sorted(self.carried.items()))
-        return RelationalSchema(self.variant, tuple(built), unmapped, carried)
+        roles = []
+        for fact in self.facts:
+            fid = str(fact.get("id"))
+            if ("fact_type", fid) not in self.carried:
+                continue
+            for role in self.roles(fact):
+                table_name, columns = self.location(fid, role)
+                roles.append(RolePlacement(fid, role, table_name, tuple(columns)))
+        identifications = []
+        for oid in sorted(self.objects):
+            key = self.key(oid)
+            if key is None:
+                continue
+            kind = "fallback" if oid in self.fallback else self.identity(oid)[0]
+            grouped = kind in ("composite", "fallback")
+            owner = self.owner_of(oid)
+            held = owner in tables
+            identifications.append(Identification(
+                # The table's own key columns: a name taken twice was renamed (OB3 r1 F1).
+                oid, kind, tuple(tables[owner]["pk"] if held else key.names),  # type: ignore[arg-type]
+                tuple(origin if grouped else None for origin in key.origins),
+                owner if held else None,
+            ))
+        return RelationalSchema(
+            self.variant, tuple(built), unmapped,
+            tuple(sorted(roles, key=lambda r: (r.fact_type, r.role))), tuple(identifications), carried,
+        )
 
     def add_component_groups(self, table, names, key: _Key) -> None:
         """Foreign-key groups for composite components, one per (fact type, role)."""

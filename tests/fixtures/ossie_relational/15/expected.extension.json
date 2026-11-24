@@ -1,0 +1,53 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:0976015851a211453c994953dc0d0d3e54daac8e5ece2c8be8c76529212ac5d5",
+ "ontology_sha256": "ed2e9462fa0083d7fb7abb87d6e99d024413673cc6c2192111b9b683b57cb39b",
+ "semantic_model_sha256": "9d823e3b5909f75b64165bdc36929a65fd4653bd713cdff67e6d11a6412d8ece",
+ "rmap_variant": "halpin",
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/student_has_gpa/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "gpa"
+   ],
+   "id": "student_has_gpa",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "concepts": [
+  {
+   "concept": "Student",
+   "reason": "subtype-absorbed"
+  }
+ ]
+}

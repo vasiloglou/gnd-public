@@ -20,7 +20,7 @@ itself reviewed.
 | Phase | Deliverable | State |
 |---|---|---|
 | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | spec r2 drafted; awaiting its spec gate |
-| OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | ready to specify |
+| OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | [spec r1](notes/phase-OB2-spec.md) drafted; awaiting its gate (S1–S11) |
 | OB3 | Semantic model and mapping files, with the default per D2 | after OB2 (D2, D4, D6 ruled) |
 | OB4 | `--physical-binding FILE` | after OB3 (D7, D8 ruled) |
 | OB5 | Docs and skill | after OB4 |

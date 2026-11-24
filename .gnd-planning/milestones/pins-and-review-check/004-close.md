@@ -118,3 +118,10 @@ merging PRs 248, 250 and 253, in that order.
   guard (OQ2).
 - A fix for OQ4 (a separate session owns it); OQ3's repair is PR 254's, not this milestone's.
 - Merge, release or publication.
+
+## After the close (2026-11-23)
+
+OQ2 was fixed at the owner's request by a maintenance pass,
+[2026-11-23-inline-inventory-counts](../../maintenance/2026-11-23-inline-inventory-counts/README.md).
+OQ4 was fixed by [PR 255](https://github.com/vasiloglou/gnd-public/pull/255),
+merged on `main`.

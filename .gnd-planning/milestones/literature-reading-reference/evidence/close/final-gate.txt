@@ -1,0 +1,12 @@
+== lane at 8baf0eda (origin/main 6b0a7e5 merged): uv run pytest -q tests/test_lr1_verify_failure_listing.py tests/test_lr2_quote_scope.py tests/test_lr3_reference_set.py tests/test_ld3_reading_workflow.py tests/test_ld4_revision.py tests/test_ld5_verdict.py tests/test_li1_literature_corpus.py tests/test_li1_assurance_report.py tests/test_lh1_reading_host.py tests/test_lh2_reading_replay.py tests/test_lh3_admission_shape.py tests/test_lh4_admission_rules.py tests/test_verify_cli.py tests/test_anchor_sidecar_v2.py tests/test_public_extraction_prose_policy.py tests/test_extract_guidelines.py tests/test_documentation_tutorials.py --tb=short
+exit=0
+544 passed in 838.37s (0:13:58)
+== guards (project.md guard block)
+exit=0
+679 passed, 2 deselected in 155.46s (0:02:35)
+== uv run ruff check
+All checks passed!
+exit=0
+== python3 scripts/components_index.py changed --base origin/main --strict
+changed against origin/main (6b0a7e5): 220 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+exit=0

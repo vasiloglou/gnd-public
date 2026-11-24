@@ -220,3 +220,85 @@ def test_render_sorts_its_keys(tmp_path: Path) -> None:
     block = rendered.split("---\n")[1]
     keys = [line.split(":")[0] for line in block.splitlines() if line and not line[0].isspace()]
     assert keys == sorted(keys)
+
+
+# The fence rule: a fence is a line that is exactly ``---`` starting at column 0,
+# optionally followed by spaces or tabs, then the line ending. YAML recognises
+# its ``---`` marker only at column 0, so an indented ``---`` is content (a
+# block-scalar line or a plain-scalar continuation), never a fence.
+
+
+def test_an_indented_fence_inside_a_block_scalar_is_content(tmp_path: Path) -> None:
+
+    path = _write(
+        tmp_path / "SKILL.md",
+        "---\ndescription: |\n  ---\n  A demo skill.\nname: demo\n---\n\nbody\n",
+    )
+
+    mapping, body = read_frontmatter(path)
+    assert mapping == {"description": "---\nA demo skill.\n", "name": "demo"}
+    assert body == "\nbody\n"
+
+
+def test_an_indented_fence_inside_a_plain_multiline_value_is_content(
+    tmp_path: Path,
+) -> None:
+
+    path = _write(
+        tmp_path / "SKILL.md",
+        "---\ndescription: first\n  ---\n  last\nname: demo\n---\nbody\n",
+    )
+
+    mapping, body = read_frontmatter(path)
+    assert mapping == {"description": "first --- last", "name": "demo"}
+    assert body == "body\n"
+
+
+def test_an_indented_opening_fence_is_refused(tmp_path: Path) -> None:
+
+    path = _write(tmp_path / "SPEC.md", "  ---\nid: EXP-001-probe\n---\nbody\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "does not open" in str(caught.value)
+
+
+def test_a_document_whose_only_closing_dashes_are_indented_is_unterminated(
+    tmp_path: Path,
+) -> None:
+
+    path = _write(tmp_path / "SKILL.md", "---\ndescription: |\n  ---\n  body\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "closing" in str(caught.value).lower()
+
+
+def test_crlf_line_endings_are_read(tmp_path: Path) -> None:
+
+    path = tmp_path / "SKILL.md"
+    path.write_bytes(b"---\r\nname: demo\r\nkind: codegen\r\n---\r\n\r\nbody\r\n")
+
+    mapping, body = read_frontmatter(path)
+    assert mapping == {"name": "demo", "kind": "codegen"}
+    assert body == "\nbody\n"
+
+
+def test_trailing_blanks_after_a_fence_are_allowed(tmp_path: Path) -> None:
+
+    path = _write(tmp_path / "SKILL.md", "--- \nname: demo\n---\t\nbody\n")
+
+    mapping, body = read_frontmatter(path)
+    assert mapping == {"name": "demo"}
+    assert body == "body\n"
+
+
+def test_a_longer_dash_run_or_a_marker_with_content_is_not_a_fence(
+    tmp_path: Path,
+) -> None:
+
+    path = _write(tmp_path / "SKILL.md", "---\nname: demo\n----\n--- x\n")
+
+    with pytest.raises(FrontmatterError) as caught:
+        read_frontmatter(path)
+    assert "closing" in str(caught.value).lower()

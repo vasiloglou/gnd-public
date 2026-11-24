@@ -5,6 +5,15 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: frontmatter fences
+
+- **An indented `---` is content.** The frontmatter reader behind experiment
+  specs, conclusions and generated `SKILL.md` files takes a fence only at
+  column 0, with nothing after it but spaces or tabs. An indented `---` in a
+  block scalar or a multi-line value no longer ends the block early and drops
+  the keys after it; a document whose only closing dashes are indented is
+  refused as unterminated.
+
 ## Unreleased: the admission example from a host
 
 - **Your own assertion entity.** The literature admission example's

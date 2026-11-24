@@ -614,7 +614,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.evolve_command
 - does: Register preview, apply and finalize arguments for model evolution [add_parsers; handle].
-- verbs: evolve command, preview model, apply proposal, finalize evolution, reviewed preview, workspace root, evidence records, additive policy, populated fact types, shape report, check population, parse flags, dispatch handler
+- verbs: evolve command, preview model, apply proposal, finalize evolution, evolve summary, round summary, operation outcomes, outcome report, reviewed preview, workspace root, evidence records, additive policy, populated fact types, shape report, check population, parse flags, dispatch handler
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -986,7 +986,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### evolve.schema
 - does: Validate versioned evolution proposals, stable operation locators, preview digests, pending states, and final records.
-- verbs: evolution schema, proposal contract, stable locator, operation identity, committed text, tracked roster, project coordinate, preview digest, finalization state, record binding, legacy reader, wire version, canonical_sha256, EvolutionProposal, EvolutionPreview, PopulationCheckRecord, PopulationOutcome, SourceDocumentLocator, source document, EvolutionPolicyGapError
+- verbs: evolution schema, proposal contract, narrowed_from, NarrowedFrom, OperationOutcome, stable locator, operation identity, committed text, tracked roster, project coordinate, preview digest, finalization state, record binding, legacy reader, wire version, canonical_sha256, EvolutionProposal, EvolutionPreview, PopulationCheckRecord, PopulationOutcome, SourceDocumentLocator, source document, EvolutionPolicyGapError
 - in: Evolution JSON documents, operation before and after values, exact UTF-8 text, versioned linked-project records.
 - out: Closed frozen Pydantic evidence records and canonical identity digests.
 - status: canonical
@@ -1070,7 +1070,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### evolve.command
 - does: Run file-based evolution preview, apply, and finalize commands with reviewed identity checks and exact breaking acceptance.
-- verbs: evolve preview command, evolve apply command, evolve finalize command, reviewed preview, interactive acceptance, blast radius digest, workspace paths, records root, claim output, preview collision, policy arguments, retry apply, exit code, check-population option
+- verbs: evolve preview command, evolve apply command, evolve finalize command, evolve summary command, outcome report file, reviewed preview, interactive acceptance, blast radius digest, workspace paths, records root, claim output, preview collision, policy arguments, retry apply, exit code, check-population option
 - in: Explicit model, proposal, preview or pending paths; workspace and records roots; format and policy options.
 - out: Published preview claims or completed evolution claims, stdout diagnostics, and classified exit codes.
 - status: canonical
@@ -3645,6 +3645,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - model id: check.population_structure, extract.bundle
 - model identifier: export.ilp_prompt, model.labels
 - model wire: model.json_document, witness.schema
+- narrowed_from: discover.narrow, evolve.schema
 - native query: examples.book_recommendations, examples.expense_application, export.applications
 - near misses: discover.service, witness.why_not
 - no extraction: cli.verify_command, export.verification
@@ -3656,10 +3657,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - offending facts: checker.evaluate, examples.session_agents
 - opaque values: model.population_sentences, semantics.extensions, semantics.temporal_guards
 - openai compatible: agent.declared_adapter, exp.adapter_policy
-- operation outcomes: discover.narrow, evolve.operation_outcomes, subsystem.evolve
+- operation outcomes: cli.evolve_command, discover.narrow, evolve.operation_outcomes, subsystem.evolve
 - oracle abstention: synth.guarded, synth.prediction
 - oscillation: exp.service, exp.session_runtime
-- outcome report: discover.narrow, evolve.operation_outcomes, subsystem.evolve
+- outcome report: cli.evolve_command, discover.narrow, evolve.operation_outcomes, subsystem.evolve
 - output collision: cli.export_command, extract.flatten_service, review.command
 - output directory: cli.codegen_command, cli.flatten_command, codegen.service, synth.paths
 - output format: cli.arguments, cli.conformance_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.verify_command
@@ -3723,6 +3724,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - reviewed preview: cli.evolve_command, evolve.command
 - reviewer timeout: cli.review_command, review.command
 - role players: extract.guidelines, model.query_index
+- round summary: cli.evolve_command, evolve.round_summary
 - round trip: exp.frontmatter, infra.yaml_comments
 - row novelty: check.baseline, infra.report_payloads
 - rule ids: check.service, cli.checking_command, infra.report_payloads

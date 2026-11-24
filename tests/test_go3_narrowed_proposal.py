@@ -204,3 +204,19 @@ def test_t1_a_seeded_root_first_round_narrows_and_previews(tmp_path: Path) -> No
     assert [operation.operation_id for operation in narrowed.operations] == ["doc", "author"]
     preview = vg4._service(root).preview(narrowed, policy="additive")
     assert preview.policy_issues == ()
+
+
+# --- Diff review r1 (notes/reviews/phase-GO3-GO5-r1/FINDINGS.md) ----------------------------------
+
+
+def test_r1_f1_rows_must_be_the_proposals_operations_in_order() -> None:
+    second = go2._op("add", policy._element("object_types", "color"),
+                     {"id": "color", "name": "Color", "kind": "value", "primitive": "String"}, "op-color")
+    operations = (go2.ADD_OBJECT, second)
+    proposal = policy._proposal(TEXT, operations)
+    swapped = (OperationOutcome(operation_index=0, operation_id="op-color", reference=second.locator.reference(),
+                                verdict="refused-by-validation", detail="r"),
+               OperationOutcome(operation_index=1, operation_id="op-object",
+                                reference=go2.ADD_OBJECT.locator.reference(), verdict="admitted"))
+    with pytest.raises(ValueError, match="not this proposal's operations"):
+        narrow_proposal(proposal, _bare_report(proposal, swapped))

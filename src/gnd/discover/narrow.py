@@ -33,7 +33,8 @@ def narrow_proposal(
 
     Refused, in this order: anything but a proposal and a preview or outcome
     report; outcomes of another proposal, or a preview without outcomes; a
-    before model whose sha256 is not the proposal's expected model identity."""
+    before model whose sha256 is not the proposal's expected model identity;
+    rows that are not the proposal's operations, one per operation in order."""
     if not isinstance(proposal, EvolutionProposal):
         raise TypeError("narrowing reads an EvolutionProposal")
     if not isinstance(outcomes, (EvolutionPreview, EvolutionOutcomeReport)):
@@ -45,8 +46,12 @@ def narrow_proposal(
         raise ValueError("the preview carries no operation_outcomes; preview with --operation-outcomes")
     if outcomes.before_model.sha256 != proposal.expected_model_sha256:
         raise ValueError("the outcomes' before model is not the proposal's expected model")
-    if len(rows) != len(proposal.operations):
-        raise ValueError("the outcomes do not cover the proposal's operations")
+    if len(rows) != len(proposal.operations) or any(
+        row.operation_index != position or row.operation_id != operation.operation_id
+        or row.reference != operation.locator.reference()
+        for position, (row, operation) in enumerate(zip(rows, proposal.operations, strict=True))
+    ):
+        raise ValueError("the outcome rows are not this proposal's operations, one per operation in order")
 
     refused = {row.operation_index: (row.verdict, row.detail) for row in rows if row.verdict in _DROPPED}
     # The closure again, over the kept set: total over any outcome list a host passes back.

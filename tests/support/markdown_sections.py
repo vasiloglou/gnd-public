@@ -90,17 +90,67 @@ def heading_text(line: str) -> tuple[int, str] | None:
     rest = stripped[level:]
     if level > 6 or (rest and not rest.startswith((" ", "\t"))):
         return None
-    words = rest.strip().split(" ")
-    if words and words[-1] and set(words[-1]) == {"#"}:
+    words = rest.split()  # spaces or tabs: a closing run is preceded by either
+    if words and set(words[-1]) == {"#"}:
         words = words[:-1]
-    return level, " ".join(words).strip()
+    return level, " ".join(words)
+
+
+def _fence_run(line: str) -> tuple[str, int] | None:
+    stripped = line.lstrip(" ")
+    marker = stripped[:1]
+    run = len(stripped) - len(stripped.lstrip(marker)) if marker in ("`", "~") else 0
+    return (marker, run) if len(line) - len(stripped) <= 3 and run >= 3 else None
+
+
+def _without_comments(lines: list[str]) -> list[str]:
+    """LINES with every HTML comment removed, inline or spanning lines, except
+    inside a fence or a code span, where ``<!--`` is literal text."""
+    out: list[str] = []
+    fence: tuple[str, int] | None = None
+    in_comment = False
+    for line in lines:
+        opened = _fence_run(line) if not in_comment else None
+        if fence is not None:
+            out.append(line)
+            if opened and opened[0] == fence[0] and opened[1] >= fence[1] \
+                    and not line.lstrip(" ")[opened[1]:].strip():
+                fence = None
+            continue
+        if opened is not None:
+            fence = opened
+            out.append(line)
+            continue
+        kept, i = [], 0
+        while i < len(line):
+            if in_comment:
+                end = line.find("-->", i)
+                if end < 0:
+                    i = len(line)
+                    continue
+                in_comment, i = False, end + 3
+            elif line[i] == "`":
+                run = len(line) - len(line[i:].lstrip("`")) - i
+                close = line.find("`" * run, i + run)
+                while close >= 0 and line[close + run:close + run + 1] == "`":
+                    close = line.find("`" * run, close + run + 1)
+                stop = len(line) if close < 0 else close + run
+                kept.append(line[i:stop])
+                i = stop
+            elif line.startswith("<!--", i):
+                in_comment, i = True, i + 4
+            else:
+                kept.append(line[i])
+                i += 1
+        out.append("".join(kept))
+    return out
 
 
 def markdown_blocks(text: str) -> list[Block]:
     """The blocks of TEXT, in order. HTML comments are not content and are
-    dropped; a fence keeps its lines verbatim."""
+    dropped, inline or not; a fence keeps its lines verbatim."""
     blocks: list[Block] = []
-    lines = text.splitlines()
+    lines = _without_comments(text.splitlines())
     paragraph: list[str] = []
 
     def flush() -> None:
@@ -127,12 +177,6 @@ def markdown_blocks(text: str) -> list[Block]:
                 body.append(lines[i])
                 i += 1
             blocks.append(Block("fence", "\n".join(body), info=info))
-            i += 1
-            continue
-        if stripped.startswith("<!--"):
-            flush()
-            while i < len(lines) and "-->" not in lines[i]:
-                i += 1
             i += 1
             continue
         heading = heading_text(line)

@@ -444,7 +444,8 @@ has `proposal_id` `<original>-narrowed` and `narrowed_from` (`proposal_id`, `pro
 operation (`<index> <operation_id> <verdict>`). Refused, in this order: anything but a proposal
 and a preview or outcome report; outcomes of another proposal (`proposal_sha256` differs); a
 preview with no `operation_outcomes`; a `before_model` whose sha256 is not the proposal's
-`expected_model_sha256`; rows that do not cover the proposal's operations. Narrowing writes nothing: the narrowed proposal is previewed and applied
+`expected_model_sha256`; rows that are not the proposal's operations, one per operation in order
+(`operation_index`, `operation_id` and `reference` each its operation's). Narrowing writes nothing: the narrowed proposal is previewed and applied
 like any other, and once it is applied the original preview's `apply` is refused as stale (exit
 `11`).
 
@@ -455,14 +456,17 @@ like any other, and once it is applied the original preview's `apply` is refused
 no file; `apply` is unchanged. `ROUND_FILE` is the host's `gnd-round/1` document (strict JSON,
 at most 1 MiB, closed): `schema_version` `1`, `round`, `document`, `reused` (rows of `collection`,
 `object_types` or `fact_types`, and `id`, each once) and `host_drops` (rows of `kind`, `id` and
-`reason`, the host's text, reported and never judged). The summary carries `round`, `document`,
+`reason`, the host's text, reported exactly as written and never judged). The summary carries `round`, `document`,
 `reused` (ids by collection), `host_drops`, `proposed` (`total`, `by_kind`, `by_collection`; zero
 without a proposal), `outcomes` (count per verdict; `null` when the preview or report carries
 none), `shape_matches` (the preview's group count, or `null`), `added` (element ids by
 collection, and constraint operation ids, from the `add` operations of the evolution record only:
 a round previewed and not applied adds nothing), `narrowed_from` (the original `proposal_id` of a
-narrowed round) and `bindings` (the sha256 of each artifact read). With outcomes, `proposed.total`
-equals their sum. Each artifact must bind the one before it: a preview or report needs its
+narrowed round) and `bindings`, each artifact read by its own identity: `round_file_sha256`,
+`proposal_sha256` and `preview_sha256` as `apply` binds them, and `outcome_report_sha256` and
+`record_sha256`, the canonical sha256 of the document read. With outcomes, `proposed.total`
+equals their sum: rows that are not the proposal's operations, one per operation in order, are
+refused. Each artifact must bind the one before it: a preview or report needs its
 proposal and must carry its `proposal_sha256`; a record needs the preview it applied and must
 carry its `preview_sha256` and `proposal_sha256`. A refusal exits `3` and prints nothing to stdout.
 

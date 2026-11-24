@@ -235,3 +235,52 @@ def test_the_command_prints_the_summary_and_refuses_by_name(tmp_path: Path) -> N
     assert refused.returncode == 3 and b"needs its proposal" in refused.stderr and not refused.stdout
     both = run_main(["evolve", "summary", str(round_path), "--preview", "a", "--outcome-report", "b"])
     assert both.returncode == 64 and b"not allowed with argument --preview" in both.stderr
+
+
+# --- Diff review r1 (notes/reviews/phase-GO3-GO5-r1/FINDINGS.md) ----------------------------------
+
+
+def _report_with(proposal: Any, rows: tuple[Any, ...], message: str = "refused") -> Any:
+    from gnd.evolve import CommittedText, EvolutionOutcomeReport, OutcomeRefusal
+
+    return EvolutionOutcomeReport(
+        proposal_id=proposal.proposal_id, proposal_sha256=proposal.proposal_sha256,
+        before_model=CommittedText.from_text(go2.TEXT, media_type="application/yaml"),
+        refusal=OutcomeRefusal(gate="policy", exit=3, message=message), operation_outcomes=rows)
+
+
+def test_r1_f2_outcomes_that_do_not_cover_the_proposal_are_refused(tmp_path: Path) -> None:
+    proposal = policy._proposal(go2.TEXT, (go2.ADD_OBJECT, go2.ADD_FACT))
+    with pytest.raises(RoundFileError, match="not the proposal's operations"):
+        round_summary(read_round_file(_round_file(tmp_path)), proposal=proposal, report=_report_with(proposal, ()))
+
+
+def test_r1_f4_bindings_name_every_artifact_read(tmp_path: Path) -> None:
+    from gnd.evolve import OperationOutcome
+
+    proposal = policy._proposal(go2.TEXT, (go2.ADD_OBJECT,))
+    rows = (OperationOutcome(operation_index=0, operation_id="op-object",
+                             reference=go2.ADD_OBJECT.locator.reference(), verdict="unassessed",
+                             gates_not_run=("policy",)),)
+    round_file = read_round_file(_round_file(tmp_path))
+    one = round_summary(round_file, proposal=proposal, report=_report_with(proposal, rows, "one"))
+    two = round_summary(round_file, proposal=proposal, report=_report_with(proposal, rows, "two"))
+    assert one.bindings["outcome_report_sha256"] != two.bindings["outcome_report_sha256"]
+    assert set(one.bindings) == {"round_file_sha256", "proposal_sha256", "outcome_report_sha256"}
+    paths = policy._cli_workspace(tmp_path / "ws", (go2.ADD_OBJECT,))
+    assert run_main(policy._preview_argv(paths)).returncode == 0
+    assert run_main(policy._apply_argv(paths)).returncode == 0
+    applied = read_evolution_proposal(paths["proposal"])
+    record = _record(paths, applied)
+    summary = round_summary(round_file, proposal=applied, preview=read_evolution_preview(paths["preview"]),
+                            record=record)
+    from gnd.evolve import canonical_sha256
+
+    assert summary.bindings["record_sha256"] == canonical_sha256(record)
+    assert summary.bindings["preview_sha256"] == record.preview_sha256
+
+
+def test_r1_f5_host_text_is_reported_verbatim(tmp_path: Path) -> None:
+    drops = [{"kind": " fact_type", "id": "x ", "reason": "  host reason\n"}]
+    summary = round_summary(read_round_file(_round_file(tmp_path, host_drops=drops, document=" round 1.txt ")))
+    assert [drop.model_dump() for drop in summary.host_drops] == drops and summary.document == " round 1.txt "

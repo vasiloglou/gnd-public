@@ -432,3 +432,20 @@ def test_go4_r1_f2_hidden_rules_are_missing_and_equivalent_markdown_is_read() ->
         assert variant != text
         assert _reply_rule_problems(variant) == []
 
+
+
+def test_go4_r2_inline_comments_hide_a_rule_and_a_tab_closed_heading_reads() -> None:
+    """GO3-GO5 review r1, F3 and F6: an inline HTML comment, in a table cell or
+    in prose, hides the rule; a closing run after a tab is still a heading;
+    ``<!--`` inside a code span is literal text."""
+    text = REFERENCE.read_text(encoding="utf-8")
+    cell = "New elements only, in the model's own element shapes;"
+    assert _reply_rule_problems(text.replace(cell, f"<!-- {cell} -->", 1))
+    opening, closing = "A reply carries only what the document adds.", "the reply names them and repeats neither."
+    assert opening in text and closing in text
+    assert _reply_rule_problems(text.replace(opening, f"visible <!-- {opening}", 1).replace(
+        closing, f"{closing} -->", 1))
+    assert _reply_rule_problems(text.replace("## The reply shape\n", "## The reply shape\t##\n", 1)) == []
+    from support.markdown_sections import markdown_blocks
+
+    assert [block.text for block in markdown_blocks("a `<!--` b\n\nc --> d\n")] == ["a `<!--` b", "c --> d"]

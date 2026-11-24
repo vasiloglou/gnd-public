@@ -152,6 +152,12 @@
     ],
     [
       "src/gnd/evolve/summary.py",
+      "<module>",
+      "Annotated[str, StringConstraints(min_length=1)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/summary.py",
       "ReusedElement",
       "Literal['object_types', 'fact_types']",
       1
@@ -229,6 +235,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7962,
-  "result_occurrences": 9904
+  "result_distinct_rows": 7963,
+  "result_occurrences": 9905
 }

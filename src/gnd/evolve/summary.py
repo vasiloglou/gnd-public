@@ -11,9 +11,9 @@ from __future__ import annotations
 
 from collections import Counter
 from pathlib import Path
-from typing import Any, Literal
+from typing import Annotated, Any, Literal
 
-from pydantic import Field, ValidationError, model_validator
+from pydantic import Field, StringConstraints, ValidationError, model_validator
 
 from gnd import input_policy as _rf7_input
 
@@ -24,13 +24,16 @@ from .models import (
     EvolutionPreview,
     EvolutionProposal,
     EvolutionRecord,
-    NonEmptyString,
     StableId,
     _ClosedFrozenModel,
+    canonical_sha256,
 )
 
 #: A round file is host-written JSON; the cap applies to the read.
 MAX_ROUND_FILE_BYTES = 1024 * 1024
+
+#: The host's own text, kept exactly as written (never stripped): GND reports it, never edits it.
+HostText = Annotated[str, StringConstraints(min_length=1)]
 
 
 class RoundFileError(ValueError):
@@ -45,9 +48,9 @@ class ReusedElement(_ClosedFrozenModel):
 class HostDrop(_ClosedFrozenModel):
     """Something the host dropped before the proposal; GND reports it, never judges it."""
 
-    kind: NonEmptyString = Field(max_length=64)
-    id: NonEmptyString = Field(max_length=256)
-    reason: NonEmptyString = Field(max_length=2000)
+    kind: HostText = Field(max_length=64)
+    id: HostText = Field(max_length=256)
+    reason: HostText = Field(max_length=2000)
 
 
 class RoundFile(_ClosedFrozenModel):
@@ -55,7 +58,7 @@ class RoundFile(_ClosedFrozenModel):
 
     schema_version: Literal[1]
     round: StableId
-    document: NonEmptyString = Field(max_length=512)
+    document: HostText = Field(max_length=512)
     reused: tuple[ReusedElement, ...] = ()
     host_drops: tuple[HostDrop, ...] = ()
 
@@ -73,7 +76,7 @@ class RoundSummary(_ClosedFrozenModel):
     schema_version: Literal[1] = 1
     kind: Literal["gnd-round-summary"] = "gnd-round-summary"
     round: StableId
-    document: NonEmptyString
+    document: HostText
     reused: dict[str, tuple[str, ...]]
     host_drops: tuple[HostDrop, ...]
     proposed: dict[str, Any]
@@ -135,12 +138,17 @@ def round_summary(
             raise RoundFileError("a record needs the preview it applied")
         if record.preview_sha256 != preview.preview_sha256 or record.proposal_sha256 != proposal.proposal_sha256:
             raise RoundFileError("the record is not this preview's")
+    rows = (preview.operation_outcomes if preview is not None
+            else report.operation_outcomes if report is not None else None)
+    if rows is not None and (len(rows) != len(proposal.operations) or any(
+        row.operation_index != position or row.operation_id != operation.operation_id
+        for position, (row, operation) in enumerate(zip(rows, proposal.operations, strict=True))
+    )):
+        raise RoundFileError("the outcome rows are not the proposal's operations, one per operation in order")
 
     operations = proposal.operations if proposal is not None else ()
     by_kind = Counter(operation.kind.value for operation in operations)
     by_collection = Counter(_collection(operation) for operation in operations)
-    rows = (preview.operation_outcomes if preview is not None
-            else report.operation_outcomes if report is not None else None)
     outcomes = None if rows is None else dict(sorted(Counter(row.verdict for row in rows).items()))
     shapes = None if preview is None or preview.shape_matches is None else len(preview.shape_matches)
     added: dict[str, list[str]] = {"object_types": [], "fact_types": [], "constraints": []}
@@ -155,13 +163,16 @@ def round_summary(
     reused: dict[str, list[str]] = {"object_types": [], "fact_types": []}
     for item in round_file.reused:
         reused[item.collection].append(item.id)
-    bindings = {"round": round_file.round}
-    for name, claim in (("proposal_sha256", proposal), ("preview_sha256", preview), ("record_preview_sha256", record)):
+    # Each artifact read, by its own identity: the proposal's and the preview's
+    # digests as apply binds them, every other document's canonical sha256.
+    bindings = {"round_file_sha256": canonical_sha256(round_file)}
+    if proposal is not None:
+        bindings["proposal_sha256"] = proposal.proposal_sha256
+    if preview is not None:
+        bindings["preview_sha256"] = preview.preview_sha256
+    for name, claim in (("outcome_report_sha256", report), ("record_sha256", record)):
         if claim is not None:
-            bindings[name] = (claim.proposal_sha256 if name == "proposal_sha256"
-                              else claim.preview_sha256)
-    if report is not None:
-        bindings["outcome_report_gate"] = report.refusal.gate
+            bindings[name] = canonical_sha256(claim)
     narrowed = getattr(proposal, "narrowed_from", None)
     return RoundSummary(
         round=round_file.round,

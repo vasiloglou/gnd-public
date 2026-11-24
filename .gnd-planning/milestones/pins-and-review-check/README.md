@@ -16,6 +16,7 @@ undone by [PR 235](https://github.com/vasiloglou/gnd-public/pull/235),
 [Plan](notes/pins-and-review-check-plan.md). Merge order: PR 248 (plan), then
 250, then 253.
 
-Carried to the owner (close record sweep): OQ2 inline count copies outside
-any name guard; OQ4 the frontmatter fence defect
-in `gnd.exp.frontmatter`, being fixed in a separate session.
+After the close: OQ2 (inline count copies outside any name guard) fixed by
+the [maintenance pass](../../maintenance/2026-11-23-inline-inventory-counts/README.md);
+OQ4 (the frontmatter fence defect) fixed by
+[PR 255](https://github.com/vasiloglou/gnd-public/pull/255), merged.

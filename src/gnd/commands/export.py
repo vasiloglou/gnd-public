@@ -126,9 +126,11 @@ def _cmd_export_ossie(
         print(f"Ossie output failure: {error}", file=sys.stderr)
         return EXIT_IO
     print(f"Exported Ossie ontology to {out}")
-    if not ontology_only:
+    if bundle.semantic_model is not None:
         print(f"Exported Ossie semantic model and mapping to {out}.semantic_model.{output_format} "
               f"and {out}.mapping.{output_format}")
+    elif not ontology_only:
+        print("note: the model maps to no table, so no semantic model or mapping is written.", file=sys.stderr)
     if bundle.redacted_fact_types:
         # Issue 169, owner ruling of 2026-11-11: `redact` withholds population values
         # from reports and does not change an export of the model's own text.

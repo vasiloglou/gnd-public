@@ -2,10 +2,11 @@
 
 ## 1. Status
 
-**r1 approved 2026-11-24 with E1–E16 as proposed**
-([spec gate](../009-OB3-spec-gate.md)). The corpus and amendment r1.1 (§14)
-are authored and **await the corpus gate**. No renderer code is written.
-Not reviewed.
+**Implemented, 2026-11-24.** The owner approved r1 with E1–E16 as proposed
+([spec gate](../009-OB3-spec-gate.md)) and the corpus with amendment r1.1
+([corpus gate](../010-OB3-corpus-gate.md)). §12 records what implementation
+found, including two departures for the owner (IF1, IF2). The text below §1
+is kept as written at each gate.
 
 ## 2. Provenance
 
@@ -353,9 +354,26 @@ the shape `review-convergence.md` defaults to corpus first.
    not exist.
 4. Each implementation commit names the cases it turns green.
 
-## 12. Implementation findings
+## 12. Implementation findings (recorded during OB3)
 
-None yet.
+Rows marked **owner** depart from an approved rule and are put to the owner
+with the phase record.
+
+| # | Finding | Effect |
+|---|---|---|
+| IF1 | **A model that maps to no table cannot have a semantic model.** The pinned core-spec requires at least one dataset. Two scanned models map to none (their fact types are all derived or unmapped). The first render failed schema validation on them. | Such a run writes the ontology's three files, prints a note on standard error and exits 0. **Owner:** this departs from predicate 2 ("a run with no new flag writes ... plus the two files") for these models. |
+| IF2 | **`unmapped_links`.** A carried fact type whose roles cannot be object-mapped (E3 b) has to be listed somewhere, and §6.6 had only `concepts`. | The extension gains `unmapped_links`, present only when not empty, so no approved corpus byte changes. **Owner:** a member §6.6 did not name. |
+| IF3 | **`identification-differs` in practice.** Over the 422 scanned models the export maps, it lists 16 fact types in 14 models and 2 concepts. Three causes: a unit-based reference (the ontology declares no identifier for it), an objectification keyed by its own fact type, and a subtype inheriting through several supertypes (the ontology inherits only through one). | Stated in the normative text. No guess is written for any of them. |
+| IF4 | **E3 (a) on the census.** One census model changes, equally under both variants: `reference_scheme_elicitation` loses the `task` table (4 to 3 tables; 3 fact types become `identification-unmatchable`). The two literature examples keep their `assertion` table, because it is an objectification and falls back to its fact type's key. Totals move from 195 / 196 tables and 35 / 35 unmapped to 194 / 195 and 38 / 38. | [OB3-rmap-measurement-after-E3.md](OB3-rmap-measurement-after-E3.md). The models that differ between the variants are the same four, so the D5 ruling stands on the same comparison. OB2's own measurement file is history and is not rewritten. |
+| IF5 | **The Rmap needed a second public record.** E4 named `roles`. Building referent mappings by fact type (B8) and comparing identifications with the ontology (E3 b) also need each object type's key structure and owning table. | `RelationalSchema.identifications` (`Identification`: kind, key columns, the component fact type and role per column, the owning table), beside `roles` (`RolePlacement`). T16 pins both. |
+| IF6 | **§6.2's signature changed.** `render_relational` would have needed the YAML encoder, which lives in `ossie.py`, which imports the renderer. | `ossie_relational` builds documents only (`build_semantic_model`, `build_mapping`, `validate_relational`); `ossie.py` encodes all five files through one `_encode` and computes the digests. |
+| IF7 | **Entities without a table** (S7: only ever a role player) get no object mapping and are not listed in `concepts`, which holds only entities that have a table. A **value-type owner** of a relationship gets link mappings and no object mapping (B1). | Stated in the normative text. |
+| IF8 | **One existing test changed.** OB1's per-artifact bound test asserted three published files. | It now passes `--ontology-only`: it is about the three legacy artifacts. T8 covers the relational files, with a model where the mapping is the largest file and one where the semantic model is. |
+| IF9 | **E16 measured.** Of 3,157 fields over the scanned models, none has a name over 128 characters. | The residual stays recorded; no rename. |
+| IF10 | **T10 measured.** At 1,400 entities and 4,500 fact types the five files render in 3.3 s, against 2.6 s for the ontology's three; the ratio to one fifth of that scale is 5.1 (linear). | T10's bound is 60 s and a ratio under 12. |
+| IF11 | **T11 is written and not run.** `OssieOracle.validate` gains a `schema` argument, and `test_external_relational_census` validates the semantic model and the mapping of every census model with the pinned validator. | The opt-in oracle lane needs the owner's request. Until it runs, upstream acceptance of quoted identifiers and of `CASE WHEN` is unconfirmed. |
+| IF12 | **RF6.** The new module and the wiring add 70 dynamic-subscript rows and remove 11. | `evidence/OB3/dynamic-query-successor.json`, chained after OB2's. A census only; no query exception is widened, and the renderer reads the model only through `gnd.rmap` and the ontology view. |
+| IF13 | **The disclosure table** already classes `gnd export ossie` as every-mode. | Its row now names the ids the two new files carry, and a test holds the two files equal in customer mode. |
 
 ## 13. Harvest findings (measured while writing this spec)
 

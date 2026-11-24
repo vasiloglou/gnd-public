@@ -650,3 +650,60 @@ def test_r2_f8_external_unique_keys_are_not_quadratic(tmp_path):
         assert len(_table(schema, "customer").unique_keys) == phones
         times[phones] = best
     assert times[4000] / times[1000] < 6  # linear about 4; quadratic about 16
+
+
+# --- OB3 additions to the public surface (OB3 spec E3, E4) -------------------------------------
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_ob3_t16_roles_cover_every_role_of_every_carried_fact_type(variant):
+    """E4: one placement per role, in columns that exist in the named table."""
+    from gnd.model import load_model
+    from gnd.model_index import ModelIndex
+    from gnd.rmap import RmapVariant, dispositions, map_model
+
+    for case in CASES:
+        model = load_model(CORPUS / "cases" / case / "model.yaml")
+        schema = map_model(model, variant=RmapVariant[variant])
+        carried = {d.id for d in dispositions(model, schema) if d.kind == "fact_type" and d.reason is None}
+        expected = sorted(
+            (fact, role) for fact, roles in ModelIndex.for_model(model).role_object_types().items()
+            if fact in carried for role in roles
+        )
+        assert [(p.fact_type, p.role) for p in schema.roles] == expected, case
+        columns = {t.name: {c.name for c in t.columns} for t in schema.tables}
+        for placement in schema.roles:
+            assert placement.columns and set(placement.columns) <= columns[placement.table], (case, placement)
+        for identification in schema.identifications:
+            assert len(identification.columns) == len(identification.components)
+            assert identification.table is None or identification.table in columns
+            if identification.table == identification.object_type:
+                assert _table(schema, identification.table).primary_key == identification.columns
+
+
+def test_ob3_t16_role_and_identification_records_are_literal(tmp_path):
+    schema, _ = _schema(tmp_path, _case("14"))
+    from gnd.rmap import Identification, RolePlacement
+
+    assert RolePlacement("city_in_state", "state", "city", ("state_country_country_code", "state_code")) in schema.roles
+    assert RolePlacement("state_in_country", "state", "state", ("country_country_code", "code")) in schema.roles
+    assert Identification(
+        "state", "composite", ("country_country_code", "code"),
+        (("state_in_country", "country"), ("state_has_code", "code")), "state",
+    ) in schema.identifications
+    assert Identification("country", "direct", ("country_code",), (None,), "country") in schema.identifications
+    assert Identification("state_code", "value", ("state_code",), (None,), None) in schema.identifications
+    schema, _ = _schema(tmp_path, _case("15"))
+    assert Identification("student", "direct", ("person_id",), (None,), "person") in schema.identifications
+    assert RolePlacement("student_has_gpa", "student", "person", ("person_id",)) in schema.roles
+
+
+@pytest.mark.parametrize("variant", ["HALPIN", "ALTERNATE"])
+def test_ob3_e3_a_composite_identifier_needs_functional_components(tmp_path, variant):
+    document = _case("14")
+    code = next(f for f in document["fact_types"] if f["id"] == "state_has_code")
+    code["constraints"] = [c for c in code["constraints"] if c["type"] != "uniqueness"]
+    schema, rows = _schema(tmp_path, document, variant)
+    assert "state" not in {t.name for t in schema.tables}
+    assert ("object_type", "state") in {(u.kind, u.id) for u in schema.unmapped}
+    assert rows[("constraint", "constraints/0")].reason == "identification-unmatchable"

@@ -9,7 +9,7 @@ before any renderer existed. This module does not render them. It only:
 - checks each case against the pinned schemas, the real ontology export, and the
   owner-approved OB2 Rmap answer (``check``).
 
-Run: ``uv run python -m tests.support.ossie_relational_corpus --mapping-schema PATH``
+Run: ``uv run python -m tests.support.ossie_relational_corpus``
 """
 
 from __future__ import annotations
@@ -17,7 +17,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import re
 import sys
 from io import StringIO
 from pathlib import Path
@@ -34,11 +33,9 @@ SCHEMAS = ROOT / "src/gnd/schema/ossie"
 UPSTREAM = "https://raw.githubusercontent.com/apache/ossie/main/"
 OUT_NAME = "ontology.yaml"  # the corpus convention for OUT's basename
 
-# The whole grammar of an expression the corpus writes: a quoted, uppercased
-# dataset.field, optionally inside CASE WHEN <flag> THEN <key> END.
-_REF = r'"([A-Z][A-Z0-9_]*)"\."([A-Z][A-Z0-9_]*)"'
-_PLAIN = re.compile(_REF)
-_UNARY = re.compile(f"CASE WHEN {_REF} THEN {_REF} END")
+# The two shapes of expression the export writes, with each quoted identifier
+# replaced by a placeholder: dataset.field, optionally inside a unary's CASE WHEN.
+_SHAPES = {"?.?": 1, "CASE WHEN ?.? THEN ?.? END": 2}
 
 
 def dump_yaml(document) -> bytes:
@@ -99,13 +96,143 @@ def _validators(mapping_schema: Path):
     )
 
 
-def _expression_fields(expression: str) -> list[tuple[str, str]]:
-    plain = _PLAIN.fullmatch(expression)
-    if plain:
-        return [(plain[1], plain[2])]
-    unary = _UNARY.fullmatch(expression)
-    assert unary, f"expression outside the corpus grammar: {expression!r}"
-    return [(unary[1], unary[2]), (unary[3], unary[4])]
+def quoted_identifiers(expression: str) -> tuple[list[str], str]:
+    """Lex SQL quoted identifiers: the names, and the text with each replaced by ``?``.
+
+    Inside quotes a doubled quote is one quote character; an unclosed quote fails.
+    """
+    names, shape, position = [], [], 0
+    while position < len(expression):
+        if expression[position] != '"':
+            shape.append(expression[position])
+            position += 1
+            continue
+        name, position = [], position + 1
+        while True:
+            assert position < len(expression), f"unclosed identifier in {expression!r}"
+            if expression[position] != '"':
+                name.append(expression[position])
+                position += 1
+            elif expression[position + 1:position + 2] == '"':
+                name.append('"')
+                position += 2
+            else:
+                position += 1
+                break
+        names.append("".join(name))
+        shape.append("?")
+    return names, "".join(shape)
+
+
+def expression_fields(expression: str) -> list[tuple[str, str]]:
+    """The (dataset, field) pairs an exported expression names."""
+    names, shape = quoted_identifiers(expression)
+    assert shape in _SHAPES, f"expression outside the export's grammar: {expression!r}"
+    return [(names[i], names[i + 1]) for i in range(0, len(names), 2)]
+
+
+def cross_check(ontology, semantic, mapping) -> list[str]:
+    """Check a mapping against its ontology and semantic model, from the documents alone.
+
+    Returns the relationships its link mappings name, in document order.
+    """
+    names = [d["name"] for d in semantic["datasets"]]
+    assert len(names) == len(set(names)), "duplicate dataset name"
+    fields = {}
+    for dataset in semantic["datasets"]:
+        own = [f["name"] for f in dataset["fields"]]
+        assert len(own) == len(set(own)), f"duplicate field in {dataset['name']}"
+        fields[dataset["name"]] = set(own)
+        for key in [dataset.get("primary_key", []), *dataset.get("unique_keys", [])]:
+            assert set(key) <= set(own), (dataset["name"], key)
+        for field in dataset["fields"]:
+            assert quoted_identifiers(field["expression"]["sql"]) == ([field["name"].upper()], "?")
+    related = [r["name"] for r in semantic.get("relationships", [])]
+    assert len(related) == len(set(related)), "duplicate relationship name"
+    for r in semantic.get("relationships", []):
+        assert set(r["from_columns"]) <= fields[r["from"]] and set(r["to_columns"]) <= fields[r["to"]], r["name"]
+        assert len(r["from_columns"]) == len(r["to_columns"]), r["name"]
+
+    assert mapping["ontology_ref"]["name"] == ontology["name"]
+    assert mapping["semantic_model_ref"]["name"] == semantic["name"]
+    declared = {(d.upper(), f.upper()) for d, own in fields.items() for f in own}
+    components = {c["concept"]: c for c in ontology["ontology"]}
+
+    def ancestors(concept):
+        seen, pending = [], [concept]
+        while pending:
+            current = pending.pop(0)
+            if current in components and current not in seen:
+                seen.append(current)
+                pending += components[current].get("extends", [])
+        return seen
+
+    def relationship(concept, name):
+        for owner in ancestors(concept):
+            for candidate in components[owner].get("relationships", []):
+                if candidate["name"] == name:
+                    return candidate
+        raise AssertionError(f"{name} is not declared on {concept}")
+
+    def identify_by(concept):
+        for owner in ancestors(concept):
+            if components[owner].get("identify_by"):
+                return components[owner]["identify_by"]
+        return []
+
+    def check_referents(node, concept):
+        listed = [referent["relationship"] for referent in node["referent_mappings"]]
+        assert listed == identify_by(concept), (concept, listed)
+        for referent in node["referent_mappings"]:
+            target = relationship(concept, referent["relationship"])["roles"][-1]["concept"]
+            check_object(referent, target, nested=True)
+
+    def check_object(node, concept, nested=False):
+        assert ("expression" in node) != ("referent_mappings" in node)
+        if "expression" in node:
+            for field in expression_fields(node["expression"]):
+                assert field in declared, field
+            entity = components[concept]["type"] == "EntityType"
+            # A bare expression finds an entity only through a one-relationship identifier.
+            assert nested or not entity or len(identify_by(concept)) == 1, concept
+            return
+        check_referents(node, concept)
+
+    linked = []
+
+    def check_link(node, concept, level, prefix):
+        if level > 1:
+            object_concept = node["object_mapping"]["concept"]
+        else:
+            object_concept = concept
+            assert "concept" not in node["object_mapping"]
+        check_object(node["object_mapping"], object_concept)
+        if "relationship" in node:
+            roles = relationship(concept, node["relationship"]).get("roles", [])
+            assert len(roles) + 1 == level, node["relationship"]
+            assert [*prefix, object_concept][1:] == [role["concept"] for role in roles]
+            linked.append(node["relationship"])
+        for child in node.get("children", []):
+            check_link(child, concept, level + 1, [*prefix, object_concept])
+
+    mapped_concepts = [entry["concept"] for entry in mapping["concept_mappings"]]
+    order = [c["concept"] for c in ontology["ontology"]]
+    assert mapped_concepts == [c for c in order if c in set(mapped_concepts)]
+    for entry in mapping["concept_mappings"]:
+        concept = entry["concept"]
+        if "object_mappings" in entry:
+            assert components[concept]["type"] == "EntityType", concept
+        for node in entry.get("object_mappings", []):
+            check_object(node, concept)
+        own = [r["name"] for r in components[concept].get("relationships", [])]
+        named = []
+        for node in entry.get("link_mappings", []):
+            before = len(linked)
+            check_link(node, concept, 1, [])
+            assert len(linked) == before + 1, "one fact type per tree"
+            named.append(linked[-1])
+        assert named == [name for name in own if name in set(named)], "ontology relationship order"
+    return linked
 
 
 def check(number: str, mapping_schema: Path) -> None:
@@ -121,7 +248,7 @@ def check(number: str, mapping_schema: Path) -> None:
     mapping = load_yaml(directory / "expected.mapping.yaml")
     payload = json.loads((directory / "expected.extension.json").read_text(encoding="utf-8"))
     answer = json.loads((RMAP / "answers" / f"{number}.json").read_text(encoding="utf-8"))
-    ontology_bytes = render_ossie(model_path, output_format="yaml").document
+    ontology_bytes = render_ossie(model_path, output_format="yaml", relational=False).document
     ontology = YAML(typ="safe", pure=True).load(ontology_bytes.decode("utf-8"))
 
     # 1. The files are in the exporter's own YAML form, byte for byte.
@@ -163,78 +290,12 @@ def check(number: str, mapping_schema: Path) -> None:
     assert semantic["name"] == ontology["name"] + "_relational"
     assert mapping["name"] == ontology["name"] + "_mapping"
 
-    # 5. Every expression names a declared dataset.field.
-    declared = {(d["name"].upper(), f["name"].upper()) for d in semantic["datasets"] for f in d["fields"]}
+    # 5, 6. Expressions name declared fields; links and referents name the ontology's
+    # relationships at the right level.
+    linked = cross_check(ontology, semantic, mapping)
     components = {c["concept"]: c for c in ontology["ontology"]}
-
-    def ancestors(concept):
-        seen, pending = [], [concept]
-        while pending:
-            current = pending.pop(0)
-            if current in components and current not in seen:
-                seen.append(current)
-                pending += components[current].get("extends", [])
-        return seen
-
-    def relationship(concept, name):
-        for owner in ancestors(concept):
-            for candidate in components[owner].get("relationships", []):
-                if candidate["name"] == name:
-                    return candidate
-        raise AssertionError(f"{name} is not declared on {concept}")
-
-    def identify_by(concept):
-        for owner in ancestors(concept):
-            if components[owner].get("identify_by"):
-                return components[owner]["identify_by"]
-        return []
-
-    def check_object(node, concept):
-        if "expression" in node:
-            for field in _expression_fields(node["expression"]):
-                assert field in declared, field
-            return
-        names = [referent["relationship"] for referent in node["referent_mappings"]]
-        assert names == identify_by(concept), (concept, names)
-        for referent in node["referent_mappings"]:
-            target = relationship(concept, referent["relationship"])["roles"][-1]["concept"]
-            check_object(referent, target)
-
-    # 6. Each link node names a relationship of its concept at the level its arity calls for.
-    linked = []
-
-    def check_link(node, concept, level, prefix):
-        object_concept = concept
-        if level > 1:
-            object_concept = node["object_mapping"]["concept"]
-        else:
-            assert "concept" not in node["object_mapping"]
-        check_object(node["object_mapping"], object_concept)
-        if "relationship" in node:
-            declared_relationship = relationship(concept, node["relationship"])
-            roles = declared_relationship.get("roles", [])
-            assert len(roles) + 1 == level, node["relationship"]
-            assert [*prefix, object_concept][1:] == [role["concept"] for role in roles]
-            linked.append(node["relationship"])
-        for child in node.get("children", []):
-            check_link(child, concept, level + 1, [*prefix, object_concept])
-
+    order = list(components)
     mapped_concepts = [entry["concept"] for entry in mapping["concept_mappings"]]
-    order = [c["concept"] for c in ontology["ontology"]]
-    assert mapped_concepts == [c for c in order if c in mapped_concepts]
-    for entry in mapping["concept_mappings"]:
-        concept = entry["concept"]
-        assert components[concept]["type"] == "EntityType"
-        for node in entry.get("object_mappings", []):
-            check_object(node, concept)
-        own = [r["name"] for r in components[concept].get("relationships", [])]
-        named = []
-        for node in entry.get("link_mappings", []):
-            before = len(linked)
-            check_link(node, concept, 1, [])
-            assert len(linked) == before + 1, "one fact type per tree"
-            named.append(linked[-1])
-        assert named == [name for name in own if name in named], "ontology relationship order"
 
     # 7. Totality: the carried fact types are exactly the link-mapped relationships.
     carried = [d["id"] for d in answer["dispositions"] if d["kind"] == "fact_type" and d["reason"] is None]
@@ -260,7 +321,7 @@ def check(number: str, mapping_schema: Path) -> None:
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--mapping-schema", type=Path, required=True)
+    parser.add_argument("--mapping-schema", type=Path, default=SCHEMAS / "mapping.json")
     parser.add_argument("--assemble", action="store_true")
     arguments = parser.parse_args(argv)
     for number in cases():

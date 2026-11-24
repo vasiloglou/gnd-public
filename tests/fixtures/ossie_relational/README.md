@@ -53,8 +53,9 @@ for; the carried fact types are exactly the link-mapped ones; and the
 extension's digests are right.
 
 ```bash
-uv run python -m tests.support.ossie_relational_corpus --mapping-schema PATH/TO/mapping.json
+uv run python -m tests.support.ossie_relational_corpus
 ```
 
-`mapping.json` is Ossie's `ontology/mapping.json` at the pinned commit. OB3
-vendors it; until then the check takes its path.
+It reads Ossie's `ontology/mapping.json` as vendored at the pinned commit
+(`src/gnd/schema/ossie/mapping.json`). `tests/test_ossie_relational.py` holds
+the same cases against the renderer.

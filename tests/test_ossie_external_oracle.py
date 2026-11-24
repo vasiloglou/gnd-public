@@ -52,6 +52,23 @@ def test_external_census(oracle, tmp_path, relative):
         assert result.returncode == 0, result.stdout + result.stderr
 
 
+@pytest.mark.parametrize("relative", sorted(set(CENSUS) - INCLUDE_ROOTS))
+def test_external_relational_census(oracle, tmp_path, relative):
+    """OB3 T11: the pinned validator accepts the semantic model, and the mapping cross-checked
+    against the ontology and semantic model its references resolve to."""
+    bundle = render_ossie(ROOT / relative, output_format="yaml", document_name="ontology.yaml")
+    if bundle.semantic_model is None:  # a model that maps to no table has no relational files
+        return
+    (tmp_path / "ontology.yaml").write_bytes(bundle.document)
+    semantic = tmp_path / "ontology.yaml.semantic_model.yaml"
+    mapping = tmp_path / "ontology.yaml.mapping.yaml"
+    semantic.write_bytes(bundle.semantic_model)
+    mapping.write_bytes(bundle.mapping)
+    for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
+        result = oracle.validate(path, schema)
+        assert result.returncode == 0, result.stdout + result.stderr
+
+
 def test_external_refusal_is_live(oracle, tmp_path):
     document = {
         "version": "0.3.0.dev0",

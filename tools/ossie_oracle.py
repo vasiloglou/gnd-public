@@ -45,12 +45,13 @@ class OssieOracle:
         schema = self.root / "ossie/ontology/ontology.json"
         assert hashlib.sha256(schema.read_bytes()).hexdigest() == SCHEMA_SHA256
 
-    def validate(self, path: Path) -> subprocess.CompletedProcess[str]:
+    def validate(self, path: Path, schema: str = "ontology/ontology.json") -> subprocess.CompletedProcess[str]:
+        """Run the pinned validator; ``schema`` is a path inside the pinned ossie checkout."""
         return self._run(
             self.root / "a/bin/python",
             self.root / "ossie/validation/validate.py",
             "--schema",
-            self.root / "ossie/ontology/ontology.json",
+            self.root / "ossie" / schema,
             path,
         )
 

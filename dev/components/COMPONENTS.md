@@ -642,7 +642,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.export_command
 - does: Dispatch Lean, Souffle, PyRel, ILP and Ossie exports with target specific input checks [handle].
-- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, output collision, dispatch handler
+- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, ontology only, five file group, semantic model file, mapping file, output collision, dispatch handler
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1633,16 +1633,29 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.ossie
-- does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, and count the fact types that declare redact [render_ossie].
-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes
-- in: standalone model path and output format
-- out: ontology, sidecar and loss report bytes
+- does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, encode and bind the semantic model and mapping of the same run, and count the fact types that declare redact [render_ossie].
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view
+- in: standalone model path, output format, and whether to add the relational files
+- out: ontology, sidecar and loss report bytes, and semantic model and mapping bytes or None
 - status: canonical
 - modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
-- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity, model.scalar_terms
+- uses: export.ossie_relational, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
 - used_by: cli.export_command
-- tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py
-- notes: The three output artifacts use the importer's input size cap.
+- tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py, tests/test_ossie_relational.py
+- notes: Every artifact of a run is bounded by max_output_bytes. _project returns the ontology with the OntologyView the mapping reads, so the mapping never recomputes concept names, role order or identify_by. A model that maps to no table gets no relational files.
+
+
+### export.ossie_relational
+- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational].
+- verbs: ossie semantic model, ossie mapping, dataset, field, relationship, concept mapping, object mapping, referent mapping, link mapping, quoted identifier, datatype map, custom extension, identification differs, subtype absorbed, unmapped links, validate against pinned schemas, offline schema registry
+- in: a RelationalSchema, its dispositions and the OntologyView of the same export run
+- out: semantic model and mapping documents (dicts)
+- status: canonical
+- modules: src/gnd/export/ossie_relational.py
+- uses: infra.artifacts, infra.input_policy, model.relational_mapping
+- used_by: export.ossie
+- tests: tests/test_ossie_relational.py
+- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection.
 
 
 ### export.pyrel_emit
@@ -1999,7 +2012,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +75 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +76 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
@@ -2274,7 +2287,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +57 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +58 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2579,14 +2592,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.relational_mapping
 - does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint [map_model; dispositions].
-- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, map_model, dispositions
+- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, identification record, functional identifier component, map_model, dispositions
 - status: canonical
 - modules: src/gnd/rmap.py
 - uses: model.query_index, model.reference_resolution
-- used_by: (none)
+- used_by: export.ossie, export.ossie_relational
 - tests: tests/test_rmap.py
 - in: a loaded Model and an RmapVariant
-- out: RelationalSchema and Disposition rows
+- out: RelationalSchema (tables, role placements, identifications) and Disposition rows
 - checked: partial
 - notes: Normative rules in representation-format.md, "Relational mapping (Rmap)". Direct identification comes from ModelIndex.reference_value_types. Composite identification is the Rmap's own selection: the preferred, confirmed alethic external uniqueness, indexed once per model. refscheme is not used, because it takes the first external uniqueness anchored on the entity whatever its status, and calling it per entity was quadratic (review r1 F1, F9).
 
@@ -2710,7 +2723,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### tools.ossie_oracle
 - does: Run pinned Ossie tools in isolated subprocesses and compare converter declarations with the exported ontology.
-- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology
+- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology, validate with a chosen pinned schema, semantic model and mapping validation
 - status: canonical
 - modules: tools/ossie_oracle.py, tools/ossie_consumer.py
 - uses: (none)
@@ -3736,6 +3749,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - resume session: exp.service, exp.session_store
 - reviewed preview: cli.evolve_command, evolve.command
 - reviewer timeout: cli.review_command, review.command
+- role columns: export.ilp_neutral, model.relational_mapping
 - role players: extract.guidelines, model.query_index
 - round summary: cli.evolve_command, evolve.round_summary
 - round trip: exp.frontmatter, infra.yaml_comments

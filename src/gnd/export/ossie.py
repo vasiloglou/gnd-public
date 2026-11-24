@@ -472,6 +472,10 @@ def _encode(document, output_format: str) -> bytes:
 def _relational(model, view, data: bytes, identity: str, *, output_format: str, document_name: str):
     """The semantic model and mapping for the ontology bytes ``data`` (OB3)."""
     schema = map_model(model, variant=RmapVariant.HALPIN)  # D5
+    if not schema.tables:
+        # The pinned core-spec requires at least one dataset. A model that maps to no
+        # table has no relational files; the run then writes the ontology's three.
+        return None, None
     semantic_name = f"{view.name}_relational"
     semantic_file = f"{document_name}.semantic_model.{output_format}"
     semantic = build_semantic_model(schema, semantic_name)

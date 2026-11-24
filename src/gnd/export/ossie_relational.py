@@ -12,6 +12,7 @@ listed in the mapping's ``GND`` extension with a closed reason.
 
 from __future__ import annotations
 
+import itertools
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from functools import lru_cache
@@ -171,7 +172,7 @@ class _Mapping:
 
     def object_mapping(
         self, object_type: str, table: str, columns: Sequence[str], *,
-        named: bool, wrap: Callable[[str], str] = lambda expression: expression,
+        named: bool, wrap: Callable[[str], str] = str,
     ) -> dict[str, Any] | None:
         """How ``columns`` of ``table`` give one object of ``object_type``."""
         node: dict[str, Any] = {"concept": self.view.concepts[object_type]} if named else {}
@@ -193,11 +194,12 @@ class _Mapping:
         """One tree per fact type: a node per role in the relationship's order, the
         last one naming the relationship. None when a role's objects cannot be mapped."""
         _, order, players = self.view.relations[fact_type]
-        wrap: Callable[[str], str] = lambda expression: expression  # noqa: E731
-        if len(order) == 1:
-            # A unary is a Boolean flag: a row is a link only where the flag is true.
-            flag = self.reference(carried_as[1], carried_as[2])
-            wrap = lambda expression: f"CASE WHEN {flag} THEN {expression} END"  # noqa: E731
+        # A unary is a Boolean flag: a row is a link only where the flag is true.
+        flag = self.reference(carried_as[1], carried_as[2]) if len(order) == 1 else None
+
+        def wrap(expression: str) -> str:
+            return expression if flag is None else f"CASE WHEN {flag} THEN {expression} END"
+
         nodes = []
         for level, role in enumerate(order):
             placement = self.placements[(fact_type, role)]
@@ -207,7 +209,7 @@ class _Mapping:
                 return None
             nodes.append({"object_mapping": node})
         nodes[-1]["relationship"] = fact_type
-        for parent, child in zip(nodes, nodes[1:]):
+        for parent, child in itertools.pairwise(nodes):
             parent["children"] = [child]
         return nodes[0]
 

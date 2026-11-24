@@ -21,8 +21,8 @@ itself reviewed.
 |---|---|---|
 | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | done: [record](004-phase-OB1.md), [spec](notes/phase-OB1-spec.md); branch `claude/ossie-ob1-size-bounds` |
 | OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **recorded** ([record](008-phase-OB2.md)); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); two review rounds |
-| OB3 | Semantic model and mapping files, with the default per D2 | after OB2 (D2, D4, D6 ruled) |
+| OB3 | Semantic model and mapping files, with the default per D2 | [spec r1](notes/phase-OB3-spec.md) drafted; awaiting its spec gate (E1–E16) |
 | OB4 | `--physical-binding FILE` | after OB3 (D7, D8 ruled) |
 | OB5 | Docs and skill | after OB4 |
 
-**Next action:** the owner reviews the OB2 pull request and rules OB2-Q3 (a third review round or not); OB3 follows. D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first.
+**Next action:** the OB3 spec gate. OB2-Q3 is ruled ("Move on to OB3": no third review round). D10 asks the reporter for inputs and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.

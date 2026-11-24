@@ -1,0 +1,170 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: student
+  name: Student
+  kind: entity
+  reference:
+    mode: popular
+    value_type: student_nr
+- id: student_nr
+  name: StudentNr
+  kind: value
+  primitive: Integer
+- id: student_name
+  name: StudentName
+  kind: value
+  primitive: String
+- id: course
+  name: Course
+  kind: entity
+  reference:
+    mode: popular
+    value_type: course_code
+- id: course_code
+  name: CourseCode
+  kind: value
+  primitive: String
+- id: course_title
+  name: CourseTitle
+  kind: value
+  primitive: String
+- id: enrolment
+  name: Enrolment
+  kind: entity
+  reference:
+    mode: external
+- id: grade
+  name: Grade
+  kind: value
+  primitive: String
+fact_types:
+- id: student_has_name
+  reading: '{Student} has {StudentName}'
+  roles:
+  - object_type: student
+    role_name: student
+  - object_type: student_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - student
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: course_has_title
+  reading: '{Course} has {CourseTitle}'
+  roles:
+  - object_type: course
+    role_name: course
+  - object_type: course_title
+    role_name: title
+  constraints:
+  - type: uniqueness
+    roles:
+    - course
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: student_enrolled_in_course
+  reading: '{Student} enrolled in {Course}'
+  roles:
+  - object_type: student
+    role_name: student
+  - object_type: course
+    role_name: course
+  constraints:
+  - type: uniqueness
+    roles:
+    - student
+    - course
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Enrolled once.
+  objectified_as: enrolment
+- id: enrolment_for_student
+  reading: '{Enrolment} for {Student}'
+  roles:
+  - object_type: enrolment
+    role_name: enrolment
+  - object_type: student
+    role_name: student
+  constraints:
+  - type: uniqueness
+    roles:
+    - enrolment
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: enrolment
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: enrolment_for_course
+  reading: '{Enrolment} for {Course}'
+  roles:
+  - object_type: enrolment
+    role_name: enrolment
+  - object_type: course
+    role_name: course
+  constraints:
+  - type: uniqueness
+    roles:
+    - enrolment
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+  - type: mandatory
+    role: enrolment
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each must have one.
+- id: enrolment_has_grade
+  reading: '{Enrolment} has {Grade}'
+  roles:
+  - object_type: enrolment
+    role_name: enrolment
+  - object_type: grade
+    role_name: grade
+  constraints:
+  - type: uniqueness
+    roles:
+    - enrolment
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+constraints:
+- type: uniqueness
+  scope: external
+  role_refs:
+  - fact_type: enrolment_for_student
+    role: student
+  - fact_type: enrolment_for_course
+    role: course
+  preferred: true
+  source: explicit
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: An enrolment is one student in one course.

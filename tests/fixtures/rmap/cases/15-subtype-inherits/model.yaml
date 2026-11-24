@@ -1,0 +1,63 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: person_name
+  name: PersonName
+  kind: value
+  primitive: String
+- id: student
+  name: Student
+  kind: entity
+  subtype_of:
+  - person
+  inherits_reference: true
+- id: gpa
+  name: Gpa
+  kind: value
+  primitive: Float
+fact_types:
+- id: person_has_name
+  reading: '{Person} has {PersonName}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: person_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: student_has_gpa
+  reading: '{Student} has {Gpa}'
+  roles:
+  - object_type: student
+    role_name: student
+  - object_type: gpa
+    role_name: gpa
+  constraints:
+  - type: uniqueness
+    roles:
+    - student
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

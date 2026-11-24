@@ -1,0 +1,66 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: room
+  name: Room
+  kind: entity
+  reference:
+    mode: popular
+    value_type: room_nr
+- id: room_nr
+  name: RoomNr
+  kind: value
+  primitive: Integer
+- id: slot
+  name: Slot
+  kind: entity
+  reference:
+    mode: popular
+    value_type: slot_code
+- id: slot_code
+  name: SlotCode
+  kind: value
+  primitive: String
+- id: lecturer
+  name: Lecturer
+  kind: entity
+  reference:
+    mode: popular
+    value_type: staff_nr
+- id: staff_nr
+  name: StaffNr
+  kind: value
+  primitive: Integer
+fact_types:
+- id: room_slot_lecturer
+  reading: '{Room} at {Slot} is taught by {Lecturer}'
+  roles:
+  - object_type: room
+    role_name: room
+  - object_type: slot
+    role_name: slot
+  - object_type: lecturer
+    role_name: lecturer
+  constraints:
+  - type: uniqueness
+    roles:
+    - room
+    - slot
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A room holds one lecture per slot.
+  - type: uniqueness
+    roles:
+    - slot
+    - lecturer
+    preferred: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A lecturer teaches once per slot.

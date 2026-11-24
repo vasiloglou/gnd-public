@@ -1,0 +1,37 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: book
+  name: Book
+  kind: entity
+  reference:
+    mode: general
+    value_type: isbn
+- id: isbn
+  name: Isbn
+  kind: value
+  primitive: String
+- id: title
+  name: Title
+  kind: value
+  primitive: String
+fact_types:
+- id: book_has_title
+  reading: '{Book} has {Title}'
+  roles:
+  - object_type: book
+    role_name: book
+  - object_type: title
+    role_name: title
+  constraints:
+  - type: uniqueness
+    roles:
+    - book
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

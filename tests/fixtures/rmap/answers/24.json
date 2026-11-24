@@ -1,0 +1,505 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [],
+   "id": "constraints/0",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/10",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/11",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/2",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/3",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/4",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/5",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/6",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/7",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/8",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [],
+   "id": "constraints/9",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_age/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/person_has_name/constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_retirement_age/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "person_parent_of_person"
+   ],
+   "id": "fact_types/person_parent_of_person/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/person_parent_of_person/constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "person_speaks_language"
+   ],
+   "id": "fact_types/person_speaks_language/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [],
+   "id": "fact_types/person_speaks_language/constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "age"
+   ],
+   "id": "person_has_age",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "retirement_age"
+   ],
+   "id": "person_has_retirement_age",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "person_is_cancer_prone"
+   ],
+   "id": "person_is_cancer_prone",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "person_is_married"
+   ],
+   "id": "person_is_married",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "person_is_widowed"
+   ],
+   "id": "person_is_widowed",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "person_parent_of_person"
+   ],
+   "id": "person_parent_of_person",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "person_smokes"
+   ],
+   "id": "person_smokes",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "person_speaks_language"
+   ],
+   "id": "person_speaks_language",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "person"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "age",
+     "nullable": true,
+     "origin": [
+      "person_has_age",
+      "age"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "person_has_name",
+      "name"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "retirement_age",
+     "nullable": true,
+     "origin": [
+      "person_has_retirement_age",
+      "retirement_age"
+     ]
+    },
+    {
+     "datatype": "Boolean",
+     "name": "person_is_cancer_prone",
+     "nullable": false,
+     "origin": [
+      "person_is_cancer_prone",
+      "person"
+     ]
+    },
+    {
+     "datatype": "Boolean",
+     "name": "person_is_married",
+     "nullable": false,
+     "origin": [
+      "person_is_married",
+      "person"
+     ]
+    },
+    {
+     "datatype": "Boolean",
+     "name": "person_is_widowed",
+     "nullable": false,
+     "origin": [
+      "person_is_widowed",
+      "person"
+     ]
+    },
+    {
+     "datatype": "Boolean",
+     "name": "person_smokes",
+     "nullable": false,
+     "origin": [
+      "person_smokes",
+      "person"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "person",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "person"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "parent_person_id",
+     "nullable": false,
+     "origin": [
+      "person_parent_of_person",
+      "parent"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "child_person_id",
+     "nullable": false,
+     "origin": [
+      "person_parent_of_person",
+      "child"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "parent_person_id"
+     ],
+     "name": "person_parent_of_person__person",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    },
+    {
+     "columns": [
+      "child_person_id"
+     ],
+     "name": "person_parent_of_person__person__2",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    }
+   ],
+   "name": "person_parent_of_person",
+   "primary_key": [
+    "parent_person_id",
+    "child_person_id"
+   ],
+   "subject": [
+    "fact_type",
+    "person_parent_of_person"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_person_id",
+     "nullable": false,
+     "origin": [
+      "person_speaks_language",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "language_language_code",
+     "nullable": false,
+     "origin": [
+      "person_speaks_language",
+      "language"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "person_person_id"
+     ],
+     "name": "person_speaks_language__person",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    }
+   ],
+   "name": "person_speaks_language",
+   "primary_key": [
+    "person_person_id",
+    "language_language_code"
+   ],
+   "subject": [
+    "fact_type",
+    "person_speaks_language"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": [
+  {
+   "detail": "subset",
+   "id": "constraints/0",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "equality",
+   "id": "constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "textual",
+   "id": "constraints/10",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "guarded",
+   "id": "constraints/11",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "exclusion",
+   "id": "constraints/2",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "exclusive-or",
+   "id": "constraints/3",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "mandatory-disjunctive",
+   "id": "constraints/4",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "value",
+   "id": "constraints/5",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "value-comparison",
+   "id": "constraints/6",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "cardinality",
+   "id": "constraints/7",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "cardinality",
+   "id": "constraints/8",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "subtype-partition",
+   "id": "constraints/9",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "anchored",
+   "id": "fact_types/person_has_name/constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "ring",
+   "id": "fact_types/person_parent_of_person/constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  },
+  {
+   "detail": "frequency",
+   "id": "fact_types/person_speaks_language/constraints/1",
+   "kind": "constraint",
+   "reason": "not-relational"
+  }
+ ]
+}

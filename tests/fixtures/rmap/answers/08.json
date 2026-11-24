@@ -1,0 +1,134 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "unique_key",
+    "passport",
+    "holder_person_id"
+   ],
+   "id": "fact_types/person_holds_passport/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "passport"
+   ],
+   "id": "fact_types/person_holds_passport/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "passport",
+    "holder_person_id"
+   ],
+   "id": "person_holds_passport",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "passport_nr",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "passport"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "holder_person_id",
+     "nullable": true,
+     "origin": [
+      "person_holds_passport",
+      "holder"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "holder_person_id"
+     ],
+     "name": "passport__person",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    }
+   ],
+   "name": "passport",
+   "primary_key": [
+    "passport_nr"
+   ],
+   "subject": [
+    "object_type",
+    "passport"
+   ],
+   "unique_keys": [
+    [
+     "holder_person_id"
+    ]
+   ]
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "person_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "person",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "person"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

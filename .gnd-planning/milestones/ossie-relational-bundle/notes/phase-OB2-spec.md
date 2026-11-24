@@ -471,3 +471,38 @@ ruling is recorded before the phase record.
 
 If the owner prefers prose approval, the corpus is still committed before
 the code (plan OB2-C2). Only the gate moves.
+
+## 12. Amendment r1.1: rules settled while authoring the corpus (2026-11-24)
+
+The owner approved r1 (sha256 `6bcca4ed…2cb972`; [gate](../005-OB2-spec-gate.md)).
+Under S11, authoring the corpus and its hand-derived answers came next.
+Doing that forced the rules below, which r1 left open or got wrong. **They
+are unapproved**: the owner sees them at the corpus gate, together with the
+stories. §1–§11 above are unchanged, except where a row here says it
+supersedes them.
+
+| # | Rule | Why | Case |
+|---|---|---|---|
+| A1 | `carried_as` uses a closed vocabulary: `table`, `columns`, `key`, `placement`, `primary_key`, `unique_key`, `implied` and `not_null`. Its definition is in `tests/fixtures/rmap/answers/README.md`, and it moves into the normative section in OB2. | r1 §6.1 gave examples only, so no answer key could be written. | all |
+| A2 | **Column order:** key columns first, in identification order; then placed columns by (fact type id, role position). In an own table, columns follow role order. | r1 did not order columns, but the answer keys compare them in order. | 01–24 |
+| A3 | A **unit-based** reference is recognized from `reference.mode` **before** `refscheme` is consulted. | `refscheme.reference_identity` returns `unmatchable` for unit-based references (measured on case 23). Without this rule, S9 could never fire. | 23 |
+| A4 | Rule-2 placements (identification components) **give the entity a table**. This refines S7. | Halpin places those functional fact types in the entity's table. Without this, a composite-identified entity with no other facts has no table that its identification facts could live in. | 14, 25 |
+| A5 | **Objectification (supersedes rule 3 and S8 where they differ).** Table O is keyed by O's identification from `refscheme`, because GND requires an external uniqueness for an objectified entity (measured on case 17). The objectified fact type's roles are matched to O's composite components **by player object type**. Matched roles are O's key, and the fact type is carried as `key`; unmatched roles become columns. If O's identification is unmatchable, O is keyed by the fact type's effective uniqueness (S8), not unmapped. | The validator refused case 17 as first written: "reference mode 'external' but no top-level external uniqueness constraint identifies it". Matching by player rather than by name keeps names out of it. | 17 |
+| A6 | A constraint of an unmapped fact type, and the external uniqueness of an unmapped entity, are unmapped **with the same reason**. | Otherwise the one walk would have to invent a second reason for one cause. | 18, 25 |
+| A7 | **Nullability.** Every column of an own table (rule 6), and every objectification column, is non-null: a fact instance fills all its roles. A `mandatory` is carried as `not_null` only when it is on the subject role of a rule-5 placement. Any other mandatory is `not-relational` with detail `mandatory`. This supersedes the second bullet of §6.4. | r1 said "nullable unless PK or mandatory", which would make own-table role columns nullable. | 05, 07, 10, 19 |
+| A8 | **ALTERNATE's count of functional roles** is the number of roles the object type plays that carry a confirmed alethic single-role uniqueness, in fact types not unmapped by rule 0. | r1 named the count but did not define it. | 07, 08 |
+| A9 | Under HALPIN, a symmetric 1:1 where **both roles have the same player** goes toward the first role position. | The tie-break by id is otherwise undefined. | — (no census case) |
+| A10 | The primary key of a **value-type table** is its value column, named after the value type id, with origin `("reference", <value type id>)`. | r1 named the column but not its origin. | 20 |
+| A11 | **Foreign-key name suffixes** count per (from table, to table) pair: `T__U`, then `T__U__2`. | A self-referencing junction table gets two foreign keys to one table. | 24 |
+| A12 | `unmapped` and `dispositions` are sorted by (`kind`, `id`), comparing ids as strings, so `constraints/10` sorts before `constraints/2`. | r1 said "sorted" without saying by what. | 24 |
+| A13 | Corpus models are named `cases/NN-slug/model.yaml`, not `model.orm.yaml`. | `tests/test_li0_witness_wire.py` pins the identity of every `*.orm.yaml` under `tests/fixtures` against a golden file frozen in phase LI0, and extending that historical pin is out of scope. Measured: naming them `.orm.yaml` turned that test red. | all |
+| A14 | T1's model scan covers `*.orm.yaml`, `*.orm.json` **and** the corpus `model.yaml` files. | Follows from A13. | — |
+
+**Authoring checks run (no Rmap code exists):**
+- All 25 models load through `gnd.model.load_model`.
+- `refscheme` classifies the cases as intended: 14 and 17 composite; 23
+  and 25 (district) unmatchable.
+- The 28 answer files pass a structural check: every fact type and
+  constraint appears exactly once; lists are sorted; keys name existing
+  columns; foreign keys target an existing primary key.
+- `tests/test_li0_witness_wire.py` passes after A13.

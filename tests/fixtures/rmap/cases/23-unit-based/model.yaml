@@ -1,0 +1,40 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: height
+  name: Height
+  kind: entity
+  reference:
+    mode: unit-based
+    unit: cm
+    measure_type: Length
+fact_types:
+- id: person_has_height
+  reading: '{Person} has {Height}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: height
+    role_name: height
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

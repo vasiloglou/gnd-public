@@ -1,0 +1,139 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [],
+   "id": "fact_types/person_has_age/constraints/0",
+   "kind": "constraint",
+   "reason": "derived-computed"
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_birth_year/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_nickname/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [],
+   "id": "person_has_age",
+   "kind": "fact_type",
+   "reason": "derived-computed"
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "birth_year"
+   ],
+   "id": "person_has_birth_year",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "nickname"
+   ],
+   "id": "person_has_nickname",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "person"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "birth_year",
+     "nullable": true,
+     "origin": [
+      "person_has_birth_year",
+      "birth_year"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "person_has_name",
+      "name"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "nickname",
+     "nullable": true,
+     "origin": [
+      "person_has_nickname",
+      "nickname"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "person",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "person"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": [
+  {
+   "detail": "",
+   "id": "fact_types/person_has_age/constraints/0",
+   "kind": "constraint",
+   "reason": "derived-computed"
+  },
+  {
+   "detail": "",
+   "id": "person_has_age",
+   "kind": "fact_type",
+   "reason": "derived-computed"
+  }
+ ]
+}

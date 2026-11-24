@@ -1,0 +1,64 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: supplier
+  name: Supplier
+  kind: entity
+  reference:
+    mode: popular
+    value_type: supplier_nr
+- id: supplier_nr
+  name: SupplierNr
+  kind: value
+  primitive: Integer
+- id: part
+  name: Part
+  kind: entity
+  reference:
+    mode: popular
+    value_type: part_nr
+- id: part_nr
+  name: PartNr
+  kind: value
+  primitive: Integer
+- id: project
+  name: Project
+  kind: entity
+  reference:
+    mode: popular
+    value_type: project_nr
+- id: project_nr
+  name: ProjectNr
+  kind: value
+  primitive: Integer
+- id: quantity
+  name: Quantity
+  kind: value
+  primitive: Integer
+fact_types:
+- id: supply
+  reading: '{Supplier} supplies {Part} to {Project} in {Quantity}'
+  roles:
+  - object_type: supplier
+    role_name: supplier
+  - object_type: part
+    role_name: part
+  - object_type: project
+    role_name: project
+  - object_type: quantity
+    role_name: quantity
+  constraints:
+  - type: uniqueness
+    roles:
+    - supplier
+    - part
+    - project
+    - quantity
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each supply line is recorded once.

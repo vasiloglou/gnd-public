@@ -1,0 +1,31 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: entry
+  name: Entry
+  kind: value
+  primitive: String
+- id: elapsed
+  name: Elapsed
+  kind: value
+  primitive: Integer
+fact_types:
+- id: entry_has_elapsed
+  reading: '{Entry} has {Elapsed}'
+  roles:
+  - object_type: entry
+    role_name: entry
+  - object_type: elapsed
+    role_name: elapsed
+  constraints:
+  - type: uniqueness
+    roles:
+    - entry
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

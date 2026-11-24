@@ -1,0 +1,58 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "book"
+   ],
+   "id": "fact_types/book_has_title/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "book",
+    "title"
+   ],
+   "id": "book_has_title",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "isbn",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "book"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "title",
+     "nullable": true,
+     "origin": [
+      "book_has_title",
+      "title"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "book",
+   "primary_key": [
+    "isbn"
+   ],
+   "subject": [
+    "object_type",
+    "book"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

@@ -1,0 +1,85 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: country
+  name: Country
+  kind: entity
+  reference:
+    mode: popular
+    value_type: country_code
+- id: country_code
+  name: CountryCode
+  kind: value
+  primitive: String
+- id: country_name
+  name: CountryName
+  kind: value
+  primitive: String
+- id: city
+  name: City
+  kind: entity
+  reference:
+    mode: popular
+    value_type: city_id
+- id: city_id
+  name: CityId
+  kind: value
+  primitive: Integer
+fact_types:
+- id: country_has_name
+  reading: '{Country} has {CountryName}'
+  roles:
+  - object_type: country
+    role_name: country
+  - object_type: country_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - country
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: country_has_capital
+  reading: '{Country} has capital {City}'
+  roles:
+  - object_type: country
+    role_name: country
+  - object_type: city
+    role_name: capital
+  constraints:
+  - type: uniqueness
+    roles:
+    - country
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A country has one capital.
+  - type: uniqueness
+    roles:
+    - capital
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A city is the capital of at most one country.
+  - type: mandatory
+    role: country
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Every country has a capital.
+  - type: mandatory
+    role: capital
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: This model only records capital cities.

@@ -1,0 +1,58 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "entry"
+   ],
+   "id": "fact_types/entry_has_elapsed/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "entry",
+    "elapsed"
+   ],
+   "id": "entry_has_elapsed",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "entry",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "entry"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "elapsed",
+     "nullable": true,
+     "origin": [
+      "entry_has_elapsed",
+      "elapsed"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "entry",
+   "primary_key": [
+    "entry"
+   ],
+   "subject": [
+    "object_type",
+    "entry"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

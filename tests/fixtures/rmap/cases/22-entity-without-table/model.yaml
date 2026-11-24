@@ -1,0 +1,64 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: article
+  name: Article
+  kind: entity
+  reference:
+    mode: popular
+    value_type: article_id
+- id: article_id
+  name: ArticleId
+  kind: value
+  primitive: Integer
+- id: headline
+  name: Headline
+  kind: value
+  primitive: String
+- id: tag
+  name: Tag
+  kind: entity
+  reference:
+    mode: popular
+    value_type: tag_name
+- id: tag_name
+  name: TagName
+  kind: value
+  primitive: String
+fact_types:
+- id: article_has_headline
+  reading: '{Article} has {Headline}'
+  roles:
+  - object_type: article
+    role_name: article
+  - object_type: headline
+    role_name: headline
+  constraints:
+  - type: uniqueness
+    roles:
+    - article
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: article_tagged_with_tag
+  reading: '{Article} tagged with {Tag}'
+  roles:
+  - object_type: article
+    role_name: article
+  - object_type: tag
+    role_name: tag
+  constraints:
+  - type: uniqueness
+    roles:
+    - article
+    - tag
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

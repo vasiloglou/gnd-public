@@ -1,0 +1,144 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "unique_key",
+    "car",
+    "employee_emp_nr"
+   ],
+   "id": "fact_types/employee_drives_car/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "car"
+   ],
+   "id": "fact_types/employee_drives_car/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "not_null",
+    "car",
+    "employee_emp_nr"
+   ],
+   "id": "fact_types/employee_drives_car/constraints/2",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "employee"
+   ],
+   "id": "fact_types/employee_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "car",
+    "employee_emp_nr"
+   ],
+   "id": "employee_drives_car",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "employee",
+    "name"
+   ],
+   "id": "employee_has_name",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "reg",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "car"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "employee_emp_nr",
+     "nullable": false,
+     "origin": [
+      "employee_drives_car",
+      "employee"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "employee_emp_nr"
+     ],
+     "name": "car__employee",
+     "target_columns": [
+      "emp_nr"
+     ],
+     "target_table": "employee"
+    }
+   ],
+   "name": "car",
+   "primary_key": [
+    "reg"
+   ],
+   "subject": [
+    "object_type",
+    "car"
+   ],
+   "unique_keys": [
+    [
+     "employee_emp_nr"
+    ]
+   ]
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "emp_nr",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "employee"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "employee_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "employee",
+   "primary_key": [
+    "emp_nr"
+   ],
+   "subject": [
+    "object_type",
+    "employee"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

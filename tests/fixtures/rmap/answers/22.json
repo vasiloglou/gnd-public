@@ -1,0 +1,120 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "article"
+   ],
+   "id": "fact_types/article_has_headline/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "article_tagged_with_tag"
+   ],
+   "id": "fact_types/article_tagged_with_tag/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "article",
+    "headline"
+   ],
+   "id": "article_has_headline",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "table",
+    "article_tagged_with_tag"
+   ],
+   "id": "article_tagged_with_tag",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "article_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "article"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "headline",
+     "nullable": true,
+     "origin": [
+      "article_has_headline",
+      "headline"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "article",
+   "primary_key": [
+    "article_id"
+   ],
+   "subject": [
+    "object_type",
+    "article"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "article_article_id",
+     "nullable": false,
+     "origin": [
+      "article_tagged_with_tag",
+      "article"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "tag_tag_name",
+     "nullable": false,
+     "origin": [
+      "article_tagged_with_tag",
+      "tag"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "article_article_id"
+     ],
+     "name": "article_tagged_with_tag__article",
+     "target_columns": [
+      "article_id"
+     ],
+     "target_table": "article"
+    }
+   ],
+   "name": "article_tagged_with_tag",
+   "primary_key": [
+    "article_article_id",
+    "tag_tag_name"
+   ],
+   "subject": [
+    "fact_type",
+    "article_tagged_with_tag"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

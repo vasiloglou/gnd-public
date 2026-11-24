@@ -1,0 +1,276 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "course"
+   ],
+   "id": "fact_types/course_has_title/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_course/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_course/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_student/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_for_student/constraints/1",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "enrolment"
+   ],
+   "id": "fact_types/enrolment_has_grade/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "primary_key",
+    "enrolment"
+   ],
+   "id": "fact_types/student_enrolled_in_course/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "student"
+   ],
+   "id": "fact_types/student_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "course",
+    "title"
+   ],
+   "id": "course_has_title",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "enrolment",
+    "course_course_code"
+   ],
+   "id": "enrolment_for_course",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "enrolment",
+    "student_student_nr"
+   ],
+   "id": "enrolment_for_student",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "enrolment",
+    "grade"
+   ],
+   "id": "enrolment_has_grade",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "key",
+    "enrolment",
+    "student_student_nr",
+    "course_course_code"
+   ],
+   "id": "student_enrolled_in_course",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "student",
+    "name"
+   ],
+   "id": "student_has_name",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "String",
+     "name": "course_code",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "course"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "title",
+     "nullable": true,
+     "origin": [
+      "course_has_title",
+      "title"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "course",
+   "primary_key": [
+    "course_code"
+   ],
+   "subject": [
+    "object_type",
+    "course"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "student_student_nr",
+     "nullable": false,
+     "origin": [
+      "enrolment_for_student",
+      "student"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "course_course_code",
+     "nullable": false,
+     "origin": [
+      "enrolment_for_course",
+      "course"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "grade",
+     "nullable": true,
+     "origin": [
+      "enrolment_has_grade",
+      "grade"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "student_student_nr"
+     ],
+     "name": "enrolment__student",
+     "target_columns": [
+      "student_nr"
+     ],
+     "target_table": "student"
+    },
+    {
+     "columns": [
+      "course_course_code"
+     ],
+     "name": "enrolment__course",
+     "target_columns": [
+      "course_code"
+     ],
+     "target_table": "course"
+    }
+   ],
+   "name": "enrolment",
+   "primary_key": [
+    "student_student_nr",
+    "course_course_code"
+   ],
+   "subject": [
+    "object_type",
+    "enrolment"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "student_nr",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "student"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "student_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "student",
+   "primary_key": [
+    "student_nr"
+   ],
+   "subject": [
+    "object_type",
+    "student"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

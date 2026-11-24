@@ -1,0 +1,44 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: customer
+  name: Customer
+  kind: entity
+  reference:
+    mode: popular
+    value_type: customer_id
+- id: customer_id
+  name: CustomerId
+  kind: value
+  primitive: Integer
+- id: email
+  name: Email
+  kind: value
+  primitive: String
+fact_types:
+- id: customer_has_email
+  reading: '{Customer} has {Email}'
+  roles:
+  - object_type: customer
+    role_name: customer
+  - object_type: email
+    role_name: email
+  constraints:
+  - type: uniqueness
+    roles:
+    - customer
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: One email per customer.
+  - type: mandatory
+    role: customer
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Every customer has an email.

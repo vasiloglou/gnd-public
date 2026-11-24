@@ -1,0 +1,79 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: person_name
+  name: PersonName
+  kind: value
+  primitive: String
+- id: email
+  name: Email
+  kind: value
+  primitive: String
+- id: phone
+  name: Phone
+  kind: value
+  primitive: String
+fact_types:
+- id: person_has_name
+  reading: '{Person} has {PersonName}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: person_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: person_has_email
+  reading: '{Person} has {Email}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: email
+    role_name: email
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: common-sense
+    status: proposed
+    modality: deontic
+    provenance:
+      library_entry: one-per-person
+      matched_pattern: person attribute
+    rationale: A common pattern.
+- id: person_has_phone
+  reading: '{Person} has {Phone}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: phone
+    role_name: phone
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: deontic
+    provenance:
+      user_quote: Probably one each.

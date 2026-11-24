@@ -1,0 +1,68 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: country
+  name: Country
+  kind: entity
+  reference:
+    mode: popular
+    value_type: country_code
+- id: country_code
+  name: CountryCode
+  kind: value
+  primitive: String
+- id: country_name
+  name: CountryName
+  kind: value
+  primitive: String
+fact_types:
+- id: country_has_country_code
+  reading: '{Country} has {CountryCode}'
+  roles:
+  - object_type: country
+    role_name: country
+  - object_type: country_code
+    role_name: code
+  constraints:
+  - type: uniqueness
+    roles:
+    - code
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A code names one country.
+  - type: uniqueness
+    roles:
+    - country
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A country has one code.
+  - type: mandatory
+    role: country
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Every country has a code.
+- id: country_has_name
+  reading: '{Country} has {CountryName}'
+  roles:
+  - object_type: country
+    role_name: country
+  - object_type: country_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - country
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.

@@ -1,0 +1,71 @@
+version: 1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+object_types:
+- id: person
+  name: Person
+  kind: entity
+  reference:
+    mode: popular
+    value_type: person_id
+- id: person_id
+  name: PersonId
+  kind: value
+  primitive: Integer
+- id: person_name
+  name: PersonName
+  kind: value
+  primitive: String
+- id: passport
+  name: Passport
+  kind: entity
+  reference:
+    mode: popular
+    value_type: passport_nr
+- id: passport_nr
+  name: PassportNr
+  kind: value
+  primitive: String
+fact_types:
+- id: person_has_name
+  reading: '{Person} has {PersonName}'
+  roles:
+  - object_type: person
+    role_name: person
+  - object_type: person_name
+    role_name: name
+  constraints:
+  - type: uniqueness
+    roles:
+    - person
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: Each is unique.
+- id: person_holds_passport
+  reading: '{Person} holds {Passport}'
+  roles:
+  - object_type: person
+    role_name: holder
+  - object_type: passport
+    role_name: passport
+  constraints:
+  - type: uniqueness
+    roles:
+    - holder
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A person holds at most one passport.
+  - type: uniqueness
+    roles:
+    - passport
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: A passport has one holder.

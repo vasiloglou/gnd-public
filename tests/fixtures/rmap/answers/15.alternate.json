@@ -1,0 +1,120 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "student"
+   ],
+   "id": "fact_types/student_has_gpa/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "student",
+    "gpa"
+   ],
+   "id": "student_has_gpa",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "person_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "person",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "person"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "student"
+     ]
+    },
+    {
+     "datatype": "Float",
+     "name": "gpa",
+     "nullable": true,
+     "origin": [
+      "student_has_gpa",
+      "gpa"
+     ]
+    }
+   ],
+   "foreign_keys": [
+    {
+     "columns": [
+      "person_id"
+     ],
+     "name": "student__person",
+     "target_columns": [
+      "person_id"
+     ],
+     "target_table": "person"
+    }
+   ],
+   "name": "student",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "student"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

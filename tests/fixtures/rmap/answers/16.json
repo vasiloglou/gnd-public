@@ -1,0 +1,109 @@
+{
+ "dispositions": [
+  {
+   "carried_as": [
+    "placement",
+    "employee"
+   ],
+   "id": "fact_types/employee_has_salary/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "placement",
+    "person"
+   ],
+   "id": "fact_types/person_has_name/constraints/0",
+   "kind": "constraint",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "employee",
+    "salary"
+   ],
+   "id": "employee_has_salary",
+   "kind": "fact_type",
+   "reason": null
+  },
+  {
+   "carried_as": [
+    "columns",
+    "person",
+    "name"
+   ],
+   "id": "person_has_name",
+   "kind": "fact_type",
+   "reason": null
+  }
+ ],
+ "tables": [
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "emp_nr",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "employee"
+     ]
+    },
+    {
+     "datatype": "Integer",
+     "name": "salary",
+     "nullable": true,
+     "origin": [
+      "employee_has_salary",
+      "salary"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "employee",
+   "primary_key": [
+    "emp_nr"
+   ],
+   "subject": [
+    "object_type",
+    "employee"
+   ],
+   "unique_keys": []
+  },
+  {
+   "columns": [
+    {
+     "datatype": "Integer",
+     "name": "person_id",
+     "nullable": false,
+     "origin": [
+      "reference",
+      "person"
+     ]
+    },
+    {
+     "datatype": "String",
+     "name": "name",
+     "nullable": true,
+     "origin": [
+      "person_has_name",
+      "name"
+     ]
+    }
+   ],
+   "foreign_keys": [],
+   "name": "person",
+   "primary_key": [
+    "person_id"
+   ],
+   "subject": [
+    "object_type",
+    "person"
+   ],
+   "unique_keys": []
+  }
+ ],
+ "unmapped": []
+}

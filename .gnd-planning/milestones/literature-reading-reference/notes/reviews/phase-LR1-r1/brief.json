@@ -1,0 +1,71 @@
+{
+  "base": "9a10bda1",
+  "claims": [
+    "LR1-C1: on the reported conflict, the documented steps give exactly one failing constraint, fact_types[subject_label].constraints[0], kind uniqueness, with its two rows.",
+    "LR1-C2: on the broad population they give none, exit 0.",
+    "LR1-C3: every field name the section uses, at report, constraint-verdict or derivation-verdict level, is a property of that level's definition in report.schema.json and a key of the live report at that level.",
+    "LR1-C4: a deontic-only violation is listed as a warning and not as a failure; a redacting model gives the marker and the page says so.",
+    "LR1-C5: the default gnd verify text and JSON for both sources are byte-identical before and after the phase.",
+    "LR1-C6: every exit-1 fixture gives a non-empty listing, including a derivation failure.",
+    "The page's steps are correct for every report gnd verify can emit at exit 1 under this repository's current schema, not only for the fixtures the tests use.",
+    "Every regular expression, string split, slice and special-case branch this change adds handles the whole class of input it is given, not only the examples in the tests and fixtures, and none reads structured text that a parser or an existing reader in this repository already reads."
+  ],
+  "created": "2026-11-23T20:38:29.041005+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/literature-reading-reference/notes/reviews/phase-LR1-r1/diff.patch",
+      "sha256": "fd246d1caab2cf284ab9dfee9df81350e2b7ddc9b01f371f0774c3ec0de16e59"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-reading-reference/notes/phase-LR1-spec.md",
+      "sha256": "bfb5249ee2b075a89df8b5adfb0b893b62fd2508bc50744466d1c31b4a69769b"
+    },
+    {
+      "path": "dev/components/modules/tools.md",
+      "sha256": "6688ebca9c96106092055586d1fd6159c025eb5439ee2c470fa576464cce3170"
+    },
+    {
+      "path": "docs/guides/documents.md",
+      "sha256": "8b546b80e066f2224b0ef38eea3e4a77166f909d903c8b2afce4c9d8407cd5db"
+    },
+    {
+      "path": "docs/literature/commands.md",
+      "sha256": "1b2a12be2af4759d8aecbf8314ccc87e516f51a3cc1ea4c03c20cefef4f0e334"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "03fa8b0ea7dba08ea4ce8796613639861bfe51892ffc80feb59c347a58632ffa"
+    },
+    {
+      "path": "src/gnd/skills/gnd-extract/references/extraction-contract.md",
+      "sha256": "3af890ab079323e6f6d4a3d11a8a99bcfa253051196e6fa578313f5a1da4ea08"
+    },
+    {
+      "path": "tests/test_documentation_tutorials.py",
+      "sha256": "9dfa5685b9e0e9471b14d9e9cfc8569e2306980db62c9ce04486c5943334257a"
+    },
+    {
+      "path": "tools/run_tutorials.py",
+      "sha256": "06ae7f3a7919b30faf6e67f4a02344aa3aed1e8bb7dfd68edf97d0f20ea1b156"
+    },
+    {
+      "path": "tests/test_lr1_verify_failure_listing.py",
+      "sha256": "d61b5876a36a815543c926905167f8f1cc01075b6650db96c1a6dd553907fcde"
+    },
+    {
+      "path": ".gnd-planning/milestones/literature-reading-reference/notes/literature-reading-reference-plan.md",
+      "sha256": "b07cf6895adac043d8de451c95c49a44ff0e7aac29eb5c4ab9e3b2ed076aa772"
+    }
+  ],
+  "head": "9a10bda12d8b821ded8fee6747b9db094d50d211",
+  "left_out": [],
+  "notes": [
+    "new: tests/test_lr1_verify_failure_listing.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Does this diff make the documented steps in docs/guides/documents.md list exactly the constraints and derivations a gnd verify exit 1 failed, with their rows, for every kind of report a host can receive, while leaving gnd verify's output unchanged; and can each test fail when the behaviour it names is wrong?",
+  "subject": "phase",
+  "version": 1
+}

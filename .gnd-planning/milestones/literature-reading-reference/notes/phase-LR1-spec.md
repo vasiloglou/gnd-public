@@ -1,199 +1,265 @@
-# Phase LR1 · why a source fails verification · spec r1
+# Phase LR1 · why a source fails verification · spec r2
 
 ## 1. Status
 
-**Draft, awaiting owner review. Implementable once the plan gate approves
-the plan, rules D7 and D8, and the owner signs off this spec.** Written by
-`start-milestone` on 2026-11-23; `process-phase` has not run and no owner
-gate is recorded. The spec is written for D7 (a) and D8 (a), the plan's
-proposals; §7 says what changes under the other readings.
+**r2, 2026-11-23, written by `process-phase` under `auto=true`.** r1 was the
+draft `start-milestone` wrote against plan r2. r2 brings the spec to plan r4
+(both panel rounds' fixes), rules the open rows of §7 and replaces r1's
+page reader. The spec gate is recorded in the phase record once the plan gate
+is ruled; no code is written before that.
 
 ## 2. Provenance
 
-- Derives from [plan r2](literature-reading-reference-plan.md), Goal (LR1),
-  §0 (R0.1, R0.3, R0.6), §1 (H1–H6, H19, H20, H22), §2 (LR1), §4 (LR1-C1 to
-  LR1-C5), §9 (the LR1 lane) and §10 (D7, D8). The plan is not reviewed and
-  not approved.
+- Derives from [plan r4](literature-reading-reference-plan.md): Goal (LR1),
+  §0 (R0.1, R0.3, R0.6), §1 (H1–H6, H19, H20, H22, H23, H25), §2 (LR1),
+  §3 (LR1 homes and fixtures), §4 (LR1-C1 to LR1-C6), §5, §9 and §10 (D7,
+  D8).
 - From [#226](https://github.com/vasiloglou/gnd-public/issues/226), request
   3.
-- No review has read these bytes.
-- Code and pages were read at `548b9a1d`. The probe of plan H2 to H4 was run
-  on that commit on 2026-11-23.
+- The probe of H2–H4 was re-run at `11a7ebf7` on 2026-11-23 with the
+  command H2 states. H23 and H25 were read at `11a7ebf7`.
+
+Changes from r1 `(r2)`:
+
+- The documented steps also list failing derivations (H23, LR1-C6).
+- The page's example is a runnable tutorial block. r1 proposed reading the
+  page through `parsed_blocks` (LR1-D3 (a)); that reader only reads
+  `gnd-run` blocks and refuses a page with none, so r1's design could not
+  be built. Executing the block is the stronger check and needs no new
+  reader.
+- The skill cites the guide by absolute URL (H25).
+- The deontic, redacting and derivation fixtures are named (§8).
 
 ## 3. Obligations
 
 | Source | Obligation | Discharged in |
 |---|---|---|
-| plan H1; #226 request 3 | a host can see which constraint failed, on which rows, per source | §6 (the section); T1 |
-| plan H2 | the JSON report already carries each failing verdict with `constraint_ref`, `constraint_type`, `modality`, `message` and `offending_facts` | §6 (the steps name these fields); T1, T3 |
-| plan H3 | the text output prints the constraint and message, not the rows | §6 (the section says to use `--format json` for rows); LR1-D2 |
-| plan H4 | the declared constraint id is not in the report; `--rule-ids` is refused on `gnd verify` | §6 (the section says how to find the constraint from `constraint_ref`); LR1-D2 |
-| plan H5 | a redacting model replaces the message and the rows with markers | §6; T5 |
-| plan H6 | no page shows the steps for a verify report | §6 |
-| plan H19, R0.1, LR1-C5 | the default verify text and JSON keep their bytes | §6 ("What does not change"); T6 |
-| plan H20 | exit 1 and the deontic case are pinned; nothing lists rows for verify | T1, T4 |
-| plan R0.3 | no fidelity rate enters the verify payload | §6 ("What does not change") |
-| plan R0.6, D8 | one home for the steps; other pages cite it | §6; T7 |
-| LR1-C1 | the reported conflict gives one failing constraint with its two rows | T1 |
-| LR1-C2 | the broad population gives none, exit 0 | T2 |
-| LR1-C3 | every field name the page uses is in the schema and in a live report | T3 |
-| LR1-C4 | a deontic-only violation is a warning, not a failure; a redacting model gives the marker | T4, T5 |
-| plan §9 | the LR1 lane, the guard block, `uv run ruff check src tests tools` | §8, closing paragraph |
-| `AGENTS.md`, "General solutions, not pattern-matched ones" | read structured text with its parser | §4; §8 (how the test reads the page) |
+| plan H1; #226 request 3 | a host can see which constraint failed, on which rows, per source | §6; T1 |
+| plan H2 | the steps name only fields the report carries; the model's include is staged beside it | §6; T1, T3, the runnable block |
+| plan H3 | the text output prints no rows | §6 step 7 |
+| plan H4 | the declared id is not in the report | §6 step 3 |
+| plan H5 | a redacting model hides message and rows | §6 step 6; T5 |
+| plan H6 | no page shows the steps | §6 |
+| plan H19, R0.1, LR1-C5 | default verify bytes unchanged | §6 "What does not change"; T6 |
+| plan H20 | nothing lists rows for verify today | T1, T4 |
+| plan H23, LR1-C6 | a derivation failure also exits 1 and is listed | §6 step 4; T8 |
+| plan H25 | the skill links the guide by absolute URL | §6 citing lines; guard block |
+| plan R0.3 | no rate enters the verify payload | §6 |
+| plan R0.6, D8 | one home for the steps | §6; T7 |
+| LR1-C1 … C6 | the criteria | T1, T2, T3, T4/T5, T6, T8 |
+| plan §9 | the LR1 lane, the guard block, `uv run ruff check`, the component-index check | §8 Gate |
+| `AGENTS.md`, general solutions | read structured text with its parser | §4 |
 
 ## 4. The standing rules, bound to this phase
 
-- **Totality (project rule 1).** The phase adds no consumer of untrusted
-  input to the package. The test's reader of the page takes a file this
-  repository writes; it reads the fenced block through the tutorial
-  runner's own parser (`tools/run_tutorials.py:37`, `parsed_blocks`), not a
-  new pattern.
-- **A cap bounds the document, not the algorithm (rule 2).** Inapplicable:
-  no work proportional to an input is added.
-- **Validation order (rule 3).** Inapplicable: no refusal is added and none
-  moves.
-- **One walk for N kinds (rule 4).** The documented steps are one filter
-  over `verdicts` that serves every constraint family. The page has no
-  per-family recipe; T1 and T4 use two families.
-- **One home for normative prose (rule 5).** "Reading a failed
-  verification" lives in `docs/guides/documents.md` (D8 (a)).
-  `extraction-contract.md` §5 keeps its table and gains one line that cites
-  the section; `docs/literature/commands.md` gains one line. T7 fails if a
-  second page restates the field list.
-- **Measurement, not argument (rule 6).** What the report carries was
-  settled by running it (plan H2 to H4), not by reading the builder.
-- **General solutions (`AGENTS.md`).** The steps select by the report's own
-  fields (`verdict`, `modality`), never by a constraint's name, a message's
-  wording or a fixture's ids. The test decodes JSON with the JSON loader and
-  compares decoded values.
-- **Plan R0.1, R0.3, R0.6:** T6; §6; T7. **R0.2, R0.4, R0.5** concern LR3's
-  figures, fixtures and live run; this phase reads the packaged reading run
-  and changes none of its bytes.
+- **Totality (1).** No package code changes. The test decodes reports with
+  `json.loads` and reads the schema with `json.load`.
+- **Cap bounds the document (2).** Inapplicable: no work proportional to an
+  input is added.
+- **Validation order (3).** Inapplicable: no refusal is added or moved.
+- **One walk for N kinds (4).** The steps are one filter over `verdicts`
+  and one over `derivations`, by the report's own fields, for every
+  constraint family; no per-family recipe. T1 (uniqueness), T4 (value
+  range), T8 (a derivation) reach three kinds.
+- **One home (5).** The steps live in `docs/guides/documents.md`. The skill
+  page and the literature commands page cite it in one line each and
+  restate no field list; T7 holds that.
+- **Measurement (6).** The report's fields were settled by running it
+  (H2–H4), and the page's example is executed, not compared by eye.
+- **General solutions (`AGENTS.md`).** The page block and the test select
+  by `verdict`, `modality` and the array they sit in, never by a
+  constraint's id, message or a fixture value. No regular expression is
+  added. The page's example is read by the tutorial runner's existing
+  grammar (`tools/run_tutorials.py:17`, the `gnd-run` marker), which states
+  the whole grammar of the block it reads. The field names of §6 step 3 are
+  a list in the test checked against the schema and the live report, not
+  scraped from prose.
 
 ## 5. Goal
 
 A reader of `docs/guides/documents.md` who runs the documented steps on a
-source that `gnd verify` exits 1 on gets each failing constraint with its
-violating rows; on the reading example's reported conflict that is one
-constraint and two rows, and on its broad population none. `gnd verify`
-prints byte-identical text and JSON before and after. The focused lane, the
-guard block and `uv run ruff check src tests tools` exit 0.
+source `gnd verify` exits 1 on gets each failing constraint or derivation
+with its rows. On the reading example's reported conflict that is one
+constraint and two rows; on its broad population, none. `gnd verify`'s
+default text and JSON are byte-identical before and after. The LR1 lane, the
+guard block, `uv run ruff check` and the component-index check exit 0.
 
 ## 6. Design
 
 ### Reuse
 
-| Capability | Searches | Found | Decision |
+| Capability | Search | Found | Decision |
 |---|---|---|---|
-| list a failed constraint and its rows | `components_index.py search "verify population"`; `git grep -n "offending_facts" docs src/gnd` | `export.verification` builds the report; the verdict already carries `offending_facts` (plan H2) | reuse: nothing is built in the package |
-| a failing source that ships with the package | `components_index.py search "literature reading"`; `git grep -n "reported-conflict" src/gnd/examples` | `examples.literature_reading`: the reported conflict, verified at exit 1 by the example itself (`reading.py:404-406`) | reuse as the test's input |
-| read a fenced block out of a page | `git grep -n "def parsed_blocks" tools` | `tools/run_tutorials.py:37` | reuse in the test |
+| list a failed constraint and its rows | `components_index.py search "verify population"`; `git grep offending_facts docs src/gnd` | the report already carries them (H2) | reuse; nothing built in the package |
+| a failing source that ships | `search "literature reading"` | `examples.literature_reading`: the reported conflict, exit 1 (`reading.py:404-406`) | reuse as the page's and test's input |
+| execute a page's example and compare its output | `git grep -n "def groups" tools` | `tools/run_tutorials.py` groups and `run_pages`; `tests/test_documentation_tutorials.py::test_documented_learning_path` | reuse: one new group |
+| a deontic-only violation | `git grep -n deontic_only tests/test_verify_cli.py` | `tests/test_verify_cli.py:309-336` | reuse its model and mutation |
+| a derivation failure | `git grep -n '"derivations"\]' tests` | the book tutorial fixtures (`tests/test_bookrec_tutorial.py:125-147`) | reuse the smallest failing derivation fixture the spec's implementation finds there; if none is reachable without the tutorial run, author one model with one derivation in the test |
 
-### `docs/guides/documents.md` (about +35 lines)
+### `docs/guides/documents.md`: "Reading a failed verification" (about +45 lines)
 
-A new section after "Ask an agent to extract, then verify its output",
-titled "Reading a failed verification". It states, in this order:
+After "Ask an agent to extract, then verify its output":
 
-1. Exit 1 means at least one alethic constraint failed. Run the command
-   with `--format json`.
-2. The failing constraints are the entries of `verdicts` whose `verdict` is
-   `fail` and whose `modality` is `alethic`.
-3. For each one: `constraint_ref` says where the constraint is declared in
-   the model (`fact_types[<fact type id>].constraints[<n>]` for a constraint
-   written inside a fact type, `constraints[<n>]` at the top level), so the
-   constraint's own `id` is at that address in the file that declares it,
-   which for an include root can be an included file;
-   `constraint_type` names its kind; `message` says what it requires and
-   what broke it; `offending_facts` lists the violating rows, one object per
+1. Exit 1 means at least one alethic constraint or derivation failed. Run
+   the same command with `--format json`. A model that includes another
+   file needs it at the path its `includes` names, beside the model.
+2. The failing constraints are the `verdicts` whose `verdict` is `fail` and
+   whose `modality` is `alethic`.
+3. Each names where it is declared by `constraint_ref`
+   (`fact_types[<fact type>].constraints[<n>]`, or `constraints[<n>]` at
+   the top level; the constraint's own `id` is at that address in the file
+   that declares it, which for an include can be the included file), its
+   kind by `constraint_type`, what it requires and what broke it in
+   `message`, and the violating rows in `offending_facts`, one object per
    row with its role values.
-4. A `warning` verdict is a deontic violation. It does not change the exit.
-5. If the model redacts a role, `message` and `offending_facts` hold a
-   marker in place of the values.
-6. The text output prints the same constraints and messages without the
-   rows.
-7. One fenced example: the command on the literature reading example's
-   reported conflict, and the one verdict it returns, trimmed to the five
-   fields above.
+4. The failing derivations are the `derivations` whose `verdict` is `fail`.
+   Each names itself by `derivation_ref` and lists its `findings`.
+5. A `warning` verdict is a deontic violation and does not change the exit.
+6. A model that redacts a role shows a marker in `message` and one marker
+   row in `offending_facts`. Whether the rows are shown is the disclosure
+   mode's rule, whose home is `docs/reference/disclosure.md`: the step
+   links it and names `--unredacted` and `GND_DISCLOSURE=internal`, and
+   restates no table (plan r4).
+7. The text output prints the same constraints and messages without rows.
+8. One runnable block (`<!-- gnd-run expect=0 -->`, Python): it runs the
+   reading example into the working folder, stages `reading.orm.json` and
+   its vocabulary beside the conflict population, runs `gnd verify … --format
+   json` with `--no-extraction`, applies steps 2 and 4, and prints each
+   listed entry's `constraint_ref`, `constraint_type` and rows. The `text`
+   block under it shows the output, which the runner compares.
 
-The sentence "checker acceptance is not proof of faithfulness" stays where
-it is (`extraction-contract.md:152`); the section links to it and adds no
-rate (R0.3).
+The section links `extraction-contract.md`'s "checker acceptance is not
+proof of faithfulness" and adds no rate (R0.3).
 
-### Citing lines (2 lines)
+### Citing lines
 
-- `src/gnd/skills/gnd-extract/references/extraction-contract.md`, §5, the
-  row "The checker found an alethic violation": its last cell gains "see
-  Reading a failed verification in the documents guide".
-- `docs/literature/commands.md`, beside the line that shows the conflicting
-  labels' exits: one sentence with the same link.
+- `src/gnd/skills/gnd-extract/references/extraction-contract.md` §5, row
+  "The checker found an alethic violation", last cell: "; to list the
+  failing constraints and their rows, see [Reading a failed
+  verification](https://vasiloglou.github.io/gnd-public/guides/documents/#reading-a-failed-verification)".
+  The packaged manifest digest moves; `tests/test_packaged_skills.py` (guard
+  block) holds the new bytes through its regeneration path.
+- `docs/literature/commands.md`, after the line that prints the conflicting
+  labels' exits: one sentence with a relative link to the section.
+
+### Tutorial runner (outside the plan's LR1 homes, said in the PR)
+
+- `tools/run_tutorials.py` `groups()`: a new group `failed-verification:
+  [docs/guides/documents.md]`.
+- `tests/test_documentation_tutorials.py`: the group joins the
+  `test_documented_learning_path` parameter list.
 
 ### What does not change
 
-`gnd verify`, its payload, its schema version (7), its text and its exits;
-`report.schema.json`; the reading example and its fixture. No source file
-under `src/gnd` changes except the one packaged reference page, whose
-manifest digest `tests/test_packaged_skills.py` holds.
+`gnd verify`, its payload, schema version 7, text and exits;
+`report.schema.json`; the reading example, its fixtures and its recorded
+outputs (R0.4). No file under `src/gnd` changes except the one packaged
+reference page.
 
-## 7. Decisions
+## 7. Decisions, ruled under `auto=true`
 
-Every row is open.
-
-| ID | Question | Readings and their cost | Proposed |
-|---|---|---|---|
-| LR1-D1 | The home of the section (plan D8) | (a) `docs/guides/documents.md`: where a reader already runs the command; the packaged skill cites a site page. (b) `extraction-contract.md` §5: travels with the installed skill, and the site page cites the package. (c) `docs/reference/cli.md`: beside the exit table, away from the worked example | (a) |
-| LR1-D2 | Does `gnd verify` change (plan D7) | (a) no: a page and a test, about 35 page lines and 150 test lines. (b) the text output also prints each failing verdict's rows: about 15 source lines in the renderer, every text golden of a failing verify changes, and LR1-C5 narrows to JSON. (c) `gnd verify` accepts `--rule-ids`: the verdict then carries the constraint's declared id, the opt-in payload follows `gnd check`'s version 15, and step 3 of the section shrinks to one field | (a). No exit code differs between the three |
-| LR1-D3 | How the test reads the page | (a) through the tutorial runner's block parser, comparing the page's example verdict with the live one field by field. (b) add the page to a tutorial group so the runner executes its command: the example then needs a population file on disk in the tutorial's working folder | (a); (b) if the owner wants the command itself executed from the page |
-| LR1-D4 | Which fields the example shows | the five of step 3, or the whole verdict object (nine serialized fields, H2) | the five; the section names the other four in one sentence |
+| ID | Question | Ruling |
+|---|---|---|
+| LR1-D1 (plan D8) | home of the section | (a) `docs/guides/documents.md`, as the plan gate rules D8 |
+| LR1-D2 (plan D7) | does `gnd verify` change | (a) no, as the plan gate rules D7 |
+| LR1-D3 `(r2)` | how the page is held | the runnable block executed by the tutorial runner (r1's reading (b)), plus the field-name list in the test. r1's (a) is withdrawn: `parsed_blocks` reads only `gnd-run` blocks (§2) |
+| LR1-D4 | which fields the example prints | `constraint_ref`, `constraint_type` and the rows; `message` is named in the steps and not printed, because the example's message is long and the runner compares output byte for byte |
 
 ## 8. Tests
 
-New file `tests/test_lr1_verify_failure_listing.py`, default lane. A fixture
-runs the packaged reading example once into a temporary folder and copies
-its model, vocabulary, `reported-conflict.population.json` and
-`broad.population.json` beside each other. `listing(report)` in the test is
-the documented steps: the `verdicts` with `verdict == "fail"` and
-`modality == "alethic"`.
+New file `tests/test_lr1_verify_failure_listing.py`, default lane. Every
+subprocess runs with `GND_DISCLOSURE` removed from its environment unless a
+case sets it. A module fixture runs the packaged reading example once into a temporary
+folder and stages `reading_fixture/reading.orm.json` and
+`depth_fixture/vocabulary.orm.json` beside its populations. `listing(report)`
+is steps 2 and 4: `verdicts` with `verdict == "fail"` and
+`modality == "alethic"`, plus `derivations` with `verdict == "fail"`.
 
 | # | Case | Expected |
 |---|---|---|
-| T1 | `gnd verify MODEL reported-conflict.population.json --no-extraction --format json` | exit 1; `listing` has one entry: `constraint_ref` `fact_types[subject_label].constraints[0]`, `constraint_type` `uniqueness`, and two `offending_facts` whose `subject` values are equal and whose `label` values differ. The declared constraint at that address, in the included vocabulary, has id `subject_has_one_label` |
-| T2 | the same on `broad.population.json` | exit 0; `listing` is empty |
-| T3 | every field name the section's step 3 and its example use | each is a property of the verdict in `src/gnd/report.schema.json` and a key of T1's live verdict. The page's example verdict equals T1's verdict on those fields |
-| T4 | a model with one deontic uniqueness constraint and a population that violates it (the case of `tests/test_verify_cli.py:309`) | exit 0; `listing` is empty; one verdict is `warning` |
-| T5 | T1's model with `redact: true` on the `label` role, the include re-pinned | exit 1; `listing` has the entry; its `message` and `offending_facts` hold the redaction marker and no label value |
-| T6 | T1 and T2 in text and in JSON, at the phase base and at the head | byte-identical. Held in the phase record by digest; in the test, the JSON key set and the text's first lines equal the values written in the test at the base |
-| T7 | the field list of step 3 | appears in `docs/guides/documents.md` once and in no other page under `docs/` or `src/gnd/skills/`; the two citing lines link to the section |
+| T1 | `gnd verify` on `reported-conflict.population.json`, `--no-extraction --format json` | exit 1; one entry: `constraint_ref` `fact_types[subject_label].constraints[0]`, `constraint_type` `uniqueness`, two `offending_facts` with equal `subject` and different `label`. The constraint at that address in the staged vocabulary has id `subject_has_one_label` |
+| T2 | the same on `broad.population.json` | exit 0; empty listing |
+| T3 | the field names of steps 2–4 and 6 (a list in the test: `verdicts`, `verdict`, `modality`, `constraint_ref`, `constraint_type`, `message`, `offending_facts`, `derivations`, `derivation_ref`, `findings`) | each is a property at its level in `src/gnd/report.schema.json`, each occurs in the section's text, and each verdict-level name is a key of T1's live verdict (derivation-level names of T8's) |
+| T4 | the deontic-only case of `tests/test_verify_cli.py:309` | exit 0; empty listing; one `warning` verdict |
+| T5 | a copy of the staged vocabulary with `redact: true` on the `subject_label` fact type, and a copy of the reading model whose include pins the new digest | exit 1; one entry; `message` is the redaction marker and `offending_facts` one marker row; no label value in the payload. The same run with `--unredacted`, and once more under `GND_DISCLOSURE=internal`, shows the two rows |
+| T6 | T1 and T2, text and JSON, default flags | the SHA-256 of each output equals the value pinned in the test, measured at the phase base `11a7ebf7` |
+| T7 | the section | the field list appears in `docs/guides/documents.md` only; the skill page and `docs/literature/commands.md` each link the section once |
+| T8 | a population that fails one derivation | exit 1; the listing holds that derivation by `derivation_ref`, with non-empty `findings` (LR1-C6) |
+| T9 | the runnable block | `test_documented_learning_path[failed-verification]` exits 0 with the shown output |
 
-Branch table. The documented filter has three branches: an alethic failure
-(listed), a deontic violation (not listed), a pass (not listed). T1, T4 and
-T2 reach them. The redacted reading of a listed entry is T5. Every branch
-has a case that fails if the filter selects by anything other than the two
-fields.
+Branch table. The filter has four outcomes: an alethic constraint failure
+(T1), a derivation failure (T8), a deontic violation (T4), a pass (T2). The
+redacted reading of a listed entry is T5. A filter that selects by anything
+but `verdict`, `modality` and the array fails one of them.
 
-Gate: the plan §9 LR1 lane with this file, the guard block of `project.md`
-(the phase changes files outside `.gnd-planning/`),
-`uv run ruff check src tests tools`, and
+Gate:
+
+```bash
+uv run pytest -q tests/test_lr1_verify_failure_listing.py tests/test_verify_cli.py tests/test_ld3_reading_workflow.py tests/test_documentation_tutorials.py --tb=short
+```
+
+plus the guard block of `project.md`, `uv run ruff check`, and
 `python3 scripts/components_index.py changed --base origin/main --strict`.
+The phase changes no module, so no component entry changes; if the check
+asks for one, the record says why.
 
-## 9. Out of scope for this phase
+## 9. Out of scope
 
-- Any change to `gnd verify` (LR1-D2 (b) and (c)), unless the owner rules
-  one in.
-- A summary across many sources. A host loops over its sources.
-- Why the reporter's 280 rows are unanchored (#226): that is the anchor
-  sidecar's coverage, which LR2's page addresses.
+- Any change to `gnd verify` (plan D7 (b), (c)).
+- A summary across many sources.
+- Why the reporter's rows are unanchored (LR2's page).
 - The quote rule (LR2) and the reference figures (LR3).
-- A constraint too strict for the data against a reading error: the section
-  shows the constraint and the rows; which of the two is wrong is the
-  host's judgment.
 
 ## 10. Size
 
-Estimate at write time: about 37 page lines (35 in the guide, 2 citing
-lines), 0 source lines, about 150 test lines. The record states the measured
-figures.
+Estimate: about 50 page lines, 2 citing lines, 2 runner lines, 0 package
+source lines, about 200 test lines. The record states the measured figures.
 
 ## 11. Approval instrument
 
-This prose. The expected answers are exits, one constraint reference, row
-counts and field names stated in §8; there is no separate answer key.
+This prose and the expected exits, references, row counts and field names
+of §8.
+
+## 12. Spec gate
+
+Delegated approval (`auto=true`), 2026-11-23. Authorization: the owner's
+milestone delegation recorded in [001-plan-gate.md](../001-plan-gate.md).
+Instrument: this prose (§11); no spec review was run, because none settles a
+concrete uncertainty the gate holds open, and the phase-diff review (one
+reviewer in a different tool, the owner's ruling) follows implementation.
+Budget: no paid call. Compatibility: `gnd verify` bytes unchanged (LR1-C5);
+the packaged `gnd-extract` reference page changes by one cell, and its
+manifest digest moves. The rulings of §7 are the gate's. The SHA-256 of these
+bytes is in the phase record. Implementation findings are appended below as
+§13.
+
+## 13. Implementation findings
+
+Appended after the gate; the gated bytes are the SHA-256 the phase record
+names.
+
+- **F1, `derivations` is `null`.** For a model that declares no derivation,
+  the report's `derivations` is `null`, not `[]`. The page's example first
+  read it as a list and raised `TypeError`. The page now says so in step 3,
+  and both the page block and `listing` read `report["derivations"] or []`.
+  T1 and T9 reach it.
+- **F2, `outcome` was not named.** T3 failed on the first draft: the prose
+  never named `outcome`, which the field list claims. The page now says the
+  report's `outcome` is `violated`. The test, not the page's draft, was the
+  authority.
+- **F3, the step order.** The page numbers its steps 1–6 with the runnable
+  example after them, where §6 drafted eight steps with the example as the
+  eighth; the content is the same.
+- **F4, affected consumers widened.** `tests/test_public_extraction_prose_policy.py`
+  and `tests/test_extract_guidelines.py` read `extraction-contract.md`, so
+  they join the lane.
+- **F5, review-driven changes (rounds 1 and 2).** The page's selection is
+  a function, `failed`, that the test reads from the page's block and
+  executes, and the runnable block's output is compared (`output=stdout`);
+  T3 compares the keys the page's code reads with the listed set; T5 pins
+  the markers; the section splitter is gone. Step 2 now says
+  `constraint_ref` addresses the composed model and maps it back through
+  `gnd flatten`'s record, and no longer lists witness shapes as a closed
+  set. T10 and T11 add a mandatory and a ring witness. §6's step 3 wording
+  ("the constraint's own `id` is at that address in the file that declares
+  it") was wrong for include roots; this finding refutes it.

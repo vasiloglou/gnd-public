@@ -71,6 +71,103 @@ malformed, or stale sidecars produce input refusal at band `3`. Read the
 was authored directly and never extracted, explicitly use `--no-extraction`;
 the report records that the extraction path was skipped.
 
+## Reading a failed verification
+
+Exit `1` means at least one alethic constraint or derivation failed. To see
+which ones, and on which rows, run the same command with `--format json`;
+the report's `outcome` is then `violated`. A model that includes another
+file needs that file at the path its `includes` entry names, next to the
+model.
+
+1. The failing constraints are the entries of `verdicts` whose `verdict` is
+   `fail` and whose `modality` is `alethic`.
+2. Each one gives the constraint's address in `constraint_ref`:
+   `fact_types[<fact type>].constraints[<n>]` for a constraint on a fact
+   type, `constraints[<n>]` for one at the top level. The address is in the
+   model `gnd verify` composed. For a model without includes that is the
+   file you wrote. For a model with includes, the root's constraints and the
+   included ones are composed into one list, so the position can differ from
+   the file that declared the constraint. `gnd flatten MODEL --out DIR`
+   writes a `gnd-flattening/1` record whose `origins` map each composed
+   address to the file that declared it (`origin`), its address there
+   (`original_address`) and its `id` (`element_id`); a fact type's composed
+   position is the origin whose `element_id` is the fact type
+   ([the record's format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md)).
+   `constraint_type` names the kind, `message` says what the constraint
+   requires and what broke it, and `offending_facts` lists the witnesses of
+   the violation. A witness's shape depends on the kind of constraint: the
+   violating facts as objects of role values for the uniqueness failure
+   below, for instance, or a bare instance for a mandatory constraint it
+   does not meet. Read each witness with `message`, which says what it is.
+3. The failing derivations are the entries of `derivations` whose `verdict`
+   is `fail`. Each names itself in `derivation_ref` and lists what went
+   wrong in `findings`. `derivations` is `null` for a model that declares
+   none.
+4. A `warning` verdict is a deontic violation. It is reported and does not
+   change the exit.
+5. A model can mark roles as sensitive. Then `message` holds a marker and
+   `offending_facts` holds one marker row, in place of the values. Whether
+   you can see the values (`--unredacted`, or `GND_DISCLOSURE=internal`) is
+   set by the [disclosure mode](../reference/disclosure.md).
+6. The text output (without `--format json`) prints the same constraints and
+   messages, but not the rows.
+
+The packaged literature reading example writes a population with two labels
+for one subject, which breaks a uniqueness constraint. These steps list it:
+
+<!-- gnd-run expect=0 output=stdout -->
+```python
+import json
+import shutil
+import subprocess
+import sys
+from importlib.resources import files
+
+
+def failed(report):
+    """Steps 1 and 3: the failing constraints, then the failing derivations."""
+    constraints = [v for v in report["verdicts"] if v["verdict"] == "fail" and v["modality"] == "alethic"]
+    derivations = [d for d in report["derivations"] or [] if d["verdict"] == "fail"]
+    return constraints, derivations
+
+
+# The literature reading example writes a population that breaks one rule.
+subprocess.run([sys.executable, "-m", "gnd.examples.literature.reading", "run", "--out", "run"],
+               capture_output=True, check=True)
+# The model includes a vocabulary file; both go in the same folder.
+example = files("gnd").joinpath("examples", "literature")
+for part, name in (("reading_fixture", "reading.orm.json"), ("depth_fixture", "vocabulary.orm.json")):
+    shutil.copyfile(example.joinpath(part, name), f"run/{name}")
+
+done = subprocess.run(["gnd", "verify", "run/reading.orm.json", "run/reported-conflict.population.json",
+                       "--no-extraction", "--format", "json"], capture_output=True, text=True)
+report = json.loads(done.stdout)
+print("exit:", done.returncode, report["outcome"])
+constraints, derivations = failed(report)
+for verdict in constraints:
+    print(verdict["constraint_ref"], verdict["constraint_type"])
+    for witness in verdict["offending_facts"]:
+        print("  ", witness)
+for derivation in derivations:
+    print(derivation["derivation_ref"])
+    for finding in derivation["findings"]:
+        print("  ", finding)
+```
+
+```text
+exit: 1 violated
+fact_types[subject_label].constraints[0] uniqueness
+   {'subject': 'alanine-in-vacuum', 'label': 'Alanine dipeptide observation'}
+   {'subject': 'alanine-in-vacuum', 'label': 'Conflicting reported label'}
+```
+
+The flattening record of this model maps
+`fact_types[subject_label].constraints[0]` to the included vocabulary's
+`subject_has_one_label`. Which side is wrong, the data or the
+constraint, is yours to judge: the report shows the rule and the rows. A
+passing report is still not proof that the extraction is faithful; see the
+[extraction contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-extract/references/extraction-contract.md#5-failure-semantics).
+
 ## Bind important values to source spans
 
 An `anchored` constraint checks whether populated role values have witnesses

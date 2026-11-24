@@ -1,0 +1,261 @@
+{
+ "schema_version": 1,
+ "run_sha256": "d3ae6e7574339404c8d72ed5969cec5b82731038d4a9744ef7d9bbbd18b9f7e6",
+ "summary": "Second and final round, over plan r3. Three of six seats succeeded (Claude, Codex, GLM), exactly the quorum; Qwen timed out, Gemini and Kimi returned no schema-valid response. All three voted revise and none raised a blocking concern. Claude and GLM found all seven round-one fixes resolved; Codex found five resolved and two incomplete. Three concerns reached agreement: the interim #226 reply has no LR2 home (Claude, Codex, GLM); the example's second verify path and its extraction sidecar are missing from H9 and LR2-C5 (Claude, Codex); D1 (d)'s 'extend' contradicts R0.4 and the LR3 lane omits the corpus tests (Claude, GLM). The driving agent confirmed the conflict path (reading.py:395), the disclosure table (docs/reference/disclosure.md:20) and the corpus tests' existence. Claude and GLM share one CLI codebase, so two of the three successes are weaker evidence of independence.",
+ "agreed_concerns": [
+  {
+   "group_id": "interim-reply-home",
+   "severity": "low",
+   "title": "D5's interim #226 reply has no LR2 home, and section 5 still says the close drafts it",
+   "summary": "The r3 fix to D5 did not reach section 3's LR2 row or section 5.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "issue-reply-timing-split"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "interim-reply-unassigned"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-interim-reply-home-unreconciled"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "lr2-example-verify-paths",
+   "severity": "medium",
+   "title": "H9 and LR2-C5 describe only the joined-sections path; the reported conflict verifies conflict.txt, and the example does write an extraction sidecar",
+   "summary": "The README sentence LR2-C5 requires must name both verify paths and say 'no anchor sidecar', not 'no sidecar'.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-example-sidecar-wording"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr2-conflict-document-scope"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "lr3-corpus-extend-vs-r04",
+   "severity": "medium",
+   "title": "D1 (d)'s 'extend the corpus' contradicts R0.4 and section 5, and the LR3 lane omits the corpus's own tests",
+   "summary": "Either reuse without changing the corpus's pinned bytes, or amend R0.4 and widen the lane.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-corpus-extend-vs-r04"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-lr3-lane-omits-corpus-tests"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "lr1-redaction-disclosure-mode"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "lr1-c3-derivation-level"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "plan-gate-owner-vs-delegation"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "glm:r3-extraction-contract-bare-path"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-interim-reply",
+   "rank": 1,
+   "title": "Give the interim reply an LR2 home and make section 5 name both drafts",
+   "action": "Add notes/issue-reply.md to LR2's homes; section 5: interim draft when LR2 merges, final draft at close.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "issue-reply-timing-split"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "interim-reply-unassigned"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-interim-reply-home-unreconciled"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "issue-reply-timing-split",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "interim-reply-unassigned",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-interim-reply-home-unreconciled",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-example-verify-paths",
+   "rank": 2,
+   "title": "Describe both verify paths of the example and say 'no anchor sidecar'",
+   "action": "H9 and LR2-C5: broad and targeted verify the joined attempted sections, the reported conflict verifies conflict.txt; each writes an extraction sidecar binding its document by digest and no anchor sidecar.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-example-sidecar-wording"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr2-conflict-document-scope"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-example-sidecar-wording",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr2-conflict-document-scope",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "fix-corpus-reuse-only",
+   "rank": 3,
+   "title": "Limit D1 (d) to reuse that keeps the corpus's pinned bytes",
+   "action": "D1 (d) reuses the corpus or adds an overlay beside it, changing none of corpus/, answers/ or expected/ (R0.4 holds); the LR3 lane adds tests/test_li1_literature_corpus.py and tests/test_li1_assurance_report.py.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-corpus-extend-vs-r04"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-lr3-lane-omits-corpus-tests"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-corpus-extend-vs-r04",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-lr3-lane-omits-corpus-tests",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-lr1-disclosure-and-levels",
+   "rank": 4,
+   "title": "Cite the disclosure home from LR1, pin GND_DISCLOSURE in the test, check derivation-level names against their own definition",
+   "action": "LR1's step on redaction cites docs/reference/disclosure.md (`--unredacted`, `internal`); the redacting fixture edits the vocabulary copy and re-pins the include; LR1-C3 checks three levels (report, constraint verdict, derivation verdict) from a listed set of names.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr1-redaction-disclosure-mode"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr1-c3-derivation-level"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr1-redaction-disclosure-mode",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr1-c3-derivation-level",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ]
+  },
+  {
+   "fix_id": "fix-plan-gate-wording",
+   "rank": 5,
+   "title": "Say the plan gate is ruled under delegation, D6 is the owner's and D3 stays the owner's",
+   "action": "Reword section 8's plan-gate line; full skill path in R0.3 and H6.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "plan-gate-owner-vs-delegation"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-extraction-contract-bare-path"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "plan-gate-owner-vs-delegation",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "glm:r3-extraction-contract-bare-path",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ]
+}

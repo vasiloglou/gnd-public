@@ -1,0 +1,490 @@
+{
+ "schema_version": 1,
+ "run_sha256": "24c570d4a176390b4eec57b55f95d1844d5e057642e87011f096990d8e7c6ada",
+ "summary": "First round over plan r2. Five of six seats succeeded (Claude, Codex, Qwen, Kimi, GLM); Gemini's output was malformed. Codex voted block; Claude, Qwen, Kimi and GLM voted revise. Four concerns reached agreement: LR2 misdescribes the packaged example's verify document (Claude, Codex, Qwen); the lint gate and H22 are stale against project.md (Codex, Kimi); D7 (b) changes the default text (Codex, GLM); and section 1 paths lack the src/gnd/ prefix (Claude, Kimi, GLM). The driving agent re-checked the contested facts: Qwen's claim that verdicts carry no `verdict` field is refuted by the live report (`\"verdict\": \"fail\"`); Kimi's claim that includes resolve against the working directory is refuted (a run from the parent directory exits 1), though the vocabulary must be staged beside the model because it lives in depth_fixture; whole-repository ruff exits 0; derivation failures do set exit 1 (_reports.py:113-116); assurance_report.py does report precision and recall against an answer key. Claude and GLM share one CLI codebase; Kimi's response is retained as incomplete (nothing dropped).",
+ "agreed_concerns": [
+  {
+   "group_id": "lr2-example-document-scope",
+   "severity": "high",
+   "title": "LR2 says the packaged example verifies against one shown section; it verifies the attempted sections of a pass joined, with no sidecar",
+   "summary": "H9 is right and section 2 LR2 contradicts it. The pages and the example's README must describe the joined document accurately, and the first-section test is a host configuration, not the example's behaviour.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-example-document-mischaracterized"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr2-packaged-document-scope"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr2-example-readme-home-without-criterion"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "qwen"
+   ]
+  },
+  {
+   "group_id": "lr1-gates-vs-project-rules",
+   "severity": "high",
+   "title": "The lint gate and its justification (H22) are stale, and the phase gates do not match project.md",
+   "summary": "Whole-repository `uv run ruff check` exits 0 again after the dev-tools re-sync, and project.md names it as the lint gate; H22 and every gate line still name the narrower `ruff check src tests tools`.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "phase-gates-conflict-with-project-rules"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-h22-lint-staleness"
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "group_id": "d7b-changes-default-text",
+   "severity": "medium",
+   "title": "D7 (b) prints rows in the default text output, against R0.1, LR1-C5 and section 5",
+   "summary": "Only (c) is opt-in as written; (b) would change default text bytes.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d7b-default-text-conflict"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr-plan-r2-d7b-default-bytes-contradiction"
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "h-rows-missing-src-prefix",
+   "severity": "low",
+   "title": "H8 to H21 cite examples/literature/... without the src/gnd/ prefix",
+   "summary": "The line numbers are right under src/gnd/examples/literature/; the prefix is wrong.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h8-h21-paths-missing-src-prefix"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-path-prefix"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr-plan-r2-examples-path-citations"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "lr3-existing-labelled-corpus-overlooked"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "lr1-derivation-failures-unlisted"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "d4-span-overlap-has-no-fact-span"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "d8-home-outside-packaged-skill"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "lr2-c3-refusal-cause-unpinned"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "lr1-verdict-field-name-not-in-h2"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "lr1-c3-verdict-only-field-scope"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "lr1-c4-fixtures-not-named"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "lr2-index-passage-claim-unreconciled"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "lr2-c1-no-verification-mechanism"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "lr3-d9-prompts-vs-h16-and-homes"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "lr1-probe-not-reproducible-from-plan"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "extraction-contract-citations-vs-start-commit"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "section3-writers-vs-lr1-homes"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "issue-reply-timing-and-lr3-fallback"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "lr2r2-include-staging"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "fix-lr2-document-scope",
+   "rank": 1,
+   "title": "Describe the example's verify document as the attempted sections of a pass joined, with no sidecar; make the LR2 test pin the span branch",
+   "action": "Rewrite section 2 LR2 and H9's use: the example verifies the joined attempted sections and writes no anchor sidecar, so it is not a model for anchoring; the README says so (new LR2-C5). LR2-C3 uses a sidecar whose document_sha256 names the first section and asserts the 'source span or excerpt differs' reason.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-example-document-mischaracterized"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr2-packaged-document-scope"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr2-example-readme-home-without-criterion"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-c3-refusal-cause-unpinned"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-example-document-mischaracterized",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "lr2-packaged-document-scope",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr2-example-readme-home-without-criterion",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr2-c3-refusal-cause-unpinned",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-gates",
+   "rank": 2,
+   "title": "Name whole-repository `uv run ruff check` as the lint gate and keep the component-index check",
+   "action": "Amend H22, the goal and sections 4 and 9: lint gate is `uv run ruff check` (exits 0 at 11a7ebf7). The component-index check stays, per project.md's later 'Component index' section, AGENTS.md and the sibling plans; record that project.md's earlier 'no component index' line is stale (not this plan's to edit).",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "phase-gates-conflict-with-project-rules"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-h22-lint-staleness"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "phase-gates-conflict-with-project-rules",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-h22-lint-staleness",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-d7b-opt-in",
+   "rank": 3,
+   "title": "Make D7 (b) explicitly a change to the default text that would need R0.1 and LR1-C5 re-ruled",
+   "action": "State in D7 and section 5 that (b) changes default text bytes and would amend R0.1 and LR1-C5; (c) is opt-in. (a) stays proposed.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d7b-default-text-conflict"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr-plan-r2-d7b-default-bytes-contradiction"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "d7b-default-text-conflict",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr-plan-r2-d7b-default-bytes-contradiction",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-paths",
+   "rank": 4,
+   "title": "Use src/gnd/-prefixed paths in section 1",
+   "action": "Prefix H8, H9, H11, H13, H15, H16 and H21 with src/gnd/examples/literature/.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h8-h21-paths-missing-src-prefix"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-path-prefix"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr-plan-r2-examples-path-citations"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "h8-h21-paths-missing-src-prefix",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-path-prefix",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "lr-plan-r2-examples-path-citations",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "fix-lr3-existing-corpus",
+   "rank": 5,
+   "title": "Add the packaged literature regression corpus and assurance scorer to D1 and D4",
+   "action": "Correct the component-index row (assurance_report.py reports precision and recall against an answer key), add D1 option (d) reuse or extend the regression corpus and its answer key, and have D4 relate its rule to the existing semantic-support and source-binding metrics; also state that a produced fact has only its section span unless LH1 adds one, and that D9's prompts come from LH2's settings only if LH2 records them.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-existing-labelled-corpus-overlooked"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-span-overlap-has-no-fact-span"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr3-d9-prompts-vs-h16-and-homes"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "issue-reply-timing-and-lr3-fallback"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr3-existing-labelled-corpus-overlooked",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d4-span-overlap-has-no-fact-span",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr3-d9-prompts-vs-h16-and-homes",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "issue-reply-timing-and-lr3-fallback",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen"
+   ]
+  },
+  {
+   "fix_id": "fix-lr1-steps",
+   "rank": 6,
+   "title": "Cover derivation failures, staging, fixtures and the page's field scope in LR1",
+   "action": "LR1 lists failing derivations too (new criterion: every exit-1 fixture gives a non-empty listing, with a derivation-failure case); write the exact probe command with the vocabulary staged beside the model; name the deontic and redaction fixtures; widen LR1-C3 to report-level and verdict-level names; record that the D8 home is cited from the packaged skill by absolute URL; LR1 changes no index.md.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr1-derivation-failures-unlisted"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d8-home-outside-packaged-skill"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-c3-verdict-only-field-scope"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-c4-fixtures-not-named"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-probe-not-reproducible-from-plan"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "section3-writers-vs-lr1-homes"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "extraction-contract-citations-vs-start-commit"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-include-staging"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "lr1-derivation-failures-unlisted",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "d8-home-outside-packaged-skill",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-c3-verdict-only-field-scope",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-c4-fixtures-not-named",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr1-probe-not-reproducible-from-plan",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "section3-writers-vs-lr1-homes",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "extraction-contract-citations-vs-start-commit",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "lr2r2-include-staging",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "kimi"
+   ]
+  },
+  {
+   "fix_id": "fix-lr2-pages",
+   "rank": 7,
+   "title": "Reconcile index.md:11 and give LR2-C1 a test",
+   "action": "LR2 rewrites index.md:11's 'tied to its passage' sentence to cite the anchor rule, and tests/test_lr2_quote_scope.py reads the pages for one statement and the citations.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr2-index-passage-claim-unreconciled"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr2-c1-no-verification-mechanism"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr2-index-passage-claim-unreconciled",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "lr2-c1-no-verification-mechanism",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ]
+  }
+ ]
+}

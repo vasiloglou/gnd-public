@@ -103,6 +103,11 @@ the next one.
   `gnd evolve apply` now parses each model text once per reader. Before, an
   `apply` parsed the same two texts 22 times. Every preview, record, message
   and exit is unchanged ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
+- **Reading a failed verification.** The documents guide shows how to list
+  the constraints and derivations a `gnd verify` exit 1 failed, with the
+  violating rows, from the JSON report, with a runnable example on the
+  literature reading example's conflicting labels. `gnd verify` itself is
+  unchanged ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
 
 ## 0.4.0 (2026-11-17)
 

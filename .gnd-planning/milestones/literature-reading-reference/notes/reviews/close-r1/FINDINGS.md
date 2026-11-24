@@ -15,4 +15,4 @@ If the review returned no findings, replace the table with the line: No findings
 
 | Id | Finding | Reproduced | Class | Disposition | Repaired at | Notes |
 |---|---|---|---|---|---|---|
-| codex-1 | close-results says the gates re-ran in the close record, which did not exist at the reviewed commit | yes (no 006 record at 8baf0eda) | completeness | fixed | the close record's commit | 006-milestone-close.md records the gate run at 8baf0eda verbatim (evidence/close/final-gate.txt) |
+| codex-1 | close-results says the gates re-ran in the close record, which did not exist at the reviewed commit | yes (no 006 record at 8baf0eda) | completeness | fixed | 38fcfd14 | 006-milestone-close.md records the gate run at 8baf0eda verbatim (evidence/close/final-gate.txt) |

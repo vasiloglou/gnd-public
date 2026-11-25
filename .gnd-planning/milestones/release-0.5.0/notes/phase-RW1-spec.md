@@ -329,6 +329,20 @@ SHA-256 of the spec bytes it covers.
 > Ossie block comes first and the PyRel block second. The owner chose among
 > one-line descriptions of the four; the owner has not read this spec.
 
+> **Second ruling: delegated approval (auto=true), 2026-11-25.** Approved
+> r7 of this spec at SHA-256
+> c2f7efed1d26e52209e87ace093fae15bc896f7856393e08f0cc3613b3c6ea6d (commit
+> `4d2d8325`) for implementation, with the handling list of §13. Source:
+> the owner's request "Release 0.5.0" and the owner's selection of delegated
+> approval on 2026-11-23. Decisions: D1 0.5.0; D2 has no subject (M5 is
+> empty); D3 and D5 as before; D4 as the owner ruled, which reorders the
+> outline of §6 (the Ossie block first, the PyRel block second); D6 yes, a
+> moved bullet keeps its wording and links. Budget: about 86 new or changed
+> lines and about 135 moved; one six-shard lane on beast-3; one independent
+> reviewer in a different tool, by the review helper. Instrument: this
+> prose and §13. Nothing in this ruling builds, uploads, tags or releases.
+> This ruling is not the owner's reading of the spec.
+
 ## 8. Tests
 
 | ID | Case | Expected |

@@ -74,5 +74,21 @@ number in the prose of tutorial, how-to and explanation pages.
   passed), the docs tests of this milestone and the `ossie` tutorial group
   (114 passed), the strict site build and the link check.
 
-The full default lane has still not been run by this milestone. The release
-session's six-shard run is the only one.
+**The full default lane was then run** on this branch at `e194e573`, on
+beast-3 (uv 0.13.7, not the uv that `release.yml` pins), in six shards from a
+clean checkout of that commit:
+
+| Shard | Result |
+|---|---|
+| 0 | 3196 passed, 174 deselected, 2 errors |
+| 1 | 4322 passed, 49 deselected |
+| 2 | 2849 passed, 238 deselected |
+| 3 | 4204 passed, 219 deselected |
+| 4 | 3649 passed, 13 skipped, 104 deselected |
+| 5 | 3778 passed, 256 deselected |
+| **Sum** | **21,998 passed, 0 failed, 2 errors** |
+
+The two errors are `tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks`
+and `::test_declared_synth_extra_is_seeded_and_loader_valid`, the lane's known
+errors on main. The release session measured 21,994 passed and 1 failed on
+main at `e8359685`; this run has that failure repaired and three new tests.

@@ -80,6 +80,8 @@ the identical helpers, run with `process-phase RF2 code-refactoring`.
 recorded; closed by the owner on candidate
 [018](milestones/code-refactoring/018-close-candidate.md) r2, with predicate 3 not met for five
 helper groups accepted as residuals. The text above is the status of 2026-10-05.
+Carried items are tracked in issues #297 to #308
+([carried-issues.md](milestones/code-refactoring/notes/carried-issues.md)).
 
 ## pyrel-agent-loop — opened, 2026-10-14
 

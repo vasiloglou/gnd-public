@@ -1,0 +1,16 @@
+[
+  {
+    "name": "AttemptRecord",
+    "path": "src/gnd/exp/session_records.py",
+    "predecessor_sha256": "26dbcae8eedd633e29390ad05e4b2536629140bce2982e29b623fffd1e82360a",
+    "ast_sha256": "438c9fd5b826dd40398e128234c826cda2798d1caa27523c10208aa4b5f43afe",
+    "reason": "F5 shares the bounded evidence JSON entry point. The per-concrete-type subclass dispatch controls are in tests/test_refactoring_session_contracts.py."
+  },
+  {
+    "name": "SessionResult",
+    "path": "src/gnd/exp/session_records.py",
+    "predecessor_sha256": "d576cb9fff2404aa6fbbc43ab5ffd38f72b63e0d2901c279053318a2c04b1c71",
+    "ast_sha256": "970c30b638bda56b82f67b69397d488f1a40e5817ae726a21ced3bfdaa15c809",
+    "reason": "F5 shares the bounded evidence JSON entry point. The per-concrete-type subclass dispatch controls are in tests/test_refactoring_session_contracts.py."
+  }
+]

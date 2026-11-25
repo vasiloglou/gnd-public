@@ -401,6 +401,12 @@ waited for is on main. RW1 of release-0.5.0 is resumed: its spec is revised
 against `e8359685` and E1 runs again. Nothing is bumped. The release plan's
 §14 records it, with how it reads that milestone's unrecorded close ruling.
 
+Status, 2026-11-25, later: RW1 is implemented on its branch and recorded
+([002-phase-RW1.md](milestones/release-0.5.0/002-phase-RW1.md)): version
+0.5.0, one 0.5.0 notes section, prepared and not published. Its pull request
+waits for the owner's merge. Pull request 275 recorded the Ossie milestone's
+close ruling and is merged. Nothing is built, uploaded, tagged or released.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

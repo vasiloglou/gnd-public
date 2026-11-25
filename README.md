@@ -49,7 +49,7 @@ final state either way.
 Requires Python 3.11 or newer. With [uv](https://docs.astral.sh/uv/getting-started/installation/):
 
 ```sh
-uv tool install get-nick-done==0.4.0
+uv tool install get-nick-done==0.5.0
 uv tool update-shell
 ```
 

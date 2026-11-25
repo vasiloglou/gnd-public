@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Versions that exist on the package index. Publication adds the new version
 # here, in the same patch that moves the install pins (historical data: the one
 # literal of its kind in the tests).
-RELEASED = {"0.1.0", "0.2.0", "0.3.0", "0.4.0"}
+RELEASED = {"0.1.0", "0.2.0", "0.3.0", "0.4.0", "0.5.0"}
 
 # Versions released as a GitHub tag only, never uploaded to the package index.
 # A tag-only version is newer than every published one and is never pinned; the

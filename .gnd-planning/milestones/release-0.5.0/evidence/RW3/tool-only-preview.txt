@@ -1,0 +1,9 @@
+changed 8 files: README.md, docs/installation.md, docs/index.md, docs/marketplace-plugins.md, docs/release-notes.md, docs/compatibility.md, docs/support.md, tests/test_release_version.py
+stale: docs/bookrec/08-guarded-rules.md: GND 0.4.0 includes all commands in this chapter. Case generation needs
+stale: docs/bookrec/09-suggested-rules.md: GND 0.4.0 includes guarded-join discovery and constants in mined rules.
+stale: docs/bookrec/09-suggested-rules.md: GND 0.4.0 includes GR-D1 through GR-D12.
+stale: docs/expense/05-receipts.md: GND 0.4.0 includes identity decisions, fixed reference lists, and separate
+stale: docs/literature/index.md: GND 0.4.0 lets you build one checked ontology over many papers. The agent
+stale: docs/literature/index.md: 0.4.0, run for real. The reading agent's answers are saved in the
+stale: docs/marketplace-plugins.md: version 0.5.0, which is prepared and not published. To use that plugin,
+Tool-only publish exit: 1

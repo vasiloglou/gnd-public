@@ -1,0 +1,99 @@
+diff --git a/docs/bookrec/08-guarded-rules.md b/docs/bookrec/08-guarded-rules.md
+index 006cfdec..75476118 100644
+--- a/docs/bookrec/08-guarded-rules.md
++++ b/docs/bookrec/08-guarded-rules.md
+@@ -18,8 +18,8 @@ Each step answers one question about a guarded rule:
+ 
+ !!! note "Where these commands ship"
+ 
+-    GND 0.4.0 includes all commands in this chapter. Case generation needs
+-    the optional `synth` extra. See the
++    GND 0.4.0 and later include all commands in this chapter. Case generation
++    needs the optional `synth` extra. See the
+     [installation guide](../installation.md) for the published runtime and
+     [synthetic data guide](../guides/synthetic-data.md#generate-examples-for-guarded-rules)
+     for the optional extra.
+diff --git a/docs/bookrec/09-suggested-rules.md b/docs/bookrec/09-suggested-rules.md
+index 52bd0e34..ffde6ba0 100644
+--- a/docs/bookrec/09-suggested-rules.md
++++ b/docs/bookrec/09-suggested-rules.md
+@@ -15,8 +15,9 @@ preview and apply it, as in [chapter 6](06-evolution.md).
+ 
+ !!! note "Where these commands ship"
+ 
+-    GND 0.4.0 includes guarded-join discovery and constants in mined rules.
+-    See the [installation guide](../installation.md) for the published runtime.
++    GND 0.4.0 and later include guarded-join discovery and constants in mined
++    rules. See the [installation guide](../installation.md) for the published
++    runtime.
+ 
+ Continue in the directory of chapter 8; this chapter starts from its
+ `bookrec-rules/rules.orm.yaml`. No miner, model account or network connection
+@@ -434,7 +435,7 @@ the expense context where one exists.
+ | GR-D11 (issue 182) | typed constants in mined rules | [Import a mined rule that names a genre](#import-a-mined-rule-that-names-a-genre) |
+ | GR-D12 (issue 183) | say when a guarded rule matched nothing; warn on an out-of-domain literal | [Chapter 8: binding counts](08-guarded-rules.md#ask-each-guard-how-many-bindings-it-had) and [the validation warning](08-guarded-rules.md#let-validation-catch-the-typo) |
+ 
+-GND 0.4.0 includes GR-D1 through GR-D12.
++GND 0.4.0 and later include GR-D1 through GR-D12.
+ 
+ ### Earlier requests, shipped
+ 
+diff --git a/docs/expense/05-receipts.md b/docs/expense/05-receipts.md
+index 152d22af..4a7898a8 100644
+--- a/docs/expense/05-receipts.md
++++ b/docs/expense/05-receipts.md
+@@ -18,9 +18,9 @@ an agent conversation.*
+ 
+ !!! note "Where this ships"
+ 
+-    GND 0.4.0 includes identity decisions, fixed reference lists, and separate
+-    reading and checking models. See the [installation guide](../installation.md)
+-    for the published runtime.
++    GND 0.4.0 and later include identity decisions, fixed reference lists, and
++    separate reading and checking models. See the
++    [installation guide](../installation.md) for the published runtime.
+ 
+ !!! info "Files on GitHub"
+ 
+diff --git a/docs/literature/index.md b/docs/literature/index.md
+index 139c95af..2c552ad9 100644
+--- a/docs/literature/index.md
++++ b/docs/literature/index.md
+@@ -7,8 +7,8 @@ paper may say a method was *evaluated*, not *built on*. It may quote
+ someone else's claim, or deny it. Two fields may give two different
+ methods the same name.
+ 
+-GND 0.4.0 lets you build one checked ontology over many papers. The agent
+-still does the reading. GND keeps each claim tied to its passage in the
++GND 0.4.0 and later let you build one checked ontology over many papers. The
++agent still does the reading. GND keeps each claim tied to its passage in the
+ document version it was read from ([where a quote may lie](../reference/anchors.md#where-a-span-may-lie)), refuses
+ to join names nobody decided, and proves or refuses every answer. This
+ page follows one stack of sixteen papers from eleven fields through three
+@@ -22,8 +22,8 @@ acts.
+ 
+ !!! note "What is real on this page"
+ 
+-    Every result below comes from the packaged literature example in GND
+-    0.4.0, run for real. The reading agent's answers are saved in the
++    Every result below comes from the packaged literature example, run for
++    real. The reading agent's answers are saved in the
+     example, so you get the same results without a model account. The
+     *You ask* boxes show how you would phrase each step to Claude Code. The
+     [commands page](commands.md) reproduces every result in about a
+diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
+index bbf2faf5..f3740ba1 100644
+--- a/docs/marketplace-plugins.md
++++ b/docs/marketplace-plugins.md
+@@ -6,9 +6,8 @@ marketplace commands below. Python 3.11 or newer is required.
+ See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
+ for the pip virtual-environment alternative.
+ 
+-The command below installs the published runtime. The plugin on `main` is
+-version 0.5.0, which is prepared and not published. To use that plugin,
+-install the runtime from the same commit as shown in [Updates](#updates).
++The command below installs the published runtime. When using a plugin from
++another commit, match its runtime as [Updates](#updates) describes.
+ 
+ ```sh
+ uv tool install get-nick-done==0.5.0

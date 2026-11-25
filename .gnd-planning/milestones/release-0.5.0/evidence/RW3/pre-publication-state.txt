@@ -1,0 +1,32 @@
+2026-11-25T17:27:15Z
+{"defaultBranchRef":{"name":"main"},"visibility":"PUBLIC"}
+44d866df77607a1384b7b97cb9c197bc669afebf	refs/heads/main
+75eda93f314e7ef82578ab4ee212d5e6d964fd71	refs/tags/v0.1.0
+d84ad6d5cca021aa572751223d7c640d2b261055	refs/tags/v0.2.0
+7c0f4d0e320ff7976296d785077280d180ea688e	refs/tags/v0.2.0^{}
+257a8bb3cc0ec5f0746e95d72b5d11cb5acdb185	refs/tags/v0.3.0
+4c07c0e6a623263048cb675d237046ebb239cb32	refs/tags/v0.3.0^{}
+5fe5852473465ea718f67088143a425f3492bb20	refs/tags/v0.3.1
+aff85c6764a3ef58f4eaed47fff57afacb4f20f6	refs/tags/v0.3.1^{}
+a6ad5b534bc5c668079fa309bc74f69a67c22852	refs/tags/v0.4.0
+648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a	refs/tags/v0.4.0^{}
+GitHub environments:
+["github-pages"]
+release.yml runs:
+[]
+GitHub releases:
+[{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-17T15:23:59Z","tagName":"v0.4.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-11T15:38:27Z","tagName":"v0.3.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-09T03:19:04Z","tagName":"v0.2.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-10-12T04:06:31Z","tagName":"v0.1.0"}]
+PyPI files:
+[{"filename": "get_nick_done-0.1.0-py3-none-any.whl", "sha256": "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183", "yanked": false}, {"filename": "get_nick_done-0.1.0.tar.gz", "sha256": "f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86", "yanked": false}, {"filename": "get_nick_done-0.2.0-py3-none-any.whl", "sha256": "e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4", "yanked": false}, {"filename": "get_nick_done-0.2.0.tar.gz", "sha256": "f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104", "yanked": false}, {"filename": "get_nick_done-0.3.0-py3-none-any.whl", "sha256": "143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b", "yanked": false}, {"filename": "get_nick_done-0.3.0.tar.gz", "sha256": "5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42", "yanked": false}, {"filename": "get_nick_done-0.4.0-py3-none-any.whl", "sha256": "36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c", "yanked": false}, {"filename": "get_nick_done-0.4.0.tar.gz", "sha256": "2c171ccccc891333a580c3fe01c4b79ac5d3e5098af20827977a6ce455a229b6", "yanked": false}]
+0.5.0 version endpoint HTTP 404
+Workflow diff v0.4.0..origin/main for .github: empty
+Shipped-path diff 85d076ba..origin/main (src PYPI.md pyproject.toml LICENSE NOTICE): empty
+Retained bundle on the planning machine:
+release/get_nick_done-0.5.0-py3-none-any.whl: OK
+release/get_nick_done-0.5.0.tar.gz: OK
+comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
+85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
+ 3578846 release/get_nick_done-0.5.0-py3-none-any.whl
+ 2673541 release/get_nick_done-0.5.0.tar.gz
+ 3578846 comparison/get_nick_done-0.5.0-py3-none-any.whl
+ 9831233 total

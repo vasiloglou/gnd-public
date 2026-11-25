@@ -409,7 +409,8 @@ def test_t13_identification_differs_is_listed_not_guessed(tmp_path):
 
 
 def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
-    """E5: `order` and `select` are legal names; quoted and uppercased they are not keywords."""
+    """E5: `order` and `select` are legal names; quoted they are not keywords. OB5: Ossie reads
+    `select` as a name that cannot stand unquoted, so it is kept as written; `order` is uppercased."""
     document = corpus.load_yaml(MODEL_01)
     document["object_types"] += [
         {"id": "select", "name": "Select", "kind": "entity", "independent": True,
@@ -428,7 +429,7 @@ def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
     customer = next(d for d in semantic["datasets"] if d["name"] == "customer")
     assert {"name": "group_order", "expression": {"sql": '"GROUP_ORDER"'}, "datatype": "Integer"} in customer["fields"]
     select = next(e for e in mapping["concept_mappings"] if e["concept"] == "Select")
-    assert select["object_mappings"] == [{"expression": '"SELECT"."ORDER"'}]
+    assert select["object_mappings"] == [{"expression": '"select"."ORDER"'}]
     links = next(e for e in mapping["concept_mappings"] if e["concept"] == "Customer")["link_mappings"]
     assert links[-1]["children"] == [{
         "object_mapping": {"concept": "Select", "expression": '"CUSTOMER"."GROUP_ORDER"'}, "relationship": "from"}]
@@ -437,8 +438,8 @@ def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
 def test_t14_quoting_escapes_an_embedded_quote():
     from gnd.export.ossie_relational import _quoted
 
-    assert _quoted('a"b') == '"A""B"'
-    assert corpus.quoted_identifiers(_quoted('a"b') + "." + _quoted("c")) == (['A"B', "C"], "?.?")
+    assert _quoted('a"b') == '"a""b"'  # OB5: a name with a quote is not regular, so it is kept as written
+    assert corpus.quoted_identifiers(_quoted('a"b') + "." + _quoted("c")) == (['a"b', "C"], "?.?")
 
 
 def test_t15_the_datatype_map_covers_every_primitive(tmp_path):
@@ -581,3 +582,34 @@ def test_r1_f4_references_are_iris_of_the_written_file_names(name):
         parts = urlsplit(reference["iri"])
         assert (parts.scheme, parts.netloc, parts.query, parts.fragment) == ("", "", "", "")
         assert parts.path.startswith("./") and unquote(parts.path[2:]) == written
+
+
+# --- OB5: identifiers Ossie keeps as written (the oracle-lane finding) ---------------------
+
+#: (name, the quoted form Ossie's normalized-identifier rule needs). Measured with the pinned
+#: validator; tests/test_ossie_external_oracle.py holds the rule to it over a generated set.
+QUOTED_FORMS = [
+    ("refund", '"REFUND"'), ("customer_code", '"CUSTOMER_CODE"'), ("a$b", '"A$B"'), ("été", '"ÉTÉ"'),
+    ("straße", '"STRASSE"'), ("from", '"FROM"'), ("order", '"ORDER"'), ("_x", '"_X"'), ("x9", '"X9"'),
+    ("uni.student", '"uni.student"'), ("a b", '"a b"'), ("a\tb", '"a\tb"'), ("a\u00a0b", '"a\u00a0b"'),
+    ("a-b", '"a-b"'), ("9lives", '"9lives"'), ("a\"b", '"a\"\"b"'), ("a/b", '"a/b"'), ("a~b", '"a~b"'),
+    ("select", '"select"'), ("Select", '"Select"'), ("NOT", '"NOT"'), ("not", '"not"'),
+    ("selects", '"SELECTS"'), ("not_", '"NOT_"'),
+]
+
+
+@pytest.mark.parametrize(("name", "quoted"), QUOTED_FORMS)
+def test_ob5_an_identifier_is_quoted_in_ossies_normalized_form(name, quoted):
+    from gnd.export.ossie_relational import _quoted
+
+    assert _quoted(name) == quoted
+
+
+def test_ob5_which_names_are_regular_identifiers():
+    from gnd.export.ossie_relational import is_regular_identifier
+
+    regular = ["refund", "A", "a$b", "été", "from", "order", "_", "x9", "selects", "not_", "ſ"]
+    kept = ["", "uni.student", "a b", "a\nb", "a\u2028b", "a\u3000b", "9", "9lives", "a-b", 'a"b', "NOT", "sElEcT",
+            *(f"a{c}b" for c in "!\"#%&'()*+,-./:;<=>?@[\\]^`{|}~")]
+    assert [name for name in regular if not is_regular_identifier(name)] == []
+    assert [name for name in kept if is_regular_identifier(name)] == []

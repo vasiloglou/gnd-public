@@ -96,6 +96,14 @@ def _validators(mapping_schema: Path):
     )
 
 
+def normalized(name: str) -> str:
+    """Ossie's normalized identifier for a declared NAME, written here independently of
+    the exporter: uppercased when the name can stand unquoted, else as written."""
+    unquotable = (not name or name[0].isascii() and name[0].isdigit() or name.upper() in ("NOT", "SELECT")
+                  or any(c.isspace() or (c.isascii() and not c.isalnum() and c not in "$_") for c in name))
+    return name if unquotable else name.upper()
+
+
 def quoted_identifiers(expression: str) -> tuple[list[str], str]:
     """Lex SQL quoted identifiers: the names, and the text with each replaced by ``?``.
 
@@ -146,7 +154,7 @@ def cross_check(ontology, semantic, mapping) -> list[str]:
         for key in [dataset.get("primary_key", []), *dataset.get("unique_keys", [])]:
             assert set(key) <= set(own), (dataset["name"], key)
         for field in dataset["fields"]:
-            assert quoted_identifiers(field["expression"]["sql"]) == ([field["name"].upper()], "?")
+            assert quoted_identifiers(field["expression"]["sql"]) == ([normalized(field["name"])], "?")
     related = [r["name"] for r in semantic.get("relationships", [])]
     assert len(related) == len(set(related)), "duplicate relationship name"
     for r in semantic.get("relationships", []):
@@ -155,7 +163,7 @@ def cross_check(ontology, semantic, mapping) -> list[str]:
 
     assert mapping["ontology_ref"]["name"] == ontology["name"]
     assert mapping["semantic_model_ref"]["name"] == semantic["name"]
-    declared = {(d.upper(), f.upper()) for d, own in fields.items() for f in own}
+    declared = {(normalized(d), normalized(f)) for d, own in fields.items() for f in own}
     components = {c["concept"]: c for c in ontology["ontology"]}
 
     def ancestors(concept):
@@ -272,7 +280,7 @@ def check(number: str, mapping_schema: Path) -> None:
             (c["name"], c["datatype"]) for c in table["columns"]
         ]
         assert [f["expression"] for f in dataset["fields"]] == [
-            {"sql": f'"{c["name"].upper()}"'} for c in table["columns"]
+            {"sql": '"' + normalized(c["name"]).replace('"', '""') + '"'} for c in table["columns"]
         ]
         assert dataset["custom_extensions"] == [{"vendor_name": "GND", "data": '{"source_kind":"logical"}'}]
         relationships += [

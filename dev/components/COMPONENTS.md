@@ -1646,8 +1646,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.ossie_relational
-- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational].
-- verbs: ossie semantic model, ossie mapping, dataset, field, relationship, concept mapping, object mapping, referent mapping, link mapping, quoted identifier, datatype map, custom extension, identification differs, subtype absorbed, unmapped links, validate against pinned schemas, offline schema registry
+- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational; is_regular_identifier].
+- verbs: ossie semantic model, ossie mapping, dataset, field, relationship, concept mapping, object mapping, referent mapping, link mapping, quoted identifier, regular identifier, normalized identifier, datatype map, custom extension, identification differs, subtype absorbed, unmapped links, validate against pinned schemas, offline schema registry
 - in: a RelationalSchema, its dispositions and the OntologyView of the same export run
 - out: semantic model and mapping documents (dicts)
 - status: canonical
@@ -1655,7 +1655,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: infra.artifacts, infra.input_policy, model.relational_mapping
 - used_by: export.ossie, export.physical_binding
 - tests: tests/test_ossie_relational.py, tests/test_physical_binding.py
-- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection. The same builders serve a physical binding: field types and source_kind come from the binding, and the extension gains its members.
+- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection. The same builders serve a physical binding: field types and source_kind come from the binding, and the extension gains its members. An identifier is quoted in Ossie's normalized form: uppercased when regular, else as written (OB5).
 
 
 ### export.physical_binding
@@ -2736,7 +2736,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### tools.ossie_oracle
 - does: Run pinned Ossie tools in isolated subprocesses and compare converter declarations with the exported ontology.
-- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology, validate with a chosen pinned schema, semantic model and mapping validation
+- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology, validate with a chosen pinned schema, semantic model and mapping validation, declared name normalization of the pinned validator
 - status: canonical
 - modules: tools/ossie_oracle.py, tools/ossie_consumer.py
 - uses: (none)

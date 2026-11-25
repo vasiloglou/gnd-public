@@ -382,11 +382,12 @@ Run the pinned standalone Ossie validator and parser without runtime dependencie
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieOracle` | class | 26 | (no docstring) |
-| `OssieOracle.check_pins(self) -> None` | method | 29 | (no docstring) |
-| `OssieOracle.validate(self, path, schema) -> subprocess.CompletedProcess[str]` | method | 48 | Run the pinned validator; ``schema`` is a path inside the pinned ossie checkout. |
-| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 58 | (no docstring) |
-| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 140 | Emit PyRel source in the isolated process, without executing that source. |
+| `OssieOracle` | class | 31 | (no docstring) |
+| `OssieOracle.check_pins(self) -> None` | method | 34 | (no docstring) |
+| `OssieOracle.validate(self, path, schema) -> subprocess.CompletedProcess[str]` | method | 53 | Run the pinned validator; ``schema`` is a path inside the pinned ossie checkout. |
+| `OssieOracle.declared_names(self, names) -> list[list[str]]` | method | 63 | For each declared name: the pinned validator's normalized form, and the name |
+| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 73 | (no docstring) |
+| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 155 | Emit PyRel source in the isolated process, without executing that source. |
 
 ## tools.plan_app_bot — `tools/plan_app_bot.py`
 Components: unassigned

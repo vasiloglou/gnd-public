@@ -85,10 +85,35 @@ def extension_data(payload: Any) -> str:
     return canonical_json_bytes(payload).decode("utf-8").removesuffix("\n")
 
 
+#: ASCII punctuation that cannot stand in an unquoted identifier: all of it but ``$`` and ``_``.
+_NOT_IN_REGULAR = frozenset("!\"#%&'()*+,-./:;<=>?@[\\]^`{|}~")
+#: The two words Ossie's reader never takes as an unquoted name, in any case.
+_NEVER_REGULAR = frozenset({"NOT", "SELECT"})
+
+
+def is_regular_identifier(name: str) -> bool:
+    """Whether Ossie reads NAME as a regular identifier, one that can be written unquoted.
+
+    Ossie compares a regular identifier by its uppercased form and keeps any other
+    name exactly as written (core-spec expression_language.md, "normalized
+    identifier"). The class is the pinned validator's, measured over every character
+    (OB5): no white space, no ASCII punctuation but ``$`` and ``_``, no leading ASCII
+    digit, and not the word NOT or SELECT.
+    """
+    return (
+        bool(name)
+        and name[0] not in "0123456789"
+        and not any(character.isspace() or character in _NOT_IN_REGULAR for character in name)
+        and name.upper() not in _NEVER_REGULAR
+    )
+
+
 def _quoted(identifier: str) -> str:
-    """One SQL identifier, quoted and uppercased, so that it matches the regular
-    identifier of the same spelling and never reads as a keyword (OB3 E5)."""
-    return '"' + identifier.upper().replace('"', '""') + '"'
+    """One SQL identifier, quoted, in Ossie's normalized form: a regular identifier
+    uppercased, so that it never reads as a keyword (OB3 E5), and any other name as
+    written, which is the only form that names it (OB5)."""
+    name = identifier.upper() if is_regular_identifier(identifier) else identifier
+    return '"' + name.replace('"', '""') + '"'
 
 
 def _extension(payload: Any) -> list[dict[str, str]]:

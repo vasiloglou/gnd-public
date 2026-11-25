@@ -11,32 +11,32 @@ semantic_model_ref:
 concept_mappings:
 - concept: Student
   object_mappings:
-  - expression: '"UNI.STUDENT"."NR"'
+  - expression: '"uni.student"."NR"'
   link_mappings:
   - object_mapping:
-      expression: '"UNI.STUDENT"."NR"'
+      expression: '"uni.student"."NR"'
     children:
     - object_mapping:
         concept: StudentName
-        expression: '"UNI.STUDENT"."FULL_NAME"'
+        expression: '"uni.student"."FULL_NAME"'
       relationship: student_has_name
   - object_mapping:
-      expression: '"UNI.ENROLLED"."STUDENT_NR"'
+      expression: '"uni.enrolled"."STUDENT_NR"'
     children:
     - object_mapping:
         concept: Course
-        expression: '"UNI.ENROLLED"."COURSE_CD"'
+        expression: '"uni.enrolled"."COURSE_CD"'
       relationship: student_takes_course
 - concept: Course
   object_mappings:
-  - expression: '"UNI.COURSE"."CD"'
+  - expression: '"uni.course"."CD"'
   link_mappings:
   - object_mapping:
-      expression: '"UNI.COURSE"."CD"'
+      expression: '"uni.course"."CD"'
     children:
     - object_mapping:
         concept: CourseTitle
-        expression: '"UNI.COURSE"."TITLE"'
+        expression: '"uni.course"."TITLE"'
       relationship: course_has_title
 custom_extensions:
 - vendor_name: GND

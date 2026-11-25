@@ -18,7 +18,7 @@ from referencing.exceptions import Unresolvable
 from ruamel.yaml import YAML
 from ruamel.yaml.error import YAMLError
 
-from gnd.artifacts import canonical_json_bytes
+from gnd.artifacts import canonical_json_bytes, json_pointer
 from gnd.errors import ModelLoadError, ModelValidationError
 from gnd.input_policy import MAX_BYTES, MAX_DEPTH, guard_yaml, loads, require_byte_bound
 from gnd.model import json_document, load_model_bytes
@@ -121,8 +121,7 @@ def _schema_check(document, validator, rule: str) -> None:
         raise OssieImportError(rule)
 
 
-def _pointer(parts) -> str:
-    return "".join("/" + str(part).replace("~", "~0").replace("/", "~1") for part in parts)
+_pointer = json_pointer
 
 
 def _tokens(pointer) -> tuple[str, ...]:

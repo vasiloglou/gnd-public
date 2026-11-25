@@ -29,6 +29,7 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
+from gnd.artifacts import json_pointer
 from gnd.export.ossie_relational import OntologyView, normalized_identifier
 from gnd.input_policy import MAX_BYTES, loads
 from gnd.model_index import ModelIndex
@@ -144,9 +145,8 @@ def read_binding(path: Path) -> Binding:
     return Binding(document, hashlib.sha256(raw).hexdigest())
 
 
-def _pointer(parts: Iterable[Any]) -> str:
-    """An RFC 6901 JSON pointer; `~` and `/` in a member name are escaped (r1 F6)."""
-    return "".join("/" + str(part).replace("~", "~0").replace("/", "~1") for part in parts)
+#: An RFC 6901 JSON pointer; `~` and `/` in a member name are escaped (r1 F6).
+_pointer = json_pointer
 
 
 def sql_datatype(sql_type: str) -> str | None:

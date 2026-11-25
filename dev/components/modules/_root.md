@@ -184,33 +184,34 @@ Bounded, no-follow artifact reads and publication primitives.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ArtifactError` | class(Exception) | 75 | An artifact path, identity, bound, or publication invariant failed. |
-| `ArtifactIdentityError` | class(ArtifactError) | 79 | A descriptor-bound leaf changed from an identity already budgeted. |
-| `LeafSnapshot` | class(BaseModel) | 83 | Stable identity observed while one regular leaf descriptor was open. |
-| `TreeFile` | class(BaseModel) | 98 | One regular leaf in a complete tree inventory. |
-| `TrackedRegularEntry` | class(BaseModel) | 110 | One LISTED regular leaf, observed while its descriptor was open. |
-| `TrackedSymlinkEntry` | class(BaseModel) | 125 | One LISTED symlink leaf, described by its LEXICAL target, never followed. |
-| `TreeInventory` | class(BaseModel) | 139 | Canonical identity of all regular leaves beneath one real directory. |
-| `is_sha256_hex(value) -> bool` | function | 164 | Whether value is an unprefixed lowercase ASCII SHA-256 hex string. |
-| `canonical_json_bytes(value, *, exact_numbers) -> bytes` | function | 173 | Return the one canonical JSON document form every stored digest is over. |
-| `canonical_json_text(value) -> str` | function | 215 | Return the canonical JSON form as text, without the trailing newline. |
-| `sha256_hex(data) -> str` | function | 225 | Return the lowercase hex content digest of ``data``. |
-| `tree_sha256_from_inventory(files) -> str` | function | 237 | Return the tree identity of a *declared* file inventory. |
-| `read_regular_file_bytes(root, relative, *, label, max_bytes, expected_root) -> bytes` | function | 250 | Read one regular leaf from an explicitly trusted directory anchor. |
-| `tree_sha256_from_directory(root, *, label, max_entries, max_bytes, relative) -> str` | function | 280 | Return the tree identity of a real directory root, by walking descriptors. |
-| `read_regular_bounded_at(root_fd, relative, *, max_bytes, expected, expected_stat) -> tuple[bytes, L…` | function | 708 | Read one leaf beneath a caller-owned retained root descriptor. |
-| `stat_leaf_at(root_fd, relative) -> os.stat_result` | function | 732 | No-follow stat one leaf beneath a caller-owned root descriptor. |
-| `readlink_at(root_fd, relative, *, expected_stat) -> str` | function | 766 | No-follow read of one symlink's VERBATIM target, re-statted after reading. |
-| `snapshot_tracked_roster(root, roster, *, label, relative, max_entries, max_file_bytes, max_total_by…` | function | 820 | Observe exactly the leaves a caller listed, and return their identity. |
-| `read_regular_bounded(root, relative, *, max_bytes, expected, expected_root) -> tuple[bytes, LeafSna…` | function | 899 | Read one contained regular leaf through no-follow descriptors. |
-| `inventory_tree(root, *, max_files, max_file_bytes, max_total_bytes, max_depth, expected_root) -> Tr…` | function | 1069 | Inventory every regular leaf beneath ``root`` in stable POSIX order. |
-| `remove_regular_if_unchanged(root, relative, *, expected, expected_root) -> None` | function | 1280 | Remove one regular leaf only while it has the identity already read. |
-| `publish_leaf_atomic(root, relative, data, *, expected, expected_root, mode) -> LeafSnapshot` | function | 1385 | Publish one complete leaf, requiring absence or an exact prior identity. |
-| `publish_directory_once(root, relative, files, *, manifest_name, max_files, max_file_bytes, max_tota…` | function | 1516 | Publish one descriptor-bound directory, writing its manifest leaf last. |
-| `canonical_report_text(payload) -> str` | function | 1728 | The payload as canonical JSON: sorted keys, no NaN, stable separators. |
-| `reject_json_constant(token) -> None` | function | 1739 | (no docstring) |
-| `reject_json_duplicate_pairs(pairs) -> dict[str, Any]` | function | 1743 | (no docstring) |
-| `reject_json_duplicate_pairs_result(pairs) -> dict[str, Any]` | function | 1752 | (no docstring) |
+| `ArtifactError` | class(Exception) | 76 | An artifact path, identity, bound, or publication invariant failed. |
+| `ArtifactIdentityError` | class(ArtifactError) | 80 | A descriptor-bound leaf changed from an identity already budgeted. |
+| `LeafSnapshot` | class(BaseModel) | 84 | Stable identity observed while one regular leaf descriptor was open. |
+| `TreeFile` | class(BaseModel) | 99 | One regular leaf in a complete tree inventory. |
+| `TrackedRegularEntry` | class(BaseModel) | 111 | One LISTED regular leaf, observed while its descriptor was open. |
+| `TrackedSymlinkEntry` | class(BaseModel) | 126 | One LISTED symlink leaf, described by its LEXICAL target, never followed. |
+| `TreeInventory` | class(BaseModel) | 140 | Canonical identity of all regular leaves beneath one real directory. |
+| `is_sha256_hex(value) -> bool` | function | 165 | Whether value is an unprefixed lowercase ASCII SHA-256 hex string. |
+| `canonical_json_bytes(value, *, exact_numbers) -> bytes` | function | 174 | Return the one canonical JSON document form every stored digest is over. |
+| `json_pointer(parts) -> str` | function | 216 | The RFC 6901 JSON pointer for PARTS: each part after a ``/``, with ``~`` written |
+| `canonical_json_text(value) -> str` | function | 222 | Return the canonical JSON form as text, without the trailing newline. |
+| `sha256_hex(data) -> str` | function | 232 | Return the lowercase hex content digest of ``data``. |
+| `tree_sha256_from_inventory(files) -> str` | function | 244 | Return the tree identity of a *declared* file inventory. |
+| `read_regular_file_bytes(root, relative, *, label, max_bytes, expected_root) -> bytes` | function | 257 | Read one regular leaf from an explicitly trusted directory anchor. |
+| `tree_sha256_from_directory(root, *, label, max_entries, max_bytes, relative) -> str` | function | 287 | Return the tree identity of a real directory root, by walking descriptors. |
+| `read_regular_bounded_at(root_fd, relative, *, max_bytes, expected, expected_stat) -> tuple[bytes, L…` | function | 715 | Read one leaf beneath a caller-owned retained root descriptor. |
+| `stat_leaf_at(root_fd, relative) -> os.stat_result` | function | 739 | No-follow stat one leaf beneath a caller-owned root descriptor. |
+| `readlink_at(root_fd, relative, *, expected_stat) -> str` | function | 773 | No-follow read of one symlink's VERBATIM target, re-statted after reading. |
+| `snapshot_tracked_roster(root, roster, *, label, relative, max_entries, max_file_bytes, max_total_by…` | function | 827 | Observe exactly the leaves a caller listed, and return their identity. |
+| `read_regular_bounded(root, relative, *, max_bytes, expected, expected_root) -> tuple[bytes, LeafSna…` | function | 906 | Read one contained regular leaf through no-follow descriptors. |
+| `inventory_tree(root, *, max_files, max_file_bytes, max_total_bytes, max_depth, expected_root) -> Tr…` | function | 1076 | Inventory every regular leaf beneath ``root`` in stable POSIX order. |
+| `remove_regular_if_unchanged(root, relative, *, expected, expected_root) -> None` | function | 1287 | Remove one regular leaf only while it has the identity already read. |
+| `publish_leaf_atomic(root, relative, data, *, expected, expected_root, mode) -> LeafSnapshot` | function | 1392 | Publish one complete leaf, requiring absence or an exact prior identity. |
+| `publish_directory_once(root, relative, files, *, manifest_name, max_files, max_file_bytes, max_tota…` | function | 1523 | Publish one descriptor-bound directory, writing its manifest leaf last. |
+| `canonical_report_text(payload) -> str` | function | 1735 | The payload as canonical JSON: sorted keys, no NaN, stable separators. |
+| `reject_json_constant(token) -> None` | function | 1746 | (no docstring) |
+| `reject_json_duplicate_pairs(pairs) -> dict[str, Any]` | function | 1750 | (no docstring) |
+| `reject_json_duplicate_pairs_result(pairs) -> dict[str, Any]` | function | 1759 | (no docstring) |
 
 ## gnd.assurance_claims — `src/gnd/assurance_claims.py`
 Components: assurance.claims
@@ -591,7 +592,7 @@ RF7 shared JSON, YAML and ISO datetime input restrictions.
 | `loads(raw, *, max_bytes, **kwargs)` | function | 114 | Decode with native numeric types or caller hooks; refuse unsafe syntax. |
 | `load(handle, **kwargs)` | function | 124 | Apply the byte cap to the read, before decoding or constructing nodes. |
 | `guard_yaml(raw, *, max_bytes, max_events, max_depth)` | function | 130 | Reject amplification and over-budget input before constructing YAML nodes. |
-| `parse_datetime(value)` | function | 154 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
+| `parse_datetime(value)` | function | 158 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
 
 ## gnd.install — `src/gnd/install.py`
 Components: install.skill_lifecycle
@@ -756,7 +757,7 @@ Bounded, offline import of the pinned Apache Ossie ontology dialect.
 | --- | --- | --- | --- |
 | `OssieImportError` | class(ValueError) | 49 | A value-free refusal at a documented import boundary. |
 | `OssieImportResult` | class | 58 | (no docstring) |
-| `plan_ossie_import(path, *, max_input_bytes) -> OssieImportResult` | function | 652 | Admit one standalone ontology or bound bundle without network access. |
+| `plan_ossie_import(path, *, max_input_bytes) -> OssieImportResult` | function | 651 | Admit one standalone ontology or bound bundle without network access. |
 
 ## gnd.output — `src/gnd/output.py`
 Components: infra.text_output
@@ -965,18 +966,19 @@ Halpin's relational mapping (Rmap) of a loaded GND model.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `RmapVariant` | class(enum.Enum) | 38 | (no docstring) |
-| `Column` | class | 57 | (no docstring) |
-| `ForeignKey` | class | 65 | (no docstring) |
-| `Table` | class | 73 | (no docstring) |
-| `Unmapped` | class | 83 | (no docstring) |
-| `Disposition` | class | 91 | (no docstring) |
-| `RolePlacement` | class | 99 | The table and columns that hold one role of a carried fact type. |
-| `Identification` | class | 116 | How an object type's key columns arise, one entry per key column. |
-| `RelationalSchema` | class | 139 | (no docstring) |
-| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 855 | Name each table's foreign keys, given as (columns, target table, target columns). |
-| `map_model(model, *, variant) -> RelationalSchema` | function | 882 | Map one loaded model to its relational schema; never raises for an admitted model. |
-| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 887 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+| `RmapVariant` | class(enum.Enum) | 39 | (no docstring) |
+| `Column` | class | 58 | (no docstring) |
+| `ForeignKey` | class | 66 | (no docstring) |
+| `Table` | class | 74 | (no docstring) |
+| `Unmapped` | class | 84 | (no docstring) |
+| `Disposition` | class | 92 | (no docstring) |
+| `RolePlacement` | class | 100 | The table and columns that hold one role of a carried fact type. |
+| `Identification` | class | 117 | How an object type's key columns arise, one entry per key column. |
+| `RelationalSchema` | class | 140 | (no docstring) |
+| `is_confirmed_alethic(constraint) -> bool` | function | 156 | Whether a constraint is one the relational forms may carry: confirmed, and alethic. |
+| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 857 | Name each table's foreign keys, given as (columns, target table, target columns). |
+| `map_model(model, *, variant) -> RelationalSchema` | function | 884 | Map one loaded model to its relational schema; never raises for an admitted model. |
+| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 889 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
 
 ## gnd.safefs — `src/gnd/safefs.py`
 Components: infra.safe_filesystem

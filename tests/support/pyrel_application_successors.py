@@ -161,6 +161,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB4/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/close-followups/dynamic-query-successor.json',
 ]
 
 

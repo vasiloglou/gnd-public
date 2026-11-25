@@ -127,8 +127,12 @@ def load(handle, **kwargs):
     return loads(raw, **kwargs)
 
 
-def guard_yaml(raw, *, max_bytes=MAX_BYTES, max_events=1_000_000, max_depth=MAX_DEPTH):
-    """Reject amplification and over-budget input before constructing YAML nodes."""
+def guard_yaml(raw, *, max_bytes=None, max_events=1_000_000, max_depth=MAX_DEPTH):
+    """Reject amplification and over-budget input before constructing YAML nodes.
+
+    ``max_bytes`` defaults to :data:`MAX_BYTES`, read at call time as :func:`loads` reads it.
+    """
+    max_bytes = MAX_BYTES if max_bytes is None else max_bytes
     if isinstance(raw, str):
         data = raw.encode('utf-8')
     elif isinstance(raw, bytes):

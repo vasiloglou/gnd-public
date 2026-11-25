@@ -1,0 +1,61 @@
+{
+  "base": "a9acbc4d",
+  "claims": [
+    "All five release fields and TAGGED agree, release notes carry SI1\u2013SI3, and release-text and focused release tests pass.",
+    "Package-index install pins and publication metadata remain at 0.5.0."
+  ],
+  "created": "2026-11-25T21:56:20.908937+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/reviews/phase-SI4-r1/diff.patch",
+      "sha256": "706f2ab1e5e4fc8fe7b94db90d48439067c35d3e7382ab662e93a0c15f9eed16"
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "sha256": "01e00a21f2db5ec81130ea1d32136cc6a94f1e1062e3901008c05cb4055211c8"
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "1551fd6e7cfe078ee01b75755eb4b75b90b2a9dd6600de850646800ae1fb503e"
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "sha256": "286e0d3b4a41352797b06340148f5cc43e06627d44631aab1f2f612197138ccb"
+    },
+    {
+      "path": "docs/compatibility.md",
+      "sha256": "7557ce453df44b26a0b9b0ae607946db54a6bc27366f4556b1fb1cccbd12139b"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "4cd8cca18d8d4f91f4a5543ab4ea675305d80a271f33ba3dfcbdf050338cacb1"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "48ae2383765cec78ff87591f40dbebe8c0b558cebc0394613c2c0292a945d766"
+    },
+    {
+      "path": "tests/test_release_version.py",
+      "sha256": "aa7b6ec975ea944806dff16d12f9980fb4343142021312b4a5d396bd4077f90d"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "a8bf8a6a367ac116f1ac8531ad19349c22c497b6cbfb2c21bbf47d4c25ee23c1"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI4-spec.md",
+      "sha256": "7e64cab6b41534872bc56b479fe1498c2bd042871d417e7dfb7da7c2f60fcbc8"
+    }
+  ],
+  "head": "a9acbc4d5873c9892d59598a7a5569bf2e3556ed",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI4-spec.md (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Does the source diff correctly prepare only the 0.5.2 tag and preserve published install pins?",
+  "subject": "phase",
+  "version": 1
+}

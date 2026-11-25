@@ -254,3 +254,30 @@ the recorder checks. C1 and C2 are owner checkpoints.
 > reviewer through the review helper; the round budget is declared before
 > round 2. Not covered: merge, publication, any recording beyond the gate
 > record's bound. This ruling is not the owner's reading of the spec.
+
+## 13. Implementation findings
+
+- **F2 (a test launched a real paid run), 2026-11-25.** The first `spent()` took
+  its folder as a default argument, read when the module loaded, so T6's
+  monkeypatch of `HOME` did not reach it. T6 passed the ceiling check and
+  `record()` ran one real four-turn Haiku conversation (`score`) in a pytest
+  temporary folder: USD 0.084 by the turns' reported `total_cost_usd`, before
+  any gate record existed. Nothing from it is kept. Repair: `spent()` reads
+  `HOME` at call time, and T6 now fails if any subprocess starts. The USD 0.084
+  counts against D11's ceiling (section 6.3, and the gate record).
+- **F1 (what that run showed).** The agent ran the learner as
+  `python3 -I stand_in_learner.py`, which the allow list did not name, so each
+  call needed approval it could not get. It wrote outputs to a temporary
+  folder outside the workspace. It also ran read-only commands (`ls`, `cat`,
+  `which`) that Claude Code itself permits. The scoring conversation's second
+  turn named the learner, so the agent tried to run it there too. Repairs,
+  amending section 6.1 and 6.2:
+  - the allow list and the keep rule name `python3`, `python3 -I` and
+    `python -I` forms of the learner command;
+  - the second turn asks for every output in the working folder, and names the
+    learner's invocation only in the conversations that run it;
+  - the check `only_allowed_bash` becomes `no_forbidden_bash`: no installer,
+    git, network command or other learner. Read-only commands are not refused,
+    because the permission layer, not this check, decides what runs.
+  These amendments fall under the delegated ruling of section 12 (auto=true);
+  the prior wording above is kept.

@@ -71,10 +71,12 @@ def redact(text: str, workspace: Path) -> str:
     return TEMPORARY.sub("<tmp>", text)
 
 
-def kept_stream(stream: str, workspace_marker: str = "<workspace>") -> str:
+def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[str, ...] = ()) -> str:
     """The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and
     reads and writes of files in the workspace). Other tool output is replaced by its size, so nothing the agent
-    happened to list or read elsewhere on the machine is kept. Claude Code's start event keeps no paths."""
+    happened to list or read elsewhere on the machine is kept. Claude Code's start event keeps no paths.
+    `keep` names further plain Bash commands, by their opening words, whose output is kept too
+    (induction-skill IS2: the refunds stand-in learner)."""
     wanted, lines = set(), []
     for raw in stream.splitlines():
         try:
@@ -92,7 +94,9 @@ def kept_stream(stream: str, workspace_marker: str = "<workspace>") -> str:
                     target = str(part["input"].get("command") or part["input"].get("file_path") or "")
                     first = target.split()[0] if target.split() else ""
                     plain = not any(mark in target for mark in (";", "&&", "||", "|", "$(", "`"))
-                    if (first.endswith("gnd") and plain and part["name"] == "Bash") or target.startswith(workspace_marker) or (
+                    kept_bash = part["name"] == "Bash" and plain and (
+                        first.endswith("gnd") or any(target.startswith(prefix) for prefix in keep))
+                    if kept_bash or target.startswith(workspace_marker) or (
                             part["name"] in ("Write", "Edit") and "/" not in target.replace(workspace_marker, "")):
                         wanted.add(part["id"])
         elif event.get("type") in ("rate_limit_event",):

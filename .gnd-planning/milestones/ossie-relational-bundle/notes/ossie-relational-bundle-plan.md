@@ -1,6 +1,11 @@
 # Ossie relational bundle
 
-**Status: r2, draft, 2026-11-24. Not approved.** r1 (sha256
+**Status: r3, 2026-11-25: r2 with the close amendments of §11.** r2 (sha256
+`52d946a48c7acd82562afbbd6a8057fe7da8a58bac328218c0a483eab13c6e1d`) was approved at the
+[plan gate](../002-plan-gate.md) and is unchanged above §11, this status
+paragraph apart. The r2 status text follows as written.
+
+*r2, draft, 2026-11-24. Not approved.* r1 (sha256
 `cdc1576f1f1d5f1b6a040b7eebed4f6e14b0d1c02097b73ad3680076fc40f44d`) was
 reviewed by the maintained light panel at effort high on 2026-11-24:
 
@@ -554,3 +559,29 @@ All open at r2.
 | D9 | Review before the plan gate. | The light panel reviewed r1. Proposed: go to the plan gate with r2, recorded as unreviewed, or run a second light round on r2 at the owner's choice. | A second round costs one more panel run. |
 | D10 | Reporter inputs. | Ask for: the three local diffs (reference only); the size of their flattened model; the intended meaning of `extension_roles`; and whether they can run the external acceptance. File the three issues on GitHub so the records can link them. | Without these, external acceptance stays missing evidence, and D11 is decided blind. |
 | D11 | Raise the export's source cap (`MAX_MODEL_BYTES`, 10 MiB) for `gnd export ossie` `(p1 F8)`. | Decide after D10 and OB1-C2's measured ratio. If needed, add a phase OB1b, because this threads a cap through the model loader. | Without it, issue 1 is fixed only for sources of 10 MiB or less. |
+
+## 11. Close amendments (r3)
+
+Phases deferred plan repairs to the close. Each row amends the text named,
+which stays above as written. Where a row and the older text disagree, the
+row governs. The normative rules are in `representation-format.md`; this
+section only records what the plan got wrong or left open.
+
+| # | Plan text (r2) | Amendment | Raised in |
+|---|---|---|---|
+| A1 | §1.2: no test covered `ossie:output-size`. | One did, in `tests/test_ossie_import.py`. | [004](../004-phase-OB1.md) IF1 |
+| A2 | §2.1, D3: five import caps. | Six: the JSON decoder re-checks the cap after the load. | 004 IF2 |
+| A3 | §9, OB1 affected consumers. | Add the CLI pin tests and the RF7 input-policy tests. | 004 IF7 |
+| A4 | §2.3 rule 2: an n-1 uniqueness of an n-ary groups into an entity table. | Not Halpin, and there is no table to group into. Such a fact type has its own table. | [008](../008-phase-OB2.md), S5 |
+| A5 | §2.3: silent on a fact type with no uniqueness. | Its key is all its roles (119 of 226 census fact types). | 008, S1 |
+| A6 | OB2-C4: a 10x scale model. | It cannot load under the 10 MiB model cap. The scale test runs at 5x. | 008 IF4 |
+| A7 | §2.3: any preferred external uniqueness is a composite key. | Every component must also be functional on the entity, as the ontology export requires. | [011](../011-phase-OB3.md), E3 (a) |
+| A8 | Predicate 2 and §5: a default run always adds the two relational files. | A model that maps to no table writes the ontology's three files and a note, because the pinned core-spec requires a dataset. | 011 IF1; [012](../012-OB3-departures-gate.md) |
+| A9 | Predicate 4: every fact type and constraint is carried or listed. | Also: a link the mapping cannot write is listed in `unmapped_links` (`identification-differs`, `arity-over-limit` above 32 roles). Foreign-key names are unique in the whole schema. | 011 IF2, RR2, RR3; 012 |
+| A10 | §2.4: a foreign key's columns are ordered by position in `references.columns`. | Every column of a group carries the same block. They pair by the table's column order. | [015](../015-phase-OB4.md), K1 |
+| A11 | D8: four contradiction classes, undefined. | Defined as rule ids in the normative section. For `binding:incompatible-keys`, an entity and a part of its own identifier are compatible. | 015 K4, K5, IF1; [016](../016-OB4-departures-gate.md) |
+| A12 | §2.4: `targets` give a column its meaning. | `roles` alone binds a role. An `identifier` target marks a home table; the other two kinds are only checked. | 015 K12 |
+| A13 | §2.4: silent on nesting depth and surrogate keys. | An identifier nested more than 8 entities deep is not followed. A fact held only through a surrogate key cannot be bound. | 015 RR2, K13; 016 |
+| A14 | OB3 E5 (spec), plan §2.2: identifiers are quoted and upper-cased. | Only a regular identifier is upper-cased. Any other name is quoted as written. Found by the oracle lane. | [020](../020-phase-OB5.md); [019](../019-OB5-quoting-gate.md) |
+| A15 | §4 OB5: "a changelog entry". | The repository has no changelog file. The entry is a section of `docs/release-notes.md` under `Unreleased:`. | 020, O14 |
+| A16 | D11: decide the source cap after D10. | Measured: output is about 6 times the source, and a model at the reporter's scale is 1.5 MB of source. No source-cap parameter is added. D10's answer can reopen it. | 004 IF9; 011 |

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "spec-results-delta",
+  "spec": {
+    "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/ossie-relational-bundle-plan.md",
+    "sha256": "28c52ece99137552205bb91dba6d842276b6080f4b1b7b35957778ae392cb924",
+    "media_type": "text/markdown"
+  },
+  "results": {
+    "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/close-results.md",
+    "sha256": "a1bde13803d8c51dfbfa566321fdba6fa06ddd771f9bddce97f120f4dbba0aea",
+    "media_type": "text/markdown"
+  },
+  "delta": {
+    "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/close-delta.md",
+    "sha256": "22fd0fdb4eb9902d4ce5eb43a49fffa577437349be2333f8f7a08296e1389c09",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "ossie-relational-bundle milestone close",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Does every completion predicate in the plan (as amended by section 11) have evidence in the results that would fail if the predicate were false? Read the phase records 004-phase-OB1.md, 008-phase-OB2.md, 011-phase-OB3.md, 015-phase-OB4.md, 020-phase-OB5.md and the tests they cite before judging.",
+      "Do the shipped code paths (src/gnd/rmap.py; src/gnd/export/ossie.py, src/gnd/export/ossie_relational.py, src/gnd/export/physical_binding.py; src/gnd/commands/export.py; src/gnd/ossie_import.py and src/gnd/input_policy.py) behave as the results and delta say? In particular: a run without --physical-binding and with --ontology-only must write the bytes it wrote before the milestone; the binding reader must be total over arbitrary bytes; and every table or column name must be quoted in Ossie's normalized form.",
+      "The results list files that carry no review opinion (repairs made after the last phase review read them). Read src/gnd/export/physical_binding.py, src/gnd/ossie_import.py, src/gnd/input_policy.py and is_regular_identifier and _quoted in src/gnd/export/ossie_relational.py with that in mind, and report any defect.",
+      "Do the pages (representation-format.md sections 'Relational mapping (Rmap)' and 'Ossie interchange'; docs/explanation/ossie.md; the two how-to pages; the Ossie section of src/gnd/skills/gnd-export/SKILL.md; the release-note section) state what the code does, each rule in one home?",
+      "Is every open question raised in the milestone's records dispositioned in the results (closed, carried with an owner, or an accepted residual), and is any disposition wrong? Is the missing external acceptance stated plainly and not implied to be met?",
+      "Are the close amendments in plan section 11 each supported by the record that raised them, with the prior wording kept?",
+      "Every concern's evidence must cite one of the three named files; name the record, code or test line in the observation."
+    ]
+  }
+}

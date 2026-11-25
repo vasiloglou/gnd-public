@@ -1,0 +1,353 @@
+diff --git a/.claude-plugin/marketplace.json b/.claude-plugin/marketplace.json
+index dab21ef2..e03e6f2d 100644
+--- a/.claude-plugin/marketplace.json
++++ b/.claude-plugin/marketplace.json
+@@ -12,7 +12,7 @@
+       "name": "gnd",
+       "source": "./",
+       "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+-      "version": "0.4.0"
++      "version": "0.5.0"
+     }
+   ]
+ }
+diff --git a/.claude-plugin/plugin.json b/.claude-plugin/plugin.json
+index 86a56cf3..6259914c 100644
+--- a/.claude-plugin/plugin.json
++++ b/.claude-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "gnd",
+-  "version": "0.4.0",
++  "version": "0.5.0",
+   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+   "author": {
+     "name": "Nikolaos Vasiloglou",
+diff --git a/.codex-plugin/plugin.json b/.codex-plugin/plugin.json
+index ee4c3308..941a77c2 100644
+--- a/.codex-plugin/plugin.json
++++ b/.codex-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "gnd",
+-  "version": "0.4.0",
++  "version": "0.5.0",
+   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+   "author": {
+     "name": "Nikolaos Vasiloglou",
+diff --git a/docs/compatibility.md b/docs/compatibility.md
+index 38e053e2..7c79533a 100644
+--- a/docs/compatibility.md
++++ b/docs/compatibility.md
+@@ -1,8 +1,9 @@
+ # Compatibility and version policy
+ 
+ Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions
+-0.1.0, 0.2.0, 0.3.0 and 0.4.0 are published (0.4.0 on 2026-11-17). For the next
+-version, confirm service ownership and that the version is still free before
++0.1.0, 0.2.0, 0.3.0 and 0.4.0 are published (0.4.0 on 2026-11-17). Version 0.5.0
++is prepared and not published. The package index was checked on 2026-11-25.
++For the next version, confirm service ownership and that the version is still free before
+ candidate freeze and again before any upload. Milestone numbers are not package
+ versions.
+ 
+diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
+index 409ed77c..919e34c1 100644
+--- a/docs/marketplace-plugins.md
++++ b/docs/marketplace-plugins.md
+@@ -6,8 +6,9 @@ marketplace commands below. Python 3.11 or newer is required.
+ See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
+ for the pip virtual-environment alternative.
+ 
+-The command below installs the published runtime. When using a plugin from
+-another commit, match its runtime as [Updates](#updates) describes.
++The command below installs the published runtime. The plugin on `main` is
++version 0.5.0, which is prepared and not published. To use that plugin,
++install the runtime from the same commit as shown in [Updates](#updates).
+ 
+ ```sh
+ uv tool install get-nick-done==0.4.0
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index a5ebe8ae..bd77fc7b 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -1,11 +1,13 @@
+ # Release notes and milestones
+ 
+ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
+-0.1.0 came before it. Releases follow the [release procedure](releasing.md).
+-Changes on `main` after a release are listed in an `Unreleased:` section until
+-the next one.
++0.1.0 came before it. Version 0.5.0 is prepared for PyPI. Releases follow the
++[release procedure](releasing.md). Changes on `main` after a release are listed
++in an `Unreleased:` section until the next one.
+ 
+-## Unreleased: Ossie relational files
++## 0.5.0 (prepared, not published)
++
++### Ossie relational files
+ 
+ - **Tables beside the ontology.** `gnd export ossie` now writes five files.
+   The two new ones are `OUT.semantic_model.<fmt>`, the tables that hold the
+@@ -28,52 +30,58 @@ the next one.
+   one run. N is a whole number of bytes, from 1 byte to 256 MiB. Any other
+   value is a usage error, exit 64 (`EXIT_USAGE`). The model file itself
+   stays capped at 10 MiB.
++- **The relational mapping as a library.** `gnd.rmap.map_model(model)`
++  returns the tables the export generates, by Halpin's relational mapping
++  procedure, with a list of what it could not place and the reason for each.
++  `gnd.rmap.dispositions(model, schema)` gives one row for every fact type
++  and constraint. The
++  [mapping rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#relational-mapping-rmap)
++  are in the representation reference.
++- **What the new files disclose.** The semantic model and the mapping carry
++  the model's object-type, fact-type and role ids as table and column
++  names, or the names your binding file gives. The
++  [disclosure page](reference/disclosure.md) lists them.
+ - **Where to read more.** [Ossie interchange in GND](explanation/ossie.md)
+   and [Describe your delivered tables](how-to/describe-delivered-tables-for-ossie.md).
+ 
+-## Unreleased: frontmatter fences
+-
+-- **An indented `---` is content.** The frontmatter reader behind experiment
+-  specs, conclusions and generated `SKILL.md` files takes a fence only at
+-  column 0, with nothing after it but spaces or tabs. An indented `---` in a
+-  block scalar or a multi-line value no longer ends the block early and drops
+-  the keys after it; a document whose only closing dashes are indented is
+-  refused as unterminated.
+-
+-## Unreleased: the admission example from a host
+-
+-- **Your own assertion entity.** The literature admission example's
+-  `admit()` takes a shape naming the assertion entity in your model and the
+-  entity types to follow from it. An assertion is identified by its own
+-  handle; every fact attached to an admitted assertion is kept, the facts of
+-  the followed entities with them, and an include root is admitted with its
+-  includes. `max_rows` bounds the rows read
+-  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+-- **Admission rules as data.** `rules` lists the requirements a reviewed
+-  assertion must meet, in order, with a reason for each refused value. A
+-  supported assertion that fails one is `policy-refused`; the packaged
+-  comparison is now the default rules. `max_targets` (up to 1,024, the cap
+-  of `gnd judgments check`) lowers the target cap. Such a call writes
+-  `literature-assertion-admission/2`; the packaged call keeps its bytes
+-  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+-
+-## Unreleased: the reading example from a host
+-
+-- **A live producer over your own documents.** The literature reading
+-  example's `run()` takes a producer object over a root that holds
+-  `profile.json`: your documents, your reading model and its includes, and
+-  the optional review, calibration, conflict and absence steps, each
+-  recorded `skipped` when undeclared. The run has a byte budget per document
+-  as well as in all, seven limits with ceilings, and records the exits of
+-  `verify` and `check`, 0, 1, 2 or 4. It writes
+-  `literature-reading-run/2`; the packaged run keeps its bytes
+-  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
+-- **Replay of a host run.** `replay(folder, fixture=root)` re-derives such a
+-  run with no producer call, from its settings and retained tables;
+-  `expected_evidence_sha256` ties it to the run that returned that digest
+-  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
+-
+-## Unreleased: include roots on more routes
++### PyRel rules programs for literature-style models
++
++`gnd export pyrel --rules duckdb` and `--rules lqp` now export models that
++use external uniqueness, anchored rules, `Number` values or value
++constraints scoped to a role. 0.4.0 refused the first three by name, as "a
++later phase of the rules programs" or "not supported by the rules programs
++yet" ([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
++[PyRel runtime page](runtimes/pyrel.md) is the reference for what the
++programs check, what they list as not checked and what they refuse.
++
++- **External uniqueness.** The programs check it over GND's shared-entity
++  join: two join rows with the same referenced values break the rule. A join
++  whose fact types share no object type is listed as not checked, and
++  reported vacuous when all its fact lists are empty, as GND does.
++- **Anchored rules are listed, not refused.** A rule that ties a value to a
++  span of a source document is printed with its id and the reason it is not
++  checked; `gnd check --anchors SIDECAR --document DOC` still decides it. A
++  must-rule listed this way gives exit 4 when the program checks a population
++  and no rule is violated. A violation gives exit 1.
++- **`Number`.** A `Number` value is held as a binary float, like `Float`.
++- **Value constraints scoped to a role.** A value constraint with `role_ref`
++  checks only the values in that role, as GND does.
++- **Inputs the programs now refuse, and two results that change.** A program
++  refuses, with exit 3, a population it cannot hold exactly: an integer
++  beyond 2**53 in a `Float` or `Number` cell, a number that is not finite,
++  or two rows that differ only as `1` and `1.0`. On a `Float` model, 0.4.0's
++  DuckDB program accepted the first and the last and reported a uniqueness
++  rule satisfied where `gnd check` reports a failure. A model is refused
++  when you export it if it holds such an integer among its allowed values,
++  range bounds or comparison literals, puts arithmetic or a sum next to a
++  `Float` or `Number` value, or compares a float literal with an `Integer`
++  value. A script that ran 0.4.0's programs on such inputs now gets exit 3.
++- **What is not verified.** The DuckDB programs are compared with
++  `gnd check` on the packaged literature models. The `--rules lqp` programs
++  are verified to compile; no RelationalAI engine has run them, so
++  enforcement by `require` on an engine is not shown in this release.
++
++### Include roots on more routes
+ 
+ - **Judgments on include roots.** `gnd judgments check` accepts a version-5
+   root with includes, temporal or not, and judges the model `gnd check`
+@@ -94,12 +102,12 @@ the next one.
+ - **Unencodable include paths.** An include path that cannot be encoded as
+   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
+   error itself, and the PyRel export exited 70.
+-- **`gnd check` on large vocabularies.** The checker no longer rebuilds its
+-  type maps once per object type: on the interop example with 1,000 extra
+-  object types `gnd check` takes about half a second where 0.4.0 took over
+-  two minutes, and `gnd judgments check` and `gnd verify` gain the same.
+-  Reports are unchanged. A subtype chain hundreds of types deep is still
+-  slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
++
++### Unattended growth from a reviewed vocabulary
++
++[Unattended growth](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md)
++is the guide these changes follow.
++
+ - **Unattended growth from a reviewed vocabulary.** A version-5 root with
+   `source.mode: unattended` may include an owner-reviewed model: the included
+   elements keep their own source, status and modality and are exempt from the
+@@ -148,6 +156,36 @@ the next one.
+   round reused, what the host dropped, what it proposed, each verdict's count
+   and what the applied record added
+   ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
++
++### The literature examples from a host
++
++- **Your own assertion entity.** The literature admission example's
++  `admit()` takes a shape naming the assertion entity in your model and the
++  entity types to follow from it. An assertion is identified by its own
++  handle; every fact attached to an admitted assertion is kept, the facts of
++  the followed entities with them, and an include root is admitted with its
++  includes. `max_rows` bounds the rows read
++  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
++- **Admission rules as data.** `rules` lists the requirements a reviewed
++  assertion must meet, in order, with a reason for each refused value. A
++  supported assertion that fails one is `policy-refused`; the packaged
++  comparison is now the default rules. `max_targets` (up to 1,024, the cap
++  of `gnd judgments check`) lowers the target cap. Such a call writes
++  `literature-assertion-admission/2`; the packaged call keeps its bytes
++  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
++- **A live producer over your own documents.** The literature reading
++  example's `run()` takes a producer object over a root that holds
++  `profile.json`: your documents, your reading model and its includes, and
++  the optional review, calibration, conflict and absence steps, each
++  recorded `skipped` when undeclared. The run has a byte budget per document
++  as well as in all, seven limits with ceilings, and records the exits of
++  `verify` and `check`, 0, 1, 2 or 4. It writes
++  `literature-reading-run/2`; the packaged run keeps its bytes
++  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
++- **Replay of a host run.** `replay(folder, fixture=root)` re-derives such a
++  run with no producer call, from its settings and retained tables;
++  `expected_evidence_sha256` ties it to the run that returned that digest
++  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
+ - **Reading a failed verification.** The documents guide shows how to list
+   the constraints and derivations a `gnd verify` exit 1 failed, with the
+   violating rows, from the JSON report, with a runnable example on the
+@@ -165,6 +203,53 @@ the next one.
+   targeted pass. The literature page shows it beside the figures #226
+   reported ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
+ 
++### Aggregate COUNT certificates
++
++- **`gnd witness-count` and `gnd replay-count`.** `gnd witness-count MODEL
++  POPULATION --request REQUEST --raw --out CERTIFICATE` writes a certificate
++  for one named group of a derived COUNT rule: its members, their count and
++  the row each one comes from. `gnd replay-count` rebuilds the roster from
++  the model, the request and the population and compares. A group with no
++  members in a covered relation gets a certificate with an empty roster and
++  count zero, which replays too. The
++  [COUNT membership contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-export/references/count-witness-contract.md)
++  says which rules and inputs qualify
++  ([#193](https://github.com/vasiloglou/gnd-public/issues/193)).
++- **A packaged example.** `src/gnd/examples/literature/count_fixture/` holds
++  a model, a population and the requests for a group with two members and an
++  empty group; its README lists the commands.
++
++### Other changes
++
++- **`gnd check` on large vocabularies.** The checker no longer rebuilds its
++  type maps once per object type: on the interop example with 1,000 extra
++  object types `gnd check` takes about half a second where 0.4.0 took over
++  two minutes, and `gnd judgments check` and `gnd verify` gain the same.
++  Reports are unchanged. A subtype chain hundreds of types deep is still
++  slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
++- **An indented `---` is content.** The frontmatter reader behind experiment
++  specs, conclusions and generated `SKILL.md` files takes a fence only at
++  column 0, with nothing after it but spaces or tabs. An indented `---` in a
++  block scalar or a multi-line value no longer ends the block early and drops
++  the keys after it; a document whose only closing dashes are indented is
++  refused as unterminated.
++- **One parse per load and per witness command.** A model without includes
++  is parsed once when it is loaded, where 0.4.0 parsed it twice, and
++  `gnd witness`, `gnd replay` and `gnd why-not` parse each model text once
++  per command, where they parsed it up to five times with `--composition`.
++  Reports, certificates and exits are unchanged
++  ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
++- **CRLF models that end in a block scalar.** A YAML model saved with CRLF
++  line endings keeps the final newline of a closing `|` or `>` block scalar,
++  as it does with LF; 0.4.0 dropped it. A plain scalar or a comment that
++  ends in `>` or `|` no longer keeps trailing blank lines.
++- **Rule text for models that differ only in key order.** Within one
++  process, two models equal up to the order of their keys no longer share a
++  cached index, so the rule verbalization of the second prints its bindings
++  in its own order.
++- **Literature pages.** The literature section opens with an overview and
++  gains a [command page](literature/commands.md).
++
+ ## 0.4.0 (2026-11-17)
+ 
+ If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)
+diff --git a/docs/support.md b/docs/support.md
+index b5f0029d..4014470c 100644
+--- a/docs/support.md
++++ b/docs/support.md
+@@ -12,6 +12,7 @@ The repository is public. No paid support SLA is offered.
+ | macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.2.0 candidate built from `7c0f4d0e` |
+ | macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.3.0 candidate built from `4c07c0e6` |
+ | macOS 27.0.1 arm64, Python 3.11.18, uv 0.10.10 | Observed in release acceptance of the 0.4.0 candidate built from `648cc6e0` |
++| Any profile, prepared 0.5.0 package | No profile is observed for 0.5.0 yet |
+ | Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |
+ | Native/provider extras | Optional, unmeasured in this preparation |
+ 
+diff --git a/pyproject.toml b/pyproject.toml
+index 8dabeae2..2b48c8bd 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -3,7 +3,7 @@
+ # `get-nick-done`. The import package and the console script both stay `gnd` —
+ # only the name users type after `uv tool install` changes.
+ name = "get-nick-done"
+-version = "0.4.0"
++version = "0.5.0"
+ description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+ # Issue 175: without this key the wheel and sdist carry no long description and
+ # the PyPI project page shows no text. PYPI.md is a short description written
+diff --git a/tests/test_release_version.py b/tests/test_release_version.py
+index d95b08ec..ca46931f 100644
+--- a/tests/test_release_version.py
++++ b/tests/test_release_version.py
+@@ -254,6 +254,7 @@ def test_a_left_placeholder_is_refused():
+ HEADLINE_BLOCK = {
+     "0.3.0": ("### Apache Ossie interchange", "explanation/ossie.md"),
+     "0.4.0": ("### Literature: identity, composition and depth", "literature/01-lineage.md"),
++    "0.5.0": ("### Ossie relational files", "explanation/ossie.md"),
+ }
+ 
+ 
+diff --git a/uv.lock b/uv.lock
+index cf5ce47c..9af73496 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -97,7 +97,7 @@ wheels = [
+ 
+ [[package]]
+ name = "get-nick-done"
+-version = "0.4.0"
++version = "0.5.0"
+ source = { editable = "." }
+ dependencies = [
+     { name = "jsonschema" },

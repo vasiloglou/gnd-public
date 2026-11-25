@@ -1,0 +1,83 @@
+{
+  "base": "3219c082",
+  "claims": [
+    "The version is 0.5.0 in pyproject.toml, the uv.lock entry for get-nick-done and the three plugin manifests, and nowhere else is the version typed as the current version; the install pins stay at 0.4.0.",
+    "Each of the 26 bullets that origin/main held under its five Unreleased headings is in the 0.5.0 section exactly once with its wording and links unchanged, and no Unreleased section remains.",
+    "Every new bullet in the 0.5.0 section (the PyRel block, the two new Ossie bullets, the COUNT block, the four new bullets under Other changes) states only what the code, the reference pages or the retained probes at this commit show.",
+    "Every user-visible change in git diff v0.4.0 HEAD over src, docs, README.md and the manifests is either noted in the 0.5.0 section or given a reason in notes-reconciliation.md.",
+    "Nothing in the notes, compatibility, support or plugin pages reads as if 0.5.0 were published, or as if a RelationalAI engine had run or enforced the exported rules programs.",
+    "A behaviour that differs from 0.4.0 in a way a script could notice is stated as a difference in its block."
+  ],
+  "created": "2026-11-25T13:34:13.752539+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch",
+      "sha256": "4f92142f2b6c3ab9650d88194dde857ba991f08541cee5220606832d7aa4aab5"
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "sha256": "f0724655e0e373311f65c5ef102a11f41ad493c1d3c8f5156aad752f9d9b2c1e"
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "2b021b3206ceca1778fd8011e9997f9ae7d7b2fc6437e669082309301ce3a85d"
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "sha256": "21c44d7a1e8cd88cf5b8f3259574a7709cd325925f9df171e0b2cea2f115df48"
+    },
+    {
+      "path": "docs/compatibility.md",
+      "sha256": "ee61db381c81252795befebc1abc04033dd16b65a195a654f82a3b991e82c66b"
+    },
+    {
+      "path": "docs/marketplace-plugins.md",
+      "sha256": "a760dac10f89ccd4ce93c99f771cca57f90e92e9ac039cf81995b2f79336c8f7"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "5b28ba132d6acbf96b3b873a7a4987d38b0343a4b1684bb464c15099c5e4786b"
+    },
+    {
+      "path": "docs/support.md",
+      "sha256": "af5e248dee386a23418111f7717115b7a735dbb3da704b2e625ab19d41824c3d"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "031acf62df8f7a8aa074eeca4976fa56396e61aa53c4f30a71dbdd61e4c7a4a2"
+    },
+    {
+      "path": "tests/test_release_version.py",
+      "sha256": "a09670902e2756ba37ae2a074fc776d30915f54b22fb2efa29dc42ec8c6ad00c"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "e96d80125673b6b3dbd6203caedcda1e5871ed47da45bd4b2ab3c35804f9496f"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/phase-RW1-spec.md",
+      "sha256": "aac415c539b5c79a567ae5775c2d92863be621933cc923b3a82d2fc4429458ce"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW1/notes-reconciliation.md",
+      "sha256": "f62b442652622d3234f29a5f6c45a5dc905c96f27879aac5902a9ccfb5c9696a"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md",
+      "sha256": "698de3702de336f61d198bca8b029029329a42a6390ebb095bc26cba90079599"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW1/e1-summary.md",
+      "sha256": "8b2bef0619c07767a5f5bd6c475d4e4c98c3a8e052116ec4a694b74c16139d09"
+    }
+  ],
+  "head": "cc8cdb6594cc75a2ee42fe7db89281bc344b3abc",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does this diff meet the criteria of the RW1 spec as ruled in its section 7 and section 13, and is each statement in the 0.5.0 section of docs/release-notes.md true of the code at this commit?",
+  "subject": "phase",
+  "version": 1
+}

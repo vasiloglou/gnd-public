@@ -69,8 +69,9 @@ def valid_date(value: object) -> bool:
         return False
 
 
-#: Keys whose values are not authored syntax.
-_NOT_SYNTAX = frozenset({"provenance", "source", "rejected_proposals"})
+#: Keys whose values are not authored syntax. An object type's `description` is never
+#: interpreted: its core keys are rendered and its extras carried unchanged.
+_NOT_SYNTAX = frozenset({"provenance", "source", "rejected_proposals", "description"})
 #: Keys whose value is a map keyed by role name: an atom's `bind` and a derivation's `head`.
 _ROLE_MAPS = frozenset({"bind", "head"})
 #: Keys whose value is a list of maps keyed by role name: a fact type's sample rows.

@@ -92,3 +92,21 @@ def test_skipped_keys_are_skipped_only_where_they_are_structure():
     element = {"provenance": {"user_quote": {"date": "2026-01-01"}}, "source": {"date": "x"}}
     assert [path for path, node in temporal_nodes(element) if is_temporal_node(node)] == []
     assert not uses_temporal({"object_types": [element], "fact_types": [], "constraints": [], "operations": []})
+
+
+@pytest.mark.parametrize("extra", [
+    {"head": {"source": {"date": "2026-07-07"}}},       # review r1: was refused once head became a role map
+    {"bind": {"day": {"duration_days": 1}}},
+    {"sample_population": [{"date": "2026-07-07"}]},    # review r1: was hidden once rows became role maps
+    {"when": {"date": "2026-07-07"}},
+])
+def test_a_description_is_never_read_as_syntax(tmp_path, extra):
+    """Descriptions are never checked (representation-format.md): their extras are carried unchanged,
+    so a key that names a syntax container there is just a key."""
+    model = poster("day")
+    model["object_types"][0]["description"] = {"summary": "A poster name.", "extra": extra}
+    assert [path for path, node in temporal_nodes(model) if ".description" in path] == []
+    assert not uses_temporal(model)
+    result = validate(tmp_path, model)
+    assert result["exit_code"] == 0, result
+

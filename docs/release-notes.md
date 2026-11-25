@@ -25,6 +25,11 @@ uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.1"
   rules, so the model was accepted where a date term is not allowed. Such a
   model is now refused with `semantic:temporal-site`, as it is under any
   other role name.
+- **Descriptions are not read as date syntax.** An object type's
+  description is never checked, as the format reference says. The temporal
+  rules no longer read it, so an extra key in a description that holds a
+  `date` or `duration_days` object no longer refuses the model or makes it
+  count as temporal.
 
 ## 0.5.0 (2026-11-25)
 

@@ -470,3 +470,13 @@ plan's [PR 248](https://github.com/vasiloglou/gnd-public/pull/248); none is
 merged. PF2 found a defect on `main` in `gnd.exp.frontmatter` (fixed in a
 separate pull request). PF1's baseline found 14 more tests red on `main`;
 PR 254 repaired them.
+
+### Added 2026-11-25: seeded-routes-and-identifiers
+
+[seeded-routes-and-identifiers](milestones/seeded-routes-and-identifiers/README.md)
+plans issues 292 (a seeded unattended root through `gnd flatten`, `gnd extract`
+and `gnd export pyrel`), 279 (`refscheme.reference_identity`'s selection) and
+280 (Ossie identifiers for unit-based references and multi-supertype subtypes),
+and a tag-only 0.5.2. The owner chose the light panel for the plan and close and
+delegated approval of the plan and specs. Planning only; no phase has started.
+

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/seeded-routes-and-identifiers-plan.md",
+    "sha256": "3bd8904535d1d5cfbbe387e14c183235112c0edf21cabee2b80618e9c6923f1f",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "seeded-routes-and-identifiers plan",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the planned software would not demonstrably do what the plan claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Judge whether each phase can be implemented and tested as written, and whether every completion predicate is measurable and would fail if the phase did not do its job.",
+      "Check that the plan's measurements of issues 292, 279 and 280 support its proposals, that each decision left to the owner is stated with its readings and costs, and that no proposal is fitted to the examples it was measured on.",
+      "Check the risks and controls, in particular whether any proposal for issue 292 would let an unattended host exempt its own claims from the unattended rules.",
+      "Read the named plan first and consult directly relevant source files only when needed to substantiate a concern. No builds, tests, credentials or delegation."
+    ]
+  }
+}

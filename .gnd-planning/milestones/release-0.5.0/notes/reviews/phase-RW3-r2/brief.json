@@ -1,0 +1,72 @@
+{
+  "base": "dcb3aa0f",
+  "claims": [
+    "stale_lines reports each stale statement of a paragraph exactly once, however its lines wrap and whatever spaces or tabs separate its words, and reports nothing a standing entry covers on the line as written or on the joined lines a phrase spans.",
+    "The lines a spanned phrase is judged on are the lines the match actually covers, for a phrase split over two lines, over three lines, and at the first or last line of a paragraph.",
+    "Every command block of the dossier stops at its first failing command and exits non-zero, and each runs from a directory in which its commands work."
+  ],
+  "created": "2026-11-25T17:37:19.507301+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r2/diff.patch",
+      "sha256": "edee8ce7eeb6221011658f0967ab6de30a92bd7f5543ee71a3a92f9e3823a0a6"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW3/dossier.md",
+      "sha256": "64bacd030f85dbe62d1c37c11d4156e198b1e405939a5fb2941636256655b36e"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW3/scratch-verification.txt",
+      "sha256": "a7a76dc3db3d3f3a80c09387946987cb3833854db731a14ef6c912d7f5db4a3d"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r1/BRIEF.md",
+      "sha256": "811454f3ff690dac444e222cef7ecafb7381b8b40de53c8c2d026317e125ceb0"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r1/FINDINGS.md",
+      "sha256": "84780394706db284184687780b913334543026ff82d52d94759386b96e3ea4b2"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r1/brief.json",
+      "sha256": "58bad275a5db3cd07296e1291e5956347148537e3f5b37470dd29881fa7a09aa"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r1/diff.patch",
+      "sha256": "246ddebc1f101bd0019a66f21aaf45bd85446252aabf7b49522615ffa453f5df"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r1/review.md",
+      "sha256": "afe0387e1cae3c2a30e4203feee68a5e4139bc36d07d112654c6a03ec1b273f6"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r1/run.json",
+      "sha256": "fa47b3589801df57eb717dc8f23cf0bdc53123b4b1f66d1a7bd9c3afed0efeb9"
+    },
+    {
+      "path": "dev/components/modules/tools.md",
+      "sha256": "1119822bb3b9d91bbc92f3326d3ef37db57687cfe77281d205cc1af5db75a914"
+    },
+    {
+      "path": "tests/test_release_text.py",
+      "sha256": "4572add30a3cb8abe5b1033f180ba3502a3bad1e298cf1403cedb5bcb042ded1"
+    },
+    {
+      "path": "tools/release_text.py",
+      "sha256": "c8611c4207293f6af11a722c5ac168892c615d40ab82035937c111356e428b47"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/phase-RW3-spec.md",
+      "sha256": "e8067584aa901fd5e0c1a0340bad8acaff23f4e9b4805748cdbc5d6bbdeca031"
+    }
+  ],
+  "head": "f7181173f5cb5987662a2b896ed6e75b490d531d",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Round 1 returned five findings. Do the repairs in tools/release_text.py and evidence/RW3/dossier.md fix each of them without a new defect, and does stale_lines now judge wrapped and oddly spaced prose the way Markdown reads it?",
+  "subject": "phase",
+  "version": 1
+}

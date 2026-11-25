@@ -172,6 +172,21 @@ SHA-256 of the spec bytes it covers.
 > the owner's explicit request at that time. This ruling is not the owner's
 > reading of the spec.
 
+> **Amendment and review stop: delegated (auto=true), 2026-11-25.** M2 (c),
+> the paragraph pass for prose that wraps, is withdrawn. Round 1 returned
+> five findings, three against it; its repair drew three of round 2's four
+> findings. That is seven findings in two rounds on one addition, and three
+> of four in round 2 attack text round 1's repair wrote, above one half. The
+> search stops after round 2, as the ruling above declared. The helper stays
+> line-based, as it was before this phase, with M2 (a) and (b) and a run of
+> spaces or tabs inside a line read as one space. Its documentation states
+> the limit: a phrase split over a line break is not reported. In its place,
+> `evidence/RW3/split-phrase-search.py` prints such text blocks for a person
+> to read; the rehearsal runs it and the dossier names it. §4's sentence
+> about a wrapped case in T1 no longer holds: T1 has seven one-line texts.
+> The final helper and that search carry no review opinion. Source and
+> scope as the ruling above. This is not the owner's reading.
+
 ## 8. Tests
 
 | ID | Case | Expected |

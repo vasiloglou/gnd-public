@@ -1,8 +1,10 @@
 # release-0.5.0
 
-Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **RW1 and
-RW2 are done: a 0.5.0 candidate is built from main `85d076ba` and passed
-installed acceptance. Nothing is uploaded, tagged or released.** The four milestones the owner made the release wait for are
+Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **The three
+preparing phases are done: a 0.5.0 candidate is built from main `85d076ba`,
+passed installed acceptance, and is handed over in the
+[dossier](evidence/RW3/dossier.md). Nothing is uploaded, tagged or released;
+each publication act waits for the owner's request.** The four milestones the owner made the release wait for are
 merged to main:
 [literature-host-interfaces](../literature-host-interfaces/README.md),
 [reviewed-vocabulary-growth](../reviewed-vocabulary-growth/README.md),
@@ -53,12 +55,16 @@ ship.
   the [build](evidence/RW2/build-summary.txt), the
   [acceptance run](evidence/RW2/acceptance-summary.txt) and the candidate's
   [SHA256SUMS](evidence/RW2/candidate/SHA256SUMS).
+- [RW3 spec](notes/phase-RW3-spec.md) and [record](005-phase-RW3.md): the
+  [dossier](evidence/RW3/dossier.md) with the owner's publication acts, the
+  [remote snapshot](evidence/RW3/pre-publication-state.txt) and the
+  [rehearsal](evidence/RW3/scratch-verification.txt) of the publication
+  edits.
 
 Three phases prepare the release and publish nothing: RW1 candidate content,
 RW2 candidate build and installed acceptance, RW3 publication hand-over.
 Publication is a separate stage in which each act runs on the owner's
 request.
 
-Next action: RW3, the publication hand-over (the dossier, the token-route
-sentence of `docs/releasing.md`, the checklist). Publication itself is the
-owner's, one act at a time.
+Next action: the owner's publication acts, in the dossier's order, each on
+the owner's request. Then the publication record and the milestone close.

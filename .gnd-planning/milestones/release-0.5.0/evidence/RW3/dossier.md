@@ -254,7 +254,7 @@ announced.
    [supplemental patch](post-publication-supplement.patch) rewrites them.
    The [rehearsal](scratch-verification.txt) ran exactly this, with the
    rehearsal date 2026-11-25, in a disposable clone of the RW3 commit: the
-   patch applied, `check` exited 0, the four release test files had 102
+   patch applied, `check` exited 0, the four release test files had 98
    passed, and the docs build and link check exited 0. If main's pages have
    changed by then, `git apply --check` fails; reconcile the patch by hand
    against the list.

@@ -267,9 +267,10 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
 | --- | --- | --- | --- |
 | `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
 | `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
-| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 239 | Map the ontology's concepts and relationships onto the semantic model. |
-| `validate_relational(semantic_model, mapping) -> None` | function | 328 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+| `is_regular_identifier(name) -> bool` | function | 94 | Whether Ossie reads NAME as a regular identifier, one that can be written unquoted. |
+| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 123 | One dataset per table, one field per column, one relationship per foreign key. |
+| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 264 | Map the ontology's concepts and relationships onto the semantic model. |
+| `validate_relational(semantic_model, mapping) -> None` | function | 353 | Check both documents against the pinned schemas; a failure is a renderer defect. |
 
 ## gnd.export.physical_binding — `src/gnd/export/physical_binding.py`
 Components: export.physical_binding

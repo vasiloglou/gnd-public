@@ -90,6 +90,72 @@ def test_external_physical_binding_cases(oracle, tmp_path):
             assert result.returncode == 0, case + ": " + result.stdout + result.stderr
 
 
+def test_external_identifier_class_is_the_exporters(oracle):
+    """OB5: the exporter's regular-identifier rule is the pinned validator's, over every
+    character inside and at the start of a name, and over case variants of its keywords."""
+    from gnd.export.ossie_relational import is_regular_identifier
+
+    points = [chr(point) for point in range(0x110000) if not 0xD800 <= point <= 0xDFFF]
+    names = [f"a{c}b" for c in points] + [f"{c}ab" for c in points]
+    names += ["not", "NOT", "Not", "select", "SELECT", "sElEcT", "from", "order", "group", "table", "alter",
+              "selects", "not_", "nota", "ſelect", "a", "A", "_", "$", "a$b", "9", "x" * 200]
+    answers = oracle.declared_names(names)
+    wrong = [
+        name for name, (declared, uppercased) in zip(names, answers, strict=True)
+        if declared != (uppercased if is_regular_identifier(name) else name)
+    ]
+    assert wrong[:20] == []
+    # Review r1 F1. The class above is compared with the validator's own uppercasing, so it
+    # does not show that the exporter's bytes match: a letter whose uppercase the two Unicode
+    # versions disagree on gives a different identifier. That is a stated limit of the
+    # normative rule. It is confined to names with a non-ASCII letter, and an ASCII name
+    # is exact; both are asserted here so the limit cannot grow unseen.
+    differs = [name for name, (_, uppercased) in zip(names, answers, strict=True) if name.upper() != uppercased]
+    assert all(not name.isascii() for name in differs)
+    assert len({character for name in differs for character in name if not character.isascii()}) < 200
+
+
+def test_external_irregular_binding_names(oracle, tmp_path):
+    """OB5: the pinned validator accepts a binding whose table and column names are not
+    regular identifiers (a space, a dot, a hyphen)."""
+    from support import physical_binding_corpus as bindings
+    from test_physical_binding import irregular_binding
+
+    bundle = render_ossie(bindings.model_path("V1"), output_format="yaml", document_name="ontology.yaml",
+                          physical_binding=irregular_binding(tmp_path))
+    (tmp_path / "ontology.yaml").write_bytes(bundle.document)
+    semantic = tmp_path / "ontology.yaml.semantic_model.yaml"
+    mapping = tmp_path / "ontology.yaml.mapping.yaml"
+    semantic.write_bytes(bundle.semantic_model)
+    mapping.write_bytes(bundle.mapping)
+    for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
+        result = oracle.validate(path, schema)
+        assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_external_keyword_named_table(oracle, tmp_path):
+    """OB5: an object type whose id is `select` gets a table Ossie keeps as written."""
+    from support import ossie_relational_corpus as relational
+
+    document = relational.load_yaml(relational.rmap_case("01"))
+    document["object_types"] += [
+        {"id": "select", "name": "Select", "kind": "entity", "independent": True,
+         "reference": {"mode": "popular", "value_type": "order"}},
+        {"id": "order", "name": "Order", "kind": "value", "primitive": "Integer"},
+    ]
+    model = tmp_path / "model.orm.json"
+    model.write_text(json.dumps(document), encoding="utf-8")
+    bundle = render_ossie(model, output_format="yaml", document_name="ontology.yaml")
+    (tmp_path / "ontology.yaml").write_bytes(bundle.document)
+    semantic = tmp_path / "ontology.yaml.semantic_model.yaml"
+    mapping = tmp_path / "ontology.yaml.mapping.yaml"
+    semantic.write_bytes(bundle.semantic_model)
+    mapping.write_bytes(bundle.mapping)
+    for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
+        result = oracle.validate(path, schema)
+        assert result.returncode == 0, result.stdout + result.stderr
+
+
 def test_external_refusal_is_live(oracle, tmp_path):
     document = {
         "version": "0.3.0.dev0",

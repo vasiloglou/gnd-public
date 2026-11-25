@@ -785,3 +785,41 @@ def test_r1_f6_a_schema_refusal_names_an_escaped_pointer_in_sorted_order(tmp_pat
         read_binding(path)
     assert caught.value.rule == "binding:schema"
     assert "at /tables/a~0b/columns:" in str(caught.value)
+
+
+# --- OB5: table and column names that are not regular identifiers ---------------------------
+
+
+def irregular_binding(tmp_path):
+    """Corpus case V1 with its table and one column renamed to names Ossie keeps as written."""
+    binding = json.loads((corpus.CORPUS / "V1" / "binding.json").read_text(encoding="utf-8"))
+    table = binding["tables"].pop("cust")
+    table["columns"] = {("e-mail addr" if name == "email_addr" else name): body
+                        for name, body in table["columns"].items()}
+    binding["tables"]["Sales Dept.cust-2024"] = table
+    binding["roles"] = {
+        "customer_has_email": {
+            "customer": [{"table": "Sales Dept.cust-2024", "column": "cust_id"}],
+            "email": [{"table": "Sales Dept.cust-2024", "column": "e-mail addr"}],
+        }
+    }
+    path = tmp_path / "binding.json"
+    path.write_text(json.dumps(binding), encoding="utf-8")
+    return path
+
+
+def test_ob5_names_that_are_not_regular_identifiers_are_quoted_as_written(tmp_path):
+    from gnd.export.ossie import render_ossie
+    from gnd.export.ossie_relational import validate_relational
+
+    bundle = render_ossie(corpus.model_path("V1"), output_format="yaml", physical_binding=irregular_binding(tmp_path))
+    semantic = relational.load_yaml_bytes(bundle.semantic_model)
+    mapping = relational.load_yaml_bytes(bundle.mapping)
+    validate_relational(semantic, mapping)
+    (dataset,) = semantic["datasets"]
+    assert [field["expression"]["sql"] for field in dataset["fields"]] == ['"CUST_ID"', '"e-mail addr"']
+    (concept,) = mapping["concept_mappings"]
+    assert concept["object_mappings"] == [{"expression": '"Sales Dept.cust-2024"."CUST_ID"'}]
+    (link,) = concept["link_mappings"]
+    assert link["children"][0]["object_mapping"]["expression"] == '"Sales Dept.cust-2024"."e-mail addr"'
+    relational.cross_check(relational.load_yaml_bytes(bundle.document), semantic, mapping)

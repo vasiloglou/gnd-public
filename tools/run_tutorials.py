@@ -212,6 +212,8 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'why-not': [root / 'docs/how-to/repair-a-missing-claim.md'],
         'disclosure': [root / 'docs/how-to/disclosure-mode.md', root / 'docs/reference/disclosure.md'],
         'growth': [root / 'docs/how-to/grow-a-model.md'],
+        'ossie': [root / 'docs/how-to/share-an-ossie-ontology.md',
+                  root / 'docs/how-to/describe-delivered-tables-for-ossie.md'],
         'compose': [root / 'docs/how-to/compose-documents.md'],
         'failed-verification': [root / 'docs/guides/documents.md'],
         'rule-check': [root / 'docs/how-to/adopt-rules-with-a-baseline.md'],

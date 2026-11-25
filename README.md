@@ -24,8 +24,9 @@ for recording business concepts and the relationships between them. You can
 bring in an existing Ossie ontology as the starting point for a GND model, or
 export your GND model's vocabulary and relationships so another tool or team
 works from the same names and connections. The exchange covers concepts, their
-relationships and a documented subset of constraint formulas, as described in
-[Ossie interchange in GND](docs/explanation/ossie.md).
+relationships and a documented subset of constraint formulas. An export also
+describes the tables that hold the model's facts, or the tables you already
+built, as described in [Ossie interchange in GND](docs/explanation/ossie.md).
 
 ![Animated: an agent proposes a payment plan, GND names the failed precondition, the agent adds the missing steps, and the revised plan is accepted.](docs/assets/hero.svg)
 
@@ -146,7 +147,7 @@ assert bad["exit_code"] == 1 and good["exit_code"] == 0
   conformance checks, and model evolution with a blast-radius preview.
 - **Round-trips documents.** Render a document from facts with planted distractors,
   extract facts back, and check both directions.
-- **Shares pinned [Ossie ontologies](docs/explanation/ossie.md).** Export and restore GND models with per-field loss reports.
+- **Shares pinned [Ossie ontologies](docs/explanation/ossie.md).** Export and restore GND models with per-field loss reports, and describe the tables that hold their facts.
 - **Exports to other engines.** Soufflé Datalog, Lean definitions with explicit proof
   obligations, PyRel programs, and independently replayable witnesses.
 - **Gets a second opinion.** A six-seat review panel across Claude, Codex, Qwen, Gemini,

@@ -7,6 +7,7 @@ b/ (parser) environments. The caller prepares these once via the OS0 receipt.
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import subprocess
 from dataclasses import dataclass
@@ -19,6 +20,10 @@ _PARSE = (
     "import sys; from pathlib import Path; sys.path.insert(0, sys.argv[1]); "
     "from ossie_ontology.parser import OssieParser; "
     "OssieParser().parse(Path(sys.argv[2]))"
+)
+_DECLARED = (
+    "import json, sys; sys.path.insert(0, sys.argv[1]); import validate; "
+    "print(json.dumps([[validate.declared_name(name), name.upper()] for name in json.load(sys.stdin)]))"
 )
 
 
@@ -54,6 +59,16 @@ class OssieOracle:
             self.root / "ossie" / schema,
             path,
         )
+
+    def declared_names(self, names: list[str]) -> list[list[str]]:
+        """For each declared name: the pinned validator's normalized form, and the name
+        uppercased by the validator's own interpreter (its Unicode tables may be older)."""
+        result = subprocess.run(
+            [str(self.root / "a/bin/python"), "-I", "-c", _DECLARED, str(self.root / "ossie/validation")],
+            input=json.dumps(names), capture_output=True, text=True, timeout=600, check=True, cwd=self.root,
+            env={"PATH": os.defpath, "HOME": str(self.root), "PYTHONUTF8": "1"},
+        )
+        return json.loads(result.stdout)
 
     def parse(self, path: Path) -> subprocess.CompletedProcess[str]:
         return self._run(

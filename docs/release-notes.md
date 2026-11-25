@@ -5,6 +5,29 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
 Changes on `main` after a release are listed in an `Unreleased:` section until
 the next one.
 
+## Unreleased: Ossie relational files
+
+- **Tables beside the ontology.** `gnd export ossie` now writes five files.
+  The two new ones are `OUT.semantic_model.<fmt>`, the tables that hold the
+  model's facts, and `OUT.mapping.<fmt>`, which says where each concept and
+  relationship is stored. The ontology, sidecar and loss report keep their
+  bytes. A file already at either new path stops the run with exit
+  11 (`EXIT_COLLISION`) and nothing is written. `--ontology-only` keeps the
+  three-file run. A model that yields no table writes three files and a note.
+- **Your own tables.** `--physical-binding FILE` describes delivered tables
+  in place of the generated ones. The file follows the packaged schema
+  `gnd-physical-binding/1`. A binding the model contradicts is refused with
+  a `binding:` rule id and exit 3. Together with `--ontology-only` it is a
+  usage error, exit 64 (`EXIT_USAGE`). A fact that a table holds only
+  through a surrogate key cannot be bound; it is listed as `unbound`.
+- **Larger files.** `--max-output-bytes N` on `gnd export ossie` and
+  `--max-input-bytes N` on `gnd import ossie` replace the 10 MiB bound for
+  one run. N is a whole number of bytes, from 1 byte to 256 MiB. Any other
+  value is a usage error, exit 64 (`EXIT_USAGE`). The model file itself
+  stays capped at 10 MiB.
+- **Where to read more.** [Ossie interchange in GND](explanation/ossie.md)
+  and [Describe your delivered tables](how-to/describe-delivered-tables-for-ossie.md).
+
 ## Unreleased: frontmatter fences
 
 - **An indented `---` is content.** The frontmatter reader behind experiment

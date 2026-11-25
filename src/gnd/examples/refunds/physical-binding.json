@@ -1,0 +1,40 @@
+{
+  "schema": "gnd-physical-binding/1",
+  "tables": {
+    "crm.customers": {
+      "columns": {
+        "cust_code": {
+          "sql_type": "VARCHAR(12)",
+          "targets": [{"kind": "identifier", "object_type": "customer"}]
+        }
+      },
+      "primary_key": ["cust_code"]
+    },
+    "fin.refunds": {
+      "columns": {
+        "refund_id": {
+          "sql_type": "BIGINT",
+          "targets": [{"kind": "identifier", "object_type": "refund"}]
+        },
+        "cust_code": {
+          "sql_type": "VARCHAR(12)",
+          "references": {"table": "crm.customers", "columns": ["cust_code"]}
+        },
+        "amount_cents": {"sql_type": "INTEGER"},
+        "pay_channel": {"sql_type": "VARCHAR(20)"},
+        "loaded_at": {"sql_type": "TIMESTAMP"}
+      },
+      "primary_key": ["refund_id"]
+    }
+  },
+  "roles": {
+    "refund_by": {
+      "refund": ["fin.refunds.refund_id"],
+      "customer": ["fin.refunds.cust_code"]
+    },
+    "refund_amount": {
+      "refund": ["fin.refunds.refund_id"],
+      "amount": ["fin.refunds.amount_cents"]
+    }
+  }
+}

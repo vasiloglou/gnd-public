@@ -2238,8 +2238,8 @@ before the ontology, which is the completion marker. Publication is
 create-once. A synchronous failure rolls back the invocation's published
 entries. An interruption before the ontology appears can leave uncommitted
 companions. Exit codes are 0 on success, 3 on input or strict-policy refusal,
-11 on output collision, 66 on missing input, 70 on an internal rendering
-failure and 74 on an I/O refusal.
+11 on output collision, 64 on a usage error, 66 on missing input, 70 on an
+internal rendering failure and 74 on an I/O refusal.
 
 ### Semantic model and mapping
 
@@ -2275,11 +2275,19 @@ and exits 0.
   themselves, and Number to Decimal. Binary and Duration map to `Opaque`,
   with the primitive in a `GND` extension on the field as
   `{"gnd_primitive": …}`. A column with no primitive has no `datatype`.
-- **Identifiers in expressions** are written quoted and uppercased, with an
-  embedded quote doubled: `"CUSTOMER"."EMAIL"` names field `email` of
-  dataset `customer`. Ossie compares a regular identifier by its uppercased
-  form, so the quoted form names the same field and never reads as a
-  keyword.
+- **Identifiers in expressions** are written quoted, in Ossie's normalized
+  form, with an embedded quote doubled. A **regular** identifier, one that
+  can be written without quotes, is uppercased: `"CUSTOMER"."EMAIL"` names
+  field `email` of dataset `customer`. Ossie compares a regular identifier
+  by its uppercased form, so the quoted form names the same field and never
+  reads as a keyword. Any other name is written exactly as given, which is
+  the only form Ossie matches it by: `"uni.student"."NR"`. A name is regular
+  unless it is empty, starts with an ASCII digit, holds white space or an
+  ASCII punctuation character other than `$` and `_`, or is the word `not`
+  or `select` in any case. That is the class of the pinned Ossie validator.
+  Uppercasing follows the Unicode tables of the Python that runs the export.
+  A reader on other tables can uppercase a non-ASCII letter differently and
+  then does not match that name; a name of ASCII characters is exact.
 - **No population.** No file of the relational layer holds a row, a model
   identity or a digest, except the mapping's extension below.
 
@@ -2359,9 +2367,10 @@ members mean.
 | `primary_key`, `unique_keys` | The dataset's keys, as given |
 | `references` | The columns of one table whose `references` name the same table and column list are **one** foreign key, and one relationship. They pair with the referenced columns in the table's column order. A table's foreign keys are ordered by their first column, and named by the relational mapping's rule. |
 
-Names are written as given, and quoted and uppercased in expressions like
-any other. Two tables, or two columns of one table, that are equal after
-uppercasing are refused.
+Names are written as given, and quoted in expressions like any other: a
+regular identifier uppercased, any other name, such as the schema-qualified
+`fin.refunds`, as given. Two tables, or two columns of one table, that are
+equal after uppercasing are refused.
 
 **SQL types.** A type is words of letters, digits and underscores separated
 by spaces, with at most one parenthesized list of unsigned integers after a

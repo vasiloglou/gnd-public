@@ -26,10 +26,13 @@ hide:
 
 GND imports and exports Apache Ossie ontology files. Start a GND model
 from an ontology your team already uses, or share your GND model's business
-concepts and relationships with another team or tool.
+concepts and relationships with another team or tool. An export also
+describes the tables that hold the model's facts, or the tables you already
+built.
 
 [See what GND carries across](explanation/ossie.md) ·
-[Try it with the refunds model](how-to/share-an-ossie-ontology.md)
+[Try it with the refunds model](how-to/share-an-ossie-ontology.md) ·
+[Describe your delivered tables](how-to/describe-delivered-tables-for-ossie.md)
 
 ## How it works
 

@@ -1,32 +1,20 @@
 # release-0.5.0
 
-Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **GND 0.5.0 is
-published: on PyPI since 2026-11-25, tagged `v0.5.0` on `85d076ba`, with a
-GitHub release. The [publication record](006-publication.md) binds the
-receipts. The milestone close is next.** The four milestones the owner made the release wait for are
-merged to main:
+Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **Closed on
+2026-11-25** ([close record](008-milestone-close.md)). GND 0.5.0 is on PyPI,
+tagged `v0.5.0` on `85d076ba`, with a GitHub release; the pages say it is
+published. The close panel's one blocking concern was settled by the owner's
+answer on the content and history review (RC-07).
+
+Later the same day, outside this milestone, 0.5.1 was cut as a GitHub tag
+only (pull request 289, tag `v0.5.1`), fixing issue 286.
+
+The milestone waited for four other milestones by the owner's rulings
+(plan §11 to §14):
 [literature-host-interfaces](../literature-host-interfaces/README.md),
 [reviewed-vocabulary-growth](../reviewed-vocabulary-growth/README.md),
 [pins-and-review-check](../pins-and-review-check/README.md) and
-[ossie-relational-bundle](../ossie-relational-bundle/README.md), each with
-its close record; the plan's §14 has the last one's history. Nothing is
-built or published.
-
-RW2 began on 2026-11-25 after the owner merged RW1 (pull request 282). Its
-[pre-freeze record](003-RW2-pre-freeze.md) has the probes, their rehearsal
-and two review rounds. The owner merged the probes pull request (283); its commit is
-the freeze commit. The [RW2 record](004-phase-RW2.md) has the freeze, the
-two builds, the acceptance run and the two oracle lanes.
-
-RW1 started on 2026-11-24, was held for ossie-relational-bundle, and resumed
-on 2026-11-25. Its [record](002-phase-RW1.md) has the result: the version is
-0.5.0 on the RW1 branch, the notes have one 0.5.0 section headed by the
-Ossie relational files (the owner's choice), and the default lane has no
-failure at `4a73af2e`.
-
-The plan's §11 and the gate record describe the first two milestones as they
-stood when the plan was approved. The plan's §12 to §14 and the milestones'
-own READMEs give their current state.
+[ossie-relational-bundle](../ossie-relational-bundle/README.md).
 
 It will carry what merged after 0.4.0: include roots on more routes, the
 PyRel rules programs for literature-style models, aggregate COUNT
@@ -61,11 +49,15 @@ ship.
   edits.
 - [Publication record](006-publication.md) with the receipts under
   `evidence/publication/`.
+- [Close candidate](007-close-candidate.md), [close record](008-milestone-close.md),
+  [predicates](notes/close-results.md), [question sweep](notes/close-question-sweep.md)
+  and the [close panel](evidence/close-panel/PANEL-REVIEW.md) with its
+  [dispositions](evidence/close-panel/disposition.md).
 
 Three phases prepare the release and publish nothing: RW1 candidate content,
 RW2 candidate build and installed acceptance, RW3 publication hand-over.
 Publication is a separate stage in which each act runs on the owner's
 request.
 
-Next action: the milestone close, with the standard GND panel the owner
-selected, and the owner's choice about issue comments.
+Next action: none for this milestone. Carried items are in the sweep, each
+with its owner.

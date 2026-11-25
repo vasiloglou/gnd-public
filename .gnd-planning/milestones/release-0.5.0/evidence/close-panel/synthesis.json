@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "run_sha256": "ee6f217adcd1e9250f93a80ef314aba41a25a55db495f7e606687fdf3eefce6b",
+  "summary": "Five of six seats returned schema-valid responses at xhigh; Kimi's seat exited nonzero. One seat blocked (codex) and four asked for revision. Fourteen concerns: three agreed groups (act 3 credited to the owner's words; the unreviewed bytes understated; owner words not pinned) and seven single-seat concerns. The one blocking concern is the owner's content and history review, which the plan required before the upload and which was not stated.",
+  "agreed_concerns": [
+    {
+      "group_id": "act3-not-owner-worded",
+      "severity": "medium",
+      "title": "The publication row credits act 3 to the owner's words",
+      "summary": "The candidate says every publication act, the served-file comparison and fresh install among them, ran on the owner's words. 006 says act 3 ran without a separate request, as docs/releasing.md requires right after an upload.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "act3-without-owner-words"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-candidate-pub-row-act3-not-owner-worded"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "unreviewed-bytes-understated",
+      "severity": "medium",
+      "title": "The limits understate which bytes carry no review opinion",
+      "summary": "Predicate 9's limit names four kinds of change, while the bound status file lists fifteen paths, among them the RW2 probe files, the publication helper and pages; no instrument is named per file.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unreviewed-bytes-understated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-predicate9-unreviewed-set-understated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "owner-words-unpinned",
+      "severity": "medium",
+      "title": "Owner words the close relies on are not digest-pinned",
+      "summary": "The owner-statements receipt is cited but not pinned, and the owner's close request and the words behind 0.5.1 and its tag have no kept quotation.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "owner-words-without-receipt"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-close-authorization-unpinned"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-owner-statements-unpinned"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rw-d0-closed-prospectively"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "RC07-prepublication-owner-check"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "c2-contradictory-python-profile"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-007-lane-errors-rc02-disposition"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-007-freeze-lane-error-count-absent"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-007-r1-amendment-authority"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-007-predicates-4-5-6-8-unmapped"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-rc07-owner-disposition",
+      "rank": 1,
+      "title": "Obtain the owner's disposition of the content and history review before the close ruling",
+      "action": "Ask the owner to state whether the repository content and history review is done, or to accept its absence before the upload as a recorded deviation; record the answer quoted whole; the close ruling waits for it.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RC07-prepublication-owner-check"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RC07-prepublication-owner-check",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-act3-wording",
+      "rank": 2,
+      "title": "Say that act 3 ran without a separate request",
+      "action": "Reword the publication row and the authority bullet: the upload, tag, GitHub release and pages ran on the owner's words; the served-file comparison and fresh install ran right after the upload as docs/releasing.md requires, disclosed in 006. Record it in the sweep as accepted.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "act3-without-owner-words"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-candidate-pub-row-act3-not-owner-worded"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "act3-without-owner-words",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "act3-without-owner-words",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-candidate-pub-row-act3-not-owner-worded",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-pin-owner-words",
+      "rank": 3,
+      "title": "Pin every owner statement the close relies on",
+      "action": "Pin evidence/publication/owner-statements.txt in the candidate, and add a close receipt quoting the owner's close request and the words behind issue 286, the 0.5.1 cut and the v0.5.1 tag; cite it from the candidate and audit.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "owner-words-without-receipt"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-close-authorization-unpinned"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-owner-statements-unpinned"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "owner-words-without-receipt",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-close-authorization-unpinned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-close-authorization-unpinned",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-owner-statements-unpinned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-owner-statements-unpinned",
+          "evidence_index": 1
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-unreviewed-enumeration",
+      "rank": 4,
+      "title": "Enumerate the unreviewed files and their instruments",
+      "action": "List every path the status file calls unreviewed, tie each to the predicate it supports and to the instrument that stands in for review, and correct close-results row 9.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unreviewed-bytes-understated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-predicate9-unreviewed-set-understated"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unreviewed-bytes-understated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-predicate9-unreviewed-set-understated",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-lane-and-profile",
+      "rank": 5,
+      "title": "State the lane errors, skips and profiles precisely",
+      "action": "Give each lane's error and skip counts, RC-02's carried disposition beside the close lane, and the default lane's Python 3.13.18 and uv 0.13.7 profile in the limits.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-lane-errors-rc02-disposition"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-freeze-lane-error-count-absent"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c2-contradictory-python-profile"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-lane-errors-rc02-disposition",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-lane-errors-rc02-disposition",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-lane-errors-rc02-disposition",
+          "evidence_index": 2
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-freeze-lane-error-count-absent",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-freeze-lane-error-count-absent",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "c2-contradictory-python-profile",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "fix-repair-authority-and-map",
+      "rank": 6,
+      "title": "Show the plan repairs' authority and map every predicate",
+      "action": "State that the section 15 repairs fall under the close ruling, as process-milestone requires, with the plan digest; add a predicate-to-evidence map for all nine; mark RW-D0 as closed by record 008.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-r1-amendment-authority"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-predicates-4-5-6-8-unmapped"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rw-d0-closed-prospectively"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-r1-amendment-authority",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-r1-amendment-authority",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-r1-amendment-authority",
+          "evidence_index": 2
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-007-predicates-4-5-6-8-unmapped",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rw-d0-closed-prospectively",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ]
+}

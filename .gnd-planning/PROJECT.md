@@ -431,6 +431,12 @@ and the GitHub release exists, each on the owner's request
 ([006-publication.md](milestones/release-0.5.0/006-publication.md)). The
 milestone close is next.
 
+Status, 2026-11-25, closed: release-0.5.0 is closed
+([008-milestone-close.md](milestones/release-0.5.0/008-milestone-close.md))
+after a full default lane at main (22,057 passed, 0 failed) and the standard
+GND panel over the close candidate. 0.5.1 was cut as a GitHub tag only the same
+day, outside the milestone, fixing issue 286.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

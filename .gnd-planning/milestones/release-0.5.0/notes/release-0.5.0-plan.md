@@ -1,15 +1,14 @@
 # Release 0.5.0
 
-r5, 2026-11-25. Milestone `release-0.5.0`, phase prefix `RW`. The standard
+r6, 2026-11-25. Milestone `release-0.5.0`, phase prefix `RW`. The standard
 GND panel reviewed r1 (SHA-256 `5a34615d…3391`, five of six seats). Section 11
 amends the r1 clauses below and records the owner's rulings of 2026-11-23.
 The [plan gate](../001-plan-gate.md) records the review and the delegated
-ruling over r2 (SHA-256 `c1c846bd…1999`). r3 (SHA-256 `6ca712ec…3c6c`) added
-§12; r4 (SHA-256 `a1758e2f…562f`) added §13; r5 adds §14 and changes this
-paragraph; every other byte is r4's. No review has read r2 to r5. **Every
-milestone the owner made the release wait for is merged to main (§14). RW1
-is resumed: its spec is revised against main `e8359685` and E1 runs
-again before the second ruling.**
+ruling over r2 (SHA-256 `c1c846bd…1999`). r3 to r5 added §12 to §14; r6 adds
+§15, the close's plan repairs, and changes this paragraph; every other byte is
+r5's (SHA-256 `ceaecc0a…a206`). No review has read r2 to r6 as a plan; the
+close panel reads r6 beside the close candidate. **GND 0.5.0 is published
+(PyPI, tag `v0.5.0`, GitHub release) and the milestone is at its close.**
 
 Source: the owner's request of 2026-11-23 ("Release 0.5.0"), made after the
 three milestones merged since 0.4.0 were recorded as closed. Inspection
@@ -691,4 +690,40 @@ repair of the red docs test the RW1 measurement found on main, and three
 clean-ups that change no behaviour. The limit stated above, that no explicit
 close ruling was recorded, no longer holds; it is kept as written because it
 was true of `e8359685`. RW1's branch merged `3998d371` before its last lane.
+
+## 15. Plan repairs at the close, 2026-11-25 (r6)
+
+Each repair names the record that raised it. The wording it replaces stays
+above, unchanged. The close ruling covers these repairs.
+
+- **R1. E1 measures the version fields only (from 002, "Refuted premises").**
+  §4's RW1 row and the RW1 spec treated the ids E1 lists as every consumer
+  the phase must handle. The notes rewrite has its own readers, which E1
+  cannot see; two tests of `tests/test_ossie_docs.py` failed at RW1's first
+  commit and the full lane found them. For the next release: E1 also lists
+  the tests that read the notes (a search of `tests/` for the notes' path),
+  and the RW1 focused gate includes them.
+- **R2. The headline (from the RW1 spec, D4 owner ruling).** §2 and RW-D3
+  name the PyRel rules block as the headline. The owner chose the Ossie
+  relational files on 2026-11-25; `HEADLINE_BLOCK["0.5.0"]` pins that block,
+  and the PyRel block comes second.
+- **R3. The installed probes (from the RW2 spec, D2 owner ruling).** §2 and
+  RW-D6 name four probes. The owner chose six, with five test files added
+  to the installed families (004, 33 passed).
+- **R4. The publication helper (from 005, "Refuted premises").** RW3-C3 and
+  RC-03 asked for negative controls for the missed phrases, which RW3 added.
+  The paragraph pass RW3 also added for prose that wraps was withdrawn after
+  review; the helper reads lines. The successor question is carried as RC-08
+  ([sweep](close-question-sweep.md)).
+- **R5. The RW2 size estimate (from 003, "Refuted premises").** §9's RW2 row
+  and the RW2 spec estimated about 230 test lines; the probes came to 338 and
+  their review controls to 59, under a limit raised to 420 by delegated
+  ruling before the merge.
+- **R6. What main declares after the milestone.** Predicate 1 reads "the
+  source version is 0.5.0". It held at the candidate commit `85d076ba` and at
+  the publication. On 2026-11-25, after the publication and outside this
+  milestone, the owner had 0.5.1 cut as a GitHub tag only (pull request 289,
+  tag `v0.5.1` on `eb93128a`), so main now declares 0.5.1 with 0.5.1 in
+  `TAGGED`. The close judges predicate 1 at the commits the milestone
+  produced, and records the later tag.
 

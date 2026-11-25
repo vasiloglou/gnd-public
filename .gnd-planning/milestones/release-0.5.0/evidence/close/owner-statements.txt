@@ -1,0 +1,47 @@
+The owner's words in the release session that the close relies on and that
+evidence/publication/owner-statements.txt does not hold. 2026-11-25, in order.
+Each is quoted whole.
+
+"fix that"
+  After the session listed the open items after publication. Read here as the
+  token-route sentence of docs/releasing.md, which the session said it took it
+  to mean; pull request 288.
+
+"yes do that and there are two new issues just filed do you think you can resolve them and cut quickly 0.5.1 version. remember these versions stay on GitHub only they don't need to be on pip"
+  The merge of pull request 288, the fix of issue 286 and the cut of 0.5.1 as a
+  GitHub tag only. The session found one new issue (286); 279 and 280 are design
+  questions and were not taken.
+
+"review the pr"
+  An independent review of pull request 289 (.gnd-planning/reviews/pr-289-r1).
+
+"post comment merge and push"
+  The review comment posted to pull request 289, its merge, and the push of the
+  annotated tag v0.5.1 on the merge commit eb93128a.
+
+"yes"
+  After the question whether to commit the PR 289 review files in a records-only
+  pull request (290); then "yes" again to merge it.
+
+"close it"
+  The milestone close.
+
+"ok"
+  After the session reported the close under way and that it would run the
+  standard GND panel and then record the dispositions and the delegated close
+  ruling.
+
+"Review done"
+  The owner's answer, chosen in the session's question form, to: "The 0.5.0
+  plan said that before the PyPI upload you would confirm PyPI ownership (you
+  did: 'get-nick-done is mine') and review the repository's content and history
+  for anything that should not be public. That review was never stated, and
+  the close panel's one blocking concern asks for your ruling on it. How do you
+  rule?" The option chosen read: "You have reviewed the repository's content
+  and history and found nothing that should not be public. The close record
+  quotes that, and RC-07 is closed." The answer does not say when the review
+  was done: before or after the upload of 17:53 UTC.
+
+The owner's selection of the standard GND panel for the plan and the close
+(2026-11-23) is in the plan, section 11, "Owner rulings" (RW-D0), and in
+001-plan-gate.md.

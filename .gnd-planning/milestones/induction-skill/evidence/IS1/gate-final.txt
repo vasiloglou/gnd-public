@@ -1,0 +1,21 @@
+IS1 final gate, run 2026-11-25 in a clean clone at the commit below (macOS, Python 3.14).
+8727886cf16d1bae95750bbc411de074048aacea
+$ uv run pytest -q -p no:randomly <spec gate files>
+1 failed, 982 passed, 1 deselected in 363.61s (0:06:03)
+$ uv run pytest -q <project structure guards, project.md>
+1 failed, 871 passed, 2 deselected in 288.16s (0:04:48)
+$ uv run ruff check
+All checks passed!
+$ uv run --group docs zensical build --strict
+Build finished in 2.55s
+$ uv run python tools/check_docs.py site
+19545 local links/assets/anchors checked
+exit 0
+$ uv run gnd install --symlink --project --force && uv run gnd doctor --project
+exit 0
+$ uv run pytest -q -p no:randomly -m distribution tests/test_public_built_inventory.py   # D20 (o)
+17 passed in 20.78s
+
+The one failure in both pytest runs was tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap: the retained review.md files of rounds 1 and 2 carried repository-relative links that do not resolve from their folder. After the declared retention edit to both review.md files (a link prefix, and one quoted example), in the same clone:
+$ uv run pytest -q tests/test_development_scaffold.py
+90 passed, 1 deselected in 68.10s (0:01:08)

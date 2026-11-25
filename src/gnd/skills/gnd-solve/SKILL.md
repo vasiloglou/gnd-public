@@ -144,7 +144,7 @@ the opt-in `--families fact-type`, fact types for a generic fact type's
 recurring attributes), or from
 `gnd import ilp-rules`, which brings an ILP learner's rules back as induced,
 advisory constraints, or from `gnd import mined-rules`, which brings back a rule
-miner's rules that hold on a population; review each here like any other.
+miner's rules that hold on a population; review each here like any other. [gnd-induce](../gnd-induce/SKILL.md) runs all three and hands their proposals here.
 
 Entry commands: `uv run gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json`; after acceptance, `uv run gnd evolve apply model.orm.yaml proposal.json --preview preview.json --workspace . --records records --format json`.
 

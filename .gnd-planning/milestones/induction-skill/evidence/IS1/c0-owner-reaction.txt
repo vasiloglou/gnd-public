@@ -1,0 +1,14 @@
+Checkpoint C0 (plan D15, IS1-C8), 2026-11-25.
+
+Shown: a private page, "Refund Rule Skill Mockup", labelled as a mockup and not a
+recording: the learn-rules tutorial with every step as a /gnd:gnd-induce prompt
+(step 6 keeps /gnd:gnd-model-evolve, then /gnd:gnd-induce for the re-check), beside
+the results the commands page prints. It asked three things: whether the six prompts
+read the way a business reader would ask; whether steps 2 and 3 stay apart; whether
+the skill's "who should the proposal be recorded as" question may show once, at step 3.
+
+The owner's answer, quoted whole: "Keep them apart"
+
+Read as: steps 2 and 3 stay two prompts (plan IS2-C4). The owner raised no objection
+to the other two points; the skill is written to serve the prompts as shown. That
+reading is the author's, not the owner's.

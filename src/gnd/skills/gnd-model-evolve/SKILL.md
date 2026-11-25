@@ -334,6 +334,7 @@ and it must be named rather than left for the next reader to discover.
   GND re-checked against the labels; review it the same way.
 - A `gnd import mined-rules` proposal adds only induced, advisory guarded constraints that GND
   counted on the bound population and that hold for every case; review it the same way.
+- These proposals come from [gnd-induce](../gnd-induce/SKILL.md), which never applies them.
 - Reject any source outside the seven-source taxonomy.
 - Keep `EvolutionOperationAudit` separate from constraint provenance.
 - Retain complete operations, rationale, audit, validation, CAS, blast radius, conformance,

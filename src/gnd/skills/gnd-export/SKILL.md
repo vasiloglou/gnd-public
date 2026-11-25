@@ -49,7 +49,7 @@ as an evolve proposal (`--target llm` reads an agent's JSON answer). With
 `--target` `amie` it writes one unlabelled population for a rule miner, and
 `gnd import mined-rules` brings back only rules that hold on it. See
 `gnd export ilp --help`; the proposal is reviewed like any other evolution
-proposal.
+proposal. To run the whole loop with a learner, use [gnd-induce](../gnd-induce/SKILL.md); its proposals are reviewed through gnd-model-evolve.
 
 For explicitly selected Lean definitions, run `gnd export lean MODEL POP
 --toolchain leanprover/lean4:v4.34.0` offline. Publish a raw create-once bundle

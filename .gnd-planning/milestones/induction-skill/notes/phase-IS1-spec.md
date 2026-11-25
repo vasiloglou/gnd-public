@@ -2,28 +2,34 @@
 
 ## 1. Status
 
-**Draft r3, awaiting plan approval, then this spec's own owner gate.** It is
-blocked on D1, D3, D4, D5, D8, D16 (plan §10) and D15, which change file names,
-file counts and pinned values. D9 is mandatory and D17..D20 are owner-accepted
-(plan §10). No implementation has started.
+**Draft r4, 2026-11-25: a refresh of the approved r3 against main `4f2945a9`.
+No review has read r4, and no ruling covers it.** The owner approved r3
+(SHA-256 `a3c29dca…443e`) on 2026-10-27 ([plan gate](../001-plan-gate.md));
+that approval covers r3's bytes only. r4 needs its own owner gate (`auto=false`).
+§12 lists every change from r3 and why. Three new decisions (D21 to D23, §7)
+come from capabilities that landed after r3. No implementation has started.
 
 ## 2. Provenance
 
 - Derived from [the plan r3](induction-skill-plan.md) §0, §2, §4 IS1 and §10,
-  at baseline `45c8603` (main after PR #48), merged into this branch as
-  `3243a64`. `077f46e..45c8603` changes no file under `src`, `tests`, `tools`,
-  `docs` or AGENTS.md, so the r1 measurements still hold.
+  and from r3 of this spec. The plan is unchanged; where this spec and the
+  plan's baseline numbers differ, this spec's measurements govern IS1.
+- Baseline: main `4f2945a95fd0e9bd1de0103caa190da7616bb159` (2026-11-25), a
+  month after r3's `45c8603`. Since then: `ilp-learners` closed (IL1 to IL6:
+  `ilasp`, `rules`, `amie` and `llm` learners, `gnd import mined-rules`);
+  `type-induction-skills` added two packaged skills (`gnd-judge-fact-types`,
+  `gnd-model-multivalued`) and `gnd discover --families fact-type`; inventory
+  pins were consolidated to import from `tests/test_packaged_skills.py`; the
+  IK census test was pinned to the IK milestone's own commits; PRs #52 and #54
+  merged.
+- Measured at this baseline: 18 packaged skills; 71 packaged skill files; 238
+  relative-link occurrences (`EXPECTED_RELATIVE_LINK_COUNT`); 0 fenced
+  `gnd export` or `gnd import` lines in any packaged skill;
+  `MEASURED_EXECUTABLE_SNIPPETS = 29`. Values after the edit are proposed and
+  fixed by measurement at implementation (standing rule 6).
 - r1 and r2 were reviewed in plan review rounds 1 and 2 (four local readers,
-  D13 (o)); their bytes are bound by SHA-256 in the
-  [round-1 disposition](plan-review-r1-disposition.md) and the
-  [round-2 disposition](plan-review-r2-disposition.md). Review closed by its
-  stop rule. These r3 bytes carry no review opinion.
-- Measured at baseline: 65 packaged skill files, 211 relative-link occurrences,
-  16 skill names, 30 measured executable snippets (the pinned floor is 29).
-  Values after the edit are proposed and are fixed by measurement at
-  implementation (standing rule 6).
-- Change tags: `(p1)` marks a round-1 repair and `(p2)` a round-2 repair, each
-  applied at the owner's quoted direction of 2026-10-27 (plan header).
+  D13 (o)); r3 and r4 carry no review opinion. Change tags `(p1)` and `(p2)`
+  are kept from r3; `(r4)` marks a change in this refresh.
 
 ## 3. Obligations
 
@@ -31,11 +37,11 @@ file counts and pinned values. D9 is mandatory and D17..D20 are owner-accepted
 |---|---|---|
 | plan IS-O1, IS-O2, IS-O21 | a packaged skill that runs measure, discover, export, import and check, then hands off | §6.1 |
 | plan IS1-C1 | frontmatter reads back; `name` equals its directory | §8 T1 (existing test) |
-| plan IS1-C2, IS-O7 | every inventory literal moves (p1) | §6.3; §8 T2..T4, T6, T16 |
+| plan IS1-C2, IS-O7 | every inventory literal moves | §6.3; §8 T2..T4, T6, T16 |
 | plan IS1-C3 | `ROUTING_MATRIX` rows tied to new sentences; `RECORD_ROUTES`; denials | §6.2; §8 T2 |
 | plan IS1-C4, IS-R2, IS-R3, IS-R11 | each one-home refusal sentence has exactly one home | §6.1; §8 T8 |
 | plan IS1-C5, IS-O17 | help-form guard and help-option test over every new fenced `gnd` line (D9) | §6.3; §8 T7 |
-| plan IS1-C6, IS-O10 | IK census pinned per D8; `test_ik_close`, `test_ik6_walk` unchanged | §6.3; §8 T9 |
+| plan IS1-C6, IS-O10 | IK census unchanged; `test_ik_close`, `test_ik6_walk` unchanged (r4: D8 already discharged on main) | §8 T9 |
 | plan IS1-C7, IS-O8, IS-O14 | AGENTS.md and `docs/agents/index.md` rows, each pinned; docs build and link check | §6.4; §8 T5, T11, T17 |
 | plan IS1-C8, IS-O13 | checkpoint C0 before the skill text is final | §11 |
 | plan IS1-C9, IS-R9 | no `FROZEN_SKILLS` directory differs from the IS1 base | §8 T13 |
@@ -44,6 +50,7 @@ file counts and pinned values. D9 is mandatory and D17..D20 are owner-accepted
 | plan IS-R5 | no downstream name or host path in the new files; actor asked of the user | §6.1; §8 T14 |
 | plan IS-O18, D17 (o) | sibling edits are route sentences only | §6.2 |
 | plan D3 (p1) | vendored label schema, runtime canonical | §6.2; §8 T15 |
+| (r4) D21, D22, D23 | the agent never answers as its own learner; the rule-miner branch; the fact-type family's judges | §6.1, §6.2; §8 T8 |
 
 ## 4. Rules bound to IS1
 
@@ -57,65 +64,60 @@ Standing rules:
    `gnd-model-evolve` only after the command that wrote it exited 0 and emitted
    something. On exit 3 the skill stops before the handoff. T8 checks that the
    stop sentence names exit 3 and that the handoff section names exit 0.
-4. **One walk over N kinds.** One reactions table governs all five commands (0,
-   3, 11, other), not five copies of it. T8 asserts the table appears once.
+4. **One walk over N kinds.** One reactions table governs every command the
+   skill runs (r4: six, with D22), not one copy per command. T8 asserts the
+   table appears once.
 5. **One home.** Exit meanings stay in `--help` and the reference pages; induced
-   semantics stay in `provenance-and-modality.md`. Each one-home refusal is one
-   sentence in the new skill only; the shared git denial is pinned by
-   `RECORD_ROUTES`. The vendored label schema (D3) is one artifact whose
-   canonical copy is the runtime file, held identical by T15.
+   semantics stay in `provenance-and-modality.md`; the learners' contracts stay
+   in `docs/reference/ilp-bridge.md` (r4). Each one-home refusal is one sentence
+   in the new skill only; the shared git denial is pinned by `RECORD_ROUTES`.
+   The vendored label schema (D3) is one artifact whose canonical copy is the
+   runtime file, held identical by T15.
 6. **Measure, don't argue.** File, link and snippet counts are measured on the
    implemented tree and written into the pins; the values in §6.3 are
    proposals.
 
-Plan rules (p1):
-
-- **IS-R1** binds R-a and the handoff (§6.1), and the `never applies` boundary
-  in `ROUTING_MATRIX` and the denials map (§6.2).
-- **IS-R2** binds R-e, R-f and R-g (§6.1).
-- **IS-R3** binds the reactions table, which states reactions and cites `--help`.
-- **IS-R4** binds R-d and T10.
-- **IS-R5** binds the actor input, R-h and T14.
-- **IS-R6** binds C0: it is labelled a mockup and is not a recording (§11).
-- **IS-R7** binds C0's prompts. C0 shows prompts and results, never commands;
-  the exception for replay transcripts is IS2's.
-- **IS-R8** binds T12.
-- **IS-R9** binds §6.2 (only the named sibling edits) and T13.
-- **IS-R10** is this section.
-- **IS-R11** binds R-b, R-c, R-h's exception, the Popper assembly sentence and
-  the assembled-run-record handoff sentence (§6.1) (p2).
+Plan rules (p1): unchanged from r3. IS-R1 binds R-a and the handoff (§6.1) and
+the `never applies` boundary in `ROUTING_MATRIX` and the denials map (§6.2);
+IS-R2 binds R-e, R-f, R-g; IS-R3 the reactions table; IS-R4 R-d and T10; IS-R5
+the actor input, R-h and T14; IS-R6 and IS-R7 C0 (§11); IS-R8 T12; IS-R9 §6.2
+and T13; IS-R10 is this section; IS-R11 R-b, R-c, R-h's exception and the
+run-record sentences (§6.1).
 
 ## 5. Goal
 
-`uv run pytest` over the IS1 gate (§8) passes on the implemented tree, apart
-from the one inherited baseline failure named in the §8 ledger (p2). The red
-evidence is two controls (p1), retained as `evidence/IS1/regressions-red.txt`:
+`uv run pytest` over the IS1 gate (§8) passes on the implemented tree (r4: with
+no inherited failure; r3's scaffold row is cleared, §12). The red evidence is
+two controls, retained as `evidence/IS1/regressions-red.txt`:
 
-- **Control 1:** the pin edits (T2..T4, T6, the per-skill count in T7) committed
-  over the pre-IS1 tree, before the skill exists, fail. T16's control-1 red
-  comes from the owner-selected distribution lane (D20 (o)) (p2).
-- **Control 2:** on a tree with the skill added and the AGENTS.md row, the
-  `docs/agents/index.md` row and the census pin not yet made, the unchanged
-  `test_public_agents_skill_table.py` (T5) and `test_ik6_skill_census.py` (T9),
-  and the new T17 committed before its row (p2), fail.
-- Both controls are recorded per test id, not per file (p2), because
-  `test_development_scaffold.py::test_reference_closure_and_declared_bootstrap`
-  is already red at baseline for a cause outside this milestone (§8 ledger).
+- **Control 1:** the pin edits in `tests/test_packaged_skills.py` (names, file
+  set and count, link set and count), the per-skill snippet count in T7, and
+  the two remaining distribution-lane literals (§6.3), committed over the
+  pre-IS1 tree, fail. Through their imports, `test_verification_fixes`,
+  `test_install`, `test_marketplace_plugins` and `test_development_scaffold`
+  fail with them, and `test_doctor_uninstall` through its own list (r4). T16's control-1 red comes
+  from the owner-selected distribution lane (D20 (o)).
+- **Control 2:** on a tree with the skill added and the AGENTS.md row and the
+  `docs/agents/index.md` row not yet made, the unchanged
+  `test_public_agents_skill_table.py` (T5) and the new T17, committed before
+  its row, fail. (r4: the census test no longer belongs here; it reads the IK
+  milestone's own commits and is unaffected.)
+- Both controls are recorded per test id.
 
 `uv run gnd doctor --project` exits 0 after
 `uv run gnd install --symlink --project --force`.
 `uv run --group docs zensical build --strict` reports no issues and
-`tools/check_docs.py site` exits 0 (p1).
+`tools/check_docs.py site` exits 0.
 
 ## 6. Design
 
-### 6.1 `src/gnd/skills/gnd-induce/SKILL.md` (D1), about 210 lines
+### 6.1 `src/gnd/skills/gnd-induce/SKILL.md` (D1), about 240 lines
 
-Frontmatter, exactly two keys (proposed text):
+Frontmatter, exactly two keys (proposed text, r4):
 
 ```yaml
 name: gnd-induce
-description: Runs GND's induction loop over host-labelled populations and hands every result to review -- `gnd measure --labels` to score a model's rules against the host's labels, `gnd discover` to propose rules that hold in one population, `gnd export ilp` then `gnd import ilp-rules` to round-trip a learner the user names, with GND re-checking the learner's coverage claim, and `gnd check` to re-check a population after a rule is applied. Use when asked to "score our rules against the auditors' labels", "find the rule our reviewers are using", "suggest rules from this data", "run a rule learner", or "import learned rules". Every output is a proposal of induced, proposed, advisory constraints, reviewed and applied only through gnd-model-evolve. Not for measuring a synth corpus (gnd-dev-session), derivation or Lean exports (gnd-export), applying or confirming a rule (gnd-model-evolve), or installing a learner.
+description: Runs GND's induction loop over host-labelled populations and hands every result to review -- `gnd measure --labels` to score a model's rules against the host's labels, `gnd discover` to propose rules that hold in one population, `gnd export ilp` then `gnd import ilp-rules` to round-trip a rule learner the user names, with GND re-checking the learner's coverage claim, `gnd import mined-rules` for a rule miner over one unlabelled population, and `gnd check` to re-check a population after a rule is applied. Use when asked to "score our rules against the auditors' labels", "find the rule our reviewers are using", "suggest rules from this data", "run a rule learner", or "import learned rules". Every output is a proposal of induced, proposed, advisory constraints, reviewed and applied only through gnd-model-evolve. Not for judging the fact types `gnd discover --families fact-type` forms (gnd-judge-fact-types, gnd-model-multivalued), measuring a synth corpus (gnd-dev-session), derivation or Lean exports (gnd-export), applying or confirming a rule (gnd-model-evolve), or installing a learner.
 ```
 
 Sections, in order:
@@ -123,72 +125,84 @@ Sections, in order:
 | Section | Content |
 |---|---|
 | Summary | the five intents and the handoff (plan §2 table) |
-| Fix the inputs first | model; manifest or population; `--actor`, asked of the user and never taken from git or the environment (p1); `--requested-at` (a fixed time); new output paths; for measure, confirm the output path does not exist, because measure overwrites (p1) |
+| Fix the inputs first | model; manifest or population; `--actor`, asked of the user and never taken from git or the environment; `--requested-at` (a fixed time); new output paths; for measure, confirm the output path does not exist, because measure overwrites |
 | Score | `gnd measure MODEL --labels MANIFEST --out OUT`; report each rule's cells with numerator and denominator as printed; class and expected-state manifests (D16); the format through `gnd measure --help` and the vendored schema, read only (D3) |
-| Discover | `gnd discover MODEL POP --out PROPOSAL --report REPORT --actor ID --requested-at T [--families …]`; report EMITTED and SUPPRESSED as printed; read each candidate back in plain English; the user sorts sensible from accidental, the skill drops none; with `EMITTED 0`, report the counts and hand off nothing (p1); value-family candidates are flagged as carrying host values (p1) |
-| Learn | `gnd export ilp MODEL --labels MANIFEST --target T --out DIR`; run the learner the user named, with a stated time limit, giving the user the exact invocation; the run record (who writes it, below); `gnd import ilp-rules MODEL CLAUSES --labels MANIFEST --reported-coverage RUN --target T --out PROPOSAL --actor ID --requested-at T`. When asked, stop after the learner run and report its claim as unchecked (p1) |
-| Re-check (p1; D18 (o)) | `gnd check MODEL POP`; report the output verbatim; it reports only. Its exit bands are in `population-format.md` (linked) and in the CLI reference's "Interpret exits in the command's context" (named in words) (p2) |
-| Reactions | one table: 0 report; 3 report the named refusal or input error verbatim and stop, and a stale label manifest goes back to the user; 11 (discover, export, import) choose a new path, delete nothing; check 1, 2 or 4: report the verdicts verbatim, they are results, not refusals (p2); any other non-zero report verbatim and stop. "Each exit's meaning has its own home: the command's `--help`, and for `gnd check` the population-format reference." (p2) |
-| Hand off | route to `gnd-model-evolve` naming each proposal file, only after exit 0 with something emitted; flag value-family candidates as carrying host values (p2); name each run record the skill assembled, the evaluation that produced its sets, and that `inducer` names the learner because the program is the learner's (p2) |
+| Discover | `gnd discover MODEL POP --out PROPOSAL --report REPORT --actor ID --requested-at T [--families …]`; report EMITTED and SUPPRESSED as printed; read each candidate back in plain English; the user sorts sensible from accidental, the skill drops none; with `EMITTED 0`, report the counts and hand off nothing; value-family candidates are flagged as carrying host values. (r4, D23) The `fact-type` family's groups are judged by `gnd-judge-fact-types` and `gnd-model-multivalued`, not here: the skill names that route and does not write judgements |
+| Learn | `gnd export ilp MODEL --labels MANIFEST --target T --out DIR`, with `T` one of `popper`, `neutral`, `ilasp`, `rules` (r4); run the learner the user named, with a stated time limit, giving the user the exact invocation; the run record (who writes it, below); `gnd import ilp-rules MODEL CLAUSES --labels MANIFEST --reported-coverage RUN --target T --out PROPOSAL --actor ID --requested-at T`. When asked, stop after the learner run and report its claim as unchecked. (r4, D22) A rule miner: `gnd export ilp MODEL --population POP --target amie --out DIR`, the named miner's run, then `gnd import mined-rules MODEL CLAUSES --population POP --reported RUN --target amie --out PROPOSAL --actor ID --requested-at T` |
+| Re-check (D18 (o)) | `gnd check MODEL POP`; report the output verbatim; it reports only. Its exit bands are in `population-format.md` (linked) and in the CLI reference's "Interpret exits in the command's context" (named in words) |
+| Reactions | one table: 0 report; 3 report the named refusal or input error verbatim and stop, and a stale label manifest goes back to the user; 11 (discover, export, both imports) choose a new path, delete nothing; check 1, 2 or 4: report the verdicts verbatim, they are results, not refusals; any other non-zero report verbatim and stop (r4: `gnd export ilp` and `gnd import mined-rules` also document 5, 64 and 66, and `mined-rules` 70 and 74). "Each exit's meaning has its own home: the command's `--help`, and for `gnd check` the population-format reference." |
+| Hand off | route to `gnd-model-evolve` naming each proposal file, only after exit 0 with something emitted; flag value-family candidates as carrying host values; name each run record the skill assembled, the evaluation that produced its sets, and that `inducer` names the learner because the program is the learner's |
 | Refusals | the sentences below |
-| Out-routes (p1) | the two "not this skill" sentences of §6.2 |
+| Out-routes | the "not this skill" sentences of §6.2 |
 | Record and commit | "This skill never touches git." The record contract link, as `gnd-export` has it |
 
 One-home refusal sentences, each verbatim once in the packaged tree (T8):
 
 - R-a "This skill never applies, confirms or edits a model, and never edits a proposal."
-- R-b (p1, p2) "It never writes or edits a learner's clauses or run record, except to save a learner's printed program verbatim as CLAUSES and to assemble a Popper run record as stated below."
-- R-c (p1) "It never writes, edits or re-binds a label manifest; labels come from the user."
+- R-b (r4) "It never writes or edits a learner's clauses or run record, and never answers as the learner itself, except to save a learner's printed program verbatim as CLAUSES and to assemble a Popper run record as stated below."
+- R-c "It never writes, edits or re-binds a label manifest; labels come from the user."
 - R-d "It never installs a learner and never runs one the user did not name."
-- R-e (p1, p2) "Covered sets come only from the learner's output or an evaluation the user selects, never from a GND verdict: the output of gnd import, gnd check, gnd measure or gnd discover, including refusal text."
+- R-e "Covered sets come only from the learner's output or an evaluation the user selects, never from a GND verdict: the output of gnd import, gnd check, gnd measure or gnd discover, including refusal text."
 - R-f "After a coverage refusal it never changes the claim and imports again."
 - R-g "It never combines measure cells into one accuracy number."
-- R-h (p1, p2) "It never copies host values or paths into a file it writes or a public page, apart from the learner artifacts it saves or assembles in the user's working paths; chat read-back may show them."
+- R-h "It never copies host values or paths into a file it writes or a public page, apart from the learner artifacts it saves or assembles in the user's working paths; chat read-back may show them."
 
 The shared git denial, "This skill never touches git.", is not in the one-home
-set: `gnd-export/SKILL.md:27` already carries it, and `RECORD_ROUTES` pins it
-(p1).
+set: `gnd-export/SKILL.md` already carries it, and `RECORD_ROUTES` pins it.
 
-The learner rule (D4, D5, IS-R11): the skill runs the example's stand-in learner
-or an installed `popper` only when the user names it. When the named learner is
-not found, it stops with "no learner named X is installed" and offers the
-neutral export alone. For Popper, which prints counts and not sets, the skill
-assembles the run record from Popper's printed program, the user's selected
-evaluation (such as Prolog over the exported `bk.pl` and `exs.pl`, which are
-evaluation input, not a GND verdict) and the two digests, and says that it
-assembled it (p1). It first saves Popper's printed program verbatim as CLAUSES.
-`learner.version` is Popper's own reported version or is asked of the user,
-never invented (p2). A run record's example ids are part of R-h's exception
-(p2). The Popper branch is stated as
-unproven on the refunds example (p1; plan §2).
+The learner rule (D4, D5, IS-R11; r4 widened to the current targets): the
+skill runs the example's stand-in learner, or an installed `popper`, `ilasp`,
+rules learner or `amie`, only when the user names it. When the named learner
+is not found, it stops with "no learner named X is installed" and offers the
+neutral export alone. A run record comes from the learner's own output. For
+Popper, which prints counts and not sets, the skill assembles the run record
+from Popper's printed program, the user's selected evaluation (such as Prolog
+over the exported `bk.pl` and `exs.pl`, which are evaluation input, not a GND
+verdict) and the two digests, and says that it assembled it; it first saves
+Popper's printed program verbatim as CLAUSES. `learner.version` is the
+learner's own reported version or is asked of the user, never invented. A run
+record's example ids are part of R-h's exception. The Popper branch is stated
+as unproven on the refunds example (plan §2). For any other learner whose
+output lacks the covered sets, the skill asks the user for the run record and
+does not assemble one (r4).
 
-Fenced `gnd` command lines: five (measure, discover, export ilp, import
-ilp-rules, check). The learner line is not a `gnd` line.
+The language-model learner (r4, D21): `--target llm` reads clauses a language
+model wrote, with a run record the reference page calls independent
+(`docs/reference/ilp-bridge.md`, "LLM proposer"). The skill never plays that
+model: answering the prompt and assembling the record in the same session
+would make the run record the answer's own claim. It names the documented
+route (an evidence script through `gnd.export.ilp_prompt` and `gnd.agents`,
+run by the user) and stops.
+
+Fenced `gnd` command lines (r4): six (measure, discover, export ilp, import
+ilp-rules, import mined-rules, check). Learner lines are not `gnd` lines.
 
 ### 6.2 Sibling edits and routes
 
 Route sentences, one each, plus its link (sibling edits are route sentences
-only, D17 (o), IS-R9):
+only, D17 (o), IS-R9). r4 re-anchored each against main:
 
 | File | Sentence or row (proposed) | Edge |
 |---|---|---|
-| `gnd-orm-core/SKILL.md` workflow index (p1, p2: a table row whose cells follow the index's columns "Workflow / Enter it when / The claim it emits — and what it never does") | row: gnd-induce, linked as ../gnd-induce/SKILL.md; then the trigger "host labels must be scored against the model's rules, rules discovered from a population, or a rule learner round-tripped"; then the claim "evolve proposals of induced, proposed, advisory constraints, plus measure and discover reports; host labels are the host's claim. It never applies an induced rule" | → `../gnd-induce/SKILL.md` |
-| `gnd-export/SKILL.md`, the ILP paragraph | `To run the whole loop with a learner, use gnd-induce, linked as ../gnd-induce/SKILL.md; its proposals are reviewed through gnd-model-evolve.` | → `../gnd-induce/SKILL.md` |
-| `gnd-dev-session/SKILL.md`, grounding | after the `--labels` sentence: `To act on those labels, see gnd-induce, linked as ../gnd-induce/SKILL.md.` | → `../gnd-induce/SKILL.md` |
-| `gnd-solve/SKILL.md`, Station 6 | after "review either here like any other": `gnd-induce, linked as ../gnd-induce/SKILL.md produces both kinds of proposal.` No station number changes | → `../gnd-induce/SKILL.md` |
-| `gnd-model-evolve/SKILL.md`, provenance invariants | after the two induced bullets: `Both kinds of proposal come from gnd-induce, linked as ../gnd-induce/SKILL.md, which never applies them.` | → `../gnd-induce/SKILL.md` |
+| `gnd-orm-core/SKILL.md` workflow index (columns "Workflow / Enter it when / The claim it emits — and what it never does"; r4: placed after the `gnd-model-multivalued` row) | row: gnd-induce, linked as ../gnd-induce/SKILL.md; trigger "host labels must be scored against the model's rules, rules discovered from a population, or a rule learner or miner round-tripped"; claim "evolve proposals of induced, proposed, advisory constraints, plus measure and discover reports; host labels are the host's claim. It never applies an induced rule" | → `../gnd-induce/SKILL.md` |
+| `gnd-export/SKILL.md`, the ILP bridge paragraph (r4: it now names every target and `gnd import mined-rules`) | after "the proposal is reviewed like any other evolution proposal.": `To run the whole loop with a learner, use gnd-induce, linked as ../gnd-induce/SKILL.md; its proposals are reviewed through gnd-model-evolve.` | → `../gnd-induce/SKILL.md` |
+| `gnd-dev-session/SKILL.md`, grounding | after "reports each rule's agreement with those labels instead.": `To act on those labels, see gnd-induce, linked as ../gnd-induce/SKILL.md.` | → `../gnd-induce/SKILL.md` |
+| `gnd-solve/SKILL.md`, Station 6 (r4: r3's anchor "review either here like any other" is gone; the paragraph now names discover, `ilp-rules` and `mined-rules`) | after "review each here like any other.": `gnd-induce, linked as ../gnd-induce/SKILL.md, runs all three and hands their proposals here.` No station number changes | → `../gnd-induce/SKILL.md` |
+| `gnd-model-evolve/SKILL.md`, provenance invariants (r4: there are now three induced-proposal bullets: discover, `ilp-rules`, `mined-rules`) | after the `mined-rules` bullet: `These proposals come from gnd-induce, linked as ../gnd-induce/SKILL.md, which never applies them.` | → `../gnd-induce/SKILL.md` |
 
-The D3 edits in `gnd-orm-core` (p1): a Reference index row for
-`references/labels.schema.json` reading "Read-only vendored copy of the label
-manifest schema; canonical at the runtime `src/gnd/labels.schema.json`", and one
-sentence in "Canonical schemas" naming that exception; that paragraph's stale
-"two `.schema.json` files" count is reworded at the same time (p2). The row's
-link has no `../`, so it adds no edge to `EXPECTED_RELATIVE_LINKS` (p2).
+The D3 edits in `gnd-orm-core` (r4: following the TS3 precedent for the two
+type schemas): a Reference index row for `references/labels.schema.json`
+reading "Read-only vendored copy of the label manifest schema; canonical at
+the runtime `src/gnd/labels.schema.json`" with its consumer `gnd-induce`, in
+the same form as the `type-evidence.schema.json` row; and the "Canonical
+schemas" sentence extended to name it beside the two type schemas. The row's
+link has no `../`, so it adds no edge to `EXPECTED_RELATIVE_LINKS`.
 
-Out-route sentences in the new skill (p1):
+Out-route sentences in the new skill:
 
 - `Derivation and Lean exports are not this skill: gnd-export, linked as ../gnd-export/SKILL.md.`
 - `Measuring a synthesized corpus is not this skill: gnd-dev-session, linked as ../gnd-dev-session/SKILL.md.`
+- (r4, D23) `Judging the groups gnd discover --families fact-type forms is not this skill: duplicates go to gnd-judge-fact-types, linked as ../gnd-judge-fact-types/SKILL.md, and multi-valued groups to gnd-model-multivalued, linked as ../gnd-model-multivalued/SKILL.md.`
 - the handoff: `Every proposal goes to gnd-model-evolve, linked as ../gnd-model-evolve/SKILL.md; this skill never applies it.`
 
 Edges out of the new skill: `../gnd-model-evolve/SKILL.md`,
@@ -196,15 +210,12 @@ Edges out of the new skill: `../gnd-model-evolve/SKILL.md`,
 `../gnd-orm-core/references/population-format.md`,
 `../gnd-orm-core/references/milestone-record-format.md`,
 `../gnd-orm-core/references/labels.schema.json`, `../gnd-export/SKILL.md`,
-`../gnd-dev-session/SKILL.md`. With the five inbound edges: 13 new edges
-(p2; reader 2's probe measured 13 edges and 224 occurrences; fixed by
-measurement at implementation).
+`../gnd-dev-session/SKILL.md`, `../gnd-judge-fact-types/SKILL.md`,
+`../gnd-model-multivalued/SKILL.md`. With the five inbound edges: 15 new edges
+(r4; fixed by measurement at implementation).
 
 New `ROUTING_MATRIX` rows (source, destination, trigger, boundary). Each regex
-matches only the new sentence (p1; `_routing_text` searches the whole file, and
-"Routing only." and "learner" already exist in two siblings). Each regex is
-written against the rendered link form, since the test also requires the
-destination's link syntax in the source (p2):
+matches only the new sentence and is written against the rendered link form:
 
 | Source | Destination | Trigger regex | Boundary regex |
 |---|---|---|---|
@@ -212,6 +223,7 @@ destination's link syntax in the source (p2):
 | `gnd-orm-core/SKILL.md` | `../gnd-induce/SKILL.md` | `host labels must be scored` | `never applies an induced rule` |
 | `gnd-export/SKILL.md` | `../gnd-induce/SKILL.md` | `whole loop with a learner` | `reviewed through gnd-model-evolve` |
 | `gnd-induce/SKILL.md` | `../gnd-export/SKILL.md` | `Derivation and Lean exports` | `are not this skill` |
+| (r4) `gnd-induce/SKILL.md` | `../gnd-judge-fact-types/SKILL.md` | `--families fact-type forms` | `is not this skill` |
 
 `RECORD_ROUTES` gains `'gnd-induce/SKILL.md': 'never touches git'`. The denials
 map in `test_no_route_promises_automatic_regeneration_or_applied_fixes` gains
@@ -219,95 +231,103 @@ map in `test_no_route_promises_automatic_regeneration_or_applied_fixes` gains
 
 ### 6.3 Pins
 
-Every literal that moves (p1: the r1 table missed five; p2: and r2 missed two):
+r4: since r3, every inventory test but three imports `EXPECTED_SKILL_NAMES`,
+`EXPECTED_SKILL_FILES` or `EXPECTED_SKILL_FILE_COUNT` from
+`tests/test_packaged_skills.py`, so most of r3's literals are gone. What moves:
 
-| Pin | At baseline | After (proposed; fixed by measurement) |
+| Pin | At `4f2945a9` | After (proposed; fixed by measurement) |
 |---|---|---|
-| `test_packaged_skills.EXPECTED_SKILL_NAMES`, its `== 16`, and the test name `test_the_packaged_tree_holds_exactly_the_fifteen_named_skills` with its "fifteen"/"sixteenth" message | 16 | 17; the name and message state the count without a spelled-out number, citing this plan |
-| `test_packaged_skills.EXPECTED_SKILL_FILES`, `EXPECTED_SKILL_FILE_COUNT` | 65 | 67 (skill + vendored schema) |
-| `EXPECTED_RELATIVE_LINKS` | the set | plus 13 edges (p2) |
-| `EXPECTED_RELATIVE_LINK_COUNT` (occurrences) | 211 | measured |
-| `test_verification_fixes.EXPECTED_SKILL_FILES`, `EXPECTED_SKILL_FILE_COUNT = 65` (line 18) | 65 | 67 |
-| `test_install.EXPECTED_SKILL_NAMES`, `EXPECTED_SKILL_FILE_COUNT = 65` (line 51) | 16 / 65 | 17 / 67 |
-| `test_doctor_uninstall` name set, both link maps, `EXPECTED_SKILL_FILE_COUNT = 65` (line 47) | 16 / 65 | 17 / 67 |
-| `test_marketplace_plugins.check_bundle` `len(expected) == 16` (line 25) | 16 | 17 |
-| `test_development_scaffold.py:109` `len(names) == 16` | 16 | 17 |
-| `test_public_built_inventory.py:306-312` (`== 65` twice, `== 16` twice) | 65 / 16 | 67 / 17 (distribution lane, D20 (o)) |
-| (p2) `test_public_distribution.py:315` `len(paths) == 16` | 16 | 17 (distribution lane; the file is red at baseline for other reasons, §8 ledger) |
-| (p2) `test_release_acceptance.py:77` `... endswith('/SKILL.md') ... == 16` | 16 | 17 (distribution lane) |
-| `test_public_packaged_invocation_guards.MEASURED_SNIPPETS_PER_SKILL`, `MEASURED_EXECUTABLE_SNIPPETS` | 29 pinned, 30 measured | `'gnd-induce': 5`; 35 (measured) |
-| `GROUPED_COMMANDS` (D9, mandatory) | `evolve, exp, recovery, review` | plus `export`, `import`. No baseline fenced snippet starts with either, so no existing snippet changes |
-| `test_ik6_skill_census` (D8) | reads HEAD and the working-tree census; asserts 65 | reads `ls-files`, `diff`, `log` **and `skill-census.md`** (`git show`) at the IS1 base commit, a 40-hex SHA reachable from main, named at the IS1 gate (p2); drops the uncommitted-edit credit; `test_t5` keeps reading the working tree |
-| `test_schema_sync.py` (D3) | three `SCHEMA_PAIRS` | a separate case (not a `SCHEMA_PAIRS` entry); the module docstring's "edit the CANONICAL copy … never the other way around" gains the labels exception beside its report.schema.json note: the runtime `src/gnd/labels.schema.json` is canonical and the skill copy is vendored (p2) |
+| `test_packaged_skills.EXPECTED_SKILL_NAMES` and `assert len(EXPECTED_SKILL_NAMES) == 18` in `test_the_packaged_tree_holds_exactly_the_named_skills` (its message names the latest addition) | 18 | 19; the message names gnd-induce and this plan |
+| `test_packaged_skills.EXPECTED_SKILL_FILES`, `EXPECTED_SKILL_FILE_COUNT` | 71 | 73 (skill + vendored schema) |
+| `test_packaged_skills.EXPECTED_RELATIVE_LINKS` | the set | plus 15 edges |
+| `test_packaged_skills.EXPECTED_RELATIVE_LINK_COUNT` (occurrences, with its comment) | 238 | measured |
+| `test_packaged_skills.ROUTING_MATRIX`, `RECORD_ROUTES`, the denials map | as listed | §6.2 |
+| `test_doctor_uninstall`: its own skill-name list and both link maps (`.claude/skills/…`, `.codex/skills/…`) | 18 names | plus gnd-induce |
+| `test_public_built_inventory` | derives its counts from the imported set (`len(EXPECTED_SKILL_NAMES)`) | no literal edit; T16 runs it (distribution lane, D20 (o)) |
+| `test_public_distribution.py:317` `len(paths) == 18` | 18 | 19 (distribution lane; cadence row, §8) |
+| `test_public_packaged_invocation_guards.MEASURED_SNIPPETS_PER_SKILL`, `MEASURED_EXECUTABLE_SNIPPETS` | no `gnd-induce` entry; 29 | `'gnd-induce': 6`; measured |
+| `GROUPED_COMMANDS` (D9, mandatory) | `evolve, exp, recovery, review` | plus `export`, `import`. Measured on main: no packaged snippet starts with either, so no existing snippet changes |
+| `test_schema_sync.py` (D3; r4: the TS3 precedent) | the "second exception" case covers the two type schemas | that case gains `labels.schema.json`, canonical at the runtime file; the docstring's exception sentence names it |
+| `test_ik6_skill_census` (D8) | reads `MILESTONE_LAST` (`33827e28`), the IK milestone's last commit | **no edit** (r4): the census is already pinned to the IK milestone's own commits, so a new skill does not move it |
+
+r4 note: of the files TS4 edited to add `gnd-model-multivalued` (commit
+`3fe48d2a`), only `test_doctor_uninstall.py` still carries its own name list
+and link maps; `test_install.py` and `test_public_built_inventory.py` now
+derive theirs from the imports.
 
 `.claude/skills/gnd-induce` and `.codex/skills/gnd-induce` are created by
-`uv run gnd install --symlink --project --force`, then `git add`ed (the doctor
-test requires tracked links). Nothing is linked by hand. The plugin manifests
-point at `./src/gnd/skills/` and need no edit.
+`uv run gnd install --symlink --project --force`, then `git add`ed. Nothing is
+linked by hand. The plugin manifests point at `./src/gnd/skills/` and need no
+edit.
 
 ### 6.4 Docs
 
 - AGENTS.md skill table: one row, gnd-induce, linked as src/gnd/skills/gnd-induce/SKILL.md.
 - `docs/agents/index.md` table: "Score rules against labels, discover rules,
-  round-trip a learner, re-check | `gnd-induce` | evolve proposals, measure and
-  discover reports | `gnd measure --labels`, `gnd discover`, `gnd export ilp`,
-  `gnd import ilp-rules`, `gnd check` | 3 a named refusal", pinned by T17 (p1).
-- No tutorial or commands-page edit in IS1. That is IS2, after #50 lands.
+  round-trip a learner or miner, re-check | `gnd-induce` | evolve proposals,
+  measure and discover reports | `gnd measure --labels`, `gnd discover`,
+  `gnd export ilp`, `gnd import ilp-rules`, `gnd import mined-rules`,
+  `gnd check` | 3 a named refusal", pinned by T17.
+- No tutorial or commands-page edit in IS1. That is IS2.
 
 ## 7. Decisions
 
-IS1 needs plan rows D1, D3, D4, D5, D8 and D16 ruled, and D15 for its approval
-instrument; D9 is mandatory and D17..D20 are accepted (o). They are stated
-once, in plan §10. The IS1 base commit, which is also the D8 pin (p2), is named
-at the gate. IS1 rebases after #52 if #52 merges first (p2).
+IS1 needs plan rows D1, D3, D4, D5, D16 and D15 as approved for r3; D9 is
+mandatory and D17..D20 are accepted (o). (r4) D8 is discharged on main (the
+census reads the IK milestone's commits) and needs no IS1 edit. The IS1 base
+commit is named at the gate. Three new rows, proposed for the owner at this
+spec's gate; once ruled they are added to plan §10:
+
+| ID | Question | Readings | Proposed |
+|---|---|---|---|
+| D21 (r4) | The `llm` learner, which landed in IL5 | (a) the skill never answers as the learner and names the documented evidence-script route; (b) the skill launches a separate named agent through `gnd.agents` and records it as the learner; (c) the skill answers the prompt itself | (a): (c) breaks the run record's independence, and (b) adds an agent launcher the plan never approved |
+| D22 (r4) | The rule-miner branch (`amie`, `gnd import mined-rules`, IL4) | include it as a branch of "Learn", with its own fenced line; or leave it out, and the skill routes miners nowhere | include it: it is the same induced, advisory proposal and the same review |
+| D23 (r4) | `gnd discover --families fact-type` (TS1 to TS4) | route its groups to the two judge skills; or have this skill judge them | route them: the judges own that verdict and never read the population |
 
 ## 8. Tests
 
 | # | File | Case | Expected |
 |---|---|---|---|
 | T1 | `tests/test_packaged_skills.py` | `test_every_packaged_skill_frontmatter_reads_back` over the new skill | pass |
-| T2 | `tests/test_packaged_skills.py` | names, file set and count, link set and count, the four routing rows, `RECORD_ROUTES`, denials, the orm-core index | control 1 red; pass after |
-| T3 | `tests/test_verification_fixes.py` | `EXPECTED_SKILL_FILES`, `EXPECTED_SKILL_FILE_COUNT` | control 1 red; pass after |
-| T4 | `tests/test_install.py`, `tests/test_doctor_uninstall.py`, `tests/test_development_scaffold.py` | 17 names; 67 files; both link maps; scaffold count | control 1 red; pass after |
+| T2 | `tests/test_packaged_skills.py` | names, file set and count, link set and count, the five routing rows, `RECORD_ROUTES`, denials, the orm-core index | control 1 red; pass after |
+| T3 | `tests/test_verification_fixes.py` | through the imported set and count | control 1 red; pass after |
+| T4 | `tests/test_install.py`, `tests/test_doctor_uninstall.py`, `tests/test_development_scaffold.py` | names; files; both link maps; scaffold | control 1 red; pass after |
 | T5 | `tests/test_public_agents_skill_table.py` | AGENTS.md row | control 2 red; pass after |
-| T6 | `tests/test_marketplace_plugins.py` | count 17 | control 1 red; pass after |
-| T7 | `tests/test_public_packaged_invocation_guards.py`, `tests/test_public_packaged_command_help.py` | per-skill count and floor; `gnd export ilp --help`, `gnd import ilp-rules --help`, `gnd check --help` exit 0 and every documented option exists | the per-skill count is control 1 red; the unedited help-option file passes before and after (p2); pass after |
-| T8 | `tests/test_induce_skill.py` (new) | R-a..R-h each appear once in the packaged tree and only in `gnd-induce/SKILL.md`; the reactions table appears once and has the check-results row; the stop sentence names exit 3; the handoff names exit 0 and the assembled-run-record sentence (p2); a seeded copy of R-e in a second file fails by name | pass; the seeded case fails as named |
-| T9 | `tests/test_ik6_skill_census.py` | pinned per D8; all its cases, including the four seeded faults | control 2 red (unchanged test); pass after |
+| T6 | `tests/test_marketplace_plugins.py` | through the imported names | control 1 red; pass after |
+| T7 | `tests/test_public_packaged_invocation_guards.py`, `tests/test_public_packaged_command_help.py` | per-skill count and floor; `gnd export ilp --help`, `gnd import ilp-rules --help`, `gnd import mined-rules --help`, `gnd check --help` exit 0 and every documented option exists | the per-skill count is control 1 red; pass after |
+| T8 | `tests/test_induce_skill.py` (new) | R-a..R-h each appear once in the packaged tree and only in `gnd-induce/SKILL.md`; the reactions table appears once and has the check-results row; the stop sentence names exit 3; the handoff names exit 0 and the assembled-run-record sentence; (r4) the `llm` sentence names the evidence-script route and R-b's "never answers as the learner"; the D23 out-route names both judges; a seeded copy of R-e in a second file fails by name | pass; the seeded case fails as named |
+| T9 | `tests/test_ik6_skill_census.py` | unchanged; all its cases | pass before and after (r4) |
 | T10 | `tests/test_packaged_skills.py` | `test_base_dependency_set_is_frozen`; T8 also asserts no `pip install` or `uv add` line in the skill | pass |
 | T11 | docs | `uv run --group docs zensical build --strict`; `tools/check_docs.py site` | no issues; exit 0 |
 | T12 | installer | `uv run gnd install --symlink --project --force`, then `uv run gnd doctor --project` | exit 0 each |
-| T13 | `tests/test_induce_skill.py` (p1) | for each `FROZEN_SKILLS` member, `git diff --quiet <IS1 base> -- src/gnd/skills/<frozen>`; a seeded edit in a scratch clone fails by name. `test_solve_successors.py` stays green unedited: `test_t16` (its frozen-skill comparison, which reads the current tree) and `test_t25` (the station numbers) (p2) | pass; the seeded case fails |
+| T13 | `tests/test_induce_skill.py` | for each `FROZEN_SKILLS` member (`gnd-codegen`, `gnd-conformance`, `gnd-extract`, `gnd-render-doc`, `gnd-review-panel`, `gnd-update-review-panel`), `git diff --quiet <IS1 base> -- src/gnd/skills/<frozen>`; a seeded edit in a scratch clone fails by name. `test_solve_successors.py` stays green unedited (`test_t16`, `test_t25`) | pass; the seeded case fails |
 | T14 | `tests/test_induce_skill.py` | no absolute path, run directory or downstream name in `src/gnd/skills/gnd-induce/`, using the patterns of `test_ik6_walk.py` T3 (imported, not copied); the skill names no git-derived actor | pass; a seeded absolute path fails |
 | T15 | `tests/test_schema_sync.py` (D3) | the vendored `labels.schema.json` is byte-identical to the runtime `src/gnd/labels.schema.json` | pass; a one-byte edit fails |
 | T16 | `tests/test_public_built_inventory.py` (distribution lane, D20 (o)) | wheel and sdist carry exactly the pinned set | control 1 red; pass after; run once at the gate |
-| T17 | `tests/test_induce_skill.py` (p1) | `docs/agents/index.md` has a row naming `gnd-induce` and its five commands | committed before the row: control 2 red (p2); pass after |
-| T18 | `tests/test_public_workflow_claim_routes.py` (p1) | the orm-core workflow-index row keeps the table's shape (the row before the `gnd-export` row ends with a pipe) | pass |
+| T17 | `tests/test_induce_skill.py` | `docs/agents/index.md` has a row naming `gnd-induce` and its six commands | committed before the row: control 2 red; pass after |
+| T18 | `tests/test_public_workflow_claim_routes.py` | the orm-core workflow-index row keeps the table's shape | pass |
 
 Honest limit: T8 checks sentences, and a sentence test cannot fail when an
 agent ignores the sentence. IS1 does not claim that an agent behaves as the
 skill says. IS2's recordings are partial evidence, limited to the branches they
 record (plan IS2-C1).
 
-### Verification selection (p1, p2)
-
-One row per logical gate, in the shape `verification-selection.md` requires
-(p2).
+### Verification selection
 
 | Obligation | Disposition | Command or evidence | Input boundary | Justification | Invalidation |
 |---|---|---|---|---|---|
-| IS1-C1..C6, C9; T1..T10, T13..T15, T17, T18 | run | gate command 1 below; expected: every case passes except the inherited row below | the IS1 diff over `src/gnd/skills`, `tests`, AGENTS.md, `docs/agents/index.md`, `.claude/skills`, `.codex/skills`; `pyproject.toml` | the listed files are every default-lane file that pins the skill inventory, its links, routes, guards, schemas or census; reader 2's probe ran 14 further skill-reading files green, and `test_contributor_preparation.py` is added because it requires a tracked link per skill (p2) | any change to those paths or to a listed test |
-| IS1-C7; T11 | run | `uv run --group docs zensical build --strict` (expected "No issues found") and `uv run python tools/check_docs.py site` (exit 0) | `docs/`, `zensical.toml`, AGENTS.md | the only docs edit is one `docs/agents/index.md` row | any docs change |
-| IS-R8; T12 | run | `uv run gnd install --symlink --project --force` then `uv run gnd doctor --project`; exit 0 each | `src/gnd/skills`, `.claude/skills`, `.codex/skills`, `src/gnd/install.py` | links are installer-owned; doctor checks them | any skill or link change |
-| T16 (distribution lane) | run once at the gate as an owner-selected lane, recorded separately (D20 (o)) | `uv run pytest -q -p no:randomly -m distribution tests/test_public_built_inventory.py`; expected pass after, red under control 1 | built wheel and sdist; `pyproject.toml` | D20 (o) selects this file only (p2) | any packaged file change |
-| the two distribution-lane literals `test_public_distribution.py:315` and `test_release_acceptance.py:77` | cadence: the milestone-close lane | edited in IS1, run at milestone close or a release-acceptance run; `test_public_distribution.py` has 6 failures at baseline from its stale attribution manifest, not IS1's, and IS1 claims only its `:315` count | built wheel; `pyproject.toml` | D20 (o) did not select these files for the IS1 gate; running them would be a D20 amendment | any packaged file change; an owner selection to run them earlier |
-| `test_development_scaffold.py::test_reference_closure_and_declared_bootstrap` | inherit: red at baseline, not claimed | branch `3243a64`: fails on two links to `plan-review-r1-disposition.md` in `.gnd-planning/milestones/ilp-learners/evidence/plan-review-r2/*.md` (e.g. `ilp-learners-plan.md`, SHA-256 `e0668e30d4ee8c6e9e921e0cbad66d80338f94e5bcc9d69740ce318700ce3bb9`), merged from main; command `uv run pytest -q -p no:randomly tests/test_development_scaffold.py -k reference_closure`, result 1 failed; this milestone's files are clean (round-2 disposition, coordinator reproduction). A separate session repairs it on main | `.gnd-planning/**/*.md` | the cause is outside IS1; IS1's own red controls are recorded per test id, so this case shows nothing about IS1 | the repair merges into the IS1 base, after which the case is `run` and must pass |
+| IS1-C1..C6, C9; T1..T10, T13..T15, T17, T18 | run | gate command 1 below; every case passes | the IS1 diff over `src/gnd/skills`, `tests`, AGENTS.md, `docs/agents/index.md`, `.claude/skills`, `.codex/skills`; `pyproject.toml` | the listed files are every default-lane file that pins the skill inventory, its links, routes, guards, schemas or census; r4 adds `test_judge_fact_types_skill.py` and `test_model_multivalued_skill.py`, which read the orm-core index and the judges' routes | any change to those paths or to a listed test |
+| IS1-C7; T11 | run | `uv run --group docs zensical build --strict` and `uv run python tools/check_docs.py site` | `docs/`, `zensical.toml`, AGENTS.md | the only docs edit is one `docs/agents/index.md` row | any docs change |
+| IS-R8; T12 | run | `uv run gnd install --symlink --project --force` then `uv run gnd doctor --project` | `src/gnd/skills`, `.claude/skills`, `.codex/skills`, `src/gnd/install.py` | links are installer-owned | any skill or link change |
+| T16 (distribution lane) | run once at the gate, recorded separately (D20 (o)) | `uv run pytest -q -p no:randomly -m distribution tests/test_public_built_inventory.py` | built wheel and sdist; `pyproject.toml` | D20 (o) selects this file only | any packaged file change |
+| `test_public_distribution.py:317` | cadence: the milestone-close lane | edited in IS1, run at milestone close or a release-acceptance run | built wheel | D20 (o) did not select it | any packaged file change |
+| (r4) r3's inherited scaffold row | cleared | `tests/test_development_scaffold.py` passed whole in a clean clone of `4f2945a9` with this spec applied (2026-11-25); PR #54 merged. In a checkout with a locally excluded `.agents/skills/` directory, `test_reference_closure_and_declared_bootstrap` fails on that directory, which is not tracked | — | the case is now an ordinary `run` in the first row | — |
 | full suite | cadence: the milestone-close lane | not run at the IS1 gate | all | the rows above close IS1's impact surface | an IS1 edit outside the listed paths |
 
 **Proposed gate** (fixed at the gate):
 
 ```text
-uv run pytest -q -p no:randomly tests/test_packaged_skills.py tests/test_verification_fixes.py tests/test_install.py tests/test_doctor_uninstall.py tests/test_development_scaffold.py tests/test_contributor_preparation.py tests/test_marketplace_plugins.py tests/test_public_agents_skill_table.py tests/test_public_packaged_invocation_guards.py tests/test_public_packaged_command_help.py tests/test_public_workflow_claim_routes.py tests/test_public_packaged_import_skill_routes.py tests/test_skill_prose_sync.py tests/test_solve_successors.py tests/test_ik6_skill_census.py tests/test_ik_close.py tests/test_ik6_walk.py tests/test_schema_sync.py tests/test_induce_skill.py
+uv run pytest -q -p no:randomly tests/test_packaged_skills.py tests/test_verification_fixes.py tests/test_install.py tests/test_doctor_uninstall.py tests/test_development_scaffold.py tests/test_contributor_preparation.py tests/test_marketplace_plugins.py tests/test_public_agents_skill_table.py tests/test_public_packaged_invocation_guards.py tests/test_public_packaged_command_help.py tests/test_public_workflow_claim_routes.py tests/test_public_packaged_import_skill_routes.py tests/test_skill_prose_sync.py tests/test_solve_successors.py tests/test_ik6_skill_census.py tests/test_ik_close.py tests/test_ik6_walk.py tests/test_schema_sync.py tests/test_judge_fact_types_skill.py tests/test_model_multivalued_skill.py tests/test_induce_skill.py
 uv run --group docs zensical build --strict
 uv run python tools/check_docs.py site
 uv run gnd install --symlink --project --force
@@ -324,24 +344,22 @@ uv run pytest -q -p no:randomly -m distribution tests/test_public_built_inventor
 
 - the tutorial, commands page, recordings, recorder edits and release notes
   (IS2);
-- any change to the five commands, their exits or schemas;
-- a learner runner command, installing Popper, a real Popper run, or fixing
-  GND's Popper rendering;
+- any change to the six commands, their exits or schemas;
+- a learner runner command, installing any learner, a real learner run, an
+  agent launcher for the `llm` learner (D21), or fixing GND's Popper rendering;
+- judging the fact-type family's groups (D23);
 - a new `gnd-solve` station;
 - edits to a `FROZEN_SKILLS` member or to the IK milestone's records.
 
 ## 10. Size
 
-Estimate (p1, p2): about 220 lines of skill prose; 5 route sentences, one index
-row and one schema sentence in siblings; one vendored schema file; about 180
-lines of new test (`test_induce_skill.py`); about 65 lines of pin edits across
-13 test files (`test_packaged_skills`, `test_verification_fixes`,
-`test_install`, `test_doctor_uninstall`, `test_development_scaffold`,
-`test_marketplace_plugins`, `test_public_built_inventory`,
-`test_public_distribution`, `test_release_acceptance`,
-`test_public_packaged_invocation_guards`, `test_ik6_skill_census`,
-`test_schema_sync`, and `test_public_agents_skill_table` only if its fixture
-needs one). No `src/gnd` module changes.
+Estimate (r4): about 240 lines of skill prose (TS4's `gnd-model-multivalued`
+is 163 lines for one command); 5 route sentences, one index row and one schema
+sentence in siblings; one vendored schema file; about 200 lines of new test
+(`test_induce_skill.py`; TS4's skill test is 343 lines); about 40 lines of pin
+edits across 5 test files (`test_packaged_skills`, `test_doctor_uninstall`,
+`test_public_distribution`, `test_public_packaged_invocation_guards`,
+`test_schema_sync`). No `src/gnd` module changes.
 
 ## 11. Approval instrument
 
@@ -352,3 +370,31 @@ the owner, and shown before the skill text is final. C0 binds the prompts the
 skill must serve, including whether steps 2 and 3 stay separate (plan IS2-C4).
 It is not a recording, it shows no command (IS-R7), and the tutorial does not
 use it. It implies nothing about a real learner (plan §2, the Popper branch).
+
+## 12. Changes from r3 (r4, 2026-11-25)
+
+r3 (SHA-256 `a3c29dca1461e9e2e6903ab294b3c49807053046166751dd58d9cb0b8409443e`,
+committed at `e74d882`) stays in git history.
+
+| Where | r3 | r4 | Why |
+|---|---|---|---|
+| §1, §2 | baseline `45c8603`; 16 skills, 65 files, 211 link occurrences | `4f2945a9`; 18 skills, 71 files, 238 occurrences | a month of main; two skills added by `type-induction-skills` |
+| §6.1 frontmatter, Learn | `popper` and the stand-in only | every current `--target`; the `amie` miner and `gnd import mined-rules` (D22) | IL2 to IL4 landed these |
+| §6.1 R-b, learner rule | no `llm` learner | R-b adds "never answers as the learner itself"; a paragraph on the `llm` route (D21) | IL5 landed an `llm` target whose run record must be independent |
+| §6.1 Discover, §6.2 out-routes | no fact-type family | the family's groups route to `gnd-judge-fact-types` and `gnd-model-multivalued` (D23) | TS1 to TS4 landed them |
+| §6.1 commands | five fenced lines | six (`gnd import mined-rules`) | D22 |
+| §6.1 reactions | 11 for discover, export, import | also `mined-rules`; the other documented exits (5, 64, 66, 70, 74) fall under "any other" | current `--help` |
+| §6.2 gnd-solve anchor | after "review either here like any other" | after "review each here like any other." | the sentence was rewritten when `mined-rules` was added |
+| §6.2 gnd-model-evolve anchor | after the two induced bullets | after the `mined-rules` bullet (three bullets now) | IL4 added a bullet |
+| §6.2 edges | 13 | 15 (the two judges) | D23 |
+| §6.3 pins | 13 test files with literal counts | 5 files; the rest import from `test_packaged_skills.py` | the inventory pins were consolidated after TS4 |
+| §6.3, §7 D8 | pin the census to the IS1 base commit | no edit | the census now reads the IK milestone's own commits |
+| §6.3 D3 | a separate `test_schema_sync` case | joins the existing "second exception" case of the two type schemas | TS3's precedent for runtime-canonical vendored schemas |
+| §8 ledger | inherited scaffold failure | cleared | PR #54 merged; the test passes in a clean clone |
+| §8 gate | 19 test files | 21 (the two judge-skill tests) | they read the orm-core index and the judges' routes |
+| §7 | — | D21, D22, D23 proposed | new capabilities |
+| §10 | 13 files, about 65 pin lines | 5 files, about 40 | the consolidation |
+
+Unchanged: D1 (`gnd-induce`), D3's vendoring, D4, D5, D9, D15, D16, D17 to
+D20, the refusal sentences R-a and R-c to R-h, C0, the honest limit and IS2's
+scope.

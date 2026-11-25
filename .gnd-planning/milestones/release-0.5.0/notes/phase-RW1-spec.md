@@ -2,8 +2,8 @@
 
 ## 1. Status
 
-**r6, resumed. E1 is to run again; no second ruling, and no
-implementation.** r5 was held on the owner's ruling of 2026-11-24 that the
+**r7. E1 ran at the resumed base (§13); the owner ruled D4; the second
+ruling is in §7.** r7 adds §13, the D4 ruling and the handling list to r6. r5 was held on the owner's ruling of 2026-11-24 that the
 release also waits for ossie-relational-bundle (plan §13) (o). That
 milestone's five phases and its close record are on main at `e8359685`
 (§2). r6 rewrites the facts that main changed, tagged `(m2)`: the
@@ -322,6 +322,13 @@ SHA-256 of the spec bytes it covers.
 > implementation file changes under this ruling. This ruling is not the
 > owner's reading of the spec.
 
+> **D4, owner ruling, 2026-11-25 (o).** Asked which change should lead the
+> 0.5.0 notes, with the four readings of D4 as the choices, the owner chose
+> "Ossie relational files". M4 is therefore
+> `"0.5.0": ("### Ossie relational files", "explanation/ossie.md")`, the
+> Ossie block comes first and the PyRel block second. The owner chose among
+> one-line descriptions of the four; the owner has not read this spec.
+
 ## 8. Tests
 
 | ID | Case | Expected |
@@ -452,5 +459,48 @@ redone with the spec:
 
 ## 13. E1 at the resumed base (m2)
 
-E1 runs again under the renewed first ruling of §7, at the commit that
-records it. Its results are appended here before the second ruling.
+E1 ran again on 2026-11-25 under the renewed first ruling, at the commit
+that records it: `4968631e`, which is main `e8359685` plus this milestone's
+planning-only commits. The [summary](../evidence/RW1/e1-summary.md) has both
+lanes' output under "Second measurement".
+
+| Lane | Passed | Failed | Errors | Skipped |
+|---|---|---|---|---|
+| base | 21,994 | 1 | 2 | 13 |
+| bumped | 21,989 | 6 | 2 | 13 |
+
+- **Base, against the prediction.** The prediction was no failure, or the
+  scaffold guard the Ossie close record calls known. It was wrong on both
+  counts. The scaffold guard passes in a clean clone. One other test fails:
+  `tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]`.
+  The how-to page says "exit code 11" in a prose sentence, and that test
+  refuses an exit number in the prose of a how-to page. The page came with
+  ossie-relational-bundle, whose close gates did not run that test file.
+- **Bumped.** The same five ids as §12, all in
+  `tests/test_release_version.py`, plus the base failure. The liveness
+  condition holds.
+- **Nothing else moved.** M5 is empty and D2 has no subject.
+- **Not measured:** which generated outputs change bytes, as in §12.
+
+### Handling, bound by the second ruling
+
+| Id that fails | Lane | Handling |
+|---|---|---|
+| the five `tests/test_release_version.py` ids of §12 | bumped only | made green by M4 and M6 to M9; no test comparison changes |
+| `tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]` | both | a base failure. RW1 does not edit the page: it is another milestone's text (D6, §9), and RW1-C6 asks for no failure the base lacks. The session that ran that milestone was told on 2026-11-25. The freeze (RW2-C0) needs it repaired on main or the owner's ruling |
+| the two `test_public_optional` setup errors | both | RC-02, carried |
+
+M5 is empty, so the total of §10 stands with the two new Ossie bullets
+added: about 86 new or changed lines, and about 135 moved. Past 1.5 times
+86, the phase pauses.
+
+### What the reconciliation added (m2)
+
+[notes-reconciliation.md](../evidence/RW1/notes-reconciliation.md) now
+places all 140 files, with row R17 for the Ossie milestone. Two things its
+four bullets do not say get a new bullet each in the Ossie block:
+`gnd.rmap.map_model` and `gnd.rmap.dispositions` are documented callables,
+and the two new files carry the model's ids as table and column names.
+
+The package index was read on 2026-11-25: it lists 0.1.0, 0.2.0, 0.3.0 and
+0.4.0, and has no 0.5.0. M7 states that date.

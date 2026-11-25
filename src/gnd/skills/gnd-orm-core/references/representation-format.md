@@ -2336,6 +2336,116 @@ Every fact type the Rmap carries is therefore either named by exactly one
 link tree or listed in `unmapped_links`, with one of those two reasons. `--strict` does not refuse any of
 these: they are listed, not refused.
 
+### Physical binding
+
+`--physical-binding FILE` makes the semantic model describe tables the caller
+delivers, and maps the ontology onto those tables. The built-in relational
+mapping is then not run. The ontology, sidecar and loss report are the bytes
+of a run without the flag. The flag cannot be combined with
+`--ontology-only` (exit 64), and a missing file exits 66.
+
+The file is JSON, at most 10 MiB, under the schema `gnd-physical-binding/1`.
+The packaged schema `gnd/schema/physical-binding.schema.json` defines its
+members and is closed at every level; this section states only what the
+members mean.
+
+**Tables.** This part uses only the binding.
+
+| Binding | Semantic model |
+|---|---|
+| A table | One dataset, in sorted table-name order. `name` and `source` are the table name as written, which may be schema-qualified. Its `GND` extension is `{"source_kind":"physical"}`. |
+| A column | One field, in the binding's own column order |
+| `sql_type` | `datatype`, through the map below. The raw text is kept on the field as `{"sql_type": …}`. |
+| `primary_key`, `unique_keys` | The dataset's keys, as given |
+| `references` | The columns of one table whose `references` name the same table and column list are **one** foreign key, and one relationship. They pair with the referenced columns in the table's column order. A table's foreign keys are ordered by their first column, and named by the relational mapping's rule. |
+
+Names are written as given, and quoted and uppercased in expressions like
+any other. Two tables, or two columns of one table, that are equal after
+uppercasing are refused.
+
+**SQL types.** A type is words of letters, digits and underscores, with at
+most one parenthesized list of unsigned integers after a word. Its name is
+the words, casefolded and joined by one space. The map is closed:
+
+| Ossie data type | Names |
+|---|---|
+| `String` | `char`, `character`, `varchar`, `character varying`, `nchar`, `nvarchar`, `text`, `string`, `uuid` |
+| `Integer` | `smallint`, `integer`, `int`, `bigint`, `tinyint`, `int2`, `int4`, `int8`, `serial`, `bigserial`, `long`, `short`, `byte` |
+| `Decimal` | `numeric`, `decimal`, `dec`, `number` |
+| `Float` | `real`, `float`, `float4`, `float8`, `double`, `double precision` |
+| `Boolean` | `boolean`, `bool` |
+| `Date` | `date` |
+| `Time` | `time`, `time without time zone` |
+| `DateTime` | `timestamp`, `timestamp without time zone`, `timestamp_ntz`, `datetime` |
+| `DateTimeTz` | `timestamp with time zone`, `timestamptz`, `timestamp_ltz` |
+| `Opaque` | `bytea`, `binary`, `varbinary`, `blob`, `json`, `jsonb` |
+
+Any other type leaves `datatype` absent. It is never a refusal.
+
+**Roles.** `roles` gives, for a fact type and a role, the ordered columns
+that hold the role.
+
+- **Names.** Fact type ids, object type ids, table names and column names
+  match exactly. A role name matches after Unicode compatibility
+  normalization (form KC), casefolding, and dropping every character that is
+  not a letter or a digit. This is its own rule, not the near-miss
+  normalization of the why-not report.
+- **A column** is written `{table, column}`, or as the string `table.column`.
+  The string is looked up among the declared tables and columns and never
+  split, because a table name can contain a dot.
+- **A role played by a value type** has one column. **A role played by an
+  entity type** has one column per part of that entity's identifier, in the
+  ontology's `identify_by` order, an entity part expanded in turn.
+- **A bound fact type** has every role bound. With all its columns in one
+  table it gets a link mapping, as under the built-in mapping. Across
+  tables, it is listed as `spans-tables`.
+- **`extension_roles`** has the same shape and is checked the same way. It
+  produces no link mapping; its entries are listed in the extension.
+- **Surrogate keys.** A role held only through a generated id has no column
+  with the entity's identifying values, so it cannot be bound. Leave that
+  fact type out of `roles`; it is then listed as `unbound`. Its foreign key
+  still becomes a relationship.
+
+**Targets** are optional. `{kind: identifier, object_type}` on every column of
+a table's primary key makes the table the object type's home; the object
+type then gets an object mapping over that key, when the key is exactly the
+columns its identifier is bound to there. `{kind: role, fact_type, role}`
+and `{kind: reference, object_type}` add nothing: they only have to agree
+with `roles`.
+
+**The listing.** The mapping's extension has no `rmap_variant` on a binding
+run. It gains `binding_sha256`, the bare hexadecimal SHA-256 of the binding
+file, and `extension_roles`, the resolved entries as
+`{fact_type, role, table, columns}`.
+
+| Element | Disposition |
+|---|---|
+| A fact type bound in `roles`, in one table | `columns`, the table, then its roles' columns in role order, each once |
+| A fact type bound across tables | `spans-tables` |
+| A fact type bound only in `extension_roles` | `extension-role` |
+| Any other fact type | `unbound` |
+| A confirmed alethic uniqueness whose roles are bound in one table | `primary_key` when its columns are the table's primary key; `unique_key` when they are one of its unique keys; otherwise `not-in-binding` |
+| Any other uniqueness | `uniqueness-not-confirmed` |
+| A constraint of a fact type that is not carried | that fact type's reason |
+| Every other constraint | `not-relational`. A binding carries no nullability, so this includes `mandatory`. |
+
+When a table has no `unique_keys` member, each such uniqueness that is not
+the primary key becomes a unique key of the table, one per column set. When
+the member is present, nothing is added.
+
+**Refusals.** A refused binding exits 3 with its rule id on standard error
+and publishes nothing. The checks run in this one order, and within a rule
+the first violation in sorted order is reported:
+
+| Step | Rule ids |
+|---|---|
+| The file | `binding:not-a-file`, `binding:size`, `binding:syntax` (not JSON, a non-finite number, nesting past the limit, a duplicate member, an integer too long to read) |
+| The document | `binding:schema` |
+| The model's own refusals | unchanged |
+| Names | `binding:name-collision`, `binding:unknown-table`, `binding:unknown-column`, `binding:ambiguous-column`, `binding:unknown-fact-type`, `binding:role-name` (a role name with no letter or digit, or two that normalize alike, in the model or the binding), `binding:unknown-role`, `binding:unknown-object-type` |
+| Contradictions | `binding:reference-group` (a foreign key with a different number of columns than it references), `binding:reference-not-a-key` (the referenced columns are not the target's primary key or a declared unique key, as a sequence), `binding:partial-fact-type`, `binding:role-arity`, `binding:target-mismatch`, `binding:key-role` (a key column of a home table holds a role that is neither played by the home object type nor part of its identifier), `binding:incompatible-keys` (one column holds two object types that are unrelated, neither a subtype of the other nor part of the other's identifier) |
+| `--strict`, then size, then collision | unchanged |
+
 ### Import a pinned ontology
 
 `gnd import ossie FILE --out MODEL` accepts an Ossie ontology in JSON or

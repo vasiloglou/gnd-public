@@ -92,8 +92,8 @@ Components: cli.export_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 219 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 248 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 225 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 254 | (no docstring) |
 
 ## gnd.commands.extract — `src/gnd/commands/extract.py`
 Components: cli.extract_command

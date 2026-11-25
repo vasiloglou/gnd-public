@@ -97,12 +97,9 @@ CENSUS = (ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS0/revise
 
 
 def _all_model_paths():
-    found = set()
-    for base in (ROOT / "src/gnd", ROOT / "tests/fixtures"):
-        for pattern in ("*.orm.yaml", "*.orm.json"):
-            found.update(base.rglob(pattern))
-    found.update((CORPUS / "cases").glob("*/model.yaml"))  # A14
-    return sorted(found)
+    from support.model_scan import all_model_paths
+
+    return all_model_paths()
 
 
 def _loaded(path):

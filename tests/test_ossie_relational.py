@@ -65,12 +65,9 @@ def test_t1_json_equals_the_approved_structure(number):
 
 
 def _model_paths():
-    found = set()
-    for base in (ROOT / "src/gnd", ROOT / "tests/fixtures"):
-        for pattern in ("*.orm.yaml", "*.orm.json"):
-            found.update(base.rglob(pattern))
-    found.update((corpus.RMAP / "cases").glob("*/model.yaml"))
-    return sorted(found)
+    from support.model_scan import all_model_paths
+
+    return all_model_paths()
 
 
 @pytest.fixture(scope="module")

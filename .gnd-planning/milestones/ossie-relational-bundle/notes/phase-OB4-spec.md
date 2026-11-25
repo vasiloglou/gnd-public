@@ -2,10 +2,11 @@
 
 ## 1. Status
 
-**r1 approved 2026-11-24 with G1–G18 as proposed**
-([spec gate](../013-OB4-spec-gate.md)). The corpus, the schema file and
-amendment r1.1 (§13) are authored and **await the corpus gate**. No reader
-code is written. Not reviewed.
+**Implemented, 2026-11-24.** The owner approved r1 with G1–G18 as proposed
+([spec gate](../013-OB4-spec-gate.md)) and the corpus, schema and amendment
+r1.1 ([corpus gate](../014-OB4-corpus-gate.md)). §12 records what
+implementation found, including one refinement for the owner (IF1). The
+text below §1 is kept as written at each gate.
 
 ## 2. Provenance
 
@@ -423,9 +424,27 @@ Estimate:
 3. The harness lands red.
 4. Each implementation commit names the cases it turns green.
 
-## 12. Implementation findings
+## 12. Implementation findings (recorded during OB4)
 
-None yet.
+Rows marked **owner** depart from an approved rule and are put to the owner
+with the phase record.
+
+| # | Finding | Effect |
+|---|---|---|
+| IF1 | **K5 contradicted the approved case V3.** As approved, `binding:incompatible-keys` refuses a column that holds two unrelated object types. In V3, `state.country_cd` holds the State (it is part of the State's key) and the Country (the State's identifying component). | Two object types are compatible when they are related by subtyping **or one is part of the other's identifier, at any depth**. **Owner:** a refinement of K5. |
+| IF2 | **A declared home and an object mapping are two things.** A table is a declared home of X when every primary-key column is marked as X's identifier; `binding:key-role` is judged on declared homes. X gets an object mapping from the table only when that key is exactly the columns X's identifier is bound to there. Otherwise X gets none and is not listed. | r1 used one notion for both; the approved refusal row for `binding:key-role` needs the first, the object mapping the second. |
+| IF3 | **`binding:ambiguous-column` is judged only where a string is used.** Two declared pairs that spell one string are harmless when every reference to them is written as an object. | §6.2's sentence read as if the spelling alone were refused. |
+| IF4 | **Several declared homes for one object type**: the object mapping reads the first table in sorted order. | r1 did not say. |
+| IF5 | **An entity the ontology does not identify** (a unit-based reference, for one) has no known column count, so `binding:role-arity` does not apply to roles it plays. A fact type through it is listed as `identification-differs`, as under the Rmap. | Stated in the normative text. |
+| IF6 | **An extension role across tables** is listed with `table: null` and each column as `{table, column}`. | K7 gave the one-table form only. |
+| IF7 | **The shared records were generalized**, with no OB2 or OB3 corpus byte changed: `RolePlacement.flag` (the unary flag column; the mapping no longer reads it out of `carried_as`), `Identification.absorbed`, `RelationalSchema.variant` may be `None`, and `name_foreign_keys` is the one home of the foreign-key naming rule for both paths. | The refactoring review of the record. |
+| IF8 | **Three guards shaped the code.** The export command may not import the binding module directly (layer map), so `gnd.export.ossie.INPUT_REFUSALS` names what `render_ossie` raises. The RF6 policy bans the literal subscript `['roles']` outside the model package, so the binding's two role sections are read by a variable member name. The docs guard keeps the token for Unicode form KC to one page, which defines a different normalization; the normative text names the form in words and says the rule is its own. | No guard was widened. |
+| IF9 | **T8 measured.** Every node of V3's binding replaced by ten kinds of JSON value: 910 replacements, 843 refused by the schema, 48 by a later rule, 19 harmless. None raised anything but a binding refusal. | — |
+| IF10 | **T10 and G6 measured.** At 1,400 entities and 4,500 fact types (2,950 tables) a binding run takes 4.1 s, against 3.4 s with the Rmap; the ratio to one fifth of that scale is 5.0. The binding file is 1.2 MB, 12% of the 10 MiB cap. | No size parameter is needed (G6). |
+| IF11 | **Two pairs of refusal rows repair each other** when combined: a role added under a second spelling, then the first spelling removed, is a valid binding. | T5's order test lists exactly those two pairs. Three rules cannot be paired from the table; hand-built witnesses cover them. |
+| IF12 | **T13 is written and not run** (`test_external_physical_binding_cases`, the opt-in oracle lane). | Upstream acceptance of the binding run's files is unconfirmed. |
+| IF13 | **OB3-Q6 done.** `tests/support/model_scan.py` is the one fixture-model scan (G17). | — |
+| IF14 | **A timing test flaked once.** OB2's `test_r2_f8_external_unique_keys_are_not_quadratic` failed once inside a two-minute run and passed three times alone. It compares two run times with a ratio bound of 6. | Recorded; not changed. |
 
 ## 13. Amendment r1.1: rules settled while authoring the corpus (2026-11-24)
 

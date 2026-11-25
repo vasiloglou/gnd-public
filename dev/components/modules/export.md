@@ -243,9 +243,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 57 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 62 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name) -> …` | function | 516 | Render the deterministic artifacts of one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 58 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 67 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 528 | Render the deterministic artifacts of one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -267,9 +267,23 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
 | --- | --- | --- | --- |
 | `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
 | `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
-| `build_semantic_model(schema, name) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 225 | Map the ontology's concepts and relationships onto the semantic model. |
-| `validate_relational(semantic_model, mapping) -> None` | function | 312 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
+| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 239 | Map the ontology's concepts and relationships onto the semantic model. |
+| `validate_relational(semantic_model, mapping) -> None` | function | 328 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+
+## gnd.export.physical_binding — `src/gnd/export/physical_binding.py`
+Components: export.physical_binding
+Read a physical binding and bind a model's roles to a delivered relational schema.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `BindingError` | class(ValueError) | 95 | A physical binding is refused. ``rule`` is one of :data:`RULE_ORDER`. |
+| `Binding` | class | 105 | A schema-valid binding document and the digest of the bytes it was read from. |
+| `read_binding(path) -> Binding` | function | 118 | Read and schema-check a binding. A missing file raises ``FileNotFoundError``. |
+| `sql_datatype(sql_type) -> str \| None` | function | 142 | The Ossie data type of an SQL type, or None when the type is outside the map. |
+| `normalize_role_name(name) -> str` | function | 176 | A role name for matching (OB4 D8): NFKC, casefolded, letters and digits only. |
+| `Bound` | class | 659 | What a binding gives the relational files: the schema, each field's type, and |
+| `bind(model, view, binding) -> Bound` | function | 668 | Resolve a binding against a model: names first, then contradictions. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules

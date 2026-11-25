@@ -24,7 +24,7 @@ from gnd.export.ossie_relational import (
     build_semantic_model,
     validate_relational,
 )
-from gnd.export.physical_binding import Bound, bind, read_binding
+from gnd.export.physical_binding import BindingError, Bound, bind, read_binding
 from gnd.input_policy import MAX_BYTES_CEILING, guard_yaml, loads, require_byte_bound
 from gnd.model import (
     MAX_MODEL_BYTES,
@@ -57,6 +57,10 @@ MAX_OUTPUT_BYTES_CEILING = MAX_BYTES_CEILING
 
 class OssieInputError(ValueError):
     """The source cannot be exported with the selected policy."""
+
+
+#: What :func:`render_ossie` raises for a refused input, besides the model's own errors.
+INPUT_REFUSALS = (OssieInputError, BindingError)
 
 
 @dataclass(frozen=True)

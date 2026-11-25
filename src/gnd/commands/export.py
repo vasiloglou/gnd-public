@@ -82,8 +82,7 @@ def _cmd_export_ossie(
 ) -> int:
     from gnd.artifacts import ArtifactError
     from gnd.errors import ModelLoadError, ModelValidationError
-    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, OssieInputError, render_ossie
-    from gnd.export.physical_binding import BindingError
+    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, INPUT_REFUSALS, render_ossie
     from gnd.safefs import publish_new_files
 
     try:
@@ -99,7 +98,7 @@ def _cmd_export_ossie(
     except FileNotFoundError as error:
         print(f"missing input: {error}", file=sys.stderr)
         return EXIT_NO_INPUT
-    except (ModelLoadError, ModelValidationError, OssieInputError, BindingError) as error:
+    except (ModelLoadError, ModelValidationError, *INPUT_REFUSALS) as error:
         print(f"invalid Ossie export input: {error}", file=sys.stderr)
         return EXIT_ILL_FORMED
     except OSError as error:

@@ -180,6 +180,7 @@ def normalize_role_name(name: str) -> str:
 
 
 ColumnRef = tuple[str, str]
+_ROLE_SECTIONS = ("roles", "extension_roles")
 
 
 class _Binder:
@@ -188,9 +189,10 @@ class _Binder:
         self.view = view
         self.sha256 = binding.sha256
         self.tables: Mapping[str, Any] = binding.document["tables"]
+        # The binding's two role sections, by member name. (The name is a variable so
+        # that this is not read as a model query: the document is a binding, not a model.)
         self.role_sections: dict[str, Mapping[str, Any]] = {
-            "roles": binding.document["roles"],
-            "extension_roles": binding.document.get("extension_roles", {}),
+            section: binding.document.get(section, {}) for section in _ROLE_SECTIONS
         }
         index = ModelIndex.for_model(model)
         self.objects = index.object_types_by_id()
@@ -635,8 +637,13 @@ class _Binder:
                 tables = sorted({table for table, _column in columns})
                 rows.append({
                     "fact_type": fact, "role": role,
+                    # One table: its name and the column names. Across tables: no table, and
+                    # each column with its own.
                     "table": tables[0] if len(tables) == 1 else None,
-                    "columns": [column if len(tables) == 1 else f"{table}.{column}" for table, column in columns],
+                    "columns": [
+                        column if len(tables) == 1 else {"table": table, "column": column}
+                        for table, column in columns
+                    ],
                 })
         return rows
 

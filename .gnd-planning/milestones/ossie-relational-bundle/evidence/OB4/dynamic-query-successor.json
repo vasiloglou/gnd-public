@@ -1,0 +1,1044 @@
+{
+ "schema_version": 1,
+ "reason": "ossie-relational-bundle OB4: the new gnd.export.physical_binding module (annotations, per-table, per-column and per-role maps over a schema-valid binding document), the generalized Rmap records, and the binding wiring in gnd.export.ossie, gnd.export.ossie_relational and the export command. Syntax census only; no model-query exception is widened.",
+ "predecessor": ".gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json",
+ "predecessor_sha256": "d20de719ce33ba4c5d58f53b913c7ef0ab7704c2be698726e43c12599397b4e6",
+ "removed": [
+  [
+   "src/gnd/export/ossie_relational.py",
+   "build_mapping",
+   "carried[fact_type]",
+   1
+  ],
+  [
+   "src/gnd/export/ossie_relational.py",
+   "link_tree",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "<module>",
+   "Literal['derived-computed', 'uniqueness-not-confirmed', 'identification-unmatchable', 'spans-tables', 'not-relational']",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "counts[target]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "dict[str, int]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "set[str]",
+   1
+  ]
+ ],
+ "added": [
+  [
+   "src/gnd/export/ossie_relational.py",
+   "build_mapping",
+   "Mapping[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ossie_relational.py",
+   "build_semantic_model",
+   "Mapping[tuple[str, str], tuple[str | None, str | None]]",
+   1
+  ],
+  [
+   "src/gnd/export/ossie_relational.py",
+   "build_semantic_model",
+   "physical[table.name, column.name]",
+   1
+  ],
+  [
+   "src/gnd/export/ossie_relational.py",
+   "build_semantic_model",
+   "tuple[str | None, str | None]",
+   1
+  ],
+  [
+   "src/gnd/export/ossie_relational.py",
+   "build_semantic_model",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ossie_relational.py",
+   "link_tree",
+   "self.placements[fact_type, order[0]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "<module>",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "<module>",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "Binding",
+   "Mapping[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "Bound",
+   "Mapping[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "Bound",
+   "Mapping[tuple[str, str], tuple[str | None, str | None]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "Bound",
+   "tuple[str | None, str | None]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "Bound",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "Mapping[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "Mapping[str, Mapping[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "Mapping[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "binding.document.get(section, {})",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "dict[str, Mapping[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "dict[str, int | None]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "dict[str, list[ColumnRef]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "dict[tuple[str, str, str], tuple[ColumnRef, ...]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "list[ColumnRef]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "tuple[ColumnRef, ...]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
+   "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "ancestors",
+   "self.objects.get(current, {})",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "ancestors",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "arity",
+   "self._arity[object_type]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "arity",
+   "self.objects[object_type]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "arity",
+   "self.view.identification.get(object_type, (None,))",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "dict[ColumnRef, list[tuple[str, str, str]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "holders.get((table, column), ())",
+   3
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "holders[reference]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "list[tuple[str, str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "self.model_names[target['fact_type']]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "self.model_names[target['fact_type']][normalize_role_name(target['role'])]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "self.players[fact]",
+   5
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "self.players[fact][role]",
+   4
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "self.role_sections[section]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "self.tables[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "self.tables[target]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_contradictions",
+   "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "dict[str, dict[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "dict[str, str]",
+   4
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "dict[tuple[str, str, str], str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "model_names[fact]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "model_names[fact].get(normalize_role_name(role))",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "model_names[target['fact_type']]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "resolved[section, fact, role]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.players[fact]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.role_sections[section]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.role_sections[section][fact]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.spelled[r]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.spelled[reference]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.tables[reference['table']]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.tables[t]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "self.tables[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "check_names",
+   "written[normal]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "columns",
+   "Iterable[tuple[str, str, Mapping[str, Any]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "columns",
+   "Mapping[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "columns",
+   "self.tables[table]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "columns",
+   "self.tables[table]['columns'][column]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "columns",
+   "tuple[str, str, Mapping[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "components",
+   "list[tuple[str, str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "components",
+   "players[order[1]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "components",
+   "self.view.identification.get(object_type, (None, None))",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "components",
+   "self.view.relations[fact]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "components",
+   "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "confirmed",
+   "Mapping[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "declared_homes",
+   "list[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "declared_homes",
+   "self.tables[table]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "declared_homes",
+   "self.tables[table]['columns'][c]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "declared_homes",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "extension_roles",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "extension_roles",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "fields",
+   "dict[tuple[str, str], tuple[str | None, str | None]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "fields",
+   "tuple[str | None, str | None]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "fields",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "foreign_keys",
+   "dict[tuple[str, tuple[str, ...]], list[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "foreign_keys",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "foreign_keys",
+   "list[tuple[tuple[str, ...], str, tuple[str, ...]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "foreign_keys",
+   "self.tables[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "foreign_keys",
+   "tuple[str, ...]",
+   3
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "foreign_keys",
+   "tuple[str, tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "foreign_keys",
+   "tuple[tuple[str, ...], str, tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "home_key",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "home_key",
+   "self.bound.get(('roles', fact, role))",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "home_key",
+   "self.objects[object_type]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "home_key",
+   "self.tables[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "home_key",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "home_tables",
+   "dict[str, str]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "identifications",
+   "list[Identification]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "identifications",
+   "list[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "identifications",
+   "self.homes.get(object_type)",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "identifications",
+   "self.objects[object_type]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "identifications",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "Mapping[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "derived[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "fact_table[f]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "fact_table[roles[0][0]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "list[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "position[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "role_columns[f, r]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "self.tables[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "tuple[str, str]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "place",
+   "unmapped['fact_type', f]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "read_binding",
+   "message[:200]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "role_entries",
+   "Iterable[tuple[str, str, str, list[Any]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "role_entries",
+   "list[Any]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "role_entries",
+   "self.role_sections[section]",
+   3
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "role_entries",
+   "self.role_sections[section][fact]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "role_entries",
+   "self.role_sections[section][fact][role]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "role_entries",
+   "tuple[str, str, str, list[Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "derived[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "dict[frozenset[str], tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "dict[str, dict[frozenset[str], tuple[str, ...]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "dict[str, tuple[tuple[str, ...], ...]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "dict[tuple[str, str], str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "dict[tuple[str, str], tuple[str, ...]]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "foreign_keys[table]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "frozenset[str]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "held[role]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "list[RolePlacement]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "list[tuple[tuple[str, str], str, frozenset[str]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "position[table]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "position[table][c]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "self.bound['roles', fid, role]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "self.players[fid]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "self.tables[table]",
+   3
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "tuple[str, ...]",
+   4
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "tuple[str, str]",
+   4
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "tuple[tuple[str, ...], ...]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "tuple[tuple[str, str], str, frozenset[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "unique_keys[table]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "schema",
+   "unmapped['fact_type', fid]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sql_datatype",
+   "SQL_TYPES.get(' '.join(words))",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sql_datatype",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sql_datatype",
+   "sql_type[end]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sql_datatype",
+   "sql_type[position + 1:end]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sql_datatype",
+   "sql_type[position:end]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sql_datatype",
+   "sql_type[position]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "targets",
+   "Iterable[tuple[str, str, Mapping[str, str]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "targets",
+   "Mapping[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "targets",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "targets",
+   "tuple[str, str, Mapping[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "<module>",
+   "Literal['derived-computed', 'uniqueness-not-confirmed', 'identification-unmatchable', 'spans-tables', 'not-relational', 'unbound', 'extension-role', 'not-in-binding']",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "dict[str, list[tuple[tuple[str, ...], str, tuple[str, ...]]]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "foreign_keys[name]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "list[tuple[tuple[str, ...], str, tuple[str, ...]]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "references[name]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "self.carried['fact_type', fid]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "self.placed[fid]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "tuple[str, ...]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "build",
+   "tuple[tuple[str, ...], str, tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "Mapping[str, Sequence[tuple[tuple[str, ...], str, tuple[str, ...]]]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "Sequence[tuple[tuple[str, ...], str, tuple[str, ...]]]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "counts[target]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "dict[str, int]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "dict[str, tuple[ForeignKey, ...]]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "references[table]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "tuple[ForeignKey, ...]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "tuple[str, ...]",
+   2
+  ],
+  [
+   "src/gnd/rmap.py",
+   "name_foreign_keys",
+   "tuple[tuple[str, ...], str, tuple[str, ...]]",
+   1
+  ]
+ ],
+ "result_distinct_rows": 8352,
+ "result_occurrences": 10387
+}

@@ -111,3 +111,33 @@ def test_layer_ratchet_detects_a_new_pair(tmp_path):
     path.write_text(json.dumps(layers))
     metrics = arch.measure(root, path)
     assert not _pairs(metrics) <= set(KNOWN_PAIRS)
+
+
+CORE_INIT_GROUPS = (
+    {"gnd.model", "gnd.model._includes", "gnd.model._operations", "gnd.model._validation"},
+    {"gnd.checker", "gnd.checker._composed", "gnd.checker._core", "gnd.compiled_obligations"},
+    {"gnd.assurance", "gnd.assurance.core"},
+)
+
+
+def _unexpected_core_cycles(groups):
+    layers = _layer_map()["modules"]
+    return [group for group in groups
+            if any(layers[name]["layer"] in {"model", "checking", "semantics"} for name in group)
+            and not any(set(group) <= known for known in CORE_INIT_GROUPS)]
+
+
+def test_package_initialization_core_ratchet(measured):
+    assert not _unexpected_core_cycles(measured["parent_initialization_sccs"])
+    extra = ["gnd.model", "gnd.checker"]
+    assert _unexpected_core_cycles([extra]) == [extra]
+
+
+@pytest.mark.parametrize("reverse", [False, True])
+def test_core_packages_import_cold(reverse):
+    import subprocess
+    names = ["gnd.model", "gnd.checker", "gnd.assurance"]
+    if reverse:
+        names.reverse()
+    imports = "\n".join(f"import {name}" for name in names)
+    subprocess.run([sys.executable, "-c", imports], check=True, timeout=30)

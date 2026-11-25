@@ -65,6 +65,7 @@ from gnd.extensions import Wildcard as _Wildcard
 from gnd.extensions import calculation_scope, derivation_claims_against, structured_extension_view
 from gnd.extensions import partial_compatible as _partial_compatible
 from gnd.model import derivation_classifications, dynamic_subject_is_functional
+from gnd.model_index import ModelIndex
 from gnd.population import Population, load_population_bytes
 from gnd.universe import descendant_closure as _descendant_closure
 from gnd.universe import resolve_primitive
@@ -1575,7 +1576,7 @@ def _unknown_precondition_verdicts(
     pinned = copy.deepcopy(operation)
     retained = []
     verdicts = []
-    fact_types = {str(row.get("id")): row for row in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=False)
     for obligation in operation.get("preconditions") or []:
         unknown = False
         definite_miss = False

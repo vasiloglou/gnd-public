@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "reason": "F3 consolidates strict and optional fact-id maps with live last-wins rows. Each removed caller has a bound variant.",
+  "predecessor": ".gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json",
+  "predecessor_sha256": "5236471cdcca24983d0daf18d9aee5cf487606dcd738b70f0b57429b98aba1bf",
+  "removed": [
+    [
+      "src/gnd/admission.py",
+      "build_admission",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_constraint_view_dispatch",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_evaluate_stratified_extensions",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_exact_extension_calculator",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_python_extension_calculator",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "structured_extension_view",
+      "model.fact_types",
+      3
+    ],
+    [
+      "src/gnd/refscheme.py",
+      "_fact_types_by_id",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "adapt_snapshot_observed",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/transition.py",
+      "_unknown_precondition_verdicts",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/verbalize_population.py",
+      "_project_rows",
+      "model.fact_types",
+      1
+    ]
+  ],
+  "added": [],
+  "result_distinct_rows": 286,
+  "result_occurrences": 350,
+  "original_metric_current": 293
+}

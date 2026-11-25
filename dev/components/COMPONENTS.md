@@ -2126,7 +2126,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: admitted/blocked partition; occurrence verdict references; validated candidate metrics
 - status: canonical
 - modules: src/gnd/admission.py, src/gnd/admission_validation.py
-- uses: check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.bounded_json, infra.report_payloads, model.address, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_adapter, semantics.snapshot_ir
+- uses: check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.bounded_json, infra.report_payloads, model.address, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, semantics.snapshot_adapter, semantics.snapshot_ir
 - used_by: check.service, exp.session_replay, exp.session_runtime, semantics.saved_judgments
 - part_of: subsystem.check
 - tests: tests/test_v71_phase4_successors.py, tests/test_public_v72_status.py
@@ -2552,10 +2552,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +42 more (graph.md)
+- used_by: check.admission, check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, … +45 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.
-- out: Detached lookup results and scoped ModelIndex snapshots.
+- out: Detached lookup results, scoped ModelIndex snapshots and compatibility maps with live last-wins fact rows.
 
 
 ### model.reference_resolution
@@ -2896,7 +2896,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Validated walk data, digest strings, TransitionReport or ComputedTransition, frame modalities and exit band.
 - status: canonical
 - modules: src/gnd/transition.py, src/gnd/transition_kernel.py
-- uses: check.branches, check.compiled_obligations, check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.extensions, semantics.ground_atoms
+- uses: check.branches, check.compiled_obligations, check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, semantics.extensions, semantics.ground_atoms
 - used_by: assurance.policy, check.element_coverage, check.service, cli.api, cli.dispatch, examples.plan_apps, exp.schema, exp.service, exp.session_store, export.pyrel_rules, export.verification, infra.report_payloads, … +1 more (graph.md)
 - tests: tests/test_transition_report.py, tests/test_public_transition_walks.py, tests/test_public_transition_contract.py, tests/test_v62_phase2_intermediate.py, tests/test_v62_phase3_terms.py, tests/test_public_phase4_transition_support.py
 - checked: partial
@@ -2938,7 +2938,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Ordered tuple of fact references and sentences with optional excerpts, or a single rendered witness sentence.
 - status: canonical
 - modules: src/gnd/verbalize_population.py
-- uses: check.population_structure, check.universe, infra.errors, infra.report_redaction, infra.verdict_prose, model.anchors, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.extensions
+- uses: check.population_structure, check.universe, infra.errors, infra.report_redaction, infra.verdict_prose, model.anchors, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, semantics.extensions
 - used_by: cli.api, model.diff, model.verbalization
 - tests: tests/test_v70_phase5_adversarial.py, tests/test_v70_phase5_corpus.py
 - notes: Projection occurs before sentence construction; original population fact indices survive deterministic sorting. Witness rendering validates role completeness and primitive compatibility without asserting population membership.

@@ -1180,7 +1180,7 @@ def _python_extension_calculator(
     }
     extensions: dict[str, _TypedRelation] = {}
     work = _JoinWork()
-    fact_types = {str(fact_type.get("id")): fact_type for fact_type in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=False)
     incremental = _incremental_context(model, relations)
     current_relations = dict(relations)
     for component in derivation_strata(model.model_dump()):
@@ -1527,7 +1527,7 @@ def _evaluate_stratified_extensions(
             member for component in strata if selected.intersection(component)
             for member in component
         }
-    fact_types = {str(row.get("id")): row for row in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=False)
     state = dict(relations)
     extensions: dict[str, _TypedRelation] = {}
     unavailable: dict[str, RelationUnavailable] = dict(prior_unavailable or {})
@@ -1884,7 +1884,7 @@ def _exact_extension_calculator(
     work = _ExactJoinWork()
     document = model.model_dump()
     prepare_where = _derivation_where_preparer(document, work)
-    fact_types = {str(fact_type.get("id")): fact_type for fact_type in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=False)
     selected = None if heads is None else frozenset(str(head) for head in heads)
     if selected is not None:
         for head in selected:
@@ -2214,7 +2214,7 @@ def structured_extension_view(
                 possible=MappingProxyType(dict(previous_possible or {})),
             )
         relations = dict(_base_relations(model, population))
-        fact_types = {str(row.get("id")): row for row in model.fact_types}
+        fact_types = ModelIndex.fact_map(model, require_id=False)
         for head, rows in (previous or {}).items():
             if head in fact_types and head in ordered:
                 roles = _relation_roles(model, fact_types[head])
@@ -2309,7 +2309,7 @@ def structured_extension_view(
                 work=DynamicRefreshWork(),
                 unavailable=MappingProxyType(dict(previous_unavailable or {})),
             )
-        fact_types = {str(row.get("id")): row for row in model.fact_types}
+        fact_types = ModelIndex.fact_map(model, require_id=False)
         relations = dict(_base_relations(model, population))
         for head in ordered:
             if head not in previous:
@@ -2373,7 +2373,7 @@ def structured_extension_view(
             work=DynamicRefreshWork(),
         )
 
-    fact_types = {str(row.get("id")): row for row in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=False)
     relations = dict(_base_relations(model, population))
     for head in ordered:
         fact_type = fact_types[head]
@@ -2804,7 +2804,7 @@ def _constraint_view_dispatch(
     if not unavailable:
         return constraint_view_legacy(model, population, extensions)
     completed = dict(extensions)
-    fact_types = {str(item.get("id")): item for item in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=False)
     for fact_type_id in unavailable:
         fact_type = fact_types[fact_type_id]
         completed[fact_type_id] = _TypedRelation(

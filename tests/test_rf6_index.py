@@ -220,3 +220,44 @@ assert old.role_object_type('F', 'x') == 'Code'
                             env={**os.environ, 'PYTHONPATH': str(root / 'src')},
                             capture_output=True, text=True, timeout=3, check=False)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_fact_maps_preserve_missing_duplicate_and_live_rows():
+    from gnd.model_index import ModelIndex
+    m = built()
+    m.fact_types.extend([{"id": "F", "roles": []}, {"id": 3}, {}])
+    rows = ModelIndex.fact_map(m, require_id=False)
+    assert list(rows) == ["F", "3", "None"]
+    assert rows["F"] is m.fact_types[1]
+    with pytest.raises(KeyError, match="id"):
+        ModelIndex.fact_map(m, require_id=True)
+    m.fact_types.pop()
+    assert ModelIndex.fact_map(m, require_id=True)["3"] is m.fact_types[-1]
+
+
+def test_two_parent_closure_with_committed_annotations():
+    from gnd.documents import DeonticNote
+    m = built()
+    m.object_types.extend([{"id": "Other", "kind": "entity"},
+                           {"id": "Leaf", "kind": "entity", "subtype_of": ["Child", "Other"]}])
+    old = index(m)
+    m.deontic_notes.append(DeonticNote(text="Review the declared roles."))
+    m.rejected_proposals.append({"id": "retired"})
+    updated = index(m)
+    assert updated.digest and updated.digest != old.digest
+    assert updated.supertype_closure("Leaf") == frozenset({"Base", "Child", "Other"})
+
+
+def test_fact_map_routing_by_consumer():
+    import ast
+    import json
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    sites = root / ".gnd-planning/milestones/refactoring-followups/evidence/F3/fact-map-sites.json"
+    for path, owner, required in json.loads(sites.read_bytes()):
+        tree = ast.parse((root / path).read_text())
+        calls = [call for func in ast.walk(tree) if isinstance(func, ast.FunctionDef)
+                 and func.name == owner for call in ast.walk(func) if isinstance(call, ast.Call)
+                 and ast.unparse(call.func) == "ModelIndex.fact_map"]
+        assert any(any(kw.arg == "require_id" and ast.literal_eval(kw.value) is required
+                       for kw in call.keywords) for call in calls), (path, owner, required)

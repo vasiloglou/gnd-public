@@ -38,8 +38,8 @@ Read-only occurrence admission projection for a completed check report.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `build_admission(model, population, report, *, max_cells) -> dict[str, list[dict[str, Any]]]` | function | 67 | Partition asserted occurrences using typed joins and completed verdicts. |
-| `wire_verdicts(payload, report, population, model) -> None` | function | 205 | Put typed occurrence addresses on v10 without touching old report rows. |
+| `build_admission(model, population, report, *, max_cells) -> dict[str, list[dict[str, Any]]]` | function | 68 | Partition asserted occurrences using typed joins and completed verdicts. |
+| `wire_verdicts(payload, report, population, model) -> None` | function | 206 | Put typed occurrence addresses on v10 without touching old report rows. |
 
 ## gnd.admission_validation — `src/gnd/admission_validation.py`
 Components: check.admission
@@ -703,31 +703,32 @@ Detached model query snapshots with a bounded, content-keyed cache.
 | `cache_info() -> dict[str, int]` | function | 112 | (no docstring) |
 | `ModelIndex` | class | 118 | A retained snapshot: queries return detached values, never writable cache state. |
 | `ModelIndex.for_model(cls, model) -> ModelIndex` | method | 143 | (no docstring) |
-| `ModelIndex.object_map(model) -> dict[str, dict[str, Any]]` | method | 197 | Compatibility lookup retains live rows and historical malformed errors. |
-| `ModelIndex.role_map(model) -> dict[str, dict[str, str]]` | method | 203 | (no docstring) |
-| `ModelIndex.constraint_roles(constraint) -> list[str]` | method | 211 | The role names a fact-type constraint spans (uniqueness, frequency), in declared order. |
-| `ModelIndex.scope_facts(model, targets) -> list[str]` | method | 217 | (no docstring) |
-| `ModelIndex.fact_types(self) -> tuple[dict[str, Any], ...]` | method | 222 | (no docstring) |
-| `ModelIndex.iter_fact_types(self) -> Iterator[dict[str, Any]]` | method | 225 | (no docstring) |
-| `ModelIndex.iter_fact_types_shared(self) -> Iterator[dict[str, Any]]` | method | 228 | Internal readers only: the index's own fact-type rows, not copied. |
-| `ModelIndex.role_object_types(self) -> dict[str, dict[str, str]]` | method | 237 | (no docstring) |
-| `ModelIndex.fact_type_roles(self) -> dict[str, set[str]]` | method | 247 | (no docstring) |
-| `ModelIndex.facts_for_objects(self, identifiers) -> list[str]` | method | 253 | (no docstring) |
-| `ModelIndex.legacy_fact_type(model, identifier) -> dict[str, Any] \| None` | method | 258 | (no docstring) |
-| `ModelIndex.legacy_role_type(model, fact_type_id, role_name) -> str \| None` | method | 265 | (no docstring) |
-| `ModelIndex.fact_type(self, identifier) -> dict[str, Any] \| None` | method | 272 | (no docstring) |
-| `ModelIndex.object_type(self, identifier) -> dict[str, Any] \| None` | method | 275 | (no docstring) |
-| `ModelIndex.object_types_by_id(self) -> dict[str, dict[str, Any]]` | method | 278 | (no docstring) |
-| `ModelIndex.role_object_type(self, fact_type_id, role_name) -> str \| None` | method | 281 | (no docstring) |
-| `ModelIndex.supertype_closure(self, identifier) -> frozenset[str]` | method | 288 | (no docstring) |
-| `ModelIndex.reference_value_types(self) -> MappingProxyType[str, str \| None]` | method | 334 | object-type id -> the value type that denotes it, or None. |
-| `ModelIndex.denoted_by(self, value_type_ids) -> set[str]` | method | 357 | Object types whose resolved value type is one of ``value_type_ids`` (a new set). |
-| `ModelIndex.subtype_children(self) -> MappingProxyType[str, frozenset[str]]` | method | 371 | Declared id -> the ids that name it in ``subtype_of`` (direct children). |
-| `ModelIndex.descendants(self, identifier) -> set[str]` | method | 385 | ``identifier`` and every transitive subtype of it, cycle-safe (a new set). |
-| `ModelIndex.kind(self, identifier) -> str \| None` | method | 403 | The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None. |
-| `ModelIndex.primitive(self, identifier, *, variant) -> str \| None` | method | 414 | (no docstring) |
-| `ModelIndex.iter_constraints_shared(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| No…` | method | 417 | Internal readers only: ``iter_constraints`` refs and order, rows not copied. |
-| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 432 | (no docstring) |
+| `ModelIndex.fact_map(model, *, require_id) -> dict[str, dict[str, Any]]` | method | 197 | Live fact rows by string id, with the last duplicate taking precedence. |
+| `ModelIndex.object_map(model) -> dict[str, dict[str, Any]]` | method | 204 | Compatibility lookup retains live rows and historical malformed errors. |
+| `ModelIndex.role_map(model) -> dict[str, dict[str, str]]` | method | 210 | (no docstring) |
+| `ModelIndex.constraint_roles(constraint) -> list[str]` | method | 218 | The role names a fact-type constraint spans (uniqueness, frequency), in declared order. |
+| `ModelIndex.scope_facts(model, targets) -> list[str]` | method | 224 | (no docstring) |
+| `ModelIndex.fact_types(self) -> tuple[dict[str, Any], ...]` | method | 229 | (no docstring) |
+| `ModelIndex.iter_fact_types(self) -> Iterator[dict[str, Any]]` | method | 232 | (no docstring) |
+| `ModelIndex.iter_fact_types_shared(self) -> Iterator[dict[str, Any]]` | method | 235 | Internal readers only: the index's own fact-type rows, not copied. |
+| `ModelIndex.role_object_types(self) -> dict[str, dict[str, str]]` | method | 244 | (no docstring) |
+| `ModelIndex.fact_type_roles(self) -> dict[str, set[str]]` | method | 254 | (no docstring) |
+| `ModelIndex.facts_for_objects(self, identifiers) -> list[str]` | method | 260 | (no docstring) |
+| `ModelIndex.legacy_fact_type(model, identifier) -> dict[str, Any] \| None` | method | 265 | (no docstring) |
+| `ModelIndex.legacy_role_type(model, fact_type_id, role_name) -> str \| None` | method | 272 | (no docstring) |
+| `ModelIndex.fact_type(self, identifier) -> dict[str, Any] \| None` | method | 279 | (no docstring) |
+| `ModelIndex.object_type(self, identifier) -> dict[str, Any] \| None` | method | 282 | (no docstring) |
+| `ModelIndex.object_types_by_id(self) -> dict[str, dict[str, Any]]` | method | 285 | (no docstring) |
+| `ModelIndex.role_object_type(self, fact_type_id, role_name) -> str \| None` | method | 288 | (no docstring) |
+| `ModelIndex.supertype_closure(self, identifier) -> frozenset[str]` | method | 295 | (no docstring) |
+| `ModelIndex.reference_value_types(self) -> MappingProxyType[str, str \| None]` | method | 341 | object-type id -> the value type that denotes it, or None. |
+| `ModelIndex.denoted_by(self, value_type_ids) -> set[str]` | method | 364 | Object types whose resolved value type is one of ``value_type_ids`` (a new set). |
+| `ModelIndex.subtype_children(self) -> MappingProxyType[str, frozenset[str]]` | method | 378 | Declared id -> the ids that name it in ``subtype_of`` (direct children). |
+| `ModelIndex.descendants(self, identifier) -> set[str]` | method | 392 | ``identifier`` and every transitive subtype of it, cycle-safe (a new set). |
+| `ModelIndex.kind(self, identifier) -> str \| None` | method | 410 | The ``kind`` of the first object type whose ``str(id)`` is ``identifier``, or None. |
+| `ModelIndex.primitive(self, identifier, *, variant) -> str \| None` | method | 421 | (no docstring) |
+| `ModelIndex.iter_constraints_shared(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| No…` | method | 424 | Internal readers only: ``iter_constraints`` refs and order, rows not copied. |
+| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 439 | (no docstring) |
 
 ## gnd.model_queries — `src/gnd/model_queries.py`
 Components: model.reference_resolution
@@ -1270,31 +1271,31 @@ Transition evaluation -- the loader half (Phase 2, lane 1).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `operations_digest(operations) -> str` | function | 95 | The digest of exactly the ``operations`` section, as loaded. |
-| `transition_model_identity(model) -> str` | function | 115 | The same function ``population.py`` uses, called from a second place. |
-| `population_file_digest(path) -> str` | function | 124 | sha256 over the population FILE BYTES as read. |
-| `read_steps_document(path) -> dict[str, Any]` | function | 159 | Read and layer-1 validate a walk. TOTAL over arbitrary bytes. |
-| `validate_steps_document(document) -> dict[str, Any]` | function | 205 | Copy and validate an already-loaded steps document through layer 1. |
-| `verify_digests(document, model, pre_path) -> None` | function | 248 | Stage 2. Each mismatch has its own rule id, so a caller is never left |
-| `operation_binding_issues(model, *, declared, operation_id, bindings, operation_path, bindings_path,…` | function | 301 | Validate one operation plus either exact bindings or a binding subset. |
-| `validate_steps(document, model) -> list[dict[str, Any]]` | function | 375 | Stage 3. Every step names a declared operation and binds exactly its |
-| `touched_fact_types(model, steps) -> set[str]` | function | 408 | Every fact type any step's operation asserts into or retracts from. |
-| `assert_frame_coverage(union, populations, supplied) -> None` | function | 430 | Stage 4. A population whose declared coverage omits a touched fact type |
-| `assert_static_derivation_coverage(model, steps, populations, supplied) -> None` | function | 458 | Require complete asserted inputs for static derivations used by the walk. |
-| `assert_dynamic_derivation_coverage(model, steps, populations, supplied) -> None` | function | 507 | Require selected/read dynamic heads and every transitive asserted leaf. |
-| `TransitionVerdict` | class(BaseModel) | 571 | One finding about one walk. |
-| `DerivedChange` | class(BaseModel) | 635 | One changed computed extension, observational and never banded. |
-| `StepResult` | class(BaseModel) | 649 | One step: what it was asked to do, what was found, and the state after. |
-| `FrameGrading` | class(BaseModel) | 665 | How one touched fact type is graded, and by whose declaration. |
-| `TransitionReport` | class(BaseModel) | 674 | Four claim families, never merged into an aggregate. |
-| `TransitionReport.all_verdicts(self) -> list[TransitionVerdict]` | method | 713 | (no docstring) |
-| `TransitionReport.embedded_reports(self) -> list[CheckReport]` | method | 720 | (no docstring) |
-| `ComputedTransition` | class | 725 | A transition report paired with the final population it computed. |
-| `band(report) -> int` | function | 733 | Verdicts -> exit band, precedence 1 > 4 > 2 > 0, jointly over all four families. |
-| `UnknownComparisonError` | class(ValueError) | 773 | A dynamic rule named an operator the evaluator does not implement. |
-| `evaluate(model, pre, post, steps, *, pre_receipt) -> TransitionReport` | function | 2050 | The whole declared-post walk, in the normative evaluation order. |
-| `evaluate_plan(model, pre, steps, *, pre_receipt) -> ComputedTransition` | function | 2092 | Apply a walk and return its computed post without a frame comparison. |
-| `frame_modalities(model) -> dict[str, tuple[str, list[str]]]` | function | 2141 | `{fact_type: (modality, operations)}` over EVERY operation in the model. |
+| `operations_digest(operations) -> str` | function | 96 | The digest of exactly the ``operations`` section, as loaded. |
+| `transition_model_identity(model) -> str` | function | 116 | The same function ``population.py`` uses, called from a second place. |
+| `population_file_digest(path) -> str` | function | 125 | sha256 over the population FILE BYTES as read. |
+| `read_steps_document(path) -> dict[str, Any]` | function | 160 | Read and layer-1 validate a walk. TOTAL over arbitrary bytes. |
+| `validate_steps_document(document) -> dict[str, Any]` | function | 206 | Copy and validate an already-loaded steps document through layer 1. |
+| `verify_digests(document, model, pre_path) -> None` | function | 249 | Stage 2. Each mismatch has its own rule id, so a caller is never left |
+| `operation_binding_issues(model, *, declared, operation_id, bindings, operation_path, bindings_path,…` | function | 302 | Validate one operation plus either exact bindings or a binding subset. |
+| `validate_steps(document, model) -> list[dict[str, Any]]` | function | 376 | Stage 3. Every step names a declared operation and binds exactly its |
+| `touched_fact_types(model, steps) -> set[str]` | function | 409 | Every fact type any step's operation asserts into or retracts from. |
+| `assert_frame_coverage(union, populations, supplied) -> None` | function | 431 | Stage 4. A population whose declared coverage omits a touched fact type |
+| `assert_static_derivation_coverage(model, steps, populations, supplied) -> None` | function | 459 | Require complete asserted inputs for static derivations used by the walk. |
+| `assert_dynamic_derivation_coverage(model, steps, populations, supplied) -> None` | function | 508 | Require selected/read dynamic heads and every transitive asserted leaf. |
+| `TransitionVerdict` | class(BaseModel) | 572 | One finding about one walk. |
+| `DerivedChange` | class(BaseModel) | 636 | One changed computed extension, observational and never banded. |
+| `StepResult` | class(BaseModel) | 650 | One step: what it was asked to do, what was found, and the state after. |
+| `FrameGrading` | class(BaseModel) | 666 | How one touched fact type is graded, and by whose declaration. |
+| `TransitionReport` | class(BaseModel) | 675 | Four claim families, never merged into an aggregate. |
+| `TransitionReport.all_verdicts(self) -> list[TransitionVerdict]` | method | 714 | (no docstring) |
+| `TransitionReport.embedded_reports(self) -> list[CheckReport]` | method | 721 | (no docstring) |
+| `ComputedTransition` | class | 726 | A transition report paired with the final population it computed. |
+| `band(report) -> int` | function | 734 | Verdicts -> exit band, precedence 1 > 4 > 2 > 0, jointly over all four families. |
+| `UnknownComparisonError` | class(ValueError) | 774 | A dynamic rule named an operator the evaluator does not implement. |
+| `evaluate(model, pre, post, steps, *, pre_receipt) -> TransitionReport` | function | 2051 | The whole declared-post walk, in the normative evaluation order. |
+| `evaluate_plan(model, pre, steps, *, pre_receipt) -> ComputedTransition` | function | 2093 | Apply a walk and return its computed post without a frame comparison. |
+| `frame_modalities(model) -> dict[str, tuple[str, list[str]]]` | function | 2142 | `{fact_type: (modality, operations)}` over EVERY operation in the model. |
 
 ## gnd.transition_kernel — `src/gnd/transition_kernel.py`
 Components: semantics.transitions
@@ -1424,10 +1425,10 @@ Deterministic, projected sentences for population facts and complete witnesses.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `PopulationVerbalizationError` | class(ValueError) | 24 | An input cannot be represented without inventing a role or reading. |
-| `validate_model_object(model) -> None` | function | 28 | Recheck both loader layers for a possibly mutated in-memory model. |
-| `verbalize_population(model, population, *, anchors, population_bytes, document_bytes, unredacted, e…` | function | 186 | Render every occurrence, with source indices preserved after sorting. |
-| `render_witness(model, fact_type_id, binding, *, unredacted) -> str` | function | 234 | Render one complete offending-fact binding as a forward sentence. |
+| `PopulationVerbalizationError` | class(ValueError) | 25 | An input cannot be represented without inventing a role or reading. |
+| `validate_model_object(model) -> None` | function | 29 | Recheck both loader layers for a possibly mutated in-memory model. |
+| `verbalize_population(model, population, *, anchors, population_bytes, document_bytes, unredacted, e…` | function | 187 | Render every occurrence, with source indices preserved after sorting. |
+| `render_witness(model, fact_type_id, binding, *, unredacted) -> str` | function | 235 | Render one complete offending-fact binding as a forward sentence. |
 
 ## gnd.vocabulary — `src/gnd/vocabulary.py`
 Components: model.extraction_vocabulary

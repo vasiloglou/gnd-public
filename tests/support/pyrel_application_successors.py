@@ -19,6 +19,7 @@ QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/query-successor.json',
     ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json',
     ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json',
+    ROOT / '.gnd-planning/milestones/refactoring-followups/evidence/F3/query-successor.json',
 ]
 
 

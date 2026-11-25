@@ -87,3 +87,16 @@ Open decisions, in execution order, include F1's byte-count contract, F3's core-
 | Owner decisions and provenance | F1 counts on-disk bytes. F2 shares guards only if both deliberate observed-call controls fail as intended. Issue #299 itself specifies the three overrides. F5 enumerates supported versions and runs recovery controls for the four named versions plus controls for other supported paths affected by its implementation. Later exact policy decisions belong to the phase spec before edits. |
 
 Reviewed r1 SHA-256 6ca733e30bffb9637b1534800adf2ebf72df84af381bcd7ea2ffc8bdb1d384be. See [the finalized advisory report](../evidence/plan-panel/PANEL-REVIEW.md). One review round, then verify these repaired criteria against implementation and fixtures.
+
+## Close amendments · r3, 2026-11-25
+
+The r2 wording above is retained as the plan the phases executed. The following dated rulings govern its exit criteria. [Measured results](close-results.md) and [decisions and remaining work](close-delta.md) give the cross-phase evidence.
+
+- F3 supersedes the proposed zero core-initializer count with a membership limit for the three existing core groups and cold-import controls. All three depend on implicit parent edges that sibling imports already create. Thirteen lookup sites migrated. The model/query maintainers own the remaining exact list under #305. [F3 ruling](../005-phase-F3.md).
+- F4 keeps single-pass, first-crossing depth refusal. If an alias or syntax error comes later in the same input, depth wins. The named public readers and writer are covered. Wider intake and MIME contract changes remain with the named component owners under #302. [F4 ruling](../006-phase-F4.md).
+- F5 preserves older session profiles and offers a digest-bound portable prompt in v6–v8. The tests and later integration checks cover both formats. [F5 ruling](../007-phase-F5.md).
+- F6 confines pairwise agreement to positional references in the common admitted domain. The two readers' full malformed-ID policies differ. [F6 ruling](../008-phase-F6.md).
+- F7 retains live shims for the first public release carrying the notice. The release owner selects later removals in a separate phase under #297. FU5 already retired three helpers. [F7 ruling](../009-phase-F7.md).
+- The owner authorized all four F8 transfers and publication in PR #310. The source historical states and later triggers stay visible in the public register. [F8 ruling](../010-phase-F8.md).
+
+This close candidate awaits its separate light panel and delegated acceptance record. Eight phase records cover twelve issues.

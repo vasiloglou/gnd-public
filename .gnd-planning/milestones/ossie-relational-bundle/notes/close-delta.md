@@ -6,7 +6,8 @@ What the milestone delivered differently from plan r2 as approved
 
 ## Plan amendments at the close (plan §11)
 
-Sixteen rows, A1 to A16, each naming the record that raised it. The ones
+Eighteen rows, A1 to A18, each naming the record that raised it; A17 and A18
+came from the close review `(c2)`. The ones
 that change what a user sees:
 
 1. **A8.** A model that maps to no table writes three files, not five.
@@ -20,13 +21,17 @@ that change what a user sees:
    only when regular. Plan r2 and OB3 as merged upper-cased every name,
    which the upstream validator rejects for a name such as `uni.student`.
 5. **A16.** No source-cap parameter was added (D11).
+6. **A17** `(c2)`. A default run has a second new failure: the size bound
+   covers the two new files, so it can stop with `ossie:output-size` where
+   the three-file run succeeded.
+7. **A18** `(c2)`. The normative home is two sections, "Relational mapping
+   (Rmap)" and "Ossie interchange".
 
 The rest correct the plan's description of the baseline or of Halpin's
 method (A1–A7, A10, A12) or name the release-notes page (A15).
 
 ## Delivered beyond the plan
 
-- `--max-input-bytes` on `gnd import ossie` (D3 (b)).
 - An independent corpus checker for the relational files and the bindings
   (`tests/support/ossie_relational_corpus.py`,
   `tests/support/physical_binding_corpus.py`), written before the code.
@@ -34,6 +39,11 @@ method (A1–A7, A10, A12) or name the release-notes page (A15).
   regular-identifier class to the pinned validator's over every character.
 - Two links on `docs/agents` pages, broken on main by another milestone,
   were fixed so the strict site build passes.
+
+## In the plan, as ruled `(c2)`
+
+- `--max-input-bytes` on `gnd import ossie`: plan D3 (b), approved at the
+  plan gate. It was listed above as beyond the plan in error.
 
 ## Not delivered
 

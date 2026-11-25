@@ -268,9 +268,10 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
 | `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
 | `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
 | `is_regular_identifier(name) -> bool` | function | 94 | Whether Ossie reads NAME as a regular identifier, one that can be written unquoted. |
-| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 123 | One dataset per table, one field per column, one relationship per foreign key. |
-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 264 | Map the ontology's concepts and relationships onto the semantic model. |
-| `validate_relational(semantic_model, mapping) -> None` | function | 353 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+| `normalized_identifier(name) -> str` | function | 111 | Ossie's normalized form of a declared NAME: a regular identifier uppercased, any |
+| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 128 | One dataset per table, one field per column, one relationship per foreign key. |
+| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 269 | Map the ontology's concepts and relationships onto the semantic model. |
+| `validate_relational(semantic_model, mapping) -> None` | function | 358 | Check both documents against the pinned schemas; a failure is a renderer defect. |
 
 ## gnd.export.physical_binding — `src/gnd/export/physical_binding.py`
 Components: export.physical_binding
@@ -283,8 +284,8 @@ Read a physical binding and bind a model's roles to a delivered relational schem
 | `read_binding(path) -> Binding` | function | 124 | Read and schema-check a binding. A missing file raises ``FileNotFoundError``. |
 | `sql_datatype(sql_type) -> str \| None` | function | 152 | The Ossie data type of an SQL type, or None when the type is outside the map. |
 | `normalize_role_name(name) -> str` | function | 188 | A role name for matching (OB4 D8): NFKC, casefolded, letters and digits only. |
-| `Bound` | class | 705 | What a binding gives the relational files: the schema, each field's type, and |
-| `bind(model, view, binding) -> Bound` | function | 714 | Resolve a binding against a model: names first, then contradictions. |
+| `Bound` | class | 706 | What a binding gives the relational files: the schema, each field's type, and |
+| `bind(model, view, binding) -> Bound` | function | 715 | Resolve a binding against a model: names first, then contradictions. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules

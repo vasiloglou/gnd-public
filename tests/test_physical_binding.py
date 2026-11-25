@@ -823,3 +823,33 @@ def test_ob5_names_that_are_not_regular_identifiers_are_quoted_as_written(tmp_pa
     (link,) = concept["link_mappings"]
     assert link["children"][0]["object_mapping"]["expression"] == '"Sales Dept.cust-2024"."e-mail addr"'
     relational.cross_check(relational.load_yaml_bytes(bundle.document), semantic, mapping)
+
+
+def test_close_names_collide_by_ossies_normalized_form(tmp_path):
+    """Close review: two names that are not regular identifiers and differ only in case are
+    distinct to Ossie, which keeps each as written, so they are two tables. Two regular
+    names that differ only in case are one identifier and are still refused."""
+    from gnd.export.ossie import INPUT_REFUSALS, render_ossie
+    from gnd.export.ossie_relational import validate_relational
+
+    def render(rename):
+        binding = json.loads((corpus.CORPUS / "V1" / "binding.json").read_text(encoding="utf-8"))
+        binding["tables"][rename["cust"]] = binding["tables"].pop("cust")
+        binding["tables"][rename["other"]] = {"columns": {"note": {}, "Note": {}} if rename["columns"] else {"note": {}}}
+        binding["roles"] = {"customer_has_email": {
+            "customer": [{"table": rename["cust"], "column": "cust_id"}],
+            "email": [{"table": rename["cust"], "column": "email_addr"}]}}
+        path = tmp_path / f"{len(list(tmp_path.iterdir()))}.json"
+        path.write_text(json.dumps(binding), encoding="utf-8")
+        return render_ossie(corpus.model_path("V1"), output_format="yaml", physical_binding=path)
+
+    bundle = render({"cust": "fin.cust", "other": "FIN.CUST", "columns": False})
+    semantic = relational.load_yaml_bytes(bundle.semantic_model)
+    mapping = relational.load_yaml_bytes(bundle.mapping)
+    validate_relational(semantic, mapping)
+    assert [dataset["name"] for dataset in semantic["datasets"]] == ["FIN.CUST", "fin.cust"]
+    assert mapping["concept_mappings"][0]["object_mappings"] == [{"expression": '"fin.cust"."CUST_ID"'}]
+    for rename in ({"cust": "cust", "other": "Cust", "columns": False},      # regular tables: one identifier
+                   {"cust": "cust", "other": "fin.x", "columns": True}):     # regular columns note / Note
+        with pytest.raises(INPUT_REFUSALS, match="binding:name-collision"):
+            render(rename)

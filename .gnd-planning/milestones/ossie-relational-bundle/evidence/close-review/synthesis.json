@@ -1,0 +1,591 @@
+{
+ "schema_version": 1,
+ "run_sha256": "11fdf71260e1313d53f6c40c43c594ce5a853db2574a7db9ed8b6573019afc93",
+ "summary": "Five of six seats succeeded at effort high (kimi failed: its provider refused the request for quota). All five asked for revision; none blocked. Strongest agreement: amendment A14 cites the wrong prior wording (4 seats), the binding's name-collision rule still upper-cases every name (3), and some open-question dispositions are not final (3). Claude alone found that the size bound on the two new files is a second new failure of a default run, which predicate 2 denies. Gemini's high concern that names are unquoted in the semantic model is not shared by any other seat.",
+ "agreed_concerns": [
+  {
+   "group_id": "g-binding-collision",
+   "severity": "high",
+   "title": "The binding's name-collision rule still upper-cases every name",
+   "summary": "Three reviewers: binding:name-collision compares names after upper-casing, so two tables that are not regular identifiers and differ only in case (fin.refunds, FIN.REFUNDS) are refused, although the quoting rule of A14 writes them as distinct identifiers. Codex calls it blocking, Claude hardening; GLM notes the stale code comment.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "binding-irregular-name-collision"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "binding-name-collision-stale-uppercase"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "binding-collision-comment"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "g-dispositions",
+   "severity": "medium",
+   "title": "Some open-question dispositions name no owner or are not final",
+   "summary": "Three reviewers: OB4-Q3, OB5-Q2 and D10 read as pending rather than closed, carried with an owner, or an accepted residual; some carried rows name no owner; OB5-Q1 is 'proposed' in the sweep but listed among the residuals as accepted.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "open-question-dispositions-without-owner"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "invalid-dispositions"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-ob5-q1-disposition-still-proposed"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "gemini"
+   ]
+  },
+  {
+   "group_id": "g-one-home",
+   "severity": "medium",
+   "title": "The one-home rule names one section; the rules shipped in two, and nothing shown would fail on a second home",
+   "summary": "Two reviewers: the plan's rule 5 and predicate 6 name only 'Ossie interchange', while the Rmap rules live in 'Relational mapping (Rmap)'; and predicates 3 and 6 cite no evidence that would fail if a rule were stated twice.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-one-home-split"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-one-home-clause-has-no-falsifying-evidence"
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "g-a14-citation",
+   "severity": "low",
+   "title": "Amendment A14 cites plan section 2.2 for wording that is not there",
+   "summary": "Four reviewers: A14's 'Plan text (r2)' cell cites plan section 2.2 for the quoting rule, but the rule was stated only in the OB3 spec (E5) and the normative section.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "a14-cites-wrong-plan-section"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "a14-prior-wording"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "a14-plan-section-citation"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-a14-pointer-to-plan-section-2-2"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "gemini",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "pred2-default-run-new-output-size-failure"
+  },
+  {
+   "reviewer_id": "gemini",
+   "concern_id": "unquoted-names"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "delta-inplan-flag"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-guard-block-red-asserted-not-evidenced"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-a8-note-artifact-unspecified"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-scale-test-size-unrecorded"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-lane-omits-amended-section9-consumers"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-unreviewed-inventory-omits-relational-renderer"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-d5-ruling-and-measurement-unrecorded"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-oracle-lane-commit-provenance"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-d11-closed-on-proxy-ratio"
+  },
+  {
+   "reviewer_id": "qwen",
+   "concern_id": "close-release-note-section-unevidenced"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "f-binding-collision",
+   "title": "The binding's name-collision rule still upper-cases every name",
+   "action": "Compare names in Ossie's normalized form (upper-cased only when regular), update the comment and the normative sentence, and add a case with two irregular names that differ only in case.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "binding-irregular-name-collision"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "binding-name-collision-stale-uppercase"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "binding-collision-comment"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "binding-irregular-name-collision",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "binding-name-collision-stale-uppercase",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "binding-collision-comment",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "glm"
+   ],
+   "rank": 1
+  },
+  {
+   "fix_id": "f-pred2-default-run-new-output-size-failure",
+   "title": "Predicate 2 says a collision is the only new default failure; the size bound on the two new files is another",
+   "action": "Add a section 11 row: a default run can now be refused with ossie:output-size where the three-file run succeeded; restate predicate 2 with test T8; add the case to the release note.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "pred2-default-run-new-output-size-failure"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "pred2-default-run-new-output-size-failure",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ],
+   "rank": 2
+  },
+  {
+   "fix_id": "f-dispositions",
+   "title": "Some open-question dispositions name no owner or are not final",
+   "action": "Give every row one of the three final states with an owner, and state OB5-Q1 once, as ruled.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "open-question-dispositions-without-owner"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "invalid-dispositions"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-ob5-q1-disposition-still-proposed"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "open-question-dispositions-without-owner",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "invalid-dispositions",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-ob5-q1-disposition-still-proposed",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "gemini"
+   ],
+   "rank": 3
+  },
+  {
+   "fix_id": "f-one-home",
+   "title": "The one-home rule names one section; the rules shipped in two, and nothing shown would fail on a second home",
+   "action": "Add a section 11 row naming both sections as the home, and say in the results which tests hold rule ids, reasons and flags to it and that prose duplication is checked by review only.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-one-home-split"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-one-home-clause-has-no-falsifying-evidence"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "close-one-home-split",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-one-home-clause-has-no-falsifying-evidence",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen",
+    "glm"
+   ],
+   "rank": 4
+  },
+  {
+   "fix_id": "f-a14-citation",
+   "title": "Amendment A14 cites plan section 2.2 for wording that is not there",
+   "action": "Cite OB3 spec E5 and the normative sentence as the prior wording, and quote it.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "a14-cites-wrong-plan-section"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "a14-prior-wording"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "a14-plan-section-citation"
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-a14-pointer-to-plan-section-2-2"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "a14-cites-wrong-plan-section",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "a14-prior-wording",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "a14-plan-section-citation",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-a14-pointer-to-plan-section-2-2",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "qwen",
+    "gemini",
+    "glm"
+   ],
+   "rank": 5
+  },
+  {
+   "fix_id": "f-close-guard-block-red-asserted-not-evidenced",
+   "title": "The guard block's one failure is called pre-existing without evidence",
+   "action": "Cite evidence that the failing test fails on the milestone's baseline and touches no file the milestone changed.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-guard-block-red-asserted-not-evidenced"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-guard-block-red-asserted-not-evidenced",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 6
+  },
+  {
+   "fix_id": "f-close-a8-note-artifact-unspecified",
+   "title": "A8's 'note' reads like a fourth output",
+   "action": "Say the note is one line on standard error, not a file.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-a8-note-artifact-unspecified"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-a8-note-artifact-unspecified",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 7
+  },
+  {
+   "fix_id": "f-close-scale-test-size-unrecorded",
+   "title": "The scale test's size is not recorded and '5x' is unexplained",
+   "action": "State the generated model's size in A6 and in the results.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-scale-test-size-unrecorded"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-scale-test-size-unrecorded",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 8
+  },
+  {
+   "fix_id": "f-close-lane-omits-amended-section9-consumers",
+   "title": "The close lane is labelled as plan section 9's rows but omits consumers that section names",
+   "action": "Name the lane as what it is and say where the other consumers ran (the guard block).",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-lane-omits-amended-section9-consumers"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-lane-omits-amended-section9-consumers",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 9
+  },
+  {
+   "fix_id": "f-close-unreviewed-inventory-omits-relational-rend",
+   "title": "The no-review-opinion list omits the relational renderer",
+   "action": "Say why: the OB5 review read it after the quoting fix; list anything changed since.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-unreviewed-inventory-omits-relational-renderer"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-unreviewed-inventory-omits-relational-renderer",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 10
+  },
+  {
+   "fix_id": "f-close-d5-ruling-and-measurement-unrecorded",
+   "title": "D5's ruling and measurement are absent from the results",
+   "action": "Add a row citing the D5 gate record and the measurement note.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-d5-ruling-and-measurement-unrecorded"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-d5-ruling-and-measurement-unrecorded",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 11
+  },
+  {
+   "fix_id": "f-delta-inplan-flag",
+   "title": "The delta lists the in-plan --max-input-bytes flag as beyond the plan",
+   "action": "Move it: D3 (b) is in the plan.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "delta-inplan-flag"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "delta-inplan-flag",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ],
+   "rank": 12
+  },
+  {
+   "fix_id": "f-close-oracle-lane-commit-provenance",
+   "title": "The oracle lane ran at another commit; equality is only asserted",
+   "action": "Give the command that shows the source trees are equal.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-oracle-lane-commit-provenance"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-oracle-lane-commit-provenance",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 13
+  },
+  {
+   "fix_id": "f-close-d11-closed-on-proxy-ratio",
+   "title": "D11 is closed on a ratio that does not reproduce the reporter's 32 MiB",
+   "action": "State the two measurements separately and keep D11 open to the reporter's answer.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-d11-closed-on-proxy-ratio"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-d11-closed-on-proxy-ratio",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 14
+  },
+  {
+   "fix_id": "f-close-release-note-section-unevidenced",
+   "title": "The release-note section has no evidence row",
+   "action": "Cite the test that holds it.",
+   "concerns": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-release-note-section-unevidenced"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "qwen",
+     "concern_id": "close-release-note-section-unevidenced",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "qwen"
+   ],
+   "rank": 15
+  },
+  {
+   "fix_id": "f-unquoted-names",
+   "title": "Dataset and field names are not quoted in the semantic model",
+   "action": "No change proposed by the synthesis: a declared name is written as given and only a reference is quoted; the pinned validator accepts such files. To be reproduced before any action.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "unquoted-names"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "unquoted-names",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "gemini"
+   ],
+   "rank": 16
+  }
+ ]
+}

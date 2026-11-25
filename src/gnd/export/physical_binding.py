@@ -29,7 +29,7 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
-from gnd.export.ossie_relational import OntologyView
+from gnd.export.ossie_relational import OntologyView, normalized_identifier
 from gnd.input_policy import MAX_BYTES, loads
 from gnd.model_index import ModelIndex
 from gnd.rmap import (
@@ -241,12 +241,13 @@ class _Binder:
     # -- step 5: names ---------------------------------------------------------------------
 
     def check_names(self) -> None:
-        # binding:name-collision. Expressions quote and uppercase every name.
+        # binding:name-collision. Two names collide when Ossie reads them as one identifier:
+        # regular identifiers by their uppercased form, any other name only when equal as written.
         for label, names in [("tables", sorted(self.tables)),
                              *((f"columns of {t}", sorted(self.tables[t]["columns"])) for t in sorted(self.tables))]:
             seen: dict[str, str] = {}
             for name in names:
-                other = seen.setdefault(name.upper(), name)
+                other = seen.setdefault(normalized_identifier(name), name)
                 if other != name:
                     raise BindingError("binding:name-collision", f"{label}: {other!r} and {name!r} are one identifier")
         # binding:unknown-table

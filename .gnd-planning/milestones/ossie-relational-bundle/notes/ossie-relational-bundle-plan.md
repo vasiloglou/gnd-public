@@ -574,14 +574,20 @@ section only records what the plan got wrong or left open.
 | A3 | §9, OB1 affected consumers. | Add the CLI pin tests and the RF7 input-policy tests. | 004 IF7 |
 | A4 | §2.3 rule 2: an n-1 uniqueness of an n-ary groups into an entity table. | Not Halpin, and there is no table to group into. Such a fact type has its own table. | [008](../008-phase-OB2.md), S5 |
 | A5 | §2.3: silent on a fact type with no uniqueness. | Its key is all its roles (119 of 226 census fact types). | 008, S1 |
-| A6 | OB2-C4: a 10x scale model. | It cannot load under the 10 MiB model cap. The scale test runs at 5x. | 008 IF4 |
+| A6 | OB2-C4: a 10x scale model. | It cannot load under the 10 MiB model cap. The base scale model has 1,400 entity types and 4,500 fact types; the larger one is 5 times that, and its time ratio is bounded (T4, T4b) `(c2)`. | 008 IF4 |
 | A7 | §2.3: any preferred external uniqueness is a composite key. | Every component must also be functional on the entity, as the ontology export requires. | [011](../011-phase-OB3.md), E3 (a) |
-| A8 | Predicate 2 and §5: a default run always adds the two relational files. | A model that maps to no table writes the ontology's three files and a note, because the pinned core-spec requires a dataset. | 011 IF1; [012](../012-OB3-departures-gate.md) |
+| A8 | Predicate 2 and §5: a default run always adds the two relational files. | A model that maps to no table writes the ontology's three files, because the pinned core-spec requires a dataset. It says so in one line on standard error; that line is not a file `(c2)`. | 011 IF1; [012](../012-OB3-departures-gate.md) |
 | A9 | Predicate 4: every fact type and constraint is carried or listed. | Also: a link the mapping cannot write is listed in `unmapped_links` (`identification-differs`, `arity-over-limit` above 32 roles). Foreign-key names are unique in the whole schema. | 011 IF2, RR2, RR3; 012 |
 | A10 | §2.4: a foreign key's columns are ordered by position in `references.columns`. | Every column of a group carries the same block. They pair by the table's column order. | [015](../015-phase-OB4.md), K1 |
 | A11 | D8: four contradiction classes, undefined. | Defined as rule ids in the normative section. For `binding:incompatible-keys`, an entity and a part of its own identifier are compatible. | 015 K4, K5, IF1; [016](../016-OB4-departures-gate.md) |
 | A12 | §2.4: `targets` give a column its meaning. | `roles` alone binds a role. An `identifier` target marks a home table; the other two kinds are only checked. | 015 K12 |
 | A13 | §2.4: silent on nesting depth and surrogate keys. | An identifier nested more than 8 entities deep is not followed. A fact held only through a surrogate key cannot be bound. | 015 RR2, K13; 016 |
-| A14 | OB3 E5 (spec), plan §2.2: identifiers are quoted and upper-cased. | Only a regular identifier is upper-cased. Any other name is quoted as written. Found by the oracle lane. | [020](../020-phase-OB5.md); [019](../019-OB5-quoting-gate.md) |
+| A14 | OB3 spec E5, and the normative section as merged with OB3: "Identifiers in expressions are written quoted and uppercased". The plan itself states no quoting rule `(c2)`. | Only a regular identifier is upper-cased. Any other name is quoted as written. `binding:name-collision` compares names in the same form `(c2)`. Found by the oracle lane. | [020](../020-phase-OB5.md); [019](../019-OB5-quoting-gate.md) |
 | A15 | §4 OB5: "a changelog entry". | The repository has no changelog file. The entry is a section of `docs/release-notes.md` under `Unreleased:`. | 020, O14 |
 | A16 | D11: decide the source cap after D10. | Measured: output is about 6 times the source, and a model at the reporter's scale is 1.5 MB of source. No source-cap parameter is added. D10's answer can reopen it. | 004 IF9; 011 |
+| A17 `(c2)` | Predicate 2 and §5: "Its only new failure is a collision on those two paths, exit 11"; "collision is the only new default-path failure". | There is a second one. The size bound covers the two relational files, so a default run can be refused with `ossie:output-size`, exit 3, where the three-file run succeeded. `--ontology-only` or `--max-output-bytes` is the remedy. | 011, OB3-C6 and T8 (`test_t8_the_output_bound_covers_the_relational_files`); close review, Claude |
+| A18 `(c2)` | §0 rule 5 and predicate 6: the normative prose lives in § "Ossie interchange". | The home is two sections of `representation-format.md`: "Relational mapping (Rmap)" for the mapping's rules and "Ossie interchange" for the files and the binding. | 008; 020 IF1; close review, GLM |
+
+`(c2)` marks a change made after the close review read r3 (sha256
+`28c52ece99137552205bb91dba6d842276b6080f4b1b7b35957778ae392cb924`). Those
+bytes carry no review opinion.

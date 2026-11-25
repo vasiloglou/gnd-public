@@ -2293,7 +2293,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### infra.input_policy
-- does: Enforce shared JSON duplicate, finite-number and depth rules, YAML resource limits, and strict ISO datetime syntax.
+- does: Enforce shared JSON duplicate, finite-number and depth rules, YAML collection depth and resource limits, and strict ISO datetime syntax.
 - verbs: parse JSON, decode JSON, duplicate keys, finite numbers, nonfinite numbers, nesting depth, byte limits, byte cap read at call time, guard YAML, YAML aliases, event budget, parse datetime, ISO datetime, JSONDecoder, loads, load, guard_yaml, parse_datetime
 - in: JSON text or encoded bytes, readable handles, YAML text or bytes, datetime strings
 - out: Decoded JSON values or datetime objects; input refusals before unsupported input is accepted

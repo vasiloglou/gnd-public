@@ -591,8 +591,9 @@ RF7 shared JSON, YAML and ISO datetime input restrictions.
 | `JSONDecoder.raw_decode(self, text, idx)` | method | 108 | (no docstring) |
 | `loads(raw, *, max_bytes, **kwargs)` | function | 114 | Decode with native numeric types or caller hooks; refuse unsafe syntax. |
 | `load(handle, **kwargs)` | function | 124 | Apply the byte cap to the read, before decoding or constructing nodes. |
-| `guard_yaml(raw, *, max_bytes, max_events, max_depth)` | function | 130 | Reject amplification and over-budget input before constructing YAML nodes. |
-| `parse_datetime(value)` | function | 158 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
+| `checked_yaml_depth(depth, event, *, max_depth, error_type)` | function | 130 | Advance one collection event, refusing the first over-limit collection. |
+| `guard_yaml(raw, *, max_bytes, max_events, max_depth)` | function | 141 | Reject amplification and over-budget input before constructing YAML nodes. |
+| `parse_datetime(value)` | function | 164 | Parse the approved ASCII extended ISO grammar, retaining naive values. |
 
 ## gnd.install — `src/gnd/install.py`
 Components: install.skill_lifecycle
@@ -817,9 +818,9 @@ Population loading — the ONE shared code path (D-11).
 | `Population.model_copy(self, *, update, deep) -> Population` | method | 170 | Copy, keeping the producer invariant that ``update`` would otherwise skip (issue 115). |
 | `Population.validated_against(self) -> Model \| None` | method | 183 | The :class:`~gnd.model.Model` OBJECT this population passed layer-2 |
 | `Population.matches_validation_marker(self, model) -> bool` | method | 198 | Whether THIS content passed layer 2 against THIS model object (D-02). |
-| `load_population_bytes(data, *, source, model) -> Population` | function | 532 | Load already-opened population bytes through the normal validation path. |
-| `load_population(path, *, model) -> Population` | function | 549 | Load a population file (YAML or JSON) through the single shared code path. |
-| `read_population_bytes(path) -> bytes` | function | 579 | The bytes of one regular population file, refused past the size cap. |
+| `load_population_bytes(data, *, source, model) -> Population` | function | 537 | Load already-opened population bytes through the normal validation path. |
+| `load_population(path, *, model) -> Population` | function | 554 | Load a population file (YAML or JSON) through the single shared code path. |
+| `read_population_bytes(path) -> bytes` | function | 584 | The bytes of one regular population file, refused past the size cap. |
 
 ## gnd.population_shape — `src/gnd/population_shape.py`
 Components: model.population_shape

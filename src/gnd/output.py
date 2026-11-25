@@ -708,7 +708,7 @@ def _canonical_payload(payload: dict[str, Any]) -> str:
     """One deterministic JSON line. Two runs over one unchanged panel print the
     same bytes, so a recorded review summary is reproduced rather than trusted."""
 
-    return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
 
 _print_issues.__module__ = "gnd.cli"
 _print_trace.__module__ = "gnd.cli"

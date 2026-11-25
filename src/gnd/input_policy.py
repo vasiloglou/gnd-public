@@ -127,6 +127,17 @@ def load(handle, **kwargs):
     return loads(raw, **kwargs)
 
 
+def checked_yaml_depth(depth, event, *, max_depth=MAX_DEPTH, error_type=ValueError):
+    """Advance one collection event, refusing the first over-limit collection."""
+    if isinstance(event, CollectionStartEvent):
+        depth += 1
+        if depth > max_depth:
+            raise error_type("YAML depth cap exceeded")
+    elif isinstance(event, CollectionEndEvent):
+        depth -= 1
+    return depth
+
+
 def guard_yaml(raw, *, max_bytes=None, max_events=1_000_000, max_depth=MAX_DEPTH):
     """Reject amplification and over-budget input before constructing YAML nodes.
 
@@ -147,12 +158,7 @@ def guard_yaml(raw, *, max_bytes=None, max_events=1_000_000, max_depth=MAX_DEPTH
             raise ValueError('YAML event cap exceeded')
         if isinstance(event, AliasEvent):
             raise ValueError('YAML alias refused')  # noqa: TRY004 -- input syntax refusal
-        if isinstance(event, CollectionStartEvent):
-            depth += 1
-            if depth > max_depth:
-                raise ValueError('YAML depth cap exceeded')
-        elif isinstance(event, CollectionEndEvent):
-            depth -= 1
+        depth = checked_yaml_depth(depth, event, max_depth=max_depth)
 
 
 def parse_datetime(value):

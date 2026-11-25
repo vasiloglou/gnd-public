@@ -133,6 +133,31 @@ def test_external_irregular_binding_names(oracle, tmp_path):
         assert result.returncode == 0, result.stdout + result.stderr
 
 
+def test_external_tables_that_differ_only_in_case(oracle, tmp_path):
+    """Close review: the pinned validator accepts a binding with the tables `fin.cust` and
+    `FIN.CUST`, which are not regular identifiers and so are two datasets."""
+    from support import physical_binding_corpus as bindings
+
+    binding = json.loads((bindings.CORPUS / "V1" / "binding.json").read_text(encoding="utf-8"))
+    binding["tables"]["fin.cust"] = binding["tables"].pop("cust")
+    binding["tables"]["FIN.CUST"] = {"columns": {"note": {}}}
+    binding["roles"] = {"customer_has_email": {
+        "customer": [{"table": "fin.cust", "column": "cust_id"}],
+        "email": [{"table": "fin.cust", "column": "email_addr"}]}}
+    source = tmp_path / "binding.json"
+    source.write_text(json.dumps(binding), encoding="utf-8")
+    bundle = render_ossie(bindings.model_path("V1"), output_format="yaml", document_name="ontology.yaml",
+                          physical_binding=source)
+    (tmp_path / "ontology.yaml").write_bytes(bundle.document)
+    semantic = tmp_path / "ontology.yaml.semantic_model.yaml"
+    mapping = tmp_path / "ontology.yaml.mapping.yaml"
+    semantic.write_bytes(bundle.semantic_model)
+    mapping.write_bytes(bundle.mapping)
+    for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
+        result = oracle.validate(path, schema)
+        assert result.returncode == 0, result.stdout + result.stderr
+
+
 def test_external_keyword_named_table(oracle, tmp_path):
     """OB5: an object type whose id is `select` gets a table Ossie keeps as written."""
     from support import ossie_relational_corpus as relational

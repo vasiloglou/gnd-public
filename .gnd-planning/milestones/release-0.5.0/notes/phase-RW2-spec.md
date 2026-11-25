@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**r1, draft. No ruling; no implementation.** Written on 2026-11-25 against
+**r1, ruled (§7). Implementation follows.** Written on 2026-11-25 against
 main `8dcfe0e7`, the merge of the RW1 pull request (282) on the owner's word.
 The [plan](release-0.5.0-plan.md) is r5. No review has read this spec. The
 phase has two owner gates of its own beside this spec's ruling: the merge of
@@ -217,6 +217,26 @@ None is added. `docs/releasing.md` stays the one home of the procedure.
 
 Rulings are appended below this line, each with its date, source and the
 SHA-256 of the spec bytes it covers.
+
+> **D2, D4 and D6, owner rulings, 2026-11-25 (o).** Asked the three
+> questions with the readings of §7 as the choices, the owner chose: D2
+> "Ossie, growth, host", which is reading (a); D4 "Yes, run it", which is
+> reading (a), with the stated condition that the lane is reported as not
+> run if the oracle environments are gone; D6 "Leave as written". The owner
+> chose among short descriptions of each reading and has not read this spec.
+
+> **Spec ruling: delegated approval (auto=true), 2026-11-25.** Approved r1
+> of this spec at SHA-256
+> db60428a4e85883791651c63d9e16bd293cc97a6054232f5b52b6f396bc9c024 (commit
+> `3dacdba9`) for implementation of steps 2 to 7 of §6. Source: the owner's
+> request "Release 0.5.0" and the owner's selection of delegated approval on
+> 2026-11-23. Decisions: D1 yes, for that file and lane only; D3 the five
+> files, less any that cannot run installed; D5 as proposed; D7 yes; D8
+> yes; D2, D4 and D6 as the owner ruled. Budget: §10. Instrument: this
+> prose and the measured table of §6; no spec review was called for. Two
+> acts stay with the owner and are not covered: the merge of the probes pull
+> request, and any act of publication. This ruling is not the owner's
+> reading of the spec.
 
 ## 8. Tests
 

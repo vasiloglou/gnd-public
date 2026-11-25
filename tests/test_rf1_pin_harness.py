@@ -414,3 +414,63 @@ def test_version_blind_compare_ignores_only_the_gnd_version_value():
     assert _version_blind(base) != _version_blind(base.replace(b'"x": "a"', b'"x": "b"'))
     # a field that merely ends in gnd_version is not the version
     assert _version_blind(base) != _version_blind(base.replace(b"0.0.1", b"0.0.2"))
+
+
+@pytest.mark.parametrize("family", ["public_v71_witness_corpus", "v71_witness_cases"])
+def test_witness_guard_observes_evaluator_calls(family, monkeypatch):
+    from importlib import import_module
+
+    from gnd import checker, extensions, terms
+
+    import_module(f"support.{family}").no_evaluator(monkeypatch)
+    for entry in (checker.check, extensions.structured_extension_view, terms.evaluate_term):
+        with pytest.raises(AssertionError, match="production evaluator"):
+            entry()
+
+
+def test_rf_plan_surfaces_have_inventory_rows():
+    """Names from RF2–RF8 scope and RF1-C3, including deferred consumers."""
+    required = {
+        "RF2": ("canonical", "sha256_hex", "exit codes", "issues_from_validation_error",
+                "synth/assemble.py", "measure/report.py:488", "model_digest", "strict-JSON",
+                "file-digest", "YAML guards"),
+        "RF3": ("primitive resolver", "checker verdicts", "applicable_scope_ids", "ContextVar",
+                "semantic_registry", "core-cycle", "ISO-datetime"),
+        "RF4": ("safe-filesystem", "agent_cli", "diff calling", "synth oracle", "assurance modules",
+                "claim-graph", "gnd.install", "wrong-way pairs", "directory_identity"),
+        "RF5": ("parser tree", "with byte pins", "without byte pins"),
+        "RF6": ("fact_types and roles", "constraint-family dispatch", "package split"),
+        "RF8": ("session replays", "SessionStore resume", "unknown-version"),
+    }
+    rows = json.loads((PINS_ROOT / "inventory.json").read_bytes())["surfaces"]
+    owed = {("RF2", "measure/report.py:488"), ("RF5", "without byte pins"),
+            ("RF6", "package split"), ("RF4", "directory_identity")}
+    matched = []
+    for phase, names in required.items():
+        for name in names:
+            found = [row for row in rows if row["phase"] == phase and name in row["surface"]]
+            assert len(found) == 1, (phase, name, found)
+            row = found[0]
+            assert row["owed_by"] == (phase if (phase, name) in owed else None)
+            matched.append(row["surface"])
+    assert sorted(matched) == sorted(row["surface"] for row in rows)
+
+
+def test_scrub_prefers_longest_token_in_escaped_json():
+    from support.rf1_pins import scrub
+
+    assert scrub({'path': 'a"b/c'}, {'a"b': '<short>', 'a"b/c': '<long>'}) == {'path': '<long>'}
+
+
+@pytest.mark.parametrize("version", [6, 7, 8])
+def test_changed_declared_policy_bytes_fail(version, tmp_path, monkeypatch):
+    from test_rf1_session_pins import BUILDERS
+
+    root = tmp_path / "répertoire"
+    root.mkdir()
+    built = BUILDERS[version](root, monkeypatch)
+    assert built.inputs()["adapter-policy"]
+    path = Path(built.argv[built.argv.index("--adapter-policy") + 1])
+    path.write_bytes(path.read_bytes() + b" ")
+    with pytest.raises(AssertionError, match="adapter-policy bytes changed"):
+        built.inputs()

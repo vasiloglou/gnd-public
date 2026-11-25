@@ -1,0 +1,40 @@
+{
+  "base": null,
+  "claims": [
+    "gnd validate no longer refuses a fact type whose sample rows have a role named date or duration_days (issue 286).",
+    "The walk in src/gnd/terms.py does not read sample rows or an object type's description, and reads bind and head maps as containers keyed by role name, decided by the key that holds them; their values (a head's terms) are still read.",
+    "A date term in a derivation head under a role named source, provenance, bind or head is now refused, as under any other role name.",
+    "The 0.5.1 bump follows the tag-only procedure in docs/releasing.md, and the install pins keep naming 0.5.0.",
+    "The only behaviour change beyond the issue is that a date or duration_days object in a sample value or in a description extra no longer refuses a model, and the release notes say so."
+  ],
+  "created": "2026-11-25T19:03:50.841706+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/reviews/pr-289-r1/diff.patch",
+      "sha256": "d6587789aea49284f039639bbfc49dfda555ba0a527f5962a61038d3ab625e5d"
+    },
+    {
+      "path": "docs/releasing.md",
+      "sha256": "59aed07138dfa74427148e3958c0741cc04a81cec8a57406bdca578282ebc30b"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "594ec58970647df4abeca920579f2088b671fdd65f0ee473354c1ebd204ca92a"
+    }
+  ],
+  "head": "380928c0f1dd424cf976e959113ace53d1ced0c7",
+  "left_out": [],
+  "notes": [],
+  "pr": {
+    "base": "102110b273003f5fced025f6b600d2254336ac17",
+    "head": "380928c0f1dd424cf976e959113ace53d1ced0c7",
+    "number": 289,
+    "title": "Fix #286 and release 0.5.1 as a tag-only version",
+    "url": "https://github.com/vasiloglou/gnd-public/pull/289"
+  },
+  "question": "Does this pull request do what it sets out to do, and what does it break?",
+  "subject": "pr",
+  "version": 1
+}

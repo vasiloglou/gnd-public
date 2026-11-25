@@ -66,7 +66,7 @@ programs check, what they list as not checked and what they refuse.
 - **`Number`.** A `Number` value is held as a binary float, like `Float`.
 - **Value constraints scoped to a role.** A value constraint with `role_ref`
   checks only the values in that role, as GND does.
-- **Inputs the programs now refuse, and two results that change.** A program
+- **Inputs the programs now refuse, and results that change.** A program
   refuses, with exit 3, a population it cannot hold exactly: an integer
   beyond 2**53 in a `Float` or `Number` cell, a number that is not finite,
   or two rows that differ only as `1` and `1.0`. On a `Float` model, 0.4.0's
@@ -74,8 +74,11 @@ programs check, what they list as not checked and what they refuse.
   rule satisfied where `gnd check` reports a failure. A model is refused
   when you export it if it holds such an integer among its allowed values,
   range bounds or comparison literals, puts arithmetic or a sum next to a
-  `Float` or `Number` value, or compares a float literal with an `Integer`
-  value. A script that ran 0.4.0's programs on such inputs now gets exit 3.
+  `Float` or `Number` value, writes an `Integer` value into a `Float` or
+  `Number` role, or compares a float literal with an `Integer` value. 0.4.0
+  exported a model whose rule writes an `Integer` sum, `min` or `max` into a
+  `Float` role; that export is now refused. A script that ran 0.4.0's
+  programs on such inputs, or exported such a model, now gets exit 3.
 - **What is not verified.** The DuckDB programs are compared with
   `gnd check` on the packaged literature models. The `--rules lqp` programs
   are verified to compile; no RelationalAI engine has run them, so

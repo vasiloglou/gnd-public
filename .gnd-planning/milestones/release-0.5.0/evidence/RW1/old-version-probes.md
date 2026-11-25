@@ -1,4 +1,4 @@
-# RW1: what 0.4.0 did on two inputs the notes name
+# RW1: what 0.4.0 did on inputs the notes name
 
 Run on 2026-11-24 on the planning machine, to back two sentences of the
 0.5.0 notes ("0.4.0's DuckDB program accepted the first and the last and
@@ -33,3 +33,30 @@ PYTHON -I float.py POPULATION
 Not measured on 0.4.0: a non-finite number, a `Number` cell (0.4.0 refuses
 `Number` at export), and the export-time refusals. The notes make no claim
 about what 0.4.0 did with those.
+
+## Added 2026-11-25: an Integer result written into a Float role
+
+The RW1 review (finding F1) named a model that 0.4.0 exported and this tree
+refuses. Reproduced on the planning machine, with `old` as above and `new` =
+`uv run gnd` at `cc8cdb65`.
+
+Input: `tests/fixtures/pyrel-rules-coverage/rp3/sum-into-number.orm.json`
+with `object_types[1].primitive` changed from `Number` to `Float` and the
+aggregate function of `fact_types[1].derivation_rule` set to `sum`, `min` or
+`max` in turn. Command: `GND export pyrel MODEL --rules MODE --out FILE`.
+
+| Aggregate | Mode | 0.4.0 | At `cc8cdb65` |
+|---|---|---|---|
+| `min` | `duckdb`, `lqp` | exit 0, program written | exit 3 |
+| `max` | `duckdb`, `lqp` | exit 0, program written | exit 3 |
+| `sum` | `duckdb`, `lqp` | exit 0, program written | exit 3 |
+
+The refusal at `cc8cdb65`, for `min` with `--rules duckdb`: `cannot write
+the rules program: run_scores_big: $total is an Integer value written into
+the Float or Number role 'score'; PyRel would round it beyond 2**53, so the
+rules programs refuse it`.
+
+Still not measured on 0.4.0: the other export-time refusals (an integer
+beyond 2**53 among a model's literals, arithmetic next to a `Float` value, a
+float literal compared with an `Integer` value). The notes say this tree
+refuses them and make no claim about 0.4.0 for them.

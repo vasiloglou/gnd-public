@@ -1217,7 +1217,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### exp.schema
 - does: Load versioned session contracts and verify their paths, byte digests, required cases, and acceptance declarations.
-- verbs: read_session_contract, DataDrivenContract, session contract, validate schema, version dispatch, normalize contracts, digest binding, verify inputs, required cases, exact bytes, coverage floors, protected tests, transition declarations, patch declarations, judgment gate
+- verbs: read_session_contract, read_session_contract_with_digest, portable prompt identity, DataDrivenContract, session contract, validate schema, version dispatch, normalize contracts, digest binding, verify inputs, required cases, exact bytes, coverage floors, protected tests, transition declarations, patch declarations, judgment gate
 - in: Contract JSON, experiment root, and caller-selected experiment id
 - out: Normalized DataDrivenContract or SessionContractError
 - status: canonical

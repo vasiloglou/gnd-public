@@ -146,16 +146,17 @@ Closed, digest-bound contracts for data-driven experiment sessions.
 | `JudgmentGate` | class(BaseModel) | 392 | (no docstring) |
 | `SessionCase` | class(BaseModel) | 406 | Normalized required or diagnostic row in the fixed case denominator. |
 | `TestsAcceptance` | class(BaseModel) | 535 | Acceptance by a sealed, explicitly named JUnit test set. |
-| `PatchCollection` | class(BaseModel) | 878 | (no docstring) |
-| `PatchArtifact` | class(BaseModel) | 892 | (no docstring) |
-| `CandidateEdits` | class(BaseModel) | 898 | (no docstring) |
-| `RankingMetric` | class(BaseModel) | 923 | (no docstring) |
-| `DataDrivenContract` | class(BaseModel) | 1053 | Version-dispatched contract normalized for the session runtime. |
-| `DataDrivenContract.profile(self) -> SessionProfile` | method | 1077 | Runtime-only shared capabilities; selection never mutates model equality. |
-| `DataDrivenContract.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1085 | Dispatch the closed wire version before parsing either schema. |
-| `DataDrivenContract.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1136 | Route JSON through the version dispatcher above. |
-| `DataDrivenContract.required_cases(self) -> tuple[SessionCase, ...]` | method | 1217 | Required cases in their contract order. |
-| `read_session_contract(path, *, experiment_root, experiment_id) -> DataDrivenContract` | function | 1606 | Load, close, path-check, and recompute every contract byte binding. |
+| `PatchCollection` | class(BaseModel) | 879 | (no docstring) |
+| `PatchArtifact` | class(BaseModel) | 893 | (no docstring) |
+| `CandidateEdits` | class(BaseModel) | 899 | (no docstring) |
+| `RankingMetric` | class(BaseModel) | 924 | (no docstring) |
+| `DataDrivenContract` | class(BaseModel) | 1054 | Version-dispatched contract normalized for the session runtime. |
+| `DataDrivenContract.profile(self) -> SessionProfile` | method | 1079 | Runtime-only shared capabilities; selection never mutates model equality. |
+| `DataDrivenContract.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1087 | Dispatch the closed wire version before parsing either schema. |
+| `DataDrivenContract.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1138 | Route JSON through the version dispatcher above. |
+| `DataDrivenContract.required_cases(self) -> tuple[SessionCase, ...]` | method | 1221 | Required cases in their contract order. |
+| `read_session_contract(path, *, experiment_root, experiment_id) -> DataDrivenContract` | function | 1611 | Load, close, path-check, and recompute every contract byte binding. |
+| `read_session_contract_with_digest(path, *, experiment_root, experiment_id) -> tuple[DataDrivenContr…` | function | 1625 | Return the validated contract and the SHA-256 of the same descriptor read. |
 
 ## gnd.exp.session_control — `src/gnd/exp/session_control.py`
 Components: exp.service
@@ -215,20 +216,21 @@ Cross-validate retained GND verifier bytes and gate exact acceptance.
 | `SessionRedaction` | class(BaseModel) | 964 | Required applied-mode marker for session successor wires. |
 | `RepairFinding` | class(VerifierVerdict) | 1122 | (no docstring) |
 | `PatchFeedbackContext` | class(BaseModel) | 1132 | (no docstring) |
-| `AttemptFeedback` | class(BaseModel) | 1185 | Version-dispatched feedback normalized without rewriting its wire shape. |
-| `AttemptFeedback.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1238 | (no docstring) |
-| `AttemptFeedback.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1311 | Route JSON through the version dispatcher above. |
-| `validate_transition_payload(raw, *, case_id, role, process_exit, expected_schema_version, expected_…` | function | 1433 | Validate one v7/v8 transition report and derive answer-free step rows. |
-| `validate_verifier_payload(raw, *, case_id, role, process_exit, expected_command, expected_subject, …` | function | 1573 | Validate exact raw verifier bytes before they may enter acceptance. |
-| `validate_tests_payload(raw, *, case_id, role, process_exit, required_tests, candidate_sha256, contr…` | function | 1884 | Bind one tests-runner row to the current immutable candidate attempt. |
-| `case_decision(case, result) -> CaseDecision` | function | 1961 | Decide one case from its validated checker evidence and acceptance branch. |
-| `contract_accepts(contract, attempt) -> bool` | function | 2034 | Whether every and only required case has one current accepted result. |
-| `ranking_observations(contract, attempt)` | function | 2066 | (no docstring) |
-| `best_key(contract, attempt) -> tuple[int, ...]` | function | 2120 | Return the locked ascending rank from the shared case decision seam. |
-| `project_assurance_feedback(execution)` | function | 2415 | Shared live projection for snapshot, derivation and direct walk consumers. |
-| `normalized_verifier_signature(contract, attempt, *, schema_version) -> str` | function | 2549 | Hash closed verifier decision semantics for one explicit wire version. |
-| `build_attempt_feedback(*, run_id, contract, contract_id, contract_sha256, invocation, evaluation, d…` | function | 2572 | Build feedback solely from one immutable attempt and its fixed contract. |
-| `canonical_feedback(feedback) -> tuple[bytes, str]` | function | 2659 | Return feedback's sole accepted JSON encoding and its SHA-256. |
+| `SessionEvidenceJson` | class | 1185 | Decode bounded JSON before delegating to each evidence type's version dispatcher. |
+| `SessionEvidenceJson.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1189 | (no docstring) |
+| `AttemptFeedback` | class(SessionEvidenceJson, BaseModel) | 1195 | Version-dispatched feedback normalized without rewriting its wire shape. |
+| `AttemptFeedback.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1248 | (no docstring) |
+| `validate_transition_payload(raw, *, case_id, role, process_exit, expected_schema_version, expected_…` | function | 1426 | Validate one v7/v8 transition report and derive answer-free step rows. |
+| `validate_verifier_payload(raw, *, case_id, role, process_exit, expected_command, expected_subject, …` | function | 1566 | Validate exact raw verifier bytes before they may enter acceptance. |
+| `validate_tests_payload(raw, *, case_id, role, process_exit, required_tests, candidate_sha256, contr…` | function | 1877 | Bind one tests-runner row to the current immutable candidate attempt. |
+| `case_decision(case, result) -> CaseDecision` | function | 1954 | Decide one case from its validated checker evidence and acceptance branch. |
+| `contract_accepts(contract, attempt) -> bool` | function | 2027 | Whether every and only required case has one current accepted result. |
+| `ranking_observations(contract, attempt)` | function | 2059 | (no docstring) |
+| `best_key(contract, attempt) -> tuple[int, ...]` | function | 2113 | Return the locked ascending rank from the shared case decision seam. |
+| `project_assurance_feedback(execution)` | function | 2408 | Shared live projection for snapshot, derivation and direct walk consumers. |
+| `normalized_verifier_signature(contract, attempt, *, schema_version) -> str` | function | 2542 | Hash closed verifier decision semantics for one explicit wire version. |
+| `build_attempt_feedback(*, run_id, contract, contract_id, contract_sha256, invocation, evaluation, d…` | function | 2565 | Build feedback solely from one immutable attempt and its fixed contract. |
+| `canonical_feedback(feedback) -> tuple[bytes, str]` | function | 2652 | Return feedback's sole accepted JSON encoding and its SHA-256. |
 
 ## gnd.exp.session_judgments — `src/gnd/exp/session_judgments.py`
 Components: exp.session_judgments
@@ -274,30 +276,28 @@ Shared session evidence types and bounded candidate intake.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `CandidateFile` | class(BaseModel) | 247 | One regular file in an immutable candidate tree. |
-| `CandidateInventory` | class(BaseModel) | 272 | Canonical identity of all regular bytes in one candidate snapshot. |
-| `EvidenceFile` | class(BaseModel) | 300 | Identity of one raw evidence leaf retained under an attempt. |
-| `VerifierPayloadEvidence` | class(EvidenceFile) | 310 | (no docstring) |
-| `LaunchIntent` | class(BaseModel) | 314 | Append-once proof that one bounded launch index was consumed. |
-| `DeclaredLaunchIntent` | class(BaseModel) | 344 | Append-once launch identity for one schema-v6 declared adapter. |
-| `DeclaredLaunchIntent` | class(_DeclaredLaunchIntentV2) | 388 | (no docstring) |
-| `DeclaredLaunchIntent.model_validate(cls, obj, *args, **kwargs)` | method | 393 | (no docstring) |
-| `DeclaredLaunchIntent.model_validate_json(cls, raw, *args, **kwargs)` | method | 408 | (no docstring) |
-| `CandidateEdit` | class(BaseModel) | 419 | (no docstring) |
-| `RankingObservation` | class(BaseModel) | 452 | (no docstring) |
-| `JudgmentEvidence` | class(BaseModel) | 579 | (no docstring) |
-| `AttemptRecord` | class(_AttemptRecordBase) | 593 | Version-dispatched immutable attempt normalized only in memory. |
-| `AttemptRecord.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 618 | (no docstring) |
-| `AttemptRecord.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 659 | Route JSON through the version dispatcher above. |
-| `SessionOutcome` | class(StrEnum) | 761 | (no docstring) |
-| `WalkFloorResult` | class(BaseModel) | 854 | Canonical declaration/discharge summary for one transition walk floor. |
-| `SessionResult` | class(_SessionResultBase) | 902 | Version-dispatched append-once terminal claim. |
-| `SessionResult.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 923 | (no docstring) |
-| `SessionResult.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 955 | Route JSON through the version dispatcher above. |
-| `BestAttemptIdentity` | class(BaseModel) | 1025 | Exact immutable attempt named by the replaceable best pointer. |
-| `RecurrencePair` | class(BaseModel) | 1035 | First occurrence of one exact candidate/signature pair. |
-| `ResumeState` | class | 1046 | State reconstructed only from complete, validated local evidence. |
-| `StagedCandidate` | class | 1058 | Private immutable snapshot made available to verifier execution. |
+| `CandidateFile` | class(BaseModel) | 248 | One regular file in an immutable candidate tree. |
+| `CandidateInventory` | class(BaseModel) | 273 | Canonical identity of all regular bytes in one candidate snapshot. |
+| `EvidenceFile` | class(BaseModel) | 301 | Identity of one raw evidence leaf retained under an attempt. |
+| `VerifierPayloadEvidence` | class(EvidenceFile) | 311 | (no docstring) |
+| `LaunchIntent` | class(BaseModel) | 315 | Append-once proof that one bounded launch index was consumed. |
+| `DeclaredLaunchIntent` | class(BaseModel) | 345 | Append-once launch identity for one schema-v6 declared adapter. |
+| `DeclaredLaunchIntent` | class(_DeclaredLaunchIntentV2) | 389 | (no docstring) |
+| `DeclaredLaunchIntent.model_validate(cls, obj, *args, **kwargs)` | method | 394 | (no docstring) |
+| `DeclaredLaunchIntent.model_validate_json(cls, raw, *args, **kwargs)` | method | 409 | (no docstring) |
+| `CandidateEdit` | class(BaseModel) | 420 | (no docstring) |
+| `RankingObservation` | class(BaseModel) | 453 | (no docstring) |
+| `JudgmentEvidence` | class(BaseModel) | 580 | (no docstring) |
+| `AttemptRecord` | class(SessionEvidenceJson, _AttemptRecordBase) | 594 | Version-dispatched immutable attempt normalized only in memory. |
+| `AttemptRecord.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 619 | (no docstring) |
+| `SessionOutcome` | class(StrEnum) | 745 | (no docstring) |
+| `WalkFloorResult` | class(BaseModel) | 838 | Canonical declaration/discharge summary for one transition walk floor. |
+| `SessionResult` | class(SessionEvidenceJson, _SessionResultBase) | 886 | Version-dispatched append-once terminal claim. |
+| `SessionResult.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 907 | (no docstring) |
+| `BestAttemptIdentity` | class(BaseModel) | 988 | Exact immutable attempt named by the replaceable best pointer. |
+| `RecurrencePair` | class(BaseModel) | 998 | First occurrence of one exact candidate/signature pair. |
+| `ResumeState` | class | 1009 | State reconstructed only from complete, validated local evidence. |
+| `StagedCandidate` | class | 1021 | Private immutable snapshot made available to verifier execution. |
 
 ## gnd.exp.session_replay — `src/gnd/exp/session_replay.py`
 Components: exp.session_replay

@@ -170,8 +170,8 @@ vocabulary.yaml.gnd.json
 vocabulary.yaml.loss.json
 ```
 
-An export never overwrites a file. Running the first export again stops with
-exit code 11 and writes nothing, because its files already exist:
+An export never overwrites a file. Running the first export again stops and
+writes nothing, because its files already exist:
 
 <!-- gnd-run expect=11 -->
 ```sh

@@ -1,0 +1,94 @@
+# Close ruling and follow-ups
+
+**Owner ruling, 2026-11-25.** `auto=false`.
+
+After PR 274 merged, the owner was told what was still open and asked "Do
+you rule the ossie-relational-bundle milestone closed, or not yet?" The
+owner answered:
+
+> close all the open things
+
+## Reading of the answer
+
+The question asked for the close ruling, and the list before it named the
+other open items. The answer is recorded as:
+
+1. **The milestone is ruled closed**, over the
+   [close record](021-milestone-close.md) as merged at `e8359685`, with its
+   stated residuals.
+2. **An instruction to finish the carried items** that can be finished
+   inside this repository.
+
+It is **not** recorded as confirmation of any text that leaves the
+repository. The plan (D10) requires the owner to confirm each such text, and
+"close all" names none.
+
+## What was done on it
+
+| Open item | Outcome |
+|---|---|
+| The close ruling | Recorded here. |
+| OB1-Q1: `guard_yaml` captured its default byte cap at import | **Closed.** The default is read at call time, as `loads` reads it. `test_guard_yaml_reads_its_default_cap_at_call_time`. |
+| OB2-Q1: two definitions of "confirmed alethic" | **Closed.** `gnd.rmap.is_confirmed_alethic` is the one definition; the ontology export uses it at both of its sites. The census baselines keep their bytes. |
+| OB4-Q4: four private RFC 6901 pointer helpers | **Closed for the three Ossie modules**: `gnd.artifacts.json_pointer`, used by the export, the import and the binding. The helpers in `recovery/inventory.py` and `transition.py` belong to other components and build their pointers in a different shape; they are left alone. |
+| OB2-Q2: `refscheme.reference_identity` ignores `preferred` and confirmation | **Not changed.** It would change results for callers outside this milestone. An issue text is drafted in [D10-drafts.md](notes/D10-drafts.md). |
+| OB3-Q5: identifiers the ontology export does not declare | **Not changed.** It changes the ontology's bytes for existing models and needs its own spec. An issue text is drafted in the same file. |
+| The Codex review comment on PR 274 | **Not posted.** The round is kept in `notes/reviews/pr-274-r1`. The PR is merged and its one finding is fixed. |
+| D10: the three issues and the reporter message | **Not sent.** Drafted; each needs the owner's confirmation of its text. Only the owner can reach the reporter. |
+| External acceptance | **Open.** It needs the reporter's run. |
+
+## Review state
+
+The three maintenance changes are covered by the focused suites and the
+guard block. No reviewer has read them.
+
+## Gates
+
+| Gate | Result |
+|---|---|
+| `uv run pytest -q tests/test_ossie_export.py tests/test_ossie_import.py tests/test_rmap.py tests/test_ossie_relational.py tests/test_physical_binding.py tests/test_ossie_docs.py tests/test_ossie_formulas.py tests/test_rf1_cli_pins.py tests/test_rf7_input_policy.py "tests/test_documentation_tutorials.py::test_documented_learning_path[ossie]" --tb=line` | `986 passed in 161.86s`, exit 0. The byte baselines of the ontology export and of the relational files are in this lane and did not move. |
+| the project guard block (16 files) | first run: 863 passed, 3 failed. Two were the dynamic-query census, which counts annotations: the two shared helpers moved two rows. A chained successor delta (`evidence/close-followups/dynamic-query-successor.json`) records them; `tests/test_rf6_query_policy.py` and the structure tests then pass (73 passed). The third is the known red, `test_reference_closure_and_declared_bootstrap`. |
+| `uv run ruff check` | exit 0 |
+| `python3 scripts/components_index.py changed --base origin/main --strict` | 0 to fix, 0 to reread |
+
+The oracle lane was not run on these bytes. The changes do not alter a
+written byte: the corpora and baselines are unchanged.
+
+## A red test on main, found after the close
+
+On 2026-11-25 the 0.5.0 release session reported one default-lane failure on
+main at `e8359685`, in a page this milestone wrote:
+`tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]`.
+The how-to's prose said "stops with exit code 11". That test refuses an exit
+number in the prose of tutorial, how-to and explanation pages.
+
+- **Reproduced:** 1 failed, 94 passed for that file.
+- **Why it was missed:** `tests/test_plan_app_docs.py` was in no OB5 gate and
+  not in the close record's gate list. The close record's statement that the
+  guard block's known red was the only failure was true of the files it ran,
+  and false of the default lane. The close ran no full default lane.
+- **Repaired:** the sentence now says the run stops and writes nothing. The
+  binding how-to's "exits with code 3" passed the test's pattern by its
+  wording only, and is reworded the same way.
+- **Checked:** the fourteen test files that read the docs pages (379
+  passed), the docs tests of this milestone and the `ossie` tutorial group
+  (114 passed), the strict site build and the link check.
+
+**The full default lane was then run** on this branch at `e194e573`, on
+beast-3 (uv 0.13.7, not the uv that `release.yml` pins), in six shards from a
+clean checkout of that commit:
+
+| Shard | Result |
+|---|---|
+| 0 | 3196 passed, 174 deselected, 2 errors |
+| 1 | 4322 passed, 49 deselected |
+| 2 | 2849 passed, 238 deselected |
+| 3 | 4204 passed, 219 deselected |
+| 4 | 3649 passed, 13 skipped, 104 deselected |
+| 5 | 3778 passed, 256 deselected |
+| **Sum** | **21,998 passed, 0 failed, 2 errors** |
+
+The two errors are `tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks`
+and `::test_declared_synth_extra_is_seeded_and_loader_valid`, the lane's known
+errors on main. The release session measured 21,994 passed and 1 failed on
+main at `e8359685`; this run has that failure repaired and three new tests.

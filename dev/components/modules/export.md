@@ -245,7 +245,7 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 | --- | --- | --- | --- |
 | `OssieInputError` | class(ValueError) | 58 | The source cannot be exported with the selected policy. |
 | `OssieArtifacts` | class | 67 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 528 | Render the deterministic artifacts of one bounded, admitted model read. |
+| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 526 | Render the deterministic artifacts of one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -279,9 +279,9 @@ Read a physical binding and bind a model's roles to a delivered relational schem
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `BindingError` | class(ValueError) | 101 | A physical binding is refused. ``rule`` is one of :data:`RULE_ORDER`. |
-| `Binding` | class | 111 | A schema-valid binding document and the digest of the bytes it was read from. |
-| `read_binding(path) -> Binding` | function | 124 | Read and schema-check a binding. A missing file raises ``FileNotFoundError``. |
+| `BindingError` | class(ValueError) | 102 | A physical binding is refused. ``rule`` is one of :data:`RULE_ORDER`. |
+| `Binding` | class | 112 | A schema-valid binding document and the digest of the bytes it was read from. |
+| `read_binding(path) -> Binding` | function | 125 | Read and schema-check a binding. A missing file raises ``FileNotFoundError``. |
 | `sql_datatype(sql_type) -> str \| None` | function | 152 | The Ossie data type of an SQL type, or None when the type is outside the map. |
 | `normalize_role_name(name) -> str` | function | 188 | A role name for matching (OB4 D8): NFKC, casefolded, letters and digits only. |
 | `Bound` | class | 706 | What a binding gives the relational files: the schema, each field's type, and |

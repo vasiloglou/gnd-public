@@ -16,7 +16,7 @@ from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
 from ruamel.yaml.error import YAMLError
 
-from gnd.artifacts import canonical_json_bytes
+from gnd.artifacts import canonical_json_bytes, json_pointer
 from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
 from gnd.export.ossie_relational import (
     OntologyView,
@@ -36,7 +36,7 @@ from gnd.model import (
 from gnd.model._documents import ModelValueError
 from gnd.model._includes import guard_document
 from gnd.model_index import ModelIndex
-from gnd.rmap import RmapVariant, dispositions, map_model
+from gnd.rmap import RmapVariant, dispositions, is_confirmed_alethic, map_model
 from gnd.safefs import NotRegularFileError, open_regular
 from gnd.terms import guarded_clause_refusal, where_uses_membership
 from gnd.values import ModelIdentityError, model_identity
@@ -125,7 +125,7 @@ def _names(objects):
 
 
 def _pointers(*path) -> str:
-    return "".join("/" + str(part).replace("~", "~0").replace("/", "~1") for part in path)
+    return json_pointer(path)
 
 
 def _copy(target):
@@ -139,8 +139,7 @@ def _role_order(fact, role_types):
         if (
             constraint["type"] == "uniqueness"
             and constraint.get("scope", "internal") == "internal"
-            and constraint.get("modality") == "alethic"
-            and constraint.get("status") == "confirmed"
+            and is_confirmed_alethic(constraint)
         ):
             determinant_constraints[frozenset(ModelIndex.constraint_roles(constraint))].append(i)
     if len(roles) < 2:
@@ -203,8 +202,7 @@ def _add_references(objects, components, names, functional_links, constraints, m
         if (
             constraint.get("type") != "uniqueness"
             or constraint.get("scope") != "external"
-            or constraint.get("modality") != "alethic"
-            or constraint.get("status") != "confirmed"
+            or not is_confirmed_alethic(constraint)
         ):
             continue
         links = []

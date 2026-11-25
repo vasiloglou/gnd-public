@@ -1,0 +1,8 @@
+uv run python .gnd-planning/milestones/code-refactoring/evidence/close/pin-agreement.py   # main 99cf3df2; the helper goldens are unchanged since a390599c for these files
+ccbb68bd _rate: 2/2 goldens; observed values AGREE
+c4e1c0f8 sorted_set/_canonical: 2/2 goldens; observed values AGREE
+0f1cc1a7 safe coordinate: 2/2 goldens; observed values AGREE
+22614c42 object_types_by_id: 3/3 goldens; observed values AGREE
+c9b00e5d role object: 2/2 goldens; observed values AGREE
+3d106ff9 directory identity: structural golden only (artifacts.directory_identity was nested; owed to RF4): True
+73ae047d, 5153de62: pinned through tests/test_rf1_session_pins.py::test_session, not per site; no per-site agreement exists

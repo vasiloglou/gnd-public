@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/code-refactoring/018-close-candidate.md",
+    "sha256": "3ba5796b84093e329fc0b20c04d372caa74dadd066c6894b4856e38b57fc6dde",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "GND code-refactoring milestone close",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Judge whether the close candidate's five completion predicates, as read through the plan's close repairs CR1 to CR13, are established by the referenced phase records and close evidence, and whether any close repair changes a predicate's meaning rather than recording what the phase records already ruled.",
+      "Check the question sweep and its close dispositions, the before/after measurements at the three commits, the missed-target table and the separation of the owner's rulings from delegated phase rulings and advisory review.",
+      "Judge the two proposed owner decisions (C-D1 package-initializer cycles under predicate 2; C-D2 never-ruled helper candidate groups under predicate 3): is each proposal supported by the evidence, and what does the alternative cost.",
+      "Read the named close candidate first and consult directly relevant evidence only when needed to substantiate a concern. No builds, tests, publication commands, credentials or delegation."
+    ]
+  }
+}

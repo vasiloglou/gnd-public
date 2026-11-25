@@ -1,0 +1,50 @@
+RF1 pin expected values, across and after the code-refactoring milestone.
+
+Method: a file-level git diff of tests/fixtures/rf1-pins (the goldens, goldens.sha256,
+inventory.json, cases.json, README.md), excluding mutations.json, which holds the mutation
+rows' target locations and is retargeted when code moves. 5f56f5f6 is the RF1 capture after
+its review fixes; a390599c is the milestone's last phase commit (record 017); 99cf3df2 is main.
+
+1. Across the milestone:
+   git diff --stat 5f56f5f6 a390599c -- tests/fixtures/rf1-pins ':!tests/fixtures/rf1-pins/mutations.json'
+   (no output: no RF1 expected value changed)
+   The seven commits that touched tests/fixtures/rf1-pins in that range (RF2 to RF6b moves)
+   changed mutations.json only.
+
+2. RF7's restriction successors live outside the RF1 goldens:
+   tests/fixtures/rf7-restrictions/successors.json, read by tests/support/rf7_pins.py
+   ("Explicit RF7 restriction successors; all other RF1 goldens remain binding").
+   rows at a390599c: 19; rows at 99cf3df2: 19; commits touching it after a390599c: 0.
+
+3. After the milestone:
+   git diff --stat a390599c 99cf3df2 -- tests/fixtures/rf1-pins
+   84 files changed, 1861 insertions(+), 593 deletions(-), in 32 commits.
+   Commit subjects by prefix (git log --format=%s a390599c..99cf3df2 -- tests/fixtures/rf1-pins):
+      3 IK4
+      2 rof1
+      2 IL5
+      2 IL3
+      1 test: re-pin frozen goldens for role-scoped value messages
+      1 phase-RR1
+      1 phase-RN1
+      1 phase-PL12
+      1 WN2
+      1 TS2
+      1 TS1
+      1 NM2
+      1 Merge main into report-output-fidelity (PR 124) after RR1 and FU2-FU4
+      1 MG5
+      1 MG4
+      1 MG3
+      1 MG2
+      1 MG-close
+      1 IL5-Q3
+      1 IL4
+      1 IL2
+      1 IKE-Q3
+      1 IK5
+      1 IK3
+      1 CT4
+      1 CT3
+      1 CT2
+   This close does not review those commits; a green run on main is a regression check, not evidence for predicate 1.

@@ -1,0 +1,22 @@
+Owner statements behind the code-refactoring close, quoted whole, 2026-11-25.
+
+1. The request (planning session, after the list of milestones without a close record):
+   "check if those three old milestones are finished and close them"
+
+2. The close route, chosen from a question form (options: full close; close with one reviewer; leave open):
+   code-refactoring: "Full close (Recommended)"
+   analytics-m3-repairs: "Leave it open (Recommended)"
+   induction-skill: "Leave it open (Recommended)"
+
+3. The two readings proposed in notes/close-results.md, given while the close panel ran:
+   "go with your proposals for C-D1 and C-D2"
+   C-D1: predicate 2 holds on the RF0 graph; the seven package-initializer cycles are carried to a successor.
+   C-D2: the four never-ruled helper candidate groups are carried; none blocks the close.
+
+4. After candidate r2 (commit c16ec8cf), answers to a question form; each question stated the
+   facts, the proposal and the alternative (close-results.md, "Owner decisions"):
+   C-D2 (asked again; the earlier answer rested on the premise that pin agreement was unknown):
+     "Accept as residuals (Recommended)"
+   C-D4 (ratify the ten delegated re-targets and the RF5 re-plan): "Ratify them (Recommended)"
+   C-D5 (ratify RF7's merges as superseding RF-D11): "Ratify (Recommended)"
+   C-D3 and the close: "Accept and close (Recommended)"

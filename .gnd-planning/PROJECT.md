@@ -60,7 +60,7 @@ public manually, and PyPI, the release and announcements wait for an owner trigg
 gnd-public is now the only development repository; the source repository is to be
 archived. This section supersedes the paused and pending statements above.
 
-## code-refactoring — in progress, 2026-10-05
+## code-refactoring — closed, 2026-11-25
 
 A behavior-preserving restructuring of `src/gnd`
 ([plan](milestones/code-refactoring/notes/code-refactoring-plan.md)): pin
@@ -75,6 +75,11 @@ measurement tool, authority handoff) is recorded in
 surface RF2–RF8 move; 167 of 167 seeded mutations killed) is recorded in
 [006](milestones/code-refactoring/006-phase-RF1.md). **Next:** RF2, consolidating
 the identical helpers, run with `process-phase RF2 code-refactoring`.
+
+**Closed 2026-11-25** ([019](milestones/code-refactoring/019-milestone-close.md)): RF0 to RF9
+recorded; closed by the owner on candidate
+[018](milestones/code-refactoring/018-close-candidate.md) r2, with predicate 3 not met for five
+helper groups accepted as residuals. The text above is the status of 2026-10-05.
 
 ## pyrel-agent-loop — opened, 2026-10-14
 

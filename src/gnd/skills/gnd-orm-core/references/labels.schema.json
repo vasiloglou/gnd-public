@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/labels.schema.json",
+  "title": "GND label manifest (gnd-labels/1)",
+  "description": "Host-supplied labels for gnd measure --labels (IK3). Closed. Expected-state mode labels every model constraint in every population; class mode tags each population positive or negative and says which class each rule should fire on. Bounds are fixed by ruling IK3-D5; the 1 MiB byte cap is enforced by the reader before this schema runs.",
+  "type": "object",
+  "required": ["schema_version", "model_sha256", "mode", "populations"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "gnd-labels/1"},
+    "model_sha256": {"$ref": "#/$defs/sha256"},
+    "mode": {"enum": ["expected-state", "class"]},
+    "populations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {"$ref": "#/$defs/population"}
+    },
+    "rules": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1024,
+      "propertyNames": {"$ref": "#/$defs/ref"},
+      "additionalProperties": {
+        "type": "object",
+        "required": ["fires_on"],
+        "additionalProperties": false,
+        "properties": {"fires_on": {"$ref": "#/$defs/class"}}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"mode": {"const": "expected-state"}}, "required": ["mode"]},
+      "then": {
+        "not": {"required": ["rules"]},
+        "properties": {"populations": {"items": {"required": ["expectations"], "not": {"required": ["class"]}}}}
+      }
+    },
+    {
+      "if": {"properties": {"mode": {"const": "class"}}, "required": ["mode"]},
+      "then": {
+        "required": ["rules"],
+        "properties": {"populations": {"items": {"required": ["class"], "not": {"required": ["expectations"]}}}}
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "class": {"enum": ["positive", "negative"]},
+    "ref": {
+      "type": "string",
+      "maxLength": 256,
+      "pattern": "^(id:[^\\s]+|fact_types\\[[^\\]\\s]+\\]\\.constraints\\[(0|[1-9][0-9]{0,5})\\]|constraints\\[(0|[1-9][0-9]{0,5})\\])$"
+    },
+    "population": {
+      "type": "object",
+      "required": ["id", "path", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:#-]{0,63}$"},
+        "path": {
+          "type": "string",
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*)*$"
+        },
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "class": {"$ref": "#/$defs/class"},
+        "expectations": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {"$ref": "#/$defs/ref"},
+          "additionalProperties": {
+            "type": "object",
+            "required": ["ground_truth", "expected_verdict"],
+            "additionalProperties": false,
+            "properties": {
+              "ground_truth": {"enum": ["satisfied", "violated", "no-subjects"]},
+              "expected_verdict": {"enum": ["pass", "fail", "warning", "unchecked", "vacuous"]},
+              "reason": {"type": "string", "maxLength": 256}
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+IS1 red controls (spec section 5), recorded per test id. Each ran in a clean clone of the IS1 base 1e6083f3.
+
+Control 1: the pin edits of tests/test_packaged_skills.py, test_doctor_uninstall.py, test_public_packaged_invocation_guards.py, test_schema_sync.py and test_public_distribution.py over the pre-IS1 tree (no skill).
+$ uv run pytest -q -rf tests/test_packaged_skills.py tests/test_verification_fixes.py tests/test_install.py tests/test_doctor_uninstall.py tests/test_marketplace_plugins.py tests/test_development_scaffold.py tests/test_public_packaged_invocation_guards.py tests/test_schema_sync.py --tb=no
+FAILED tests/test_packaged_skills.py::test_skill_resource_tree_carries_every_file
+FAILED tests/test_packaged_skills.py::test_the_packaged_tree_holds_exactly_the_named_skills
+FAILED tests/test_packaged_skills.py::test_every_relative_skill_link_resolves_inside_the_resource_tree
+FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-induce->gnd-model-evolve]
+FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-orm-core->gnd-induce]
+FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-export->gnd-induce]
+FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-induce->gnd-export]
+FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-induce->gnd-judge-fact-types]
+FAILED tests/test_packaged_skills.py::test_gnd_orm_core_indexes_the_workflows_without_becoming_one
+FAILED tests/test_packaged_skills.py::test_no_route_promises_automatic_regeneration_or_applied_fixes
+FAILED tests/test_packaged_skills.py::test_every_workflow_skill_routes_to_the_record_contract[gnd-induce]
+FAILED tests/test_verification_fixes.py::test_f01_a_run_that_placed_nothing_and_owns_nothing_writes_no_receipt
+FAILED tests/test_verification_fixes.py::test_f01_doctor_does_not_date_and_version_a_root_gnd_never_wrote
+FAILED tests/test_verification_fixes.py::test_f01_a_forced_run_over_the_same_root_still_writes_its_receipt
+FAILED tests/test_verification_fixes.py::test_f01_two_targets_aliasing_one_directory_leave_a_receipt_owning_the_files
+FAILED tests/test_verification_fixes.py::test_f01_the_aliased_install_is_fully_removable_by_uninstall
+FAILED tests/test_install.py::test_iter_skill_files_yields_every_packaged_file
+FAILED tests/test_install.py::test_plan_against_an_empty_target_yields_create_for_every_file
+FAILED tests/test_install.py::test_apply_into_an_empty_root_writes_every_file_and_one_manifest
+FAILED tests/test_install.py::test_install_places_both_runtimes_at_project_scope
+FAILED tests/test_install.py::test_install_adversarial_case[zero-write-second-run]
+FAILED tests/test_install.py::test_a_clean_install_places_every_skill_through_one_generic_path
+FAILED tests/test_doctor_uninstall.py::test_diagnose_reports_every_placed_file_current_after_a_fresh_install
+FAILED tests/test_doctor_uninstall.py::test_remove_deletes_every_hash_matching_file_and_prunes
+FAILED tests/test_doctor_uninstall.py::test_remove_unlinks_a_symlink_install_without_following_it
+FAILED tests/test_doctor_uninstall.py::test_the_repository_carries_exactly_the_pinned_link_targets
+FAILED tests/test_doctor_uninstall.py::test_the_repository_links_reach_a_real_skill_md
+FAILED tests/test_doctor_uninstall.py::test_a_development_install_reproduces_the_repository_link_targets
+FAILED tests/test_doctor_uninstall.py::test_the_repository_install_receipts_are_not_tracked_by_git
+FAILED tests/test_doctor_uninstall.py::test_remove_adversarial_case[symlink-uninstall-never-follows]
+FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.claude/skills]
+FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.codex/skills]
+FAILED tests/test_doctor_uninstall.py::test_the_pinned_link_map_cannot_lag_the_packaged_tree
+FAILED tests/test_doctor_uninstall.py::test_every_discovery_link_is_tracked_at_symlink_mode
+FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[retargeted-to-another-real-skill]
+FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[replaced-by-a-real-directory-of-identical-bytes]
+FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[receipt-disagrees-with-the-placed-link]
+FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[link-dropped-entirely]
+FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[bytes-behind-the-link-substituted]
+FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[a-file-behind-the-link-removed]
+FAILED tests/test_doctor_uninstall.py::test_the_installer_refuses_to_adopt_an_unmanaged_directory_at_a_gnd_owned_name
+FAILED tests/test_doctor_uninstall.py::test_uninstall_removes_owned_links_and_leaves_a_foreign_sibling_intact
+FAILED tests/test_marketplace_plugins.py::test_marketplaces_use_complete_canonical_skills
+FAILED tests/test_marketplace_plugins.py::test_broken_plugin_bundle_refused[outside_root]
+FAILED tests/test_marketplace_plugins.py::test_broken_plugin_bundle_refused[missing_reference]
+FAILED tests/test_marketplace_plugins.py::test_broken_plugin_bundle_refused[version]
+FAILED tests/test_development_scaffold.py::test_twins_modes_and_generated_links
+FAILED tests/test_public_packaged_invocation_guards.py::test_every_skill_that_documents_commands_still_contributes_snippets
+FAILED tests/test_schema_sync.py::test_type_schema_copies_are_byte_identical_to_the_runtime_files[labels.schema.json]
+49 failed, 557 passed, 1 deselected in 77.88s (0:01:17)
+
+Note: tests/test_packaged_skills.py::test_every_relative_skill_link_resolves_inside_the_resource_tree is also red on the unedited base (IS1 finding F1, the unpinned SI1 edge); its control-1 red is not evidence of IS1's edges alone.
+
+Control 2: the whole IS1 change except the AGENTS.md row and the docs/agents/index.md row.
+$ uv run pytest -q -rf tests/test_public_agents_skill_table.py tests/test_induce_skill.py --tb=no
+FAILED tests/test_public_agents_skill_table.py::test_agents_md_table_names_every_packaged_skill
+FAILED tests/test_induce_skill.py::test_t17_the_agents_index_has_a_gnd_induce_row
+2 failed, 28 passed in 4.66s
+
+Control 1, T16 (the D20 distribution lane), added after review round 1 (finding F12): the same pin edits over the pre-IS1 tree.
+$ uv run pytest -q -p no:randomly -rf -m distribution tests/test_public_built_inventory.py --tb=no
+FAILED tests/test_public_built_inventory.py::test_the_wheel_carries_exactly_the_pinned_skill_file_set
+FAILED tests/test_public_built_inventory.py::test_the_sdist_carries_exactly_the_pinned_skill_file_set
+FAILED tests/test_public_built_inventory.py::test_the_source_tree_carries_exactly_the_pinned_skill_file_set
+FAILED tests/test_public_built_inventory.py::test_wheel_carries_every_skill_file
+FAILED tests/test_public_built_inventory.py::test_sdist_carries_every_skill_file
+FAILED tests/test_public_built_inventory.py::test_source_tree_count_matches_the_expected_constant
+FAILED tests/test_public_built_inventory.py::test_public_built_surfaces_agree_with_current_inventory
+7 failed, 10 passed in 3.15s
+
+Commit order (F12): a7b2f24b pins; 86961531 the skill and tests/test_induce_skill.py without the two docs rows (control 2 is this tree); 983a23b0 the rows.

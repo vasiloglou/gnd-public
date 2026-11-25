@@ -48,5 +48,13 @@ Plan review:
 Open at gates: the IS1 base commit (also the D8 pin) and checkpoint C0 at the
 IS1 gate; D11 (recordings) at the IS2 gate.
 
-Next action: the owner's gate on IS1 spec r4 (D21 to D23), then an explicit
-`process-phase IS1 induction-skill` selection.
+**IS1 done, 2026-11-25** ([record 002](002-phase-IS1.md)): `gnd-induce` ships
+with its routes and pins, under `process-milestone induction-skill auto=true`.
+The IS1 spec r4 was approved by delegated ruling; checkpoint C0 was shown to
+the owner ("Keep them apart"). One reviewer (Codex), two rounds; eight
+test-strength residuals carried (IS1-Q2).
+
+**IS2:** the owner approved D11, the paid recordings, on 2026-11-25
+([receipt](evidence/IS2/owner-statements.txt)). Next action: the IS2 spec, its
+recording gate record with a run bound and cost ceiling, then the recordings
+and Fable's tutorial rewrite.

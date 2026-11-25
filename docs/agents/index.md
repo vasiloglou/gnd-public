@@ -41,6 +41,7 @@ locally on DuckDB; Snowflake execution is not yet supported by gnd export.
 | Render a document from facts | `gnd-render-doc` | `document.md` + manifest | `gnd doccheck` | 0 obligations met |
 | Judge whether induced fact types duplicate existing ones | `gnd-judge-fact-types` | `duplicates` judgements file | `gnd discover --duplicate-judgements`, `gnd evolve preview` | 3 a refused verdict |
 | Model multi-valued induced attributes | `gnd-model-multivalued` | `shapes` judgements file | `gnd discover --shape-judgements`, `gnd evolve preview` | 3 a refused verdict |
+| Score rules against labels, discover rules, round-trip a learner or miner, re-check | `gnd-induce` | evolve proposals, measure and discover reports | `gnd measure --labels`, `gnd discover`, `gnd export ilp`, `gnd import ilp-rules`, `gnd import mined-rules`, `gnd check` | 3 a named refusal |
 | Export to Soufflé or Lean, or build a witness | `gnd-export` | export bundle, witness certificate | `gnd export … -verify`, `gnd replay` | 0 replayed |
 | Get an independent multi-model review | `gnd-review-panel`, `gnd-review-panel-light` | `review-request.json`, `synthesis.json` | `gnd review panel`, `finalize` | 16 below quorum |
 | Walk the whole loop, station by station | `gnd-solve` | station records | `gnd solve` | 17 walk halted |

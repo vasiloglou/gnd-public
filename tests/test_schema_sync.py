@@ -16,9 +16,10 @@ to cover a contract no model or population author ever writes. Its own
 round-trip guard lives in ``tests/test_report_json.py``, which validates real
 payloads against it on every exit path.
 
-The second exception: the two type schemas (TS3) are canonical at the runtime
-``src/gnd/`` files and vendored into the gnd-orm-core references, the reverse
-of SCHEMA_PAIRS; their own case is at the end of this file.
+The second exception: the two type schemas (TS3) and the label manifest schema
+(induction-skill IS1, D3) are canonical at the runtime ``src/gnd/`` files and
+vendored into the gnd-orm-core references, the reverse of SCHEMA_PAIRS; their
+own case is at the end of this file.
 """
 
 
@@ -74,7 +75,8 @@ def test_witness_schema_twins_are_byte_identical() -> None:
 #: TS3 (spec D5): the two type schemas run the other way. gnd discover owns
 #: src/gnd/type-evidence.schema.json and src/gnd/type-judgements.schema.json;
 #: the gnd-orm-core copies are read-only, regenerated from the runtime files.
-TYPE_SCHEMAS = ["type-evidence.schema.json", "type-judgements.schema.json"]
+#: induction-skill IS1 (D3): gnd measure owns src/gnd/labels.schema.json the same way.
+TYPE_SCHEMAS = ["type-evidence.schema.json", "type-judgements.schema.json", "labels.schema.json"]
 
 
 @pytest.mark.parametrize("filename", TYPE_SCHEMAS)

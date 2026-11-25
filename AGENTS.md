@@ -47,6 +47,7 @@ stated scope; handoffs between skills require an explicit user selection.
 | gnd-dev-session | [gnd-dev-session](src/gnd/skills/gnd-dev-session/SKILL.md) |
 | gnd-export | [gnd-export](src/gnd/skills/gnd-export/SKILL.md) |
 | gnd-extract | [gnd-extract](src/gnd/skills/gnd-extract/SKILL.md) |
+| gnd-induce | [gnd-induce](src/gnd/skills/gnd-induce/SKILL.md) |
 | gnd-judge-fact-types | [gnd-judge-fact-types](src/gnd/skills/gnd-judge-fact-types/SKILL.md) |
 | gnd-model-evolve | [gnd-model-evolve](src/gnd/skills/gnd-model-evolve/SKILL.md) |
 | gnd-model-from-code | [gnd-model-from-code](src/gnd/skills/gnd-model-from-code/SKILL.md) |

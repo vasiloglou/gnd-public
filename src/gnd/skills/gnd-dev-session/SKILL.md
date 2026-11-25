@@ -229,7 +229,7 @@ agent under test and your own improvisation:
   per-constraint rates; set `min_facts` from what the corpus actually
   exercises, not from intuition. Against a host's own labelled populations,
   `uv run gnd measure MODEL --labels MANIFEST` reports each rule's agreement
-  with those labels instead.
+  with those labels instead. To act on those labels, see [gnd-induce](../gnd-induce/SKILL.md).
 - **Corpus to contract:** a selected corpus artifact enters a case either as
   a digest-bound input blob or, through `author-expectation`, as an expected
   output. The contract binds bytes, so a regenerated corpus is a new contract

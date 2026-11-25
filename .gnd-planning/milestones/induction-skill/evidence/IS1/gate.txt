@@ -1,0 +1,36 @@
+IS1 gate, run 2026-11-25 in a clean clone of 1e6083f3 with the IS1 files applied (Python 3.14, macOS). The first run had the new files untracked; the rerun has them staged, as committed. Local paths are replaced by <clone>; nothing else is edited.
+$ uv run pytest -q -p no:randomly <spec gate files>
+FAILED tests/test_doctor_uninstall.py::test_the_repository_install_receipts_are_not_tracked_by_git
+FAILED tests/test_doctor_uninstall.py::test_every_discovery_link_is_tracked_at_symlink_mode
+2 failed, 953 passed, 1 deselected in 141.73s (0:02:21)
+$ project structure guards
+FAILED tests/test_doctor_uninstall.py::test_every_discovery_link_is_tracked_at_symlink_mode
+2 failed, 870 passed, 2 deselected in 135.46s (0:02:15)
+$ uv run ruff check
+
+Found 1 error.
+$ uv run ruff check
+All checks passed!
+$ uv run pytest -q tests/test_induce_skill.py tests/test_doctor_uninstall.py (files staged)
+109 passed in 18.56s
+$ uv run --group docs zensical build --strict
+No issues found
+Build finished in 1.10s
+$ uv run python tools/check_docs.py site
+19545 local links/assets/anchors checked
+exit 0
+$ uv run gnd install --symlink --project --force
+exit 0
+$ uv run gnd doctor --project
+  installed (symlink mode, get-nick-done 0.5.2, placed 2026-11-25T22:34:21Z): current=19
+  note: <clone>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+exit 0
+
+=== rerun with the IS1 files staged (as they will be committed) ===
+$ uv run pytest -q -p no:randomly <spec gate files>
+955 passed, 1 deselected in 77.06s (0:01:17)
+$ uv run pytest -q <project structure guards>
+872 passed, 2 deselected in 145.43s (0:02:25)
+$ uv run pytest -q -p no:randomly -m distribution tests/test_public_built_inventory.py   # D20 (o), owner-selected lane
+.................                                                        [100%]
+17 passed in 13.29s

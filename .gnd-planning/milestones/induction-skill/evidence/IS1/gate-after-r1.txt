@@ -1,0 +1,20 @@
+IS1 gate after review round 1's repairs, run 2026-11-25 in a clean clone at the commit below (macOS, Python 3.14).
+2eb6478d757f99a5043c9d25dc9dd1064621172e
+$ uv run pytest -q -p no:randomly <spec gate files>
+983 passed, 1 deselected in 394.04s (0:06:34)
+$ uv run pytest -q <project structure guards, project.md>
+872 passed, 2 deselected in 239.68s (0:03:59)
+$ uv run ruff check
+All checks passed!
+$ uv run --group docs zensical build --strict
+No issues found
+Build finished in 1.13s
+$ uv run python tools/check_docs.py site
+19545 local links/assets/anchors checked
+exit 0
+$ uv run gnd install --symlink --project --force
+exit 0
+$ uv run gnd doctor --project
+exit 0
+$ uv run pytest -q -p no:randomly -m distribution tests/test_public_built_inventory.py   # D20 (o)
+17 passed in 98.95s (0:01:38)

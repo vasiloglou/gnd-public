@@ -1,0 +1,13 @@
+Owner statements for IS2 of induction-skill, quoted whole.
+
+1. 2026-11-25, in the planning session, while IS1's record was being written,
+   after being told that IS2's recordings (plan D11) are paid runs that auto=true
+   does not cover and need the owner's word on the model, run count and cost ceiling:
+   "approved D11"
+
+Read as: the owner approves D11, the recordings, as the plan proposes them
+(plan section 10: "precedent: Claude Code with Haiku, one run per conversation;
+Claude Code's own login, no environment import; the IS gate record with declared
+turns, a run bound and a cost ceiling; paid"). The concrete run bound and cost
+ceiling are declared in the IS2 recording gate record (plan section 3) before any
+paid run. That reading is the author's.

@@ -73,7 +73,7 @@ SAMPLE_FILE = "gnd-orm-core/SKILL.md"
 #: Twenty-four became twenty-six in milestone v1.2 with gnd-new-project, the
 #: `.gnd-planning/` scaffold, and twenty-six became twenty-eight in milestone
 #: v2.0 phase 6a with gnd-adopt, the GSD migration skill. type-induction-skills
-#: TS3 adds gnd-judge-fact-types and TS4 gnd-model-multivalued (two more links each).
+#: TS3 adds gnd-judge-fact-types, TS4 gnd-model-multivalued and induction-skill IS1 gnd-induce (two more links each).
 REPOSITORY_LINK_TARGETS: dict[str, str] = {
     ".claude/skills/gnd-export": "../../src/gnd/skills/gnd-export",
     ".codex/skills/gnd-export": "../../src/gnd/skills/gnd-export",
@@ -84,6 +84,7 @@ REPOSITORY_LINK_TARGETS: dict[str, str] = {
     ".claude/skills/gnd-extract": "../../src/gnd/skills/gnd-extract",
     ".claude/skills/gnd-judge-fact-types": "../../src/gnd/skills/gnd-judge-fact-types",
     ".claude/skills/gnd-model-multivalued": "../../src/gnd/skills/gnd-model-multivalued",
+    ".claude/skills/gnd-induce": "../../src/gnd/skills/gnd-induce",
     ".claude/skills/gnd-model-evolve": "../../src/gnd/skills/gnd-model-evolve",
     ".claude/skills/gnd-model-from-code": "../../src/gnd/skills/gnd-model-from-code",
     ".claude/skills/gnd-new-project": "../../src/gnd/skills/gnd-new-project",
@@ -101,6 +102,7 @@ REPOSITORY_LINK_TARGETS: dict[str, str] = {
     ".codex/skills/gnd-extract": "../../src/gnd/skills/gnd-extract",
     ".codex/skills/gnd-judge-fact-types": "../../src/gnd/skills/gnd-judge-fact-types",
     ".codex/skills/gnd-model-multivalued": "../../src/gnd/skills/gnd-model-multivalued",
+    ".codex/skills/gnd-induce": "../../src/gnd/skills/gnd-induce",
     ".codex/skills/gnd-model-evolve": "../../src/gnd/skills/gnd-model-evolve",
     ".codex/skills/gnd-model-from-code": "../../src/gnd/skills/gnd-model-from-code",
     ".codex/skills/gnd-new-project": "../../src/gnd/skills/gnd-new-project",

@@ -1,0 +1,35 @@
+Review round 1 repairs: the failing-first runs and the mutation re-runs (2026-11-25).
+
+1. The repaired tests over the unrepaired skill text (commit 983a23b0's skill), before the text fix:
+$ uv run pytest -q -rf tests/test_induce_skill.py --tb=no
+FAILED tests/test_induce_skill.py::test_t8_the_handoff_is_conditional_on_a_written_proposal
+FAILED tests/test_induce_skill.py::test_t8_the_handoff_names_the_proposal_inducer_not_a_run_record_field
+FAILED tests/test_induce_skill.py::test_t8_the_llm_learner_is_named_and_the_skill_stops
+FAILED tests/test_induce_skill.py::test_t8_discovery_hands_off_by_the_written_file_not_by_emitted
+FAILED tests/test_induce_skill.py::test_t8_the_miner_import_is_all_or_nothing
+FAILED tests/test_induce_skill.py::test_t8_a_learner_needs_a_class_mode_manifest_and_falls_back_to_neutral
+FAILED tests/test_induce_skill.py::test_t8_the_description_and_summary_claim_only_what_gnd_writes
+7 failed, 50 passed in 6.21s
+
+2. Each reviewer mutation, applied to the repaired skill or index and run against the repaired tests. CAUGHT means the tests fail on the mutation. F10's trailing-space heading is the one mutation that must pass: the finding was that a valid heading broke the section reader.
+$ uv run python .gnd-planning/milestones/induction-skill/evidence/IS1/review-r1-mutations.py <the repaired SKILL.md>
+CAUGHT  F6 swap the two judge links: 2 failed, 55 passed in 10.44s
+CAUGHT  F7 R-e a second time in the same file: 3 failed, 54 passed in 7.60s
+CAUGHT  F7 R-c hidden in an HTML comment: 1 failed, 56 passed in 7.25s
+CAUGHT  F8 LLM route reversed: 1 failed, 56 passed in 7.35s
+CAUGHT  F8 handoff condition negated: 1 failed, 56 passed in 9.73s
+CAUGHT  F8 exit-11 row deleted: 1 failed, 56 passed in 8.56s
+CAUGHT  F9 mined-rules line replaced by a second check: 1 failed, 56 passed in 9.01s
+CAUGHT  F9 --families shortened to --fam: 1 failed, 56 passed in 9.42s
+MISSED  F10 trailing spaces on the Learn heading: 57 passed in 17.95s
+CAUGHT  F11 fixed actor: 1 failed, 56 passed in 15.70s
+CAUGHT  F11 git var for the actor: 1 failed, 56 passed in 13.20s
+CAUGHT  F11 pip3 install: 1 failed, 56 passed in 14.52s
+CAUGHT  F11 /srv path: 1 failed, 56 passed in 15.29s
+CAUGHT  F10 index row moved into a fence: 1 failed, 56 passed in 12.73s
+CAUGHT  F10 index command gnd check -> gnd checker: 1 failed, 56 passed in 15.54s
+
+Defect in the runner above (review round 2, finding F11): run() writes the supplied baseline,
+not the file's current bytes, back over the target, and labels any failing pytest summary
+CAUGHT, including a failure unrelated to the mutation. The outcomes listed above were
+reproduced independently by the round-2 reviewer; the script does not enforce them on a rerun.

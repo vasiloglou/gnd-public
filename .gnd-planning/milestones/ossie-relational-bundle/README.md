@@ -25,4 +25,4 @@ itself reviewed.
 | OB4 | `--physical-binding FILE` | **merged** (PR #272): ([record](015-phase-OB4.md)); one review round; both added rules accepted ([gate](016-OB4-departures-gate.md)) |
 | OB5 | Docs and skill | **merged** (PR #273): [record](020-phase-OB5.md); the oracle lane ran and its finding is repaired ([gate](019-OB5-quoting-gate.md)); one review round |
 
-**Next action:** the owner's close ruling. The [close record](021-milestone-close.md) is written except for it; the light panel ran and its concerns are [dispositioned](evidence/close-review/disposition.md). Then: the reporter message and the three issues ([drafts](notes/D10-drafts.md)), each confirmed by the owner first, and the note to the 0.5.0 release session once this merges.
+**Next action:** the owner's explicit close ruling. The [close record](021-milestone-close.md), the close review and its repairs are merged on the owner's word (PR 274). Then: the reporter message and the three issues ([drafts](notes/D10-drafts.md)), each confirmed by the owner first.

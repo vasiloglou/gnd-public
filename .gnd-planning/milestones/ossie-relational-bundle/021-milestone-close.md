@@ -34,9 +34,9 @@ gates:
   - command: "ruling: owner requested the oracle lane on the final code (yes, 2026-11-25); GND_OSSIE_ORACLE_ROOT=<scratch> uv run pytest -q -m ossie_oracle tests/test_ossie_external_oracle.py -k 'not consumer'"
     exit: 0
     output: "91 passed, 1 deselected in 64.80s (0:01:04)"
-  - command: "ruling: the owner's close ruling"
+  - command: "ruling: owner directed the merge of PR 274 (merge, 2026-11-25), in answer to: Do you rule the milestone closed and want PR 274 merged, or not yet?"
     exit: "n/a -- ruling"
-    note: "NOT YET GIVEN. This record is complete except for it."
+    note: "The answer names the merge. It is recorded as the merge decision, which is the owner's acceptance of the PR under AGENTS.md. Whether it also rules the milestone closed is not inferred; see Close ruling."
 slow_cadence:
   command: "GND_OSSIE_ORACLE_ROOT=<scratch> uv run pytest -q -m ossie_oracle tests/test_ossie_external_oracle.py -k 'not consumer'"
   trigger: "explicit owner request"
@@ -83,9 +83,24 @@ evidence:
 
 ## Close ruling
 
-**Not yet given.** The owner selected the close review instrument and
-accepted OB5-Q1 ("go with your recs", 2026-11-25). The owner has not yet
-ruled the close itself. Everything below is what that ruling would be over.
+**The owner directed the merge; an explicit close ruling is not recorded.**
+
+- The owner selected the close review instrument and accepted OB5-Q1 ("go
+  with your recs", 2026-11-25).
+- The owner requested the oracle lane on the final code ("yes").
+- The owner asked for the pull request and an independent review of it
+  ("open a PR and then run review pr"). Codex approved it with one wording
+  finding, fixed on the owner's word
+  ([round](notes/reviews/pr-274-r1/FINDINGS.md)).
+- Asked "Do you rule the milestone closed and want PR 274 merged, or not
+  yet?", the owner answered:
+
+  > merge
+
+The answer names the merge only. Under AGENTS.md the owner's merge decision
+is the acceptance of the pull request. This record does not read it as more:
+the milestone's work and records are merged, and the sentence "the owner
+ruled the milestone closed" waits for the owner to say so.
 
 ## Phases
 

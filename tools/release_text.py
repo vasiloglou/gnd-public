@@ -209,6 +209,16 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
     older = [v for v in released if v != declared]
     problems = []
     used = set()
+    relative = ""
+
+    def judge(text: str) -> None:
+        """Report TEXT as stale unless a standing entry covers it."""
+        entry = _standing(relative, text)
+        if entry is None:
+            problems.append(f"stale: {relative}: {text.strip()}")
+        else:
+            used.add(entry)
+
     for relative in page_files(root):
         try:
             text = (root / relative).read_text(encoding="utf-8")
@@ -218,22 +228,24 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
             # The generated paragraph names every published version; it is compared whole.
             text = "\n\n".join("" if p.startswith(COMPATIBILITY_START) else p for p in _paragraphs(text))
         for paragraph in _paragraphs(text):
-            lines = paragraph.splitlines()
-            reported = False
+            # Markdown reads a run of spaces or tabs, and a line break inside a paragraph, as one
+            # space. A phrase is looked for in each line with its whitespace collapsed, and a
+            # phrase that a line break splits is judged on the lines it spans, joined. A standing
+            # entry is still matched against the line as written.
+            written = [line for line in paragraph.splitlines() if line.strip()]
+            lines = [" ".join(line.split()) for line in written]
+            for line, collapsed in zip(written, lines):
+                if STALE.search(collapsed) or any(_mentions(line, v) for v in older):
+                    judge(line)
+            starts, joined = [], ""
             for line in lines:
-                if not (STALE.search(line) or any(_mentions(line, v) for v in older)):
-                    continue
-                entry = _standing(relative, line)
-                if entry is None:
-                    problems.append(f"stale: {relative}: {line.strip()}")
-                    reported = True
-                else:
-                    used.add(entry)
-            # Prose wraps: a phrase split over a line break is in no single line. The paragraph is
-            # read again as one line, with every line already judged above left out of the count.
-            joined = " ".join(line.strip() for line in lines)
-            if not reported and len(STALE.findall(joined)) > sum(len(STALE.findall(line)) for line in lines):
-                problems.append(f"stale: {relative}: {joined}")
+                starts.append(len(joined) + (1 if joined else 0))
+                joined = f"{joined} {line}" if joined else line
+            for match in STALE.finditer(joined):
+                first = max(i for i, start in enumerate(starts) if start <= match.start())
+                last = max(i for i, start in enumerate(starts) if start < match.end())
+                if first != last:
+                    judge(" ".join(lines[first:last + 1]))
     for index, (name, pattern) in enumerate(STANDING):
         if name is not None and index not in used:
             problems.append(f"standing entry matches no line: {name}: {pattern}")

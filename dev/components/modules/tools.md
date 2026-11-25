@@ -509,13 +509,13 @@ Publication-day text: move the pages from "prepared" to "published", and check t
 | `support_row(declared, built, profile) -> str` | function | 177 | (no docstring) |
 | `page_files(root) -> list[str]` | function | 197 | README.md and every text file under docs/, except the release notes. |
 | `stale_lines(root, declared, released) -> list[str]` | function | 207 | Lines that name an older version or use prepared-state wording and are not standing. |
-| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 243 | (no docstring) |
-| `presence_problems(root, declared) -> list[str]` | function | 268 | The pins, the links and the support row name the declared version. |
-| `tag_problems(root, declared, released) -> list[str]` | function | 296 | A tag-only version: newer than every published one, with its own notes heading and install command. |
-| `subject_version(root) -> str \| None` | function | 315 | The version the pages are held to: the declared one, or the latest published one while |
-| `problems(root) -> list[str]` | function | 325 | Everything that still describes the state before the declared version was published. |
-| `publish(root, *, date, built, profile) -> list[str]` | function | 342 | Make the publication-day edits for the declared version. Return the files changed. |
-| `main(argv) -> int` | function | 419 | (no docstring) |
+| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 255 | (no docstring) |
+| `presence_problems(root, declared) -> list[str]` | function | 280 | The pins, the links and the support row name the declared version. |
+| `tag_problems(root, declared, released) -> list[str]` | function | 308 | A tag-only version: newer than every published one, with its own notes heading and install command. |
+| `subject_version(root) -> str \| None` | function | 327 | The version the pages are held to: the declared one, or the latest published one while |
+| `problems(root) -> list[str]` | function | 337 | Everything that still describes the state before the declared version was published. |
+| `publish(root, *, date, built, profile) -> list[str]` | function | 354 | Make the publication-day edits for the declared version. Return the files changed. |
+| `main(argv) -> int` | function | 431 | (no docstring) |
 
 ## tools.render_replay — `tools/render_replay.py`
 Components: unassigned

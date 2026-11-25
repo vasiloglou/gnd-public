@@ -101,30 +101,44 @@ announced.
    the version is still free:
 
    ```sh
+   (
+   set -e
    cd ~/gnd-release/0.5.0/85d076ba/candidate
    shasum -a 256 -c SHA256SUMS
    test "$(cat SOURCE_COMMIT)" = 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
-   curl -sS -o /dev/null -w '%{http_code}\n' https://pypi.org/pypi/get-nick-done/0.5.0/json
+   test "$(curl -sS -o /dev/null -w '%{http_code}' https://pypi.org/pypi/get-nick-done/0.5.0/json)" = 404
+   echo 'The retained files verify and 0.5.0 is free.'
+   )
    ```
 
-   Expected: three `OK` lines and `404`. Also check that main has not changed
-   a shipped file since the candidate:
+   Expected: three `OK` lines and the last line. Then, from a checkout of
+   the repository (the retained folder is not one), check that main has not
+   changed a shipped file since the candidate:
 
    ```sh
+   (
+   set -e
+   cd "$(git rev-parse --show-toplevel)"
    git fetch origin main
-   git diff --stat 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7 origin/main -- src PYPI.md pyproject.toml LICENSE NOTICE
+   git diff --exit-code --stat 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7 origin/main -- src PYPI.md pyproject.toml LICENSE NOTICE
+   echo 'Main has not changed a shipped file since the candidate.'
+   )
    ```
 
-   Expected: no output. If it prints a file, the candidate is stale: stop,
-   and RW2 builds a new one.
+   Expected: the last line and nothing before it. If it lists a file, the
+   candidate is stale: stop, and RW2 builds a new one.
 
 2. **Upload** the wheel and the sdist with the owner's PyPI token. The token
    is the owner's; it is typed by the owner and is not given to an agent.
    Receipt: the upload output with its date.
 
    ```sh
+   (
+   set -e
    cd ~/gnd-release/0.5.0/85d076ba/candidate
+   shasum -a 256 -c SHA256SUMS
    uvx twine upload release/get_nick_done-0.5.0-py3-none-any.whl release/get_nick_done-0.5.0.tar.gz
+   )
    ```
 
 3. **Compare the served files and install from the index.** These are the
@@ -134,6 +148,8 @@ announced.
    the incident procedure of `docs/releasing.md` applies.
 
    ```sh
+   (
+   set -e
    cd ~/gnd-release/0.5.0/85d076ba
    python3 - <<'PYTHON'
    import hashlib, json, pathlib, urllib.request
@@ -161,7 +177,11 @@ announced.
        assert result['exit_code'] == expected, result
    print('Fresh PyPI install rejected the invalid plan and accepted its repair.')
    PYTHON
+   )
    ```
+
+   The block stops at the first command that fails, and its exit status is
+   that failure's.
 
 4. **Tag** the accepted source, from a repository checkout. Receipt: the
    peeled remote ref.

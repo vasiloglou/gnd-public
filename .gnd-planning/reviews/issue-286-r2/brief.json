@@ -1,0 +1,72 @@
+{
+  "base": "a8059adc",
+  "claims": [
+    "No authored term syntax can be placed under a key named description in a model document, so stopping the walk there hides no term the temporal rules should see.",
+    "Outside descriptions, provenance, source and rejected proposals, every map keyed by bind or head and every list keyed by sample_population is a role-keyed container in the model schema, wherever it occurs.",
+    "The new notes bullet states exactly the behaviour change of the description rule."
+  ],
+  "created": "2026-11-25T18:30:31.660417+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/reviews/issue-286-r2/diff.patch",
+      "sha256": "005f1c0c56e949af511a19e0bfdbed4ded31c9b1e74e232b9d0ea0dc379216a1"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/BRIEF.md",
+      "sha256": "3ea6accf1d0206dc9a87c382c395149080392856c597ff9312d834ab4b404609"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/FINDINGS.md",
+      "sha256": "7ca0f3acffb69e09d5af5ffdb81ac9a0b6ad2848eb393453af2c80b3ce2339b2"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/brief.json",
+      "sha256": "bd83d1087cd051c67a19fc007826690902d8a5dcf6acb1783ed191ef174f847a"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/diff.patch",
+      "sha256": "68b9342072c0413f08875da521651414f7af7b2dc9539f3a75567e03e3d9ac0a"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/review.md",
+      "sha256": "823559ede4d1127e29308d2facb5a110b65960eee1fb99bc7d2fcf7023f5de61"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/run.json",
+      "sha256": "e225334b0ed3085ffbb260687266a941b88f06e72b7c956d174cc42cc2f3d958"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "f9bf45397a513f9501bc0664b80b2e0c1fbc7b33551cd7a807f643e9827038c6"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "57e1d1877cad11358558bb569f7faf352a47a013dfc720c902eb4226b45ed529"
+    },
+    {
+      "path": "src/gnd/terms.py",
+      "sha256": "4f7ebf46e69ebadf72d9080820881c9ae2ff926572d5b25127ac99a4ff4384f2"
+    },
+    {
+      "path": "tests/test_issue_286_role_keyed_maps.py",
+      "sha256": "a71705e9898da94ef6f72355b0f3354a84bc77dfbca805bec2ad20db2512382c"
+    },
+    {
+      "path": "src/gnd/schema/orm-meta.schema.json",
+      "sha256": "0cab9e99afbc048afe328d57009062bb46932d8790688f3e4a8f27e75ef0cc62"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "594ec58970647df4abeca920579f2088b671fdd65f0ee473354c1ebd204ca92a"
+    }
+  ],
+  "head": "79b3cc35711358ea875791cc081d81e58747cbca",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Round 1 found that role-map detection matched keys inside an object type's description. Does stopping the temporal walk at description fix that without hiding authored syntax, and is any other place in a model document still open to the same confusion?",
+  "subject": "phase",
+  "version": 1
+}

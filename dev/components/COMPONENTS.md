@@ -2845,8 +2845,9 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - modules: src/gnd/terms.py
 - uses: infra.errors, semantics.snapshot_ir
 - used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +23 more (graph.md)
-- tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py
+- tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py, tests/test_issue_286_role_keyed_maps.py
 - notes: Includes the guarded operand evaluator adapter and temporal syntax detection used to refuse unsupported consumers.
+- reread: 2026-11-25, beside src/gnd/terms.py after the issue 286 change to temporal_nodes (role-keyed maps decided by their holding key); still accurate.
 
 
 ### check.universe

@@ -1240,29 +1240,29 @@ Closed exact scalar-term language shared by derivations and guarded rules.
 | --- | --- | --- | --- |
 | `valid_duration(value) -> bool` | function | 56 | (no docstring) |
 | `valid_date(value) -> bool` | function | 62 | (no docstring) |
-| `temporal_nodes(value)` | function | 72 | Iterate authored syntax without descending into provenance or archived proposals. |
-| `is_temporal_node(node) -> bool` | function | 90 | (no docstring) |
-| `uses_temporal(model) -> bool` | function | 96 | (no docstring) |
-| `require_non_temporal(model, consumer) -> None` | function | 113 | Refuse unsupported consumers before they publish artifacts or claims. |
-| `ExactTermLimits` | class | 137 | (no docstring) |
-| `TermAnalysis` | class | 147 | (no docstring) |
-| `ExactTermResult` | class | 156 | (no docstring) |
-| `ExactTermResult.available(self) -> bool` | method | 165 | (no docstring) |
-| `guarded_operand_evaluator(legacy, scalar_factory)` | function | 169 | Build the unpinned exact-term extension of the guarded operand seam. |
-| `variable_name(term) -> str \| None` | function | 255 | (no docstring) |
-| `is_function_term(term) -> bool` | function | 261 | (no docstring) |
-| `term_variables(term) -> tuple[str, ...]` | function | 265 | Return variables without an unbounded recursive walk. |
-| `analyze_term(term, variables, *, limits) -> TermAnalysis` | function | 302 | Infer one term's primitive and structural budget without evaluating it. |
-| `membership_domain(primitive) -> str \| None` | function | 402 | (no docstring) |
-| `compile_membership(terms) -> MembershipSet \| None` | function | 433 | Compile an authored literal list once for a guarded or derivation filter. |
-| `membership_verdict(operator, value, members, primitive) -> bool \| None` | function | 451 | Return the membership verdict or unavailable for an incompatible value. |
-| `where_uses_membership(where) -> bool` | function | 465 | (no docstring) |
-| `guard_uses_membership(consequent) -> bool` | function | 472 | (no docstring) |
-| `guarded_clause_refusal(constraint) -> str \| None` | function | 482 | Name the new clause shapes for profiles that cannot represent them. |
-| `prepare_comparisons(comparisons)` | function | 496 | Keep the existing filter rows while compiling any membership lists. |
-| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 509 | Evaluate exactly, returning a named unavailable result instead of raising. |
-| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 755 | (no docstring) |
-| `materialize_scalar(value) -> Any` | function | 862 | Return the existing wire scalar for a head value; fractions never escape. |
+| `temporal_nodes(value)` | function | 81 | Iterate authored syntax without descending into provenance, archived proposals or data. |
+| `is_temporal_node(node) -> bool` | function | 109 | (no docstring) |
+| `uses_temporal(model) -> bool` | function | 115 | (no docstring) |
+| `require_non_temporal(model, consumer) -> None` | function | 132 | Refuse unsupported consumers before they publish artifacts or claims. |
+| `ExactTermLimits` | class | 156 | (no docstring) |
+| `TermAnalysis` | class | 166 | (no docstring) |
+| `ExactTermResult` | class | 175 | (no docstring) |
+| `ExactTermResult.available(self) -> bool` | method | 184 | (no docstring) |
+| `guarded_operand_evaluator(legacy, scalar_factory)` | function | 188 | Build the unpinned exact-term extension of the guarded operand seam. |
+| `variable_name(term) -> str \| None` | function | 274 | (no docstring) |
+| `is_function_term(term) -> bool` | function | 280 | (no docstring) |
+| `term_variables(term) -> tuple[str, ...]` | function | 284 | Return variables without an unbounded recursive walk. |
+| `analyze_term(term, variables, *, limits) -> TermAnalysis` | function | 321 | Infer one term's primitive and structural budget without evaluating it. |
+| `membership_domain(primitive) -> str \| None` | function | 421 | (no docstring) |
+| `compile_membership(terms) -> MembershipSet \| None` | function | 452 | Compile an authored literal list once for a guarded or derivation filter. |
+| `membership_verdict(operator, value, members, primitive) -> bool \| None` | function | 470 | Return the membership verdict or unavailable for an incompatible value. |
+| `where_uses_membership(where) -> bool` | function | 484 | (no docstring) |
+| `guard_uses_membership(consequent) -> bool` | function | 491 | (no docstring) |
+| `guarded_clause_refusal(constraint) -> str \| None` | function | 501 | Name the new clause shapes for profiles that cannot represent them. |
+| `prepare_comparisons(comparisons)` | function | 515 | Keep the existing filter rows while compiling any membership lists. |
+| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 528 | Evaluate exactly, returning a named unavailable result instead of raising. |
+| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 774 | (no docstring) |
+| `materialize_scalar(value) -> Any` | function | 881 | Return the existing wire scalar for a head value; fractions never escape. |
 
 ## gnd.transition — `src/gnd/transition.py`
 Components: semantics.transitions

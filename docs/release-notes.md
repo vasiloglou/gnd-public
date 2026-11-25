@@ -1,9 +1,37 @@
 # Release notes and milestones
 
 Version 0.5.0, published on 2026-11-25, is the latest release; 0.4.0, 0.3.0,
-0.2.0 and 0.1.0 came before it. Releases follow the [release
+0.2.0 and 0.1.0 came before it. Version 0.5.1 is a GitHub tag only and is not
+published on the package index. Releases follow the [release
 procedure](releasing.md). Changes on `main` after a release are listed in an
 `Unreleased:` section until the next one.
+
+## 0.5.1 (tagged 2026-11-25, not published on PyPI)
+
+0.5.1 is a GitHub tag only. Install it from the tag:
+
+```sh
+uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.1"
+```
+
+- **A role named `date` or `duration_days`.** `gnd validate` no longer
+  refuses a fact type whose sample rows have such a role with
+  `semantic:temporal-site`. A sample row is data keyed by role name, as a
+  population's facts are, so the temporal rules no longer read sample rows
+  at all; a date object given as a sample value no longer refuses the model
+  either. A model with such a role is also no longer taken for a temporal
+  model by the commands that refuse one
+  ([#286](https://github.com/vasiloglou/gnd-public/issues/286)).
+- **A date term in a derivation head, under any role name.** A head whose
+  role is named `source`, `provenance`, `bind` or `head` could hide a date
+  term from the temporal rules, so the model was accepted where a date term
+  is not allowed. Such a model is now refused with `semantic:temporal-site`,
+  as it is under any other role name.
+- **Descriptions are not read as date syntax.** An object type's
+  description is never checked, as the format reference says. The temporal
+  rules no longer read it, so an extra key in a description that holds a
+  `date` or `duration_days` object no longer refuses the model or makes it
+  count as temporal.
 
 ## 0.5.0 (2026-11-25)
 

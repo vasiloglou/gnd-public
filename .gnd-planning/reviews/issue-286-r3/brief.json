@@ -1,0 +1,128 @@
+{
+  "base": "102110b2",
+  "claims": [
+    "After skipping provenance, source, rejected_proposals, description and sample_population, every remaining map under a key named bind or head in a schema-valid model document is an atom binding or a derivation head.",
+    "Compared with the walk on main, the final walk yields fewer nodes only inside descriptions, sample rows and role-keyed maps, and more nodes only for terms under a head or bind role named like a skipped key.",
+    "The release notes' three 0.5.1 bullets describe every behaviour change the comparison above finds, and nothing more."
+  ],
+  "created": "2026-11-25T18:42:50.736650+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/reviews/issue-286-r3/diff.patch",
+      "sha256": "d6988b7224cf687b3ecd5db6a530027ea5594903bb191e2eb1ab28e6da1a1c10"
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "sha256": "585c84e020e683462b827668de77e97c7401b091364ba2c47896eb7fda29861e"
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "bfcfc5dddfe807e1562e9bc77fadd25e9a4f7a6db0e57f9d01a5a8364ec9b1e5"
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "sha256": "4db81f701fcf043f837f9ce8653c2130983aa2c0e91c113e893b1449a9ab3c83"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/BRIEF.md",
+      "sha256": "3ea6accf1d0206dc9a87c382c395149080392856c597ff9312d834ab4b404609"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/FINDINGS.md",
+      "sha256": "7ca0f3acffb69e09d5af5ffdb81ac9a0b6ad2848eb393453af2c80b3ce2339b2"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/brief.json",
+      "sha256": "bd83d1087cd051c67a19fc007826690902d8a5dcf6acb1783ed191ef174f847a"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/diff.patch",
+      "sha256": "68b9342072c0413f08875da521651414f7af7b2dc9539f3a75567e03e3d9ac0a"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/review.md",
+      "sha256": "823559ede4d1127e29308d2facb5a110b65960eee1fb99bc7d2fcf7023f5de61"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r1/run.json",
+      "sha256": "e225334b0ed3085ffbb260687266a941b88f06e72b7c956d174cc42cc2f3d958"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r2/BRIEF.md",
+      "sha256": "1f63244110c65d97a3c8fa2b46f44963840f6b6e6cd626e08de6136e54bd7d63"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r2/FINDINGS.md",
+      "sha256": "de32a295387d70df5f59f3893b51b4945dc65d65f870cd45744230d41ec71946"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r2/brief.json",
+      "sha256": "1cabcb5317e03ad65ab9fb3799d0733229a19c28d6ac0eb58f3012682dd51415"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r2/diff.patch",
+      "sha256": "005f1c0c56e949af511a19e0bfdbed4ded31c9b1e74e232b9d0ea0dc379216a1"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r2/review.md",
+      "sha256": "fd311c3e27922d2026415c9b0742e42a560c79cc9c02676abf46981b73eab1ad"
+    },
+    {
+      "path": ".gnd-planning/reviews/issue-286-r2/run.json",
+      "sha256": "e4bee773dc5506116ccee740326ff9aec7870501b8b2eb596e9de3ce9a462ae0"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "7110bf5d091c2345bc5d718c800cd9782a600dd946258d956943a8cae89a1097"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "7e6451dfa84e162549f6e098e1032115c1d39842ff0b535d182f64a42ec3764c"
+    },
+    {
+      "path": "docs/compatibility.md",
+      "sha256": "f1997225a730e83bbb52ffe98f6cdc7e3084b9f2c6c481b0c26d861b532b5915"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "742fa90292e233fc8ad5f21090fa74b1f8412200629328771a0e902e761af449"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "ad19198871890329fd5eaf64f08fd256dabecca0bbd1ee5e1cb01dd7d2273ab5"
+    },
+    {
+      "path": "src/gnd/terms.py",
+      "sha256": "0df1756a70dc47250656cd919e991ab1bacd658630ea8dce70abbcb108781100"
+    },
+    {
+      "path": "tests/test_issue_286_role_keyed_maps.py",
+      "sha256": "5d6198cb2a35ed73897fbcaa298e868ae4310ebb4aa4065a0ba3f78e837c7f8d"
+    },
+    {
+      "path": "tests/test_release_version.py",
+      "sha256": "2c69d01015a3557f7db5dbbf742b6b3773014fbfbe35018dd58aac6554ddc151"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "93d1735c2dbd70f0625072b77ca1068545f4043688730b9b672feec59888b4ab"
+    },
+    {
+      "path": "src/gnd/schema/orm-meta.schema.json",
+      "sha256": "0cab9e99afbc048afe328d57009062bb46932d8790688f3e4a8f27e75ef0cc62"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "594ec58970647df4abeca920579f2088b671fdd65f0ee473354c1ebd204ca92a"
+    }
+  ],
+  "head": "60e42d7e231080020e8f536f8c56f2b67e97f5ba",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Is the final temporal walk in src/gnd/terms.py right: does it read every piece of authored syntax in a model document and nothing else, with bind and head read as role-keyed containers only where the schema puts them; and do the notes and the 0.5.1 tag-only bump state and do exactly that?",
+  "subject": "phase",
+  "version": 1
+}

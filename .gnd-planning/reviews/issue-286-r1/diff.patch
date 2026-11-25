@@ -1,0 +1,360 @@
+diff --git a/.claude-plugin/marketplace.json b/.claude-plugin/marketplace.json
+index e03e6f2d..1bc363f8 100644
+--- a/.claude-plugin/marketplace.json
++++ b/.claude-plugin/marketplace.json
+@@ -12,7 +12,7 @@
+       "name": "gnd",
+       "source": "./",
+       "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+-      "version": "0.5.0"
++      "version": "0.5.1"
+     }
+   ]
+ }
+diff --git a/.claude-plugin/plugin.json b/.claude-plugin/plugin.json
+index 6259914c..38a2acc0 100644
+--- a/.claude-plugin/plugin.json
++++ b/.claude-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "gnd",
+-  "version": "0.5.0",
++  "version": "0.5.1",
+   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+   "author": {
+     "name": "Nikolaos Vasiloglou",
+diff --git a/.codex-plugin/plugin.json b/.codex-plugin/plugin.json
+index 941a77c2..39422b56 100644
+--- a/.codex-plugin/plugin.json
++++ b/.codex-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "gnd",
+-  "version": "0.5.0",
++  "version": "0.5.1",
+   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+   "author": {
+     "name": "Nikolaos Vasiloglou",
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index c28dc0df..8a0b6e0d 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -2845,8 +2845,9 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - modules: src/gnd/terms.py
+ - uses: infra.errors, semantics.snapshot_ir
+ - used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +23 more (graph.md)
+-- tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py
++- tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py, tests/test_issue_286_role_keyed_maps.py
+ - notes: Includes the guarded operand evaluator adapter and temporal syntax detection used to refuse unsupported consumers.
++- reread: 2026-11-25, beside src/gnd/terms.py after the issue 286 change to temporal_nodes (role-keyed maps decided by their holding key); still accurate.
+ 
+ 
+ ### check.universe
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 16fdfc16..4dcdd7e7 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -1240,29 +1240,29 @@ Closed exact scalar-term language shared by derivations and guarded rules.
+ | --- | --- | --- | --- |
+ | `valid_duration(value) -> bool` | function | 56 | (no docstring) |
+ | `valid_date(value) -> bool` | function | 62 | (no docstring) |
+-| `temporal_nodes(value)` | function | 72 | Iterate authored syntax without descending into provenance or archived proposals. |
+-| `is_temporal_node(node) -> bool` | function | 90 | (no docstring) |
+-| `uses_temporal(model) -> bool` | function | 96 | (no docstring) |
+-| `require_non_temporal(model, consumer) -> None` | function | 113 | Refuse unsupported consumers before they publish artifacts or claims. |
+-| `ExactTermLimits` | class | 137 | (no docstring) |
+-| `TermAnalysis` | class | 147 | (no docstring) |
+-| `ExactTermResult` | class | 156 | (no docstring) |
+-| `ExactTermResult.available(self) -> bool` | method | 165 | (no docstring) |
+-| `guarded_operand_evaluator(legacy, scalar_factory)` | function | 169 | Build the unpinned exact-term extension of the guarded operand seam. |
+-| `variable_name(term) -> str \| None` | function | 255 | (no docstring) |
+-| `is_function_term(term) -> bool` | function | 261 | (no docstring) |
+-| `term_variables(term) -> tuple[str, ...]` | function | 265 | Return variables without an unbounded recursive walk. |
+-| `analyze_term(term, variables, *, limits) -> TermAnalysis` | function | 302 | Infer one term's primitive and structural budget without evaluating it. |
+-| `membership_domain(primitive) -> str \| None` | function | 402 | (no docstring) |
+-| `compile_membership(terms) -> MembershipSet \| None` | function | 433 | Compile an authored literal list once for a guarded or derivation filter. |
+-| `membership_verdict(operator, value, members, primitive) -> bool \| None` | function | 451 | Return the membership verdict or unavailable for an incompatible value. |
+-| `where_uses_membership(where) -> bool` | function | 465 | (no docstring) |
+-| `guard_uses_membership(consequent) -> bool` | function | 472 | (no docstring) |
+-| `guarded_clause_refusal(constraint) -> str \| None` | function | 482 | Name the new clause shapes for profiles that cannot represent them. |
+-| `prepare_comparisons(comparisons)` | function | 496 | Keep the existing filter rows while compiling any membership lists. |
+-| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 509 | Evaluate exactly, returning a named unavailable result instead of raising. |
+-| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 755 | (no docstring) |
+-| `materialize_scalar(value) -> Any` | function | 862 | Return the existing wire scalar for a head value; fractions never escape. |
++| `temporal_nodes(value)` | function | 81 | Iterate authored syntax without descending into provenance or archived proposals. |
++| `is_temporal_node(node) -> bool` | function | 109 | (no docstring) |
++| `uses_temporal(model) -> bool` | function | 115 | (no docstring) |
++| `require_non_temporal(model, consumer) -> None` | function | 132 | Refuse unsupported consumers before they publish artifacts or claims. |
++| `ExactTermLimits` | class | 156 | (no docstring) |
++| `TermAnalysis` | class | 166 | (no docstring) |
++| `ExactTermResult` | class | 175 | (no docstring) |
++| `ExactTermResult.available(self) -> bool` | method | 184 | (no docstring) |
++| `guarded_operand_evaluator(legacy, scalar_factory)` | function | 188 | Build the unpinned exact-term extension of the guarded operand seam. |
++| `variable_name(term) -> str \| None` | function | 274 | (no docstring) |
++| `is_function_term(term) -> bool` | function | 280 | (no docstring) |
++| `term_variables(term) -> tuple[str, ...]` | function | 284 | Return variables without an unbounded recursive walk. |
++| `analyze_term(term, variables, *, limits) -> TermAnalysis` | function | 321 | Infer one term's primitive and structural budget without evaluating it. |
++| `membership_domain(primitive) -> str \| None` | function | 421 | (no docstring) |
++| `compile_membership(terms) -> MembershipSet \| None` | function | 452 | Compile an authored literal list once for a guarded or derivation filter. |
++| `membership_verdict(operator, value, members, primitive) -> bool \| None` | function | 470 | Return the membership verdict or unavailable for an incompatible value. |
++| `where_uses_membership(where) -> bool` | function | 484 | (no docstring) |
++| `guard_uses_membership(consequent) -> bool` | function | 491 | (no docstring) |
++| `guarded_clause_refusal(constraint) -> str \| None` | function | 501 | Name the new clause shapes for profiles that cannot represent them. |
++| `prepare_comparisons(comparisons)` | function | 515 | Keep the existing filter rows while compiling any membership lists. |
++| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 528 | Evaluate exactly, returning a named unavailable result instead of raising. |
++| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 774 | (no docstring) |
++| `materialize_scalar(value) -> Any` | function | 881 | Return the existing wire scalar for a head value; fractions never escape. |
+ 
+ ## gnd.transition — `src/gnd/transition.py`
+ Components: semantics.transitions
+diff --git a/docs/compatibility.md b/docs/compatibility.md
+index 2de9ff04..8f5cbc18 100644
+--- a/docs/compatibility.md
++++ b/docs/compatibility.md
+@@ -1,10 +1,11 @@
+ # Compatibility and version policy
+ 
+ Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions
+-0.1.0, 0.2.0, 0.3.0, 0.4.0 and 0.5.0 are published (0.5.0 on 2026-11-25). For
+-the next version, confirm service ownership and that the version is still free
+-before candidate freeze and again before any upload. Milestone numbers are not
+-package versions.
++0.1.0, 0.2.0, 0.3.0, 0.4.0 and 0.5.0 are published (0.5.0 on 2026-11-25).
++Version 0.5.1 is a GitHub tag only and is not published on the package index.
++For the next version, confirm service ownership and that the version is still
++free before candidate freeze and again before any upload. Milestone numbers are
++not package versions.
+ 
+ Preserve documented schemas, exit bands and deterministic behavior unless an
+ explicit reviewed compatibility decision says otherwise. Record breaking changes
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index b5485d98..d66cc885 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -1,10 +1,31 @@
+ # Release notes and milestones
+ 
+ Version 0.5.0, published on 2026-11-25, is the latest release; 0.4.0, 0.3.0,
+-0.2.0 and 0.1.0 came before it. Releases follow the [release
++0.2.0 and 0.1.0 came before it. Version 0.5.1 is a GitHub tag only and is not
++published on the package index. Releases follow the [release
+ procedure](releasing.md). Changes on `main` after a release are listed in an
+ `Unreleased:` section until the next one.
+ 
++## 0.5.1 (tagged 2026-11-25, not published on PyPI)
++
++0.5.1 is a GitHub tag only. Install it from the tag:
++
++```sh
++uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.1"
++```
++
++- **A role named `date` or `duration_days`.** `gnd validate` no longer
++  refuses a fact type whose sample rows have such a role with
++  `semantic:temporal-site`: a sample row is data keyed by role name, not a
++  date term. A model with such a role is also no longer taken for a temporal
++  model by the commands that refuse one
++  ([#286](https://github.com/vasiloglou/gnd-public/issues/286)).
++- **A date term in a derivation head, under any role name.** A head whose
++  role is named `source` or `provenance` hid a date term from the temporal
++  rules, so the model was accepted where a date term is not allowed. Such a
++  model is now refused with `semantic:temporal-site`, as it is under any
++  other role name.
++
+ ## 0.5.0 (2026-11-25)
+ 
+ ### Ossie relational files
+diff --git a/pyproject.toml b/pyproject.toml
+index 2b48c8bd..0d82057c 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -3,7 +3,7 @@
+ # `get-nick-done`. The import package and the console script both stay `gnd` —
+ # only the name users type after `uv tool install` changes.
+ name = "get-nick-done"
+-version = "0.5.0"
++version = "0.5.1"
+ description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+ # Issue 175: without this key the wheel and sdist carry no long description and
+ # the PyPI project page shows no text. PYPI.md is a short description written
+diff --git a/src/gnd/terms.py b/src/gnd/terms.py
+index a20d96e3..cc68bd0b 100644
+--- a/src/gnd/terms.py
++++ b/src/gnd/terms.py
+@@ -69,22 +69,41 @@ def valid_date(value: object) -> bool:
+         return False
+ 
+ 
++#: Keys whose values are not authored syntax.
++_NOT_SYNTAX = frozenset({"provenance", "source", "rejected_proposals"})
++#: Keys whose value is a map keyed by role name: an atom's `bind` and a derivation's `head`.
++_ROLE_MAPS = frozenset({"bind", "head"})
++#: Keys whose value is a list of maps keyed by role name: a fact type's sample rows.
++_ROLE_ROWS = frozenset({"sample_population"})
++_SYNTAX, _ROLE_MAP, _ROLE_ROW_LIST = "syntax", "role-map", "role-rows"
++
++
+ def temporal_nodes(value: object):
+-    """Iterate authored syntax without descending into provenance or archived proposals."""
+-    stack = [("$", value)]
++    """Iterate authored syntax without descending into provenance or archived proposals.
++
++    A map keyed by role name is a container, not a term, whatever its roles are called
++    (issue 286): its keys are never read as syntax, so a role named `date`,
++    `duration_days`, `source` or `bind` is just a role. Which maps those are is decided
++    by the key that holds them, as the model schema places them, never by the text of
++    the path. The values inside such a map are syntax again: a derivation head holds terms.
++    """
++    stack = [("$", value, _SYNTAX)]
+     while stack:
+-        path, node = stack.pop()
++        path, node, kind = stack.pop()
+         if isinstance(node, dict):
+-            # Role-name maps are containers, even when a role is named date.
+-            if not path.endswith((".bind", ".head")):
+-                yield path, node
++            if kind == _ROLE_MAP:
++                stack.extend((f"{path}.{key}", child, _SYNTAX) for key, child in node.items())
++                continue
++            yield path, node
+             stack.extend(
+-                (f"{path}.{key}", child)
++                (f"{path}.{key}", child,
++                 _ROLE_MAP if key in _ROLE_MAPS else _ROLE_ROW_LIST if key in _ROLE_ROWS else _SYNTAX)
+                 for key, child in node.items()
+-                if key not in {"provenance", "source", "rejected_proposals"}
++                if key not in _NOT_SYNTAX
+             )
+         elif isinstance(node, list):
+-            stack.extend((f"{path}[{index}]", child) for index, child in enumerate(node))
++            item_kind = _ROLE_MAP if kind == _ROLE_ROW_LIST else _SYNTAX
++            stack.extend((f"{path}[{index}]", child, item_kind) for index, child in enumerate(node))
+ 
+ 
+ def is_temporal_node(node: Mapping) -> bool:
+diff --git a/tests/test_issue_286_role_keyed_maps.py b/tests/test_issue_286_role_keyed_maps.py
+new file mode 100644
+index 00000000..6bb8eacf
+--- /dev/null
++++ b/tests/test_issue_286_role_keyed_maps.py
+@@ -0,0 +1,94 @@
++"""Issue 286: a map keyed by role name is a container, whatever its roles are called.
++
++`gnd validate` read a sample row with a role named `date` or `duration_days` as a
++temporal term and refused the model (`semantic:temporal-site`). The walk behind that
++rule decided which maps hold role names by the text of their path. It now decides by
++the key that holds them (`bind`, `head`, `sample_population`), so the same walk also
++finds a date term held by a head role named like a skipped key (`source`, `provenance`)
++or like a container key (`bind`, `head`), which it used to miss.
++"""
++from __future__ import annotations
++
++import copy
++import json
++from pathlib import Path
++
++import pytest
++
++from gnd import api
++from gnd.terms import is_temporal_node, temporal_nodes, uses_temporal
++
++ROOT = Path(__file__).resolve().parents[1]
++COUNT = ROOT / "tests/fixtures/v71/phase6/dispatch/count/model.orm.json"
++DATE_TERM = {"fn": "date_add", "args": ["$x", {"duration_days": 1}]}
++
++
++def poster(role: str, version: int = 3) -> dict:
++    """The model of issue 286, with its second role named ROLE."""
++    return {
++        "version": version,
++        "model_id": "urn:example:poster@1",
++        "object_types": [
++            {"id": "poster", "kind": "value", "name": "PosterName", "primitive": "String"},
++            {"id": "poster_date", "kind": "value", "name": "PosterDate", "primitive": "String"},
++        ],
++        "fact_types": [{
++            "id": "poster_is_scheduled",
++            "reading": "{PosterName} is scheduled on {PosterDate}",
++            "roles": [{"role_name": "poster", "object_type": "poster"},
++                      {"role_name": role, "object_type": "poster_date"}],
++            "sample_population": [{"poster": "D2P", role: "Tuesday, July 7th"}],
++        }],
++        "constraints": [],
++    }
++
++
++def validate(tmp_path: Path, model: dict) -> dict:
++    path = tmp_path / "model.orm.json"
++    path.write_text(json.dumps(model), encoding="utf-8")
++    return api.validate(path)
++
++
++@pytest.mark.parametrize("role", ["date", "duration_days", "fn", "day"])
++@pytest.mark.parametrize("version", [2, 3])
++def test_a_sample_row_is_data_whatever_its_roles_are_called(tmp_path, role, version):
++    model = poster(role, version)
++    result = validate(tmp_path, model)
++    assert result["exit_code"] == 0, result
++    assert not uses_temporal(model)
++
++
++def test_a_temporal_term_outside_a_comparison_is_still_refused(tmp_path):
++    """Control: the rule the issue tripped still holds where it applies."""
++    model = poster("day")
++    model["object_types"][1]["description"] = "the day"
++    model["constraints"] = [{
++        "id": "c0", "type": "value", "object_type": "poster_date",
++        "values": [{"date": "2026-07-07"}],
++        "source": "explicit", "status": "confirmed", "modality": "alethic",
++    }]
++    result = validate(tmp_path, model)
++    assert result["exit_code"] == 3, result
++    assert uses_temporal(model)
++
++
++@pytest.mark.parametrize("role", ["source", "provenance", "bind", "head", "date", "count"])
++def test_a_date_term_in_a_head_is_found_whatever_the_role_is_called(tmp_path, role):
++    """A head maps roles to terms. A date term there is found and refused under any role name."""
++    model = json.loads(COUNT.read_text(encoding="utf-8"))
++    rule = next(item["derivation_rule"] for item in model["fact_types"] + model["object_types"]
++                if isinstance(item.get("derivation_rule"), dict) and "head" in item["derivation_rule"])
++    rule["head"] = {role: copy.deepcopy(DATE_TERM)}
++    found = [path for path, node in temporal_nodes(model) if is_temporal_node(node)]
++    assert any(path.endswith(f".head.{role}") for path in found), found
++    assert uses_temporal(model)
++    result = validate(tmp_path, model)
++    assert result["exit_code"] == 3
++    assert "semantic:temporal-site" in json.dumps(result)
++
++
++def test_skipped_keys_are_skipped_only_where_they_are_structure():
++    """`source` and `provenance` hold no syntax on an element; as role names they are roles."""
++    element = {"provenance": {"user_quote": {"date": "2026-01-01"}}, "source": {"date": "x"}}
++    assert [path for path, node in temporal_nodes(element) if is_temporal_node(node)] == []
++    assert not uses_temporal({"object_types": [element], "fact_types": [], "constraints": [], "operations": []})
+diff --git a/tests/test_release_version.py b/tests/test_release_version.py
+index 48a461a7..36f0e4cf 100644
+--- a/tests/test_release_version.py
++++ b/tests/test_release_version.py
+@@ -26,7 +26,7 @@ RELEASED = {"0.1.0", "0.2.0", "0.3.0", "0.4.0", "0.5.0"}
+ # Versions released as a GitHub tag only, never uploaded to the package index.
+ # A tag-only version is newer than every published one and is never pinned; the
+ # pages describe the latest published version (see tools/release_text.py).
+-TAGGED = {"0.3.1"}
++TAGGED = {"0.3.1", "0.5.1"}
+ 
+ MANIFESTS = (
+     ".claude-plugin/plugin.json",
+diff --git a/uv.lock b/uv.lock
+index 9af73496..66b6e47c 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -97,7 +97,7 @@ wheels = [
+ 
+ [[package]]
+ name = "get-nick-done"
+-version = "0.5.0"
++version = "0.5.1"
+ source = { editable = "." }
+ dependencies = [
+     { name = "jsonschema" },

@@ -1,0 +1,37 @@
+Run output of accept-beast3.sh on beast-3. Edited to replace the home path and to drop uv's package install lines.
+
+release/get_nick_done-0.5.0-py3-none-any.whl: OK
+release/get_nick_done-0.5.0.tar.gz: OK
+comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
+Building source distribution (uv build backend)...
+Building wheel from source distribution (uv build backend)...
+Successfully built <home>/gnd-release/0.5.0/85d076ba/independent.build.mPI8fO/release/get_nick_done-0.5.0.tar.gz
+Successfully built <home>/gnd-release/0.5.0/85d076ba/independent.build.mPI8fO/release/get_nick_done-0.5.0-py3-none-any.whl
+Building wheel (uv build backend)...
+Successfully built gnd-release/0.5.0/85d076ba/independent.build.mPI8fO/comparison/get_nick_done-0.5.0-py3-none-any.whl
+release/get_nick_done-0.5.0-py3-none-any.whl: OK
+release/get_nick_done-0.5.0.tar.gz: OK
+comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
+85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+arm64
+Python 3.11.18
+uv 0.10.10 (8c730aaad 2026-03-13)
+c843909e6f5f676b19f06522b0e9dffe89b84421e1f7bd5610ee0494b32b0d49  release/get_nick_done-0.5.0-py3-none-any.whl
+9576a57d735d54aa7cd565b52670f11feb6bf659dd75da40a868942168e8a8c0  release/get_nick_done-0.5.0.tar.gz
+c843909e6f5f676b19f06522b0e9dffe89b84421e1f7bd5610ee0494b32b0d49  comparison/get_nick_done-0.5.0-py3-none-any.whl
+Independent wheel, sdist and comparison wheel match the retained SHA256SUMS.
+release/get_nick_done-0.5.0-py3-none-any.whl: OK
+release/get_nick_done-0.5.0.tar.gz: OK
+comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
+Python 3.11.18
+uv 0.10.10 (8c730aaad 2026-03-13)
+2026-11-25T16:48:43Z
+.................................                                        [100%]
+33 passed in 1327.51s (0:22:07)
+Installed acceptance exit 0.
+gnd 0.5.0
+2026-11-25T17:10:52Z
+accept exit 0

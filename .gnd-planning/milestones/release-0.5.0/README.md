@@ -1,8 +1,8 @@
 # release-0.5.0
 
-Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **RW1 is on
-main. RW2's installed probes are written and wait for the owner's merge; no
-candidate is built.** The four milestones the owner made the release wait for are
+Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **RW1 and
+RW2 are done: a 0.5.0 candidate is built from main `85d076ba` and passed
+installed acceptance. Nothing is uploaded, tagged or released.** The four milestones the owner made the release wait for are
 merged to main:
 [literature-host-interfaces](../literature-host-interfaces/README.md),
 [reviewed-vocabulary-growth](../reviewed-vocabulary-growth/README.md),
@@ -13,8 +13,9 @@ built or published.
 
 RW2 began on 2026-11-25 after the owner merged RW1 (pull request 282). Its
 [pre-freeze record](003-RW2-pre-freeze.md) has the probes, their rehearsal
-and two review rounds. The freeze, the two builds and the acceptance run on
-beast-3 follow the merge of the probes pull request.
+and two review rounds. The owner merged the probes pull request (283); its commit is
+the freeze commit. The [RW2 record](004-phase-RW2.md) has the freeze, the
+two builds, the acceptance run and the two oracle lanes.
 
 RW1 started on 2026-11-24, was held for ossie-relational-bundle, and resumed
 on 2026-11-25. Its [record](002-phase-RW1.md) has the result: the version is
@@ -48,12 +49,16 @@ ship.
   [pre-freeze record](003-RW2-pre-freeze.md), the
   [0.4.0 controls](evidence/RW2/controls-0.4.0.md) and the
   [probe rehearsal](evidence/RW2/probes-rehearsal.md).
+- [RW2 record](004-phase-RW2.md), the [freeze](evidence/RW2/freeze-summary.md),
+  the [build](evidence/RW2/build-summary.txt), the
+  [acceptance run](evidence/RW2/acceptance-summary.txt) and the candidate's
+  [SHA256SUMS](evidence/RW2/candidate/SHA256SUMS).
 
 Three phases prepare the release and publish nothing: RW1 candidate content,
 RW2 candidate build and installed acceptance, RW3 publication hand-over.
 Publication is a separate stage in which each act runs on the owner's
 request.
 
-Next action: the owner's merge decision on the RW2 probes pull request. The
-main commit it makes is the freeze commit: the freeze checks, the two builds,
-the acceptance run and the two oracle lanes run at it.
+Next action: RW3, the publication hand-over (the dossier, the token-route
+sentence of `docs/releasing.md`, the checklist). Publication itself is the
+owner's, one act at a time.

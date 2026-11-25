@@ -1,0 +1,55 @@
+{
+  "base": "d5641d1d",
+  "claims": [
+    "Each of the six probes asserts the candidate result, the candidate behavior control and the 0.4.0 control that the spec's probe table states, and nothing in a probe passes vacuously (an empty list, a loop that never runs, an assertion on a constant).",
+    "Removing the four 0.3.0 controls removed no assertion about the candidate.",
+    "program_constants reads the constants of every exported program the probes pass it, for any model and mode the export supports, without running the program.",
+    "readme_commands fails when the packaged README stops listing a command the probe runs.",
+    "The corrected sentence in the PyRel block of docs/release-notes.md is true of 0.4.0 as evidence/RW2/controls-0.4.0.md measures it.",
+    "No probe reads a file of the source checkout where the spec says the input comes from the installed package."
+  ],
+  "created": "2026-11-25T16:13:50.779253+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/diff.patch",
+      "sha256": "815855dc71e1a478354812602d3c26b9f0d2bfb0fe236d4a61f9009b8a9cffae"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md",
+      "sha256": "ea86cb5289a3417099c6f86503bc014d2089fa7de9417b72b4553bf2426a2a0d"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py",
+      "sha256": "2dd669bba9602610e1aa8c83aa73e85412eb0fbc58555a3bb6896b2d231d448e"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py",
+      "sha256": "3783db17e2f4613d954befd972b49d140952a9a9230a592ab1ced8f560d9db00"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "7526c08e8ac8281e48d4b6cf8c138f9bb24aa6b4b833f834468c30a1254e1d25"
+    },
+    {
+      "path": "tests/test_release_acceptance.py",
+      "sha256": "1d3fc1ea3ca5a0131e4ebd690dee198c081c021ae24c2eadd8d3d2bd2d699919"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/phase-RW2-spec.md",
+      "sha256": "362bfc12a0d04161dbf4d4f458458e91f7b278c5e9d9f3fa366fa3457bcd9264"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/controls-0.4.0.md",
+      "sha256": "db37a9144234705191a2db4309c19f3397814d9374a1da3542008b7d9e2e39c5"
+    }
+  ],
+  "head": "d5641d1dd9dbb729abead855d2475a71c6fd788e",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Do the probes added to tests/test_release_acceptance.py do what section 6 of the RW2 spec says, and would each one fail if the installed package lacked the feature it names?",
+  "subject": "phase",
+  "version": 1
+}

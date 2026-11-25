@@ -63,7 +63,9 @@ TAG_SENTENCE = re.compile(rf"The `v{VERSION}` tag contains")
 #: the publication was meant to fill.
 STALE = re.compile(
     r"next release|not published|not signed off|prepared \d|newer than"
-    r"|unreleased (?:feature|example)|development checkout|PUBLICATION_DATE",
+    r"|unreleased (?:feature|example)|development checkout|PUBLICATION_DATE"
+    # A page that says where a feature ships before its release (release-0.4.0 RC-03).
+    r"|not in (?:a|any) published|on `?main`? after \d",
     re.IGNORECASE)
 #: The same, inside the published version's own section of the release notes.
 STALE_IN_NOTES = re.compile(
@@ -78,7 +80,8 @@ STALE_IN_NOTES = re.compile(
 STANDING = (
     ("docs/development/candidate.md", r"^The artifact is `get_nick_done-0\.1\.0-py3-none-any\.whl`\."),
     (PLUGINS, r"^not register the development checkout in the user's marketplace configuration\.$"),
-    ("docs/releasing.md", r"^were validated\. Every release through 0\.3\.0 \(0\.1\.0, 0\.2\.0 and 0\.3\.0\) was$"),
+    # The token-route sentence lists the releases published that way; the list grows, the form stays.
+    ("docs/releasing.md", rf"^were validated\. Every release through {VERSION} \((?:{VERSION}, )*{VERSION} and {VERSION}\) was$"),
     # The tag-only procedure quotes the heading form a tag-only version carries.
     ("docs/releasing.md", r"^   `## X\.Y\.Z \(tagged YYYY-MM-DD, not published on PyPI\)`, and give in it the$"),
     (SUPPORT, r"^\| [^|]+ \| Observed in Phase 3 acceptance of 0\.1\.0 \|$"),
@@ -214,14 +217,23 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
         if relative == COMPATIBILITY:
             # The generated paragraph names every published version; it is compared whole.
             text = "\n\n".join("" if p.startswith(COMPATIBILITY_START) else p for p in _paragraphs(text))
-        for line in text.splitlines():
-            if not (STALE.search(line) or any(_mentions(line, v) for v in older)):
-                continue
-            entry = _standing(relative, line)
-            if entry is None:
-                problems.append(f"stale: {relative}: {line.strip()}")
-            else:
-                used.add(entry)
+        for paragraph in _paragraphs(text):
+            lines = paragraph.splitlines()
+            reported = False
+            for line in lines:
+                if not (STALE.search(line) or any(_mentions(line, v) for v in older)):
+                    continue
+                entry = _standing(relative, line)
+                if entry is None:
+                    problems.append(f"stale: {relative}: {line.strip()}")
+                    reported = True
+                else:
+                    used.add(entry)
+            # Prose wraps: a phrase split over a line break is in no single line. The paragraph is
+            # read again as one line, with every line already judged above left out of the count.
+            joined = " ".join(line.strip() for line in lines)
+            if not reported and len(STALE.findall(joined)) > sum(len(STALE.findall(line)) for line in lines):
+                problems.append(f"stale: {relative}: {joined}")
     for index, (name, pattern) in enumerate(STANDING):
         if name is not None and index not in used:
             problems.append(f"standing entry matches no line: {name}: {pattern}")

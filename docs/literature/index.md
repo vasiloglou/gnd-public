@@ -7,8 +7,8 @@ paper may say a method was *evaluated*, not *built on*. It may quote
 someone else's claim, or deny it. Two fields may give two different
 methods the same name.
 
-GND 0.4.0 lets you build one checked ontology over many papers. The agent
-still does the reading. GND keeps each claim tied to its passage in the
+GND 0.4.0 and later let you build one checked ontology over many papers. The
+agent still does the reading. GND keeps each claim tied to its passage in the
 document version it was read from ([where a quote may lie](../reference/anchors.md#where-a-span-may-lie)), refuses
 to join names nobody decided, and proves or refuses every answer. This
 page follows one stack of sixteen papers from eleven fields through three
@@ -22,8 +22,8 @@ acts.
 
 !!! note "What is real on this page"
 
-    Every result below comes from the packaged literature example in GND
-    0.4.0, run for real. The reading agent's answers are saved in the
+    Every result below comes from the packaged literature example, run for
+    real. The reading agent's answers are saved in the
     example, so you get the same results without a model account. The
     *You ask* boxes show how you would phrase each step to Claude Code. The
     [commands page](commands.md) reproduces every result in about a

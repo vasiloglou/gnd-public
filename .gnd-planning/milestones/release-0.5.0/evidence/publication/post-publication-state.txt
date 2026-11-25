@@ -1,0 +1,24 @@
+2026-11-25T18:01:56Z
+{"defaultBranchRef":{"name":"main"},"visibility":"PUBLIC"}
+5d908318b05eb2b27347810b03cb9131d684b89d	refs/heads/main
+75eda93f314e7ef82578ab4ee212d5e6d964fd71	refs/tags/v0.1.0
+d84ad6d5cca021aa572751223d7c640d2b261055	refs/tags/v0.2.0
+7c0f4d0e320ff7976296d785077280d180ea688e	refs/tags/v0.2.0^{}
+257a8bb3cc0ec5f0746e95d72b5d11cb5acdb185	refs/tags/v0.3.0
+4c07c0e6a623263048cb675d237046ebb239cb32	refs/tags/v0.3.0^{}
+5fe5852473465ea718f67088143a425f3492bb20	refs/tags/v0.3.1
+aff85c6764a3ef58f4eaed47fff57afacb4f20f6	refs/tags/v0.3.1^{}
+a6ad5b534bc5c668079fa309bc74f69a67c22852	refs/tags/v0.4.0
+648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a	refs/tags/v0.4.0^{}
+5d99a45a48ea7a5561c9251241e4c59941f00b88	refs/tags/v0.5.0
+85d076ba384e67b1f992cfd6b9a596ca01b3d4e7	refs/tags/v0.5.0^{}
+GitHub environments:
+["github-pages"]
+release.yml runs:
+[]
+GitHub releases:
+[{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-25T17:57:29Z","tagName":"v0.5.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-17T15:23:59Z","tagName":"v0.4.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-11T15:38:27Z","tagName":"v0.3.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-09T03:19:04Z","tagName":"v0.2.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-10-12T04:06:31Z","tagName":"v0.1.0"}]
+PyPI files for 0.5.0:
+[{"filename": "get_nick_done-0.5.0-py3-none-any.whl", "sha256": "c843909e6f5f676b19f06522b0e9dffe89b84421e1f7bd5610ee0494b32b0d49", "yanked": false, "uploaded": "2026-11-25T17:53:25.974630Z"}, {"filename": "get_nick_done-0.5.0.tar.gz", "sha256": "9576a57d735d54aa7cd565b52670f11feb6bf659dd75da40a868942168e8a8c0", "yanked": false, "uploaded": "2026-11-25T17:53:27.418240Z"}]
+PyPI versions:
+['0.1.0', '0.2.0', '0.3.0', '0.4.0', '0.5.0'] latest 0.5.0

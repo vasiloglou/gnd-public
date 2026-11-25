@@ -1,0 +1,11 @@
+2026-11-25T17:54:57Z
+uv 0.10.10 (Homebrew 2026-03-13)
+Python 3.14.3
+gnd 0.5.0
+installed distribution: 0.5.0
+Fresh PyPI install rejected the invalid plan and accepted its repair.
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.prefix, expected <scratch> got <scratch>
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.exec_prefix, expected <scratch> got <scratch>
+Exported Ossie ontology to o.yaml
+Exported Ossie semantic model and mapping to o.yaml.semantic_model.yaml and o.yaml.mapping.yaml
+model.orm.yaml o.yaml o.yaml.gnd.json o.yaml.loss.json o.yaml.mapping.yaml o.yaml.semantic_model.yaml 

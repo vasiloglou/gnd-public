@@ -1,11 +1,11 @@
 # Release notes and milestones
 
-Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
-0.1.0 came before it. Version 0.5.0 is prepared for PyPI. Releases follow the
-[release procedure](releasing.md). Changes on `main` after a release are listed
-in an `Unreleased:` section until the next one.
+Version 0.5.0, published on 2026-11-25, is the latest release; 0.4.0, 0.3.0,
+0.2.0 and 0.1.0 came before it. Releases follow the [release
+procedure](releasing.md). Changes on `main` after a release are listed in an
+`Unreleased:` section until the next one.
 
-## 0.5.0 (prepared, not published)
+## 0.5.0 (2026-11-25)
 
 ### Ossie relational files
 

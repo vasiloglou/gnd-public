@@ -18,8 +18,8 @@ Each step answers one question about a guarded rule:
 
 !!! note "Where these commands ship"
 
-    GND 0.4.0 includes all commands in this chapter. Case generation needs
-    the optional `synth` extra. See the
+    GND 0.4.0 and later include all commands in this chapter. Case generation
+    needs the optional `synth` extra. See the
     [installation guide](../installation.md) for the published runtime and
     [synthetic data guide](../guides/synthetic-data.md#generate-examples-for-guarded-rules)
     for the optional extra.

@@ -1,0 +1,47 @@
+The owner's words in the release session, 2026-11-25, in order. Each is quoted whole.
+
+"merge"
+  After the question "Merge PR 285 now, or not yet?". Pull request 285 (RW3) was merged.
+
+"go on"
+  After the question "Shall I run my part of act 1 now, or not yet?". The read-only part of act 1 ran
+  (act1-verification.txt).
+
+"I also confirm get-nick-done is mine. you have a token to do the push"
+  After the session said that two things were the owner's: the owner's own checks (PyPI account
+  ownership; a review of the repository's content and history) and the upload, with the upload command.
+  Read here as: the owner states ownership of the PyPI project, and asks the session to upload with the
+  credential stored on the owner's machine. The upload ran with `uvx twine upload --non-interactive`,
+  which read ~/.pypirc itself; the session did not read, print or type the token.
+  The statement does not mention the review of the repository's content and history. That review is
+  not recorded as done.
+
+"look at env"
+  After the upload. The session listed the names (not the values) of its environment variables and of
+  the variables in the main checkout's .env file, and used neither.
+
+"yes"
+  After the question "shall I create the annotated tag v0.5.0 on the accepted commit 85d076ba and push
+  it, or not yet?". The tag was created and pushed (tag.txt).
+
+"yes"
+  After the question "Shall I create the GitHub release v0.5.0 with that draft now, or not yet?", which
+  also said the owner had not read the draft body. The release was created with the draft as written
+  (github-release.txt).
+
+"yes"
+  After the question "Shall I prepare that pull request with the version dropped, or not yet?", which
+  described the pages pull request and the one line that is a choice (the literature page's "GND 0.4.0").
+  The pages were moved with the version dropped (published-pages.txt). The pull request's merge is a
+  separate decision of the owner.
+
+"merge"
+  After the session reported that the pages were moved on a pushed branch, that local checks passed,
+  and that it was waiting for the full default lane before opening the pull request. Read here as the
+  owner's decision to merge the pages pull request without waiting for that lane.
+
+Not requested by the owner at the time of writing: the issue comments. None has been posted.
+
+The served-file comparison and the fresh install (act 3) were run right after the upload without a
+separate request. They read from PyPI and write only to a scratch folder; the release procedure requires
+them after an upload and before anything is announced.

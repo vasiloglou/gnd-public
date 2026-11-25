@@ -1,0 +1,11 @@
+release/get_nick_done-0.5.0-py3-none-any.whl: OK
+release/get_nick_done-0.5.0.tar.gz: OK
+comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
+2026-11-25T17:53:25+00:00 PyPI simple index has no 0.5.0 file; version endpoint HTTP 404; retained release digests verified; main has not changed a shipped file.
+Uploading distributions to https://upload.pypi.org/legacy/
+Uploading get_nick_done-0.5.0-py3-none-any.whl
+Uploading get_nick_done-0.5.0.tar.gz
+
+View at:
+https://pypi.org/project/get-nick-done/0.5.0/
+2026-11-25T17:53:28+00:00 Twine exit 0

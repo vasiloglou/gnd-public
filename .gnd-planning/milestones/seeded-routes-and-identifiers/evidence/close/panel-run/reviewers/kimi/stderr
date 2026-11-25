@@ -1,0 +1,2 @@
+error: failed to run prompt: provider.api_error: 429 You've reached your weekly (7-day) usage limit. Your quota will reset when the current 7-day window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota
+See log: ***/.kimi-code/logs/kimi-code.log

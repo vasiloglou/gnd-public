@@ -1,0 +1,16 @@
+PYTHONPATH=tests .venv/bin/python .gnd-planning/milestones/seeded-routes-and-identifiers/evidence/close/probe-standalone.py
+validate valid spans 0 []
+check valid spans 0 []
+flatten valid spans 3 ['include:declaration']
+extract valid spans 0 []
+pyrel valid spans 0 []
+duckdb valid spans 0 []
+lqp valid spans 0 []
+validate missing owned span 3 ['unattended:flat-without-root', 'semantic:unattended-u4']
+check missing owned span 3 ['unattended:flat-without-root', 'semantic:unattended-u4']
+flatten missing owned span 3 ['unattended:flat-without-root', 'semantic:unattended-u4']
+extract missing owned span 3 ['unattended:flat-without-root', 'semantic:unattended-u4']
+pyrel missing owned span 3 ['unattended:flat-without-root', 'semantic:unattended-u4']
+duckdb missing owned span 3 ['unattended:flat-without-root', 'semantic:unattended-u4']
+lqp missing owned span 3 ['unattended:flat-without-root', 'semantic:unattended-u4']
+Exit: 0

@@ -1,0 +1,364 @@
+{
+  "schema_version": 1,
+  "run_sha256": "6a69e30f048bf1aac8cc77c37289eec081f0fd0a6b760b7cdf03fbd994d8e440",
+  "summary": "Four of six seats provided schema-valid, complete reviews. Codex approved. Claude, Qwen and GLM requested revisions. Gemini returned no JSON object and Kimi exited 1 after a quota response. Three concerns had multiple supporters, and seven were raised by one reviewer.",
+  "agreed_concerns": [
+    {
+      "group_id": "tagged-tree-evidence",
+      "severity": "high",
+      "title": "Evidence for the tagged tree",
+      "summary": "Two seats asked for the exact tagged-merge tree difference. Qwen classed it as blocking.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-lane-not-on-merged-bytes"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-lane-covers-pr-head-not-tagged-merge"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "ossie-corpus-units",
+      "severity": "high",
+      "title": "Ossie corpus populations and counted units",
+      "summary": "Three seats asked whether the 410 and 414 populations match and how 17 changed documents relate to 13 targeted rows.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ossie-denominator-410-vs-414"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-corpus-count-unreconciled"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si3-corpus-count-unreconciled"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "default-lane-toolchain",
+      "severity": "medium",
+      "title": "Default-lane tooling and RC-02",
+      "summary": "Two seats asked for the pinned uv override and a maintenance target for the host-default uv mismatch.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc02-uv-residual-untargeted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lane-runner-uv-drift"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "d1-standalone-refusal-narrowed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "pyrel-skips-unidentified"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "predicate6-digest-check-no-receipt"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "si1-repair-test-only"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "rmap-timing-single-green"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "independent-review-bytes-drift"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-seat-quorum-unsourced"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "bind-tagged-tree",
+      "rank": 1,
+      "title": "Bind the tagged tree diff",
+      "action": "Keep the exact tree hashes and verbatim two-path diff in the close evidence.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-lane-not-on-merged-bytes"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-lane-covers-pr-head-not-tagged-merge"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-lane-not-on-merged-bytes",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-lane-covers-pr-head-not-tagged-merge",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "reconcile-ossie-corpus",
+      "rank": 2,
+      "title": "Reconcile the Ossie measures",
+      "action": "Recount mapping admission across the planning baseline, SI3 baseline and tagged tree. Report rows and changed documents separately.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ossie-denominator-410-vs-414"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-corpus-count-unreconciled"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si3-corpus-count-unreconciled"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ossie-denominator-410-vs-414",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-corpus-count-unreconciled",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si3-corpus-count-unreconciled",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "bind-pinned-uv",
+      "rank": 3,
+      "title": "Record the pinned uv lane",
+      "action": "Record the only runner override and the RC-02 maintenance target.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc02-uv-residual-untargeted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lane-runner-uv-drift"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc02-uv-residual-untargeted",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "lane-runner-uv-drift",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "d1-standalone-refusal-narrowed",
+      "rank": 4,
+      "title": "State the D1 route outcomes",
+      "action": "Bind the owner-approved D1b matrix and show legal standalone data and the owned-span negative control.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "d1-standalone-refusal-narrowed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "d1-standalone-refusal-narrowed",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "pyrel-skips-unidentified",
+      "rank": 5,
+      "title": "Identify the 13 live PyRel skips",
+      "action": "List the skipped test nodes and the separate passing seeded-route and include-route export controls.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "pyrel-skips-unidentified"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "pyrel-skips-unidentified",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "predicate6-digest-check-no-receipt",
+      "rank": 6,
+      "title": "Bind the phase evidence audit",
+      "action": "Retain the digest verification and the review-helper status outputs.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate6-digest-check-no-receipt"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate6-digest-check-no-receipt",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "si1-repair-test-only",
+      "rank": 7,
+      "title": "Explain the packaged skill inventory repair",
+      "action": "Bind the exact guide link and the reviewer\u2019s negative controls, and retain the aggregate count limitation.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-repair-test-only"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-repair-test-only",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "rmap-timing-single-green",
+      "rank": 8,
+      "title": "Carry the Rmap timing fluctuation",
+      "action": "Record both passing beast-3 shard runs and name a target for threshold-sensitive tests.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rmap-timing-single-green"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rmap-timing-single-green",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "independent-review-bytes-drift",
+      "rank": 9,
+      "title": "State independent review coverage",
+      "action": "Identify each phase and repair review by scope, and record how the subsequent bytes were checked.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "independent-review-bytes-drift"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "independent-review-bytes-drift",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "close-seat-quorum-unsourced",
+      "rank": 10,
+      "title": "Source the four-seat threshold",
+      "action": "Bind the project rule and the attempted, successful and failed seats in the close record.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-seat-quorum-unsourced"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-seat-quorum-unsourced",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    }
+  ]
+}

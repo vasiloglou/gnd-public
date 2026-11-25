@@ -1,10 +1,15 @@
 # RW1 notes reconciliation
 
-Built from `git diff v0.4.0 c62a32b8 -- src docs README.md PYPI.md pyproject.toml LICENSE NOTICE .claude-plugin .codex-plugin .agents/plugins`:
-125 files. Each file is in exactly one row; a file that several pull requests changed is in the row of its main change, and the other
-pull requests are named there. The script that built this table refused a file with no row or with two.
+Built from `git diff v0.4.0 <base> -- src docs README.md PYPI.md pyproject.toml LICENSE NOTICE .claude-plugin .codex-plugin .agents/plugins`,
+first at `c62a32b8` (125 files, rows R1 to R16) and again at `e8359685` (140 files, row R17 added). Each file is in exactly one row; a file
+that several pull requests changed is in the row of its main change, and the other pull requests are named there. A script checked that no
+file lacks a row and none has two: it reads each row's file list, matches it against the diff and compares the count.
 
-`PYPI.md`, `LICENSE`, `NOTICE`, `pyproject.toml`, the plugin manifests and `.agents/plugins` do not differ between the two commits.
+`PYPI.md`, `LICENSE`, `NOTICE`, `pyproject.toml`, the plugin manifests and `.agents/plugins` do not differ between `v0.4.0` and either commit.
+
+How the rows were built: from which pull request changed each file and the bullets already in the notes. Five entry-point diffs were read
+line by line for R1 to R16. For R17 the diffs of the nine small files were read line by line; the three new modules, the two how-to pages, the
+explanation page and the reference section were read for what they expose, not line by line.
 
 | Row | User-visible change | Pull requests | Notes | Files |
 |---|---|---|---|---|
@@ -24,5 +29,11 @@ pull requests are named there. The script that built this table refused a file w
 | R14 | The model index cache is keyed on key order too (and the checker scaling of R5) | 267, 239 | noted: new bullet "Rule text for models that differ only in key order" | 1: `src/gnd/model_index.py` |
 | R15 | The page edits of the 0.4.0 publication (install pins, compatibility, support) | 211 | no note: they describe 0.4.0, which this diff starts just before; RW1 edits three of them again for 0.5.0 | 9: `README.md`, `docs/bookrec/08-guarded-rules.md`, `docs/bookrec/09-suggested-rules.md`, `docs/compatibility.md`, `docs/expense/05-receipts.md`, `docs/index.md`, `docs/installation.md`, `docs/marketplace-plugins.md`, `docs/support.md` |
 | R16 | The release notes themselves | 211 and every pull request above | the subject of this table | 1: `docs/release-notes.md` |
+| R17 | Ossie relational files: `gnd export ossie` writes a semantic model and a mapping beside the ontology; `--ontology-only`; `--physical-binding FILE` for delivered tables; `--max-output-bytes` and `--max-input-bytes`; the relational mapping `gnd.rmap` and its rules; the mapping schema pinned | 266, 270, 271, 272, 273, 274, 275 | noted: four moved bullets under "Ossie relational files". Two things those bullets do not say get new bullets: `gnd.rmap.map_model` and `gnd.rmap.dispositions` are documented callables, and the disclosure page now lists the model's ids as table and column names in the two new files. The milestone also changed ten files that earlier rows hold (`README.md`, `docs/index.md`, `docs/reference/cli.md`, `docs/reference/disclosure.md`, `docs/agents/evolve.md`, `docs/agents/model-from-text.md`, `docs/release-notes.md`, `src/gnd/commands/checking.py`, `src/gnd/commands/export.py`, `src/gnd/skills/gnd-orm-core/references/representation-format.md`): two front pages gain a sentence, two agent pages get a repaired link, and the rest carry the options above | 15: `docs/explanation/ossie.md`, `docs/how-to/describe-delivered-tables-for-ossie.md`, `docs/how-to/share-an-ossie-ontology.md`, `src/gnd/commands/_arguments.py`, `src/gnd/examples/refunds/physical-binding.json`, `src/gnd/export/ossie.py`, `src/gnd/export/ossie_relational.py`, `src/gnd/export/physical_binding.py`, `src/gnd/input_policy.py`, `src/gnd/ossie_import.py`, `src/gnd/rmap.py`, `src/gnd/schema/ossie/PINNED.json`, `src/gnd/schema/ossie/mapping.json`, `src/gnd/schema/physical-binding.schema.json`, `src/gnd/skills/gnd-export/SKILL.md` |
 
-Files placed: 125 of 125.
+Files placed: 140 of 140, at `e8359685`.
+
+Checked again after the branch merged main `3998d371` (pull request 275): the diff then holds 144 files. The four more are this phase's
+own version edits (`pyproject.toml` and the three manifests), which the table leaves out by its rule. Pull request 275 changed eight shipped
+files, all already in rows R4 and R17: two how-to pages reworded one sentence each, and `guard_yaml`, `json_pointer` and
+`is_confirmed_alethic` were moved or shared without a change in behaviour, by that pull request's own account and tests. No note.

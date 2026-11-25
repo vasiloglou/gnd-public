@@ -2,17 +2,17 @@
 
 ## 1. Status
 
-**r5, held. First ruling recorded (§7); E1 ran at `cfe5f00e` (§12); no
-second ruling, and no implementation.** On 2026-11-24 the owner ruled that
-the release also waits for ossie-relational-bundle (plan §13) (o). When that
-milestone is merged, this spec is revised against main, E1 runs again at the
-commit the bump is then applied to, and the second ruling follows. r5 adds
-§12 and this paragraph to r4 and changes nothing else. The
-[plan](release-0.5.0-plan.md) is r3: r2 approved by delegated ruling
-([plan gate](../001-plan-gate.md)), with §12 added. The three milestones the
-owner made this release wait for are merged and closed on main (§2). This
-spec gets two rulings: the first approves the E1 measurement, the second
-binds the handling E1 shows to be needed. Both are recorded in §7.
+**r7. E1 ran at the resumed base (§13); the owner ruled D4; the second
+ruling is in §7.** r7 adds §13, the D4 ruling and the handling list to r6. r5 was held on the owner's ruling of 2026-11-24 that the
+release also waits for ossie-relational-bundle (plan §13) (o). That
+milestone's five phases and its close record are on main at `e8359685`
+(§2). r6 rewrites the facts that main changed, tagged `(m2)`: the
+dependency, the E1 base, the inventory, the notes outline, the
+reconciliation counts and D4. §12 keeps the first measurement as it was
+written. The [plan](release-0.5.0-plan.md) is r5: r2 approved by delegated
+ruling ([plan gate](../001-plan-gate.md)), with §12 to §14 added. This spec
+gets two rulings: the first approves the E1 measurement, the second binds
+the handling E1 shows to be needed. Both are recorded in §7.
 
 ## 2. Provenance
 
@@ -32,10 +32,21 @@ The dependency, observed at `c62a32b8` with `git log --first-parent` and
 | literature-host-interfaces | [006-milestone-close.md](../../literature-host-interfaces/006-milestone-close.md) |
 | reviewed-vocabulary-growth | [007-milestone-close.md](../../reviewed-vocabulary-growth/007-milestone-close.md) |
 | pins-and-review-check | [004-close.md](../../pins-and-review-check/004-close.md) |
+| ossie-relational-bundle (m2) | [021-milestone-close.md](../../ossie-relational-bundle/021-milestone-close.md), observed at `e8359685` |
+
+The fourth row is not like the other three (m2). That record's "Close
+ruling" section says the owner directed the merge of its pull request and
+that an explicit ruling that the milestone is closed is not recorded. The
+owner's words for this dependency were that the release waits "so that I can
+include it" (plan §13). The milestone's five phases and its notes are on
+main, so the release can include it. Plan §14 records that reading as this
+milestone's own and what it does not claim.
 
 Also merged since the plan was written, and so in this release: all of
 growth-round-outcomes and literature-reading-reference, and the pull
-requests 254, 255, 257, 262, 265 and 267.
+requests 254, 255, 257, 262, 265 and 267. Since r5: pull requests 264, 266
+and 270 to 274 (ossie-relational-bundle) and 268 (a tooling sync that
+changes no shipped file) (m2).
 
 One thing differs from RV1 at the start: RV1 expected the bump to move
 nothing and measured 37 moved results. This spec expects movement and names
@@ -111,8 +122,8 @@ decision is in §4: `tests/support/recorded_version.py`.
   beast-3, six round-robin shards over C-sorted `tests/test_*.py`, default
   marker filter:
   1. the base: the commit the bump is applied to (p1). That is the commit of
-     this branch that records the first ruling: main `c62a32b8` plus this
-     milestone's planning-only commits. Its hash is written in §12 with the
+     this branch that records the renewed first ruling: main `e8359685`
+     plus this milestone's planning-only commits (m2). Its hash is written in §12 with the
      results, because a spec cannot name the commit that contains it;
   2. a scratch tree of the same commit with 0.5.0 in `pyproject.toml`, the
      lock line and the three manifests, and nothing else changed.
@@ -121,7 +132,12 @@ decision is in §4: `tests/support/recorded_version.py`.
   records alone: the lane at `c227c004` was measured (plan §12: 19 failed),
   and pull requests 254, 257 and 267 repaired main after it. Their own runs
   report no failure; none was repeated here, so the base run is also the
-  first check of that claim.
+  first check of that claim. The first E1 confirmed it at `cfe5f00e` (§12).
+  At `e8359685` the expectation is the same (m2); the Ossie milestone's
+  close record reports its own files green and one red guard,
+  `tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap`,
+  which it calls known. If the base run shows it, it is a base failure and
+  not this phase's.
 - **Expected, bumped:** the release-version checks fail until M4 and M6 to
   M9 exist. `test_lock_manifests_and_notes_agree_with_pyproject` fails
   because the newest version heading is still 0.4.0;
@@ -137,7 +153,10 @@ decision is in §4: `tests/support/recorded_version.py`.
   files `test_lh1_reading_host.py`, `test_ir1_judgments_includes.py` and
   `vg3_cases.py` name 0.4.0 (m); so may the count example, the flatten
   record, the seeded-growth example and the reference set. Each id that
-  moves is listed.
+  moves is listed. The first E1 moved five ids, all in
+  `tests/test_release_version.py` (§12). The Ossie milestone added tests of
+  exported bytes and of documentation; whether any reads the version is what
+  the second run shows (m2).
 - **What it cannot measure:** opt-in lanes (D3), and anything an installed
   wheel shows (RW2).
 - **Liveness:** the bumped tree with no notes change must turn at least
@@ -151,9 +170,10 @@ the mode (`base` or `bumped`) made arguments and the version strings moved
 on. The record carries the diff of the two scripts. It clones the public
 repository, so the base commit is pushed before E1 runs.
 
-### Inventory (observed at `c62a32b8`; classified after E1) (m)
+### Inventory (observed at `c62a32b8` and again at `e8359685`; classified after E1) (m) (m2)
 
-Outside planning and the lock, 29 tracked files name 0.4.0:
+Outside planning and the lock, 29 tracked files name 0.4.0, the same 29 at
+both commits:
 
 - `pyproject.toml` and the 3 manifests;
 - `README.md`;
@@ -189,15 +209,15 @@ rechecked for entries that the 0.4.0 publication edits changed.
 | M3 | `uv.lock` | the editable `get-nick-done` line, by hand | 1 |
 | M4 | `tests/test_release_version.py` | add a `HEADLINE_BLOCK["0.5.0"]` entry (D4). No other case changes | 1 |
 | M5 | files E1 names, if any | handled as D2 rules, with the digests listed before code | unknown until E1 |
-| M6 | `docs/release-notes.md` | edit the opening paragraph; replace the four `Unreleased:` headings by one `## 0.5.0 (prepared, not published)` section; add the blocks below | about 60 new, about 110 moved |
+| M6 | `docs/release-notes.md` | edit the opening paragraph; replace the five `Unreleased:` headings (m2) by one `## 0.5.0 (prepared, not published)` section; add the blocks below | about 60 new, about 135 moved |
 | M7 | `docs/compatibility.md` | 0.5.0 is prepared and not published, with the date availability was observed | 3 |
 | M8 | `docs/support.md` | a row saying no profile is observed for 0.5.0 | 1 |
 | M9 | `docs/marketplace-plugins.md` | the plugin on `main` is 0.5.0, prepared and not published; install the runtime from the same commit. The pins are untouched | about 4 |
 
 ### Notes blocks (M6), proposed outline (m)
 
-Main has four `Unreleased:` sections holding 22 bullets, written by the
-phases that shipped them. They become one section with these `###` blocks.
+Main has five `Unreleased:` sections holding 26 bullets (m2), written by
+the phases that shipped them. They become one section with these `###` blocks.
 A moved bullet keeps its wording. New text is drafted at implementation from
 each milestone's close record and reference pages; it goes into the record,
 and the review reads it.
@@ -233,7 +253,11 @@ and the review reads it.
    [COUNT close](../../aggregate-count-certificates/006-milestone-close.md):
    `gnd witness-count` and `gnd replay-count`, the certified zero for a
    covered empty group, and the packaged example.
-6. `### Other changes`: `gnd check` on large vocabularies, the frontmatter
+6. `### Ossie relational files` (m2), linking `explanation/ossie.md` and
+   the how-to page: the four bullets of ossie-relational-bundle, moved
+   (tables beside the ontology, your own tables, larger files, where to
+   read more). Its place in the section follows D4.
+7. `### Other changes`: `gnd check` on large vocabularies, the frontmatter
    fences, the literature pages of PR 213, and anything the reconciliation
    finds.
 
@@ -246,7 +270,10 @@ One row per user-visible change, not per pull request, built by reading
 `git diff v0.4.0 <base> -- src docs README.md PYPI.md pyproject.toml LICENSE NOTICE .claude-plugin .codex-plugin .agents/plugins`
 file by file, leaving out this phase's own version edits (p1). At
 `c62a32b8` that diff holds 125 files (+6,612, −486), 103 of them under
-`src`; 46 first-parent commits separate `v0.4.0` from it (m). Changes that
+`src`; 46 first-parent commits separate `v0.4.0` from it (m). At
+`e8359685` it holds 140 files (+10,079, −601), 115 of them under `src`, and
+56 first-parent commits (m2); the 25 files the Ossie milestone touched get
+their rows at implementation. Changes that
 are tests only, planning only or internal get a reason instead of a note.
 The table goes into `evidence/RW1/notes-reconciliation.md`. It names every
 file of the diff once, so a file with no row is visible as a gap.
@@ -263,7 +290,7 @@ None is added. The heading carries "not published" while 0.5.0 is not in
 | D1 | Version (plan RW-D1) | -- | open; proposed: 0.5.0, from the owner's request |
 | D2 | If E1 moves a result or a recorded byte | (a) fix the comparison so the test reads the recorded version and no committed byte moves; (b) re-record that file with its digests listed. (a) is what RV1 did. Either way the list is written before code | open; proposed: (a) |
 | D3 | Opt-in lanes in E1 (plan RW-D8) | excluded from E1, or run on both trees. `pyrel_oracle` is RW2's question, not E1's | open; proposed: excluded |
-| D4 | The headline block for 0.5.0 | (a) the PyRel rules block, linking `runtimes/pyrel.md`: the one block where 0.5.0 gives a different result from 0.4.0 on the same input, and the plan's RW-D3 proposal; (b) unattended growth from a reviewed vocabulary; (c) the literature examples from a host. The owner made the release wait for the milestones behind (b) and (c), which may mean one of them is the release's point. Changing it later costs one test line and the order of two blocks | open; proposed: (a) |
+| D4 | The headline block for 0.5.0 | (a) the PyRel rules block, linking `runtimes/pyrel.md`: the one block where 0.5.0 gives a different result from 0.4.0 on the same input, and the plan's RW-D3 proposal; (b) unattended growth from a reviewed vocabulary; (c) the literature examples from a host. The owner made the release wait for the milestones behind (b) and (c), which may mean one of them is the release's point. Changing it later costs one test line and the order of two blocks. (d) (m2) the Ossie relational files, linking `explanation/ossie.md`: the milestone the owner held the release for last, with the words "so that I can include it", and the one that changes what a default `gnd export ossie` run writes | open; put to the owner before the second ruling, because r5's close said so; proposed: (a) or (d) |
 | D5 | The base commit of E1 | closed by plan §11 (p1): the commit the bump is applied to, for both runs | closed |
 | D6 | Does a moved bullet keep its issue links and wording? (m) | yes: each was reviewed in its own phase, and rewording it here would be an unreviewed second home for the same statement. The cost is a section whose blocks differ in style | open; proposed: yes |
 
@@ -282,6 +309,40 @@ SHA-256 of the spec bytes it covers.
 > beast-3. No implementation file changes under this ruling. This ruling is
 > not the owner's reading of the spec.
 
+> **First ruling, renewed: delegated approval (auto=true), 2026-11-25.**
+> Approved draft r6 of this spec at SHA-256
+> a56efcc9ea2f3f38b81b929fd5e8d7a661f6192e0d04705a63733cca192e847e (commit
+> `b25bb2d8`) for the E1 measurement only, at the resumed base. Source: the
+> owner's request "Release 0.5.0" and the owner's selection of delegated
+> approval on 2026-11-23; the four milestones of plan §11 to §13 are on
+> main at `e8359685` (plan §14, with the limit it states for the fourth).
+> Decisions: D1, D3 and D5 as in the first ruling. D2 and D6 wait for the
+> second ruling; D4 is put to the owner first. Instrument: this prose; no
+> spec review was called for. Budget: two six-shard lanes on beast-3. No
+> implementation file changes under this ruling. This ruling is not the
+> owner's reading of the spec.
+
+> **D4, owner ruling, 2026-11-25 (o).** Asked which change should lead the
+> 0.5.0 notes, with the four readings of D4 as the choices, the owner chose
+> "Ossie relational files". M4 is therefore
+> `"0.5.0": ("### Ossie relational files", "explanation/ossie.md")`, the
+> Ossie block comes first and the PyRel block second. The owner chose among
+> one-line descriptions of the four; the owner has not read this spec.
+
+> **Second ruling: delegated approval (auto=true), 2026-11-25.** Approved
+> r7 of this spec at SHA-256
+> c2f7efed1d26e52209e87ace093fae15bc896f7856393e08f0cc3613b3c6ea6d (commit
+> `4d2d8325`) for implementation, with the handling list of §13. Source:
+> the owner's request "Release 0.5.0" and the owner's selection of delegated
+> approval on 2026-11-23. Decisions: D1 0.5.0; D2 has no subject (M5 is
+> empty); D3 and D5 as before; D4 as the owner ruled, which reorders the
+> outline of §6 (the Ossie block first, the PyRel block second); D6 yes, a
+> moved bullet keeps its wording and links. Budget: about 86 new or changed
+> lines and about 135 moved; one six-shard lane on beast-3; one independent
+> reviewer in a different tool, by the review helper. Instrument: this
+> prose and §13. Nothing in this ruling builds, uploads, tags or releases.
+> This ruling is not the owner's reading of the spec.
+
 ## 8. Tests
 
 | ID | Case | Expected |
@@ -297,7 +358,8 @@ SHA-256 of the spec bytes it covers.
 | T9 | `python3 scripts/components_index.py changed --base <E1 base> --strict` | 0 to fix (m) |
 
 Each test name above was checked against `tests/test_release_version.py` at
-`c62a32b8`.
+`c62a32b8`. That file, `tools/release_text.py` and the three status pages
+are unchanged between `c62a32b8` and `e8359685` (m2).
 
 ### Verification selection
 
@@ -333,7 +395,7 @@ Each test name above was checked against `tests/test_release_version.py` at
 The estimate is:
 
 - 5 config lines;
-- about 60 new notes lines, and about 110 existing notes lines moved under
+- about 60 new notes lines, and about 135 (m2) existing notes lines moved under
   new headings with their wording unchanged;
 - about 8 other docs lines;
 - 1 test line;
@@ -408,3 +470,51 @@ redone with the spec:
 - [old-version-probes.md](../evidence/RW1/old-version-probes.md): two inputs
   on which 0.4.0's DuckDB rules program reports a rule satisfied and
   `gnd check` reports a failure. The notes' PyRel block would cite them.
+
+## 13. E1 at the resumed base (m2)
+
+E1 ran again on 2026-11-25 under the renewed first ruling, at the commit
+that records it: `4968631e`, which is main `e8359685` plus this milestone's
+planning-only commits. The [summary](../evidence/RW1/e1-summary.md) has both
+lanes' output under "Second measurement".
+
+| Lane | Passed | Failed | Errors | Skipped |
+|---|---|---|---|---|
+| base | 21,994 | 1 | 2 | 13 |
+| bumped | 21,989 | 6 | 2 | 13 |
+
+- **Base, against the prediction.** The prediction was no failure, or the
+  scaffold guard the Ossie close record calls known. It was wrong on both
+  counts. The scaffold guard passes in a clean clone. One other test fails:
+  `tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]`.
+  The how-to page says "exit code 11" in a prose sentence, and that test
+  refuses an exit number in the prose of a how-to page. The page came with
+  ossie-relational-bundle, whose close gates did not run that test file.
+- **Bumped.** The same five ids as §12, all in
+  `tests/test_release_version.py`, plus the base failure. The liveness
+  condition holds.
+- **Nothing else moved.** M5 is empty and D2 has no subject.
+- **Not measured:** which generated outputs change bytes, as in §12.
+
+### Handling, bound by the second ruling
+
+| Id that fails | Lane | Handling |
+|---|---|---|
+| the five `tests/test_release_version.py` ids of §12 | bumped only | made green by M4 and M6 to M9; no test comparison changes |
+| `tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]` | both | a base failure. RW1 does not edit the page: it is another milestone's text (D6, §9), and RW1-C6 asks for no failure the base lacks. The session that ran that milestone was told on 2026-11-25. The freeze (RW2-C0) needs it repaired on main or the owner's ruling |
+| the two `test_public_optional` setup errors | both | RC-02, carried |
+
+M5 is empty, so the total of §10 stands with the two new Ossie bullets
+added: about 86 new or changed lines, and about 135 moved. Past 1.5 times
+86, the phase pauses.
+
+### What the reconciliation added (m2)
+
+[notes-reconciliation.md](../evidence/RW1/notes-reconciliation.md) now
+places all 140 files, with row R17 for the Ossie milestone. Two things its
+four bullets do not say get a new bullet each in the Ossie block:
+`gnd.rmap.map_model` and `gnd.rmap.dispositions` are documented callables,
+and the two new files carry the model's ids as table and column names.
+
+The package index was read on 2026-11-25: it lists 0.1.0, 0.2.0, 0.3.0 and
+0.4.0, and has no 0.5.0. M7 states that date.

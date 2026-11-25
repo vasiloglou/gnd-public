@@ -254,6 +254,7 @@ def test_a_left_placeholder_is_refused():
 HEADLINE_BLOCK = {
     "0.3.0": ("### Apache Ossie interchange", "explanation/ossie.md"),
     "0.4.0": ("### Literature: identity, composition and depth", "literature/01-lineage.md"),
+    "0.5.0": ("### Ossie relational files", "explanation/ossie.md"),
 }
 
 

@@ -1,4 +1,10 @@
-# RW1 E1: what the version bump moves (measured at `cfe5f00e`)
+# RW1 E1: what the version bump moves
+
+Two measurements: the first at `cfe5f00e`, before the phase was held, and the
+second at `4968631e`, after it resumed. The second is the basis of the
+second ruling.
+
+## First measurement, at `cfe5f00e`
 
 Run on 2026-11-24 on beast-3 under the first RW1 ruling, with
 [e1-shards.sh](e1-shards.sh): `e1-shards.sh cfe5f00ee70ae3208a4765c063b4285d26d3355f base`
@@ -93,4 +99,110 @@ Shard 4 exit 0
 Shard 5 exit 0
 3987 passed, 132 deselected in 918.17s (0:15:18)
 
+```
+
+## Second measurement, at `4968631e`
+
+Run on 2026-11-25 on beast-3 under the renewed first ruling, with the same
+script and the same two commands at
+`4968631ec93ad7e74936c5569bf7657a5b088d94`, both at once. `4968631e` is main
+`e8359685` plus this milestone's planning-only commits. Same uv and Python as
+the first measurement.
+
+| Lane | Passed | Failed | Errors | Skipped |
+|---|---|---|---|---|
+| base | 21,994 | 1 | 2 | 13 |
+| bumped | 21,989 | 6 | 2 | 13 |
+
+- The base failure is
+  `tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]`.
+  It is in both lanes. The page `docs/how-to/share-an-ossie-ontology.md`
+  says "exit code 11" in a prose sentence, which that test refuses on
+  how-to pages. The page came with ossie-relational-bundle; the failure is
+  main's, not the bump's. It reproduces in this checkout (1 failed, 23
+  passed for that test function).
+- The two errors are the RC-02 setup errors, in both lanes.
+- The bump adds the same five failures as the first measurement, all in
+  `tests/test_release_version.py`, and nothing else.
+- `tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap`,
+  which the Ossie close record lists as a known red, passes in both lanes
+  here: the clone has no untracked skill mirror.
+
+Not measured, as before: which generated outputs change bytes.
+
+The output below is the two scripts' standard output with uv's package
+install lines removed. Nothing else was edited.
+
+```text
+===== base
+E1 scratch directory: /private/tmp/gnd-rw1-e1-base.vyGMcq
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+4968631ec93ad7e74936c5569bf7657a5b088d94
+warning: `build_system.requires = ["uv-build>=0.10.10,<0.11.0"]` does not contain the current uv version 0.13.7
+Python 3.13.18
+
+Shard 0 exit 0
+4321 passed, 49 deselected in 764.06s (0:12:44)
+
+Shard 1 exit 0
+2849 passed, 238 deselected in 792.66s (0:13:12)
+
+Shard 2 exit 0
+4204 passed, 219 deselected, 1 warning in 856.26s (0:14:16)
+
+Shard 3 exit 1
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]
+1 failed, 3648 passed, 13 skipped, 104 deselected in 1127.61s (0:18:47)
+
+Shard 4 exit 0
+3778 passed, 256 deselected in 656.68s (0:10:56)
+
+Shard 5 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+3194 passed, 174 deselected, 2 errors in 848.56s (0:14:08)
+
+===== bumped
+E1 scratch directory: /private/tmp/gnd-rw1-e1-bumped.mukjl0
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+4968631ec93ad7e74936c5569bf7657a5b088d94
+.claude-plugin/marketplace.json
+.claude-plugin/plugin.json
+.codex-plugin/plugin.json
+pyproject.toml
+uv.lock
+warning: `build_system.requires = ["uv-build>=0.10.10,<0.11.0"]` does not contain the current uv version 0.13.7
+Python 3.13.18
+
+Shard 0 exit 0
+4321 passed, 49 deselected in 768.00s (0:12:48)
+
+Shard 1 exit 0
+2849 passed, 238 deselected in 794.15s (0:13:14)
+
+Shard 2 exit 0
+4204 passed, 219 deselected, 1 warning in 857.75s (0:14:17)
+
+Shard 3 exit 1
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]
+1 failed, 3648 passed, 13 skipped, 104 deselected in 1129.10s (0:18:49)
+
+Shard 4 exit 1
+FAILED tests/test_release_version.py::test_lock_manifests_and_notes_agree_with_pyproject
+FAILED tests/test_release_version.py::test_agreement_control_passes_on_an_unmutated_copy
+FAILED tests/test_release_version.py::test_drift_is_refused[notes] - Assertio...
+FAILED tests/test_release_version.py::test_notes_and_compatibility_do_not_claim_publication
+FAILED tests/test_release_version.py::test_support_and_plugin_pages_state_the_prepared_version
+5 failed, 3773 passed, 256 deselected in 656.65s (0:10:56)
+
+Shard 5 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+3194 passed, 174 deselected, 2 errors in 850.05s (0:14:10)
 ```

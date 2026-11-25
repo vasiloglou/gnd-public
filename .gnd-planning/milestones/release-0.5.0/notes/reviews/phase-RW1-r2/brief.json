@@ -1,0 +1,63 @@
+{
+  "base": "cc8cdb65",
+  "claims": [
+    "The repaired sentence states every export-time refusal that docs/runtimes/pyrel.md lists for inexact numbers, and claims a 0.4.0 difference only where evidence/RW1/old-version-probes.md shows one.",
+    "tests/test_ossie_docs.py reads the same four moved bullets as before, and would fail if the Ossie block lost an exit constant or the byte bound."
+  ],
+  "created": "2026-11-25T13:54:12.333460+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r2/diff.patch",
+      "sha256": "12bb3f669aae8a26d84b55bad5447eebb949e1ec9e90e2c3510084998635ba81"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md",
+      "sha256": "373d25a415c374d22a687fdda155623c1b34180723a6796d14840f4ab08049a0"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/BRIEF.md",
+      "sha256": "6652f3063bee2dbb77c4221af79e83e56b5947624bed5e5e091b87204b1f17f3"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/FINDINGS.md",
+      "sha256": "28576fa81da233c17bd90c21842c64fdc35b7a4c912263294779f3cf9b9eef4e"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/brief.json",
+      "sha256": "eb0505593d698ff2c774ff4de4746581624d7715444e963ad3ab5403e8181f4b"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch",
+      "sha256": "4f92142f2b6c3ab9650d88194dde857ba991f08541cee5220606832d7aa4aab5"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/review.md",
+      "sha256": "1fb549ac6c59c059b70b2175cc8015eaaf55172fe5743b3f9266f7d8ce44fb39"
+    },
+    {
+      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/run.json",
+      "sha256": "69ae4b0787c665e7f4b66e133c7c1ec997e4b728e595df2ea779d4eef348c59d"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "19d658d38e3580f1e816f779d83a311243f3ac69dceefcd0b3fd6bdbb9053e80"
+    },
+    {
+      "path": "tests/test_ossie_docs.py",
+      "sha256": "6635a3d9069a2025df7650593adf69488323e950cc7c02e66bd3e121e065657d"
+    },
+    {
+      "path": "docs/runtimes/pyrel.md",
+      "sha256": "c622ee96a74897cec5330b42920b9ee094795584f454c9dc0c5247bdaafe27a8"
+    }
+  ],
+  "head": "d639461b7841da3de33f3fea5c0f4a5f122287bd",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "This diff repairs finding F1 of round 1 and changes two tests that read the release notes. Is the repaired sentence in the PyRel block of docs/release-notes.md true of the code at this commit and of 0.4.0, and do the two changed tests still check what they checked before?",
+  "subject": "phase",
+  "version": 1
+}

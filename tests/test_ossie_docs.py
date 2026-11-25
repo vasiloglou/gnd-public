@@ -31,6 +31,7 @@ NORMATIVE = ROOT / "src/gnd/skills/gnd-orm-core/references/representation-format
 SKILL = ROOT / "src/gnd/skills/gnd-export/SKILL.md"
 CLI_REFERENCE = ROOT / "docs/reference/cli.md"
 RELEASE_NOTES = ROOT / "docs/release-notes.md"
+RELEASE_NOTE_HEADING = "### Ossie relational files"  # the block of the 0.5.0 section (release-0.5.0 RW1)
 EXAMPLE = ROOT / "src/gnd/examples/refunds"
 HOMES = ("## Relational mapping (Rmap)", "## Ossie interchange")
 PAGES = (
@@ -136,7 +137,7 @@ def test_r1_f4_every_exit_number_in_the_release_note_is_checked():
 
 def test_r1_f6_the_release_note_states_the_bound_as_the_cli_takes_it(tmp_path):
     """--max-output-bytes takes 1 to 268435456; a small value is a size refusal, not a usage error."""
-    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), "## Unreleased: Ossie relational files")
+    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), RELEASE_NOTE_HEADING)
     assert "from 1 byte to 256 MiB" in " ".join(section.split())
     assert cli.main(["export", "ossie", str(EXAMPLE / "model.orm.yaml"), "--out", str(tmp_path / "o.yaml"),
                      "--max-output-bytes", "1"]) == 3  # a size refusal, not EXIT_USAGE
@@ -177,7 +178,7 @@ def test_a_flag_is_matched_as_a_whole_option():
 
 
 def test_the_release_note_states_the_exits_by_their_constants():
-    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), "## Unreleased: Ossie relational files")
+    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), RELEASE_NOTE_HEADING)
     assert section, "the release-note section is missing"
     for name in ("EXIT_COLLISION", "EXIT_USAGE"):
         numbers = exit_numbers(section, name)

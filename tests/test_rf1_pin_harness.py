@@ -119,6 +119,14 @@ def test_inventory():
             assert row["rf1_nodes"] and row["owed_by"] is None
         else:
             assert row["existing_nodes"] and not row["rf1_nodes"] and row["owed_by"] is None
+    # F3 extends the historical core-cycle surface with initializer and cold-import checks.
+    core_cycle, = [row for row in rows if row["surface"] == "core-cycle wrong-way edges"]
+    core_cycle["rf1_nodes"].extend([
+        "tests/test_rf1_layering.py::test_package_initialization_core_ratchet",
+        "tests/test_rf1_layering.py::test_package_initialization_measured_negative_control",
+        *[f"tests/test_rf1_layering.py::test_core_packages_import_cold[{name}]"
+          for name in ("gnd.model", "gnd.checker", "gnd.assurance")],
+    ])
     references = [ref for row in rows for ref in row["rf1_nodes"] + row["existing_nodes"]]
     files = sorted({ref.split("::", 1)[0] for ref in references} | set(tool.PIN_FILES) | {"tests/test_rf1_layering.py"})
     collected = _collect(files)

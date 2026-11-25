@@ -73,12 +73,14 @@ programs check, what they list as not checked and what they refuse.
   DuckDB program accepted the first and the last and reported a uniqueness
   rule satisfied where `gnd check` reports a failure. A model is refused
   when you export it if it holds such an integer among its allowed values,
-  range bounds or comparison literals, puts arithmetic or a sum next to a
-  `Float` or `Number` value, writes an `Integer` value into a `Float` or
-  `Number` role, or compares a float literal with an `Integer` value. 0.4.0
-  exported a model whose rule writes an `Integer` sum, `min` or `max` into a
-  `Float` role; that export is now refused. A script that ran 0.4.0's
-  programs on such inputs, or exported such a model, now gets exit 3.
+  range bounds or comparison literals, puts arithmetic next to a `Float` or
+  `Number` value, sums over or into one, or compares a float literal with an
+  `Integer` value. It is also refused if a rule writes a value from an
+  `Integer` role, or an `Integer` `min` or `max`, into a `Float` or `Number`
+  role; a count or a constant may be written there. 0.4.0 exported a model
+  whose rule writes an `Integer` sum, `min` or `max` into a `Float` role;
+  that export is now refused. A script that ran 0.4.0's programs on such
+  inputs, or exported such a model, now gets exit 3.
 - **What is not verified.** The DuckDB programs are compared with
   `gnd check` on the packaged literature models. The `--rules lqp` programs
   are verified to compile; no RelationalAI engine has run them, so

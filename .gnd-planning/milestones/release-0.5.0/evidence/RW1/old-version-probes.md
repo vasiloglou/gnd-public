@@ -60,3 +60,12 @@ Still not measured on 0.4.0: the other export-time refusals (an integer
 beyond 2**53 among a model's literals, arithmetic next to a `Float` value, a
 float literal compared with an `Integer` value). The notes say this tree
 refuses them and make no claim about 0.4.0 for them.
+
+## Added 2026-11-25: a count written into a Float or Number role
+
+The second review round (finding F1) said the repaired sentence refused too
+much. Reproduced at `1d8536de`:
+`tests/fixtures/pyrel-rules-coverage/rp3/count-into-number.orm.json` exports
+with exit 0 under `--rules duckdb` and `--rules lqp`. The same model with
+its `Number` destination changed to `Float` exports with exit 0 in both
+modes on this tree and on 0.4.0. A count is accepted; the notes now say so.

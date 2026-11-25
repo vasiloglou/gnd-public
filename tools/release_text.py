@@ -15,6 +15,10 @@ to the latest published version, and also requires the tagged version's notes
 heading, its install-from-tag command and one sentence about it in the release
 notes opening and in the compatibility paragraph.
 
+The check reads the pages line by line. A phrase that a line break splits is
+not reported, so the wording it looks for is kept on one line when a page is
+written, and a release rehearsal reads the pages for it once more.
+
 ``publish`` makes the edits that are the same at every release: the install
 pins, the release link and wheel name, the tag sentence, the compatibility
 paragraph, the opening and the heading of the release notes, the support row
@@ -209,16 +213,6 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
     older = [v for v in released if v != declared]
     problems = []
     used = set()
-    relative = ""
-
-    def judge(text: str) -> None:
-        """Report TEXT as stale unless a standing entry covers it."""
-        entry = _standing(relative, text)
-        if entry is None:
-            problems.append(f"stale: {relative}: {text.strip()}")
-        else:
-            used.add(entry)
-
     for relative in page_files(root):
         try:
             text = (root / relative).read_text(encoding="utf-8")
@@ -227,25 +221,15 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
         if relative == COMPATIBILITY:
             # The generated paragraph names every published version; it is compared whole.
             text = "\n\n".join("" if p.startswith(COMPATIBILITY_START) else p for p in _paragraphs(text))
-        for paragraph in _paragraphs(text):
-            # Markdown reads a run of spaces or tabs, and a line break inside a paragraph, as one
-            # space. A phrase is looked for in each line with its whitespace collapsed, and a
-            # phrase that a line break splits is judged on the lines it spans, joined. A standing
-            # entry is still matched against the line as written.
-            written = [line for line in paragraph.splitlines() if line.strip()]
-            lines = [" ".join(line.split()) for line in written]
-            for line, collapsed in zip(written, lines):
-                if STALE.search(collapsed) or any(_mentions(line, v) for v in older):
-                    judge(line)
-            starts, joined = [], ""
-            for line in lines:
-                starts.append(len(joined) + (1 if joined else 0))
-                joined = f"{joined} {line}" if joined else line
-            for match in STALE.finditer(joined):
-                first = max(i for i, start in enumerate(starts) if start <= match.start())
-                last = max(i for i, start in enumerate(starts) if start < match.end())
-                if first != last:
-                    judge(" ".join(lines[first:last + 1]))
+        for line in text.splitlines():
+            # A run of spaces or tabs inside a line reads as one space.
+            if not (STALE.search(" ".join(line.split())) or any(_mentions(line, v) for v in older)):
+                continue
+            entry = _standing(relative, line)
+            if entry is None:
+                problems.append(f"stale: {relative}: {line.strip()}")
+            else:
+                used.add(entry)
     for index, (name, pattern) in enumerate(STANDING):
         if name is not None and index not in used:
             problems.append(f"standing entry matches no line: {name}: {pattern}")

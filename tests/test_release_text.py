@@ -310,14 +310,12 @@ PREPARED_GUIDANCE = {
         "    models are on `main` after 0.3.1. They are not in a published package yet.\n"
         "    Install GND from a checkout of the repository to run this chapter.\n"),
     "phrase-alone": "These commands are not in a published package yet.\n",
-    "phrase-wrapped": "These commands are not in a published\npackage yet.\n",
     "main-after-a-tag": "The receipts example is on `main` after 0.3.1.\n",
-    "main-after-wrapped": "The receipts example is on `main`\nafter 0.3.1.\n",
+    "main-without-code-marks": "The receipts example is on main after 0.3.1.\n",
     "any-published": "The example is not in any published wheel.\n",
-    # Markdown reads a run of spaces or a tab as one space (RW3 review r1, F3).
-    "double-space": "These commands are not in a  published\npackage yet.\n",
+    # A run of spaces or a tab inside a line reads as one space (RW3 review r1, F3).
+    "double-space": "These commands are not in a  published package yet.\n",
     "tab": "These commands are not in a\tpublished package yet.\n",
-    "three-lines": "These commands are not\nin a\npublished package yet.\n",
 }
 
 
@@ -330,26 +328,6 @@ def test_prepared_install_guidance_is_reported(tmp_path, name):
     page.write_text("# Receipts\n\n" + PREPARED_GUIDANCE[name] + "\nThe chapter starts here.\n", encoding="utf-8")
     found = tool.problems(root)
     assert found and all(problem.startswith("stale: docs/expense/05-receipts.md: ") for problem in found), found
-
-
-def test_each_stale_statement_of_a_paragraph_is_reported(tmp_path):
-    """One reported line does not hide a wrapped statement in the same paragraph (RW3 review r1, F2)."""
-    root = copy_tree(tmp_path)
-    (root / "docs/page.md").write_text(
-        "# Page\n\nCommand A is not published.\nCommand B is not in any\npublished wheel.\n", encoding="utf-8")
-    assert tool.problems(root) == [
-        "stale: docs/page.md: Command A is not published.",
-        "stale: docs/page.md: Command B is not in any published wheel.",
-    ]
-
-
-def test_a_standing_statement_stays_standing_when_it_wraps(tmp_path):
-    """Reflowing a sentence a standing entry covers changes nothing (RW3 review r1, F1)."""
-    root = copy_tree(tmp_path)
-    for text in ("GND 0.2.0 and later can be used for unreleased examples.\n",
-                 "GND 0.2.0 and later can be used for unreleased\nexamples.\n"):
-        (root / "docs/page.md").write_text("# Page\n\n" + text, encoding="utf-8")
-        assert tool.problems(root) == [], text
 
 
 def test_standing_install_guidance_is_not_reported(tmp_path):

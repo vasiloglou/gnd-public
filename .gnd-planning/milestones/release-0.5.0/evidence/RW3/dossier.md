@@ -164,7 +164,8 @@ announced.
            assert hashlib.sha256(response.read()).hexdigest() == expected, artifact.name
        print('served file matches:', artifact.name, expected)
    PYTHON
-   scratch=$(mktemp -d) && cd "$scratch"
+   scratch=$(mktemp -d)
+   cd "$scratch"
    uv venv installed
    uv pip install --python installed/bin/python --index-url https://pypi.org/simple "get-nick-done==0.5.0"
    installed/bin/gnd --version
@@ -235,11 +236,18 @@ announced.
    git apply --check "$supplemental_patch"
    git apply "$supplemental_patch"
    uv run python tools/release_text.py check
+   uv run python "$(dirname "$supplemental_patch")/split-phrase-search.py"
    uv run pytest -q tests/test_release_docs.py tests/test_release_preparation.py tests/test_release_version.py tests/test_release_text.py --tb=short
    uv run --group docs zensical build --strict
    uv run python tools/check_docs.py site
    )
    ```
+
+   `check` reads lines, so it cannot see a phrase that a line break splits.
+   [split-phrase-search.py](split-phrase-search.py) joins the lines of each
+   block and prints any block it should be read for; it printed none in the
+   rehearsal. If it prints one on publication day, read it and rewrite the
+   page if it describes the earlier state.
 
    The helper exits 1 at first because it leaves seven lines for a person;
    the [tool-only preview](tool-only-preview.txt) lists them and the

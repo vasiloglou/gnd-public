@@ -21,6 +21,8 @@ printf 'git apply --check <supplement>: exit 0\n'
 git apply "$supplement"
 uv run python tools/release_text.py check
 printf 'uv run python tools/release_text.py check: exit 0\n'
+uv run python "$(dirname "$supplement")/split-phrase-search.py"
+printf 'split-phrase-search.py: exit 0\n'
 release_tests=(tests/test_release_docs.py tests/test_release_preparation.py tests/test_release_version.py tests/test_release_text.py)
 printf 'uv run pytest -q %s --tb=short\n' "${release_tests[*]}"
 uv run pytest -q "${release_tests[@]}" --tb=short -p no:cacheprovider

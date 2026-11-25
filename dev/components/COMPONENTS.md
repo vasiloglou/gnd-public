@@ -1678,7 +1678,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Python source string; callers own publication.
 - status: canonical
 - modules: src/gnd/export/emit.py
-- uses: export.include_roots, export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms
+- uses: export.include_roots, export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms, model.validation
 - used_by: cli.export_command, export.applications
 - tests: tests/test_pyrel_export.py, tests/test_pyrel_native_seam.py
 - notes: The checker runtime is embedded verbatim without importing the foreign runtime during export; render_pyrel_rules delegates to export.pyrel_rules. An include root is exported through its flat model (export.include_roots); other models keep the one-read path.
@@ -1878,7 +1878,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
 - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions, witness.service
+- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, export.pyrel_emit, extract.service, model.loading, model.operation_obligations, semantics.extensions, witness.service
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
 - checked: partial
 - notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.

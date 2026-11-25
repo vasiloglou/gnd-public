@@ -6,6 +6,13 @@ published on the package index. Releases follow the [release
 procedure](releasing.md). Changes on `main` after a release are listed in an
 `Unreleased:` section until the next one.
 
+## Unreleased:
+
+- `gnd flatten`, `gnd extract`, and all three PyRel export modes accept
+  unattended roots with reviewed includes. Pass the authored root when a
+  standalone flat model is refused with `unattended:flat-without-root`.
+  ([#292](https://github.com/vasiloglou/gnd-public/issues/292))
+
 ## 0.5.1 (tagged 2026-11-25, not published on PyPI)
 
 0.5.1 is a GitHub tag only. Install it from the tag:

@@ -63,6 +63,23 @@ _UNATTENDED_ALETHIC_SOURCES = ("sample", "llm-inferred", "common-sense", "induce
 #: and by nothing else (``gnd.model._includes.included_rows`` computes it).
 #: Every other caller sees the empty set, and so today's rules.
 _INCLUDED: ContextVar[frozenset[int]] = ContextVar("gnd_unattended_included", default=frozenset())
+_FLAT_ROOT: ContextVar[bool] = ContextVar("gnd_unattended_flat_root", default=False)
+
+
+def flat_without_root_issue(issues: list[ValidationIssue]) -> ValidationIssue | None:
+    """Explain a possible missing root while retaining the actual validation errors."""
+    if any(issue.rule_id in _INCLUDE_SENSITIVE_RULES or
+           (issue.rule_id == "semantic:unattended-u1" and issue.path == "$.source.documents")
+           for issue in issues):
+        return ValidationIssue(
+            path="$.source",
+            rule_id="unattended:flat-without-root",
+            message="If this is a flattened seeded model, load the root that declares the reviewed includes.",
+        )
+    return None
+
+
+_INCLUDE_SENSITIVE_RULES = frozenset(f"semantic:unattended-u{n}" for n in range(2, 9))
 
 
 def _declared_spans(owner: Any, declared: set[str], *, samples: bool) -> Iterator[tuple[str, Any]]:
@@ -298,7 +315,7 @@ def _owns_nothing(doc: dict[str, Any], included: frozenset[int]) -> bool:
     four merged sections, an attachment enters an included fact type as the
     root's, and an include cannot declare any other section.
     """
-    if not _listed(doc.get("includes")):
+    if not (_listed(doc.get("includes")) or _FLAT_ROOT.get()):
         return False
     for key, value in doc.items():
         if key in _HEADER_KEYS:

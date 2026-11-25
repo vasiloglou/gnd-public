@@ -11,6 +11,10 @@ from __future__ import annotations
 import hashlib
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from gnd.documents import Model
 
 
 @dataclass(frozen=True)
@@ -20,6 +24,7 @@ class FlatExport:
     model_bytes: bytes
     record_sha256: str
     includes: tuple
+    model: Model
 
 
 def flatten_for_export(model_path: Path, raw: bytes):
@@ -47,8 +52,7 @@ def flatten_for_export(model_path: Path, raw: bytes):
     except ExportInputError:
         raise
     except ModelValidationError as error:
-        code = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
-        raise ExportInputError(code or str(error)) from error
+        raise ExportInputError(model_validation_message(error)) from error
     # ValueError covers UnicodeError from an include path that cannot be encoded;
     # gnd check and gnd flatten refuse the same root with exit 3.
     except (ModelLoadError, ReferenceInputError, FlatteningError, OSError, ValueError) as error:
@@ -57,7 +61,16 @@ def flatten_for_export(model_path: Path, raw: bytes):
         model_bytes=flat.model_bytes,
         record_sha256=hashlib.sha256(flat.record_bytes).hexdigest(),
         includes=tuple((entry.id, entry.path, entry.sha256) for entry in model._included),
+        model=flat.model,
     )
+
+
+def model_validation_message(error) -> str:
+    ids = dict.fromkeys(i.rule_id for i in error.issues)
+    code = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
+    if code is not None and "flattening:re-entry" not in ids:
+        return code
+    return f"{error} [{', '.join(ids)}]"
 
 
 def flattening_constants(flat) -> str:

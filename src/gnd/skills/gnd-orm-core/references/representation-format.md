@@ -1994,7 +1994,18 @@ field still identifies the authored root. Include-free bundles omit the
 two files and the `flattening` object. Bundle publication refuses output
 destinations that overlap the bound root, include or reference files.
 
-The flat model is canonical JSON accepted by unrooted model-byte intake.
+The flat model is canonical JSON. For an unattended root with reviewed
+includes, in-process validation of the flat model uses the origins from the
+pin-checked root and preserves the unattended include rules above. This applies
+to `flatten`, `extract`, extraction verification, all three PyRel export
+modes, and rooted witness and replay. Direct intake of a standalone flat file
+applies the ordinary model rules. If a file fails a rule that can depend on reviewed-include provenance,
+the refusal includes `unattended:flat-without-root` and directs the caller
+to load the authored root if the file came from seeded flattening.
+Structural validation precedes this diagnostic. The flat bytes and record
+are output artifacts. The root's include pins are the authority for exemptions.
+A validation failure during re-entry of an authenticated projection is reported
+as `flattening:re-entry` by `flatten`, `extract`, and PyRel export, with exit 3.
 Resolved elements keep their order and identities, with project-owned
 attachments materialized as inline constraints. The wire omits the consumed
 include and attachment declarations, load-time warnings, and the usual

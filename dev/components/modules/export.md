@@ -27,8 +27,8 @@ Offline publication of a self-contained optional PyRel program.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 19 | Render from one bounded input read; no checker or foreign-runtime import. |
-| `render_pyrel_rules(model_path, target)` | function | 70 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
-| `render_pyrel_rules_report(model_path, target)` | function | 77 | The rules program and the ids of the rules it lists as not checked. |
+| `render_pyrel_rules(model_path, target)` | function | 76 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+| `render_pyrel_rules_report(model_path, target)` | function | 83 | The rules program and the ids of the rules it lists as not checked. |
 
 ## gnd.export.ilp — `src/gnd/export/ilp.py`
 Components: export.ilp_neutral
@@ -165,9 +165,10 @@ Export an include root through its flat model (include-root-routes IR3).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `FlatExport` | class | 17 | An include root's flat model, as ``gnd flatten`` would write it. |
-| `flatten_for_export(model_path, raw)` | function | 25 | The flat model to export for an include root, or None for any other model. |
-| `flattening_constants(flat) -> str` | function | 63 | The two program lines that record an exported flattening; empty for None. |
+| `FlatExport` | class | 21 | An include root's flat model, as ``gnd flatten`` would write it. |
+| `flatten_for_export(model_path, raw)` | function | 30 | The flat model to export for an include root, or None for any other model. |
+| `model_validation_message(error) -> str` | function | 68 | (no docstring) |
+| `flattening_constants(flat) -> str` | function | 76 | The two program lines that record an exported flattening; empty for None. |
 
 ## gnd.export.lean — `src/gnd/export/lean.py`
 Components: export.lean_lowering

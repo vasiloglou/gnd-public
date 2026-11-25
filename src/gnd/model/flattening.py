@@ -6,7 +6,8 @@ from dataclasses import asdict, dataclass
 
 from gnd.artifacts import canonical_json_bytes, sha256_hex
 from gnd.documents import Model
-from gnd.model import load_model_bytes
+from gnd.errors import ModelLoadError, ModelValidationError, ReferenceInputError, ValidationIssue
+from gnd.model import _finish_model, _model_warnings, parse_model_document
 from gnd.model._documents import model_wire
 from gnd.model._validation import MAX_MODEL_BYTES
 
@@ -19,6 +20,7 @@ class FlatteningError(ValueError):
 class FlattenedModel:
     model_bytes: bytes
     record_bytes: bytes
+    model: Model
 
 
 def flatten_model(model: Model) -> FlattenedModel:
@@ -37,7 +39,13 @@ def flatten_model(model: Model) -> FlattenedModel:
     if len(flat_bytes) > MAX_MODEL_BYTES:
         raise FlatteningError("flattening: flat model exceeds the model byte limit")
 
-    reopened = load_model_bytes(flat_bytes, source="flat.orm.json")
+    try:
+        reopened = _load_projection(flat_bytes, model)
+    except ModelValidationError as error:
+        issue = ValidationIssue(path="$", rule_id="flattening:re-entry", message="Flat model failed validation")
+        raise ModelValidationError([issue, *error.issues], error.warnings) from error
+    except (ModelLoadError, ReferenceInputError) as error:
+        raise FlatteningError(f"flattening:re-entry: {error}") from error
     original = model.model_dump(exclude={"warnings", "includes", "fact_type_constraints"})
     if original != reopened.model_dump(exclude={"warnings"}):
         raise FlatteningError("flattening would change model values on re-entry")
@@ -53,4 +61,10 @@ def flatten_model(model: Model) -> FlattenedModel:
     })
     if len(record) > MAX_MODEL_BYTES:
         raise FlatteningError("flattening: record exceeds the model byte limit")
-    return FlattenedModel(flat_bytes, record)
+    return FlattenedModel(flat_bytes, record, reopened)
+
+
+def _load_projection(data: bytes, root: Model) -> Model:
+    document = parse_model_document(data, source="flat.orm.json")
+    warnings = _model_warnings(document, root._provenance, flat_root=True)
+    return _finish_model(document, _warnings=warnings)

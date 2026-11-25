@@ -5,7 +5,7 @@ from __future__ import annotations
 from importlib.resources import files
 from pathlib import Path
 
-from .include_roots import flatten_for_export, flattening_constants
+from .include_roots import flatten_for_export, flattening_constants, model_validation_message
 from .pyrel_runtime import _constraint_entries, _parse_document, _read_text, admit_model
 
 SCRIPT_HEADER = (
@@ -30,13 +30,19 @@ def render_pyrel(
     if flat is not None:
         text = flat.model_bytes.decode("utf-8")
     document = _parse_document(text)
-    from gnd.errors import ModelValidationError
+    from gnd.errors import ModelLoadError, ModelValidationError, ReferenceInputError
+    from gnd.model import load_model_bytes
     from gnd.model._includes import guard_document
+    from gnd.model._unattended import _unattended_source
 
     from .pyrel_runtime import ExportInputError, ProfileRefusal
     try:
         guard_document(document, "export.pyrel")
+        if flat is None and _unattended_source(document) is not None:
+            load_model_bytes(text.encode("utf-8"), source=model_path)
     except ModelValidationError as error:
+        raise ExportInputError(model_validation_message(error)) from error
+    except (ModelLoadError, ReferenceInputError) as error:
         raise ExportInputError(str(error)) from error
     from gnd.model import iter_derivation_clauses
     from gnd.terms import guarded_clause_refusal, uses_temporal, where_uses_membership

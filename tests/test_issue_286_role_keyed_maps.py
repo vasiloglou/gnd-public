@@ -110,3 +110,19 @@ def test_a_description_is_never_read_as_syntax(tmp_path, extra):
     result = validate(tmp_path, model)
     assert result["exit_code"] == 0, result
 
+
+@pytest.mark.parametrize("value", [
+    {"head": {"source": {"date": "2026-07-07"}}},       # review r2: a nested head in a sample value
+    {"bind": {"source": {"date": "2026-07-07"}}},
+    {"date": "2026-07-07"},
+    {"fn": "date_add", "args": [{"date": "2026-07-07"}, {"duration_days": 1}]},
+])
+def test_a_sample_row_value_is_data_whatever_it_holds(tmp_path, value):
+    """A sample row is data, as a population's facts are: nothing in it is read as syntax."""
+    model = poster("day")
+    model["fact_types"][0]["sample_population"] = [{"poster": "D2P", "day": value}]
+    assert [path for path, node in temporal_nodes(model) if ".sample_population" in path] == []
+    assert not uses_temporal(model)
+    result = validate(tmp_path, model)
+    assert result["exit_code"] == 0, result
+

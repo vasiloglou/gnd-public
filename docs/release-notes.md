@@ -16,8 +16,10 @@ uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.1"
 
 - **A role named `date` or `duration_days`.** `gnd validate` no longer
   refuses a fact type whose sample rows have such a role with
-  `semantic:temporal-site`: a sample row is data keyed by role name, not a
-  date term. A model with such a role is also no longer taken for a temporal
+  `semantic:temporal-site`. A sample row is data keyed by role name, as a
+  population's facts are, so the temporal rules no longer read sample rows
+  at all; a date object given as a sample value no longer refuses the model
+  either. A model with such a role is also no longer taken for a temporal
   model by the commands that refuse one
   ([#286](https://github.com/vasiloglou/gnd-public/issues/286)).
 - **A date term in a derivation head, under any role name.** A head whose

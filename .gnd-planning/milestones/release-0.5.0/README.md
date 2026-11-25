@@ -1,10 +1,9 @@
 # release-0.5.0
 
-Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **The three
-preparing phases are done: a 0.5.0 candidate is built from main `85d076ba`,
-passed installed acceptance, and is handed over in the
-[dossier](evidence/RW3/dossier.md). Nothing is uploaded, tagged or released;
-each publication act waits for the owner's request.** The four milestones the owner made the release wait for are
+Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **GND 0.5.0 is
+published: on PyPI since 2026-11-25, tagged `v0.5.0` on `85d076ba`, with a
+GitHub release. The [publication record](006-publication.md) binds the
+receipts. The milestone close is next.** The four milestones the owner made the release wait for are
 merged to main:
 [literature-host-interfaces](../literature-host-interfaces/README.md),
 [reviewed-vocabulary-growth](../reviewed-vocabulary-growth/README.md),
@@ -60,11 +59,13 @@ ship.
   [remote snapshot](evidence/RW3/pre-publication-state.txt) and the
   [rehearsal](evidence/RW3/scratch-verification.txt) of the publication
   edits.
+- [Publication record](006-publication.md) with the receipts under
+  `evidence/publication/`.
 
 Three phases prepare the release and publish nothing: RW1 candidate content,
 RW2 candidate build and installed acceptance, RW3 publication hand-over.
 Publication is a separate stage in which each act runs on the owner's
 request.
 
-Next action: the owner's publication acts, in the dossier's order, each on
-the owner's request. Then the publication record and the milestone close.
+Next action: the milestone close, with the standard GND panel the owner
+selected, and the owner's choice about issue comments.

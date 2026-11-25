@@ -425,6 +425,12 @@ Status, 2026-11-25, RW3 done: the publication hand-over for 0.5.0 is written
 with each owner act, the rehearsed publication edits and a remote snapshot.
 Nothing is uploaded, tagged or released; each act waits for the owner.
 
+Status, 2026-11-25, published: GND 0.5.0 is on PyPI (uploaded 17:53 UTC), the
+served files match the accepted candidate, `v0.5.0` is tagged on `85d076ba`
+and the GitHub release exists, each on the owner's request
+([006-publication.md](milestones/release-0.5.0/006-publication.md)). The
+milestone close is next.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

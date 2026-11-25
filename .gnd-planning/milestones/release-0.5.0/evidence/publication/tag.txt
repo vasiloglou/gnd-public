@@ -1,0 +1,8 @@
+2026-11-25T17:55:56Z
+commit
+To https://github.com/vasiloglou/gnd-public.git
+ * [new tag]           v0.5.0 -> v0.5.0
+5d99a45a48ea7a5561c9251241e4c59941f00b88	refs/tags/v0.5.0
+85d076ba384e67b1f992cfd6b9a596ca01b3d4e7	refs/tags/v0.5.0^{}
+peeled commit: 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
+2026-11-25T17:55:59Z

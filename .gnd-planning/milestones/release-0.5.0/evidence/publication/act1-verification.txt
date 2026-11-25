@@ -1,0 +1,22 @@
+Act 1, the read-only part, run on 2026-11-25 on the owner's words "go on".
+Commands: the two blocks of act 1 in evidence/RW3/dossier.md, on the planning machine.
+The home path does not appear in the output.
+
+release/get_nick_done-0.5.0-py3-none-any.whl: OK
+release/get_nick_done-0.5.0.tar.gz: OK
+comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
+The retained files verify and 0.5.0 is free.
+block 1 exit 0
+From https://github.com/vasiloglou/gnd-public
+ * branch              main       -> FETCH_HEAD
+Main has not changed a shipped file since the candidate.
+block 2 exit 0
+2026-11-25T17:52:04Z
+
+Also observed at the same time:
+origin/main: 5d908318 (the merge of pull request 285)
+remote tags named v0.5.0: 0
+PyPI releases: 0.1.0, 0.2.0, 0.3.0, 0.4.0
+The retained copy on beast-3: the same three OK lines and SOURCE_COMMIT 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
+
+Not done by this run: the owner's own checks (PyPI account ownership; repository content and history).

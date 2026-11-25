@@ -1,7 +1,7 @@
 # seeded-routes-and-identifiers
 
 Opened on 2026-11-25 at the owner's request ("can we actually reopen and plan
-them", then "can you also include 292?"). **SI1 complete. SI2 compatibility measurement is next.**
+them", then "can you also include 292?"). **SI1 and SI2 complete. SI3 corpus and D3 approved.**
 
 It plans three open issues and a tag-only release:
 
@@ -26,4 +26,7 @@ merges and the decisions the specs name; a tag-only 0.5.2 at the end.
 - [SI1 spec](notes/phase-SI1-spec.md): D1 approved by the owner.
 - [SI1 record](002-phase-SI1.md): route verification, review and repairs.
 
-Next action: SI2.
+- [SI2 record](003-phase-SI2.md): identity selection, compatibility census, and review.
+- [SI3 spec](notes/phase-SI3-spec.md): owner-approved corpus and oracle.
+
+Next action: SI3.

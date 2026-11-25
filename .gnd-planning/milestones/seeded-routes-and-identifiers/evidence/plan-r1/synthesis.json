@@ -1,0 +1,726 @@
+{
+  "schema_version": 1,
+  "run_sha256": "9d33b12b548700b8bafd864fdcaff02475d6f3e104ec93aa11bb14f548fe6754",
+  "summary": "Four of six seats returned schema-valid responses at high effort (Gemini malformed, Kimi refused for quota); all four ask for revision. All four found that SI1's proposed marker, carried in host-written flat bytes and optionally bound to digests the host can recompute, would let an unattended host exempt its own claims. The other groups make the predicates checkable: SI1's outcome per route and input, the exemption's full rule band (U8 included), #280's count by cause, the rule for disagreeing supertypes, and D2's readings with costs. Five single-reviewer concerns (Qwen) harden SI2, SI4 and the route set.",
+  "agreed_concerns": [
+    {
+      "group_id": "si1-marker-trust",
+      "severity": "critical",
+      "title": "A marker in the flat bytes lets an unattended host exempt its own elements",
+      "summary": "All four reviewers: plan section 2 puts the exemption list in host-written flat bytes and R1 allows binding it to the flattening record's digests, which the same host can recompute. No predicate requires the forged-marker test.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-marker-self-exemption"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI1-PROVENANCE-TRUST"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-exemption-marker-forgeable"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-r1-trust-boundary"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "si3-count-by-cause",
+      "severity": "high",
+      "title": "The #280 count is not split by cause",
+      "summary": "All four reviewers: the 17 rows include the out-of-scope objectification cause, so D3's cost and predicate 4's target are unsupported.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si3-count-attribution"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI3-CAUSE-COUNTS"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-identification-differs-count-not-decomposed"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-si3-measured-count-underspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "d2-readings-costs",
+      "severity": "medium",
+      "title": "D2 gives no readings or costs",
+      "summary": "All four reviewers: the D2 row defers proposal and cost, though section 2 and C2 already state the readings and one cost.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "d2-costs-unstated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "D2-DECISION-COSTS"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "d2-row-missing-readings-and-cost"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-d2-decision-row-incomplete"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "si1-route-expectations",
+      "severity": "high",
+      "title": "SI1's predicates name no checkable outcome per route, model state and input",
+      "summary": "Claude, Qwen and GLM: predicate 1 asks a rule id of accepted routes; the packaged root's U1 is not covered by the exemption as described; no predicate runs a route on the written flat form; SI1-C1 loses its only input once the seeded root is accepted.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-c1-reachable-input"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-packaged-root-u1-not-exempt"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-1-exit-code-and-rule-id"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-flat-form-predicate-gap"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "si1-exemption-band",
+      "severity": "high",
+      "title": "Predicate 2 names U2 to U6 and misses U8",
+      "summary": "Codex and Qwen: an included confirmed element is also exempt from U8 (_unattended.py), and the plan records no rule band.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI1-U8-EXEMPTION"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-2-u6-unmeasured"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "si3-disagreeing-supertypes",
+      "severity": "medium",
+      "title": "No rule for supertypes that disagree",
+      "summary": "Claude and Qwen: the multi-supertype rule covers only agreeing supertypes.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si3-disagreeing-supertypes"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-supertype-disagreement-unnamed"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "si2-reading-c-vacuous-predicate"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "include-route-list-unhomed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "si2-si3-corpus-approval-order"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "si4-c2-owner-gated-criterion"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "o4-map-budget-no-predicate"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-si1-marker-trust",
+      "rank": 1,
+      "title": "A marker in the flat bytes lets an unattended host exempt its own elements",
+      "action": "Drop the marker and the digest-binding control. The exemption is computed only in-process from the resolved, pin-checked includes; nothing read from input bytes grants it. The written flat file of a seeded root, given as input, gets one named refusal (O2's second branch for that input), and D1 says so. Predicate 2 and SI1-C3 require a forged-marker case that is still refused on every route.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-marker-self-exemption"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI1-PROVENANCE-TRUST"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-exemption-marker-forgeable"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-r1-trust-boundary"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-marker-self-exemption",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-marker-self-exemption",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-marker-self-exemption",
+          "evidence_index": 2
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI1-PROVENANCE-TRUST",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-exemption-marker-forgeable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-exemption-marker-forgeable",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-exemption-marker-forgeable",
+          "evidence_index": 2
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-exemption-marker-forgeable",
+          "evidence_index": 3
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-r1-trust-boundary",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-r1-trust-boundary",
+          "evidence_index": 1
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-si3-count-by-cause",
+      "rank": 2,
+      "title": "The #280 count is not split by cause",
+      "action": "Measured at f7ee3720: of the 17 rows, 8 are unit-based (8 models), 5 multi-supertype (3 models), 4 objectification (2 models); both concepts rows are objectification. Predicate 4 becomes 17 to 4 rows and 2 to 2 concepts, each in-scope class checked separately; D3's cost reads 13 links in 11 models.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si3-count-attribution"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI3-CAUSE-COUNTS"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-identification-differs-count-not-decomposed"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-si3-measured-count-underspecified"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si3-count-attribution",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si3-count-attribution",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI3-CAUSE-COUNTS",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-identification-differs-count-not-decomposed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-identification-differs-count-not-decomposed",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-identification-differs-count-not-decomposed",
+          "evidence_index": 2
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-si3-measured-count-underspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-si3-measured-count-underspecified",
+          "evidence_index": 1
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-d2-readings-costs",
+      "rank": 3,
+      "title": "D2 gives no readings or costs",
+      "action": "Fill the D2 row with readings (a), (b), (c) and the cost of each: (a) changes three shipped examples, against record 022's precedent; (b) leaves the #279 case unfixed; (c) changes no tracked model and is shown only on built fixtures.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "d2-costs-unstated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "D2-DECISION-COSTS"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "d2-row-missing-readings-and-cost"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-d2-decision-row-incomplete"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "d2-costs-unstated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "D2-DECISION-COSTS",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "d2-row-missing-readings-and-cost",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "d2-row-missing-readings-and-cost",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "d2-row-missing-readings-and-cost",
+          "evidence_index": 2
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-d2-decision-row-incomplete",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-si1-route-expectations",
+      "rank": 4,
+      "title": "SI1's predicates name no checkable outcome per route, model state and input",
+      "action": "Predicate 1 becomes a table the SI1 ruling fills: (route, input: packaged root, grown root, written flat file) to (exit code, rule id or none). Correct section 1: U1's wait for the first document also depends on the includes (_owns_nothing reads includes), so the in-process re-entry must carry it. SI1-C1 names its class (re-entry refuses bytes the composition accepted) and a test that injects such a failure.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-c1-reachable-input"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-packaged-root-u1-not-exempt"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-1-exit-code-and-rule-id"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-flat-form-predicate-gap"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si1-c1-reachable-input",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-packaged-root-u1-not-exempt",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-packaged-root-u1-not-exempt",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-packaged-root-u1-not-exempt",
+          "evidence_index": 2
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si1-packaged-root-u1-not-exempt",
+          "evidence_index": 3
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-1-exit-code-and-rule-id",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-1-exit-code-and-rule-id",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-flat-form-predicate-gap",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "si-plan-flat-form-predicate-gap",
+          "evidence_index": 1
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-si1-exemption-band",
+      "rank": 5,
+      "title": "Predicate 2 names U2 to U6 and misses U8",
+      "action": "Predicate 2 lists the exemption rule by rule from its home: U2, U3 and U6 skipped, U4 and U5 replaced by U7 over root-declared documents, U8 skipped when confirmed, U1's first-document wait; a reviewed-include case exercises U8.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI1-U8-EXEMPTION"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-2-u6-unmeasured"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "SI1-U8-EXEMPTION",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-2-u6-unmeasured",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-2-u6-unmeasured",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate-2-u6-unmeasured",
+          "evidence_index": 2
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-si3-disagreeing-supertypes",
+      "rank": 6,
+      "title": "No rule for supertypes that disagree",
+      "action": "Measured: all 7 multi-supertype subtypes have supertypes with different identifiers, so the agree rule covers none. Use the normative rule GND already states (an inheriting subtype is identified as its first supertype is, composite included) and test it, with one non-inheriting case.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si3-disagreeing-supertypes"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-supertype-disagreement-unnamed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "si3-disagreeing-supertypes",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-supertype-disagreement-unnamed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-supertype-disagreement-unnamed",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si3-supertype-disagreement-unnamed",
+          "evidence_index": 2
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-si2-reading-c-vacuous-predicate",
+      "rank": 7,
+      "title": "SI2 requires discriminating fixtures",
+      "action": "Predicate 3 and SI2-C2 are judged on built fixtures that separate the readings (first not preferred; preferred not confirmed; confirmed but deontic; two qualifying constraints with a stated tie rule), failing first on main.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-reading-c-vacuous-predicate"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-reading-c-vacuous-predicate",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-reading-c-vacuous-predicate",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-reading-c-vacuous-predicate",
+          "evidence_index": 2
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-include-route-list-unhomed",
+      "rank": 8,
+      "title": "Home the route list and close the route set",
+      "action": "Section 3 names the route table in representation-format.md, Model includes (version 5); the SI1 spec's E1 enumerates every route that loads an include root or re-loads flat bytes.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "include-route-list-unhomed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "include-route-list-unhomed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "include-route-list-unhomed",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "include-route-list-unhomed",
+          "evidence_index": 2
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-si2-si3-corpus-approval-order",
+      "rank": 9,
+      "title": "State why SI2 and SI3 are independent",
+      "action": "The Ossie export selects its composite identifier in its own code and does not call reference_identity, so D2 cannot change ontology bytes; the plan says so and SI3's spec re-checks it.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-si3-corpus-approval-order"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-si3-corpus-approval-order",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-si3-corpus-approval-order",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si2-si3-corpus-approval-order",
+          "evidence_index": 2
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-si4-c2-owner-gated-criterion",
+      "rank": 10,
+      "title": "Move the tag out of SI4's criteria",
+      "action": "SI4 closes on the preparation and release_text.py check; the tag is the owner's act, recorded at the close.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si4-c2-owner-gated-criterion"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si4-c2-owner-gated-criterion",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si4-c2-owner-gated-criterion",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "si4-c2-owner-gated-criterion",
+          "evidence_index": 2
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-o4-map-budget-no-predicate",
+      "rank": 11,
+      "title": "Give O4's map question a predicate",
+      "action": "Predicate 3 adds that reference_identity adds no runtime query outside the RC-04 budget, checked by the existing counted guard.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "o4-map-budget-no-predicate"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "o4-map-budget-no-predicate",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "o4-map-budget-no-predicate",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "o4-map-budget-no-predicate",
+          "evidence_index": 2
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # seeded-routes-and-identifiers
 
 Opened on 2026-11-25 at the owner's request ("can we actually reopen and plan
-them", then "can you also include 292?"). **Planning.** No phase has started.
+them", then "can you also include 292?"). **Plan approved (delegated); no phase has started.**
 
 It plans three open issues and a tag-only release:
 
@@ -18,8 +18,11 @@ The owner chose on 2026-11-25: the light GND panel for the plan and the
 close; delegated approval of the plan and the specs, with the owner deciding
 merges and the decisions the specs name; a tag-only 0.5.2 at the end.
 
-- [Plan r1](notes/seeded-routes-and-identifiers-plan.md): the measurements of
-  all three issues on main `f7ee3720`, five phases, decisions D0 to D5.
-- [SI1 spec r1](notes/phase-SI1-spec.md): draft; D1 is the owner's.
+- [Plan r2](notes/seeded-routes-and-identifiers-plan.md): the measurements of
+  all three issues on main `f7ee3720`, five phases, decisions D0 to D5, and
+  in §11 the eleven fixes from the light panel over r1.
+- [001 plan gate](001-plan-gate.md): light panel over r1 (four of six seats,
+  all "revise"), r2 approved by delegated ruling; no review has read r2.
+- [SI1 spec r2](notes/phase-SI1-spec.md): draft; D1 is the owner's.
 
-Next action: the light panel over the plan, then the plan gate.
+Next action: SI1's E1 measurement, then D1 to the owner.

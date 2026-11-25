@@ -1,8 +1,11 @@
 # Seeded routes and identifiers
 
-r1, 2026-11-25. Milestone `seeded-routes-and-identifiers`, phase prefix `SI`.
-**Draft. No review has read it, and it has no ruling.** It plans three open
-issues and a tag-only release:
+r2, 2026-11-25. Milestone `seeded-routes-and-identifiers`, phase prefix `SI`.
+**r1 was read by the light GND panel (four of six seats, all "revise"; see
+[the panel review](../evidence/plan-r1/PANEL-REVIEW.md)). r2 applies its
+eleven fixes, listed in §11; no review has read the r2 bytes.** The plan
+gate is recorded in [001](../001-plan-gate.md). It plans three open issues
+and a tag-only release:
 
 - [#292](https://github.com/vasiloglou/gnd-public/issues/292): an unattended
   root that includes a reviewed model validates, but `gnd flatten` ends in a
@@ -24,25 +27,44 @@ close. Plan authorship is not approval and not publication authority.
 
 The milestone is complete when, on main after merge:
 
-1. On a copy of the packaged `seeded_growth` example, before and after its two
-   growth rounds, `gnd flatten`, `gnd extract`, `gnd export pyrel` and both
-   `--rules` modes give the result SI1's ruling names for each route, with an
-   exit code and a named rule id. No route ends in a traceback; `gnd flatten`
-   on any model it cannot flatten exits 3 with a named refusal (SI1).
-2. An element that came from a reviewed include keeps the exemption from U2
-   to U6 on every route SI1's ruling admits, and an element the root owns
-   keeps every unattended rule there (SI1).
-3. `refscheme.reference_identity` selects the identifier SI2's ruling names.
-   Each caller whose result changes is listed before code with the measured
-   models and entities it affects, and each change is either the ruling's
-   intent or repaired (SI2).
+1. SI1's ruling fills one expectation table, (route, input) to (exit code,
+   rule id or none), and a test checks every cell. The routes: `gnd flatten`,
+   `gnd extract`, `gnd export pyrel` and both `--rules` modes, plus `gnd
+   validate` and `gnd check` for the flat-file input. The inputs: the packaged
+   `seeded_growth` root, that root after its two growth rounds, and the flat
+   file `gnd flatten` writes for each. No cell is a traceback. `gnd flatten`
+   reports the class of models its re-entry refuses (bytes the composition
+   accepted and the re-entry did not) with exit 3 and a named rule id, shown
+   by a test that injects such a refusal (SI1).
+2. An element that came from a reviewed include keeps, on every route SI1's
+   ruling admits, each exemption its home (`gnd.model._unattended`) grants it
+   today, rule by rule: U2, U3 and U6 do not apply; U4 and U5 are replaced by
+   U7 over the documents the root declares; U8 does not apply when the element
+   is confirmed; and U1 waits for the first document while the root owns
+   nothing. An element the root owns keeps every unattended rule. The
+   exemption is computed only from the resolved, pin-checked includes;
+   nothing in input bytes grants it, and a test in which a root or a flat file
+   lists its own elements as included is refused on every route (SI1).
+3. `refscheme.reference_identity` selects the identifier SI2's ruling names,
+   judged on built fixtures that separate the readings (a first constraint
+   that is not preferred; one preferred but not confirmed; one confirmed but
+   deontic; two that qualify, with the tie rule stated), each failing first
+   on main. Each caller whose result changes on a tracked model is listed
+   before code with the models and entities it affects, and each change is
+   either the ruling's intent or repaired. `reference_identity` adds no
+   runtime query outside the counted budget (RC-04), as the existing counted
+   guard shows (SI2).
 4. The Ossie ontology export declares the identifiers SI3's ruling names. Every
    ontology whose bytes change is listed before code with its old and new
    digest; the pinned upstream validator and parser accept the new
-   ontologies, the round trip through `gnd import ossie` holds, and the
-   mapping's `identification-differs` rows fall by the measured count (SI3).
+   ontologies, and the round trip through `gnd import ossie` holds. The
+   mapping's `identification-differs` rows go from 17 to 4 (the
+   objectification rows, out of scope), each of the two classes checked on
+   its own: the 8 unit-based rows and the 5 multi-supertype rows reach 0. The
+   2 `concepts` rows, both objectifications, stay (SI3).
 5. 0.5.2 is prepared as a GitHub tag only, under the procedure in
-   `docs/releasing.md`, and the tag waits for the owner's word (SI4).
+   `docs/releasing.md`. The tag is the owner's act, on the owner's word, and
+   the close records it (SI4).
 6. Each phase has an approved spec, a record with verbatim gate output and one
    independent reviewer in a different tool; the close has the light GND
    panel, a full default lane and a question sweep.
@@ -97,6 +119,18 @@ context `_INCLUDED` set by the include loader while it validates the root;
 `flatten_model` drops `includes` from the wire and re-loads the flat bytes,
 and the re-entry has no includes, so every element is the root's own.
 
+U1 on the packaged root has the same cause (r2, from the panel): a root that
+owns nothing may wait for its first document, and `_owns_nothing`
+(`_unattended.py`) answers false for a model without `includes`. Passing the
+origins into the re-entry is therefore not enough; the re-entry must also
+know that the root owns nothing. The rules and what an included element is
+spared, from `_rule_unattended`: U1 (documents declared, waived while the
+root owns nothing), U2 (no confirmed status), U3 (no human source), U4 and
+U5 (spans on object types, fact types and constraints), U6 (spans on sample
+rows), U7 (span shape), U8 (no unreviewed alethic). An included element skips
+U2, U3 and U6, has U4 and U5 replaced by U7 over the root's documents, and
+skips U8 when it is confirmed.
+
 **#279**, over the 436 loadable models tracked in the repository: 9 entities
 have a composite `reference_identity`. For 3 of them the Rmap selects no
 composite identifier, where `reference_identity` returns one: `assertion` in
@@ -119,6 +153,23 @@ a unit-based reference; 7 subtypes in 7 models have more than one supertype.
 The normative text names a third cause, an objectification keyed by its own
 fact type, which #280 does not ask to change.
 
+Split by cause (r2, from the panel; the cause is that of the role player the
+mapping cannot identify, measured with
+[cause280.py](../evidence/plan-r1/cause280.py)):
+
+| Cause | `unmapped_links` rows | Models | `concepts` rows |
+|---|---|---|---|
+| unit-based reference | 8 | 8 | 0 |
+| subtype with several supertypes | 5 | 3 | 0 |
+| objectification keyed by its own fact type (out of scope) | 4 | 2 | 2 |
+
+In all 7 subtypes with several supertypes, the supertypes carry different
+identifiers (each its own `popular` reference), so a rule for supertypes that
+agree would cover none of them. The normative text already says which one
+applies: an inheriting subtype "is identified as its first supertype is,
+composite included" (`representation-format.md`, the Rmap's identification
+table).
+
 ### Conflicting clauses
 
 - **C1 (#292, O2).** The issue offers two outcomes: accept with the
@@ -131,16 +182,21 @@ fact type, which #280 does not ask to change.
 
 ## 2. Contract proposal and product behavior
 
-- **SI1, #292 (proposal for D1: accept).** The flat form of a seeded root
-  keeps the exemption. Proposed mechanism, to be measured in the SI1 spec
-  before code: the flat model records which elements came from a reviewed
-  include, as one top-level list of element addresses, and the unattended
-  rules read it as they read `_INCLUDED` today; the flattening record's
-  `origins` already holds the same addresses. `gnd flatten`, `gnd extract`
-  and `gnd export pyrel` then accept the packaged root and the grown root.
-  Whatever D1 decides, `gnd flatten` reports a model it cannot flatten with
-  exit 3 and a named rule id. The alternative reading (refuse by name) keeps
-  the 0.4.0 workaround and adds one refusal and one sentence to the guide.
+- **SI1, #292 (proposal for D1: accept, in process only).** The routes that
+  flatten a seeded root themselves (`flatten`, `extract`, the three PyRel
+  modes) keep the exemption while they do it: the re-entry of the flat bytes
+  is validated with the origins and the owns-nothing state the root's own
+  validation computed from its resolved, pin-checked includes. Nothing is
+  written into the flat model to say what was included, and nothing read
+  from input bytes grants the exemption. The flat file such a route writes,
+  given later as an input on its own, has no pins to check, so it gets one
+  named refusal that says to load the root (O2's second branch, for that
+  input only). r1 proposed a list of included addresses in the flat model;
+  the panel found that a host can write that list, and its digests, itself
+  (§11, A1). Whatever D1 decides, `gnd flatten` reports a model it cannot
+  flatten with exit 3 and a named rule id. The alternative reading (refuse by
+  name) keeps the 0.4.0 workaround and adds one refusal and one sentence to
+  the guide.
 - **SI2, #279 (no proposal yet; D2).** Three readings: (a) select as the Rmap
   does, accepting the measured changes in three shipped examples; (b) keep
   the first declared, document it, and build the value-type map once per
@@ -151,8 +207,11 @@ fact type, which #280 does not ask to change.
   have it, and no tracked model does; the spec builds such a model to test
   it. The spec measures each reading per caller.
 - **SI3, #280 (D3).** The ontology declares `identify_by` for a unit-based
-  reference (a value relationship to its measure) and, for a subtype with
-  several supertypes, the identifier it inherits when the supertypes agree.
+  reference (a value relationship to its measure) and, for an inheriting
+  subtype with several supertypes, the identifier of its first supertype, as
+  the normative text already identifies it (r1 said "when the supertypes
+  agree", which covers none of the 7 measured subtypes; §11, A6). A subtype
+  that does not inherit its reference is unchanged, and a test shows it.
   The ontology bytes of the affected models change; the spec is corpus-first
   and lists each changed ontology with its digests, and the round trip
   through `gnd import ossie` and the sidecar is decided there.
@@ -168,9 +227,12 @@ SI2 ─┼──> SI4 ──> close
 SI3 ─┘
 ```
 
-SI1, SI2 and SI3 touch different modules and can run in any order; SI3 reads
-SI2's ruling only if D2 changes how the Ossie export identifies an entity,
-which the SI3 spec checks.
+SI1, SI2 and SI3 touch different modules and can run in any order. D2 cannot
+change the ontology bytes SI3 approves: the Ossie export selects its
+composite identifier in its own code (`export/ossie.py`, `_add_references`,
+which already prefers a `preferred` constraint) and never calls
+`reference_identity`. The SI3 spec checks this again before its corpus is
+approved.
 
 | Artifact | Home |
 |---|---|
@@ -179,18 +241,24 @@ which the SI3 spec checks.
 | reference identity | `src/gnd/refscheme.py` |
 | Ossie ontology identifiers | `src/gnd/export/ossie.py`; `representation-format.md`, the Ossie projection table |
 | guide | `src/gnd/skills/gnd-model-from-text/references/unattended-growth.md` |
+| include route list | `representation-format.md`, "Model includes (version 5)", the table of CLI routes that resolve an include root |
 | release | `pyproject.toml` and the files `docs/releasing.md` names |
 
 ## 4. Phases
 
 ### SI1: seeded roots through flatten, extract and PyRel export (#292)
 
-- SI1-C1: `gnd flatten` exits 3 with a named rule id for every model it
-  cannot flatten; a test reproduces today's traceback first.
-- SI1-C2: D1's outcome on the packaged and the grown `seeded_growth` root, for
-  `flatten`, `extract` and the three PyRel modes, each with a test.
-- SI1-C3: an element the root owns keeps every unattended rule on those
-  routes; a root element without spans is still refused.
+- SI1-C0: the spec's E1 lists every route that loads an include root or
+  loads flat bytes again, in process or from a written file, with what each
+  does today with a seeded root; predicate 1's table ranges over that list.
+- SI1-C1: `gnd flatten` exits 3 with a named rule id for a model its re-entry
+  refuses; a test reproduces today's traceback first, and a second test
+  injects a re-entry refusal after the fix.
+- SI1-C2: predicate 1's table, each cell with a test.
+- SI1-C3: predicate 2, rule by rule; a root element without spans is still
+  refused with U4 or U5; a reviewed include with a confirmed alethic element
+  keeps its U8 exemption; a root or flat file that lists its own elements as
+  included is refused on every route.
 - SI1-C4: the guide and the include route list say what each route does with
   a seeded root.
 - SI1-C5: the notes bullet under `Unreleased:`.
@@ -198,11 +266,12 @@ which the SI3 spec checks.
 ### SI2: reference identity selection (#279)
 
 - SI2-C1: the spec measures D2's three readings per caller over the tracked
-  models before the ruling.
+  models and over the built fixtures of predicate 3 before the ruling.
 - SI2-C2: the ruled reading, with a test per changed caller and the old
-  behaviour pinned where it stays.
+  behaviour pinned where it stays; the fixtures fail first on main.
 - SI2-C3: if the ruling keeps per-call map building, the reason is stated;
-  otherwise the map is built once per model through `ModelIndex`.
+  otherwise the map is built once per model through `ModelIndex`. Either
+  way, the counted-budget guard (RC-04) passes unchanged.
 
 ### SI3: Ossie identifiers for unit-based references and multi-supertype subtypes (#280)
 
@@ -211,13 +280,15 @@ which the SI3 spec checks.
 - SI3-C2: the export writes them; the pinned validator and parser accept them
   (`ossie_oracle`, on the owner's selection at the spec).
 - SI3-C3: `gnd import ossie` restores each changed model as before.
-- SI3-C4: the `identification-differs` count falls by what the corpus shows;
-  the normative text and `docs/explanation/ossie.md` say what changed.
+- SI3-C4: predicate 4's counts, each class on its own; the normative text and
+  `docs/explanation/ossie.md` say what changed.
 
 ### SI4: 0.5.2 as a GitHub tag only
 
 - SI4-C1: the tag-only procedure; `tools/release_text.py check` exits 0.
-- SI4-C2: the tag `v0.5.2` on the merge commit, on the owner's word.
+  SI4 is complete on this. The tag `v0.5.2` on the merge commit is the
+  owner's act, on the owner's word, and the close records it (r1 listed it as
+  SI4-C2; §11, A10).
 
 ### Milestone close
 
@@ -250,7 +321,7 @@ question sweep and a close record with a delegated ruling.
 
 | Risk | Control |
 |---|---|
-| R1: SI1's marker lets a host exempt its own elements by writing the marker into a flat file | the exemption is honoured only on the routes that produce the flat bytes from the pinned root in-process, or the marker is bound to the flattening record's digests; the spec decides and tests a forged marker |
+| R1: an unattended host exempts its own elements | the exemption is computed only in process, from includes resolved and checked against their pins in the same run; no marker is written and nothing in input bytes, the flattening record included, grants it (a host can write a list and recompute its digests). Tests: a root and a flat file that list their own elements as included are refused on every route (predicate 2). r1 also allowed binding a marker to the record's digests; withdrawn (§11, A1) |
 | R2: SI2 changes shipped verbalizations unannounced | the per-caller measurement before the ruling; a notes bullet |
 | R3: SI3's new `identify_by` is rejected upstream | the pinned validator and parser on every changed ontology (SI3-C2) |
 | R4: SI3's ontology change breaks the sidecar binding of existing exports | the round trip (SI3-C3); old ontologies stay importable |
@@ -269,7 +340,8 @@ question sweep and a close record with a delegated ruling.
 - Approvals: the owner delegated plan and spec approval for this milestone on
   2026-11-25 ("Delegate"). Each ruling is recorded as a delegated approval
   with the digest of the bytes it covers and is never described as the
-  owner's reading. Decisions D1 to D3 are put to the owner.
+  owner's reading. D1 and D3 are put to the owner, and D2 is when the ruled
+  reading changes a shipped example.
 - Plan and close review: the light GND panel, the owner's choice of
   2026-11-25.
 - Phase diffs: one independent reviewer in a different tool through the review
@@ -293,10 +365,35 @@ None of these has run. The measurements in §1 are inspection.
 | ID | Question | Proposal | Cost of the other reading |
 |---|---|---|---|
 | D0 | Plan and close review | the light GND panel (**the owner's choice**) | -- |
-| D1 | #292: accept a seeded root's flat form with the exemption, or refuse it by name? | accept, with the mechanism the SI1 spec measures | refusing keeps the 0.4.0 workaround for every host that grows from a seed |
-| D2 | #279: which identifier does `reference_identity` select? | decided at the SI2 spec, after the per-caller measurement | -- |
-| D3 | #280: declare the identifiers, and how the round trip treats them | declare them, corpus-first | not declaring leaves 17 links unmapped |
+| D1 | #292: accept a seeded root's flat form with the exemption, or refuse it by name? | accept, in process only: `flatten`, `extract` and the PyRel modes accept the seeded root; the flat file they write, given on its own, gets one named refusal that says to load the root | refusing keeps the 0.4.0 workaround for every host that grows from a seed; a marker in the flat file (r1's mechanism) lets a host exempt its own claims |
+| D2 | #279: which identifier does `reference_identity` select? | ruled at the SI2 spec, after the per-caller and fixture measurement; put to the owner if the ruled reading changes a shipped example | (a) as the Rmap: changes the verbalization and extraction vocabulary of three shipped examples, the break record 022 declined; (b) first declared: no change, the #279 case stays unfixed; (c) preferred confirmed alethic, else first: no tracked model changes, shown only on built fixtures |
+| D3 | #280: declare the identifiers, and how the round trip treats them | declare them, corpus-first; for several supertypes, the first supertype's, as the normative text says | not declaring leaves 13 links unmapped in 11 models (8 unit-based, 5 multi-supertype) |
 | D4 | Release | 0.5.2 tag-only (**the owner's choice**) | -- |
 | D5 | Phase order | SI1 first (a defect a user reported), then SI2, SI3, SI4 | -- |
 
 Open questions carried: none beyond the rows above.
+
+## 11. Amendments of r2 (2026-11-25, from the r1 plan panel)
+
+The light GND panel read r1 (SHA-256
+`3bd8904535d1d5cfbbe387e14c183235112c0edf21cabee2b80618e9c6923f1f`,
+committed at `d316b119`): four of six seats, every one "revise". Its review,
+synthesis and the disposition of each concern are in
+[evidence/plan-r1](../evidence/plan-r1/). r1's wording stays in git at that
+commit; each row below says what r2 changed and where.
+
+| Row | Panel fix | Change in r2 | Where |
+|---|---|---|---|
+| A1 | `fix-si1-marker-trust` (all four seats) | the flat-model marker and the digest-binding control are withdrawn; the exemption is computed only in process from the pin-checked includes; the written flat file, given on its own, gets one named refusal | §2 SI1, R1, D1, predicate 2 |
+| A2 | `fix-si3-count-by-cause` (all four) | the 17 rows split by cause: 8 unit-based, 5 multi-supertype, 4 objectification; predicate 4 becomes 17 to 4, each class checked on its own; D3's cost is 13 links in 11 models | §1, predicate 4, SI3-C4, D3 |
+| A3 | `fix-d2-readings-costs` (all four) | D2 carries the three readings and the cost of each | D2 |
+| A4 | `fix-si1-route-expectations` (Claude, Qwen, GLM) | predicate 1 is a (route, input) table including the written flat file; §1 records that U1 also depends on the includes; SI1-C1 names its class and an injected test | predicate 1, §1, SI1-C0 to C2 |
+| A5 | `fix-si1-exemption-band` (Codex, Qwen) | predicate 2 lists the exemption rule by rule, U8 included; §1 records the band | predicate 2, §1, SI1-C3 |
+| A6 | `fix-si3-disagreeing-supertypes` (Claude, Qwen) | measured: the supertypes disagree in all 7; SI3 uses the first supertype, as the normative text does | §1, §2 SI3, D3 |
+| A7 | `fix-si2-reading-c-vacuous-predicate` (Qwen) | SI2 is judged on built fixtures that separate the readings, failing first | predicate 3, SI2-C1, SI2-C2 |
+| A8 | `fix-include-route-list-unhomed` (Qwen) | the route list has a home; E1 lists every route that loads an include root or flat bytes | §3, SI1-C0 |
+| A9 | `fix-si2-si3-corpus-approval-order` (Qwen) | §3 says why D2 cannot change SI3's ontology bytes | §3 |
+| A10 | `fix-si4-c2-owner-gated-criterion` (Qwen) | the tag leaves SI4's criteria and is recorded at the close | predicate 5, SI4 |
+| A11 | `fix-o4-map-budget-no-predicate` (Qwen) | O4's map question gets a predicate: no runtime query outside RC-04 | predicate 3, SI2-C3 |
+
+No row changes a decision the owner made (D0, D4) or the phase list.

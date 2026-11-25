@@ -1,0 +1,31 @@
+ssh -o BatchMode=yes -o ConnectTimeout=10 beast-3 'bash -s -- 4f2945a95fd0e9bd1de0103caa190da7616bb159 base' < .gnd-planning/milestones/release-0.5.0/evidence/RW1/e1-shards.sh
+Runner exit: 0. Shard exits are listed below. The scratch path is abbreviated.
+
+E1 scratch directory: <beast-3-scratch>
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+4f2945a95fd0e9bd1de0103caa190da7616bb159
+Python 3.13.18
+
+Shard 0 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+2834 passed, 183 deselected, 2 errors in 543.75s (0:09:03)
+
+Shard 1 exit 0
+4375 passed, 75 deselected in 799.00s (0:13:18)
+
+Shard 2 exit 1
+FAILED tests/test_packaged_skills.py::test_every_relative_skill_link_resolves_inside_the_resource_tree
+1 failed, 3556 passed, 214 deselected, 1 warning in 531.71s (0:08:51)
+
+Shard 3 exit 0
+4175 passed, 13 skipped, 256 deselected in 642.83s (0:10:42)
+
+Shard 4 exit 0
+4351 passed, 128 deselected in 914.65s (0:15:14)
+
+Shard 5 exit 0
+2855 passed, 228 deselected in 502.02s (0:08:22)

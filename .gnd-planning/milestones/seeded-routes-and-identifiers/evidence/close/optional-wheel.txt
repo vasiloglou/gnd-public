@@ -1,0 +1,9 @@
+beast-3, PATH prefixed with an isolated uv 0.10.10 install
+.venv/bin/python -m pytest -q --tb=short -p no:cacheprovider tests/test_public_optional.py
+Exit: 0
+
+4f2945a95fd0e9bd1de0103caa190da7616bb159
+uv 0.10.10 (8c730aaad 2026-03-13)
+Python 3.13.18
+..                                                                       [100%]
+2 passed in 3.10s

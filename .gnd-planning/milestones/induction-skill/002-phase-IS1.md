@@ -185,7 +185,7 @@ one reviewer.
 
 **None executed.** One refactor was seen and deferred.
 `tests/test_packaged_skills.py` pins the link graph as a chain of
-per-milestone unions: MC3, MC4, RN0, GC4, LX2, VG5, and now SI1 and IS1.
+per-milestone unions: MC3, MC4, RN0, GC4, LX2, VG5, SI1 and now IS1.
 Each milestone appends a set and a count. That chain is how SI1's edge went
 unpinned while the file stayed on the structure-guard list: a new edge needs
 someone to append it, and nothing fails until the whole graph is compared.
@@ -216,7 +216,7 @@ and the sibling edits are one sentence each.
 | IS1-Q1 | The global invocation guard predates IS1 and binds every skill. It has a floor of 29 against 41 measured snippets, matches long options by substring (so an abbreviation passes), and scans backtick fences only | repository maintenance; an issue on the owner's word |
 | IS1-Q2 | The test-strength residuals of round 2, F3 (test) and F4 to F10: per-command actor assertions, the miner's export line, table and comment visibility, link-definition titles, the handoff link, keyword reversals, the path, install and identity patterns | the next change to `tests/test_induce_skill.py`, at the latest IS2 |
 | IS1-Q3 | Regenerate `EXPECTED_RELATIVE_LINKS` as one literal, ending the per-milestone union chain | repository maintenance |
-| IS1-Q4 | SI1 (seeded-routes-and-identifiers, `8acc7b29`) merged with `tests/test_packaged_skills.py` red, although that file is on the structure-guard list; IS1 pinned the edge (finding F1 below) | the seeded-routes-and-identifiers close sweep |
+| IS1-Q4 | SI1 (seeded-routes-and-identifiers, `8acc7b29`) merged with `tests/test_packaged_skills.py` red, although that file is on the structure-guard list (finding F1 below). That milestone's close (PR 314, merged while IS1's PR was open) pinned the edge as `SI1_FLATTENING_EDGE`; IS1's own pin of it was dropped when main was merged into this branch | closed by PR 314; the gate-list question stays with the seeded-routes-and-identifiers close |
 | IS1-Q5 | The evidence runner `review-r1-mutations.py` restores the supplied baseline and labels any failure CAUGHT (round 2 F11); the recorded outcomes were reproduced independently | stated beside the evidence; no later use |
 
 ## Refuted premises
@@ -228,9 +228,11 @@ and the sibling edits are one sentence each.
   close.
 - **Spec section 6.1: "six fenced `gnd` lines".** Measured seven: the miner's
   export is its own line. Fixed by measurement, as the spec allows.
-- **Spec section 6.2: "15 new edges".** Measured 15 for IS1, plus one SI1 edge
-  main had left unpinned (implementation finding F1: main was red on
-  `test_every_relative_skill_link_resolves_inside_the_resource_tree` at the
-  base, reproduced in a clean clone of `1e6083f3`).
+- **Spec section 6.2: "15 new edges".** Measured 15 for IS1. At the base,
+  main was also red on
+  `test_every_relative_skill_link_resolves_inside_the_resource_tree` over one
+  unpinned SI1 edge (implementation finding F1, reproduced in a clean clone of
+  `1e6083f3`). IS1 pinned it, and when PR 314 pinned the same edge on main,
+  the merge of main into this branch kept main's pin and dropped IS1's.
 - **Round 1's first T8 and T17 tests** passed on edits that reversed what they
   guard. They were replaced; see the review section.

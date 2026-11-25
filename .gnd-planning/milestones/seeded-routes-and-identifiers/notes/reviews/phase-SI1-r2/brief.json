@@ -1,0 +1,34 @@
+{
+  "base": "4f2945a95fd0e9bd1de0103caa190da7616bb159",
+  "claims": [
+    "The release-preparation merge fails the package skill guard on one intentional resolved link. Only the exact expected edge and matching multiplicity change; unrelated and missing edges are still rejected."
+  ],
+  "created": "2026-11-25T22:09:35.356164+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/reviews/phase-SI1-r2/diff.patch",
+      "sha256": "a81518319d1e16e796297441f9278ce0055eabfbf0c4950ca51ece939d6a9392"
+    },
+    {
+      "path": "tests/test_packaged_skills.py",
+      "sha256": "962093d37de52031c6c0840e1ba81ef66899a31e305b26ae73d02dda798a6f01"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
+      "sha256": "eb004b90f123ac034ca8553306bffdf6532d20554c0273f15f7728c01f48a309"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "ad7823a3fc383563021119d18812611f337a59616a6f9f0660a45f01b2109042"
+    }
+  ],
+  "head": "4f2945a95fd0e9bd1de0103caa190da7616bb159",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does this repair correctly record the intentional SI1 growth-guide link and keep the packaged skill inventory guard strict?",
+  "subject": "phase",
+  "version": 1
+}

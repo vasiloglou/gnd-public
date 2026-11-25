@@ -240,8 +240,8 @@ plan's "Close repairs".
 | A5 | repaired: CR12. RF-D5's trigger (the first public release after RF6) has happened: 0.2.0 to 0.5.0 are published. Shim retirement still needs its own approved phase; carried |
 | A6, A8, A9 | repaired: CR12 |
 | A7, B1, B4 | repaired: CR1; the RF7 remainder is carried |
-| A11 | repaired: CR3 |
-| A13, C38 | accepted: delegated re-targets and the RF5 re-plan are listed in close-results.md as delegated, not the owner's |
+| A11 | CR3, for the owner's ratification (C-D5) |
+| A13, C38 | owner decision C-D4: ratify the delegated re-targets and the RF5 re-plan, listed in close-results.md as delegated |
 | B2 | the close review is the light GND panel over record 018 |
 | B3 | repaired: CR2 |
 | C2 | closed: vasiloglou/gnd-public#8 is a merged pull request ("Drop whole-tree attribution from the ledger check"), checked at the close |
@@ -264,7 +264,7 @@ plan's "Close repairs".
 | C66 | carried to the source owners, as recorded |
 | C67 | accepted: cloud CI is not a required check (AGENTS.md); the full lane ran on beast-3 instead |
 | C68 | accepted limitation: macOS only |
-| families: four never-ruled groups | owner decision C-D2 |
+| families: groups with agreeing pins and several definitions | owner decision C-D2 (close-results.md, measured in evidence/close/pin-agreement.txt) |
 
 Every row of sections A to C not listed here is ruled, closed or historical
 as its "State per records" column says.

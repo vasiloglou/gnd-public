@@ -1,0 +1,611 @@
+{
+  "schema_version": 1,
+  "run_sha256": "34862279a3d384e29e4eb53256e1df3a55e5b4e831836d73d8fec55b6c7f097c",
+  "summary": "Four of six seats returned valid responses at high effort, all 'revise' (Gemini returned a block without a concern and failed validation; Kimi exited nonzero). All four found that predicate 3 rests on an author reading of 'identical' no phase record made; measuring RF1's goldens shows five unpromoted groups agree, so predicate 3 as written is not met for them. Four found that predicate 5 needs the owner to ratify nine delegated re-targets, two that CR3's supersession of RF-D11 needs an owner ruling, two that the headline overstates predicate 2. The rest are evidence and traceability fixes.",
+  "agreed_concerns": [
+    {
+      "group_id": "p3-identical-reading",
+      "severity": "high",
+      "title": "Predicate 3 rests on CR5's reading of 'identical', which no phase record made",
+      "summary": "All four seats: CR5 narrows 'marks identical' to 'promoted', and the candidate does not say whether RF1's pins agreed for the unpromoted groups.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd2-identical-helpers-pin-agreement-unstated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "CD2-UNRULED-FAMILIES"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p3-unruled-candidate-groups"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c2-cr5-marks-identical-reading"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "p5-delegated-retargets",
+      "severity": "high",
+      "title": "Predicate 5 needs owner-ruled final values; nine re-targets were delegated",
+      "summary": "Claude, Codex, Qwen and GLM: RF-D13 reserves re-targeting to the owner; the candidate counts delegated ones without putting them to the owner.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "delegated-retargets-vs-no-delegation"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF-D13-OWNER-VALUES"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-missed-originals-residual"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c3-predicate5-owner-ruled-vs-delegated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "cr3-authority",
+      "severity": "high",
+      "title": "CR3 supersedes RF-D11 without an owner ruling",
+      "summary": "Codex and GLM: the RF7 amendment names only RF-D7 and RF-R1; CR3 extends it to RF-D11.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "CR3-AUTHORITY"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c1-cr3-rfd11-delegated-supersession"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "p2-overclaim",
+      "severity": "high",
+      "title": "The headline and predicate 2 row overstate 'no import cycle'",
+      "summary": "Claude and Qwen: seven package-initializer cycles exist; the headline says none, and row 2 reads as an unqualified hold.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd1-no-import-cycle-overclaim"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p2-cr4-scope-narrowing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "owner-decisions-undefined",
+      "severity": "medium",
+      "title": "C-D3 is undefined and the proposals are not in the candidate",
+      "summary": "Claude and Qwen: the candidate names C-D1 to C-D3 without stating C-D3, the proposals or their alternatives' costs, and carried items name no tracked owner.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd3-undefined"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "owner-decisions-carried-to-nonexistent-successor"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-cd3-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "p1-evidence",
+      "severity": "medium",
+      "title": "Predicate 1's evidence mixes milestone-end and main, and its method is unstated",
+      "summary": "Qwen and GLM: the main run checks re-recorded values; pin-history states no method and does not list the nineteen RF7 successors; 'each under its own review' is unsupported.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p1-pin-rerecord-circular"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c4-pin-history-predicate1-evidence"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c5-post-milestone-review-attribution"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "codex",
+      "concern_id": "MISSED-TARGET-MEASUREMENTS"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "cc-lane-two-errors-no-gate"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "cc-repairs-cr1-cr6-cr13-unmapped"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "cc-p2-xfail-clause-no-pointer"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "cc-measurement-commits-unnamed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "cc-digested-evidence-uncited"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "c6-sweep-disagree-count"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-p3-identical-reading",
+      "rank": 1,
+      "title": "Predicate 3 rests on CR5's reading of 'identical', which no phase record made",
+      "action": "Measured from the RF1 helper goldens: pins agree for five unpromoted groups (_rate, c4e1c0f8, 0f1cc1a7, 22614c42, c9b00e5d), so they are identical under RF0 D7. Predicate 3 as written is not met for them; three have phase rulings (RF4 D2; RF6a A3/A4 wrappers), two have none. CR5 is withdrawn; C-D2 is restated to the owner with these facts: accept the five as ruled residuals, or repair before the close.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd2-identical-helpers-pin-agreement-unstated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "CD2-UNRULED-FAMILIES"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p3-unruled-candidate-groups"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c2-cr5-marks-identical-reading"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd2-identical-helpers-pin-agreement-unstated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd2-identical-helpers-pin-agreement-unstated",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "CD2-UNRULED-FAMILIES",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p3-unruled-candidate-groups",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c2-cr5-marks-identical-reading",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-p5-delegated-retargets",
+      "rank": 2,
+      "title": "Predicate 5 needs owner-ruled final values; nine re-targets were delegated",
+      "action": "State the split (3 owner, 9 delegated, 1 estimate error) and add C-D4: the owner ratifies the nine delegated final values and the RF5 re-plan, or predicate 5 is recorded unmet. Correct line 44: auto=false is the plan default; phases ran with per-phase auto selections.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "delegated-retargets-vs-no-delegation"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF-D13-OWNER-VALUES"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-missed-originals-residual"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c3-predicate5-owner-ruled-vs-delegated"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "delegated-retargets-vs-no-delegation",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "delegated-retargets-vs-no-delegation",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF-D13-OWNER-VALUES",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-missed-originals-residual",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c3-predicate5-owner-ruled-vs-delegated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c3-predicate5-owner-ruled-vs-delegated",
+          "evidence_index": 1
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-cr3-authority",
+      "rank": 3,
+      "title": "CR3 supersedes RF-D11 without an owner ruling",
+      "action": "Pose CR3 to the owner as C-D5 (ratify RF7's merges of the JSON, datetime and file-digest families as superseding RF-D11), and stop attributing them to the amendment alone.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "CR3-AUTHORITY"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c1-cr3-rfd11-delegated-supersession"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "CR3-AUTHORITY",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c1-cr3-rfd11-delegated-supersession",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-p2-overclaim",
+      "rank": 4,
+      "title": "The headline and predicate 2 row overstate 'no import cycle'",
+      "action": "Narrow the headline to 'no multi-module SCC on the RF0 import graph' and state row 2 as holding on that graph, with the package-initializer cycles carried by the owner's C-D1 ruling (owner-statements.txt).",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd1-no-import-cycle-overclaim"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p2-cr4-scope-narrowing"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd1-no-import-cycle-overclaim",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd1-no-import-cycle-overclaim",
+          "evidence_index": 1
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p2-cr4-scope-narrowing",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-owner-decisions-undefined",
+      "rank": 5,
+      "title": "C-D3 is undefined and the proposals are not in the candidate",
+      "action": "Add an owner-decisions section to the candidate: each decision, the proposal, the alternative and its cost, and the owner's ruling where given; offer tracking issues for the carried items.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd3-undefined"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "owner-decisions-carried-to-nonexistent-successor"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-cd3-undefined"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cd3-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "owner-decisions-carried-to-nonexistent-successor",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-cd3-undefined",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-p1-evidence",
+      "rank": 6,
+      "title": "Predicate 1's evidence mixes milestone-end and main, and its method is unstated",
+      "action": "Split predicate 1: the evidence is the file diff of tests/fixtures/rf1-pins excluding mutations.json from 5f56f5f6 to a390599c (stated in pin-history.txt), plus RF7's successor inventory in 013; main's green run is a regression check only. Drop 'each under its own review'.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p1-pin-rerecord-circular"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c4-pin-history-predicate1-evidence"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c5-post-milestone-review-attribution"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p1-pin-rerecord-circular",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c4-pin-history-predicate1-evidence",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c5-post-milestone-review-attribution",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "fix-missed-target-measurements",
+      "rank": 7,
+      "title": "Fill the missing measured values",
+      "action": "RF4 touched 249 and docs 578 (RF4-final-budget.json), RF8 touched 136 (RF8/budget.json), RF9-ci-repair touched 84 (RF9-ci-repair/budget.json).",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "MISSED-TARGET-MEASUREMENTS"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "MISSED-TARGET-MEASUREMENTS",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "fix-cc-lane-two-errors-no-gate",
+      "rank": 8,
+      "title": "State the lane's pass condition",
+      "action": "0 failed; errors limited to the two RC-02 nodes the release-0.5.0 close carried; skips limited to GND_PYREL_PYTHON.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-lane-two-errors-no-gate"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-lane-two-errors-no-gate",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-cc-repairs-cr1-cr6-cr13-unmapped",
+      "rank": 9,
+      "title": "Map every close repair",
+      "action": "A table of CR1 to CR13 with what each touches and whether it records a phase ruling or reframes a predicate.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-repairs-cr1-cr6-cr13-unmapped"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-repairs-cr1-cr6-cr13-unmapped",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-cc-p2-xfail-clause-no-pointer",
+      "rank": 10,
+      "title": "Point the xfail clause at evidence",
+      "action": "Cite predicates-focused.txt and the layering test with no xfail marker.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p2-xfail-clause-no-pointer"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-p2-xfail-clause-no-pointer",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-cc-measurement-commits-unnamed",
+      "rank": 11,
+      "title": "Name the three measurement commits",
+      "action": "RF0 base 19b131b, milestone end a390599c (full SHA), main 99cf3df2.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-measurement-commits-unnamed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-measurement-commits-unnamed",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-cc-digested-evidence-uncited",
+      "rank": 12,
+      "title": "Cite each digested file",
+      "action": "Cite metrics files, close-families.md and predicates-focused.txt at their claims.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-digested-evidence-uncited"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cc-digested-evidence-uncited",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "fix-c6-sweep-disagree-count",
+      "rank": 13,
+      "title": "Correct the disagreement count",
+      "action": "Eleven DISAGREE rows and one possible conflict (C63).",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c6-sweep-disagree-count"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "c6-sweep-disagree-count",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "glm"
+      ]
+    }
+  ]
+}

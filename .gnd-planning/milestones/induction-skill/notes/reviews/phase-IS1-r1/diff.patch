@@ -1,0 +1,916 @@
+diff --git a/.claude/skills/gnd-induce b/.claude/skills/gnd-induce
+new file mode 120000
+index 00000000..efd1d94f
+--- /dev/null
++++ b/.claude/skills/gnd-induce
+@@ -0,0 +1 @@
++../../src/gnd/skills/gnd-induce
+\ No newline at end of file
+diff --git a/.codex/skills/gnd-induce b/.codex/skills/gnd-induce
+new file mode 120000
+index 00000000..efd1d94f
+--- /dev/null
++++ b/.codex/skills/gnd-induce
+@@ -0,0 +1 @@
++../../src/gnd/skills/gnd-induce
+\ No newline at end of file
+diff --git a/.gnd-planning/milestones/induction-skill/evidence/IS1/c0-owner-reaction.txt b/.gnd-planning/milestones/induction-skill/evidence/IS1/c0-owner-reaction.txt
+new file mode 100644
+index 00000000..6defa7d5
+--- /dev/null
++++ b/.gnd-planning/milestones/induction-skill/evidence/IS1/c0-owner-reaction.txt
+@@ -0,0 +1,14 @@
++Checkpoint C0 (plan D15, IS1-C8), 2026-11-25.
++
++Shown: a private page, "Refund Rule Skill Mockup", labelled as a mockup and not a
++recording: the learn-rules tutorial with every step as a /gnd:gnd-induce prompt
++(step 6 keeps /gnd:gnd-model-evolve, then /gnd:gnd-induce for the re-check), beside
++the results the commands page prints. It asked three things: whether the six prompts
++read the way a business reader would ask; whether steps 2 and 3 stay apart; whether
++the skill's "who should the proposal be recorded as" question may show once, at step 3.
++
++The owner's answer, quoted whole: "Keep them apart"
++
++Read as: steps 2 and 3 stay two prompts (plan IS2-C4). The owner raised no objection
++to the other two points; the skill is written to serve the prompts as shown. That
++reading is the author's, not the owner's.
+diff --git a/.gnd-planning/milestones/induction-skill/evidence/IS1/gate.txt b/.gnd-planning/milestones/induction-skill/evidence/IS1/gate.txt
+new file mode 100644
+index 00000000..3987d6ae
+--- /dev/null
++++ b/.gnd-planning/milestones/induction-skill/evidence/IS1/gate.txt
+@@ -0,0 +1,36 @@
++IS1 gate, run 2026-11-25 in a clean clone of 1e6083f3 with the IS1 files applied (Python 3.14, macOS). The first run had the new files untracked; the rerun has them staged, as committed. Local paths are replaced by <clone>; nothing else is edited.
++$ uv run pytest -q -p no:randomly <spec gate files>
++FAILED tests/test_doctor_uninstall.py::test_the_repository_install_receipts_are_not_tracked_by_git
++FAILED tests/test_doctor_uninstall.py::test_every_discovery_link_is_tracked_at_symlink_mode
++2 failed, 953 passed, 1 deselected in 141.73s (0:02:21)
++$ project structure guards
++FAILED tests/test_doctor_uninstall.py::test_every_discovery_link_is_tracked_at_symlink_mode
++2 failed, 870 passed, 2 deselected in 135.46s (0:02:15)
++$ uv run ruff check
++
++Found 1 error.
++$ uv run ruff check
++All checks passed!
++$ uv run pytest -q tests/test_induce_skill.py tests/test_doctor_uninstall.py (files staged)
++109 passed in 18.56s
++$ uv run --group docs zensical build --strict
++No issues found
++Build finished in 1.10s
++$ uv run python tools/check_docs.py site
++19545 local links/assets/anchors checked
++exit 0
++$ uv run gnd install --symlink --project --force
++exit 0
++$ uv run gnd doctor --project
++  installed (symlink mode, get-nick-done 0.5.2, placed 2026-11-25T22:34:21Z): current=19
++  note: <clone>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
++exit 0
++
++=== rerun with the IS1 files staged (as they will be committed) ===
++$ uv run pytest -q -p no:randomly <spec gate files>
++955 passed, 1 deselected in 77.06s (0:01:17)
++$ uv run pytest -q <project structure guards>
++872 passed, 2 deselected in 145.43s (0:02:25)
++$ uv run pytest -q -p no:randomly -m distribution tests/test_public_built_inventory.py   # D20 (o), owner-selected lane
++.................                                                        [100%]
++17 passed in 13.29s
+diff --git a/.gnd-planning/milestones/induction-skill/evidence/IS1/regressions-red.txt b/.gnd-planning/milestones/induction-skill/evidence/IS1/regressions-red.txt
+new file mode 100644
+index 00000000..aa8fb5e0
+--- /dev/null
++++ b/.gnd-planning/milestones/induction-skill/evidence/IS1/regressions-red.txt
+@@ -0,0 +1,62 @@
++IS1 red controls (spec section 5), recorded per test id. Each ran in a clean clone of the IS1 base 1e6083f3.
++
++Control 1: the pin edits of tests/test_packaged_skills.py, test_doctor_uninstall.py, test_public_packaged_invocation_guards.py, test_schema_sync.py and test_public_distribution.py over the pre-IS1 tree (no skill).
++$ uv run pytest -q -rf tests/test_packaged_skills.py tests/test_verification_fixes.py tests/test_install.py tests/test_doctor_uninstall.py tests/test_marketplace_plugins.py tests/test_development_scaffold.py tests/test_public_packaged_invocation_guards.py tests/test_schema_sync.py --tb=no
++FAILED tests/test_packaged_skills.py::test_skill_resource_tree_carries_every_file
++FAILED tests/test_packaged_skills.py::test_the_packaged_tree_holds_exactly_the_named_skills
++FAILED tests/test_packaged_skills.py::test_every_relative_skill_link_resolves_inside_the_resource_tree
++FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-induce->gnd-model-evolve]
++FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-orm-core->gnd-induce]
++FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-export->gnd-induce]
++FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-induce->gnd-export]
++FAILED tests/test_packaged_skills.py::test_each_phase4_route_names_its_trigger_and_its_authority_boundary[gnd-induce->gnd-judge-fact-types]
++FAILED tests/test_packaged_skills.py::test_gnd_orm_core_indexes_the_workflows_without_becoming_one
++FAILED tests/test_packaged_skills.py::test_no_route_promises_automatic_regeneration_or_applied_fixes
++FAILED tests/test_packaged_skills.py::test_every_workflow_skill_routes_to_the_record_contract[gnd-induce]
++FAILED tests/test_verification_fixes.py::test_f01_a_run_that_placed_nothing_and_owns_nothing_writes_no_receipt
++FAILED tests/test_verification_fixes.py::test_f01_doctor_does_not_date_and_version_a_root_gnd_never_wrote
++FAILED tests/test_verification_fixes.py::test_f01_a_forced_run_over_the_same_root_still_writes_its_receipt
++FAILED tests/test_verification_fixes.py::test_f01_two_targets_aliasing_one_directory_leave_a_receipt_owning_the_files
++FAILED tests/test_verification_fixes.py::test_f01_the_aliased_install_is_fully_removable_by_uninstall
++FAILED tests/test_install.py::test_iter_skill_files_yields_every_packaged_file
++FAILED tests/test_install.py::test_plan_against_an_empty_target_yields_create_for_every_file
++FAILED tests/test_install.py::test_apply_into_an_empty_root_writes_every_file_and_one_manifest
++FAILED tests/test_install.py::test_install_places_both_runtimes_at_project_scope
++FAILED tests/test_install.py::test_install_adversarial_case[zero-write-second-run]
++FAILED tests/test_install.py::test_a_clean_install_places_every_skill_through_one_generic_path
++FAILED tests/test_doctor_uninstall.py::test_diagnose_reports_every_placed_file_current_after_a_fresh_install
++FAILED tests/test_doctor_uninstall.py::test_remove_deletes_every_hash_matching_file_and_prunes
++FAILED tests/test_doctor_uninstall.py::test_remove_unlinks_a_symlink_install_without_following_it
++FAILED tests/test_doctor_uninstall.py::test_the_repository_carries_exactly_the_pinned_link_targets
++FAILED tests/test_doctor_uninstall.py::test_the_repository_links_reach_a_real_skill_md
++FAILED tests/test_doctor_uninstall.py::test_a_development_install_reproduces_the_repository_link_targets
++FAILED tests/test_doctor_uninstall.py::test_the_repository_install_receipts_are_not_tracked_by_git
++FAILED tests/test_doctor_uninstall.py::test_remove_adversarial_case[symlink-uninstall-never-follows]
++FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.claude/skills]
++FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.codex/skills]
++FAILED tests/test_doctor_uninstall.py::test_the_pinned_link_map_cannot_lag_the_packaged_tree
++FAILED tests/test_doctor_uninstall.py::test_every_discovery_link_is_tracked_at_symlink_mode
++FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[retargeted-to-another-real-skill]
++FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[replaced-by-a-real-directory-of-identical-bytes]
++FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[receipt-disagrees-with-the-placed-link]
++FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[link-dropped-entirely]
++FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[bytes-behind-the-link-substituted]
++FAILED tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[a-file-behind-the-link-removed]
++FAILED tests/test_doctor_uninstall.py::test_the_installer_refuses_to_adopt_an_unmanaged_directory_at_a_gnd_owned_name
++FAILED tests/test_doctor_uninstall.py::test_uninstall_removes_owned_links_and_leaves_a_foreign_sibling_intact
++FAILED tests/test_marketplace_plugins.py::test_marketplaces_use_complete_canonical_skills
++FAILED tests/test_marketplace_plugins.py::test_broken_plugin_bundle_refused[outside_root]
++FAILED tests/test_marketplace_plugins.py::test_broken_plugin_bundle_refused[missing_reference]
++FAILED tests/test_marketplace_plugins.py::test_broken_plugin_bundle_refused[version]
++FAILED tests/test_development_scaffold.py::test_twins_modes_and_generated_links
++FAILED tests/test_public_packaged_invocation_guards.py::test_every_skill_that_documents_commands_still_contributes_snippets
++FAILED tests/test_schema_sync.py::test_type_schema_copies_are_byte_identical_to_the_runtime_files[labels.schema.json]
++49 failed, 557 passed, 1 deselected in 77.88s (0:01:17)
++
++Note: tests/test_packaged_skills.py::test_every_relative_skill_link_resolves_inside_the_resource_tree is also red on the unedited base (IS1 finding F1, the unpinned SI1 edge); its control-1 red is not evidence of IS1's edges alone.
++
++Control 2: the whole IS1 change except the AGENTS.md row and the docs/agents/index.md row.
++$ uv run pytest -q -rf tests/test_public_agents_skill_table.py tests/test_induce_skill.py --tb=no
++FAILED tests/test_public_agents_skill_table.py::test_agents_md_table_names_every_packaged_skill
++FAILED tests/test_induce_skill.py::test_t17_the_agents_index_has_a_gnd_induce_row
++2 failed, 28 passed in 4.66s
+diff --git a/.gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md b/.gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md
+index ee050b76..20121c05 100644
+--- a/.gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md
++++ b/.gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md
+@@ -398,3 +398,22 @@ committed at `e74d882`) stays in git history.
+ Unchanged: D1 (`gnd-induce`), D3's vendoring, D4, D5, D9, D15, D16, D17 to
+ D20, the refusal sentences R-a and R-c to R-h, C0, the honest limit and IS2's
+ scope.
++
++## 13. Rulings
++
++> **Delegated approval (auto=true), 2026-11-25.** Approved IS1 spec r4 at
++> SHA-256 `c1620d12e50991f25f671570064208c28652a21f33ff365f030f8b9be7098bed` (the bytes above this section, as merged to main by PR 312).
++> Authorization: the owner's invocation "process-milestone induction-skill
++> auto=true" in the planning session of 2026-11-25. Instrument: spec prose
++> plus checkpoint C0 (D15, as approved for r3). Decisions: D21 (a), D22
++> include, D23 route, as proposed in §7; D1, D3, D4, D5, D9, D15, D16 and
++> D17 to D20 stand as approved for r3; D8 is discharged on main. IS1 base
++> commit: `1e6083f3554e785aa994422c837fda874d74d1e6`. Budget: §10's estimate; past twice it the phase pauses.
++> Review: one independent diff reviewer in a different tool through the
++> review helper (process-phase step 4; one reviewer is one reviewer); the
++> round budget is declared before round 2. Not covered: merge, the
++> distribution lane beyond D20's one run, paid recordings (IS2, D11),
++> publication. Checkpoint C0 is shown to the owner before the skill text is
++> final, and implementation of the skill text waits for the owner's reaction
++> to it (owner rule IS-O13). This ruling is not the owner's reading of the
++> spec.
+diff --git a/AGENTS.md b/AGENTS.md
+index 74239d88..974e20f5 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -47,6 +47,7 @@ stated scope; handoffs between skills require an explicit user selection.
+ | gnd-dev-session | [gnd-dev-session](src/gnd/skills/gnd-dev-session/SKILL.md) |
+ | gnd-export | [gnd-export](src/gnd/skills/gnd-export/SKILL.md) |
+ | gnd-extract | [gnd-extract](src/gnd/skills/gnd-extract/SKILL.md) |
++| gnd-induce | [gnd-induce](src/gnd/skills/gnd-induce/SKILL.md) |
+ | gnd-judge-fact-types | [gnd-judge-fact-types](src/gnd/skills/gnd-judge-fact-types/SKILL.md) |
+ | gnd-model-evolve | [gnd-model-evolve](src/gnd/skills/gnd-model-evolve/SKILL.md) |
+ | gnd-model-from-code | [gnd-model-from-code](src/gnd/skills/gnd-model-from-code/SKILL.md) |
+diff --git a/docs/agents/index.md b/docs/agents/index.md
+index a393a742..96b77334 100644
+--- a/docs/agents/index.md
++++ b/docs/agents/index.md
+@@ -41,6 +41,7 @@ locally on DuckDB; Snowflake execution is not yet supported by gnd export.
+ | Render a document from facts | `gnd-render-doc` | `document.md` + manifest | `gnd doccheck` | 0 obligations met |
+ | Judge whether induced fact types duplicate existing ones | `gnd-judge-fact-types` | `duplicates` judgements file | `gnd discover --duplicate-judgements`, `gnd evolve preview` | 3 a refused verdict |
+ | Model multi-valued induced attributes | `gnd-model-multivalued` | `shapes` judgements file | `gnd discover --shape-judgements`, `gnd evolve preview` | 3 a refused verdict |
++| Score rules against labels, discover rules, round-trip a learner or miner, re-check | `gnd-induce` | evolve proposals, measure and discover reports | `gnd measure --labels`, `gnd discover`, `gnd export ilp`, `gnd import ilp-rules`, `gnd import mined-rules`, `gnd check` | 3 a named refusal |
+ | Export to Soufflé or Lean, or build a witness | `gnd-export` | export bundle, witness certificate | `gnd export … -verify`, `gnd replay` | 0 replayed |
+ | Get an independent multi-model review | `gnd-review-panel`, `gnd-review-panel-light` | `review-request.json`, `synthesis.json` | `gnd review panel`, `finalize` | 16 below quorum |
+ | Walk the whole loop, station by station | `gnd-solve` | station records | `gnd solve` | 17 walk halted |
+diff --git a/src/gnd/skills/gnd-dev-session/SKILL.md b/src/gnd/skills/gnd-dev-session/SKILL.md
+index 1a2b4ff1..78e3bf18 100644
+--- a/src/gnd/skills/gnd-dev-session/SKILL.md
++++ b/src/gnd/skills/gnd-dev-session/SKILL.md
+@@ -229,7 +229,7 @@ agent under test and your own improvisation:
+   per-constraint rates; set `min_facts` from what the corpus actually
+   exercises, not from intuition. Against a host's own labelled populations,
+   `uv run gnd measure MODEL --labels MANIFEST` reports each rule's agreement
+-  with those labels instead.
++  with those labels instead. To act on those labels, see [gnd-induce](../gnd-induce/SKILL.md).
+ - **Corpus to contract:** a selected corpus artifact enters a case either as
+   a digest-bound input blob or, through `author-expectation`, as an expected
+   output. The contract binds bytes, so a regenerated corpus is a new contract
+diff --git a/src/gnd/skills/gnd-export/SKILL.md b/src/gnd/skills/gnd-export/SKILL.md
+index 3f71ce3c..8035bf61 100644
+--- a/src/gnd/skills/gnd-export/SKILL.md
++++ b/src/gnd/skills/gnd-export/SKILL.md
+@@ -49,7 +49,7 @@ as an evolve proposal (`--target llm` reads an agent's JSON answer). With
+ `--target` `amie` it writes one unlabelled population for a rule miner, and
+ `gnd import mined-rules` brings back only rules that hold on it. See
+ `gnd export ilp --help`; the proposal is reviewed like any other evolution
+-proposal.
++proposal. To run the whole loop with a learner, use [gnd-induce](../gnd-induce/SKILL.md); its proposals are reviewed through gnd-model-evolve.
+ 
+ For explicitly selected Lean definitions, run `gnd export lean MODEL POP
+ --toolchain leanprover/lean4:v4.34.0` offline. Publish a raw create-once bundle
+diff --git a/src/gnd/skills/gnd-induce/SKILL.md b/src/gnd/skills/gnd-induce/SKILL.md
+new file mode 100644
+index 00000000..ce9c2880
+--- /dev/null
++++ b/src/gnd/skills/gnd-induce/SKILL.md
+@@ -0,0 +1,177 @@
++---
++name: gnd-induce
++description: Runs GND's induction loop over host-labelled populations and hands every result to review -- `gnd measure --labels` to score a model's rules against the host's labels, `gnd discover` to propose rules that hold in one population, `gnd export ilp` then `gnd import ilp-rules` to round-trip a rule learner the user names, with GND re-checking the learner's coverage claim, `gnd import mined-rules` for a rule miner over one unlabelled population, and `gnd check` to re-check a population after a rule is applied. Use when asked to "score our rules against the auditors' labels", "find the rule our reviewers are using", "suggest rules from this data", "run a rule learner", or "import learned rules". Every output is a proposal of induced, proposed, advisory constraints, reviewed and applied only through gnd-model-evolve. Not for judging the fact types `gnd discover --families fact-type` forms (gnd-judge-fact-types, gnd-model-multivalued), measuring a synth corpus (gnd-dev-session), derivation or Lean exports (gnd-export), applying or confirming a rule (gnd-model-evolve), or installing a learner.
++---
++
++# Induce rules from labelled data, and hand them to review
++
++A host has a model and populations, and often a verdict on each population
++from the people who know the business: an auditor's "flagged" or "clean", a
++reviewer's "should have been refused". This skill runs GND's four induction
++commands over them and reports what GND printed. It has five intents:
++
++| Intent | What you ask | What GND writes |
++|---|---|---|
++| **Score** | how well the model's rules agree with the host's labels | a measure report |
++| **Discover** | which rules hold in one population | a discovery report and, when anything is emitted, an evolve proposal |
++| **Learn** | what rule a learner the user names finds, checked by GND | the learner's inputs, then an evolve proposal only if GND reproduces the learner's coverage claim |
++| **Re-check** | what a population says against the model after a change | nothing; the check output only |
++| **Hand off** | review the proposals | nothing; a route to the review skill |
++
++Nothing becomes a rule because a program found it. Every rule this skill
++produces is **induced**, **proposed** and **advisory**, as
++[provenance and modality](../gnd-orm-core/references/provenance-and-modality.md)
++defines those words. Every proposal goes to [gnd-model-evolve](../gnd-model-evolve/SKILL.md); this skill never applies it.
++
++## Fix the inputs first
++
++Before any command, settle these with the user and say them back:
++
++- **The model**, and either the **label manifest** (for score and learn) or
++  the **population** (for discover, a rule miner and re-check). The label
++  manifest's format is the read-only
++  [label manifest schema](../gnd-orm-core/references/labels.schema.json);
++  `gnd measure --help` names its modes. Labels come from the user.
++- **The audit actor and the request time**, for every command that writes a
++  proposal. Ask: "Who should the proposal be recorded as, and at what time?"
++  The actor is the user's answer, never a name taken from git, the shell or
++  the environment.
++- **New output paths.** Discover, export and both imports refuse an existing
++  `--out` (exit 11). `gnd measure` overwrites its `--out` without warning, so
++  confirm that the measure output path does not exist before you run it.
++
++## Score
++
++```sh
++gnd measure MODEL --labels MANIFEST --out OUT
++```
++
++Report each rule's cells as GND printed them, with numerator and denominator
++("fired on 2 of 4 flagged populations"). A class-mode manifest gives a cell
++per rule and label; an expected-state manifest gives each population's
++expected verdict, and `gnd measure` exits 6 on a checker defect, which you
++report as printed. It never combines measure cells into one accuracy number.
++
++## Discover
++
++```sh
++gnd discover MODEL POPULATION --families uniqueness,mandatory --out PROPOSAL --report REPORT --actor ACTOR --requested-at TIMESTAMP
++```
++
++Choose `--families` with the user; `gnd discover --help` lists them. Report
++the `EMITTED` and `SUPPRESSED` counts as printed, then read every emitted
++candidate back in plain English. The user sorts the sensible rules from the
++accidents of one small sample; drop none of them yourself. With `EMITTED 0`,
++report the counts and hand nothing off. A candidate of a value family (one
++that names a value from the population) carries host data: say so when you
++read it back and again at the handoff.
++
++Judging the groups gnd discover --families fact-type forms is not this skill: duplicates go to [gnd-judge-fact-types](../gnd-judge-fact-types/SKILL.md), and multi-valued groups to [gnd-model-multivalued](../gnd-model-multivalued/SKILL.md).
++
++## Learn
++
++**A learner over labelled populations.** Export the labelled populations for
++the learner the user named, with `--target` one of `popper`, `neutral`,
++`ilasp` or `rules`:
++
++```sh
++gnd export ilp MODEL --labels MANIFEST --target TARGET --out EXPORT_DIR
++```
++
++Then run the learner, with a stated time limit, and give the user the exact
++command you ran. It never installs a learner and never runs one the user did not name. When the named learner is not found, stop with "no learner named X
++is installed", and offer the export alone: its files are what any learner
++reads ([the ILP bridge](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/ilp-bridge.md)).
++
++When the user asks for the learner's answer only, stop here and report its
++claim as unchecked. Otherwise import it:
++
++```sh
++gnd import ilp-rules MODEL CLAUSES --labels MANIFEST --reported-coverage RUN --target TARGET --out PROPOSAL --actor ACTOR --requested-at TIMESTAMP
++```
++
++GND re-runs every clause over every labelled population and writes the
++proposal only if the populations it covers equal the run record's claim.
++
++**The run record** (`RUN`) is the learner's claim. It never writes or edits a learner's clauses or run record, and never answers as the learner itself, except to save a learner's printed program verbatim as CLAUSES and to assemble a Popper run record as stated below. Covered sets come only from the learner's output or an evaluation the user selects, never from a GND verdict: the output of gnd import, gnd check, gnd measure or gnd discover, including refusal text.
++
++Popper prints counts, not sets. For a Popper run, first save Popper's printed
++program verbatim as CLAUSES. Then assemble the run record from that program,
++the evaluation the user selects (for example Prolog over the exported
++`bk.pl` and `exs.pl`, which are evaluation input, not a GND verdict) and the
++two digests, and tell the user you assembled it. `learner.version` is the
++version Popper reports, or the user's answer when it reports none; never
++invent one. The Popper branch has not been run on GND's examples. For any
++other learner whose output lacks the covered sets, ask the user for its run
++record; do not assemble one.
++
++**A language model as the learner** (`--target llm`) needs a run record
++independent of the model that answered, so this skill never plays that
++model. The documented route is an evidence script that builds the prompt and
++runs a separate agent; name it and stop.
++
++**A rule miner over one unlabelled population** (`--target amie`):
++
++```sh
++gnd export ilp MODEL --population POPULATION --target amie --out EXPORT_DIR
++gnd import mined-rules MODEL CLAUSES --population POPULATION --reported RUN --target amie --out PROPOSAL --actor ACTOR --requested-at TIMESTAMP
++```
++
++The miner the user named runs between the two commands. GND keeps only the
++rules it counted on the population and that hold for every case.
++
++After a coverage refusal it never changes the claim and imports again.
++
++## Re-check
++
++```sh
++gnd check MODEL POPULATION
++```
++
++Report the output verbatim. It reports only: it changes neither the model nor
++the population. Its exit bands are in the
++[population format](../gnd-orm-core/references/population-format.md) and in
++the CLI reference's "Interpret exits in the command's context".
++
++## Reactions
++
++One table governs every command above:
++
++| Exit | Reaction |
++|---|---|
++| 0 | report what GND printed |
++| 3 | report the named refusal or input error verbatim and stop; a stale label manifest goes back to the user |
++| 11 | (discover, export, either import) choose a new output path with the user; delete nothing |
++| 1, 2 or 4 from `gnd check` | report the verdicts verbatim: they are results, not refusals |
++| any other | report verbatim and stop |
++
++Each exit's meaning has its own home: the command's `--help`, and for `gnd check` the population-format reference. This skill states only its reactions.
++
++## Hand off
++
++Only after the command that wrote a proposal exited 0 and emitted something,
++name each proposal file and route it: every proposal goes to review in
++[gnd-model-evolve](../gnd-model-evolve/SKILL.md), which previews it and
++applies only what the user accepts. At the handoff, also name:
++
++- each value-family candidate, as carrying host values;
++- each run record this skill assembled, the evaluation that produced its
++  sets, and that its `inducer` names the learner, because the program is the
++  learner's.
++
++## Refusals
++
++This skill never applies, confirms or edits a model, and never edits a proposal. It never writes, edits or re-binds a label manifest; labels come from the user. It never copies host values or paths into a file it writes or a public page, apart from the learner artifacts it saves or assembles in the user's working paths; chat read-back may show them.
++
++## Not this skill
++
++- Derivation and Lean exports are not this skill: [gnd-export](../gnd-export/SKILL.md).
++- Measuring a synthesized corpus is not this skill: [gnd-dev-session](../gnd-dev-session/SKILL.md).
++- Every reference this skill cites lives in [gnd-orm-core](../gnd-orm-core/SKILL.md).
++
++## Record and commit
++
++This skill never touches git. When the user records the work, the
++[milestone record contract](../gnd-orm-core/references/milestone-record-format.md)
++governs the record and its commit; the evidence of an applied rule enters the
++evolve record on apply.
+diff --git a/src/gnd/skills/gnd-model-evolve/SKILL.md b/src/gnd/skills/gnd-model-evolve/SKILL.md
+index 6b8fb733..57e24edc 100644
+--- a/src/gnd/skills/gnd-model-evolve/SKILL.md
++++ b/src/gnd/skills/gnd-model-evolve/SKILL.md
+@@ -334,6 +334,7 @@ and it must be named rather than left for the next reader to discover.
+   GND re-checked against the labels; review it the same way.
+ - A `gnd import mined-rules` proposal adds only induced, advisory guarded constraints that GND
+   counted on the bound population and that hold for every case; review it the same way.
++- These proposals come from [gnd-induce](../gnd-induce/SKILL.md), which never applies them.
+ - Reject any source outside the seven-source taxonomy.
+ - Keep `EvolutionOperationAudit` separate from constraint provenance.
+ - Retain complete operations, rationale, audit, validation, CAS, blast radius, conformance,
+diff --git a/src/gnd/skills/gnd-orm-core/SKILL.md b/src/gnd/skills/gnd-orm-core/SKILL.md
+index aa36e96a..4a8d315d 100644
+--- a/src/gnd/skills/gnd-orm-core/SKILL.md
++++ b/src/gnd/skills/gnd-orm-core/SKILL.md
+@@ -34,6 +34,7 @@ Routing only. This skill acquires no workflow steps by listing them, and none of
+ | [`../gnd-solve/SKILL.md`](../gnd-solve/SKILL.md) | you want the whole loop walked in order | nothing of its own — every claim belongs to the station skill that produced it. It never runs a sibling on your behalf and stops at an explicit user gate between steps |
+ | [`../gnd-judge-fact-types/SKILL.md`](../gnd-judge-fact-types/SKILL.md) | the fact-type family's evidence must be judged for duplicates of fact types the model already has | a `duplicates` judgements file that `gnd discover --duplicate-judgements` checks and renders. It never reads the population and never applies a proposal |
+ | [`../gnd-model-multivalued/SKILL.md`](../gnd-model-multivalued/SKILL.md) | the fact-type family's evidence has `multi_valued` groups to model | a `shapes` judgements file that `gnd discover --shape-judgements` checks and renders, proposing many-to-many fact types with a spanning uniqueness. It never reads the population and never applies a proposal |
++| [`../gnd-induce/SKILL.md`](../gnd-induce/SKILL.md) | host labels must be scored against the model's rules, rules discovered from a population, or a rule learner or miner round-tripped | evolve proposals of induced, proposed, advisory constraints, plus measure and discover reports; host labels are the host's claim. It never applies an induced rule |
+ | [`../gnd-export/SKILL.md`](../gnd-export/SKILL.md) | explicitly requested tuples need finite proof/replay or a finite Lean definitions with unproved obligations or standalone Souffle program | bounded derivation program export, explicit native execution, grounded witnesses and independent replay; never source truth, completeness or assurance |
+ 
+ One reference library, and every packaged workflow skill indexed above. No row merges its claim with another's: a verifier verdict, a conformance result, an evolution record, recovery evidence, and a panel synthesis stay separate payloads even when one cites another by digest (D-24). The updater changes maintainer/runtime state and emits no review claim at all.
+@@ -55,9 +56,10 @@ One reference library, and every packaged workflow skill indexed above. No row m
+ | [references/population.schema.json](references/population.schema.json) | **Canonical machine spec** for population files (Draft 2020-12) | `gnd.population.load_population` (vendored copy), external validators |
+ | [references/type-evidence.schema.json](references/type-evidence.schema.json) | Read-only vendored copy of the `gnd-type-evidence/1` schema; canonical at the runtime `src/gnd/type-evidence.schema.json` | `gnd-judge-fact-types`, `gnd-model-multivalued` |
+ | [references/type-judgements.schema.json](references/type-judgements.schema.json) | Read-only vendored copy of the `gnd-type-judgements/1` schema; canonical at the runtime `src/gnd/type-judgements.schema.json` | `gnd-judge-fact-types`, `gnd-model-multivalued` |
++| [references/labels.schema.json](references/labels.schema.json) | Read-only vendored copy of the label manifest schema (`gnd-labels/1`); canonical at the runtime `src/gnd/labels.schema.json` | `gnd-induce` |
+ 
+ ## Canonical schemas
+ 
+-The model, population and walk `.schema.json` files in `references/` are the **canonical** machine specs. The `gnd` package vendors byte-identical copies at `src/gnd/schema/`; `tests/test_schema_sync.py` asserts byte equality. To change one of them: edit the canonical copy here, then regenerate the vendored copy from it — never the other way around. The two type schemas run the other way: `gnd discover` owns `src/gnd/type-evidence.schema.json` and `src/gnd/type-judgements.schema.json`, and the copies here are read-only, regenerated from those and held byte-identical by the same test.
++The model, population and walk `.schema.json` files in `references/` are the **canonical** machine specs. The `gnd` package vendors byte-identical copies at `src/gnd/schema/`; `tests/test_schema_sync.py` asserts byte equality. To change one of them: edit the canonical copy here, then regenerate the vendored copy from it — never the other way around. The two type schemas run the other way: `gnd discover` owns `src/gnd/type-evidence.schema.json` and `src/gnd/type-judgements.schema.json`, and the copies here are read-only, regenerated from those and held byte-identical by the same test. So does the label manifest schema: `gnd measure` owns `src/gnd/labels.schema.json`, and `references/labels.schema.json` is its read-only copy.
+ 
+ When the user selects saved external opinions, see the separate [judgment contract](../gnd-dev-session/references/judgment-contract.md); confidence grants no mechanical assurance.
+diff --git a/src/gnd/skills/gnd-orm-core/references/labels.schema.json b/src/gnd/skills/gnd-orm-core/references/labels.schema.json
+new file mode 100644
+index 00000000..028b579b
+--- /dev/null
++++ b/src/gnd/skills/gnd-orm-core/references/labels.schema.json
+@@ -0,0 +1,87 @@
++{
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "$id": "https://gnd.dev/schemas/labels.schema.json",
++  "title": "GND label manifest (gnd-labels/1)",
++  "description": "Host-supplied labels for gnd measure --labels (IK3). Closed. Expected-state mode labels every model constraint in every population; class mode tags each population positive or negative and says which class each rule should fire on. Bounds are fixed by ruling IK3-D5; the 1 MiB byte cap is enforced by the reader before this schema runs.",
++  "type": "object",
++  "required": ["schema_version", "model_sha256", "mode", "populations"],
++  "additionalProperties": false,
++  "properties": {
++    "schema_version": {"const": "gnd-labels/1"},
++    "model_sha256": {"$ref": "#/$defs/sha256"},
++    "mode": {"enum": ["expected-state", "class"]},
++    "populations": {
++      "type": "array",
++      "minItems": 1,
++      "maxItems": 10000,
++      "items": {"$ref": "#/$defs/population"}
++    },
++    "rules": {
++      "type": "object",
++      "minProperties": 1,
++      "maxProperties": 1024,
++      "propertyNames": {"$ref": "#/$defs/ref"},
++      "additionalProperties": {
++        "type": "object",
++        "required": ["fires_on"],
++        "additionalProperties": false,
++        "properties": {"fires_on": {"$ref": "#/$defs/class"}}
++      }
++    }
++  },
++  "allOf": [
++    {
++      "if": {"properties": {"mode": {"const": "expected-state"}}, "required": ["mode"]},
++      "then": {
++        "not": {"required": ["rules"]},
++        "properties": {"populations": {"items": {"required": ["expectations"], "not": {"required": ["class"]}}}}
++      }
++    },
++    {
++      "if": {"properties": {"mode": {"const": "class"}}, "required": ["mode"]},
++      "then": {
++        "required": ["rules"],
++        "properties": {"populations": {"items": {"required": ["class"], "not": {"required": ["expectations"]}}}}
++      }
++    }
++  ],
++  "$defs": {
++    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
++    "class": {"enum": ["positive", "negative"]},
++    "ref": {
++      "type": "string",
++      "maxLength": 256,
++      "pattern": "^(id:[^\\s]+|fact_types\\[[^\\]\\s]+\\]\\.constraints\\[(0|[1-9][0-9]{0,5})\\]|constraints\\[(0|[1-9][0-9]{0,5})\\])$"
++    },
++    "population": {
++      "type": "object",
++      "required": ["id", "path", "sha256"],
++      "additionalProperties": false,
++      "properties": {
++        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:#-]{0,63}$"},
++        "path": {
++          "type": "string",
++          "maxLength": 256,
++          "pattern": "^[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*)*$"
++        },
++        "sha256": {"$ref": "#/$defs/sha256"},
++        "class": {"$ref": "#/$defs/class"},
++        "expectations": {
++          "type": "object",
++          "minProperties": 1,
++          "propertyNames": {"$ref": "#/$defs/ref"},
++          "additionalProperties": {
++            "type": "object",
++            "required": ["ground_truth", "expected_verdict"],
++            "additionalProperties": false,
++            "properties": {
++              "ground_truth": {"enum": ["satisfied", "violated", "no-subjects"]},
++              "expected_verdict": {"enum": ["pass", "fail", "warning", "unchecked", "vacuous"]},
++              "reason": {"type": "string", "maxLength": 256}
++            }
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/src/gnd/skills/gnd-solve/SKILL.md b/src/gnd/skills/gnd-solve/SKILL.md
+index 010afa3b..3c07b50d 100644
+--- a/src/gnd/skills/gnd-solve/SKILL.md
++++ b/src/gnd/skills/gnd-solve/SKILL.md
+@@ -144,7 +144,7 @@ the opt-in `--families fact-type`, fact types for a generic fact type's
+ recurring attributes), or from
+ `gnd import ilp-rules`, which brings an ILP learner's rules back as induced,
+ advisory constraints, or from `gnd import mined-rules`, which brings back a rule
+-miner's rules that hold on a population; review each here like any other.
++miner's rules that hold on a population; review each here like any other. [gnd-induce](../gnd-induce/SKILL.md) runs all three and hands their proposals here.
+ 
+ Entry commands: `uv run gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json`; after acceptance, `uv run gnd evolve apply model.orm.yaml proposal.json --preview preview.json --workspace . --records records --format json`.
+ 
+diff --git a/tests/test_doctor_uninstall.py b/tests/test_doctor_uninstall.py
+index a9823541..d033548a 100644
+--- a/tests/test_doctor_uninstall.py
++++ b/tests/test_doctor_uninstall.py
+@@ -73,7 +73,7 @@ SAMPLE_FILE = "gnd-orm-core/SKILL.md"
+ #: Twenty-four became twenty-six in milestone v1.2 with gnd-new-project, the
+ #: `.gnd-planning/` scaffold, and twenty-six became twenty-eight in milestone
+ #: v2.0 phase 6a with gnd-adopt, the GSD migration skill. type-induction-skills
+-#: TS3 adds gnd-judge-fact-types and TS4 gnd-model-multivalued (two more links each).
++#: TS3 adds gnd-judge-fact-types, TS4 gnd-model-multivalued and induction-skill IS1 gnd-induce (two more links each).
+ REPOSITORY_LINK_TARGETS: dict[str, str] = {
+     ".claude/skills/gnd-export": "../../src/gnd/skills/gnd-export",
+     ".codex/skills/gnd-export": "../../src/gnd/skills/gnd-export",
+@@ -84,6 +84,7 @@ REPOSITORY_LINK_TARGETS: dict[str, str] = {
+     ".claude/skills/gnd-extract": "../../src/gnd/skills/gnd-extract",
+     ".claude/skills/gnd-judge-fact-types": "../../src/gnd/skills/gnd-judge-fact-types",
+     ".claude/skills/gnd-model-multivalued": "../../src/gnd/skills/gnd-model-multivalued",
++    ".claude/skills/gnd-induce": "../../src/gnd/skills/gnd-induce",
+     ".claude/skills/gnd-model-evolve": "../../src/gnd/skills/gnd-model-evolve",
+     ".claude/skills/gnd-model-from-code": "../../src/gnd/skills/gnd-model-from-code",
+     ".claude/skills/gnd-new-project": "../../src/gnd/skills/gnd-new-project",
+@@ -101,6 +102,7 @@ REPOSITORY_LINK_TARGETS: dict[str, str] = {
+     ".codex/skills/gnd-extract": "../../src/gnd/skills/gnd-extract",
+     ".codex/skills/gnd-judge-fact-types": "../../src/gnd/skills/gnd-judge-fact-types",
+     ".codex/skills/gnd-model-multivalued": "../../src/gnd/skills/gnd-model-multivalued",
++    ".codex/skills/gnd-induce": "../../src/gnd/skills/gnd-induce",
+     ".codex/skills/gnd-model-evolve": "../../src/gnd/skills/gnd-model-evolve",
+     ".codex/skills/gnd-model-from-code": "../../src/gnd/skills/gnd-model-from-code",
+     ".codex/skills/gnd-new-project": "../../src/gnd/skills/gnd-new-project",
+diff --git a/tests/test_induce_skill.py b/tests/test_induce_skill.py
+new file mode 100644
+index 00000000..45ca6853
+--- /dev/null
++++ b/tests/test_induce_skill.py
+@@ -0,0 +1,179 @@
++"""induction-skill IS1: the gnd-induce skill's one-home sentences, reactions, boundaries and docs row.
++
++Spec: .gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md section 8 (T8, T13, T14, T17).
++These tests read sentences; a sentence test cannot fail when an agent ignores the
++sentence, so nothing here claims the skill is followed (spec section 8, honest limit).
++"""
++
++import hashlib
++import re
++import shutil
++import subprocess
++from pathlib import Path
++
++import pytest
++from test_ik6_walk import ABSOLUTE, DOWNSTREAM
++from test_solve_successors import FROZEN_SKILLS
++
++ROOT = Path(__file__).resolve().parents[1]
++SKILLS = ROOT / "src/gnd/skills"
++SKILL = SKILLS / "gnd-induce/SKILL.md"
++AGENTS_INDEX = ROOT / "docs/agents/index.md"
++#: The IS1 base commit, named in the spec's delegated ruling (section 13).
++IS1_BASE = "1e6083f3554e785aa994422c837fda874d74d1e6"
++
++#: R-a..R-h of spec section 6.1: each lives in gnd-induce/SKILL.md and nowhere else.
++ONE_HOME = {
++    "R-a": "This skill never applies, confirms or edits a model, and never edits a proposal.",
++    "R-b": "It never writes or edits a learner's clauses or run record, and never answers as the learner "
++           "itself, except to save a learner's printed program verbatim as CLAUSES and to assemble a Popper "
++           "run record as stated below.",
++    "R-c": "It never writes, edits or re-binds a label manifest; labels come from the user.",
++    "R-d": "It never installs a learner and never runs one the user did not name.",
++    "R-e": "Covered sets come only from the learner's output or an evaluation the user selects, never from "
++           "a GND verdict: the output of gnd import, gnd check, gnd measure or gnd discover, including "
++           "refusal text.",
++    "R-f": "After a coverage refusal it never changes the claim and imports again.",
++    "R-g": "It never combines measure cells into one accuracy number.",
++    "R-h": "It never copies host values or paths into a file it writes or a public page, apart from the "
++           "learner artifacts it saves or assembles in the user's working paths; chat read-back may show them.",
++}
++REACTIONS_HEADER = "| Exit | Reaction |"
++COMMANDS = ("gnd measure --labels", "gnd discover", "gnd export ilp", "gnd import ilp-rules",
++            "gnd import mined-rules", "gnd check")
++
++
++def flat(text: str) -> str:
++    return re.sub(r"\s+", " ", text.replace("*", ""))
++
++
++def packaged_texts(root: Path = SKILLS):
++    for path in sorted(root.rglob("*.md")):
++        yield path.relative_to(root).as_posix(), flat(path.read_text(encoding="utf-8"))
++
++
++def homes(sentence: str, texts) -> list[str]:
++    return [rel for rel, text in texts if sentence in text]
++
++
++def skill_text() -> str:
++    return flat(SKILL.read_text(encoding="utf-8"))
++
++
++def section(name: str) -> str:
++    raw = SKILL.read_text(encoding="utf-8")
++    match = re.search(rf"^## {re.escape(name)}\n(.*?)(?=^## |\Z)", raw, re.MULTILINE | re.DOTALL)
++    assert match, f"gnd-induce has no '## {name}' section"
++    return flat(match.group(1))
++
++
++# --- T8: one home per refusal, one reactions table, the ordering sentences ---
++
++@pytest.mark.parametrize("rule", sorted(ONE_HOME))
++def test_t8_each_refusal_has_exactly_one_home(rule):
++    assert homes(ONE_HOME[rule], list(packaged_texts())) == ["gnd-induce/SKILL.md"], rule
++
++
++def test_t8_a_seeded_second_home_is_found_by_name(tmp_path):
++    seeded = tmp_path / "skills"
++    shutil.copytree(SKILLS, seeded)
++    other = seeded / "gnd-export/SKILL.md"
++    other.write_text(other.read_text(encoding="utf-8") + "\n" + ONE_HOME["R-e"] + "\n", encoding="utf-8")
++    assert homes(ONE_HOME["R-e"], list(packaged_texts(seeded))) == ["gnd-export/SKILL.md", "gnd-induce/SKILL.md"]
++
++
++def test_t8_one_reactions_table_with_the_check_results_row():
++    raw = SKILL.read_text(encoding="utf-8")
++    assert raw.count(REACTIONS_HEADER) == 1
++    table = section("Reactions")
++    assert "| 1, 2 or 4 from `gnd check` | report the verdicts verbatim: they are results, not refusals |" in table
++    assert "| 3 | report the named refusal or input error verbatim and stop" in table
++
++
++def test_t8_the_stop_names_exit_3_and_the_handoff_names_exit_0():
++    assert re.search(r"\| 3 \| [^|]*\bstop\b", section("Reactions"))
++    handoff = section("Hand off")
++    assert "exited 0 and emitted something" in handoff
++    assert "each run record this skill assembled, the evaluation that produced its sets" in handoff
++    assert "its `inducer` names the learner, because the program is the learner's" in handoff
++
++
++def test_t8_the_llm_learner_is_never_played_by_the_skill():
++    learn = section("Learn")
++    assert "this skill never plays that model" in learn
++    assert "evidence script" in learn
++    assert "never answers as the learner itself" in learn
++
++
++def test_t8_the_fact_type_family_routes_to_both_judges():
++    text = section("Discover")
++    assert "](../gnd-judge-fact-types/SKILL.md)" in text and "](../gnd-model-multivalued/SKILL.md)" in text
++
++
++def test_t8_every_proposal_command_asks_the_actor_of_the_user():
++    inputs = section("Fix the inputs first")
++    assert "never a name taken from git, the shell or the environment" in inputs
++    assert "Who should the proposal be recorded as" in inputs
++
++
++def test_t10_the_skill_installs_nothing():
++    text = skill_text()
++    assert not re.search(r"\b(pip install|uv add|uv tool install|brew install|conda install)\b", text)
++
++
++# --- T13: no frozen skill differs from the IS1 base --------------------------
++
++def _frozen_diff(root: Path) -> list[str]:
++    changed = []
++    for name in FROZEN_SKILLS:
++        result = subprocess.run(["git", "diff", "--quiet", IS1_BASE, "--", f"src/gnd/skills/{name}"],
++                                cwd=root, capture_output=True, check=False)
++        if result.returncode == 1:
++            changed.append(name)
++        elif result.returncode != 0:
++            raise AssertionError(f"git diff failed for {name}: {result.stderr.decode(errors='replace')}")
++    return changed
++
++
++def test_t13_no_frozen_skill_differs_from_the_is1_base():
++    assert _frozen_diff(ROOT) == []
++
++
++def test_t13_a_seeded_edit_to_a_frozen_skill_is_named(tmp_path):
++    clone = tmp_path / "clone"
++    subprocess.run(["git", "clone", "-q", "--no-checkout", str(ROOT), str(clone)], check=True)
++    subprocess.run(["git", "checkout", "-q", "--detach", IS1_BASE], cwd=clone, check=True)
++    target = clone / "src/gnd/skills" / FROZEN_SKILLS[0] / "SKILL.md"
++    target.write_text(target.read_text(encoding="utf-8") + "\nseeded\n", encoding="utf-8")
++    assert _frozen_diff(clone) == [FROZEN_SKILLS[0]]
++
++
++# --- T14: no host path, run directory or downstream name ---------------------
++
++@pytest.mark.parametrize("pattern", ABSOLUTE)
++def test_t14_no_absolute_path_in_the_skill(pattern):
++    assert not re.search(pattern, SKILL.read_text(encoding="utf-8"))
++
++
++def test_t14_a_seeded_absolute_path_is_found():
++    seeded = SKILL.read_text(encoding="utf-8") + "\nsee /Users/someone/runs/x\n"
++    assert any(re.search(p, seeded) for p in ABSOLUTE)
++
++
++def test_t14_no_downstream_name_in_the_skill():
++    tokens = set(re.findall(r"[a-z][a-z0-9_-]+", SKILL.read_text(encoding="utf-8").lower()))
++    assert [t for t in tokens if hashlib.sha256(t.encode()).hexdigest() in DOWNSTREAM] == []
++
++
++def test_t14_the_actor_is_never_derived_from_git():
++    text = skill_text()
++    assert not re.search(r"git config|user\.name|user\.email|\$USER|whoami", text)
++
++
++# --- T17: the agents index names the skill and its six commands --------------
++
++def test_t17_the_agents_index_has_a_gnd_induce_row():
++    rows = [line for line in AGENTS_INDEX.read_text(encoding="utf-8").splitlines()
++            if line.startswith("|") and "`gnd-induce`" in line]
++    assert len(rows) == 1, rows
++    assert all(command in rows[0] for command in COMMANDS), rows[0]
+diff --git a/tests/test_packaged_skills.py b/tests/test_packaged_skills.py
+index b72f3896..d24498ac 100644
+--- a/tests/test_packaged_skills.py
++++ b/tests/test_packaged_skills.py
+@@ -16,11 +16,11 @@ import pytest
+ 
+ from gnd import DEV_VERSION, DISTRIBUTION, resolve_version
+ 
+-EXPECTED_SKILL_FILE_COUNT = 71  # AC1 adds the bounded COUNT membership contract.
++EXPECTED_SKILL_FILE_COUNT = 73  # AC1 adds the bounded COUNT membership contract; IS1: gnd-induce and the vendored label schema.
+ EXPECTED_RELATIVE_LINK_COUNT = 238  # MG5: the Unattended mode cites representation-format.md once more; TS3: six new edges; TS4: nine, and S1 cites gnd-model-evolve once more; #104: unattended-growth.md adds seven; UG4: it cites the contract at two new anchors and representation-format.md once more
+ EXPECTED_RELATIVE_LINKS = frozenset({('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/constraint-reference.md#internal-uniqueness-uc'), ('gnd-model-multivalued/SKILL.md', '../gnd-judge-fact-types/SKILL.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-multivalued/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-multivalued/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'), ('gnd-orm-core/SKILL.md', '../gnd-judge-fact-types/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-extract/references/extraction-contract.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/references/population-format.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-render-doc/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-render-doc/references/rendering-contract.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'), ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/session-v7-contract.md'), ('gnd-extract/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-export/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-export/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-export/references/export-contract.md', '../SKILL.md'), ('gnd-export/references/witness-contract.md', '../SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-adopt/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-adopt/SKILL.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-adopt/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-adopt/references/gsd-mapping.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-codegen/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-codegen/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-codegen/references/codegen-contract.md', '../../gnd-extract/references/extraction-contract.md'), ('gnd-codegen/references/codegen-contract.md', '../../gnd-orm-core/references/population-format.md'), ('gnd-codegen/references/codegen-contract.md', '../SKILL.md'), ('gnd-codegen/references/architecture-contract.md', '../SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-conformance/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-conformance/references/conformance-contract.md', '../SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/representation-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'), ('gnd-extract/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-extract/references/extraction-contract.md', '../../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'), ('gnd-extract/references/extraction-contract.md', '../SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-conformance/references/conformance-contract.md'), ('gnd-model-evolve/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/SKILL.md'), ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-evolve/references/evolution-contract.md', '../SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-code/references/recovery-contract.md', '../../gnd-orm-core/SKILL.md'), ('gnd-model-from-code/references/recovery-contract.md', '../SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/orm-meta.schema.json'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/verbalization-patterns.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/evals/README.md', '../examples/movie_catalog.dialogue.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/representation-format.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/verbalization-patterns.md'), ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-new-project/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-new-project/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/coverage-and-element-addressing.md'), ('gnd-new-project/SKILL.md', '../gnd-solve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-dev-session/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel-light/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-solve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-update-review-panel/SKILL.md'), ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-new-project/SKILL.md'), ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-solve/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-render-doc/references/rendering-contract.md', '../SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-review-panel/SKILL.md', '../gnd-update-review-panel/SKILL.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/references/review-contract.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-review-panel/references/review-contract.md', '../../gnd-update-review-panel/SKILL.md'), ('gnd-review-panel/references/review-contract.md', '../SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-dev-session/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-solve/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-update-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/SKILL.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#additive-policy'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#unattended-source'), ('gnd-model-from-text/references/unattended-growth.md', '../SKILL.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#stable-locators'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#population-check')})
+-EXPECTED_SKILL_NAMES = frozenset({'gnd-adopt', 'gnd-judge-fact-types', 'gnd-model-multivalued', 'gnd-codegen', 'gnd-conformance', 'gnd-dev-session', 'gnd-extract', 'gnd-export', 'gnd-model-evolve', 'gnd-model-from-code', 'gnd-model-from-text', 'gnd-new-project', 'gnd-orm-core', 'gnd-render-doc', 'gnd-review-panel', 'gnd-review-panel-light', 'gnd-solve', 'gnd-update-review-panel'})
+-EXPECTED_SKILL_FILES = frozenset({'gnd-judge-fact-types/SKILL.md', 'gnd-model-multivalued/SKILL.md', 'gnd-orm-core/references/type-evidence.schema.json', 'gnd-orm-core/references/type-judgements.schema.json', 'gnd-dev-session/references/judgment-contract.md', 'gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adopt/references/gsd-mapping.md', 'gnd-adopt/scripts/verify_migration.py', 'gnd-codegen/SKILL.md', 'gnd-codegen/references/architecture-contract.md', 'gnd-codegen/references/codegen-contract.md', 'gnd-conformance/SKILL.md', 'gnd-conformance/references/conformance-contract.md', 'gnd-dev-session/SKILL.md', 'gnd-dev-session/references/session-v7-contract.md', 'gnd-export/SKILL.md', 'gnd-export/references/export-contract.md', 'gnd-export/references/witness-contract.md', 'gnd-export/references/witness.schema.json', 'gnd-extract/SKILL.md', 'gnd-extract/references/extraction-contract.md', 'gnd-model-evolve/SKILL.md', 'gnd-model-evolve/references/evolution-contract.md', 'gnd-model-from-code/SKILL.md', 'gnd-model-from-code/references/recovery-contract.md', 'gnd-model-from-text/SKILL.md', 'gnd-model-from-text/USAGE.md', 'gnd-model-from-text/evals/README.md', 'gnd-model-from-text/evals/cases.json', 'gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md', 'gnd-model-from-text/evals/reviewability_checklist.md', 'gnd-model-from-text/examples/library_with_subtypes.dialogue.md', 'gnd-model-from-text/examples/library_with_subtypes.orm.yaml', 'gnd-model-from-text/examples/movie_catalog.dialogue.md', 'gnd-model-from-text/examples/movie_catalog.orm.yaml', 'gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md', 'gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml', 'gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md', 'gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml', 'gnd-model-from-text/references/csdp-workflow.md', 'gnd-model-from-text/references/dialogue-patterns.md', 'gnd-model-from-text/references/unattended-growth.md', 'gnd-model-from-text/scripts/validate_model.py', 'gnd-new-project/SKILL.md', 'gnd-orm-core/SKILL.md', 'gnd-orm-core/references/constraint-inference.md', 'gnd-orm-core/references/coverage-and-element-addressing.md', 'gnd-orm-core/references/constraint-reference.md', 'gnd-orm-core/references/halpin-posture.md', 'gnd-orm-core/references/milestone-record-format.md', 'gnd-orm-core/references/orm-meta.schema.json', 'gnd-orm-core/references/population-format.md', 'gnd-orm-core/references/population.schema.json', 'gnd-orm-core/references/provenance-and-modality.md', 'gnd-orm-core/references/representation-format.md', 'gnd-orm-core/references/steps.schema.json', 'gnd-orm-core/references/verbalization-patterns.md', 'gnd-render-doc/SKILL.md', 'gnd-render-doc/references/rendering-contract.md', 'gnd-review-panel/SKILL.md', 'gnd-review-panel/references/review-contract.md', 'gnd-review-panel-light/SKILL.md', 'gnd-solve/SKILL.md', 'gnd-update-review-panel/SKILL.md', 'gnd-update-review-panel/agents/openai.yaml', 'gnd-update-review-panel/scripts/update_harnesses.py'})
++EXPECTED_SKILL_NAMES = frozenset({'gnd-adopt', 'gnd-induce', 'gnd-judge-fact-types', 'gnd-model-multivalued', 'gnd-codegen', 'gnd-conformance', 'gnd-dev-session', 'gnd-extract', 'gnd-export', 'gnd-model-evolve', 'gnd-model-from-code', 'gnd-model-from-text', 'gnd-new-project', 'gnd-orm-core', 'gnd-render-doc', 'gnd-review-panel', 'gnd-review-panel-light', 'gnd-solve', 'gnd-update-review-panel'})
++EXPECTED_SKILL_FILES = frozenset({'gnd-induce/SKILL.md', 'gnd-orm-core/references/labels.schema.json', 'gnd-judge-fact-types/SKILL.md', 'gnd-model-multivalued/SKILL.md', 'gnd-orm-core/references/type-evidence.schema.json', 'gnd-orm-core/references/type-judgements.schema.json', 'gnd-dev-session/references/judgment-contract.md', 'gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adopt/references/gsd-mapping.md', 'gnd-adopt/scripts/verify_migration.py', 'gnd-codegen/SKILL.md', 'gnd-codegen/references/architecture-contract.md', 'gnd-codegen/references/codegen-contract.md', 'gnd-conformance/SKILL.md', 'gnd-conformance/references/conformance-contract.md', 'gnd-dev-session/SKILL.md', 'gnd-dev-session/references/session-v7-contract.md', 'gnd-export/SKILL.md', 'gnd-export/references/export-contract.md', 'gnd-export/references/witness-contract.md', 'gnd-export/references/witness.schema.json', 'gnd-extract/SKILL.md', 'gnd-extract/references/extraction-contract.md', 'gnd-model-evolve/SKILL.md', 'gnd-model-evolve/references/evolution-contract.md', 'gnd-model-from-code/SKILL.md', 'gnd-model-from-code/references/recovery-contract.md', 'gnd-model-from-text/SKILL.md', 'gnd-model-from-text/USAGE.md', 'gnd-model-from-text/evals/README.md', 'gnd-model-from-text/evals/cases.json', 'gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md', 'gnd-model-from-text/evals/reviewability_checklist.md', 'gnd-model-from-text/examples/library_with_subtypes.dialogue.md', 'gnd-model-from-text/examples/library_with_subtypes.orm.yaml', 'gnd-model-from-text/examples/movie_catalog.dialogue.md', 'gnd-model-from-text/examples/movie_catalog.orm.yaml', 'gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md', 'gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml', 'gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md', 'gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml', 'gnd-model-from-text/references/csdp-workflow.md', 'gnd-model-from-text/references/dialogue-patterns.md', 'gnd-model-from-text/references/unattended-growth.md', 'gnd-model-from-text/scripts/validate_model.py', 'gnd-new-project/SKILL.md', 'gnd-orm-core/SKILL.md', 'gnd-orm-core/references/constraint-inference.md', 'gnd-orm-core/references/coverage-and-element-addressing.md', 'gnd-orm-core/references/constraint-reference.md', 'gnd-orm-core/references/halpin-posture.md', 'gnd-orm-core/references/milestone-record-format.md', 'gnd-orm-core/references/orm-meta.schema.json', 'gnd-orm-core/references/population-format.md', 'gnd-orm-core/references/population.schema.json', 'gnd-orm-core/references/provenance-and-modality.md', 'gnd-orm-core/references/representation-format.md', 'gnd-orm-core/references/steps.schema.json', 'gnd-orm-core/references/verbalization-patterns.md', 'gnd-render-doc/SKILL.md', 'gnd-render-doc/references/rendering-contract.md', 'gnd-review-panel/SKILL.md', 'gnd-review-panel/references/review-contract.md', 'gnd-review-panel-light/SKILL.md', 'gnd-solve/SKILL.md', 'gnd-update-review-panel/SKILL.md', 'gnd-update-review-panel/agents/openai.yaml', 'gnd-update-review-panel/scripts/update_harnesses.py'})
+ FROZEN_BASE_DEPENDENCIES = {'jsonschema', 'pydantic', 'ruamel-yaml'}
+ PEP723_SIBLING_SCHEMA = 'gnd-orm-core/references/orm-meta.schema.json'
+ # MC3 preserves the 238-edge predecessor and adds exactly this normative edge.
+@@ -90,7 +90,7 @@ def test_the_packaged_tree_holds_exactly_the_named_skills() -> None:
+     assert root.is_dir(), 'gnd/skills resource directory is absent (see the sibling test)'
+     names = {rel.split('/')[0] for rel, _ in iter_skill_files(root)}
+     assert names == EXPECTED_SKILL_NAMES, f'packaged skills are {sorted(names)}, expected {sorted(EXPECTED_SKILL_NAMES)}.\n  missing: {sorted(EXPECTED_SKILL_NAMES - names)}\n  extra:   {sorted(names - EXPECTED_SKILL_NAMES)}'
+-    assert len(EXPECTED_SKILL_NAMES) == 18, 'the packaged surface is exactly the named skills; another is a decision with a plan behind it, not an edit to this literal (the latest: gnd-model-multivalued, type-induction-skills TS4)'
++    assert len(EXPECTED_SKILL_NAMES) == 19, 'the packaged surface is exactly the named skills; another is a decision with a plan behind it, not an edit to this literal (the latest: gnd-induce, induction-skill IS1)'
+ 
+ LX2_FLATTENING_EDGE = (
+     'gnd-export/references/witness-contract.md',
+@@ -103,6 +103,31 @@ VG5_GROWTH_EDGES = {
+     ('gnd-model-from-text/references/unattended-growth.md',
+      '../../gnd-orm-core/references/provenance-and-modality.md#evolve-admission-d-12'),
+ }
++# seeded-routes-and-identifiers SI1 (commit 8acc7b29) added this citation without
++# pinning it, so main was red here; induction-skill IS1 pins it (IS1 finding F1).
++SI1_FLATTENING_RECORD_EDGE = (
++    'gnd-model-from-text/references/unattended-growth.md',
++    '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record',
++)
++# induction-skill IS1: gnd-induce, its five inbound route sentences and its outbound links.
++IS1_INDUCE_EDGES = frozenset({
++    ('gnd-dev-session/SKILL.md', '../gnd-induce/SKILL.md'),
++    ('gnd-export/SKILL.md', '../gnd-induce/SKILL.md'),
++    ('gnd-model-evolve/SKILL.md', '../gnd-induce/SKILL.md'),
++    ('gnd-orm-core/SKILL.md', '../gnd-induce/SKILL.md'),
++    ('gnd-solve/SKILL.md', '../gnd-induce/SKILL.md'),
++    ('gnd-induce/SKILL.md', '../gnd-dev-session/SKILL.md'),
++    ('gnd-induce/SKILL.md', '../gnd-export/SKILL.md'),
++    ('gnd-induce/SKILL.md', '../gnd-judge-fact-types/SKILL.md'),
++    ('gnd-induce/SKILL.md', '../gnd-model-evolve/SKILL.md'),
++    ('gnd-induce/SKILL.md', '../gnd-model-multivalued/SKILL.md'),
++    ('gnd-induce/SKILL.md', '../gnd-orm-core/SKILL.md'),
++    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/labels.schema.json'),
++    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
++    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/population-format.md'),
++    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
++})
++IS1_INDUCE_LINK_COUNT = 16  # 15 edges; gnd-induce cites gnd-model-evolve twice (the summary and the handoff).
+ 
+ 
+ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
+@@ -130,11 +155,11 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
+             if resolved not in entries and resolved not in directories:
+                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
+     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
+-    expected = GC4_RELATIVE_LINKS | {LX2_FLATTENING_EDGE} | VG5_GROWTH_EDGES
++    expected = GC4_RELATIVE_LINKS | {LX2_FLATTENING_EDGE} | VG5_GROWTH_EDGES | {SI1_FLATTENING_RECORD_EDGE} | IS1_INDUCE_EDGES
+     missing = sorted(expected - edges)
+     extra = sorted(edges - expected)
+     assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
+-    expected_count = GC4_RELATIVE_LINK_COUNT + 1 + len(VG5_GROWTH_EDGES)
++    expected_count = GC4_RELATIVE_LINK_COUNT + 1 + len(VG5_GROWTH_EDGES) + 1 + IS1_INDUCE_LINK_COUNT
+     assert checked == expected_count, f'checked {checked} relative links, expected {expected_count}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+ 
+ def test_pep723_validator_sibling_schema_ships() -> None:
+@@ -216,7 +241,7 @@ def _routing_text(rel: str) -> str:
+     for part in rel.split('/'):
+         resource = resource / part
+     return re.sub('\\s+', ' ', resource.read_text(encoding='utf-8').replace('*', ''))
+-ROUTING_MATRIX: tuple[tuple[str, str, str, str], ...] = (('gnd-model-from-text/SKILL.md', '../gnd-model-evolve/SKILL.md', 'model .{0,30}already exists', 'unchanged.{0,80}(source|provenance).{0,200}D-12'), ('gnd-model-from-text/SKILL.md', '../gnd-model-from-code/SKILL.md', '(codebase|existing code)', 'one-time.{0,300}D-14'), ('gnd-codegen/SKILL.md', '../gnd-conformance/SKILL.md', 'drift', 'separate claim'), ('gnd-codegen/SKILL.md', '../gnd-model-evolve/SKILL.md', 'model.{0,40}(is wrong|must change|changing)', '[Nn]othing regenerates automatically'), ('gnd-conformance/SKILL.md', '../gnd-model-evolve/SKILL.md', 'model.{0,40}(has to change|must change|is what)', 'not permission to regenerate'), ('gnd-conformance/SKILL.md', '../gnd-model-from-code/SKILL.md', '(brownfield|never had a model)', 'drift and brownfield recovery are different'), ('gnd-orm-core/SKILL.md', '../gnd-model-evolve/SKILL.md', 'must change', '[Rr]outing only'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-code/SKILL.md', 'existing codebase', 'D-14'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel/SKILL.md', '(plan|experiment outcome)', 'advisory.{0,200}D-22'), ('gnd-orm-core/SKILL.md', '../gnd-judge-fact-types/SKILL.md', 'evidence must be judged for duplicates', 'never applies a proposal'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-evolve/SKILL.md', 'admission is the user.s reviewed step', 'never applies a proposal'), ('gnd-orm-core/SKILL.md', '../gnd-model-multivalued/SKILL.md', '`multi_valued` groups to model', 'never applies a proposal'), ('gnd-model-multivalued/SKILL.md', '../gnd-model-evolve/SKILL.md', 'admission is the user.s reviewed step', 'never applies a proposal'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-multivalued/SKILL.md', 'status `multi_valued` are not this skill.s', 'Other statuses take no verdict'))
++ROUTING_MATRIX: tuple[tuple[str, str, str, str], ...] = (('gnd-model-from-text/SKILL.md', '../gnd-model-evolve/SKILL.md', 'model .{0,30}already exists', 'unchanged.{0,80}(source|provenance).{0,200}D-12'), ('gnd-model-from-text/SKILL.md', '../gnd-model-from-code/SKILL.md', '(codebase|existing code)', 'one-time.{0,300}D-14'), ('gnd-codegen/SKILL.md', '../gnd-conformance/SKILL.md', 'drift', 'separate claim'), ('gnd-codegen/SKILL.md', '../gnd-model-evolve/SKILL.md', 'model.{0,40}(is wrong|must change|changing)', '[Nn]othing regenerates automatically'), ('gnd-conformance/SKILL.md', '../gnd-model-evolve/SKILL.md', 'model.{0,40}(has to change|must change|is what)', 'not permission to regenerate'), ('gnd-conformance/SKILL.md', '../gnd-model-from-code/SKILL.md', '(brownfield|never had a model)', 'drift and brownfield recovery are different'), ('gnd-orm-core/SKILL.md', '../gnd-model-evolve/SKILL.md', 'must change', '[Rr]outing only'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-code/SKILL.md', 'existing codebase', 'D-14'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel/SKILL.md', '(plan|experiment outcome)', 'advisory.{0,200}D-22'), ('gnd-orm-core/SKILL.md', '../gnd-judge-fact-types/SKILL.md', 'evidence must be judged for duplicates', 'never applies a proposal'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-evolve/SKILL.md', 'admission is the user.s reviewed step', 'never applies a proposal'), ('gnd-orm-core/SKILL.md', '../gnd-model-multivalued/SKILL.md', '`multi_valued` groups to model', 'never applies a proposal'), ('gnd-model-multivalued/SKILL.md', '../gnd-model-evolve/SKILL.md', 'admission is the user.s reviewed step', 'never applies a proposal'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-multivalued/SKILL.md', 'status `multi_valued` are not this skill.s', 'Other statuses take no verdict'), ('gnd-induce/SKILL.md', '../gnd-model-evolve/SKILL.md', 'Every proposal goes to', 'this skill never applies it'), ('gnd-orm-core/SKILL.md', '../gnd-induce/SKILL.md', 'host labels must be scored', 'never applies an induced rule'), ('gnd-export/SKILL.md', '../gnd-induce/SKILL.md', 'whole loop with a learner', 'reviewed through gnd-model-evolve'), ('gnd-induce/SKILL.md', '../gnd-export/SKILL.md', 'Derivation and Lean exports', 'are not this skill'), ('gnd-induce/SKILL.md', '../gnd-judge-fact-types/SKILL.md', '--families fact-type forms', 'is not this skill'))
+ 
+ @pytest.mark.parametrize(('source', 'destination', 'trigger', 'boundary'), ROUTING_MATRIX, ids=[f"{src.split('/')[0]}->{dst.split('/')[1]}" for src, dst, _, _ in ROUTING_MATRIX])
+ def test_each_phase4_route_names_its_trigger_and_its_authority_boundary(source: str, destination: str, trigger: str, boundary: str) -> None:
+@@ -237,11 +262,11 @@ def test_gnd_orm_core_indexes_the_workflows_without_becoming_one() -> None:
+     assert not procedural, f"gnd-orm-core acquired procedural heading(s) {procedural}; it is a references-only library (D-07). 'Workflow index' is a list of destinations and is allowed; '## Workflow' is a procedure and is not."
+ 
+ def test_no_route_promises_automatic_regeneration_or_applied_fixes() -> None:
+-    denials = {'gnd-model-from-code/SKILL.md': 'one-time', 'gnd-conformance/SKILL.md': 'no route above installs a watcher', 'gnd-review-panel/SKILL.md': 'never applies a fix', 'gnd-review-panel-light/SKILL.md': 'never applies a fix', 'gnd-codegen/SKILL.md': 'no payload in GND presents them as one score', 'gnd-orm-core/SKILL.md': 'stay separate payloads', 'gnd-model-from-text/SKILL.md': '[Nn]either route hands over write authority', 'gnd-judge-fact-types/SKILL.md': 'never applies a proposal', 'gnd-model-multivalued/SKILL.md': 'never applies a proposal'}
++    denials = {'gnd-model-from-code/SKILL.md': 'one-time', 'gnd-conformance/SKILL.md': 'no route above installs a watcher', 'gnd-review-panel/SKILL.md': 'never applies a fix', 'gnd-review-panel-light/SKILL.md': 'never applies a fix', 'gnd-codegen/SKILL.md': 'no payload in GND presents them as one score', 'gnd-orm-core/SKILL.md': 'stay separate payloads', 'gnd-model-from-text/SKILL.md': '[Nn]either route hands over write authority', 'gnd-judge-fact-types/SKILL.md': 'never applies a proposal', 'gnd-model-multivalued/SKILL.md': 'never applies a proposal', 'gnd-induce/SKILL.md': 'never applies'}
+     for rel, pattern in denials.items():
+         assert re.search(pattern, _routing_text(rel), re.IGNORECASE), f'{rel} no longer carries its required denial (expected to match {pattern!r}). Every Phase 4 handoff is a user-selected step, and the document that omits the denial is the one whose reader assumes otherwise.'
+ RECORD_CONTRACT = 'gnd-orm-core/references/milestone-record-format.md'
+-RECORD_ROUTES = {'gnd-export/SKILL.md': 'never touches git', 'gnd-codegen/SKILL.md': 'never touches git', 'gnd-conformance/SKILL.md': 'never touches git', 'gnd-dev-session/SKILL.md': 'never touches git', 'gnd-extract/SKILL.md': 'never touches git', 'gnd-model-evolve/SKILL.md': 'never touches git', 'gnd-model-from-code/SKILL.md': 'never touches git', 'gnd-model-from-text/SKILL.md': 'never touches git', 'gnd-new-project/SKILL.md': 'never touches git', 'gnd-render-doc/SKILL.md': 'never touches git', 'gnd-review-panel/SKILL.md': 'never touches git', 'gnd-review-panel-light/SKILL.md': 'never touches git', 'gnd-solve/SKILL.md': 'commits nothing itself', 'gnd-update-review-panel/SKILL.md': 'never touches git', 'gnd-judge-fact-types/SKILL.md': 'never touches git', 'gnd-model-multivalued/SKILL.md': 'never touches git'}
++RECORD_ROUTES = {'gnd-export/SKILL.md': 'never touches git', 'gnd-codegen/SKILL.md': 'never touches git', 'gnd-conformance/SKILL.md': 'never touches git', 'gnd-dev-session/SKILL.md': 'never touches git', 'gnd-extract/SKILL.md': 'never touches git', 'gnd-model-evolve/SKILL.md': 'never touches git', 'gnd-model-from-code/SKILL.md': 'never touches git', 'gnd-model-from-text/SKILL.md': 'never touches git', 'gnd-new-project/SKILL.md': 'never touches git', 'gnd-render-doc/SKILL.md': 'never touches git', 'gnd-review-panel/SKILL.md': 'never touches git', 'gnd-review-panel-light/SKILL.md': 'never touches git', 'gnd-solve/SKILL.md': 'commits nothing itself', 'gnd-update-review-panel/SKILL.md': 'never touches git', 'gnd-judge-fact-types/SKILL.md': 'never touches git', 'gnd-model-multivalued/SKILL.md': 'never touches git', 'gnd-induce/SKILL.md': 'never touches git'}
+ 
+ @pytest.mark.parametrize(('source', 'denial'), sorted(RECORD_ROUTES.items()), ids=[src.split('/')[0] for src, _ in sorted(RECORD_ROUTES.items())])
+ def test_every_workflow_skill_routes_to_the_record_contract(source: str, denial: str) -> None:
+diff --git a/tests/test_public_distribution.py b/tests/test_public_distribution.py
+index 3b6c6598..6ae34b86 100644
+--- a/tests/test_public_distribution.py
++++ b/tests/test_public_distribution.py
+@@ -314,7 +314,7 @@ def test_artifact_and_installed_resource_sets(package_probe):
+     for resource in ["gnd/schema/orm-meta.schema.json", "gnd/schema/population.schema.json"]:
+         json.loads(wheel_payload[resource])
+     paths = [p for p in wheel_payload if p.endswith("/SKILL.md")]
+-    assert len(paths) == 18
++    assert len(paths) == 19
+     missing = dict(wheel_payload)
+     missing.pop("gnd/schema/orm-meta.schema.json")
+     with pytest.raises(AssertionError, match="orm-meta.schema.json"):
+diff --git a/tests/test_public_packaged_invocation_guards.py b/tests/test_public_packaged_invocation_guards.py
+index 159cc13d..4280f26f 100644
+--- a/tests/test_public_packaged_invocation_guards.py
++++ b/tests/test_public_packaged_invocation_guards.py
+@@ -128,9 +128,9 @@ def test_fallback_capability_statement_is_complete(limitation: str) -> None:
+     assert re.search(CAPABILITY_LIMITS[limitation], source, re.IGNORECASE), f"{FALLBACK_SCRIPT}'s capability statement does not name the limitation {limitation!r}. D-14 requires the list in full, and it grew during Phase 01.1 — model-relative population validation, the indeterminate band, the JSON payload and the acceptance flag all postdate the original 'layer 1 only' sentence. Repair: state this limitation explicitly in the module docstring. A fallback whose limits are understated reads as an equivalent of `gnd validate`, which it is not."
+ FENCE_RE = re.compile('^\\s*```')
+ PROMPT_RE = re.compile('^\\$\\s+')
+-GROUPED_COMMANDS = frozenset({'evolve', 'exp', 'recovery', 'review'})
++GROUPED_COMMANDS = frozenset({'evolve', 'exp', 'export', 'import', 'recovery', 'review'})
+ MEASURED_EXECUTABLE_SNIPPETS = 29
+-MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-judge-fact-types': 2, 'gnd-model-multivalued': 2, 'gnd-model-evolve': 6, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
++MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-induce': 7, 'gnd-judge-fact-types': 2, 'gnd-model-multivalued': 2, 'gnd-model-evolve': 6, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
+ SKILLS_WITH_EXECUTABLE_SNIPPETS = frozenset(MEASURED_SNIPPETS_PER_SKILL)
+ 
+ @dataclass(frozen=True)
+diff --git a/tests/test_schema_sync.py b/tests/test_schema_sync.py
+index 6aa25360..1f41a0f7 100644
+--- a/tests/test_schema_sync.py
++++ b/tests/test_schema_sync.py
+@@ -16,9 +16,10 @@ to cover a contract no model or population author ever writes. Its own
+ round-trip guard lives in ``tests/test_report_json.py``, which validates real
+ payloads against it on every exit path.
+ 
+-The second exception: the two type schemas (TS3) are canonical at the runtime
+-``src/gnd/`` files and vendored into the gnd-orm-core references, the reverse
+-of SCHEMA_PAIRS; their own case is at the end of this file.
++The second exception: the two type schemas (TS3) and the label manifest schema
++(induction-skill IS1, D3) are canonical at the runtime ``src/gnd/`` files and
++vendored into the gnd-orm-core references, the reverse of SCHEMA_PAIRS; their
++own case is at the end of this file.
+ """
+ 
+ 
+@@ -74,7 +75,8 @@ def test_witness_schema_twins_are_byte_identical() -> None:
+ #: TS3 (spec D5): the two type schemas run the other way. gnd discover owns
+ #: src/gnd/type-evidence.schema.json and src/gnd/type-judgements.schema.json;
+ #: the gnd-orm-core copies are read-only, regenerated from the runtime files.
+-TYPE_SCHEMAS = ["type-evidence.schema.json", "type-judgements.schema.json"]
++#: induction-skill IS1 (D3): gnd measure owns src/gnd/labels.schema.json the same way.
++TYPE_SCHEMAS = ["type-evidence.schema.json", "type-judgements.schema.json", "labels.schema.json"]
+ 
+ 
+ @pytest.mark.parametrize("filename", TYPE_SCHEMAS)

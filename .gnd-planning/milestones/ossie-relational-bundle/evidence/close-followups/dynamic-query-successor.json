@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "reason": "ossie-relational-bundle close follow-ups: the private pointer helper of gnd.export.physical_binding and the private predicate of gnd.rmap became the shared gnd.artifacts.json_pointer and gnd.rmap.is_confirmed_alethic. Two parameter annotations moved; syntax census only, no model-query exception is widened.",
+  "predecessor": ".gnd-planning/milestones/ossie-relational-bundle/evidence/OB4/dynamic-query-successor.json",
+  "predecessor_sha256": "693dbb047299d13bd06a4c300056ef705e9d6887170eb680ca7ddb91a98d1419",
+  "removed": [
+    [
+      "src/gnd/export/physical_binding.py",
+      "_pointer",
+      "Iterable[Any]",
+      1
+    ],
+    [
+      "src/gnd/rmap.py",
+      "_confirmed",
+      "dict[str, Any]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/artifacts.py",
+      "json_pointer",
+      "Iterable[object]",
+      1
+    ],
+    [
+      "src/gnd/rmap.py",
+      "is_confirmed_alethic",
+      "Mapping[str, Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8360,
+  "result_occurrences": 10396
+}

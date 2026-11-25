@@ -1,4 +1,4 @@
-# D10 drafts: the three issues and the questions for the reporter
+# D10 drafts: the issues and the questions for the reporter
 
 **Status: drafts for the owner, 2026-11-25. Nothing here has been sent or
 filed.** Each text needs the owner's confirmation before it goes out
@@ -88,6 +88,47 @@ Delivered in PR 272, with a fix in PR 273 so that a table name that is not a
 plain identifier, such as a schema-qualified `fin.refunds`, is written the
 way Ossie's validator matches it. The schema is `gnd-physical-binding/1`.
 Known limit: a fact held only through a surrogate key cannot be bound.
+
+## Issue 4 (to file, open): a carried question from the milestone
+
+**Title:** `refscheme.reference_identity` ignores `preferred` and confirmation
+
+**Body:**
+
+`refscheme.reference_identity` takes the first external uniqueness anchored
+on an entity as its composite reference, whatever the constraint's
+`preferred` flag, status or modality, and rebuilds its value-type map on
+every call.
+
+The relational mapping (`gnd.rmap`) stopped using it for that reason: it
+selects the preferred, confirmed alethic external uniqueness, indexed once
+per model. Other callers still get the first one.
+
+To decide:
+
+- Should it select as the relational mapping does?
+- Which callers would see a different identifier, and is that a fix or a
+  break for each?
+- Should the map be built once per model?
+
+## Issue 5 (to file, open): a carried question from the milestone
+
+**Title:** `gnd export ossie`: declare identifiers for unit-based references and multi-supertype subtypes
+
+**Body:**
+
+The Ossie ontology export writes `identify_by` for popular, general and
+external references. It writes none for an entity with a unit-based
+reference, or for a subtype with more than one supertype.
+
+The mapping can only link a relationship whose concepts the ontology
+identifies. For these entities the link is listed in the mapping's
+`unmapped_links` with the reason `identification-differs`. Across the 422
+models scanned in the repository this affects 16 fact types in 14 models.
+
+Declaring those identifiers would let the mapping cover them. It changes the
+ontology's bytes for existing models, so it needs its own specification and
+a decision on the round trip.
 
 ## Message to the reporter
 

@@ -624,3 +624,28 @@ def test_r1_f2_the_corpus_checkers_normalizer_agrees_with_the_exporter_on_every_
     names = [f"a{c}b" for c in points] + [f"{c}ab" for c in points] + ["", "not", "Select", "selects", "9", "_", "$"]
     assert [name for name in names
             if corpus.normalized(name) != (name.upper() if is_regular_identifier(name) else name)][:10] == []
+
+
+def test_close_one_json_pointer_helper_serves_the_ossie_modules():
+    """OB4-Q4: export, import and the binding build RFC 6901 pointers with one helper."""
+    from gnd import ossie_import
+    from gnd.artifacts import json_pointer
+    from gnd.export import ossie, physical_binding
+
+    assert json_pointer(()) == ""
+    assert json_pointer(["a/b", "c~d", 0, "~1"]) == "/a~1b/c~0d/0/~01"
+    assert ossie_import._pointer is json_pointer and physical_binding._pointer is json_pointer
+    assert ossie._pointers("a/b", 2) == json_pointer(["a/b", 2])
+    assert ossie_import._tokens(json_pointer(["a/b", "c~d", "~1"])) == ("a/b", "c~d", "~1")
+
+
+def test_close_the_ontology_export_and_the_rmap_share_one_confirmed_alethic_predicate():
+    """OB2-Q1: one definition of the constraints the relational forms may carry."""
+    from gnd import rmap
+    from gnd.export import ossie
+
+    assert ossie.is_confirmed_alethic is rmap.is_confirmed_alethic
+    assert rmap.is_confirmed_alethic({"status": "confirmed", "modality": "alethic"})
+    assert not rmap.is_confirmed_alethic({"status": "confirmed", "modality": "deontic"})
+    assert not rmap.is_confirmed_alethic({"status": "inferred", "modality": "alethic"})
+    assert not rmap.is_confirmed_alethic({})

@@ -100,3 +100,14 @@ def test_native_encoded_bytes_and_custom_refusal():
 
     with pytest.raises(ValueError, match='caller numeric refusal'):
         p.loads('[1e999]', parse_float=refuse)
+
+
+def test_guard_yaml_reads_its_default_cap_at_call_time(monkeypatch):
+    """ossie-relational-bundle OB1-Q1: a lowered MAX_BYTES lowers guard_yaml's default, as it
+    lowers loads'. The default used to be captured when the module was imported."""
+    p = policy()
+    p.guard_yaml('x: 123456789')
+    monkeypatch.setattr(p, 'MAX_BYTES', 8)
+    with pytest.raises(ValueError, match='byte cap'):
+        p.guard_yaml('x: 123456789')
+    p.guard_yaml('x: 123456789', max_bytes=64)

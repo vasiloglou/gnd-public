@@ -1642,7 +1642,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: export.ossie_relational, export.physical_binding, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
 - used_by: cli.export_command
 - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py, tests/test_ossie_relational.py
-- notes: Every artifact of a run is bounded by max_output_bytes. _project returns the ontology with the OntologyView the mapping reads, so the mapping never recomputes concept names, role order or identify_by. A model that maps to no table gets no relational files.
+- notes: Every artifact of a run is bounded by max_output_bytes. _project returns the ontology with the OntologyView the mapping reads, so the mapping never recomputes concept names, role order or identify_by. A model that maps to no table gets no relational files. Confirmed-alethic decisions come from model.relational_mapping, and loss-report pointers from infra.artifacts' json_pointer.
 
 
 ### export.ossie_relational
@@ -1665,10 +1665,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Binding (document and digest); Bound (RelationalSchema, field types, extension members); BindingError with a rule id
 - status: canonical
 - modules: src/gnd/export/physical_binding.py
-- uses: export.ossie_relational, infra.input_policy, infra.safe_filesystem, model.query_index, model.relational_mapping
+- uses: export.ossie_relational, infra.artifacts, infra.input_policy, infra.safe_filesystem, model.query_index, model.relational_mapping
 - used_by: export.ossie
 - tests: tests/test_physical_binding.py
-- notes: Normative rules in representation-format.md, "Physical binding"; the member list is the packaged schema gnd/schema/physical-binding.schema.json. Total over arbitrary bytes and over any schema-valid document. Fills the Rmap's own records, so gnd.rmap.dispositions is the one walk for both paths and the Rmap is not run. A table.column string is looked up, never split. Names collide by Ossie's normalized identifier, from export.ossie_relational.
+- notes: Normative rules in representation-format.md, "Physical binding"; the member list is the packaged schema gnd/schema/physical-binding.schema.json. Total over arbitrary bytes and over any schema-valid document. Fills the Rmap's own records, so gnd.rmap.dispositions is the one walk for both paths and the Rmap is not run. A table.column string is looked up, never split. Names collide by Ossie's normalized identifier, from export.ossie_relational. Message pointers are built by infra.artifacts' json_pointer.
 
 
 ### export.pyrel_emit
@@ -2019,13 +2019,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### infra.artifacts
 - does: Read bounded filesystem artifacts and publish files or manifest-last directories with identity checks.
-- verbs: read_regular_bounded, publish_leaf_atomic, publish_directory_once, canonical JSON, serialize bytes, hash content, digest tree, inventory files, no follow, reject symlinks, compare and swap, atomic publication, snapshot roster, bounded read
+- verbs: read_regular_bounded, publish_leaf_atomic, publish_directory_once, canonical JSON, JSON pointer, RFC 6901 pointer, json_pointer, serialize bytes, hash content, digest tree, inventory files, no follow, reject symlinks, compare and swap, atomic publication, snapshot roster, bounded read
 - in: trusted root and relative paths; bytes or file inventories
 - out: bytes and LeafSnapshot; published TreeInventory
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +76 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +77 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
@@ -2294,7 +2294,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### infra.input_policy
 - does: Enforce shared JSON duplicate, finite-number and depth rules, YAML resource limits, and strict ISO datetime syntax.
-- verbs: parse JSON, decode JSON, duplicate keys, finite numbers, nonfinite numbers, nesting depth, byte limits, guard YAML, YAML aliases, event budget, parse datetime, ISO datetime, JSONDecoder, loads, load, guard_yaml, parse_datetime
+- verbs: parse JSON, decode JSON, duplicate keys, finite numbers, nonfinite numbers, nesting depth, byte limits, byte cap read at call time, guard YAML, YAML aliases, event budget, parse datetime, ISO datetime, JSONDecoder, loads, load, guard_yaml, parse_datetime
 - in: JSON text or encoded bytes, readable handles, YAML text or bytes, datetime strings
 - out: Decoded JSON values or datetime objects; input refusals before unsupported input is accepted
 - status: canonical
@@ -2604,7 +2604,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.relational_mapping
-- does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint [map_model; dispositions].
+- does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint, and state which constraints the relational forms may carry [map_model; dispositions; is_confirmed_alethic].
 - verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, unary flag column, identification record, absorbed subtype flag, functional identifier component, name foreign keys, binding-only reasons, map_model, dispositions
 - status: canonical
 - modules: src/gnd/rmap.py
@@ -2753,7 +2753,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.scalar_identity
 - used_by: cli.checking_command
 - tests: tests/test_ossie_import.py
-- notes: The admitted plan contains only output bytes. The CLI publishes the report first and the model last.
+- notes: The admitted plan contains only output bytes. The CLI publishes the report first and the model last. Sidecar pointers are built by infra.artifacts' json_pointer.
 
 ### model.rai_import
 - does: Normalize the admitted RAI schema dialect into validated ORM YAML and a digest-bound alias map.
@@ -3668,6 +3668,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - inverse reading: evolve.shape_matches, extract.guidelines, model.population_sentences
 - invocation evidence: agent.invocation, exp.declared_invocation
 - json output: conformance.command, witness.command
+- json pointer: infra.artifacts, recovery.schema
 - json report: discover.output, infra.report_payloads
 - json schema: model.population_shape, model.validation, skills.model_structure
 - judgment receipts: exp.session_judgments, semantics.saved_judgments

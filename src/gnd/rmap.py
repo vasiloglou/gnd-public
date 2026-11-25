@@ -30,6 +30,7 @@ __all__ = [
     "Unmapped",
     "UnmappedReason",
     "dispositions",
+    "is_confirmed_alethic",
     "map_model",
     "name_foreign_keys",
 ]
@@ -152,7 +153,8 @@ class RelationalSchema:
 # --------------------------------------------------------------------------- helpers
 
 
-def _confirmed(constraint: dict[str, Any]) -> bool:
+def is_confirmed_alethic(constraint: Mapping[str, Any]) -> bool:
+    """Whether a constraint is one the relational forms may carry: confirmed, and alethic."""
     return constraint.get("status") == "confirmed" and constraint.get("modality") == "alethic"
 
 
@@ -219,7 +221,7 @@ class _Mapper:
                 constraint.get("type") == "uniqueness"
                 and constraint.get("scope") == "external"
                 and constraint.get("preferred")
-                and _confirmed(constraint)
+                and is_confirmed_alethic(constraint)
             ):
                 refs = self.refs(constraint)
                 anchor = self.anchor(refs)
@@ -360,7 +362,7 @@ class _Mapper:
         for constraint in fact.get("constraints") or ():
             if constraint.get("type") != "uniqueness" or constraint.get("scope") == "external":
                 continue
-            if not _confirmed(constraint):
+            if not is_confirmed_alethic(constraint):
                 continue
             roles = self.uc_roles(fact, constraint)
             found[roles] = found.get(roles, False) or bool(constraint.get("preferred"))
@@ -488,7 +490,7 @@ class _Mapper:
         mandatory = {
             str(c.get("role"))
             for c in fact.get("constraints") or ()
-            if c.get("type") == "mandatory" and _confirmed(c)
+            if c.get("type") == "mandatory" and is_confirmed_alethic(c)
         }
         covered = [r for r in singles if r in mandatory]
         if len(covered) == 1:
@@ -583,7 +585,7 @@ class _Mapper:
                 table = tables[p.owner]
                 absorbed = self.is_absorbed(players[p.subject_role])
                 not_null = (not absorbed) and any(
-                    c.get("type") == "mandatory" and _confirmed(c) and str(c.get("role")) == p.subject_role
+                    c.get("type") == "mandatory" and is_confirmed_alethic(c) and str(c.get("role")) == p.subject_role
                     for c in fact.get("constraints") or ()
                 )
                 added: list[str] = []
@@ -741,17 +743,17 @@ class _Mapper:
                     continue
                 p = placed[fid]
                 if kind == "uniqueness":
-                    if not _confirmed(constraint):
+                    if not is_confirmed_alethic(constraint):
                         self.unmapped[address] = ("uniqueness-not-confirmed", "")
                         continue
                     self.carried[address] = self.uniqueness(fact, constraint, p, eff_roles, tables)
                 elif kind == "mandatory":
                     role = str(constraint.get("role"))
-                    if p.rule in (1, 2) and _confirmed(constraint) and role == self.subject_of_key(fact, p):
+                    if p.rule in (1, 2) and is_confirmed_alethic(constraint) and role == self.subject_of_key(fact, p):
                         self.carried[address] = ("primary_key", p.owner)
                     elif (
                         p.rule == 5
-                        and _confirmed(constraint)
+                        and is_confirmed_alethic(constraint)
                         and role == p.subject_role
                         and not self.is_absorbed(self.players(fact)[role])
                     ):
@@ -764,7 +766,7 @@ class _Mapper:
         for index, constraint in enumerate(self.top):
             address = ("constraint", _address(None, index))
             if constraint.get("type") == "uniqueness" and constraint.get("scope") == "external":
-                if not _confirmed(constraint):
+                if not is_confirmed_alethic(constraint):
                     self.unmapped[address] = ("uniqueness-not-confirmed", "")
                     continue
                 self.external(constraint, index, address, tables)

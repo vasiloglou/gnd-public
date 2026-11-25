@@ -14,7 +14,7 @@ import json
 import os
 import secrets
 import stat
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from contextlib import suppress
 from decimal import Decimal
 from itertools import pairwise
@@ -44,6 +44,7 @@ __all__ = [
     "canonical_report_text",
     "inventory_tree",
     "is_sha256_hex",
+    "json_pointer",
     "publish_directory_once",
     "publish_leaf_atomic",
     "read_regular_bounded",
@@ -210,6 +211,12 @@ def canonical_json_bytes(value: object, *, exact_numbers: bool = False) -> bytes
         )
         + "\n"
     ).encode("utf-8")
+
+
+def json_pointer(parts: Iterable[object]) -> str:
+    """The RFC 6901 JSON pointer for PARTS: each part after a ``/``, with ``~`` written
+    ``~0`` and ``/`` written ``~1`` (in that order, so an escape is never escaped twice)."""
+    return "".join("/" + str(part).replace("~", "~0").replace("/", "~1") for part in parts)
 
 
 def canonical_json_text(value: object) -> str:

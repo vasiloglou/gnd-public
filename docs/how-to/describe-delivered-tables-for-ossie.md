@@ -168,7 +168,7 @@ gnd export ossie refunds/model.orm.yaml --out broken.ossie.yaml --physical-bindi
 invalid Ossie export input: binding:unknown-role: refund_by has no role 'custmer'
 ```
 
-The run exits with code 3 and writes no file. The message starts with a rule
+The run stops and writes no file. The message starts with a rule
 id, here `binding:unknown-role`. Fix the binding and run again. Do not
 change the model to fit a binding. The
 [binding rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#physical-binding)

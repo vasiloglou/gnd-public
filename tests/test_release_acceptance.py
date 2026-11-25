@@ -6,7 +6,6 @@ import itertools
 import json
 import os
 import re
-import shlex
 import shutil
 import subprocess
 import sys
@@ -902,17 +901,15 @@ COUNT_COMMANDS = [
 
 
 def readme_commands(folder, commands):
-    """COMMANDS, after checking that each is a command line of a shell block in the packaged README.
+    """COMMANDS, after checking that one shell block of the packaged README is exactly these commands.
 
-    The README is read as Markdown blocks and each line of a `sh` or `bash` fence as a shell command, so
-    a command that is commented out, given another executable or moved out of its block does not count.
+    A block is compared whole, as text. No line of it is read as shell, so any edit inside the block
+    fails here until the probe's command list changes with it.
     """
+    expected = '\n'.join('gnd ' + ' '.join(command) for command in commands)
     blocks = markdown_blocks((folder / 'README.md').read_text(encoding='utf-8'))
-    documented = [shlex.split(line, comments=True) for block in blocks
-                  if block.kind == 'fence' and block.info.split()[:1] in (['sh'], ['bash'])
-                  for line in block.text.splitlines()]
-    for command in commands:
-        assert ['gnd', *command] in documented, command
+    shell = [block.text for block in blocks if block.kind == 'fence' and block.info in ('sh', 'bash')]
+    assert expected in shell, commands   # list membership: one whole block, never a part of one
     return commands
 
 

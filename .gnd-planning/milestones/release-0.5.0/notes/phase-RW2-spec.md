@@ -238,6 +238,13 @@ SHA-256 of the spec bytes it covers.
 > request, and any act of publication. This ruling is not the owner's
 > reading of the spec.
 
+> **Review budget, declared before round 2, 2026-11-25.** Round 1 of the
+> probes review (Codex) returned one finding, against `readme_commands`; it
+> is reproduced and repaired at `423ab44f`. One more round reads the repair.
+> The search stops after round 2 whatever it returns if more than half of
+> its findings attack text the repair wrote; otherwise a third round may
+> read round 2's repairs, and there is no fourth.
+
 ## 8. Tests
 
 | ID | Case | Expected |

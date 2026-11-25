@@ -62,10 +62,20 @@ def test_installed_console_script_is_on_the_selected_environment_path(tmp_path):
     assert env['PATH'].split(os.pathsep)[0] == str(python.parent)
 
 
-# -- release-0.5.0 RW2 probes review r1, F1: a README command counts only as a line of a shell block --
+# -- release-0.5.0 RW2 probes review, r1 F1 and r2 F1 to F3: a probe's commands are one whole shell block --
 
 COUNT_README = acceptance.ROOT / 'src/gnd/examples/literature/count_fixture'
 GROWTH_README = acceptance.ROOT / 'src/gnd/examples/seeded_growth'
+# Each change keeps the command's text somewhere in the README and stops the README documenting it.
+README_CHANGES = {
+    'other-executable': lambda line: 'other-' + line,
+    'commented': lambda line: '# ' + line,
+    'glued-comment': lambda line: line.rstrip('\n') + '#BROKEN\n',
+    'here-document': lambda line: 'cat <<END_COMMAND_TEXT\n' + line + 'END_COMMAND_TEXT\n',
+    'line-separator': lambda line: 'other ' + line,
+    'extra-line': lambda line: line + 'rm -r records\n',
+    'removed': lambda line: '',
+}
 
 
 def test_readme_commands_accepts_the_packaged_readmes():
@@ -75,23 +85,20 @@ def test_readme_commands_accepts_the_packaged_readmes():
 
 @pytest.mark.parametrize('folder, commands', [(COUNT_README, acceptance.COUNT_COMMANDS),
                                               (GROWTH_README, acceptance.GROWTH_COMMANDS)], ids=['count', 'growth'])
-@pytest.mark.parametrize('change', ['other-executable', 'commented', 'html-comment', 'outside-block', 'removed'])
+@pytest.mark.parametrize('change', [*README_CHANGES, 'html-comment', 'outside-block', 'other-language'])
 def test_readme_commands_refuses_a_command_the_readme_no_longer_documents(tmp_path, folder, commands, change):
     text = (folder / 'README.md').read_text(encoding='utf-8')
     line = 'gnd ' + ' '.join(commands[0]) + '\n'
     assert text.count(line) == 1
-    replacement = {
-        'other-executable': 'other-' + line,
-        'commented': '# ' + line,
-        'html-comment': '',
-        'outside-block': '',
-        'removed': '',
-    }[change]
-    text = text.replace(line, replacement)
-    if change == 'html-comment':
-        text += '\n<!--\n' + line + '-->\n'
+    if change in README_CHANGES:
+        text = text.replace(line, README_CHANGES[change](line))
+    elif change == 'html-comment':
+        text = text.replace(line, '') + '\n<!--\n' + line + '-->\n'
     elif change == 'outside-block':
-        text += '\n' + line
+        text = text.replace(line, '') + '\n' + line
+    else:   # the same block, declared as another language
+        opening = next(fence for fence in ('```sh\n', '```bash\n') if fence + line in text)
+        text = text.replace(opening + line, '```text\n' + line)
     (tmp_path / 'README.md').write_text(text, encoding='utf-8')
     with pytest.raises(AssertionError):
         acceptance.readme_commands(tmp_path, commands)

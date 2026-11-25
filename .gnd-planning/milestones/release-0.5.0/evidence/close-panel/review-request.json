@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/release-0.5.0/007-close-candidate.md",
+    "sha256": "039e7ab5dff0c30a241ad0ee6f67e4bfc262059699bd1cc064bbe9a31adf6376",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "GND 0.5.0 milestone close",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Judge whether the close candidate's nine completion predicates, as amended by plan section 15, are established by the referenced phase, publication and close evidence.",
+      "Check the question sweep, the plan repairs, the exact source and artifact identities, and the separation of the owner's own acts and rulings from tests, delegated rulings and advisory reviews.",
+      "Identify any missing acceptance evidence or contradiction that blocks the proposed bounded milestone close. Classify limitations and inherited residuals precisely.",
+      "Read the named close candidate first and consult directly relevant evidence only when needed to substantiate a concern. No publication commands, builds, tests, credentials or delegation."
+    ]
+  }
+}

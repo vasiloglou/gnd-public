@@ -1,0 +1,17 @@
+Audit of predicate 7, 2026-11-25. Read-only commands.
+
+$ git diff --stat v0.4.0 origin/main -- .github
+(no output: .github unchanged since v0.4.0)
+
+$ git log --oneline v0.4.0..origin/main -- .github
+(no output)
+
+Tags created since the plan's baseline W4, with their peeled commits:
+5d99a45a48ea7a5561c9251241e4c59941f00b88	refs/tags/v0.5.0
+85d076ba384e67b1f992cfd6b9a596ca01b3d4e7	refs/tags/v0.5.0^{}
+e84c4c84213bc3d5e105092724d63b3ca0fefbbd	refs/tags/v0.5.1
+eb93128aeb9eff75ecd42b15d157dbb03f835852	refs/tags/v0.5.1^{}
+
+Each was created in the publication stage or after the milestone's phases, on the owner's words:
+  v0.5.0 -> 85d076ba (publication act 4, 006-publication.md)
+  v0.5.1 -> eb93128a (tag-only 0.5.1, after the publication; PR 289, the owner's 'post comment merge and push')

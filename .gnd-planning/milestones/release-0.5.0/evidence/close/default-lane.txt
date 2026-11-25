@@ -1,0 +1,31 @@
+The close's six-shard default lane on beast-3 at main 75c9ef52, run with evidence/RW1/e1-shards.sh in base mode on 2026-11-25.
+uv's package install lines are removed; nothing else is edited.
+
+E1 scratch directory: /private/tmp/gnd-rw1-e1-base.H9MRZr
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+75c9ef52630f980746d994f9a72348ce84d223ad
+warning: `build_system.requires = ["uv-build>=0.10.10,<0.11.0"]` does not contain the current uv version 0.13.7
+Python 3.13.18
+
+Shard 0 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+2973 passed, 183 deselected, 2 errors in 608.68s (0:10:08)
+
+Shard 1 exit 0
+4350 passed, 77 deselected in 731.72s (0:12:11)
+
+Shard 2 exit 0
+3282 passed, 214 deselected, 1 warning in 568.90s (0:09:28)
+
+Shard 3 exit 0
+3991 passed, 13 skipped, 222 deselected in 580.82s (0:09:40)
+
+Shard 4 exit 0
+4341 passed, 126 deselected in 970.11s (0:16:10)
+
+Shard 5 exit 0
+3120 passed, 228 deselected in 461.28s (0:07:41)

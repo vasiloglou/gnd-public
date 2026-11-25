@@ -398,3 +398,22 @@ committed at `e74d882`) stays in git history.
 Unchanged: D1 (`gnd-induce`), D3's vendoring, D4, D5, D9, D15, D16, D17 to
 D20, the refusal sentences R-a and R-c to R-h, C0, the honest limit and IS2's
 scope.
+
+## 13. Rulings
+
+> **Delegated approval (auto=true), 2026-11-25.** Approved IS1 spec r4 at
+> SHA-256 `c1620d12e50991f25f671570064208c28652a21f33ff365f030f8b9be7098bed` (the bytes above this section, as merged to main by PR 312).
+> Authorization: the owner's invocation "process-milestone induction-skill
+> auto=true" in the planning session of 2026-11-25. Instrument: spec prose
+> plus checkpoint C0 (D15, as approved for r3). Decisions: D21 (a), D22
+> include, D23 route, as proposed in §7; D1, D3, D4, D5, D9, D15, D16 and
+> D17 to D20 stand as approved for r3; D8 is discharged on main. IS1 base
+> commit: `1e6083f3554e785aa994422c837fda874d74d1e6`. Budget: §10's estimate; past twice it the phase pauses.
+> Review: one independent diff reviewer in a different tool through the
+> review helper (process-phase step 4; one reviewer is one reviewer); the
+> round budget is declared before round 2. Not covered: merge, the
+> distribution lane beyond D20's one run, paid recordings (IS2, D11),
+> publication. Checkpoint C0 is shown to the owner before the skill text is
+> final, and implementation of the skill text waits for the owner's reaction
+> to it (owner rule IS-O13). This ruling is not the owner's reading of the
+> spec.

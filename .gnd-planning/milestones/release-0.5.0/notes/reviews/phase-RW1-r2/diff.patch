@@ -1,0 +1,738 @@
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md b/.gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md
+index 585f05b0..0244ca53 100644
+--- a/.gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md
+@@ -1,4 +1,4 @@
+-# RW1: what 0.4.0 did on two inputs the notes name
++# RW1: what 0.4.0 did on inputs the notes name
+ 
+ Run on 2026-11-24 on the planning machine, to back two sentences of the
+ 0.5.0 notes ("0.4.0's DuckDB program accepted the first and the last and
+@@ -33,3 +33,30 @@ PYTHON -I float.py POPULATION
+ Not measured on 0.4.0: a non-finite number, a `Number` cell (0.4.0 refuses
+ `Number` at export), and the export-time refusals. The notes make no claim
+ about what 0.4.0 did with those.
++
++## Added 2026-11-25: an Integer result written into a Float role
++
++The RW1 review (finding F1) named a model that 0.4.0 exported and this tree
++refuses. Reproduced on the planning machine, with `old` as above and `new` =
++`uv run gnd` at `cc8cdb65`.
++
++Input: `tests/fixtures/pyrel-rules-coverage/rp3/sum-into-number.orm.json`
++with `object_types[1].primitive` changed from `Number` to `Float` and the
++aggregate function of `fact_types[1].derivation_rule` set to `sum`, `min` or
++`max` in turn. Command: `GND export pyrel MODEL --rules MODE --out FILE`.
++
++| Aggregate | Mode | 0.4.0 | At `cc8cdb65` |
++|---|---|---|---|
++| `min` | `duckdb`, `lqp` | exit 0, program written | exit 3 |
++| `max` | `duckdb`, `lqp` | exit 0, program written | exit 3 |
++| `sum` | `duckdb`, `lqp` | exit 0, program written | exit 3 |
++
++The refusal at `cc8cdb65`, for `min` with `--rules duckdb`: `cannot write
++the rules program: run_scores_big: $total is an Integer value written into
++the Float or Number role 'score'; PyRel would round it beyond 2**53, so the
++rules programs refuse it`.
++
++Still not measured on 0.4.0: the other export-time refusals (an integer
++beyond 2**53 among a model's literals, arithmetic next to a `Float` value, a
++float literal compared with an `Integer` value). The notes say this tree
++refuses them and make no claim about 0.4.0 for them.
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/BRIEF.md b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/BRIEF.md
+new file mode 100644
+index 00000000..afe0d62d
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/BRIEF.md
+@@ -0,0 +1,91 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Does this diff meet the criteria of the RW1 spec as ruled in its section 7 and section 13, and is each statement in the 0.5.0 section of docs/release-notes.md true of the code at this commit?
++
++## Claims to test
++
++The author claims what follows. For each, try to show where it is false: a claim is
++met only if you looked for the case that breaks it and did not find one.
++
++- C1. The version is 0.5.0 in pyproject.toml, the uv.lock entry for get-nick-done and the three plugin manifests, and nowhere else is the version typed as the current version; the install pins stay at 0.4.0.
++- C2. Each of the 26 bullets that origin/main held under its five Unreleased headings is in the 0.5.0 section exactly once with its wording and links unchanged, and no Unreleased section remains.
++- C3. Every new bullet in the 0.5.0 section (the PyRel block, the two new Ossie bullets, the COUNT block, the four new bullets under Other changes) states only what the code, the reference pages or the retained probes at this commit show.
++- C4. Every user-visible change in git diff v0.4.0 HEAD over src, docs, README.md and the manifests is either noted in the 0.5.0 section or given a reason in notes-reconciliation.md.
++- C5. Nothing in the notes, compatibility, support or plugin pages reads as if 0.5.0 were published, or as if a RelationalAI engine had run or enforced the exported rules programs.
++- C6. A behaviour that differs from 0.4.0 in a way a script could notice is stated as a difference in its block.
++
++## The change under review
++
++The work from `3219c082` to the working tree at `cc8cdb6594cc`. Its diff is `.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch` | `4f92142f2b6c3ab9650d88194dde857ba991f08541cee5220606832d7aa4aab5` |
++| `.claude-plugin/marketplace.json` | `f0724655e0e373311f65c5ef102a11f41ad493c1d3c8f5156aad752f9d9b2c1e` |
++| `.claude-plugin/plugin.json` | `2b021b3206ceca1778fd8011e9997f9ae7d7b2fc6437e669082309301ce3a85d` |
++| `.codex-plugin/plugin.json` | `21c44d7a1e8cd88cf5b8f3259574a7709cd325925f9df171e0b2cea2f115df48` |
++| `docs/compatibility.md` | `ee61db381c81252795befebc1abc04033dd16b65a195a654f82a3b991e82c66b` |
++| `docs/marketplace-plugins.md` | `a760dac10f89ccd4ce93c99f771cca57f90e92e9ac039cf81995b2f79336c8f7` |
++| `docs/release-notes.md` | `5b28ba132d6acbf96b3b873a7a4987d38b0343a4b1684bb464c15099c5e4786b` |
++| `docs/support.md` | `af5e248dee386a23418111f7717115b7a735dbb3da704b2e625ab19d41824c3d` |
++| `pyproject.toml` | `031acf62df8f7a8aa074eeca4976fa56396e61aa53c4f30a71dbdd61e4c7a4a2` |
++| `tests/test_release_version.py` | `a09670902e2756ba37ae2a074fc776d30915f54b22fb2efa29dc42ec8c6ad00c` |
++| `uv.lock` | `e96d80125673b6b3dbd6203caedcda1e5871ed47da45bd4b2ab3c35804f9496f` |
++| `.gnd-planning/milestones/release-0.5.0/notes/phase-RW1-spec.md` | `aac415c539b5c79a567ae5775c2d92863be621933cc923b3a82d2fc4429458ce` |
++| `.gnd-planning/milestones/release-0.5.0/evidence/RW1/notes-reconciliation.md` | `f62b442652622d3234f29a5f6c45a5dc905c96f27879aac5902a9ccfb5c9696a` |
++| `.gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md` | `698de3702de336f61d198bca8b029029329a42a6390ebb095bc26cba90079599` |
++| `.gnd-planning/milestones/release-0.5.0/evidence/RW1/e1-summary.md` | `8b2bef0619c07767a5f5bd6c475d4e4c98c3a8e052116ec4a694b74c16139d09` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/FINDINGS.md b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/FINDINGS.md
+new file mode 100644
+index 00000000..5bb648a9
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/FINDINGS.md
+@@ -0,0 +1,18 @@
++# Findings ledger: phase-RW1-r1
++
++One row per finding the review returned, under the reviewer's own id. Fill every cell:
++
++- Reproduced: yes or no. A finding is believed only once it is reproduced against the bytes.
++- Class: blocking, hardening or completeness, assigned here, not by the reviewer
++  (review-convergence.md).
++- Disposition: fixed, deferred, rejected or open.
++- Repaired at: for a fixed finding, the commit or tag that holds the repaired bytes. Those
++  bytes are unreviewed until a later round reads them; `review_tool.py status` says which.
++- Notes: the regression test for a fixed finding, the target for a deferred one, the reason
++  for a rejected one.
++
++If the review returned no findings, replace the table with the line: No findings.
++
++| Id | Finding | Reproduced | Class | Disposition | Repaired at | Notes |
++|---|---|---|---|---|---|---|
++| F1 | The PyRel block omits a newly refused export: an Integer `min` or `max` (and, as reproduced here, `sum`) written into a `Float` role, which 0.4.0 exported | yes | completeness | fixed | 1d8536de | Reproduced with 0.4.0 from the package index and this tree at `cc8cdb65`: exit 0 against exit 3 for `min`, `max` and `sum` in both modes (`evidence/RW1/old-version-probes.md`, the section added 2026-11-25). The notes sentence now names the refusal and the 0.4.0 difference. No regression test: the notes' wording for PyRel has no test, and the refusal itself is tested by the pyrel-rules-coverage suites |
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/brief.json b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/brief.json
+new file mode 100644
+index 00000000..4ff37af3
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/brief.json
+@@ -0,0 +1,83 @@
++{
++  "base": "3219c082",
++  "claims": [
++    "The version is 0.5.0 in pyproject.toml, the uv.lock entry for get-nick-done and the three plugin manifests, and nowhere else is the version typed as the current version; the install pins stay at 0.4.0.",
++    "Each of the 26 bullets that origin/main held under its five Unreleased headings is in the 0.5.0 section exactly once with its wording and links unchanged, and no Unreleased section remains.",
++    "Every new bullet in the 0.5.0 section (the PyRel block, the two new Ossie bullets, the COUNT block, the four new bullets under Other changes) states only what the code, the reference pages or the retained probes at this commit show.",
++    "Every user-visible change in git diff v0.4.0 HEAD over src, docs, README.md and the manifests is either noted in the 0.5.0 section or given a reason in notes-reconciliation.md.",
++    "Nothing in the notes, compatibility, support or plugin pages reads as if 0.5.0 were published, or as if a RelationalAI engine had run or enforced the exported rules programs.",
++    "A behaviour that differs from 0.4.0 in a way a script could notice is stated as a difference in its block."
++  ],
++  "created": "2026-11-25T13:34:13.752539+00:00",
++  "deleted": [],
++  "dirty": false,
++  "files": [
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch",
++      "sha256": "4f92142f2b6c3ab9650d88194dde857ba991f08541cee5220606832d7aa4aab5"
++    },
++    {
++      "path": ".claude-plugin/marketplace.json",
++      "sha256": "f0724655e0e373311f65c5ef102a11f41ad493c1d3c8f5156aad752f9d9b2c1e"
++    },
++    {
++      "path": ".claude-plugin/plugin.json",
++      "sha256": "2b021b3206ceca1778fd8011e9997f9ae7d7b2fc6437e669082309301ce3a85d"
++    },
++    {
++      "path": ".codex-plugin/plugin.json",
++      "sha256": "21c44d7a1e8cd88cf5b8f3259574a7709cd325925f9df171e0b2cea2f115df48"
++    },
++    {
++      "path": "docs/compatibility.md",
++      "sha256": "ee61db381c81252795befebc1abc04033dd16b65a195a654f82a3b991e82c66b"
++    },
++    {
++      "path": "docs/marketplace-plugins.md",
++      "sha256": "a760dac10f89ccd4ce93c99f771cca57f90e92e9ac039cf81995b2f79336c8f7"
++    },
++    {
++      "path": "docs/release-notes.md",
++      "sha256": "5b28ba132d6acbf96b3b873a7a4987d38b0343a4b1684bb464c15099c5e4786b"
++    },
++    {
++      "path": "docs/support.md",
++      "sha256": "af5e248dee386a23418111f7717115b7a735dbb3da704b2e625ab19d41824c3d"
++    },
++    {
++      "path": "pyproject.toml",
++      "sha256": "031acf62df8f7a8aa074eeca4976fa56396e61aa53c4f30a71dbdd61e4c7a4a2"
++    },
++    {
++      "path": "tests/test_release_version.py",
++      "sha256": "a09670902e2756ba37ae2a074fc776d30915f54b22fb2efa29dc42ec8c6ad00c"
++    },
++    {
++      "path": "uv.lock",
++      "sha256": "e96d80125673b6b3dbd6203caedcda1e5871ed47da45bd4b2ab3c35804f9496f"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/notes/phase-RW1-spec.md",
++      "sha256": "aac415c539b5c79a567ae5775c2d92863be621933cc923b3a82d2fc4429458ce"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW1/notes-reconciliation.md",
++      "sha256": "f62b442652622d3234f29a5f6c45a5dc905c96f27879aac5902a9ccfb5c9696a"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW1/old-version-probes.md",
++      "sha256": "698de3702de336f61d198bca8b029029329a42a6390ebb095bc26cba90079599"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW1/e1-summary.md",
++      "sha256": "8b2bef0619c07767a5f5bd6c475d4e4c98c3a8e052116ec4a694b74c16139d09"
++    }
++  ],
++  "head": "cc8cdb6594cc75a2ee42fe7db89281bc344b3abc",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Does this diff meet the criteria of the RW1 spec as ruled in its section 7 and section 13, and is each statement in the 0.5.0 section of docs/release-notes.md true of the code at this commit?",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch
+new file mode 100644
+index 00000000..25b67e1a
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/diff.patch
+@@ -0,0 +1,353 @@
++diff --git a/.claude-plugin/marketplace.json b/.claude-plugin/marketplace.json
++index dab21ef2..e03e6f2d 100644
++--- a/.claude-plugin/marketplace.json
+++++ b/.claude-plugin/marketplace.json
++@@ -12,7 +12,7 @@
++       "name": "gnd",
++       "source": "./",
++       "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
++-      "version": "0.4.0"
+++      "version": "0.5.0"
++     }
++   ]
++ }
++diff --git a/.claude-plugin/plugin.json b/.claude-plugin/plugin.json
++index 86a56cf3..6259914c 100644
++--- a/.claude-plugin/plugin.json
+++++ b/.claude-plugin/plugin.json
++@@ -1,6 +1,6 @@
++ {
++   "name": "gnd",
++-  "version": "0.4.0",
+++  "version": "0.5.0",
++   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
++   "author": {
++     "name": "Nikolaos Vasiloglou",
++diff --git a/.codex-plugin/plugin.json b/.codex-plugin/plugin.json
++index ee4c3308..941a77c2 100644
++--- a/.codex-plugin/plugin.json
+++++ b/.codex-plugin/plugin.json
++@@ -1,6 +1,6 @@
++ {
++   "name": "gnd",
++-  "version": "0.4.0",
+++  "version": "0.5.0",
++   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
++   "author": {
++     "name": "Nikolaos Vasiloglou",
++diff --git a/docs/compatibility.md b/docs/compatibility.md
++index 38e053e2..7c79533a 100644
++--- a/docs/compatibility.md
+++++ b/docs/compatibility.md
++@@ -1,8 +1,9 @@
++ # Compatibility and version policy
++ 
++ Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions
++-0.1.0, 0.2.0, 0.3.0 and 0.4.0 are published (0.4.0 on 2026-11-17). For the next
++-version, confirm service ownership and that the version is still free before
+++0.1.0, 0.2.0, 0.3.0 and 0.4.0 are published (0.4.0 on 2026-11-17). Version 0.5.0
+++is prepared and not published. The package index was checked on 2026-11-25.
+++For the next version, confirm service ownership and that the version is still free before
++ candidate freeze and again before any upload. Milestone numbers are not package
++ versions.
++ 
++diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
++index 409ed77c..919e34c1 100644
++--- a/docs/marketplace-plugins.md
+++++ b/docs/marketplace-plugins.md
++@@ -6,8 +6,9 @@ marketplace commands below. Python 3.11 or newer is required.
++ See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
++ for the pip virtual-environment alternative.
++ 
++-The command below installs the published runtime. When using a plugin from
++-another commit, match its runtime as [Updates](#updates) describes.
+++The command below installs the published runtime. The plugin on `main` is
+++version 0.5.0, which is prepared and not published. To use that plugin,
+++install the runtime from the same commit as shown in [Updates](#updates).
++ 
++ ```sh
++ uv tool install get-nick-done==0.4.0
++diff --git a/docs/release-notes.md b/docs/release-notes.md
++index a5ebe8ae..bd77fc7b 100644
++--- a/docs/release-notes.md
+++++ b/docs/release-notes.md
++@@ -1,11 +1,13 @@
++ # Release notes and milestones
++ 
++ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
++-0.1.0 came before it. Releases follow the [release procedure](releasing.md).
++-Changes on `main` after a release are listed in an `Unreleased:` section until
++-the next one.
+++0.1.0 came before it. Version 0.5.0 is prepared for PyPI. Releases follow the
+++[release procedure](releasing.md). Changes on `main` after a release are listed
+++in an `Unreleased:` section until the next one.
++ 
++-## Unreleased: Ossie relational files
+++## 0.5.0 (prepared, not published)
+++
+++### Ossie relational files
++ 
++ - **Tables beside the ontology.** `gnd export ossie` now writes five files.
++   The two new ones are `OUT.semantic_model.<fmt>`, the tables that hold the
++@@ -28,52 +30,58 @@ the next one.
++   one run. N is a whole number of bytes, from 1 byte to 256 MiB. Any other
++   value is a usage error, exit 64 (`EXIT_USAGE`). The model file itself
++   stays capped at 10 MiB.
+++- **The relational mapping as a library.** `gnd.rmap.map_model(model)`
+++  returns the tables the export generates, by Halpin's relational mapping
+++  procedure, with a list of what it could not place and the reason for each.
+++  `gnd.rmap.dispositions(model, schema)` gives one row for every fact type
+++  and constraint. The
+++  [mapping rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#relational-mapping-rmap)
+++  are in the representation reference.
+++- **What the new files disclose.** The semantic model and the mapping carry
+++  the model's object-type, fact-type and role ids as table and column
+++  names, or the names your binding file gives. The
+++  [disclosure page](reference/disclosure.md) lists them.
++ - **Where to read more.** [Ossie interchange in GND](explanation/ossie.md)
++   and [Describe your delivered tables](how-to/describe-delivered-tables-for-ossie.md).
++ 
++-## Unreleased: frontmatter fences
++-
++-- **An indented `---` is content.** The frontmatter reader behind experiment
++-  specs, conclusions and generated `SKILL.md` files takes a fence only at
++-  column 0, with nothing after it but spaces or tabs. An indented `---` in a
++-  block scalar or a multi-line value no longer ends the block early and drops
++-  the keys after it; a document whose only closing dashes are indented is
++-  refused as unterminated.
++-
++-## Unreleased: the admission example from a host
++-
++-- **Your own assertion entity.** The literature admission example's
++-  `admit()` takes a shape naming the assertion entity in your model and the
++-  entity types to follow from it. An assertion is identified by its own
++-  handle; every fact attached to an admitted assertion is kept, the facts of
++-  the followed entities with them, and an include root is admitted with its
++-  includes. `max_rows` bounds the rows read
++-  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
++-- **Admission rules as data.** `rules` lists the requirements a reviewed
++-  assertion must meet, in order, with a reason for each refused value. A
++-  supported assertion that fails one is `policy-refused`; the packaged
++-  comparison is now the default rules. `max_targets` (up to 1,024, the cap
++-  of `gnd judgments check`) lowers the target cap. Such a call writes
++-  `literature-assertion-admission/2`; the packaged call keeps its bytes
++-  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
++-
++-## Unreleased: the reading example from a host
++-
++-- **A live producer over your own documents.** The literature reading
++-  example's `run()` takes a producer object over a root that holds
++-  `profile.json`: your documents, your reading model and its includes, and
++-  the optional review, calibration, conflict and absence steps, each
++-  recorded `skipped` when undeclared. The run has a byte budget per document
++-  as well as in all, seven limits with ceilings, and records the exits of
++-  `verify` and `check`, 0, 1, 2 or 4. It writes
++-  `literature-reading-run/2`; the packaged run keeps its bytes
++-  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
++-- **Replay of a host run.** `replay(folder, fixture=root)` re-derives such a
++-  run with no producer call, from its settings and retained tables;
++-  `expected_evidence_sha256` ties it to the run that returned that digest
++-  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
++-
++-## Unreleased: include roots on more routes
+++### PyRel rules programs for literature-style models
+++
+++`gnd export pyrel --rules duckdb` and `--rules lqp` now export models that
+++use external uniqueness, anchored rules, `Number` values or value
+++constraints scoped to a role. 0.4.0 refused the first three by name, as "a
+++later phase of the rules programs" or "not supported by the rules programs
+++yet" ([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
+++[PyRel runtime page](runtimes/pyrel.md) is the reference for what the
+++programs check, what they list as not checked and what they refuse.
+++
+++- **External uniqueness.** The programs check it over GND's shared-entity
+++  join: two join rows with the same referenced values break the rule. A join
+++  whose fact types share no object type is listed as not checked, and
+++  reported vacuous when all its fact lists are empty, as GND does.
+++- **Anchored rules are listed, not refused.** A rule that ties a value to a
+++  span of a source document is printed with its id and the reason it is not
+++  checked; `gnd check --anchors SIDECAR --document DOC` still decides it. A
+++  must-rule listed this way gives exit 4 when the program checks a population
+++  and no rule is violated. A violation gives exit 1.
+++- **`Number`.** A `Number` value is held as a binary float, like `Float`.
+++- **Value constraints scoped to a role.** A value constraint with `role_ref`
+++  checks only the values in that role, as GND does.
+++- **Inputs the programs now refuse, and two results that change.** A program
+++  refuses, with exit 3, a population it cannot hold exactly: an integer
+++  beyond 2**53 in a `Float` or `Number` cell, a number that is not finite,
+++  or two rows that differ only as `1` and `1.0`. On a `Float` model, 0.4.0's
+++  DuckDB program accepted the first and the last and reported a uniqueness
+++  rule satisfied where `gnd check` reports a failure. A model is refused
+++  when you export it if it holds such an integer among its allowed values,
+++  range bounds or comparison literals, puts arithmetic or a sum next to a
+++  `Float` or `Number` value, or compares a float literal with an `Integer`
+++  value. A script that ran 0.4.0's programs on such inputs now gets exit 3.
+++- **What is not verified.** The DuckDB programs are compared with
+++  `gnd check` on the packaged literature models. The `--rules lqp` programs
+++  are verified to compile; no RelationalAI engine has run them, so
+++  enforcement by `require` on an engine is not shown in this release.
+++
+++### Include roots on more routes
++ 
++ - **Judgments on include roots.** `gnd judgments check` accepts a version-5
++   root with includes, temporal or not, and judges the model `gnd check`
++@@ -94,12 +102,12 @@ the next one.
++ - **Unencodable include paths.** An include path that cannot be encoded as
++   UTF-8 is refused `include:path` on every route; 0.4.0 reported the codec
++   error itself, and the PyRel export exited 70.
++-- **`gnd check` on large vocabularies.** The checker no longer rebuilds its
++-  type maps once per object type: on the interop example with 1,000 extra
++-  object types `gnd check` takes about half a second where 0.4.0 took over
++-  two minutes, and `gnd judgments check` and `gnd verify` gain the same.
++-  Reports are unchanged. A subtype chain hundreds of types deep is still
++-  slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
+++
+++### Unattended growth from a reviewed vocabulary
+++
+++[Unattended growth](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md)
+++is the guide these changes follow.
+++
++ - **Unattended growth from a reviewed vocabulary.** A version-5 root with
++   `source.mode: unattended` may include an owner-reviewed model: the included
++   elements keep their own source, status and modality and are exempt from the
++@@ -148,6 +156,36 @@ the next one.
++   round reused, what the host dropped, what it proposed, each verdict's count
++   and what the applied record added
++   ([#227](https://github.com/vasiloglou/gnd-public/issues/227)).
+++
+++### The literature examples from a host
+++
+++- **Your own assertion entity.** The literature admission example's
+++  `admit()` takes a shape naming the assertion entity in your model and the
+++  entity types to follow from it. An assertion is identified by its own
+++  handle; every fact attached to an admitted assertion is kept, the facts of
+++  the followed entities with them, and an include root is admitted with its
+++  includes. `max_rows` bounds the rows read
+++  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+++- **Admission rules as data.** `rules` lists the requirements a reviewed
+++  assertion must meet, in order, with a reason for each refused value. A
+++  supported assertion that fails one is `policy-refused`; the packaged
+++  comparison is now the default rules. `max_targets` (up to 1,024, the cap
+++  of `gnd judgments check`) lowers the target cap. Such a call writes
+++  `literature-assertion-admission/2`; the packaged call keeps its bytes
+++  ([#215](https://github.com/vasiloglou/gnd-public/issues/215)).
+++- **A live producer over your own documents.** The literature reading
+++  example's `run()` takes a producer object over a root that holds
+++  `profile.json`: your documents, your reading model and its includes, and
+++  the optional review, calibration, conflict and absence steps, each
+++  recorded `skipped` when undeclared. The run has a byte budget per document
+++  as well as in all, seven limits with ceilings, and records the exits of
+++  `verify` and `check`, 0, 1, 2 or 4. It writes
+++  `literature-reading-run/2`; the packaged run keeps its bytes
+++  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
+++- **Replay of a host run.** `replay(folder, fixture=root)` re-derives such a
+++  run with no producer call, from its settings and retained tables;
+++  `expected_evidence_sha256` ties it to the run that returned that digest
+++  ([#216](https://github.com/vasiloglou/gnd-public/issues/216)).
++ - **Reading a failed verification.** The documents guide shows how to list
++   the constraints and derivations a `gnd verify` exit 1 failed, with the
++   violating rows, from the JSON report, with a runnable example on the
++@@ -165,6 +203,53 @@ the next one.
++   targeted pass. The literature page shows it beside the figures #226
++   reported ([#226](https://github.com/vasiloglou/gnd-public/issues/226)).
++ 
+++### Aggregate COUNT certificates
+++
+++- **`gnd witness-count` and `gnd replay-count`.** `gnd witness-count MODEL
+++  POPULATION --request REQUEST --raw --out CERTIFICATE` writes a certificate
+++  for one named group of a derived COUNT rule: its members, their count and
+++  the row each one comes from. `gnd replay-count` rebuilds the roster from
+++  the model, the request and the population and compares. A group with no
+++  members in a covered relation gets a certificate with an empty roster and
+++  count zero, which replays too. The
+++  [COUNT membership contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-export/references/count-witness-contract.md)
+++  says which rules and inputs qualify
+++  ([#193](https://github.com/vasiloglou/gnd-public/issues/193)).
+++- **A packaged example.** `src/gnd/examples/literature/count_fixture/` holds
+++  a model, a population and the requests for a group with two members and an
+++  empty group; its README lists the commands.
+++
+++### Other changes
+++
+++- **`gnd check` on large vocabularies.** The checker no longer rebuilds its
+++  type maps once per object type: on the interop example with 1,000 extra
+++  object types `gnd check` takes about half a second where 0.4.0 took over
+++  two minutes, and `gnd judgments check` and `gnd verify` gain the same.
+++  Reports are unchanged. A subtype chain hundreds of types deep is still
+++  slow ([#221](https://github.com/vasiloglou/gnd-public/issues/221)).
+++- **An indented `---` is content.** The frontmatter reader behind experiment
+++  specs, conclusions and generated `SKILL.md` files takes a fence only at
+++  column 0, with nothing after it but spaces or tabs. An indented `---` in a
+++  block scalar or a multi-line value no longer ends the block early and drops
+++  the keys after it; a document whose only closing dashes are indented is
+++  refused as unterminated.
+++- **One parse per load and per witness command.** A model without includes
+++  is parsed once when it is loaded, where 0.4.0 parsed it twice, and
+++  `gnd witness`, `gnd replay` and `gnd why-not` parse each model text once
+++  per command, where they parsed it up to five times with `--composition`.
+++  Reports, certificates and exits are unchanged
+++  ([#228](https://github.com/vasiloglou/gnd-public/issues/228)).
+++- **CRLF models that end in a block scalar.** A YAML model saved with CRLF
+++  line endings keeps the final newline of a closing `|` or `>` block scalar,
+++  as it does with LF; 0.4.0 dropped it. A plain scalar or a comment that
+++  ends in `>` or `|` no longer keeps trailing blank lines.
+++- **Rule text for models that differ only in key order.** Within one
+++  process, two models equal up to the order of their keys no longer share a
+++  cached index, so the rule verbalization of the second prints its bindings
+++  in its own order.
+++- **Literature pages.** The literature section opens with an overview and
+++  gains a [command page](literature/commands.md).
+++
++ ## 0.4.0 (2026-11-17)
++ 
++ If you're upgrading from PyPI version 0.3.0, the [0.3.1 notes](#031-tagged-2026-11-11-not-published-on-pypi)
++diff --git a/docs/support.md b/docs/support.md
++index b5f0029d..4014470c 100644
++--- a/docs/support.md
+++++ b/docs/support.md
++@@ -12,6 +12,7 @@ The repository is public. No paid support SLA is offered.
++ | macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.2.0 candidate built from `7c0f4d0e` |
++ | macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.3.0 candidate built from `4c07c0e6` |
++ | macOS 27.0.1 arm64, Python 3.11.18, uv 0.10.10 | Observed in release acceptance of the 0.4.0 candidate built from `648cc6e0` |
+++| Any profile, prepared 0.5.0 package | No profile is observed for 0.5.0 yet |
++ | Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |
++ | Native/provider extras | Optional, unmeasured in this preparation |
++ 
++diff --git a/pyproject.toml b/pyproject.toml
++index 8dabeae2..2b48c8bd 100644
++--- a/pyproject.toml
+++++ b/pyproject.toml
++@@ -3,7 +3,7 @@
++ # `get-nick-done`. The import package and the console script both stay `gnd` —
++ # only the name users type after `uv tool install` changes.
++ name = "get-nick-done"
++-version = "0.4.0"
+++version = "0.5.0"
++ description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
++ # Issue 175: without this key the wheel and sdist carry no long description and
++ # the PyPI project page shows no text. PYPI.md is a short description written
++diff --git a/tests/test_release_version.py b/tests/test_release_version.py
++index d95b08ec..ca46931f 100644
++--- a/tests/test_release_version.py
+++++ b/tests/test_release_version.py
++@@ -254,6 +254,7 @@ def test_a_left_placeholder_is_refused():
++ HEADLINE_BLOCK = {
++     "0.3.0": ("### Apache Ossie interchange", "explanation/ossie.md"),
++     "0.4.0": ("### Literature: identity, composition and depth", "literature/01-lineage.md"),
+++    "0.5.0": ("### Ossie relational files", "explanation/ossie.md"),
++ }
++ 
++ 
++diff --git a/uv.lock b/uv.lock
++index cf5ce47c..9af73496 100644
++--- a/uv.lock
+++++ b/uv.lock
++@@ -97,7 +97,7 @@ wheels = [
++ 
++ [[package]]
++ name = "get-nick-done"
++-version = "0.4.0"
+++version = "0.5.0"
++ source = { editable = "." }
++ dependencies = [
++     { name = "jsonschema" },
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/review.md b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/review.md
+new file mode 100644
+index 00000000..ce64ec4c
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/review.md
+@@ -0,0 +1,26 @@
++<!-- Edited by review_tool.py sanitize: 1 absolute path(s) replaced with <repo> or <home>. The reviewer's words are otherwise unchanged; run.json holds the SHA-256 of the original. -->
++1. **Finding F1 — Missing PyRel compatibility change (P2).**  
++   [docs/release-notes.md:75](<repo>/docs/release-notes.md:75) omits a newly refused export: an Integer `min` or `max` result projected into a Float role. This violates C6’s requirement to state script-visible differences.
++
++   **Reproduction:** Take `tests/fixtures/pyrel-rules-coverage/rp3/sum-into-number.orm.json`, change `object_types[1].primitive` from `Number` to `Float`, and change `fact_types[1].derivation_rule.aggregate.fn` from `sum` to `min` or `max`. Export with `--rules duckdb` or `--rules lqp`.
++
++   Executed entirely in memory: the `v0.4.0` exporter source renders both targets; the candidate refuses both. The candidate DuckDB export command returns **3**, reporting an “Integer value written into the Float or Number role.” This model contains none of the sums, arithmetic or problematic literals the notes currently identify. Add this accepted-before/refused-now case to the PyRel block.
++
++2. **Checked and found true.**
++
++   - All 15 pinned SHA-256 hashes match; the supplied patch matches the actual diff.
++   - C1: package, lock and three manifests agree on 0.5.0; installation pins remain 0.4.0.
++   - C2: all 26 original bullets occur exactly once, unchanged, under 0.5.0. No Unreleased heading remains.
++   - C4’s inventory check: all 140 baseline files appear exactly once in the reconciliation table.
++   - C5: the four pages consistently describe preparation without publication or verified RelationalAI engine enforcement.
++   - Passed 31 read-only release assertions and mutation cases, 46 parser cases, and `ruff check --no-cache`.
++   - COUNT production and replay succeed for both the two-member and empty groups.
++   - Ossie’s original three artifacts remain byte-identical on the refunds probe; the new artifacts render, and ontology-only mode omits them.
++   - Numeric input refusals, CRLF preservation and separate indexes for differently ordered bindings reproduce.
++   - Standing matcher check: the phase introduces no matcher. Additional probes of `_is_fence`/`_split` used CRLF, tab-suffixed fences, Unicode content and indented dashes; all behaved as documented.
++
++3. **Could not check.**
++
++   The full pytest gates, strict documentation build, lock/environment checks and beast-3 lane were not rerun under the read-only constraints. E1 results and historical runtime verdicts were inspected as retained evidence. No RelationalAI engine execution was attempted. `release_text.py check` exits 0, explicitly reporting that preparation has nothing to check before publication.
++
++VERDICT: CHANGES_REQUESTED
+\ No newline at end of file
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/run.json b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/run.json
+new file mode 100644
+index 00000000..473aabc1
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/run.json
+@@ -0,0 +1,32 @@
++{
++  "argv": [
++    "codex",
++    "exec",
++    "--ephemeral",
++    "-c",
++    "model_reasoning_effort=\"high\"",
++    "--sandbox",
++    "read-only",
++    "--color",
++    "never",
++    "--skip-git-repo-check",
++    "--add-dir",
++    "{dir}",
++    "-o",
++    "{dir}/review.md",
++    "Read {dir}/BRIEF.md and follow it."
++  ],
++  "brief_sha256": "6652f3063bee2dbb77c4221af79e83e56b5947624bed5e5e091b87204b1f17f3",
++  "effort": "high",
++  "exit": 0,
++  "finished": "2026-11-25T13:39:10+00:00",
++  "model": "codex default",
++  "pid": 67430,
++  "review_sha256": "b2c76efa4394404f990d1882a4c786e0879b2e8fffd859d2a15637a0043cbf7d",
++  "reviewer": "codex",
++  "sanitized_sha256": "1fb549ac6c59c059b70b2175cc8015eaaf55172fe5743b3f9266f7d8ce44fb39",
++  "started": "2026-11-25T13:34:14+00:00",
++  "state": "done",
++  "stdout": "review.log",
++  "timeout_minutes": 60
++}
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index bd77fc7b..78d22eff 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -66,7 +66,7 @@ programs check, what they list as not checked and what they refuse.
+ - **`Number`.** A `Number` value is held as a binary float, like `Float`.
+ - **Value constraints scoped to a role.** A value constraint with `role_ref`
+   checks only the values in that role, as GND does.
+-- **Inputs the programs now refuse, and two results that change.** A program
++- **Inputs the programs now refuse, and results that change.** A program
+   refuses, with exit 3, a population it cannot hold exactly: an integer
+   beyond 2**53 in a `Float` or `Number` cell, a number that is not finite,
+   or two rows that differ only as `1` and `1.0`. On a `Float` model, 0.4.0's
+@@ -74,8 +74,11 @@ programs check, what they list as not checked and what they refuse.
+   rule satisfied where `gnd check` reports a failure. A model is refused
+   when you export it if it holds such an integer among its allowed values,
+   range bounds or comparison literals, puts arithmetic or a sum next to a
+-  `Float` or `Number` value, or compares a float literal with an `Integer`
+-  value. A script that ran 0.4.0's programs on such inputs now gets exit 3.
++  `Float` or `Number` value, writes an `Integer` value into a `Float` or
++  `Number` role, or compares a float literal with an `Integer` value. 0.4.0
++  exported a model whose rule writes an `Integer` sum, `min` or `max` into a
++  `Float` role; that export is now refused. A script that ran 0.4.0's
++  programs on such inputs, or exported such a model, now gets exit 3.
+ - **What is not verified.** The DuckDB programs are compared with
+   `gnd check` on the packaged literature models. The `--rules lqp` programs
+   are verified to compile; no RelationalAI engine has run them, so
+diff --git a/tests/test_ossie_docs.py b/tests/test_ossie_docs.py
+index 6fb96a1b..bded976f 100644
+--- a/tests/test_ossie_docs.py
++++ b/tests/test_ossie_docs.py
+@@ -31,6 +31,7 @@ NORMATIVE = ROOT / "src/gnd/skills/gnd-orm-core/references/representation-format
+ SKILL = ROOT / "src/gnd/skills/gnd-export/SKILL.md"
+ CLI_REFERENCE = ROOT / "docs/reference/cli.md"
+ RELEASE_NOTES = ROOT / "docs/release-notes.md"
++RELEASE_NOTE_HEADING = "### Ossie relational files"  # the block of the 0.5.0 section (release-0.5.0 RW1)
+ EXAMPLE = ROOT / "src/gnd/examples/refunds"
+ HOMES = ("## Relational mapping (Rmap)", "## Ossie interchange")
+ PAGES = (
+@@ -136,7 +137,7 @@ def test_r1_f4_every_exit_number_in_the_release_note_is_checked():
+ 
+ def test_r1_f6_the_release_note_states_the_bound_as_the_cli_takes_it(tmp_path):
+     """--max-output-bytes takes 1 to 268435456; a small value is a size refusal, not a usage error."""
+-    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), "## Unreleased: Ossie relational files")
++    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), RELEASE_NOTE_HEADING)
+     assert "from 1 byte to 256 MiB" in " ".join(section.split())
+     assert cli.main(["export", "ossie", str(EXAMPLE / "model.orm.yaml"), "--out", str(tmp_path / "o.yaml"),
+                      "--max-output-bytes", "1"]) == 3  # a size refusal, not EXIT_USAGE
+@@ -177,7 +178,7 @@ def test_a_flag_is_matched_as_a_whole_option():
+ 
+ 
+ def test_the_release_note_states_the_exits_by_their_constants():
+-    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), "## Unreleased: Ossie relational files")
++    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), RELEASE_NOTE_HEADING)
+     assert section, "the release-note section is missing"
+     for name in ("EXIT_COLLISION", "EXIT_USAGE"):
+         numbers = exit_numbers(section, name)

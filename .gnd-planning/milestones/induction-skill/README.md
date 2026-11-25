@@ -12,7 +12,9 @@ review opinion. No phase is selected and nothing is implemented. `auto=false`. B
 #48), merged into this branch.
 
 - [Canonical plan (r3, approved)](notes/induction-skill-plan.md)
-- [IS1 spec (r3, approved)](notes/phase-IS1-spec.md)
+- [IS1 spec](notes/phase-IS1-spec.md): **r4 draft (2026-11-25)**, a refresh of the approved r3
+  against main `4f2945a9`, with three new decisions D21 to D23; no review and
+  no ruling. r3 (approved) is in git history at `e74d882`
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with reader notes 1-4
 - [Plan review round 2 disposition](notes/plan-review-r2-disposition.md), with reader notes 1-4
@@ -46,4 +48,5 @@ Plan review:
 Open at gates: the IS1 base commit (also the D8 pin) and checkpoint C0 at the
 IS1 gate; D11 (recordings) at the IS2 gate.
 
-Next action: an explicit `process-phase IS1 induction-skill` selection.
+Next action: the owner's gate on IS1 spec r4 (D21 to D23), then an explicit
+`process-phase IS1 induction-skill` selection.

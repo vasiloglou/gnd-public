@@ -304,22 +304,28 @@ def _load_model_document(doc) -> Model:
     return _finish_model(doc)
 
 
-def _model_warnings(doc, origins):
+def _model_warnings(doc, origins, *, flat_root=False):
     from gnd.model._includes import included_rows, remap_issues
-    from gnd.model._unattended import _INCLUDED
+    from gnd.model._unattended import _FLAT_ROOT, _INCLUDED, flat_without_root_issue
 
     issues = remap_issues(_layer1_structural(doc), origins)
     if issues:
         raise ModelValidationError(issues)
     # VG3: the unattended rules read which elements came from an include.
     token = _INCLUDED.set(included_rows(doc, origins))
+    flat_token = _FLAT_ROOT.set(flat_root)
     try:
         issues = remap_issues(semantic_validate(dict(doc)), origins)
     finally:
+        _FLAT_ROOT.reset(flat_token)
         _INCLUDED.reset(token)
     errors = [issue for issue in issues if issue.severity == "error"]
     warnings = [issue for issue in issues if issue.severity == "warning"]
     if errors:
+        if doc.get("version") == 5 and not (flat_root or doc.get("includes")):
+            hint = flat_without_root_issue(errors)
+            if hint is not None:
+                errors.append(hint)
         raise ModelValidationError(errors, warnings)
     return warnings
 

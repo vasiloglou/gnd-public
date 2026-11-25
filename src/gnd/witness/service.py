@@ -150,7 +150,9 @@ def _produce_projected(projection, model_path, population_path, targets, **optio
     model, candidate, references, _, lineage = _projected_inputs(
         projection, model_path, population_path, **options
     )
-    result = produce_witness(model, candidate, targets, references=references).model_dump(mode="json")
+    result = produce_witness(
+        model, candidate, targets, references=references, _projected_model=projection.flat.model,
+    ).model_dump(mode="json")
     if lineage is not None:
         result = _stamp_composition(result, lineage, catalog=references is not None)
     return stamp_projection(result, projection)
@@ -159,13 +161,14 @@ def _produce_projected(projection, model_path, population_path, targets, **optio
 def _replay_projected(projection, model_path, population_path, certificate, **options):
     from gnd.witness.kernel import replay_witness
 
-    _, _, references, document, lineage = _projected_inputs(
+    model, _, references, document, lineage = _projected_inputs(
         projection, model_path, population_path, **options
     )
     refs = tuple((origin.id, raw) for origin, _, raw in references._snapshots) if references else ()
     return replay_witness(
         _rf7_input.loads(projection.flat.model_bytes), document, certificate,
         reference_inputs=refs, composition=lineage, flattening=projection.binding,
+        _projected_model=model,
     ).model_dump(mode="json")
 
 

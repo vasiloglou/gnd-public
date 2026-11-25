@@ -296,6 +296,7 @@ def replay_witness(
     limits=DEFAULT_LIMITS,
     composition: tuple[str, dict] | None = None,
     flattening: tuple[str, dict] | None = None,
+    _projected_model=None,
 ):
     targets = ()
     try:
@@ -303,7 +304,8 @@ def replay_witness(
         certificate_shape(certificate, limits=limits)
         targets = tuple(r["target"] for r in certificate["results"])
         model, candidate, refs = intake(
-            model_document, candidate_document, reference_inputs, limits=limits
+            model_document, candidate_document, reference_inputs, limits=limits,
+            _projected_model=_projected_model,
         )
         binding = dict(certificate["binding"])
         projected = "flattening_sha256" in binding

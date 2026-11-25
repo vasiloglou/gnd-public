@@ -46,6 +46,9 @@ def flatten_to(model_path: str, out_dir: str, *, output_format: str = "text") ->
         return EXIT_ILL_FORMED
     try:
         flat = flatten_model(model)
+    except ModelValidationError as error:
+        _print_issues(error.issues)
+        return EXIT_ILL_FORMED
     except FlatteningError as error:
         print(f"ERROR: {error}")
         return EXIT_ILL_FORMED

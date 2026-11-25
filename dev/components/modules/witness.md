@@ -94,12 +94,12 @@ Bounded wire intake, structural validation and byte-bound input identities.
 | `load_certificate(path, *, limits)` | function | 290 | (no docstring) |
 | `witness_input_identity(model, candidate, *, references)` | function | 296 | (no docstring) |
 | `identity(model, candidate, refs)` | function | 301 | (no docstring) |
-| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 313 | (no docstring) |
-| `roster(model)` | function | 366 | (no docstring) |
-| `validate_targets(targets, model)` | function | 375 | (no docstring) |
-| `support_closure(model, targets)` | function | 401 | Conservative syntactic classifier; no tuple or comparison evaluation. |
-| `population_wire(pop)` | function | 457 | (no docstring) |
-| `classify_targets(model, targets, populations)` | function | 471 | Classify each request independently, caching only within this call. |
+| `intake(model_document, candidate_document, reference_inputs, *, limits, _projected_model)` | function | 313 | (no docstring) |
+| `roster(model)` | function | 372 | (no docstring) |
+| `validate_targets(targets, model)` | function | 381 | (no docstring) |
+| `support_closure(model, targets)` | function | 407 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+| `population_wire(pop)` | function | 463 | (no docstring) |
+| `classify_targets(model, targets, populations)` | function | 477 | Classify each request independently, caching only within this call. |
 
 ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
 Components: witness.replay
@@ -126,7 +126,7 @@ Capture grounded firings from the production evaluator into a finite DAG.
 | `GroundedTrace.add(self, node)` | method | 101 | (no docstring) |
 | `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 118 | (no docstring) |
 | `GroundedTrace.compact(self, roots)` | method | 165 | (no docstring) |
-| `produce_witness(model, candidate, targets, *, references, limits)` | function | 182 | (no docstring) |
+| `produce_witness(model, candidate, targets, *, references, limits, _projected_model)` | function | 182 | (no docstring) |
 
 ## gnd.witness.service — `src/gnd/witness/service.py`
 Components: witness.service
@@ -134,16 +134,16 @@ Bounded witness/replay input orchestration.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 173 | Produce finite witnesses, authenticating model origins for a rooted include model. |
-| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 203 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 234 | Replay a finite proof with an independent local inference kernel. |
-| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 263 | Replay a finite proof with an independent local inference kernel. |
-| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 301 | Produce a composed witness whose base nodes name their source facts. |
-| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 339 | Replay a witness against the composition record it binds. |
-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 418 | Explain why a derived fact type, or one claimed row of it, is not derived. |
-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 472 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 486 | Replay a finite proof with an independent local inference kernel. |
-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 500 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 176 | Produce finite witnesses, authenticating model origins for a rooted include model. |
+| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 206 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 237 | Replay a finite proof with an independent local inference kernel. |
+| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 266 | Replay a finite proof with an independent local inference kernel. |
+| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 304 | Produce a composed witness whose base nodes name their source facts. |
+| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 342 | Replay a witness against the composition record it binds. |
+| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 421 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 475 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 489 | Replay a finite proof with an independent local inference kernel. |
+| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 503 | Explain why a derived fact type, or one claimed row of it, is not derived. |
 
 ## gnd.witness.types — `src/gnd/witness/types.py`
 Components: witness.schema

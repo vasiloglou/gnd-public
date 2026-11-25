@@ -500,6 +500,16 @@ The `{ fact_type: <id>, role: <role_name> }` tuple is the canonical cross-refere
 
 For self-referential or multi-occurrence fact types where the role name disambiguates two roles of the same object type, the role reference must use the disambiguating name (not the object-type name).
 
+For reference identity in model and extraction rendering, GND first resolves
+direct identities. For a composite identity it selects an anchored external
+uniqueness marked `preferred`, `confirmed`, and `alethic` when one is present.
+Ties compare the sorted `(fact_type, role)` pairs, then the original sequence,
+in Unicode code-point order. Components are emitted in their declared order.
+Without a qualifying declaration, the first anchored external uniqueness remains
+the fallback. An unresolvable selected key is reported as unmatchable.
+Relational key placement has its own
+[requirements](#relational-mapping-rmap).
+
 ## Guarded constraints
 
 `guarded` is GND's top-level conditional constraint family. Its `antecedent`
@@ -1994,7 +2004,18 @@ field still identifies the authored root. Include-free bundles omit the
 two files and the `flattening` object. Bundle publication refuses output
 destinations that overlap the bound root, include or reference files.
 
-The flat model is canonical JSON accepted by unrooted model-byte intake.
+The flat model is canonical JSON. For an unattended root with reviewed
+includes, in-process validation of the flat model uses the origins from the
+pin-checked root and preserves the unattended include rules above. This applies
+to `flatten`, `extract`, extraction verification, all three PyRel export
+modes, and rooted witness and replay. Direct intake of a standalone flat file
+applies the ordinary model rules. If a file fails a rule that can depend on reviewed-include provenance,
+the refusal includes `unattended:flat-without-root` and directs the caller
+to load the authored root if the file came from seeded flattening.
+Structural validation precedes this diagnostic. The flat bytes and record
+are output artifacts. The root's include pins are the authority for exemptions.
+A validation failure during re-entry of an authenticated projection is reported
+as `flattening:re-entry` by `flatten`, `extract`, and PyRel export, with exit 3.
 Resolved elements keep their order and identities, with project-owned
 attachments materialized as inline constraints. The wire omits the consumed
 include and attachment declarations, load-time warnings, and the usual
@@ -2180,11 +2201,19 @@ models with `include:unsupported-route` before resolving their dependencies.
 | Object types and subtypes | EntityType or ValueType concepts, with subtype parents in `extends`. Safe unique names are preserved. Other names get deterministic ID-based aliases. |
 | Value primitives | The corresponding Ossie built-in, with Number projected as Decimal and Duration as Integer. The sidecar retains those source types and Binary. |
 | Popular and general references | A generated binary OneToOne relationship and an `identify_by` entry. |
+| Unit-based references | A generated OneToOne relationship to `Decimal` and an `identify_by` entry. The source unit and measure type are retained in the sidecar. |
 | External references | `identify_by` on functional binary relationships sharing the first-role entity. Unsupported reference details travel in the sidecar. |
+| Inheriting subtypes with several supertypes | The first declared supertype's exported identifier, with its ordered components. The relationship names must resolve to those of the selected parent. |
 | Fact types and readings | One relationship under its first-role concept. The forward placeholders bind by source role position. Explicit inverse qualifiers bind by role name. A bare binary inverse reverses the bindings. Additional roles have explicit names. |
 | Confirmed alethic internal uniqueness | OneToOne for both directions of a binary. ManyToOne for an n−1 determinant, with the dependent role last. Reading bindings retain source order even when declaration roles move. |
 | Reviewed constraints and derivations | `requires` and `derived_by` at the scope described below. |
 | Other source rules, provenance, modality and operations | The source values travel in the sidecar. |
+
+In an ontology with inheriting multi-parent subtypes, generated identifier
+names avoid authored relationship names throughout the ontology so local
+relationships cannot shadow inherited identifiers.
+A subtype with a single unit-based parent can inherit that parent's
+generated identifier.
 
 The formula projection supports confirmed alethic rules in these shapes.
 Players are String value types without subtype or supertype links, with
@@ -2337,9 +2366,11 @@ newline, under the schema id `gnd-ossie-relational/1`:
 | `unmapped_links` | Present only when not empty: carried fact types with no link mapping, each with the reason `identification-differs` or `arity-over-limit` |
 
 `identification-differs` means the ontology does not identify an object type
-the way its key columns do, so no object mapping for it can be written. That
-is the case for a unit-based reference, for an objectification keyed by its
-own fact type, and for a subtype that inherits through several supertypes.
+the way its key columns do, so no object mapping for it can be written. An
+objectification keyed by its own fact type is one example. A projected
+unit-based identifier uses an expression over the unit-based key column.
+For simple logical keys, the ontology and Rmap must agree on both the key
+kind and the reference target before the mapping emits an expression.
 Every fact type the Rmap carries is therefore either named by exactly one
 link tree or listed in `unmapped_links`, with one of those two reasons. `--strict` does not refuse any of
 these: they are listed, not refused.

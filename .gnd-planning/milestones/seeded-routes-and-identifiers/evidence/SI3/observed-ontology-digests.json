@@ -1,0 +1,176 @@
+{
+  "exports": 414,
+  "baseline": "99cf3df2",
+  "changed": {
+    "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml": {
+      "before": {
+        "json": "28a6258888b3124caf84f71f4ff54cd753f66167e9c9a055317966ab1a4056b7",
+        "yaml": "3e3dfa572dd2089e5c1b4f5dd6fdbbed0b942fbdcc658424ba6049f746e3396a"
+      },
+      "after": {
+        "json": "6fe2525e8aec64846cfbf5ae7b5221a9b5b0a028702edde8b18c27ee84beaede",
+        "yaml": "0592c32f7d31d7c5547286f1391b59a5e38f0f5d020760b51b16cce8795bb2b3"
+      }
+    },
+    "tests/fixtures/coverage/mixed/v2_operations.orm.yaml": {
+      "before": {
+        "json": "ff51e5e929397605b61198f0a29aa43a138d21926537af7417ab6a45085a28cf",
+        "yaml": "c119b75268ae6c4b32329b4918fe9dc4dccd38586c29c766628752d41e9b4215"
+      },
+      "after": {
+        "json": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015",
+        "yaml": "2fb1f9902f3526fa1a688a616bb64a1f3890e260558b5ed14619f1cf3e7eed91"
+      }
+    },
+    "tests/fixtures/coverage/positional/library.orm.yaml": {
+      "before": {
+        "json": "07aa9a34fe048a21b00ae470c81e1f86693b0a1efba7241b17bd3b9cbba37e52",
+        "yaml": "2d054319db91cde9100b6007249bd9c5133ac0de8cb45dc25bc3f2f260b770b1"
+      },
+      "after": {
+        "json": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654",
+        "yaml": "15afa15629cc478a10e490f0139045cde811c781952bb84be6bc10e83ca1c23d"
+      }
+    },
+    "tests/fixtures/guarded/models/undecidable.orm.yaml": {
+      "before": {
+        "json": "49b12f98671480a8cebc9bb1a5db5294bd873b62a43e49abdbf20356feff4c4d",
+        "yaml": "a27294029b5004090c7e3c33d2846af420f8ba41b2b0ab2259e415fbc32d2820"
+      },
+      "after": {
+        "json": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7",
+        "yaml": "235f1373515d0571ad20d97c7faf1bac8f5696126e19995f891f8c4cc4542ea2"
+      }
+    },
+    "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml": {
+      "before": {
+        "json": "195a6462aa1d6647ff1384b53ada6a1ee270e31324d68fb9891e1f021e543377",
+        "yaml": "ce12dfd33f8a8568d0352a96fa6c19149a39c16c49d197f2772d2656f597fa41"
+      },
+      "after": {
+        "json": "d2a5005be4119222532929f157d444b820cfe13afa5780163486c7acb32ec7d5",
+        "yaml": "dfd39c227f4f416ba9b1deb8eba7b7710eb594b8850ce2e3c9f1ea45479224d5"
+      }
+    },
+    "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml": {
+      "before": {
+        "json": "ad895d6e7119f6e74f4720ff6ed711c344edb2c0ff0af00a31dcc9104e112f76",
+        "yaml": "0107dc46fa987bddd910d256816f6916c223126a368984730cca8dcdc308e2c0"
+      },
+      "after": {
+        "json": "c0e1c96d5379d201a34e58f1bddda8b6cf91d8872c6aba1a2f36ef818f6c9ac7",
+        "yaml": "f54ed7c93d827c1d6530e15a951d16c71620d7a288d959b086a4c6afc46192b4"
+      }
+    },
+    "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml": {
+      "before": {
+        "json": "76d07d56fbfc327686073a834ca42323d3e6ea78c2dd2a59605bcb2f75991e42",
+        "yaml": "98c38a2e07fb87a7095e561808b1d9163e71fa6d6f26b58f908f375306184a68"
+      },
+      "after": {
+        "json": "9f848181e59d7953db726802772d865c7c7484bf604ac4e54ef53cf8b4c542df",
+        "yaml": "a06dd2aa90fb6618bd9074391058b3cdb68a67d7d7ef7fa4e8345f36acdea926"
+      }
+    },
+    "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml": {
+      "before": {
+        "json": "cb3de027d8cd968e82c78d9bc7cf6c9acde46ccf29324bd50554aa61d8cad52b",
+        "yaml": "e3902a257bbce75d9280533e92855abc9d10abbe3de3af5af7f0c3418ae905bd"
+      },
+      "after": {
+        "json": "330d9d1dc4c3ef18ccdbebc742735f0b2603c6918f32a3dbc6dd78c00e92eb4e",
+        "yaml": "474dcdb4e387e04c37041dabc0954c0f0e9e0af2bc6138c6b06fcbcfbaf821c5"
+      }
+    },
+    "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml": {
+      "before": {
+        "json": "4abbdcb392d80ca77b7262d298853ebf47cf5e869cbe62d1567b79f6326e8810",
+        "yaml": "7ec90b43cbd2ed89fb969132f70d16c588c9144717d99e153e5a0ec70d64b440"
+      },
+      "after": {
+        "json": "34aec2ef9894996dfdb368358557fe2161c14c936977b85521a21154d5914874",
+        "yaml": "298d24ea3885a1363a88f72ffe8c9189e6aa449555e7357ac3cbbea56db4f101"
+      }
+    },
+    "tests/fixtures/ilp_learners/close/family.orm.yaml": {
+      "before": {
+        "json": "7b8f1a909ad7b22244b2a63c2fd456cf194c2d9fabfac469b1685231ca737a87",
+        "yaml": "69eead086e05ccc7628c8316a03ba75a80cb92b0f0859dbd66ce1d3162620b3c"
+      },
+      "after": {
+        "json": "e01f6c2881ddade20b7e3343f9ed53d2ba1423826b515c44f1cc887786221ffe",
+        "yaml": "b2fc9ba75640632e52997047ae5262d3d5f60cd129832bedb3b61bbb9ed97f9b"
+      }
+    },
+    "tests/fixtures/ilp_learners/close/multi.orm.yaml": {
+      "before": {
+        "json": "9af5ca5d89249e4b7e46aa02ac15462bc6690d9a25fd10846b195aa19ee553c2",
+        "yaml": "42b409e81515ae5aa405e77671c7a9bab1da9cda39ccfb27f3efda0be4c7a961"
+      },
+      "after": {
+        "json": "2417cd96729e1d4576c34f1e2fd67b5128cc45ce9e1168b037171c0b62aeb7d2",
+        "yaml": "c18d076ddea571aa87b9eb2f81b04c4352e6712cbca17e0048673b2bba970f71"
+      }
+    },
+    "tests/fixtures/models/full_vocabulary.orm.yaml": {
+      "before": {
+        "json": "9451deb9b1a4e0e485419e6a7921a21ac4ec61af38739c77d1f562b92aae9f2e",
+        "yaml": "0d7f5787765b86e7c48590d694c57489b21a14c5aeabf68c67ee77d6faab8109"
+      },
+      "after": {
+        "json": "bdc6b86573c41c20dee528c1f991a408cf12fd77063d3aee56c9d7229e615e5a",
+        "yaml": "3d6f552773df2e0f46e25ae31891aa8547ec18e263c01a91f6d9d0756c2efc27"
+      }
+    },
+    "tests/fixtures/models/library.orm.yaml": {
+      "before": {
+        "json": "07aa9a34fe048a21b00ae470c81e1f86693b0a1efba7241b17bd3b9cbba37e52",
+        "yaml": "2d054319db91cde9100b6007249bd9c5133ac0de8cb45dc25bc3f2f260b770b1"
+      },
+      "after": {
+        "json": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654",
+        "yaml": "15afa15629cc478a10e490f0139045cde811c781952bb84be6bc10e83ca1c23d"
+      }
+    },
+    "tests/fixtures/models/v2_operations.orm.yaml": {
+      "before": {
+        "json": "ff51e5e929397605b61198f0a29aa43a138d21926537af7417ab6a45085a28cf",
+        "yaml": "c119b75268ae6c4b32329b4918fe9dc4dccd38586c29c766628752d41e9b4215"
+      },
+      "after": {
+        "json": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015",
+        "yaml": "2fb1f9902f3526fa1a688a616bb64a1f3890e260558b5ed14619f1cf3e7eed91"
+      }
+    },
+    "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml": {
+      "before": {
+        "json": "0a4bcc6c166a465bcc0380b79ac14422bc36b7b10b9b97b7efdf53e46cd0fff0",
+        "yaml": "b03dc80cceedbf9014edd89fc256b33b9eeecb06f6dda2b8cdd8271ed1d42f1c"
+      },
+      "after": {
+        "json": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10",
+        "yaml": "1119c4f9b4adc058894b62bced3d96f64c15c60675ee548a4da4d5f6a1617719"
+      }
+    },
+    "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml": {
+      "before": {
+        "json": "49b12f98671480a8cebc9bb1a5db5294bd873b62a43e49abdbf20356feff4c4d",
+        "yaml": "a27294029b5004090c7e3c33d2846af420f8ba41b2b0ab2259e415fbc32d2820"
+      },
+      "after": {
+        "json": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7",
+        "yaml": "235f1373515d0571ad20d97c7faf1bac8f5696126e19995f891f8c4cc4542ea2"
+      }
+    },
+    "tests/fixtures/public-semantic-shapes/model.orm.yaml": {
+      "before": {
+        "json": "0a4bcc6c166a465bcc0380b79ac14422bc36b7b10b9b97b7efdf53e46cd0fff0",
+        "yaml": "b03dc80cceedbf9014edd89fc256b33b9eeecb06f6dda2b8cdd8271ed1d42f1c"
+      },
+      "after": {
+        "json": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10",
+        "yaml": "1119c4f9b4adc058894b62bced3d96f64c15c60675ee548a4da4d5f6a1617719"
+      }
+    }
+  }
+}

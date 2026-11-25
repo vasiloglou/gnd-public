@@ -179,7 +179,8 @@ class GroundedTrace:
         return nodes, [mapping[r] if r is not None else None for r in roots]
 
 
-def produce_witness(model, candidate, targets, *, references=None, limits=DEFAULT_LIMITS):
+def produce_witness(model, candidate, targets, *, references=None, limits=DEFAULT_LIMITS,
+                    _projected_model=None):
     try:
         checked_limits(limits)
         validate_witness_structure(list(targets), limits=limits)
@@ -199,6 +200,7 @@ def produce_witness(model, candidate, targets, *, references=None, limits=DEFAUL
             candidate_doc,
             raw_refs,
             limits=limits,
+            _projected_model=_projected_model,
         )
         binding = witness_input_identity(model, candidate, references=context)
         populations = (candidate, *context._populations) if context else (candidate,)

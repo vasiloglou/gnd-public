@@ -30,6 +30,7 @@ __all__ = [
     "Unmapped",
     "UnmappedReason",
     "dispositions",
+    "external_uniqueness_order",
     "is_confirmed_alethic",
     "map_model",
     "name_foreign_keys",
@@ -134,6 +135,8 @@ class Identification:
     table: str | None
     #: Whether ``table`` is a supertype's table that absorbed this object type.
     absorbed: bool = False
+    #: Value-type id for a direct key, or the defining entity id for a unit key.
+    simple_target: str | None = field(default=None, compare=False, repr=False)
 
 
 @dataclass(frozen=True)
@@ -156,6 +159,11 @@ class RelationalSchema:
 def is_confirmed_alethic(constraint: Mapping[str, Any]) -> bool:
     """Whether a constraint is one the relational forms may carry: confirmed, and alethic."""
     return constraint.get("status") == "confirmed" and constraint.get("modality") == "alethic"
+
+
+def external_uniqueness_order(refs: list) -> tuple:
+    """Order by the role set, then by the declared component sequence."""
+    return sorted(refs), refs
 
 
 def _address(fact_id: str | None, index: int) -> str:
@@ -232,7 +240,7 @@ class _Mapper:
                     and all(self.functional_on(fact, role) for fact, role in refs)
                 ):
                     current = self.identifiers.get(anchor)
-                    if current is None or (sorted(refs), refs) < (sorted(current), current):
+                    if current is None or external_uniqueness_order(refs) < external_uniqueness_order(current):
                         self.identifiers[anchor] = refs
 
     # -- identification -------------------------------------------------------------
@@ -647,7 +655,7 @@ class _Mapper:
             key = self.key(oid)
             if key is None:
                 continue
-            kind = "fallback" if oid in self.fallback else self.identity(oid)[0]
+            kind, target = ("fallback", None) if oid in self.fallback else self.identity(oid)
             grouped = kind in ("composite", "fallback")
             owner = self.owner_of(oid)
             held = owner in tables
@@ -657,6 +665,7 @@ class _Mapper:
                 tuple(origin if grouped else None for origin in key.origins),
                 owner if held else None,
                 held and owner != oid,
+                simple_target=target if kind in {"direct", "unit"} else None,
             ))
         return RelationalSchema(
             self.variant, tuple(built), unmapped,

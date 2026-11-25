@@ -6,6 +6,22 @@ published on the package index. Releases follow the [release
 procedure](releasing.md). Changes on `main` after a release are listed in an
 `Unreleased:` section until the next one.
 
+## Unreleased:
+
+- `gnd flatten`, `gnd extract`, and all three PyRel export modes accept
+  unattended roots with reviewed includes. Pass the authored root when a
+  standalone flat model is refused with `unattended:flat-without-root`.
+  ([#292](https://github.com/vasiloglou/gnd-public/issues/292))
+
+- Composite reference identity prefers a confirmed alethic external uniqueness
+  marked `preferred`. When none qualifies, GND uses the first anchored
+  declaration. ([#279](https://github.com/vasiloglou/gnd-public/issues/279))
+
+- Ossie export supplies identifiers for unit-based references and for
+  inheriting subtypes with several supertypes. These identifiers change the
+  ontology bytes and let the relational mapping carry the associated links.
+  ([#280](https://github.com/vasiloglou/gnd-public/issues/280))
+
 ## 0.5.1 (tagged 2026-11-25, not published on PyPI)
 
 0.5.1 is a GitHub tag only. Install it from the tag:

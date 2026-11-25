@@ -1,0 +1,78 @@
+{
+  "base": "5699c76a",
+  "claims": [
+    "Only anchored preferred confirmed alethic external uniqueness takes priority; direct and legacy fallback behavior are preserved.",
+    "Tie order is stable, component order is retained, and all 436 tracked reference identity results are byte-equivalent.",
+    "The measured static and dynamic runtime query inventories remain unchanged."
+  ],
+  "created": "2026-11-25T21:23:08.770902+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/reviews/phase-SI2-r1/diff.patch",
+      "sha256": "0326614e061698831102fa229b8dbf4cb4120b587334f1f1cad2df7e82439681"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "e3dfd8936a6a8bbe39185a8e65a1310b86a4937249e2c116eb7c53ad71a797a0"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "17b190bba686d3e9f0668270846e0e79e5a13c9dd4fd0a703b74eeacfa74900b"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "69c1956e66aa042b672ed3c0f03109a7614689b3692b5445fd5633f2175e55a4"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "997c4ae93aedfc42f201e782f7b2d302275c738b3906d271974ccb3bc85fc526"
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "sha256": "a0c94fa2b29bce6d47948276f40fb53e829b51adda62c5afa207ff8147d90833"
+    },
+    {
+      "path": "src/gnd/rmap.py",
+      "sha256": "8b4292c72fc86394a6f230cb370c0003df3b8efdccc1f307a463ffdf98578065"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "da6db6b00b846b4f93cae7f20733d463e6f5e72bcaa3fa313838cfa5097ef134"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI2/baseline.json",
+      "sha256": "5f48cdaaabd59515ebad79d1739588c986fb61bac646bc106101b0a34c1e4d6d"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI2/candidate.json",
+      "sha256": "5f48cdaaabd59515ebad79d1739588c986fb61bac646bc106101b0a34c1e4d6d"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI2/census.py",
+      "sha256": "e59eace90c54c0d8570c446ab06eab060cff90511ebea7e8be7e5c017381e99b"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI2-spec.md",
+      "sha256": "3f0efbeff3f05a41765f1d7fa314ce12bf4dd51216095aa770977687aedd7a49"
+    },
+    {
+      "path": "tests/test_si2_reference_identity.py",
+      "sha256": "b0f49cc33e313cf121ee9f648ddec2c4931ebc40278201367d3a82fe570cca7d"
+    }
+  ],
+  "head": "5699c76accc69761eed7e4c7667a032f01217b54",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI2/baseline.json (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI2/candidate.json (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI2/census.py (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI2-spec.md (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/test_si2_reference_identity.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Can the preference, tie, fallback, query budget or caller-compatibility claims be refuted?",
+  "subject": "phase",
+  "version": 1
+}

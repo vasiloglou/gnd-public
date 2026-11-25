@@ -398,14 +398,14 @@ def test_t13_an_identifier_needs_functional_components(tmp_path):
     assert "identify_by" not in state
 
 
-def test_t13_identification_differs_is_listed_not_guessed(tmp_path):
-    """E3 (b): a unit-based entity has a key column but no identifier in the ontology."""
+def test_t13_unit_based_identifier_links_its_key_column(tmp_path):
+    """SI3 supersedes E3 (b): a unit-based key has an Ossie identifier and link."""
     bundle = _render_document(tmp_path, corpus.load_yaml(corpus.rmap_case("23")))
     mapping = json.loads(bundle.mapping)
     payload = json.loads(mapping["custom_extensions"][0]["data"])
-    assert payload["unmapped_links"] == [{"fact_type": "person_has_height", "reason": "identification-differs"}]
+    assert "unmapped_links" not in payload
     linked = corpus.cross_check(json.loads(bundle.document), json.loads(bundle.semantic_model), mapping)
-    assert "person_has_height" not in linked
+    assert "person_has_height" in linked
 
 
 def test_t14_reserved_words_are_quoted_not_listed(tmp_path):

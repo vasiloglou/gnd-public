@@ -1,0 +1,115 @@
+{
+  "base": "99cf3df2",
+  "claims": [
+    "Required seeded root routes exit zero and a standalone projection needing exemptions exits three with a named diagnostic.",
+    "Source documents and caller-supplied flat bytes or records cannot grant include exemptions.",
+    "Rooted extraction verification and witness replay derive their projections from checked pins and preserve previous structural and binding checks.",
+    "A validation error on flattening re-entry exits three with the named rule and publishes neither artifact."
+  ],
+  "created": "2026-11-25T21:08:41.128001+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/reviews/phase-SI1-r1/diff.patch",
+      "sha256": "347b027b10038a95792c88878543538a4e2989d368168dd6991a0518b24cc060"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI1-spec.md",
+      "sha256": "c5907475b33e18e35e4b0d30d3ec276ee4dd8fcca8bf828775ab99344b749506"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "3e08cb5c253c318f82494979c5218831027a5867714ebff5e1904edaee4af7a7"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "827fd6d49c88a738848bd4602a1d531dcaeea62e4ecde080a02fd8e9a937ee8d"
+    },
+    {
+      "path": "dev/components/modules/export.md",
+      "sha256": "8a8b7c1c55afe4dac28500ae95f3a18bfe7c9deed8faa35a210d15a9e4cd2c9c"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "189eb913cb64bf7ac9da32eecccf9f4415e2b5b05bfd8f5371e96057c04e8247"
+    },
+    {
+      "path": "dev/components/modules/witness.md",
+      "sha256": "3ae856c97a1712b52cadbad67468f231058f3b820fba6ebe991e35b2fd5277ed"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "e33e76bafb970e8b4ae06aefa5e884d5e6dc8e32633658ef012732dd4f560508"
+    },
+    {
+      "path": "src/gnd/export/emit.py",
+      "sha256": "422b2b45b74936948515e96b54dbeed95f849321e0eb7133b18fbef73ccf760f"
+    },
+    {
+      "path": "src/gnd/export/include_roots.py",
+      "sha256": "c5dffd7df4f13271f13ea2c1894e02cb398a9ec1df68794b56f30d67f1863ad1"
+    },
+    {
+      "path": "src/gnd/export/pyrel_rules.py",
+      "sha256": "ab20c148cf89bf03ad18f3e87b1c1f8f79026c2d41ee01952f6c95a48bc049f9"
+    },
+    {
+      "path": "src/gnd/extract/flatten_service.py",
+      "sha256": "fd64639c093c94da1d61e3d8d44f251ab57dc47fc51ac8c9370dcf8395824a50"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "d9881751f18708326ec6cab3d9bc4c3e72be6829c8b12ff613991214ee75707d"
+    },
+    {
+      "path": "src/gnd/model/_unattended.py",
+      "sha256": "04609f3fa423434ca32013403c540e49d8fcc069ea0fabf2aff8eafb2abac2c3"
+    },
+    {
+      "path": "src/gnd/model/flattening.py",
+      "sha256": "34540762f3b85940b73ea708d4021130796feeb33ad15cb3aa00b4a01d64073e"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
+      "sha256": "eb004b90f123ac034ca8553306bffdf6532d20554c0273f15f7728c01f48a309"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "07b04ec25b290a16345f10f83b53049df0ef32a05d714ee8bc6f3b347d2b7d70"
+    },
+    {
+      "path": "src/gnd/witness/flattening.py",
+      "sha256": "3f072528aa6eaa4cf1cb1bd82c2aefb29b72eeb629eb8023b29e08811000c35a"
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "sha256": "d65f2cf95e24ef54fda3d44f7ebb7c4c8bb69e325e451cbb46861f15a079de0e"
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "sha256": "b64b55e066a705b54c027a050633474867cee8d05ac0a48be3e9ecf93e4318b9"
+    },
+    {
+      "path": "src/gnd/witness/producer.py",
+      "sha256": "776d7d3af72e94632bf6eb4b7753d112de2dffe09ee6fc3b30916c246202b464"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "sha256": "453c2956ed2a1c002df75f1377122bd0b44deedd6f5d8c3dc4c3122b1c15aaae"
+    },
+    {
+      "path": "tests/test_si1_seeded_routes.py",
+      "sha256": "cdeefc84ed8ab92a21442835088cb63d36b9892366116a834db938c0be3de12a"
+    }
+  ],
+  "head": "99cf3df2aeb8663d27a7028d6f8bfd24a8ddfdf9",
+  "left_out": [],
+  "notes": [
+    "new: tests/test_si1_seeded_routes.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Where can the seeded route, authenticated ownership, standalone refusal, or existing model compatibility claims be refuted?",
+  "subject": "phase",
+  "version": 1
+}

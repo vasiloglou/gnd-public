@@ -497,25 +497,25 @@ Publication-day text: move the pages from "prepared" to "published", and check t
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ReleaseTextError` | class(Exception) | 93 | An input the tool cannot work from. |
-| `version_key(version) -> tuple[int, ...]` | function | 97 | (no docstring) |
-| `declared_version(root) -> str` | function | 101 | (no docstring) |
-| `released_versions(root) -> list[str]` | function | 105 | The published versions, oldest first, from their one home in the tests. |
-| `tagged_versions(root) -> list[str]` | function | 114 | The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`. |
-| `tag_sentence(version) -> str` | function | 123 | (no docstring) |
-| `tag_install_command(version) -> str` | function | 131 | (no docstring) |
-| `notes_opening(declared, date, released, tagged) -> str` | function | 143 | The first paragraph of the release notes once `declared` is published. |
-| `compatibility_paragraph(declared, date, released, tagged) -> str` | function | 162 | The first paragraph of the compatibility page once `declared` is published. |
-| `support_row(declared, built, profile) -> str` | function | 174 | (no docstring) |
-| `page_files(root) -> list[str]` | function | 194 | README.md and every text file under docs/, except the release notes. |
-| `stale_lines(root, declared, released) -> list[str]` | function | 204 | Lines that name an older version or use prepared-state wording and are not standing. |
-| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 231 | (no docstring) |
-| `presence_problems(root, declared) -> list[str]` | function | 256 | The pins, the links and the support row name the declared version. |
-| `tag_problems(root, declared, released) -> list[str]` | function | 284 | A tag-only version: newer than every published one, with its own notes heading and install command. |
-| `subject_version(root) -> str \| None` | function | 303 | The version the pages are held to: the declared one, or the latest published one while |
-| `problems(root) -> list[str]` | function | 313 | Everything that still describes the state before the declared version was published. |
-| `publish(root, *, date, built, profile) -> list[str]` | function | 330 | Make the publication-day edits for the declared version. Return the files changed. |
-| `main(argv) -> int` | function | 407 | (no docstring) |
+| `ReleaseTextError` | class(Exception) | 96 | An input the tool cannot work from. |
+| `version_key(version) -> tuple[int, ...]` | function | 100 | (no docstring) |
+| `declared_version(root) -> str` | function | 104 | (no docstring) |
+| `released_versions(root) -> list[str]` | function | 108 | The published versions, oldest first, from their one home in the tests. |
+| `tagged_versions(root) -> list[str]` | function | 117 | The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`. |
+| `tag_sentence(version) -> str` | function | 126 | (no docstring) |
+| `tag_install_command(version) -> str` | function | 134 | (no docstring) |
+| `notes_opening(declared, date, released, tagged) -> str` | function | 146 | The first paragraph of the release notes once `declared` is published. |
+| `compatibility_paragraph(declared, date, released, tagged) -> str` | function | 165 | The first paragraph of the compatibility page once `declared` is published. |
+| `support_row(declared, built, profile) -> str` | function | 177 | (no docstring) |
+| `page_files(root) -> list[str]` | function | 197 | README.md and every text file under docs/, except the release notes. |
+| `stale_lines(root, declared, released) -> list[str]` | function | 207 | Lines that name an older version or use prepared-state wording and are not standing. |
+| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 243 | (no docstring) |
+| `presence_problems(root, declared) -> list[str]` | function | 268 | The pins, the links and the support row name the declared version. |
+| `tag_problems(root, declared, released) -> list[str]` | function | 296 | A tag-only version: newer than every published one, with its own notes heading and install command. |
+| `subject_version(root) -> str \| None` | function | 315 | The version the pages are held to: the declared one, or the latest published one while |
+| `problems(root) -> list[str]` | function | 325 | Everything that still describes the state before the declared version was published. |
+| `publish(root, *, date, built, profile) -> list[str]` | function | 342 | Make the publication-day edits for the declared version. Return the files changed. |
+| `main(argv) -> int` | function | 419 | (no docstring) |
 
 ## tools.render_replay — `tools/render_replay.py`
 Components: unassigned

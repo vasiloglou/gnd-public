@@ -1,0 +1,1882 @@
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/017-OB5-spec-gate.md b/.gnd-planning/milestones/ossie-relational-bundle/017-OB5-spec-gate.md
+new file mode 100644
+index 00000000..224508ed
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/017-OB5-spec-gate.md
+@@ -0,0 +1,37 @@
++# OB5 spec gate
++
++**Owner ruling, 2026-11-25.** `auto=false`.
++
++The owner was shown the [OB5 spec](notes/phase-OB5-spec.md) r1 and asked "Do
++you approve the spec with all ten as proposed, or all except running the
++validator (H7)?" The owner answered:
++
++> ok
++
++| Item | Value |
++|---|---|
++| Spec read at the gate | [phase-OB5-spec.md](notes/phase-OB5-spec.md) r1, sha256 `7f6eea49e4d8d4906c63e2abff34cdf55a5065c3180cae3ebfc034567de35215` |
++| Base | main at `6758d224` |
++| Review state | no review has run over the spec |
++
++## Reading of the answer
++
++The question offered two choices, and both approve the spec. They differ only
++on H7. "ok" does not say which, so it is recorded as approval of what the two
++choices share. H7 is an opt-in gate, which runs only on an explicit owner
++request for a named subject, and "ok" is not that.
++
++## Rulings
++
++| Item | Ruling |
++|---|---|
++| H1 | **Approved.** Prose spec, then a viewable checkpoint of the built pages before the review. |
++| H2 | **Approved.** Two how-to pages. |
++| H3 | **Approved.** The example binding is a packaged file in the refunds example. |
++| H4 | **Approved.** The how-to commands run in the tutorial runner. |
++| H5 | **Approved.** The release-note section and its four bullets. |
++| H6 | **Approved.** README, index page and CLI reference. |
++| H7 | **Open.** The oracle lane is not run. The pages say only that GND checks the files against the pinned Ossie schemas. Asked again at the checkpoint. |
++| H8 | **Approved.** OB1-Q1 goes to the close sweep. |
++| H9 | **Approved.** One Codex round over the diff, after the checkpoint. |
++| H10 | **Approved.** No second review of OB4's fixes; this rules OB4-Q2. |
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/018-OB5-checkpoint-gate.md b/.gnd-planning/milestones/ossie-relational-bundle/018-OB5-checkpoint-gate.md
+new file mode 100644
+index 00000000..47d2a11b
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/018-OB5-checkpoint-gate.md
+@@ -0,0 +1,22 @@
++# OB5 checkpoint gate
++
++**Owner ruling, 2026-11-25.** `auto=false`.
++
++At the viewable checkpoint (H1) the owner was shown the three pages at
++commit `4cacaf8d` and asked three questions:
++
++1. Are the pages good to go to the Codex review, or do you have changes?
++2. Should I fix the two broken links in this phase so the strict build passes?
++3. Do you want Ossie's own validator run now (H7)?
++
++The owner answered:
++
++> yes to all
++
++## Rulings
++
++| Item | Ruling |
++|---|---|
++| Checkpoint (H1) | **Passed.** The pages go to the review as written. |
++| The two broken links | **Fix in this phase.** `docs/agents/model-from-text.md` and `docs/agents/evolve.md` link to a file outside the site. Both are broken on main (from `b36b446d`). This widens OB5 by those two lines. |
++| H7, OB3-Q3 | **Requested.** The opt-in oracle lane runs now, for the semantic model and mapping of the export census (OB3 T11) and of the valid binding corpus (OB4 T13), on the code at this branch. The root is prepared from the OS0 receipt. |
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/019-OB5-quoting-gate.md b/.gnd-planning/milestones/ossie-relational-bundle/019-OB5-quoting-gate.md
+new file mode 100644
+index 00000000..c12f143d
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/019-OB5-quoting-gate.md
+@@ -0,0 +1,18 @@
++# OB5 quoting gate
++
++**Owner ruling, 2026-11-25.** `auto=false`.
++
++The owner was shown the [oracle-lane run](notes/OB5-oracle-lane-run.md)
++(commit `404f9b4c`) and asked "Do you approve fixing the quoting rule and
++changing V2's expected mapping, or do you want it explained further first?"
++The owner answered:
++
++> approved
++
++## Rulings
++
++| Item | Ruling |
++|---|---|
++| The quoting rule (amends OB3 E5) | **Approved.** A regular identifier is written quoted and upper-cased, as before. Any other name is written quoted exactly as given. |
++| Approved corpus answer | **Approved to change:** `tests/fixtures/physical_binding/V2/expected.mapping.yaml`, its six expressions over the `uni.` tables. No other approved file changes. The OB4 corpus digest `d8377d48…54ed` is superseded by the one in the OB5 record. |
++| Scope | The repair lands in OB5, which the approved H7 text provides for ("that is repaired first"). The export, relational and binding suites are selected again. |
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/README.md b/.gnd-planning/milestones/ossie-relational-bundle/README.md
+index af70ce9e..d2dfbd09 100644
+--- a/.gnd-planning/milestones/ossie-relational-bundle/README.md
++++ b/.gnd-planning/milestones/ossie-relational-bundle/README.md
+@@ -22,7 +22,7 @@ itself reviewed.
+ | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | **merged** (PR #266): [record](004-phase-OB1.md), [spec](notes/phase-OB1-spec.md) |
+ | OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **merged** (PR #270): [record](008-phase-OB2.md); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); two review rounds |
+ | OB3 | Semantic model and mapping files, with the default per D2 | **merged** (PR #271): [record](011-phase-OB3.md); its four departures accepted ([gate](012-OB3-departures-gate.md)); one review round |
+-| OB4 | `--physical-binding FILE` | **recorded** ([record](015-phase-OB4.md)); one review round; both added rules accepted ([gate](016-OB4-departures-gate.md)); not pushed |
+-| OB5 | Docs and skill | after OB4 |
++| OB4 | `--physical-binding FILE` | **recorded** ([record](015-phase-OB4.md)); one review round; both added rules accepted ([gate](016-OB4-departures-gate.md)); merged (PR 272) |
++| OB5 | Docs and skill | **spec drafted** ([spec](notes/phase-OB5-spec.md) r1); approved except H7, which is open ([gate](017-OB5-spec-gate.md)); in progress |
+ 
+-**Next action:** the owner decides on a pull request for OB4; OB5 (docs and skill) follows. Open with the owner: the oracle lane (OB3-Q3). D10 asks the reporter for inputs, including whether their schema uses surrogate keys (OB4-Q3), and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.
++**Next action:** OB5 implementation, then the viewable checkpoint; the owner rules H7 (the oracle lane) there. Open with the owner: the oracle lane (OB3-Q3). D10 asks the reporter for inputs, including whether their schema uses surrogate keys (OB4-Q3), and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/notes/OB5-oracle-lane-run.md b/.gnd-planning/milestones/ossie-relational-bundle/notes/OB5-oracle-lane-run.md
+new file mode 100644
+index 00000000..d61e83a5
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/notes/OB5-oracle-lane-run.md
+@@ -0,0 +1,75 @@
++# The Ossie oracle lane, first run over the relational files
++
++**Run 2026-11-25** on the owner's request ([gate](../018-OB5-checkpoint-gate.md)),
++at commit `717f47e8`. It discharges OB3-Q3 and OB5 H7.
++
++## Setup
++
++A scratch root prepared from the OS0 receipt
++(`.gnd-planning/milestones/ossie-interchange/evidence/OS0/README.md`):
++
++| Item | Value |
++|---|---|
++| `apache/ossie` | `ee89dbdc2844d8b7d293ed42c8613928bb99505f` |
++| `apache/ossie-converters` | `83ddc294c8840f5f497a2bdbec2348a128fc2254` |
++| `ontology/ontology.json`, `ontology/mapping.json`, `validation/validate.py` | sha256 equal to `pins.json` |
++| Environment `a` (validator) | Python 3.11.15, PyYAML 6.0.3, jsonschema 4.26.0, sqlglot 30.31.0 and the receipt's other pins |
++| Environment `b` (parser) | `converters/ontology` installed |
++
++Environments `c` and `d` (the RelationalAI consumer) were not built, so the
++one consumer test was deselected.
++
++## Command and result
++
++```text
++GND_OSSIE_ORACLE_ROOT=<scratch> uv run pytest -q -m ossie_oracle tests/test_ossie_external_oracle.py -k "not consumer"
++1 failed, 86 passed, 1 deselected in 17.83s
++```
++
++| Test | Result |
++|---|---|
++| `test_external_census` (the ontology, validator and parser) | passed |
++| `test_external_relational_census` (OB3 T11: semantic model and mapping of every census model) | **passed** |
++| `test_external_physical_binding_cases` (OB4 T13) | **failed** on case V2 |
++| the refusal, YAML, OS2 corpus and keyword tests | passed |
++
++So the upstream validator accepts the quoted upper-case identifiers and the
++`CASE WHEN` expressions that OB3 could not confirm.
++
++## The failure
++
++Case V2 has tables named `uni.student`, `uni.enrolled` and `uni.course`. The
++validator reports eight errors of this form:
++
++```text
++[Reference] ...: expression names '"UNI.STUDENT"."NR"' but the semantic model declares no dataset '"UNI.STUDENT"'
++```
++
++**Cause.** GND writes every identifier quoted and upper-cased (OB3 E5). The
++validator upper-cases a declared name only when it is a *regular*
++identifier, one that can be written without quotes. Any other name "can only
++be written quoted and is kept as written" (`validate.py`,
++`declared_name`; Ossie `core-spec/expression_language.md`, "normalized
++identifier"). `uni.student` contains a dot, so it is kept as written, and
++the reference must be `"uni.student"`.
++
++**Measured with the pinned validator** (every character from U+0020 to
++U+2FFF, inside and at the start of a name; 266 keyword-like words):
++
++- Kept as written: a name with white space or one of
++  ``! " # % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ ` { | } ~``, a name that
++  starts with a digit, and the two words `not` and `select`.
++- Upper-cased: everything else, including `$`, non-ASCII letters, and
++  keywords such as `from`, `order`, `group` and `table`.
++
++**Reach.**
++
++- The built-in mapping passes for all census models.
++- A binding whose table or column name is not regular fails upstream today.
++  A schema-qualified name such as `fin.refunds` is one.
++- In the approved corpora, only `physical_binding/V2/expected.mapping.yaml`
++  holds such names (six expressions). The OB5 example binding uses dotted
++  names too.
++
++**Not changed.** No code or corpus file is changed by this run. V2's
++expected mapping is an approved answer, so changing it goes to the owner.
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB5-spec.md b/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB5-spec.md
+new file mode 100644
+index 00000000..43b8ac87
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB5-spec.md
+@@ -0,0 +1,231 @@
++# Phase OB5 spec: docs and skill
++
++**Status: draft r1, awaiting owner review.** No docs, skill or test file is
++edited before the owner gate.
++
++## 1. Provenance
++
++- **Plan:** [ossie-relational-bundle-plan.md](ossie-relational-bundle-plan.md)
++  r2, §4 "OB5: docs and skill", completion predicate 6, §5 and §9.
++- **Prior records:** [004 OB1](../004-phase-OB1.md),
++  [008 OB2](../008-phase-OB2.md), [011 OB3](../011-phase-OB3.md),
++  [012 OB3 departures](../012-OB3-departures-gate.md),
++  [015 OB4](../015-phase-OB4.md),
++  [016 OB4 departures](../016-OB4-departures-gate.md).
++- **Base:** main at `6758d224` (PR 272 merged). OB1–OB4 are on main.
++- **Reviews:** none has run over this spec.
++
++## 2. Obligations (the harvest)
++
++| # | Source | Obligation | Discharged in |
++|---|---|---|---|
++| O1 | Plan §4 OB5, deliverable | The normative section, the explanation, the how-to (a worked relational export and a binding), the export skill guidance, a changelog entry. | §5.1–§5.6 |
++| O2 | Plan §4 OB5, deliverable | The changelog states exit 11 and exit 64 by their constants. | §5.5, T5 |
++| O3 | Plan §4 OB5, criteria | The docs build and the link check passes. | T1, T2 |
++| O4 | Plan §4 OB5, criteria; predicate 6 | The normative section is the only home of every rule. The reviewer checks every cited rule. | §5.7, T4, §8 |
++| O5 | Plan §3 | OB5 also documents OB1 (`--max-output-bytes`, `--max-input-bytes`). | §5.1, §5.2, §5.4, §5.5 |
++| O6 | Plan §9, OB5 row | "The docs link check named in the OB5 spec"; affected consumer: the site. | T1, T2 |
++| O7 | Plan §5 | The default change to five files and the exit 11 collision go in the changelog. | §5.5 |
++| O8 | Plan §6 | A reader must not take the generated tables for delivered ones: the `source_kind: logical` marker is explained. | §5.1 |
++| O9 | Records 011 and 015, boundary | The user docs, the how-to, the skill and the release note "still describe three files and no binding". | §5.1–§5.5 |
++| O10 | Record 015, K13 | Tables linked only by surrogate keys cannot be bound. A reader has to be told. | §5.1, §5.3 |
++| O11 | Records 012 and 016 | The accepted departures are behaviour a reader meets: a model with no table writes three files; `unmapped_links`; the 32-role limit; the 8-level identifier limit; an entity and a part of its identifier may share a column. | §5.1 (in plain words, linked to the rule) |
++| O12 | Records 011 and 015 | The upstream validator has not run on the new files. Docs must not say it has. | H7, §5.1 |
++| O13 | Records 004–015, OB1-Q1 | `guard_yaml`'s captured default: "OB5 or the close sweep". | H8 |
++| O14 | Release session's message | Release-note bullets go under an `Unreleased:` heading in `docs/release-notes.md`. The repository has no `CHANGELOG.md`; that page is the changelog. | §5.5 |
++| O15 | AGENTS.md; memory | Public text names no downstream project or customer. PyRel stays optional. Business pages show `/gnd` prompts beside results. | §5 (all), §8 brief |
++| O16 | Plan §7 | Out of scope stays out: DDL, importing the relational files, metrics. | §6 |
++
++## 3. Standing rules bound to this phase
++
++| Rule | Binding here |
++|---|---|
++| 1 Totality | No new reader of untrusted input. The one new file (the example binding, H3) is read by the OB4 reader, already total. Inapplicable otherwise. |
++| 2 Cap bounds the document | No algorithm changes. Inapplicable. |
++| 3 Validation order | No new refusal. The docs state none; they link to the order in the normative section. |
++| 4 One walk | Inapplicable: no walk is added. |
++| 5 One home | The binding rule of this phase. The explanation, how-to and skill describe and link; they state no rule. T4 fails when a page uses a rule id, reason or flag the normative section lacks. |
++| 6 Measure | Numbers on the pages (file counts, table counts in the example) come from a run in the test, not from memory (T3, T6). |
++| General solutions | T4 and T6 read Markdown fences with the existing tutorial block parser and YAML with its loader. No regular expression over nested text. |
++
++## 4. Goal
++
++After OB5, a reader of the site and of the export skill learns that
++`gnd export ossie` writes five files, how to get three, how to raise the size
++bounds, and how to describe delivered tables with a binding. `uv run --group
++docs zensical build --strict` exits 0, `uv run python tools/check_docs.py site`
++exits 0, the how-to's commands run in the tutorial runner with exit 0, and the
++focused docs tests exit 0.
++
++## 5. Design
++
++### Reuse
++
++| Capability | Searched | Found | Decision |
++|---|---|---|---|
++| Build and link check | `components_index.py search "docs link check"`; `docs/development/documentation.md` | `zensical build --strict`, `tools/check_docs.py site` | reuse |
++| Run a page's commands in tests | `git grep gnd-run`; `tools/run_tutorials.py` `groups()` | the `<!-- gnd-run expect=N -->` marker and the group table | reuse; add one group `ossie` |
++| Exit constants | `src/gnd/exits.py` | `EXIT_COLLISION` 11, `EXIT_USAGE` 64 | reuse in T5 |
++| Schema validation of the example output | `gnd.export.ossie_relational.validate_relational` | as used by the corpora | reuse in T6 |
++
++Nothing new is built outside tests, pages and one example file.
++
++### 5.1 `docs/explanation/ossie.md` (about 63 → 130 lines)
++
++- **Scope paragraph.** Today it says semantic models and mappings are outside
++  scope. New text: the export writes the ontology, a semantic model and a
++  mapping. Import reads the ontology only. Metrics, dimensions and query
++  interfaces stay outside.
++- **New section "The tables an export describes".** In business terms: the
++  semantic model lists one table per thing that has facts of its own, with
++  its key and its links to other tables; the mapping says which column holds
++  which concept. These tables are GND's reading of the model, not tables you
++  have delivered, and each is marked `source_kind: logical` (O8).
++- **New section "What is listed instead of mapped".** Every fact type and
++  constraint is either carried or listed with a reason. The page gives the
++  reasons a reader will meet, each in one plain sentence, and links to the
++  normative list. It states the three limits as limits (O11): a model that
++  yields no table writes three files and a note; a fact type with more than
++  32 roles and an identifier nested more than 8 entities deep are listed.
++- **New section "Describe the tables you delivered".** What a binding is, when
++  to use one, that without it nothing changes, and the known limit: tables
++  linked only by surrogate keys cannot be bound (O10).
++- **New section "Large models".** The 10 MiB default per file,
++  `--max-output-bytes`, `--max-input-bytes` on import, the 256 MiB ceiling,
++  and that the model source itself stays capped at 10 MiB (O5).
++- **Validation sentence (O12, H7).** "GND checks the semantic model and
++  mapping against the pinned Ossie schemas." It does not say Ossie's own
++  validator accepted them unless H7 runs that lane first.
++- The PyRel section and its numbers are unchanged.
++
++### 5.2 `docs/how-to/share-an-ossie-ontology.md` (revised in place)
++
++- The file table grows from three export files to five, plus the two import
++  files.
++- A short "See the tables" step shows one dataset and one mapping entry from
++  the real refunds export, and the list of fact types the export names
++  instead of mapping.
++- `--ontology-only` is shown as the way to keep the earlier three-file output,
++  with one sentence on the exit 11 collision.
++- The three existing commands get `<!-- gnd-run expect=0 -->` markers, and the
++  page joins a new `ossie` group in `tools/run_tutorials.py`.
++- The `/gnd` prompt stays beside the commands.
++
++### 5.3 New page `docs/how-to/describe-delivered-tables-for-ossie.md` (H2)
++
++- **Reader's goal:** "My warehouse already has a refunds table. I want the
++  Ossie files to describe that table, not GND's."
++- The page shows the example binding (H3), the command with
++  `--physical-binding`, the resulting dataset, and the extension's list of
++  what the binding left out.
++- It shows one refused binding (a misspelled role name) with its rule id and
++  exit 3, marked `<!-- gnd-run expect=3 -->`.
++- It ends with the limits (O10) and a link to the normative section and the
++  packaged schema.
++- `zensical.toml` gains the nav entry. The page is in the `ossie` group.
++
++### 5.4 `src/gnd/skills/gnd-export/SKILL.md`, "Ossie interchange" section
++
++- Five files by default; `--ontology-only` for three.
++- Before sharing, read the mapping's `GND` extension as well as the loss
++  report: `dispositions` and, when present, `unmapped_links`.
++- `--physical-binding FILE` when the user has delivered tables; a refusal
++  names a `binding:` rule and exits 3; fix the binding, do not edit the model
++  to fit.
++- `--max-output-bytes` and `--max-input-bytes` for a named size refusal only;
++  never raise a bound to pass a different refusal.
++- The frontmatter `description` gains "semantic model and mapping".
++- **Pin sites:** the generated discovery copies of the skill and any skill
++  census or digest test. They are counted when the phase runs, not here.
++
++### 5.5 `docs/release-notes.md`
++
++One section, `## Unreleased: Ossie relational files`, with these bullets:
++
++1. Five files by default. A file already at `OUT.semantic_model.<fmt>` or
++   `OUT.mapping.<fmt>` exits 11 (`EXIT_COLLISION`) and publishes nothing.
++   `--ontology-only` keeps the three-file run.
++2. `--physical-binding FILE`, with its schema id and the exit 3 refusals.
++   Combined with `--ontology-only` it exits 64 (`EXIT_USAGE`).
++3. `--max-output-bytes N` on export and `--max-input-bytes N` on import;
++   an out-of-range value exits 64 (`EXIT_USAGE`).
++4. Known limits: surrogate-key tables cannot be bound; a model with no table
++   writes three files.
++
++The bullets name no downstream project (O15).
++
++### 5.6 Smaller mentions
++
++- `README.md` lines 22–28 and 149, and `docs/index.md` lines 25–32: "ontology
++  files" becomes wording that includes the tables. One sentence each.
++- `docs/reference/cli.md`: the command table gains rows for
++  `gnd export ossie` and `gnd import ossie`, each with its flags and a link
++  to the normative section. It has none today.
++- `dev/components/`: no module changes, so the index needs no entry. The
++  pre-PR check still runs.
++
++### 5.7 The normative section (audit, not authorship)
++
++OB1–OB4 already wrote "Ossie interchange" in `representation-format.md`. OB5
++reads it against completion predicates 1–5 and the two departures records and
++lists every gap. A gap is fixed there, in this phase, and named in the record.
++One is known now: the section's opening paragraph on publication and exit
++codes predates the five-file run and omits exit 64. No rule is restated
++anywhere else.
++
++## 6. Out of scope
++
++- Any change to export or import behaviour, or to `--help` text beyond a
++  wording error the audit finds.
++- DDL, importing the relational files, metrics (plan §7).
++- The reporter questions and the three GitHub issues (D10).
++- The milestone close record and the close-bar panel.
++- Videos, tours and the launch drafts.
++
++## 7. Decisions for the owner
++
++| ID | Question | Proposal | Cost of the alternative |
++|---|---|---|---|
++| H1 | Approval instrument. | Prose: this spec. Then one **viewable checkpoint**: the built pages, shown before the review, as for earlier docs work. | Corpus-first does not fit; a docs phase has no format, exit contract or predicate of its own. |
++| H2 | One how-to page or two. | Two: the existing page for sharing, a new page for the binding. | One page mixes two readers' goals and doubles its length; the plan's "the how-to" reads as one page. |
++| H3 | Where the example binding lives. | A packaged file, `src/gnd/examples/refunds/physical-binding.json`, so the page's command runs from an installed GND. | Inline in the page: the reader pastes about 30 lines of JSON before the first command. |
++| H4 | Run the how-to commands in tests. | Yes: `gnd-run` markers and an `ossie` tutorial group. | Without them a page can show a command that no longer works. |
++| H5 | The release-note section title and its four bullets (§5.5). | As written. | — |
++| H6 | Update README, the index page and the CLI reference (§5.6). | Yes, minimal wording. | They keep saying "ontology files" only. |
++| H7 | **Run Ossie's own validator now** (OB3-Q3, the opt-in oracle lane: OB3 T11 and OB4 T13). Predicate 4 needs it before the milestone can close. | Yes, in this phase, before the pages are final. If it finds a defect, that is repaired first and the pages describe what is true. | Deferring to the close leaves the docs worded around an unrun check, and a late finding reopens pages already merged. |
++| H8 | OB1-Q1, `guard_yaml`'s captured default. | Leave to the close sweep. It is a code change with its own tests, not docs. | Folding it in widens a docs phase into the input policy. |
++| H9 | Review. | One Codex round over the diff. Its brief: check every rule id, reason and flag on a page against the normative section; find a rule stated twice; run each page command; look for a downstream name. | — |
++| H10 | OB4's review fixes are not re-reviewed (OB4-Q2). | No second round; the close-bar panel reads the merged code. | A second round costs one more reviewer run now. |
++
++## 8. Tests
++
++New file `tests/test_ossie_docs.py` unless noted.
++
++| ID | Case | Expected |
++|---|---|---|
++| T1 | `uv run --group docs zensical build --strict` | exit 0 |
++| T2 | `uv run python tools/check_docs.py site` | exit 0 |
++| T3 | `tests/test_documentation_tutorials.py::test_documented_learning_path[ossie]`: both how-to pages run block by block. The binding page's refused run expects exit 3. | exit 0; more than 0 blocks run |
++| T4a | **Cited ids exist.** Every `binding:…` rule id, every unmapped reason and every `ossie:…` id written on the explanation, the two how-tos and the skill section appears in the normative section. | pass; fails on a planted unknown id |
++| T4b | **Flags are covered.** Every option in the `gnd export ossie` and `gnd import ossie` parsers appears in the skill section and in the CLI reference. Read from the parsers, not from help text. | pass; fails when a flag is added and not documented |
++| T5 | The release notes have the `Unreleased: Ossie relational files` section, and the numbers beside `EXIT_COLLISION` and `EXIT_USAGE` equal `gnd.exits`. | pass |
++| T6 | **Shown output is real.** Each YAML or JSON excerpt marked on the how-to pages is contained in the file the test's own run wrote. The example binding exports with exit 0 and `validate_relational` accepts the result. | pass; fails on an edited excerpt |
++| T7 | Existing guards: `tests/test_disclosure_docs.py`, `tests/test_release_docs.py`, `tests/test_packaged_skills.py`, `tests/test_skill_prose_sync.py`, the skill census tests, and the project guard block. | exit 0, except the one known red `test_reference_closure_and_declared_bootstrap` |
++| T8 | `uv run ruff check`; `python3 scripts/components_index.py changed --base origin/main --strict` | exit 0; 0 to fix |
++| T9 | Only if H7 is approved: `uv run pytest -q -m ossie_oracle tests/test_ossie_external_oracle.py` with the oracle root prepared from the OS0 receipt. | recorded as run, with its result |
++
++**Verification selection.** Direct: T1–T6. Impact closure: T7 (the skill and
++docs guards). Not selected: the export, Rmap and binding suites, because no
++source under `src/gnd` changes except the skill text and one example file;
++they are selected again if the audit (§5.7) or H7 leads to a code change.
++
++## 9. Coverage argument
++
++- A page that shows a dead command fails T3.
++- A page that invents or misspells a rule id fails T4a.
++- A flag added later without docs fails T4b.
++- A release note with a wrong exit number fails T5.
++- An excerpt that drifts from real output fails T6.
++- A broken link or anchor fails T1 or T2.
++- A rule stated a second time in different words is not caught by a test. It
++  is the reviewer's task (H9) and is named in the record's boundary.
+diff --git a/README.md b/README.md
+index 48da5346..a742c337 100644
+--- a/README.md
++++ b/README.md
+@@ -24,8 +24,9 @@ for recording business concepts and the relationships between them. You can
+ bring in an existing Ossie ontology as the starting point for a GND model, or
+ export your GND model's vocabulary and relationships so another tool or team
+ works from the same names and connections. The exchange covers concepts, their
+-relationships and a documented subset of constraint formulas, as described in
+-[Ossie interchange in GND](docs/explanation/ossie.md).
++relationships and a documented subset of constraint formulas. An export also
++describes the tables that hold the model's facts, or the tables you already
++built, as described in [Ossie interchange in GND](docs/explanation/ossie.md).
+ 
+ ![Animated: an agent proposes a payment plan, GND names the failed precondition, the agent adds the missing steps, and the revised plan is accepted.](docs/assets/hero.svg)
+ 
+@@ -146,7 +147,7 @@ assert bad["exit_code"] == 1 and good["exit_code"] == 0
+   conformance checks, and model evolution with a blast-radius preview.
+ - **Round-trips documents.** Render a document from facts with planted distractors,
+   extract facts back, and check both directions.
+-- **Shares pinned [Ossie ontologies](docs/explanation/ossie.md).** Export and restore GND models with per-field loss reports.
++- **Shares pinned [Ossie ontologies](docs/explanation/ossie.md).** Export and restore GND models with per-field loss reports, and describe the tables that hold their facts.
+ - **Exports to other engines.** Soufflé Datalog, Lean definitions with explicit proof
+   obligations, PyRel programs, and independently replayable witnesses.
+ - **Gets a second opinion.** A six-seat review panel across Claude, Codex, Qwen, Gemini,
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 4a242855..63088097 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1646,8 +1646,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### export.ossie_relational
+-- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational].
+-- verbs: ossie semantic model, ossie mapping, dataset, field, relationship, concept mapping, object mapping, referent mapping, link mapping, quoted identifier, datatype map, custom extension, identification differs, subtype absorbed, unmapped links, validate against pinned schemas, offline schema registry
++- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational; is_regular_identifier].
++- verbs: ossie semantic model, ossie mapping, dataset, field, relationship, concept mapping, object mapping, referent mapping, link mapping, quoted identifier, regular identifier, normalized identifier, datatype map, custom extension, identification differs, subtype absorbed, unmapped links, validate against pinned schemas, offline schema registry
+ - in: a RelationalSchema, its dispositions and the OntologyView of the same export run
+ - out: semantic model and mapping documents (dicts)
+ - status: canonical
+@@ -1655,7 +1655,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - uses: infra.artifacts, infra.input_policy, model.relational_mapping
+ - used_by: export.ossie, export.physical_binding
+ - tests: tests/test_ossie_relational.py, tests/test_physical_binding.py
+-- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection. The same builders serve a physical binding: field types and source_kind come from the binding, and the extension gains its members.
++- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection. The same builders serve a physical binding: field types and source_kind come from the binding, and the extension gains its members. An identifier is quoted in Ossie's normalized form: uppercased when regular, else as written (OB5).
+ 
+ 
+ ### export.physical_binding
+@@ -2736,7 +2736,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### tools.ossie_oracle
+ - does: Run pinned Ossie tools in isolated subprocesses and compare converter declarations with the exported ontology.
+-- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology, validate with a chosen pinned schema, semantic model and mapping validation
++- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology, validate with a chosen pinned schema, semantic model and mapping validation, declared name normalization of the pinned validator
+ - status: canonical
+ - modules: tools/ossie_oracle.py, tools/ossie_consumer.py
+ - uses: (none)
+diff --git a/dev/components/modules/export.md b/dev/components/modules/export.md
+index 40d9bd92..a7c83ed9 100644
+--- a/dev/components/modules/export.md
++++ b/dev/components/modules/export.md
+@@ -267,9 +267,10 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
+ | --- | --- | --- | --- |
+ | `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
+ | `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
+-| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
+-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 239 | Map the ontology's concepts and relationships onto the semantic model. |
+-| `validate_relational(semantic_model, mapping) -> None` | function | 328 | Check both documents against the pinned schemas; a failure is a renderer defect. |
++| `is_regular_identifier(name) -> bool` | function | 94 | Whether Ossie reads NAME as a regular identifier, one that can be written unquoted. |
++| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 123 | One dataset per table, one field per column, one relationship per foreign key. |
++| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 264 | Map the ontology's concepts and relationships onto the semantic model. |
++| `validate_relational(semantic_model, mapping) -> None` | function | 353 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+ 
+ ## gnd.export.physical_binding — `src/gnd/export/physical_binding.py`
+ Components: export.physical_binding
+diff --git a/dev/components/modules/tools.md b/dev/components/modules/tools.md
+index 7015d4f2..0da9ad04 100644
+--- a/dev/components/modules/tools.md
++++ b/dev/components/modules/tools.md
+@@ -382,11 +382,12 @@ Run the pinned standalone Ossie validator and parser without runtime dependencie
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `OssieOracle` | class | 26 | (no docstring) |
+-| `OssieOracle.check_pins(self) -> None` | method | 29 | (no docstring) |
+-| `OssieOracle.validate(self, path, schema) -> subprocess.CompletedProcess[str]` | method | 48 | Run the pinned validator; ``schema`` is a path inside the pinned ossie checkout. |
+-| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 58 | (no docstring) |
+-| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 140 | Emit PyRel source in the isolated process, without executing that source. |
++| `OssieOracle` | class | 31 | (no docstring) |
++| `OssieOracle.check_pins(self) -> None` | method | 34 | (no docstring) |
++| `OssieOracle.validate(self, path, schema) -> subprocess.CompletedProcess[str]` | method | 53 | Run the pinned validator; ``schema`` is a path inside the pinned ossie checkout. |
++| `OssieOracle.declared_names(self, names) -> list[list[str]]` | method | 63 | For each declared name: the pinned validator's normalized form, and the name |
++| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 73 | (no docstring) |
++| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 155 | Emit PyRel source in the isolated process, without executing that source. |
+ 
+ ## tools.plan_app_bot — `tools/plan_app_bot.py`
+ Components: unassigned
+@@ -605,4 +606,4 @@ Execute explicitly marked, trusted repository tutorial blocks as written.
+ | `require_runtime(lane, python, env) -> dict` | function | 83 | (no docstring) |
+ | `run_pages(pages, cwd, python, lane, *, receipts, group) -> int` | function | 122 | (no docstring) |
+ | `groups(root) -> dict[str, list[Path]]` | function | 200 | (no docstring) |
+-| `main()` | function | 234 | (no docstring) |
++| `main()` | function | 236 | (no docstring) |
+diff --git a/docs/agents/evolve.md b/docs/agents/evolve.md
+index e06ea4be..a7a3a914 100644
+--- a/docs/agents/evolve.md
++++ b/docs/agents/evolve.md
+@@ -71,5 +71,5 @@ lowers a cap, both through a previewed proposal, and rerun the unchanged query.
+ ## Starting from a reviewed vocabulary
+ 
+ An unattended growth run can include an owner-reviewed model instead of restating it: see
+-[Starting from a reviewed vocabulary](../../src/gnd/skills/gnd-model-from-text/references/unattended-growth.md#starting-from-a-reviewed-vocabulary) and the packaged example
++[Starting from a reviewed vocabulary](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md#starting-from-a-reviewed-vocabulary) and the packaged example
+ `src/gnd/examples/seeded_growth/`.
+diff --git a/docs/agents/model-from-text.md b/docs/agents/model-from-text.md
+index 81f383f4..cafcf019 100644
+--- a/docs/agents/model-from-text.md
++++ b/docs/agents/model-from-text.md
+@@ -178,5 +178,5 @@ and [Expense chapter 4](../expense/04-native.md#3-the-rules-three-ways).
+ ## Starting from a reviewed vocabulary
+ 
+ An unattended growth run can include an owner-reviewed model instead of restating it: see
+-[Starting from a reviewed vocabulary](../../src/gnd/skills/gnd-model-from-text/references/unattended-growth.md#starting-from-a-reviewed-vocabulary) and the packaged example
++[Starting from a reviewed vocabulary](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md#starting-from-a-reviewed-vocabulary) and the packaged example
+ `src/gnd/examples/seeded_growth/`.
+diff --git a/docs/explanation/ossie.md b/docs/explanation/ossie.md
+index ae2789c6..d82e041f 100644
+--- a/docs/explanation/ossie.md
++++ b/docs/explanation/ossie.md
+@@ -14,13 +14,20 @@ validation tool come from Apache Ossie
+ export check comes from Apache Ossie Converters
+ `83ddc294c8840f5f497a2bdbec2348a128fc2254`.
+ 
+-The supported scope is the ontology layer. It covers concepts, their
+-relationships and a documented subset of constraint formulas. Ossie's
+-semantic models, mappings and query interfaces are outside this scope.
++An export covers three Ossie layers. The **ontology** holds concepts, their
++relationships and a documented subset of constraint formulas. The **semantic
++model** describes tables that hold the model's facts. The **mapping** says
++which table and column holds each concept and relationship. Import reads
++the ontology only. Ossie's metrics, dimensions and query interfaces are
++outside this scope.
+ 
+ !!! info "Files on GitHub"
+ 
+-    [Normative mapping and file format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange)
++    [Normative mapping and file format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange) ·
++    [Relational mapping rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#relational-mapping-rmap)
++
++This page explains what the export does and why. The rules themselves have
++one home, the two sections linked above.
+ 
+ ## Share an ontology and keep the original details
+ 
+@@ -44,6 +51,98 @@ integer value type and the sidecar preserves its original GND meaning.
+ The export report also records omissions, such as example populations.
+ Use `--strict` when any refusal should stop the export.
+ 
++## The tables an export describes
++
++A GND model states facts: a refund is requested by a customer, a refund is
++for an amount. A database stores facts in tables. The export works out a set
++of tables for the model and writes them as the semantic model.
++
++The method is the standard one for this kind of model:
++
++- A business object that has facts of its own gets a table. Its key is the
++  way the business identifies it, such as a refund number.
++- A fact that can hold only once per object becomes a column of that
++  object's table. If each refund has one requesting customer, the customer
++  is a column of the refund table.
++- A fact that can hold many times gets a table of its own, linked back by a
++  foreign key.
++- A uniqueness rule that fits inside one table becomes a key of that table.
++
++The result depends only on the model, so two exports of the same model give
++the same bytes.
++
++These tables are GND's reading of the model, not tables anyone has built.
++Each one carries the marker `"source_kind":"logical"`, so that a reader does
++not take its name for a real table in a warehouse. The semantic model and
++the mapping are written beside the ontology, as `OUT.semantic_model.<fmt>`
++and `OUT.mapping.<fmt>`. Add `--ontology-only` to write the ontology, sidecar
++and loss report without them.
++
++GND checks the semantic model and the mapping against the pinned Ossie
++schemas before it writes them.
++
++## What is listed instead of mapped
++
++Tables carry facts, keys and links. They do not carry every rule, and a few
++shapes do not fit Ossie's mapping format. Nothing is dropped silently. The
++mapping file holds a list, under its `GND` extension, of every fact type and
++every constraint in the model. Each entry says where it is carried, or gives
++a reason it is not. The reasons you are most likely to meet:
++
++| Reason | What it means |
++|---|---|
++| `not-relational` | A rule over values or across facts, such as a spending limit. A table definition cannot state it. It stays in the sidecar. |
++| `uniqueness-not-confirmed` | A uniqueness rule that is not yet confirmed in the model, so it is not written as a key. |
++| `spans-tables` | A rule whose facts ended up in more than one table. |
++| `derived-computed` | A fact that is worked out from others and not stored. |
++| `identification-differs` | The ontology and the tables identify an object in different ways, so the link between them is not written. |
++| `arity-over-limit` | A fact type with more than 32 roles. It keeps its table, and the mapping does not link it. |
++
++Three limits follow from the same principle of listing and not guessing:
++
++- A model that yields no table at all writes the ontology's three files and
++  prints a note, because an Ossie semantic model needs at least one table.
++- An object identified through a chain of more than 8 other objects is
++  treated as one the ontology does not identify.
++- A fact type with more than 32 roles is listed, as the table shows.
++
++## Describe the tables you delivered
++
++The tables above are a proposal. If you have already built your schema, with
++your own table and column names, give the export a **binding file** with
++`--physical-binding FILE`. The binding lists your tables and says which
++columns hold which roles of the model. The semantic model then describes
++your tables, marked `"source_kind":"physical"`, and the mapping points at
++your columns.
++
++A binding does not need to cover the whole model. Fact types it does not
++mention are listed with the reason `unbound`. A binding that contradicts the
++model, for example by naming a role the fact type does not have, is refused
++with a rule id that starts with `binding:`, and nothing is written.
++
++One limit matters when you plan a binding: a role has to be bound to
++columns that hold the model's own identifier for the object. A fact that a
++table holds only through a generated surrogate key cannot be bound. It is
++left out and listed as `unbound`, while the table and its foreign key are
++still described.
++
++Without the option, an export is exactly what it was.
++
++- [Describe your delivered tables](../how-to/describe-delivered-tables-for-ossie.md)
++
++## Large models
++
++Each written file may be at most 10 MiB by default. A large model, such as
++one composed from many shared vocabularies, can exceed that. The export then
++stops with `ossie:output-size` and writes nothing. Raise the bound for that
++run with `--max-output-bytes N`, up to 256 MiB.
++
++Import has the matching option. `gnd import ossie` reads documents up to
++10 MiB unless `--max-input-bytes N` sets another bound.
++
++Neither option changes the limit on the model file itself, which stays at
++10 MiB.
++
+ ## Where PyRel fits
+ 
+ PyRel is optional. You can export and import using GND alone. The offline
+diff --git a/docs/how-to/describe-delivered-tables-for-ossie.md b/docs/how-to/describe-delivered-tables-for-ossie.md
+new file mode 100644
+index 00000000..d7d93bd0
+--- /dev/null
++++ b/docs/how-to/describe-delivered-tables-for-ossie.md
+@@ -0,0 +1,188 @@
++# Describe your delivered tables in an Ossie export
++
++Your warehouse already has a refunds table. Its name and columns are not the
++ones GND would choose. You want the Ossie files to describe the table your
++partner will actually query, and to say which of its columns holds each fact
++of the model.
++
++A **binding file** does that. It lists your tables and says which columns
++hold which roles. With it, the export describes your tables. Without it,
++nothing about the export changes.
++
++!!! info "Files on GitHub"
++
++    [Example binding](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/physical-binding.json) ·
++    [Binding schema](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/schema/physical-binding.schema.json) ·
++    [Binding rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#physical-binding)
++
++With the `/gnd` skill, give it this prompt:
++
++> Export the refunds example as an Ossie ontology, described by the tables
++> in its example binding. Show me the refunds table it writes and list
++> anything in the model the binding leaves out.
++
++## Read the binding
++
++The refunds example ships inside GND with a binding for a small warehouse.
++The first command copies the example into a `refunds` folder. The second
++prints the binding.
++
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++python -c "import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/refunds', 'refunds', dirs_exist_ok=True)"
++cat refunds/physical-binding.json
++```
++
++```text
++{
++  "schema": "gnd-physical-binding/1",
++  "tables": {
++    "crm.customers": {
++      "columns": {
++        "cust_code": {
++          "sql_type": "VARCHAR(12)",
++          "targets": [{"kind": "identifier", "object_type": "customer"}]
++        }
++      },
++      "primary_key": ["cust_code"]
++    },
++    "fin.refunds": {
++      "columns": {
++        "refund_id": {
++          "sql_type": "BIGINT",
++          "targets": [{"kind": "identifier", "object_type": "refund"}]
++        },
++        "cust_code": {
++          "sql_type": "VARCHAR(12)",
++          "references": {"table": "crm.customers", "columns": ["cust_code"]}
++        },
++        "amount_cents": {"sql_type": "INTEGER"},
++        "pay_channel": {"sql_type": "VARCHAR(20)"},
++        "loaded_at": {"sql_type": "TIMESTAMP"}
++      },
++      "primary_key": ["refund_id"]
++    }
++  },
++  "roles": {
++    "refund_by": {
++      "refund": ["fin.refunds.refund_id"],
++      "customer": ["fin.refunds.cust_code"]
++    },
++    "refund_amount": {
++      "refund": ["fin.refunds.refund_id"],
++      "amount": ["fin.refunds.amount_cents"]
++    }
++  }
++}
++```
++
++It has two parts:
++
++- **`tables`** is your schema: each table, its columns in order, their SQL
++  types, the primary key, and each foreign key as a `references` entry. A
++  column that holds the key of a business object says so with an
++  `identifier` target. Here `refund_id` identifies a refund.
++- **`roles`** connects the model to those columns. For each fact type, each
++  role names the column that holds it. `refund_by` says the refund is in
++  `refund_id` and the requesting customer is in `cust_code`.
++
++A column the model knows nothing about, such as `loaded_at`, needs no
++entry in `roles`. It is still described as part of the table.
++
++## Export with the binding
++
++<!-- gnd-run expect=0 -->
++```sh
++gnd export ossie refunds/model.orm.yaml --out warehouse.ossie.yaml --physical-binding refunds/physical-binding.json
++```
++
++The semantic model now describes your tables, under your names, and the
++foreign key becomes one link between them:
++
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++tail -9 warehouse.ossie.yaml.semantic_model.yaml
++```
++
++```text
++    data: '{"source_kind":"physical"}'
++relationships:
++- name: fin.refunds__crm.customers
++  from: fin.refunds
++  to: crm.customers
++  from_columns:
++  - cust_code
++  to_columns:
++  - cust_code
++```
++
++Each table is marked `"source_kind":"physical"`: it is a table you
++delivered, not one GND proposed. The ontology, the sidecar and the loss
++report are the same files, byte for byte, as an export without the binding.
++
++## See what the binding leaves out
++
++The binding does not have to cover the whole model. The mapping file lists
++whatever it leaves out, with a reason:
++
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++grep -o '"id":"[a-z_/0-9]*","kind":"[a-z_]*","reason":"[a-z-]*"' warehouse.ossie.yaml.mapping.yaml
++```
++
++```text
++"id":"constraints/0","kind":"constraint","reason":"not-relational"
++"id":"refund_channel","kind":"fact_type","reason":"unbound"
++```
++
++- `refund_channel` is `unbound`: the binding names a `pay_channel` column
++  but never says which fact it holds. To fix it, add this entry under
++  `roles` and export again under a new name:
++
++    ```json
++    "refund_channel": {
++      "refund": ["fin.refunds.refund_id"],
++      "channel": ["fin.refunds.pay_channel"]
++    }
++    ```
++
++- The policy about refund amounts is `not-relational`, as it is without a
++  binding. No table definition can carry it.
++
++The mapping also records the SHA-256 of the binding file, so a reader can
++tell which binding an export was made from.
++
++## When a binding is refused
++
++GND checks the binding against the model before it writes anything. A
++binding that names something the model does not have is refused. This
++command makes a copy with a misspelled role name and tries it:
++
++<!-- gnd-run expect=3 output=stderr -->
++```sh
++sed 's/"customer":/"custmer":/' refunds/physical-binding.json > broken.json
++gnd export ossie refunds/model.orm.yaml --out broken.ossie.yaml --physical-binding broken.json
++```
++
++```text
++invalid Ossie export input: binding:unknown-role: refund_by has no role 'custmer'
++```
++
++The run exits with code 3 and writes no file. The message starts with a rule
++id, here `binding:unknown-role`. Fix the binding and run again. Do not
++change the model to fit a binding. The
++[binding rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#physical-binding)
++list every rule id and the order GND checks them in.
++
++## Limits
++
++- **Surrogate keys.** A role has to be bound to columns that hold the
++  model's own identifier for the object, such as the refund number. A fact
++  that a table holds only through a generated id cannot be bound. Leave it
++  out of `roles` and it is listed as `unbound`. The table and its foreign
++  key are still described.
++- **Size.** A binding file can be at most 10 MiB.
++- **Not with `--ontology-only`.** That option writes no tables, so the two
++  together are a usage error.
++
++[Read the Ossie interchange scope](../explanation/ossie.md).
+diff --git a/docs/how-to/share-an-ossie-ontology.md b/docs/how-to/share-an-ossie-ontology.md
+index bfa14833..48ddefbb 100644
+--- a/docs/how-to/share-an-ossie-ontology.md
++++ b/docs/how-to/share-an-ossie-ontology.md
+@@ -2,61 +2,186 @@
+ 
+ Your team records who requested each refund, how much it was for, and how
+ it was paid. A partner wants the same vocabulary for their reporting tool.
+-Share the ontology so both teams use the same relationships. Keep the
+-sidecar when a GND user needs to recover the original rules.
++Share the ontology so both teams use the same relationships, and the tables
++that go with it so the partner can see where each fact would be stored. Keep
++the sidecar when a GND user needs to recover the original rules.
+ 
+ !!! info "Files on GitHub"
+ 
+     [Refunds example model](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/model.orm.yaml)
+ 
+-From the GND repository, give the `/gnd` skill this prompt:
++With the `/gnd` skill, give it this prompt:
+ 
+-> Export the refunds example as an Ossie ontology. Show how the output
+-> represents who requested a refund. Then import it and compare the
+-> restored model with the original.
++> Export the refunds example as an Ossie ontology with its tables. Show how
++> the output represents who requested a refund, and which table holds it.
++> Then import it and compare the restored model with the original.
+ 
+-With GND installed, run these commands from the repository root.
+-Use new output names for another run.
++## Export the model
+ 
++The refunds example ships inside GND. The first command copies it into a
++`refunds` folder in your working directory. The second writes the export.
++Use a new output name for another run.
++
++<!-- gnd-run expect=0 -->
+ ```sh
+-gnd export ossie src/gnd/examples/refunds/model.orm.yaml --out refunds.ossie.yaml
+-gnd import ossie refunds.ossie.yaml --out restored.orm.json
+-gnd diff src/gnd/examples/refunds/model.orm.yaml restored.orm.json
++python -c "import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/refunds', 'refunds', dirs_exist_ok=True)"
++gnd export ossie refunds/model.orm.yaml --out refunds.ossie.yaml
++```
++
++The export writes five files:
++
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++ls refunds.ossie.yaml*
++```
++
++```text
++refunds.ossie.yaml
++refunds.ossie.yaml.gnd.json
++refunds.ossie.yaml.loss.json
++refunds.ossie.yaml.mapping.yaml
++refunds.ossie.yaml.semantic_model.yaml
+ ```
+ 
++| File | What it gives you |
++|---|---|
++| `refunds.ossie.yaml` | The ontology you can share with an Ossie reader. |
++| `refunds.ossie.yaml.semantic_model.yaml` | The tables, columns, keys and links between tables that would hold the model's facts. |
++| `refunds.ossie.yaml.mapping.yaml` | Which table and column holds each concept and relationship of the ontology. |
++| `refunds.ossie.yaml.gnd.json` | The GND details needed to restore the original model, including the policy about refund amounts. |
++| `refunds.ossie.yaml.loss.json` | A list of source fields and how the export handled each one. |
++
++## Read the relationship
++
+ The output relationship `refund_by` is many-to-one. One customer can
+ request several refunds. Each refund has at most one requesting customer.
+ 
+-Here is the exported relationship:
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++sed -n '10,16p' refunds.ossie.yaml
++```
+ 
+-```yaml
+-name: refund_by
+-verbalizes:
+-- '{Refund} is requested by {Customer:customer}'
+-roles:
+-- concept: Customer
+-  name: customer
+-multiplicity: ManyToOne
++```text
++  - name: refund_by
++    verbalizes:
++    - '{Refund} is requested by {Customer:customer}'
++    roles:
++    - concept: Customer
++      name: customer
++    multiplicity: ManyToOne
+ ```
+ 
+ ![Each refund has at most one requesting customer.](../assets/applications/refund-requester.svg)
+ 
++## See the tables
++
++Because each refund has one requesting customer, the customer sits in a
++column of the refund's own table. The table's key is the refund number.
++
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++sed -n '6,18p' refunds.ossie.yaml.semantic_model.yaml
++```
++
++```text
++- name: refund
++  source: refund
++  primary_key:
++  - refund_no
++  fields:
++  - name: refund_no
++    expression:
++      sql: '"REFUND_NO"'
++    datatype: Integer
++  - name: customer_customer_code
++    expression:
++      sql: '"CUSTOMER_CUSTOMER_CODE"'
++    datatype: String
++```
++
++The model does not say that a refund has only one amount or one payment
++channel. So those two facts each get a table of their own, `refund_amount`
++and `refund_channel`, linked back to `refund`. If your business has one
++amount per refund, say so in the model and the amount moves into the refund
++table.
++
++These tables are GND's reading of the model. They are not tables you have
++built, and each one is marked `"source_kind":"logical"` to say so. To
++describe the tables you did build, see
++[Describe your delivered tables](describe-delivered-tables-for-ossie.md).
++
++## Check what the tables do not carry
++
++Tables can hold facts and keys. They cannot hold every rule. The mapping
++file lists each fact type and rule of the model with where it is carried, or
++the reason it is not. This command prints the ones that are not:
++
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++grep -o '"id":"[a-z_/0-9]*","kind":"[a-z_]*","reason":"[a-z-]*"' refunds.ossie.yaml.mapping.yaml
++```
++
++```text
++"id":"constraints/0","kind":"constraint","reason":"not-relational"
++```
++
++That one entry is the policy about refund amounts. It is a rule over values,
++which a table definition cannot express, so it travels in the sidecar. The
++[Ossie explanation](../explanation/ossie.md#what-is-listed-instead-of-mapped)
++describes the reasons you can meet.
++
++## Restore the model
++
++<!-- gnd-run expect=0 -->
++```sh
++gnd import ossie refunds.ossie.yaml --out restored.orm.json
++gnd diff refunds/model.orm.yaml restored.orm.json
++```
++
+ | File | What it gives you |
+ |---|---|
+-| `refunds.ossie.yaml` | The ontology you can share with an Ossie reader. |
+-| `refunds.ossie.yaml.gnd.json` | The GND details needed to restore the original model, including the policy about refund amounts. |
+-| `refunds.ossie.yaml.loss.json` | A list of source fields and how the export handled each one. |
+ | `restored.orm.json` | The restored GND model. |
+ | `restored.orm.json.loss.json` | The import report, including whether the restored model matched the source identity. |
+ 
+ The diff reports the same model identity for both files and compares
+ each of the two rules in both directions. For a GND restore, keep the
+-companion files with an exact copy of the original ontology. Reformatting
+-the ontology changes the bytes the sidecar verifies. The companions
+-carry source details beyond the shared ontology.
++sidecar and loss report with an exact copy of the original ontology.
++Reformatting the ontology changes the bytes the sidecar verifies. Import
++reads the ontology and its two companions. It does not read the semantic
++model or the mapping.
++
++## Share the ontology alone
++
++If your partner wants only the vocabulary, add `--ontology-only`. The run
++writes the ontology, the sidecar and the loss report, as GND did before it
++wrote tables.
++
++<!-- gnd-run expect=0 output=stdout -->
++```sh
++gnd export ossie refunds/model.orm.yaml --out vocabulary.yaml --ontology-only >/dev/null
++ls vocabulary.yaml*
++```
++
++```text
++vocabulary.yaml
++vocabulary.yaml.gnd.json
++vocabulary.yaml.loss.json
++```
++
++An export never overwrites a file. Running the first export again stops with
++exit code 11 and writes nothing, because its files already exist:
++
++<!-- gnd-run expect=11 -->
++```sh
++gnd export ossie refunds/model.orm.yaml --out refunds.ossie.yaml
++```
++
++## Before you share another model
+ 
+-For other models, check the loss report before sharing. For example, a
+-model's example data can be omitted and listed as refused. Add `--strict`
+-to stop export if any source field would be refused.
++Check the loss report and the mapping's list before sharing. For example, a
++model's example data is omitted and listed as refused. Add `--strict` to stop
++the export if any source field would be refused. A very large model can
++exceed the size limit of a file; the
++[explanation](../explanation/ossie.md#large-models) says how to raise it.
+ 
+ [Read the Ossie interchange scope](../explanation/ossie.md).
+diff --git a/docs/index.md b/docs/index.md
+index d429f666..7fee27ba 100644
+--- a/docs/index.md
++++ b/docs/index.md
+@@ -26,10 +26,13 @@ hide:
+ 
+ GND imports and exports Apache Ossie ontology files. Start a GND model
+ from an ontology your team already uses, or share your GND model's business
+-concepts and relationships with another team or tool.
++concepts and relationships with another team or tool. An export also
++describes the tables that hold the model's facts, or the tables you already
++built.
+ 
+ [See what GND carries across](explanation/ossie.md) ·
+-[Try it with the refunds model](how-to/share-an-ossie-ontology.md)
++[Try it with the refunds model](how-to/share-an-ossie-ontology.md) ·
++[Describe your delivered tables](how-to/describe-delivered-tables-for-ossie.md)
+ 
+ ## How it works
+ 
+diff --git a/docs/reference/cli.md b/docs/reference/cli.md
+index c0fd5621..aae0cb1c 100644
+--- a/docs/reference/cli.md
++++ b/docs/reference/cli.md
+@@ -110,6 +110,8 @@ prerequisites and credentials are separate from deterministic tutorial runs.
+ | `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted (raw under `internal`) |
+ | `gnd why-not MODEL POPULATION --fact-type ID --row REQUEST` | Where a derivation stops for one claimed row, with values spelled differently counted; values redacted |
+ | `gnd export souffle ...` / `gnd export lean ...` / `gnd export pyrel ...` | Selected bounded export profile |
++| `gnd export ossie MODEL --out OUT` | An Ossie ontology, its sidecar and loss report, a semantic model and a mapping. Options: `--format`, `--loss-report`, `--strict`, `--ontology-only`, `--physical-binding FILE`, `--max-output-bytes N`. [Rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange) |
++| `gnd import ossie ONTOLOGY --out MODEL` | A GND model restored from an Ossie ontology, with an import report. Options: `--loss-report`, `--max-input-bytes N`. [Rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange) |
+ | `gnd install --project` | Copy packaged skills to project discovery roots |
+ | `gnd doctor --project` | Diagnose installed skills and shadowing across scopes |
+ | `gnd install --sync` | Refresh standard roots with existing installation receipts |
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 771f4d1d..4b994270 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -5,6 +5,28 @@ Version 0.4.0, published on 2026-11-17, is the latest release; 0.3.0, 0.2.0 and
+ Changes on `main` after a release are listed in an `Unreleased:` section until
+ the next one.
+ 
++## Unreleased: Ossie relational files
++
++- **Tables beside the ontology.** `gnd export ossie` now writes five files.
++  The two new ones are `OUT.semantic_model.<fmt>`, the tables that hold the
++  model's facts, and `OUT.mapping.<fmt>`, which says where each concept and
++  relationship is stored. The ontology, sidecar and loss report keep their
++  bytes. A file already at either new path stops the run with exit
++  11 (`EXIT_COLLISION`) and nothing is written. `--ontology-only` keeps the
++  three-file run. A model that yields no table writes three files and a note.
++- **Your own tables.** `--physical-binding FILE` describes delivered tables
++  in place of the generated ones. The file follows the packaged schema
++  `gnd-physical-binding/1`. A binding the model contradicts is refused with
++  a `binding:` rule id and exit 3. Together with `--ontology-only` it is a
++  usage error, exit 64 (`EXIT_USAGE`). A fact that a table holds only
++  through a surrogate key cannot be bound; it is listed as `unbound`.
++- **Larger files.** `--max-output-bytes N` on `gnd export ossie` and
++  `--max-input-bytes N` on `gnd import ossie` raise the 10 MiB bound for one
++  run, up to 256 MiB. A value outside that range is a usage error, exit
++  64 (`EXIT_USAGE`). The model file itself stays capped at 10 MiB.
++- **Where to read more.** [Ossie interchange in GND](explanation/ossie.md)
++  and [Describe your delivered tables](how-to/describe-delivered-tables-for-ossie.md).
++
+ ## Unreleased: frontmatter fences
+ 
+ - **An indented `---` is content.** The frontmatter reader behind experiment
+diff --git a/src/gnd/examples/refunds/physical-binding.json b/src/gnd/examples/refunds/physical-binding.json
+new file mode 100644
+index 00000000..1e26b29d
+--- /dev/null
++++ b/src/gnd/examples/refunds/physical-binding.json
+@@ -0,0 +1,40 @@
++{
++  "schema": "gnd-physical-binding/1",
++  "tables": {
++    "crm.customers": {
++      "columns": {
++        "cust_code": {
++          "sql_type": "VARCHAR(12)",
++          "targets": [{"kind": "identifier", "object_type": "customer"}]
++        }
++      },
++      "primary_key": ["cust_code"]
++    },
++    "fin.refunds": {
++      "columns": {
++        "refund_id": {
++          "sql_type": "BIGINT",
++          "targets": [{"kind": "identifier", "object_type": "refund"}]
++        },
++        "cust_code": {
++          "sql_type": "VARCHAR(12)",
++          "references": {"table": "crm.customers", "columns": ["cust_code"]}
++        },
++        "amount_cents": {"sql_type": "INTEGER"},
++        "pay_channel": {"sql_type": "VARCHAR(20)"},
++        "loaded_at": {"sql_type": "TIMESTAMP"}
++      },
++      "primary_key": ["refund_id"]
++    }
++  },
++  "roles": {
++    "refund_by": {
++      "refund": ["fin.refunds.refund_id"],
++      "customer": ["fin.refunds.cust_code"]
++    },
++    "refund_amount": {
++      "refund": ["fin.refunds.refund_id"],
++      "amount": ["fin.refunds.amount_cents"]
++    }
++  }
++}
+diff --git a/src/gnd/export/ossie_relational.py b/src/gnd/export/ossie_relational.py
+index 884c648d..ea3465a4 100644
+--- a/src/gnd/export/ossie_relational.py
++++ b/src/gnd/export/ossie_relational.py
+@@ -85,10 +85,35 @@ def extension_data(payload: Any) -> str:
+     return canonical_json_bytes(payload).decode("utf-8").removesuffix("\n")
+ 
+ 
++#: ASCII punctuation that cannot stand in an unquoted identifier: all of it but ``$`` and ``_``.
++_NOT_IN_REGULAR = frozenset("!\"#%&'()*+,-./:;<=>?@[\\]^`{|}~")
++#: The two words Ossie's reader never takes as an unquoted name, in any case.
++_NEVER_REGULAR = frozenset({"NOT", "SELECT"})
++
++
++def is_regular_identifier(name: str) -> bool:
++    """Whether Ossie reads NAME as a regular identifier, one that can be written unquoted.
++
++    Ossie compares a regular identifier by its uppercased form and keeps any other
++    name exactly as written (core-spec expression_language.md, "normalized
++    identifier"). The class is the pinned validator's, measured over every character
++    (OB5): no white space, no ASCII punctuation but ``$`` and ``_``, no leading ASCII
++    digit, and not the word NOT or SELECT.
++    """
++    return (
++        bool(name)
++        and name[0] not in "0123456789"
++        and not any(character.isspace() or character in _NOT_IN_REGULAR for character in name)
++        and name.upper() not in _NEVER_REGULAR
++    )
++
++
+ def _quoted(identifier: str) -> str:
+-    """One SQL identifier, quoted and uppercased, so that it matches the regular
+-    identifier of the same spelling and never reads as a keyword (OB3 E5)."""
+-    return '"' + identifier.upper().replace('"', '""') + '"'
++    """One SQL identifier, quoted, in Ossie's normalized form: a regular identifier
++    uppercased, so that it never reads as a keyword (OB3 E5), and any other name as
++    written, which is the only form that names it (OB5)."""
++    name = identifier.upper() if is_regular_identifier(identifier) else identifier
++    return '"' + name.replace('"', '""') + '"'
+ 
+ 
+ def _extension(payload: Any) -> list[dict[str, str]]:
+diff --git a/src/gnd/skills/gnd-export/SKILL.md b/src/gnd/skills/gnd-export/SKILL.md
+index ec0b26e0..3f71ce3c 100644
+--- a/src/gnd/skills/gnd-export/SKILL.md
++++ b/src/gnd/skills/gnd-export/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: gnd-export
+-description: Exports and imports pinned Apache Ossie ontologies with loss reports. Exports finite Lean models with unproved obligations, finite grounded witnesses, or explicitly selected bounded standalone Souffle derivation programs. Native compilation/execution and positive proof replay are separate optional claims; never source truth, completeness or assurance.
++description: Exports and imports pinned Apache Ossie ontologies with loss reports, and exports their semantic model and mapping, optionally over delivered tables. Exports finite Lean models with unproved obligations, finite grounded witnesses, or explicitly selected bounded standalone Souffle derivation programs. Native compilation/execution and positive proof replay are separate optional claims; never source truth, completeness or assurance.
+ ---
+ 
+ # Derivation program and finite witness export
+@@ -61,15 +61,41 @@ refusals, exact propositions and ceilings are in the export boundary above.
+ 
+ ## Ossie interchange
+ 
+-Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to create the ontology,
+-`ONTOLOGY.yaml.gnd.json` sidecar and `ONTOLOGY.yaml.loss.json` loss report.
+-Inspect refused pointers before sharing. Use `--strict` when a refusal
+-should prevent writing the bundle. Keep the three files together for a
+-GND round trip with `gnd import ossie ONTOLOGY.yaml --out MODEL.json`.
+-Preserve the ontology bytes so import can verify the sidecar binding.
+-The import report is written to `MODEL.json.loss.json` by default.
++Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to create five files: the
++ontology, the `ONTOLOGY.yaml.gnd.json` sidecar, the
++`ONTOLOGY.yaml.loss.json` loss report (move it with `--loss-report`), and the
++relational pair `ONTOLOGY.yaml.semantic_model.yaml` and
++`ONTOLOGY.yaml.mapping.yaml`. `--format json` writes JSON instead. Add
++`--ontology-only` when the user wants the ontology without tables; the run
++then writes the first three files.
++
++Before sharing, inspect two lists. The loss report names refused pointers.
++The mapping's `GND` extension lists every fact type and constraint under
++`dispositions`, each carried or given a reason, and may hold
++`unmapped_links`. Report the entries that carry a reason; never describe
++them as mapped. Use `--strict` when a refusal should prevent writing the
++bundle.
++
++When the user has delivered tables, pass their binding file with
++`--physical-binding FILE`. The semantic model then describes those tables.
++A refused binding exits 3 with a `binding:` rule id and writes nothing.
++Repair the binding. Never edit the model to make a binding pass, and do not
++combine the option with `--ontology-only`.
++
++An export stopped by `ossie:output-size` can be rerun with
++`--max-output-bytes N`. Use `--max-input-bytes N` on import for a document
++above the default bound. Raise a bound only for a size refusal that names
++it, never to get past a different refusal. Outputs are create-once: an
++existing file at any output path exits 11.
++
++Keep the ontology, sidecar and loss report together for a GND round trip
++with `gnd import ossie ONTOLOGY.yaml --out MODEL.json`. Preserve the
++ontology bytes so import can verify the sidecar binding. Import reads the
++ontology only, not the relational pair. The import report is written to
++`MODEL.json.loss.json` by default, or to the path given by `--loss-report`.
+ 
+ Use the [normative Ossie mapping and file format](../gnd-orm-core/references/representation-format.md#ossie-interchange)
+-for supported declarations, pins, output formats and import rules.
++for supported declarations, pins, output formats, the relational files, the
++binding rules and import rules.
+ The ordinary CLI routes run offline. Select any external consumer
+ verification separately.
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index 4860c8b5..619507a6 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -2238,8 +2238,8 @@ before the ontology, which is the completion marker. Publication is
+ create-once. A synchronous failure rolls back the invocation's published
+ entries. An interruption before the ontology appears can leave uncommitted
+ companions. Exit codes are 0 on success, 3 on input or strict-policy refusal,
+-11 on output collision, 66 on missing input, 70 on an internal rendering
+-failure and 74 on an I/O refusal.
++11 on output collision, 64 on a usage error, 66 on missing input, 70 on an
++internal rendering failure and 74 on an I/O refusal.
+ 
+ ### Semantic model and mapping
+ 
+@@ -2275,11 +2275,17 @@ and exits 0.
+   themselves, and Number to Decimal. Binary and Duration map to `Opaque`,
+   with the primitive in a `GND` extension on the field as
+   `{"gnd_primitive": …}`. A column with no primitive has no `datatype`.
+-- **Identifiers in expressions** are written quoted and uppercased, with an
+-  embedded quote doubled: `"CUSTOMER"."EMAIL"` names field `email` of
+-  dataset `customer`. Ossie compares a regular identifier by its uppercased
+-  form, so the quoted form names the same field and never reads as a
+-  keyword.
++- **Identifiers in expressions** are written quoted, in Ossie's normalized
++  form, with an embedded quote doubled. A **regular** identifier, one that
++  can be written without quotes, is uppercased: `"CUSTOMER"."EMAIL"` names
++  field `email` of dataset `customer`. Ossie compares a regular identifier
++  by its uppercased form, so the quoted form names the same field and never
++  reads as a keyword. Any other name is written exactly as given, which is
++  the only form Ossie matches it by: `"uni.student"."NR"`. A name is regular
++  unless it is empty, starts with an ASCII digit, holds white space or an
++  ASCII punctuation character other than `$` and `_`, or is the word `not`
++  or `select` in any case. That is the class of the pinned Ossie validator.
++  Uppercasing follows the Unicode tables of the Python that runs the export.
+ - **No population.** No file of the relational layer holds a row, a model
+   identity or a digest, except the mapping's extension below.
+ 
+@@ -2359,9 +2365,10 @@ members mean.
+ | `primary_key`, `unique_keys` | The dataset's keys, as given |
+ | `references` | The columns of one table whose `references` name the same table and column list are **one** foreign key, and one relationship. They pair with the referenced columns in the table's column order. A table's foreign keys are ordered by their first column, and named by the relational mapping's rule. |
+ 
+-Names are written as given, and quoted and uppercased in expressions like
+-any other. Two tables, or two columns of one table, that are equal after
+-uppercasing are refused.
++Names are written as given, and quoted in expressions like any other: a
++regular identifier uppercased, any other name, such as the schema-qualified
++`fin.refunds`, as given. Two tables, or two columns of one table, that are
++equal after uppercasing are refused.
+ 
+ **SQL types.** A type is words of letters, digits and underscores separated
+ by spaces, with at most one parenthesized list of unsigned integers after a
+diff --git a/tests/fixtures/physical_binding/V2/expected.mapping.yaml b/tests/fixtures/physical_binding/V2/expected.mapping.yaml
+index 4bac1697..e60e88e2 100644
+--- a/tests/fixtures/physical_binding/V2/expected.mapping.yaml
++++ b/tests/fixtures/physical_binding/V2/expected.mapping.yaml
+@@ -11,32 +11,32 @@ semantic_model_ref:
+ concept_mappings:
+ - concept: Student
+   object_mappings:
+-  - expression: '"UNI.STUDENT"."NR"'
++  - expression: '"uni.student"."NR"'
+   link_mappings:
+   - object_mapping:
+-      expression: '"UNI.STUDENT"."NR"'
++      expression: '"uni.student"."NR"'
+     children:
+     - object_mapping:
+         concept: StudentName
+-        expression: '"UNI.STUDENT"."FULL_NAME"'
++        expression: '"uni.student"."FULL_NAME"'
+       relationship: student_has_name
+   - object_mapping:
+-      expression: '"UNI.ENROLLED"."STUDENT_NR"'
++      expression: '"uni.enrolled"."STUDENT_NR"'
+     children:
+     - object_mapping:
+         concept: Course
+-        expression: '"UNI.ENROLLED"."COURSE_CD"'
++        expression: '"uni.enrolled"."COURSE_CD"'
+       relationship: student_takes_course
+ - concept: Course
+   object_mappings:
+-  - expression: '"UNI.COURSE"."CD"'
++  - expression: '"uni.course"."CD"'
+   link_mappings:
+   - object_mapping:
+-      expression: '"UNI.COURSE"."CD"'
++      expression: '"uni.course"."CD"'
+     children:
+     - object_mapping:
+         concept: CourseTitle
+-        expression: '"UNI.COURSE"."TITLE"'
++        expression: '"uni.course"."TITLE"'
+       relationship: course_has_title
+ custom_extensions:
+ - vendor_name: GND
+diff --git a/tests/support/ossie_relational_corpus.py b/tests/support/ossie_relational_corpus.py
+index 4b94f5b4..53c8e9bc 100644
+--- a/tests/support/ossie_relational_corpus.py
++++ b/tests/support/ossie_relational_corpus.py
+@@ -96,6 +96,14 @@ def _validators(mapping_schema: Path):
+     )
+ 
+ 
++def normalized(name: str) -> str:
++    """Ossie's normalized identifier for a declared NAME, written here independently of
++    the exporter: uppercased when the name can stand unquoted, else as written."""
++    unquotable = (not name or name[0].isascii() and name[0].isdigit() or name.upper() in ("NOT", "SELECT")
++                  or any(c.isspace() or (c.isascii() and not c.isalnum() and c not in "$_") for c in name))
++    return name if unquotable else name.upper()
++
++
+ def quoted_identifiers(expression: str) -> tuple[list[str], str]:
+     """Lex SQL quoted identifiers: the names, and the text with each replaced by ``?``.
+ 
+@@ -146,7 +154,7 @@ def cross_check(ontology, semantic, mapping) -> list[str]:
+         for key in [dataset.get("primary_key", []), *dataset.get("unique_keys", [])]:
+             assert set(key) <= set(own), (dataset["name"], key)
+         for field in dataset["fields"]:
+-            assert quoted_identifiers(field["expression"]["sql"]) == ([field["name"].upper()], "?")
++            assert quoted_identifiers(field["expression"]["sql"]) == ([normalized(field["name"])], "?")
+     related = [r["name"] for r in semantic.get("relationships", [])]
+     assert len(related) == len(set(related)), "duplicate relationship name"
+     for r in semantic.get("relationships", []):
+@@ -155,7 +163,7 @@ def cross_check(ontology, semantic, mapping) -> list[str]:
+ 
+     assert mapping["ontology_ref"]["name"] == ontology["name"]
+     assert mapping["semantic_model_ref"]["name"] == semantic["name"]
+-    declared = {(d.upper(), f.upper()) for d, own in fields.items() for f in own}
++    declared = {(normalized(d), normalized(f)) for d, own in fields.items() for f in own}
+     components = {c["concept"]: c for c in ontology["ontology"]}
+ 
+     def ancestors(concept):
+@@ -272,7 +280,7 @@ def check(number: str, mapping_schema: Path) -> None:
+             (c["name"], c["datatype"]) for c in table["columns"]
+         ]
+         assert [f["expression"] for f in dataset["fields"]] == [
+-            {"sql": f'"{c["name"].upper()}"'} for c in table["columns"]
++            {"sql": '"' + normalized(c["name"]).replace('"', '""') + '"'} for c in table["columns"]
+         ]
+         assert dataset["custom_extensions"] == [{"vendor_name": "GND", "data": '{"source_kind":"logical"}'}]
+         relationships += [
+diff --git a/tests/test_documentation_tutorials.py b/tests/test_documentation_tutorials.py
+index 36185d5c..8dd27e15 100644
+--- a/tests/test_documentation_tutorials.py
++++ b/tests/test_documentation_tutorials.py
+@@ -91,7 +91,7 @@ def test_installed_origin_uses_path_components(tmp_path):
+         installed_docs.check_origin(str(root / 'src/gnd/__init__.py'), venv, root)
+ 
+ 
+-@pytest.mark.parametrize('group', ['shared-expenses', 'quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'induced', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision', 'why-not', 'disclosure', 'failed-verification'])
++@pytest.mark.parametrize('group', ['shared-expenses', 'quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'induced', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision', 'why-not', 'disclosure', 'failed-verification', 'ossie'])
+ def test_documented_learning_path(group, tmp_path):
+     pages = runner.groups(ROOT)[group]
+     assert pages
+diff --git a/tests/test_ossie_docs.py b/tests/test_ossie_docs.py
+new file mode 100644
+index 00000000..1ccde617
+--- /dev/null
++++ b/tests/test_ossie_docs.py
+@@ -0,0 +1,158 @@
++"""OB5: the Ossie pages, the export skill and the release note agree with the code.
++
++The pages describe and link; the rules live in representation-format.md,
++"Relational mapping (Rmap)" and "Ossie interchange". These tests fail when a page names a rule the normative
++section lacks, when a flag is undocumented, when the release note's exit
++numbers drift from gnd.exits, or when the packaged example binding stops
++exporting. The pages' commands and shown output run in the tutorial runner
++(tests/test_documentation_tutorials.py, group ``ossie``).
++"""
++
++from __future__ import annotations
++
++import argparse
++import json
++import re
++import typing
++from pathlib import Path
++
++import pytest
++
++from gnd import cli, exits
++from gnd.export import physical_binding
++from gnd.export.ossie import render_ossie
++from gnd.export.ossie_relational import validate_relational
++from gnd.rmap import UnmappedReason
++from tests.support import ossie_relational_corpus as relational
++from tests.support.markdown_sections import markdown_section
++
++ROOT = Path(__file__).resolve().parents[1]
++NORMATIVE = ROOT / "src/gnd/skills/gnd-orm-core/references/representation-format.md"
++SKILL = ROOT / "src/gnd/skills/gnd-export/SKILL.md"
++CLI_REFERENCE = ROOT / "docs/reference/cli.md"
++RELEASE_NOTES = ROOT / "docs/release-notes.md"
++EXAMPLE = ROOT / "src/gnd/examples/refunds"
++HOMES = ("## Relational mapping (Rmap)", "## Ossie interchange")
++PAGES = (
++    ROOT / "docs/explanation/ossie.md",
++    ROOT / "docs/how-to/share-an-ossie-ontology.md",
++    ROOT / "docs/how-to/describe-delivered-tables-for-ossie.md",
++    SKILL,
++)
++
++#: A rule or refusal id is a flat token: a namespace, a colon, lower-case words joined by hyphens.
++RULE_ID = re.compile(r"\b(?:binding|ossie):[a-z0-9]+(?:-[a-z0-9]+)*")
++#: The reasons a mapping link is listed for (gnd.export.ossie_relational), beside UnmappedReason.
++LINK_REASONS = ("identification-differs", "arity-over-limit")
++
++
++def normative() -> str:
++    """The two normative sections: the relational mapping's rules, and the Ossie files."""
++    text = NORMATIVE.read_text(encoding="utf-8")
++    return "".join(markdown_section(text, heading) for heading in HOMES)
++
++
++def cited_ids(text: str) -> set[str]:
++    return set(RULE_ID.findall(text))
++
++
++def missing_from_normative(text: str) -> set[str]:
++    return cited_ids(text) - cited_ids(normative())
++
++
++def names_flag(text: str, flag: str) -> bool:
++    """Whether TEXT names the option FLAG itself, not a longer option that contains it."""
++    return re.search(rf"(?<![\w-]){re.escape(flag)}(?![\w-])", text) is not None
++
++
++class _Captured(Exception):
++    pass
++
++
++def ossie_options(group: str, monkeypatch) -> set[str]:
++    """The long options of `gnd GROUP ossie`, read from the parser itself."""
++    captured: list[argparse.ArgumentParser] = []
++
++    def capture(parser, _args=None, _namespace=None):
++        captured.append(parser)
++        raise _Captured
++
++    with monkeypatch.context() as patch:
++        patch.setattr(cli._BandSafeParser, "parse_args", capture)
++        with pytest.raises(_Captured):
++            cli.main([])
++    parser = captured[0]
++    for name in (group, "ossie"):
++        (children,) = [a for a in parser._actions if isinstance(a, argparse._SubParsersAction)]
++        parser = children.choices[name]
++    return {flag for action in parser._actions for flag in action.option_strings
++            if flag.startswith("--") and flag != "--help"}
++
++
++# --- T4a: every cited id exists in the one home -------------------------------------------
++
++
++@pytest.mark.parametrize("page", PAGES, ids=lambda path: path.name)
++def test_every_rule_id_on_a_page_is_in_the_normative_section(page):
++    assert page.is_file(), f"{page} is not written"
++    assert not missing_from_normative(page.read_text(encoding="utf-8"))
++
++
++def test_a_planted_unknown_rule_id_is_caught():
++    assert missing_from_normative("A refusal such as `binding:no-such-rule` exits 3.") == {"binding:no-such-rule"}
++    assert missing_from_normative("`ossie:output-size` and `binding:syntax`") == set()
++
++
++def test_the_normative_section_names_every_rule_and_reason_in_the_code():
++    section = normative()
++    reasons = (*typing.get_args(UnmappedReason), *LINK_REASONS)
++    assert not [rule for rule in physical_binding.RULE_ORDER if rule not in section]
++    assert not [reason for reason in reasons if f"`{reason}`" not in section]
++
++
++# --- T4b: every flag is documented ----------------------------------------------------------
++
++
++@pytest.mark.parametrize("group", ["export", "import"])
++def test_every_ossie_flag_is_in_the_skill_and_the_cli_reference(group, monkeypatch):
++    options = ossie_options(group, monkeypatch)
++    assert "--out" in options
++    skill = markdown_section(SKILL.read_text(encoding="utf-8"), "## Ossie interchange")
++    reference = CLI_REFERENCE.read_text(encoding="utf-8")
++    for name, text in (("skill", skill), ("CLI reference", reference), ("normative section", normative())):
++        assert not sorted(flag for flag in options if not names_flag(text, flag)), name
++
++
++def test_a_flag_is_matched_as_a_whole_option():
++    assert names_flag("run `gnd export ossie M --out FILE`", "--out")
++    assert not names_flag("see `--output` and `--max-output-bytes`", "--out")
++    assert not names_flag("see `--max-output-bytes`", "--output-bytes")
++
++
++# --- T5: the release note names the exits by constant ---------------------------------------
++
++
++def test_the_release_note_states_the_exits_by_their_constants():
++    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), "## Unreleased: Ossie relational files")
++    assert section, "the release-note section is missing"
++    for name in ("EXIT_COLLISION", "EXIT_USAGE"):
++        assert f"{getattr(exits, name)} (`{name}`)" in section, name
++    assert cited_ids(section) <= cited_ids(normative())
++
++
++# --- T6: the packaged example binding is real -----------------------------------------------
++
++
++def test_the_example_binding_exports_and_validates():
++    binding = EXAMPLE / "physical-binding.json"
++    bound = render_ossie(EXAMPLE / "model.orm.yaml", output_format="yaml", physical_binding=binding)
++    plain = render_ossie(EXAMPLE / "model.orm.yaml", output_format="yaml")
++    semantic = relational.load_yaml_bytes(bound.semantic_model)
++    mapping = relational.load_yaml_bytes(bound.mapping)
++    validate_relational(semantic, mapping)
++    assert bound.document == plain.document and bound.sidecar == plain.sidecar
++    assert [dataset["name"] for dataset in semantic["datasets"]] == ["crm.customers", "fin.refunds"]
++    (extension,) = mapping["custom_extensions"]
++    rows = {row["id"]: row["reason"] for row in json.loads(extension["data"])["dispositions"]}
++    assert rows["refund_by"] is None and rows["refund_amount"] is None
++    assert rows["refund_channel"] == "unbound"
+diff --git a/tests/test_ossie_external_oracle.py b/tests/test_ossie_external_oracle.py
+index 444434f8..8aeb6602 100644
+--- a/tests/test_ossie_external_oracle.py
++++ b/tests/test_ossie_external_oracle.py
+@@ -90,6 +90,63 @@ def test_external_physical_binding_cases(oracle, tmp_path):
+             assert result.returncode == 0, case + ": " + result.stdout + result.stderr
+ 
+ 
++def test_external_identifier_class_is_the_exporters(oracle):
++    """OB5: the exporter's regular-identifier rule is the pinned validator's, over every
++    character inside and at the start of a name, and over case variants of its keywords."""
++    from gnd.export.ossie_relational import is_regular_identifier
++
++    points = [chr(point) for point in range(0x110000) if not 0xD800 <= point <= 0xDFFF]
++    names = [f"a{c}b" for c in points] + [f"{c}ab" for c in points]
++    names += ["not", "NOT", "Not", "select", "SELECT", "sElEcT", "from", "order", "group", "table", "alter",
++              "selects", "not_", "nota", "ſelect", "a", "A", "_", "$", "a$b", "9", "x" * 200]
++    wrong = [
++        name for name, (declared, uppercased) in zip(names, oracle.declared_names(names), strict=True)
++        if declared != (uppercased if is_regular_identifier(name) else name)
++    ]
++    assert wrong[:20] == []
++
++
++def test_external_irregular_binding_names(oracle, tmp_path):
++    """OB5: the pinned validator accepts a binding whose table and column names are not
++    regular identifiers (a space, a dot, a hyphen)."""
++    from support import physical_binding_corpus as bindings
++    from test_physical_binding import irregular_binding
++
++    bundle = render_ossie(bindings.model_path("V1"), output_format="yaml", document_name="ontology.yaml",
++                          physical_binding=irregular_binding(tmp_path))
++    (tmp_path / "ontology.yaml").write_bytes(bundle.document)
++    semantic = tmp_path / "ontology.yaml.semantic_model.yaml"
++    mapping = tmp_path / "ontology.yaml.mapping.yaml"
++    semantic.write_bytes(bundle.semantic_model)
++    mapping.write_bytes(bundle.mapping)
++    for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
++        result = oracle.validate(path, schema)
++        assert result.returncode == 0, result.stdout + result.stderr
++
++
++def test_external_keyword_named_table(oracle, tmp_path):
++    """OB5: an object type whose id is `select` gets a table Ossie keeps as written."""
++    from support import ossie_relational_corpus as relational
++
++    document = relational.load_yaml(relational.rmap_case("01"))
++    document["object_types"] += [
++        {"id": "select", "name": "Select", "kind": "entity", "independent": True,
++         "reference": {"mode": "popular", "value_type": "order"}},
++        {"id": "order", "name": "Order", "kind": "value", "primitive": "Integer"},
++    ]
++    model = tmp_path / "model.orm.json"
++    model.write_text(json.dumps(document), encoding="utf-8")
++    bundle = render_ossie(model, output_format="yaml", document_name="ontology.yaml")
++    (tmp_path / "ontology.yaml").write_bytes(bundle.document)
++    semantic = tmp_path / "ontology.yaml.semantic_model.yaml"
++    mapping = tmp_path / "ontology.yaml.mapping.yaml"
++    semantic.write_bytes(bundle.semantic_model)
++    mapping.write_bytes(bundle.mapping)
++    for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
++        result = oracle.validate(path, schema)
++        assert result.returncode == 0, result.stdout + result.stderr
++
++
+ def test_external_refusal_is_live(oracle, tmp_path):
+     document = {
+         "version": "0.3.0.dev0",
+diff --git a/tests/test_ossie_relational.py b/tests/test_ossie_relational.py
+index 5a76588e..45fe5464 100644
+--- a/tests/test_ossie_relational.py
++++ b/tests/test_ossie_relational.py
+@@ -409,7 +409,8 @@ def test_t13_identification_differs_is_listed_not_guessed(tmp_path):
+ 
+ 
+ def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
+-    """E5: `order` and `select` are legal names; quoted and uppercased they are not keywords."""
++    """E5: `order` and `select` are legal names; quoted they are not keywords. OB5: Ossie reads
++    `select` as a name that cannot stand unquoted, so it is kept as written; `order` is uppercased."""
+     document = corpus.load_yaml(MODEL_01)
+     document["object_types"] += [
+         {"id": "select", "name": "Select", "kind": "entity", "independent": True,
+@@ -428,7 +429,7 @@ def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
+     customer = next(d for d in semantic["datasets"] if d["name"] == "customer")
+     assert {"name": "group_order", "expression": {"sql": '"GROUP_ORDER"'}, "datatype": "Integer"} in customer["fields"]
+     select = next(e for e in mapping["concept_mappings"] if e["concept"] == "Select")
+-    assert select["object_mappings"] == [{"expression": '"SELECT"."ORDER"'}]
++    assert select["object_mappings"] == [{"expression": '"select"."ORDER"'}]
+     links = next(e for e in mapping["concept_mappings"] if e["concept"] == "Customer")["link_mappings"]
+     assert links[-1]["children"] == [{
+         "object_mapping": {"concept": "Select", "expression": '"CUSTOMER"."GROUP_ORDER"'}, "relationship": "from"}]
+@@ -437,8 +438,8 @@ def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
+ def test_t14_quoting_escapes_an_embedded_quote():
+     from gnd.export.ossie_relational import _quoted
+ 
+-    assert _quoted('a"b') == '"A""B"'
+-    assert corpus.quoted_identifiers(_quoted('a"b') + "." + _quoted("c")) == (['A"B', "C"], "?.?")
++    assert _quoted('a"b') == '"a""b"'  # OB5: a name with a quote is not regular, so it is kept as written
++    assert corpus.quoted_identifiers(_quoted('a"b') + "." + _quoted("c")) == (['a"b', "C"], "?.?")
+ 
+ 
+ def test_t15_the_datatype_map_covers_every_primitive(tmp_path):
+@@ -581,3 +582,34 @@ def test_r1_f4_references_are_iris_of_the_written_file_names(name):
+         parts = urlsplit(reference["iri"])
+         assert (parts.scheme, parts.netloc, parts.query, parts.fragment) == ("", "", "", "")
+         assert parts.path.startswith("./") and unquote(parts.path[2:]) == written
++
++
++# --- OB5: identifiers Ossie keeps as written (the oracle-lane finding) ---------------------
++
++#: (name, the quoted form Ossie's normalized-identifier rule needs). Measured with the pinned
++#: validator; tests/test_ossie_external_oracle.py holds the rule to it over a generated set.
++QUOTED_FORMS = [
++    ("refund", '"REFUND"'), ("customer_code", '"CUSTOMER_CODE"'), ("a$b", '"A$B"'), ("été", '"ÉTÉ"'),
++    ("straße", '"STRASSE"'), ("from", '"FROM"'), ("order", '"ORDER"'), ("_x", '"_X"'), ("x9", '"X9"'),
++    ("uni.student", '"uni.student"'), ("a b", '"a b"'), ("a\tb", '"a\tb"'), ("a\u00a0b", '"a\u00a0b"'),
++    ("a-b", '"a-b"'), ("9lives", '"9lives"'), ("a\"b", '"a\"\"b"'), ("a/b", '"a/b"'), ("a~b", '"a~b"'),
++    ("select", '"select"'), ("Select", '"Select"'), ("NOT", '"NOT"'), ("not", '"not"'),
++    ("selects", '"SELECTS"'), ("not_", '"NOT_"'),
++]
++
++
++@pytest.mark.parametrize(("name", "quoted"), QUOTED_FORMS)
++def test_ob5_an_identifier_is_quoted_in_ossies_normalized_form(name, quoted):
++    from gnd.export.ossie_relational import _quoted
++
++    assert _quoted(name) == quoted
++
++
++def test_ob5_which_names_are_regular_identifiers():
++    from gnd.export.ossie_relational import is_regular_identifier
++
++    regular = ["refund", "A", "a$b", "été", "from", "order", "_", "x9", "selects", "not_", "ſ"]
++    kept = ["", "uni.student", "a b", "a\nb", "a\u2028b", "a\u3000b", "9", "9lives", "a-b", 'a"b', "NOT", "sElEcT",
++            *(f"a{c}b" for c in "!\"#%&'()*+,-./:;<=>?@[\\]^`{|}~")]
++    assert [name for name in regular if not is_regular_identifier(name)] == []
++    assert [name for name in kept if is_regular_identifier(name)] == []
+diff --git a/tests/test_physical_binding.py b/tests/test_physical_binding.py
+index 0558348b..bb0a6d43 100644
+--- a/tests/test_physical_binding.py
++++ b/tests/test_physical_binding.py
+@@ -785,3 +785,41 @@ def test_r1_f6_a_schema_refusal_names_an_escaped_pointer_in_sorted_order(tmp_pat
+         read_binding(path)
+     assert caught.value.rule == "binding:schema"
+     assert "at /tables/a~0b/columns:" in str(caught.value)
++
++
++# --- OB5: table and column names that are not regular identifiers ---------------------------
++
++
++def irregular_binding(tmp_path):
++    """Corpus case V1 with its table and one column renamed to names Ossie keeps as written."""
++    binding = json.loads((corpus.CORPUS / "V1" / "binding.json").read_text(encoding="utf-8"))
++    table = binding["tables"].pop("cust")
++    table["columns"] = {("e-mail addr" if name == "email_addr" else name): body
++                        for name, body in table["columns"].items()}
++    binding["tables"]["Sales Dept.cust-2024"] = table
++    binding["roles"] = {
++        "customer_has_email": {
++            "customer": [{"table": "Sales Dept.cust-2024", "column": "cust_id"}],
++            "email": [{"table": "Sales Dept.cust-2024", "column": "e-mail addr"}],
++        }
++    }
++    path = tmp_path / "binding.json"
++    path.write_text(json.dumps(binding), encoding="utf-8")
++    return path
++
++
++def test_ob5_names_that_are_not_regular_identifiers_are_quoted_as_written(tmp_path):
++    from gnd.export.ossie import render_ossie
++    from gnd.export.ossie_relational import validate_relational
++
++    bundle = render_ossie(corpus.model_path("V1"), output_format="yaml", physical_binding=irregular_binding(tmp_path))
++    semantic = relational.load_yaml_bytes(bundle.semantic_model)
++    mapping = relational.load_yaml_bytes(bundle.mapping)
++    validate_relational(semantic, mapping)
++    (dataset,) = semantic["datasets"]
++    assert [field["expression"]["sql"] for field in dataset["fields"]] == ['"CUST_ID"', '"e-mail addr"']
++    (concept,) = mapping["concept_mappings"]
++    assert concept["object_mappings"] == [{"expression": '"Sales Dept.cust-2024"."CUST_ID"'}]
++    (link,) = concept["link_mappings"]
++    assert link["children"][0]["object_mapping"]["expression"] == '"Sales Dept.cust-2024"."e-mail addr"'
++    relational.cross_check(relational.load_yaml_bytes(bundle.document), semantic, mapping)
+diff --git a/tools/ossie_oracle.py b/tools/ossie_oracle.py
+index 53acd47e..c29d0cff 100644
+--- a/tools/ossie_oracle.py
++++ b/tools/ossie_oracle.py
+@@ -7,6 +7,7 @@ b/ (parser) environments. The caller prepares these once via the OS0 receipt.
+ from __future__ import annotations
+ 
+ import hashlib
++import json
+ import os
+ import subprocess
+ from dataclasses import dataclass
+@@ -20,6 +21,10 @@ _PARSE = (
+     "from ossie_ontology.parser import OssieParser; "
+     "OssieParser().parse(Path(sys.argv[2]))"
+ )
++_DECLARED = (
++    "import json, sys; sys.path.insert(0, sys.argv[1]); import validate; "
++    "print(json.dumps([[validate.declared_name(name), name.upper()] for name in json.load(sys.stdin)]))"
++)
+ 
+ 
+ @dataclass(frozen=True)
+@@ -55,6 +60,16 @@ class OssieOracle:
+             path,
+         )
+ 
++    def declared_names(self, names: list[str]) -> list[list[str]]:
++        """For each declared name: the pinned validator's normalized form, and the name
++        uppercased by the validator's own interpreter (its Unicode tables may be older)."""
++        result = subprocess.run(
++            [str(self.root / "a/bin/python"), "-I", "-c", _DECLARED, str(self.root / "ossie/validation")],
++            input=json.dumps(names), capture_output=True, text=True, timeout=600, check=True, cwd=self.root,
++            env={"PATH": os.defpath, "HOME": str(self.root), "PYTHONUTF8": "1"},
++        )
++        return json.loads(result.stdout)
++
+     def parse(self, path: Path) -> subprocess.CompletedProcess[str]:
+         return self._run(
+             self.root / "b/bin/python",
+diff --git a/tools/run_tutorials.py b/tools/run_tutorials.py
+index cafa0953..dd7b9061 100644
+--- a/tools/run_tutorials.py
++++ b/tools/run_tutorials.py
+@@ -212,6 +212,8 @@ def groups(root: Path) -> dict[str, list[Path]]:
+         'why-not': [root / 'docs/how-to/repair-a-missing-claim.md'],
+         'disclosure': [root / 'docs/how-to/disclosure-mode.md', root / 'docs/reference/disclosure.md'],
+         'growth': [root / 'docs/how-to/grow-a-model.md'],
++        'ossie': [root / 'docs/how-to/share-an-ossie-ontology.md',
++                  root / 'docs/how-to/describe-delivered-tables-for-ossie.md'],
+         'compose': [root / 'docs/how-to/compose-documents.md'],
+         'failed-verification': [root / 'docs/guides/documents.md'],
+         'rule-check': [root / 'docs/how-to/adopt-rules-with-a-baseline.md'],
+diff --git a/zensical.toml b/zensical.toml
+index 062dbecf..74736450 100644
+--- a/zensical.toml
++++ b/zensical.toml
+@@ -22,7 +22,7 @@ nav = [
+     { "Expense approvals" = [{ "1. Model the workflow" = "expense/01-model.md" }, { "2. Build and check" = "expense/02-application.md" }, { "3. Add currencies" = "expense/03-evolution.md" }, { "4. Run on PyRel, put an agent in the loop" = "expense/04-native.md" }, { "5. Check one claim across three documents" = "expense/05-receipts.md" }] },
+     { "An ontology from a stack of papers" = [{ "The story" = "literature/index.md" }, { "The commands behind it" = "literature/commands.md" }, { "Trace a method's lineage" = "literature/01-lineage.md" }] }
+   ] },
+-  { "How-to guides" = [{ "Run the two-team expense example" = "how-to/shared-expense-policies-commands.md" }, { "Stop a manager approving their report's access" = "how-to/access-requests.md" }, { "Keep a trip under budget" = "how-to/trip-budget.md" }, { "Schedule rent inside a lease" = "how-to/lease-schedule.md" }, { "Read the recorded model runs" = "how-to/model-runs.md" }, { "The commands behind the auditors' rule" = "how-to/learn-rules-commands.md" }, { "Repair a claim that does not derive" = "how-to/repair-a-missing-claim.md" }, { "Run GND for internal or customer readers" = "how-to/disclosure-mode.md" }, { "Grow a model by additions" = "how-to/grow-a-model.md" }, { "From several documents to one checked answer" = "how-to/compose-documents.md" }, { "Judge induced fact types with two skills" = "how-to/judge-induced-fact-types.md" }, { "Compare the rule learners on real runs" = "how-to/compare-ilp-learners.md" }, { "Adopt rules on a project that already breaks them" = "how-to/adopt-rules-with-a-baseline.md" }, { "Share a refund model as an Ossie ontology" = "how-to/share-an-ossie-ontology.md" }] },
++  { "How-to guides" = [{ "Run the two-team expense example" = "how-to/shared-expense-policies-commands.md" }, { "Stop a manager approving their report's access" = "how-to/access-requests.md" }, { "Keep a trip under budget" = "how-to/trip-budget.md" }, { "Schedule rent inside a lease" = "how-to/lease-schedule.md" }, { "Read the recorded model runs" = "how-to/model-runs.md" }, { "The commands behind the auditors' rule" = "how-to/learn-rules-commands.md" }, { "Repair a claim that does not derive" = "how-to/repair-a-missing-claim.md" }, { "Run GND for internal or customer readers" = "how-to/disclosure-mode.md" }, { "Grow a model by additions" = "how-to/grow-a-model.md" }, { "From several documents to one checked answer" = "how-to/compose-documents.md" }, { "Judge induced fact types with two skills" = "how-to/judge-induced-fact-types.md" }, { "Compare the rule learners on real runs" = "how-to/compare-ilp-learners.md" }, { "Adopt rules on a project that already breaks them" = "how-to/adopt-rules-with-a-baseline.md" }, { "Share a refund model as an Ossie ontology" = "how-to/share-an-ossie-ontology.md" }, { "Describe your delivered tables in an Ossie export" = "how-to/describe-delivered-tables-for-ossie.md" }] },
+   { "Explanation" = [{ "What PyRel is, and when you need it" = "explanation/what-is-pyrel.md" }, { "How a rule becomes a PyRel check" = "explanation/rules-as-pyrel.md" }, { "Ossie interchange in GND" = "explanation/ossie.md" }] },
+   { "Verify at scale" = [{ "Release governance across runtimes" = "runtimes/scenario.md" }, { "PyRel: approval audits" = "runtimes/pyrel.md" }, { "Soufflé: dependency impact" = "runtimes/souffle.md" }, { "Lean: policy proofs" = "runtimes/lean.md" }, { "Interpret the evidence" = "runtimes/decision.md" }] },
+   { "Guides (CLI and Python)" = [{ "Models and constraints" = "guides/modeling.md" }, { "Data and transitions" = "guides/data-and-transitions.md" }, { "Synthetic data" = "guides/synthetic-data.md" }, { "Generated projects" = "guides/generated-projects.md" }, { "Evolution and recovery" = "guides/evolution-and-recovery.md" }, { "Documents and extraction" = "guides/documents.md" }, { "Experiment sessions" = "guides/experiments.md" }, { "Exports and witnesses" = "guides/exports.md" }] },

@@ -62,8 +62,8 @@ The method is the standard one for this kind of model:
 - A business object that has facts of its own gets a table. Its key is the
   way the business identifies it, such as a refund number.
 - A fact that can hold only once per object becomes a column of that
-  object's table. If each refund has one requesting customer, the customer
-  is a column of the refund table.
+  object's table. If each refund has at most one requesting customer, the
+  customer is a column of the refund table.
 - A fact that can hold many times gets a table of its own, linked back by a
   foreign key.
 - A uniqueness rule that fits inside one table becomes a key of that table.
@@ -92,7 +92,7 @@ a reason it is not. The reasons you are most likely to meet:
 | Reason | What it means |
 |---|---|
 | `not-relational` | A rule over values or across facts, such as a spending limit. A table definition cannot state it. It stays in the sidecar. |
-| `uniqueness-not-confirmed` | A uniqueness rule that is not yet confirmed in the model, so it is not written as a key. |
+| `uniqueness-not-confirmed` | A uniqueness rule that is not both confirmed and a hard rule of the domain (alethic), so it is not written as a key. A confirmed rule that people are only expected to follow (deontic) is listed this way too. |
 | `spans-tables` | A rule whose facts ended up in more than one table. |
 | `derived-computed` | A fact that is worked out from others and not stored. |
 | `identification-differs` | The ontology and the tables identify an object in different ways, so the link between them is not written. |
@@ -135,7 +135,7 @@ Without the option, an export is exactly what it was.
 Each written file may be at most 10 MiB by default. A large model, such as
 one composed from many shared vocabularies, can exceed that. The export then
 stops with `ossie:output-size` and writes nothing. Raise the bound for that
-run with `--max-output-bytes N`, up to 256 MiB.
+run with `--max-output-bytes N`, a number of bytes up to 256 MiB.
 
 Import has the matching option. `gnd import ossie` reads documents up to
 10 MiB unless `--max-input-bytes N` sets another bound.

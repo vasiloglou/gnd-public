@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import string
 import sys
 from io import StringIO
 from pathlib import Path
@@ -99,8 +100,9 @@ def _validators(mapping_schema: Path):
 def normalized(name: str) -> str:
     """Ossie's normalized identifier for a declared NAME, written here independently of
     the exporter: uppercased when the name can stand unquoted, else as written."""
-    unquotable = (not name or name[0].isascii() and name[0].isdigit() or name.upper() in ("NOT", "SELECT")
-                  or any(c.isspace() or (c.isascii() and not c.isalnum() and c not in "$_") for c in name))
+    punctuation = set(string.punctuation) - {"$", "_"}
+    unquotable = (not name or name[0] in string.digits or name.upper() in ("NOT", "SELECT")
+                  or any(c.isspace() or c in punctuation for c in name))
     return name if unquotable else name.upper()
 
 

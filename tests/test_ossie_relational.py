@@ -613,3 +613,14 @@ def test_ob5_which_names_are_regular_identifiers():
             *(f"a{c}b" for c in "!\"#%&'()*+,-./:;<=>?@[\\]^`{|}~")]
     assert [name for name in regular if not is_regular_identifier(name)] == []
     assert [name for name in kept if is_regular_identifier(name)] == []
+
+
+def test_r1_f2_the_corpus_checkers_normalizer_agrees_with_the_exporter_on_every_character():
+    """The checker states the rule independently; the two must still agree (OB5 review r1 F2:
+    it took every ASCII control character for punctuation)."""
+    from gnd.export.ossie_relational import is_regular_identifier
+
+    points = [chr(point) for point in range(0x110000) if not 0xD800 <= point <= 0xDFFF]
+    names = [f"a{c}b" for c in points] + [f"{c}ab" for c in points] + ["", "not", "Select", "selects", "9", "_", "$"]
+    assert [name for name in names
+            if corpus.normalized(name) != (name.upper() if is_regular_identifier(name) else name)][:10] == []

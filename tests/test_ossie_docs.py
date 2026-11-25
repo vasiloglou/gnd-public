@@ -60,6 +60,25 @@ def missing_from_normative(text: str) -> set[str]:
     return cited_ids(text) - cited_ids(normative())
 
 
+#: A reason is a flat token too: lower-case words joined by hyphens, written as inline code.
+REASON_SPAN = re.compile(r"`([a-z]+(?:-[a-z]+)+)`")
+
+
+def unknown_reasons(text: str) -> set[str]:
+    """Hyphenated lower-case code spans of TEXT that are not a reason the code can give.
+
+    On these pages such a span is always a reason id; any other use fails here and is
+    then reworded or added to the code's closed sets, never silently passed (review r1 F3).
+    """
+    known = {*typing.get_args(UnmappedReason), *LINK_REASONS}
+    return set(REASON_SPAN.findall(text)) - known
+
+
+def exit_numbers(section: str, name: str) -> list[int]:
+    """Every number the release note writes before the constant NAME (review r1 F4)."""
+    return [int(number) for number in re.findall(rf"(?<![\w.])(\d+)\s+\(`{name}`\)", section)]
+
+
 def names_flag(text: str, flag: str) -> bool:
     """Whether TEXT names the option FLAG itself, not a longer option that contains it."""
     return re.search(rf"(?<![\w-]){re.escape(flag)}(?![\w-])", text) is not None
@@ -96,6 +115,31 @@ def ossie_options(group: str, monkeypatch) -> set[str]:
 def test_every_rule_id_on_a_page_is_in_the_normative_section(page):
     assert page.is_file(), f"{page} is not written"
     assert not missing_from_normative(page.read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize("page", PAGES, ids=lambda path: path.name)
+def test_every_reason_on_a_page_is_one_the_code_gives(page):
+    assert not unknown_reasons(page.read_text(encoding="utf-8"))
+
+
+def test_r1_f3_a_misspelled_reason_is_caught():
+    page = PAGES[0].read_text(encoding="utf-8")
+    assert "`uniqueness-not-confirmed`" in page
+    assert unknown_reasons(page.replace("uniqueness-not-confirmed", "uniqueness-not-confirmed-typo")) == {
+        "uniqueness-not-confirmed-typo"}
+
+
+def test_r1_f4_every_exit_number_in_the_release_note_is_checked():
+    assert exit_numbers("exit\n  11 (`EXIT_COLLISION`) and 111 (`EXIT_COLLISION`)", "EXIT_COLLISION") == [11, 111]
+    assert exit_numbers("exit 164 (`EXIT_USAGE`), exit 64 (`EXIT_USAGE`)", "EXIT_USAGE") == [164, 64]
+
+
+def test_r1_f6_the_release_note_states_the_bound_as_the_cli_takes_it(tmp_path):
+    """--max-output-bytes takes 1 to 268435456; a small value is a size refusal, not a usage error."""
+    section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), "## Unreleased: Ossie relational files")
+    assert "from 1 byte to 256 MiB" in " ".join(section.split())
+    assert cli.main(["export", "ossie", str(EXAMPLE / "model.orm.yaml"), "--out", str(tmp_path / "o.yaml"),
+                     "--max-output-bytes", "1"]) == 3  # a size refusal, not EXIT_USAGE
 
 
 def test_a_planted_unknown_rule_id_is_caught():
@@ -136,7 +180,9 @@ def test_the_release_note_states_the_exits_by_their_constants():
     section = markdown_section(RELEASE_NOTES.read_text(encoding="utf-8"), "## Unreleased: Ossie relational files")
     assert section, "the release-note section is missing"
     for name in ("EXIT_COLLISION", "EXIT_USAGE"):
-        assert f"{getattr(exits, name)} (`{name}`)" in section, name
+        numbers = exit_numbers(section, name)
+        assert numbers and set(numbers) == {getattr(exits, name)}, (name, numbers)
+        assert len(numbers) == section.count(f"`{name}`"), name  # no mention without its number
     assert cited_ids(section) <= cited_ids(normative())
 
 

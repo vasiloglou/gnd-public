@@ -1,0 +1,155 @@
+{
+  "base": "6758d224",
+  "claims": [
+    "Every statement on docs/explanation/ossie.md, docs/how-to/share-an-ossie-ontology.md, docs/how-to/describe-delivered-tables-for-ossie.md, the Ossie section of src/gnd/skills/gnd-export/SKILL.md and the release-note section is true of the code at this commit; check each against the source and the normative sections, and name any that is false, overstated or stated nowhere normative.",
+    "The pages state no rule of their own: every rule id, reason, limit and exit code they mention is stated in the normative sections, with the same meaning. Look for a rule said twice in different words that could drift.",
+    "tests/test_ossie_docs.py can fail: a page naming an unknown binding: or ossie: id, an Ossie flag missing from the skill, the CLI reference or the normative section, or a wrong exit number in the release note each fail it. Read each new regular expression and string test there as a claim about its input class, build a legal input the tests lack, and report a wrong result.",
+    "is_regular_identifier and _quoted in src/gnd/export/ossie_relational.py write, for every table or column name a model or a schema-valid binding can produce, the identifier Ossie's validator normalizes the declared name to: uppercased for a regular identifier, as written otherwise. The independent restatement normalized() in tests/support/ossie_relational_corpus.py agrees with it on every name. Build names the tests lack (empty, one character, mixed scripts, case-changing-length characters, keywords in other cases) and report any disagreement.",
+    "The quoting fix changes no output for a name that is a regular identifier, so every OB2, OB3 and OB4 corpus answer except physical_binding/V2/expected.mapping.yaml and the census baselines are unchanged, and binding:name-collision still refuses every pair of names the exporter would write as one identifier.",
+    "The packaged example src/gnd/examples/refunds/physical-binding.json is a correct binding of the refunds model, the how-to describes it truthfully, and no public text names a downstream project, customer or reporter."
+  ],
+  "created": "2026-11-25T09:36:47.044888+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/reviews/phase-OB5-r1/diff.patch",
+      "sha256": "d356aba2e039eb3874eb25089fa3955b56f96c96777154aca2ecbfb5c4786385"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/017-OB5-spec-gate.md",
+      "sha256": "59baca4c3fcdc7d1187aa3eae1366acca45765f1a506e31f3318a233fd79deb1"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/018-OB5-checkpoint-gate.md",
+      "sha256": "da7e038dd745697b5bafba9907370c87ede4d3bf61e1345b2b0d22dbcac23d71"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/019-OB5-quoting-gate.md",
+      "sha256": "842bf7efedb87b6d87977f52f3788c62da1056ed09d3ade684b43cfc3ca73151"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/README.md",
+      "sha256": "ec818713a884fcb50d3f100d3a5b7cf87e9fc789215b25e87405834de9c821ce"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/OB5-oracle-lane-run.md",
+      "sha256": "81bc060db5c92be1c8358814873e1f92c89557091e8d7dcf96cdccf29bab1209"
+    },
+    {
+      "path": ".gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB5-spec.md",
+      "sha256": "7f6eea49e4d8d4906c63e2abff34cdf55a5065c3180cae3ebfc034567de35215"
+    },
+    {
+      "path": "README.md",
+      "sha256": "c326e980aee8e67b6413054e1e38c5801bd4618fb7b3c3a121a78c0a86233d12"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "279d6e294be4a9bf4d5d3e8a528fdaac42b1848588e1e8b151b0bdf070047c04"
+    },
+    {
+      "path": "dev/components/modules/export.md",
+      "sha256": "dfc9c9c762bd11345febda89833d450fab95040d635d8e57f671c63816dee452"
+    },
+    {
+      "path": "dev/components/modules/tools.md",
+      "sha256": "dc49eb1cbbfa148ad6dd5a814f335ab2fe266b74a27175df822d620f17a62acb"
+    },
+    {
+      "path": "docs/agents/evolve.md",
+      "sha256": "f8d97b9a5ce859cf2f6ecd68093d6328611dcc513ffaab801ab670f7d25ffdff"
+    },
+    {
+      "path": "docs/agents/model-from-text.md",
+      "sha256": "338a01bd5ba52dc73cc668f52793f33ab5de0f07f2761af1dff0b18ba74180b5"
+    },
+    {
+      "path": "docs/explanation/ossie.md",
+      "sha256": "58f6fbed3920298a727b33a534ca5d422006be633448a8725adf13b87174191f"
+    },
+    {
+      "path": "docs/how-to/describe-delivered-tables-for-ossie.md",
+      "sha256": "817976d939649c8e7828d392719d52d7f2c628c9e722a274f2eb40a98f94697a"
+    },
+    {
+      "path": "docs/how-to/share-an-ossie-ontology.md",
+      "sha256": "9005100af91bef89fc03efc585a99ce72e69f4281dcda999163fd32f5329648a"
+    },
+    {
+      "path": "docs/index.md",
+      "sha256": "7b044b4fde0166bcd7c830289f27ac3795a4ba50b8b70ebbbca334ca1f622707"
+    },
+    {
+      "path": "docs/reference/cli.md",
+      "sha256": "88bd6bb953e237b0fe95460c9cb0a84eea1033af19e109230bddf216e832a1d2"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "75b7539a71de6ee639e8c4e28900308797979940518c6ce67dc40b6c3cbbd24f"
+    },
+    {
+      "path": "src/gnd/examples/refunds/physical-binding.json",
+      "sha256": "74b253fa1abdb66334283c0dbf2d1070c7db204e0a08f3641a964eac7f66cc6b"
+    },
+    {
+      "path": "src/gnd/export/ossie_relational.py",
+      "sha256": "bf41736815e75f0ad5be7a5190e83ae80e39892b43dd7c13f736b3a5e5d79f8a"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/SKILL.md",
+      "sha256": "16cf80a5c045f8d67de6ccd7484bbf80683cbeacef5bd83774e7710340bb2478"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "45284f8111733277947d571dec574da72a93da02763f3e477a01f97a3a011d0b"
+    },
+    {
+      "path": "tests/fixtures/physical_binding/V2/expected.mapping.yaml",
+      "sha256": "1afa9b12d5ed20f83a69dc26940651abd100f026c4b239dcb308f0c54d50b199"
+    },
+    {
+      "path": "tests/support/ossie_relational_corpus.py",
+      "sha256": "8f874e497211ac8e01254602e724cbfe73404e4362d1713f59bd2346706fea6c"
+    },
+    {
+      "path": "tests/test_documentation_tutorials.py",
+      "sha256": "2bf430f0947746a36f4cebb5933e27a9e2ba5c346776e2e32152e5d84683e267"
+    },
+    {
+      "path": "tests/test_ossie_docs.py",
+      "sha256": "a365792734f7844079b57d07ba8344c7a59a5028a0842f284047ca8b7318dbbd"
+    },
+    {
+      "path": "tests/test_ossie_external_oracle.py",
+      "sha256": "5bac878064f6273513731210d03f199cf1233a8d8b08963339d6a72c015a138c"
+    },
+    {
+      "path": "tests/test_ossie_relational.py",
+      "sha256": "2359997630be700398307d4a3f724fab6963045446e44b4165498bba3e00f286"
+    },
+    {
+      "path": "tests/test_physical_binding.py",
+      "sha256": "3a828722fa601197c754ad689da77a5f6da1046a65fb1f6564f4ea8f47b88cbb"
+    },
+    {
+      "path": "tools/ossie_oracle.py",
+      "sha256": "05c16866cd2666385428c475112a1bea3a9f8107ca5188468cada43bdea42f5d"
+    },
+    {
+      "path": "tools/run_tutorials.py",
+      "sha256": "10d42c6b750e37715ac8c300793f069edffed91d238a34c72ca1f1a5141154cd"
+    },
+    {
+      "path": "zensical.toml",
+      "sha256": "aceb16144e67d1566b040f792d4fc754a224c8d6e22334ccb9251a7007b72402"
+    }
+  ],
+  "head": "b304e3b4d4b850db64c18ded05482638d68a263f",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Do the OB5 changes (the Ossie explanation, the two how-to pages, the gnd-export skill section, the release-note section, the README, index and CLI reference mentions, tests/test_ossie_docs.py, the packaged example binding, and the quoting fix in gnd.export.ossie_relational with its changed corpus answer) meet the approved OB5 spec (notes/phase-OB5-spec.md, with gates 017, 018 and 019)? Is any sentence on a page false against the code or the normative sections 'Relational mapping (Rmap)' and 'Ossie interchange' of representation-format.md, is any rule stated on a page that those sections do not state, does any shown command or output differ from a real run, and is there a table or column name for which the exporter writes an identifier the Ossie normalized-identifier rule (core-spec expression_language.md; the measured class in notes/OB5-oracle-lane-run.md) would not match?",
+  "subject": "phase",
+  "version": 1
+}

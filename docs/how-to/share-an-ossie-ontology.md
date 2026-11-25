@@ -75,8 +75,10 @@ sed -n '10,16p' refunds.ossie.yaml
 
 ## See the tables
 
-Because each refund has one requesting customer, the customer sits in a
-column of the refund's own table. The table's key is the refund number.
+Because each refund has at most one requesting customer, the customer sits
+in a column of the refund's own table. The column may be empty, since the
+model does not say every refund has a requester. The table's key is the
+refund number.
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh

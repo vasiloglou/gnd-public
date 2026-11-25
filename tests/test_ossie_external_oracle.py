@@ -99,11 +99,20 @@ def test_external_identifier_class_is_the_exporters(oracle):
     names = [f"a{c}b" for c in points] + [f"{c}ab" for c in points]
     names += ["not", "NOT", "Not", "select", "SELECT", "sElEcT", "from", "order", "group", "table", "alter",
               "selects", "not_", "nota", "ſelect", "a", "A", "_", "$", "a$b", "9", "x" * 200]
+    answers = oracle.declared_names(names)
     wrong = [
-        name for name, (declared, uppercased) in zip(names, oracle.declared_names(names), strict=True)
+        name for name, (declared, uppercased) in zip(names, answers, strict=True)
         if declared != (uppercased if is_regular_identifier(name) else name)
     ]
     assert wrong[:20] == []
+    # Review r1 F1. The class above is compared with the validator's own uppercasing, so it
+    # does not show that the exporter's bytes match: a letter whose uppercase the two Unicode
+    # versions disagree on gives a different identifier. That is a stated limit of the
+    # normative rule. It is confined to names with a non-ASCII letter, and an ASCII name
+    # is exact; both are asserted here so the limit cannot grow unseen.
+    differs = [name for name, (_, uppercased) in zip(names, answers, strict=True) if name.upper() != uppercased]
+    assert all(not name.isascii() for name in differs)
+    assert len({character for name in differs for character in name if not character.isascii()}) < 200
 
 
 def test_external_irregular_binding_names(oracle, tmp_path):

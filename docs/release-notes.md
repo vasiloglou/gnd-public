@@ -21,9 +21,10 @@ the next one.
   usage error, exit 64 (`EXIT_USAGE`). A fact that a table holds only
   through a surrogate key cannot be bound; it is listed as `unbound`.
 - **Larger files.** `--max-output-bytes N` on `gnd export ossie` and
-  `--max-input-bytes N` on `gnd import ossie` raise the 10 MiB bound for one
-  run, up to 256 MiB. A value outside that range is a usage error, exit
-  64 (`EXIT_USAGE`). The model file itself stays capped at 10 MiB.
+  `--max-input-bytes N` on `gnd import ossie` replace the 10 MiB bound for
+  one run. N is a whole number of bytes, from 1 byte to 256 MiB. Any other
+  value is a usage error, exit 64 (`EXIT_USAGE`). The model file itself
+  stays capped at 10 MiB.
 - **Where to read more.** [Ossie interchange in GND](explanation/ossie.md)
   and [Describe your delivered tables](how-to/describe-delivered-tables-for-ossie.md).
 

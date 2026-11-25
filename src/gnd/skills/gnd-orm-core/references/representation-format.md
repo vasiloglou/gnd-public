@@ -2286,6 +2286,8 @@ and exits 0.
   ASCII punctuation character other than `$` and `_`, or is the word `not`
   or `select` in any case. That is the class of the pinned Ossie validator.
   Uppercasing follows the Unicode tables of the Python that runs the export.
+  A reader on other tables can uppercase a non-ASCII letter differently and
+  then does not match that name; a name of ASCII characters is exact.
 - **No population.** No file of the relational layer holds a row, a model
   identity or a digest, except the mapping's extension below.
 

@@ -23,10 +23,10 @@ uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.1"
   model by the commands that refuse one
   ([#286](https://github.com/vasiloglou/gnd-public/issues/286)).
 - **A date term in a derivation head, under any role name.** A head whose
-  role is named `source` or `provenance` hid a date term from the temporal
-  rules, so the model was accepted where a date term is not allowed. Such a
-  model is now refused with `semantic:temporal-site`, as it is under any
-  other role name.
+  role is named `source`, `provenance`, `bind` or `head` could hide a date
+  term from the temporal rules, so the model was accepted where a date term
+  is not allowed. Such a model is now refused with `semantic:temporal-site`,
+  as it is under any other role name.
 - **Descriptions are not read as date syntax.** An object type's
   description is never checked, as the format reference says. The temporal
   rules no longer read it, so an extra key in a description that holds a

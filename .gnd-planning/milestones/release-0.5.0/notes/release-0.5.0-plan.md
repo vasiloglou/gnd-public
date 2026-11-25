@@ -1,15 +1,15 @@
 # Release 0.5.0
 
-r4, 2026-11-24. Milestone `release-0.5.0`, phase prefix `RW`. The standard
+r5, 2026-11-25. Milestone `release-0.5.0`, phase prefix `RW`. The standard
 GND panel reviewed r1 (SHA-256 `5a34615d…3391`, five of six seats). Section 11
 amends the r1 clauses below and records the owner's rulings of 2026-11-23.
 The [plan gate](../001-plan-gate.md) records the review and the delegated
 ruling over r2 (SHA-256 `c1c846bd…1999`). r3 (SHA-256 `6ca712ec…3c6c`) added
-§12; r4 adds §13, a further owner ruling, and changes this paragraph; every
-other byte is r3's. No review has read r2, r3 or r4. **The release is cut
-after ossie-relational-bundle is merged (§13). RW1 has its first ruling and
-its E1 measurement, and is held before its second ruling. The milestones of
-§11 and §12 are merged.**
+§12; r4 (SHA-256 `a1758e2f…562f`) added §13; r5 adds §14 and changes this
+paragraph; every other byte is r4's. No review has read r2 to r5. **Every
+milestone the owner made the release wait for is merged to main (§14). RW1
+is resumed: its spec is revised against main `e8359685` and E1 runs
+again before the second ruling.**
 
 Source: the owner's request of 2026-11-23 ("Release 0.5.0"), made after the
 three milestones merged since 0.4.0 were recorded as closed. Inspection
@@ -633,3 +633,50 @@ ruling approved the E1 measurement, and E1 ran at `cfe5f00e`
   exists. The owner can ask for it.
 - The owner named no other milestone. Anything else merged before the freeze
   is in the release, with a note, as §11 says.
+
+## 14. The fourth dependency is on main, 2026-11-25 (r5)
+
+This section adds to §11 to §13 and replaces none of them. The r4 bytes are
+at commit `c90bbd5d`, merged to main as pull request 269 on the owner's word.
+
+### What main holds
+
+Observed at `e8359685` with `git log --first-parent` and `git ls-tree`:
+ossie-relational-bundle's five phases are merged (pull requests 266, 270,
+271, 272 and 273), and its close record
+([021-milestone-close.md](../../ossie-relational-bundle/021-milestone-close.md))
+is merged with pull request 274. The session that ran the milestone sent a
+note saying so; the note was checked against main and approves nothing.
+
+### How the dependency is read, and what is not claimed
+
+- §13 read the owner's ruling as "cut after ossie-relational-bundle is
+  merged to main with its close record". Both hold.
+- That close record says the owner directed the merge of its pull request
+  and that an explicit ruling that the milestone is closed is not recorded.
+  This plan does not record one either. It resumes RW1 on the owner's stated
+  purpose, "so that I can include it": the work and its notes are on main
+  and the release can include them. The owner may stop RW1 again by saying
+  so; nothing RW1 does is published, and its pull request merges only on the
+  owner's word.
+- The close record's residuals come with the content: external acceptance by
+  the issue's reporter is missing, the repairs made after its close review
+  carry no review opinion, and the oracle lane's consumer test was not run.
+  The release notes do not claim any of the three.
+
+### Consequences for the phases
+
+- **RW1.** The spec is revised against `e8359685` (r6): five `Unreleased:`
+  sections and 26 bullets, 140 shipped files differing from `v0.4.0`, and a
+  fourth candidate for the headline block (spec D4), which is put to the
+  owner. E1 runs again; §12 of the spec keeps the first measurement.
+- **RW-D8, reopened for one lane.** §10 excluded `ossie_oracle` when the
+  release changed nothing in the Ossie export. It now changes what a default
+  `gnd export ossie` run writes. The Ossie milestone ran that lane at
+  `98344052`, without the consumer test (91 passed). Whether it runs again
+  at the freeze commit is the owner's choice, asked at the RW2 spec; until
+  then it stays excluded and the exclusion is stated in the dossier.
+- **RW-D6.** The installed probes of §2 were chosen before this milestone.
+  The RW2 spec proposes a fifth, the five-file Ossie export with its 0.4.0
+  control (three files).
+- **W5 and W7** are recounted in the RW1 spec.

@@ -395,6 +395,12 @@ release also waits for ossie-relational-bundle (pull requests 264 and 266,
 not merged), so RW1 is held before its second ruling and nothing is bumped.
 The release plan's §13 records it.
 
+Status, 2026-11-25: ossie-relational-bundle is merged to main with its close
+record (pull requests 266 and 270 to 274), so every milestone the release
+waited for is on main. RW1 of release-0.5.0 is resumed: its spec is revised
+against `e8359685` and E1 runs again. Nothing is bumped. The release plan's
+§14 records it, with how it reads that milestone's unrecorded close ruling.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

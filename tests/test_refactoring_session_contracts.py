@@ -134,3 +134,17 @@ def test_contract_digest_survives_path_replacement(tmp_path, monkeypatch):
     )
     assert contract.schema_version == 6 and path.read_bytes() == b"{}"
     assert digest == hashlib.sha256(original).hexdigest()
+
+
+def test_portable_v6_terminal_evidence(tmp_path, monkeypatch):
+    built = BUILDERS[6](tmp_path, monkeypatch)
+    path = built.root / "session.contract.json"
+    contract = json.loads(path.read_bytes())
+    contract["prompt_format"] = "portable-v1"
+    path.write_text(json.dumps(contract))
+    assert run_main(built.argv, cwd=tmp_path).returncode in (0, 15)
+    run = built.root / "runs/run-0001"
+    monkeypatch.setattr(owner("_next_session_run_root"), "_next_session_run_root", lambda root: run)
+    before = tree(built.root)
+    assert run_main(built.argv, cwd=tmp_path).returncode == 74
+    assert tree(built.root) == before

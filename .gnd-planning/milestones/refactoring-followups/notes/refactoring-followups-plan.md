@@ -100,3 +100,7 @@ The r2 wording above is retained as the plan the phases executed. The following 
 - The owner authorized all four F8 transfers and publication in PR #310. The source historical states and later triggers stay visible in the public register. [F8 ruling](../010-phase-F8.md).
 
 This close candidate awaits its separate light panel and delegated acceptance record. Eight phase records cover twelve issues.
+
+## Delegated close amendment · r4, 2026-11-25
+
+The light panel reviewed r3 at b12be6a2. The [close ruling](../012-milestone-close.md) accepts eight phase records and tracks four partial issue dispositions. For #304 the verified scope is the contract hash and the base, controller and effective prompt hashes under portable-v1. General cross-root evidence parity remains under #304 for the session maintainer at the next change to portable evidence or replay. For #305 the next edit of a listed consumer triggers a parity check. At the first public API release review after the release containing the migration notice, the release owner reassesses #297. No removal date is inferred. The prior r2 and r3 decisions above describe their own candidate versions.

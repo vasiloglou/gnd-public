@@ -705,3 +705,7 @@ def test_pool_file_errors(tmp_path):
     path.write_bytes(b"\xff")
     with pytest.raises(UnicodeDecodeError):
         load_pool(path, None)
+    path.write_text("{", encoding="utf-8")
+    with pytest.raises(json.JSONDecodeError) as malformed:
+        load_pool(path, None)
+    assert malformed.value.pos == 1

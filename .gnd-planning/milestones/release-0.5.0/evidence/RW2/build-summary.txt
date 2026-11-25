@@ -1,0 +1,21 @@
+Run output of build.sh on the planning machine. Edited to replace the home path.
+
+Building source distribution (uv build backend)...
+Building wheel from source distribution (uv build backend)...
+Successfully built <home>/gnd-release/0.5.0/85d076ba/candidate.build.9zM3ec/release/get_nick_done-0.5.0.tar.gz
+Successfully built <home>/gnd-release/0.5.0/85d076ba/candidate.build.9zM3ec/release/get_nick_done-0.5.0-py3-none-any.whl
+Building wheel (uv build backend)...
+Successfully built <home>/gnd-release/0.5.0/85d076ba/candidate.build.9zM3ec/comparison/get_nick_done-0.5.0-py3-none-any.whl
+release/get_nick_done-0.5.0-py3-none-any.whl: OK
+release/get_nick_done-0.5.0.tar.gz: OK
+comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
+85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
+ProductName:		macOS
+ProductVersion:		26.6.2
+BuildVersion:		25G83
+arm64
+Python 3.11.15
+uv 0.10.10 (Homebrew 2026-03-13)
+c843909e6f5f676b19f06522b0e9dffe89b84421e1f7bd5610ee0494b32b0d49  release/get_nick_done-0.5.0-py3-none-any.whl
+9576a57d735d54aa7cd565b52670f11feb6bf659dd75da40a868942168e8a8c0  release/get_nick_done-0.5.0.tar.gz
+c843909e6f5f676b19f06522b0e9dffe89b84421e1f7bd5610ee0494b32b0d49  comparison/get_nick_done-0.5.0-py3-none-any.whl

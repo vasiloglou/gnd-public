@@ -413,6 +413,13 @@ installed probes are written and rehearsed
 ([003-RW2-pre-freeze.md](milestones/release-0.5.0/003-RW2-pre-freeze.md));
 their pull request waits for the owner's merge. No candidate is built.
 
+Status, 2026-11-25, RW2 done: the owner merged the probes pull request
+(283). A 0.5.0 candidate was built from main `85d076ba`, rebuilt
+independently on beast-3 with the same hashes, and passed installed
+acceptance there (33 passed)
+([004-phase-RW2.md](milestones/release-0.5.0/004-phase-RW2.md)). Nothing is
+uploaded, tagged or released; RW3 is next.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

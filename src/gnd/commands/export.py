@@ -78,10 +78,11 @@ def _cmd_export_ossie(
     strict: bool,
     max_output_bytes: int | None = None,
     ontology_only: bool = False,
+    physical_binding: str | None = None,
 ) -> int:
     from gnd.artifacts import ArtifactError
     from gnd.errors import ModelLoadError, ModelValidationError
-    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, OssieInputError, render_ossie
+    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, INPUT_REFUSALS, render_ossie
     from gnd.safefs import publish_new_files
 
     try:
@@ -92,11 +93,12 @@ def _cmd_export_ossie(
             max_output_bytes=DEFAULT_MAX_OUTPUT_BYTES if max_output_bytes is None else max_output_bytes,
             relational=not ontology_only,
             document_name=Path(out).name,
+            physical_binding=None if physical_binding is None else Path(physical_binding),
         )
     except FileNotFoundError as error:
         print(f"missing input: {error}", file=sys.stderr)
         return EXIT_NO_INPUT
-    except (ModelLoadError, ModelValidationError, OssieInputError) as error:
+    except (ModelLoadError, ModelValidationError, *INPUT_REFUSALS) as error:
         print(f"invalid Ossie export input: {error}", file=sys.stderr)
         return EXIT_ILL_FORMED
     except OSError as error:
@@ -212,8 +214,12 @@ def _register_export(subparsers):
         "--ontology-only", action="store_true",
         help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
     )
+    ossie_parser.add_argument(
+        "--physical-binding", metavar="FILE",
+        help="describe the delivered tables with this binding file instead of the built-in relational mapping",
+    )
 
-    return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
+    return {'ossie_parser': ossie_parser, 'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
 
 
 def add_parsers(subparsers, *, command: str | None = None):
@@ -248,10 +254,13 @@ def _ilp_inputs(args) -> str | None:
 def handle(args, parsers) -> int:
     if args.command == "export":
         if args.export_target == "ossie":
+            if args.physical_binding is not None and args.ontology_only:
+                parsers["ossie_parser"].error("--physical-binding cannot be used with --ontology-only")
             return _cmd_export_ossie(args.model, args.out, loss_report=args.loss_report,
                                      output_format=args.format, strict=args.strict,
                                      max_output_bytes=args.max_output_bytes,
-                                     ontology_only=args.ontology_only)
+                                     ontology_only=args.ontology_only,
+                                     physical_binding=args.physical_binding)
         if args.export_target == "ilp":
             from gnd.export.ilp_service import _cmd_export_ilp
 

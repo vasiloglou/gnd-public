@@ -536,6 +536,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.physical_binding": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.pyrel_rules": {
       "lane": "export",
       "layer": "lanes"

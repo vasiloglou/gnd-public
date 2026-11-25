@@ -95,8 +95,15 @@ def _extension(payload: Any) -> list[dict[str, str]]:
     return [{"vendor_name": VENDOR, "data": extension_data(payload)}]
 
 
-def build_semantic_model(schema: RelationalSchema, name: str) -> dict[str, Any]:
-    """One dataset per table, one field per column, one relationship per foreign key."""
+def build_semantic_model(
+    schema: RelationalSchema, name: str,
+    *, physical: Mapping[tuple[str, str], tuple[str | None, str | None]] | None = None,
+) -> dict[str, Any]:
+    """One dataset per table, one field per column, one relationship per foreign key.
+
+    ``physical`` is given for a delivered schema (a physical binding): per
+    (table, column), the Ossie data type or None, and the raw SQL type or None.
+    """
     datasets = []
     relationships = []
     for table in schema.tables:
@@ -108,13 +115,19 @@ def build_semantic_model(schema: RelationalSchema, name: str) -> dict[str, Any]:
         fields = []
         for column in table.columns:
             field: dict[str, Any] = {"name": column.name, "expression": {"sql": _quoted(column.name)}}
-            if column.datatype is not None:
+            if physical is not None:
+                datatype, sql_type = physical[(table.name, column.name)]
+                if datatype is not None:
+                    field["datatype"] = datatype
+                if sql_type is not None:
+                    field["custom_extensions"] = _extension({"sql_type": sql_type})
+            elif column.datatype is not None:
                 field["datatype"] = DATATYPES[column.datatype]
                 if field["datatype"] == "Opaque":
                     field["custom_extensions"] = _extension({"gnd_primitive": column.datatype})
             fields.append(field)
         dataset["fields"] = fields
-        dataset["custom_extensions"] = _extension({"source_kind": "logical"})
+        dataset["custom_extensions"] = _extension({"source_kind": "logical" if physical is None else "physical"})
         datasets.append(dataset)
         relationships += [
             {
@@ -196,14 +209,15 @@ class _Mapping:
             node["referent_mappings"] = referents
         return node
 
-    def link_tree(self, fact_type: str, carried_as: tuple[str, ...]) -> dict[str, Any] | str:
+    def link_tree(self, fact_type: str) -> dict[str, Any] | str:
         """One tree per fact type: a node per role in the relationship's order, the
         last one naming the relationship. Otherwise the reason there is no tree."""
         _, order, players = self.view.relations[fact_type]
         if len(order) > MAX_LINK_ARITY:
             return "arity-over-limit"
-        # A unary is a Boolean flag: a row is a link only where the flag is true.
-        flag = self.reference(carried_as[1], carried_as[2]) if len(order) == 1 else None
+        # A unary stored as a Boolean flag: a row is a link only where the flag is true.
+        first = self.placements[(fact_type, order[0])]
+        flag = self.reference(first.table, first.flag) if first.flag is not None else None
 
         def wrap(expression: str) -> str:
             return expression if flag is None else f"CASE WHEN {flag} THEN {expression} END"
@@ -232,6 +246,7 @@ def build_mapping(
     semantic_model_name: str,
     semantic_model_iri: str,
     bindings: Mapping[str, str],
+    extra: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Map the ontology's concepts and relationships onto the semantic model.
 
@@ -242,11 +257,11 @@ def build_mapping(
     mapper = _Mapping(schema, view)
     trees: dict[str, list[dict[str, Any]]] = {}
     unmapped_links = []
-    carried = {d.id: d.carried_as for d in dispositions if d.kind == "fact_type" and d.reason is None}
+    carried = {d.id for d in dispositions if d.kind == "fact_type" and d.reason is None}
     for fact_type, (owner, _order, _players) in view.relations.items():  # the ontology's relationship order
         if fact_type not in carried:
             continue
-        tree = mapper.link_tree(fact_type, carried[fact_type])
+        tree = mapper.link_tree(fact_type)
         if isinstance(tree, str):
             unmapped_links.append({"fact_type": fact_type, "reason": tree})
         else:
@@ -259,7 +274,7 @@ def build_mapping(
         identification = mapper.identifications.get(object_type)
         table = identification.table if identification is not None else None
         if view.kinds[object_type] == "entity" and table is not None:
-            if table != object_type:
+            if identification.absorbed:
                 concepts.append({"concept": concept, "reason": "subtype-absorbed"})
             else:
                 node = mapper.object_mapping(object_type, table, identification.columns, named=False)
@@ -275,12 +290,13 @@ def build_mapping(
     payload: dict[str, Any] = {
         "schema": EXTENSION_SCHEMA,
         **bindings,
-        "rmap_variant": schema.variant.value,
+        **({"rmap_variant": schema.variant.value} if schema.variant is not None else {}),
         "dispositions": [
             {"kind": d.kind, "id": d.id, "carried_as": list(d.carried_as), "reason": d.reason}
             for d in dispositions
         ],
         "concepts": concepts,
+        **(extra or {}),
     }
     if unmapped_links:
         payload["unmapped_links"] = sorted(unmapped_links, key=lambda row: row["fact_type"])

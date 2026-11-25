@@ -1,0 +1,43 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_mapping
+ontology_ref:
+  name: gnd_model
+  iri: ./ontology.yaml
+semantic_model_ref:
+  name: gnd_model_relational
+  iri: ./ontology.yaml.semantic_model.yaml
+concept_mappings:
+- concept: Student
+  object_mappings:
+  - expression: '"UNI.STUDENT"."NR"'
+  link_mappings:
+  - object_mapping:
+      expression: '"UNI.STUDENT"."NR"'
+    children:
+    - object_mapping:
+        concept: StudentName
+        expression: '"UNI.STUDENT"."FULL_NAME"'
+      relationship: student_has_name
+  - object_mapping:
+      expression: '"UNI.ENROLLED"."STUDENT_NR"'
+    children:
+    - object_mapping:
+        concept: Course
+        expression: '"UNI.ENROLLED"."COURSE_CD"'
+      relationship: student_takes_course
+- concept: Course
+  object_mappings:
+  - expression: '"UNI.COURSE"."CD"'
+  link_mappings:
+  - object_mapping:
+      expression: '"UNI.COURSE"."CD"'
+    children:
+    - object_mapping:
+        concept: CourseTitle
+        expression: '"UNI.COURSE"."TITLE"'
+      relationship: course_has_title
+custom_extensions:
+- vendor_name: GND
+  data: '{"binding_sha256":"5f67cb556adcaae6599b3ccbe04f2a4d3816d4baed3d11ebc348b5e29f6b62cf","concepts":[],"dispositions":[{"carried_as":["primary_key","uni.course"],"id":"fact_types/course_has_title/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","uni.student"],"id":"fact_types/student_has_name/constraints/0","kind":"constraint","reason":null},{"carried_as":["primary_key","uni.enrolled"],"id":"fact_types/student_takes_course/constraints/0","kind":"constraint","reason":null},{"carried_as":["columns","uni.course","cd","title"],"id":"course_has_title","kind":"fact_type","reason":null},{"carried_as":["columns","uni.student","nr","full_name"],"id":"student_has_name","kind":"fact_type","reason":null},{"carried_as":["columns","uni.enrolled","student_nr","course_cd"],"id":"student_takes_course","kind":"fact_type","reason":null}],"extension_roles":[],"model_identity":"sha256:361bf77ed7acc260ae97e0c01442d6bf5e55afe18f0789f3a606c0a228cc90b1","ontology_sha256":"1e709f7a62ad6cdb26143f34efbbc9a1dd43fbe9ac18338fd76874d63a739ded","schema":"gnd-ossie-relational/1","semantic_model_sha256":"5eb291429f658e04a93ab5371a6033931d1b65912bb65f25962ccee8c8a4b282"}'

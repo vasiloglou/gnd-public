@@ -1,0 +1,140 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:9385a7e650141519876cd379a9d0842699b1fc14ca6eac51e06838ebe7844537",
+ "ontology_sha256": "4d6e3d1ddc063f9fd4496d046f13b0bb85a0abb9b491f289f3b08fde579a75dc",
+ "semantic_model_sha256": "558a0319296e2f74f6cba48395cf373f3b90f70bcfc08626a2cd6d88bb1962be",
+ "binding_sha256": "91ca58f5d1a5d8d48eaaf056d0c3951d342de0039e46bac60d5d9f2bd8b6df83",
+ "dispositions": [
+  {
+   "kind": "constraint",
+   "id": "constraints/0",
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/city_in_state/constraints/0",
+   "carried_as": [],
+   "reason": "unbound"
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/city_in_state/constraints/1",
+   "carried_as": [],
+   "reason": "unbound"
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/country_has_name/constraints/0",
+   "carried_as": [
+    "primary_key",
+    "country"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/state_has_code/constraints/0",
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/state_has_code/constraints/1",
+   "carried_as": [],
+   "reason": "not-relational"
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/state_has_population/constraints/0",
+   "carried_as": [],
+   "reason": "extension-role"
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/state_in_country/constraints/0",
+   "carried_as": [
+    "primary_key",
+    "state"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/state_in_country/constraints/1",
+   "carried_as": [],
+   "reason": "not-relational"
+  },
+  {
+   "kind": "fact_type",
+   "id": "city_in_state",
+   "carried_as": [],
+   "reason": "unbound"
+  },
+  {
+   "kind": "fact_type",
+   "id": "country_has_name",
+   "carried_as": [
+    "columns",
+    "country",
+    "cd",
+    "name"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "fact_type",
+   "id": "state_has_code",
+   "carried_as": [
+    "columns",
+    "state",
+    "country_cd",
+    "state_cd"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "fact_type",
+   "id": "state_has_population",
+   "carried_as": [],
+   "reason": "extension-role"
+  },
+  {
+   "kind": "fact_type",
+   "id": "state_in_country",
+   "carried_as": [
+    "columns",
+    "state",
+    "country_cd",
+    "state_cd"
+   ],
+   "reason": null
+  }
+ ],
+ "concepts": [],
+ "extension_roles": [
+  {
+   "fact_type": "state_has_population",
+   "role": "population",
+   "table": "state",
+   "columns": [
+    "pop"
+   ]
+  },
+  {
+   "fact_type": "state_has_population",
+   "role": "state",
+   "table": "state",
+   "columns": [
+    "country_cd",
+    "state_cd"
+   ]
+  }
+ ]
+}

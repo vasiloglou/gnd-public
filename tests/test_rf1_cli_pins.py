@@ -295,6 +295,11 @@ def _ossie_successor(command):
             "--ontology-only", action="store_true",
             help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
         )
+        # ossie-relational-bundle OB4: the declared physical-binding input.
+        ossie.add_argument(
+            "--physical-binding", metavar="FILE",
+            help="describe the delivered tables with this binding file instead of the built-in relational mapping",
+        )
     else:
         ossie.add_argument(
             "--max-input-bytes", type=_byte_bound, default=None, metavar="N",

@@ -1,0 +1,67 @@
+{
+  "comment": "Each row is one bad binding and the refusal it must produce. `base` names a valid case; `patch` is an RFC 6902 patch of its binding.json. `raw` is the literal file text instead. `generate` names a file the test builds: directory, oversize (10 MiB + 1 of spaces around {}), deep (65 nested arrays), long-integer (a 5,000-digit integer as schema). Every row exits 3 and publishes nothing.",
+  "rows": [
+    {"id": "not-a-file", "rule": "binding:not-a-file", "generate": "directory"},
+    {"id": "oversize", "rule": "binding:size", "generate": "oversize"},
+    {"id": "empty", "rule": "binding:syntax", "raw": ""},
+    {"id": "truncated", "rule": "binding:syntax", "raw": "{\"schema\": \"gnd-physical-binding/1\", \"tables\": "},
+    {"id": "nan", "rule": "binding:syntax", "raw": "{\"schema\": \"gnd-physical-binding/1\", \"tables\": {\"t\": {\"columns\": {\"c\": {}}}}, \"roles\": {}, \"x\": NaN}"},
+    {"id": "duplicate-member", "rule": "binding:syntax", "raw": "{\"schema\": \"gnd-physical-binding/1\", \"tables\": {\"t\": {\"columns\": {\"c\": {}, \"c\": {}}}}, \"roles\": {}}"},
+    {"id": "deep", "rule": "binding:syntax", "generate": "deep"},
+    {"id": "not-utf8", "rule": "binding:syntax", "generate": "not-utf8"},
+    {"id": "long-integer", "rule": "binding:syntax", "generate": "long-integer"},
+
+    {"id": "top-level-array", "rule": "binding:schema", "raw": "[]"},
+    {"id": "wrong-schema-id", "rule": "binding:schema", "base": "V1", "patch": [{"op": "replace", "path": "/schema", "value": "gnd-physical-binding/2"}]},
+    {"id": "missing-roles", "rule": "binding:schema", "base": "V1", "patch": [{"op": "remove", "path": "/roles"}]},
+    {"id": "unknown-member", "rule": "binding:schema", "base": "V1", "patch": [{"op": "add", "path": "/tables/cust/rows", "value": []}]},
+    {"id": "no-tables", "rule": "binding:schema", "base": "V1", "patch": [{"op": "replace", "path": "/tables", "value": {}}]},
+    {"id": "no-columns", "rule": "binding:schema", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/columns", "value": {}}]},
+    {"id": "unknown-target-kind", "rule": "binding:schema", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/columns/cust_id/targets/0/kind", "value": "key"}]},
+    {"id": "role-target-without-role", "rule": "binding:schema", "base": "V1", "patch": [{"op": "remove", "path": "/tables/cust/columns/email_addr/targets/0/role"}]},
+    {"id": "empty-role-columns", "rule": "binding:schema", "base": "V1", "patch": [{"op": "replace", "path": "/roles/customer_has_email/email", "value": []}]},
+    {"id": "repeated-key-column", "rule": "binding:schema", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/primary_key", "value": ["cust_id", "cust_id"]}]},
+    {"id": "numeric-sql-type", "rule": "binding:schema", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/columns/cust_id/sql_type", "value": 4}]},
+    {"id": "empty-table-name", "rule": "binding:schema", "base": "V1", "patch": [{"op": "add", "path": "/tables/", "value": {"columns": {"c": {}}}}]},
+
+    {"id": "column-collision", "rule": "binding:name-collision", "base": "V1", "patch": [{"op": "add", "path": "/tables/cust/columns/CUST_ID", "value": {}}]},
+    {"id": "table-collision", "rule": "binding:name-collision", "base": "V1", "patch": [{"op": "add", "path": "/tables/Cust", "value": {"columns": {"c": {}}}}]},
+    {"id": "reference-to-unknown-table", "rule": "binding:unknown-table", "base": "V2", "patch": [{"op": "replace", "path": "/tables/uni.enrolled/columns/student_nr/references/table", "value": "uni.pupil"}]},
+    {"id": "role-in-unknown-table", "rule": "binding:unknown-table", "base": "V2", "patch": [{"op": "replace", "path": "/roles/student_takes_course/student/0/table", "value": "uni.pupil"}]},
+    {"id": "key-names-unknown-column", "rule": "binding:unknown-column", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/primary_key", "value": ["id"]}]},
+    {"id": "unique-key-names-unknown-column", "rule": "binding:unknown-column", "base": "V5", "patch": [{"op": "replace", "path": "/tables/timetable/unique_keys/0/0", "value": "room"}]},
+    {"id": "reference-to-unknown-column", "rule": "binding:unknown-column", "base": "V2", "patch": [{"op": "replace", "path": "/tables/uni.enrolled/columns/student_nr/references/columns", "value": ["id"]}]},
+    {"id": "role-in-unknown-column", "rule": "binding:unknown-column", "base": "V2", "patch": [{"op": "replace", "path": "/roles/student_takes_course/student/0/column", "value": "pupil_nr"}]},
+    {"id": "string-names-no-column", "rule": "binding:unknown-column", "base": "V1", "patch": [{"op": "replace", "path": "/roles/customer_has_email/email", "value": ["cust.email"]}]},
+    {"id": "ambiguous-string", "rule": "binding:ambiguous-column", "base": "V1", "patch": [
+      {"op": "add", "path": "/tables/a", "value": {"columns": {"b.c": {}}}},
+      {"op": "add", "path": "/tables/a.b", "value": {"columns": {"c": {}}}},
+      {"op": "replace", "path": "/roles/customer_has_email/email", "value": ["a.b.c"]}]},
+    {"id": "unknown-fact-type", "rule": "binding:unknown-fact-type", "base": "V1", "patch": [{"op": "add", "path": "/roles/customer_has_phone", "value": {"customer": ["cust.cust_id"]}}]},
+    {"id": "target-names-unknown-fact-type", "rule": "binding:unknown-fact-type", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/columns/email_addr/targets/0/fact_type", "value": "customer_has_phone"}]},
+    {"id": "extension-names-unknown-fact-type", "rule": "binding:unknown-fact-type", "base": "V1", "patch": [{"op": "add", "path": "/extension_roles", "value": {"customer_has_phone": {"customer": ["cust.cust_id"]}}}]},
+    {"id": "unknown-role", "rule": "binding:unknown-role", "base": "V1", "patch": [{"op": "add", "path": "/roles/customer_has_email/phone", "value": ["cust.email_addr"]}]},
+    {"id": "target-names-unknown-role", "rule": "binding:unknown-role", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/columns/email_addr/targets/0/role", "value": "phone"}]},
+    {"id": "unknown-object-type", "rule": "binding:unknown-object-type", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/columns/cust_id/targets/0/object_type", "value": "client"}]},
+
+    {"id": "role-names-collide", "rule": "binding:role-name", "base": "V1", "patch": [{"op": "add", "path": "/roles/customer_has_email/E-Mail", "value": ["cust.email_addr"]}]},
+    {"id": "compatibility-form-collides", "rule": "binding:role-name", "base": "V1", "patch": [{"op": "add", "path": "/roles/customer_has_email/ｅｍａｉｌ", "value": ["cust.email_addr"]}]},
+    {"id": "punctuation-only-role-name", "rule": "binding:role-name", "base": "V1", "patch": [{"op": "add", "path": "/roles/customer_has_email/--", "value": ["cust.email_addr"]}]},
+    {"id": "foreign-key-group-too-small", "rule": "binding:reference-group", "base": "V3", "patch": [{"op": "remove", "path": "/tables/city/columns/st_cd/references"}]},
+    {"id": "foreign-key-to-reordered-key", "rule": "binding:reference-not-a-key", "base": "V3", "patch": [
+      {"op": "replace", "path": "/tables/city/columns/st_country_cd/references/columns", "value": ["state_cd", "country_cd"]},
+      {"op": "replace", "path": "/tables/city/columns/st_cd/references/columns", "value": ["state_cd", "country_cd"]}]},
+    {"id": "foreign-key-to-non-key", "rule": "binding:reference-not-a-key", "base": "V2", "patch": [{"op": "replace", "path": "/tables/uni.enrolled/columns/student_nr/references/columns", "value": ["full_name"]}]},
+    {"id": "one-role-missing", "rule": "binding:partial-fact-type", "base": "V1", "patch": [{"op": "remove", "path": "/roles/customer_has_email/email"}]},
+    {"id": "composite-role-with-one-column", "rule": "binding:role-arity", "base": "V3", "patch": [{"op": "replace", "path": "/roles/city_in_state/state", "value": ["city.st_cd"]}]},
+    {"id": "simple-role-with-two-columns", "rule": "binding:role-arity", "base": "V1", "patch": [
+      {"op": "remove", "path": "/tables/cust/columns/email_addr/targets"},
+      {"op": "replace", "path": "/roles/customer_has_email/email", "value": ["cust.email_addr", "cust.cust_id"]}]},
+    {"id": "role-target-disagrees-with-roles", "rule": "binding:target-mismatch", "base": "V1", "patch": [{"op": "replace", "path": "/tables/cust/columns/email_addr/targets/0/role", "value": "customer"}]},
+    {"id": "reference-target-names-wrong-player", "rule": "binding:target-mismatch", "base": "V2", "patch": [{"op": "replace", "path": "/tables/uni.enrolled/columns/student_nr/targets/0/object_type", "value": "course"}]},
+    {"id": "key-column-holds-an-attribute", "rule": "binding:key-role", "base": "V1", "patch": [
+      {"op": "replace", "path": "/tables/cust/primary_key", "value": ["cust_id", "email_addr"]},
+      {"op": "add", "path": "/tables/cust/columns/email_addr/targets/-", "value": {"kind": "identifier", "object_type": "customer"}}]},
+    {"id": "one-column-for-two-value-types", "rule": "binding:incompatible-keys", "base": "V2", "patch": [{"op": "replace", "path": "/roles/course_has_title/title", "value": ["uni.student.full_name"]}]}
+  ]
+}

@@ -642,7 +642,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.export_command
 - does: Dispatch Lean, Souffle, PyRel, ILP and Ossie exports with target specific input checks [handle].
-- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, ontology only, five file group, semantic model file, mapping file, output collision, dispatch handler
+- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, ontology only, five file group, semantic model file, mapping file, physical binding flag, output collision, dispatch handler
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1634,12 +1634,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### export.ossie
 - does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, encode and bind the semantic model and mapping of the same run, and count the fact types that declare redact [render_ossie].
-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view
-- in: standalone model path, output format, and whether to add the relational files
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view, physical binding run
+- in: standalone model path, output format, whether to add the relational files, and an optional physical binding path
 - out: ontology, sidecar and loss report bytes, and semantic model and mapping bytes or None
 - status: canonical
 - modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
-- uses: export.ossie_relational, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
+- uses: export.ossie_relational, export.physical_binding, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
 - used_by: cli.export_command
 - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py, tests/test_ossie_relational.py
 - notes: Every artifact of a run is bounded by max_output_bytes. _project returns the ontology with the OntologyView the mapping reads, so the mapping never recomputes concept names, role order or identify_by. A model that maps to no table gets no relational files.
@@ -1653,9 +1653,22 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/export/ossie_relational.py
 - uses: infra.artifacts, infra.input_policy, model.relational_mapping
+- used_by: export.ossie, export.physical_binding
+- tests: tests/test_ossie_relational.py, tests/test_physical_binding.py
+- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection. The same builders serve a physical binding: field types and source_kind come from the binding, and the extension gains its members.
+
+
+### export.physical_binding
+- does: Read a physical binding (a delivered relational schema and where it holds a model's roles) as untrusted JSON, check it in one pinned order of rule ids, and return the relational schema, field types and extension members the Ossie relational files are built from [read_binding; bind].
+- verbs: physical binding, column map, delivered schema, bind roles to columns, binding refusal, rule order, unknown table, unknown column, ambiguous column, role name normalization, NFKC casefold, foreign key group, reference not a key, role arity, home table, identifier target, key role, incompatible keys, sql type map, lex sql type, unbound fact type, extension roles, derived unique key, binding sha256
+- in: a binding file path; then a loaded Model, the OntologyView of the export run and the read Binding
+- out: Binding (document and digest); Bound (RelationalSchema, field types, extension members); BindingError with a rule id
+- status: canonical
+- modules: src/gnd/export/physical_binding.py
+- uses: export.ossie_relational, infra.input_policy, infra.safe_filesystem, model.query_index, model.relational_mapping
 - used_by: export.ossie
-- tests: tests/test_ossie_relational.py
-- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection.
+- tests: tests/test_physical_binding.py
+- notes: Normative rules in representation-format.md, "Physical binding"; the member list is the packaged schema gnd/schema/physical-binding.schema.json. Total over arbitrary bytes and over any schema-valid document. Fills the Rmap's own records, so gnd.rmap.dispositions is the one walk for both paths and the Rmap is not run. A table.column string is looked up, never split.
 
 
 ### export.pyrel_emit
@@ -2287,7 +2300,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +58 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +59 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2539,7 +2552,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +41 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +42 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2592,11 +2605,11 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.relational_mapping
 - does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint [map_model; dispositions].
-- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, identification record, functional identifier component, map_model, dispositions
+- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, unary flag column, identification record, absorbed subtype flag, functional identifier component, name foreign keys, binding-only reasons, map_model, dispositions
 - status: canonical
 - modules: src/gnd/rmap.py
 - uses: model.query_index, model.reference_resolution
-- used_by: export.ossie, export.ossie_relational
+- used_by: export.ossie, export.ossie_relational, export.physical_binding
 - tests: tests/test_rmap.py
 - in: a loaded Model and an RmapVariant
 - out: RelationalSchema (tables, role placements, identifications) and Disposition rows
@@ -2645,7 +2658,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +18 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.physical_binding, … +19 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -3749,6 +3762,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - resume session: exp.service, exp.session_store
 - reviewed preview: cli.evolve_command, evolve.command
 - reviewer timeout: cli.review_command, review.command
+- role arity: export.physical_binding, extract.projection
 - role columns: export.ilp_neutral, model.relational_mapping
 - role players: extract.guidelines, model.query_index
 - round summary: cli.evolve_command, evolve.round_summary

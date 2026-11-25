@@ -1,0 +1,20 @@
+{
+  "schema": "gnd-physical-binding/1",
+  "tables": {
+    "timetable": {
+      "columns": {
+        "room_no": {"sql_type": "INTEGER"},
+        "slot_cd": {"sql_type": "VARCHAR(12)"},
+        "staff_no": {"sql_type": "INTEGER"}
+      },
+      "primary_key": ["slot_cd", "staff_no"]
+    }
+  },
+  "roles": {
+    "room_slot_lecturer": {
+      "room": ["timetable.room_no"],
+      "slot": ["timetable.slot_cd"],
+      "lecturer": ["timetable.staff_no"]
+    }
+  }
+}

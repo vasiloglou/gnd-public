@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import enum
 from collections import defaultdict
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
@@ -30,6 +31,7 @@ __all__ = [
     "UnmappedReason",
     "dispositions",
     "map_model",
+    "name_foreign_keys",
 ]
 
 
@@ -44,6 +46,10 @@ UnmappedReason = Literal[
     "identification-unmatchable",
     "spans-tables",
     "not-relational",
+    # A physical binding run only (gnd.export.physical_binding):
+    "unbound",
+    "extension-role",
+    "not-in-binding",
 ]
 
 
@@ -101,6 +107,9 @@ class RolePlacement:
     role: str
     table: str
     columns: tuple[str, ...]
+    #: For a unary fact type the Rmap stores as a Boolean flag: that column. The fact
+    #: holds for a row only where the flag is true. ``None`` when every row is a link.
+    flag: str | None = None
 
 
 @dataclass(frozen=True)
@@ -122,11 +131,14 @@ class Identification:
     columns: tuple[str, ...]
     components: tuple[tuple[str, str] | None, ...]
     table: str | None
+    #: Whether ``table`` is a supertype's table that absorbed this object type.
+    absorbed: bool = False
 
 
 @dataclass(frozen=True)
 class RelationalSchema:
-    variant: RmapVariant
+    #: The Rmap variant that produced the schema, or ``None`` for a physical binding.
+    variant: RmapVariant | None
     tables: tuple[Table, ...]
     unmapped: tuple[Unmapped, ...]
     # Every role of every carried fact type, sorted by (fact type, role).
@@ -597,23 +609,17 @@ class _Mapper:
 
         # Foreign keys, named per (from, to) pair in column order (A11).
         built: list[Table] = []
-        key_names: set[str] = set()  # unique in the schema, not only per table pair (OB3 r1 F3)
-        for name in sorted(tables):
-            t = tables[name]
-            counts: dict[str, int] = defaultdict(int)
-            fks = []
+        references: dict[str, list[tuple[tuple[str, ...], str, tuple[str, ...]]]] = {}
+        for name, t in tables.items():
+            references[name] = []
             for columns, player in t["groups"]:
                 target = self.owner_of(player)
-                if target not in tables or not tables[target]["pk"]:
-                    continue
-                while True:
-                    counts[target] += 1
-                    suffix = "" if counts[target] == 1 else f"__{counts[target]}"
-                    key_name = f"{name}__{target}{suffix}"
-                    if key_name not in key_names:
-                        break
-                key_names.add(key_name)
-                fks.append(ForeignKey(key_name, tuple(columns), target, tuple(tables[target]["pk"])))
+                if target in tables and tables[target]["pk"]:
+                    references[name].append((tuple(columns), target, tuple(tables[target]["pk"])))
+        foreign_keys = name_foreign_keys(references)
+        for name in sorted(tables):
+            t = tables[name]
+            fks = foreign_keys[name]
             position = {c.name: i for i, c in enumerate(t["columns"])}
             uks = sorted((tuple(u) for u in t["uks"].values()), key=lambda u: [position[c] for c in u])
             built.append(Table(name, t["subject"], tuple(t["columns"]), tuple(t["pk"]), tuple(uks), tuple(fks)))
@@ -632,7 +638,8 @@ class _Mapper:
                 continue
             for role in self.roles(fact):
                 table_name, columns = self.location(fid, role)
-                roles.append(RolePlacement(fid, role, table_name, tuple(columns)))
+                flag = self.carried[("fact_type", fid)][2] if self.placed[fid].rule == 4 else None
+                roles.append(RolePlacement(fid, role, table_name, tuple(columns), flag))
         identifications = []
         for oid in sorted(self.objects):
             key = self.key(oid)
@@ -647,6 +654,7 @@ class _Mapper:
                 oid, kind, tuple(tables[owner]["pk"] if held else key.names),  # type: ignore[arg-type]
                 tuple(origin if grouped else None for origin in key.origins),
                 owner if held else None,
+                held and owner != oid,
             ))
         return RelationalSchema(
             self.variant, tuple(built), unmapped,
@@ -842,6 +850,33 @@ class _Mapper:
             return
         reasons = {self.unmapped[("fact_type", f)][0] for f, _ in refs if ("fact_type", f) in self.unmapped}
         self.unmapped[address] = (next(iter(sorted(reasons))), "") if reasons else ("spans-tables", "")
+
+
+def name_foreign_keys(
+    references: Mapping[str, Sequence[tuple[tuple[str, ...], str, tuple[str, ...]]]],
+) -> dict[str, tuple[ForeignKey, ...]]:
+    """Name each table's foreign keys, given as (columns, target table, target columns).
+
+    ``<from>__<to>``, then ``__2`` and so on, counted per pair in the order given. A
+    name is unique in the whole schema: tables are named in sorted order, and a name
+    another pair already took takes the next number (OB3 r1 F3).
+    """
+    taken: set[str] = set()
+    named: dict[str, tuple[ForeignKey, ...]] = {}
+    for table in sorted(references):
+        counts: dict[str, int] = defaultdict(int)
+        keys = []
+        for columns, target, target_columns in references[table]:
+            while True:
+                counts[target] += 1
+                suffix = "" if counts[target] == 1 else f"__{counts[target]}"
+                name = f"{table}__{target}{suffix}"
+                if name not in taken:
+                    break
+            taken.add(name)
+            keys.append(ForeignKey(name, tuple(columns), target, tuple(target_columns)))
+        named[table] = tuple(keys)
+    return named
 
 
 def map_model(model: Any, *, variant: RmapVariant = RmapVariant.HALPIN) -> RelationalSchema:

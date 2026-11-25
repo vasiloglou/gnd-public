@@ -1,0 +1,27 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_mapping
+ontology_ref:
+  name: gnd_model
+  iri: ./ontology.yaml
+semantic_model_ref:
+  name: gnd_model_relational
+  iri: ./ontology.yaml.semantic_model.yaml
+concept_mappings:
+- concept: Room
+  link_mappings:
+  - object_mapping:
+      expression: '"TIMETABLE"."ROOM_NO"'
+    children:
+    - object_mapping:
+        concept: Slot
+        expression: '"TIMETABLE"."SLOT_CD"'
+      children:
+      - object_mapping:
+          concept: Lecturer
+          expression: '"TIMETABLE"."STAFF_NO"'
+        relationship: room_slot_lecturer
+custom_extensions:
+- vendor_name: GND
+  data: '{"binding_sha256":"1d9a67e5a4756bde0d2870c5b02a7de28f824beda766c6e572d729c937fad7af","concepts":[],"dispositions":[{"carried_as":[],"id":"fact_types/room_slot_lecturer/constraints/0","kind":"constraint","reason":"not-in-binding"},{"carried_as":["primary_key","timetable"],"id":"fact_types/room_slot_lecturer/constraints/1","kind":"constraint","reason":null},{"carried_as":["columns","timetable","room_no","slot_cd","staff_no"],"id":"room_slot_lecturer","kind":"fact_type","reason":null}],"extension_roles":[],"model_identity":"sha256:3d8b5332edd068a5eb943cde351331b4c0f0535dd919f509982178b74c2c87a0","ontology_sha256":"227809e2b10b4c6dcefc5f1f47e091c74ddffa34a42f0ee5c72377270dfbe1f3","schema":"gnd-ossie-relational/1","semantic_model_sha256":"9c4663ebb9628cd322c19a88ecf6ae97b892d7d2e02efa0b65ecd951240faa10"}'

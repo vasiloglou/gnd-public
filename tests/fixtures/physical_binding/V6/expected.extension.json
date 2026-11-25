@@ -1,0 +1,37 @@
+{
+ "schema": "gnd-ossie-relational/1",
+ "model_identity": "sha256:a7ba3beb78500b8cd0df756186803ad58ac6b73bebf4d6f9f20f669324b1fc6a",
+ "ontology_sha256": "3a8e457fc09ffb17f8d5c95e4f3a2933c6578df311f682df22bec0db8dbeaa1b",
+ "semantic_model_sha256": "d97df4044a7d4a2d4f6daf53ea2f91c53491ae337369dedf5bfbac88f1963f49",
+ "binding_sha256": "b4a9d56f62c9012634f51ba30d8e6a7a8fcc438061a395c062ce69d97077821c",
+ "dispositions": [
+  {
+   "kind": "constraint",
+   "id": "fact_types/customer_has_email/constraints/0",
+   "carried_as": [
+    "primary_key",
+    "cust"
+   ],
+   "reason": null
+  },
+  {
+   "kind": "constraint",
+   "id": "fact_types/customer_has_email/constraints/1",
+   "carried_as": [],
+   "reason": "not-relational"
+  },
+  {
+   "kind": "fact_type",
+   "id": "customer_has_email",
+   "carried_as": [
+    "columns",
+    "cust",
+    "cust_id",
+    "email_addr"
+   ],
+   "reason": null
+  }
+ ],
+ "concepts": [],
+ "extension_roles": []
+}

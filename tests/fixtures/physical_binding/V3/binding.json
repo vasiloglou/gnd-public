@@ -1,0 +1,69 @@
+{
+  "schema": "gnd-physical-binding/1",
+  "tables": {
+    "country": {
+      "columns": {
+        "cd": {
+          "sql_type": "CHAR(2)",
+          "targets": [{"kind": "identifier", "object_type": "country"}]
+        },
+        "name": {"sql_type": "VARCHAR(80)"}
+      },
+      "primary_key": ["cd"]
+    },
+    "state": {
+      "columns": {
+        "country_cd": {
+          "sql_type": "CHAR(2)",
+          "targets": [{"kind": "identifier", "object_type": "state"}],
+          "references": {"table": "country", "columns": ["cd"]}
+        },
+        "state_cd": {
+          "sql_type": "VARCHAR(8)",
+          "targets": [{"kind": "identifier", "object_type": "state"}]
+        },
+        "pop": {"sql_type": "BIGINT"}
+      },
+      "primary_key": ["country_cd", "state_cd"]
+    },
+    "city": {
+      "columns": {
+        "id": {
+          "sql_type": "INTEGER",
+          "targets": [{"kind": "identifier", "object_type": "city"}]
+        },
+        "st_country_cd": {
+          "sql_type": "CHAR(2)",
+          "references": {"table": "state", "columns": ["country_cd", "state_cd"]}
+        },
+        "st_cd": {
+          "sql_type": "VARCHAR(8)",
+          "references": {"table": "state", "columns": ["country_cd", "state_cd"]}
+        }
+      },
+      "primary_key": ["id"]
+    }
+  },
+  "roles": {
+    "country_has_name": {
+      "country": ["country.cd"],
+      "name": ["country.name"]
+    },
+    "state_in_country": {
+      "state": ["state.country_cd", "state.state_cd"],
+      "country": ["state.country_cd"]
+    },
+    "state_has_code": {
+      "state": ["state.country_cd", "state.state_cd"],
+      "code": ["state.state_cd"]
+    },
+    "state_has_population": {
+      "state": ["state.country_cd", "state.state_cd"],
+      "population": ["state.pop"]
+    },
+    "city_in_state": {
+      "city": ["city.id"],
+      "state": ["city.st_country_cd", "city.st_cd"]
+    }
+  }
+}

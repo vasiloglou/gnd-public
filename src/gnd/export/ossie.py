@@ -24,6 +24,7 @@ from gnd.export.ossie_relational import (
     build_semantic_model,
     validate_relational,
 )
+from gnd.export.physical_binding import BindingError, Bound, bind, read_binding
 from gnd.input_policy import MAX_BYTES_CEILING, guard_yaml, loads, require_byte_bound
 from gnd.model import (
     MAX_MODEL_BYTES,
@@ -56,6 +57,10 @@ MAX_OUTPUT_BYTES_CEILING = MAX_BYTES_CEILING
 
 class OssieInputError(ValueError):
     """The source cannot be exported with the selected policy."""
+
+
+#: What :func:`render_ossie` raises for a refused input, besides the model's own errors.
+INPUT_REFUSALS = (OssieInputError, BindingError)
 
 
 @dataclass(frozen=True)
@@ -484,16 +489,22 @@ def _relative_iri(file_name: str) -> str:
     return "./" + encoded
 
 
-def _relational(model, view, data: bytes, identity: str, *, output_format: str, document_name: str):
-    """The semantic model and mapping for the ontology bytes ``data`` (OB3)."""
-    schema = map_model(model, variant=RmapVariant.HALPIN)  # D5
+def _relational(
+    model, view, data: bytes, identity: str, *, output_format: str, document_name: str, bound: Bound | None,
+):
+    """The semantic model and mapping for the ontology bytes ``data`` (OB3).
+
+    From the built-in Rmap, or from ``bound``, a resolved physical binding (OB4): the
+    Rmap is then not run.
+    """
+    schema = map_model(model, variant=RmapVariant.HALPIN) if bound is None else bound.schema  # D5
     if not schema.tables:
         # The pinned core-spec requires at least one dataset. A model that maps to no
         # table has no relational files; the run then writes the ontology's three.
         return None, None
     semantic_name = f"{view.name}_relational"
     semantic_file = f"{document_name}.semantic_model.{output_format}"
-    semantic = build_semantic_model(schema, semantic_name)
+    semantic = build_semantic_model(schema, semantic_name, physical=None if bound is None else bound.fields)
     semantic_bytes = _encode(semantic, output_format)
     mapping = build_mapping(
         schema,
@@ -508,6 +519,7 @@ def _relational(model, view, data: bytes, identity: str, *, output_format: str, 
             "ontology_sha256": hashlib.sha256(data).hexdigest(),
             "semantic_model_sha256": hashlib.sha256(semantic_bytes).hexdigest(),
         },
+        extra=None if bound is None else bound.extension,
     )
     validate_relational(semantic, mapping)
     return semantic_bytes, _encode(mapping, output_format)
@@ -521,6 +533,7 @@ def render_ossie(
     max_output_bytes: int = DEFAULT_MAX_OUTPUT_BYTES,
     relational: bool = True,
     document_name: str | None = None,
+    physical_binding: Path | None = None,
 ) -> OssieArtifacts:
     """Render the deterministic artifacts of one bounded, admitted model read.
 
@@ -533,9 +546,16 @@ def render_ossie(
     refused with ``ossie:output-size`` and nothing is returned to publish.
     """
     require_byte_bound("max_output_bytes", max_output_bytes)
+    if physical_binding is not None and not relational:
+        raise ValueError("a physical binding needs the relational files")
+    # The binding's syntax and schema need no model, so they are judged first.
+    binding = None if physical_binding is None else read_binding(physical_binding)
     document, model = _read_model(model_path)
     ontology, mapped, view = _project(document, model)
     _schema().validate(ontology)
+    # Its names and contradictions need the model and the ontology view, and are
+    # judged before the strict refusals below.
+    bound = None if binding is None else bind(model, view, binding)
     incompatible = {}
     for index, constraint in enumerate(document.get("constraints", ())):
         reason = guarded_clause_refusal(constraint)
@@ -570,6 +590,7 @@ def render_ossie(
         semantic_model, mapping = _relational(
             model, view, data, identity,
             output_format=output_format, document_name=document_name or f"ontology.{output_format}",
+            bound=bound,
         )
     artifacts = (data, sidecar, report, semantic_model, mapping)
     if max(len(artifact) for artifact in artifacts if artifact is not None) > max_output_bytes:

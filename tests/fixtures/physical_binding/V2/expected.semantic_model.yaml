@@ -1,0 +1,87 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_relational
+datasets:
+- name: uni.course
+  source: uni.course
+  primary_key:
+  - cd
+  fields:
+  - name: cd
+    expression:
+      sql: '"CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(10)"}'
+  - name: title
+    expression:
+      sql: '"TITLE"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"TEXT"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'
+- name: uni.enrolled
+  source: uni.enrolled
+  primary_key:
+  - student_nr
+  - course_cd
+  fields:
+  - name: student_nr
+    expression:
+      sql: '"STUDENT_NR"'
+    datatype: Integer
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"INTEGER"}'
+  - name: course_cd
+    expression:
+      sql: '"COURSE_CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(10)"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'
+- name: uni.student
+  source: uni.student
+  primary_key:
+  - nr
+  fields:
+  - name: nr
+    expression:
+      sql: '"NR"'
+    datatype: Integer
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"INTEGER"}'
+  - name: full_name
+    expression:
+      sql: '"FULL_NAME"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(200)"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'
+relationships:
+- name: uni.enrolled__uni.student
+  from: uni.enrolled
+  to: uni.student
+  from_columns:
+  - student_nr
+  to_columns:
+  - nr
+- name: uni.enrolled__uni.course
+  from: uni.enrolled
+  to: uni.course
+  from_columns:
+  - course_cd
+  to_columns:
+  - cd

@@ -69,6 +69,27 @@ def test_external_relational_census(oracle, tmp_path, relative):
         assert result.returncode == 0, result.stdout + result.stderr
 
 
+def test_external_physical_binding_cases(oracle, tmp_path):
+    """OB4 T13: the pinned validator accepts the files of every valid corpus binding."""
+    from support import physical_binding_corpus as bindings
+
+    for case in bindings.cases():
+        directory = tmp_path / case
+        directory.mkdir()
+        bundle = render_ossie(
+            bindings.model_path(case), output_format="yaml", document_name="ontology.yaml",
+            physical_binding=bindings.CORPUS / case / "binding.json",
+        )
+        (directory / "ontology.yaml").write_bytes(bundle.document)
+        semantic = directory / "ontology.yaml.semantic_model.yaml"
+        mapping = directory / "ontology.yaml.mapping.yaml"
+        semantic.write_bytes(bundle.semantic_model)
+        mapping.write_bytes(bundle.mapping)
+        for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
+            result = oracle.validate(path, schema)
+            assert result.returncode == 0, case + ": " + result.stdout + result.stderr
+
+
 def test_external_refusal_is_live(oracle, tmp_path):
     document = {
         "version": "0.3.0.dev0",

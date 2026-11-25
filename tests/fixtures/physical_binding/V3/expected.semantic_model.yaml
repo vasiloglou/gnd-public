@@ -1,0 +1,103 @@
+%YAML 1.1
+---
+version: 0.3.0.dev0
+name: gnd_model_relational
+datasets:
+- name: city
+  source: city
+  primary_key:
+  - id
+  fields:
+  - name: id
+    expression:
+      sql: '"ID"'
+    datatype: Integer
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"INTEGER"}'
+  - name: st_country_cd
+    expression:
+      sql: '"ST_COUNTRY_CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"CHAR(2)"}'
+  - name: st_cd
+    expression:
+      sql: '"ST_CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(8)"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'
+- name: country
+  source: country
+  primary_key:
+  - cd
+  fields:
+  - name: cd
+    expression:
+      sql: '"CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"CHAR(2)"}'
+  - name: name
+    expression:
+      sql: '"NAME"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(80)"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'
+- name: state
+  source: state
+  primary_key:
+  - country_cd
+  - state_cd
+  fields:
+  - name: country_cd
+    expression:
+      sql: '"COUNTRY_CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"CHAR(2)"}'
+  - name: state_cd
+    expression:
+      sql: '"STATE_CD"'
+    datatype: String
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"VARCHAR(8)"}'
+  - name: pop
+    expression:
+      sql: '"POP"'
+    datatype: Integer
+    custom_extensions:
+    - vendor_name: GND
+      data: '{"sql_type":"BIGINT"}'
+  custom_extensions:
+  - vendor_name: GND
+    data: '{"source_kind":"physical"}'
+relationships:
+- name: city__state
+  from: city
+  to: state
+  from_columns:
+  - st_country_cd
+  - st_cd
+  to_columns:
+  - country_cd
+  - state_cd
+- name: state__country
+  from: state
+  to: country
+  from_columns:
+  - country_cd
+  to_columns:
+  - cd

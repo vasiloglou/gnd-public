@@ -1,0 +1,24 @@
+{
+  "schema": "gnd-physical-binding/1",
+  "tables": {
+    "cust": {
+      "columns": {
+        "cust_id": {
+          "sql_type": "INTEGER",
+          "targets": [{"kind": "identifier", "object_type": "customer"}]
+        },
+        "email_addr": {
+          "sql_type": "VARCHAR(320)",
+          "targets": [{"kind": "role", "fact_type": "customer_has_email", "role": "email"}]
+        }
+      },
+      "primary_key": ["cust_id"]
+    }
+  },
+  "roles": {
+    "customer_has_email": {
+      "customer": [{"table": "cust", "column": "cust_id"}],
+      "email": [{"table": "cust", "column": "email_addr"}]
+    }
+  }
+}

@@ -965,17 +965,18 @@ Halpin's relational mapping (Rmap) of a loaded GND model.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `RmapVariant` | class(enum.Enum) | 36 | (no docstring) |
-| `Column` | class | 51 | (no docstring) |
-| `ForeignKey` | class | 59 | (no docstring) |
-| `Table` | class | 67 | (no docstring) |
-| `Unmapped` | class | 77 | (no docstring) |
-| `Disposition` | class | 85 | (no docstring) |
-| `RolePlacement` | class | 93 | The table and columns that hold one role of a carried fact type. |
-| `Identification` | class | 107 | How an object type's key columns arise, one entry per key column. |
-| `RelationalSchema` | class | 128 | (no docstring) |
-| `map_model(model, *, variant) -> RelationalSchema` | function | 847 | Map one loaded model to its relational schema; never raises for an admitted model. |
-| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 852 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+| `RmapVariant` | class(enum.Enum) | 38 | (no docstring) |
+| `Column` | class | 57 | (no docstring) |
+| `ForeignKey` | class | 65 | (no docstring) |
+| `Table` | class | 73 | (no docstring) |
+| `Unmapped` | class | 83 | (no docstring) |
+| `Disposition` | class | 91 | (no docstring) |
+| `RolePlacement` | class | 99 | The table and columns that hold one role of a carried fact type. |
+| `Identification` | class | 116 | How an object type's key columns arise, one entry per key column. |
+| `RelationalSchema` | class | 139 | (no docstring) |
+| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 855 | Name each table's foreign keys, given as (columns, target table, target columns). |
+| `map_model(model, *, variant) -> RelationalSchema` | function | 882 | Map one loaded model to its relational schema; never raises for an admitted model. |
+| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 887 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
 
 ## gnd.safefs — `src/gnd/safefs.py`
 Components: infra.safe_filesystem

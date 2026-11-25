@@ -420,6 +420,11 @@ acceptance there (33 passed)
 ([004-phase-RW2.md](milestones/release-0.5.0/004-phase-RW2.md)). Nothing is
 uploaded, tagged or released; RW3 is next.
 
+Status, 2026-11-25, RW3 done: the publication hand-over for 0.5.0 is written
+([005-phase-RW3.md](milestones/release-0.5.0/005-phase-RW3.md)): the dossier
+with each owner act, the rehearsed publication edits and a remote snapshot.
+Nothing is uploaded, tagged or released; each act waits for the owner.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

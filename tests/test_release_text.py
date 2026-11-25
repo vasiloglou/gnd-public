@@ -75,7 +75,7 @@ PAGES = {
         "| Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |\n"
     ),
     "docs/releasing.md": (
-        "were validated. Every release through 0.3.0 (0.1.0, 0.2.0 and 0.3.0) was\n"
+        "were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was\n"
         "   `## X.Y.Z (tagged YYYY-MM-DD, not published on PyPI)`, and give in it the\n"
     ),
     "docs/development/candidate.md": "The artifact is `get_nick_done-0.1.0-py3-none-any.whl`.\n",
@@ -300,6 +300,63 @@ def test_a_page_left_in_the_earlier_state_is_reported(tmp_path, name):
     _replace_line(root, relative, start, new)
     found = tool.problems(root)
     assert any(expected in problem for problem in found), found
+
+
+# release-0.4.0 RC-03: the 0.4.0 publication found a page whose "where this ships" note the tool did
+# not report. Each text below is such a note; the first is that page's, as it stood.
+PREPARED_GUIDANCE = {
+    "receipts": (
+        "    Identity decisions, fixed reference lists and separate reading and checking\n"
+        "    models are on `main` after 0.3.1. They are not in a published package yet.\n"
+        "    Install GND from a checkout of the repository to run this chapter.\n"),
+    "phrase-alone": "These commands are not in a published package yet.\n",
+    "main-after-a-tag": "The receipts example is on `main` after 0.3.1.\n",
+    "main-without-code-marks": "The receipts example is on main after 0.3.1.\n",
+    "any-published": "The example is not in any published wheel.\n",
+    # A run of spaces or a tab inside a line reads as one space (RW3 review r1, F3).
+    "double-space": "These commands are not in a  published package yet.\n",
+    "tab": "These commands are not in a\tpublished package yet.\n",
+}
+
+
+@pytest.mark.parametrize("name", sorted(PREPARED_GUIDANCE))
+def test_prepared_install_guidance_is_reported(tmp_path, name):
+    root = copy_tree(tmp_path)
+    assert tool.problems(root) == []   # the control: the copy is clean
+    page = root / "docs/expense/05-receipts.md"
+    page.parent.mkdir(parents=True)
+    page.write_text("# Receipts\n\n" + PREPARED_GUIDANCE[name] + "\nThe chapter starts here.\n", encoding="utf-8")
+    found = tool.problems(root)
+    assert found and all(problem.startswith("stale: docs/expense/05-receipts.md: ") for problem in found), found
+
+
+def test_standing_install_guidance_is_not_reported(tmp_path):
+    """Pages that say how to use unreleased work in general stay true after any release."""
+    root = copy_tree(tmp_path)
+    page = root / "docs/how-to/trip-budget.md"
+    page.parent.mkdir(parents=True)
+    page.write_text(
+        "# Trip budget\n\n"
+        "shows: GND from PyPI, or from a checkout for unreleased work on `main`, and\n"
+        "the published package otherwise.\n\n"
+        "To use unreleased work on `main`,\ninstall it from a checkout of the repository instead:\n\n"
+        "The catalog on `main` holds three components. After 2 runs it holds four.\n", encoding="utf-8")
+    assert tool.problems(root) == []
+
+
+@pytest.mark.parametrize("sentence, standing", [
+    ("were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was", True),
+    ("were validated. Every release through 0.5.0 (0.1.0, 0.2.0, 0.3.0, 0.4.0 and 0.5.0) was", True),
+    ("were validated. Every release through 0.2.0 (0.1.0 and 0.2.0) was", True),
+    ("were validated. Every release through 0.4.0 was", False),   # the list is part of the sentence
+    ("were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) is", False),
+])
+def test_the_token_route_sentence_stands_for_any_list_of_releases(tmp_path, sentence, standing):
+    root = copy_tree(tmp_path)
+    edit(root, "docs/releasing.md",
+         "were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was", sentence)
+    found = tool.problems(root)
+    assert (found == []) is standing, found
 
 
 def test_a_longer_version_and_a_first_version_statement_are_not_stale(tmp_path):

@@ -1,0 +1,718 @@
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW3/dossier.md b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/dossier.md
+new file mode 100644
+index 00000000..e7b8a183
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/dossier.md
+@@ -0,0 +1,245 @@
++# GND 0.5.0 publication hand-over
++
++Prepared on 2026-11-25. This page hands the accepted candidate to the owner.
++It publishes nothing, and no command on it was run except where it says so.
++The procedure is [docs/releasing.md](../../../../../docs/releasing.md); this
++page adds no rule to it.
++
++## The candidate
++
++The [RW2 record](../../004-phase-RW2.md) binds the accepted candidate to main
++commit `85d076ba384e67b1f992cfd6b9a596ca01b3d4e7`. The retained directory, on
++the planning machine and on beast-3, is
++`~/gnd-release/0.5.0/85d076ba/candidate/`.
++
++| File | Bytes | SHA-256 |
++|---|---:|---|
++| `release/get_nick_done-0.5.0-py3-none-any.whl` | 3,578,846 | `c843909e6f5f676b19f06522b0e9dffe89b84421e1f7bd5610ee0494b32b0d49` |
++| `release/get_nick_done-0.5.0.tar.gz` | 2,673,541 | `9576a57d735d54aa7cd565b52670f11feb6bf659dd75da40a868942168e8a8c0` |
++| `comparison/get_nick_done-0.5.0-py3-none-any.whl` | 3,578,846 | `c843909e6f5f676b19f06522b0e9dffe89b84421e1f7bd5610ee0494b32b0d49` |
++
++The comparison wheel was built from the sdist and has the wheel's digest. It
++stays in the receipt and is not uploaded.
++
++## Results
++
++- **Two builds, one result.** The first build ran on macOS 26.6.2 arm64 with
++  Python 3.11.15 and uv 0.10.10; an independent build on beast-3 (macOS
++  27.0.1 arm64, Python 3.11.18, uv 0.10.10) gave the same three digests.
++- **Installed acceptance** on beast-3: 33 passed, for the release wheel and
++  the comparison wheel, with the source checkout denied. `uvx` printed
++  `gnd 0.5.0`.
++- **Default lane** at the candidate commit, six shards on beast-3 with
++  Python 3.13.18 and uv 0.13.7: 22,020 passed, no failure, and the two known
++  `tests/test_public_optional.py` setup errors.
++- **Opt-in lanes** at the candidate commit, on the owner's selections:
++  `pyrel_oracle` 345 passed; `ossie_oracle` 91 passed with its consumer test
++  deselected.
++- **Main since the candidate.** At the [snapshot](pre-publication-state.txt)
++  main was `44d866df`; `src`, `PYPI.md`, `pyproject.toml`, `LICENSE` and
++  `NOTICE`, the only paths the sdist holds, do not differ from `85d076ba`.
++  RW3 changes `docs/releasing.md`, `tools/release_text.py` and one test file,
++  none of which is in the package.
++
++## What was not measured
++
++- Any profile but macOS 27.0.1 arm64 with Python 3.11.18 and uv 0.10.10.
++  Ubuntu, Windows, the workflow's prepare job, Trusted Publishing and
++  TestPyPI were outside the run.
++- The files PyPI will serve, and a fresh install from the index. Both are
++  act 3 below.
++- A RelationalAI engine: no exported `--rules lqp` program was run on one,
++  and the Ossie oracle's consumer test was not run.
++- Whether the Ossie oracle root used at the freeze is the one the Ossie
++  milestone used. It held both upstream repositories at the pinned commits
++  and passed the lane's own pin check.
++- From an installed wheel, by the RW2 spec's coverage table:
++  - the PyRel exactness refusals, beyond the models the probe exports;
++  - an include path that cannot be encoded;
++  - the checker's speed on large vocabularies, one parse per load, CRLF
++    block scalars and the model index's key order;
++  - `narrow_proposal` and `gnd evolve summary`;
++  - a live producer run of the reading example;
++  - the frontmatter reader, and every documentation page;
++  - the Ossie size options beyond one refusal, and binding refusals by rule.
++  The default lane covers each of these from the source tree.
++- The notes' completeness beyond the reconciliation table of RW1 and its
++  one reviewer.
++- External acceptance of the Ossie relational files by the reporter, and a
++  review of the repairs made after that milestone's close review. Both are
++  that milestone's stated residuals.
++
++## The remote state
++
++The [snapshot](pre-publication-state.txt) was taken on 2026-11-25 at
++17:27 UTC with read-only commands. Against the plan's baseline (W4):
++
++| Item | Baseline | Snapshot |
++|---|---|---|
++| Visibility, default branch | public, `main` | the same |
++| Tags | `v0.1.0`, `v0.2.0`, `v0.3.0`, `v0.3.1`, `v0.4.0` with the peeled commits W4 lists | the same five, the same commits; no `v0.5.0` |
++| GitHub releases | four; 0.3.1 has none | the same four |
++| Environments | `github-pages` only | the same |
++| `release.yml` runs | none | none |
++| PyPI | 0.1.0 to 0.4.0 | the same; the 0.5.0 endpoint answers 404 |
++| `.github` since `v0.4.0` | -- | no change |
++
++Take it again immediately before the upload.
++
++## Owner acts
++
++Each act runs only on the owner's explicit request at that time. The order
++is the plan's (§11): the tag and the GitHub release come after the served
++files are compared, so a failed comparison stops before anything is
++announced.
++
++1. **Before anything: the owner's own checks (RC-07).** Confirm that the
++   PyPI account that will upload owns `get-nick-done`, and review the
++   repository's content and history for anything that should not be public.
++   No tool here can do either. Say that both are done, with the date; the
++   publication record quotes that statement. Then verify the files and that
++   the version is still free:
++
++   ```sh
++   cd ~/gnd-release/0.5.0/85d076ba/candidate
++   shasum -a 256 -c SHA256SUMS
++   test "$(cat SOURCE_COMMIT)" = 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
++   curl -sS -o /dev/null -w '%{http_code}\n' https://pypi.org/pypi/get-nick-done/0.5.0/json
++   ```
++
++   Expected: three `OK` lines and `404`. Also check that main has not changed
++   a shipped file since the candidate:
++
++   ```sh
++   git fetch origin main
++   git diff --stat 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7 origin/main -- src PYPI.md pyproject.toml LICENSE NOTICE
++   ```
++
++   Expected: no output. If it prints a file, the candidate is stale: stop,
++   and RW2 builds a new one.
++
++2. **Upload** the wheel and the sdist with the owner's PyPI token. The token
++   is the owner's; it is typed by the owner and is not given to an agent.
++   Receipt: the upload output with its date.
++
++   ```sh
++   cd ~/gnd-release/0.5.0/85d076ba/candidate
++   uvx twine upload release/get_nick_done-0.5.0-py3-none-any.whl release/get_nick_done-0.5.0.tar.gz
++   ```
++
++3. **Compare the served files and install from the index.** These are the
++   commands of the workflow step "Compare served PyPI files and exercise a
++   fresh index install", run by hand as `docs/releasing.md` says. Receipt:
++   their output. On a mismatch or a failure, stop: no tag, no release, and
++   the incident procedure of `docs/releasing.md` applies.
++
++   ```sh
++   cd ~/gnd-release/0.5.0/85d076ba
++   python3 - <<'PYTHON'
++   import hashlib, json, pathlib, urllib.request
++   release = pathlib.Path('candidate/release')
++   with urllib.request.urlopen('https://pypi.org/pypi/get-nick-done/0.5.0/json', timeout=60) as response:
++       served = {item['filename']: item for item in json.load(response)['urls']}
++   for artifact in sorted(release.iterdir()):
++       expected = hashlib.sha256(artifact.read_bytes()).hexdigest()
++       item = served[artifact.name]
++       assert item['digests']['sha256'] == expected, artifact.name
++       with urllib.request.urlopen(item['url'], timeout=60) as response:
++           assert hashlib.sha256(response.read()).hexdigest() == expected, artifact.name
++       print('served file matches:', artifact.name, expected)
++   PYTHON
++   scratch=$(mktemp -d) && cd "$scratch"
++   uv venv installed
++   uv pip install --python installed/bin/python --index-url https://pypi.org/simple "get-nick-done==0.5.0"
++   installed/bin/gnd --version
++   installed/bin/python -I - <<'PYTHON'
++   from importlib.resources import files
++   from gnd import api
++   root = files('gnd') / 'examples' / 'dispatch'
++   for name, expected in [('seed.pop.json', 1), ('repaired.pop.json', 0)]:
++       result = api.check(root / 'model.orm.json', root / name, admission=True)
++       assert result['exit_code'] == expected, result
++   print('Fresh PyPI install rejected the invalid plan and accepted its repair.')
++   PYTHON
++   ```
++
++4. **Tag** the accepted source, from a repository checkout. Receipt: the
++   peeled remote ref.
++
++   ```sh
++   (
++   set -e
++   git fetch origin main
++   git tag -a v0.5.0 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7 -m 'get-nick-done 0.5.0'
++   git push origin refs/tags/v0.5.0
++   peeled=$(git ls-remote --tags origin 'refs/tags/v0.5.0^{}' | awk '{print $1}')
++   test "$peeled" = 85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
++   printf '%s\n' "$peeled"
++   )
++   ```
++
++5. **GitHub release** with the two files and their checksums (RW-D9). The
++   [release body](github-release-notes.md) is a draft for the owner to edit.
++   Receipt: the release URL and the downloaded attachment check.
++
++   ```sh
++   (
++   set -e
++   repo=$(git rev-parse --show-toplevel)
++   release_notes_file="$repo/.gnd-planning/milestones/release-0.5.0/evidence/RW3/github-release-notes.md"
++   test -r "$release_notes_file"
++   cd ~/gnd-release/0.5.0/85d076ba/candidate
++   (cd release && shasum -a 256 get_nick_done-0.5.0-py3-none-any.whl get_nick_done-0.5.0.tar.gz) > SHA256SUMS.txt
++   gh release create v0.5.0 --verify-tag --repo vasiloglou/gnd-public --title 'GND v0.5.0' --notes-file "$release_notes_file" release/get_nick_done-0.5.0-py3-none-any.whl release/get_nick_done-0.5.0.tar.gz SHA256SUMS.txt
++   attachments=$(mktemp -d)
++   gh release download v0.5.0 --repo vasiloglou/gnd-public --dir "$attachments"
++   cmp SHA256SUMS.txt "$attachments/SHA256SUMS.txt"
++   (cd "$attachments" && shasum -a 256 -c SHA256SUMS.txt)
++   )
++   ```
++
++6. **The pages pull request**, on a topic branch of a checkout that holds
++   this folder. The date is the one on the upload receipt.
++
++   ```sh
++   (
++   set -e
++   cd "$(git rev-parse --show-toplevel)"
++   supplemental_patch="$PWD/.gnd-planning/milestones/release-0.5.0/evidence/RW3/post-publication-supplement.patch"
++   test -r "$supplemental_patch"
++   printf 'Publication date from the upload receipt (YYYY-MM-DD): '
++   IFS= read -r publication_date
++   publish_exit=0
++   uv run python tools/release_text.py publish --date "$publication_date" --built 85d076ba --profile 'macOS 27.0.1 arm64, Python 3.11.18, uv 0.10.10' || publish_exit=$?
++   test "$publish_exit" = 1
++   git apply --check "$supplemental_patch"
++   git apply "$supplemental_patch"
++   uv run python tools/release_text.py check
++   uv run pytest -q tests/test_release_docs.py tests/test_release_preparation.py tests/test_release_version.py tests/test_release_text.py --tb=short
++   uv run --group docs zensical build --strict
++   uv run python tools/check_docs.py site
++   )
++   ```
++
++   The helper exits 1 at first because it leaves seven lines for a person;
++   the [tool-only preview](tool-only-preview.txt) lists them and the
++   [supplemental patch](post-publication-supplement.patch) rewrites them.
++   The [rehearsal](scratch-verification.txt) ran exactly this, with the
++   rehearsal date 2026-11-25, in a disposable clone of the RW3 commit: the
++   patch applied, `check` exited 0, the four release test files had 97
++   passed, and the docs build and link check exited 0. If main's pages have
++   changed by then, `git apply --check` fails; reconcile the patch by hand
++   against the list.
++
++   One of the seven lines is a choice (RW3 spec D3). The literature page
++   says its results come from "the packaged literature example in GND 0.4.0".
++   The patch drops the version, because the page now holds results 0.4.0
++   does not ship and this phase did not check that every result comes from
++   0.5.0. Name 0.5.0 instead if that is checked.
++
++7. **Issue comments**, if the owner wants them (RW-D10). The plan names
++   issues 214 and 217. The 0.5.0 notes also link 193, 215, 216, 218, 221,
++   222, 226, 227 and 228, and the Ossie milestone filed 276 to 278 for its
++   three requests. No text is drafted here.
++
++A numbered publication record then binds the receipts of acts 1 to 7.
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW3/github-release-notes.md b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/github-release-notes.md
+new file mode 100644
+index 00000000..7897e3b8
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/github-release-notes.md
+@@ -0,0 +1,20 @@
++# GND 0.5.0
++
++`gnd export ossie` now writes the tables beside the ontology: a semantic
++model and a mapping, five files in all, or your own delivered tables with
++`--physical-binding`. `--ontology-only` keeps the three-file run.
++
++Also in this release: PyRel rules programs for models with external
++uniqueness, anchored rules, `Number` values and role-scoped value rules;
++include roots in `gnd judgments check`, the new `gnd flatten` and the PyRel
++export; unattended growth from a reviewed vocabulary; the literature
++examples over a host's own model and documents; and COUNT certificates with
++`gnd witness-count` and `gnd replay-count`.
++
++Two things a script may notice: a default `gnd export ossie` run writes two
++more files and can stop on the size bound for them, and the PyRel rules
++programs refuse some inputs that 0.4.0's programs accepted. See the
++[full release notes](https://github.com/vasiloglou/gnd-public/blob/main/docs/release-notes.md).
++
++The attached wheel and sdist were built from
++`85d076ba384e67b1f992cfd6b9a596ca01b3d4e7`.
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW3/post-publication-supplement.patch b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/post-publication-supplement.patch
+new file mode 100644
+index 00000000..83dbebb4
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/post-publication-supplement.patch
+@@ -0,0 +1,99 @@
++diff --git a/docs/bookrec/08-guarded-rules.md b/docs/bookrec/08-guarded-rules.md
++index 006cfdec..75476118 100644
++--- a/docs/bookrec/08-guarded-rules.md
+++++ b/docs/bookrec/08-guarded-rules.md
++@@ -18,8 +18,8 @@ Each step answers one question about a guarded rule:
++ 
++ !!! note "Where these commands ship"
++ 
++-    GND 0.4.0 includes all commands in this chapter. Case generation needs
++-    the optional `synth` extra. See the
+++    GND 0.4.0 and later include all commands in this chapter. Case generation
+++    needs the optional `synth` extra. See the
++     [installation guide](../installation.md) for the published runtime and
++     [synthetic data guide](../guides/synthetic-data.md#generate-examples-for-guarded-rules)
++     for the optional extra.
++diff --git a/docs/bookrec/09-suggested-rules.md b/docs/bookrec/09-suggested-rules.md
++index 52bd0e34..ffde6ba0 100644
++--- a/docs/bookrec/09-suggested-rules.md
+++++ b/docs/bookrec/09-suggested-rules.md
++@@ -15,8 +15,9 @@ preview and apply it, as in [chapter 6](06-evolution.md).
++ 
++ !!! note "Where these commands ship"
++ 
++-    GND 0.4.0 includes guarded-join discovery and constants in mined rules.
++-    See the [installation guide](../installation.md) for the published runtime.
+++    GND 0.4.0 and later include guarded-join discovery and constants in mined
+++    rules. See the [installation guide](../installation.md) for the published
+++    runtime.
++ 
++ Continue in the directory of chapter 8; this chapter starts from its
++ `bookrec-rules/rules.orm.yaml`. No miner, model account or network connection
++@@ -434,7 +435,7 @@ the expense context where one exists.
++ | GR-D11 (issue 182) | typed constants in mined rules | [Import a mined rule that names a genre](#import-a-mined-rule-that-names-a-genre) |
++ | GR-D12 (issue 183) | say when a guarded rule matched nothing; warn on an out-of-domain literal | [Chapter 8: binding counts](08-guarded-rules.md#ask-each-guard-how-many-bindings-it-had) and [the validation warning](08-guarded-rules.md#let-validation-catch-the-typo) |
++ 
++-GND 0.4.0 includes GR-D1 through GR-D12.
+++GND 0.4.0 and later include GR-D1 through GR-D12.
++ 
++ ### Earlier requests, shipped
++ 
++diff --git a/docs/expense/05-receipts.md b/docs/expense/05-receipts.md
++index 152d22af..4a7898a8 100644
++--- a/docs/expense/05-receipts.md
+++++ b/docs/expense/05-receipts.md
++@@ -18,9 +18,9 @@ an agent conversation.*
++ 
++ !!! note "Where this ships"
++ 
++-    GND 0.4.0 includes identity decisions, fixed reference lists, and separate
++-    reading and checking models. See the [installation guide](../installation.md)
++-    for the published runtime.
+++    GND 0.4.0 and later include identity decisions, fixed reference lists, and
+++    separate reading and checking models. See the
+++    [installation guide](../installation.md) for the published runtime.
++ 
++ !!! info "Files on GitHub"
++ 
++diff --git a/docs/literature/index.md b/docs/literature/index.md
++index 139c95af..2c552ad9 100644
++--- a/docs/literature/index.md
+++++ b/docs/literature/index.md
++@@ -7,8 +7,8 @@ paper may say a method was *evaluated*, not *built on*. It may quote
++ someone else's claim, or deny it. Two fields may give two different
++ methods the same name.
++ 
++-GND 0.4.0 lets you build one checked ontology over many papers. The agent
++-still does the reading. GND keeps each claim tied to its passage in the
+++GND 0.4.0 and later let you build one checked ontology over many papers. The
+++agent still does the reading. GND keeps each claim tied to its passage in the
++ document version it was read from ([where a quote may lie](../reference/anchors.md#where-a-span-may-lie)), refuses
++ to join names nobody decided, and proves or refuses every answer. This
++ page follows one stack of sixteen papers from eleven fields through three
++@@ -22,8 +22,8 @@ acts.
++ 
++ !!! note "What is real on this page"
++ 
++-    Every result below comes from the packaged literature example in GND
++-    0.4.0, run for real. The reading agent's answers are saved in the
+++    Every result below comes from the packaged literature example, run for
+++    real. The reading agent's answers are saved in the
++     example, so you get the same results without a model account. The
++     *You ask* boxes show how you would phrase each step to Claude Code. The
++     [commands page](commands.md) reproduces every result in about a
++diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
++index bbf2faf5..f3740ba1 100644
++--- a/docs/marketplace-plugins.md
+++++ b/docs/marketplace-plugins.md
++@@ -6,9 +6,8 @@ marketplace commands below. Python 3.11 or newer is required.
++ See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
++ for the pip virtual-environment alternative.
++ 
++-The command below installs the published runtime. The plugin on `main` is
++-version 0.5.0, which is prepared and not published. To use that plugin,
++-install the runtime from the same commit as shown in [Updates](#updates).
+++The command below installs the published runtime. When using a plugin from
+++another commit, match its runtime as [Updates](#updates) describes.
++ 
++ ```sh
++ uv tool install get-nick-done==0.5.0
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW3/pre-publication-state.txt b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/pre-publication-state.txt
+new file mode 100644
+index 00000000..05a690e7
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/pre-publication-state.txt
+@@ -0,0 +1,32 @@
++2026-11-25T17:27:15Z
++{"defaultBranchRef":{"name":"main"},"visibility":"PUBLIC"}
++44d866df77607a1384b7b97cb9c197bc669afebf	refs/heads/main
++75eda93f314e7ef82578ab4ee212d5e6d964fd71	refs/tags/v0.1.0
++d84ad6d5cca021aa572751223d7c640d2b261055	refs/tags/v0.2.0
++7c0f4d0e320ff7976296d785077280d180ea688e	refs/tags/v0.2.0^{}
++257a8bb3cc0ec5f0746e95d72b5d11cb5acdb185	refs/tags/v0.3.0
++4c07c0e6a623263048cb675d237046ebb239cb32	refs/tags/v0.3.0^{}
++5fe5852473465ea718f67088143a425f3492bb20	refs/tags/v0.3.1
++aff85c6764a3ef58f4eaed47fff57afacb4f20f6	refs/tags/v0.3.1^{}
++a6ad5b534bc5c668079fa309bc74f69a67c22852	refs/tags/v0.4.0
++648cc6e07fc6ea0e4d8791a2a33a0d005f4e106a	refs/tags/v0.4.0^{}
++GitHub environments:
++["github-pages"]
++release.yml runs:
++[]
++GitHub releases:
++[{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-17T15:23:59Z","tagName":"v0.4.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-11T15:38:27Z","tagName":"v0.3.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-11-09T03:19:04Z","tagName":"v0.2.0"},{"isDraft":false,"isPrerelease":false,"publishedAt":"2026-10-12T04:06:31Z","tagName":"v0.1.0"}]
++PyPI files:
++[{"filename": "get_nick_done-0.1.0-py3-none-any.whl", "sha256": "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183", "yanked": false}, {"filename": "get_nick_done-0.1.0.tar.gz", "sha256": "f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86", "yanked": false}, {"filename": "get_nick_done-0.2.0-py3-none-any.whl", "sha256": "e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4", "yanked": false}, {"filename": "get_nick_done-0.2.0.tar.gz", "sha256": "f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104", "yanked": false}, {"filename": "get_nick_done-0.3.0-py3-none-any.whl", "sha256": "143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b", "yanked": false}, {"filename": "get_nick_done-0.3.0.tar.gz", "sha256": "5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42", "yanked": false}, {"filename": "get_nick_done-0.4.0-py3-none-any.whl", "sha256": "36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c", "yanked": false}, {"filename": "get_nick_done-0.4.0.tar.gz", "sha256": "2c171ccccc891333a580c3fe01c4b79ac5d3e5098af20827977a6ce455a229b6", "yanked": false}]
++0.5.0 version endpoint HTTP 404
++Workflow diff v0.4.0..origin/main for .github: empty
++Shipped-path diff 85d076ba..origin/main (src PYPI.md pyproject.toml LICENSE NOTICE): empty
++Retained bundle on the planning machine:
++release/get_nick_done-0.5.0-py3-none-any.whl: OK
++release/get_nick_done-0.5.0.tar.gz: OK
++comparison/get_nick_done-0.5.0-py3-none-any.whl: OK
++85d076ba384e67b1f992cfd6b9a596ca01b3d4e7
++ 3578846 release/get_nick_done-0.5.0-py3-none-any.whl
++ 2673541 release/get_nick_done-0.5.0.tar.gz
++ 3578846 comparison/get_nick_done-0.5.0-py3-none-any.whl
++ 9831233 total
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW3/rehearse-publication.sh b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/rehearse-publication.sh
+new file mode 100755
+index 00000000..8f917aa7
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/rehearse-publication.sh
+@@ -0,0 +1,36 @@
++#!/usr/bin/env bash
++# Rehearse the publication text in a disposable clone: rehearse-publication.sh CHECKOUT SUPPLEMENT COMMIT
++# Nothing here uploads, tags or releases. The date below is a rehearsal date.
++set -euo pipefail
++checkout=$1
++supplement=$2
++expected=$3
++test "$(git -C "$checkout" rev-parse HEAD)" = "$expected"
++test -z "$(git -C "$checkout" status --porcelain)"
++cd "$checkout"
++printf 'Rehearsal source: %s\nRehearsal date: 2026-11-25\n' "$expected"
++printf '%s\n' "uv run python tools/release_text.py publish --date 2026-11-25 --built 85d076ba --profile 'macOS 27.0.1 arm64, Python 3.11.18, uv 0.10.10'"
++tool_exit=0
++uv run python tools/release_text.py publish --date 2026-11-25 --built 85d076ba \
++    --profile 'macOS 27.0.1 arm64, Python 3.11.18, uv 0.10.10' || tool_exit=$?
++printf 'Tool-only publish exit: %s\n' "$tool_exit"
++test "$tool_exit" = 1
++
++git apply --check "$supplement"
++printf 'git apply --check <supplement>: exit 0\n'
++git apply "$supplement"
++uv run python tools/release_text.py check
++printf 'uv run python tools/release_text.py check: exit 0\n'
++release_tests=(tests/test_release_docs.py tests/test_release_preparation.py tests/test_release_version.py tests/test_release_text.py)
++printf 'uv run pytest -q %s --tb=short\n' "${release_tests[*]}"
++uv run pytest -q "${release_tests[@]}" --tb=short -p no:cacheprovider
++printf 'Release tests exit: 0\n'
++uv run --group docs zensical build --strict
++printf 'uv run --group docs zensical build --strict: exit 0\n'
++uv run python tools/check_docs.py site
++printf 'uv run python tools/check_docs.py site: exit 0\n'
++git diff --check
++printf 'Files changed by the publication edits:\n'
++git diff --stat HEAD -- | cat
++printf 'Scratch publication diff SHA-256: '
++git diff --binary HEAD -- | shasum -a 256 | awk '{ print $1 }'
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW3/scratch-verification.txt b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/scratch-verification.txt
+new file mode 100644
+index 00000000..a7b910d5
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/scratch-verification.txt
+@@ -0,0 +1,41 @@
++Rehearsal source: 85097f0e6b48c69ab9ea379f2093e52ed0da96a2
++Rehearsal date: 2026-11-25
++uv run python tools/release_text.py publish --date 2026-11-25 --built 85d076ba --profile 'macOS 27.0.1 arm64, Python 3.11.18, uv 0.10.10'
++changed 8 files: README.md, docs/installation.md, docs/index.md, docs/marketplace-plugins.md, docs/release-notes.md, docs/compatibility.md, docs/support.md, tests/test_release_version.py
++stale: docs/bookrec/08-guarded-rules.md: GND 0.4.0 includes all commands in this chapter. Case generation needs
++stale: docs/bookrec/09-suggested-rules.md: GND 0.4.0 includes guarded-join discovery and constants in mined rules.
++stale: docs/bookrec/09-suggested-rules.md: GND 0.4.0 includes GR-D1 through GR-D12.
++stale: docs/expense/05-receipts.md: GND 0.4.0 includes identity decisions, fixed reference lists, and separate
++stale: docs/literature/index.md: GND 0.4.0 lets you build one checked ontology over many papers. The agent
++stale: docs/literature/index.md: 0.4.0, run for real. The reading agent's answers are saved in the
++stale: docs/marketplace-plugins.md: version 0.5.0, which is prepared and not published. To use that plugin,
++Tool-only publish exit: 1
++git apply --check <supplement>: exit 0
++no page describes the state before 0.5.0 was published
++uv run python tools/release_text.py check: exit 0
++uv run pytest -q tests/test_release_docs.py tests/test_release_preparation.py tests/test_release_version.py tests/test_release_text.py --tb=short
++........................................................................ [ 74%]
++.........................                                                [100%]
++97 passed, 1 deselected in 0.63s
++Release tests exit: 0
++Build started
++No issues found
++Build finished in 1.04s
++uv run --group docs zensical build --strict: exit 0
++19539 local links/assets/anchors checked
++uv run python tools/check_docs.py site: exit 0
++Files changed by the publication edits:
++ README.md                          |  2 +-
++ docs/bookrec/08-guarded-rules.md   |  4 ++--
++ docs/bookrec/09-suggested-rules.md |  7 ++++---
++ docs/compatibility.md              |  9 ++++-----
++ docs/expense/05-receipts.md        |  6 +++---
++ docs/index.md                      |  2 +-
++ docs/installation.md               |  8 ++++----
++ docs/literature/index.md           |  8 ++++----
++ docs/marketplace-plugins.md        |  9 ++++-----
++ docs/release-notes.md              | 10 +++++-----
++ docs/support.md                    |  2 +-
++ tests/test_release_version.py      |  2 +-
++ 12 files changed, 34 insertions(+), 35 deletions(-)
++Scratch publication diff SHA-256: 8a4a5e831050586fc6451f67976c8ff74c477e26ca87fe5bb88e75d0f43a6e8a
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW3/tool-only-preview.txt b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/tool-only-preview.txt
+new file mode 100644
+index 00000000..201e81d5
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW3/tool-only-preview.txt
+@@ -0,0 +1,9 @@
++changed 8 files: README.md, docs/installation.md, docs/index.md, docs/marketplace-plugins.md, docs/release-notes.md, docs/compatibility.md, docs/support.md, tests/test_release_version.py
++stale: docs/bookrec/08-guarded-rules.md: GND 0.4.0 includes all commands in this chapter. Case generation needs
++stale: docs/bookrec/09-suggested-rules.md: GND 0.4.0 includes guarded-join discovery and constants in mined rules.
++stale: docs/bookrec/09-suggested-rules.md: GND 0.4.0 includes GR-D1 through GR-D12.
++stale: docs/expense/05-receipts.md: GND 0.4.0 includes identity decisions, fixed reference lists, and separate
++stale: docs/literature/index.md: GND 0.4.0 lets you build one checked ontology over many papers. The agent
++stale: docs/literature/index.md: 0.4.0, run for real. The reading agent's answers are saved in the
++stale: docs/marketplace-plugins.md: version 0.5.0, which is prepared and not published. To use that plugin,
++Tool-only publish exit: 1
+diff --git a/dev/components/modules/tools.md b/dev/components/modules/tools.md
+index 0da9ad04..7ae4b572 100644
+--- a/dev/components/modules/tools.md
++++ b/dev/components/modules/tools.md
+@@ -497,25 +497,25 @@ Publication-day text: move the pages from "prepared" to "published", and check t
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `ReleaseTextError` | class(Exception) | 93 | An input the tool cannot work from. |
+-| `version_key(version) -> tuple[int, ...]` | function | 97 | (no docstring) |
+-| `declared_version(root) -> str` | function | 101 | (no docstring) |
+-| `released_versions(root) -> list[str]` | function | 105 | The published versions, oldest first, from their one home in the tests. |
+-| `tagged_versions(root) -> list[str]` | function | 114 | The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`. |
+-| `tag_sentence(version) -> str` | function | 123 | (no docstring) |
+-| `tag_install_command(version) -> str` | function | 131 | (no docstring) |
+-| `notes_opening(declared, date, released, tagged) -> str` | function | 143 | The first paragraph of the release notes once `declared` is published. |
+-| `compatibility_paragraph(declared, date, released, tagged) -> str` | function | 162 | The first paragraph of the compatibility page once `declared` is published. |
+-| `support_row(declared, built, profile) -> str` | function | 174 | (no docstring) |
+-| `page_files(root) -> list[str]` | function | 194 | README.md and every text file under docs/, except the release notes. |
+-| `stale_lines(root, declared, released) -> list[str]` | function | 204 | Lines that name an older version or use prepared-state wording and are not standing. |
+-| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 231 | (no docstring) |
+-| `presence_problems(root, declared) -> list[str]` | function | 256 | The pins, the links and the support row name the declared version. |
+-| `tag_problems(root, declared, released) -> list[str]` | function | 284 | A tag-only version: newer than every published one, with its own notes heading and install command. |
+-| `subject_version(root) -> str \| None` | function | 303 | The version the pages are held to: the declared one, or the latest published one while |
+-| `problems(root) -> list[str]` | function | 313 | Everything that still describes the state before the declared version was published. |
+-| `publish(root, *, date, built, profile) -> list[str]` | function | 330 | Make the publication-day edits for the declared version. Return the files changed. |
+-| `main(argv) -> int` | function | 407 | (no docstring) |
++| `ReleaseTextError` | class(Exception) | 96 | An input the tool cannot work from. |
++| `version_key(version) -> tuple[int, ...]` | function | 100 | (no docstring) |
++| `declared_version(root) -> str` | function | 104 | (no docstring) |
++| `released_versions(root) -> list[str]` | function | 108 | The published versions, oldest first, from their one home in the tests. |
++| `tagged_versions(root) -> list[str]` | function | 117 | The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`. |
++| `tag_sentence(version) -> str` | function | 126 | (no docstring) |
++| `tag_install_command(version) -> str` | function | 134 | (no docstring) |
++| `notes_opening(declared, date, released, tagged) -> str` | function | 146 | The first paragraph of the release notes once `declared` is published. |
++| `compatibility_paragraph(declared, date, released, tagged) -> str` | function | 165 | The first paragraph of the compatibility page once `declared` is published. |
++| `support_row(declared, built, profile) -> str` | function | 177 | (no docstring) |
++| `page_files(root) -> list[str]` | function | 197 | README.md and every text file under docs/, except the release notes. |
++| `stale_lines(root, declared, released) -> list[str]` | function | 207 | Lines that name an older version or use prepared-state wording and are not standing. |
++| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 243 | (no docstring) |
++| `presence_problems(root, declared) -> list[str]` | function | 268 | The pins, the links and the support row name the declared version. |
++| `tag_problems(root, declared, released) -> list[str]` | function | 296 | A tag-only version: newer than every published one, with its own notes heading and install command. |
++| `subject_version(root) -> str \| None` | function | 315 | The version the pages are held to: the declared one, or the latest published one while |
++| `problems(root) -> list[str]` | function | 325 | Everything that still describes the state before the declared version was published. |
++| `publish(root, *, date, built, profile) -> list[str]` | function | 342 | Make the publication-day edits for the declared version. Return the files changed. |
++| `main(argv) -> int` | function | 419 | (no docstring) |
+ 
+ ## tools.render_replay — `tools/render_replay.py`
+ Components: unassigned
+diff --git a/docs/releasing.md b/docs/releasing.md
+index c46955f9..4eff2fb3 100644
+--- a/docs/releasing.md
++++ b/docs/releasing.md
+@@ -14,7 +14,7 @@ decision; preparing a release configures and runs neither.
+ **Token upload of retained files.** The owner uploads the release wheel and
+ sdist that a preparation retained, after `sha256sum -c SHA256SUMS` passes,
+ with the owner's own PyPI credentials. The uploaded bytes are the bytes that
+-were validated. Every release through 0.3.0 (0.1.0, 0.2.0 and 0.3.0) was
++were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was
+ published this way.
+ 
+ **The workflow with Trusted Publishing.** Sign in to
+diff --git a/tests/test_release_text.py b/tests/test_release_text.py
+index d42d37bb..4f602094 100644
+--- a/tests/test_release_text.py
++++ b/tests/test_release_text.py
+@@ -75,7 +75,7 @@ PAGES = {
+         "| Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |\n"
+     ),
+     "docs/releasing.md": (
+-        "were validated. Every release through 0.3.0 (0.1.0, 0.2.0 and 0.3.0) was\n"
++        "were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was\n"
+         "   `## X.Y.Z (tagged YYYY-MM-DD, not published on PyPI)`, and give in it the\n"
+     ),
+     "docs/development/candidate.md": "The artifact is `get_nick_done-0.1.0-py3-none-any.whl`.\n",
+@@ -302,6 +302,61 @@ def test_a_page_left_in_the_earlier_state_is_reported(tmp_path, name):
+     assert any(expected in problem for problem in found), found
+ 
+ 
++# release-0.4.0 RC-03: the 0.4.0 publication found a page whose "where this ships" note the tool did
++# not report. Each text below is such a note; the first is that page's, as it stood.
++PREPARED_GUIDANCE = {
++    "receipts": (
++        "    Identity decisions, fixed reference lists and separate reading and checking\n"
++        "    models are on `main` after 0.3.1. They are not in a published package yet.\n"
++        "    Install GND from a checkout of the repository to run this chapter.\n"),
++    "phrase-alone": "These commands are not in a published package yet.\n",
++    "phrase-wrapped": "These commands are not in a published\npackage yet.\n",
++    "main-after-a-tag": "The receipts example is on `main` after 0.3.1.\n",
++    "main-after-wrapped": "The receipts example is on `main`\nafter 0.3.1.\n",
++    "any-published": "The example is not in any published wheel.\n",
++}
++
++
++@pytest.mark.parametrize("name", sorted(PREPARED_GUIDANCE))
++def test_prepared_install_guidance_is_reported(tmp_path, name):
++    root = copy_tree(tmp_path)
++    assert tool.problems(root) == []   # the control: the copy is clean
++    page = root / "docs/expense/05-receipts.md"
++    page.parent.mkdir(parents=True)
++    page.write_text("# Receipts\n\n" + PREPARED_GUIDANCE[name] + "\nThe chapter starts here.\n", encoding="utf-8")
++    found = tool.problems(root)
++    assert found and all(problem.startswith("stale: docs/expense/05-receipts.md: ") for problem in found), found
++
++
++def test_standing_install_guidance_is_not_reported(tmp_path):
++    """Pages that say how to use unreleased work in general stay true after any release."""
++    root = copy_tree(tmp_path)
++    page = root / "docs/how-to/trip-budget.md"
++    page.parent.mkdir(parents=True)
++    page.write_text(
++        "# Trip budget\n\n"
++        "shows: GND from PyPI, or from a checkout for unreleased work on `main`, and\n"
++        "the published package otherwise.\n\n"
++        "To use unreleased work on `main`,\ninstall it from a checkout of the repository instead:\n\n"
++        "The catalog on `main` holds three components. After 2 runs it holds four.\n", encoding="utf-8")
++    assert tool.problems(root) == []
++
++
++@pytest.mark.parametrize("sentence, standing", [
++    ("were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was", True),
++    ("were validated. Every release through 0.5.0 (0.1.0, 0.2.0, 0.3.0, 0.4.0 and 0.5.0) was", True),
++    ("were validated. Every release through 0.2.0 (0.1.0 and 0.2.0) was", True),
++    ("were validated. Every release through 0.4.0 was", False),   # the list is part of the sentence
++    ("were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) is", False),
++])
++def test_the_token_route_sentence_stands_for_any_list_of_releases(tmp_path, sentence, standing):
++    root = copy_tree(tmp_path)
++    edit(root, "docs/releasing.md",
++         "were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was", sentence)
++    found = tool.problems(root)
++    assert (found == []) is standing, found
++
++
+ def test_a_longer_version_and_a_first_version_statement_are_not_stale(tmp_path):
+     root = copy_tree(tmp_path)
+     edit(root, "docs/index.md", "uv tool install get-nick-done==0.3.0", (
+diff --git a/tools/release_text.py b/tools/release_text.py
+index fdbd43dc..65295fd5 100644
+--- a/tools/release_text.py
++++ b/tools/release_text.py
+@@ -63,7 +63,9 @@ TAG_SENTENCE = re.compile(rf"The `v{VERSION}` tag contains")
+ #: the publication was meant to fill.
+ STALE = re.compile(
+     r"next release|not published|not signed off|prepared \d|newer than"
+-    r"|unreleased (?:feature|example)|development checkout|PUBLICATION_DATE",
++    r"|unreleased (?:feature|example)|development checkout|PUBLICATION_DATE"
++    # A page that says where a feature ships before its release (release-0.4.0 RC-03).
++    r"|not in (?:a|any) published|on `?main`? after \d",
+     re.IGNORECASE)
+ #: The same, inside the published version's own section of the release notes.
+ STALE_IN_NOTES = re.compile(
+@@ -78,7 +80,8 @@ STALE_IN_NOTES = re.compile(
+ STANDING = (
+     ("docs/development/candidate.md", r"^The artifact is `get_nick_done-0\.1\.0-py3-none-any\.whl`\."),
+     (PLUGINS, r"^not register the development checkout in the user's marketplace configuration\.$"),
+-    ("docs/releasing.md", r"^were validated\. Every release through 0\.3\.0 \(0\.1\.0, 0\.2\.0 and 0\.3\.0\) was$"),
++    # The token-route sentence lists the releases published that way; the list grows, the form stays.
++    ("docs/releasing.md", rf"^were validated\. Every release through {VERSION} \((?:{VERSION}, )*{VERSION} and {VERSION}\) was$"),
+     # The tag-only procedure quotes the heading form a tag-only version carries.
+     ("docs/releasing.md", r"^   `## X\.Y\.Z \(tagged YYYY-MM-DD, not published on PyPI\)`, and give in it the$"),
+     (SUPPORT, r"^\| [^|]+ \| Observed in Phase 3 acceptance of 0\.1\.0 \|$"),
+@@ -214,14 +217,23 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
+         if relative == COMPATIBILITY:
+             # The generated paragraph names every published version; it is compared whole.
+             text = "\n\n".join("" if p.startswith(COMPATIBILITY_START) else p for p in _paragraphs(text))
+-        for line in text.splitlines():
+-            if not (STALE.search(line) or any(_mentions(line, v) for v in older)):
+-                continue
+-            entry = _standing(relative, line)
+-            if entry is None:
+-                problems.append(f"stale: {relative}: {line.strip()}")
+-            else:
+-                used.add(entry)
++        for paragraph in _paragraphs(text):
++            lines = paragraph.splitlines()
++            reported = False
++            for line in lines:
++                if not (STALE.search(line) or any(_mentions(line, v) for v in older)):
++                    continue
++                entry = _standing(relative, line)
++                if entry is None:
++                    problems.append(f"stale: {relative}: {line.strip()}")
++                    reported = True
++                else:
++                    used.add(entry)
++            # Prose wraps: a phrase split over a line break is in no single line. The paragraph is
++            # read again as one line, with every line already judged above left out of the count.
++            joined = " ".join(line.strip() for line in lines)
++            if not reported and len(STALE.findall(joined)) > sum(len(STALE.findall(line)) for line in lines):
++                problems.append(f"stale: {relative}: {joined}")
+     for index, (name, pattern) in enumerate(STANDING):
+         if name is not None and index not in used:
+             problems.append(f"standing entry matches no line: {name}: {pattern}")

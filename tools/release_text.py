@@ -15,6 +15,10 @@ to the latest published version, and also requires the tagged version's notes
 heading, its install-from-tag command and one sentence about it in the release
 notes opening and in the compatibility paragraph.
 
+The check reads the pages line by line. A phrase that a line break splits is
+not reported, so the wording it looks for is kept on one line when a page is
+written, and a release rehearsal reads the pages for it once more.
+
 ``publish`` makes the edits that are the same at every release: the install
 pins, the release link and wheel name, the tag sentence, the compatibility
 paragraph, the opening and the heading of the release notes, the support row
@@ -63,7 +67,9 @@ TAG_SENTENCE = re.compile(rf"The `v{VERSION}` tag contains")
 #: the publication was meant to fill.
 STALE = re.compile(
     r"next release|not published|not signed off|prepared \d|newer than"
-    r"|unreleased (?:feature|example)|development checkout|PUBLICATION_DATE",
+    r"|unreleased (?:feature|example)|development checkout|PUBLICATION_DATE"
+    # A page that says where a feature ships before its release (release-0.4.0 RC-03).
+    r"|not in (?:a|any) published|on `?main`? after \d",
     re.IGNORECASE)
 #: The same, inside the published version's own section of the release notes.
 STALE_IN_NOTES = re.compile(
@@ -78,7 +84,8 @@ STALE_IN_NOTES = re.compile(
 STANDING = (
     ("docs/development/candidate.md", r"^The artifact is `get_nick_done-0\.1\.0-py3-none-any\.whl`\."),
     (PLUGINS, r"^not register the development checkout in the user's marketplace configuration\.$"),
-    ("docs/releasing.md", r"^were validated\. Every release through 0\.3\.0 \(0\.1\.0, 0\.2\.0 and 0\.3\.0\) was$"),
+    # The token-route sentence lists the releases published that way; the list grows, the form stays.
+    ("docs/releasing.md", rf"^were validated\. Every release through {VERSION} \((?:{VERSION}, )*{VERSION} and {VERSION}\) was$"),
     # The tag-only procedure quotes the heading form a tag-only version carries.
     ("docs/releasing.md", r"^   `## X\.Y\.Z \(tagged YYYY-MM-DD, not published on PyPI\)`, and give in it the$"),
     (SUPPORT, r"^\| [^|]+ \| Observed in Phase 3 acceptance of 0\.1\.0 \|$"),
@@ -215,7 +222,8 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
             # The generated paragraph names every published version; it is compared whole.
             text = "\n\n".join("" if p.startswith(COMPATIBILITY_START) else p for p in _paragraphs(text))
         for line in text.splitlines():
-            if not (STALE.search(line) or any(_mentions(line, v) for v in older)):
+            # A run of spaces or tabs inside a line reads as one space.
+            if not (STALE.search(" ".join(line.split())) or any(_mentions(line, v) for v in older)):
                 continue
             entry = _standing(relative, line)
             if entry is None:

@@ -397,3 +397,19 @@ commit; each row below says what r2 changed and where.
 | A11 | `fix-o4-map-budget-no-predicate` (Qwen) | O4's map question gets a predicate: no runtime query outside RC-04 | predicate 3, SI2-C3 |
 
 No row changes a decision the owner made (D0, D4) or the phase list.
+
+## 12. Close amendments (2026-11-25)
+
+The wording above remains the approved r2 baseline. These amendments record
+the phase measurements against it.
+
+| Prior premise and location | Measured correction | Raising record |
+|---|---|---|
+| §2, D1: “The flat file such a route writes, given later as an input on its own, has no pins to check, so it gets one named refusal that says to load the root”. | The original bytes and a renamed copy show that a standalone file has no authenticated origin. The named `unattended:flat-without-root` hint accompanies include-sensitive unattended validation failures, including a standalone input that needs the root's reviewed-include exemptions. The message is conditional and preserves the underlying diagnostics. A valid standalone file still loads under its own rules. | [002-phase-SI1.md](../002-phase-SI1.md), Open questions and Boundary |
+| §1, C2: “Selecting as the Rmap does would make `reference_identity` return no composite for the 3 measured entities, changing the verbalization and the extraction vocabulary of three shipped examples.” §2 and D2 repeated the three-example count. The verification targets in §5 and §9 inherited that focus. | The alternative changes 13 entities in 9 models. It removes three existing composite identities and adds ten previously uncounted composite identities. Reading C, the ruled preference for confirmed alethic external uniqueness with a first-declared fallback, leaves the measured identities of all 436 admitted tracked models unchanged. | [003-phase-SI2.md](../003-phase-SI2.md), Open questions and Boundary |
+
+SI1's re-entry audit also refuted the baseline assumption that every
+standalone PyRel mode refused the seeded flat candidate. Baseline default
+PyRel's structural intake exported that candidate. The [SI1 spec](phase-SI1-spec.md)
+retains the measured before and after route matrices, including both growth
+rounds. The approved criteria continue to apply to the final routes.

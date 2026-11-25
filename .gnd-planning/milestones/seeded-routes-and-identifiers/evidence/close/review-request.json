@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "kind": "spec-results-delta",
+  "spec": {
+    "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/seeded-routes-and-identifiers-plan.md",
+    "sha256": "92fc519521d5d2ff2f5858a292c120895d24204e8106778bf30b9cad116c9666",
+    "media_type": "text/markdown"
+  },
+  "results": {
+    "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/close-results.md",
+    "sha256": "351040563a3ac4fb8ef0afdf6aa0a706212f0a7fbf0176d52e22d6ae027f48c2",
+    "media_type": "text/markdown"
+  },
+  "delta": {
+    "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/close-delta.md",
+    "sha256": "3c265eb0d6164462df717cfe4d31bf7f73c8d3c327128300621780214c3eaa98",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "seeded-routes-and-identifiers milestone close",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the planned software would not demonstrably do what the plan claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Judge whether the close candidate supports each completed predicate using the named measurements and phase records. Flag a missing gate or evidence that covers different bytes than the claim.",
+      "Check the original and corrected test lanes, the scope of the merge difference, and the annotated tag evidence. Review the scope of the corrected lane and the higher project threshold of four successful seats.",
+      "Check that the plan amendments preserve the approved criteria and that the question sweep disposes the phase questions with evidence or a named residual target.",
+      "Cite one concrete location in a requested artifact for each concern. Consult directly relevant evidence only as needed. Make one focused pass without delegation, builds or tests."
+    ]
+  }
+}

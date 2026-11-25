@@ -1,0 +1,17 @@
+git ls-remote --tags origin refs/tags/v0.5.2 'refs/tags/v0.5.2^{}'
+Exit: 0
+9d1021d892feffa22c4f4da802b85f9c966a9415	refs/tags/v0.5.2
+9c051d52a970b82b81940a7125b393f41741013d	refs/tags/v0.5.2^{}
+
+Local tag type: tag
+Tagger date: 2026-11-25T17:32:11-05:00
+Merge parent 2: c89e55e614bdd414023b89b47b4f5143ea0dae01
+Merge tree: 1f0768e584dfcfb41af7cd79a9b3a98d4cd3b2a7
+Compared with the tested repair head, the merge adds only these paths from PR #312:
+.gnd-planning/milestones/induction-skill/README.md
+.gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md
+
+Merged checkout with close drafts present:
+uv run --no-sync pytest -q tests/test_packaged_skills.py tests/test_development_scaffold.py tests/test_release_version.py tests/test_release_text.py tests/test_release_docs.py --tb=short
+Exit: 0
+226 passed, 1 deselected in 22.53s

@@ -309,6 +309,19 @@ SHA-256 of the spec bytes it covers.
 > beast-3. No implementation file changes under this ruling. This ruling is
 > not the owner's reading of the spec.
 
+> **First ruling, renewed: delegated approval (auto=true), 2026-11-25.**
+> Approved draft r6 of this spec at SHA-256
+> a56efcc9ea2f3f38b81b929fd5e8d7a661f6192e0d04705a63733cca192e847e (commit
+> `b25bb2d8`) for the E1 measurement only, at the resumed base. Source: the
+> owner's request "Release 0.5.0" and the owner's selection of delegated
+> approval on 2026-11-23; the four milestones of plan §11 to §13 are on
+> main at `e8359685` (plan §14, with the limit it states for the fourth).
+> Decisions: D1, D3 and D5 as in the first ruling. D2 and D6 wait for the
+> second ruling; D4 is put to the owner first. Instrument: this prose; no
+> spec review was called for. Budget: two six-shard lanes on beast-3. No
+> implementation file changes under this ruling. This ruling is not the
+> owner's reading of the spec.
+
 ## 8. Tests
 
 | ID | Case | Expected |

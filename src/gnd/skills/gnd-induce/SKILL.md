@@ -1,13 +1,13 @@
 ---
 name: gnd-induce
-description: Runs GND's induction loop over host-labelled populations and hands every result to review -- `gnd measure --labels` to score a model's rules against the host's labels, `gnd discover` to propose rules that hold in one population, `gnd export ilp` then `gnd import ilp-rules` to round-trip a rule learner the user names, with GND re-checking the learner's coverage claim, `gnd import mined-rules` for a rule miner over one unlabelled population, and `gnd check` to re-check a population after a rule is applied. Use when asked to "score our rules against the auditors' labels", "find the rule our reviewers are using", "suggest rules from this data", "run a rule learner", or "import learned rules". Every output is a proposal of induced, proposed, advisory constraints, reviewed and applied only through gnd-model-evolve. Not for judging the fact types `gnd discover --families fact-type` forms (gnd-judge-fact-types, gnd-model-multivalued), measuring a synth corpus (gnd-dev-session), derivation or Lean exports (gnd-export), applying or confirming a rule (gnd-model-evolve), or installing a learner.
+description: Runs GND's induction loop over host-labelled populations and hands every result to review -- `gnd measure --labels` to score a model's rules against the host's labels, `gnd discover` to propose rules that hold in one population, `gnd export ilp` then `gnd import ilp-rules` to round-trip a rule learner the user names, with GND re-checking the learner's coverage claim, `gnd import mined-rules` for a rule miner over one unlabelled population, and `gnd check` to re-check a population after a rule is applied. Use when asked to "score our rules against the auditors' labels", "find the rule our reviewers are using", "suggest rules from this data", "run a rule learner", or "import learned rules". Every rule it produces is a proposal of induced, proposed, advisory constraints, reviewed and applied only through gnd-model-evolve; its reports stay reports. Not for judging the fact types `gnd discover --families fact-type` forms (gnd-judge-fact-types, gnd-model-multivalued), measuring a synth corpus (gnd-dev-session), derivation or Lean exports (gnd-export), applying or confirming a rule (gnd-model-evolve), or installing a learner.
 ---
 
 # Induce rules from labelled data, and hand them to review
 
 A host has a model and populations, and often a verdict on each population
 from the people who know the business: an auditor's "flagged" or "clean", a
-reviewer's "should have been refused". This skill runs GND's four induction
+reviewer's "should have been refused". This skill runs GND's induction
 commands over them and reports what GND printed. It has five intents:
 
 | Intent | What you ask | What GND writes |
@@ -46,9 +46,10 @@ Before any command, settle these with the user and say them back:
 gnd measure MODEL --labels MANIFEST --out OUT
 ```
 
-Report each rule's cells as GND printed them, with numerator and denominator
-("fired on 2 of 4 flagged populations"). A class-mode manifest gives a cell
-per rule and label; an expected-state manifest gives each population's
+Report every cell GND printed for each rule, as printed, with its numerator
+and denominator ("fired on 2 of 4 flagged populations"), including the cells
+for vacuous and unchecked results. A class-mode manifest scores rules against
+classes; an expected-state manifest scores each population against its
 expected verdict, and `gnd measure` exits 6 on a checker defect, which you
 report as printed. It never combines measure cells into one accuracy number.
 
@@ -59,20 +60,26 @@ gnd discover MODEL POPULATION --families uniqueness,mandatory --out PROPOSAL --r
 ```
 
 Choose `--families` with the user; `gnd discover --help` lists them. Report
-the `EMITTED` and `SUPPRESSED` counts as printed, then read every emitted
-candidate back in plain English. The user sorts the sensible rules from the
-accidents of one small sample; drop none of them yourself. With `EMITTED 0`,
-report the counts and hand nothing off. A candidate of a value family (one
-that names a value from the population) carries host data: say so when you
-read it back and again at the handoff.
+the `EMITTED` and `SUPPRESSED` counts as printed, and with the `fact-type`
+family the `FACT TYPES` count. Discover writes the proposal only when it
+proposes something, and `EMITTED 0` can still come with fact types, so hand
+off by whether the proposal file was written, not by `EMITTED`.
 
-Judging the groups gnd discover --families fact-type forms is not this skill: duplicates go to [gnd-judge-fact-types](../gnd-judge-fact-types/SKILL.md), and multi-valued groups to [gnd-model-multivalued](../gnd-model-multivalued/SKILL.md).
+Read every proposed candidate back in plain English. The user sorts the
+sensible rules from the accidents of one small sample; drop none of them
+yourself. A candidate of a value family (one that names a value from the
+population) carries host data: say so when you read it back and again at the
+handoff.
+
+Judging the groups gnd discover --families fact-type forms is not this skill: duplicates go to [gnd-judge-fact-types](../gnd-judge-fact-types/SKILL.md), and multi-valued groups to [gnd-model-multivalued](../gnd-model-multivalued/SKILL.md). Both judges read a type-evidence file, so for them run discover with `--type-evidence EVIDENCE` beside `--families fact-type`.
 
 ## Learn
 
-**A learner over labelled populations.** Export the labelled populations for
-the learner the user named, with `--target` one of `popper`, `neutral`,
-`ilasp` or `rules`:
+**A learner over labelled populations.** A learner needs a class-mode label
+manifest: an expected-state manifest has no classes to learn from, and the
+export refuses it (exit 3), so ask the host for a class-mode one. Export the
+labelled populations for the learner the user named, with `--target` one of
+`popper`, `neutral`, `ilasp` or `rules`:
 
 ```sh
 gnd export ilp MODEL --labels MANIFEST --target TARGET --out EXPORT_DIR
@@ -80,8 +87,8 @@ gnd export ilp MODEL --labels MANIFEST --target TARGET --out EXPORT_DIR
 
 Then run the learner, with a stated time limit, and give the user the exact
 command you ran. It never installs a learner and never runs one the user did not name. When the named learner is not found, stop with "no learner named X
-is installed", and offer the export alone: its files are what any learner
-reads ([the ILP bridge](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/ilp-bridge.md)).
+is installed", and offer the neutral export alone (`--target neutral`): its
+files are what any learner reads ([the ILP bridge](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/ilp-bridge.md)).
 
 When the user asks for the learner's answer only, stop here and report its
 claim as unchecked. Otherwise import it:
@@ -101,14 +108,13 @@ the evaluation the user selects (for example Prolog over the exported
 `bk.pl` and `exs.pl`, which are evaluation input, not a GND verdict) and the
 two digests, and tell the user you assembled it. `learner.version` is the
 version Popper reports, or the user's answer when it reports none; never
-invent one. The Popper branch has not been run on GND's examples. For any
-other learner whose output lacks the covered sets, ask the user for its run
+invent one. The ILP bridge reference records the Popper runs over GND's
+refunds example and what each produced. For any other learner whose output lacks the covered sets, ask the user for its run
 record; do not assemble one.
 
 **A language model as the learner** (`--target llm`) needs a run record
 independent of the model that answered, so this skill never plays that
-model. The documented route is an evidence script that builds the prompt and
-runs a separate agent; name it and stop.
+model. The documented route is an evidence script that builds the prompt and runs a separate agent, outside this conversation; name it and stop.
 
 **A rule miner over one unlabelled population** (`--target amie`):
 
@@ -117,8 +123,9 @@ gnd export ilp MODEL --population POPULATION --target amie --out EXPORT_DIR
 gnd import mined-rules MODEL CLAUSES --population POPULATION --reported RUN --target amie --out PROPOSAL --actor ACTOR --requested-at TIMESTAMP
 ```
 
-The miner the user named runs between the two commands. GND keeps only the
-rules it counted on the population and that hold for every case.
+The miner the user named runs between the two commands. GND writes the
+proposal only if every mined rule holds for every case on the population:
+admission is all-or-nothing, so one failing rule means no proposal at all.
 
 After a coverage refusal it never changes the claim and imports again.
 
@@ -149,15 +156,12 @@ Each exit's meaning has its own home: the command's `--help`, and for `gnd check
 
 ## Hand off
 
-Only after the command that wrote a proposal exited 0 and emitted something,
-name each proposal file and route it: every proposal goes to review in
+Only after the command that wrote a proposal exited 0 and the proposal file exists, name each proposal file and route it: every proposal goes to review in
 [gnd-model-evolve](../gnd-model-evolve/SKILL.md), which previews it and
 applies only what the user accepts. At the handoff, also name:
 
 - each value-family candidate, as carrying host values;
-- each run record this skill assembled, the evaluation that produced its
-  sets, and that its `inducer` names the learner, because the program is the
-  learner's.
+- each run record this skill assembled, and the evaluation that produced its sets; and that the proposal's induction provenance names the learner as its inducer, because the program is the learner's.
 
 ## Refusals
 
@@ -167,7 +171,7 @@ This skill never applies, confirms or edits a model, and never edits a proposal.
 
 - Derivation and Lean exports are not this skill: [gnd-export](../gnd-export/SKILL.md).
 - Measuring a synthesized corpus is not this skill: [gnd-dev-session](../gnd-dev-session/SKILL.md).
-- Every reference this skill cites lives in [gnd-orm-core](../gnd-orm-core/SKILL.md).
+- The references this skill links inside the package live in [gnd-orm-core](../gnd-orm-core/SKILL.md); the ILP bridge reference is on the documentation site.
 
 ## Record and commit
 

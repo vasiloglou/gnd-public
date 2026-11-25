@@ -3,16 +3,21 @@
 Spec: .gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md section 8 (T8, T13, T14, T17).
 These tests read sentences; a sentence test cannot fail when an agent ignores the
 sentence, so nothing here claims the skill is followed (spec section 8, honest limit).
+Review round 1 (notes/reviews/phase-IS1-r1) found that several first versions passed
+when the instruction they guard was reversed; each repair names its finding.
 """
 
 import hashlib
 import re
 import shutil
 import subprocess
+import sys
+from collections import Counter
 from pathlib import Path
 
 import pytest
 from test_ik6_walk import ABSOLUTE, DOWNSTREAM
+from test_public_packaged_invocation_guards import EXECUTABLE_SNIPPETS
 from test_solve_successors import FROZEN_SKILLS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,7 +27,7 @@ AGENTS_INDEX = ROOT / "docs/agents/index.md"
 #: The IS1 base commit, named in the spec's delegated ruling (section 13).
 IS1_BASE = "1e6083f3554e785aa994422c837fda874d74d1e6"
 
-#: R-a..R-h of spec section 6.1: each lives in gnd-induce/SKILL.md and nowhere else.
+#: R-a..R-h of spec section 6.1: each is said once, in gnd-induce/SKILL.md, and nowhere else.
 ONE_HOME = {
     "R-a": "This skill never applies, confirms or edits a model, and never edits a proposal.",
     "R-b": "It never writes or edits a learner's clauses or run record, and never answers as the learner "
@@ -38,40 +43,76 @@ ONE_HOME = {
     "R-h": "It never copies host values or paths into a file it writes or a public page, apart from the "
            "learner artifacts it saves or assembles in the user's working paths; chat read-back may show them.",
 }
-REACTIONS_HEADER = "| Exit | Reaction |"
-COMMANDS = ("gnd measure --labels", "gnd discover", "gnd export ilp", "gnd import ilp-rules",
-            "gnd import mined-rules", "gnd check")
+#: The reactions table, row by row (F8: deleting a row must fail).
+REACTIONS = (
+    ("0", "report what GND printed"),
+    ("3", "report the named refusal or input error verbatim and stop; a stale label manifest goes back to the user"),
+    ("11", "(discover, export, either import) choose a new output path with the user; delete nothing"),
+    ("1, 2 or 4 from `gnd check`", "report the verdicts verbatim: they are results, not refusals"),
+    ("any other", "report verbatim and stop"),
+)
+#: The six command paths the skill documents, as fenced lines (F9: a missing one must fail).
+COMMAND_PATHS = Counter({("measure",): 1, ("discover",): 1, ("export", "ilp"): 2, ("import", "ilp-rules"): 1,
+                         ("import", "mined-rules"): 1, ("check",): 1})
+INDEX_COMMANDS = ["gnd measure --labels", "gnd discover", "gnd export ilp", "gnd import ilp-rules",
+                  "gnd import mined-rules", "gnd check"]
+#: Absolute POSIX paths that are not part of a URL or a relative link (F11: /srv/... must fail).
+ANY_ABSOLUTE = re.compile(r"(?<![\w:/.~-])/(?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]*")
+INSTALLS = re.compile(r"\b(?:pip3?|pipx|python3? -m pip|uv pip|brew|conda|mamba|apt-get|apt|npm|cargo)\s+install\b"
+                      r"|\buv\s+(?:add|tool\s+install)\b", re.IGNORECASE)
+GIT_IDENTITY = re.compile(r"\bgit\s+(?:config|var|log|show|blame)\b|GIT_(?:AUTHOR|COMMITTER)|user\.(?:name|email)"
+                          r"|\$USER\b|\$LOGNAME\b|\bwhoami\b|\bid\s+-un\b", re.IGNORECASE)
+HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+FENCE = re.compile(r"^\s*(```|~~~)")
 
 
-def flat(text: str) -> str:
-    return re.sub(r"\s+", " ", text.replace("*", ""))
+def visible(raw: str) -> str:
+    """The text a reader sees: no HTML comments, emphasis markers dropped, whitespace collapsed."""
+    return re.sub(r"\s+", " ", HTML_COMMENT.sub("", raw).replace("*", ""))
 
 
-def packaged_texts(root: Path = SKILLS):
+def skill_raw() -> str:
+    return SKILL.read_text(encoding="utf-8")
+
+
+def occurrences(sentence: str, root: Path = SKILLS) -> Counter:
+    found = Counter()
     for path in sorted(root.rglob("*.md")):
-        yield path.relative_to(root).as_posix(), flat(path.read_text(encoding="utf-8"))
+        count = visible(path.read_text(encoding="utf-8")).count(sentence)
+        if count:
+            found[path.relative_to(root).as_posix()] = count
+    return found
 
 
-def homes(sentence: str, texts) -> list[str]:
-    return [rel for rel, text in texts if sentence in text]
-
-
-def skill_text() -> str:
-    return flat(SKILL.read_text(encoding="utf-8"))
-
-
-def section(name: str) -> str:
-    raw = SKILL.read_text(encoding="utf-8")
-    match = re.search(rf"^## {re.escape(name)}\n(.*?)(?=^## |\Z)", raw, re.MULTILINE | re.DOTALL)
+def section(name: str, raw: str | None = None) -> str:
+    raw = skill_raw() if raw is None else raw
+    match = re.search(rf"^##[ \t]+{re.escape(name)}[ \t]*\n(.*?)(?=^##[ \t]|\Z)", raw, re.MULTILINE | re.DOTALL)
     assert match, f"gnd-induce has no '## {name}' section"
-    return flat(match.group(1))
+    return visible(match.group(1)).strip()
 
 
-# --- T8: one home per refusal, one reactions table, the ordering sentences ---
+def tables(raw: str) -> list[list[list[str]]]:
+    """Markdown tables outside fences, as rows of stripped cells (header and rule rows dropped)."""
+    found, current, in_fence = [], [], False
+    for line in raw.splitlines():
+        if FENCE.match(line):
+            in_fence = not in_fence
+            continue
+        if not in_fence and line.strip().startswith("|"):
+            current.append([cell.strip() for cell in line.strip().strip("|").split("|")])
+        elif current:
+            found.append(current)
+            current = []
+    if current:
+        found.append(current)
+    return [[row for row in table[2:]] for table in found if len(table) >= 2]
+
+
+# --- T8: one home per refusal, said once ---------------------------------------
 
 @pytest.mark.parametrize("rule", sorted(ONE_HOME))
-def test_t8_each_refusal_has_exactly_one_home(rule):
-    assert homes(ONE_HOME[rule], list(packaged_texts())) == ["gnd-induce/SKILL.md"], rule
+def test_t8_each_refusal_is_said_once_and_only_in_gnd_induce(rule):
+    assert occurrences(ONE_HOME[rule]) == Counter({"gnd-induce/SKILL.md": 1}), rule
 
 
 def test_t8_a_seeded_second_home_is_found_by_name(tmp_path):
@@ -79,35 +120,84 @@ def test_t8_a_seeded_second_home_is_found_by_name(tmp_path):
     shutil.copytree(SKILLS, seeded)
     other = seeded / "gnd-export/SKILL.md"
     other.write_text(other.read_text(encoding="utf-8") + "\n" + ONE_HOME["R-e"] + "\n", encoding="utf-8")
-    assert homes(ONE_HOME["R-e"], list(packaged_texts(seeded))) == ["gnd-export/SKILL.md", "gnd-induce/SKILL.md"]
+    assert occurrences(ONE_HOME["R-e"], seeded) == Counter({"gnd-export/SKILL.md": 1, "gnd-induce/SKILL.md": 1})
 
 
-def test_t8_one_reactions_table_with_the_check_results_row():
-    raw = SKILL.read_text(encoding="utf-8")
-    assert raw.count(REACTIONS_HEADER) == 1
-    table = section("Reactions")
-    assert "| 1, 2 or 4 from `gnd check` | report the verdicts verbatim: they are results, not refusals |" in table
-    assert "| 3 | report the named refusal or input error verbatim and stop" in table
+def test_t8_a_repeat_in_the_same_file_and_a_hidden_copy_are_both_caught(tmp_path):
+    """F7: the first version counted files, so a second copy in gnd-induce passed, as did a comment."""
+    seeded = tmp_path / "skills"
+    shutil.copytree(SKILLS, seeded)
+    skill = seeded / "gnd-induce/SKILL.md"
+    text = skill.read_text(encoding="utf-8")
+    skill.write_text(text + "\n" + ONE_HOME["R-e"] + "\n", encoding="utf-8")
+    assert occurrences(ONE_HOME["R-e"], seeded)["gnd-induce/SKILL.md"] == 2
+    skill.write_text(text.replace(ONE_HOME["R-c"], f"<!-- {ONE_HOME['R-c']} -->"), encoding="utf-8")
+    assert occurrences(ONE_HOME["R-c"], seeded) == Counter()
 
 
-def test_t8_the_stop_names_exit_3_and_the_handoff_names_exit_0():
-    assert re.search(r"\| 3 \| [^|]*\bstop\b", section("Reactions"))
+# --- T8: the reactions table and the ordering sentences --------------------------
+
+def test_t8_the_reactions_table_is_one_table_with_exactly_its_rows():
+    raw = skill_raw()
+    assert raw.count("| Exit | Reaction |") == 1
+    rows = [tuple(row) for table in tables(raw) for row in table if len(row) == 2 and row[0] in dict(REACTIONS)]
+    assert tuple(rows) == REACTIONS
+
+
+def test_t8_the_handoff_is_conditional_on_a_written_proposal():
+    """F8: the first version passed with the condition negated."""
     handoff = section("Hand off")
-    assert "exited 0 and emitted something" in handoff
-    assert "each run record this skill assembled, the evaluation that produced its sets" in handoff
-    assert "its `inducer` names the learner, because the program is the learner's" in handoff
+    assert handoff.startswith("Only after the command that wrote a proposal exited 0 and the proposal file "
+                              "exists, name each proposal file and route it")
+    assert not re.search(r"\b(even if|regardless|whether or not)\b", handoff, re.IGNORECASE)
 
 
-def test_t8_the_llm_learner_is_never_played_by_the_skill():
+def test_t8_the_handoff_names_the_proposal_inducer_not_a_run_record_field():
+    """F3: the run record has learner; GND writes inducer into the proposal's induction provenance."""
+    handoff = section("Hand off")
+    assert "each run record this skill assembled, and the evaluation that produced its sets" in handoff
+    assert "the proposal's induction provenance names the learner as its inducer" in handoff
+    assert "its `inducer`" not in handoff
+
+
+def test_t8_the_llm_learner_is_named_and_the_skill_stops():
+    """D21, F8: the agent never plays the model; the documented route is run separately."""
     learn = section("Learn")
-    assert "this skill never plays that model" in learn
-    assert "evidence script" in learn
-    assert "never answers as the learner itself" in learn
+    assert ("The documented route is an evidence script that builds the prompt and runs a separate agent, "
+            "outside this conversation; name it and stop.") in learn
+    assert not re.search(r"\b(answer|write|construct|assemble)\w* (the|its|a) (prompt|answer|run record)\b[^.]*"
+                         r"\bllm\b", learn, re.IGNORECASE)
 
 
-def test_t8_the_fact_type_family_routes_to_both_judges():
-    text = section("Discover")
-    assert "](../gnd-judge-fact-types/SKILL.md)" in text and "](../gnd-model-multivalued/SKILL.md)" in text
+def test_t8_discovery_hands_off_by_the_written_file_not_by_emitted():
+    """F1: with the fact-type family, EMITTED 0 can come with a written proposal (FACT TYPES)."""
+    discover = section("Discover")
+    assert "hand off by whether the proposal file was written, not by `EMITTED`" in discover
+    assert "`FACT TYPES`" in discover
+    assert "`--type-evidence EVIDENCE`" in discover
+
+
+def test_t8_the_miner_import_is_all_or_nothing():
+    """F2: one failing mined rule refuses the whole set; no subset is kept."""
+    learn = section("Learn")
+    assert "admission is all-or-nothing" in learn
+    assert "keeps only the rules" not in learn
+
+
+def test_t8_a_learner_needs_a_class_mode_manifest_and_falls_back_to_neutral():
+    """F4: an expected-state manifest has no classes to learn from; the fallback export is neutral."""
+    learn = section("Learn")
+    assert "class-mode label manifest" in learn
+    assert "`--target neutral`" in learn
+
+
+def test_t8_the_description_and_summary_claim_only_what_gnd_writes():
+    """F5: a measure report is not a proposal; measure prints several cells per rule; Popper has run."""
+    raw = skill_raw()
+    assert "Every rule it produces is a proposal" in raw and "Every output is a proposal" not in raw
+    assert "a cell per rule and label" not in raw
+    assert "has not been run on GND's examples" not in raw
+    assert "four induction commands" not in raw
 
 
 def test_t8_every_proposal_command_asks_the_actor_of_the_user():
@@ -116,12 +206,55 @@ def test_t8_every_proposal_command_asks_the_actor_of_the_user():
     assert "Who should the proposal be recorded as" in inputs
 
 
+# --- T8, D23, F6: every skill link names the skill it opens ------------------------
+
+def test_t8_each_skill_link_label_names_its_destination():
+    links = re.findall(r"\[`?(gnd-[a-z-]+)`?\]\(\.\./(gnd-[a-z-]+)/SKILL\.md\)", skill_raw())
+    assert links and [(label, target) for label, target in links if label != target] == []
+
+
+def test_t8_the_fact_type_family_routes_each_kind_to_its_judge():
+    discover = section("Discover")
+    assert "duplicates go to [gnd-judge-fact-types](../gnd-judge-fact-types/SKILL.md)" in discover
+    assert "multi-valued groups to [gnd-model-multivalued](../gnd-model-multivalued/SKILL.md)" in discover
+
+
+# --- T7 for this skill, F9: the six command paths, and option names in full ---------
+
+def _induce_snippets():
+    return [s for s in EXECUTABLE_SNIPPETS if s.skill == "gnd-induce"]
+
+
+def test_t7_the_skill_documents_exactly_its_command_paths():
+    assert Counter(s.subcommand_path for s in _induce_snippets()) == COMMAND_PATHS
+
+
+@pytest.mark.parametrize("path", sorted(COMMAND_PATHS), ids=lambda p: "-".join(p))
+def test_t7_every_option_is_a_full_option_name_of_its_command(path):
+    help_text = subprocess.run([sys.executable, "-m", "gnd", *path, "--help"], capture_output=True, text=True,
+                               check=True).stdout
+    options = set(re.findall(r"(?<![\w-])--[a-z][a-z0-9-]*", help_text))
+    used = {option for s in _induce_snippets() if s.subcommand_path == path for option in s.long_options}
+    assert used - options == set(), sorted(used - options)
+
+
+def test_t7_every_actor_is_the_placeholder():
+    """F11: a fixed --actor would record one name for every user."""
+    actors = [s.tokens[s.tokens.index("--actor") + 1] for s in _induce_snippets() if "--actor" in s.tokens]
+    assert actors and set(actors) == {"ACTOR"}
+
+
 def test_t10_the_skill_installs_nothing():
-    text = skill_text()
-    assert not re.search(r"\b(pip install|uv add|uv tool install|brew install|conda install)\b", text)
+    assert not INSTALLS.search(visible(skill_raw()))
 
 
-# --- T13: no frozen skill differs from the IS1 base --------------------------
+@pytest.mark.parametrize("line", ["pip3 install popper", "uv tool install x", "brew install swi-prolog",
+                                  "python -m pip install popper"])
+def test_t10_the_install_pattern_catches_each_installer(line):
+    assert INSTALLS.search(line)
+
+
+# --- T13: no frozen skill differs from the IS1 base --------------------------------
 
 def _frozen_diff(root: Path) -> list[str]:
     changed = []
@@ -148,32 +281,57 @@ def test_t13_a_seeded_edit_to_a_frozen_skill_is_named(tmp_path):
     assert _frozen_diff(clone) == [FROZEN_SKILLS[0]]
 
 
-# --- T14: no host path, run directory or downstream name ---------------------
+# --- T14: no host path, run directory, downstream name or git-derived actor ----------
 
 @pytest.mark.parametrize("pattern", ABSOLUTE)
 def test_t14_no_absolute_path_in_the_skill(pattern):
-    assert not re.search(pattern, SKILL.read_text(encoding="utf-8"))
+    assert not re.search(pattern, skill_raw())
 
 
-def test_t14_a_seeded_absolute_path_is_found():
-    seeded = SKILL.read_text(encoding="utf-8") + "\nsee /Users/someone/runs/x\n"
-    assert any(re.search(p, seeded) for p in ABSOLUTE)
+def test_t14_no_absolute_path_of_any_root():
+    assert ANY_ABSOLUTE.findall(skill_raw()) == []
+
+
+@pytest.mark.parametrize("seed", ["see /srv/reviewer/runs/april", "under /mnt/data/x", "(/etc/gnd/cfg)"])
+def test_t14_a_seeded_absolute_path_is_found(seed):
+    assert ANY_ABSOLUTE.search(skill_raw() + "\n" + seed + "\n")
+
+
+def test_t14_urls_and_relative_links_are_not_paths():
+    assert ANY_ABSOLUTE.findall("[x](../gnd-x/SKILL.md) https://github.com/a/b/blob/main/c.md src/gnd/x.json") == []
 
 
 def test_t14_no_downstream_name_in_the_skill():
-    tokens = set(re.findall(r"[a-z][a-z0-9_-]+", SKILL.read_text(encoding="utf-8").lower()))
+    tokens = set(re.findall(r"[a-z][a-z0-9_-]+", skill_raw().lower()))
     assert [t for t in tokens if hashlib.sha256(t.encode()).hexdigest() in DOWNSTREAM] == []
 
 
 def test_t14_the_actor_is_never_derived_from_git():
-    text = skill_text()
-    assert not re.search(r"git config|user\.name|user\.email|\$USER|whoami", text)
+    assert not GIT_IDENTITY.search(visible(skill_raw()))
 
 
-# --- T17: the agents index names the skill and its six commands --------------
+@pytest.mark.parametrize("line", ["git var GIT_AUTHOR_IDENT", "git config user.name", "echo $USER",
+                                  "git log -1 --format=%an"])
+def test_t14_the_identity_pattern_catches_each_source(line):
+    assert GIT_IDENTITY.search(line)
+
+
+# --- T17: the agents index row names the skill and exactly its six commands ----------
 
 def test_t17_the_agents_index_has_a_gnd_induce_row():
-    rows = [line for line in AGENTS_INDEX.read_text(encoding="utf-8").splitlines()
-            if line.startswith("|") and "`gnd-induce`" in line]
+    """F10: the row must be a table row outside any fence, and its commands compared in full."""
+    rows = [row for table in tables(AGENTS_INDEX.read_text(encoding="utf-8")) for row in table
+            if any(cell == "`gnd-induce`" for cell in row)]
     assert len(rows) == 1, rows
-    assert all(command in rows[0] for command in COMMANDS), rows[0]
+    commands = [cell for cell in rows[0] if "`gnd " in cell]
+    assert len(commands) == 1
+    assert [c.strip().strip("`") for c in commands[0].split(",")] == INDEX_COMMANDS
+
+
+def test_t17_a_row_inside_a_fence_or_a_wrong_command_is_refused():
+    row = next(line for line in AGENTS_INDEX.read_text(encoding="utf-8").splitlines() if "`gnd-induce`" in line)
+    header = "| Task | Skill | Writes | Commands | Refusal |\n|---|---|---|---|---|\n"
+    assert not [r for t in tables("```text\n" + header + row + "\n```\n") for r in t]
+    wrong = row.replace("`gnd check`", "`gnd checker`")
+    cells = next(c for table in tables(header + wrong + "\n") for r in table for c in r if "`gnd " in c)
+    assert [c.strip().strip("`") for c in cells.split(",")] != INDEX_COMMANDS

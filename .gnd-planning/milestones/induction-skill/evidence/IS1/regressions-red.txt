@@ -60,3 +60,16 @@ $ uv run pytest -q -rf tests/test_public_agents_skill_table.py tests/test_induce
 FAILED tests/test_public_agents_skill_table.py::test_agents_md_table_names_every_packaged_skill
 FAILED tests/test_induce_skill.py::test_t17_the_agents_index_has_a_gnd_induce_row
 2 failed, 28 passed in 4.66s
+
+Control 1, T16 (the D20 distribution lane), added after review round 1 (finding F12): the same pin edits over the pre-IS1 tree.
+$ uv run pytest -q -p no:randomly -rf -m distribution tests/test_public_built_inventory.py --tb=no
+FAILED tests/test_public_built_inventory.py::test_the_wheel_carries_exactly_the_pinned_skill_file_set
+FAILED tests/test_public_built_inventory.py::test_the_sdist_carries_exactly_the_pinned_skill_file_set
+FAILED tests/test_public_built_inventory.py::test_the_source_tree_carries_exactly_the_pinned_skill_file_set
+FAILED tests/test_public_built_inventory.py::test_wheel_carries_every_skill_file
+FAILED tests/test_public_built_inventory.py::test_sdist_carries_every_skill_file
+FAILED tests/test_public_built_inventory.py::test_source_tree_count_matches_the_expected_constant
+FAILED tests/test_public_built_inventory.py::test_public_built_surfaces_agree_with_current_inventory
+7 failed, 10 passed in 3.15s
+
+Commit order (F12): a7b2f24b pins; 86961531 the skill and tests/test_induce_skill.py without the two docs rows (control 2 is this tree); 983a23b0 the rows.

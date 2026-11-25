@@ -3013,7 +3013,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - does: Build and validate identifier pools against a model, then sample admitted universes with replacement [load_pool, EntityPool].
 - verbs: identifier pool, entity pool, pool artifact, load_pool, write_pool, build_faker_pool, EntityPool, faker pool, proposed pool, coherence, schema validation, distinct identifiers, join recurrence, sample with replacement, canonical hash, pool provenance
 - in: Model, pool JSON or seed and desired pool size; admitted Pool and Random for sampling.
-- out: Content-addressed Pool, canonical pool JSON, sampled identifiers or values; PoolValidationError with enumerated failures.
+- out: Content-addressed Pool, canonical pool JSON, sampled identifiers or values; PoolValidationError with enumerated failures, including the on-disk pool byte limit.
 - status: canonical
 - modules: src/gnd/synth/poolfile.py, src/gnd/synth/pool.py
 - uses: check.population_structure, infra.input_policy, model.loading, model.query_index, synth.identity, synth.value_domain

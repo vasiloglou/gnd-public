@@ -1,6 +1,6 @@
 ---
 name: gnd-induce
-description: Runs GND's induction loop over host-labelled populations and hands every result to review -- `gnd measure --labels` to score a model's rules against the host's labels, `gnd discover` to propose rules that hold in one population, `gnd export ilp` then `gnd import ilp-rules` to round-trip a rule learner the user names, with GND re-checking the learner's coverage claim, `gnd import mined-rules` for a rule miner over one unlabelled population, and `gnd check` to re-check a population after a rule is applied. Use when asked to "score our rules against the auditors' labels", "find the rule our reviewers are using", "suggest rules from this data", "run a rule learner", or "import learned rules". Every rule it produces is a proposal of induced, proposed, advisory constraints, reviewed and applied only through gnd-model-evolve; its reports stay reports. Not for judging the fact types `gnd discover --families fact-type` forms (gnd-judge-fact-types, gnd-model-multivalued), measuring a synth corpus (gnd-dev-session), derivation or Lean exports (gnd-export), applying or confirming a rule (gnd-model-evolve), or installing a learner.
+description: Runs GND's induction loop over host-labelled populations and hands every proposal to review -- `gnd measure --labels` to score a model's rules against the host's labels, `gnd discover` to propose rules that hold in one population, `gnd export ilp` then `gnd import ilp-rules` to round-trip a rule learner the user names, with GND re-checking the learner's coverage claim, `gnd import mined-rules` for a rule miner over one unlabelled population, and `gnd check` to re-check a population after a rule is applied. Use when asked to "score our rules against the auditors' labels", "find the rule our reviewers are using", "suggest rules from this data", "run a rule learner", or "import learned rules". Every rule it produces is a proposal of induced, proposed, advisory constraints, reviewed and applied only through gnd-model-evolve; its reports stay reports. Not for judging the fact types `gnd discover --families fact-type` forms (gnd-judge-fact-types, gnd-model-multivalued), measuring a synth corpus (gnd-dev-session), derivation or Lean exports (gnd-export), applying or confirming a rule (gnd-model-evolve), or installing a learner.
 ---
 
 # Induce rules from labelled data, and hand them to review
@@ -47,10 +47,11 @@ gnd measure MODEL --labels MANIFEST --out OUT
 ```
 
 Report every cell GND printed for each rule, as printed, with its numerator
-and denominator ("fired on 2 of 4 flagged populations"), including the cells
-for vacuous and unchecked results. A class-mode manifest scores rules against
-classes; an expected-state manifest scores each population against its
-expected verdict, and `gnd measure` exits 6 on a checker defect, which you
+and denominator ("fired on 2 of 4 flagged populations"). The cells differ by
+mode, and the [measure reference](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/measure-labels.md)
+lists them: a class-mode manifest scores rules against classes, and an
+expected-state manifest scores each population against its expected verdict.
+In expected-state mode `gnd measure` exits 6 on a checker defect, which you
 report as printed. It never combines measure cells into one accuracy number.
 
 ## Discover
@@ -87,8 +88,9 @@ gnd export ilp MODEL --labels MANIFEST --target TARGET --out EXPORT_DIR
 
 Then run the learner, with a stated time limit, and give the user the exact
 command you ran. It never installs a learner and never runs one the user did not name. When the named learner is not found, stop with "no learner named X
-is installed", and offer the neutral export alone (`--target neutral`): its
-files are what any learner reads ([the ILP bridge](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/ilp-bridge.md)).
+is installed", and offer the neutral export alone (`--target neutral`). It holds the
+learner-neutral form only; a learner run later needs its own target's files
+([the ILP bridge](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/ilp-bridge.md)).
 
 When the user asks for the learner's answer only, stop here and report its
 claim as unchecked. Otherwise import it:

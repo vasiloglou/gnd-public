@@ -198,6 +198,13 @@ def test_t8_the_description_and_summary_claim_only_what_gnd_writes():
     assert "a cell per rule and label" not in raw
     assert "has not been run on GND's examples" not in raw
     assert "four induction commands" not in raw
+    # Round 2 (notes/reviews/phase-IS1-r2): F3, F1 and F2.
+    flat = visible(raw)
+    assert "hands every result to review" not in flat and "hands every proposal to review" in flat
+    assert "including the cells for vacuous and unchecked results" not in flat
+    assert "cells differ by mode" in flat
+    assert "its files are what any learner reads" not in flat
+    assert "needs its own target's files" in flat
 
 
 def test_t8_every_proposal_command_asks_the_actor_of_the_user():

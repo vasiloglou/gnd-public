@@ -1,0 +1,4 @@
+Review round 2 repairs (2026-11-25): the round-2 assertions over the unrepaired skill text, before the text fix.
+$ uv run pytest -q tests/test_induce_skill.py::test_t8_the_description_and_summary_claim_only_what_gnd_writes --tb=line
+FAILED tests/test_induce_skill.py::test_t8_the_description_and_summary_claim_only_what_gnd_writes
+1 failed in 0.97s

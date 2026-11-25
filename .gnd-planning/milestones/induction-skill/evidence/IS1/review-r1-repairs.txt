@@ -28,3 +28,8 @@ CAUGHT  F11 pip3 install: 1 failed, 56 passed in 14.52s
 CAUGHT  F11 /srv path: 1 failed, 56 passed in 15.29s
 CAUGHT  F10 index row moved into a fence: 1 failed, 56 passed in 12.73s
 CAUGHT  F10 index command gnd check -> gnd checker: 1 failed, 56 passed in 15.54s
+
+Defect in the runner above (review round 2, finding F11): run() writes the supplied baseline,
+not the file's current bytes, back over the target, and labels any failing pytest summary
+CAUGHT, including a failure unrelated to the mutation. The outcomes listed above were
+reproduced independently by the round-2 reviewer; the script does not enforce them on a rerun.

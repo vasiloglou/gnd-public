@@ -69,22 +69,41 @@ def valid_date(value: object) -> bool:
         return False
 
 
+#: Keys whose values are not authored syntax.
+_NOT_SYNTAX = frozenset({"provenance", "source", "rejected_proposals"})
+#: Keys whose value is a map keyed by role name: an atom's `bind` and a derivation's `head`.
+_ROLE_MAPS = frozenset({"bind", "head"})
+#: Keys whose value is a list of maps keyed by role name: a fact type's sample rows.
+_ROLE_ROWS = frozenset({"sample_population"})
+_SYNTAX, _ROLE_MAP, _ROLE_ROW_LIST = "syntax", "role-map", "role-rows"
+
+
 def temporal_nodes(value: object):
-    """Iterate authored syntax without descending into provenance or archived proposals."""
-    stack = [("$", value)]
+    """Iterate authored syntax without descending into provenance or archived proposals.
+
+    A map keyed by role name is a container, not a term, whatever its roles are called
+    (issue 286): its keys are never read as syntax, so a role named `date`,
+    `duration_days`, `source` or `bind` is just a role. Which maps those are is decided
+    by the key that holds them, as the model schema places them, never by the text of
+    the path. The values inside such a map are syntax again: a derivation head holds terms.
+    """
+    stack = [("$", value, _SYNTAX)]
     while stack:
-        path, node = stack.pop()
+        path, node, kind = stack.pop()
         if isinstance(node, dict):
-            # Role-name maps are containers, even when a role is named date.
-            if not path.endswith((".bind", ".head")):
-                yield path, node
+            if kind == _ROLE_MAP:
+                stack.extend((f"{path}.{key}", child, _SYNTAX) for key, child in node.items())
+                continue
+            yield path, node
             stack.extend(
-                (f"{path}.{key}", child)
+                (f"{path}.{key}", child,
+                 _ROLE_MAP if key in _ROLE_MAPS else _ROLE_ROW_LIST if key in _ROLE_ROWS else _SYNTAX)
                 for key, child in node.items()
-                if key not in {"provenance", "source", "rejected_proposals"}
+                if key not in _NOT_SYNTAX
             )
         elif isinstance(node, list):
-            stack.extend((f"{path}[{index}]", child) for index, child in enumerate(node))
+            item_kind = _ROLE_MAP if kind == _ROLE_ROW_LIST else _SYNTAX
+            stack.extend((f"{path}[{index}]", child, item_kind) for index, child in enumerate(node))
 
 
 def is_temporal_node(node: Mapping) -> bool:

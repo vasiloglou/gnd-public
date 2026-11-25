@@ -14,7 +14,7 @@ decision; preparing a release configures and runs neither.
 **Token upload of retained files.** The owner uploads the release wheel and
 sdist that a preparation retained, after `sha256sum -c SHA256SUMS` passes,
 with the owner's own PyPI credentials. The uploaded bytes are the bytes that
-were validated. Every release through 0.4.0 (0.1.0, 0.2.0, 0.3.0 and 0.4.0) was
+were validated. Every release through 0.5.0 (0.1.0, 0.2.0, 0.3.0, 0.4.0 and 0.5.0) was
 published this way.
 
 **The workflow with Trusted Publishing.** Sign in to

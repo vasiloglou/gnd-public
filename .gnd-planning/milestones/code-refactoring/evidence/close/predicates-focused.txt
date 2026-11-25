@@ -1,0 +1,2 @@
+uv run pytest -q -p no:cacheprovider tests/test_rf1_*.py tests/test_rf5_commands.py tests/test_gnd_arch.py  # main 99cf3df2, macOS, Python 3.14.3
+758 passed in 107.66s (0:01:47)

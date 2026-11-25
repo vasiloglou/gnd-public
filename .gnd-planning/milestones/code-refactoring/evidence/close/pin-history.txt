@@ -1,0 +1,33 @@
+Pin expected values across the milestone (RF1 capture fix 5f56f5f6 to the last phase commit a390599c), excluding mutations.json:
+(empty above = unchanged)
+
+After the milestone (a390599c to main 99cf3df2), files changed:
+ 84 files changed, 1861 insertions(+), 593 deletions(-)
+Commits, by milestone prefix:
+   3 IK4
+   2 rof1
+   2 IL5
+   2 IL3
+   1 test: re-pin frozen goldens for role-scoped value messages
+   1 phase-RR1
+   1 phase-RN1
+   1 phase-PL12
+   1 WN2
+   1 TS2
+   1 TS1
+   1 NM2
+   1 Merge main into report-output-fidelity (PR 124) after RR1 and FU2-FU4
+   1 MG5
+   1 MG4
+   1 MG3
+   1 MG2
+   1 MG-close
+   1 IL5-Q3
+   1 IL4
+   1 IL2
+   1 IKE-Q3
+   1 IK5
+   1 IK3
+   1 CT4
+   1 CT3
+   1 CT2

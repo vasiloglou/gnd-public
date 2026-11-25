@@ -1,0 +1,57 @@
+# bash .gnd-planning/milestones/release-0.5.0/evidence/RW1/e1-shards.sh 99cf3df2aeb8663d27a7028d6f8bfd24a8ddfdf9 base   (run on beast-3, 2026-11-25)
+E1 scratch directory: <beast-3 scratch>
+uv 0.13.7 (316c827e0 2026-11-03 aarch64-apple-darwin)
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+99cf3df2aeb8663d27a7028d6f8bfd24a8ddfdf9
+Using CPython 3.13.18
+Creating virtual environment at: .venv
+Resolved 32 packages in 1ms
+   Building get-nick-done @ file://<beast-3 scratch>/source
+warning: `build_system.requires = ["uv-build>=0.10.10,<0.11.0"]` does not contain the current uv version 0.13.7
+      Built get-nick-done @ file://<beast-3 scratch>/source
+Prepared 1 package in 3ms
+Installed 20 packages in 29ms
+ + annotated-types==0.8.0
+ + attrs==26.1.0
+ + duckdb==1.5.5
+ + faker==40.36.0
+ + get-nick-done==0.5.1 (from file://<beast-3 scratch>/source)
+ + iniconfig==2.3.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + packaging==26.3
+ + pluggy==1.6.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.20.0
+ + pytest==9.1.1
+ + referencing==0.37.0
+ + rpds-py==2026.6.3
+ + ruamel-yaml==0.19.1
+ + ruff==0.16.2
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.2
+Python 3.13.18
+
+Shard 0 exit 1
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+2973 passed, 183 deselected, 2 errors in 606.77s (0:10:06)
+
+Shard 1 exit 0
+4350 passed, 77 deselected in 729.05s (0:12:09)
+
+Shard 2 exit 0
+3282 passed, 214 deselected, 1 warning in 566.10s (0:09:26)
+
+Shard 3 exit 0
+3991 passed, 13 skipped, 222 deselected in 578.27s (0:09:38)
+
+Shard 4 exit 0
+4341 passed, 126 deselected in 966.97s (0:16:06)
+
+Shard 5 exit 0
+3120 passed, 228 deselected in 458.11s (0:07:38)
+exit 0

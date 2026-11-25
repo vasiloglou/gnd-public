@@ -1,0 +1,47 @@
+uv run python .gnd-planning/milestones/code-refactoring/evidence/close/close-table.py .gnd-planning/milestones/code-refactoring/evidence/metrics-RF0.json .gnd-planning/milestones/code-refactoring/evidence/close/metrics-a390599c.json .gnd-planning/milestones/code-refactoring/evidence/close/metrics-close.json
+# RF0 baseline 19b131b; milestone end a390599c (measured from git archive with tools/gnd_arch.py measure); main 99cf3df2
+== .gnd-planning/milestones/code-refactoring/evidence/metrics-RF0.json
+  modules: 148
+  lines: 104094
+  runtime SCCs >1: 5
+  largest SCC: 14
+  core-layer SCCs >1: 2
+  private imports: 242
+  AST-identical groups: 15
+  families: 9
+  wrong-way edges: 27
+  cross-lane edges: 54
+  clean layers: 2
+  entry-point violations: n/a
+  unmapped modules: 0
+  largest: [('gnd.cli', 9088), ('gnd.model', 5157), ('gnd.checker', 5143), ('gnd.exp.session_store', 3023), ('gnd.exp.session_eval', 2698)]
+== .gnd-planning/milestones/code-refactoring/evidence/close/metrics-a390599c.json
+  modules: 228
+  lines: 111580
+  runtime SCCs >1: 0
+  largest SCC: 0
+  core-layer SCCs >1: 0
+  private imports: 680
+  AST-identical groups: 12
+  families: 9
+  wrong-way edges: 0
+  cross-lane edges: 153
+  clean layers: 6
+  entry-point violations: 0
+  unmapped modules: 0
+  largest: [('gnd.model._validation', 4890), ('gnd.extensions', 2763), ('gnd.exp.session_eval', 2695), ('gnd.semantic_spec', 2588), ('gnd.synth.boundary', 2376)]
+== .gnd-planning/milestones/code-refactoring/evidence/close/metrics-close.json
+  modules: 296
+  lines: 143456
+  runtime SCCs >1: 0
+  largest SCC: 0
+  core-layer SCCs >1: 0
+  private imports: 804
+  AST-identical groups: 22
+  families: 9
+  wrong-way edges: 0
+  cross-lane edges: 190
+  clean layers: 6
+  entry-point violations: 0
+  unmapped modules: 0
+  largest: [('gnd.model._validation', 4989), ('gnd.semantic_spec', 3065), ('gnd.extensions', 3035), ('gnd.export.pyrel_rules', 2942), ('gnd.evolve.service', 2906)]

@@ -1,0 +1,8 @@
+.venv/bin/python .gnd-planning/milestones/seeded-routes-and-identifiers/evidence/close/verify-phase-evidence.py c89e55e614bdd414023b89b47b4f5143ea0dae01
+002-phase-SI1.md 16 evidence digests match
+003-phase-SI2.md 13 evidence digests match
+004-phase-SI3.md 17 evidence digests match
+005-phase-SI4.md 15 evidence digests match
+006-phase-SI1.md 9 evidence digests match
+70 evidence digests match
+Exit: 0

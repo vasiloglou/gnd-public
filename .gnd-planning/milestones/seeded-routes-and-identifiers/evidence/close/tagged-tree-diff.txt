@@ -1,0 +1,9 @@
+$ git diff --name-status c89e55e614bdd414023b89b47b4f5143ea0dae01 9c051d52a970b82b81940a7125b393f41741013d
+M	.gnd-planning/milestones/induction-skill/README.md
+M	.gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md
+Exit: 0
+$ git rev-parse c89e55e6^{tree} 9c051d52^{tree}
+3cb3428d61e24a0d7b4c74da4f766fbdfec8ce59
+1f0768e584dfcfb41af7cd79a9b3a98d4cd3b2a7
+Exit: 0
+Full-tree diff excluding the two named paths exit: 0

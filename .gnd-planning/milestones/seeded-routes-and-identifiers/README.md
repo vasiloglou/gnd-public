@@ -1,7 +1,7 @@
 # seeded-routes-and-identifiers
 
 Opened on 2026-11-25 at the owner's request ("can we actually reopen and plan
-them", then "can you also include 292?"). **SI1–SI4 recorded. Milestone close gates pending.**
+them", then "can you also include 292?"). **SI1–SI4 complete. Close approved under `auto=true`.**
 
 It plans three open issues and a tag-only release:
 
@@ -34,6 +34,12 @@ merges and the decisions the specs name; a tag-only 0.5.2 at the end.
 - [SI4 spec](notes/phase-SI4-spec.md) and [record](005-phase-SI4.md) cover the
   tag-only release preparation.
 
+- [SI1 repair](006-phase-SI1.md) records the packaged skill inventory fix.
+- [Close record](007-milestone-close.md) binds the verified tag, default
+  suite, light panel and delegated close ruling.
+
 [PR #294](https://github.com/vasiloglou/gnd-public/pull/294) merged SI1–SI3.
-The close record will bind the separate SI4 merge, remote tag, full default
-test lane and light panel.
+[PR #311](https://github.com/vasiloglou/gnd-public/pull/311) prepared 0.5.2.
+[PR #313](https://github.com/vasiloglou/gnd-public/pull/313) merged the
+inventory repair and is the verified target of
+[`v0.5.2`](https://github.com/vasiloglou/gnd-public/tree/v0.5.2).

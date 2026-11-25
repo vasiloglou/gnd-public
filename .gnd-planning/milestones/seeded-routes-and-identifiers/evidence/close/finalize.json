@@ -1,0 +1,22 @@
+{
+  "advisory": true,
+  "agreed_concern_count": 3,
+  "command": "review finalize",
+  "divergent_concern_count": 7,
+  "gnd_version": "0.5.2",
+  "outcome": "quorum-established",
+  "prioritized_fix_count": 10,
+  "quorum_met": true,
+  "report_path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/close/PANEL-REVIEW.md",
+  "required_successes": 3,
+  "run_sha256": "6a69e30f048bf1aac8cc77c37289eec081f0fd0a6b760b7cdf03fbd994d8e440",
+  "schema_version": 1,
+  "successful_reviewer_ids": [
+    "claude",
+    "codex",
+    "qwen",
+    "glm"
+  ],
+  "synthesis_sha256": "4b444fa29634225b648d48c336919aaa9ee34c914014030c1ef5c8d958a4a70d",
+  "tool": "gnd"
+}

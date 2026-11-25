@@ -23,6 +23,6 @@ itself reviewed.
 | OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **merged** (PR #270): [record](008-phase-OB2.md); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); two review rounds |
 | OB3 | Semantic model and mapping files, with the default per D2 | **merged** (PR #271): [record](011-phase-OB3.md); its four departures accepted ([gate](012-OB3-departures-gate.md)); one review round |
 | OB4 | `--physical-binding FILE` | **recorded** ([record](015-phase-OB4.md)); one review round; both added rules accepted ([gate](016-OB4-departures-gate.md)); merged (PR 272) |
-| OB5 | Docs and skill | **spec drafted** ([spec](notes/phase-OB5-spec.md) r1); awaiting the owner gate (H1-H10) |
+| OB5 | Docs and skill | **spec drafted** ([spec](notes/phase-OB5-spec.md) r1); approved except H7, which is open ([gate](017-OB5-spec-gate.md)); in progress |
 
-**Next action:** the owner rules the OB5 spec (H1-H10); no docs are edited before that. Open with the owner: the oracle lane (OB3-Q3). D10 asks the reporter for inputs, including whether their schema uses surrogate keys (OB4-Q3), and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.
+**Next action:** OB5 implementation, then the viewable checkpoint; the owner rules H7 (the oracle lane) there. Open with the owner: the oracle lane (OB3-Q3). D10 asks the reporter for inputs, including whether their schema uses surrogate keys (OB4-Q3), and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.

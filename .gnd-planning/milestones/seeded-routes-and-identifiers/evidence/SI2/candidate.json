@@ -1,0 +1,122 @@
+{
+  "counts": {
+    "qualifying_competitions": 0,
+    "C": 0,
+    "loadable": 436,
+    "legacy_composite": 9,
+    "refused": 67,
+    "A": 13
+  },
+  "changes": [
+    [
+      "A",
+      "src/gnd/examples/literature/assertions/model.orm.yaml",
+      [
+        "assertion"
+      ],
+      [
+        "model_verbalization",
+        "extraction_vocabulary",
+        "applicability",
+        "evolve_shape_references",
+        "extraction_guidelines"
+      ]
+    ],
+    [
+      "A",
+      "src/gnd/examples/literature/lineage/model.orm.yaml",
+      [
+        "assertion"
+      ],
+      [
+        "model_verbalization",
+        "extraction_vocabulary",
+        "applicability",
+        "evolve_shape_references",
+        "extraction_guidelines"
+      ]
+    ],
+    [
+      "A",
+      "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml",
+      [
+        "enrolment"
+      ],
+      [
+        "applicability"
+      ]
+    ],
+    [
+      "A",
+      "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml",
+      [
+        "task"
+      ],
+      [
+        "model_verbalization",
+        "extraction_vocabulary",
+        "applicability",
+        "evolve_shape_references",
+        "extraction_guidelines"
+      ]
+    ],
+    [
+      "A",
+      "tests/fixtures/checker/setfam.orm.yaml",
+      [
+        "booking"
+      ],
+      [
+        "applicability"
+      ]
+    ],
+    [
+      "A",
+      "tests/fixtures/coverage/positional/library.orm.yaml",
+      [
+        "copy",
+        "circulating_copy",
+        "reference_copy"
+      ],
+      [
+        "applicability",
+        "evolve_shape_references"
+      ]
+    ],
+    [
+      "A",
+      "tests/fixtures/models/dispatch.orm.yaml",
+      [
+        "delivery"
+      ],
+      [
+        "applicability"
+      ]
+    ],
+    [
+      "A",
+      "tests/fixtures/models/full_vocabulary.orm.yaml",
+      [
+        "assignment"
+      ],
+      [
+        "applicability"
+      ]
+    ],
+    [
+      "A",
+      "tests/fixtures/models/library.orm.yaml",
+      [
+        "copy",
+        "circulating_copy",
+        "reference_copy"
+      ],
+      [
+        "applicability",
+        "evolve_shape_references"
+      ]
+    ]
+  ],
+  "identity_digest": "58f0ebce91661bb0c66912633234951ccfa53f3a32af11b01b50e7d6a828535a",
+  "B": "legacy, zero changes by definition"
+}

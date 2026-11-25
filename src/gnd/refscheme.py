@@ -6,6 +6,7 @@ from typing import Any
 
 from gnd.extraction_scope import fact_type_scope
 from gnd.model_index import ModelIndex
+from gnd.rmap import external_uniqueness_order, is_confirmed_alethic
 from gnd.universe import resolve_reference_value_type
 
 __all__ = [
@@ -38,7 +39,7 @@ def _referenced_object_type(role_ref: dict[str, Any], model: Any) -> str | None:
     return None
 
 
-def _anchors_on(role_refs: list[dict[str, Any]], oid: str, model: Any) -> bool:
+def _anchors_on(role_refs: list[dict[str, Any]], oid: str, model: Any, *, _facts=None) -> bool:
     """Does this external UC's role sequence identify ``oid``?
 
     It does when every referenced fact type ALSO plays ``oid`` in a role other
@@ -46,7 +47,7 @@ def _anchors_on(role_refs: list[dict[str, Any]], oid: str, model: Any) -> bool:
     values is unique", which is precisely a composite identifier for the
     entity those fact types share.
     """
-    fact_types = _fact_types_by_id(model)
+    fact_types = _fact_types_by_id(model) if _facts is None else _facts
     for role_ref in role_refs:
         if not isinstance(role_ref, dict):
             return False
@@ -64,6 +65,31 @@ def _anchors_on(role_refs: list[dict[str, Any]], oid: str, model: Any) -> bool:
         ):
             return False
     return True
+
+
+def _select_role_refs(oid: str, model: Any) -> list:
+    first = []
+    preferred = []
+    fact_types = None
+    for constraint in model.constraints:
+        if str(constraint.get("type")) != "uniqueness" or constraint.get("scope") != "external":
+            continue
+        role_refs = constraint.get("role_refs") or []
+        if not role_refs:
+            continue
+        if fact_types is None:
+            fact_types = _fact_types_by_id(model)
+        if not _anchors_on(role_refs, oid, model, _facts=fact_types):
+            continue
+        if not first:
+            first = role_refs
+        if constraint.get("preferred") and is_confirmed_alethic(constraint):
+            preferred.append(role_refs)
+
+    def order(refs):
+        return external_uniqueness_order([(str(ref.get("fact_type")), str(ref.get("role"))) for ref in refs])
+
+    return min(preferred, key=order) if preferred else first
 
 
 def _unmatchable_reason(oid: str, model: Any) -> str:
@@ -110,9 +136,10 @@ def reference_identity(
 
     Path 1 delegates to ``popvalidate.resolve_reference_value_type`` (call,
     never re-implement). Path 2 consumes ``role_refs`` from a top-level
-    external ``uniqueness`` constraint that anchors on this object type, each
-    referenced role's object type resolved recursively. Path 3 is an explicit
-    refusal carrying its mechanism.
+    external ``uniqueness`` that anchors on this object type. Prefer a
+    confirmed alethic preferred declaration, with a deterministic tie order
+    and the first anchored declaration as fallback. Resolve each referenced
+    role's object type recursively. Path 3 is an explicit refusal.
     """
     # Each recursive branch gets its own ancestor set. Completed siblings are
     # not ancestors and must not be mistaken for a cycle when two component
@@ -134,16 +161,8 @@ def reference_identity(
     if value_type is not None:
         return ("direct", value_type)
 
-    for constraint in model.constraints:
-        if str(constraint.get("type")) != "uniqueness":
-            continue
-        if constraint.get("scope") != "external":
-            continue
-        # PANEL-5: the identifying sequence lives in `role_refs`; the research
-        # prototype's constraint.get("roles") silently matched nothing.
-        role_refs = constraint.get("role_refs") or []
-        if not role_refs or not _anchors_on(role_refs, oid, model):
-            continue
+    role_refs = _select_role_refs(oid, model)
+    if role_refs:
         resolved: list[dict[str, Any]] = []
         for role_ref in role_refs:
             counterpart = _referenced_object_type(role_ref, model)

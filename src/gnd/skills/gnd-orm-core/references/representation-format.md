@@ -500,6 +500,16 @@ The `{ fact_type: <id>, role: <role_name> }` tuple is the canonical cross-refere
 
 For self-referential or multi-occurrence fact types where the role name disambiguates two roles of the same object type, the role reference must use the disambiguating name (not the object-type name).
 
+For reference identity in model and extraction rendering, GND first resolves
+direct identities. For a composite identity it selects an anchored external
+uniqueness marked `preferred`, `confirmed`, and `alethic` when one is present.
+Ties compare the sorted `(fact_type, role)` pairs, then the original sequence,
+in Unicode code-point order. Components are emitted in their declared order.
+Without a qualifying declaration, the first anchored external uniqueness remains
+the fallback. An unresolvable selected key is reported as unmatchable.
+Relational key placement has its own
+[requirements](#relational-mapping-rmap).
+
 ## Guarded constraints
 
 `guarded` is GND's top-level conditional constraint family. Its `antecedent`

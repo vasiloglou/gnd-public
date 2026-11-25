@@ -2596,7 +2596,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: reference identity, direct identification, composite reference, applicable set, unmatchable entity, reference cycle, extraction scope, role_player_signature, fact_type_signatures, shape matching, entity_reference, role player multiset
 - status: canonical
 - modules: src/gnd/refscheme.py
-- uses: check.universe, model.extraction_scope, model.query_index
+- uses: check.universe, model.extraction_scope, model.query_index, model.relational_mapping
 - used_by: discover.fact_types, discover.type_evidence, evolve.shape_matches, extract.guidelines, extract.reference_schemes, extract.vocabulary, model.extraction_vocabulary, model.verbalization
 - tests: tests/test_evolve_shape_matches.py
 - checked: partial
@@ -2609,7 +2609,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/rmap.py
 - uses: model.query_index, model.reference_resolution
-- used_by: export.ossie, export.ossie_relational, export.physical_binding
+- used_by: export.ossie, export.ossie_relational, export.physical_binding, model.reference_schemes
 - tests: tests/test_rmap.py
 - in: a loaded Model and an RmapVariant
 - out: RelationalSchema (tables, role placements, identifications) and Disposition rows

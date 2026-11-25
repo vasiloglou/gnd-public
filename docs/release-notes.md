@@ -13,6 +13,10 @@ procedure](releasing.md). Changes on `main` after a release are listed in an
   standalone flat model is refused with `unattended:flat-without-root`.
   ([#292](https://github.com/vasiloglou/gnd-public/issues/292))
 
+- Composite reference identity prefers a confirmed alethic external uniqueness
+  marked `preferred`. When none qualifies, GND uses the first anchored
+  declaration. ([#279](https://github.com/vasiloglou/gnd-public/issues/279))
+
 ## 0.5.1 (tagged 2026-11-25, not published on PyPI)
 
 0.5.1 is a GitHub tag only. Install it from the tag:

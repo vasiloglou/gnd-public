@@ -30,6 +30,7 @@ __all__ = [
     "Unmapped",
     "UnmappedReason",
     "dispositions",
+    "external_uniqueness_order",
     "is_confirmed_alethic",
     "map_model",
     "name_foreign_keys",
@@ -158,6 +159,11 @@ def is_confirmed_alethic(constraint: Mapping[str, Any]) -> bool:
     return constraint.get("status") == "confirmed" and constraint.get("modality") == "alethic"
 
 
+def external_uniqueness_order(refs: list) -> tuple:
+    """Order by the role set, then by the declared component sequence."""
+    return sorted(refs), refs
+
+
 def _address(fact_id: str | None, index: int) -> str:
     return f"fact_types/{fact_id}/constraints/{index}" if fact_id is not None else f"constraints/{index}"
 
@@ -232,7 +238,7 @@ class _Mapper:
                     and all(self.functional_on(fact, role) for fact, role in refs)
                 ):
                     current = self.identifiers.get(anchor)
-                    if current is None or (sorted(refs), refs) < (sorted(current), current):
+                    if current is None or external_uniqueness_order(refs) < external_uniqueness_order(current):
                         self.identifiers[anchor] = refs
 
     # -- identification -------------------------------------------------------------

@@ -2,11 +2,18 @@
 
 Version 0.5.0, published on 2026-11-25, is the latest release; 0.4.0, 0.3.0,
 0.2.0 and 0.1.0 came before it. Version 0.5.1 is a GitHub tag only and is not
+published on the package index. Version 0.5.2 is a GitHub tag only and is not
 published on the package index. Releases follow the [release
 procedure](releasing.md). Changes on `main` after a release are listed in an
 `Unreleased:` section until the next one.
 
-## Unreleased:
+## 0.5.2 (tagged 2026-11-25, not published on PyPI)
+
+0.5.2 is a GitHub tag only. Install it from the tag:
+
+```sh
+uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.2"
+```
 
 - `gnd flatten`, `gnd extract`, and all three PyRel export modes accept
   unattended roots with reviewed includes. Pass the authored root when a

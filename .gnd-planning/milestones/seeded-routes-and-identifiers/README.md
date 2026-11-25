@@ -1,7 +1,7 @@
 # seeded-routes-and-identifiers
 
 Opened on 2026-11-25 at the owner's request ("can we actually reopen and plan
-them", then "can you also include 292?"). **SI1–SI3 complete. SI4 awaits the implementation merge.**
+them", then "can you also include 292?"). **SI1–SI4 recorded. Milestone close gates pending.**
 
 It plans three open issues and a tag-only release:
 
@@ -31,4 +31,9 @@ merges and the decisions the specs name; a tag-only 0.5.2 at the end.
 
 - [SI3 record](004-phase-SI3.md): ontology and mapping census, pinned tools, and review.
 
-Next action: owner merge decision for [PR #294](https://github.com/vasiloglou/gnd-public/pull/294), then SI4 on main.
+- [SI4 spec](notes/phase-SI4-spec.md) and [record](005-phase-SI4.md) cover the
+  tag-only release preparation.
+
+[PR #294](https://github.com/vasiloglou/gnd-public/pull/294) merged SI1–SI3.
+The close record will bind the separate SI4 merge, remote tag, full default
+test lane and light panel.

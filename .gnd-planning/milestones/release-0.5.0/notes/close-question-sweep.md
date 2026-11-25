@@ -25,17 +25,18 @@ stated residual). Swept on 2026-11-25 at main `75c9ef52`.
 | Q12 | `release_text.py check` reads lines, so a phrase split over a line break is not reported | 005 | **carried** as RC-08 (below) |
 | Q13 | The literature page's "GND 0.4.0" (RW3 spec D3) | 005 | **closed**: the owner chose to drop the version; applied in PR 287 |
 | Q14 | Issue comments after publication (RW-D10, RW3 spec D5) | 005, 006 | **accepted**: not requested by the owner; none posted |
-| Q15 | The owner's review of repository content and history (RC-07) | 005, 006 | **carried**: RC-07, narrowed (below) |
+| Q15 | The owner's review of repository content and history (RC-07) | 005, 006 | **closed by the owner**: RC-07 (below) |
 | Q16 | `docs/releasing.md` named token-published releases through 0.4.0 | 006 | **closed**: PR 288 names 0.5.0 (RC-06) |
 | Q17 | The GitHub release body is the RW3 draft | 006 | **closed**: published as written; the owner may edit it on the release page |
 | Q18 | The owner's `~/.pypirc` is readable by other users of the machine | 006 | **carried**: to the owner, on their machine; not a repository matter |
 | Q19 | The full default lane at the pages commit `6e980af9` had not finished when 006 was written | 006 | **closed**: 22,033 passed, 0 failed, the two RC-02 errors ([close-results](close-results.md)) |
+| Q20 | Publication act 3, the served-file comparison and fresh install, ran without a separate owner request | close panel | **accepted**: `docs/releasing.md` requires both right after an upload and before any announcement; both only read from PyPI; 006 discloses it |
 
 ## Plan §10 decisions
 
 | ID | Disposition |
 |---|---|
-| RW-D0 | **closed**: the standard GND panel reviewed the plan (001) and the close (008) |
+| RW-D0 | **closed by record 008**: the standard GND panel reviewed the plan (001) and the close candidate (007); 008 retains the close panel's report and dispositions |
 | RW-D1 | **closed**: 0.5.0 published (006) |
 | RW-D2 | **closed**: the owner extended it three times (plan §12 to §14); all four milestones merged before the bump |
 | RW-D3 | **repaired**: the owner chose the Ossie relational files as the headline (RW1 spec D4); plan §15, R2 |
@@ -47,7 +48,7 @@ stated residual). Swept on 2026-11-25 at main `75c9ef52`.
 | RW-D9 | **closed**: wheel, sdist and `SHA256SUMS.txt` attached and verified (006) |
 | RW-D10 | **accepted**: as Q14 |
 | RW-D11 | **accepted**: no RelationalAI engine ran an exported program; the notes and the dossier say so |
-| RW-D12 | **carried**: as RC-07 |
+| RW-D12 | **closed by the owner**: as RC-07 |
 | RW-D13 | **closed**: superseded; `uv run ruff check` exits 0 on main (plan §12), and every phase gate used exit 0 |
 | RW-D14 | **accepted**: the workflow's prepare job was not run; only the macOS profile is observed |
 
@@ -61,7 +62,7 @@ stated residual). Swept on 2026-11-25 at main `75c9ef52`.
 | RC-04 | model-query policy maintainer | **carried** unchanged: this milestone added no runtime model query |
 | RC-05 | disclosure maintainer | **carried** unchanged: this milestone did not assess the Ossie export's interaction with `redact`; the Ossie milestone changed the disclosure page for the new files |
 | RC-06 | release procedure maintainer | **closed**: PR 288 |
-| RC-07 | repository and PyPI account owner | **carried, narrowed**: on 2026-11-25 the owner stated "get-nick-done is mine"; the review of repository content and history was not stated and stays the owner's before the next publication |
+| RC-07 | repository and PyPI account owner | **closed by the owner**: on 2026-11-25 the owner stated "get-nick-done is mine", and, asked by the close, answered "Review done" for the review of repository content and history ([receipt](../evidence/close/owner-statements.txt)). The plan placed that review before the upload; the answer does not say whether it was done before or after it, and the close records that |
 | RC-08 (new) | release tooling maintainer | **carried**: `release_text.py check` reads lines, so a phrase split over a line break is not reported. The RW3 paragraph pass was withdrawn after two review rounds found six defects in it; `evidence/RW3/split-phrase-search.py` prints such blocks for a person. Trigger: the next change to the helper; the question is the unit it judges, not a pattern to add |
 
 ## Issues the 0.5.0 notes link

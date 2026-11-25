@@ -14,7 +14,27 @@ plan's, as amended by its §15.
 | 6 | A dossier states identity, evidence, what was not measured and every owner act; the `publish` invocation is rehearsed and not applied | **holds** | `evidence/RW3/dossier.md`; the rehearsal on a disposable clone (`evidence/RW3/scratch-verification.txt`); main kept its prepared pages until PR 287 |
 | 7 | No phase uploaded, tagged, released, created the `pypi` environment or changed `.github/`; audited by `git diff` and three remote snapshots | **holds** | `evidence/close/audit.txt`: `.github/` unchanged since `v0.4.0`. Snapshots: baseline W4 (plan §1), hand-over (`evidence/RW3/pre-publication-state.txt`), after publication (`evidence/publication/post-publication-state.txt`) and at close (`evidence/close/remote-state.txt`). The only new tags are `v0.5.0` (publication act 4) and `v0.5.1` (after the milestone); the only new release is v0.5.0; the environments are still `github-pages` only; `release.yml` has no run. Each act is tied to the owner's words in `evidence/publication/owner-statements.txt` |
 | 8 | The owner has published; served files compared, a fresh index install exercised, post-publication page edits on main, a publication record binds the receipts | **holds** | 006: the served wheel and sdist have the retained digests; a fresh index install printed `gnd 0.5.0`; PR 287 moved the pages; the receipts are under `evidence/publication/` |
-| 9 | Each phase has an approved spec, a record with verbatim focused-gate output and one independent reviewer; the close disposes of every open question | **holds, with stated limits** | RW1 (002), RW2 (003, 004) and RW3 (005) each have a spec approved by delegated ruling, the owner's rulings on the decisions the plan left to the owner, verbatim gate output and Codex review rounds; the [sweep](close-question-sweep.md) disposes of every question. `evidence/close/phase-review-status.txt` lists the bytes changed after the last round that read them: RW1's and RW3's last repairs, the RW2 spec's amendment, and two RW1 evidence files. The lanes and rehearsals are their instrument |
+| 9 | Each phase has an approved spec, a record with verbatim focused-gate output and one independent reviewer; the close disposes of every open question | **holds, with stated limits** | RW1 (002), RW2 (003, 004) and RW3 (005) each have a spec approved by delegated ruling, the owner's rulings on the decisions the plan left to the owner, verbatim gate output and Codex review rounds; the [sweep](close-question-sweep.md) disposes of every question. Fifteen paths changed after the last review round that read them (`evidence/close/phase-review-status.txt`); each is listed below with the predicate it supports and the instrument that stands in for a review |
+
+## Bytes without a review opinion
+
+| Path | Supports | What changed after review | Instrument in place of review |
+|---|---|---|---|
+| `evidence/RW1/notes-reconciliation.md` | 3 | the row for pull request 275 and the recount at the merge | the script that places every shipped file exactly once, rerun at the freeze (`evidence/RW2/freeze-summary.md`) |
+| `evidence/RW1/old-version-probes.md` | 3 | two probe sections added during RW1's review repairs | the recorded commands against the hash-pinned 0.4.0 wheel; RW2 measured the same export refusals again (`evidence/RW2/controls-0.4.0.md`) |
+| `evidence/RW3/dossier.md` | 6 | the guarded command blocks and the test count, after RW3's round 2 | `bash -n` of every block; the publication followed it with receipts (006) |
+| `evidence/RW3/rehearse-publication.sh` | 6 | the split-phrase search step | its run on a disposable clone (`evidence/RW3/scratch-verification.txt`) |
+| `evidence/RW3/scratch-verification.txt` | 6 | rerun with the final helper | the publication's page diff has the same SHA-256 (006) |
+| `notes/phase-RW2-spec.md` | 9 | the review stop and the raised line budget | delegated ruling text; no instrument applies |
+| `notes/phase-RW3-spec.md` | 9 | the withdrawal of the paragraph pass | delegated ruling text; no instrument applies |
+| `dev/components/modules/tools.md` | -- | regenerated for the helper's line numbers | `components_index.py changed --strict` |
+| `docs/marketplace-plugins.md` | 8 | the publication edits | `release_text.py check`, the release tests and the strict docs build (006) |
+| `docs/support.md` | 8 | the publication edits | the same |
+| `docs/release-notes.md` | 3, 8 | the publication edits, and the 0.5.1 section after the milestone | the same, and the review rounds of pull request 289 for the 0.5.1 section |
+| `tests/test_release_acceptance.py` | 4, 5 | the second README-check repair | the acceptance run on beast-3 (33 passed, 004) |
+| `tests/test_acceptance_controls.py` | 4, 5 | the controls for that repair | the default lane, which runs them (every lane after 003) |
+| `tools/release_text.py` | 6, 8 | the withdrawal of the paragraph pass | 98 release tests, the rehearsal and the publication's `check` at exit 0 |
+| `tests/test_release_text.py` | 6, 8 | the same | the same |
 
 ## Lanes
 
@@ -26,7 +46,7 @@ plan's, as amended by its §15.
 | `6e980af9` | the published pages | 22,033 | 0 | 2 | 13 |
 | `75c9ef52` | main at the close | 22,057 | 0 | 2 | 13 |
 
-The two errors in every row are RC-02's. The E1 base failure was in a page
+Every lane ran on beast-3 with Python 3.13.18 and uv 0.13.7, in a clean clone. The two errors in every row are RC-02's setup errors of `tests/test_public_optional.py` (carried, sweep). The 13 skips in every row are `tests/test_guarded_clause_exports.py`, which needs `GND_PYREL_PYTHON`; the `pyrel_oracle` lane ran that runtime at the freeze commit (345 passed). The E1 base failure was in a page
 of the Ossie milestone, repaired on main by pull request 275 before the
 candidate.
 

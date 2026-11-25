@@ -48,9 +48,9 @@ in an `Unreleased:` section until the next one.
 
 `gnd export pyrel --rules duckdb` and `--rules lqp` now export models that
 use external uniqueness, anchored rules, `Number` values or value
-constraints scoped to a role. 0.4.0 refused the first three by name, as "a
-later phase of the rules programs" or "not supported by the rules programs
-yet" ([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
+constraints scoped to a role. 0.4.0 refused each of them by name, as "a
+later phase" or "not supported by the rules programs yet"
+([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
 [PyRel runtime page](runtimes/pyrel.md) is the reference for what the
 programs check, what they list as not checked and what they refuse.
 

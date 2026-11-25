@@ -153,13 +153,13 @@
   [
    "src/gnd/export/physical_binding.py",
    "__init__",
-   "dict[str, int | None]",
+   "dict[str, list[ColumnRef]]",
    1
   ],
   [
    "src/gnd/export/physical_binding.py",
    "__init__",
-   "dict[str, list[ColumnRef]]",
+   "dict[str, tuple[int, int] | None]",
    1
   ],
   [
@@ -183,7 +183,19 @@
   [
    "src/gnd/export/physical_binding.py",
    "__init__",
+   "tuple[int, int]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "__init__",
    "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "_pointer",
+   "Iterable[Any]",
    1
   ],
   [
@@ -196,24 +208,6 @@
    "src/gnd/export/physical_binding.py",
    "ancestors",
    "set[str]",
-   1
-  ],
-  [
-   "src/gnd/export/physical_binding.py",
-   "arity",
-   "self._arity[object_type]",
-   1
-  ],
-  [
-   "src/gnd/export/physical_binding.py",
-   "arity",
-   "self.objects[object_type]",
-   1
-  ],
-  [
-   "src/gnd/export/physical_binding.py",
-   "arity",
-   "self.view.identification.get(object_type, (None,))",
    1
   ],
   [
@@ -633,18 +627,6 @@
   [
    "src/gnd/export/physical_binding.py",
    "place",
-   "fact_table[f]",
-   1
-  ],
-  [
-   "src/gnd/export/physical_binding.py",
-   "place",
-   "fact_table[roles[0][0]]",
-   1
-  ],
-  [
-   "src/gnd/export/physical_binding.py",
-   "place",
    "list[tuple[str, str]]",
    1
   ],
@@ -657,7 +639,7 @@
   [
    "src/gnd/export/physical_binding.py",
    "place",
-   "role_columns[f, r]",
+   "self.bound.get(('roles', f, r))",
    1
   ],
   [
@@ -866,6 +848,66 @@
   ],
   [
    "src/gnd/export/physical_binding.py",
+   "shape",
+   "self._shape[player]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "shape",
+   "self._shape[start]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "shape",
+   "self.objects[current]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "shape",
+   "self.view.identification.get(current, (None,))",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "shape",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "shape",
+   "stack[-1]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "shape",
+   "tuple[int, int]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sorted_foreign_keys",
+   "list[tuple[tuple[str, ...], str, tuple[str, ...]]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sorted_foreign_keys",
+   "tuple[str, ...]",
+   2
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sorted_foreign_keys",
+   "tuple[tuple[str, ...], str, tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
    "sql_datatype",
    "SQL_TYPES.get(' '.join(words))",
    1
@@ -874,6 +916,12 @@
    "src/gnd/export/physical_binding.py",
    "sql_datatype",
    "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/physical_binding.py",
+   "sql_datatype",
+   "sql_type[end + 1:end + 2]",
    1
   ],
   [
@@ -1039,6 +1087,6 @@
    1
   ]
  ],
- "result_distinct_rows": 8352,
- "result_occurrences": 10387
+ "result_distinct_rows": 8360,
+ "result_occurrences": 10396
 }

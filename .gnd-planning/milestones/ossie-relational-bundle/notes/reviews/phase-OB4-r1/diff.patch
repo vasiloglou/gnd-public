@@ -1,0 +1,3451 @@
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/evidence/OB4/dynamic-query-successor.json b/.gnd-planning/milestones/ossie-relational-bundle/evidence/OB4/dynamic-query-successor.json
+new file mode 100644
+index 00000000..3ca56705
+--- /dev/null
++++ b/.gnd-planning/milestones/ossie-relational-bundle/evidence/OB4/dynamic-query-successor.json
+@@ -0,0 +1,1044 @@
++{
++ "schema_version": 1,
++ "reason": "ossie-relational-bundle OB4: the new gnd.export.physical_binding module (annotations, per-table, per-column and per-role maps over a schema-valid binding document), the generalized Rmap records, and the binding wiring in gnd.export.ossie, gnd.export.ossie_relational and the export command. Syntax census only; no model-query exception is widened.",
++ "predecessor": ".gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json",
++ "predecessor_sha256": "d20de719ce33ba4c5d58f53b913c7ef0ab7704c2be698726e43c12599397b4e6",
++ "removed": [
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "carried[fact_type]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "tuple[str, ...]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "<module>",
++   "Literal['derived-computed', 'uniqueness-not-confirmed', 'identification-unmatchable', 'spans-tables', 'not-relational']",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "counts[target]",
++   2
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "dict[str, int]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "set[str]",
++   1
++  ]
++ ],
++ "added": [
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_mapping",
++   "Mapping[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_semantic_model",
++   "Mapping[tuple[str, str], tuple[str | None, str | None]]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_semantic_model",
++   "physical[table.name, column.name]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_semantic_model",
++   "tuple[str | None, str | None]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "build_semantic_model",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/ossie_relational.py",
++   "link_tree",
++   "self.placements[fact_type, order[0]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "<module>",
++   "dict[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "<module>",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "Binding",
++   "Mapping[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "Bound",
++   "Mapping[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "Bound",
++   "Mapping[tuple[str, str], tuple[str | None, str | None]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "Bound",
++   "tuple[str | None, str | None]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "Bound",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "Mapping[str, Any]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "Mapping[str, Mapping[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "Mapping[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "binding.document.get(section, {})",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "dict[str, Mapping[str, Any]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "dict[str, int | None]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "dict[str, list[ColumnRef]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "dict[tuple[str, str, str], tuple[ColumnRef, ...]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "list[ColumnRef]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "tuple[ColumnRef, ...]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "__init__",
++   "tuple[str, str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "ancestors",
++   "self.objects.get(current, {})",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "ancestors",
++   "set[str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "arity",
++   "self._arity[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "arity",
++   "self.objects[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "arity",
++   "self.view.identification.get(object_type, (None,))",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "dict[ColumnRef, list[tuple[str, str, str]]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "holders.get((table, column), ())",
++   3
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "holders[reference]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "list[tuple[str, str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "self.model_names[target['fact_type']]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "self.model_names[target['fact_type']][normalize_role_name(target['role'])]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "self.players[fact]",
++   5
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "self.players[fact][role]",
++   4
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "self.role_sections[section]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "self.tables[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "self.tables[target]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_contradictions",
++   "tuple[str, str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "dict[str, dict[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "dict[str, str]",
++   4
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "dict[tuple[str, str, str], str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "model_names[fact]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "model_names[fact].get(normalize_role_name(role))",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "model_names[target['fact_type']]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "resolved[section, fact, role]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.players[fact]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.role_sections[section]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.role_sections[section][fact]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.spelled[r]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.spelled[reference]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.tables[reference['table']]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.tables[t]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "self.tables[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "tuple[str, str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "check_names",
++   "written[normal]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "columns",
++   "Iterable[tuple[str, str, Mapping[str, Any]]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "columns",
++   "Mapping[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "columns",
++   "self.tables[table]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "columns",
++   "self.tables[table]['columns'][column]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "columns",
++   "tuple[str, str, Mapping[str, Any]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "components",
++   "list[tuple[str, str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "components",
++   "players[order[1]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "components",
++   "self.view.identification.get(object_type, (None, None))",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "components",
++   "self.view.relations[fact]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "components",
++   "tuple[str, str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "confirmed",
++   "Mapping[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "declared_homes",
++   "list[tuple[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "declared_homes",
++   "self.tables[table]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "declared_homes",
++   "self.tables[table]['columns'][c]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "declared_homes",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "extension_roles",
++   "dict[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "extension_roles",
++   "list[dict[str, Any]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "fields",
++   "dict[tuple[str, str], tuple[str | None, str | None]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "fields",
++   "tuple[str | None, str | None]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "fields",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "foreign_keys",
++   "dict[tuple[str, tuple[str, ...]], list[str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "foreign_keys",
++   "list[str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "foreign_keys",
++   "list[tuple[tuple[str, ...], str, tuple[str, ...]]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "foreign_keys",
++   "self.tables[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "foreign_keys",
++   "tuple[str, ...]",
++   3
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "foreign_keys",
++   "tuple[str, tuple[str, ...]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "foreign_keys",
++   "tuple[tuple[str, ...], str, tuple[str, ...]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "home_key",
++   "list[str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "home_key",
++   "self.bound.get(('roles', fact, role))",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "home_key",
++   "self.objects[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "home_key",
++   "self.tables[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "home_key",
++   "tuple[str, ...]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "home_tables",
++   "dict[str, str]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "identifications",
++   "list[Identification]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "identifications",
++   "list[tuple[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "identifications",
++   "self.homes.get(object_type)",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "identifications",
++   "self.objects[object_type]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "identifications",
++   "tuple[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "Mapping[str, Any]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "derived[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "fact_table[f]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "fact_table[roles[0][0]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "list[tuple[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "position[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "role_columns[f, r]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "self.tables[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "tuple[str, str]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "place",
++   "unmapped['fact_type', f]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "read_binding",
++   "message[:200]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "role_entries",
++   "Iterable[tuple[str, str, str, list[Any]]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "role_entries",
++   "list[Any]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "role_entries",
++   "self.role_sections[section]",
++   3
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "role_entries",
++   "self.role_sections[section][fact]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "role_entries",
++   "self.role_sections[section][fact][role]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "role_entries",
++   "tuple[str, str, str, list[Any]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "derived[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "dict[frozenset[str], tuple[str, ...]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "dict[str, dict[frozenset[str], tuple[str, ...]]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "dict[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "dict[str, tuple[tuple[str, ...], ...]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "dict[tuple[str, str], str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "dict[tuple[str, str], tuple[str, ...]]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "foreign_keys[table]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "frozenset[str]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "held[role]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "list[RolePlacement]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "list[str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "list[tuple[tuple[str, str], str, frozenset[str]]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "position[table]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "position[table][c]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "self.bound['roles', fid, role]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "self.players[fid]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "self.tables[table]",
++   3
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "tuple[str, ...]",
++   4
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "tuple[str, str]",
++   4
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "tuple[tuple[str, ...], ...]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "tuple[tuple[str, str], str, frozenset[str]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "unique_keys[table]",
++   2
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "schema",
++   "unmapped['fact_type', fid]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "sql_datatype",
++   "SQL_TYPES.get(' '.join(words))",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "sql_datatype",
++   "list[str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "sql_datatype",
++   "sql_type[end]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "sql_datatype",
++   "sql_type[position + 1:end]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "sql_datatype",
++   "sql_type[position:end]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "sql_datatype",
++   "sql_type[position]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "targets",
++   "Iterable[tuple[str, str, Mapping[str, str]]]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "targets",
++   "Mapping[str, str]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "targets",
++   "tuple[str, ...]",
++   1
++  ],
++  [
++   "src/gnd/export/physical_binding.py",
++   "targets",
++   "tuple[str, str, Mapping[str, str]]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "<module>",
++   "Literal['derived-computed', 'uniqueness-not-confirmed', 'identification-unmatchable', 'spans-tables', 'not-relational', 'unbound', 'extension-role', 'not-in-binding']",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "dict[str, list[tuple[tuple[str, ...], str, tuple[str, ...]]]]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "foreign_keys[name]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "list[tuple[tuple[str, ...], str, tuple[str, ...]]]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "references[name]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "self.carried['fact_type', fid]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "self.placed[fid]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "tuple[str, ...]",
++   2
++  ],
++  [
++   "src/gnd/rmap.py",
++   "build",
++   "tuple[tuple[str, ...], str, tuple[str, ...]]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "Mapping[str, Sequence[tuple[tuple[str, ...], str, tuple[str, ...]]]]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "Sequence[tuple[tuple[str, ...], str, tuple[str, ...]]]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "counts[target]",
++   2
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "dict[str, int]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "dict[str, tuple[ForeignKey, ...]]",
++   2
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "references[table]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "set[str]",
++   1
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "tuple[ForeignKey, ...]",
++   2
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "tuple[str, ...]",
++   2
++  ],
++  [
++   "src/gnd/rmap.py",
++   "name_foreign_keys",
++   "tuple[tuple[str, ...], str, tuple[str, ...]]",
++   1
++  ]
++ ],
++ "result_distinct_rows": 8352,
++ "result_occurrences": 10387
++}
+diff --git a/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB4-spec.md b/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB4-spec.md
+index 85d26e40..a02a1d5f 100644
+--- a/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB4-spec.md
++++ b/.gnd-planning/milestones/ossie-relational-bundle/notes/phase-OB4-spec.md
+@@ -2,10 +2,11 @@
+ 
+ ## 1. Status
+ 
+-**r1 approved 2026-11-24 with G1–G18 as proposed**
+-([spec gate](../013-OB4-spec-gate.md)). The corpus, the schema file and
+-amendment r1.1 (§13) are authored and **await the corpus gate**. No reader
+-code is written. Not reviewed.
++**Implemented, 2026-11-24.** The owner approved r1 with G1–G18 as proposed
++([spec gate](../013-OB4-spec-gate.md)) and the corpus, schema and amendment
++r1.1 ([corpus gate](../014-OB4-corpus-gate.md)). §12 records what
++implementation found, including one refinement for the owner (IF1). The
++text below §1 is kept as written at each gate.
+ 
+ ## 2. Provenance
+ 
+@@ -423,9 +424,27 @@ Estimate:
+ 3. The harness lands red.
+ 4. Each implementation commit names the cases it turns green.
+ 
+-## 12. Implementation findings
++## 12. Implementation findings (recorded during OB4)
+ 
+-None yet.
++Rows marked **owner** depart from an approved rule and are put to the owner
++with the phase record.
++
++| # | Finding | Effect |
++|---|---|---|
++| IF1 | **K5 contradicted the approved case V3.** As approved, `binding:incompatible-keys` refuses a column that holds two unrelated object types. In V3, `state.country_cd` holds the State (it is part of the State's key) and the Country (the State's identifying component). | Two object types are compatible when they are related by subtyping **or one is part of the other's identifier, at any depth**. **Owner:** a refinement of K5. |
++| IF2 | **A declared home and an object mapping are two things.** A table is a declared home of X when every primary-key column is marked as X's identifier; `binding:key-role` is judged on declared homes. X gets an object mapping from the table only when that key is exactly the columns X's identifier is bound to there. Otherwise X gets none and is not listed. | r1 used one notion for both; the approved refusal row for `binding:key-role` needs the first, the object mapping the second. |
++| IF3 | **`binding:ambiguous-column` is judged only where a string is used.** Two declared pairs that spell one string are harmless when every reference to them is written as an object. | §6.2's sentence read as if the spelling alone were refused. |
++| IF4 | **Several declared homes for one object type**: the object mapping reads the first table in sorted order. | r1 did not say. |
++| IF5 | **An entity the ontology does not identify** (a unit-based reference, for one) has no known column count, so `binding:role-arity` does not apply to roles it plays. A fact type through it is listed as `identification-differs`, as under the Rmap. | Stated in the normative text. |
++| IF6 | **An extension role across tables** is listed with `table: null` and each column as `{table, column}`. | K7 gave the one-table form only. |
++| IF7 | **The shared records were generalized**, with no OB2 or OB3 corpus byte changed: `RolePlacement.flag` (the unary flag column; the mapping no longer reads it out of `carried_as`), `Identification.absorbed`, `RelationalSchema.variant` may be `None`, and `name_foreign_keys` is the one home of the foreign-key naming rule for both paths. | The refactoring review of the record. |
++| IF8 | **Three guards shaped the code.** The export command may not import the binding module directly (layer map), so `gnd.export.ossie.INPUT_REFUSALS` names what `render_ossie` raises. The RF6 policy bans the literal subscript `['roles']` outside the model package, so the binding's two role sections are read by a variable member name. The docs guard keeps the token for Unicode form KC to one page, which defines a different normalization; the normative text names the form in words and says the rule is its own. | No guard was widened. |
++| IF9 | **T8 measured.** Every node of V3's binding replaced by ten kinds of JSON value: 910 replacements, 843 refused by the schema, 48 by a later rule, 19 harmless. None raised anything but a binding refusal. | — |
++| IF10 | **T10 and G6 measured.** At 1,400 entities and 4,500 fact types (2,950 tables) a binding run takes 4.1 s, against 3.4 s with the Rmap; the ratio to one fifth of that scale is 5.0. The binding file is 1.2 MB, 12% of the 10 MiB cap. | No size parameter is needed (G6). |
++| IF11 | **Two pairs of refusal rows repair each other** when combined: a role added under a second spelling, then the first spelling removed, is a valid binding. | T5's order test lists exactly those two pairs. Three rules cannot be paired from the table; hand-built witnesses cover them. |
++| IF12 | **T13 is written and not run** (`test_external_physical_binding_cases`, the opt-in oracle lane). | Upstream acceptance of the binding run's files is unconfirmed. |
++| IF13 | **OB3-Q6 done.** `tests/support/model_scan.py` is the one fixture-model scan (G17). | — |
++| IF14 | **A timing test flaked once.** OB2's `test_r2_f8_external_unique_keys_are_not_quadratic` failed once inside a two-minute run and passed three times alone. It compares two run times with a ratio bound of 6. | Recorded; not changed. |
+ 
+ ## 13. Amendment r1.1: rules settled while authoring the corpus (2026-11-24)
+ 
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index a6a6625b..4a242855 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -642,7 +642,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### cli.export_command
+ - does: Dispatch Lean, Souffle, PyRel, ILP and Ossie exports with target specific input checks [handle].
+-- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, ontology only, five file group, semantic model file, mapping file, output collision, dispatch handler
++- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, ontology only, five file group, semantic model file, mapping file, physical binding flag, output collision, dispatch handler
+ - in: argparse subparsers or a parsed command namespace
+ - out: registered parsers or the selected command exit code
+ - status: canonical
+@@ -1634,12 +1634,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### export.ossie
+ - does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, encode and bind the semantic model and mapping of the same run, and count the fact types that declare redact [render_ossie].
+-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view
+-- in: standalone model path, output format, and whether to add the relational files
++- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view, physical binding run
++- in: standalone model path, output format, whether to add the relational files, and an optional physical binding path
+ - out: ontology, sidecar and loss report bytes, and semantic model and mapping bytes or None
+ - status: canonical
+ - modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
+-- uses: export.ossie_relational, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
++- uses: export.ossie_relational, export.physical_binding, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
+ - used_by: cli.export_command
+ - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py, tests/test_ossie_relational.py
+ - notes: Every artifact of a run is bounded by max_output_bytes. _project returns the ontology with the OntologyView the mapping reads, so the mapping never recomputes concept names, role order or identify_by. A model that maps to no table gets no relational files.
+@@ -1653,9 +1653,22 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/export/ossie_relational.py
+ - uses: infra.artifacts, infra.input_policy, model.relational_mapping
++- used_by: export.ossie, export.physical_binding
++- tests: tests/test_ossie_relational.py, tests/test_physical_binding.py
++- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection. The same builders serve a physical binding: field types and source_kind come from the binding, and the extension gains its members.
++
++
++### export.physical_binding
++- does: Read a physical binding (a delivered relational schema and where it holds a model's roles) as untrusted JSON, check it in one pinned order of rule ids, and return the relational schema, field types and extension members the Ossie relational files are built from [read_binding; bind].
++- verbs: physical binding, column map, delivered schema, bind roles to columns, binding refusal, rule order, unknown table, unknown column, ambiguous column, role name normalization, NFKC casefold, foreign key group, reference not a key, role arity, home table, identifier target, key role, incompatible keys, sql type map, lex sql type, unbound fact type, extension roles, derived unique key, binding sha256
++- in: a binding file path; then a loaded Model, the OntologyView of the export run and the read Binding
++- out: Binding (document and digest); Bound (RelationalSchema, field types, extension members); BindingError with a rule id
++- status: canonical
++- modules: src/gnd/export/physical_binding.py
++- uses: export.ossie_relational, infra.input_policy, infra.safe_filesystem, model.query_index, model.relational_mapping
+ - used_by: export.ossie
+-- tests: tests/test_ossie_relational.py
+-- notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection.
++- tests: tests/test_physical_binding.py
++- notes: Normative rules in representation-format.md, "Physical binding"; the member list is the packaged schema gnd/schema/physical-binding.schema.json. Total over arbitrary bytes and over any schema-valid document. Fills the Rmap's own records, so gnd.rmap.dispositions is the one walk for both paths and the Rmap is not run. A table.column string is looked up, never split.
+ 
+ 
+ ### export.pyrel_emit
+@@ -2287,7 +2300,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/input_policy.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +58 more (graph.md)
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +59 more (graph.md)
+ - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
+ - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
+ 
+@@ -2539,7 +2552,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model_index.py
+ - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
+-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +41 more (graph.md)
++- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +42 more (graph.md)
+ - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
+ - in: Loaded Model and query identifiers.
+ - out: Detached lookup results and scoped ModelIndex snapshots.
+@@ -2592,11 +2605,11 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### model.relational_mapping
+ - does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint [map_model; dispositions].
+-- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, identification record, functional identifier component, map_model, dispositions
++- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, unary flag column, identification record, absorbed subtype flag, functional identifier component, name foreign keys, binding-only reasons, map_model, dispositions
+ - status: canonical
+ - modules: src/gnd/rmap.py
+ - uses: model.query_index, model.reference_resolution
+-- used_by: export.ossie, export.ossie_relational
++- used_by: export.ossie, export.ossie_relational, export.physical_binding
+ - tests: tests/test_rmap.py
+ - in: a loaded Model and an RmapVariant
+ - out: RelationalSchema (tables, role placements, identifications) and Disposition rows
+@@ -2645,7 +2658,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
+ - uses: infra.artifacts, infra.errors
+-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +18 more (graph.md)
++- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.physical_binding, … +19 more (graph.md)
+ - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
+ - checked: partial
+ - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
+@@ -3749,6 +3762,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - resume session: exp.service, exp.session_store
+ - reviewed preview: cli.evolve_command, evolve.command
+ - reviewer timeout: cli.review_command, review.command
++- role arity: export.physical_binding, extract.projection
+ - role columns: export.ilp_neutral, model.relational_mapping
+ - role players: extract.guidelines, model.query_index
+ - round summary: cli.evolve_command, evolve.round_summary
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 4072a3fa..38d215fa 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -2964,12 +2964,15 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/export/ilp_amie.py -> src/gnd/terms.py`
+ 
+ ### export.ossie
+-- uses: export.ossie_relational, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
++- uses: export.ossie_relational, export.physical_binding, export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.relational_mapping, model.scalar_identity, model.scalar_terms
+ - used_by: cli.export_command
+ 
+ #### export.ossie -> export.ossie_relational
+ - `src/gnd/export/ossie.py -> src/gnd/export/ossie_relational.py`
+ 
++#### export.ossie -> export.physical_binding
++- `src/gnd/export/ossie.py -> src/gnd/export/physical_binding.py`
++
+ #### export.ossie -> export.pyrel_rules
+ - `src/gnd/export/ossie_formulas.py -> src/gnd/export/pyrel_rules.py`
+ 
+@@ -3006,7 +3009,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### export.ossie_relational
+ - uses: infra.artifacts, infra.input_policy, model.relational_mapping
+-- used_by: export.ossie
++- used_by: export.ossie, export.physical_binding
+ 
+ #### export.ossie_relational -> infra.artifacts
+ - `src/gnd/export/ossie_relational.py -> src/gnd/artifacts.py`
+@@ -3017,6 +3020,25 @@ Generated by `scripts/components_index.py`.
+ #### export.ossie_relational -> model.relational_mapping
+ - `src/gnd/export/ossie_relational.py -> src/gnd/rmap.py`
+ 
++### export.physical_binding
++- uses: export.ossie_relational, infra.input_policy, infra.safe_filesystem, model.query_index, model.relational_mapping
++- used_by: export.ossie
++
++#### export.physical_binding -> export.ossie_relational
++- `src/gnd/export/physical_binding.py -> src/gnd/export/ossie_relational.py`
++
++#### export.physical_binding -> infra.input_policy
++- `src/gnd/export/physical_binding.py -> src/gnd/input_policy.py`
++
++#### export.physical_binding -> infra.safe_filesystem
++- `src/gnd/export/physical_binding.py -> src/gnd/safefs.py`
++
++#### export.physical_binding -> model.query_index
++- `src/gnd/export/physical_binding.py -> src/gnd/model_index.py`
++
++#### export.physical_binding -> model.relational_mapping
++- `src/gnd/export/physical_binding.py -> src/gnd/rmap.py`
++
+ ### export.popper
+ - uses: export.ilp_neutral, infra.exit_codes
+ - used_by: export.ilasp, export.ilp_prompt, export.learner_registry, export.ruleset
+@@ -3571,7 +3593,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.input_policy
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.ossie_relational, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.ossie_relational, export.physical_binding, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
+ 
+ ### infra.output
+ - uses: infra.text_output
+@@ -3647,7 +3669,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.safe_filesystem
+ - uses: infra.artifacts, infra.errors
+-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, extract.flatten_service, extract.manifest, extract.service, fidelity.service, install.skill_lifecycle, measure.labels, measure.promote, measure.service, model.ossie_import, model.population_loading, recovery.command, semantics.saved_judgments, semantics.transitions, synth.corpus, synth.paths, synth.provenance, synth.service, witness.count_membership
++- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.physical_binding, export.verification, extract.flatten_service, extract.manifest, extract.service, fidelity.service, install.skill_lifecycle, measure.labels, measure.promote, measure.service, model.ossie_import, model.population_loading, recovery.command, semantics.saved_judgments, semantics.transitions, synth.corpus, synth.paths, synth.provenance, synth.service, witness.count_membership
+ 
+ #### infra.safe_filesystem -> infra.artifacts
+ - `src/gnd/safefs.py -> src/gnd/artifacts.py`
+@@ -4242,7 +4264,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.query_index
+ - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
+-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.reference_schemes, model.relational_mapping, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.count_membership, witness.why_not
++- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.physical_binding, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.reference_schemes, model.relational_mapping, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.count_membership, witness.why_not
+ 
+ #### model.query_index -> infra.artifacts
+ - `src/gnd/model_index.py -> src/gnd/artifacts.py`
+@@ -4305,7 +4327,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.relational_mapping
+ - uses: model.query_index, model.reference_resolution
+-- used_by: export.ossie, export.ossie_relational
++- used_by: export.ossie, export.ossie_relational, export.physical_binding
+ 
+ #### model.relational_mapping -> model.query_index
+ - `src/gnd/rmap.py -> src/gnd/model_index.py`
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 5fc62cf6..ae73db89 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -965,17 +965,18 @@ Halpin's relational mapping (Rmap) of a loaded GND model.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `RmapVariant` | class(enum.Enum) | 36 | (no docstring) |
+-| `Column` | class | 51 | (no docstring) |
+-| `ForeignKey` | class | 59 | (no docstring) |
+-| `Table` | class | 67 | (no docstring) |
+-| `Unmapped` | class | 77 | (no docstring) |
+-| `Disposition` | class | 85 | (no docstring) |
+-| `RolePlacement` | class | 93 | The table and columns that hold one role of a carried fact type. |
+-| `Identification` | class | 107 | How an object type's key columns arise, one entry per key column. |
+-| `RelationalSchema` | class | 128 | (no docstring) |
+-| `map_model(model, *, variant) -> RelationalSchema` | function | 847 | Map one loaded model to its relational schema; never raises for an admitted model. |
+-| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 852 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
++| `RmapVariant` | class(enum.Enum) | 38 | (no docstring) |
++| `Column` | class | 57 | (no docstring) |
++| `ForeignKey` | class | 65 | (no docstring) |
++| `Table` | class | 73 | (no docstring) |
++| `Unmapped` | class | 83 | (no docstring) |
++| `Disposition` | class | 91 | (no docstring) |
++| `RolePlacement` | class | 99 | The table and columns that hold one role of a carried fact type. |
++| `Identification` | class | 116 | How an object type's key columns arise, one entry per key column. |
++| `RelationalSchema` | class | 139 | (no docstring) |
++| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 855 | Name each table's foreign keys, given as (columns, target table, target columns). |
++| `map_model(model, *, variant) -> RelationalSchema` | function | 882 | Map one loaded model to its relational schema; never raises for an admitted model. |
++| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 887 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+ 
+ ## gnd.safefs — `src/gnd/safefs.py`
+ Components: infra.safe_filesystem
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index ac004a83..6b5dcce9 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -92,8 +92,8 @@ Components: cli.export_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 219 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 248 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 225 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 254 | (no docstring) |
+ 
+ ## gnd.commands.extract — `src/gnd/commands/extract.py`
+ Components: cli.extract_command
+diff --git a/dev/components/modules/export.md b/dev/components/modules/export.md
+index b6e6a1cd..fb3cc0a7 100644
+--- a/dev/components/modules/export.md
++++ b/dev/components/modules/export.md
+@@ -243,9 +243,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `OssieInputError` | class(ValueError) | 57 | The source cannot be exported with the selected policy. |
+-| `OssieArtifacts` | class | 62 | (no docstring) |
+-| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name) -> …` | function | 516 | Render the deterministic artifacts of one bounded, admitted model read. |
++| `OssieInputError` | class(ValueError) | 58 | The source cannot be exported with the selected policy. |
++| `OssieArtifacts` | class | 67 | (no docstring) |
++| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 528 | Render the deterministic artifacts of one bounded, admitted model read. |
+ 
+ ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
+ Components: export.ossie
+@@ -267,9 +267,23 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
+ | --- | --- | --- | --- |
+ | `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
+ | `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
+-| `build_semantic_model(schema, name) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
+-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 225 | Map the ontology's concepts and relationships onto the semantic model. |
+-| `validate_relational(semantic_model, mapping) -> None` | function | 312 | Check both documents against the pinned schemas; a failure is a renderer defect. |
++| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 98 | One dataset per table, one field per column, one relationship per foreign key. |
++| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 239 | Map the ontology's concepts and relationships onto the semantic model. |
++| `validate_relational(semantic_model, mapping) -> None` | function | 328 | Check both documents against the pinned schemas; a failure is a renderer defect. |
++
++## gnd.export.physical_binding — `src/gnd/export/physical_binding.py`
++Components: export.physical_binding
++Read a physical binding and bind a model's roles to a delivered relational schema.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `BindingError` | class(ValueError) | 95 | A physical binding is refused. ``rule`` is one of :data:`RULE_ORDER`. |
++| `Binding` | class | 105 | A schema-valid binding document and the digest of the bytes it was read from. |
++| `read_binding(path) -> Binding` | function | 118 | Read and schema-check a binding. A missing file raises ``FileNotFoundError``. |
++| `sql_datatype(sql_type) -> str \| None` | function | 142 | The Ossie data type of an SQL type, or None when the type is outside the map. |
++| `normalize_role_name(name) -> str` | function | 176 | A role name for matching (OB4 D8): NFKC, casefolded, letters and digits only. |
++| `Bound` | class | 659 | What a binding gives the relational files: the schema, each field's type, and |
++| `bind(model, view, binding) -> Bound` | function | 668 | Resolve a binding against a model: names first, then contradictions. |
+ 
+ ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
+ Components: export.pyrel_rules
+diff --git a/docs/reference/disclosure.md b/docs/reference/disclosure.md
+index a34aefc1..23751d74 100644
+--- a/docs/reference/disclosure.md
++++ b/docs/reference/disclosure.md
+@@ -125,7 +125,7 @@ Do not route them to a customer.
+ | `gnd doccheck` | the population values a rendered document misses | Its input is your own rendering case. |
+ | `gnd compose`, `gnd.api.compose` | the caller's own composed population; the composition record carries no value | Its inputs are your own populations; refusals name sources and indexes, never values. |
+ | `gnd verbalize model`, `gnd.api.verbalize_model` | the caller's complete model review, including authored sample populations | Its input is your own model; it takes no supplied population. |
+-| `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; the model's object-type, fact-type and role ids, as table and column names in the semantic model and mapping; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A `redact` declaration withholds population values from reports. It does not change the export, which prints a note counting the fact types that declare it. |
++| `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; the model's object-type, fact-type and role ids, as table and column names in the semantic model and mapping, or the names a `--physical-binding` file gives; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A `redact` declaration withholds population values from reports. It does not change the export, which prints a note counting the fact types that declare it. |
+ | `gnd import ossie` | whatever model content the ontology and its sidecar carry | Its inputs are your own files. |
+ 
+ ## Child processes
+diff --git a/src/gnd/commands/export.py b/src/gnd/commands/export.py
+index 035617f5..8cb2f48c 100644
+--- a/src/gnd/commands/export.py
++++ b/src/gnd/commands/export.py
+@@ -78,10 +78,11 @@ def _cmd_export_ossie(
+     strict: bool,
+     max_output_bytes: int | None = None,
+     ontology_only: bool = False,
++    physical_binding: str | None = None,
+ ) -> int:
+     from gnd.artifacts import ArtifactError
+     from gnd.errors import ModelLoadError, ModelValidationError
+-    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, OssieInputError, render_ossie
++    from gnd.export.ossie import DEFAULT_MAX_OUTPUT_BYTES, INPUT_REFUSALS, render_ossie
+     from gnd.safefs import publish_new_files
+ 
+     try:
+@@ -92,11 +93,12 @@ def _cmd_export_ossie(
+             max_output_bytes=DEFAULT_MAX_OUTPUT_BYTES if max_output_bytes is None else max_output_bytes,
+             relational=not ontology_only,
+             document_name=Path(out).name,
++            physical_binding=None if physical_binding is None else Path(physical_binding),
+         )
+     except FileNotFoundError as error:
+         print(f"missing input: {error}", file=sys.stderr)
+         return EXIT_NO_INPUT
+-    except (ModelLoadError, ModelValidationError, OssieInputError) as error:
++    except (ModelLoadError, ModelValidationError, *INPUT_REFUSALS) as error:
+         print(f"invalid Ossie export input: {error}", file=sys.stderr)
+         return EXIT_ILL_FORMED
+     except OSError as error:
+@@ -212,8 +214,12 @@ def _register_export(subparsers):
+         "--ontology-only", action="store_true",
+         help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
+     )
++    ossie_parser.add_argument(
++        "--physical-binding", metavar="FILE",
++        help="describe the delivered tables with this binding file instead of the built-in relational mapping",
++    )
+ 
+-    return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
++    return {'ossie_parser': ossie_parser, 'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
+ 
+ 
+ def add_parsers(subparsers, *, command: str | None = None):
+@@ -248,10 +254,13 @@ def _ilp_inputs(args) -> str | None:
+ def handle(args, parsers) -> int:
+     if args.command == "export":
+         if args.export_target == "ossie":
++            if args.physical_binding is not None and args.ontology_only:
++                parsers["ossie_parser"].error("--physical-binding cannot be used with --ontology-only")
+             return _cmd_export_ossie(args.model, args.out, loss_report=args.loss_report,
+                                      output_format=args.format, strict=args.strict,
+                                      max_output_bytes=args.max_output_bytes,
+-                                     ontology_only=args.ontology_only)
++                                     ontology_only=args.ontology_only,
++                                     physical_binding=args.physical_binding)
+         if args.export_target == "ilp":
+             from gnd.export.ilp_service import _cmd_export_ilp
+ 
+diff --git a/src/gnd/export/ossie.py b/src/gnd/export/ossie.py
+index b475f5c9..bc17ee1f 100644
+--- a/src/gnd/export/ossie.py
++++ b/src/gnd/export/ossie.py
+@@ -24,6 +24,7 @@ from gnd.export.ossie_relational import (
+     build_semantic_model,
+     validate_relational,
+ )
++from gnd.export.physical_binding import BindingError, Bound, bind, read_binding
+ from gnd.input_policy import MAX_BYTES_CEILING, guard_yaml, loads, require_byte_bound
+ from gnd.model import (
+     MAX_MODEL_BYTES,
+@@ -58,6 +59,10 @@ class OssieInputError(ValueError):
+     """The source cannot be exported with the selected policy."""
+ 
+ 
++#: What :func:`render_ossie` raises for a refused input, besides the model's own errors.
++INPUT_REFUSALS = (OssieInputError, BindingError)
++
++
+ @dataclass(frozen=True)
+ class OssieArtifacts:
+     document: bytes
+@@ -484,16 +489,22 @@ def _relative_iri(file_name: str) -> str:
+     return "./" + encoded
+ 
+ 
+-def _relational(model, view, data: bytes, identity: str, *, output_format: str, document_name: str):
+-    """The semantic model and mapping for the ontology bytes ``data`` (OB3)."""
+-    schema = map_model(model, variant=RmapVariant.HALPIN)  # D5
++def _relational(
++    model, view, data: bytes, identity: str, *, output_format: str, document_name: str, bound: Bound | None,
++):
++    """The semantic model and mapping for the ontology bytes ``data`` (OB3).
++
++    From the built-in Rmap, or from ``bound``, a resolved physical binding (OB4): the
++    Rmap is then not run.
++    """
++    schema = map_model(model, variant=RmapVariant.HALPIN) if bound is None else bound.schema  # D5
+     if not schema.tables:
+         # The pinned core-spec requires at least one dataset. A model that maps to no
+         # table has no relational files; the run then writes the ontology's three.
+         return None, None
+     semantic_name = f"{view.name}_relational"
+     semantic_file = f"{document_name}.semantic_model.{output_format}"
+-    semantic = build_semantic_model(schema, semantic_name)
++    semantic = build_semantic_model(schema, semantic_name, physical=None if bound is None else bound.fields)
+     semantic_bytes = _encode(semantic, output_format)
+     mapping = build_mapping(
+         schema,
+@@ -508,6 +519,7 @@ def _relational(model, view, data: bytes, identity: str, *, output_format: str,
+             "ontology_sha256": hashlib.sha256(data).hexdigest(),
+             "semantic_model_sha256": hashlib.sha256(semantic_bytes).hexdigest(),
+         },
++        extra=None if bound is None else bound.extension,
+     )
+     validate_relational(semantic, mapping)
+     return semantic_bytes, _encode(mapping, output_format)
+@@ -521,6 +533,7 @@ def render_ossie(
+     max_output_bytes: int = DEFAULT_MAX_OUTPUT_BYTES,
+     relational: bool = True,
+     document_name: str | None = None,
++    physical_binding: Path | None = None,
+ ) -> OssieArtifacts:
+     """Render the deterministic artifacts of one bounded, admitted model read.
+ 
+@@ -533,9 +546,16 @@ def render_ossie(
+     refused with ``ossie:output-size`` and nothing is returned to publish.
+     """
+     require_byte_bound("max_output_bytes", max_output_bytes)
++    if physical_binding is not None and not relational:
++        raise ValueError("a physical binding needs the relational files")
++    # The binding's syntax and schema need no model, so they are judged first.
++    binding = None if physical_binding is None else read_binding(physical_binding)
+     document, model = _read_model(model_path)
+     ontology, mapped, view = _project(document, model)
+     _schema().validate(ontology)
++    # Its names and contradictions need the model and the ontology view, and are
++    # judged before the strict refusals below.
++    bound = None if binding is None else bind(model, view, binding)
+     incompatible = {}
+     for index, constraint in enumerate(document.get("constraints", ())):
+         reason = guarded_clause_refusal(constraint)
+@@ -570,6 +590,7 @@ def render_ossie(
+         semantic_model, mapping = _relational(
+             model, view, data, identity,
+             output_format=output_format, document_name=document_name or f"ontology.{output_format}",
++            bound=bound,
+         )
+     artifacts = (data, sidecar, report, semantic_model, mapping)
+     if max(len(artifact) for artifact in artifacts if artifact is not None) > max_output_bytes:
+diff --git a/src/gnd/export/ossie_relational.py b/src/gnd/export/ossie_relational.py
+index d348c830..884c648d 100644
+--- a/src/gnd/export/ossie_relational.py
++++ b/src/gnd/export/ossie_relational.py
+@@ -95,8 +95,15 @@ def _extension(payload: Any) -> list[dict[str, str]]:
+     return [{"vendor_name": VENDOR, "data": extension_data(payload)}]
+ 
+ 
+-def build_semantic_model(schema: RelationalSchema, name: str) -> dict[str, Any]:
+-    """One dataset per table, one field per column, one relationship per foreign key."""
++def build_semantic_model(
++    schema: RelationalSchema, name: str,
++    *, physical: Mapping[tuple[str, str], tuple[str | None, str | None]] | None = None,
++) -> dict[str, Any]:
++    """One dataset per table, one field per column, one relationship per foreign key.
++
++    ``physical`` is given for a delivered schema (a physical binding): per
++    (table, column), the Ossie data type or None, and the raw SQL type or None.
++    """
+     datasets = []
+     relationships = []
+     for table in schema.tables:
+@@ -108,13 +115,19 @@ def build_semantic_model(schema: RelationalSchema, name: str) -> dict[str, Any]:
+         fields = []
+         for column in table.columns:
+             field: dict[str, Any] = {"name": column.name, "expression": {"sql": _quoted(column.name)}}
+-            if column.datatype is not None:
++            if physical is not None:
++                datatype, sql_type = physical[(table.name, column.name)]
++                if datatype is not None:
++                    field["datatype"] = datatype
++                if sql_type is not None:
++                    field["custom_extensions"] = _extension({"sql_type": sql_type})
++            elif column.datatype is not None:
+                 field["datatype"] = DATATYPES[column.datatype]
+                 if field["datatype"] == "Opaque":
+                     field["custom_extensions"] = _extension({"gnd_primitive": column.datatype})
+             fields.append(field)
+         dataset["fields"] = fields
+-        dataset["custom_extensions"] = _extension({"source_kind": "logical"})
++        dataset["custom_extensions"] = _extension({"source_kind": "logical" if physical is None else "physical"})
+         datasets.append(dataset)
+         relationships += [
+             {
+@@ -196,14 +209,15 @@ class _Mapping:
+             node["referent_mappings"] = referents
+         return node
+ 
+-    def link_tree(self, fact_type: str, carried_as: tuple[str, ...]) -> dict[str, Any] | str:
++    def link_tree(self, fact_type: str) -> dict[str, Any] | str:
+         """One tree per fact type: a node per role in the relationship's order, the
+         last one naming the relationship. Otherwise the reason there is no tree."""
+         _, order, players = self.view.relations[fact_type]
+         if len(order) > MAX_LINK_ARITY:
+             return "arity-over-limit"
+-        # A unary is a Boolean flag: a row is a link only where the flag is true.
+-        flag = self.reference(carried_as[1], carried_as[2]) if len(order) == 1 else None
++        # A unary stored as a Boolean flag: a row is a link only where the flag is true.
++        first = self.placements[(fact_type, order[0])]
++        flag = self.reference(first.table, first.flag) if first.flag is not None else None
+ 
+         def wrap(expression: str) -> str:
+             return expression if flag is None else f"CASE WHEN {flag} THEN {expression} END"
+@@ -232,6 +246,7 @@ def build_mapping(
+     semantic_model_name: str,
+     semantic_model_iri: str,
+     bindings: Mapping[str, str],
++    extra: Mapping[str, Any] | None = None,
+ ) -> dict[str, Any]:
+     """Map the ontology's concepts and relationships onto the semantic model.
+ 
+@@ -242,11 +257,11 @@ def build_mapping(
+     mapper = _Mapping(schema, view)
+     trees: dict[str, list[dict[str, Any]]] = {}
+     unmapped_links = []
+-    carried = {d.id: d.carried_as for d in dispositions if d.kind == "fact_type" and d.reason is None}
++    carried = {d.id for d in dispositions if d.kind == "fact_type" and d.reason is None}
+     for fact_type, (owner, _order, _players) in view.relations.items():  # the ontology's relationship order
+         if fact_type not in carried:
+             continue
+-        tree = mapper.link_tree(fact_type, carried[fact_type])
++        tree = mapper.link_tree(fact_type)
+         if isinstance(tree, str):
+             unmapped_links.append({"fact_type": fact_type, "reason": tree})
+         else:
+@@ -259,7 +274,7 @@ def build_mapping(
+         identification = mapper.identifications.get(object_type)
+         table = identification.table if identification is not None else None
+         if view.kinds[object_type] == "entity" and table is not None:
+-            if table != object_type:
++            if identification.absorbed:
+                 concepts.append({"concept": concept, "reason": "subtype-absorbed"})
+             else:
+                 node = mapper.object_mapping(object_type, table, identification.columns, named=False)
+@@ -275,12 +290,13 @@ def build_mapping(
+     payload: dict[str, Any] = {
+         "schema": EXTENSION_SCHEMA,
+         **bindings,
+-        "rmap_variant": schema.variant.value,
++        **({"rmap_variant": schema.variant.value} if schema.variant is not None else {}),
+         "dispositions": [
+             {"kind": d.kind, "id": d.id, "carried_as": list(d.carried_as), "reason": d.reason}
+             for d in dispositions
+         ],
+         "concepts": concepts,
++        **(extra or {}),
+     }
+     if unmapped_links:
+         payload["unmapped_links"] = sorted(unmapped_links, key=lambda row: row["fact_type"])
+diff --git a/src/gnd/export/physical_binding.py b/src/gnd/export/physical_binding.py
+new file mode 100644
+index 00000000..e930ab8c
+--- /dev/null
++++ b/src/gnd/export/physical_binding.py
+@@ -0,0 +1,676 @@
++"""Read a physical binding and bind a model's roles to a delivered relational schema.
++
++The normative rules have one home: "Physical binding" under "Ossie interchange" in
++``gnd-orm-core/references/representation-format.md``. The document's members are
++defined by the packaged schema ``gnd/schema/physical-binding.schema.json``.
++
++A binding is untrusted input. :func:`read_binding` is total over arbitrary bytes, and
++:func:`bind` over any schema-valid document and admitted model: every refusal is a
++:class:`BindingError` with a rule id. The checks run in one pinned order
++(:data:`RULE_ORDER`), and within a rule the first violation in sorted order is
++reported, so a message never depends on the document's member order.
++
++:func:`bind` returns the same :class:`gnd.rmap.RelationalSchema` the Rmap returns, so
++the semantic model, the mapping and the one walk over fact types and constraints are
++shared with the built-in path.
++"""
++
++from __future__ import annotations
++
++import hashlib
++import unicodedata
++from collections.abc import Iterable, Mapping
++from dataclasses import dataclass
++from functools import lru_cache
++from importlib.resources import files
++from pathlib import Path
++from typing import Any
++
++from jsonschema import Draft202012Validator
++
++from gnd.export.ossie_relational import OntologyView
++from gnd.input_policy import MAX_BYTES, loads
++from gnd.model_index import ModelIndex
++from gnd.rmap import (
++    Column,
++    Identification,
++    RelationalSchema,
++    RolePlacement,
++    Table,
++    Unmapped,
++    name_foreign_keys,
++)
++from gnd.safefs import NotRegularFileError, open_regular
++
++__all__ = ["RULE_ORDER", "SQL_TYPES", "Binding", "BindingError", "bind", "normalize_role_name", "read_binding", "sql_datatype"]
++
++SCHEMA_ID = "gnd-physical-binding/1"
++
++#: Every rule id, in the one order the checks run. The first three need only the
++#: file; the fourth only the JSON; the rest need the model and the ontology view.
++RULE_ORDER = (
++    "binding:not-a-file",
++    "binding:size",
++    "binding:syntax",
++    "binding:schema",
++    "binding:name-collision",
++    "binding:unknown-table",
++    "binding:unknown-column",
++    "binding:ambiguous-column",
++    "binding:unknown-fact-type",
++    "binding:role-name",
++    "binding:unknown-role",
++    "binding:unknown-object-type",
++    "binding:reference-group",
++    "binding:reference-not-a-key",
++    "binding:partial-fact-type",
++    "binding:role-arity",
++    "binding:target-mismatch",
++    "binding:key-role",
++    "binding:incompatible-keys",
++)
++
++#: Normalized SQL type name -> Ossie core-spec data type (OB4 D7). A type outside this
++#: closed map leaves ``datatype`` absent.
++SQL_TYPES: dict[str, str] = {
++    **dict.fromkeys(
++        ("char", "character", "varchar", "character varying", "nchar", "nvarchar", "text", "string", "uuid"), "String"),
++    **dict.fromkeys(
++        ("smallint", "integer", "int", "bigint", "tinyint", "int2", "int4", "int8", "serial", "bigserial",
++         "long", "short", "byte"), "Integer"),
++    **dict.fromkeys(("numeric", "decimal", "dec", "number"), "Decimal"),
++    **dict.fromkeys(("real", "float", "float4", "float8", "double", "double precision"), "Float"),
++    **dict.fromkeys(("boolean", "bool"), "Boolean"),
++    "date": "Date",
++    **dict.fromkeys(("time", "time without time zone"), "Time"),
++    **dict.fromkeys(("timestamp", "timestamp without time zone", "timestamp_ntz", "datetime"), "DateTime"),
++    **dict.fromkeys(("timestamp with time zone", "timestamptz", "timestamp_ltz"), "DateTimeTz"),
++    **dict.fromkeys(("bytea", "binary", "varbinary", "blob", "json", "jsonb"), "Opaque"),
++}
++
++_WORD = frozenset("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
++_DIGITS = frozenset("0123456789")
++
++
++class BindingError(ValueError):
++    """A physical binding is refused. ``rule`` is one of :data:`RULE_ORDER`."""
++
++    def __init__(self, rule: str, detail: str = "") -> None:
++        assert rule in RULE_ORDER, rule
++        self.rule = rule
++        super().__init__(f"{rule}: {detail}" if detail else rule)
++
++
++@dataclass(frozen=True)
++class Binding:
++    """A schema-valid binding document and the digest of the bytes it was read from."""
++
++    document: Mapping[str, Any]
++    sha256: str
++
++
++@lru_cache(maxsize=1)
++def _validator() -> Draft202012Validator:
++    schema = loads(files("gnd").joinpath("schema", "physical-binding.schema.json").read_bytes())
++    return Draft202012Validator(schema)
++
++
++def read_binding(path: Path) -> Binding:
++    """Read and schema-check a binding. A missing file raises ``FileNotFoundError``."""
++    try:
++        descriptor = open_regular(path)
++    except NotRegularFileError as error:
++        raise BindingError("binding:not-a-file", "the path is not a regular file") from error
++    with open(descriptor, "rb") as stream:
++        raw = stream.read(MAX_BYTES + 1)
++    if len(raw) > MAX_BYTES:
++        raise BindingError("binding:size", f"the file is larger than {MAX_BYTES} bytes")
++    try:
++        document = loads(raw, max_bytes=MAX_BYTES)
++    except (ValueError, RecursionError, OverflowError) as error:
++        raise BindingError("binding:syntax", "the file is not JSON within the input limits") from error
++    violations = sorted(
++        ("/" + "/".join(str(part) for part in error.absolute_path) if error.absolute_path else "", error.message)
++        for error in _validator().iter_errors(document)
++    )
++    if violations:
++        pointer, message = violations[0]
++        raise BindingError("binding:schema", f"at {pointer or 'the document root'}: {message[:200]}")
++    return Binding(document, hashlib.sha256(raw).hexdigest())
++
++
++def sql_datatype(sql_type: str) -> str | None:
++    """The Ossie data type of an SQL type, or None when the type is outside the map.
++
++    A type is words of letters, digits and underscores separated by spaces, with at
++    most one parenthesized list of unsigned integers after a word. Its name is the
++    words, casefolded and joined by one space.
++    """
++    words: list[str] = []
++    listed = False
++    position = 0
++    while position < len(sql_type):
++        character = sql_type[position]
++        if character == " ":
++            position += 1
++        elif character in _WORD:
++            end = position
++            while end < len(sql_type) and sql_type[end] in _WORD:
++                end += 1
++            words.append(sql_type[position:end].casefold())
++            position = end
++        elif character == "(" and words and not listed:
++            end = sql_type.find(")", position)
++            if end < 0:
++                return None
++            items = [item.strip(" ") for item in sql_type[position + 1:end].split(",")]
++            if not all(item and set(item) <= _DIGITS for item in items):
++                return None
++            listed = True
++            position = end + 1
++        else:
++            return None
++    return SQL_TYPES.get(" ".join(words))
++
++
++def normalize_role_name(name: str) -> str:
++    """A role name for matching (OB4 D8): NFKC, casefolded, letters and digits only."""
++    folded = unicodedata.normalize("NFKC", name).casefold()
++    return "".join(c for c in folded if unicodedata.category(c)[0] in "LN")
++
++
++ColumnRef = tuple[str, str]
++_ROLE_SECTIONS = ("roles", "extension_roles")
++
++
++class _Binder:
++    def __init__(self, model: Any, view: OntologyView, binding: Binding) -> None:
++        self.model = model
++        self.view = view
++        self.sha256 = binding.sha256
++        self.tables: Mapping[str, Any] = binding.document["tables"]
++        # The binding's two role sections, by member name. (The name is a variable so
++        # that this is not read as a model query: the document is a binding, not a model.)
++        self.role_sections: dict[str, Mapping[str, Any]] = {
++            section: binding.document.get(section, {}) for section in _ROLE_SECTIONS
++        }
++        index = ModelIndex.for_model(model)
++        self.objects = index.object_types_by_id()
++        self.players: Mapping[str, Mapping[str, str]] = index.role_object_types()
++        self.facts = list(index.iter_fact_types_shared())
++        self.spelled: dict[str, list[ColumnRef]] = {}
++        for table, body in self.tables.items():
++            for column in body["columns"]:
++                self.spelled.setdefault(f"{table}.{column}", []).append((table, column))
++        #: (section, fact type, model role name) -> columns, filled by the name checks.
++        self.bound: dict[tuple[str, str, str], tuple[ColumnRef, ...]] = {}
++        self._arity: dict[str, int | None] = {}
++
++    # -- iteration in sorted order ------------------------------------------------------
++
++    def columns(self) -> Iterable[tuple[str, str, Mapping[str, Any]]]:
++        for table in sorted(self.tables):
++            for column in sorted(self.tables[table]["columns"]):
++                yield table, column, self.tables[table]["columns"][column]
++
++    def role_entries(self) -> Iterable[tuple[str, str, str, list[Any]]]:
++        """(section, fact type, role name as written, column references)."""
++        for section in ("roles", "extension_roles"):
++            for fact in sorted(self.role_sections[section]):
++                for role in sorted(self.role_sections[section][fact]):
++                    yield section, fact, role, self.role_sections[section][fact][role]
++
++    def targets(self, kinds: tuple[str, ...]) -> Iterable[tuple[str, str, Mapping[str, str]]]:
++        for table, column, body in self.columns():
++            for target in body.get("targets", ()):
++                if target["kind"] in kinds:
++                    yield table, column, target
++
++    # -- step 5: names ---------------------------------------------------------------------
++
++    def check_names(self) -> None:
++        # binding:name-collision. Expressions quote and uppercase every name.
++        for label, names in [("tables", sorted(self.tables)),
++                             *((f"columns of {t}", sorted(self.tables[t]["columns"])) for t in sorted(self.tables))]:
++            seen: dict[str, str] = {}
++            for name in names:
++                other = seen.setdefault(name.upper(), name)
++                if other != name:
++                    raise BindingError("binding:name-collision", f"{label}: {other!r} and {name!r} are one identifier")
++        # binding:unknown-table
++        for table, column, body in self.columns():
++            target = body.get("references", {}).get("table")
++            if target is not None and target not in self.tables:
++                raise BindingError("binding:unknown-table", f"{table}.{column} references table {target!r}")
++        for _section, fact, role, references in self.role_entries():
++            for reference in references:
++                if not isinstance(reference, str) and reference["table"] not in self.tables:
++                    raise BindingError("binding:unknown-table", f"{fact}.{role} names table {reference['table']!r}")
++        # binding:unknown-column
++        for table in sorted(self.tables):
++            body = self.tables[table]
++            for key in [body.get("primary_key", ()), *body.get("unique_keys", ())]:
++                for column in key:
++                    if column not in body["columns"]:
++                        raise BindingError("binding:unknown-column", f"a key of {table} names column {column!r}")
++        for table, column, body in self.columns():
++            reference = body.get("references")
++            if reference is not None:
++                for name in reference["columns"]:
++                    if name not in self.tables[reference["table"]]["columns"]:
++                        raise BindingError(
++                            "binding:unknown-column", f"{table}.{column} references {reference['table']}.{name}")
++        for _section, fact, role, references in self.role_entries():
++            for reference in references:
++                if isinstance(reference, str):
++                    if reference not in self.spelled:
++                        raise BindingError("binding:unknown-column", f"{fact}.{role} names column {reference!r}")
++                elif reference["column"] not in self.tables[reference["table"]]["columns"]:
++                    raise BindingError(
++                        "binding:unknown-column", f"{fact}.{role} names column {reference['table']}.{reference['column']}")
++        # binding:ambiguous-column. A string is looked up, never split on its dots.
++        for _section, fact, role, references in self.role_entries():
++            for reference in references:
++                if isinstance(reference, str) and len(self.spelled[reference]) > 1:
++                    raise BindingError(
++                        "binding:ambiguous-column", f"{fact}.{role}: {reference!r} spells more than one table and column")
++        # binding:unknown-fact-type
++        for _section, fact, _role, _references in self.role_entries():
++            if fact not in self.players:
++                raise BindingError("binding:unknown-fact-type", f"{fact!r} is not a fact type of the model")
++        for table, column, target in self.targets(("role",)):
++            if target["fact_type"] not in self.players:
++                raise BindingError("binding:unknown-fact-type", f"a target of {table}.{column} names {target['fact_type']!r}")
++        # binding:role-name, then binding:unknown-role. A name that normalizes to nothing,
++        # or like another, cannot be looked up, so it is judged before the lookup.
++        resolved: dict[tuple[str, str, str], str] = {}
++        model_names: dict[str, dict[str, str]] = {}
++        named_facts = sorted({fact for _s, fact, _r, _c in self.role_entries()}
++                             | {target["fact_type"] for _t, _c, target in self.targets(("role",))})
++        for fact in named_facts:
++            names: dict[str, str] = {}
++            for role in self.players[fact]:
++                normal = normalize_role_name(role)
++                if not normal or normal in names:
++                    raise BindingError("binding:role-name", f"the roles of {fact} cannot be told apart once normalized")
++                names[normal] = role
++            model_names[fact] = names
++        for section in ("roles", "extension_roles"):
++            for fact in sorted(self.role_sections[section]):
++                written: dict[str, str] = {}
++                for role in sorted(self.role_sections[section][fact]):
++                    normal = normalize_role_name(role)
++                    if not normal:
++                        raise BindingError("binding:role-name", f"{fact}: role name {role!r} has no letter or digit")
++                    if normal in written:
++                        raise BindingError(
++                            "binding:role-name", f"{fact}: {written[normal]!r} and {role!r} are one role name")
++                    written[normal] = role
++        for table, column, target in self.targets(("role",)):
++            if not normalize_role_name(target["role"]):
++                raise BindingError("binding:role-name", f"a target of {table}.{column} names role {target['role']!r}")
++        for section, fact, role, _references in self.role_entries():
++            match = model_names[fact].get(normalize_role_name(role))
++            if match is None:
++                raise BindingError("binding:unknown-role", f"{fact} has no role {role!r}")
++            resolved[(section, fact, role)] = match
++        for table, column, target in self.targets(("role",)):
++            if normalize_role_name(target["role"]) not in model_names[target["fact_type"]]:
++                raise BindingError(
++                    "binding:unknown-role", f"a target of {table}.{column}: {target['fact_type']} has no role {target['role']!r}")
++        # binding:unknown-object-type
++        for table, column, target in self.targets(("identifier", "reference")):
++            if target["object_type"] not in self.objects:
++                raise BindingError("binding:unknown-object-type", f"a target of {table}.{column} names {target['object_type']!r}")
++        self.model_names = model_names
++        for section, fact, role, references in self.role_entries():
++            self.bound[(section, fact, resolved[(section, fact, role)])] = tuple(
++                self.spelled[r][0] if isinstance(r, str) else (r["table"], r["column"]) for r in references)
++
++    # -- identification, as the ontology declares it ---------------------------------------
++
++    def components(self, object_type: str) -> list[tuple[str, str, str]] | None:
++        """(fact type, component role, component player) per identifying relationship of
++        a composite identifier, in the ontology's order; None for any other object type."""
++        form, payload = self.view.identification.get(object_type, (None, None))
++        if form != "composite":
++            return None
++        result = []
++        for fact in payload:
++            _owner, order, players = self.view.relations[fact]
++            result.append((fact, order[1], players[order[1]]))
++        return result
++
++    def arity(self, object_type: str) -> int | None:
++        """How many columns hold one object of the type; None when the ontology declares
++        no identifier for it (the mapping then lists it as identification-differs)."""
++        if object_type in self._arity:
++            return self._arity[object_type]
++        self._arity[object_type] = None  # a re-entrant request has no answer
++        result: int | None
++        if self.objects[object_type]["kind"] == "value" or self.view.identification.get(object_type, (None,))[0] == "simple":
++            result = 1
++        elif (components := self.components(object_type)) is not None:
++            parts = [self.arity(player) for _fact, _role, player in components]
++            result = None if None in parts else sum(parts)  # type: ignore[arg-type]
++        else:
++            result = None
++        self._arity[object_type] = result
++        return result
++
++    def related(self, first: str, second: str) -> bool:
++        """The same object type, or one a subtype of the other."""
++        def ancestors(object_type: str) -> set[str]:
++            seen, pending = set(), [object_type]
++            while pending:
++                current = pending.pop()
++                if current not in seen:
++                    seen.add(current)
++                    pending += [str(parent) for parent in self.objects.get(current, {}).get("subtype_of") or ()]
++            return seen
++
++        return first in ancestors(second) or second in ancestors(first)
++
++    def declared_homes(self) -> list[tuple[str, str]]:
++        """(table, object type) wherever every primary-key column is marked as that
++        object type's identifier, in sorted order."""
++        declared = []
++        for table in sorted(self.tables):
++            key = tuple(self.tables[table].get("primary_key", ()))
++            marked = [
++                {t["object_type"] for t in self.tables[table]["columns"][c].get("targets", ()) if t["kind"] == "identifier"}
++                for c in key
++            ]
++            declared += [(table, object_type) for object_type in (sorted(set.intersection(*marked)) if marked else ())]
++        return declared
++
++    def home_tables(self) -> dict[str, str]:
++        """object type -> the table its object mapping reads: the first declared home
++        whose key is exactly the columns its identifier is bound to there."""
++        homes: dict[str, str] = {}
++        for table, object_type in self.declared_homes():
++            if object_type not in homes and self.home_key(object_type, table) is not None:
++                homes[object_type] = table
++        return homes
++
++    def identified_through(self, whole: str, part: str) -> bool:
++        """Whether ``part`` is a component of ``whole``'s identifier, at any depth."""
++        seen, pending = set(), [whole]
++        while pending:
++            current = pending.pop()
++            if current in seen:
++                continue
++            seen.add(current)
++            for _fact, _role, player in self.components(current) or ():
++                if self.related(player, part):
++                    return True
++                pending.append(player)
++        return False
++
++    def home_key(self, object_type: str, table: str) -> tuple[str, ...] | None:
++        """The table's key columns in the object type's identification order, or None
++        when the key is not that object type's identifier."""
++        key = tuple(self.tables[table].get("primary_key", ()))
++        if self.objects[object_type]["kind"] != "entity" or self.arity(object_type) is None:
++            return None
++        components = self.components(object_type)
++        if components is None:
++            return key if len(key) == 1 else None
++        ordered: list[str] = []
++        for fact, role, _player in components:
++            columns = self.bound.get(("roles", fact, role))
++            if columns is None or any(t != table for t, _c in columns):
++                return None
++            ordered += [column for _t, column in columns]
++        return tuple(ordered) if sorted(ordered) == sorted(key) else None
++
++    # -- step 6: contradictions ------------------------------------------------------------
++
++    def foreign_keys(self, table: str) -> list[tuple[tuple[str, ...], str, tuple[str, ...]]]:
++        """(columns, target table, target columns) per group of equal `references`, in
++        the order of each group's first column. Columns pair by table column order."""
++        groups: dict[tuple[str, tuple[str, ...]], list[str]] = {}
++        for column, body in self.tables[table]["columns"].items():
++            reference = body.get("references")
++            if reference is not None:
++                groups.setdefault((reference["table"], tuple(reference["columns"])), []).append(column)
++        return [(tuple(columns), target, target_columns) for (target, target_columns), columns in groups.items()]
++
++    def check_contradictions(self) -> None:
++        # binding:reference-group
++        for table in sorted(self.tables):
++            for columns, target, target_columns in self.foreign_keys(table):
++                if len(columns) != len(target_columns):
++                    raise BindingError(
++                        "binding:reference-group",
++                        f"{table}: {len(columns)} column(s) reference {len(target_columns)} column(s) of {target}")
++        # binding:reference-not-a-key
++        for table in sorted(self.tables):
++            for _columns, target, target_columns in self.foreign_keys(table):
++                body = self.tables[target]
++                keys = [tuple(body.get("primary_key", ())), *(tuple(key) for key in body.get("unique_keys", ()))]
++                if target_columns not in keys:
++                    raise BindingError(
++                        "binding:reference-not-a-key", f"{table} references {target}{list(target_columns)}, which is not a key")
++        # binding:partial-fact-type
++        for section in ("roles", "extension_roles"):
++            for fact in sorted(self.role_sections[section]):
++                missing = sorted(role for role in self.players[fact] if (section, fact, role) not in self.bound)
++                if missing:
++                    raise BindingError("binding:partial-fact-type", f"{fact}: no columns for role {missing[0]!r}")
++        # binding:role-arity
++        for (_section, fact, role), columns in sorted(self.bound.items()):
++            wanted = self.arity(self.players[fact][role])
++            if wanted is not None and len(columns) != wanted:
++                raise BindingError(
++                    "binding:role-arity", f"{fact}.{role} needs {wanted} column(s) and has {len(columns)}")
++        # binding:target-mismatch
++        holders: dict[ColumnRef, list[tuple[str, str, str]]] = {}
++        for (section, fact, role), columns in sorted(self.bound.items()):
++            for reference in columns:
++                holders.setdefault(reference, []).append((section, fact, role))
++        for table, column, target in self.targets(("role",)):
++            role = self.model_names[target["fact_type"]][normalize_role_name(target["role"])]
++            if not any((fact, name) == (target["fact_type"], role) for _s, fact, name in holders.get((table, column), ())):
++                raise BindingError(
++                    "binding:target-mismatch", f"{table}.{column} is not among the columns of {target['fact_type']}.{role}")
++        for table, column, target in self.targets(("reference",)):
++            if not any(self.players[fact][role] == target["object_type"] for _s, fact, role in holders.get((table, column), ())):
++                raise BindingError(
++                    "binding:target-mismatch", f"{table}.{column} holds no role played by {target['object_type']}")
++        # binding:key-role
++        for table, object_type in self.declared_homes():
++            identifying = {(fact, role) for fact, role, _player in self.components(object_type) or ()}
++            for column in self.tables[table]["primary_key"]:
++                for _section, fact, role in holders.get((table, column), ()):
++                    if not self.related(self.players[fact][role], object_type) and (fact, role) not in identifying:
++                        raise BindingError(
++                            "binding:key-role", f"{table}.{column} is a key of {object_type} and holds {fact}.{role}")
++        # binding:incompatible-keys
++        for reference in sorted(holders):
++            held = sorted({self.players[fact][role] for section, fact, role in holders[reference] if section == "roles"})
++            for first in held:
++                for second in held:
++                    compatible = (
++                        self.related(first, second)
++                        # A key column holds an entity and the part of its identifier kept there.
++                        or self.identified_through(first, second)
++                        or self.identified_through(second, first)
++                    )
++                    if first < second and not compatible:
++                        raise BindingError(
++                            "binding:incompatible-keys",
++                            f"{reference[0]}.{reference[1]} holds both {first} and {second}")
++        self.homes = self.home_tables()
++
++    # -- the relational schema -------------------------------------------------------------
++
++    def schema(self) -> RelationalSchema:
++        carried: dict[tuple[str, str], tuple[str, ...]] = {}
++        unmapped: dict[tuple[str, str], str] = {}
++        placements: list[RolePlacement] = []
++        fact_table: dict[str, str] = {}
++        role_columns: dict[tuple[str, str], tuple[str, ...]] = {}
++        for fact in self.facts:
++            fid = str(fact["id"])
++            roles = list(self.players[fid])
++            if ("roles", fid, roles[0]) not in self.bound:
++                extension = ("extension_roles", fid, roles[0]) in self.bound
++                unmapped[("fact_type", fid)] = "extension-role" if extension else "unbound"
++                continue
++            held = {role: self.bound[("roles", fid, role)] for role in roles}
++            used = {table for columns in held.values() for table, _column in columns}
++            if len(used) != 1:
++                unmapped[("fact_type", fid)] = "spans-tables"
++                continue
++            (table,) = used
++            fact_table[fid] = table
++            listed: list[str] = []
++            for role in roles:
++                names = tuple(column for _table, column in held[role])
++                role_columns[(fid, role)] = names
++                placements.append(RolePlacement(fid, role, table, names))
++                listed += [name for name in names if name not in listed]
++            carried[("fact_type", fid)] = ("columns", table, *listed)
++
++        # Uniqueness: every confirmed alethic one whose roles sit in one table.
++        position = {t: {c: i for i, c in enumerate(body["columns"])} for t, body in self.tables.items()}
++        derived: dict[str, dict[frozenset[str], tuple[str, ...]]] = {t: {} for t in self.tables}
++        pending: list[tuple[tuple[str, str], str, frozenset[str]]] = []
++
++        def confirmed(constraint: Mapping[str, Any]) -> bool:
++            return constraint.get("status") == "confirmed" and constraint.get("modality") == "alethic"
++
++        def place(address: tuple[str, str], constraint: Mapping[str, Any], roles: list[tuple[str, str]]) -> None:
++            reasons = sorted({unmapped[("fact_type", f)] for f, _r in roles if ("fact_type", f) in unmapped})
++            if reasons:
++                unmapped[address] = reasons[0]
++            elif not confirmed(constraint):
++                unmapped[address] = "uniqueness-not-confirmed"
++            elif len({fact_table[f] for f, _r in roles}) != 1:
++                unmapped[address] = "spans-tables"
++            else:
++                table = fact_table[roles[0][0]]
++                columns = frozenset(c for f, r in roles for c in role_columns[(f, r)])
++                pending.append((address, table, columns))
++                if columns != frozenset(self.tables[table].get("primary_key", ())):
++                    derived[table][columns] = tuple(sorted(columns, key=position[table].__getitem__))
++
++        for fact in self.facts:
++            fid = str(fact["id"])
++            for number, constraint in enumerate(fact.get("constraints") or ()):
++                address = ("constraint", f"fact_types/{fid}/constraints/{number}")
++                if ("fact_type", fid) in unmapped:
++                    unmapped[address] = unmapped[("fact_type", fid)]
++                elif constraint.get("type") == "uniqueness" and constraint.get("scope") != "external":
++                    place(address, constraint, [(fid, role) for role in ModelIndex.constraint_roles(constraint)])
++                else:
++                    unmapped[address] = "not-relational"
++        for number, constraint in enumerate(self.model.constraints or ()):
++            address = ("constraint", f"constraints/{number}")
++            if constraint.get("type") == "uniqueness" and constraint.get("scope") == "external":
++                place(address, constraint, [
++                    (str(ref.get("fact_type")), str(ref.get("role"))) for ref in constraint.get("role_refs") or ()])
++            else:
++                unmapped[address] = "not-relational"
++
++        unique_keys: dict[str, tuple[tuple[str, ...], ...]] = {}
++        for table, body in self.tables.items():
++            if "unique_keys" in body:
++                unique_keys[table] = tuple(tuple(key) for key in body["unique_keys"])
++            else:  # none declared: the model's own, one per column set, in column order
++                unique_keys[table] = tuple(sorted(
++                    derived[table].values(), key=lambda key: [position[table][c] for c in key]))
++        for address, table, columns in pending:
++            if columns == frozenset(self.tables[table].get("primary_key", ())):
++                carried[address] = ("primary_key", table)
++            elif any(columns == frozenset(key) for key in unique_keys[table]):
++                carried[address] = ("unique_key", table, *sorted(columns, key=position[table].__getitem__))
++            else:
++                unmapped[address] = "not-in-binding"
++
++        foreign_keys = name_foreign_keys({table: self.foreign_keys(table) for table in self.tables})
++        tables = tuple(
++            Table(
++                table, ("table", table),
++                tuple(Column(column, None, True, ("binding", table)) for column in self.tables[table]["columns"]),
++                tuple(self.tables[table].get("primary_key", ())), unique_keys[table], foreign_keys[table],
++            )
++            for table in sorted(self.tables)
++        )
++        return RelationalSchema(
++            None, tables,
++            tuple(Unmapped(kind, ident, reason) for (kind, ident), reason in sorted(unmapped.items())),  # type: ignore[arg-type]
++            tuple(sorted(placements, key=lambda p: (p.fact_type, p.role))),
++            tuple(self.identifications()),
++            tuple(sorted(carried.items())),
++        )
++
++    def identifications(self) -> list[Identification]:
++        """How each object type is identified, as the ontology declares it; the mapping
++        compares these with the ontology view and never guesses beyond it."""
++        result = []
++        for object_type in sorted(self.objects):
++            width = self.arity(object_type)
++            if width is None:
++                continue
++            table = self.homes.get(object_type)
++            if self.objects[object_type]["kind"] == "value":
++                result.append(Identification(object_type, "value", (object_type,), (None,), None))
++                continue
++            components = self.components(object_type)
++            if components is None:
++                columns = self.home_key(object_type, table) if table else (object_type,)
++                result.append(Identification(object_type, "direct", columns, (None,), table))  # type: ignore[arg-type]
++                continue
++            origins: list[tuple[str, str]] = []
++            for fact, role, player in components:
++                origins += [(fact, role)] * (self.arity(player) or 0)
++            columns = self.home_key(object_type, table) if table else tuple(f"{f}.{r}" for f, r in origins)
++            result.append(Identification(object_type, "composite", columns, tuple(origins), table))  # type: ignore[arg-type]
++        return result
++
++    def extension_roles(self) -> list[dict[str, Any]]:
++        rows = []
++        for (section, fact, role), columns in sorted(self.bound.items()):
++            if section == "extension_roles":
++                tables = sorted({table for table, _column in columns})
++                rows.append({
++                    "fact_type": fact, "role": role,
++                    # One table: its name and the column names. Across tables: no table, and
++                    # each column with its own.
++                    "table": tables[0] if len(tables) == 1 else None,
++                    "columns": [
++                        column if len(tables) == 1 else {"table": table, "column": column}
++                        for table, column in columns
++                    ],
++                })
++        return rows
++
++    def fields(self) -> dict[tuple[str, str], tuple[str | None, str | None]]:
++        """(table, column) -> (Ossie data type or None, raw SQL type or None)."""
++        return {
++            (table, column): (sql_datatype(body["sql_type"]) if "sql_type" in body else None, body.get("sql_type"))
++            for table, column, body in self.columns()
++        }
++
++
++@dataclass(frozen=True)
++class Bound:
++    """What a binding gives the relational files: the schema, each field's type, and
++    the members the mapping's extension carries."""
++
++    schema: RelationalSchema
++    fields: Mapping[tuple[str, str], tuple[str | None, str | None]]
++    extension: Mapping[str, Any]
++
++
++def bind(model: Any, view: OntologyView, binding: Binding) -> Bound:
++    """Resolve a binding against a model: names first, then contradictions."""
++    binder = _Binder(model, view, binding)
++    binder.check_names()
++    binder.check_contradictions()
++    return Bound(
++        binder.schema(), binder.fields(),
++        {"binding_sha256": binding.sha256, "extension_roles": binder.extension_roles()},
++    )
+diff --git a/src/gnd/rmap.py b/src/gnd/rmap.py
+index f9363f5e..3bd33c14 100644
+--- a/src/gnd/rmap.py
++++ b/src/gnd/rmap.py
+@@ -11,6 +11,7 @@ from __future__ import annotations
+ 
+ import enum
+ from collections import defaultdict
++from collections.abc import Mapping, Sequence
+ from dataclasses import dataclass, field
+ from typing import Any, Literal
+ 
+@@ -30,6 +31,7 @@ __all__ = [
+     "UnmappedReason",
+     "dispositions",
+     "map_model",
++    "name_foreign_keys",
+ ]
+ 
+ 
+@@ -44,6 +46,10 @@ UnmappedReason = Literal[
+     "identification-unmatchable",
+     "spans-tables",
+     "not-relational",
++    # A physical binding run only (gnd.export.physical_binding):
++    "unbound",
++    "extension-role",
++    "not-in-binding",
+ ]
+ 
+ 
+@@ -101,6 +107,9 @@ class RolePlacement:
+     role: str
+     table: str
+     columns: tuple[str, ...]
++    #: For a unary fact type the Rmap stores as a Boolean flag: that column. The fact
++    #: holds for a row only where the flag is true. ``None`` when every row is a link.
++    flag: str | None = None
+ 
+ 
+ @dataclass(frozen=True)
+@@ -122,11 +131,14 @@ class Identification:
+     columns: tuple[str, ...]
+     components: tuple[tuple[str, str] | None, ...]
+     table: str | None
++    #: Whether ``table`` is a supertype's table that absorbed this object type.
++    absorbed: bool = False
+ 
+ 
+ @dataclass(frozen=True)
+ class RelationalSchema:
+-    variant: RmapVariant
++    #: The Rmap variant that produced the schema, or ``None`` for a physical binding.
++    variant: RmapVariant | None
+     tables: tuple[Table, ...]
+     unmapped: tuple[Unmapped, ...]
+     # Every role of every carried fact type, sorted by (fact type, role).
+@@ -597,23 +609,17 @@ class _Mapper:
+ 
+         # Foreign keys, named per (from, to) pair in column order (A11).
+         built: list[Table] = []
+-        key_names: set[str] = set()  # unique in the schema, not only per table pair (OB3 r1 F3)
+-        for name in sorted(tables):
+-            t = tables[name]
+-            counts: dict[str, int] = defaultdict(int)
+-            fks = []
++        references: dict[str, list[tuple[tuple[str, ...], str, tuple[str, ...]]]] = {}
++        for name, t in tables.items():
++            references[name] = []
+             for columns, player in t["groups"]:
+                 target = self.owner_of(player)
+-                if target not in tables or not tables[target]["pk"]:
+-                    continue
+-                while True:
+-                    counts[target] += 1
+-                    suffix = "" if counts[target] == 1 else f"__{counts[target]}"
+-                    key_name = f"{name}__{target}{suffix}"
+-                    if key_name not in key_names:
+-                        break
+-                key_names.add(key_name)
+-                fks.append(ForeignKey(key_name, tuple(columns), target, tuple(tables[target]["pk"])))
++                if target in tables and tables[target]["pk"]:
++                    references[name].append((tuple(columns), target, tuple(tables[target]["pk"])))
++        foreign_keys = name_foreign_keys(references)
++        for name in sorted(tables):
++            t = tables[name]
++            fks = foreign_keys[name]
+             position = {c.name: i for i, c in enumerate(t["columns"])}
+             uks = sorted((tuple(u) for u in t["uks"].values()), key=lambda u: [position[c] for c in u])
+             built.append(Table(name, t["subject"], tuple(t["columns"]), tuple(t["pk"]), tuple(uks), tuple(fks)))
+@@ -632,7 +638,8 @@ class _Mapper:
+                 continue
+             for role in self.roles(fact):
+                 table_name, columns = self.location(fid, role)
+-                roles.append(RolePlacement(fid, role, table_name, tuple(columns)))
++                flag = self.carried[("fact_type", fid)][2] if self.placed[fid].rule == 4 else None
++                roles.append(RolePlacement(fid, role, table_name, tuple(columns), flag))
+         identifications = []
+         for oid in sorted(self.objects):
+             key = self.key(oid)
+@@ -647,6 +654,7 @@ class _Mapper:
+                 oid, kind, tuple(tables[owner]["pk"] if held else key.names),  # type: ignore[arg-type]
+                 tuple(origin if grouped else None for origin in key.origins),
+                 owner if held else None,
++                held and owner != oid,
+             ))
+         return RelationalSchema(
+             self.variant, tuple(built), unmapped,
+@@ -844,6 +852,33 @@ class _Mapper:
+         self.unmapped[address] = (next(iter(sorted(reasons))), "") if reasons else ("spans-tables", "")
+ 
+ 
++def name_foreign_keys(
++    references: Mapping[str, Sequence[tuple[tuple[str, ...], str, tuple[str, ...]]]],
++) -> dict[str, tuple[ForeignKey, ...]]:
++    """Name each table's foreign keys, given as (columns, target table, target columns).
++
++    ``<from>__<to>``, then ``__2`` and so on, counted per pair in the order given. A
++    name is unique in the whole schema: tables are named in sorted order, and a name
++    another pair already took takes the next number (OB3 r1 F3).
++    """
++    taken: set[str] = set()
++    named: dict[str, tuple[ForeignKey, ...]] = {}
++    for table in sorted(references):
++        counts: dict[str, int] = defaultdict(int)
++        keys = []
++        for columns, target, target_columns in references[table]:
++            while True:
++                counts[target] += 1
++                suffix = "" if counts[target] == 1 else f"__{counts[target]}"
++                name = f"{table}__{target}{suffix}"
++                if name not in taken:
++                    break
++            taken.add(name)
++            keys.append(ForeignKey(name, tuple(columns), target, tuple(target_columns)))
++        named[table] = tuple(keys)
++    return named
++
++
+ def map_model(model: Any, *, variant: RmapVariant = RmapVariant.HALPIN) -> RelationalSchema:
+     """Map one loaded model to its relational schema; never raises for an admitted model."""
+     return _Mapper(model, variant).run()
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index 5d00b53a..55b08da2 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -2336,6 +2336,116 @@ Every fact type the Rmap carries is therefore either named by exactly one
+ link tree or listed in `unmapped_links`, with one of those two reasons. `--strict` does not refuse any of
+ these: they are listed, not refused.
+ 
++### Physical binding
++
++`--physical-binding FILE` makes the semantic model describe tables the caller
++delivers, and maps the ontology onto those tables. The built-in relational
++mapping is then not run. The ontology, sidecar and loss report are the bytes
++of a run without the flag. The flag cannot be combined with
++`--ontology-only` (exit 64), and a missing file exits 66.
++
++The file is JSON, at most 10 MiB, under the schema `gnd-physical-binding/1`.
++The packaged schema `gnd/schema/physical-binding.schema.json` defines its
++members and is closed at every level; this section states only what the
++members mean.
++
++**Tables.** This part uses only the binding.
++
++| Binding | Semantic model |
++|---|---|
++| A table | One dataset, in sorted table-name order. `name` and `source` are the table name as written, which may be schema-qualified. Its `GND` extension is `{"source_kind":"physical"}`. |
++| A column | One field, in the binding's own column order |
++| `sql_type` | `datatype`, through the map below. The raw text is kept on the field as `{"sql_type": …}`. |
++| `primary_key`, `unique_keys` | The dataset's keys, as given |
++| `references` | The columns of one table whose `references` name the same table and column list are **one** foreign key, and one relationship. They pair with the referenced columns in the table's column order. A table's foreign keys are ordered by their first column, and named by the relational mapping's rule. |
++
++Names are written as given, and quoted and uppercased in expressions like
++any other. Two tables, or two columns of one table, that are equal after
++uppercasing are refused.
++
++**SQL types.** A type is words of letters, digits and underscores, with at
++most one parenthesized list of unsigned integers after a word. Its name is
++the words, casefolded and joined by one space. The map is closed:
++
++| Ossie data type | Names |
++|---|---|
++| `String` | `char`, `character`, `varchar`, `character varying`, `nchar`, `nvarchar`, `text`, `string`, `uuid` |
++| `Integer` | `smallint`, `integer`, `int`, `bigint`, `tinyint`, `int2`, `int4`, `int8`, `serial`, `bigserial`, `long`, `short`, `byte` |
++| `Decimal` | `numeric`, `decimal`, `dec`, `number` |
++| `Float` | `real`, `float`, `float4`, `float8`, `double`, `double precision` |
++| `Boolean` | `boolean`, `bool` |
++| `Date` | `date` |
++| `Time` | `time`, `time without time zone` |
++| `DateTime` | `timestamp`, `timestamp without time zone`, `timestamp_ntz`, `datetime` |
++| `DateTimeTz` | `timestamp with time zone`, `timestamptz`, `timestamp_ltz` |
++| `Opaque` | `bytea`, `binary`, `varbinary`, `blob`, `json`, `jsonb` |
++
++Any other type leaves `datatype` absent. It is never a refusal.
++
++**Roles.** `roles` gives, for a fact type and a role, the ordered columns
++that hold the role.
++
++- **Names.** Fact type ids, object type ids, table names and column names
++  match exactly. A role name matches after Unicode compatibility
++  normalization (form KC), casefolding, and dropping every character that is
++  not a letter or a digit. This is its own rule, not the near-miss
++  normalization of the why-not report.
++- **A column** is written `{table, column}`, or as the string `table.column`.
++  The string is looked up among the declared tables and columns and never
++  split, because a table name can contain a dot.
++- **A role played by a value type** has one column. **A role played by an
++  entity type** has one column per part of that entity's identifier, in the
++  ontology's `identify_by` order, an entity part expanded in turn.
++- **A bound fact type** has every role bound. With all its columns in one
++  table it gets a link mapping, as under the built-in mapping. Across
++  tables, it is listed as `spans-tables`.
++- **`extension_roles`** has the same shape and is checked the same way. It
++  produces no link mapping; its entries are listed in the extension.
++- **Surrogate keys.** A role held only through a generated id has no column
++  with the entity's identifying values, so it cannot be bound. Leave that
++  fact type out of `roles`; it is then listed as `unbound`. Its foreign key
++  still becomes a relationship.
++
++**Targets** are optional. `{kind: identifier, object_type}` on every column of
++a table's primary key makes the table the object type's home; the object
++type then gets an object mapping over that key, when the key is exactly the
++columns its identifier is bound to there. `{kind: role, fact_type, role}`
++and `{kind: reference, object_type}` add nothing: they only have to agree
++with `roles`.
++
++**The listing.** The mapping's extension has no `rmap_variant` on a binding
++run. It gains `binding_sha256`, the bare hexadecimal SHA-256 of the binding
++file, and `extension_roles`, the resolved entries as
++`{fact_type, role, table, columns}`.
++
++| Element | Disposition |
++|---|---|
++| A fact type bound in `roles`, in one table | `columns`, the table, then its roles' columns in role order, each once |
++| A fact type bound across tables | `spans-tables` |
++| A fact type bound only in `extension_roles` | `extension-role` |
++| Any other fact type | `unbound` |
++| A confirmed alethic uniqueness whose roles are bound in one table | `primary_key` when its columns are the table's primary key; `unique_key` when they are one of its unique keys; otherwise `not-in-binding` |
++| Any other uniqueness | `uniqueness-not-confirmed` |
++| A constraint of a fact type that is not carried | that fact type's reason |
++| Every other constraint | `not-relational`. A binding carries no nullability, so this includes `mandatory`. |
++
++When a table has no `unique_keys` member, each such uniqueness that is not
++the primary key becomes a unique key of the table, one per column set. When
++the member is present, nothing is added.
++
++**Refusals.** A refused binding exits 3 with its rule id on standard error
++and publishes nothing. The checks run in this one order, and within a rule
++the first violation in sorted order is reported:
++
++| Step | Rule ids |
++|---|---|
++| The file | `binding:not-a-file`, `binding:size`, `binding:syntax` (not JSON, a non-finite number, nesting past the limit, a duplicate member, an integer too long to read) |
++| The document | `binding:schema` |
++| The model's own refusals | unchanged |
++| Names | `binding:name-collision`, `binding:unknown-table`, `binding:unknown-column`, `binding:ambiguous-column`, `binding:unknown-fact-type`, `binding:role-name` (a role name with no letter or digit, or two that normalize alike, in the model or the binding), `binding:unknown-role`, `binding:unknown-object-type` |
++| Contradictions | `binding:reference-group` (a foreign key with a different number of columns than it references), `binding:reference-not-a-key` (the referenced columns are not the target's primary key or a declared unique key, as a sequence), `binding:partial-fact-type`, `binding:role-arity`, `binding:target-mismatch`, `binding:key-role` (a key column of a home table holds a role that is neither played by the home object type nor part of its identifier), `binding:incompatible-keys` (one column holds two object types that are unrelated, neither a subtype of the other nor part of the other's identifier) |
++| `--strict`, then size, then collision | unchanged |
++
+ ### Import a pinned ontology
+ 
+ `gnd import ossie FILE --out MODEL` accepts an Ossie ontology in JSON or
+diff --git a/tests/support/binding_large.py b/tests/support/binding_large.py
+new file mode 100644
+index 00000000..7c17fdcf
+--- /dev/null
++++ b/tests/support/binding_large.py
+@@ -0,0 +1,35 @@
++"""Build a physical binding shaped like delivered DDL from a model's own Rmap schema.
++
++For the OB4 scale and totality tests: every table, key and foreign key of the Rmap
++becomes a binding table, and every role placement a `roles` entry. ``keep`` chooses
++the fact types to bind; the others are left unbound.
++"""
++
++from __future__ import annotations
++
++_SQL = {"String": "VARCHAR(100)", "Integer": "BIGINT", "Boolean": "BOOLEAN", "Float": "DOUBLE PRECISION"}
++
++
++def binding_from_rmap(model, keep=lambda fact_type: True) -> dict:
++    from gnd.rmap import map_model
++
++    schema = map_model(model)
++    tables = {}
++    for table in schema.tables:
++        columns = {}
++        for column in table.columns:
++            columns[column.name] = {"sql_type": _SQL[column.datatype]} if column.datatype in _SQL else {}
++        for key in table.foreign_keys:
++            for name in key.columns:
++                columns[name]["references"] = {"table": key.target_table, "columns": list(key.target_columns)}
++        if table.subject[0] == "object_type":
++            for name in table.primary_key:
++                columns[name]["targets"] = [{"kind": "identifier", "object_type": table.subject[1]}]
++        tables[table.name] = {"columns": columns, "primary_key": list(table.primary_key)}
++    roles: dict[str, dict[str, list[dict[str, str]]]] = {}
++    for placement in schema.roles:
++        if keep(placement.fact_type):
++            roles.setdefault(placement.fact_type, {})[placement.role] = [
++                {"table": placement.table, "column": column} for column in placement.columns
++            ]
++    return {"schema": "gnd-physical-binding/1", "tables": tables, "roles": roles}
+diff --git a/tests/support/model_scan.py b/tests/support/model_scan.py
+new file mode 100644
+index 00000000..3472cd8c
+--- /dev/null
++++ b/tests/support/model_scan.py
+@@ -0,0 +1,19 @@
++"""Every fixture and example model, for the tests that run over all of them (OB3-Q6)."""
++
++from __future__ import annotations
++
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[2]
++RMAP_CASES = ROOT / "tests/fixtures/rmap/cases"
++
++
++def all_model_paths() -> list[Path]:
++    """Every `*.orm.yaml` and `*.orm.json` under src/gnd and tests/fixtures, and the Rmap
++    corpus models, which are named `model.yaml` (OB2 A13, A14)."""
++    found: set[Path] = set()
++    for base in (ROOT / "src/gnd", ROOT / "tests/fixtures"):
++        for pattern in ("*.orm.yaml", "*.orm.json"):
++            found.update(base.rglob(pattern))
++    found.update(RMAP_CASES.glob("*/model.yaml"))
++    return sorted(found)
+diff --git a/tests/support/physical_binding_corpus.py b/tests/support/physical_binding_corpus.py
+index ab1e4ccb..7ccbcfee 100644
+--- a/tests/support/physical_binding_corpus.py
++++ b/tests/support/physical_binding_corpus.py
+@@ -18,7 +18,7 @@ from pathlib import Path
+ 
+ from jsonschema import Draft202012Validator
+ 
+-from tests.support import ossie_relational_corpus as relational
++from . import ossie_relational_corpus as relational
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+ CORPUS = ROOT / "tests/fixtures/physical_binding"
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index 8dc6439a..ebcd6a30 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -160,6 +160,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO3-GO5/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB2/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB4/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_ossie_external_oracle.py b/tests/test_ossie_external_oracle.py
+index c8272f05..444434f8 100644
+--- a/tests/test_ossie_external_oracle.py
++++ b/tests/test_ossie_external_oracle.py
+@@ -69,6 +69,27 @@ def test_external_relational_census(oracle, tmp_path, relative):
+         assert result.returncode == 0, result.stdout + result.stderr
+ 
+ 
++def test_external_physical_binding_cases(oracle, tmp_path):
++    """OB4 T13: the pinned validator accepts the files of every valid corpus binding."""
++    from support import physical_binding_corpus as bindings
++
++    for case in bindings.cases():
++        directory = tmp_path / case
++        directory.mkdir()
++        bundle = render_ossie(
++            bindings.model_path(case), output_format="yaml", document_name="ontology.yaml",
++            physical_binding=bindings.CORPUS / case / "binding.json",
++        )
++        (directory / "ontology.yaml").write_bytes(bundle.document)
++        semantic = directory / "ontology.yaml.semantic_model.yaml"
++        mapping = directory / "ontology.yaml.mapping.yaml"
++        semantic.write_bytes(bundle.semantic_model)
++        mapping.write_bytes(bundle.mapping)
++        for path, schema in ((semantic, "core-spec/ossie-schema.json"), (mapping, "ontology/mapping.json")):
++            result = oracle.validate(path, schema)
++            assert result.returncode == 0, case + ": " + result.stdout + result.stderr
++
++
+ def test_external_refusal_is_live(oracle, tmp_path):
+     document = {
+         "version": "0.3.0.dev0",
+diff --git a/tests/test_ossie_relational.py b/tests/test_ossie_relational.py
+index feebdbb9..5a76588e 100644
+--- a/tests/test_ossie_relational.py
++++ b/tests/test_ossie_relational.py
+@@ -65,12 +65,9 @@ def test_t1_json_equals_the_approved_structure(number):
+ 
+ 
+ def _model_paths():
+-    found = set()
+-    for base in (ROOT / "src/gnd", ROOT / "tests/fixtures"):
+-        for pattern in ("*.orm.yaml", "*.orm.json"):
+-            found.update(base.rglob(pattern))
+-    found.update((corpus.RMAP / "cases").glob("*/model.yaml"))
+-    return sorted(found)
++    from support.model_scan import all_model_paths
++
++    return all_model_paths()
+ 
+ 
+ @pytest.fixture(scope="module")
+diff --git a/tests/test_physical_binding.py b/tests/test_physical_binding.py
+new file mode 100644
+index 00000000..18687ddc
+--- /dev/null
++++ b/tests/test_physical_binding.py
+@@ -0,0 +1,628 @@
++"""OB4: `gnd export ossie --physical-binding` against its owner-approved corpus.
++
++The corpus (tests/fixtures/physical_binding), its refusal table and the packaged
++schema were approved at the OB4 corpus gate before any binding reader existed.
++"""
++
++from __future__ import annotations
++
++import json
++
++import pytest
++from support import ossie_relational_corpus as relational
++from support import physical_binding_corpus as corpus
++
++CASES = corpus.cases()
++ROWS = corpus.refusal_rows()
++
++
++def _render(case, output_format="yaml", **extra):
++    from gnd.export.ossie import render_ossie
++
++    return render_ossie(
++        corpus.model_path(case), output_format=output_format,
++        physical_binding=corpus.CORPUS / case / "binding.json", **extra,
++    )
++
++
++def _argv(model, out, *extra):
++    return ["export", "ossie", str(model), "--out", str(out), *extra]
++
++
++@pytest.mark.parametrize("case", CASES)
++def test_t1_yaml_equals_the_approved_files(case):
++    bundle = _render(case)
++    directory = corpus.CORPUS / case
++    assert bundle.semantic_model == (directory / "expected.semantic_model.yaml").read_bytes()
++    assert bundle.mapping == (directory / "expected.mapping.yaml").read_bytes()
++
++
++@pytest.mark.parametrize("case", CASES)
++def test_t1_extension_parses_to_the_readable_copy(case):
++    mapping = relational.load_yaml_bytes(_render(case).mapping)
++    (extension,) = mapping["custom_extensions"]
++    expected = json.loads((corpus.CORPUS / case / "expected.extension.json").read_text(encoding="utf-8"))
++    assert json.loads(extension["data"]) == expected
++
++
++def _write_refusal(row, directory):
++    """The row's binding file under ``directory``; a directory for the not-a-file row."""
++    path = directory / "binding.json"
++    data = corpus.refusal_bytes(row)
++    if data is None:
++        path.mkdir()
++    else:
++        path.write_bytes(data)
++    return path
++
++
++@pytest.mark.parametrize("row", ROWS, ids=[row["id"] for row in ROWS])
++def test_t4_each_bad_binding_is_refused_by_its_rule(row, tmp_path, capsys):
++    from gnd import cli
++
++    binding = _write_refusal(row, tmp_path)
++    model = corpus.model_path(row.get("base", "V1"))
++    out = tmp_path / "out"
++    out.mkdir()
++    assert cli.main(_argv(model, out / "o.yaml", "--physical-binding", str(binding))) == 3
++    captured = capsys.readouterr()
++    assert row["rule"] in captured.err, captured.err
++    assert "Traceback" not in captured.err
++    assert not list(out.iterdir())
++
++
++# --- T2, T3: the valid cases beyond their bytes -------------------------------------------------
++
++
++@pytest.mark.parametrize("case", CASES)
++@pytest.mark.parametrize("output_format", ("yaml", "json"))
++def test_t2_valid_cases_are_consistent_and_leave_the_legacy_files_alone(case, output_format):
++    from gnd.export.ossie import render_ossie
++    from gnd.export.ossie_relational import validate_relational
++
++    bundle = _render(case, output_format)
++    load = json.loads if output_format == "json" else relational.load_yaml_bytes
++    ontology, semantic, mapping = load(bundle.document), load(bundle.semantic_model), load(bundle.mapping)
++    validate_relational(semantic, mapping)
++    relational.cross_check(ontology, semantic, mapping)
++    plain = render_ossie(corpus.model_path(case), output_format=output_format)
++    assert (bundle.document, bundle.sidecar, bundle.loss_report) == (plain.document, plain.sidecar, plain.loss_report)
++    assert bundle.semantic_model != plain.semantic_model
++    payload = json.loads(mapping["custom_extensions"][0]["data"])
++    assert "rmap_variant" not in payload and "binding_sha256" in payload
++    assert "binding_sha256" not in json.loads(load(plain.mapping)["custom_extensions"][0]["data"])
++
++
++def test_t2_the_corpus_checker_accepts_what_the_reader_writes():
++    for case in CASES:
++        corpus.check_valid(case)
++
++
++def test_t3_a_two_column_foreign_key_is_one_relationship():
++    semantic = relational.load_yaml_bytes(_render("V3").semantic_model)
++    (city_state,) = [r for r in semantic["relationships"] if r["from"] == "city"]
++    assert city_state == {
++        "name": "city__state", "from": "city", "to": "state",
++        "from_columns": ["st_country_cd", "st_cd"], "to_columns": ["country_cd", "state_cd"],
++    }
++
++
++# --- T5: one order --------------------------------------------------------------------------------
++
++
++def test_t5_the_rule_order_is_the_source_order():
++    """The checks appear in the module in the order RULE_ORDER states."""
++    import ast
++    import inspect
++
++    from gnd.export import physical_binding
++
++    tree = ast.parse(inspect.getsource(physical_binding))
++    functions = {node.name: node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)}
++    raised = []
++    for name in ("read_binding", "check_names", "check_contradictions"):
++        for node in sorted(ast.walk(functions[name]), key=lambda n: (getattr(n, "lineno", 0), getattr(n, "col_offset", 0))):
++            if (isinstance(node, ast.Call) and getattr(node.func, "id", None) == "BindingError"
++                    and isinstance(node.args[0], ast.Constant) and node.args[0].value not in raised):
++                raised.append(node.args[0].value)
++    assert tuple(raised) == physical_binding.RULE_ORDER
++    assert physical_binding.RULE_ORDER == corpus.RULES
++
++
++def _combined(first, second):
++    """Two refusal rows' edits in one binding, or None when they cannot be combined."""
++    if first.get("base") is None or first.get("base") != second.get("base"):
++        return None
++    for one in first["patch"]:
++        for other in second["patch"]:  # an edit inside or over the other would undo it
++            shorter, longer = sorted((one["path"], other["path"]), key=len)
++            if longer == shorter or longer.startswith(shorter + "/"):
++                return None
++    base = json.loads((corpus.CORPUS / first["base"] / "binding.json").read_text(encoding="utf-8"))
++    try:
++        document = corpus.apply_patch(corpus.apply_patch(base, first["patch"]), second["patch"])
++    except (AssertionError, KeyError, IndexError, ValueError):
++        return None
++    if list(corpus.binding_schema().iter_errors(document)):
++        return None
++    return document
++
++
++def test_t5_an_earlier_rule_wins_over_every_later_one(tmp_path):
++    """Every pair of refusal rows that can share one binding reports the earlier rule."""
++    from gnd.export.ossie import render_ossie
++    from gnd.export.physical_binding import RULE_ORDER, BindingError
++
++    rank = {rule: number for number, rule in enumerate(RULE_ORDER)}
++    rows = [row for row in ROWS if row["rule"] in corpus.MODEL_RULES]
++    earlier_rules = set()
++    cancelled = []
++    checked = 0
++    for first in rows:
++        for second in rows:
++            if rank[first["rule"]] >= rank[second["rule"]]:
++                continue
++            document = _combined(first, second)
++            if document is None:
++                continue
++            path = tmp_path / f"{checked}.json"
++            path.write_text(json.dumps(document))
++            checked += 1
++            try:
++                render_ossie(corpus.model_path(first["base"]), output_format="yaml", physical_binding=path)
++            except BindingError as error:
++                # A later defect may be masked by the combination, never reported first.
++                assert rank[error.rule] <= rank[first["rule"]], (first["id"], second["id"], error.rule)
++                if error.rule == first["rule"]:
++                    earlier_rules.add(first["rule"])
++            else:
++                cancelled.append((first["id"], second["id"]))
++    assert checked >= 150
++    # Two edits can repair each other: a role added under a second spelling, then the
++    # first spelling removed, is a valid binding again.
++    assert cancelled == [("role-names-collide", "one-role-missing"), ("compatibility-form-collides", "one-role-missing")]
++    # Every model-step rule was seen winning over a later one, except the three the
++    # table cannot pair; test_t5_hand_built_order_witnesses covers those.
++    assert earlier_rules == set(corpus.MODEL_RULES) - {
++        "binding:role-arity", "binding:key-role", "binding:incompatible-keys"}
++
++
++def test_t5_hand_built_order_witnesses(tmp_path):
++    """Bindings with two defects, for the adjacent rules the refusal table cannot pair."""
++    from gnd.export.ossie import render_ossie
++    from gnd.export.physical_binding import BindingError
++
++    def rule(case, patch):
++        base = json.loads((corpus.CORPUS / case / "binding.json").read_text(encoding="utf-8"))
++        path = tmp_path / "binding.json"
++        path.write_text(json.dumps(corpus.apply_patch(base, patch)))
++        with pytest.raises(BindingError) as caught:
++            render_ossie(corpus.model_path(case), output_format="yaml", physical_binding=path)
++        return caught.value.rule
++
++    arity = {"op": "replace", "path": "/roles/city_in_state/state", "value": ["city.st_cd"]}
++    mismatch = {"op": "add", "path": "/tables/country/columns/name/targets",
++                "value": [{"kind": "role", "fact_type": "country_has_name", "role": "country"}]}
++    assert rule("V3", [arity, mismatch]) == "binding:role-arity"
++    assert rule("V3", [mismatch]) == "binding:target-mismatch"
++    # One column of a home table's key holding another entity: a key-role defect and an
++    # incompatible-keys defect at once. Without the home, only the second remains.
++    both = {"op": "replace", "path": "/roles/course_has_title/course", "value": ["uni.student.nr"]}
++    no_home = {"op": "remove", "path": "/tables/uni.student/columns/nr/targets"}
++    assert rule("V2", [both]) == "binding:key-role"
++    assert rule("V2", [both, no_home]) == "binding:incompatible-keys"
++    wrong_player = {"op": "replace", "path": "/tables/uni.enrolled/columns/student_nr/targets/0/object_type",
++                    "value": "course"}
++    assert rule("V2", [wrong_player, both]) == "binding:target-mismatch"
++
++
++def test_t5_binding_syntax_and_schema_come_before_the_model(tmp_path, capsys):
++    from gnd import cli
++
++    broken_model = tmp_path / "model.yaml"
++    broken_model.write_text("not: [a model")
++    missing_model = tmp_path / "absent.yaml"
++    for row_id in ("truncated", "missing-roles"):
++        row = next(r for r in ROWS if r["id"] == row_id)
++        directory = tmp_path / row_id
++        directory.mkdir()
++        binding = _write_refusal(row, directory)
++        for model in (broken_model, missing_model):
++            assert cli.main(_argv(model, directory / "o.yaml", "--physical-binding", str(binding))) == 3
++            assert row["rule"] in capsys.readouterr().err
++    # The model's own refusals come before the binding's names.
++    row = next(r for r in ROWS if r["id"] == "unknown-fact-type")
++    directory = tmp_path / "names"
++    directory.mkdir()
++    binding = _write_refusal(row, directory)
++    assert cli.main(_argv(broken_model, directory / "o.yaml", "--physical-binding", str(binding))) == 3
++    assert "binding:" not in capsys.readouterr().err
++    assert cli.main(_argv(missing_model, directory / "o.yaml", "--physical-binding", str(binding))) == 66
++
++
++def test_t5_a_binding_refusal_comes_before_strict_and_size(tmp_path, capsys):
++    from gnd import cli
++
++    document = relational.load_yaml(corpus.model_path("V1"))
++    document["fact_types"][0]["sample_population"] = [{"customer": 1, "email": "a@example.org"}]
++    model = tmp_path / "model.json"
++    model.write_text(json.dumps(document))
++    good = corpus.CORPUS / "V1" / "binding.json"
++    bad = _write_refusal(next(r for r in ROWS if r["id"] == "unknown-role"), tmp_path)
++    argv = _argv(model, tmp_path / "o.yaml", "--strict", "--max-output-bytes", "1")
++    assert cli.main([*argv, "--physical-binding", str(bad)]) == 3
++    assert "binding:unknown-role" in capsys.readouterr().err
++    assert cli.main([*argv, "--physical-binding", str(good)]) == 3
++    assert "population:out-of-scope" in capsys.readouterr().err
++
++
++def test_t5_usage_and_missing_file(tmp_path, capsys):
++    from gnd import cli
++
++    model = corpus.model_path("V1")
++    binding = corpus.CORPUS / "V1" / "binding.json"
++    with pytest.raises(SystemExit) as caught:
++        cli.main(_argv(model, tmp_path / "o.yaml", "--ontology-only", "--physical-binding", str(binding)))
++    assert caught.value.code == 64
++    assert "--ontology-only" in capsys.readouterr().err
++    assert cli.main(_argv(model, tmp_path / "o.yaml", "--physical-binding", str(tmp_path / "absent.json"))) == 66
++    assert not list(tmp_path.iterdir())
++    from gnd.export.ossie import render_ossie
++
++    with pytest.raises(ValueError, match="relational"):
++        render_ossie(model, output_format="yaml", relational=False, physical_binding=binding)
++
++
++# --- T6: unbound fact types and the shared walk ---------------------------------------------------
++
++
++def _generated(tmp_path, entities, fact_types, keep=lambda fact_type: True):
++    from support.binding_large import binding_from_rmap
++    from support.rmap_large import large_rmap_model
++
++    from gnd.model import load_model
++
++    model = tmp_path / f"model{entities}.json"
++    model.write_text(json.dumps(large_rmap_model(entities, fact_types), separators=(",", ":")))
++    binding = tmp_path / f"binding{entities}.json"
++    binding.write_text(json.dumps(binding_from_rmap(load_model(model), keep), separators=(",", ":")))
++    return model, binding
++
++
++def test_t6_unbound_fact_types_are_listed_and_the_rmap_is_not_run(tmp_path, monkeypatch):
++    import hashlib
++
++    from gnd.export import ossie
++    from gnd.model import load_model
++    from gnd.model_index import ModelIndex
++
++    model, binding = _generated(tmp_path, 40, 120, keep=lambda fact_type: int(fact_type[1:]) % 2 == 0)
++
++    def refuse(*_args, **_kwargs):
++        raise AssertionError("the Rmap ran on a binding run")
++
++    monkeypatch.setattr(ossie, "map_model", refuse)
++    bundle = ossie.render_ossie(model, output_format="json", physical_binding=binding)
++    ontology, semantic, mapping = (json.loads(part) for part in (bundle.document, bundle.semantic_model, bundle.mapping))
++    payload = json.loads(mapping["custom_extensions"][0]["data"])
++    assert payload["binding_sha256"] == hashlib.sha256(binding.read_bytes()).hexdigest()
++    loaded = load_model(model)
++    expected = []
++    for fact in ModelIndex.for_model(loaded).iter_fact_types_shared():
++        expected.append(("fact_type", fact["id"]))
++        expected += [("constraint", f"fact_types/{fact['id']}/constraints/{i}")
++                     for i, _ in enumerate(fact.get("constraints") or ())]
++    assert sorted((row["kind"], row["id"]) for row in payload["dispositions"]) == sorted(expected)
++    facts = {row["id"]: row for row in payload["dispositions"] if row["kind"] == "fact_type"}
++    assert len(facts) == 120
++    for fact_type, row in facts.items():
++        assert row["reason"] == (None if int(fact_type[1:]) % 2 == 0 else "unbound"), fact_type
++    linked = relational.cross_check(ontology, semantic, mapping)
++    assert sorted(linked) == sorted(f for f, row in facts.items() if row["reason"] is None)
++    constraints = [row for row in payload["dispositions"] if row["kind"] == "constraint"]
++    assert {row["reason"] for row in constraints} == {None, "unbound"}
++
++
++# --- T7: without the flag nothing changes ---------------------------------------------------------
++
++OB4_BASELINE = json.loads((corpus.ROOT / "tests/fixtures/ossie_ob4_baseline.json").read_bytes())
++
++
++@pytest.mark.parametrize("key", sorted(OB4_BASELINE))
++def test_t7_without_the_flag_the_relational_files_equal_the_baseline(key):
++    import hashlib
++
++    from gnd.export.ossie import render_ossie
++
++    relative, _, output_format = key.partition("::")
++    try:
++        bundle = render_ossie(corpus.ROOT / relative, output_format=output_format)
++        actual = {
++            name: None if getattr(bundle, name) is None else hashlib.sha256(getattr(bundle, name)).hexdigest()
++            for name in ("semantic_model", "mapping")
++        }
++    except Exception as error:  # noqa: BLE001 -- the baseline records refusals by type and text
++        actual = {"refused": f"{type(error).__name__}: {error}"}
++    assert actual == OB4_BASELINE[key]
++
++
++# --- T8, T9: hostile input ------------------------------------------------------------------------
++
++
++def _pointers(value, path=()):
++    yield path
++    if isinstance(value, dict):
++        for key, child in value.items():
++            yield from _pointers(child, (*path, key))
++    elif isinstance(value, list):
++        for index, child in enumerate(value):
++            yield from _pointers(child, (*path, index))
++
++
++def test_t8_a_wrong_value_anywhere_is_a_binding_refusal_or_harmless(tmp_path):
++    """Every node of a valid binding replaced by each kind of JSON value in turn."""
++    from gnd.export.ossie import render_ossie
++    from gnd.export.physical_binding import RULE_ORDER, BindingError
++
++    base = json.loads((corpus.CORPUS / "V3" / "binding.json").read_text(encoding="utf-8"))
++    model = corpus.model_path("V3")
++    path = tmp_path / "binding.json"
++    outcomes = {"accepted": 0}
++    for pointer in list(_pointers(base))[1:]:
++        for replacement in (None, True, 7, 1.5, "x", "", [], ["x"], {}, {"x": 1}):
++            document = json.loads(json.dumps(base))
++            parent = document
++            for part in pointer[:-1]:
++                parent = parent[part]
++            parent[pointer[-1]] = replacement
++            path.write_text(json.dumps(document))
++            try:
++                render_ossie(model, output_format="yaml", physical_binding=path)
++                outcomes["accepted"] += 1
++            except BindingError as error:
++                assert error.rule in RULE_ORDER
++                outcomes[error.rule] = outcomes.get(error.rule, 0) + 1
++    # 910 replacements on 2026-11-24: 843 refused by the schema, 19 harmless, the rest by name.
++    assert sum(outcomes.values()) >= 900
++    assert outcomes["binding:schema"] >= 800 and len(outcomes) >= 6, outcomes
++
++
++def test_t8_arbitrary_bytes_are_refused_by_name(tmp_path):
++    from gnd.export.physical_binding import BindingError, read_binding
++
++    path = tmp_path / "binding.json"
++    samples = [b"", b"\x00", b"\xff\xfe", b"null", b"0", b'"text"', b"[", b"{" * 100, b'{"a":' * 70 + b"1" + b"}" * 70,
++               b'{"schema": Infinity}', b'{"schema": -Infinity}', b"1e400", b"\xef\xbb\xbf{}", b"{}\n{}"]
++    for sample in samples:
++        path.write_bytes(sample)
++        with pytest.raises(BindingError) as caught:
++            read_binding(path)
++        assert caught.value.rule in ("binding:syntax", "binding:schema"), sample
++    with pytest.raises(FileNotFoundError):
++        read_binding(tmp_path / "absent.json")
++
++
++@pytest.mark.parametrize(("written", "normal"), [
++    ("email", "email"), ("E-Mail", "email"), (" e_mail ", "email"), ("ｅｍａｉｌ", "email"), ("ﬁle", "file"),
++    ("Straße", "strasse"), ("room２", "room2"), ("İd", "i̇d".replace("̇", "")), ("--", ""), ("", ""), ("  ", ""),
++])
++def test_t9_role_name_normalization(written, normal):
++    from gnd.export.physical_binding import normalize_role_name
++
++    if written == "İd":  # the dot above is a combining mark, which is neither a letter nor a digit
++        assert normalize_role_name(written) == "id"
++    else:
++        assert normalize_role_name(written) == normal
++
++
++def test_t9_role_names_that_collide_in_the_model_are_refused(tmp_path):
++    from gnd.export.ossie import render_ossie
++    from gnd.export.physical_binding import BindingError
++
++    document = relational.load_yaml(corpus.model_path("V1"))
++    fact = document["fact_types"][0]
++    fact["roles"][0]["role_name"] = "e_mail"
++    for constraint in fact["constraints"]:
++        if "roles" in constraint:
++            constraint["roles"] = ["e_mail"]
++        else:
++            constraint["role"] = "e_mail"
++    model = tmp_path / "model.json"
++    model.write_text(json.dumps(document))
++    binding = json.loads((corpus.CORPUS / "V1" / "binding.json").read_text(encoding="utf-8"))
++    binding["roles"]["customer_has_email"] = {"e_mail": ["cust.cust_id"], "email": ["cust.email_addr"]}
++    del binding["tables"]["cust"]["columns"]["email_addr"]["targets"]
++    path = tmp_path / "binding.json"
++    path.write_text(json.dumps(binding))
++    with pytest.raises(BindingError) as caught:
++        render_ossie(model, output_format="yaml", physical_binding=path)
++    assert caught.value.rule == "binding:role-name"
++    # Unbound, the same fact type is no obstacle.
++    del binding["roles"]["customer_has_email"]
++    path.write_text(json.dumps(binding))
++    assert render_ossie(model, output_format="yaml", physical_binding=path).mapping is not None
++
++
++# --- T10: scale -----------------------------------------------------------------------------------
++
++
++def test_t10_binding_time_is_bounded_and_not_quadratic(tmp_path):
++    from time import monotonic
++
++    from gnd.export.ossie import render_ossie
++    from gnd.input_policy import MAX_BYTES
++
++    times = {}
++    for scale in (1, 5):
++        model, binding = _generated(tmp_path, 280 * scale, 900 * scale)
++        best = float("inf")
++        for _ in range(2):
++            start = monotonic()
++            bundle = render_ossie(model, output_format="json", max_output_bytes=268435456, physical_binding=binding)
++            best = min(best, monotonic() - start)
++        assert bundle.mapping is not None
++        times[scale] = best
++    # 1,400 entities and 4,500 fact types (2,950 tables): 4.1 s with the binding against 3.4 s with
++    # the Rmap, ratio 5.0 to one fifth of that scale; the binding file is 1.2 MB. 2026-11-24.
++    assert binding.stat().st_size < MAX_BYTES // 2
++    assert times[5] < 60
++    assert times[5] / times[1] < 12  # linear about 5; quadratic about 25
++
++
++# --- T11, T12: the type map and the schema --------------------------------------------------------
++
++
++def test_t11_the_sql_type_map_is_closed_and_literal():
++    from gnd.export.physical_binding import SQL_TYPES, sql_datatype
++
++    table = {
++        "String": ["char", "character", "varchar", "character varying", "nchar", "nvarchar", "text", "string", "uuid"],
++        "Integer": ["smallint", "integer", "int", "bigint", "tinyint", "int2", "int4", "int8", "serial", "bigserial",
++                    "long", "short", "byte"],
++        "Decimal": ["numeric", "decimal", "dec", "number"],
++        "Float": ["real", "float", "float4", "float8", "double", "double precision"],
++        "Boolean": ["boolean", "bool"],
++        "Date": ["date"],
++        "Time": ["time", "time without time zone"],
++        "DateTime": ["timestamp", "timestamp without time zone", "timestamp_ntz", "datetime"],
++        "DateTimeTz": ["timestamp with time zone", "timestamptz", "timestamp_ltz"],
++        "Opaque": ["bytea", "binary", "varbinary", "blob", "json", "jsonb"],
++    }
++    assert SQL_TYPES == {name: datatype for datatype, names in table.items() for name in names}
++    core = json.loads((corpus.ROOT / "src/gnd/schema/ossie/core-spec.json").read_text())
++    assert set(table) <= set(core["$defs"]["DataType"]["enum"])
++    for datatype, names in table.items():
++        for name in names:
++            assert sql_datatype(name) == sql_datatype(name.upper()) == sql_datatype(f"  {name}  ") == datatype
++
++
++@pytest.mark.parametrize(("sql_type", "datatype"), [
++    ("VARCHAR(20)", "String"), ("varchar ( 20 )", "String"), ("NUMERIC(10,2)", "Decimal"), ("numeric(10, 2)", "Decimal"),
++    ("TIMESTAMP(6) WITH TIME ZONE", "DateTimeTz"), ("timestamp   with time  zone", "DateTimeTz"),
++    ("Double Precision", "Float"), ("character varying (320)", "String"),
++    ("INTEGER[]", None), ('"char"', None), ("varchar(20)(3)", None), ("(20) varchar", None), ("varchar(", None),
++    ("varchar()", None), ("varchar(a)", None), ("varchar(1,)", None), ("geography", None), ("int unsigned", None),
++    ("", None), ("   ", None), ("numeric(-1)", None), ("var-char", None), ("ｉｎｔ", None),
++])
++def test_t11_sql_types_are_lexed_not_pattern_matched(sql_type, datatype):
++    from gnd.export.physical_binding import sql_datatype
++
++    assert sql_datatype(sql_type) == datatype
++
++
++def test_t11_an_unknown_type_is_kept_and_not_refused(tmp_path):
++    binding = json.loads((corpus.CORPUS / "V1" / "binding.json").read_text(encoding="utf-8"))
++    binding["tables"]["cust"]["columns"]["email_addr"]["sql_type"] = "CITEXT[]"
++    del binding["tables"]["cust"]["columns"]["cust_id"]["sql_type"]
++    path = tmp_path / "binding.json"
++    path.write_text(json.dumps(binding))
++    from gnd.export.ossie import render_ossie
++
++    semantic = json.loads(render_ossie(corpus.model_path("V1"), output_format="json", physical_binding=path).semantic_model)
++    key, email = semantic["datasets"][0]["fields"]
++    assert "datatype" not in email and email["custom_extensions"] == [{"vendor_name": "GND", "data": '{"sql_type":"CITEXT[]"}'}]
++    assert "datatype" not in key and "custom_extensions" not in key
++
++
++def test_t12_the_packaged_schema_is_closed_and_names_the_documented_members():
++    from importlib.resources import files
++
++    from jsonschema import Draft202012Validator
++
++    schema = json.loads(files("gnd").joinpath("schema", "physical-binding.schema.json").read_bytes())
++    Draft202012Validator.check_schema(schema)
++    assert schema["$id"] == "urn:gnd:physical-binding:1"
++    assert schema["properties"]["schema"] == {"const": "gnd-physical-binding/1"}
++    members = set()
++
++    def walk(node):
++        if isinstance(node, dict):
++            if "properties" in node:
++                assert node.get("additionalProperties") is False, node
++                members.update(node["properties"])
++            for child in node.values():
++                walk(child)
++        elif isinstance(node, list):
++            for child in node:
++                walk(child)
++
++    walk(schema)
++    assert members == {"schema", "tables", "roles", "extension_roles", "columns", "primary_key", "unique_keys",
++                       "sql_type", "targets", "references", "table", "kind", "object_type", "fact_type", "role", "column"}
++
++
++# --- Rules implementation settled (OB4 spec section 12) -------------------------------------------
++
++
++def _bound(tmp_path, case, patch):
++    from gnd.export.ossie import render_ossie
++
++    base = json.loads((corpus.CORPUS / case / "binding.json").read_text(encoding="utf-8"))
++    path = tmp_path / "binding.json"
++    path.write_text(json.dumps(corpus.apply_patch(base, patch)))
++    bundle = render_ossie(corpus.model_path(case), output_format="json", physical_binding=path)
++    mapping = json.loads(bundle.mapping)
++    return json.loads(bundle.semantic_model), mapping, json.loads(mapping["custom_extensions"][0]["data"])
++
++
++def test_a_fact_type_bound_across_tables_is_listed_not_refused(tmp_path):
++    """G14: the fact type's State role is bound in `city` and its population in `state`."""
++    patch = [{"op": "replace", "path": "/roles/state_has_population/state", "value": ["city.st_country_cd", "city.st_cd"]}]
++    _semantic, mapping, payload = _bound(tmp_path, "V3", patch)
++    rows = {(row["kind"], row["id"]): row for row in payload["dispositions"]}
++    assert rows[("fact_type", "state_has_population")]["reason"] == "spans-tables"
++    assert rows[("constraint", "fact_types/state_has_population/constraints/0")]["reason"] == "spans-tables"
++    state = next(e for e in mapping["concept_mappings"] if e["concept"] == "State")
++    assert [tree["children"][0]["relationship"] for tree in state["link_mappings"]] == ["state_in_country", "state_has_code"]
++
++
++def test_an_extension_role_across_tables_is_listed_with_each_column_table(tmp_path):
++    patch = [{"op": "add", "path": "/extension_roles", "value": {"city_in_state": {
++        "city": ["city.id"], "state": ["state.country_cd", "city.st_cd"]}}},
++        {"op": "remove", "path": "/roles/city_in_state"}]
++    _semantic, _mapping, payload = _bound(tmp_path, "V3", patch)
++    assert payload["extension_roles"] == [
++        {"fact_type": "city_in_state", "role": "city", "table": "city", "columns": ["id"]},
++        {"fact_type": "city_in_state", "role": "state", "table": None,
++         "columns": [{"table": "state", "column": "country_cd"}, {"table": "city", "column": "st_cd"}]},
++    ]
++
++
++def test_an_ambiguous_spelling_is_refused_only_when_it_is_used(tmp_path):
++    patch = [{"op": "add", "path": "/tables/a", "value": {"columns": {"b.c": {}}}},
++             {"op": "add", "path": "/tables/a.b", "value": {"columns": {"c": {}}}}]
++    semantic, _mapping, _payload = _bound(tmp_path, "V1", patch)
++    assert [d["name"] for d in semantic["datasets"]] == ["a", "a.b", "cust"]
++
++
++def test_a_declared_home_whose_key_is_not_the_identifier_gets_no_object_mapping(tmp_path):
++    """V5 with `timetable` marked as Room's home: its key is (slot, staff), not a room number."""
++    patch = [{"op": "add", "path": f"/tables/timetable/columns/{column}/targets",
++              "value": [{"kind": "identifier", "object_type": "room"}]} for column in ("slot_cd", "staff_no")]
++    from gnd.export.physical_binding import BindingError
++
++    with pytest.raises(BindingError) as caught:
++        _bound(tmp_path, "V5", patch)
++    assert caught.value.rule == "binding:key-role"  # the key columns hold a Slot and a Lecturer
++
++
++def test_two_homes_for_one_object_type_use_the_first_table(tmp_path):
++    patch = [{"op": "add", "path": "/tables/archive", "value": {
++        "columns": {"old_id": {"targets": [{"kind": "identifier", "object_type": "customer"}]}}, "primary_key": ["old_id"]}}]
++    _semantic, mapping, _payload = _bound(tmp_path, "V1", patch)
++    (customer,) = mapping["concept_mappings"]
++    assert customer["object_mappings"] == [{"expression": '"ARCHIVE"."OLD_ID"'}]
++
++
++def test_an_entity_the_ontology_does_not_identify_is_listed_as_identification_differs(tmp_path):
++    """Corpus model 23: a unit-based reference has no identifier in the ontology."""
++    from gnd.export.ossie import render_ossie
++
++    binding = {"schema": "gnd-physical-binding/1",
++               "tables": {"p": {"columns": {"id": {}, "cm": {}, "extra": {}}, "primary_key": ["id"]}},
++               "roles": {"person_has_height": {"person": ["p.id"], "height": ["p.cm", "p.extra"]}}}
++    path = tmp_path / "binding.json"
++    path.write_text(json.dumps(binding))
++    mapping = json.loads(render_ossie(relational.rmap_case("23"), output_format="json", physical_binding=path).mapping)
++    payload = json.loads(mapping["custom_extensions"][0]["data"])
++    assert payload["unmapped_links"] == [{"fact_type": "person_has_height", "reason": "identification-differs"}]
+diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
+index b6a37323..d7c2752a 100644
+--- a/tests/test_rf1_cli_pins.py
++++ b/tests/test_rf1_cli_pins.py
+@@ -295,6 +295,11 @@ def _ossie_successor(command):
+             "--ontology-only", action="store_true",
+             help="write only the ontology, sidecar and loss report, without the semantic model and mapping",
+         )
++        # ossie-relational-bundle OB4: the declared physical-binding input.
++        ossie.add_argument(
++            "--physical-binding", metavar="FILE",
++            help="describe the delivered tables with this binding file instead of the built-in relational mapping",
++        )
+     else:
+         ossie.add_argument(
+             "--max-input-bytes", type=_byte_bound, default=None, metavar="N",
+diff --git a/tests/test_rmap.py b/tests/test_rmap.py
+index 65c05fcf..121d4096 100644
+--- a/tests/test_rmap.py
++++ b/tests/test_rmap.py
+@@ -84,6 +84,7 @@ def test_t8_public_surface():
+     assert [member.name for member in rmap.RmapVariant] == ["HALPIN", "ALTERNATE"]
+     assert set(rmap.UnmappedReason.__args__) == {
+         "derived-computed", "uniqueness-not-confirmed", "identification-unmatchable", "spans-tables", "not-relational",
++        "unbound", "extension-role", "not-in-binding",  # OB4 G13: a physical binding run only
+     }
+     for cls in (rmap.Column, rmap.ForeignKey, rmap.Table, rmap.Unmapped, rmap.RelationalSchema, rmap.Disposition):
+         assert dataclasses.is_dataclass(cls) and cls.__dataclass_params__.frozen
+@@ -96,12 +97,9 @@ CENSUS = (ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS0/revise
+ 
+ 
+ def _all_model_paths():
+-    found = set()
+-    for base in (ROOT / "src/gnd", ROOT / "tests/fixtures"):
+-        for pattern in ("*.orm.yaml", "*.orm.json"):
+-            found.update(base.rglob(pattern))
+-    found.update((CORPUS / "cases").glob("*/model.yaml"))  # A14
+-    return sorted(found)
++    from support.model_scan import all_model_paths
++
++    return all_model_paths()
+ 
+ 
+ def _loaded(path):
+@@ -694,7 +692,7 @@ def test_ob3_t16_role_and_identification_records_are_literal(tmp_path):
+     assert Identification("country", "direct", ("country_code",), (None,), "country") in schema.identifications
+     assert Identification("state_code", "value", ("state_code",), (None,), None) in schema.identifications
+     schema, _ = _schema(tmp_path, _case("15"))
+-    assert Identification("student", "direct", ("person_id",), (None,), "person") in schema.identifications
++    assert Identification("student", "direct", ("person_id",), (None,), "person", absorbed=True) in schema.identifications
+     assert RolePlacement("student_has_gpa", "student", "person", ("person_id",)) in schema.roles
+ 
+ 
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index a69c2fac..2e4ac960 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -536,6 +536,10 @@
+       "lane": "export",
+       "layer": "lanes"
+     },
++    "gnd.export.physical_binding": {
++      "lane": "export",
++      "layer": "lanes"
++    },
+     "gnd.export.pyrel_rules": {
+       "lane": "export",
+       "layer": "lanes"

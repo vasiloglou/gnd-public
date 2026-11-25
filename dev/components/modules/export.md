@@ -277,13 +277,13 @@ Read a physical binding and bind a model's roles to a delivered relational schem
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `BindingError` | class(ValueError) | 95 | A physical binding is refused. ``rule`` is one of :data:`RULE_ORDER`. |
-| `Binding` | class | 105 | A schema-valid binding document and the digest of the bytes it was read from. |
-| `read_binding(path) -> Binding` | function | 118 | Read and schema-check a binding. A missing file raises ``FileNotFoundError``. |
-| `sql_datatype(sql_type) -> str \| None` | function | 142 | The Ossie data type of an SQL type, or None when the type is outside the map. |
-| `normalize_role_name(name) -> str` | function | 176 | A role name for matching (OB4 D8): NFKC, casefolded, letters and digits only. |
-| `Bound` | class | 659 | What a binding gives the relational files: the schema, each field's type, and |
-| `bind(model, view, binding) -> Bound` | function | 668 | Resolve a binding against a model: names first, then contradictions. |
+| `BindingError` | class(ValueError) | 101 | A physical binding is refused. ``rule`` is one of :data:`RULE_ORDER`. |
+| `Binding` | class | 111 | A schema-valid binding document and the digest of the bytes it was read from. |
+| `read_binding(path) -> Binding` | function | 124 | Read and schema-check a binding. A missing file raises ``FileNotFoundError``. |
+| `sql_datatype(sql_type) -> str \| None` | function | 152 | The Ossie data type of an SQL type, or None when the type is outside the map. |
+| `normalize_role_name(name) -> str` | function | 188 | A role name for matching (OB4 D8): NFKC, casefolded, letters and digits only. |
+| `Bound` | class | 705 | What a binding gives the relational files: the schema, each field's type, and |
+| `bind(model, view, binding) -> Bound` | function | 714 | Resolve a binding against a model: names first, then contradictions. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules

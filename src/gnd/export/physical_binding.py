@@ -18,6 +18,7 @@ shared with the built-in path.
 from __future__ import annotations
 
 import hashlib
+import json
 import unicodedata
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
@@ -42,7 +43,7 @@ from gnd.rmap import (
 )
 from gnd.safefs import NotRegularFileError, open_regular
 
-__all__ = ["RULE_ORDER", "SQL_TYPES", "Binding", "BindingError", "bind", "normalize_role_name", "read_binding", "sql_datatype"]
+__all__ = ["MAX_IDENTIFIER_DEPTH", "RULE_ORDER", "SQL_TYPES", "Binding", "BindingError", "bind", "normalize_role_name", "read_binding", "sql_datatype"]
 
 SCHEMA_ID = "gnd-physical-binding/1"
 
@@ -69,6 +70,11 @@ RULE_ORDER = (
     "binding:key-role",
     "binding:incompatible-keys",
 )
+
+#: An identifier nests one level per entity it is identified through. A deeper one is
+#: not followed: the object type is then treated as one the ontology does not identify,
+#: so every mapping document stays shallow whatever chain the model admits.
+MAX_IDENTIFIER_DEPTH = 8
 
 #: Normalized SQL type name -> Ossie core-spec data type (OB4 D7). A type outside this
 #: closed map leaves ``datatype`` absent.
@@ -127,16 +133,20 @@ def read_binding(path: Path) -> Binding:
         raise BindingError("binding:size", f"the file is larger than {MAX_BYTES} bytes")
     try:
         document = loads(raw, max_bytes=MAX_BYTES)
+        # An escaped lone surrogate is JSON but not text: no output could carry it (r1 F1).
+        json.dumps(document, ensure_ascii=False).encode("utf-8")
     except (ValueError, RecursionError, OverflowError) as error:
-        raise BindingError("binding:syntax", "the file is not JSON within the input limits") from error
-    violations = sorted(
-        ("/" + "/".join(str(part) for part in error.absolute_path) if error.absolute_path else "", error.message)
-        for error in _validator().iter_errors(document)
-    )
+        raise BindingError("binding:syntax", "the file is not JSON text within the input limits") from error
+    violations = sorted((_pointer(error.absolute_path), error.message) for error in _validator().iter_errors(document))
     if violations:
         pointer, message = violations[0]
         raise BindingError("binding:schema", f"at {pointer or 'the document root'}: {message[:200]}")
     return Binding(document, hashlib.sha256(raw).hexdigest())
+
+
+def _pointer(parts: Iterable[Any]) -> str:
+    """An RFC 6901 JSON pointer; `~` and `/` in a member name are escaped (r1 F6)."""
+    return "".join("/" + str(part).replace("~", "~0").replace("/", "~1") for part in parts)
 
 
 def sql_datatype(sql_type: str) -> str | None:
@@ -166,6 +176,8 @@ def sql_datatype(sql_type: str) -> str | None:
             items = [item.strip(" ") for item in sql_type[position + 1:end].split(",")]
             if not all(item and set(item) <= _DIGITS for item in items):
                 return None
+            if sql_type[end + 1:end + 2] not in ("", " "):
+                return None  # a word after the list is separated by a space, like any other (r1 F5)
             listed = True
             position = end + 1
         else:
@@ -204,7 +216,7 @@ class _Binder:
                 self.spelled.setdefault(f"{table}.{column}", []).append((table, column))
         #: (section, fact type, model role name) -> columns, filled by the name checks.
         self.bound: dict[tuple[str, str, str], tuple[ColumnRef, ...]] = {}
-        self._arity: dict[str, int | None] = {}
+        self._shape: dict[str, tuple[int, int] | None] = {}
 
     # -- iteration in sorted order ------------------------------------------------------
 
@@ -343,20 +355,47 @@ class _Binder:
 
     def arity(self, object_type: str) -> int | None:
         """How many columns hold one object of the type; None when the ontology declares
-        no identifier for it (the mapping then lists it as identification-differs)."""
-        if object_type in self._arity:
-            return self._arity[object_type]
-        self._arity[object_type] = None  # a re-entrant request has no answer
-        result: int | None
-        if self.objects[object_type]["kind"] == "value" or self.view.identification.get(object_type, (None,))[0] == "simple":
-            result = 1
-        elif (components := self.components(object_type)) is not None:
-            parts = [self.arity(player) for _fact, _role, player in components]
-            result = None if None in parts else sum(parts)  # type: ignore[arg-type]
-        else:
-            result = None
-        self._arity[object_type] = result
-        return result
+        no identifier for it, or one nested deeper than MAX_IDENTIFIER_DEPTH (the mapping
+        then lists it as identification-differs)."""
+        shape = self.shape(object_type)
+        return None if shape is None else shape[0]
+
+    def shape(self, start: str) -> tuple[int, int] | None:
+        """(column count, nesting depth) of an object type's identification.
+
+        Computed with an explicit stack, so a long chain of entities identified through
+        one another cannot exhaust the interpreter's recursion (review r1 F2).
+        """
+        stack = [start]
+        open_types: set[str] = set()
+        while stack:
+            current = stack[-1]
+            if current in self._shape:
+                stack.pop()
+                continue
+            if self.objects[current]["kind"] == "value" or self.view.identification.get(current, (None,))[0] == "simple":
+                self._shape[current] = (1, 0)
+                continue
+            components = self.components(current)
+            if components is None:
+                self._shape[current] = None
+                continue
+            waiting = [player for _fact, _role, player in components if player not in self._shape]
+            if waiting and current in open_types:  # identified through itself
+                self._shape[current] = None
+                continue
+            if waiting:
+                open_types.add(current)
+                stack.extend(waiting)
+                continue
+            parts = [self._shape[player] for _fact, _role, player in components]
+            if any(part is None for part in parts):
+                self._shape[current] = None
+            else:
+                depth = 1 + max(part[1] for part in parts)  # type: ignore[index]
+                width = sum(part[0] for part in parts)  # type: ignore[index]
+                self._shape[current] = (width, depth) if depth <= MAX_IDENTIFIER_DEPTH else None
+        return self._shape[start]
 
     def related(self, first: str, second: str) -> bool:
         """The same object type, or one a subtype of the other."""
@@ -436,17 +475,21 @@ class _Binder:
                 groups.setdefault((reference["table"], tuple(reference["columns"])), []).append(column)
         return [(tuple(columns), target, target_columns) for (target, target_columns), columns in groups.items()]
 
+    def sorted_foreign_keys(self, table: str) -> list[tuple[tuple[str, ...], str, tuple[str, ...]]]:
+        """The same groups in an order that ignores the document's member order (r1 F4)."""
+        return sorted(self.foreign_keys(table), key=lambda group: (sorted(group[0]), group[1], group[2]))
+
     def check_contradictions(self) -> None:
         # binding:reference-group
         for table in sorted(self.tables):
-            for columns, target, target_columns in self.foreign_keys(table):
+            for columns, target, target_columns in self.sorted_foreign_keys(table):
                 if len(columns) != len(target_columns):
                     raise BindingError(
                         "binding:reference-group",
                         f"{table}: {len(columns)} column(s) reference {len(target_columns)} column(s) of {target}")
         # binding:reference-not-a-key
         for table in sorted(self.tables):
-            for _columns, target, target_columns in self.foreign_keys(table):
+            for _columns, target, target_columns in self.sorted_foreign_keys(table):
                 body = self.tables[target]
                 keys = [tuple(body.get("primary_key", ())), *(tuple(key) for key in body.get("unique_keys", ()))]
                 if target_columns not in keys:
@@ -542,16 +585,19 @@ class _Binder:
             return constraint.get("status") == "confirmed" and constraint.get("modality") == "alethic"
 
         def place(address: tuple[str, str], constraint: Mapping[str, Any], roles: list[tuple[str, str]]) -> None:
-            reasons = sorted({unmapped[("fact_type", f)] for f, _r in roles if ("fact_type", f) in unmapped})
+            """A uniqueness is placed by the columns of the roles it names. A fact type
+            that spans tables still has each role in its own columns (review r1 F3)."""
+            held = [self.bound.get(("roles", f, r)) for f, r in roles]
+            reasons = sorted({unmapped[("fact_type", f)] for (f, _r), columns in zip(roles, held) if columns is None})
             if reasons:
                 unmapped[address] = reasons[0]
             elif not confirmed(constraint):
                 unmapped[address] = "uniqueness-not-confirmed"
-            elif len({fact_table[f] for f, _r in roles}) != 1:
+            elif len({table for columns in held for table, _column in columns}) != 1:  # type: ignore[union-attr]
                 unmapped[address] = "spans-tables"
             else:
-                table = fact_table[roles[0][0]]
-                columns = frozenset(c for f, r in roles for c in role_columns[(f, r)])
+                table = held[0][0][0]  # type: ignore[index]
+                columns = frozenset(column for group in held for _table, column in group)  # type: ignore[union-attr]
                 pending.append((address, table, columns))
                 if columns != frozenset(self.tables[table].get("primary_key", ())):
                     derived[table][columns] = tuple(sorted(columns, key=position[table].__getitem__))

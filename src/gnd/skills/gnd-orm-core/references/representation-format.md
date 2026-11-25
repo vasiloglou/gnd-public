@@ -2363,8 +2363,9 @@ Names are written as given, and quoted and uppercased in expressions like
 any other. Two tables, or two columns of one table, that are equal after
 uppercasing are refused.
 
-**SQL types.** A type is words of letters, digits and underscores, with at
-most one parenthesized list of unsigned integers after a word. Its name is
+**SQL types.** A type is words of letters, digits and underscores separated
+by spaces, with at most one parenthesized list of unsigned integers after a
+word; a word after the list needs its space too. Its name is
 the words, casefolded and joined by one space. The map is closed:
 
 | Ossie data type | Names |
@@ -2395,7 +2396,11 @@ that hold the role.
   split, because a table name can contain a dot.
 - **A role played by a value type** has one column. **A role played by an
   entity type** has one column per part of that entity's identifier, in the
-  ontology's `identify_by` order, an entity part expanded in turn.
+  ontology's `identify_by` order, an entity part expanded in turn. An
+  identifier that nests more than 8 entities deep is not followed: that
+  entity is treated as one the ontology does not identify, so a fact type
+  through it is listed as `identification-differs` and its column count is
+  not checked.
 - **A bound fact type** has every role bound. With all its columns in one
   table it gets a link mapping, as under the built-in mapping. Across
   tables, it is listed as `spans-tables`.
@@ -2424,7 +2429,7 @@ file, and `extension_roles`, the resolved entries as
 | A fact type bound across tables | `spans-tables` |
 | A fact type bound only in `extension_roles` | `extension-role` |
 | Any other fact type | `unbound` |
-| A confirmed alethic uniqueness whose roles are bound in one table | `primary_key` when its columns are the table's primary key; `unique_key` when they are one of its unique keys; otherwise `not-in-binding` |
+| A confirmed alethic uniqueness whose roles are bound in one table | `primary_key` when its columns are the table's primary key; `unique_key` when they are one of its unique keys; otherwise `not-in-binding`. An external uniqueness is placed by the columns of the roles it names, also when one of their fact types spans tables; across tables it is `spans-tables`. |
 | Any other uniqueness | `uniqueness-not-confirmed` |
 | A constraint of a fact type that is not carried | that fact type's reason |
 | Every other constraint | `not-relational`. A binding carries no nullability, so this includes `mandatory`. |
@@ -2439,8 +2444,8 @@ the first violation in sorted order is reported:
 
 | Step | Rule ids |
 |---|---|
-| The file | `binding:not-a-file`, `binding:size`, `binding:syntax` (not JSON, a non-finite number, nesting past the limit, a duplicate member, an integer too long to read) |
-| The document | `binding:schema` |
+| The file | `binding:not-a-file`, `binding:size`, `binding:syntax` (not JSON, a non-finite number, nesting past the limit, a duplicate member, an integer too long to read, a string that is not Unicode text) |
+| The document | `binding:schema`, with the RFC 6901 pointer of the first violation in sorted pointer order |
 | The model's own refusals | unchanged |
 | Names | `binding:name-collision`, `binding:unknown-table`, `binding:unknown-column`, `binding:ambiguous-column`, `binding:unknown-fact-type`, `binding:role-name` (a role name with no letter or digit, or two that normalize alike, in the model or the binding), `binding:unknown-role`, `binding:unknown-object-type` |
 | Contradictions | `binding:reference-group` (a foreign key with a different number of columns than it references), `binding:reference-not-a-key` (the referenced columns are not the target's primary key or a declared unique key, as a sequence), `binding:partial-fact-type`, `binding:role-arity`, `binding:target-mismatch`, `binding:key-role` (a key column of a home table holds a role that is neither played by the home object type nor part of its identifier), `binding:incompatible-keys` (one column holds two object types that are unrelated, neither a subtype of the other nor part of the other's identifier) |

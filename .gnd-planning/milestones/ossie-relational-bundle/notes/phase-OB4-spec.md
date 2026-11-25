@@ -491,3 +491,23 @@ and the format in
   were each caught.
 - **Not checked, because it needs the reader:** the datatype each SQL type
   maps to, and which rule id each row of steps 5 and 6 actually produces.
+
+## 14. Review round 1 (Codex, read-only) and its repairs
+
+[review.md](reviews/phase-OB4-r1/review.md) requested changes, with six
+findings. Each was reproduced as a regression test (11 tests red on the
+pre-repair code; three more were passing controls) and fixed. The ledger is
+[FINDINGS.md](reviews/phase-OB4-r1/FINDINGS.md). No approved corpus file and
+no refusal row changed.
+
+| # | Change | Departs from |
+|---|---|---|
+| RR1 | A string that is not Unicode text (an escaped lone surrogate) is `binding:syntax` (F1). | §6.7 step 2 |
+| RR2 | **An identifier nested more than 8 entities deep is not followed.** The entity is treated as one the ontology does not identify: its roles' column counts are not checked, and fact types through it are listed as `identification-differs` (F2). The shape is computed with an explicit stack. | §6.5 ("an entity component expanded in turn", without a bound). **Owner.** |
+| RR3 | An external uniqueness is placed by the columns of the roles it names, also when one of their fact types spans tables (F3). | §6.6 |
+| RR4 | Foreign-key groups are checked in sorted order (F4). | §6.7 |
+| RR5 | In an SQL type, a word after the parenthesized list needs a space (F5). | §6.4 |
+| RR6 | A schema refusal names an RFC 6901 pointer, escaped, the first in sorted pointer order (F6). | §6.7 step 3 |
+
+**The repaired bytes are not re-reviewed.**
+

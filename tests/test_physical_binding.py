@@ -626,3 +626,162 @@ def test_an_entity_the_ontology_does_not_identify_is_listed_as_identification_di
     mapping = json.loads(render_ossie(relational.rmap_case("23"), output_format="json", physical_binding=path).mapping)
     payload = json.loads(mapping["custom_extensions"][0]["data"])
     assert payload["unmapped_links"] == [{"fact_type": "person_has_height", "reason": "identification-differs"}]
+
+
+# --- Review round 1 regressions (notes/reviews/phase-OB4-r1, F1-F6) -----------------------------
+
+
+@pytest.mark.parametrize("where", ("sql_type", "table", "column", "role"))
+def test_r1_f1_a_lone_surrogate_anywhere_is_a_syntax_refusal(tmp_path, where, capsys):
+    from gnd import cli
+
+    texts = {
+        "sql_type": '{"schema":"gnd-physical-binding/1","tables":{"t":{"columns":{"c":{"sql_type":"\\ud800"}}}},"roles":{}}',
+        "table": '{"schema":"gnd-physical-binding/1","tables":{"t\\udc00":{"columns":{"c":{}}}},"roles":{}}',
+        "column": '{"schema":"gnd-physical-binding/1","tables":{"t":{"columns":{"\\ud83d":{}}}},"roles":{}}',
+        "role": '{"schema":"gnd-physical-binding/1","tables":{"t":{"columns":{"c":{}}}},'
+                '"roles":{"customer_has_email":{"\\udfff":["t.c"]}}}',
+    }
+    binding = tmp_path / "binding.json"
+    binding.write_text(texts[where])
+    for output_format in ("yaml", "json"):
+        argv = _argv(corpus.model_path("V1"), tmp_path / f"o.{output_format}", "--format", output_format)
+        assert cli.main([*argv, "--physical-binding", str(binding)]) == 3
+        assert "binding:syntax" in capsys.readouterr().err
+    assert [p.name for p in tmp_path.iterdir()] == ["binding.json"]
+
+
+def _chain_model(depth):
+    """Entity e0 is identified through e1, which is identified through e2, and so on."""
+    modality = {"source": "explicit", "status": "confirmed", "modality": "alethic", "provenance": {"user_quote": "x"}}
+    objects = [{"id": "code", "name": "Code", "kind": "value", "primitive": "String"}]
+    facts, constraints = [], []
+    for level in range(depth + 1):
+        name, label = f"e{level:04d}", f"E{level:04d}"
+        if level == depth:
+            objects.append({"id": name, "name": label, "kind": "entity", "reference": {"mode": "popular", "value_type": "code"}})
+            break
+        objects.append({"id": name, "name": label, "kind": "entity", "reference": {"mode": "external"}})
+        for role, target, target_label in (("next", f"e{level + 1:04d}", f"E{level + 1:04d}"), ("code", "code", "Code")):
+            facts.append({"id": f"{name}_{role}", "reading": "{" + label + "} has {" + target_label + "}",
+                          "roles": [{"object_type": name, "role_name": "self"}, {"object_type": target, "role_name": role}],
+                          "constraints": [{"type": "uniqueness", "roles": ["self"], **modality},
+                                          {"type": "mandatory", "role": "self", **modality}]})
+        constraints.append({"type": "uniqueness", "scope": "external", "preferred": True, **modality, "role_refs": [
+            {"fact_type": f"{name}_next", "role": "next"}, {"fact_type": f"{name}_code", "role": "code"}]})
+    return {"version": 1, "source": {"kind": "text-conversation", "confidence": "standard", "mode": "guided"},
+            "object_types": objects, "fact_types": facts, "constraints": constraints}
+
+
+def test_r1_f2_a_deep_identifier_chain_is_listed_not_followed(tmp_path):
+    from gnd.export.ossie import render_ossie
+    from gnd.export.physical_binding import MAX_IDENTIFIER_DEPTH
+
+    assert MAX_IDENTIFIER_DEPTH == 8
+    model = tmp_path / "model.json"
+    model.write_text(json.dumps(_chain_model(1100)))
+    binding = tmp_path / "binding.json"
+    # e1099 is one level above the simple end of the chain; e0000 is 1100 levels above it.
+    binding.write_text(json.dumps({
+        "schema": "gnd-physical-binding/1",
+        "tables": {"t": {"columns": {"a": {}, "b": {}, "c": {}}}},
+        "roles": {
+            "e1099_code": {"self": ["t.a", "t.b"], "code": ["t.b"]},
+            "e0000_code": {"self": ["t.a"], "code": ["t.c"]},
+        },
+    }))
+    bundle = render_ossie(model, output_format="json", physical_binding=binding, max_output_bytes=268435456)
+    mapping = json.loads(bundle.mapping)
+    payload = json.loads(mapping["custom_extensions"][0]["data"])
+    assert {"fact_type": "e0000_code", "reason": "identification-differs"} in payload["unmapped_links"]
+    linked = relational.cross_check(json.loads(bundle.document), json.loads(bundle.semantic_model), mapping)
+    assert linked == ["e1099_code"]
+
+
+def test_r1_f2_the_depth_limit_itself_is_mapped(tmp_path):
+    from gnd.export.ossie import render_ossie
+    from gnd.export.physical_binding import MAX_IDENTIFIER_DEPTH, BindingError
+
+    depth = MAX_IDENTIFIER_DEPTH
+    model = tmp_path / "model.json"
+    model.write_text(json.dumps(_chain_model(depth + 1)))
+    columns = [f"k{n}" for n in range(depth + 1)]
+
+    def binding(fact, width):
+        path = tmp_path / f"{fact}.json"
+        path.write_text(json.dumps({
+            "schema": "gnd-physical-binding/1", "tables": {"t": {"columns": {name: {} for name in [*columns, "v"]}}},
+            "roles": {fact: {"self": [f"t.{c}" for c in columns[:width]], "code": ["t.v"]}}}))
+        return path
+
+    # e0001 nests exactly `depth` levels: its identifier is depth + 1 columns wide.
+    bundle = render_ossie(model, output_format="json", physical_binding=binding("e0001_code", depth + 1))
+    assert "unmapped_links" not in json.loads(json.loads(bundle.mapping)["custom_extensions"][0]["data"])
+    with pytest.raises(BindingError) as caught:
+        render_ossie(model, output_format="json", physical_binding=binding("e0001_code", depth))
+    assert caught.value.rule == "binding:role-arity"
+    # e0000 nests one level more: any column count is accepted, and the link is listed.
+    bundle = render_ossie(model, output_format="json", physical_binding=binding("e0000_code", 1))
+    payload = json.loads(json.loads(bundle.mapping)["custom_extensions"][0]["data"])
+    assert payload["unmapped_links"] == [{"fact_type": "e0000_code", "reason": "identification-differs"}]
+
+
+def test_r1_f3_an_external_uniqueness_is_placed_by_its_own_roles(tmp_path):
+    """Both identifying fact types span tables, but the roles the uniqueness names sit in `state`."""
+    move = [{"op": "replace", "path": f"/roles/{fact}/state", "value": ["city.st_country_cd", "city.st_cd"]}
+            for fact in ("state_in_country", "state_has_code")]
+    _semantic, _mapping, payload = _bound(tmp_path, "V3", move)
+    rows = {(row["kind"], row["id"]): row for row in payload["dispositions"]}
+    assert rows[("fact_type", "state_in_country")]["reason"] == "spans-tables"
+    assert rows[("constraint", "constraints/0")]["carried_as"] == ["primary_key", "state"]
+    # Without that primary key, the same uniqueness is derived as a unique key.
+    semantic, _mapping, payload = _bound(tmp_path, "V3", [
+        *move,
+        {"op": "remove", "path": "/tables/state/primary_key"},
+        {"op": "remove", "path": "/tables/state/columns/country_cd/targets"},
+        {"op": "remove", "path": "/tables/state/columns/state_cd/targets"},
+        {"op": "remove", "path": "/tables/city/columns/st_country_cd/references"},
+        {"op": "remove", "path": "/tables/city/columns/st_cd/references"},
+    ])
+    rows = {(row["kind"], row["id"]): row for row in payload["dispositions"]}
+    assert rows[("constraint", "constraints/0")]["carried_as"] == ["unique_key", "state", "country_cd", "state_cd"]
+    assert next(d for d in semantic["datasets"] if d["name"] == "state")["unique_keys"] == [["country_cd", "state_cd"]]
+
+
+@pytest.mark.parametrize("order", (("z", "a"), ("a", "z")))
+def test_r1_f4_the_reported_foreign_key_does_not_depend_on_member_order(tmp_path, order):
+    from gnd.export.ossie import render_ossie
+    from gnd.export.physical_binding import BindingError
+
+    references = {"z": ["x", "y"], "a": ["x", "y", "w"]}
+    binding = {"schema": "gnd-physical-binding/1", "roles": {}, "tables": {
+        "target": {"columns": {"x": {}, "y": {}, "w": {}}, "primary_key": ["x", "y", "w"]},
+        "source": {"columns": {name: {"references": {"table": "target", "columns": references[name]}} for name in order}},
+    }}
+    path = tmp_path / "binding.json"
+    path.write_text(json.dumps(binding))
+    with pytest.raises(BindingError) as caught:
+        render_ossie(corpus.model_path("V1"), output_format="yaml", physical_binding=path)
+    assert caught.value.rule == "binding:reference-group"
+    assert "1 column(s) reference 3 column(s)" in str(caught.value)  # the group of column `a`
+
+
+@pytest.mark.parametrize("sql_type", ("double(2)precision", "timestamp(6)with time zone", "varchar(20)x", "numeric(1)2"))
+def test_r1_f5_a_word_after_the_list_needs_a_space(sql_type):
+    from gnd.export.physical_binding import sql_datatype
+
+    assert sql_datatype(sql_type) is None
+    assert sql_datatype("timestamp(6) with time zone") == "DateTimeTz"
+    assert sql_datatype("double precision(2)") == "Float"
+
+
+def test_r1_f6_a_schema_refusal_names_an_escaped_pointer_in_sorted_order(tmp_path):
+    from gnd.export.physical_binding import BindingError, read_binding
+
+    path = tmp_path / "binding.json"
+    path.write_text(json.dumps({"schema": "gnd-physical-binding/1", "roles": {},
+                                "tables": {"a/b": {"columns": {}}, "a~b": {"columns": {}}}}))
+    with pytest.raises(BindingError) as caught:
+        read_binding(path)
+    assert caught.value.rule == "binding:schema"
+    assert "at /tables/a~0b/columns:" in str(caught.value)

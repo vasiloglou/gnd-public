@@ -680,3 +680,15 @@ note saying so; the note was checked against main and approves nothing.
   The RW2 spec proposes a fifth, the five-file Ossie export with its 0.4.0
   control (three files).
 - **W5 and W7** are recounted in the RW1 spec.
+
+### Added later on 2026-11-25: the close ruling exists
+
+After this section was written, pull request 275 merged to main at
+`3998d371`. It carries
+[022-close-ruling.md](../../ossie-relational-bundle/022-close-ruling.md),
+which records the owner's ruling that ossie-relational-bundle is closed, the
+repair of the red docs test the RW1 measurement found on main, and three
+clean-ups that change no behaviour. The limit stated above, that no explicit
+close ruling was recorded, no longer holds; it is kept as written because it
+was true of `e8359685`. RW1's branch merged `3998d371` before its last lane.
+

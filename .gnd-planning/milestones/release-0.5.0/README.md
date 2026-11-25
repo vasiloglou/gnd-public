@@ -6,9 +6,9 @@ merged to main:
 [literature-host-interfaces](../literature-host-interfaces/README.md),
 [reviewed-vocabulary-growth](../reviewed-vocabulary-growth/README.md),
 [pins-and-review-check](../pins-and-review-check/README.md) and
-[ossie-relational-bundle](../ossie-relational-bundle/README.md). The last
-one's close record says an explicit close ruling is not recorded; the plan's
-§14 says how the release reads that. Nothing is bumped, built or published.
+[ossie-relational-bundle](../ossie-relational-bundle/README.md), each with
+its close record; the plan's §14 has the last one's history. Nothing is
+built or published.
 
 RW1 started on 2026-11-24, was held for ossie-relational-bundle, and resumed
 on 2026-11-25: its spec is revised against main `e8359685`, and the E1

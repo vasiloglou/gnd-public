@@ -1,6 +1,6 @@
 ---
 name: gnd-export
-description: Exports and imports pinned Apache Ossie ontologies with loss reports. Exports finite Lean models with unproved obligations, finite grounded witnesses, or explicitly selected bounded standalone Souffle derivation programs. Native compilation/execution and positive proof replay are separate optional claims; never source truth, completeness or assurance.
+description: Exports and imports pinned Apache Ossie ontologies with loss reports, and exports their semantic model and mapping, optionally over delivered tables. Exports finite Lean models with unproved obligations, finite grounded witnesses, or explicitly selected bounded standalone Souffle derivation programs. Native compilation/execution and positive proof replay are separate optional claims; never source truth, completeness or assurance.
 ---
 
 # Derivation program and finite witness export
@@ -61,15 +61,41 @@ refusals, exact propositions and ceilings are in the export boundary above.
 
 ## Ossie interchange
 
-Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to create the ontology,
-`ONTOLOGY.yaml.gnd.json` sidecar and `ONTOLOGY.yaml.loss.json` loss report.
-Inspect refused pointers before sharing. Use `--strict` when a refusal
-should prevent writing the bundle. Keep the three files together for a
-GND round trip with `gnd import ossie ONTOLOGY.yaml --out MODEL.json`.
-Preserve the ontology bytes so import can verify the sidecar binding.
-The import report is written to `MODEL.json.loss.json` by default.
+Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to create five files: the
+ontology, the `ONTOLOGY.yaml.gnd.json` sidecar, the
+`ONTOLOGY.yaml.loss.json` loss report (move it with `--loss-report`), and the
+relational pair `ONTOLOGY.yaml.semantic_model.yaml` and
+`ONTOLOGY.yaml.mapping.yaml`. `--format json` writes JSON instead. Add
+`--ontology-only` when the user wants the ontology without tables; the run
+then writes the first three files.
+
+Before sharing, inspect two lists. The loss report names refused pointers.
+The mapping's `GND` extension lists every fact type and constraint under
+`dispositions`, each carried or given a reason, and may hold
+`unmapped_links`. Report the entries that carry a reason; never describe
+them as mapped. Use `--strict` when a refusal should prevent writing the
+bundle.
+
+When the user has delivered tables, pass their binding file with
+`--physical-binding FILE`. The semantic model then describes those tables.
+A refused binding exits 3 with a `binding:` rule id and writes nothing.
+Repair the binding. Never edit the model to make a binding pass, and do not
+combine the option with `--ontology-only`.
+
+An export stopped by `ossie:output-size` can be rerun with
+`--max-output-bytes N`. Use `--max-input-bytes N` on import for a document
+above the default bound. Raise a bound only for a size refusal that names
+it, never to get past a different refusal. Outputs are create-once: an
+existing file at any output path exits 11.
+
+Keep the ontology, sidecar and loss report together for a GND round trip
+with `gnd import ossie ONTOLOGY.yaml --out MODEL.json`. Preserve the
+ontology bytes so import can verify the sidecar binding. Import reads the
+ontology only, not the relational pair. The import report is written to
+`MODEL.json.loss.json` by default, or to the path given by `--loss-report`.
 
 Use the [normative Ossie mapping and file format](../gnd-orm-core/references/representation-format.md#ossie-interchange)
-for supported declarations, pins, output formats and import rules.
+for supported declarations, pins, output formats, the relational files, the
+binding rules and import rules.
 The ordinary CLI routes run offline. Select any external consumer
 verification separately.

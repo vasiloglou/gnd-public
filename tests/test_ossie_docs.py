@@ -60,6 +60,11 @@ def missing_from_normative(text: str) -> set[str]:
     return cited_ids(text) - cited_ids(normative())
 
 
+def names_flag(text: str, flag: str) -> bool:
+    """Whether TEXT names the option FLAG itself, not a longer option that contains it."""
+    return re.search(rf"(?<![\w-]){re.escape(flag)}(?![\w-])", text) is not None
+
+
 class _Captured(Exception):
     pass
 
@@ -114,9 +119,14 @@ def test_every_ossie_flag_is_in_the_skill_and_the_cli_reference(group, monkeypat
     assert "--out" in options
     skill = markdown_section(SKILL.read_text(encoding="utf-8"), "## Ossie interchange")
     reference = CLI_REFERENCE.read_text(encoding="utf-8")
-    assert not sorted(flag for flag in options if f"`{flag}" not in skill), "skill"
-    assert not sorted(flag for flag in options if f"`{flag}" not in reference), "CLI reference"
-    assert not sorted(flag for flag in options if f"`{flag}" not in normative()), "normative section"
+    for name, text in (("skill", skill), ("CLI reference", reference), ("normative section", normative())):
+        assert not sorted(flag for flag in options if not names_flag(text, flag)), name
+
+
+def test_a_flag_is_matched_as_a_whole_option():
+    assert names_flag("run `gnd export ossie M --out FILE`", "--out")
+    assert not names_flag("see `--output` and `--max-output-bytes`", "--out")
+    assert not names_flag("see `--max-output-bytes`", "--output-bytes")
 
 
 # --- T5: the release note names the exits by constant ---------------------------------------

@@ -14,13 +14,20 @@ validation tool come from Apache Ossie
 export check comes from Apache Ossie Converters
 `83ddc294c8840f5f497a2bdbec2348a128fc2254`.
 
-The supported scope is the ontology layer. It covers concepts, their
-relationships and a documented subset of constraint formulas. Ossie's
-semantic models, mappings and query interfaces are outside this scope.
+An export covers three Ossie layers. The **ontology** holds concepts, their
+relationships and a documented subset of constraint formulas. The **semantic
+model** describes tables that hold the model's facts. The **mapping** says
+which table and column holds each concept and relationship. Import reads
+the ontology only. Ossie's metrics, dimensions and query interfaces are
+outside this scope.
 
 !!! info "Files on GitHub"
 
-    [Normative mapping and file format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange)
+    [Normative mapping and file format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange) ·
+    [Relational mapping rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#relational-mapping-rmap)
+
+This page explains what the export does and why. The rules themselves have
+one home, the two sections linked above.
 
 ## Share an ontology and keep the original details
 
@@ -43,6 +50,98 @@ GND keeps its `Duration` type, which counts whole days. Ossie receives an
 integer value type and the sidecar preserves its original GND meaning.
 The export report also records omissions, such as example populations.
 Use `--strict` when any refusal should stop the export.
+
+## The tables an export describes
+
+A GND model states facts: a refund is requested by a customer, a refund is
+for an amount. A database stores facts in tables. The export works out a set
+of tables for the model and writes them as the semantic model.
+
+The method is the standard one for this kind of model:
+
+- A business object that has facts of its own gets a table. Its key is the
+  way the business identifies it, such as a refund number.
+- A fact that can hold only once per object becomes a column of that
+  object's table. If each refund has one requesting customer, the customer
+  is a column of the refund table.
+- A fact that can hold many times gets a table of its own, linked back by a
+  foreign key.
+- A uniqueness rule that fits inside one table becomes a key of that table.
+
+The result depends only on the model, so two exports of the same model give
+the same bytes.
+
+These tables are GND's reading of the model, not tables anyone has built.
+Each one carries the marker `"source_kind":"logical"`, so that a reader does
+not take its name for a real table in a warehouse. The semantic model and
+the mapping are written beside the ontology, as `OUT.semantic_model.<fmt>`
+and `OUT.mapping.<fmt>`. Add `--ontology-only` to write the ontology, sidecar
+and loss report without them.
+
+GND checks the semantic model and the mapping against the pinned Ossie
+schemas before it writes them.
+
+## What is listed instead of mapped
+
+Tables carry facts, keys and links. They do not carry every rule, and a few
+shapes do not fit Ossie's mapping format. Nothing is dropped silently. The
+mapping file holds a list, under its `GND` extension, of every fact type and
+every constraint in the model. Each entry says where it is carried, or gives
+a reason it is not. The reasons you are most likely to meet:
+
+| Reason | What it means |
+|---|---|
+| `not-relational` | A rule over values or across facts, such as a spending limit. A table definition cannot state it. It stays in the sidecar. |
+| `uniqueness-not-confirmed` | A uniqueness rule that is not yet confirmed in the model, so it is not written as a key. |
+| `spans-tables` | A rule whose facts ended up in more than one table. |
+| `derived-computed` | A fact that is worked out from others and not stored. |
+| `identification-differs` | The ontology and the tables identify an object in different ways, so the link between them is not written. |
+| `arity-over-limit` | A fact type with more than 32 roles. It keeps its table, and the mapping does not link it. |
+
+Three limits follow from the same principle of listing and not guessing:
+
+- A model that yields no table at all writes the ontology's three files and
+  prints a note, because an Ossie semantic model needs at least one table.
+- An object identified through a chain of more than 8 other objects is
+  treated as one the ontology does not identify.
+- A fact type with more than 32 roles is listed, as the table shows.
+
+## Describe the tables you delivered
+
+The tables above are a proposal. If you have already built your schema, with
+your own table and column names, give the export a **binding file** with
+`--physical-binding FILE`. The binding lists your tables and says which
+columns hold which roles of the model. The semantic model then describes
+your tables, marked `"source_kind":"physical"`, and the mapping points at
+your columns.
+
+A binding does not need to cover the whole model. Fact types it does not
+mention are listed with the reason `unbound`. A binding that contradicts the
+model, for example by naming a role the fact type does not have, is refused
+with a rule id that starts with `binding:`, and nothing is written.
+
+One limit matters when you plan a binding: a role has to be bound to
+columns that hold the model's own identifier for the object. A fact that a
+table holds only through a generated surrogate key cannot be bound. It is
+left out and listed as `unbound`, while the table and its foreign key are
+still described.
+
+Without the option, an export is exactly what it was.
+
+- [Describe your delivered tables](../how-to/describe-delivered-tables-for-ossie.md)
+
+## Large models
+
+Each written file may be at most 10 MiB by default. A large model, such as
+one composed from many shared vocabularies, can exceed that. The export then
+stops with `ossie:output-size` and writes nothing. Raise the bound for that
+run with `--max-output-bytes N`, up to 256 MiB.
+
+Import has the matching option. `gnd import ossie` reads documents up to
+10 MiB unless `--max-input-bytes N` sets another bound.
+
+Neither option changes the limit on the model file itself, which stays at
+10 MiB.
 
 ## Where PyRel fits
 

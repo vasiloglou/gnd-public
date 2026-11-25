@@ -2238,8 +2238,8 @@ before the ontology, which is the completion marker. Publication is
 create-once. A synchronous failure rolls back the invocation's published
 entries. An interruption before the ontology appears can leave uncommitted
 companions. Exit codes are 0 on success, 3 on input or strict-policy refusal,
-11 on output collision, 66 on missing input, 70 on an internal rendering
-failure and 74 on an I/O refusal.
+11 on output collision, 64 on a usage error, 66 on missing input, 70 on an
+internal rendering failure and 74 on an I/O refusal.
 
 ### Semantic model and mapping
 

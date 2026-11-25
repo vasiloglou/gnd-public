@@ -110,6 +110,8 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 | `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted (raw under `internal`) |
 | `gnd why-not MODEL POPULATION --fact-type ID --row REQUEST` | Where a derivation stops for one claimed row, with values spelled differently counted; values redacted |
 | `gnd export souffle ...` / `gnd export lean ...` / `gnd export pyrel ...` | Selected bounded export profile |
+| `gnd export ossie MODEL --out OUT` | An Ossie ontology, its sidecar and loss report, a semantic model and a mapping. Options: `--format`, `--loss-report`, `--strict`, `--ontology-only`, `--physical-binding FILE`, `--max-output-bytes N`. [Rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange) |
+| `gnd import ossie ONTOLOGY --out MODEL` | A GND model restored from an Ossie ontology, with an import report. Options: `--loss-report`, `--max-input-bytes N`. [Rules](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#ossie-interchange) |
 | `gnd install --project` | Copy packaged skills to project discovery roots |
 | `gnd doctor --project` | Diagnose installed skills and shadowing across scopes |
 | `gnd install --sync` | Refresh standard roots with existing installation receipts |

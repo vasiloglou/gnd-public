@@ -254,10 +254,18 @@ def test_fact_map_routing_by_consumer():
     from pathlib import Path
     root = Path(__file__).resolve().parents[1]
     sites = root / ".gnd-planning/milestones/refactoring-followups/evidence/F3/fact-map-sites.json"
-    for path, owner, required in json.loads(sites.read_bytes()):
+    from collections import Counter
+    expected = Counter(tuple(site) for site in json.loads(sites.read_bytes()))
+    actual = Counter()
+    for path in sorted({path for path, _, _ in expected}):
         tree = ast.parse((root / path).read_text())
-        calls = [call for func in ast.walk(tree) if isinstance(func, ast.FunctionDef)
-                 and func.name == owner for call in ast.walk(func) if isinstance(call, ast.Call)
-                 and ast.unparse(call.func) == "ModelIndex.fact_map"]
-        assert any(any(kw.arg == "require_id" and ast.literal_eval(kw.value) is required
-                       for kw in call.keywords) for call in calls), (path, owner, required)
+        parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+        for call in ast.walk(tree):
+            if not isinstance(call, ast.Call) or ast.unparse(call.func) != "ModelIndex.fact_map":
+                continue
+            owner = parents[call]
+            while not isinstance(owner, ast.FunctionDef):
+                owner = parents[owner]
+            required, = [ast.literal_eval(kw.value) for kw in call.keywords if kw.arg == "require_id"]
+            actual[path, owner.name, required] += 1
+    assert actual == expected

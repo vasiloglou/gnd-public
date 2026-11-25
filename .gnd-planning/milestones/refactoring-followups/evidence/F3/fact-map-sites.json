@@ -58,5 +58,10 @@
     "src/gnd/refscheme.py",
     "_fact_types_by_id",
     false
+  ],
+  [
+    "src/gnd/diff.py",
+    "_derivation_rows",
+    true
   ]
 ]

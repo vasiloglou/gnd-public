@@ -181,7 +181,7 @@ def _derivation_rows(model_a: Model, model_b: Model, pop_a: Any, pop_b: Any) -> 
     rows: list[dict[str, Any]] = []
     a_to_b: list[dict[str, Any]] = []
     b_to_a: list[dict[str, Any]] = []
-    facts_b = {str(fact["id"]): fact for fact in model_b.fact_types}
+    facts_b = ModelIndex.fact_map(model_b, require_id=True)
     for fact in model_a.fact_types:
         head = str(fact["id"])
         derived_a = fact.get("derivation") == "derived"

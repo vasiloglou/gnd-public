@@ -63,10 +63,16 @@
       "_project_rows",
       "model.fact_types",
       1
+    ],
+    [
+      "src/gnd/diff.py",
+      "_derivation_rows",
+      "model_b.fact_types",
+      1
     ]
   ],
   "added": [],
-  "result_distinct_rows": 286,
-  "result_occurrences": 350,
-  "original_metric_current": 293
+  "result_distinct_rows": 285,
+  "result_occurrences": 349,
+  "original_metric_current": 292
 }

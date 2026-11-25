@@ -129,15 +129,29 @@ def _unexpected_core_cycles(groups):
 
 def test_package_initialization_core_ratchet(measured):
     assert not _unexpected_core_cycles(measured["parent_initialization_sccs"])
-    extra = ["gnd.model", "gnd.checker"]
-    assert _unexpected_core_cycles([extra]) == [extra]
+
+def test_package_initialization_measured_negative_control(tmp_path):
+    root = tmp_path / "src" / "gnd"
+    root.mkdir(parents=True)
+    (root / "__init__.py").touch()
+    (root / "population.py").write_text("import gnd.universe\n")
+    (root / "universe.py").write_text("import gnd.population\n")
+    layers = _layer_map()
+    layers["modules"] = {name: layers["modules"][name] for name in
+                         ("gnd", "gnd.universe", "gnd.population")}
+    layers["allow_list"] = []
+    path = tmp_path / "layers.json"
+    path.write_text(json.dumps(layers))
+    groups = arch.measure(tmp_path, path)["parent_initialization_sccs"]
+    assert _unexpected_core_cycles(groups) == [["gnd.population", "gnd.universe"]]
 
 
-@pytest.mark.parametrize("reverse", [False, True])
-def test_core_packages_import_cold(reverse):
+
+@pytest.mark.parametrize("first", ["gnd.model", "gnd.checker", "gnd.assurance"])
+def test_core_packages_import_cold(first):
     import subprocess
     names = ["gnd.model", "gnd.checker", "gnd.assurance"]
-    if reverse:
-        names.reverse()
+    names.remove(first)
+    names.insert(0, first)
     imports = "\n".join(f"import {name}" for name in names)
     subprocess.run([sys.executable, "-c", imports], check=True, timeout=30)

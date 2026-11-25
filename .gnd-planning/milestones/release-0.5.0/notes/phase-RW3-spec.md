@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**r1, draft. No ruling.** Written on 2026-11-25 against main `44d866df`,
+**r1, ruled (§7).** Written on 2026-11-25 against main `44d866df`,
 after the owner merged the RW2 record (pull request 284). The
 [plan](release-0.5.0-plan.md) is r5. No review has read this spec. The phase
 prepares the owner's publication acts and performs none of them.
@@ -158,6 +158,19 @@ repeats it by reference to `docs/releasing.md` and the plan.
 
 Rulings are appended below this line, each with its date, source and the
 SHA-256 of the spec bytes it covers.
+
+> **Spec ruling: delegated approval (auto=true), 2026-11-25.** Approved r1
+> of this spec at SHA-256
+> 54200c91a402300ebf6df0305ef4271204c70149d12fa49fbd7c44992e7551ea (commit
+> `5163686e`) for implementation. Source: the owner's request "Release 0.5.0" and
+> the owner's selection of delegated approval on 2026-11-23. Decisions: D1
+> (a), the page edits wait for publication; D2 yes, with the round budget of
+> one round and a second only over a repair, after which the search stops;
+> D4 yes. D3 and D5 are the owner's at publication and are not ruled here.
+> Budget: §10. Instrument: this prose and the measured table of §6; no spec
+> review was called for. No act of publication is covered: each runs only on
+> the owner's explicit request at that time. This ruling is not the owner's
+> reading of the spec.
 
 ## 8. Tests
 

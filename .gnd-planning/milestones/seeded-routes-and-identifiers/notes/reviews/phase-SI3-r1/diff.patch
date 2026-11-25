@@ -1,0 +1,1174 @@
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/01.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/01.json
+new file mode 100644
+index 00000000..cd5bd8d3
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/01.json
+@@ -0,0 +1 @@
++{"name":"gnd_model","ontology":[{"concept":"Batch","identify_by":["gnd_reference"],"relationships":[{"name":"batch_has_mass","roles":[{"concept":"Mass","name":"mass"}],"verbalizes":["{Batch} has mass {Mass:mass}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"BatchId"}],"verbalizes":["{Batch} is identified by {BatchId}"]}],"type":"EntityType"},{"concept":"BatchId","extends":["String"],"type":"ValueType"},{"concept":"Mass","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Mass} is identified by {Decimal}"]}],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/02.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/02.json
+new file mode 100644
+index 00000000..0a9493ae
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/02.json
+@@ -0,0 +1 @@
++{"name":"urn:gnd-fixture:v2-operations@1","ontology":[{"concept":"WorkItem","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"work_item_has_state","roles":[{"concept":"WorkState","name":"state"}],"verbalizes":["{WorkItem} has state {WorkState:state}"]},{"name":"work_item_reviewed_by","roles":[{"concept":"Reviewer","name":"reviewer"}],"verbalizes":["{WorkItem} is reviewed by {Reviewer:reviewer}"]},{"name":"work_item_has_note","roles":[{"concept":"Note","name":"note"}],"verbalizes":["{WorkItem} has note {Note:note}"]},{"multiplicity":"ManyToOne","name":"work_item_has_priority","roles":[{"concept":"Priority","name":"priority"}],"verbalizes":["{WorkItem} has priority {Priority:priority}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"WorkItemId"}],"verbalizes":["{WorkItem} is identified by {WorkItemId}"]}],"type":"EntityType"},{"concept":"WorkItemId","extends":["String"],"type":"ValueType"},{"concept":"WorkState","extends":["String"],"type":"ValueType"},{"concept":"Reviewer","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ReviewerId"}],"verbalizes":["{Reviewer} is identified by {ReviewerId}"]}],"type":"EntityType"},{"concept":"ReviewerId","extends":["String"],"type":"ValueType"},{"concept":"Note","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"NoteId"}],"verbalizes":["{Note} is identified by {NoteId}"]}],"type":"EntityType"},{"concept":"NoteId","extends":["String"],"type":"ValueType"},{"concept":"Priority","extends":["Integer"],"type":"ValueType"},{"concept":"Effort","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Effort} is identified by {Decimal}"]}],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/03.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/03.json
+new file mode 100644
+index 00000000..c36aa1e3
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/03.json
+@@ -0,0 +1 @@
++{"name":"gnd-fixture-library-v1","ontology":[{"concept":"Borrower","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"borrower_has_name","roles":[{"concept":"BorrowerName","name":"full_name"}],"verbalizes":["{Borrower} has {BorrowerName:full_name}"]},{"multiplicity":"OneToOne","name":"borrower_holds_card","roles":[{"concept":"CardNumber","name":"card"}],"verbalizes":["{Borrower} holds {CardNumber:card}"]},{"multiplicity":"ManyToOne","name":"borrower_registered_at_branch","roles":[{"concept":"Branch","name":"home_branch"}],"verbalizes":["{Borrower} is registered at {Branch:home_branch}"]},{"multiplicity":"ManyToOne","name":"borrower_owes_fine","roles":[{"concept":"FineAmount","name":"owed"}],"verbalizes":["{Borrower} owes {FineAmount:owed}"]},{"name":"borrower_shares_household_with_borrower","roles":[{"concept":"Borrower","name":"housemate"}],"verbalizes":["{Borrower} shares a household with {Borrower:housemate}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"CardNumber"}],"verbalizes":["{Borrower} is identified by {CardNumber}"]}],"type":"EntityType"},{"concept":"CardNumber","extends":["String"],"type":"ValueType"},{"concept":"BorrowerName","extends":["String"],"type":"ValueType"},{"concept":"Title","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"title_has_isbn","roles":[{"concept":"Isbn","name":"code"}],"verbalizes":["{Title} has {Isbn:code}"]},{"multiplicity":"ManyToOne","name":"title_published_in_year","roles":[{"concept":"PublicationYear","name":"year"}],"verbalizes":["{Title} was published in {PublicationYear:year}"]},{"multiplicity":"ManyToOne","name":"title_has_genre","roles":[{"concept":"Genre","name":"category"}],"verbalizes":["{Title} is shelved under {Genre:category}"]},{"name":"title_is_reserved_by_borrower","roles":[{"concept":"Borrower","name":"member"}],"verbalizes":["{Title} is reserved by {Borrower:member}"]},{"multiplicity":"ManyToOne","name":"title_grants_loan_period","roles":[{"concept":"LoanPeriod","name":"term"}],"verbalizes":["{Title} is lent for {LoanPeriod:term}"]},{"name":"title_supersedes_title","roles":[{"concept":"Title","name":"predecessor"}],"verbalizes":["{Title} supersedes {Title:predecessor}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Isbn"}],"verbalizes":["{Title} is identified by {Isbn}"]}],"type":"EntityType"},{"concept":"Isbn","extends":["String"],"type":"ValueType"},{"concept":"Genre","extends":["String"],"requires":["Genre == 'fiction' OR Genre == 'history' OR Genre == 'science' OR Genre == 'reference' OR Genre == 'poetry'"],"type":"ValueType"},{"concept":"PublicationYear","extends":["Integer"],"type":"ValueType"},{"concept":"Copy","identify_by":["copy_is_of_title","copy_has_shelf_mark"],"relationships":[{"multiplicity":"ManyToOne","name":"copy_is_of_title","roles":[{"concept":"Title","name":"work"}],"verbalizes":["{Copy} is a copy of {Title:work}"]},{"multiplicity":"ManyToOne","name":"copy_has_shelf_mark","roles":[{"concept":"ShelfMark","name":"mark"}],"verbalizes":["{Copy} carries {ShelfMark:mark}"]},{"multiplicity":"ManyToOne","name":"copy_held_at_branch","roles":[{"concept":"Branch","name":"holding_branch"}],"verbalizes":["{Copy} is held at {Branch:holding_branch}"]},{"name":"loan_records_copy_to_borrower","roles":[{"concept":"Borrower","name":"member"},{"concept":"CalendarDay","name":"lent_on"},{"concept":"CalendarDay","name":"due_on"}],"verbalizes":["{Copy} was lent to {Borrower:member} on {CalendarDay:lent_on} until {CalendarDay:due_on}"]},{"name":"copy_is_on_loan","verbalizes":["{Copy} is on loan"]},{"name":"copy_is_withdrawn","verbalizes":["{Copy} is withdrawn"]},{"name":"copy_is_shelved","verbalizes":["{Copy} is shelved"]}],"type":"EntityType"},{"concept":"ShelfMark","extends":["String"],"type":"ValueType"},{"concept":"Branch","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"BranchCode"}],"verbalizes":["{Branch} is identified by {BranchCode}"]}],"type":"EntityType"},{"concept":"BranchCode","extends":["String"],"type":"ValueType"},{"concept":"Librarian","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"librarian_manages_branch","roles":[{"concept":"Branch","name":"managed_branch"}],"verbalizes":["{Librarian} manages {Branch:managed_branch}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"StaffNumber"}],"verbalizes":["{Librarian} is identified by {StaffNumber}"]}],"type":"EntityType"},{"concept":"StaffNumber","extends":["Integer"],"type":"ValueType"},{"concept":"LoanPeriod","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{LoanPeriod} is identified by {Decimal}"]}],"type":"EntityType"},{"concept":"CalendarDay","extends":["Date"],"type":"ValueType"},{"concept":"FineAmount","extends":["Decimal"],"type":"ValueType"},{"concept":"CirculatingCopy","extends":["Copy"],"type":"EntityType"},{"concept":"ReferenceCopy","extends":["Copy"],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/04.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/04.json
+new file mode 100644
+index 00000000..42eeb6a0
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/04.json
+@@ -0,0 +1 @@
++{"name":"urn:gnd-fixture:guarded-corpus-undecidable@1","ontology":[{"concept":"Mode","extends":["String"],"relationships":[{"name":"observed_pair","roles":[{"concept":"Opaque","name":"left"},{"concept":"Opaque","name":"right"}],"verbalizes":["in {Mode}, {Opaque:left} is compared with {Opaque:right}"]}],"type":"ValueType"},{"concept":"Opaque","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Opaque} is identified by {Decimal}"]}],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/05.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/05.json
+new file mode 100644
+index 00000000..8ee93f2e
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/05.json
+@@ -0,0 +1 @@
++{"name":"diamond_director","ontology":[{"concept":"Staff","identify_by":["gnd_reference"],"relationships":[{"name":"works_in","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Staff} works in {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"StaffCode"}],"verbalizes":["{Staff} is identified by {StaffCode}"]}],"type":"EntityType"},{"concept":"StaffCode","extends":["String"],"type":"ValueType"},{"concept":"Manager","extends":["Staff"],"identify_by":["gnd_reference"],"relationships":[{"name":"manages","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Manager} manages {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ManagerNo"}],"verbalizes":["{Manager} is identified by {ManagerNo}"]}],"type":"EntityType"},{"concept":"ManagerNo","extends":["Integer"],"type":"ValueType"},{"concept":"Director","extends":["Manager","Staff"],"identify_by":["gnd_reference"],"relationships":[{"name":"directs","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Director} directs {Team:team}"]},{"name":"heads","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Director} heads {Team:team}"]}],"type":"EntityType"},{"concept":"Team","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"TeamCode"}],"verbalizes":["{Team} is identified by {TeamCode}"]}],"type":"EntityType"},{"concept":"TeamCode","extends":["String"],"type":"ValueType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/06.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/06.json
+new file mode 100644
+index 00000000..122c4ffd
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/06.json
+@@ -0,0 +1 @@
++{"name":"diamond_number","ontology":[{"concept":"Staff","identify_by":["gnd_reference"],"relationships":[{"name":"works_in","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Staff} works in {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"StaffCode"}],"verbalizes":["{Staff} is identified by {StaffCode}"]}],"type":"EntityType"},{"concept":"StaffCode","extends":["Integer"],"type":"ValueType"},{"concept":"Manager","extends":["Staff"],"identify_by":["gnd_reference"],"relationships":[{"name":"manages","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Manager} manages {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ManagerNo"}],"verbalizes":["{Manager} is identified by {ManagerNo}"]}],"type":"EntityType"},{"concept":"ManagerNo","extends":["Decimal"],"type":"ValueType"},{"concept":"Director","extends":["Manager","Staff"],"identify_by":["gnd_reference"],"type":"EntityType"},{"concept":"Team","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"TeamCode"}],"verbalizes":["{Team} is identified by {TeamCode}"]}],"type":"EntityType"},{"concept":"TeamCode","extends":["String"],"type":"ValueType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/07.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/07.json
+new file mode 100644
+index 00000000..d973f159
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/07.json
+@@ -0,0 +1 @@
++{"name":"diamond_string","ontology":[{"concept":"Staff","identify_by":["gnd_reference"],"relationships":[{"name":"works_in","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Staff} works in {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"StaffCode"}],"verbalizes":["{Staff} is identified by {StaffCode}"]}],"type":"EntityType"},{"concept":"StaffCode","extends":["String"],"type":"ValueType"},{"concept":"Manager","extends":["Staff"],"identify_by":["gnd_reference"],"relationships":[{"name":"manages","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Manager} manages {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ManagerNo"}],"verbalizes":["{Manager} is identified by {ManagerNo}"]}],"type":"EntityType"},{"concept":"ManagerNo","extends":["String"],"type":"ValueType"},{"concept":"Director","extends":["Manager","Staff"],"identify_by":["gnd_reference"],"type":"EntityType"},{"concept":"Team","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"TeamCode"}],"verbalizes":["{Team} is identified by {TeamCode}"]}],"type":"EntityType"},{"concept":"TeamCode","extends":["String"],"type":"ValueType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/08.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/08.json
+new file mode 100644
+index 00000000..3f60dac1
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/08.json
+@@ -0,0 +1 @@
++{"name":"diamond","ontology":[{"concept":"Staff","identify_by":["gnd_reference"],"relationships":[{"name":"works_in","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Staff} works in {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"StaffCode"}],"verbalizes":["{Staff} is identified by {StaffCode}"]}],"type":"EntityType"},{"concept":"StaffCode","extends":["String"],"type":"ValueType"},{"concept":"Manager","extends":["Staff"],"identify_by":["gnd_reference"],"relationships":[{"name":"manages","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Manager} manages {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ManagerNo"}],"verbalizes":["{Manager} is identified by {ManagerNo}"]}],"type":"EntityType"},{"concept":"ManagerNo","extends":["Integer"],"type":"ValueType"},{"concept":"Director","extends":["Manager","Staff"],"identify_by":["gnd_reference"],"type":"EntityType"},{"concept":"Team","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"TeamCode"}],"verbalizes":["{Team} is identified by {TeamCode}"]}],"type":"EntityType"},{"concept":"TeamCode","extends":["String"],"type":"ValueType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/09.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/09.json
+new file mode 100644
+index 00000000..80b03070
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/09.json
+@@ -0,0 +1 @@
++{"name":"tops","ontology":[{"concept":"X","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Xc"}],"verbalizes":["{X} is identified by {Xc}"]}],"type":"EntityType"},{"concept":"Xc","extends":["String"],"type":"ValueType"},{"concept":"Y","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Yc"}],"verbalizes":["{Y} is identified by {Yc}"]}],"type":"EntityType"},{"concept":"Yc","extends":["Integer"],"type":"ValueType"},{"concept":"D","extends":["X","Y"],"identify_by":["gnd_reference"],"relationships":[{"name":"leads","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{D} leads {Team:team}"]},{"name":"heads","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{D} heads {Team:team}"]}],"type":"EntityType"},{"concept":"Team","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Tc"}],"verbalizes":["{Team} is identified by {Tc}"]}],"type":"EntityType"},{"concept":"Tc","extends":["String"],"type":"ValueType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/10.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/10.json
+new file mode 100644
+index 00000000..c91fe96f
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/10.json
+@@ -0,0 +1 @@
++{"name":"family","ontology":[{"concept":"P","identify_by":["gnd_reference"],"relationships":[{"name":"rp","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{P} is in {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"PCode"}],"verbalizes":["{P} is identified by {PCode}"]}],"type":"EntityType"},{"concept":"PCode","extends":["String"],"type":"ValueType"},{"concept":"Q","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"QCode"}],"verbalizes":["{Q} is identified by {QCode}"]}],"type":"EntityType"},{"concept":"QCode","extends":["String"],"type":"ValueType"},{"concept":"X","extends":["P","Q"],"identify_by":["gnd_reference"],"type":"EntityType"},{"concept":"Y","extends":["P"],"identify_by":["gnd_reference"],"relationships":[{"name":"ry","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Y} is in {Team:team}"]}],"type":"EntityType"},{"concept":"W","extends":["P"],"identify_by":["gnd_reference"],"relationships":[{"name":"rw","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{W} is in {Team:team}"]}],"type":"EntityType"},{"concept":"Z","extends":["Q"],"identify_by":["gnd_reference"],"relationships":[{"name":"rz","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Z} is in {Team:team}"]}],"type":"EntityType"},{"concept":"Team","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"TeamCode"}],"verbalizes":["{Team} is identified by {TeamCode}"]}],"type":"EntityType"},{"concept":"TeamCode","extends":["String"],"type":"ValueType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/11.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/11.json
+new file mode 100644
+index 00000000..6dc2ece2
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/11.json
+@@ -0,0 +1 @@
++{"name":"multi","ontology":[{"concept":"Staff","identify_by":["gnd_reference"],"relationships":[{"name":"works_in","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Staff} works in {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"StaffCode"}],"verbalizes":["{Staff} is identified by {StaffCode}"]}],"type":"EntityType"},{"concept":"StaffCode","extends":["String"],"type":"ValueType"},{"concept":"Person","identify_by":["gnd_reference"],"relationships":[{"name":"member_of","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Person} is a member of {Team:team}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"PersonCode"}],"verbalizes":["{Person} is identified by {PersonCode}"]}],"type":"EntityType"},{"concept":"PersonCode","extends":["String"],"type":"ValueType"},{"concept":"Manager","extends":["Staff","Person"],"identify_by":["gnd_reference"],"relationships":[{"name":"manages","roles":[{"concept":"Team","name":"team"}],"verbalizes":["{Manager} manages {Team:team}"]}],"type":"EntityType"},{"concept":"Team","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"TeamCode"}],"verbalizes":["{Team} is identified by {TeamCode}"]}],"type":"EntityType"},{"concept":"TeamCode","extends":["String"],"type":"ValueType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/12.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/12.json
+new file mode 100644
+index 00000000..f0da34c4
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/12.json
+@@ -0,0 +1 @@
++{"name":"gnd_model","ontology":[{"concept":"Employee","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"employee_has_name","roles":[{"concept":"EmployeeName","name":"name"}],"verbalizes":["{Employee} has {EmployeeName:name}"]},{"multiplicity":"ManyToOne","name":"employee_has_gender","roles":[{"concept":"Gender","name":"gender"}],"verbalizes":["{Employee} has {Gender:gender}"]},{"multiplicity":"ManyToOne","name":"employee_earns_salary","roles":[{"concept":"Salary","name":"salary"}],"verbalizes":["{Employee} earns {Salary:salary}"]},{"multiplicity":"ManyToOne","name":"employee_reports_to_employee","roles":[{"concept":"Employee","name":"manager"}],"verbalizes":["{Employee} reports to {Employee:manager}"]},{"name":"employee_works_on_project","roles":[{"concept":"Project","name":"project"}],"verbalizes":["{Employee} works on {Project:project}"]},{"name":"employee_leads_project","roles":[{"concept":"Project","name":"project"}],"verbalizes":["{Employee} leads {Project:project}"]},{"name":"employee_is_fulltime","verbalizes":["{Employee} is full-time"]},{"name":"employee_is_parttime","verbalizes":["{Employee} is part-time"]},{"name":"employee_is_active","verbalizes":["{Employee} is active"]},{"name":"employee_is_terminated","verbalizes":["{Employee} is terminated"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"EmployeeId"}],"verbalizes":["{Employee} is identified by {EmployeeId}"]}],"type":"EntityType"},{"concept":"EmployeeId","extends":["Integer"],"type":"ValueType"},{"concept":"EmployeeName","extends":["String"],"type":"ValueType"},{"concept":"Gender","extends":["String"],"requires":["Gender == 'M' OR Gender == 'F' OR Gender == 'X'"],"type":"ValueType"},{"concept":"Department","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"employee_heads_department","roles":[{"concept":"Employee","name":"employee"}],"verbalizes":["{Employee:employee} heads {Department}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"DepartmentCode"}],"verbalizes":["{Department} is identified by {DepartmentCode}"]}],"type":"EntityType"},{"concept":"DepartmentCode","extends":["String"],"type":"ValueType"},{"concept":"Project","identify_by":["gnd_reference"],"relationships":[{"name":"project_ran_from_date_to_date","roles":[{"concept":"CalendarDate","name":"start"},{"concept":"CalendarDate","name":"end"}],"verbalizes":["{Project} ran from {CalendarDate:start} to {CalendarDate:end}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ProjectName"}],"verbalizes":["{Project} is identified by {ProjectName}"]}],"type":"EntityType"},{"concept":"ProjectName","extends":["String"],"type":"ValueType"},{"concept":"Salary","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Salary} is identified by {Decimal}"]}],"type":"EntityType"},{"concept":"Hours","extends":["Integer"],"type":"ValueType"},{"concept":"CalendarDate","extends":["Date"],"type":"ValueType"},{"concept":"Assignment","identify_by":["assignment_of_employee","assignment_on_project"],"relationships":[{"multiplicity":"ManyToOne","name":"assignment_of_employee","roles":[{"concept":"Employee","name":"employee"}],"verbalizes":["{Assignment} is of {Employee:employee}"]},{"multiplicity":"ManyToOne","name":"assignment_on_project","roles":[{"concept":"Project","name":"project"}],"verbalizes":["{Assignment} is on {Project:project}"]},{"multiplicity":"ManyToOne","name":"assignment_has_hours","roles":[{"concept":"Hours","name":"hours"}],"verbalizes":["{Assignment} has logged {Hours:hours}"]},{"name":"assignment_has_overtime_hours","roles":[{"concept":"Hours","name":"hours"}],"verbalizes":["{Assignment} has overtime {Hours:hours}"]}],"type":"EntityType"},{"concept":"ContractorEmployee","extends":["Employee"],"identify_by":["gnd_reference"],"type":"EntityType"},{"concept":"PermanentEmployee","extends":["Employee"],"identify_by":["gnd_reference"],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/13.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/13.json
+new file mode 100644
+index 00000000..c36aa1e3
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/13.json
+@@ -0,0 +1 @@
++{"name":"gnd-fixture-library-v1","ontology":[{"concept":"Borrower","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"borrower_has_name","roles":[{"concept":"BorrowerName","name":"full_name"}],"verbalizes":["{Borrower} has {BorrowerName:full_name}"]},{"multiplicity":"OneToOne","name":"borrower_holds_card","roles":[{"concept":"CardNumber","name":"card"}],"verbalizes":["{Borrower} holds {CardNumber:card}"]},{"multiplicity":"ManyToOne","name":"borrower_registered_at_branch","roles":[{"concept":"Branch","name":"home_branch"}],"verbalizes":["{Borrower} is registered at {Branch:home_branch}"]},{"multiplicity":"ManyToOne","name":"borrower_owes_fine","roles":[{"concept":"FineAmount","name":"owed"}],"verbalizes":["{Borrower} owes {FineAmount:owed}"]},{"name":"borrower_shares_household_with_borrower","roles":[{"concept":"Borrower","name":"housemate"}],"verbalizes":["{Borrower} shares a household with {Borrower:housemate}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"CardNumber"}],"verbalizes":["{Borrower} is identified by {CardNumber}"]}],"type":"EntityType"},{"concept":"CardNumber","extends":["String"],"type":"ValueType"},{"concept":"BorrowerName","extends":["String"],"type":"ValueType"},{"concept":"Title","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"title_has_isbn","roles":[{"concept":"Isbn","name":"code"}],"verbalizes":["{Title} has {Isbn:code}"]},{"multiplicity":"ManyToOne","name":"title_published_in_year","roles":[{"concept":"PublicationYear","name":"year"}],"verbalizes":["{Title} was published in {PublicationYear:year}"]},{"multiplicity":"ManyToOne","name":"title_has_genre","roles":[{"concept":"Genre","name":"category"}],"verbalizes":["{Title} is shelved under {Genre:category}"]},{"name":"title_is_reserved_by_borrower","roles":[{"concept":"Borrower","name":"member"}],"verbalizes":["{Title} is reserved by {Borrower:member}"]},{"multiplicity":"ManyToOne","name":"title_grants_loan_period","roles":[{"concept":"LoanPeriod","name":"term"}],"verbalizes":["{Title} is lent for {LoanPeriod:term}"]},{"name":"title_supersedes_title","roles":[{"concept":"Title","name":"predecessor"}],"verbalizes":["{Title} supersedes {Title:predecessor}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Isbn"}],"verbalizes":["{Title} is identified by {Isbn}"]}],"type":"EntityType"},{"concept":"Isbn","extends":["String"],"type":"ValueType"},{"concept":"Genre","extends":["String"],"requires":["Genre == 'fiction' OR Genre == 'history' OR Genre == 'science' OR Genre == 'reference' OR Genre == 'poetry'"],"type":"ValueType"},{"concept":"PublicationYear","extends":["Integer"],"type":"ValueType"},{"concept":"Copy","identify_by":["copy_is_of_title","copy_has_shelf_mark"],"relationships":[{"multiplicity":"ManyToOne","name":"copy_is_of_title","roles":[{"concept":"Title","name":"work"}],"verbalizes":["{Copy} is a copy of {Title:work}"]},{"multiplicity":"ManyToOne","name":"copy_has_shelf_mark","roles":[{"concept":"ShelfMark","name":"mark"}],"verbalizes":["{Copy} carries {ShelfMark:mark}"]},{"multiplicity":"ManyToOne","name":"copy_held_at_branch","roles":[{"concept":"Branch","name":"holding_branch"}],"verbalizes":["{Copy} is held at {Branch:holding_branch}"]},{"name":"loan_records_copy_to_borrower","roles":[{"concept":"Borrower","name":"member"},{"concept":"CalendarDay","name":"lent_on"},{"concept":"CalendarDay","name":"due_on"}],"verbalizes":["{Copy} was lent to {Borrower:member} on {CalendarDay:lent_on} until {CalendarDay:due_on}"]},{"name":"copy_is_on_loan","verbalizes":["{Copy} is on loan"]},{"name":"copy_is_withdrawn","verbalizes":["{Copy} is withdrawn"]},{"name":"copy_is_shelved","verbalizes":["{Copy} is shelved"]}],"type":"EntityType"},{"concept":"ShelfMark","extends":["String"],"type":"ValueType"},{"concept":"Branch","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"BranchCode"}],"verbalizes":["{Branch} is identified by {BranchCode}"]}],"type":"EntityType"},{"concept":"BranchCode","extends":["String"],"type":"ValueType"},{"concept":"Librarian","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"librarian_manages_branch","roles":[{"concept":"Branch","name":"managed_branch"}],"verbalizes":["{Librarian} manages {Branch:managed_branch}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"StaffNumber"}],"verbalizes":["{Librarian} is identified by {StaffNumber}"]}],"type":"EntityType"},{"concept":"StaffNumber","extends":["Integer"],"type":"ValueType"},{"concept":"LoanPeriod","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{LoanPeriod} is identified by {Decimal}"]}],"type":"EntityType"},{"concept":"CalendarDay","extends":["Date"],"type":"ValueType"},{"concept":"FineAmount","extends":["Decimal"],"type":"ValueType"},{"concept":"CirculatingCopy","extends":["Copy"],"type":"EntityType"},{"concept":"ReferenceCopy","extends":["Copy"],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/14.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/14.json
+new file mode 100644
+index 00000000..0a9493ae
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/14.json
+@@ -0,0 +1 @@
++{"name":"urn:gnd-fixture:v2-operations@1","ontology":[{"concept":"WorkItem","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"ManyToOne","name":"work_item_has_state","roles":[{"concept":"WorkState","name":"state"}],"verbalizes":["{WorkItem} has state {WorkState:state}"]},{"name":"work_item_reviewed_by","roles":[{"concept":"Reviewer","name":"reviewer"}],"verbalizes":["{WorkItem} is reviewed by {Reviewer:reviewer}"]},{"name":"work_item_has_note","roles":[{"concept":"Note","name":"note"}],"verbalizes":["{WorkItem} has note {Note:note}"]},{"multiplicity":"ManyToOne","name":"work_item_has_priority","roles":[{"concept":"Priority","name":"priority"}],"verbalizes":["{WorkItem} has priority {Priority:priority}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"WorkItemId"}],"verbalizes":["{WorkItem} is identified by {WorkItemId}"]}],"type":"EntityType"},{"concept":"WorkItemId","extends":["String"],"type":"ValueType"},{"concept":"WorkState","extends":["String"],"type":"ValueType"},{"concept":"Reviewer","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ReviewerId"}],"verbalizes":["{Reviewer} is identified by {ReviewerId}"]}],"type":"EntityType"},{"concept":"ReviewerId","extends":["String"],"type":"ValueType"},{"concept":"Note","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"NoteId"}],"verbalizes":["{Note} is identified by {NoteId}"]}],"type":"EntityType"},{"concept":"NoteId","extends":["String"],"type":"ValueType"},{"concept":"Priority","extends":["Integer"],"type":"ValueType"},{"concept":"Effort","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Effort} is identified by {Decimal}"]}],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/15.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/15.json
+new file mode 100644
+index 00000000..edcbc9ed
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/15.json
+@@ -0,0 +1 @@
++{"name":"urn:gnd-v6-phase2:shapes@1","ontology":[{"concept":"Item","identify_by":["gnd_reference"],"relationships":[{"name":"item_has_grade","roles":[{"concept":"Grade","name":"grade"}],"verbalizes":["{Item} has grade {Grade:grade}"]},{"name":"item_in_year","roles":[{"concept":"Year","name":"year"}],"verbalizes":["{Item} dates from {Year:year}"]},{"name":"item_has_score","roles":[{"concept":"Score","name":"score"}],"verbalizes":["{Item} scores {Score:score}"]},{"name":"item_window","roles":[{"concept":"Moment","name":"opened"},{"concept":"Moment","name":"closed"}],"verbalizes":["{Item} is open from {Moment:opened} to {Moment:closed}"]},{"name":"item_has_mass","roles":[{"concept":"Mass","name":"mass"}],"verbalizes":["{Item} weighs {Mass:mass}"]},{"name":"item_flag","roles":[{"concept":"Flag","name":"flag"}],"verbalizes":["{Item} is flagged {Flag:flag}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ItemCode"}],"verbalizes":["{Item} is identified by {ItemCode}"]}],"type":"EntityType"},{"concept":"ItemCode","extends":["String"],"type":"ValueType"},{"concept":"Grade","extends":["String"],"type":"ValueType"},{"concept":"Score","extends":["Float"],"relationships":[{"multiplicity":"ManyToOne","name":"item_scores","roles":[{"concept":"Item","name":"item"}],"verbalizes":["{Item:item} is scored {Score}"]}],"type":"ValueType"},{"concept":"Year","extends":["Integer"],"type":"ValueType"},{"concept":"Moment","extends":["DateTime"],"type":"ValueType"},{"concept":"Flag","extends":["Boolean"],"type":"ValueType"},{"concept":"Mass","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Mass} is identified by {Decimal}"]}],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/16.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/16.json
+new file mode 100644
+index 00000000..42eeb6a0
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/16.json
+@@ -0,0 +1 @@
++{"name":"urn:gnd-fixture:guarded-corpus-undecidable@1","ontology":[{"concept":"Mode","extends":["String"],"relationships":[{"name":"observed_pair","roles":[{"concept":"Opaque","name":"left"},{"concept":"Opaque","name":"right"}],"verbalizes":["in {Mode}, {Opaque:left} is compared with {Opaque:right}"]}],"type":"ValueType"},{"concept":"Opaque","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Opaque} is identified by {Decimal}"]}],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/17.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/17.json
+new file mode 100644
+index 00000000..edcbc9ed
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/17.json
+@@ -0,0 +1 @@
++{"name":"urn:gnd-v6-phase2:shapes@1","ontology":[{"concept":"Item","identify_by":["gnd_reference"],"relationships":[{"name":"item_has_grade","roles":[{"concept":"Grade","name":"grade"}],"verbalizes":["{Item} has grade {Grade:grade}"]},{"name":"item_in_year","roles":[{"concept":"Year","name":"year"}],"verbalizes":["{Item} dates from {Year:year}"]},{"name":"item_has_score","roles":[{"concept":"Score","name":"score"}],"verbalizes":["{Item} scores {Score:score}"]},{"name":"item_window","roles":[{"concept":"Moment","name":"opened"},{"concept":"Moment","name":"closed"}],"verbalizes":["{Item} is open from {Moment:opened} to {Moment:closed}"]},{"name":"item_has_mass","roles":[{"concept":"Mass","name":"mass"}],"verbalizes":["{Item} weighs {Mass:mass}"]},{"name":"item_flag","roles":[{"concept":"Flag","name":"flag"}],"verbalizes":["{Item} is flagged {Flag:flag}"]},{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"ItemCode"}],"verbalizes":["{Item} is identified by {ItemCode}"]}],"type":"EntityType"},{"concept":"ItemCode","extends":["String"],"type":"ValueType"},{"concept":"Grade","extends":["String"],"type":"ValueType"},{"concept":"Score","extends":["Float"],"relationships":[{"multiplicity":"ManyToOne","name":"item_scores","roles":[{"concept":"Item","name":"item"}],"verbalizes":["{Item:item} is scored {Score}"]}],"type":"ValueType"},{"concept":"Year","extends":["Integer"],"type":"ValueType"},{"concept":"Moment","extends":["DateTime"],"type":"ValueType"},{"concept":"Flag","extends":["Boolean"],"type":"ValueType"},{"concept":"Mass","identify_by":["gnd_reference"],"relationships":[{"multiplicity":"OneToOne","name":"gnd_reference","roles":[{"concept":"Decimal"}],"verbalizes":["{Mass} is identified by {Decimal}"]}],"type":"EntityType"}],"version":"0.3.0.dev0"}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/ontology-corpus.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/ontology-corpus.json
+new file mode 100644
+index 00000000..cf65d6b3
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/ontology-corpus.json
+@@ -0,0 +1,258 @@
++{
++  "format": "json",
++  "baseline": "99cf3df2",
++  "models": [
++    {
++      "model": "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml",
++      "old_sha256": "28a6258888b3124caf84f71f4ff54cd753f66167e9c9a055317966ab1a4056b7",
++      "new_sha256": "6fe2525e8aec64846cfbf5ae7b5221a9b5b0a028702edde8b18c27ee84beaede",
++      "fixture": "expected/01.json",
++      "edits": [
++        [
++          "mass",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/coverage/mixed/v2_operations.orm.yaml",
++      "old_sha256": "ff51e5e929397605b61198f0a29aa43a138d21926537af7417ab6a45085a28cf",
++      "new_sha256": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015",
++      "fixture": "expected/02.json",
++      "edits": [
++        [
++          "effort",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/coverage/positional/library.orm.yaml",
++      "old_sha256": "07aa9a34fe048a21b00ae470c81e1f86693b0a1efba7241b17bd3b9cbba37e52",
++      "new_sha256": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654",
++      "fixture": "expected/03.json",
++      "edits": [
++        [
++          "loan_period",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/guarded/models/undecidable.orm.yaml",
++      "old_sha256": "49b12f98671480a8cebc9bb1a5db5294bd873b62a43e49abdbf20356feff4c4d",
++      "new_sha256": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7",
++      "fixture": "expected/04.json",
++      "edits": [
++        [
++          "opaque",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml",
++      "old_sha256": "195a6462aa1d6647ff1384b53ada6a1ee270e31324d68fb9891e1f021e543377",
++      "new_sha256": "d2a5005be4119222532929f157d444b820cfe13afa5780163486c7acb32ec7d5",
++      "fixture": "expected/05.json",
++      "edits": [
++        [
++          "director",
++          "first-supertype",
++          "manager",
++          [
++            "gnd_reference"
++          ]
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml",
++      "old_sha256": "ad895d6e7119f6e74f4720ff6ed711c344edb2c0ff0af00a31dcc9104e112f76",
++      "new_sha256": "c0e1c96d5379d201a34e58f1bddda8b6cf91d8872c6aba1a2f36ef818f6c9ac7",
++      "fixture": "expected/06.json",
++      "edits": [
++        [
++          "director",
++          "first-supertype",
++          "manager",
++          [
++            "gnd_reference"
++          ]
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml",
++      "old_sha256": "76d07d56fbfc327686073a834ca42323d3e6ea78c2dd2a59605bcb2f75991e42",
++      "new_sha256": "9f848181e59d7953db726802772d865c7c7484bf604ac4e54ef53cf8b4c542df",
++      "fixture": "expected/07.json",
++      "edits": [
++        [
++          "director",
++          "first-supertype",
++          "manager",
++          [
++            "gnd_reference"
++          ]
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml",
++      "old_sha256": "cb3de027d8cd968e82c78d9bc7cf6c9acde46ccf29324bd50554aa61d8cad52b",
++      "new_sha256": "330d9d1dc4c3ef18ccdbebc742735f0b2603c6918f32a3dbc6dd78c00e92eb4e",
++      "fixture": "expected/08.json",
++      "edits": [
++        [
++          "director",
++          "first-supertype",
++          "manager",
++          [
++            "gnd_reference"
++          ]
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml",
++      "old_sha256": "4abbdcb392d80ca77b7262d298853ebf47cf5e869cbe62d1567b79f6326e8810",
++      "new_sha256": "34aec2ef9894996dfdb368358557fe2161c14c936977b85521a21154d5914874",
++      "fixture": "expected/09.json",
++      "edits": [
++        [
++          "d",
++          "first-supertype",
++          "x",
++          [
++            "gnd_reference"
++          ]
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/ilp_learners/close/family.orm.yaml",
++      "old_sha256": "7b8f1a909ad7b22244b2a63c2fd456cf194c2d9fabfac469b1685231ca737a87",
++      "new_sha256": "e01f6c2881ddade20b7e3343f9ed53d2ba1423826b515c44f1cc887786221ffe",
++      "fixture": "expected/10.json",
++      "edits": [
++        [
++          "x",
++          "first-supertype",
++          "p",
++          [
++            "gnd_reference"
++          ]
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/ilp_learners/close/multi.orm.yaml",
++      "old_sha256": "9af5ca5d89249e4b7e46aa02ac15462bc6690d9a25fd10846b195aa19ee553c2",
++      "new_sha256": "2417cd96729e1d4576c34f1e2fd67b5128cc45ce9e1168b037171c0b62aeb7d2",
++      "fixture": "expected/11.json",
++      "edits": [
++        [
++          "manager",
++          "first-supertype",
++          "staff",
++          [
++            "gnd_reference"
++          ]
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/models/full_vocabulary.orm.yaml",
++      "old_sha256": "9451deb9b1a4e0e485419e6a7921a21ac4ec61af38739c77d1f562b92aae9f2e",
++      "new_sha256": "bdc6b86573c41c20dee528c1f991a408cf12fd77063d3aee56c9d7229e615e5a",
++      "fixture": "expected/12.json",
++      "edits": [
++        [
++          "salary",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/models/library.orm.yaml",
++      "old_sha256": "07aa9a34fe048a21b00ae470c81e1f86693b0a1efba7241b17bd3b9cbba37e52",
++      "new_sha256": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654",
++      "fixture": "expected/13.json",
++      "edits": [
++        [
++          "loan_period",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/models/v2_operations.orm.yaml",
++      "old_sha256": "ff51e5e929397605b61198f0a29aa43a138d21926537af7417ab6a45085a28cf",
++      "new_sha256": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015",
++      "fixture": "expected/14.json",
++      "edits": [
++        [
++          "effort",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml",
++      "old_sha256": "0a4bcc6c166a465bcc0380b79ac14422bc36b7b10b9b97b7efdf53e46cd0fff0",
++      "new_sha256": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10",
++      "fixture": "expected/15.json",
++      "edits": [
++        [
++          "mass",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml",
++      "old_sha256": "49b12f98671480a8cebc9bb1a5db5294bd873b62a43e49abdbf20356feff4c4d",
++      "new_sha256": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7",
++      "fixture": "expected/16.json",
++      "edits": [
++        [
++          "opaque",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    },
++    {
++      "model": "tests/fixtures/public-semantic-shapes/model.orm.yaml",
++      "old_sha256": "0a4bcc6c166a465bcc0380b79ac14422bc36b7b10b9b97b7efdf53e46cd0fff0",
++      "new_sha256": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10",
++      "fixture": "expected/17.json",
++      "edits": [
++        [
++          "mass",
++          "unit-based",
++          "gnd_reference",
++          "Decimal"
++        ]
++      ]
++    }
++  ]
++}
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/oracle-preimplementation.json b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/oracle-preimplementation.json
+new file mode 100644
+index 00000000..f92916d8
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/oracle-preimplementation.json
+@@ -0,0 +1,257 @@
++[
++  {
++    "model": "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 01.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/coverage/mixed/v2_operations.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 02.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/coverage/positional/library.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 03.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/guarded/models/undecidable.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 04.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 05.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 06.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 07.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 08.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 09.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/ilp_learners/close/family.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 10.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/ilp_learners/close/multi.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 11.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/models/full_vocabulary.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 12.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/models/library.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 13.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/models/v2_operations.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 14.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 15.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 16.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  },
++  {
++    "model": "tests/fixtures/public-semantic-shapes/model.orm.yaml",
++    "results": [
++      [
++        "validator",
++        0,
++        "Validation PASSED: 17.json"
++      ],
++      [
++        "parser",
++        0,
++        ""
++      ]
++    ]
++  }
++]
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI3-spec.md b/.gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI3-spec.md
+new file mode 100644
+index 00000000..85fdcfb6
+--- /dev/null
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI3-spec.md
+@@ -0,0 +1,168 @@
++# Phase SI3 — Ossie reference identifiers
++
++## 1. Status
++
++Draft on 2026-11-25. The owner decides D3 and the opt-in Ossie validator and
++parser lane after the corpus-first gate is ready.
++
++## 2. Provenance
++
++Issue #280, plan r2 §0, §1, §2, §4, §5 and §9, Ossie relational bundle OB3-Q5,
++and the OS0 upstream receipt. The SI2 census and the Ossie exporter call path
++show that its identity-selection change leaves this corpus's output unchanged.
++
++## 3. Obligations
++
++| Obligation | Evidence |
++|---|---|
++| SI3-C1 / D3 | Before-code JSON goldens and SHA-256 roster for every affected tracked model. |
++| SI3-C2 / R3 | Export comparisons, local schema and name resolution, and owner-selected pinned validator and parser. |
++| SI3-C3 / R4 | CLI import of old bundles and new CLI export/import round trips with the bound sidecar. |
++| SI3-C4 | Mapping counts by cause and a control for subtypes without `inherits_reference`. |
++| O5 / §5 | Normative Ossie projection table, explanation page, and release note. |
++
++## 4. Standing rules
++
++Reuse the existing structured model reader. The projection consumes the
++existing reference declarations and identification view. Rmap columns, unit
++labels, sidecar identities, and path safety stay governed by their current
++contracts. Test the size of the added identifier work through the existing
++bounded export. The representation format owns the projected relationship
++rule. The phase scope excludes tag operations.
++
++## 5. Expected behavior
++
++A unit-based entity identifies through a single-valued `Decimal` relationship.
++GND maps its `Number` identity column to that referent and keeps the source
++unit and measure label through the digest-bound sidecar. An inheriting entity
++with several supertypes uses the first supertype's identifier in the declared
++order. Its own identity, if present, still has precedence. An entity which
++declares `inherits_reference: false` retains its own identity. Objectification
++fallbacks remain outside SI3.
++
++## 6. Corpus and measurements
++
++The authoring probe patches already-exported canonical JSON with explicit
++ontology edits and pins the before and after bytes. It runs source loader and
++export admission on the tracked model set. The expected documents each pass
++GND's local ontology schema and name graph. This is a preparation result.
++The pinned upstream validator and parser run belongs to the selected SI3 gate.
++
++A mapping dry calculation supplies the expected identifiers on the existing
++relational projection, using the current Number columns for unit references.
++That calculation removes 8 unit-based links and 5 multi-supertype links and
++adds none. The expected final totals are 4 unmapped links and 2 concepts for
++the retained objectification cause. A mapping comparison after implementation
++must re-run the same tracked-model census.
++
++The affected ontology census contains ten unit-based identities and seven
++inheriting multi-supertype identities across 17 tracked models. The [corpus manifest](../evidence/SI3/ontology-corpus.json) lists each model's
++old and expected SHA-256, identity edits, and expected document.
++The JSON artifact is the digest-pinned corpus. The YAML CLI export must parse
++to the same ontology and round-trip through a YAML-bound sidecar.
++
++## 7. Decision D3
++
++Proposed (owner): approve the corpus with a numeric Decimal identifier for
++unit-based entities, first-supertype identity selection for the inheriting
++multi-supertype case, and source-model round-trip through the sidecar. Authorize
++the pinned Ossie parser and validator on the changed ontologies. Sidecar-free
++foreign import continues to apply its published best-effort general-reference
++rules.
++
++## 8. Tests and gates
++
++- Compare canonical JSON output to each approved expected document.
++- Exercise YAML output, independent old-bundle import and new bound CLI
++  import. Preserve the original model identity and the declared unit and
++  supertype information.
++- Measure mapping counts by cause. Check an authored non-inheriting subtype
++  with a different identity and the first-parent sequence with differing
++  supertypes.
++- Run focused OSSIE export/import/relational/docs, existing corpus, lint,
++  query and architecture controls, and the component-index gate.
++- With D3's separate selection, run the pinned validator and parser from the
++  OS0 receipt against each new changed ontology. Record the exact checkout
++  and oracle pins and machine-observed results.
++
++## 9. Out of scope
++
++Objectifications keyed by their own fact types, a new Rmap key rule, upstream
++release changes, and a new standalone unit-interchange wire format.
++
++## 10. Size
++
++Approximately 65 production lines, 130 direct test lines, and the expected
++wire corpus. A materially larger implementation needs a recorded spec repair.
++
++## 11. Approval instrument
++
++The preimplementation canonical JSON corpus and its digest manifest. Retain
++the pre-edit export digests and verify the named red cases on the base.
++
++### Corpus binding
++
++Manifest SHA-256: `ba2964bb757ad645340cd870b4e848cd1d17af92fc7af97b14b373de7541bb62`. All 17 expected documents passed GND's local schema and name graph. The pinned upstream oracle remains pending the D3 decision.
++
++### Owner decision, 2026-11-25
++
++The owner approved D3 in this chat against the preceding spec bytes at
++SHA-256 `a0e8e5dbaa92337e5084c3af9371f7f349dd486f81aa7a7787d2334763e20666` and the corpus manifest bound above. Scope: Decimal
++identification for unit-based entities, the declared first supertype's
++identifier for inheriting multi-supertype entities, source-model round trip
++through the digest-bound sidecar, and the pinned upstream validator and
++parser for the changed ontologies. This is the owner's direct ruling.
++
++The delegated implementation gate follows SI2's completion record and the
++corpus-first preimplementation checks.
++
++### Approved preimplementation gate
++
++SI2 completed in record 003. Component-index searches for `Ossie ontology`
++and `Ossie mapping` found the existing projection, mapping, importer and
++oracle components. The implementation adapts those surfaces.
++
++The approved files and manifest retain their original digest. The pinned
++validator and parser each accepted all 17 expected JSON documents. The
++respective checkouts matched OS0's `ee89dbdc2844d8b7d293ed42c8613928bb99505f`
++and `83ddc294c8840f5f497a2bdbec2348a128fc2254`. Raw command results with
++paths redacted are retained in `evidence/SI3/oracle-preimplementation.json`.
++
++The default fixture gate at `b6722aee` ran
++`.venv/bin/pytest -q tests/test_si3_ossie_identifiers.py --tb=short`
++and exited 1 with `37 failed, 1 passed, 34 deselected in 2.48s`. All JSON/YAML
++corpus comparisons, the mapping-loss control, the inheriting-subtype control
++and the large unit projection were red. The non-inheriting control passed.
++The deselected oracle tests are run separately under the owner's selection.
++The pre-change bound import probe restored all 17 source documents.
++
++Delegated implementation approval (auto=true), 2026-11-25. SI3 spec
++through the preceding gate SHA-256 `1482e16164269f713bb84bba9c68bba9141d5bc4fe3a2cb099c8fe8ac57343e8`. Source: the owner's named
++milestone delegation and direct D3 ruling above. Scope: the approved corpus,
++unit and multi-supertype projection and mapping, existing source round trip,
++and the selected pinned oracle on changed ontologies. Instrument: the
++before-code corpus plus the red test gate. Budget: one phase diff review
++with Claude Code Opus, with a second only over repairs if needed.
++
++### Implementation controls added under D3
++
++Authoring any relationship that shadows a generated identifier in an
++inheriting multi-parent ontology would leave the new identifier unusable.
++A legal model with a local relationship of that name first failed with no
++identifier on the subtype. In those ontologies the generator now reserves
++authored relationship names across components before choosing its default
++identifier. The test checks that the selected parent's relation and the
++authored local relation each resolve to their own owner.
++
++An additional fixture inherits an ordered composite key from the first
++parent. It fails on the archived baseline with no subtype identifier and
++passes after the change. A successor of OB3 T13(b) checks that a unit-based
++ontology can now link its actual key column. Objectification controls still
++require the recorded residuals.
++
++Delegated clarification (auto=true), 2026-11-25. Approved these
++implementation controls through the preceding paragraph at SHA-256
++`277cc068a861520d5f9e40c5617e156ef9abc37f62fa53f6d2fb67fc7d10424f`. Source: D3 and the named milestone delegation. Scope: authored
++relationship collisions, composite-parent reachability, and the T13(b)
++successor. The approved ontology manifest remains unchanged. Instrument:
++reproduced red controls and the measured projection oracle.
+diff --git a/dev/components/modules/export.md b/dev/components/modules/export.md
+index 39ad7b6a..c35fd655 100644
+--- a/dev/components/modules/export.md
++++ b/dev/components/modules/export.md
+@@ -246,7 +246,7 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
+ | --- | --- | --- | --- |
+ | `OssieInputError` | class(ValueError) | 58 | The source cannot be exported with the selected policy. |
+ | `OssieArtifacts` | class | 67 | (no docstring) |
+-| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 526 | Render the deterministic artifacts of one bounded, admitted model read. |
++| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 542 | Render the deterministic artifacts of one bounded, admitted model read. |
+ 
+ ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
+ Components: export.ossie
+diff --git a/docs/explanation/ossie.md b/docs/explanation/ossie.md
+index f5785ccd..2cacaefd 100644
+--- a/docs/explanation/ossie.md
++++ b/docs/explanation/ossie.md
+@@ -98,6 +98,11 @@ a reason it is not. The reasons you are most likely to meet:
+ | `identification-differs` | The ontology and the tables identify an object in different ways, so the link between them is not written. |
+ | `arity-over-limit` | A fact type with more than 32 roles. It keeps its table, and the mapping does not link it. |
+ 
++Unit-based identifiers use a `Decimal` relationship. Inheriting subtypes
++with several supertypes use the first declared supertype's identifier.
++Importing the ontology with its GND sidecar restores the original reference
++declarations, including the unit and measure type.
++
+ Three limits follow from the same principle of listing and not guessing:
+ 
+ - A model that yields no table at all writes the ontology's three files and
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 5bec2cd6..4576afc5 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -17,6 +17,11 @@ procedure](releasing.md). Changes on `main` after a release are listed in an
+   marked `preferred`. When none qualifies, GND uses the first anchored
+   declaration. ([#279](https://github.com/vasiloglou/gnd-public/issues/279))
+ 
++- Ossie export supplies identifiers for unit-based references and for
++  inheriting subtypes with several supertypes. These identifiers change the
++  ontology bytes and let the relational mapping carry the associated links.
++  ([#280](https://github.com/vasiloglou/gnd-public/issues/280))
++
+ ## 0.5.1 (tagged 2026-11-25, not published on PyPI)
+ 
+ 0.5.1 is a GitHub tag only. Install it from the tag:
+diff --git a/src/gnd/export/ossie.py b/src/gnd/export/ossie.py
+index 68e83b87..bb775fca 100644
+--- a/src/gnd/export/ossie.py
++++ b/src/gnd/export/ossie.py
+@@ -196,6 +196,16 @@ def _relationship(fact, names, order, role_types):
+ 
+ 
+ def _add_references(objects, components, names, functional_links, constraints, mapped, indexes, identification):
++    # A subtype resolves identifiers through its own relationships first.
++    # Keep authored relationship names available throughout a multi-parent ontology.
++    default_key = "gnd_reference"
++    if any(obj.get("inherits_reference") and len(obj.get("subtype_of") or ()) > 1
++           for obj in objects.values()):
++        authored_names = {rel["name"] for component in components.values()
++                          for rel in component.get("relationships", ())}
++        while default_key in authored_names:
++            default_key = "_" + default_key
++
+     # Pre-index composite UC candidates by their shared identifying entity.
+     composite = {}
+     for i, constraint in enumerate(constraints):
+@@ -231,25 +241,29 @@ def _add_references(objects, components, names, functional_links, constraints, m
+         component = components[oid]
+         mode = ref.get("mode")
+         path = ("object_types", indexes[oid], "reference")
+-        if mode in {"popular", "general"}:
+-            value_type = ref["value_type"]
++        if mode in {"popular", "general", "unit-based"}:
++            unit_based = mode == "unit-based"
++            value_type = ref.get("value_type")
+             rels = component.setdefault("relationships", [])
+             used = {r["name"] for r in rels}
+-            key = "gnd_reference"
++            key = default_key
+             while key in used:
+                 key = "_" + key
+             rels.append(
+                 {
+                     "name": key,
+-                    "roles": [{"concept": names[value_type]}],
+-                    "verbalizes": [f"{{{names[oid]}}} is identified by {{{names[value_type]}}}"],
++                    "roles": [{"concept": "Decimal" if unit_based else names[value_type]}],
++                    "verbalizes": [
++                        f"{{{names[oid]}}} is identified by {{{'Decimal' if unit_based else names[value_type]}}}"
++                    ],
+                     "multiplicity": "OneToOne",
+                 }
+             )
+             component["identify_by"] = [key]
+             identification[oid] = ("simple", key)
+             mapped[path] = _NATIVE_LITERAL
+-            mapped[(*path, "value_type")] = _NATIVE_LITERAL
++            if not unit_based:
++                mapped[(*path, "value_type")] = _NATIVE_LITERAL
+         elif mode == "external" and oid in composite:
+             _, index, links = composite[oid]
+             component["identify_by"] = links
+@@ -270,10 +284,11 @@ def _inherit_identifiers(objects, components, indexes, mapped, identification):
+         if (obj.get("reference") or {}).get("mode") in {"popular", "general"}
+     }
+     for oid in order:
+-        if not objects[oid].get("inherits_reference") or len(parents[oid]) != 1:
++        declared = parents[oid]
++        if not objects[oid].get("inherits_reference") or not declared:
+             continue
+         parent = parents[oid][0]
+-        if parent not in direct:
++        if parent not in identification or (len(declared) == 1 and parent not in direct):
+             continue
+         child = components[oid]
+         inherited = components[parent]["identify_by"]
+@@ -281,7 +296,8 @@ def _inherit_identifiers(objects, components, indexes, mapped, identification):
+         if inherited and not child.get("identify_by") and own_names.isdisjoint(inherited):
+             child["identify_by"] = list(inherited)
+             identification[oid] = identification[parent]
+-            direct.add(oid)
++            if parent in direct:
++                direct.add(oid)
+             mapped[("object_types", indexes[oid], "inherits_reference")] = _NATIVE_LITERAL
+ 
+ 
+diff --git a/src/gnd/export/ossie_relational.py b/src/gnd/export/ossie_relational.py
+index abecbcdd..2d8a1440 100644
+--- a/src/gnd/export/ossie_relational.py
++++ b/src/gnd/export/ossie_relational.py
+@@ -192,7 +192,7 @@ class _Mapping:
+         if rmap is None or ontology is None or len(columns) != len(rmap.columns):
+             return None
+         form, payload = ontology
+-        if rmap.kind == "direct" and form == "simple":
++        if rmap.kind in {"direct", "unit"} and form == "simple":
+             return [{"relationship": payload, "expression": wrap(self.reference(table, columns[0]))}]
+         if rmap.kind != "composite" or form != "composite":
+             return None
+@@ -233,7 +233,7 @@ class _Mapping:
+         referents = self.referents(object_type, table, columns, wrap)
+         if referents is None:
+             return None
+-        if self.identifications[object_type].kind == "direct":
++        if self.identifications[object_type].kind in {"direct", "unit"}:
+             node["expression"] = referents[0]["expression"]
+         else:
+             node["referent_mappings"] = referents
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index c9ffac4d..18751e0f 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -2201,12 +2201,18 @@ models with `include:unsupported-route` before resolving their dependencies.
+ | Object types and subtypes | EntityType or ValueType concepts, with subtype parents in `extends`. Safe unique names are preserved. Other names get deterministic ID-based aliases. |
+ | Value primitives | The corresponding Ossie built-in, with Number projected as Decimal and Duration as Integer. The sidecar retains those source types and Binary. |
+ | Popular and general references | A generated binary OneToOne relationship and an `identify_by` entry. |
++| Unit-based references | A generated OneToOne relationship to `Decimal` and an `identify_by` entry. The source unit and measure type are retained in the sidecar. |
+ | External references | `identify_by` on functional binary relationships sharing the first-role entity. Unsupported reference details travel in the sidecar. |
++| Inheriting subtypes with several supertypes | The first declared supertype's exported identifier, with its ordered components. The relationship names must resolve to those of the selected parent. |
+ | Fact types and readings | One relationship under its first-role concept. The forward placeholders bind by source role position. Explicit inverse qualifiers bind by role name. A bare binary inverse reverses the bindings. Additional roles have explicit names. |
+ | Confirmed alethic internal uniqueness | OneToOne for both directions of a binary. ManyToOne for an n−1 determinant, with the dependent role last. Reading bindings retain source order even when declaration roles move. |
+ | Reviewed constraints and derivations | `requires` and `derived_by` at the scope described below. |
+ | Other source rules, provenance, modality and operations | The source values travel in the sidecar. |
+ 
++In an ontology with inheriting multi-parent subtypes, generated identifier
++names avoid authored relationship names throughout the ontology so local
++relationships cannot shadow inherited identifiers.
++
+ The formula projection supports confirmed alethic rules in these shapes.
+ Players are String value types without subtype or supertype links, with
+ an Integer value type in the compared role for the integer guard.
+@@ -2358,9 +2364,9 @@ newline, under the schema id `gnd-ossie-relational/1`:
+ | `unmapped_links` | Present only when not empty: carried fact types with no link mapping, each with the reason `identification-differs` or `arity-over-limit` |
+ 
+ `identification-differs` means the ontology does not identify an object type
+-the way its key columns do, so no object mapping for it can be written. That
+-is the case for a unit-based reference, for an objectification keyed by its
+-own fact type, and for a subtype that inherits through several supertypes.
++the way its key columns do, so no object mapping for it can be written. An
++objectification keyed by its own fact type is one example. A projected
++unit-based identifier uses an expression over the unit-based key column.
+ Every fact type the Rmap carries is therefore either named by exactly one
+ link tree or listed in `unmapped_links`, with one of those two reasons. `--strict` does not refuse any of
+ these: they are listed, not refused.
+diff --git a/tests/test_ossie_relational.py b/tests/test_ossie_relational.py
+index 6fcc4728..17d51640 100644
+--- a/tests/test_ossie_relational.py
++++ b/tests/test_ossie_relational.py
+@@ -398,14 +398,14 @@ def test_t13_an_identifier_needs_functional_components(tmp_path):
+     assert "identify_by" not in state
+ 
+ 
+-def test_t13_identification_differs_is_listed_not_guessed(tmp_path):
+-    """E3 (b): a unit-based entity has a key column but no identifier in the ontology."""
++def test_t13_unit_based_identifier_links_its_key_column(tmp_path):
++    """SI3 supersedes E3 (b): a unit-based key has an Ossie identifier and link."""
+     bundle = _render_document(tmp_path, corpus.load_yaml(corpus.rmap_case("23")))
+     mapping = json.loads(bundle.mapping)
+     payload = json.loads(mapping["custom_extensions"][0]["data"])
+-    assert payload["unmapped_links"] == [{"fact_type": "person_has_height", "reason": "identification-differs"}]
++    assert "unmapped_links" not in payload
+     linked = corpus.cross_check(json.loads(bundle.document), json.loads(bundle.semantic_model), mapping)
+-    assert "person_has_height" not in linked
++    assert "person_has_height" in linked
+ 
+ 
+ def test_t14_reserved_words_are_quoted_not_listed(tmp_path):
+diff --git a/tests/test_si3_ossie_identifiers.py b/tests/test_si3_ossie_identifiers.py
+new file mode 100644
+index 00000000..06551947
+--- /dev/null
++++ b/tests/test_si3_ossie_identifiers.py
+@@ -0,0 +1,141 @@
++"""SI3: corpus-bound Ossie identities and source round trips."""
++
++import hashlib
++import json
++import time
++from pathlib import Path
++
++import pytest
++from ruamel.yaml import YAML
++from support.cli_runner import run_main
++from test_ossie_external_oracle import oracle as oracle  # noqa: PLC0414 -- pytest fixture reexport
++
++from gnd.export.ossie import render_ossie
++from gnd.model import json_document, parse_model_document
++from gnd.ossie_import import _NameGraph
++
++ROOT = Path(__file__).resolve().parents[1]
++EVIDENCE = ROOT / ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3"
++ROWS = json.loads((EVIDENCE / "ontology-corpus.json").read_bytes())["models"]
++OBJECTIFICATIONS = [
++    ROOT / "src/gnd/examples/literature/assertions/model.orm.yaml",
++    ROOT / "src/gnd/examples/literature/lineage/model.orm.yaml",
++]
++
++
++@pytest.mark.parametrize("row", ROWS, ids=lambda row: row["model"])
++@pytest.mark.parametrize("output_format", ["json", "yaml"])
++def test_changed_ontologies_and_bound_round_trip(row, output_format, tmp_path):
++    source = ROOT / row["model"]
++    expected = (EVIDENCE / row["fixture"]).read_bytes()
++    assert hashlib.sha256(expected).hexdigest() == row["new_sha256"]
++    ontology = tmp_path / f"ontology.{output_format}"
++    result = run_main(["export", "ossie", str(source), "--format", output_format, "--out", str(ontology)])
++    assert result.returncode == 0, result.stdout + result.stderr
++    if output_format == "json":
++        assert ontology.read_bytes() == expected
++    else:
++        assert YAML(typ="safe").load(ontology.read_text()) == json.loads(expected)
++    restored = tmp_path / "restored.orm.json"
++    result = run_main(["import", "ossie", str(ontology), "--out", str(restored)])
++    assert result.returncode == 0, result.stdout + result.stderr
++    assert json.loads(restored.read_bytes()) == json_document(parse_model_document(source.read_bytes(), source=source))
++
++
++@pytest.mark.parametrize("row", ROWS, ids=lambda row: row["model"])
++@pytest.mark.parametrize("output_format", ["json", "yaml"])
++@pytest.mark.ossie_oracle
++def test_changed_ontologies_match_pinned_ossie(oracle, row, output_format, tmp_path):
++    ontology = tmp_path / f"ontology.{output_format}"
++    export = render_ossie(ROOT / row["model"], output_format=output_format)
++    ontology.write_bytes(export.document)
++    for operation in (oracle.validate, oracle.parse):
++        result = operation(ontology)
++        assert result.returncode == 0, result.stdout + result.stderr
++
++
++def _gnd_extension(bundle):
++    return json.loads(json.loads(bundle.mapping)["custom_extensions"][0]["data"])
++
++
++def test_targeted_mapping_losses_close_and_objectification_losses_stay():
++    for row in ROWS:
++        bundle = render_ossie(ROOT / row["model"], output_format="json")
++        if bundle.mapping is not None:
++            data = _gnd_extension(bundle)
++            assert not [link for link in data.get("unmapped_links", ()) if link["reason"] == "identification-differs"]
++    for path in OBJECTIFICATIONS:
++        data = _gnd_extension(render_ossie(path, output_format="json"))
++        assert sum(row["reason"] == "identification-differs" for row in data["unmapped_links"]) == 2
++        assert sum(row["reason"] == "identification-differs" for row in data["concepts"]) == 1
++
++
++@pytest.mark.parametrize("inherits", [True, False])
++def test_first_declared_supertype_defines_inherited_key(tmp_path, inherits):
++    source = ROOT / "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml"
++    authored = json_document(parse_model_document(source.read_bytes(), source=source))
++    objects = {obj["id"]: obj for obj in authored["object_types"]}
++    child = objects["director"]
++    child["subtype_of"].reverse()
++    child["inherits_reference"] = inherits
++    if not inherits:
++        child["reference"] = objects["manager"]["reference"].copy()
++    path = tmp_path / "model.orm.json"
++    path.write_text(json.dumps(authored))
++    export = render_ossie(path, output_format="json", relational=False)
++    graph = _NameGraph(json.loads(export.document))
++    name = child.get("name", "director")
++    key, = graph.concepts[name]["identify_by"]
++    owner, relationship = graph.resolve(name, key)
++    expected_owner = objects[child["subtype_of"][0]].get("name", child["subtype_of"][0]) if inherits else name
++    assert owner == expected_owner
++    source_id = objects[child["subtype_of"][0]]["reference"]["value_type"] if inherits else child["reference"]["value_type"]
++    assert relationship["roles"][0]["concept"] == objects[source_id].get("name", source_id)
++
++
++def test_local_relationship_never_shadows_the_first_supertype_identifier(tmp_path):
++    source = ROOT / "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml"
++    authored = json_document(parse_model_document(source.read_bytes(), source=source))
++    fact = next(fact for fact in authored["fact_types"] if fact["id"] == "directs")
++    fact["id"] = "gnd_reference"
++    path = tmp_path / "shadowing.orm.json"
++    path.write_text(json.dumps(authored))
++    bundle = render_ossie(path, output_format="json")
++    graph = _NameGraph(json.loads(bundle.document))
++    key, = graph.concepts["Director"]["identify_by"]
++    assert key != fact["id"]
++    owner, relationship = graph.resolve("Director", key)
++    assert owner == "Manager"
++    assert relationship["roles"][0]["concept"] == "ManagerNo"
++    assert graph.resolve("Director", fact["id"])[0] == "Director"
++
++
++def test_multi_supertype_inherits_ordered_composite_identifier(tmp_path):
++    source = ROOT / "tests/fixtures/rmap/cases/14-external-identification/model.yaml"
++    authored = json_document(parse_model_document(source.read_bytes(), source=source))
++    authored["object_types"].append({
++        "id": "district", "name": "District", "kind": "entity",
++        "subtype_of": ["state", "country"], "inherits_reference": True,
++    })
++    path = tmp_path / "composite-parent.orm.json"
++    path.write_text(json.dumps(authored))
++    bundle = render_ossie(path, output_format="json")
++    graph = _NameGraph(json.loads(bundle.document))
++    keys = graph.concepts["District"]["identify_by"]
++    assert keys == ["state_in_country", "state_has_code"]
++    assert [graph.resolve("District", key)[0] for key in keys] == ["State", "State"]
++
++
++def test_large_unit_identifier_projection_stays_bounded(tmp_path):
++    source = tmp_path / "model.orm.json"
++    source.write_text(json.dumps({
++        "version": 4,
++        "object_types": [{"id": f"measure_{i}", "kind": "entity",
++                          "reference": {"mode": "unit-based", "unit": "cm", "measure_type": "Length"}}
++                         for i in range(1000)],
++        "fact_types": [],
++    }))
++    start = time.monotonic()
++    bundle = render_ossie(source, output_format="json", relational=False)
++    assert len([obj for obj in json.loads(bundle.document)["ontology"] if obj["identify_by"]]) == 1000
++    assert time.monotonic() - start < 10

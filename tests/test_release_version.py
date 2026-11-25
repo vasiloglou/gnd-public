@@ -26,7 +26,7 @@ RELEASED = {"0.1.0", "0.2.0", "0.3.0", "0.4.0", "0.5.0"}
 # Versions released as a GitHub tag only, never uploaded to the package index.
 # A tag-only version is newer than every published one and is never pinned; the
 # pages describe the latest published version (see tools/release_text.py).
-TAGGED = {"0.3.1", "0.5.1"}
+TAGGED = {"0.3.1", "0.5.1", "0.5.2"}
 
 MANIFESTS = (
     ".claude-plugin/plugin.json",

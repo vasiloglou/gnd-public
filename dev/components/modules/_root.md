@@ -941,11 +941,11 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_identity(object_type_id, model, *, _seen) -> tuple[str, Any]` | function | 105 | ``("direct", value_type_id)`` \| ``("composite", resolved_role_refs)`` \| |
-| `applicable_set(model) -> dict[str, Any]` | function | 199 | The per-model applicable set as the first-class artifact dict. |
-| `role_player_signature(role_players) -> tuple[str, ...]` | function | 284 | The sorted multiset of role-player object-type ids of one fact type. |
-| `fact_type_signatures(index) -> dict[str, tuple[str, ...]]` | function | 294 | Every fact type's role-player signature, read through ``ModelIndex``. |
-| `entity_reference(object_type_id, model) -> tuple[str, str \| None]` | function | 302 | ``(kind, value_type)`` for one entity: the kind ``reference_identity`` |
+| `reference_identity(object_type_id, model, *, _seen) -> tuple[str, Any]` | function | 131 | ``("direct", value_type_id)`` \| ``("composite", resolved_role_refs)`` \| |
+| `applicable_set(model) -> dict[str, Any]` | function | 218 | The per-model applicable set as the first-class artifact dict. |
+| `role_player_signature(role_players) -> tuple[str, ...]` | function | 303 | The sorted multiset of role-player object-type ids of one fact type. |
+| `fact_type_signatures(index) -> dict[str, tuple[str, ...]]` | function | 313 | Every fact type's role-player signature, read through ``ModelIndex``. |
+| `entity_reference(object_type_id, model) -> tuple[str, str \| None]` | function | 321 | ``(kind, value_type)`` for one entity: the kind ``reference_identity`` |
 
 ## gnd.report — `src/gnd/report.py`
 Components: infra.report_payloads
@@ -968,19 +968,20 @@ Halpin's relational mapping (Rmap) of a loaded GND model.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `RmapVariant` | class(enum.Enum) | 39 | (no docstring) |
-| `Column` | class | 58 | (no docstring) |
-| `ForeignKey` | class | 66 | (no docstring) |
-| `Table` | class | 74 | (no docstring) |
-| `Unmapped` | class | 84 | (no docstring) |
-| `Disposition` | class | 92 | (no docstring) |
-| `RolePlacement` | class | 100 | The table and columns that hold one role of a carried fact type. |
-| `Identification` | class | 117 | How an object type's key columns arise, one entry per key column. |
-| `RelationalSchema` | class | 140 | (no docstring) |
-| `is_confirmed_alethic(constraint) -> bool` | function | 156 | Whether a constraint is one the relational forms may carry: confirmed, and alethic. |
-| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 857 | Name each table's foreign keys, given as (columns, target table, target columns). |
-| `map_model(model, *, variant) -> RelationalSchema` | function | 884 | Map one loaded model to its relational schema; never raises for an admitted model. |
-| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 889 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+| `RmapVariant` | class(enum.Enum) | 40 | (no docstring) |
+| `Column` | class | 59 | (no docstring) |
+| `ForeignKey` | class | 67 | (no docstring) |
+| `Table` | class | 75 | (no docstring) |
+| `Unmapped` | class | 85 | (no docstring) |
+| `Disposition` | class | 93 | (no docstring) |
+| `RolePlacement` | class | 101 | The table and columns that hold one role of a carried fact type. |
+| `Identification` | class | 118 | How an object type's key columns arise, one entry per key column. |
+| `RelationalSchema` | class | 143 | (no docstring) |
+| `is_confirmed_alethic(constraint) -> bool` | function | 159 | Whether a constraint is one the relational forms may carry: confirmed, and alethic. |
+| `external_uniqueness_order(refs) -> tuple` | function | 164 | Order by the role set, then by the declared component sequence. |
+| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 866 | Name each table's foreign keys, given as (columns, target table, target columns). |
+| `map_model(model, *, variant) -> RelationalSchema` | function | 893 | Map one loaded model to its relational schema; never raises for an admitted model. |
+| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 898 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
 
 ## gnd.safefs — `src/gnd/safefs.py`
 Components: infra.safe_filesystem

@@ -7,7 +7,7 @@ from pathlib import Path
 from gnd.anchors import read_regular_path
 from gnd.artifacts import canonical_json_bytes, sha256_hex
 from gnd.errors import ModelValidationError
-from gnd.model import load_model, load_model_bytes
+from gnd.model import load_model
 from gnd.model._includes import guard_bytes, include_reason
 from gnd.model.flattening import FlattenedModel, flatten_model
 from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, WitnessResult, result_rows
@@ -101,4 +101,4 @@ def stamp_projection(result: dict, projection: WitnessProjection) -> dict:
 
 
 def load_flat_model(projection: WitnessProjection):
-    return load_model_bytes(projection.flat.model_bytes, source="flat.orm.json")
+    return projection.flat.model

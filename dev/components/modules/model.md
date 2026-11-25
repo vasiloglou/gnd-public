@@ -9,21 +9,21 @@ Model loading with two-layer validation.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `load_model_bytes(data, *, source) -> Model` | function | 290 | Validate one immutable bounded buffer; source is diagnostic metadata. |
-| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 373 | Resolve the authored model and bind references under one retained root. |
-| `load_model(path) -> Model` | function | 438 | Read model and reference bytes beneath a single retained directory. |
-| `ReferenceOrigin` | class | 498 | (no docstring) |
-| `OccurrenceOrigin` | class | 504 | (no docstring) |
-| `BoundReferenceContext` | class | 510 | (no docstring) |
-| `BoundPopulationView` | class | 520 | (no docstring) |
-| `validate_reference_structure(document) -> None` | function | 527 | (no docstring) |
-| `validate_declarations(model) -> dict[str, str]` | function | 542 | (no docstring) |
-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 649 | (no docstring) |
-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 655 | Bind a model's declared reference populations at ``root``, or return None |
-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 670 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
-| `resolve_context(model, references) -> BoundReferenceContext` | function | 679 | (no docstring) |
-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 711 | (no docstring) |
-| `candidate_fact_count(view) -> int` | function | 787 | (no docstring) |
-| `is_bound_population(model, population, context) -> bool` | function | 791 | Recognize only a current combined population created by this binder. |
+| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 379 | Resolve the authored model and bind references under one retained root. |
+| `load_model(path) -> Model` | function | 444 | Read model and reference bytes beneath a single retained directory. |
+| `ReferenceOrigin` | class | 504 | (no docstring) |
+| `OccurrenceOrigin` | class | 510 | (no docstring) |
+| `BoundReferenceContext` | class | 516 | (no docstring) |
+| `BoundPopulationView` | class | 526 | (no docstring) |
+| `validate_reference_structure(document) -> None` | function | 533 | (no docstring) |
+| `validate_declarations(model) -> dict[str, str]` | function | 548 | (no docstring) |
+| `bind_references(model, *, root) -> BoundReferenceContext` | function | 655 | (no docstring) |
+| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 661 | Bind a model's declared reference populations at ``root``, or return None |
+| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 676 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+| `resolve_context(model, references) -> BoundReferenceContext` | function | 685 | (no docstring) |
+| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 717 | (no docstring) |
+| `candidate_fact_count(view) -> int` | function | 793 | (no docstring) |
+| `is_bound_population(model, population, context) -> bool` | function | 797 | Recognize only a current combined population created by this binder. |
 
 ## gnd.model._documents — `src/gnd/model/_documents.py`
 Components: model.json_document
@@ -105,11 +105,12 @@ MG5 unattended source mode (model-growth-guardrails milestone).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SpanCoverage` | class | 330 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
-| `SpanCoverage.unchecked(self) -> int` | method | 342 | (no docstring) |
-| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 345 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
-| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 398 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
-| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 410 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
+| `flat_without_root_issue(issues) -> ValidationIssue \| None` | function | 69 | Explain a possible missing root while retaining the actual validation errors. |
+| `SpanCoverage` | class | 347 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
+| `SpanCoverage.unchecked(self) -> int` | method | 359 | (no docstring) |
+| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 362 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
+| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 415 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 427 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
 
 ## gnd.model._validation — `src/gnd/model/_validation.py`
 Components: model.validation
@@ -139,6 +140,6 @@ Canonical re-entry bytes and provenance for a resolved model include root.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `FlatteningError` | class(ValueError) | 14 | A resolved model cannot be represented within the flat wire contract. |
-| `FlattenedModel` | class | 19 | (no docstring) |
-| `flatten_model(model) -> FlattenedModel` | function | 24 | Serialize an include snapshot made by the model loader. |
+| `FlatteningError` | class(ValueError) | 15 | A resolved model cannot be represented within the flat wire contract. |
+| `FlattenedModel` | class | 20 | (no docstring) |
+| `flatten_model(model) -> FlattenedModel` | function | 26 | Serialize an include snapshot made by the model loader. |

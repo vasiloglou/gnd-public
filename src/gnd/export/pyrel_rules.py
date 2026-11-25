@@ -2691,7 +2691,7 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
     if target not in TARGETS:
         raise ExportInputError(f"target must be one of {TARGETS}")
     raw = Path(model_path).read_bytes()
-    from .include_roots import flatten_for_export, flattening_constants
+    from .include_roots import flatten_for_export, flattening_constants, model_validation_message
     flat = flatten_for_export(Path(model_path), raw)  # an include root exports its flat model
     if flat is not None:
         raw = flat.model_bytes
@@ -2699,8 +2699,10 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
     try:
         from gnd.model._includes import guard_bytes
         guard_bytes(raw, source=str(model_path), route='pyrel_rules:2267')
-        loaded = load_model_bytes(raw, source=str(model_path))
-    except (ModelLoadError, ModelValidationError, ReferenceInputError) as error:
+        loaded = flat.model if flat is not None else load_model_bytes(raw, source=str(model_path))
+    except ModelValidationError as error:
+        raise ExportInputError(f"invalid model: {model_validation_message(error)}") from error
+    except (ModelLoadError, ReferenceInputError) as error:
         raise ExportInputError(f"invalid model: {error}") from error
     doc = _parse_document(raw.decode("utf-8"))
     model = _Model(doc)

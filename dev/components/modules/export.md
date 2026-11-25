@@ -27,8 +27,8 @@ Offline publication of a self-contained optional PyRel program.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 19 | Render from one bounded input read; no checker or foreign-runtime import. |
-| `render_pyrel_rules(model_path, target)` | function | 70 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
-| `render_pyrel_rules_report(model_path, target)` | function | 77 | The rules program and the ids of the rules it lists as not checked. |
+| `render_pyrel_rules(model_path, target)` | function | 76 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+| `render_pyrel_rules_report(model_path, target)` | function | 83 | The rules program and the ids of the rules it lists as not checked. |
 
 ## gnd.export.ilp — `src/gnd/export/ilp.py`
 Components: export.ilp_neutral
@@ -165,9 +165,10 @@ Export an include root through its flat model (include-root-routes IR3).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `FlatExport` | class | 17 | An include root's flat model, as ``gnd flatten`` would write it. |
-| `flatten_for_export(model_path, raw)` | function | 25 | The flat model to export for an include root, or None for any other model. |
-| `flattening_constants(flat) -> str` | function | 63 | The two program lines that record an exported flattening; empty for None. |
+| `FlatExport` | class | 21 | An include root's flat model, as ``gnd flatten`` would write it. |
+| `flatten_for_export(model_path, raw)` | function | 30 | The flat model to export for an include root, or None for any other model. |
+| `model_validation_message(error) -> str` | function | 68 | (no docstring) |
+| `flattening_constants(flat) -> str` | function | 76 | The two program lines that record an exported flattening; empty for None. |
 
 ## gnd.export.lean — `src/gnd/export/lean.py`
 Components: export.lean_lowering
@@ -245,7 +246,7 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 | --- | --- | --- | --- |
 | `OssieInputError` | class(ValueError) | 58 | The source cannot be exported with the selected policy. |
 | `OssieArtifacts` | class | 67 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 526 | Render the deterministic artifacts of one bounded, admitted model read. |
+| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 539 | Render the deterministic artifacts of one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -266,12 +267,12 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
-| `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
-| `is_regular_identifier(name) -> bool` | function | 94 | Whether Ossie reads NAME as a regular identifier, one that can be written unquoted. |
-| `normalized_identifier(name) -> str` | function | 111 | Ossie's normalized form of a declared NAME: a regular identifier uppercased, any |
-| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 128 | One dataset per table, one field per column, one relationship per foreign key. |
-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 269 | Map the ontology's concepts and relationships onto the semantic model. |
-| `validate_relational(semantic_model, mapping) -> None` | function | 358 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+| `extension_data(payload) -> str` | function | 84 | An extension's ``data``: canonical JSON without its trailing newline. |
+| `is_regular_identifier(name) -> bool` | function | 95 | Whether Ossie reads NAME as a regular identifier, one that can be written unquoted. |
+| `normalized_identifier(name) -> str` | function | 112 | Ossie's normalized form of a declared NAME: a regular identifier uppercased, any |
+| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 129 | One dataset per table, one field per column, one relationship per foreign key. |
+| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 275 | Map the ontology's concepts and relationships onto the semantic model. |
+| `validate_relational(semantic_model, mapping) -> None` | function | 364 | Check both documents against the pinned schemas; a failure is a renderer defect. |
 
 ## gnd.export.physical_binding — `src/gnd/export/physical_binding.py`
 Components: export.physical_binding

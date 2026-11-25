@@ -1,0 +1,112 @@
+diff --git a/.claude-plugin/marketplace.json b/.claude-plugin/marketplace.json
+index 1bc363f8..3b0104f6 100644
+--- a/.claude-plugin/marketplace.json
++++ b/.claude-plugin/marketplace.json
+@@ -12,7 +12,7 @@
+       "name": "gnd",
+       "source": "./",
+       "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+-      "version": "0.5.1"
++      "version": "0.5.2"
+     }
+   ]
+ }
+diff --git a/.claude-plugin/plugin.json b/.claude-plugin/plugin.json
+index 38a2acc0..1799cc05 100644
+--- a/.claude-plugin/plugin.json
++++ b/.claude-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "gnd",
+-  "version": "0.5.1",
++  "version": "0.5.2",
+   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+   "author": {
+     "name": "Nikolaos Vasiloglou",
+diff --git a/.codex-plugin/plugin.json b/.codex-plugin/plugin.json
+index 39422b56..c91b70c2 100644
+--- a/.codex-plugin/plugin.json
++++ b/.codex-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "gnd",
+-  "version": "0.5.1",
++  "version": "0.5.2",
+   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+   "author": {
+     "name": "Nikolaos Vasiloglou",
+diff --git a/docs/compatibility.md b/docs/compatibility.md
+index 8f5cbc18..a8564db1 100644
+--- a/docs/compatibility.md
++++ b/docs/compatibility.md
+@@ -3,6 +3,7 @@
+ Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions
+ 0.1.0, 0.2.0, 0.3.0, 0.4.0 and 0.5.0 are published (0.5.0 on 2026-11-25).
+ Version 0.5.1 is a GitHub tag only and is not published on the package index.
++Version 0.5.2 is a GitHub tag only and is not published on the package index.
+ For the next version, confirm service ownership and that the version is still
+ free before candidate freeze and again before any upload. Milestone numbers are
+ not package versions.
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 4576afc5..a2af6018 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -2,11 +2,18 @@
+ 
+ Version 0.5.0, published on 2026-11-25, is the latest release; 0.4.0, 0.3.0,
+ 0.2.0 and 0.1.0 came before it. Version 0.5.1 is a GitHub tag only and is not
++published on the package index. Version 0.5.2 is a GitHub tag only and is not
+ published on the package index. Releases follow the [release
+ procedure](releasing.md). Changes on `main` after a release are listed in an
+ `Unreleased:` section until the next one.
+ 
+-## Unreleased:
++## 0.5.2 (tagged 2026-11-25, not published on PyPI)
++
++0.5.2 is a GitHub tag only. Install it from the tag:
++
++```sh
++uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.2"
++```
+ 
+ - `gnd flatten`, `gnd extract`, and all three PyRel export modes accept
+   unattended roots with reviewed includes. Pass the authored root when a
+diff --git a/pyproject.toml b/pyproject.toml
+index 0d82057c..4f64c4b2 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -3,7 +3,7 @@
+ # `get-nick-done`. The import package and the console script both stay `gnd` —
+ # only the name users type after `uv tool install` changes.
+ name = "get-nick-done"
+-version = "0.5.1"
++version = "0.5.2"
+ description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+ # Issue 175: without this key the wheel and sdist carry no long description and
+ # the PyPI project page shows no text. PYPI.md is a short description written
+diff --git a/tests/test_release_version.py b/tests/test_release_version.py
+index 36f0e4cf..f49fc8b4 100644
+--- a/tests/test_release_version.py
++++ b/tests/test_release_version.py
+@@ -26,7 +26,7 @@ RELEASED = {"0.1.0", "0.2.0", "0.3.0", "0.4.0", "0.5.0"}
+ # Versions released as a GitHub tag only, never uploaded to the package index.
+ # A tag-only version is newer than every published one and is never pinned; the
+ # pages describe the latest published version (see tools/release_text.py).
+-TAGGED = {"0.3.1", "0.5.1"}
++TAGGED = {"0.3.1", "0.5.1", "0.5.2"}
+ 
+ MANIFESTS = (
+     ".claude-plugin/plugin.json",
+diff --git a/uv.lock b/uv.lock
+index 66b6e47c..f4d46be3 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -97,7 +97,7 @@ wheels = [
+ 
+ [[package]]
+ name = "get-nick-done"
+-version = "0.5.1"
++version = "0.5.2"
+ source = { editable = "." }
+ dependencies = [
+     { name = "jsonschema" },

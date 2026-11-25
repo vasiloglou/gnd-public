@@ -1,0 +1,257 @@
+[
+  {
+    "model": "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 01.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/coverage/mixed/v2_operations.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 02.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/coverage/positional/library.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 03.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/guarded/models/undecidable.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 04.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 05.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 06.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 07.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 08.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 09.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/ilp_learners/close/family.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 10.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/ilp_learners/close/multi.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 11.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/models/full_vocabulary.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 12.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/models/library.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 13.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/models/v2_operations.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 14.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 15.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 16.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  },
+  {
+    "model": "tests/fixtures/public-semantic-shapes/model.orm.yaml",
+    "results": [
+      [
+        "validator",
+        0,
+        "Validation PASSED: 17.json"
+      ],
+      [
+        "parser",
+        0,
+        ""
+      ]
+    ]
+  }
+]

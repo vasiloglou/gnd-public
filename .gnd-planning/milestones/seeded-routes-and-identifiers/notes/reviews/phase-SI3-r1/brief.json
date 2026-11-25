@@ -1,0 +1,147 @@
+{
+  "base": "b6722aee",
+  "claims": [
+    "Exactly the 17 approved model ontologies change, with first-parent and authored-name collision controls.",
+    "The mapped links close by 8 unit and 5 multiple-supertype cases, retaining 4 objectification links and 2 concepts.",
+    "The selected upstream validator and parser admit the outputs in both formats, and bound CLI import restores the source model."
+  ],
+  "created": "2026-11-25T21:37:04.159933+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/reviews/phase-SI3-r1/diff.patch",
+      "sha256": "c93c78fa7b5635575d906598ed1ef7efc073f54cd5ed47f0e0c3f776b3e31e54"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/01.json",
+      "sha256": "6fe2525e8aec64846cfbf5ae7b5221a9b5b0a028702edde8b18c27ee84beaede"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/02.json",
+      "sha256": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/03.json",
+      "sha256": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/04.json",
+      "sha256": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/05.json",
+      "sha256": "d2a5005be4119222532929f157d444b820cfe13afa5780163486c7acb32ec7d5"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/06.json",
+      "sha256": "c0e1c96d5379d201a34e58f1bddda8b6cf91d8872c6aba1a2f36ef818f6c9ac7"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/07.json",
+      "sha256": "9f848181e59d7953db726802772d865c7c7484bf604ac4e54ef53cf8b4c542df"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/08.json",
+      "sha256": "330d9d1dc4c3ef18ccdbebc742735f0b2603c6918f32a3dbc6dd78c00e92eb4e"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/09.json",
+      "sha256": "34aec2ef9894996dfdb368358557fe2161c14c936977b85521a21154d5914874"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/10.json",
+      "sha256": "e01f6c2881ddade20b7e3343f9ed53d2ba1423826b515c44f1cc887786221ffe"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/11.json",
+      "sha256": "2417cd96729e1d4576c34f1e2fd67b5128cc45ce9e1168b037171c0b62aeb7d2"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/12.json",
+      "sha256": "bdc6b86573c41c20dee528c1f991a408cf12fd77063d3aee56c9d7229e615e5a"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/13.json",
+      "sha256": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/14.json",
+      "sha256": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/15.json",
+      "sha256": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/16.json",
+      "sha256": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/expected/17.json",
+      "sha256": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/ontology-corpus.json",
+      "sha256": "ba2964bb757ad645340cd870b4e848cd1d17af92fc7af97b14b373de7541bb62"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/oracle-preimplementation.json",
+      "sha256": "deedd1c5d2a2751e83183cd3726390593cff91cd11b9a9bff4a47a5fb0a5ab22"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI3-spec.md",
+      "sha256": "0c5a972d51fc5a4c2a1a597ba3371356ef8668f5f86303df12767bcc29131797"
+    },
+    {
+      "path": "dev/components/modules/export.md",
+      "sha256": "34c2fa855c1aeb58caed40e857855600b92d72228f79e3d6e8a6519cbb706e00"
+    },
+    {
+      "path": "docs/explanation/ossie.md",
+      "sha256": "bce9d33e059b5abe1b1bfa2843b6e27149c70972ef5ce4a3a33d8993a49f2110"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "d3273aadb5f63b48534ad539f5ff3332a3698ad36c911b3c3c3a33a1d7d14711"
+    },
+    {
+      "path": "src/gnd/export/ossie.py",
+      "sha256": "9e6b8a1f02d117f7f565d01a7dbbe4c1973c8d818912ca00c69eade4be4cfada"
+    },
+    {
+      "path": "src/gnd/export/ossie_relational.py",
+      "sha256": "693ecbc7088b39d715dd4aa4e64c1f4f7b20bfb8080a145f79ef64c39c7c3455"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "25771b0d9d9d6173736abf8f7dbbec04d572c248112cf21259cb9804e1dbed14"
+    },
+    {
+      "path": "tests/test_ossie_relational.py",
+      "sha256": "f63db073d6d1f4ac45e385b9a0b0dd0acb3381a307104e7a5f77f5037d9a5bec"
+    },
+    {
+      "path": "tests/test_si3_ossie_identifiers.py",
+      "sha256": "db873c6ddef39ea3cab7f097125a5ac3187c710d09585fe07e12e965a4ff87b3"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/mapping-census.txt",
+      "sha256": "6a22c1c255a947fec93e752989d8c10bbf5655c805d53daa09593fa6e4155899"
+    },
+    {
+      "path": ".gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/observed-ontology-digests.json",
+      "sha256": "c45327dd9434a48adca912f7469a52ae909ae8495f9b54ebae0be9333db6ff33"
+    }
+  ],
+  "head": "813987524a4bb2ad640ee023a5d362ba4fc9988f",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/mapping-census.txt (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/seeded-routes-and-identifiers/evidence/SI3/observed-ontology-digests.json (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Can native, relational or sidecar identity of a unit reference or inheriting multi-supertype subtype be refuted?",
+  "subject": "phase",
+  "version": 1
+}

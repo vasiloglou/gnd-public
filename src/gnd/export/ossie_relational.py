@@ -68,7 +68,8 @@ class OntologyView:
     """What the mapping reads from the ontology the same export run built.
 
     ``identification`` gives, per object type id, how the ontology identifies it:
-    ``("simple", relationship)`` or ``("composite", (relationship, ...))`` in
+    ``("simple", (relationship, kind, target))`` or
+    ``("composite", (relationship, ...))`` in
     ``identify_by`` order. ``relations`` gives, per fact type id, the concept that
     owns its relationship and its roles in the relationship's order.
     """
@@ -178,6 +179,7 @@ def build_semantic_model(
 class _Mapping:
     def __init__(self, schema: RelationalSchema, view: OntologyView) -> None:
         self.view = view
+        self.physical_binding = schema.variant is None
         self.tables = {table.name for table in schema.tables}
         self.identifications: dict[str, Identification] = {i.object_type: i for i in schema.identifications}
         self.placements: dict[tuple[str, str], RolePlacement] = {(p.fact_type, p.role): p for p in schema.roles}
@@ -192,8 +194,12 @@ class _Mapping:
         if rmap is None or ontology is None or len(columns) != len(rmap.columns):
             return None
         form, payload = ontology
-        if rmap.kind == "direct" and form == "simple":
-            return [{"relationship": payload, "expression": wrap(self.reference(table, columns[0]))}]
+        if rmap.kind in {"direct", "unit"} and form == "simple":
+            relationship, kind, target = payload
+            # Physical bindings already declare their keys against this ontology.
+            if not self.physical_binding and (rmap.kind, rmap.simple_target) != (kind, target):
+                return None
+            return [{"relationship": relationship, "expression": wrap(self.reference(table, columns[0]))}]
         if rmap.kind != "composite" or form != "composite":
             return None
         by_fact: dict[str, tuple[str, list[str]]] = {}
@@ -233,7 +239,7 @@ class _Mapping:
         referents = self.referents(object_type, table, columns, wrap)
         if referents is None:
             return None
-        if self.identifications[object_type].kind == "direct":
+        if self.identifications[object_type].kind in {"direct", "unit"}:
             node["expression"] = referents[0]["expression"]
         else:
             node["referent_mappings"] = referents

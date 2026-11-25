@@ -98,6 +98,11 @@ a reason it is not. The reasons you are most likely to meet:
 | `identification-differs` | The ontology and the tables identify an object in different ways, so the link between them is not written. |
 | `arity-over-limit` | A fact type with more than 32 roles. It keeps its table, and the mapping does not link it. |
 
+Unit-based identifiers use a `Decimal` relationship. Inheriting subtypes
+with several supertypes use the first declared supertype's identifier.
+Importing the ontology with its GND sidecar restores the original reference
+declarations, including the unit and measure type.
+
 Three limits follow from the same principle of listing and not guessing:
 
 - A model that yields no table at all writes the ontology's three files and

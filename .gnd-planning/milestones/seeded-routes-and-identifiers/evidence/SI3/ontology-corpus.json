@@ -1,0 +1,258 @@
+{
+  "format": "json",
+  "baseline": "99cf3df2",
+  "models": [
+    {
+      "model": "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml",
+      "old_sha256": "28a6258888b3124caf84f71f4ff54cd753f66167e9c9a055317966ab1a4056b7",
+      "new_sha256": "6fe2525e8aec64846cfbf5ae7b5221a9b5b0a028702edde8b18c27ee84beaede",
+      "fixture": "expected/01.json",
+      "edits": [
+        [
+          "mass",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/coverage/mixed/v2_operations.orm.yaml",
+      "old_sha256": "ff51e5e929397605b61198f0a29aa43a138d21926537af7417ab6a45085a28cf",
+      "new_sha256": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015",
+      "fixture": "expected/02.json",
+      "edits": [
+        [
+          "effort",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/coverage/positional/library.orm.yaml",
+      "old_sha256": "07aa9a34fe048a21b00ae470c81e1f86693b0a1efba7241b17bd3b9cbba37e52",
+      "new_sha256": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654",
+      "fixture": "expected/03.json",
+      "edits": [
+        [
+          "loan_period",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/guarded/models/undecidable.orm.yaml",
+      "old_sha256": "49b12f98671480a8cebc9bb1a5db5294bd873b62a43e49abdbf20356feff4c4d",
+      "new_sha256": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7",
+      "fixture": "expected/04.json",
+      "edits": [
+        [
+          "opaque",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml",
+      "old_sha256": "195a6462aa1d6647ff1384b53ada6a1ee270e31324d68fb9891e1f021e543377",
+      "new_sha256": "d2a5005be4119222532929f157d444b820cfe13afa5780163486c7acb32ec7d5",
+      "fixture": "expected/05.json",
+      "edits": [
+        [
+          "director",
+          "first-supertype",
+          "manager",
+          [
+            "gnd_reference"
+          ]
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml",
+      "old_sha256": "ad895d6e7119f6e74f4720ff6ed711c344edb2c0ff0af00a31dcc9104e112f76",
+      "new_sha256": "c0e1c96d5379d201a34e58f1bddda8b6cf91d8872c6aba1a2f36ef818f6c9ac7",
+      "fixture": "expected/06.json",
+      "edits": [
+        [
+          "director",
+          "first-supertype",
+          "manager",
+          [
+            "gnd_reference"
+          ]
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml",
+      "old_sha256": "76d07d56fbfc327686073a834ca42323d3e6ea78c2dd2a59605bcb2f75991e42",
+      "new_sha256": "9f848181e59d7953db726802772d865c7c7484bf604ac4e54ef53cf8b4c542df",
+      "fixture": "expected/07.json",
+      "edits": [
+        [
+          "director",
+          "first-supertype",
+          "manager",
+          [
+            "gnd_reference"
+          ]
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml",
+      "old_sha256": "cb3de027d8cd968e82c78d9bc7cf6c9acde46ccf29324bd50554aa61d8cad52b",
+      "new_sha256": "330d9d1dc4c3ef18ccdbebc742735f0b2603c6918f32a3dbc6dd78c00e92eb4e",
+      "fixture": "expected/08.json",
+      "edits": [
+        [
+          "director",
+          "first-supertype",
+          "manager",
+          [
+            "gnd_reference"
+          ]
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml",
+      "old_sha256": "4abbdcb392d80ca77b7262d298853ebf47cf5e869cbe62d1567b79f6326e8810",
+      "new_sha256": "34aec2ef9894996dfdb368358557fe2161c14c936977b85521a21154d5914874",
+      "fixture": "expected/09.json",
+      "edits": [
+        [
+          "d",
+          "first-supertype",
+          "x",
+          [
+            "gnd_reference"
+          ]
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/ilp_learners/close/family.orm.yaml",
+      "old_sha256": "7b8f1a909ad7b22244b2a63c2fd456cf194c2d9fabfac469b1685231ca737a87",
+      "new_sha256": "e01f6c2881ddade20b7e3343f9ed53d2ba1423826b515c44f1cc887786221ffe",
+      "fixture": "expected/10.json",
+      "edits": [
+        [
+          "x",
+          "first-supertype",
+          "p",
+          [
+            "gnd_reference"
+          ]
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/ilp_learners/close/multi.orm.yaml",
+      "old_sha256": "9af5ca5d89249e4b7e46aa02ac15462bc6690d9a25fd10846b195aa19ee553c2",
+      "new_sha256": "2417cd96729e1d4576c34f1e2fd67b5128cc45ce9e1168b037171c0b62aeb7d2",
+      "fixture": "expected/11.json",
+      "edits": [
+        [
+          "manager",
+          "first-supertype",
+          "staff",
+          [
+            "gnd_reference"
+          ]
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/models/full_vocabulary.orm.yaml",
+      "old_sha256": "9451deb9b1a4e0e485419e6a7921a21ac4ec61af38739c77d1f562b92aae9f2e",
+      "new_sha256": "bdc6b86573c41c20dee528c1f991a408cf12fd77063d3aee56c9d7229e615e5a",
+      "fixture": "expected/12.json",
+      "edits": [
+        [
+          "salary",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/models/library.orm.yaml",
+      "old_sha256": "07aa9a34fe048a21b00ae470c81e1f86693b0a1efba7241b17bd3b9cbba37e52",
+      "new_sha256": "8b4d14a9f93d4309a2591f50d03ece3350c36151192e56c09addfe5acdd1f654",
+      "fixture": "expected/13.json",
+      "edits": [
+        [
+          "loan_period",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/models/v2_operations.orm.yaml",
+      "old_sha256": "ff51e5e929397605b61198f0a29aa43a138d21926537af7417ab6a45085a28cf",
+      "new_sha256": "4903fe7150bce5343fde628402478f4bb820548ac95870acd13c132b1f87c015",
+      "fixture": "expected/14.json",
+      "edits": [
+        [
+          "effort",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml",
+      "old_sha256": "0a4bcc6c166a465bcc0380b79ac14422bc36b7b10b9b97b7efdf53e46cd0fff0",
+      "new_sha256": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10",
+      "fixture": "expected/15.json",
+      "edits": [
+        [
+          "mass",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml",
+      "old_sha256": "49b12f98671480a8cebc9bb1a5db5294bd873b62a43e49abdbf20356feff4c4d",
+      "new_sha256": "1393dfcd54ed1c8c5ca1f8e97a2328f694c57815cbcb0c01186e98bd6c7cbdb7",
+      "fixture": "expected/16.json",
+      "edits": [
+        [
+          "opaque",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    },
+    {
+      "model": "tests/fixtures/public-semantic-shapes/model.orm.yaml",
+      "old_sha256": "0a4bcc6c166a465bcc0380b79ac14422bc36b7b10b9b97b7efdf53e46cd0fff0",
+      "new_sha256": "73cd099f6e3fa28236d9d242576ff435d769a074bacdf78638f08f55a97d3f10",
+      "fixture": "expected/17.json",
+      "edits": [
+        [
+          "mass",
+          "unit-based",
+          "gnd_reference",
+          "Decimal"
+        ]
+      ]
+    }
+  ]
+}

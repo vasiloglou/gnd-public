@@ -2,6 +2,7 @@
 
 Version 0.5.0, published on 2026-11-25, is the latest release; 0.4.0, 0.3.0,
 0.2.0 and 0.1.0 came before it. Version 0.5.1 is a GitHub tag only and is not
+published on the package index. Version 0.5.2 is a GitHub tag only and is not
 published on the package index. Releases follow the [release
 procedure](releasing.md). Changes on `main` after a release are listed in an
 `Unreleased:` section until the next one.
@@ -9,6 +10,28 @@ procedure](releasing.md). Changes on `main` after a release are listed in an
 ## Unreleased
 
 The first release carrying this notice keeps the live refactoring aliases. The migration guide lists replacements and patch sites. See the [import migration guide](refactoring-import-migration.md).
+
+## 0.5.2 (tagged 2026-11-25, not published on PyPI)
+
+0.5.2 is a GitHub tag only. Install it from the tag:
+
+```sh
+uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.5.2"
+```
+
+- `gnd flatten`, `gnd extract`, and all three PyRel export modes accept
+  unattended roots with reviewed includes. Pass the authored root when a
+  standalone flat model is refused with `unattended:flat-without-root`.
+  ([#292](https://github.com/vasiloglou/gnd-public/issues/292))
+
+- Composite reference identity prefers a confirmed alethic external uniqueness
+  marked `preferred`. When none qualifies, GND uses the first anchored
+  declaration. ([#279](https://github.com/vasiloglou/gnd-public/issues/279))
+
+- Ossie export supplies identifiers for unit-based references and for
+  inheriting subtypes with several supertypes. These identifiers change the
+  ontology bytes and let the relational mapping carry the associated links.
+  ([#280](https://github.com/vasiloglou/gnd-public/issues/280))
 
 ## 0.5.1 (tagged 2026-11-25, not published on PyPI)
 

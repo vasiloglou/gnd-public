@@ -112,6 +112,11 @@ include, naming what it carries. The new constraint's source follows
 The packaged example `src/gnd/examples/seeded_growth/` runs the whole path: a seed, an empty root,
 two rounds, then `gnd validate`, `gnd check` and `gnd judgments check`.
 
+Pass the authored root to `gnd flatten`, `gnd extract`, or any PyRel export
+mode so GND can check the include pins. If direct use of a written flat file
+reports `unattended:flat-without-root`, retry with the authored root.
+See the [flattening contract](../../gnd-orm-core/references/representation-format.md#extraction-flattening-record).
+
 When the vocabulary cannot be included (it is unattended itself, or nests includes), carry its claims
 into the root as `imported`, `proposed` and `deontic`, with the vocabulary file as the root's first
 document and a span on each element. Inside the growth model those claims then read as unreviewed.

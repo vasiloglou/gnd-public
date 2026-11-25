@@ -196,6 +196,16 @@ def _relationship(fact, names, order, role_types):
 
 
 def _add_references(objects, components, names, functional_links, constraints, mapped, indexes, identification):
+    # A subtype resolves identifiers through its own relationships first.
+    # Keep authored relationship names available throughout a multi-parent ontology.
+    default_key = "gnd_reference"
+    if any(obj.get("inherits_reference") and len(obj.get("subtype_of") or ()) > 1
+           for obj in objects.values()):
+        authored_names = {rel["name"] for component in components.values()
+                          for rel in component.get("relationships", ())}
+        while default_key in authored_names:
+            default_key = "_" + default_key
+
     # Pre-index composite UC candidates by their shared identifying entity.
     composite = {}
     for i, constraint in enumerate(constraints):
@@ -231,25 +241,30 @@ def _add_references(objects, components, names, functional_links, constraints, m
         component = components[oid]
         mode = ref.get("mode")
         path = ("object_types", indexes[oid], "reference")
-        if mode in {"popular", "general"}:
-            value_type = ref["value_type"]
+        if mode in {"popular", "general", "unit-based"}:
+            unit_based = mode == "unit-based"
+            value_type = ref.get("value_type")
             rels = component.setdefault("relationships", [])
             used = {r["name"] for r in rels}
-            key = "gnd_reference"
+            key = default_key
             while key in used:
                 key = "_" + key
             rels.append(
                 {
                     "name": key,
-                    "roles": [{"concept": names[value_type]}],
-                    "verbalizes": [f"{{{names[oid]}}} is identified by {{{names[value_type]}}}"],
+                    "roles": [{"concept": "Decimal" if unit_based else names[value_type]}],
+                    "verbalizes": [
+                        f"{{{names[oid]}}} is identified by {{{'Decimal' if unit_based else names[value_type]}}}"
+                    ],
                     "multiplicity": "OneToOne",
                 }
             )
             component["identify_by"] = [key]
-            identification[oid] = ("simple", key)
+            identifier = ("unit", oid) if unit_based else ("direct", value_type)
+            identification[oid] = ("simple", (key, *identifier))
             mapped[path] = _NATIVE_LITERAL
-            mapped[(*path, "value_type")] = _NATIVE_LITERAL
+            if not unit_based:
+                mapped[(*path, "value_type")] = _NATIVE_LITERAL
         elif mode == "external" and oid in composite:
             _, index, links = composite[oid]
             component["identify_by"] = links
@@ -264,24 +279,22 @@ def _inherit_identifiers(objects, components, indexes, mapped, identification):
         order = list(TopologicalSorter(parents).static_order())
     except CycleError as error:
         raise OssieInputError("ossie:cyclic-subtypes") from error
-    direct = {
-        oid
-        for oid, obj in objects.items()
-        if (obj.get("reference") or {}).get("mode") in {"popular", "general"}
-    }
     for oid in order:
-        if not objects[oid].get("inherits_reference") or len(parents[oid]) != 1:
+        declared = parents[oid]
+        if not objects[oid].get("inherits_reference") or not declared:
             continue
         parent = parents[oid][0]
-        if parent not in direct:
+        if parent not in identification:
+            continue
+        parent_identifier = identification[parent]
+        if len(declared) == 1 and parent_identifier[0] != "simple":
             continue
         child = components[oid]
         inherited = components[parent]["identify_by"]
         own_names = {relationship["name"] for relationship in child.get("relationships", ())}
         if inherited and not child.get("identify_by") and own_names.isdisjoint(inherited):
             child["identify_by"] = list(inherited)
-            identification[oid] = identification[parent]
-            direct.add(oid)
+            identification[oid] = parent_identifier
             mapped[("object_types", indexes[oid], "inherits_reference")] = _NATIVE_LITERAL
 
 

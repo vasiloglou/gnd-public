@@ -230,9 +230,9 @@ def main():
                     state,
                     disposition,
                     release,
-                    " ".join(sorted(consumers[old])),
-                    " ".join(sorted(patches[old])),
-                    " ".join(sorted(patches[new])),
+                    " ".join(sorted(consumers[old])) or "—",
+                    " ".join(sorted(patches[old])) or "—",
+                    " ".join(sorted(patches[new])) or "—",
                 )
             )
 

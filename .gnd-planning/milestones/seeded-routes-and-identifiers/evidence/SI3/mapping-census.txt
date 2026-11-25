@@ -1,0 +1,18 @@
+concepts        objectification                            2 rows in 2 models
+unmapped_links  objectification                            4 rows in 2 models
+
+  ('concepts', 'src/gnd/examples/literature/assertions/model.orm.yaml', 'Assertion', ['objectification'])
+  ('unmapped_links', 'src/gnd/examples/literature/assertions/model.orm.yaml', 'assertion_names_passage', ['objectification'])
+  ('unmapped_links', 'src/gnd/examples/literature/assertions/model.orm.yaml', 'assertion_names_work', ['objectification'])
+  ('concepts', 'src/gnd/examples/literature/lineage/model.orm.yaml', 'Assertion', ['objectification'])
+  ('unmapped_links', 'src/gnd/examples/literature/lineage/model.orm.yaml', 'assertion_names_passage', ['objectification'])
+  ('unmapped_links', 'src/gnd/examples/literature/lineage/model.orm.yaml', 'assertion_names_work', ['objectification'])
+
+multi-supertype subtypes:
+  ('tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml', 'director', ['manager', 'staff'], ['popular', 'popular'], True)
+  ('tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml', 'director', ['manager', 'staff'], ['popular', 'popular'], True)
+  ('tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml', 'director', ['manager', 'staff'], ['popular', 'popular'], True)
+  ('tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml', 'director', ['manager', 'staff'], ['popular', 'popular'], True)
+  ('tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml', 'd', ['x', 'y'], ['popular', 'popular'], True)
+  ('tests/fixtures/ilp_learners/close/family.orm.yaml', 'x', ['p', 'q'], ['popular', 'popular'], True)
+  ('tests/fixtures/ilp_learners/close/multi.orm.yaml', 'manager', ['staff', 'person'], ['popular', 'popular'], True)

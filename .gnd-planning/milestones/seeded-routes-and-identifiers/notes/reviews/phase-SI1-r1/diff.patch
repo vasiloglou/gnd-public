@@ -1,0 +1,836 @@
+diff --git a/.gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI1-spec.md b/.gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI1-spec.md
+index 6cd76fad..1b906b38 100644
+--- a/.gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI1-spec.md
++++ b/.gnd-planning/milestones/seeded-routes-and-identifiers/notes/phase-SI1-spec.md
+@@ -2,10 +2,10 @@
+ 
+ ## 1. Status
+ 
+-**r2, draft. No ruling and no implementation.** Written on 2026-11-25 against
++**r3, owner-decided (2026-11-25), approved for implementation.** Written on 2026-11-25 against
+ main `f7ee3720`; r2 follows the [plan](seeded-routes-and-identifiers-plan.md)
+-r2 (its §11, A1, A4, A5, A8). No review has read this spec. D1 is the owner's;
+-the rest is approved by delegated ruling once the plan gate is recorded.
++r2 (its §11, A1, A4, A5, A8). No independent spec review was selected. The owner's D1 ruling and the
++delegated spec ruling are recorded below.
+ 
+ ## 2. Provenance
+ 
+@@ -71,6 +71,67 @@ each: whether it has the root's resolved, pin-checked includes at hand. The
+ list is the row set of plan predicate 1's table and decides D1b's
+ detection.
+ 
++#### E1 baseline, 2026-11-25
++
++Measured at `99cf3df2` using the checkout's source on `PYTHONPATH` with the
++existing development environment. The grown case applies the two packaged
++proposals using the example README. The packaged check/discover population
++contains the seed fact and roster only (removed the grown author fact,
++roster and coverage entry from the packaged population).
++
++Both flatten commands fail before writing. The candidate columns below use
++the exact pre-re-entry bytes: `model_wire(load_model(root))`, dropping
++`includes` and `fact_type_constraints`, then `canonical_json_bytes`.
++Validate on a byte-identical renamed copy returned the same result for each
++candidate. These are prospective bytes, before any flatten artifact exists.
++
++| Command | Packaged root | Grown root | Packaged candidate flat bytes | Grown candidate flat bytes |
++|---|---|---|---|---|
++| `validate` | 0 | 0 | 3, U1–U5 | 3, U2–U5 |
++| `check` | 0 | 0 | 3, U1–U5 | 3, U2–U5 |
++| `flatten` | 1, traceback | 1, traceback | 3, U1–U5 | 3, U2–U5 |
++| `extract` | 3, U1–U5 | 3, U2–U5 | 3, U1–U5 | 3, U2–U5 |
++| `export pyrel` | 3, U1–U5 messages | 3, U2–U5 messages | 0 | 0 |
++| `export pyrel --rules duckdb` | 3, U1–U5 messages | 3, U2–U5 messages | 3, U1–U5 messages | 3, U2–U5 messages |
++| `export pyrel --rules lqp` | 3, U1–U5 messages | 3, U2–U5 messages | 3, U1–U5 messages | 3, U2–U5 messages |
++| `verbalize model` | 0 | 0 | 3, U1–U5 | 3, U2–U5 |
++| `coverage` | 0 | 0 | 3, U1–U5 | 3, U2–U5 |
++| `discover` | 70, generated candidate fails U1 | 0 | 3 | 3 |
++
++U1–U5 denote `semantic:unattended-u1` through `semantic:unattended-u5`.
++The PyRel error text carries the issues' messages without their IDs. Grown
++`validate --require-documents` with both documents and `judgments check` with
++the shipped policy and receipts also exited 0. Both rounds' evolve preview
++and apply exited 0.
++
++Source-level route inventory supplements the command matrix:
++
++| Route or intake | Root and pin context | Flat-byte behavior or boundary |
++|---|---|---|
++| Validate/check, compose, coverage, judgments check, discover, evolve preview/apply/finalize | Rooted model intake verifies pins. Discover also validates its generated candidate, and evolve validates authored candidates. Judgments binds before checking. | Ordinary validation consumes a standalone model without include context. The packaged discover failure is on a generated candidate that adds to a document-less root, independent of flattening. |
++| Model and population verbalization, evolve shapes | Model verbalization loads the root directly. Population verbalization uses the model/population service. Evolve shapes compares the loaded model and candidate inside evolve. | No separate flatten re-entry. `shapes` is a service, not an evolve CLI verb. |
++| Flatten, extract, verify | All three have the authenticated root when calling `flatten_model`. Verify also checks the derived flat/record pair against the extraction index. | All depend on flattening's internal reload. A valid seeded extraction bundle is unavailable on this baseline, so the verify row is a source observation. |
++| Default PyRel | Export resolves and checks pins before flattening a root. | The emitter and generated runtime parse the bytes for their own structural admission, which explains its exit 0 on standalone candidate bytes. |
++| DuckDB and LQP rule exporters | Both use the same pinned-root export path. | The rules renderer calls `load_model_bytes` again after flattening. Fixing only the first reload leaves both rule exporters refusing. |
++| Rooted witness/replay, with or without a composition record | `resolved_projection` authenticates the root and derives the flat pair. An optional supplied pair is compared against those bytes. A witness probe exited 3 with `input-invalid` for each seeded root. | Witness subsequently calls `load_flat_model` for evaluation. Independent replay parses the projected bytes for certificate checking. Neither obtains authority from the supplied record. |
++| Ossie and ILP exports, import adapters, standalone skill scripts, other guarded routes | These use their existing format or route guards. Ossie and why-not returned `include:unsupported-route` on both roots. | No path in these adapters obtains authenticated flat provenance from a standalone model. Keep their existing route boundaries. |
++
++The wire keeps `source.mode: unattended` but carries no origin or ownership
++field. A consumer of those bytes alone has no way to distinguish the same
++bytes authored directly from bytes flattened from a reviewed seed. A file
++suffix is only a naming convention. A flattening record can supply a caller
++hint but cannot prove the exemption independently of resolving the root
++and pins. D1b must account for this limitation. If D1 selects in-process
++acceptance, the default PyRel command also needs an explicit admission
++check at its standalone unattended input boundary to enforce the plan's
++refusal predicate. Its generated runtime receives the already admitted
++projection.
++
++The E1 inventory extends the focused affected-consumer selection to
++`tests/test_lx2_witness_flattening.py`, `tests/test_pyrel_export_boundaries.py`,
++`tests/test_extract_cli.py`, and `tests/test_include_root_close.py` in
++addition to T7. The expectations under the adopted D1 ruling follow below.
++
+ ### D1: what a seeded root's flat form does
+ 
+ | Reading | What it does | Cost |
+@@ -97,13 +158,58 @@ names the seed's elements and reads like the host's error.
+ | M4 | `representation-format.md` (the two sections), `unattended-growth.md` (the include route list) | what each route does with a seeded root |
+ | M5 | `docs/release-notes.md` | a bullet under `Unreleased:` |
+ 
++### Adopted design (o)
++
++| Capability | Index searches and disposition |
++|---|---|
++| Root admission and flattening | `flatten model`, `resolved model flattening`, `unattended source`; adapt `model.loading` and `extract.flatten_service`. |
++| PyRel admission | `PyRel export`, `flatten model`; adapt `export.include_roots`, `export.pyrel_emit` and `export.pyrel_rules`. |
++| Rooted witnesses | `witness replay`, `witness flattening`; adapt the existing projection consumer in `witness.service`. |
++
++`_model_warnings(doc, origins, *, flat_root=False)` uses the same
++`included_rows` and validation order for a loader-derived projection.
++Its private, reset-on-exit context lets `_owns_nothing` recognize a flat
++projection of a root, with ownership evaluated from the projected elements.
++`flatten_model` returns the reopened model with the unchanged canonical
++flat and record bytes. Rules export and witness evaluation reuse that model.
++The standalone default PyRel emitter additionally validates unattended input
++with the GND model loader, before its usual profile admission.
++
++**D1b diagnostic.** The byte stream has no distinguishing signal. When
++unrooted unattended validation refuses and at least one error is from a rule
++with a reviewed-include exemption, add the single named diagnostic
++`unattended:flat-without-root` at `$.source`, directing callers to load the
++root if this is a flattened seeded model. Preserve the underlying rule IDs
++and paths for directly authored input. No input marker, path suffix or
++adjacent record is interpreted as proof. Unrooted input that passes ordinary
++validation is admitted as usual. A structural failure stays first.
++
++**Expected route matrix.** For each packaged and twice-grown root,
++`validate`, `check`, `flatten`, `extract` and the three PyRel modes exit 0.
++For each written flat file loaded directly, the same seven routes exit 3 with
++`unattended:flat-without-root`; repeat after renaming the file. A validation
++refusal after flatten re-entry yields exit 3 with `flattening:re-entry` and
++the originating diagnostics. Extraction verification and witness evaluation
++with the root rederive the flat projection from the pins.
++
++**Standing-rule and implementability sweep.** Existing bounded model
++parsers are used at the intake and malformed input still goes through
++structural validation before semantic rules. Ownership uses one existing
++origin walk across element kinds. A large seeded projection gets a time-bound
++control for the added validation work. The representation format owns the
++policy, with a link from the guide. The E1 renamed-file and default PyRel
++probes settle the contested detection and admission questions. No wire format
++or model query changes, and this phase has no tag step. Existing reference
++path coordinates and the independently checked witness/verify bindings
++remain part of the contract.
++
+ ## 7. Decisions
+ 
+ | ID | Question | Readings | Ruling |
+ |---|---|---|---|
+-| D1 | a seeded root's flat form | (a), (b), (c) above | **the owner's**; proposed: (a) |
+-| D1b | the written flat file loaded on its own, under (a) | a named refusal, or today's U2 to U5 list | open; proposed: a named refusal, if E1 shows it can be detected |
+-| D2 | the round budget for the review | one round, a second only over a repair, then stop | open; proposed: yes |
++| D1 | a seeded root's flat form | (a), (b), (c) above | (a), owner ruling 2026-11-25 (o) |
++| D1b | the written flat file loaded on its own, under (a) | a named refusal, or today's U2 to U5 list | Named conditional diagnostic with the underlying rule IDs (o); see adopted design |
++| D2 | the round budget for the review | one round, a second only over a repair, then stop | One diff review, a second only over a repair; no spec review |
+ 
+ Rulings are appended below this line, each with its date, source and the
+ SHA-256 of the spec bytes it covers.
+@@ -122,7 +228,7 @@ SHA-256 of the spec bytes it covers.
+ 
+ ### Verification selection
+ 
+-Focused: T1 to T7 and the structure guards of `project.md`. Impact closure:
++Focused: `tests/test_si1_seeded_routes.py` for T1 to T6, plus T7 and the structure guards of `project.md`. Impact closure:
+ every test file that loads an include root or a flat model. Broad: the full
+ default lane on beast-3 before the pull request. No opt-in lane.
+ 
+@@ -142,11 +248,41 @@ default lane on beast-3 before the pull request. No opt-in lane.
+ 
+ ## 10. Size
+ 
+-About 40 production lines, 120 test lines and 20 lines of normative text and
+-guide. Past twice that, the phase pauses.
++Draft estimate: 40 production lines, 120 test lines and 20 documentation lines.
++E1 found the second PyRel and witness reloads and the standalone PyRel admission
++gap. Revised estimate: 80 production lines, 145 test lines and 20 documentation
++lines. The twice-estimate stop rule applies to the revised estimate.
+ 
+ ## 11. Approval instrument
+ 
+-This prose, E1's result and D1's ruling. Corpus-first is not used: no
+-exported format changes under (a); D1b adds one rule id, which the normative
+-text lists.
++This prose, E1's result, and the expected exit matrix above. Existing canonical
++wire bytes give a comparison baseline. The new exit-3 diagnostic is pinned by
++the matrix and the injected re-entry control; this phase proposes no new wire
++format.
++
++### Approval record
++
++Owner decision (o), 2026-11-25, on E1 draft SHA-256 `02b304a94130036d7d6694d18586937a785328586b9f2703a20317806f5f7ef5`.
++The owner's message in this chat approved D1: accept seeded roots in process
++and give standalone flat files that need the exemptions a named refusal
++directing users to load the root. The owner also renewed `auto=true`.
++
++Delegated approval (auto=true), 2026-11-25. Approved SI1 r3 through the
++previous paragraph, SHA-256 `3b38ff5baca25146b7817314a904243ef97c8541d43bcf2d62b0b8c9cc63897b`. Source: the owner's D1 ruling
++and renewed milestone execution delegation in this chat. Scope: SI1 spec,
++D1b implementation and compatibility, and focused verification. Instrument:
++spec prose, E1 command results, and the route matrix. Budget: one independent
++phase diff review via the project's review helper, a second only over a
++repair. Optional spec review omitted. Owner merge and reserved milestone
++decisions retain their own gates.
++
++Scope clarification and instrument selection, 2026-11-25. The owner selected
++Claude Code with Opus for the independent phase diffs in this milestone.
++Start the helper through its existing Claude login. The rooted witness
++producer and verifier also run a bounded structural intake. That reader
++retains its existing checks and compares the model bytes it consumes against
++the model already validated from the root and pins in the current invocation.
++The witness/replay fixture exercises this path and the extraction verifier
++rederives its bundle in the same fixture. The full default lane on beast-3
++is a milestone close gate under plan §9. Per-phase verification uses the
++focused default lane with the project's standing exclusions.
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 8a0b6e0d..91161f91 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1678,7 +1678,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - out: Python source string; callers own publication.
+ - status: canonical
+ - modules: src/gnd/export/emit.py
+-- uses: export.include_roots, export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms
++- uses: export.include_roots, export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms, model.validation
+ - used_by: cli.export_command, export.applications
+ - tests: tests/test_pyrel_export.py, tests/test_pyrel_native_seam.py
+ - notes: The checker runtime is embedded verbatim without importing the foreign runtime during export; render_pyrel_rules delegates to export.pyrel_rules. An include root is exported through its flat model (export.include_roots); other models keep the one-read path.
+@@ -1878,7 +1878,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py, src/gnd/model/_guarded.py, src/gnd/model/_parsing.py
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions, witness.service
++- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, export.pyrel_emit, extract.service, model.loading, model.operation_obligations, semantics.extensions, witness.service
+ - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py, tests/test_go1_evolve_parse_once.py
+ - checked: partial
+ - notes: The parsing module's parse scope (GO1, #228) keys a parsed document by the sha256 of its bytes and the strict-JSON reader bit and shares it, uncopied, for one `gnd evolve` command; tests switch on its write check (`set_parse_scope_verify`) through an autouse fixture. The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 976eae0c..3eed1773 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -3053,7 +3053,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/export/ilp_popper.py -> src/gnd/exits.py`
+ 
+ ### export.pyrel_emit
+-- uses: export.include_roots, export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms
++- uses: export.include_roots, export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms, model.validation
+ - used_by: cli.export_command, export.applications
+ 
+ #### export.pyrel_emit -> export.include_roots
+@@ -3075,6 +3075,9 @@ Generated by `scripts/components_index.py`.
+ #### export.pyrel_emit -> model.scalar_terms
+ - `src/gnd/export/emit.py -> src/gnd/terms.py`
+ 
++#### export.pyrel_emit -> model.validation
++- `src/gnd/export/emit.py -> src/gnd/model/_unattended.py`
++
+ ### export.pyrel_rules
+ - uses: export.include_roots, export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, model.scalar_terms, semantics.transitions
+ - used_by: examples.plan_apps, export.ossie, export.pyrel_emit
+@@ -4369,7 +4372,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.validation
+ - uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
+-- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, extract.service, model.loading, model.operation_obligations, semantics.extensions, witness.service
++- used_by: evolve.command, evolve.service, examples.literature_assertion_admission, export.pyrel_emit, extract.service, model.loading, model.operation_obligations, semantics.extensions, witness.service
+ 
+ #### model.validation -> check.universe
+ - `src/gnd/model/_guarded.py -> src/gnd/universe.py`
+diff --git a/dev/components/modules/export.md b/dev/components/modules/export.md
+index e67e1054..39ad7b6a 100644
+--- a/dev/components/modules/export.md
++++ b/dev/components/modules/export.md
+@@ -27,8 +27,8 @@ Offline publication of a self-contained optional PyRel program.
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 19 | Render from one bounded input read; no checker or foreign-runtime import. |
+-| `render_pyrel_rules(model_path, target)` | function | 70 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+-| `render_pyrel_rules_report(model_path, target)` | function | 77 | The rules program and the ids of the rules it lists as not checked. |
++| `render_pyrel_rules(model_path, target)` | function | 76 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
++| `render_pyrel_rules_report(model_path, target)` | function | 83 | The rules program and the ids of the rules it lists as not checked. |
+ 
+ ## gnd.export.ilp — `src/gnd/export/ilp.py`
+ Components: export.ilp_neutral
+@@ -165,9 +165,10 @@ Export an include root through its flat model (include-root-routes IR3).
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `FlatExport` | class | 17 | An include root's flat model, as ``gnd flatten`` would write it. |
+-| `flatten_for_export(model_path, raw)` | function | 25 | The flat model to export for an include root, or None for any other model. |
+-| `flattening_constants(flat) -> str` | function | 63 | The two program lines that record an exported flattening; empty for None. |
++| `FlatExport` | class | 21 | An include root's flat model, as ``gnd flatten`` would write it. |
++| `flatten_for_export(model_path, raw)` | function | 30 | The flat model to export for an include root, or None for any other model. |
++| `model_validation_message(error) -> str` | function | 68 | (no docstring) |
++| `flattening_constants(flat) -> str` | function | 76 | The two program lines that record an exported flattening; empty for None. |
+ 
+ ## gnd.export.lean — `src/gnd/export/lean.py`
+ Components: export.lean_lowering
+diff --git a/dev/components/modules/model.md b/dev/components/modules/model.md
+index 3b18851c..bd523d29 100644
+--- a/dev/components/modules/model.md
++++ b/dev/components/modules/model.md
+@@ -9,21 +9,21 @@ Model loading with two-layer validation.
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ | `load_model_bytes(data, *, source) -> Model` | function | 290 | Validate one immutable bounded buffer; source is diagnostic metadata. |
+-| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 373 | Resolve the authored model and bind references under one retained root. |
+-| `load_model(path) -> Model` | function | 438 | Read model and reference bytes beneath a single retained directory. |
+-| `ReferenceOrigin` | class | 498 | (no docstring) |
+-| `OccurrenceOrigin` | class | 504 | (no docstring) |
+-| `BoundReferenceContext` | class | 510 | (no docstring) |
+-| `BoundPopulationView` | class | 520 | (no docstring) |
+-| `validate_reference_structure(document) -> None` | function | 527 | (no docstring) |
+-| `validate_declarations(model) -> dict[str, str]` | function | 542 | (no docstring) |
+-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 649 | (no docstring) |
+-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 655 | Bind a model's declared reference populations at ``root``, or return None |
+-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 670 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+-| `resolve_context(model, references) -> BoundReferenceContext` | function | 679 | (no docstring) |
+-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 711 | (no docstring) |
+-| `candidate_fact_count(view) -> int` | function | 787 | (no docstring) |
+-| `is_bound_population(model, population, context) -> bool` | function | 791 | Recognize only a current combined population created by this binder. |
++| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 379 | Resolve the authored model and bind references under one retained root. |
++| `load_model(path) -> Model` | function | 444 | Read model and reference bytes beneath a single retained directory. |
++| `ReferenceOrigin` | class | 504 | (no docstring) |
++| `OccurrenceOrigin` | class | 510 | (no docstring) |
++| `BoundReferenceContext` | class | 516 | (no docstring) |
++| `BoundPopulationView` | class | 526 | (no docstring) |
++| `validate_reference_structure(document) -> None` | function | 533 | (no docstring) |
++| `validate_declarations(model) -> dict[str, str]` | function | 548 | (no docstring) |
++| `bind_references(model, *, root) -> BoundReferenceContext` | function | 655 | (no docstring) |
++| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 661 | Bind a model's declared reference populations at ``root``, or return None |
++| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 676 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
++| `resolve_context(model, references) -> BoundReferenceContext` | function | 685 | (no docstring) |
++| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 717 | (no docstring) |
++| `candidate_fact_count(view) -> int` | function | 793 | (no docstring) |
++| `is_bound_population(model, population, context) -> bool` | function | 797 | Recognize only a current combined population created by this binder. |
+ 
+ ## gnd.model._documents — `src/gnd/model/_documents.py`
+ Components: model.json_document
+@@ -105,11 +105,12 @@ MG5 unattended source mode (model-growth-guardrails milestone).
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `SpanCoverage` | class | 330 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
+-| `SpanCoverage.unchecked(self) -> int` | method | 342 | (no docstring) |
+-| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 345 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
+-| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 398 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+-| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 410 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
++| `flat_without_root_issue(issues) -> ValidationIssue \| None` | function | 69 | Explain a possible missing root while retaining the actual validation errors. |
++| `SpanCoverage` | class | 347 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
++| `SpanCoverage.unchecked(self) -> int` | method | 359 | (no docstring) |
++| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 362 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
++| `unattended_span_issues(doc, documents, *, included) -> list[ValidationIssue]` | function | 415 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
++| `unattended_span_coverage(doc, documents, *, included) -> SpanCoverage \| None` | function | 427 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
+ 
+ ## gnd.model._validation — `src/gnd/model/_validation.py`
+ Components: model.validation
+@@ -141,4 +142,4 @@ Canonical re-entry bytes and provenance for a resolved model include root.
+ | --- | --- | --- | --- |
+ | `FlatteningError` | class(ValueError) | 14 | A resolved model cannot be represented within the flat wire contract. |
+ | `FlattenedModel` | class | 19 | (no docstring) |
+-| `flatten_model(model) -> FlattenedModel` | function | 24 | Serialize an include snapshot made by the model loader. |
++| `flatten_model(model) -> FlattenedModel` | function | 25 | Serialize an include snapshot made by the model loader. |
+diff --git a/dev/components/modules/witness.md b/dev/components/modules/witness.md
+index 206fd28b..d43be8d1 100644
+--- a/dev/components/modules/witness.md
++++ b/dev/components/modules/witness.md
+@@ -94,12 +94,12 @@ Bounded wire intake, structural validation and byte-bound input identities.
+ | `load_certificate(path, *, limits)` | function | 290 | (no docstring) |
+ | `witness_input_identity(model, candidate, *, references)` | function | 296 | (no docstring) |
+ | `identity(model, candidate, refs)` | function | 301 | (no docstring) |
+-| `intake(model_document, candidate_document, reference_inputs, *, limits)` | function | 313 | (no docstring) |
+-| `roster(model)` | function | 366 | (no docstring) |
+-| `validate_targets(targets, model)` | function | 375 | (no docstring) |
+-| `support_closure(model, targets)` | function | 401 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+-| `population_wire(pop)` | function | 457 | (no docstring) |
+-| `classify_targets(model, targets, populations)` | function | 471 | Classify each request independently, caching only within this call. |
++| `intake(model_document, candidate_document, reference_inputs, *, limits, _projected_model)` | function | 313 | (no docstring) |
++| `roster(model)` | function | 372 | (no docstring) |
++| `validate_targets(targets, model)` | function | 381 | (no docstring) |
++| `support_closure(model, targets)` | function | 407 | Conservative syntactic classifier; no tuple or comparison evaluation. |
++| `population_wire(pop)` | function | 463 | (no docstring) |
++| `classify_targets(model, targets, populations)` | function | 477 | Classify each request independently, caching only within this call. |
+ 
+ ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
+ Components: witness.replay
+@@ -126,7 +126,7 @@ Capture grounded firings from the production evaluator into a finite DAG.
+ | `GroundedTrace.add(self, node)` | method | 101 | (no docstring) |
+ | `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 118 | (no docstring) |
+ | `GroundedTrace.compact(self, roots)` | method | 165 | (no docstring) |
+-| `produce_witness(model, candidate, targets, *, references, limits)` | function | 182 | (no docstring) |
++| `produce_witness(model, candidate, targets, *, references, limits, _projected_model)` | function | 182 | (no docstring) |
+ 
+ ## gnd.witness.service — `src/gnd/witness/service.py`
+ Components: witness.service
+@@ -134,16 +134,16 @@ Bounded witness/replay input orchestration.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 173 | Produce finite witnesses, authenticating model origins for a rooted include model. |
+-| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 203 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+-| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 234 | Replay a finite proof with an independent local inference kernel. |
+-| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 263 | Replay a finite proof with an independent local inference kernel. |
+-| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 301 | Produce a composed witness whose base nodes name their source facts. |
+-| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 339 | Replay a witness against the composition record it binds. |
+-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 418 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 472 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 486 | Replay a finite proof with an independent local inference kernel. |
+-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 500 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `rooted_witness_result(model_path, population_path, targets_path, *, reference_root, flat_model, fla…` | function | 176 | Produce finite witnesses, authenticating model origins for a rooted include model. |
++| `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 206 | Produce finite witnesses; exit zero requires every requested tuple proved. |
++| `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 237 | Replay a finite proof with an independent local inference kernel. |
++| `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 266 | Replay a finite proof with an independent local inference kernel. |
++| `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 304 | Produce a composed witness whose base nodes name their source facts. |
++| `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 342 | Replay a witness against the composition record it binds. |
++| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 421 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 475 | Produce finite witnesses; exit zero requires every requested tuple proved. |
++| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 489 | Replay a finite proof with an independent local inference kernel. |
++| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 503 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+ 
+ ## gnd.witness.types — `src/gnd/witness/types.py`
+ Components: witness.schema
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index e7d48566..b2318fc4 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -6,6 +6,13 @@ published on the package index. Releases follow the [release
+ procedure](releasing.md). Changes on `main` after a release are listed in an
+ `Unreleased:` section until the next one.
+ 
++## Unreleased:
++
++- `gnd flatten`, `gnd extract`, and all three PyRel export modes accept
++  unattended roots with reviewed includes. Pass the authored root when a
++  standalone flat model is refused with `unattended:flat-without-root`.
++  ([#292](https://github.com/vasiloglou/gnd-public/issues/292))
++
+ ## 0.5.1 (tagged 2026-11-25, not published on PyPI)
+ 
+ 0.5.1 is a GitHub tag only. Install it from the tag:
+diff --git a/src/gnd/export/emit.py b/src/gnd/export/emit.py
+index 16f3e03c..958791e6 100644
+--- a/src/gnd/export/emit.py
++++ b/src/gnd/export/emit.py
+@@ -5,7 +5,7 @@ from __future__ import annotations
+ from importlib.resources import files
+ from pathlib import Path
+ 
+-from .include_roots import flatten_for_export, flattening_constants
++from .include_roots import flatten_for_export, flattening_constants, model_validation_message
+ from .pyrel_runtime import _constraint_entries, _parse_document, _read_text, admit_model
+ 
+ SCRIPT_HEADER = (
+@@ -30,13 +30,19 @@ def render_pyrel(
+     if flat is not None:
+         text = flat.model_bytes.decode("utf-8")
+     document = _parse_document(text)
+-    from gnd.errors import ModelValidationError
++    from gnd.errors import ModelLoadError, ModelValidationError, ReferenceInputError
++    from gnd.model import load_model_bytes
+     from gnd.model._includes import guard_document
++    from gnd.model._unattended import _unattended_source
+ 
+     from .pyrel_runtime import ExportInputError, ProfileRefusal
+     try:
+         guard_document(document, "export.pyrel")
++        if flat is None and _unattended_source(document) is not None:
++            load_model_bytes(text.encode("utf-8"), source=model_path)
+     except ModelValidationError as error:
++        raise ExportInputError(model_validation_message(error)) from error
++    except (ModelLoadError, ReferenceInputError) as error:
+         raise ExportInputError(str(error)) from error
+     from gnd.model import iter_derivation_clauses
+     from gnd.terms import guarded_clause_refusal, uses_temporal, where_uses_membership
+diff --git a/src/gnd/export/include_roots.py b/src/gnd/export/include_roots.py
+index 1a71b2c9..47683989 100644
+--- a/src/gnd/export/include_roots.py
++++ b/src/gnd/export/include_roots.py
+@@ -11,6 +11,10 @@ from __future__ import annotations
+ import hashlib
+ from dataclasses import dataclass
+ from pathlib import Path
++from typing import TYPE_CHECKING
++
++if TYPE_CHECKING:
++    from gnd.documents import Model
+ 
+ 
+ @dataclass(frozen=True)
+@@ -20,6 +24,7 @@ class FlatExport:
+     model_bytes: bytes
+     record_sha256: str
+     includes: tuple
++    model: Model
+ 
+ 
+ def flatten_for_export(model_path: Path, raw: bytes):
+@@ -47,8 +52,7 @@ def flatten_for_export(model_path: Path, raw: bytes):
+     except ExportInputError:
+         raise
+     except ModelValidationError as error:
+-        code = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
+-        raise ExportInputError(code or str(error)) from error
++        raise ExportInputError(model_validation_message(error)) from error
+     # ValueError covers UnicodeError from an include path that cannot be encoded;
+     # gnd check and gnd flatten refuse the same root with exit 3.
+     except (ModelLoadError, ReferenceInputError, FlatteningError, OSError, ValueError) as error:
+@@ -57,9 +61,18 @@ def flatten_for_export(model_path: Path, raw: bytes):
+         model_bytes=flat.model_bytes,
+         record_sha256=hashlib.sha256(flat.record_bytes).hexdigest(),
+         includes=tuple((entry.id, entry.path, entry.sha256) for entry in model._included),
++        model=flat.model,
+     )
+ 
+ 
++def model_validation_message(error) -> str:
++    code = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
++    if code is not None:
++        return code
++    ids = dict.fromkeys(i.rule_id for i in error.issues)
++    return f"{error} [{', '.join(ids)}]"
++
++
+ def flattening_constants(flat) -> str:
+     """The two program lines that record an exported flattening; empty for None."""
+     if flat is None:
+diff --git a/src/gnd/export/pyrel_rules.py b/src/gnd/export/pyrel_rules.py
+index 34163245..07272615 100644
+--- a/src/gnd/export/pyrel_rules.py
++++ b/src/gnd/export/pyrel_rules.py
+@@ -2691,7 +2691,7 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
+     if target not in TARGETS:
+         raise ExportInputError(f"target must be one of {TARGETS}")
+     raw = Path(model_path).read_bytes()
+-    from .include_roots import flatten_for_export, flattening_constants
++    from .include_roots import flatten_for_export, flattening_constants, model_validation_message
+     flat = flatten_for_export(Path(model_path), raw)  # an include root exports its flat model
+     if flat is not None:
+         raw = flat.model_bytes
+@@ -2699,8 +2699,10 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
+     try:
+         from gnd.model._includes import guard_bytes
+         guard_bytes(raw, source=str(model_path), route='pyrel_rules:2267')
+-        loaded = load_model_bytes(raw, source=str(model_path))
+-    except (ModelLoadError, ModelValidationError, ReferenceInputError) as error:
++        loaded = flat.model if flat is not None else load_model_bytes(raw, source=str(model_path))
++    except ModelValidationError as error:
++        raise ExportInputError(f"invalid model: {model_validation_message(error)}") from error
++    except (ModelLoadError, ReferenceInputError) as error:
+         raise ExportInputError(f"invalid model: {error}") from error
+     doc = _parse_document(raw.decode("utf-8"))
+     model = _Model(doc)
+diff --git a/src/gnd/extract/flatten_service.py b/src/gnd/extract/flatten_service.py
+index f39f3a14..f40fabab 100644
+--- a/src/gnd/extract/flatten_service.py
++++ b/src/gnd/extract/flatten_service.py
+@@ -46,6 +46,13 @@ def flatten_to(model_path: str, out_dir: str, *, output_format: str = "text") ->
+         return EXIT_ILL_FORMED
+     try:
+         flat = flatten_model(model)
++    except ModelValidationError as error:
++        print("ERROR: flat model failed validation [flattening:re-entry]")
++        _print_issues(error.issues)
++        return EXIT_ILL_FORMED
++    except (ModelLoadError, ReferenceInputError) as error:
++        print(f"ERROR: {error} [flattening:re-entry]")
++        return EXIT_ILL_FORMED
+     except FlatteningError as error:
+         print(f"ERROR: {error}")
+         return EXIT_ILL_FORMED
+diff --git a/src/gnd/model/__init__.py b/src/gnd/model/__init__.py
+index e02c9d5a..eefbd2fe 100644
+--- a/src/gnd/model/__init__.py
++++ b/src/gnd/model/__init__.py
+@@ -304,22 +304,28 @@ def _load_model_document(doc) -> Model:
+     return _finish_model(doc)
+ 
+ 
+-def _model_warnings(doc, origins):
++def _model_warnings(doc, origins, *, flat_root=False):
+     from gnd.model._includes import included_rows, remap_issues
+-    from gnd.model._unattended import _INCLUDED
++    from gnd.model._unattended import _FLAT_ROOT, _INCLUDED, flat_without_root_issue
+ 
+     issues = remap_issues(_layer1_structural(doc), origins)
+     if issues:
+         raise ModelValidationError(issues)
+     # VG3: the unattended rules read which elements came from an include.
+     token = _INCLUDED.set(included_rows(doc, origins))
++    flat_token = _FLAT_ROOT.set(flat_root)
+     try:
+         issues = remap_issues(semantic_validate(dict(doc)), origins)
+     finally:
++        _FLAT_ROOT.reset(flat_token)
+         _INCLUDED.reset(token)
+     errors = [issue for issue in issues if issue.severity == "error"]
+     warnings = [issue for issue in issues if issue.severity == "warning"]
+     if errors:
++        if doc.get("version") == 5 and not (flat_root or doc.get("includes")):
++            hint = flat_without_root_issue(errors)
++            if hint is not None:
++                errors.append(hint)
+         raise ModelValidationError(errors, warnings)
+     return warnings
+ 
+diff --git a/src/gnd/model/_unattended.py b/src/gnd/model/_unattended.py
+index 8d4d2bf5..9191cc15 100644
+--- a/src/gnd/model/_unattended.py
++++ b/src/gnd/model/_unattended.py
+@@ -63,6 +63,23 @@ _UNATTENDED_ALETHIC_SOURCES = ("sample", "llm-inferred", "common-sense", "induce
+ #: and by nothing else (``gnd.model._includes.included_rows`` computes it).
+ #: Every other caller sees the empty set, and so today's rules.
+ _INCLUDED: ContextVar[frozenset[int]] = ContextVar("gnd_unattended_included", default=frozenset())
++_FLAT_ROOT: ContextVar[bool] = ContextVar("gnd_unattended_flat_root", default=False)
++
++
++def flat_without_root_issue(issues: list[ValidationIssue]) -> ValidationIssue | None:
++    """Explain a possible missing root while retaining the actual validation errors."""
++    if any(issue.rule_id in _INCLUDE_SENSITIVE_RULES or
++           (issue.rule_id == "semantic:unattended-u1" and issue.path == "$.source.documents")
++           for issue in issues):
++        return ValidationIssue(
++            path="$.source",
++            rule_id="unattended:flat-without-root",
++            message="If this is a flattened seeded model, load the root that declares the reviewed includes.",
++        )
++    return None
++
++
++_INCLUDE_SENSITIVE_RULES = frozenset(f"semantic:unattended-u{n}" for n in range(2, 9))
+ 
+ 
+ def _declared_spans(owner: Any, declared: set[str], *, samples: bool) -> Iterator[tuple[str, Any]]:
+@@ -298,7 +315,7 @@ def _owns_nothing(doc: dict[str, Any], included: frozenset[int]) -> bool:
+     four merged sections, an attachment enters an included fact type as the
+     root's, and an include cannot declare any other section.
+     """
+-    if not _listed(doc.get("includes")):
++    if not (_listed(doc.get("includes")) or _FLAT_ROOT.get()):
+         return False
+     for key, value in doc.items():
+         if key in _HEADER_KEYS:
+diff --git a/src/gnd/model/flattening.py b/src/gnd/model/flattening.py
+index 177b767c..17038b5c 100644
+--- a/src/gnd/model/flattening.py
++++ b/src/gnd/model/flattening.py
+@@ -6,7 +6,7 @@ from dataclasses import asdict, dataclass
+ 
+ from gnd.artifacts import canonical_json_bytes, sha256_hex
+ from gnd.documents import Model
+-from gnd.model import load_model_bytes
++from gnd.model import _finish_model, _model_warnings, parse_model_document
+ from gnd.model._documents import model_wire
+ from gnd.model._validation import MAX_MODEL_BYTES
+ 
+@@ -19,6 +19,7 @@ class FlatteningError(ValueError):
+ class FlattenedModel:
+     model_bytes: bytes
+     record_bytes: bytes
++    model: Model
+ 
+ 
+ def flatten_model(model: Model) -> FlattenedModel:
+@@ -37,7 +38,7 @@ def flatten_model(model: Model) -> FlattenedModel:
+     if len(flat_bytes) > MAX_MODEL_BYTES:
+         raise FlatteningError("flattening: flat model exceeds the model byte limit")
+ 
+-    reopened = load_model_bytes(flat_bytes, source="flat.orm.json")
++    reopened = _load_projection(flat_bytes, model)
+     original = model.model_dump(exclude={"warnings", "includes", "fact_type_constraints"})
+     if original != reopened.model_dump(exclude={"warnings"}):
+         raise FlatteningError("flattening would change model values on re-entry")
+@@ -53,4 +54,10 @@ def flatten_model(model: Model) -> FlattenedModel:
+     })
+     if len(record) > MAX_MODEL_BYTES:
+         raise FlatteningError("flattening: record exceeds the model byte limit")
+-    return FlattenedModel(flat_bytes, record)
++    return FlattenedModel(flat_bytes, record, reopened)
++
++
++def _load_projection(data: bytes, root: Model) -> Model:
++    document = parse_model_document(data, source="flat.orm.json")
++    warnings = _model_warnings(document, root._provenance, flat_root=True)
++    return _finish_model(document, _warnings=warnings)
+diff --git a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+index e9fb8dde..f99aacd1 100644
+--- a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
++++ b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+@@ -112,6 +112,11 @@ include, naming what it carries. The new constraint's source follows
+ The packaged example `src/gnd/examples/seeded_growth/` runs the whole path: a seed, an empty root,
+ two rounds, then `gnd validate`, `gnd check` and `gnd judgments check`.
+ 
++Pass the authored root to `gnd flatten`, `gnd extract`, or any PyRel export
++mode so GND can check the include pins. If direct use of a written flat file
++reports `unattended:flat-without-root`, retry with the authored root.
++See the [flattening contract](../../gnd-orm-core/references/representation-format.md#extraction-flattening-record).
++
+ When the vocabulary cannot be included (it is unattended itself, or nests includes), carry its claims
+ into the root as `imported`, `proposed` and `deontic`, with the vocabulary file as the root's first
+ document and a span on each element. Inside the growth model those claims then read as unreviewed.
+diff --git a/src/gnd/skills/gnd-orm-core/references/representation-format.md b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+index 6c7edba0..4241362d 100644
+--- a/src/gnd/skills/gnd-orm-core/references/representation-format.md
++++ b/src/gnd/skills/gnd-orm-core/references/representation-format.md
+@@ -1994,7 +1994,16 @@ field still identifies the authored root. Include-free bundles omit the
+ two files and the `flattening` object. Bundle publication refuses output
+ destinations that overlap the bound root, include or reference files.
+ 
+-The flat model is canonical JSON accepted by unrooted model-byte intake.
++The flat model is canonical JSON. For an unattended root with reviewed
++includes, in-process validation of the flat model uses the origins from the
++pin-checked root and preserves the unattended include rules above. This applies
++to `flatten`, `extract`, extraction verification and all three PyRel export
++modes. Direct intake of a standalone flat file applies the ordinary model
++rules. If a file fails a rule that can depend on reviewed-include provenance,
++the refusal includes `unattended:flat-without-root` and directs the caller
++to load the authored root if the file came from seeded flattening.
++Structural validation precedes this diagnostic. The flat bytes and record
++are output artifacts. The root's include pins are the authority for exemptions.
+ Resolved elements keep their order and identities, with project-owned
+ attachments materialized as inline constraints. The wire omits the consumed
+ include and attachment declarations, load-time warnings, and the usual
+diff --git a/src/gnd/witness/flattening.py b/src/gnd/witness/flattening.py
+index fbfb69db..6efa8579 100644
+--- a/src/gnd/witness/flattening.py
++++ b/src/gnd/witness/flattening.py
+@@ -7,7 +7,7 @@ from pathlib import Path
+ from gnd.anchors import read_regular_path
+ from gnd.artifacts import canonical_json_bytes, sha256_hex
+ from gnd.errors import ModelValidationError
+-from gnd.model import load_model, load_model_bytes
++from gnd.model import load_model
+ from gnd.model._includes import guard_bytes, include_reason
+ from gnd.model.flattening import FlattenedModel, flatten_model
+ from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, WitnessResult, result_rows
+@@ -101,4 +101,4 @@ def stamp_projection(result: dict, projection: WitnessProjection) -> dict:
+ 
+ 
+ def load_flat_model(projection: WitnessProjection):
+-    return load_model_bytes(projection.flat.model_bytes, source="flat.orm.json")
++    return projection.flat.model
+diff --git a/src/gnd/witness/io.py b/src/gnd/witness/io.py
+index 8904f92c..cfd493dd 100644
+--- a/src/gnd/witness/io.py
++++ b/src/gnd/witness/io.py
+@@ -310,15 +310,21 @@ def identity(model, candidate, refs):
+     }
+ 
+ 
+-def intake(model_document, candidate_document, reference_inputs, *, limits=DEFAULT_LIMITS):
++def intake(model_document, candidate_document, reference_inputs, *, limits=DEFAULT_LIMITS,
++           _projected_model=None):
+     validate_witness_structure(model_document, limits=limits)
+     validate_witness_structure(candidate_document, limits=limits)
+     from gnd.model._includes import guard_document
+     guard_document(model_document, 'witness.io')
+-    model = load_model_bytes(
+-        json.dumps(model_document, ensure_ascii=False, allow_nan=False).encode("utf-8"),
+-        source="model.orm.json",
+-    )
++    if _projected_model is None:
++        model = load_model_bytes(
++            json.dumps(model_document, ensure_ascii=False, allow_nan=False).encode("utf-8"),
++            source="model.orm.json",
++        )
++    else:
++        model = _projected_model
++        if canonical_json_bytes(model_wire(model)) != canonical_json_bytes(model_document):
++            raise WitnessInputError("projected model differs from rooted validation")
+     candidate = load_population_bytes(
+         canonical_json_bytes(candidate_document), source="candidate.pop.json", model=model
+     )
+diff --git a/src/gnd/witness/kernel.py b/src/gnd/witness/kernel.py
+index 96afdfbd..520ee7cd 100644
+--- a/src/gnd/witness/kernel.py
++++ b/src/gnd/witness/kernel.py
+@@ -296,6 +296,7 @@ def replay_witness(
+     limits=DEFAULT_LIMITS,
+     composition: tuple[str, dict] | None = None,
+     flattening: tuple[str, dict] | None = None,
++    _projected_model=None,
+ ):
+     targets = ()
+     try:
+@@ -303,7 +304,8 @@ def replay_witness(
+         certificate_shape(certificate, limits=limits)
+         targets = tuple(r["target"] for r in certificate["results"])
+         model, candidate, refs = intake(
+-            model_document, candidate_document, reference_inputs, limits=limits
++            model_document, candidate_document, reference_inputs, limits=limits,
++            _projected_model=_projected_model,
+         )
+         binding = dict(certificate["binding"])
+         projected = "flattening_sha256" in binding
+diff --git a/src/gnd/witness/producer.py b/src/gnd/witness/producer.py
+index e6f3d78c..837ac3d6 100644
+--- a/src/gnd/witness/producer.py
++++ b/src/gnd/witness/producer.py
+@@ -179,7 +179,8 @@ class GroundedTrace:
+         return nodes, [mapping[r] if r is not None else None for r in roots]
+ 
+ 
+-def produce_witness(model, candidate, targets, *, references=None, limits=DEFAULT_LIMITS):
++def produce_witness(model, candidate, targets, *, references=None, limits=DEFAULT_LIMITS,
++                    _projected_model=None):
+     try:
+         checked_limits(limits)
+         validate_witness_structure(list(targets), limits=limits)
+@@ -199,6 +200,7 @@ def produce_witness(model, candidate, targets, *, references=None, limits=DEFAUL
+             candidate_doc,
+             raw_refs,
+             limits=limits,
++            _projected_model=_projected_model,
+         )
+         binding = witness_input_identity(model, candidate, references=context)
+         populations = (candidate, *context._populations) if context else (candidate,)
+diff --git a/src/gnd/witness/service.py b/src/gnd/witness/service.py
+index 924cbc83..3654a5bc 100644
+--- a/src/gnd/witness/service.py
++++ b/src/gnd/witness/service.py
+@@ -150,7 +150,9 @@ def _produce_projected(projection, model_path, population_path, targets, **optio
+     model, candidate, references, _, lineage = _projected_inputs(
+         projection, model_path, population_path, **options
+     )
+-    result = produce_witness(model, candidate, targets, references=references).model_dump(mode="json")
++    result = produce_witness(
++        model, candidate, targets, references=references, _projected_model=projection.flat.model,
++    ).model_dump(mode="json")
+     if lineage is not None:
+         result = _stamp_composition(result, lineage, catalog=references is not None)
+     return stamp_projection(result, projection)
+@@ -159,13 +161,14 @@ def _produce_projected(projection, model_path, population_path, targets, **optio
+ def _replay_projected(projection, model_path, population_path, certificate, **options):
+     from gnd.witness.kernel import replay_witness
+ 
+-    _, _, references, document, lineage = _projected_inputs(
++    model, _, references, document, lineage = _projected_inputs(
+         projection, model_path, population_path, **options
+     )
+     refs = tuple((origin.id, raw) for origin, _, raw in references._snapshots) if references else ()
+     return replay_witness(
+         _rf7_input.loads(projection.flat.model_bytes), document, certificate,
+         reference_inputs=refs, composition=lineage, flattening=projection.binding,
++        _projected_model=model,
+     ).model_dump(mode="json")
+ 
+ 

@@ -1,6 +1,6 @@
 # Refactoring follow-ups · issues 297–308
 
-Draft r1, 2026-11-25, based on main `4dea8dac`. Awaiting owner review. Plan review has not run because the owner has not selected a review instrument. Execution mode is `auto=false`.
+Revision 2, 2026-11-25. The light panel reviewed r1 at commit bf874602. The owner selected delegated approvals (auto=true), light plan/close panels and Claude Code phase-diff reviews. Revision 2 incorporates the dispositions below and carries no separate review opinion.
 
 The [refactoring close](../../code-refactoring/019-milestone-close.md) accepted a set of measured limitations. This successor gives twelve of them an owner, a test or a recorded decision. Completion requires an accepted disposition for every row below, passing evidence for every selected change, a migration story for changed public behavior, and owner acceptance of any residual with a named destination. Deferring a change keeps its issue open.
 
@@ -73,3 +73,17 @@ Use default-lane focused pytest and ruff for changed code. Select later exact no
 ## 10. Owner decisions
 
 Open decisions, in execution order, include F1's byte-count contract, F3's core-only cycle gate, F4's input and validator scope, F5's semantic mergers, recovery policy and evidence version, F6's generated-byte policy, F7's release window and F8's four ownership rulings. Proposed defaults appear beside their acceptance tests in §4. The first decision is detailed in [F1](phase-F1-spec.md).
+
+## Plan-review disposition and governing amendments · r2
+
+| Finding | Ruling and evidence due |
+|---|---|
+| Reader selection and input policy | F4 must cover the public model and population YAML entry points and the pool file intake. For each, inventory byte, event, depth and alias behavior where applicable, demonstrate already-effective controls and implement missing applicable controls under its phase gate. Inventory other loaders, separately disposition each with reason and target. Include the MIME variance experiment and validator error inventory even if compatibility warrants deferral. |
+| Shim timing | F7 delivers the audited inventory, patch migration and release guidance. Remove aliases only if the release and retirement gate have been selected. Otherwise retain the aliases, name the release trigger and owner, and leave #297 open. |
+| Source records | All four original mints are indexed by the archived source register. Require four dispositions, or an explicitly accepted and tracked residual naming the missing mint and recovery owner. |
+| Review status and closure counts | Record the plan gate in 002-plan-gate.md. Close reconciles twelve issue dispositions across eight phase records. A deferral needs an owner, trigger and open issue. |
+| Model queries and dependencies | Preserve exact *accounting* while shrinking exceptions per verified migration. ModelIndex owns model snapshot access, model_queries owns applicable pure routing operations. F6 consumes the pinned positional reference resolution. F2 supplies normalization parity, the surface manifest and deliberate guard-failure controls before later phases change pins. |
+| Historical counts, layering and test selection | Capture phase-start denominators. Document each added or removed site relative to the issue and apply the same criterion to all live sites in scope. For moves run the live layer-map and wrong-way-edge tests and cold imports for affected public entry points. Repository policy specifies focused consumers. A full historical-suite gate exceeds the selection. |
+| Owner decisions and provenance | F1 counts on-disk bytes. F2 shares guards only if both deliberate observed-call controls fail as intended. Issue #299 itself specifies the three overrides. F5 enumerates supported versions and runs recovery controls for the four named versions plus controls for other supported paths affected by its implementation. Later exact policy decisions belong to the phase spec before edits. |
+
+Reviewed r1 SHA-256 6ca733e30bffb9637b1534800adf2ebf72df84af381bcd7ea2ffc8bdb1d384be. See [the finalized advisory report](../evidence/plan-panel/PANEL-REVIEW.md). One review round, then verify these repaired criteria against implementation and fixtures.

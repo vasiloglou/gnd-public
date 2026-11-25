@@ -1,6 +1,6 @@
 # F1 · Report the pool byte cap through PoolValidationError
 
-Awaiting owner review.
+Owner gate satisfied by delegated approval (auto=true), 2026-11-25.
 
 ## 2. Provenance
 
@@ -36,7 +36,7 @@ Keep `load_pool(path: str | Path, model: Model) -> Pool` and `PoolValidationErro
 
 | ID | Proposed ruling | Observable cost |
 |---|---|---|
-| D1 · open | Count file bytes before UTF-8 decoding and universal-newline conversion. | A CRLF-heavy file whose disk size exceeds the cap can currently fit after translation. A raw-byte limit refuses it. Retaining translated-text sizing requires a streaming text budget and a distinct physical-read policy. |
+| D1 · adopt on-disk byte count (delegated) | Count file bytes before UTF-8 decoding and universal-newline conversion. | A CRLF-heavy file whose disk size exceeds the cap can currently fit after translation. A raw-byte limit refuses it. Retaining translated-text sizing requires a streaming text budget and a distinct physical-read policy. |
 
 ## 8. Tests
 

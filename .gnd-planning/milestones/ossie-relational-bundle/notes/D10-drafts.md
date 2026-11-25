@@ -1,9 +1,21 @@
 # D10 drafts: the issues and the questions for the reporter
 
-**Status: drafts for the owner, 2026-11-25. Nothing here has been sent or
-filed.** Each text needs the owner's confirmation before it goes out
-(plan D10). The texts name no downstream project or customer; the reporter's
-case is "a large composed model".
+**Status, 2026-11-25: the five issues are filed; the reporter message is not
+sent.** The owner answered "Merge and file" to "Should I merge PR 275 and file
+the five GitHub issues as drafted?". The titles and bodies below went out
+unchanged.
+
+| Draft | Issue | State |
+|---|---|---|
+| Issue 1 | [#276](https://github.com/vasiloglou/gnd-public/issues/276) | closed, delivered in PR 266 |
+| Issue 2 | [#277](https://github.com/vasiloglou/gnd-public/issues/277) | closed, delivered in PRs 270 and 271 |
+| Issue 3 | [#278](https://github.com/vasiloglou/gnd-public/issues/278) | closed, delivered in PRs 272 and 273 |
+| Issue 4 | [#279](https://github.com/vasiloglou/gnd-public/issues/279) | open (OB2-Q2) |
+| Issue 5 | [#280](https://github.com/vasiloglou/gnd-public/issues/280) | open (OB3-Q5) |
+
+The message to the reporter at the end of this file is still a draft. This
+session has no channel to the reporter; it is the owner's to send. The texts
+name no downstream project or customer.
 
 ## Issue 1 (to file, then close against PR 266)
 

@@ -3,7 +3,7 @@
 Planning opened 2026-11-24 from the owner's issue file, which holds three
 Ossie export issues not yet filed on GitHub.
 
-**Status:** plan r2, **approved by the owner on 2026-11-24** ([plan gate](002-plan-gate.md), sha256 `52d946a4…6e1d`), with D1–D11 ruled as proposed. OB1 is implemented and recorded; OB2 is next.
+**Status:** closed by the owner on 2026-11-25 ([ruling](022-close-ruling.md); [close record](021-milestone-close.md)). The three requests are issues [#276](https://github.com/vasiloglou/gnd-public/issues/276), [#277](https://github.com/vasiloglou/gnd-public/issues/277) and [#278](https://github.com/vasiloglou/gnd-public/issues/278), closed as delivered; the two carried design questions are open as [#279](https://github.com/vasiloglou/gnd-public/issues/279) and [#280](https://github.com/vasiloglou/gnd-public/issues/280). **Still outside the repository:** the [message to the reporter](notes/D10-drafts.md) is the owner's to send, and external acceptance waits for the reporter's run.
 
 The maintained light panel reviewed r1 at effort high:
 

@@ -49,7 +49,7 @@ evidence:
     sha256: d79da714b27d2720912a3a3fe8cbccf38de82c9c63c86831ef15eb817533aa4c
     note: "the panel read a1bde138...0aea"
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/close-delta.md
-    sha256: 0945a5793de802d3e10074238e7981262c9ca4a86f4f226e10289468b4d24fa4
+    sha256: b08eb77caf2b893a52409b2681befc993934e956115979fc8ed6a315b2964f57
     note: "the panel read 22fd0fdb...9c09"
   - path: .gnd-planning/milestones/ossie-relational-bundle/evidence/close-review/review-request.json
     sha256: be5bc7fd11afa9a9d0f2a3788de6128a762425a405eb731068a4f9144cb49e51

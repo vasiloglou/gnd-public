@@ -18,8 +18,9 @@ that change what a user sees:
    share a column; an identifier nested more than 8 entities deep is not
    followed; a fact held only through a surrogate key cannot be bound.
 4. **A14.** Identifiers are quoted in Ossie's normalized form: upper-cased
-   only when regular. Plan r2 and OB3 as merged upper-cased every name,
-   which the upstream validator rejects for a name such as `uni.student`.
+   only when regular. OB3's spec (E5) and normative text, as merged,
+   upper-cased every name; plan r2 states no quoting rule `(c3)`. The
+   upstream validator rejects that for a name such as `uni.student`.
 5. **A16.** No source-cap parameter was added (D11).
 6. **A17** `(c2)`. A default run has a second new failure: the size bound
    covers the two new files, so it can stop with `ossie:output-size` where

@@ -1646,7 +1646,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.ossie_relational
-- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational; is_regular_identifier].
+- does: Build an Ossie core-spec semantic model from a relational schema and an Ossie mapping from the ontology's concepts and relationships onto it, with a GND extension listing every disposition [build_semantic_model; build_mapping; validate_relational; is_regular_identifier; normalized_identifier].
 - verbs: ossie semantic model, ossie mapping, dataset, field, relationship, concept mapping, object mapping, referent mapping, link mapping, quoted identifier, regular identifier, normalized identifier, datatype map, custom extension, identification differs, subtype absorbed, unmapped links, validate against pinned schemas, offline schema registry
 - in: a RelationalSchema, its dispositions and the OntologyView of the same export run
 - out: semantic model and mapping documents (dicts)
@@ -1668,7 +1668,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: export.ossie_relational, infra.input_policy, infra.safe_filesystem, model.query_index, model.relational_mapping
 - used_by: export.ossie
 - tests: tests/test_physical_binding.py
-- notes: Normative rules in representation-format.md, "Physical binding"; the member list is the packaged schema gnd/schema/physical-binding.schema.json. Total over arbitrary bytes and over any schema-valid document. Fills the Rmap's own records, so gnd.rmap.dispositions is the one walk for both paths and the Rmap is not run. A table.column string is looked up, never split.
+- notes: Normative rules in representation-format.md, "Physical binding"; the member list is the packaged schema gnd/schema/physical-binding.schema.json. Total over arbitrary bytes and over any schema-valid document. Fills the Rmap's own records, so gnd.rmap.dispositions is the one walk for both paths and the Rmap is not run. A table.column string is looked up, never split. Names collide by Ossie's normalized identifier, from export.ossie_relational.
 
 
 ### export.pyrel_emit

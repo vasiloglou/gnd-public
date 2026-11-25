@@ -1,0 +1,5 @@
+28c52ece99137552205bb91dba6d842276b6080f4b1b7b35957778ae392cb924  .gnd-planning/milestones/ossie-relational-bundle/notes/ossie-relational-bundle-plan.md
+a1bde13803d8c51dfbfa566321fdba6fa06ddd771f9bddce97f120f4dbba0aea  .gnd-planning/milestones/ossie-relational-bundle/notes/close-results.md
+22fd0fdb4eb9902d4ce5eb43a49fffa577437349be2333f8f7a08296e1389c09  .gnd-planning/milestones/ossie-relational-bundle/notes/close-delta.md
+error: failed to run prompt: provider.api_error: 429 You've reached your weekly (7-day) usage limit. Your quota will reset when the current 7-day window ends. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/settings/subscription?tab=quota
+See log: ***/.kimi-code/logs/kimi-code.log

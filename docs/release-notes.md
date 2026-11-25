@@ -13,7 +13,10 @@ the next one.
   relationship is stored. The ontology, sidecar and loss report keep their
   bytes. A file already at either new path stops the run with exit
   11 (`EXIT_COLLISION`) and nothing is written. `--ontology-only` keeps the
-  three-file run. A model that yields no table writes three files and a note.
+  three-file run. The size bound covers the two new files as well, so a
+  large model whose three files fitted can now stop with `ossie:output-size`;
+  add `--ontology-only` or raise `--max-output-bytes`. A model that yields no
+  table writes three files and prints a note.
 - **Your own tables.** `--physical-binding FILE` describes delivered tables
   in place of the generated ones. The file follows the packaged schema
   `gnd-physical-binding/1`. A binding the model contradicts is refused with

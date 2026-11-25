@@ -108,12 +108,17 @@ def is_regular_identifier(name: str) -> bool:
     )
 
 
+def normalized_identifier(name: str) -> str:
+    """Ossie's normalized form of a declared NAME: a regular identifier uppercased, any
+    other name as written. Two names are one identifier to Ossie when these are equal."""
+    return name.upper() if is_regular_identifier(name) else name
+
+
 def _quoted(identifier: str) -> str:
     """One SQL identifier, quoted, in Ossie's normalized form: a regular identifier
     uppercased, so that it never reads as a keyword (OB3 E5), and any other name as
     written, which is the only form that names it (OB5)."""
-    name = identifier.upper() if is_regular_identifier(identifier) else identifier
-    return '"' + name.replace('"', '""') + '"'
+    return '"' + normalized_identifier(identifier).replace('"', '""') + '"'
 
 
 def _extension(payload: Any) -> list[dict[str, str]]:

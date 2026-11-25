@@ -2369,8 +2369,10 @@ members mean.
 
 Names are written as given, and quoted in expressions like any other: a
 regular identifier uppercased, any other name, such as the schema-qualified
-`fin.refunds`, as given. Two tables, or two columns of one table, that are
-equal after uppercasing are refused.
+`fin.refunds`, as given. Two tables, or two columns of one table, that Ossie
+reads as one identifier are refused: two regular identifiers equal after
+uppercasing, such as `cust` and `Cust`. Two names that are not regular and
+differ only in case, such as `fin.cust` and `FIN.CUST`, are two tables.
 
 **SQL types.** A type is words of letters, digits and underscores separated
 by spaces, with at most one parenthesized list of unsigned integers after a

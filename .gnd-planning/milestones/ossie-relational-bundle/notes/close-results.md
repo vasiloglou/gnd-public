@@ -117,9 +117,9 @@ five asked for revision.
   one semantic model (checked by hand in the oracle environment).
 - The release note says the size bound covers the two new files (A17).
 
-**Not re-run:** the oracle lane. Its evidence is for the bytes at
-`7a6ccfe9`. Since then `src/gnd/export/physical_binding.py`,
-`src/gnd/export/ossie_relational.py`, the normative section and one test file
-changed. A new run needs the owner's request.
+**The oracle lane was re-run on the final code** on the owner's request
+(2026-11-25), at `98344052`: `91 passed, 1 deselected in 64.80s`, exit 0. It
+includes a new case, `test_external_tables_that_differ_only_in_case`. The
+consumer test was again not run.
 
 **Gates on the repaired tree** are in the close record.

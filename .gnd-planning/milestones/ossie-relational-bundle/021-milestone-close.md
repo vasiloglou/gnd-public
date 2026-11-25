@@ -31,19 +31,22 @@ gates:
     exit: 0
   - command: "ruling: owner selected the light panel at effort high and accepted OB5-Q1 as a stated limit (go with your recs, 2026-11-25)"
     exit: "n/a -- ruling"
+  - command: "ruling: owner requested the oracle lane on the final code (yes, 2026-11-25); GND_OSSIE_ORACLE_ROOT=<scratch> uv run pytest -q -m ossie_oracle tests/test_ossie_external_oracle.py -k 'not consumer'"
+    exit: 0
+    output: "91 passed, 1 deselected in 64.80s (0:01:04)"
   - command: "ruling: the owner's close ruling"
     exit: "n/a -- ruling"
     note: "NOT YET GIVEN. This record is complete except for it."
 slow_cadence:
   command: "GND_OSSIE_ORACLE_ROOT=<scratch> uv run pytest -q -m ossie_oracle tests/test_ossie_external_oracle.py -k 'not consumer'"
   trigger: "explicit owner request"
-  reason: "run once on request at 7a6ccfe9 (90 passed). Not re-run on the bytes the close review's repairs changed."
+  reason: "run on request at 7a6ccfe9 (90 passed) and again on the final code at 98344052 (91 passed, 1 deselected in 64.80s). The consumer test needs the RelationalAI environments and was not run."
 evidence:
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/ossie-relational-bundle-plan.md
     sha256: a751d3e6a60a40ae3162b0633b6c65a55f964b9d64d763ad1d2495f3efd6220f
     note: "r3 with (c2) rows; the panel read 28c52ece...b924"
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/close-results.md
-    sha256: 5e853f8efd7bc407ef677382aedbdc2a4e54f1586f6ace472100ad75a4bc0bb6
+    sha256: d79da714b27d2720912a3a3fe8cbccf38de82c9c63c86831ef15eb817533aa4c
     note: "the panel read a1bde138...0aea"
   - path: .gnd-planning/milestones/ossie-relational-bundle/notes/close-delta.md
     sha256: 0945a5793de802d3e10074238e7981262c9ca4a86f4f226e10289468b4d24fa4
@@ -57,7 +60,7 @@ evidence:
   - path: .gnd-planning/milestones/ossie-relational-bundle/evidence/close-review/PANEL-REVIEW.md
     sha256: 09731adf64096afb28cf547e821f6e37995491c87fddaab167001468988e2934
   - path: .gnd-planning/milestones/ossie-relational-bundle/evidence/close-review/disposition.md
-    sha256: 602471b9a33f43b3d8cca43b8a68efeef71dbb0b55e9ffadb6c54dcfdc7fec46
+    sha256: abdd4a350c76fd08cde436e0ed277a7b6fda89fa80e83433c049fce02152b5cf
   - path: .gnd-planning/milestones/ossie-relational-bundle/004-phase-OB1.md
     sha256: 82b327a4ac52cf427e2a6fdb47fbd68f31c256a8a21a60e8fa936138095e02bf
   - path: .gnd-planning/milestones/ossie-relational-bundle/008-phase-OB2.md
@@ -106,8 +109,8 @@ bytes, with these limits:
 - Predicate 1 holds for model files within the 10 MiB cap.
 - Predicate 2 as first written was false in one clause: a default run has a
   second new failure, the size bound on the two new files (A17).
-- Predicate 4's upstream validation is evidenced at `7a6ccfe9`, before the
-  close review's repairs.
+- Predicate 4's upstream validation is evidenced on the final code, at
+  `98344052`, for everything but the consumer test.
 
 **External acceptance is missing.** The reporter's own checks need their
 model. They have not been asked. No reporter run is cited.
@@ -166,8 +169,6 @@ ontology does not declare (OB3-Q5), and D10. The D10 texts are drafted in
 ## Boundary -- what this close does NOT establish
 
 - That the reporter's model exports, binds or matches their schema.
-- That the pinned upstream validator accepts the bytes as repaired after the
-  close review. It was not re-run.
 - That the close-review repairs are free of defects. They are unreviewed.
 - That the oracle lane's consumer test passes. It was not run.
 - Publication. The 0.5.0 release is a separate milestone and is notified

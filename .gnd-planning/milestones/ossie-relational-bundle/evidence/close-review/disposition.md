@@ -25,7 +25,7 @@ assigned here, not by the reviewer.
 | The no-review list omits the relational renderer (qwen) | no: the OB5 review read it after the quoting fix | not a defect at the time | **answered** in the results; the file changed again after this review and is listed there |
 | D5's ruling and measurement are absent (qwen) | yes | completeness | **fixed**: predicate 3 cites the gate and the measurement note |
 | `--max-input-bytes` listed as beyond the plan (glm) | yes | completeness | **fixed** in the delta |
-| The oracle lane ran at another commit (qwen) | yes, equality was only asserted | completeness | **fixed**: the diff command is given. The lane is **not re-run** on the bytes changed after this review |
+| The oracle lane ran at another commit (qwen) | yes, equality was only asserted | completeness | **fixed**: the diff command is given. The lane was re-run on the final code at `98344052` on the owner's request: 91 passed |
 | D11 closed on a proxy ratio (qwen) | yes | hardening | **fixed**: the two measurements are stated apart; D11 stays open to the reporter's answer |
 | OB5-Q1 "proposed" but listed as accepted (qwen) | yes | completeness | **fixed** with the dispositions row above |
 | The release-note section has no evidence row (qwen) | yes | completeness | **fixed**: predicate 6 names its test |

@@ -1,7 +1,7 @@
 # seeded-routes-and-identifiers
 
 Opened on 2026-11-25 at the owner's request ("can we actually reopen and plan
-them", then "can you also include 292?"). **SI1 and SI2 complete. SI3 corpus and D3 approved.**
+them", then "can you also include 292?"). **SI1–SI3 complete. SI4 awaits the implementation merge.**
 
 It plans three open issues and a tag-only release:
 
@@ -29,4 +29,6 @@ merges and the decisions the specs name; a tag-only 0.5.2 at the end.
 - [SI2 record](003-phase-SI2.md): identity selection, compatibility census, and review.
 - [SI3 spec](notes/phase-SI3-spec.md): owner-approved corpus and oracle.
 
-Next action: SI3.
+- [SI3 record](004-phase-SI3.md): ontology and mapping census, pinned tools, and review.
+
+Next action: owner merge decision for [PR #294](https://github.com/vasiloglou/gnd-public/pull/294), then SI4 on main.

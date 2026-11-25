@@ -178,5 +178,5 @@ and [Expense chapter 4](../expense/04-native.md#3-the-rules-three-ways).
 ## Starting from a reviewed vocabulary
 
 An unattended growth run can include an owner-reviewed model instead of restating it: see
-[Starting from a reviewed vocabulary](../../src/gnd/skills/gnd-model-from-text/references/unattended-growth.md#starting-from-a-reviewed-vocabulary) and the packaged example
+[Starting from a reviewed vocabulary](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md#starting-from-a-reviewed-vocabulary) and the packaged example
 `src/gnd/examples/seeded_growth/`.

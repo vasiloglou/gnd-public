@@ -128,9 +128,9 @@ def test_fallback_capability_statement_is_complete(limitation: str) -> None:
     assert re.search(CAPABILITY_LIMITS[limitation], source, re.IGNORECASE), f"{FALLBACK_SCRIPT}'s capability statement does not name the limitation {limitation!r}. D-14 requires the list in full, and it grew during Phase 01.1 — model-relative population validation, the indeterminate band, the JSON payload and the acceptance flag all postdate the original 'layer 1 only' sentence. Repair: state this limitation explicitly in the module docstring. A fallback whose limits are understated reads as an equivalent of `gnd validate`, which it is not."
 FENCE_RE = re.compile('^\\s*```')
 PROMPT_RE = re.compile('^\\$\\s+')
-GROUPED_COMMANDS = frozenset({'evolve', 'exp', 'recovery', 'review'})
+GROUPED_COMMANDS = frozenset({'evolve', 'exp', 'export', 'import', 'recovery', 'review'})
 MEASURED_EXECUTABLE_SNIPPETS = 29
-MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-judge-fact-types': 2, 'gnd-model-multivalued': 2, 'gnd-model-evolve': 6, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
+MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-induce': 7, 'gnd-judge-fact-types': 2, 'gnd-model-multivalued': 2, 'gnd-model-evolve': 6, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
 SKILLS_WITH_EXECUTABLE_SNIPPETS = frozenset(MEASURED_SNIPPETS_PER_SKILL)
 
 @dataclass(frozen=True)

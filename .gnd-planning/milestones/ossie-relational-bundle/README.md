@@ -21,8 +21,8 @@ itself reviewed.
 |---|---|---|
 | OB1 | `--max-output-bytes N` on export and, per D3, `--max-input-bytes N` on import | **merged** (PR #266): [record](004-phase-OB1.md), [spec](notes/phase-OB1-spec.md) |
 | OB2 | Halpin Rmap library `gnd.rmap`, with D5 ruled inside the phase | **merged** (PR #270): [record](008-phase-OB2.md); D5 = HALPIN ([gate](007-OB2-D5-gate.md)); two review rounds |
-| OB3 | Semantic model and mapping files, with the default per D2 | **recorded** ([record](011-phase-OB3.md)); its four departures accepted ([gate](012-OB3-departures-gate.md)); one review round; PR #271 |
-| OB4 | `--physical-binding FILE` | [spec r1](notes/phase-OB4-spec.md), [corpus](../../../tests/fixtures/physical_binding/README.md), schema file and amendment r1.1 approved ([spec gate](013-OB4-spec-gate.md), [corpus gate](014-OB4-corpus-gate.md)); implementation waits for PR #271 to merge (G16) |
+| OB3 | Semantic model and mapping files, with the default per D2 | **merged** (PR #271): [record](011-phase-OB3.md); its four departures accepted ([gate](012-OB3-departures-gate.md)); one review round |
+| OB4 | `--physical-binding FILE` | **recorded** ([record](015-phase-OB4.md)); one review round; two rules for the owner (OB4-Q1); not pushed |
 | OB5 | Docs and skill | after OB4 |
 
-**Next action:** the owner merges PR #271; OB4 implementation then starts from main. Open with the owner: the oracle lane (OB3-Q3) and a second OB3 review round (OB3-Q4). D10 asks the reporter for inputs, including whether their schema uses surrogate keys (OB4 K13), and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.
+**Next action:** the owner rules OB4-Q1 and decides on a pull request for OB4; OB5 (docs and skill) follows. Open with the owner: the oracle lane (OB3-Q3). D10 asks the reporter for inputs, including whether their schema uses surrogate keys (OB4-Q3), and files the three issues on GitHub, each confirmed with the owner first. The 0.5.0 release waits for this milestone's close.

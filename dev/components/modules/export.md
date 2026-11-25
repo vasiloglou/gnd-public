@@ -246,7 +246,7 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 | --- | --- | --- | --- |
 | `OssieInputError` | class(ValueError) | 58 | The source cannot be exported with the selected policy. |
 | `OssieArtifacts` | class | 67 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 526 | Render the deterministic artifacts of one bounded, admitted model read. |
+| `render_ossie(model_path, *, output_format, strict, max_output_bytes, relational, document_name, phy…` | function | 539 | Render the deterministic artifacts of one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -267,12 +267,12 @@ Build the Ossie semantic model and mapping that accompany an exported ontology.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `OntologyView` | class | 67 | What the mapping reads from the ontology the same export run built. |
-| `extension_data(payload) -> str` | function | 83 | An extension's ``data``: canonical JSON without its trailing newline. |
-| `is_regular_identifier(name) -> bool` | function | 94 | Whether Ossie reads NAME as a regular identifier, one that can be written unquoted. |
-| `normalized_identifier(name) -> str` | function | 111 | Ossie's normalized form of a declared NAME: a regular identifier uppercased, any |
-| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 128 | One dataset per table, one field per column, one relationship per foreign key. |
-| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 269 | Map the ontology's concepts and relationships onto the semantic model. |
-| `validate_relational(semantic_model, mapping) -> None` | function | 358 | Check both documents against the pinned schemas; a failure is a renderer defect. |
+| `extension_data(payload) -> str` | function | 84 | An extension's ``data``: canonical JSON without its trailing newline. |
+| `is_regular_identifier(name) -> bool` | function | 95 | Whether Ossie reads NAME as a regular identifier, one that can be written unquoted. |
+| `normalized_identifier(name) -> str` | function | 112 | Ossie's normalized form of a declared NAME: a regular identifier uppercased, any |
+| `build_semantic_model(schema, name, *, physical) -> dict[str, Any]` | function | 129 | One dataset per table, one field per column, one relationship per foreign key. |
+| `build_mapping(schema, dispositions, view, *, name, ontology_iri, semantic_model_name, semantic_mode…` | function | 275 | Map the ontology's concepts and relationships onto the semantic model. |
+| `validate_relational(semantic_model, mapping) -> None` | function | 364 | Check both documents against the pinned schemas; a failure is a renderer defect. |
 
 ## gnd.export.physical_binding — `src/gnd/export/physical_binding.py`
 Components: export.physical_binding

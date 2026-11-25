@@ -615,17 +615,46 @@ def test_two_homes_for_one_object_type_use_the_first_table(tmp_path):
 
 
 def test_an_entity_the_ontology_does_not_identify_is_listed_as_identification_differs(tmp_path):
-    """Corpus model 23: a unit-based reference has no identifier in the ontology."""
+    """A nonfunctional external key has no identifier in the ontology."""
     from gnd.export.ossie import render_ossie
+
+    model = relational.load_yaml(relational.rmap_case("14"))
+    code = next(fact for fact in model["fact_types"] if fact["id"] == "state_has_code")
+    code["constraints"] = [row for row in code["constraints"] if row["type"] != "uniqueness"]
+    source = tmp_path / "model.orm.json"
+    source.write_text(json.dumps(model))
+    binding = {"schema": "gnd-physical-binding/1",
+               "tables": {"p": {"columns": {"id": {}, "pop": {}, "extra": {}}, "primary_key": ["id"]}},
+               "roles": {"state_has_population": {"state": ["p.id", "p.extra"], "population": ["p.pop"]}}}
+    path = tmp_path / "binding.json"
+    path.write_text(json.dumps(binding))
+    mapping = json.loads(render_ossie(source, output_format="json", physical_binding=path).mapping)
+    payload = json.loads(mapping["custom_extensions"][0]["data"])
+    assert payload["unmapped_links"] == [{"fact_type": "state_has_population", "reason": "identification-differs"}]
+
+
+@pytest.mark.parametrize("width", [1, 2])
+def test_physical_binding_checks_the_projected_unit_key_arity(tmp_path, width):
+    from gnd.export.ossie import render_ossie
+    from gnd.export.physical_binding import BindingError
 
     binding = {"schema": "gnd-physical-binding/1",
                "tables": {"p": {"columns": {"id": {}, "cm": {}, "extra": {}}, "primary_key": ["id"]}},
-               "roles": {"person_has_height": {"person": ["p.id"], "height": ["p.cm", "p.extra"]}}}
+               "roles": {"person_has_height": {"person": ["p.id"], "height": ["p.cm", "p.extra"][:width]}}}
     path = tmp_path / "binding.json"
     path.write_text(json.dumps(binding))
-    mapping = json.loads(render_ossie(relational.rmap_case("23"), output_format="json", physical_binding=path).mapping)
-    payload = json.loads(mapping["custom_extensions"][0]["data"])
-    assert payload["unmapped_links"] == [{"fact_type": "person_has_height", "reason": "identification-differs"}]
+    source = relational.rmap_case("23")
+    if width == 2:
+        with pytest.raises(BindingError) as caught:
+            render_ossie(source, output_format="json", physical_binding=path)
+        assert caught.value.rule == "binding:role-arity"
+    else:
+        bundle = render_ossie(source, output_format="json", physical_binding=path)
+        mapping = json.loads(bundle.mapping)
+        payload = json.loads(mapping["custom_extensions"][0]["data"])
+        assert "unmapped_links" not in payload
+        linked = relational.cross_check(json.loads(bundle.document), json.loads(bundle.semantic_model), mapping)
+        assert "person_has_height" in linked
 
 
 # --- Review round 1 regressions (notes/reviews/phase-OB4-r1, F1-F6) -----------------------------

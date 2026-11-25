@@ -143,3 +143,68 @@ unit and multi-supertype projection and mapping, existing source round trip,
 and the selected pinned oracle on changed ontologies. Instrument: the
 before-code corpus plus the red test gate. Budget: one phase diff review
 with Claude Code Opus, with a second only over repairs if needed.
+
+### Implementation controls added under D3
+
+Authoring any relationship that shadows a generated identifier in an
+inheriting multi-parent ontology would leave the new identifier unusable.
+A legal model with a local relationship of that name first failed with no
+identifier on the subtype. In those ontologies the generator now reserves
+authored relationship names across components before choosing its default
+identifier. The test checks that the selected parent's relation and the
+authored local relation each resolve to their own owner.
+
+An additional fixture inherits an ordered composite key from the first
+parent. It fails on the archived baseline with no subtype identifier and
+passes after the change. A successor of OB3 T13(b) checks that a unit-based
+ontology can now link its actual key column. Objectification controls still
+require the recorded residuals.
+
+Delegated clarification (auto=true), 2026-11-25. Approved these
+implementation controls through the preceding paragraph at SHA-256
+`277cc068a861520d5f9e40c5617e156ef9abc37f62fa53f6d2fb67fc7d10424f`. Source: D3 and the named milestone delegation. Scope: authored
+relationship collisions, composite-parent reachability, and the T13(b)
+successor. The approved ontology manifest remains unchanged. Instrument:
+reproduced red controls and the measured projection oracle.
+
+### Independent review repairs, 2026-11-25
+
+F1: logical Rmap and ontology simple keys must agree in both kind and
+target. Rmap supplies the value-type ID of a direct key or the defining
+entity ID of a unit key. The ontology carries the same metadata with
+its generated relationship. A mismatch leaves the link listed as
+`identification-differs` without changing either side's key-selection
+policy. Physical bindings declare their keys against the ontology
+directly and keep their existing path.
+
+F2: the composite-parent fixture now includes a fact played by the
+subtype. It verifies that the ontology inherits the composite while the
+incompatible logical key remains explicitly unmapped.
+
+F3: a single-parent subtype can inherit the parent's simple unit key.
+The control fails on the reviewed source without the identifier. The
+mixed-parent control fails on the reviewed source because a String key
+is wrongly accepted for a decimal identifier. Both are covered by the
+repaired phase gate.
+
+Delegated repair approval (auto=true), 2026-11-25. SI3 spec through the
+review repairs SHA-256 `c36dc733289f6cfda5ddfc4c3ad2f4131d7d14d39072cb764a6db3dc915508d0`. Source: the owner's D3 ruling and
+named milestone delegation. Scope: preserving each declared key,
+refusing incompatible logical links, and extending inheritance of
+the new simple unit identifier. The approved manifest remains bound
+to the same bytes. Instrument: reproduced review controls, source
+round trips, full ontology and mapping comparisons, and the selected
+pinned oracle. The independent opinion remains tied to its original bytes.
+
+The additional direct-key control uses two distinct reference targets with
+the same key kind. The repaired candidate passes. In an isolated source
+copy, removing just the target comparison makes the fixture emit the wrong
+link and fails its assertion. The comparison therefore covers both the kind
+and the reference target independently.
+
+The physical-binding impact run found one predecessor test that still
+assumed a unit-based key had unknown arity. The new projected unit key
+uses one column, so the previous two-column fixture now receives the
+existing `binding:role-arity` refusal. The successor tests verify both
+the one-column success and two-column refusal, and keep the unknown
+identifier coverage with a nonfunctional external key.

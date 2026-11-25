@@ -135,6 +135,8 @@ class Identification:
     table: str | None
     #: Whether ``table`` is a supertype's table that absorbed this object type.
     absorbed: bool = False
+    #: Value-type id for a direct key, or the defining entity id for a unit key.
+    simple_target: str | None = field(default=None, compare=False, repr=False)
 
 
 @dataclass(frozen=True)
@@ -653,7 +655,7 @@ class _Mapper:
             key = self.key(oid)
             if key is None:
                 continue
-            kind = "fallback" if oid in self.fallback else self.identity(oid)[0]
+            kind, target = ("fallback", None) if oid in self.fallback else self.identity(oid)
             grouped = kind in ("composite", "fallback")
             owner = self.owner_of(oid)
             held = owner in tables
@@ -663,6 +665,7 @@ class _Mapper:
                 tuple(origin if grouped else None for origin in key.origins),
                 owner if held else None,
                 held and owner != oid,
+                simple_target=target if kind in {"direct", "unit"} else None,
             ))
         return RelationalSchema(
             self.variant, tuple(built), unmapped,

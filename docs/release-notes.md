@@ -17,6 +17,11 @@ procedure](releasing.md). Changes on `main` after a release are listed in an
   marked `preferred`. When none qualifies, GND uses the first anchored
   declaration. ([#279](https://github.com/vasiloglou/gnd-public/issues/279))
 
+- Ossie export supplies identifiers for unit-based references and for
+  inheriting subtypes with several supertypes. These identifiers change the
+  ontology bytes and let the relational mapping carry the associated links.
+  ([#280](https://github.com/vasiloglou/gnd-public/issues/280))
+
 ## 0.5.1 (tagged 2026-11-25, not published on PyPI)
 
 0.5.1 is a GitHub tag only. Install it from the tag:

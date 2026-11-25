@@ -2201,11 +2201,19 @@ models with `include:unsupported-route` before resolving their dependencies.
 | Object types and subtypes | EntityType or ValueType concepts, with subtype parents in `extends`. Safe unique names are preserved. Other names get deterministic ID-based aliases. |
 | Value primitives | The corresponding Ossie built-in, with Number projected as Decimal and Duration as Integer. The sidecar retains those source types and Binary. |
 | Popular and general references | A generated binary OneToOne relationship and an `identify_by` entry. |
+| Unit-based references | A generated OneToOne relationship to `Decimal` and an `identify_by` entry. The source unit and measure type are retained in the sidecar. |
 | External references | `identify_by` on functional binary relationships sharing the first-role entity. Unsupported reference details travel in the sidecar. |
+| Inheriting subtypes with several supertypes | The first declared supertype's exported identifier, with its ordered components. The relationship names must resolve to those of the selected parent. |
 | Fact types and readings | One relationship under its first-role concept. The forward placeholders bind by source role position. Explicit inverse qualifiers bind by role name. A bare binary inverse reverses the bindings. Additional roles have explicit names. |
 | Confirmed alethic internal uniqueness | OneToOne for both directions of a binary. ManyToOne for an n−1 determinant, with the dependent role last. Reading bindings retain source order even when declaration roles move. |
 | Reviewed constraints and derivations | `requires` and `derived_by` at the scope described below. |
 | Other source rules, provenance, modality and operations | The source values travel in the sidecar. |
+
+In an ontology with inheriting multi-parent subtypes, generated identifier
+names avoid authored relationship names throughout the ontology so local
+relationships cannot shadow inherited identifiers.
+A subtype with a single unit-based parent can inherit that parent's
+generated identifier.
 
 The formula projection supports confirmed alethic rules in these shapes.
 Players are String value types without subtype or supertype links, with
@@ -2358,9 +2366,11 @@ newline, under the schema id `gnd-ossie-relational/1`:
 | `unmapped_links` | Present only when not empty: carried fact types with no link mapping, each with the reason `identification-differs` or `arity-over-limit` |
 
 `identification-differs` means the ontology does not identify an object type
-the way its key columns do, so no object mapping for it can be written. That
-is the case for a unit-based reference, for an objectification keyed by its
-own fact type, and for a subtype that inherits through several supertypes.
+the way its key columns do, so no object mapping for it can be written. An
+objectification keyed by its own fact type is one example. A projected
+unit-based identifier uses an expression over the unit-based key column.
+For simple logical keys, the ontology and Rmap must agree on both the key
+kind and the reference target before the mapping emits an expression.
 Every fact type the Rmap carries is therefore either named by exactly one
 link tree or listed in `unmapped_links`, with one of those two reasons. `--strict` does not refuse any of
 these: they are listed, not refused.

@@ -93,6 +93,102 @@ def test_first_declared_supertype_defines_inherited_key(tmp_path, inherits):
     assert relationship["roles"][0]["concept"] == objects[source_id].get("name", source_id)
 
 
+def test_local_relationship_never_shadows_the_first_supertype_identifier(tmp_path):
+    source = ROOT / "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml"
+    authored = json_document(parse_model_document(source.read_bytes(), source=source))
+    fact = next(fact for fact in authored["fact_types"] if fact["id"] == "directs")
+    fact["id"] = "gnd_reference"
+    path = tmp_path / "shadowing.orm.json"
+    path.write_text(json.dumps(authored))
+    bundle = render_ossie(path, output_format="json")
+    graph = _NameGraph(json.loads(bundle.document))
+    key, = graph.concepts["Director"]["identify_by"]
+    assert key != fact["id"]
+    owner, relationship = graph.resolve("Director", key)
+    assert owner == "Manager"
+    assert relationship["roles"][0]["concept"] == "ManagerNo"
+    assert graph.resolve("Director", fact["id"])[0] == "Director"
+
+
+def test_multi_supertype_inherits_ordered_composite_identifier(tmp_path):
+    source = ROOT / "tests/fixtures/rmap/cases/14-external-identification/model.yaml"
+    authored = json_document(parse_model_document(source.read_bytes(), source=source))
+    authored["object_types"].append({
+        "id": "district", "name": "District", "kind": "entity",
+        "subtype_of": ["state", "country"], "inherits_reference": True,
+    })
+    authored["fact_types"].append({
+        "id": "district_in_country", "reading": "{District} is in {Country}",
+        "roles": [{"role_name": "district", "object_type": "district"},
+                  {"role_name": "country", "object_type": "country"}],
+    })
+    path = tmp_path / "composite-parent.orm.json"
+    path.write_text(json.dumps(authored))
+    bundle = render_ossie(path, output_format="json")
+    graph = _NameGraph(json.loads(bundle.document))
+    keys = graph.concepts["District"]["identify_by"]
+    assert keys == ["state_in_country", "state_has_code"]
+    assert [graph.resolve("District", key)[0] for key in keys] == ["State", "State"]
+    assert {"fact_type": "district_in_country", "reason": "identification-differs"} in (
+        _gnd_extension(bundle)["unmapped_links"]
+    )
+
+
+@pytest.mark.parametrize(("parents", "linked"), [(["height"], True), (["height", "person"], False)])
+def test_unit_supertype_mapping_requires_the_same_key(tmp_path, parents, linked):
+    path = tmp_path / "mixed-inheritance.orm.json"
+    path.write_text(json.dumps({
+        "version": 1,
+        "object_types": [
+            {"id": "height", "name": "Height", "kind": "entity",
+             "reference": {"mode": "unit-based", "unit": "cm", "measure_type": "Length"}},
+            {"id": "person", "name": "Person", "kind": "entity",
+             "reference": {"mode": "popular", "value_type": "pid"}},
+            {"id": "pid", "name": "Pid", "kind": "value", "primitive": "String"},
+            {"id": "thing", "name": "Thing", "kind": "entity",
+             "subtype_of": parents, "inherits_reference": True},
+            {"id": "team", "name": "Team", "kind": "entity",
+             "reference": {"mode": "popular", "value_type": "pid"}},
+        ],
+        "fact_types": [{
+            "id": "thing_in_team", "reading": "{Thing} is in {Team}",
+            "roles": [{"role_name": "thing", "object_type": "thing"},
+                      {"role_name": "team", "object_type": "team"}],
+        }],
+    }))
+    bundle = render_ossie(path, output_format="json")
+    graph = _NameGraph(json.loads(bundle.document))
+    key, = graph.concepts["Thing"]["identify_by"]
+    owner, relationship = graph.resolve("Thing", key)
+    assert owner == "Height" and relationship["roles"] == [{"concept": "Decimal"}]
+    losses = _gnd_extension(bundle).get("unmapped_links", ())
+    assert ({"fact_type": "thing_in_team", "reason": "identification-differs"} not in losses) is linked
+
+
+def test_logical_mapping_refuses_different_direct_reference_targets(tmp_path):
+    source = ROOT / "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml"
+    authored = json_document(parse_model_document(source.read_bytes(), source=source))
+    authored["object_types"].append({
+        "id": "junior", "name": "Junior", "kind": "entity",
+        "subtype_of": ["director", "team"], "inherits_reference": True,
+    })
+    authored["fact_types"].append({
+        "id": "junior_joins_team", "reading": "{Junior} joins {Team}",
+        "roles": [{"role_name": "junior", "object_type": "junior"},
+                  {"role_name": "team", "object_type": "team"}],
+    })
+    path = tmp_path / "different-direct-targets.orm.json"
+    path.write_text(json.dumps(authored))
+    bundle = render_ossie(path, output_format="json")
+    graph = _NameGraph(json.loads(bundle.document))
+    key, = graph.concepts["Junior"]["identify_by"]
+    owner, relationship = graph.resolve("Junior", key)
+    assert owner == "Manager" and relationship["roles"] == [{"concept": "ManagerNo"}]
+    assert {"fact_type": "junior_joins_team", "reason": "identification-differs"} in (
+        _gnd_extension(bundle)["unmapped_links"]
+    )
+
+
 def test_large_unit_identifier_projection_stays_bounded(tmp_path):
     source = tmp_path / "model.orm.json"
     source.write_text(json.dumps({

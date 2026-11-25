@@ -974,12 +974,12 @@ Halpin's relational mapping (Rmap) of a loaded GND model.
 | `Disposition` | class | 93 | (no docstring) |
 | `RolePlacement` | class | 101 | The table and columns that hold one role of a carried fact type. |
 | `Identification` | class | 118 | How an object type's key columns arise, one entry per key column. |
-| `RelationalSchema` | class | 141 | (no docstring) |
-| `is_confirmed_alethic(constraint) -> bool` | function | 157 | Whether a constraint is one the relational forms may carry: confirmed, and alethic. |
-| `external_uniqueness_order(refs) -> tuple` | function | 162 | Order by the role set, then by the declared component sequence. |
-| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 863 | Name each table's foreign keys, given as (columns, target table, target columns). |
-| `map_model(model, *, variant) -> RelationalSchema` | function | 890 | Map one loaded model to its relational schema; never raises for an admitted model. |
-| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 895 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
+| `RelationalSchema` | class | 143 | (no docstring) |
+| `is_confirmed_alethic(constraint) -> bool` | function | 159 | Whether a constraint is one the relational forms may carry: confirmed, and alethic. |
+| `external_uniqueness_order(refs) -> tuple` | function | 164 | Order by the role set, then by the declared component sequence. |
+| `name_foreign_keys(references) -> dict[str, tuple[ForeignKey, ...]]` | function | 866 | Name each table's foreign keys, given as (columns, target table, target columns). |
+| `map_model(model, *, variant) -> RelationalSchema` | function | 893 | Map one loaded model to its relational schema; never raises for an admitted model. |
+| `dispositions(model, schema) -> tuple[Disposition, ...]` | function | 898 | Exactly one row per fact type and per constraint: carried (where) or unmapped (why). |
 
 ## gnd.safefs — `src/gnd/safefs.py`
 Components: infra.safe_filesystem

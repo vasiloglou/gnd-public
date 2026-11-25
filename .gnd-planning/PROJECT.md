@@ -407,6 +407,12 @@ Status, 2026-11-25, later: RW1 is implemented on its branch and recorded
 waits for the owner's merge. Pull request 275 recorded the Ossie milestone's
 close ruling and is merged. Nothing is built, uploaded, tagged or released.
 
+Status, 2026-11-25, RW2: the owner merged RW1 (pull request 282), so main
+says 0.5.0, prepared and not published. RW2's spec is ruled and its six
+installed probes are written and rehearsed
+([003-RW2-pre-freeze.md](milestones/release-0.5.0/003-RW2-pre-freeze.md));
+their pull request waits for the owner's merge. No candidate is built.
+
 Decisions waiting for the owner: the VG1 spec
 of reviewed-vocabulary-growth; D1–D9 of
 [growth-round-outcomes](milestones/growth-round-outcomes/notes/growth-round-outcomes-plan.md);

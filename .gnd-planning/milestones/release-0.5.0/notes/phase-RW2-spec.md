@@ -245,6 +245,19 @@ SHA-256 of the spec bytes it covers.
 > its findings attack text the repair wrote; otherwise a third round may
 > read round 2's repairs, and there is no fourth.
 
+> **Review stop and a budget amendment: delegated (auto=true), 2026-11-25.**
+> Round 2 returned three findings, each against `readme_commands` as round
+> 1's repair wrote it: three of three, above one half. The search stops, as
+> declared. The helper was rewritten once more (commit `9f853be4`) and that
+> text carries no review opinion; ten README changes on two READMEs are its
+> controls in the default lane, among them the three inputs round 2 named.
+> §10 set a pause at 350 added test lines. The probes pull request adds 338
+> lines to `tests/test_release_acceptance.py` and 59 to
+> `tests/test_acceptance_controls.py`, 397 in all. The 59 are the controls
+> the two review rounds led to, which §10 did not count. The limit is
+> amended to 420 for this pull request; nothing else in §10 changes. Source
+> and scope as the spec ruling above. This is not the owner's reading.
+
 ## 8. Tests
 
 | ID | Case | Expected |

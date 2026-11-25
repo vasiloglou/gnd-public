@@ -1,0 +1,1611 @@
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md
+new file mode 100644
+index 00000000..219edd63
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md
+@@ -0,0 +1,71 @@
++# RW2: rehearsal of the probe functions before the probes pull request
++
++Run on 2026-11-25 on the planning machine, on the working tree of the probes
++branch (main `8dcfe0e7` plus the RW2 commits). This is a rehearsal. It does
++not use a retained candidate, a built wheel or the source-checkout denial;
++the acceptance run on beast-3 is the evidence.
++
++## The five probe functions
++
++[rehearse_probes.py](rehearse_probes.py) imports
++`tests/test_release_acceptance.py` and calls each new function with:
++
++- the candidate: the working tree installed editable (`gnd 0.5.0`);
++- the published wheel: `published_wheel(..., '0.4.0')`, which downloads the
++  0.4.0 wheel from PyPI and checks its SHA-256 against the pin in the test
++  file (`gnd 0.4.0`);
++- the checkout: a `git archive` of HEAD with the working tree's test file;
++- an empty sandbox prefix. CPython 3.13 ran the harness; the 0.4.0
++  environment used the same interpreter.
++
++```text
++published 0.4.0: gnd 0.4.0
++candidate stand-in: gnd 0.5.0
++test_installed_rw2_include_roots: passed
++test_installed_rw2_pyrel_rules: passed
++test_installed_rw2_count_certificates: passed
++test_installed_rw2_ossie_relational: passed
++test_installed_rw2_seeded_growth: passed
++failures: 0
++```
++
++Control, the same harness with `--swap`: the 0.4.0 interpreter stands in for
++the candidate, and every probe must fail.
++
++```text
++test_installed_rw2_include_roots: FAILED (AssertionError): gnd judgments check ... exit 3
++test_installed_rw2_pyrel_rules: FAILED (AssertionError): gnd export pyrel ... exit 3
++test_installed_rw2_count_certificates: FAILED (AssertionError): the packaged count_fixture is absent
++test_installed_rw2_ossie_relational: FAILED (AssertionError): the packaged physical-binding.json is absent
++test_installed_rw2_seeded_growth: FAILED (AssertionError): the packaged seeded_growth is absent
++failures: 5
++```
++
++The second block gives each failure's cause in words; the harness printed
++the assertion's first line, which for the last three is a traceback of the
++resource copy.
++
++## The five families files
++
++[rehearse_families.py](rehearse_families.py) is the gate program of
++`installed_pytest`. It ran each file from the archive checkout with
++`python -I`, in a fresh Python 3.11 environment holding the working tree
++(editable, with the `synth` extra), `pytest==9.1.1` and `duckdb==1.5.5`, the
++packages the acceptance run installs.
++
++| File | Result |
++|---|---|
++| `test_vg3_unattended_includes.py` | 46 passed, no skip |
++| `test_go2_operation_outcomes.py` | 40 passed, no skip |
++| `test_lh1_reading_host.py` | 98 passed, no skip |
++| `test_lh2_reading_replay.py` | 30 passed, no skip |
++| `test_lr3_reference_set.py` | 22 passed, no skip |
++
++Not shown here: that each passes with the package installed from a wheel and
++reads of the source checkout denied.
++
++## Not rehearsed
++
++`test_installed_0_3_0_regressions` with its new five-file assertion, the four
++RV2 probes without their 0.3.0 controls, and the candidate identity tests.
++They need a retained candidate. Collection of the whole file: 33 tests.
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py
+new file mode 100644
+index 00000000..b95da7b2
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py
+@@ -0,0 +1,11 @@
++import sys,pytest,gnd
++class Gate:
++ def __init__(self): self.skips=[];self.passed=0
++ def pytest_collectreport(self,report):
++  if report.skipped:self.skips.append(report.nodeid)
++ def pytest_runtest_logreport(self,report):
++  if report.skipped:self.skips.append(report.nodeid)
++  if report.when=='call' and report.passed:self.passed+=1
++p=Gate()
++code=pytest.main(['-q','--tb=line','-p','no:cacheprovider',*sys.argv[1:]],plugins=[p])
++print('code',code,'passed',p.passed,'skips',p.skips[:5])
+diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py
+new file mode 100644
+index 00000000..5b011814
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py
+@@ -0,0 +1,49 @@
++"""Rehearse the RW2 probe functions without a retained candidate.
++
++Usage: rehearse_probes.py WORKTREE SCRATCH [--swap]
++The candidate is the worktree's editable install; the sandbox prefix is empty; the checkout is a git
++archive of HEAD plus the working-tree test file. With --swap the 0.4.0 interpreter stands in for the
++candidate, and every probe must fail.
++"""
++import os, shutil, subprocess, sys, tarfile, traceback
++from pathlib import Path
++
++worktree, scratch = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
++swap = "--swap" in sys.argv
++sys.path.insert(0, str(worktree / "tests"))
++import test_release_acceptance as t
++
++shutil.rmtree(scratch, ignore_errors=True)
++scratch.mkdir(parents=True)
++checkout = scratch / "checkout"; checkout.mkdir()
++raw = subprocess.run(["git", "archive", "HEAD"], cwd=worktree, capture_output=True, check=True).stdout
++(scratch / "checkout.tar").write_bytes(raw)
++with tarfile.open(scratch / "checkout.tar") as archive:
++    archive.extractall(checkout, filter="data")
++shutil.copyfile(worktree / "tests/test_release_acceptance.py", checkout / "tests/test_release_acceptance.py")
++
++class Factory:
++    def mktemp(self, name):
++        path = scratch / name; path.mkdir(); return path
++
++env = {k: v for k, v in os.environ.items() if k in {"PATH", "TMPDIR", "LANG", "LC_ALL"}}
++env.update(HOME=str(scratch / "home"), PYTHONNOUSERSITE="1"); (scratch / "home").mkdir()
++old_python, old_env = t.published_wheel(Factory(), "0.4.0")
++print("published 0.4.0:", t.gnd(old_python, [], old_env, scratch, "--version", expected=0).stdout.strip())
++new_python = worktree / ".venv/bin/python"
++print("candidate stand-in:", t.gnd(new_python, [], env, scratch, "--version", expected=0).stdout.strip())
++candidate = (old_python, old_env) if swap else (new_python, env)
++installed = (scratch, checkout, candidate[0], None, candidate[1], [])
++failures = 0
++for name in ("test_installed_rw2_include_roots", "test_installed_rw2_pyrel_rules", "test_installed_rw2_count_certificates",
++             "test_installed_rw2_ossie_relational", "test_installed_rw2_seeded_growth"):
++    tmp = scratch / name; tmp.mkdir()
++    try:
++        getattr(t, name)(installed, (old_python, old_env), tmp)
++        print(f"{name}: passed")
++    except Exception as error:
++        failures += 1
++        line = traceback.extract_tb(error.__traceback__)[-1]
++        first = str(error).strip().splitlines()[0][:200] if str(error).strip() else type(error).__name__
++        print(f"{name}: FAILED at line {traceback.extract_tb(error.__traceback__)[1].lineno} ({type(error).__name__}): {first}")
++print("failures:", failures)
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/phase-RW2-spec.md b/.gnd-planning/milestones/release-0.5.0/notes/phase-RW2-spec.md
+index c9b5f9f5..e6c69393 100644
+--- a/.gnd-planning/milestones/release-0.5.0/notes/phase-RW2-spec.md
++++ b/.gnd-planning/milestones/release-0.5.0/notes/phase-RW2-spec.md
+@@ -238,6 +238,13 @@ SHA-256 of the spec bytes it covers.
+ > request, and any act of publication. This ruling is not the owner's
+ > reading of the spec.
+ 
++> **Review budget, declared before round 2, 2026-11-25.** Round 1 of the
++> probes review (Codex) returned one finding, against `readme_commands`; it
++> is reproduced and repaired at `423ab44f`. One more round reads the repair.
++> The search stops after round 2 whatever it returns if more than half of
++> its findings attack text the repair wrote; otherwise a third round may
++> read round 2's repairs, and there is no fourth.
++
+ ## 8. Tests
+ 
+ | ID | Case | Expected |
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/BRIEF.md b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/BRIEF.md
+new file mode 100644
+index 00000000..1732c7db
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/BRIEF.md
+@@ -0,0 +1,84 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Do the probes added to tests/test_release_acceptance.py do what section 6 of the RW2 spec says, and would each one fail if the installed package lacked the feature it names?
++
++## Claims to test
++
++The author claims what follows. For each, try to show where it is false: a claim is
++met only if you looked for the case that breaks it and did not find one.
++
++- C1. Each of the six probes asserts the candidate result, the candidate behavior control and the 0.4.0 control that the spec's probe table states, and nothing in a probe passes vacuously (an empty list, a loop that never runs, an assertion on a constant).
++- C2. Removing the four 0.3.0 controls removed no assertion about the candidate.
++- C3. program_constants reads the constants of every exported program the probes pass it, for any model and mode the export supports, without running the program.
++- C4. readme_commands fails when the packaged README stops listing a command the probe runs.
++- C5. The corrected sentence in the PyRel block of docs/release-notes.md is true of 0.4.0 as evidence/RW2/controls-0.4.0.md measures it.
++- C6. No probe reads a file of the source checkout where the spec says the input comes from the installed package.
++
++## The change under review
++
++The work from `d5641d1d` to the working tree at `d5641d1dd9db` with uncommitted changes. Its diff is `.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/diff.patch`.
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/diff.patch` | `815855dc71e1a478354812602d3c26b9f0d2bfb0fe236d4a61f9009b8a9cffae` |
++| `.gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md` | `ea86cb5289a3417099c6f86503bc014d2089fa7de9417b72b4553bf2426a2a0d` |
++| `.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py` | `2dd669bba9602610e1aa8c83aa73e85412eb0fbc58555a3bb6896b2d231d448e` |
++| `.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py` | `3783db17e2f4613d954befd972b49d140952a9a9230a592ab1ced8f560d9db00` |
++| `docs/release-notes.md` | `7526c08e8ac8281e48d4b6cf8c138f9bb24aa6b4b833f834468c30a1254e1d25` |
++| `tests/test_release_acceptance.py` | `1d3fc1ea3ca5a0131e4ebd690dee198c081c021ae24c2eadd8d3d2bd2d699919` |
++| `.gnd-planning/milestones/release-0.5.0/notes/phase-RW2-spec.md` | `362bfc12a0d04161dbf4d4f458458e91f7b278c5e9d9f3fa366fa3457bcd9264` |
++| `.gnd-planning/milestones/release-0.5.0/evidence/RW2/controls-0.4.0.md` | `db37a9144234705191a2db4309c19f3397814d9374a1da3542008b7d9e2e39c5` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/FINDINGS.md b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/FINDINGS.md
+new file mode 100644
+index 00000000..4e728ab2
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/FINDINGS.md
+@@ -0,0 +1,18 @@
++# Findings ledger: phase-RW2-probes-r1
++
++One row per finding the review returned, under the reviewer's own id. Fill every cell:
++
++- Reproduced: yes or no. A finding is believed only once it is reproduced against the bytes.
++- Class: blocking, hardening or completeness, assigned here, not by the reviewer
++  (review-convergence.md).
++- Disposition: fixed, deferred, rejected or open.
++- Repaired at: for a fixed finding, the commit or tag that holds the repaired bytes. Those
++  bytes are unreviewed until a later round reads them; `review_tool.py status` says which.
++- Notes: the regression test for a fixed finding, the target for a deferred one, the reason
++  for a rejected one.
++
++If the review returned no findings, replace the table with the line: No findings.
++
++| Id | Finding | Reproduced | Class | Disposition | Repaired at | Notes |
++|---|---|---|---|---|---|---|
++| F1 | `readme_commands` accepts a command the README no longer documents: another executable before it, a shell comment, or a copy kept only in an HTML comment | yes | hardening | fixed | 423ab44f | Reproduced with both packaged READMEs. The helper now reads the README's Markdown blocks with the existing `markdown_blocks` and each line of a `sh` or `bash` fence with `shlex`; it adds no pattern. Regression: `tests/test_acceptance_controls.py::test_readme_commands_refuses_a_command_the_readme_no_longer_documents` (five changes on two READMEs) and `test_readme_commands_accepts_the_packaged_readmes`, in the default lane |
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/brief.json b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/brief.json
+new file mode 100644
+index 00000000..42505411
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/brief.json
+@@ -0,0 +1,55 @@
++{
++  "base": "d5641d1d",
++  "claims": [
++    "Each of the six probes asserts the candidate result, the candidate behavior control and the 0.4.0 control that the spec's probe table states, and nothing in a probe passes vacuously (an empty list, a loop that never runs, an assertion on a constant).",
++    "Removing the four 0.3.0 controls removed no assertion about the candidate.",
++    "program_constants reads the constants of every exported program the probes pass it, for any model and mode the export supports, without running the program.",
++    "readme_commands fails when the packaged README stops listing a command the probe runs.",
++    "The corrected sentence in the PyRel block of docs/release-notes.md is true of 0.4.0 as evidence/RW2/controls-0.4.0.md measures it.",
++    "No probe reads a file of the source checkout where the spec says the input comes from the installed package."
++  ],
++  "created": "2026-11-25T16:13:50.779253+00:00",
++  "deleted": [],
++  "dirty": true,
++  "files": [
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/diff.patch",
++      "sha256": "815855dc71e1a478354812602d3c26b9f0d2bfb0fe236d4a61f9009b8a9cffae"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md",
++      "sha256": "ea86cb5289a3417099c6f86503bc014d2089fa7de9417b72b4553bf2426a2a0d"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py",
++      "sha256": "2dd669bba9602610e1aa8c83aa73e85412eb0fbc58555a3bb6896b2d231d448e"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py",
++      "sha256": "3783db17e2f4613d954befd972b49d140952a9a9230a592ab1ced8f560d9db00"
++    },
++    {
++      "path": "docs/release-notes.md",
++      "sha256": "7526c08e8ac8281e48d4b6cf8c138f9bb24aa6b4b833f834468c30a1254e1d25"
++    },
++    {
++      "path": "tests/test_release_acceptance.py",
++      "sha256": "1d3fc1ea3ca5a0131e4ebd690dee198c081c021ae24c2eadd8d3d2bd2d699919"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/notes/phase-RW2-spec.md",
++      "sha256": "362bfc12a0d04161dbf4d4f458458e91f7b278c5e9d9f3fa366fa3457bcd9264"
++    },
++    {
++      "path": ".gnd-planning/milestones/release-0.5.0/evidence/RW2/controls-0.4.0.md",
++      "sha256": "db37a9144234705191a2db4309c19f3397814d9374a1da3542008b7d9e2e39c5"
++    }
++  ],
++  "head": "d5641d1dd9dbb729abead855d2475a71c6fd788e",
++  "left_out": [],
++  "notes": [],
++  "pr": null,
++  "question": "Do the probes added to tests/test_release_acceptance.py do what section 6 of the RW2 spec says, and would each one fail if the installed package lacked the feature it names?",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/diff.patch b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/diff.patch
+new file mode 100644
+index 00000000..5e00a697
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/diff.patch
+@@ -0,0 +1,629 @@
++diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md
++new file mode 100644
++index 00000000..219edd63
++--- /dev/null
+++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/probes-rehearsal.md
++@@ -0,0 +1,71 @@
+++# RW2: rehearsal of the probe functions before the probes pull request
+++
+++Run on 2026-11-25 on the planning machine, on the working tree of the probes
+++branch (main `8dcfe0e7` plus the RW2 commits). This is a rehearsal. It does
+++not use a retained candidate, a built wheel or the source-checkout denial;
+++the acceptance run on beast-3 is the evidence.
+++
+++## The five probe functions
+++
+++[rehearse_probes.py](rehearse_probes.py) imports
+++`tests/test_release_acceptance.py` and calls each new function with:
+++
+++- the candidate: the working tree installed editable (`gnd 0.5.0`);
+++- the published wheel: `published_wheel(..., '0.4.0')`, which downloads the
+++  0.4.0 wheel from PyPI and checks its SHA-256 against the pin in the test
+++  file (`gnd 0.4.0`);
+++- the checkout: a `git archive` of HEAD with the working tree's test file;
+++- an empty sandbox prefix. CPython 3.13 ran the harness; the 0.4.0
+++  environment used the same interpreter.
+++
+++```text
+++published 0.4.0: gnd 0.4.0
+++candidate stand-in: gnd 0.5.0
+++test_installed_rw2_include_roots: passed
+++test_installed_rw2_pyrel_rules: passed
+++test_installed_rw2_count_certificates: passed
+++test_installed_rw2_ossie_relational: passed
+++test_installed_rw2_seeded_growth: passed
+++failures: 0
+++```
+++
+++Control, the same harness with `--swap`: the 0.4.0 interpreter stands in for
+++the candidate, and every probe must fail.
+++
+++```text
+++test_installed_rw2_include_roots: FAILED (AssertionError): gnd judgments check ... exit 3
+++test_installed_rw2_pyrel_rules: FAILED (AssertionError): gnd export pyrel ... exit 3
+++test_installed_rw2_count_certificates: FAILED (AssertionError): the packaged count_fixture is absent
+++test_installed_rw2_ossie_relational: FAILED (AssertionError): the packaged physical-binding.json is absent
+++test_installed_rw2_seeded_growth: FAILED (AssertionError): the packaged seeded_growth is absent
+++failures: 5
+++```
+++
+++The second block gives each failure's cause in words; the harness printed
+++the assertion's first line, which for the last three is a traceback of the
+++resource copy.
+++
+++## The five families files
+++
+++[rehearse_families.py](rehearse_families.py) is the gate program of
+++`installed_pytest`. It ran each file from the archive checkout with
+++`python -I`, in a fresh Python 3.11 environment holding the working tree
+++(editable, with the `synth` extra), `pytest==9.1.1` and `duckdb==1.5.5`, the
+++packages the acceptance run installs.
+++
+++| File | Result |
+++|---|---|
+++| `test_vg3_unattended_includes.py` | 46 passed, no skip |
+++| `test_go2_operation_outcomes.py` | 40 passed, no skip |
+++| `test_lh1_reading_host.py` | 98 passed, no skip |
+++| `test_lh2_reading_replay.py` | 30 passed, no skip |
+++| `test_lr3_reference_set.py` | 22 passed, no skip |
+++
+++Not shown here: that each passes with the package installed from a wheel and
+++reads of the source checkout denied.
+++
+++## Not rehearsed
+++
+++`test_installed_0_3_0_regressions` with its new five-file assertion, the four
+++RV2 probes without their 0.3.0 controls, and the candidate identity tests.
+++They need a retained candidate. Collection of the whole file: 33 tests.
++diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py
++new file mode 100644
++index 00000000..b95da7b2
++--- /dev/null
+++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_families.py
++@@ -0,0 +1,11 @@
+++import sys,pytest,gnd
+++class Gate:
+++ def __init__(self): self.skips=[];self.passed=0
+++ def pytest_collectreport(self,report):
+++  if report.skipped:self.skips.append(report.nodeid)
+++ def pytest_runtest_logreport(self,report):
+++  if report.skipped:self.skips.append(report.nodeid)
+++  if report.when=='call' and report.passed:self.passed+=1
+++p=Gate()
+++code=pytest.main(['-q','--tb=line','-p','no:cacheprovider',*sys.argv[1:]],plugins=[p])
+++print('code',code,'passed',p.passed,'skips',p.skips[:5])
++diff --git a/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py
++new file mode 100644
++index 00000000..5b011814
++--- /dev/null
+++++ b/.gnd-planning/milestones/release-0.5.0/evidence/RW2/rehearse_probes.py
++@@ -0,0 +1,49 @@
+++"""Rehearse the RW2 probe functions without a retained candidate.
+++
+++Usage: rehearse_probes.py WORKTREE SCRATCH [--swap]
+++The candidate is the worktree's editable install; the sandbox prefix is empty; the checkout is a git
+++archive of HEAD plus the working-tree test file. With --swap the 0.4.0 interpreter stands in for the
+++candidate, and every probe must fail.
+++"""
+++import os, shutil, subprocess, sys, tarfile, traceback
+++from pathlib import Path
+++
+++worktree, scratch = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
+++swap = "--swap" in sys.argv
+++sys.path.insert(0, str(worktree / "tests"))
+++import test_release_acceptance as t
+++
+++shutil.rmtree(scratch, ignore_errors=True)
+++scratch.mkdir(parents=True)
+++checkout = scratch / "checkout"; checkout.mkdir()
+++raw = subprocess.run(["git", "archive", "HEAD"], cwd=worktree, capture_output=True, check=True).stdout
+++(scratch / "checkout.tar").write_bytes(raw)
+++with tarfile.open(scratch / "checkout.tar") as archive:
+++    archive.extractall(checkout, filter="data")
+++shutil.copyfile(worktree / "tests/test_release_acceptance.py", checkout / "tests/test_release_acceptance.py")
+++
+++class Factory:
+++    def mktemp(self, name):
+++        path = scratch / name; path.mkdir(); return path
+++
+++env = {k: v for k, v in os.environ.items() if k in {"PATH", "TMPDIR", "LANG", "LC_ALL"}}
+++env.update(HOME=str(scratch / "home"), PYTHONNOUSERSITE="1"); (scratch / "home").mkdir()
+++old_python, old_env = t.published_wheel(Factory(), "0.4.0")
+++print("published 0.4.0:", t.gnd(old_python, [], old_env, scratch, "--version", expected=0).stdout.strip())
+++new_python = worktree / ".venv/bin/python"
+++print("candidate stand-in:", t.gnd(new_python, [], env, scratch, "--version", expected=0).stdout.strip())
+++candidate = (old_python, old_env) if swap else (new_python, env)
+++installed = (scratch, checkout, candidate[0], None, candidate[1], [])
+++failures = 0
+++for name in ("test_installed_rw2_include_roots", "test_installed_rw2_pyrel_rules", "test_installed_rw2_count_certificates",
+++             "test_installed_rw2_ossie_relational", "test_installed_rw2_seeded_growth"):
+++    tmp = scratch / name; tmp.mkdir()
+++    try:
+++        getattr(t, name)(installed, (old_python, old_env), tmp)
+++        print(f"{name}: passed")
+++    except Exception as error:
+++        failures += 1
+++        line = traceback.extract_tb(error.__traceback__)[-1]
+++        first = str(error).strip().splitlines()[0][:200] if str(error).strip() else type(error).__name__
+++        print(f"{name}: FAILED at line {traceback.extract_tb(error.__traceback__)[1].lineno} ({type(error).__name__}): {first}")
+++print("failures:", failures)
++diff --git a/docs/release-notes.md b/docs/release-notes.md
++index 5887226b..e12b6b7d 100644
++--- a/docs/release-notes.md
+++++ b/docs/release-notes.md
++@@ -48,9 +48,9 @@ in an `Unreleased:` section until the next one.
++ 
++ `gnd export pyrel --rules duckdb` and `--rules lqp` now export models that
++ use external uniqueness, anchored rules, `Number` values or value
++-constraints scoped to a role. 0.4.0 refused the first three by name, as "a
++-later phase of the rules programs" or "not supported by the rules programs
++-yet" ([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
+++constraints scoped to a role. 0.4.0 refused each of them by name, as "a
+++later phase" or "not supported by the rules programs yet"
+++([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
++ [PyRel runtime page](runtimes/pyrel.md) is the reference for what the
++ programs check, what they list as not checked and what they refuse.
++ 
++diff --git a/tests/test_release_acceptance.py b/tests/test_release_acceptance.py
++index edf3639d..61d330f4 100644
++--- a/tests/test_release_acceptance.py
+++++ b/tests/test_release_acceptance.py
++@@ -1,4 +1,5 @@
++ """Consume retained candidate artifacts; never rebuild them during acceptance."""
+++import ast
++ import email
++ import hashlib
++ import itertools
++@@ -31,6 +32,9 @@ FAMILIES = [
++     'test_public_generated_examples.py', 'test_solve_successors.py',
++     'test_public_v71_witness_corpus.py', 'test_public_lean_export_successors.py',
++     'test_review_request.py', 'test_release_examples.py',
+++    # release-0.5.0 RW2: growth from a reviewed vocabulary and the literature examples from a host.
+++    'test_vg3_unattended_includes.py', 'test_go2_operation_outcomes.py', 'test_lh1_reading_host.py',
+++    'test_lh2_reading_replay.py', 'test_lr3_reference_set.py',
++ ]
++ 
++ 
++@@ -241,7 +245,7 @@ def test_target_only_contributor_lifecycle(installed):
++ 
++ # Only the latest published wheel provides release availability controls.
++ # The older release probes stay as positive regressions.
++-PUBLISHED_WHEEL_SHA256 = {'0.3.0': '143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b'}
+++PUBLISHED_WHEEL_SHA256 = {'0.4.0': '36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c'}
++ MODEL, HEAD, BASE, FIXED = (f'catalog/{n}' for n in [
++     'model.orm.yaml', 'head.population.yaml', 'base.population.yaml', 'fixed.population.yaml'])
++ REMEDIES = {
++@@ -424,18 +428,13 @@ OSSIE_FILES = ['gnd/schema/ossie/PINNED.json', 'gnd/schema/ossie/core-spec.json'
++ Q4_PREVIEW = ['evolve', 'preview', 'model.orm.yaml', 'proposal.json', '--workspace', '.',
++               '--records', 'records', '--format', 'json', '--policy', 'additive',
++               '--populated', 'customer_places_order']
+++OSSIE_ONTOLOGY_OUTPUTS = ['', '.gnd.json', '.loss.json']
+++OSSIE_OUTPUTS = [*OSSIE_ONTOLOGY_OUTPUTS, '.mapping.yaml', '.semantic_model.yaml']   # sorted, as iterdir is compared
++ SPANS_UNCHECKED = '1 of 10 source spans were not re-hashed'
++ YAML_TO_JSON = ('import json,sys; from ruamel.yaml import YAML; '
++                 "print(json.dumps(YAML(typ='safe').load(open(sys.argv[1], encoding='utf-8'))))")
++ 
++ 
++-@pytest.fixture(scope='module')
++-def published_0_3_0(tmp_path_factory):
++-    python, env = published_wheel(tmp_path_factory, '0.3.0')
++-    assert gnd(python, [], env, python.parent, '--version', expected=0).stdout.strip() == 'gnd 0.3.0'
++-    return python, env
++-
++-
++ def copy_packaged(python, prefix, env, work, relative, name):
++     """Copy one file or directory of the installed gnd package into work/name."""
++     program = ('import shutil,sys; from importlib.resources import files; '
++@@ -481,10 +480,11 @@ def test_installed_0_3_0_regressions(installed, tmp_path):
++         names = set(archive.namelist())
++     assert set(OSSIE_FILES) <= names, sorted(set(OSSIE_FILES) - names)
++ 
++-    # Q1: an Ossie export writes three files, and an import with its sidecar restores the model.
+++    # Q1: an Ossie export writes its files (five since 0.5.0; probe P5 holds the three-file run), and an
+++    # import with its sidecar restores the model.
++     q1 = work / 'q1'
++     new('q1', 'export', 'ossie', 'model.orm.yaml', '--out', 'o.yaml', expected=0)
++-    assert sorted(p.name for p in q1.iterdir()) == ['model.orm.yaml', 'o.yaml', 'o.yaml.gnd.json', 'o.yaml.loss.json']
+++    assert sorted(p.name for p in q1.iterdir()) == ['model.orm.yaml', *('o.yaml' + suffix for suffix in OSSIE_OUTPUTS)]
++     # The exported YAML itself, read by the YAML library the wheel depends on (review G2).
++     concepts = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON, 'o.yaml'], q1, env))['ontology']
++     (refund_by,) = [r for c in concepts for r in c.get('relationships', ()) if r['name'] == 'refund_by']
++@@ -556,13 +556,14 @@ def test_installed_0_3_0_regressions(installed, tmp_path):
++ 
++ @pytest.fixture(scope='module')
++ def rv2_installed(installed):
+++    """The candidate, required to be 0.5.0 before any 0.4.0 or 0.5.0 probe touches its inputs."""
++     outside, checkout, python, _wheel, env, prefix = installed
++-    assert declared_version(checkout) == '0.4.0'
++-    assert gnd(python, prefix, env, outside, '--version', expected=0).stdout.strip() == 'gnd 0.4.0'
+++    assert declared_version(checkout) == '0.5.0'
+++    assert gnd(python, prefix, env, outside, '--version', expected=0).stdout.strip() == 'gnd 0.5.0'
++     return installed
++ 
++ 
++-def test_installed_rv2_guarded_membership(rv2_installed, published_0_3_0, tmp_path):
+++def test_installed_rv2_guarded_membership(rv2_installed, tmp_path):
++     _, checkout, python, _, env, prefix = rv2_installed
++     model = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON,
++                             checkout / 'tests/fixtures/models/guarded_minimal.orm.yaml'], tmp_path, env))
++@@ -588,17 +589,9 @@ def test_installed_rv2_guarded_membership(rv2_installed, published_0_3_0, tmp_pa
++         result, = [row for row in report['verdicts'] if row['constraint_type'] == 'guarded']
++         assert (result['verdict'], result['guarded_antecedent']['binding_count']) == (verdict, bindings)
++ 
++-    old_python, old_env = published_0_3_0
++-    result = gnd(old_python, prefix, old_env, tmp_path, 'validate', model_path, '--format', 'json', expected=3)
++-    assert {(row['path'], row['rule_id']) for row in json.loads(result.stdout)['issues']} == {
++-        ('$.constraints[0]', 'jsonschema:oneOf'),
++-        ('$.constraints[0]', 'jsonschema:unevaluatedProperties'),
++-    }
++-
++ 
++-def test_installed_rv2_composition_and_catalog(rv2_installed, published_0_3_0, tmp_path):
+++def test_installed_rv2_composition_and_catalog(rv2_installed, tmp_path):
++     _, _, python, _, env, prefix = rv2_installed
++-    old_python, old_env = published_0_3_0
++     work = tmp_path.resolve() / 'interop'
++     run([*prefix, python, '-I', '-m', 'gnd.examples.literature.interop', 'run', '--out', work], tmp_path, env)
++     model, population, record = 'checking.orm.json', 'composed.population.json', 'composition.json'
++@@ -625,14 +618,6 @@ def test_installed_rv2_composition_and_catalog(rv2_installed, published_0_3_0, t
++     alias_args = ('compose', alias / 'model.orm.yaml', alias / 'cases/A-alias',
++                   '--out', 'alias.population.json', '--record', 'alias.composition.json')
++     gnd(python, prefix, env, tmp_path, *alias_args, expected=0)
++-    old_root = tmp_path / 'old'
++-    old_root.mkdir()
++-    old_alias = gnd(old_python, prefix, old_env, old_root, *alias_args, expected=3)
++-    assert 'manifest has missing or unexpected fields' in old_alias.stderr
++-    assert not list(old_root.iterdir())
++-    old_catalog = gnd(old_python, prefix, old_env, work, 'compose', model, 'sources',
++-                      '--out', 'old.population.json', '--record', 'old.composition.json', expected=3)
++-    assert 'composition with reference populations is unsupported' in old_catalog.stderr
++ 
++     witness = ('witness', model, population, '--targets', 'targets.json', '--composition', record, '--raw')
++     replay = ('replay', model, population, 'rv2.witness.json', '--composition', record, '--raw')
++@@ -671,7 +656,7 @@ else:
++     assert not list(work.glob('mutant.*.json'))
++ 
++ 
++-def test_installed_rv2_literature_assurance(rv2_installed, published_0_3_0, tmp_path):
+++def test_installed_rv2_literature_assurance(rv2_installed, tmp_path):
++     _, checkout, python, _, env, prefix = rv2_installed
++     literature = copy_packaged(python, prefix, env, tmp_path, 'examples/literature', 'literature')
++     reference = literature / 'runs/reference'
++@@ -695,13 +680,8 @@ def test_installed_rv2_literature_assurance(rv2_installed, published_0_3_0, tmp_
++     changed = json.loads(run([*prefix, python, *command], tmp_path, env, expected=1))
++     assert changed['failed_stages'] == ['identity-decisions', 'derivation', 'freshness']
++ 
++-    old_python, old_env = published_0_3_0
++-    absence = ("from importlib.resources import files; "
++-               "assert not files('gnd').joinpath('examples/literature/assurance_report.py').is_file()")
++-    run([*prefix, old_python, '-I', '-c', absence], tmp_path, old_env)
++ 
++-
++-def test_installed_rv2_expense_receipts(rv2_installed, published_0_3_0, tmp_path):
+++def test_installed_rv2_expense_receipts(rv2_installed, tmp_path):
++     _, _, python, _, env, prefix = rv2_installed
++     work = copy_packaged(python, prefix, env, tmp_path, 'examples/expense/receipts', 'receipts')
++     model, population, record = 'checking.orm.json', 'claim.population.json', 'claim.composition.json'
++@@ -720,6 +700,319 @@ def test_installed_rv2_expense_receipts(rv2_installed, published_0_3_0, tmp_path
++     assert 'joined without a same decision' in missing.stderr
++     assert not list(work.glob('missing.*.json'))
++ 
++-    old_python, old_env = published_0_3_0
++-    absence = "from importlib.resources import files; assert not files('gnd').joinpath('examples/expense/receipts').is_dir()"
++-    run([*prefix, old_python, '-I', '-c', absence], tmp_path, old_env)
+++
+++# -- release-0.5.0 RW2: what 0.5.0 adds, from the installed wheel (probes P1 to P6) --
+++#
+++# Each probe has a control on the candidate and one on the published 0.4.0 wheel. The expected 0.4.0
+++# results are the ones measured for the RW2 spec (release-0.5.0 evidence/RW2/controls-0.4.0.md).
+++
+++INCLUDES = ['literature', 'chronology']
+++JUDGE = ('judgments', 'check', 'checking.orm.json', 'composed.population.json', '--policy', 'policy.json',
+++         '--receipts', 'receipts.json', '--trusted-root', '.', '--format', 'json')
+++# The judgment inputs bind digests of files the interop run writes, so the installed package writes them.
+++BIND_JUDGMENT = '''import hashlib, json, sys
+++from pathlib import Path
+++from gnd.artifacts import canonical_json_bytes
+++from gnd.judgments import judgment_fact_digest
+++root = Path.cwd()
+++model, population, target = sys.argv[1:4]
+++sha = lambda raw: hashlib.sha256(raw).hexdigest()
+++document = json.loads((root / model).read_bytes())
+++raw = (root / population).read_bytes()
+++fact = json.loads(raw)["facts"][target][0]
+++(root / "evidence.txt").write_bytes(b"evidence")
+++identity = {"identity_version": 1, "references": [
+++    {"id": r["id"], "sha256": r["sha256"]} for r in document["reference_populations"]]}
+++receipts = [{
+++    "receipt_id": "r-" + judge, "judge_id": judge, "verdict": "approve", "trust": "consumer-pinned",
+++    "subject": {"model_sha256": sha((root / model).read_bytes()), "population_sha256": sha(raw),
+++                "reference_identity": identity, "fact_type": target, "index": 0,
+++                "fact_sha256": judgment_fact_digest(target, 0, fact)},
+++    "sources": [{"path": "evidence.txt", "sha256": sha(b"evidence"), "quote": None}],
+++    "external_evidence": None} for judge in ("a", "b")]
+++policy = {
+++    "admission": {"evidence_floor": None, "minimum_approvals": 2}, "judges": ["a", "b"], "policy_id": "rw2",
+++    "repair": {"evidence_floor": None, "minimum_rejections": 1}, "schema_version": 1,
+++    "targets": [{"fact_type": target, "index": 0}], "trust_mode": "consumer-pinned",
+++    "trusted_receipts": [{"judge_id": r["judge_id"],
+++                          "receipt_sha256": sha(canonical_json_bytes(r, exact_numbers=True))} for r in receipts]}
+++(root / "policy.json").write_bytes(canonical_json_bytes(policy))
+++(root / "receipts.json").write_bytes(canonical_json_bytes({"schema_version": 1, "receipts": receipts}))
+++'''
+++RMAP_TABLES = ('import json, sys; from pathlib import Path; from gnd import rmap; from gnd.model import load_model; '
+++               'print(json.dumps(sorted(t.name for t in rmap.map_model(load_model(Path(sys.argv[1]))).tables)))')
+++PACKAGE_HAS_DIRECTORY = ("import sys; from importlib.resources import files; "
+++                         "print(files('gnd').joinpath(*sys.argv[1].split('/')).is_dir())")
+++
+++
+++@pytest.fixture(scope='module')
+++def published_0_4_0(tmp_path_factory):
+++    python, env = published_wheel(tmp_path_factory, '0.4.0')
+++    assert gnd(python, [], env, python.parent, '--version', expected=0).stdout.strip() == 'gnd 0.4.0'
+++    return python, env
+++
+++
+++def sha256_file(path):
+++    return hashlib.sha256(path.read_bytes()).hexdigest()
+++
+++
+++def program_constants(path, *names):
+++    """The named module-level constants of an exported PyRel program, read with ast; the program never runs.
+++
+++    The export writes a constant either as a literal or as json.loads of one string literal.
+++    """
+++    found = {}
+++    for node in ast.parse(path.read_text(encoding='utf-8')).body:
+++        if not (isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name)):
+++            continue
+++        name = node.targets[0].id
+++        if name in names:
+++            assert name not in found, name
+++            value = node.value
+++            found[name] = (json.loads(ast.literal_eval(value.args[0])) if isinstance(value, ast.Call)
+++                           else ast.literal_eval(value))
+++    assert set(found) == set(names), sorted(set(names) - set(found))
+++    return found
+++
+++
+++def rules_mode(mode):
+++    return () if mode is None else ('--rules', mode)
+++
+++
+++def test_installed_rw2_include_roots(rv2_installed, published_0_4_0, tmp_path):
+++    _, _, python, _, env, prefix = rv2_installed
+++    old_python, old_env = published_0_4_0
+++    work = tmp_path.resolve() / 'interop'
+++    run([*prefix, python, '-I', '-m', 'gnd.examples.literature.interop', 'run', '--out', work], tmp_path, env)
+++
+++    def new(*args, expected):
+++        return gnd(python, prefix, env, work, *args, expected=expected)
+++
+++    def old(*args, expected):
+++        return gnd(old_python, prefix, old_env, work, *args, expected=expected)
+++
+++    # P1: gnd judgments check judges the temporal include root; 0.4.0 refuses the route.
+++    run([*prefix, python, '-I', '-c', BIND_JUDGMENT, 'checking.orm.json', 'composed.population.json',
+++         'paper_names_parent_method'], work, env)
+++    judged = json.loads(new(*JUDGE, expected=0).stdout)
+++    assert (judged['outcome'], judged['error'], judged['judgment_policy']['admission']) == (0, None, True)
+++    assert json.loads(old(*JUDGE, expected=3).stdout)['error']['reason'] == 'include:unsupported-route'
+++
+++    # P2: gnd flatten writes the flat model and its record for both roots, and never overwrites.
+++    flat = work / 'flat'
+++    records = {}
+++    for root in ('checking', 'extraction'):
+++        new('flatten', f'{root}.orm.json', '--out', 'flat', expected=0)
+++        record_path = flat / f'{root}.orm.flattening.json'
+++        record = json.loads(record_path.read_bytes())
+++        assert record['format'] == 'gnd-flattening/1'
+++        assert [entry['id'] for entry in record['includes']] == INCLUDES
+++        assert record['flat_model_sha256'] == sha256_file(flat / f'{root}.orm.flat.orm.json')
+++        records[root] = sha256_file(record_path)
+++    written = {path.name: path.read_bytes() for path in flat.iterdir()}
+++    assert sorted(written) == [f'{root}.orm.{kind}.json' for root in ('checking', 'extraction')
+++                               for kind in ('flat.orm', 'flattening')]
+++    new('flatten', 'checking.orm.json', '--out', 'flat', expected=11)
+++    assert {path.name: path.read_bytes() for path in flat.iterdir()} == written
+++    old('flatten', 'checking.orm.json', '--out', 'flat-old', expected=64)   # 0.4.0 has no such command
+++    assert not (work / 'flat-old').exists()
+++
+++    # P3, include roots: every advertised mode exports through the flat model and records its digest.
+++    modes = {'checking': ('duckdb', 'lqp'), 'extraction': (None, 'duckdb', 'lqp')}
+++    for root, selected in modes.items():
+++        for mode in selected:
+++            program = work / f'{root}-{mode or "default"}.py'
+++            new('export', 'pyrel', f'{root}.orm.json', *rules_mode(mode), '--out', program, expected=0)
+++            constants = program_constants(program, 'FLATTENING_RECORD_SHA256', 'MODEL_INCLUDES')
+++            assert constants['FLATTENING_RECORD_SHA256'] == records[root], (root, mode)
+++            assert [entry[0] for entry in constants['MODEL_INCLUDES']] == INCLUDES
+++    # The default mode still refuses a temporal model, as the notes say.
+++    temporal = new('export', 'pyrel', 'checking.orm.json', '--out', 'temporal.py', expected=3)
+++    assert 'PyRel export does not support temporal models' in temporal.stderr
+++    for root in modes:
+++        for mode in (None, 'duckdb', 'lqp'):
+++            refused = old('export', 'pyrel', f'{root}.orm.json', *rules_mode(mode), '--out', 'old.py', expected=3)
+++            assert 'include:unsupported-route' in refused.stderr, (root, mode)
+++    assert not (work / 'temporal.py').exists() and not (work / 'old.py').exists()
+++
+++    # P1 control, last because it changes an include: an include edited without a new pin is refused.
+++    include = work / 'vocabulary/chronology.orm.json'
+++    document = json.loads(include.read_bytes())
+++    document['object_types'].append({'id': 'extra_0', 'kind': 'value', 'name': 'Extra0', 'primitive': 'String'})
+++    include.write_text(json.dumps(document), encoding='utf-8')
+++    assert json.loads(new(*JUDGE, expected=3).stdout)['error'] == {
+++        'message': 'include:hash-mismatch', 'reason': 'binding'}
+++
+++
+++def test_installed_rw2_pyrel_rules(rv2_installed, published_0_4_0, tmp_path):
+++    _, checkout, python, _, env, prefix = rv2_installed
+++    old_python, old_env = published_0_4_0
+++    literature = copy_packaged(python, prefix, env, tmp_path, 'examples/literature', 'literature')
+++    fixtures = checkout / 'tests/fixtures'
+++    # Each model, with the refusal 0.4.0 gives it by name.
+++    cases = {
+++        'external': (literature / 'assertions/model.orm.yaml',
+++                     'external uniqueness is a later phase of the rules programs'),
+++        'anchored': (literature / 'model.orm.yaml', "family 'anchored' is a later phase of the rules programs"),
+++        'number': (literature / 'depth_fixture/decimal.orm.json',
+++                   "primitive 'Number' is not supported by the rules programs yet"),
+++        # The packaged role-scoped model also has an anchored rule, which 0.4.0 refuses first.
+++        'role-anchored': (literature / 'quantity_fixture/time.orm.yaml',
+++                          "family 'anchored' is a later phase of the rules programs"),
+++        'role': (fixtures / 'pyrel-rules-coverage/rp4/range.orm.json',
+++                 'role-scoped value constraints are a later phase'),
+++    }
+++    frequency = fixtures / 'pyrel-rules-families/review/refuse-external-frequency.orm.json'
+++    for mode in ('duckdb', 'lqp'):
+++        constants = {}
+++        for label, (model, refusal) in cases.items():
+++            program = tmp_path / f'{label}-{mode}.py'
+++            gnd(python, prefix, env, tmp_path, 'export', 'pyrel', model, '--rules', mode, '--out', program, expected=0)
+++            constants[label] = program_constants(program, 'RULES', 'UNCHECKED')
+++            refused = gnd(old_python, prefix, old_env, tmp_path, 'export', 'pyrel', model, '--rules', mode,
+++                          '--out', 'old.py', expected=3)
+++            assert refusal in refused.stderr, (label, mode)
+++        # What each program holds: the external-uniqueness requirement over its two roles, the anchored
+++        # rule listed as not checked, and the value rule of one role.
+++        external = [rule for rule in constants['external']['RULES'] if rule['info'].get('external')]
+++        assert external and all(rule['info']['refs'] == [['assertion_names_passage', 'passage'],
+++                                                         ['assertion_names_work', 'work']] for rule in external)
+++        unchecked = {rule['id']: rule['reason'] for rule in constants['anchored']['UNCHECKED']}
+++        assert unchecked['work_introduces_method#0'].startswith('source anchor:')
+++        assert ('time_step#1', 'value') in {(rule['id'], rule['family'])
+++                                            for rule in constants['role-anchored']['RULES']}
+++        assert any(rule['family'] == 'value' for rule in constants['role']['RULES'])
+++        # Control: an external frequency rule is still refused by name.
+++        still = gnd(python, prefix, env, tmp_path, 'export', 'pyrel', frequency, '--rules', mode,
+++                    '--out', 'frequency.py', expected=3)
+++        assert 'external frequency is a later phase of the rules programs' in still.stderr
+++    assert not (tmp_path / 'old.py').exists() and not (tmp_path / 'frequency.py').exists()
+++
+++
+++COUNT_COMMANDS = [
+++    ('check', 'model.orm.yaml', 'population.json'),
+++    ('witness-count', 'model.orm.yaml', 'population.json', '--request', 'group.json', '--raw', '--out', 'flow.cert.json'),
+++    ('replay-count', 'model.orm.yaml', 'population.json', 'flow.cert.json', '--request', 'group.json', '--raw'),
+++    ('witness-count', 'model.orm.yaml', 'population.json', '--request', 'empty-group.json', '--raw',
+++     '--out', 'empty.cert.json'),
+++    ('replay-count', 'model.orm.yaml', 'population.json', 'empty.cert.json', '--request', 'empty-group.json', '--raw'),
+++]
+++
+++
+++def readme_commands(folder, commands):
+++    """COMMANDS, after checking that the packaged README lists each one as written here."""
+++    readme = (folder / 'README.md').read_text(encoding='utf-8')
+++    for command in commands:
+++        assert 'gnd ' + ' '.join(command) + '\n' in readme, command
+++    return commands
+++
+++
+++def test_installed_rw2_count_certificates(rv2_installed, published_0_4_0, tmp_path):
+++    _, _, python, _, env, prefix = rv2_installed
+++    old_python, old_env = published_0_4_0
+++    work = copy_packaged(python, prefix, env, tmp_path, 'examples/literature/count_fixture', 'count')
+++    # P4: the README's commands, each exit 0; the certificates replay with their counts.
+++    replays = []
+++    for command in readme_commands(work, COUNT_COMMANDS):
+++        result = gnd(python, prefix, env, work, *command, expected=0)
+++        if command[0] == 'replay-count':
+++            replays.append(json.loads(result.stdout))
+++    assert [(row['count'], row['status']) for row in replays] == [(2, 'complete'), (0, 'empty-group')]
+++    assert json.loads((work / 'empty.cert.json').read_bytes())['members'] == []
+++    # Control: the population without the first roster member's row no longer replays.
+++    flow = json.loads((work / 'flow.cert.json').read_bytes())
+++    population = json.loads((work / 'population.json').read_bytes())
+++    del population['facts']['observation'][flow['members'][0]['fact_index']]
+++    (work / 'lost.population.json').write_text(json.dumps(population), encoding='utf-8')
+++    lost = gnd(python, prefix, env, work, 'replay-count', 'model.orm.yaml', 'lost.population.json', 'flow.cert.json',
+++               '--request', 'group.json', '--raw', expected=3)
+++    assert json.loads(lost.stdout)['reason'] == 'binding-stale'
+++    # 0.4.0 has neither the command nor the example.
+++    gnd(old_python, prefix, old_env, work, *COUNT_COMMANDS[1][:-1], 'old.cert.json', expected=64)
+++    assert not (work / 'old.cert.json').exists()
+++    assert run([*prefix, old_python, '-I', '-c', PACKAGE_HAS_DIRECTORY, 'examples/literature/count_fixture'],
+++               tmp_path, old_env).strip() == 'False'
+++
+++
+++def test_installed_rw2_ossie_relational(rv2_installed, published_0_4_0, tmp_path):
+++    _, _, python, _, env, prefix = rv2_installed
+++    old_python, old_env = published_0_4_0
+++    work, old_work = tmp_path / 'ossie', tmp_path / 'ossie-old'
+++    for folder in (work, old_work):
+++        folder.mkdir()
+++        copy_packaged(python, prefix, env, folder, 'examples/refunds/model.orm.yaml', 'model.orm.yaml')
+++    copy_packaged(python, prefix, env, work, 'examples/refunds/physical-binding.json', 'binding.json')
+++
+++    def export(out, *extra, expected, runner=(python, env), cwd=work):
+++        return gnd(runner[0], prefix, runner[1], cwd, 'export', 'ossie', 'model.orm.yaml', '--out', out, *extra,
+++                   expected=expected)
+++
+++    def written(folder, out):
+++        return sorted(path.name for path in folder.iterdir() if path.name.startswith(out))
+++
+++    # P5: five files by default; the tables are the relational mapping's; --ontology-only keeps the
+++    # three-file run with the same bytes; a binding file is accepted.
+++    export('o.yaml', expected=0)
+++    assert written(work, 'o.yaml') == ['o.yaml' + suffix for suffix in OSSIE_OUTPUTS]
+++    semantic = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON, 'o.yaml.semantic_model.yaml'], work, env))
+++    tables = json.loads(run([*prefix, python, '-I', '-c', RMAP_TABLES, 'model.orm.yaml'], work, env))
+++    assert tables and sorted(dataset['name'] for dataset in semantic['datasets']) == tables
+++    export('t.yaml', '--ontology-only', expected=0)
+++    assert written(work, 't.yaml') == ['t.yaml' + suffix for suffix in OSSIE_ONTOLOGY_OUTPUTS]
+++    for suffix in OSSIE_ONTOLOGY_OUTPUTS:
+++        assert (work / ('t.yaml' + suffix)).read_bytes() == (work / ('o.yaml' + suffix)).read_bytes(), suffix
+++    export('b.yaml', '--physical-binding', 'binding.json', expected=0)
+++    assert written(work, 'b.yaml') == ['b.yaml' + suffix for suffix in OSSIE_OUTPUTS]
+++    # Controls: a file at a new path stops the run and nothing else is written; the two options
+++    # exclude each other; a bound of one byte is a size refusal.
+++    (work / 'c.yaml.mapping.yaml').write_text('kept', encoding='utf-8')
+++    export('c.yaml', expected=11)
+++    assert written(work, 'c.yaml') == ['c.yaml.mapping.yaml']
+++    assert (work / 'c.yaml.mapping.yaml').read_text(encoding='utf-8') == 'kept'
+++    export('u.yaml', '--physical-binding', 'binding.json', '--ontology-only', expected=64)
+++    assert 'ossie:output-size' in export('s.yaml', '--max-output-bytes', '1', expected=3).stderr
+++    assert written(work, 'u.yaml') == written(work, 's.yaml') == []
+++    # 0.4.0 writes the three ontology files, with the candidate's bytes, and has no --ontology-only.
+++    published = (old_python, old_env)
+++    export('o.yaml', expected=0, runner=published, cwd=old_work)
+++    assert written(old_work, 'o.yaml') == ['o.yaml' + suffix for suffix in OSSIE_ONTOLOGY_OUTPUTS]
+++    for suffix in OSSIE_ONTOLOGY_OUTPUTS:
+++        assert (old_work / ('o.yaml' + suffix)).read_bytes() == (work / ('o.yaml' + suffix)).read_bytes(), suffix
+++    export('t.yaml', '--ontology-only', expected=64, runner=published, cwd=old_work)
+++    assert written(old_work, 't.yaml') == []
+++
+++
+++GROWTH_COMMANDS = [
+++    ('validate', 'root.orm.yaml'),
+++    ('evolve', 'preview', 'root.orm.yaml', 'round-1.proposal.json', '--workspace', '.', '--records', 'records',
+++     '--out', 'preview-1.json', '--policy', 'additive'),
+++    ('evolve', 'apply', 'root.orm.yaml', 'round-1.proposal.json', '--preview', 'preview-1.json', '--workspace', '.',
+++     '--records', 'records', '--policy', 'additive'),
+++    ('evolve', 'preview', 'root.orm.yaml', 'round-2.proposal.json', '--workspace', '.', '--records', 'records',
+++     '--out', 'preview-2.json', '--policy', 'additive'),
+++    ('evolve', 'apply', 'root.orm.yaml', 'round-2.proposal.json', '--preview', 'preview-2.json', '--workspace', '.',
+++     '--records', 'records', '--policy', 'additive'),
+++    ('validate', 'root.orm.yaml', '--document', 'round-1.document.txt', '--document', 'round-2.document.txt',
+++     '--require-documents'),
+++    ('check', 'root.orm.yaml', 'population.json'),
+++    ('judgments', 'check', 'root.orm.yaml', 'population.json', '--policy', 'policy.json', '--receipts',
+++     'receipts.json', '--trusted-root', '.'),
+++]
+++
+++
+++def test_installed_rw2_seeded_growth(rv2_installed, published_0_4_0, tmp_path):
+++    _, _, python, _, env, prefix = rv2_installed
+++    old_python, old_env = published_0_4_0
+++    work = copy_packaged(python, prefix, env, tmp_path, 'examples/seeded_growth', 'growth')
+++    old_work = tmp_path / 'growth-old'
+++    shutil.copytree(work, old_work)
+++    # P6: the README's commands, each exit 0, from the packaged example.
+++    outputs = [gnd(python, prefix, env, work, *command, expected=0).stdout
+++               for command in readme_commands(work, GROWTH_COMMANDS)]
+++    assert sum(line.startswith('INCLUDE seed ') for line in outputs[0].splitlines()) == 1
+++    # 0.4.0 holds the reviewed include to the unattended rules, and does not ship the example.
+++    refused = gnd(old_python, prefix, old_env, old_work, *GROWTH_COMMANDS[0], '--format', 'json', expected=3)
+++    assert 'semantic:unattended-u5' in {issue['rule_id'] for issue in json.loads(refused.stdout)['issues']}
+++    assert run([*prefix, old_python, '-I', '-c', PACKAGE_HAS_DIRECTORY, 'examples/seeded_growth'],
+++               tmp_path, old_env).strip() == 'False'
+++
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/review.md b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/review.md
+new file mode 100644
+index 00000000..75c8cb5c
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/review.md
+@@ -0,0 +1,28 @@
++<!-- Edited by review_tool.py sanitize: 1 absolute path(s) replaced with <repo> or <home>. The reviewer's words are otherwise unchanged; run.json holds the SHA-256 of the original. -->
++F1 (medium) — [tests/test_release_acceptance.py:906](<repo>/tests/test_release_acceptance.py:906): `readme_commands` accepts commands that the README no longer documents correctly.
++
++The substring check accepts this replacement for the COUNT example’s first command:
++
++```sh
++other-gnd check model.orm.yaml population.json
++```
++
++It also accepts `# gnd check model.orm.yaml population.json`. P4 subsequently executes its hardcoded `gnd` command, so the README regression remains undetected. This contradicts C4.
++
++I reproduced this in memory using both actual packaged README texts: replacing their first commands with another executable or a shell comment still returned all five COUNT commands and all eight growth commands. Removing the command from its shell block and retaining it only in a trailing HTML comment also passed. Each should fail. Validate documented command entries and executable tokens instead of arbitrary substrings.
++
++All eight SHA-256 hashes matched the brief.
++
++What I checked and found true:
++
++- **C1:** Reading all six probe rows against §6 found the specified candidate results and controls represented, including P6’s explicitly shared behavior control. Nonempty guards, exact lists and required dictionary entries prevent the identified assertions from passing vacuously.
++- **C2:** Comparison with `d5641d1d`, including an AST comparison of assertions, confirmed that retiring the four 0.3.0 controls removed no candidate assertion.
++- **C3:** `program_constants` successfully read actual generated programs for both rules modes and the supported default include-root mode. P3’s content assertions and flattening-digest comparisons passed. Additional nested JSON, Unicode, quotes, backslashes and multiline literals parsed correctly; a trailing `raise` remained unexecuted.
++- **C5:** The corrected release-note sentence agrees with the supplied 0.4.0 measurements, including its explicit role-scoped-value refusal.
++- **C6:** The new probes obtain the specified examples, READMEs and binding file through installed-package resources. The two checkout fixtures used by P3 are explicitly permitted by the spec.
++
++Other matcher checks passed: `written(...).startswith(out)` retained an unexpected Unicode filename for the exact-list assertion to reject; the `INCLUDE seed ` predicate handled CRLF and Unicode text, excluded `seedling`, and counted duplicate lines; resource-path splitting resolved both configured example directories. The README matcher rejected complete removal and equivalent doubled whitespace, confirming its dependence on literal formatting.
++
++I could not independently rerun retained-wheel acceptance, the published 0.4.0 controls, or the source-denial families lane. Those runs create environments and scratch files, which this read-only review forbids. Executed checks used the existing editable environment and in-memory inputs; the supplied rehearsal results were reviewed as recorded evidence.
++
++VERDICT: CHANGES_REQUESTED
+\ No newline at end of file
+diff --git a/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/run.json b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/run.json
+new file mode 100644
+index 00000000..37709f56
+--- /dev/null
++++ b/.gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/run.json
+@@ -0,0 +1,32 @@
++{
++  "argv": [
++    "codex",
++    "exec",
++    "--ephemeral",
++    "-c",
++    "model_reasoning_effort=\"high\"",
++    "--sandbox",
++    "read-only",
++    "--color",
++    "never",
++    "--skip-git-repo-check",
++    "--add-dir",
++    "{dir}",
++    "-o",
++    "{dir}/review.md",
++    "Read {dir}/BRIEF.md and follow it."
++  ],
++  "brief_sha256": "e3f9047e24a47063c4d3469e0d2e16397e597a0e2ba2915ae2929cbe08962ac5",
++  "effort": "high",
++  "exit": 0,
++  "finished": "2026-11-25T16:16:51+00:00",
++  "model": "codex default",
++  "pid": 86119,
++  "review_sha256": "578cc00e9eeab12f2ff8f6e101a7c5eccecd7f5a0c9f164e2cd22ec93ffe8ff9",
++  "reviewer": "codex",
++  "sanitized_sha256": "829780f97398183ccb3c538f4d18b6c046d8e2411da61f7ba11f77d59dc992bc",
++  "started": "2026-11-25T16:13:51+00:00",
++  "state": "done",
++  "stdout": "review.log",
++  "timeout_minutes": 60
++}
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 5887226b..e12b6b7d 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -48,9 +48,9 @@ in an `Unreleased:` section until the next one.
+ 
+ `gnd export pyrel --rules duckdb` and `--rules lqp` now export models that
+ use external uniqueness, anchored rules, `Number` values or value
+-constraints scoped to a role. 0.4.0 refused the first three by name, as "a
+-later phase of the rules programs" or "not supported by the rules programs
+-yet" ([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
++constraints scoped to a role. 0.4.0 refused each of them by name, as "a
++later phase" or "not supported by the rules programs yet"
++([#214](https://github.com/vasiloglou/gnd-public/issues/214)). The
+ [PyRel runtime page](runtimes/pyrel.md) is the reference for what the
+ programs check, what they list as not checked and what they refuse.
+ 
+diff --git a/tests/test_acceptance_controls.py b/tests/test_acceptance_controls.py
+index b1c244d8..600caf4f 100644
+--- a/tests/test_acceptance_controls.py
++++ b/tests/test_acceptance_controls.py
+@@ -60,3 +60,55 @@ def test_installed_console_script_is_on_the_selected_environment_path(tmp_path):
+         (tmp_path, tmp_path / 'checkout', None, None, {'PATH': '/usr/bin'}, []))
+     assert shutil.which('gnd', path=env['PATH']) == str(executable)
+     assert env['PATH'].split(os.pathsep)[0] == str(python.parent)
++
++
++# -- release-0.5.0 RW2 probes review r1, F1: a README command counts only as a line of a shell block --
++
++COUNT_README = acceptance.ROOT / 'src/gnd/examples/literature/count_fixture'
++GROWTH_README = acceptance.ROOT / 'src/gnd/examples/seeded_growth'
++
++
++def test_readme_commands_accepts_the_packaged_readmes():
++    assert acceptance.readme_commands(COUNT_README, acceptance.COUNT_COMMANDS) == acceptance.COUNT_COMMANDS
++    assert acceptance.readme_commands(GROWTH_README, acceptance.GROWTH_COMMANDS) == acceptance.GROWTH_COMMANDS
++
++
++@pytest.mark.parametrize('folder, commands', [(COUNT_README, acceptance.COUNT_COMMANDS),
++                                              (GROWTH_README, acceptance.GROWTH_COMMANDS)], ids=['count', 'growth'])
++@pytest.mark.parametrize('change', ['other-executable', 'commented', 'html-comment', 'outside-block', 'removed'])
++def test_readme_commands_refuses_a_command_the_readme_no_longer_documents(tmp_path, folder, commands, change):
++    text = (folder / 'README.md').read_text(encoding='utf-8')
++    line = 'gnd ' + ' '.join(commands[0]) + '\n'
++    assert text.count(line) == 1
++    replacement = {
++        'other-executable': 'other-' + line,
++        'commented': '# ' + line,
++        'html-comment': '',
++        'outside-block': '',
++        'removed': '',
++    }[change]
++    text = text.replace(line, replacement)
++    if change == 'html-comment':
++        text += '\n<!--\n' + line + '-->\n'
++    elif change == 'outside-block':
++        text += '\n' + line
++    (tmp_path / 'README.md').write_text(text, encoding='utf-8')
++    with pytest.raises(AssertionError):
++        acceptance.readme_commands(tmp_path, commands)
++
++
++def test_program_constants_reads_both_forms_without_running_the_program(tmp_path):
++    import json
++    rules = [{'id': 'a#0', 'info': {'note': 'a "quoted" word'}}]
++    program = tmp_path / 'program.py'
++    program.write_text('\n'.join([
++        'import json',
++        f'RULES = json.loads({json.dumps(rules)!r})',
++        "FLATTENING_RECORD_SHA256 = 'ab'",
++        "MODEL_INCLUDES = (('seed', 'seed.orm.yaml', 'cd'),)",
++        "raise SystemExit('the program ran')",
++        '']), encoding='utf-8')
++    assert acceptance.program_constants(program, 'RULES', 'FLATTENING_RECORD_SHA256', 'MODEL_INCLUDES') == {
++        'RULES': rules, 'FLATTENING_RECORD_SHA256': 'ab', 'MODEL_INCLUDES': (('seed', 'seed.orm.yaml', 'cd'),)}
++    with pytest.raises(AssertionError):
++        acceptance.program_constants(program, 'UNCHECKED')   # a constant the program lacks
+diff --git a/tests/test_release_acceptance.py b/tests/test_release_acceptance.py
+index edf3639d..cfee1748 100644
+--- a/tests/test_release_acceptance.py
++++ b/tests/test_release_acceptance.py
+@@ -1,10 +1,12 @@
+ """Consume retained candidate artifacts; never rebuild them during acceptance."""
++import ast
+ import email
+ import hashlib
+ import itertools
+ import json
+ import os
+ import re
++import shlex
+ import shutil
+ import subprocess
+ import sys
+@@ -15,6 +17,7 @@ import zipfile
+ from pathlib import Path
+ 
+ import pytest
++from support.markdown_sections import markdown_blocks
+ from support.recorded_version import move_version
+ 
+ pytestmark = pytest.mark.distribution
+@@ -31,6 +34,9 @@ FAMILIES = [
+     'test_public_generated_examples.py', 'test_solve_successors.py',
+     'test_public_v71_witness_corpus.py', 'test_public_lean_export_successors.py',
+     'test_review_request.py', 'test_release_examples.py',
++    # release-0.5.0 RW2: growth from a reviewed vocabulary and the literature examples from a host.
++    'test_vg3_unattended_includes.py', 'test_go2_operation_outcomes.py', 'test_lh1_reading_host.py',
++    'test_lh2_reading_replay.py', 'test_lr3_reference_set.py',
+ ]
+ 
+ 
+@@ -241,7 +247,7 @@ def test_target_only_contributor_lifecycle(installed):
+ 
+ # Only the latest published wheel provides release availability controls.
+ # The older release probes stay as positive regressions.
+-PUBLISHED_WHEEL_SHA256 = {'0.3.0': '143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b'}
++PUBLISHED_WHEEL_SHA256 = {'0.4.0': '36288e7a918b17d14ea307b6492acfbad741755e1e83818641836452cee9ea5c'}
+ MODEL, HEAD, BASE, FIXED = (f'catalog/{n}' for n in [
+     'model.orm.yaml', 'head.population.yaml', 'base.population.yaml', 'fixed.population.yaml'])
+ REMEDIES = {
+@@ -424,18 +430,13 @@ OSSIE_FILES = ['gnd/schema/ossie/PINNED.json', 'gnd/schema/ossie/core-spec.json'
+ Q4_PREVIEW = ['evolve', 'preview', 'model.orm.yaml', 'proposal.json', '--workspace', '.',
+               '--records', 'records', '--format', 'json', '--policy', 'additive',
+               '--populated', 'customer_places_order']
++OSSIE_ONTOLOGY_OUTPUTS = ['', '.gnd.json', '.loss.json']
++OSSIE_OUTPUTS = [*OSSIE_ONTOLOGY_OUTPUTS, '.mapping.yaml', '.semantic_model.yaml']   # sorted, as iterdir is compared
+ SPANS_UNCHECKED = '1 of 10 source spans were not re-hashed'
+ YAML_TO_JSON = ('import json,sys; from ruamel.yaml import YAML; '
+                 "print(json.dumps(YAML(typ='safe').load(open(sys.argv[1], encoding='utf-8'))))")
+ 
+ 
+-@pytest.fixture(scope='module')
+-def published_0_3_0(tmp_path_factory):
+-    python, env = published_wheel(tmp_path_factory, '0.3.0')
+-    assert gnd(python, [], env, python.parent, '--version', expected=0).stdout.strip() == 'gnd 0.3.0'
+-    return python, env
+-
+-
+ def copy_packaged(python, prefix, env, work, relative, name):
+     """Copy one file or directory of the installed gnd package into work/name."""
+     program = ('import shutil,sys; from importlib.resources import files; '
+@@ -481,10 +482,11 @@ def test_installed_0_3_0_regressions(installed, tmp_path):
+         names = set(archive.namelist())
+     assert set(OSSIE_FILES) <= names, sorted(set(OSSIE_FILES) - names)
+ 
+-    # Q1: an Ossie export writes three files, and an import with its sidecar restores the model.
++    # Q1: an Ossie export writes its files (five since 0.5.0; probe P5 holds the three-file run), and an
++    # import with its sidecar restores the model.
+     q1 = work / 'q1'
+     new('q1', 'export', 'ossie', 'model.orm.yaml', '--out', 'o.yaml', expected=0)
+-    assert sorted(p.name for p in q1.iterdir()) == ['model.orm.yaml', 'o.yaml', 'o.yaml.gnd.json', 'o.yaml.loss.json']
++    assert sorted(p.name for p in q1.iterdir()) == ['model.orm.yaml', *('o.yaml' + suffix for suffix in OSSIE_OUTPUTS)]
+     # The exported YAML itself, read by the YAML library the wheel depends on (review G2).
+     concepts = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON, 'o.yaml'], q1, env))['ontology']
+     (refund_by,) = [r for c in concepts for r in c.get('relationships', ()) if r['name'] == 'refund_by']
+@@ -556,13 +558,14 @@ def test_installed_0_3_0_regressions(installed, tmp_path):
+ 
+ @pytest.fixture(scope='module')
+ def rv2_installed(installed):
++    """The candidate, required to be 0.5.0 before any 0.4.0 or 0.5.0 probe touches its inputs."""
+     outside, checkout, python, _wheel, env, prefix = installed
+-    assert declared_version(checkout) == '0.4.0'
+-    assert gnd(python, prefix, env, outside, '--version', expected=0).stdout.strip() == 'gnd 0.4.0'
++    assert declared_version(checkout) == '0.5.0'
++    assert gnd(python, prefix, env, outside, '--version', expected=0).stdout.strip() == 'gnd 0.5.0'
+     return installed
+ 
+ 
+-def test_installed_rv2_guarded_membership(rv2_installed, published_0_3_0, tmp_path):
++def test_installed_rv2_guarded_membership(rv2_installed, tmp_path):
+     _, checkout, python, _, env, prefix = rv2_installed
+     model = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON,
+                             checkout / 'tests/fixtures/models/guarded_minimal.orm.yaml'], tmp_path, env))
+@@ -588,17 +591,9 @@ def test_installed_rv2_guarded_membership(rv2_installed, published_0_3_0, tmp_pa
+         result, = [row for row in report['verdicts'] if row['constraint_type'] == 'guarded']
+         assert (result['verdict'], result['guarded_antecedent']['binding_count']) == (verdict, bindings)
+ 
+-    old_python, old_env = published_0_3_0
+-    result = gnd(old_python, prefix, old_env, tmp_path, 'validate', model_path, '--format', 'json', expected=3)
+-    assert {(row['path'], row['rule_id']) for row in json.loads(result.stdout)['issues']} == {
+-        ('$.constraints[0]', 'jsonschema:oneOf'),
+-        ('$.constraints[0]', 'jsonschema:unevaluatedProperties'),
+-    }
+-
+ 
+-def test_installed_rv2_composition_and_catalog(rv2_installed, published_0_3_0, tmp_path):
++def test_installed_rv2_composition_and_catalog(rv2_installed, tmp_path):
+     _, _, python, _, env, prefix = rv2_installed
+-    old_python, old_env = published_0_3_0
+     work = tmp_path.resolve() / 'interop'
+     run([*prefix, python, '-I', '-m', 'gnd.examples.literature.interop', 'run', '--out', work], tmp_path, env)
+     model, population, record = 'checking.orm.json', 'composed.population.json', 'composition.json'
+@@ -625,14 +620,6 @@ def test_installed_rv2_composition_and_catalog(rv2_installed, published_0_3_0, t
+     alias_args = ('compose', alias / 'model.orm.yaml', alias / 'cases/A-alias',
+                   '--out', 'alias.population.json', '--record', 'alias.composition.json')
+     gnd(python, prefix, env, tmp_path, *alias_args, expected=0)
+-    old_root = tmp_path / 'old'
+-    old_root.mkdir()
+-    old_alias = gnd(old_python, prefix, old_env, old_root, *alias_args, expected=3)
+-    assert 'manifest has missing or unexpected fields' in old_alias.stderr
+-    assert not list(old_root.iterdir())
+-    old_catalog = gnd(old_python, prefix, old_env, work, 'compose', model, 'sources',
+-                      '--out', 'old.population.json', '--record', 'old.composition.json', expected=3)
+-    assert 'composition with reference populations is unsupported' in old_catalog.stderr
+ 
+     witness = ('witness', model, population, '--targets', 'targets.json', '--composition', record, '--raw')
+     replay = ('replay', model, population, 'rv2.witness.json', '--composition', record, '--raw')
+@@ -671,7 +658,7 @@ else:
+     assert not list(work.glob('mutant.*.json'))
+ 
+ 
+-def test_installed_rv2_literature_assurance(rv2_installed, published_0_3_0, tmp_path):
++def test_installed_rv2_literature_assurance(rv2_installed, tmp_path):
+     _, checkout, python, _, env, prefix = rv2_installed
+     literature = copy_packaged(python, prefix, env, tmp_path, 'examples/literature', 'literature')
+     reference = literature / 'runs/reference'
+@@ -695,13 +682,8 @@ def test_installed_rv2_literature_assurance(rv2_installed, published_0_3_0, tmp_
+     changed = json.loads(run([*prefix, python, *command], tmp_path, env, expected=1))
+     assert changed['failed_stages'] == ['identity-decisions', 'derivation', 'freshness']
+ 
+-    old_python, old_env = published_0_3_0
+-    absence = ("from importlib.resources import files; "
+-               "assert not files('gnd').joinpath('examples/literature/assurance_report.py').is_file()")
+-    run([*prefix, old_python, '-I', '-c', absence], tmp_path, old_env)
+ 
+-
+-def test_installed_rv2_expense_receipts(rv2_installed, published_0_3_0, tmp_path):
++def test_installed_rv2_expense_receipts(rv2_installed, tmp_path):
+     _, _, python, _, env, prefix = rv2_installed
+     work = copy_packaged(python, prefix, env, tmp_path, 'examples/expense/receipts', 'receipts')
+     model, population, record = 'checking.orm.json', 'claim.population.json', 'claim.composition.json'
+@@ -720,6 +702,325 @@ def test_installed_rv2_expense_receipts(rv2_installed, published_0_3_0, tmp_path
+     assert 'joined without a same decision' in missing.stderr
+     assert not list(work.glob('missing.*.json'))
+ 
+-    old_python, old_env = published_0_3_0
+-    absence = "from importlib.resources import files; assert not files('gnd').joinpath('examples/expense/receipts').is_dir()"
+-    run([*prefix, old_python, '-I', '-c', absence], tmp_path, old_env)
++
++# -- release-0.5.0 RW2: what 0.5.0 adds, from the installed wheel (probes P1 to P6) --
++#
++# Each probe has a control on the candidate and one on the published 0.4.0 wheel. The expected 0.4.0
++# results are the ones measured for the RW2 spec (release-0.5.0 evidence/RW2/controls-0.4.0.md).
++
++INCLUDES = ['literature', 'chronology']
++JUDGE = ('judgments', 'check', 'checking.orm.json', 'composed.population.json', '--policy', 'policy.json',
++         '--receipts', 'receipts.json', '--trusted-root', '.', '--format', 'json')
++# The judgment inputs bind digests of files the interop run writes, so the installed package writes them.
++BIND_JUDGMENT = '''import hashlib, json, sys
++from pathlib import Path
++from gnd.artifacts import canonical_json_bytes
++from gnd.judgments import judgment_fact_digest
++root = Path.cwd()
++model, population, target = sys.argv[1:4]
++sha = lambda raw: hashlib.sha256(raw).hexdigest()
++document = json.loads((root / model).read_bytes())
++raw = (root / population).read_bytes()
++fact = json.loads(raw)["facts"][target][0]
++(root / "evidence.txt").write_bytes(b"evidence")
++identity = {"identity_version": 1, "references": [
++    {"id": r["id"], "sha256": r["sha256"]} for r in document["reference_populations"]]}
++receipts = [{
++    "receipt_id": "r-" + judge, "judge_id": judge, "verdict": "approve", "trust": "consumer-pinned",
++    "subject": {"model_sha256": sha((root / model).read_bytes()), "population_sha256": sha(raw),
++                "reference_identity": identity, "fact_type": target, "index": 0,
++                "fact_sha256": judgment_fact_digest(target, 0, fact)},
++    "sources": [{"path": "evidence.txt", "sha256": sha(b"evidence"), "quote": None}],
++    "external_evidence": None} for judge in ("a", "b")]
++policy = {
++    "admission": {"evidence_floor": None, "minimum_approvals": 2}, "judges": ["a", "b"], "policy_id": "rw2",
++    "repair": {"evidence_floor": None, "minimum_rejections": 1}, "schema_version": 1,
++    "targets": [{"fact_type": target, "index": 0}], "trust_mode": "consumer-pinned",
++    "trusted_receipts": [{"judge_id": r["judge_id"],
++                          "receipt_sha256": sha(canonical_json_bytes(r, exact_numbers=True))} for r in receipts]}
++(root / "policy.json").write_bytes(canonical_json_bytes(policy))
++(root / "receipts.json").write_bytes(canonical_json_bytes({"schema_version": 1, "receipts": receipts}))
++'''
++RMAP_TABLES = ('import json, sys; from pathlib import Path; from gnd import rmap; from gnd.model import load_model; '
++               'print(json.dumps(sorted(t.name for t in rmap.map_model(load_model(Path(sys.argv[1]))).tables)))')
++PACKAGE_HAS_DIRECTORY = ("import sys; from importlib.resources import files; "
++                         "print(files('gnd').joinpath(*sys.argv[1].split('/')).is_dir())")
++
++
++@pytest.fixture(scope='module')
++def published_0_4_0(tmp_path_factory):
++    python, env = published_wheel(tmp_path_factory, '0.4.0')
++    assert gnd(python, [], env, python.parent, '--version', expected=0).stdout.strip() == 'gnd 0.4.0'
++    return python, env
++
++
++def sha256_file(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def program_constants(path, *names):
++    """The named module-level constants of an exported PyRel program, read with ast; the program never runs.
++
++    The export writes a constant either as a literal or as json.loads of one string literal.
++    """
++    found = {}
++    for node in ast.parse(path.read_text(encoding='utf-8')).body:
++        if not (isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name)):
++            continue
++        name = node.targets[0].id
++        if name in names:
++            assert name not in found, name
++            value = node.value
++            found[name] = (json.loads(ast.literal_eval(value.args[0])) if isinstance(value, ast.Call)
++                           else ast.literal_eval(value))
++    assert set(found) == set(names), sorted(set(names) - set(found))
++    return found
++
++
++def rules_mode(mode):
++    return () if mode is None else ('--rules', mode)
++
++
++def test_installed_rw2_include_roots(rv2_installed, published_0_4_0, tmp_path):
++    _, _, python, _, env, prefix = rv2_installed
++    old_python, old_env = published_0_4_0
++    work = tmp_path.resolve() / 'interop'
++    run([*prefix, python, '-I', '-m', 'gnd.examples.literature.interop', 'run', '--out', work], tmp_path, env)
++
++    def new(*args, expected):
++        return gnd(python, prefix, env, work, *args, expected=expected)
++
++    def old(*args, expected):
++        return gnd(old_python, prefix, old_env, work, *args, expected=expected)
++
++    # P1: gnd judgments check judges the temporal include root; 0.4.0 refuses the route.
++    run([*prefix, python, '-I', '-c', BIND_JUDGMENT, 'checking.orm.json', 'composed.population.json',
++         'paper_names_parent_method'], work, env)
++    judged = json.loads(new(*JUDGE, expected=0).stdout)
++    assert (judged['outcome'], judged['error'], judged['judgment_policy']['admission']) == (0, None, True)
++    assert json.loads(old(*JUDGE, expected=3).stdout)['error']['reason'] == 'include:unsupported-route'
++
++    # P2: gnd flatten writes the flat model and its record for both roots, and never overwrites.
++    flat = work / 'flat'
++    records = {}
++    for root in ('checking', 'extraction'):
++        new('flatten', f'{root}.orm.json', '--out', 'flat', expected=0)
++        record_path = flat / f'{root}.orm.flattening.json'
++        record = json.loads(record_path.read_bytes())
++        assert record['format'] == 'gnd-flattening/1'
++        assert [entry['id'] for entry in record['includes']] == INCLUDES
++        assert record['flat_model_sha256'] == sha256_file(flat / f'{root}.orm.flat.orm.json')
++        records[root] = sha256_file(record_path)
++    written = {path.name: path.read_bytes() for path in flat.iterdir()}
++    assert sorted(written) == [f'{root}.orm.{kind}.json' for root in ('checking', 'extraction')
++                               for kind in ('flat.orm', 'flattening')]
++    new('flatten', 'checking.orm.json', '--out', 'flat', expected=11)
++    assert {path.name: path.read_bytes() for path in flat.iterdir()} == written
++    old('flatten', 'checking.orm.json', '--out', 'flat-old', expected=64)   # 0.4.0 has no such command
++    assert not (work / 'flat-old').exists()
++
++    # P3, include roots: every advertised mode exports through the flat model and records its digest.
++    modes = {'checking': ('duckdb', 'lqp'), 'extraction': (None, 'duckdb', 'lqp')}
++    for root, selected in modes.items():
++        for mode in selected:
++            program = work / f'{root}-{mode or "default"}.py'
++            new('export', 'pyrel', f'{root}.orm.json', *rules_mode(mode), '--out', program, expected=0)
++            constants = program_constants(program, 'FLATTENING_RECORD_SHA256', 'MODEL_INCLUDES')
++            assert constants['FLATTENING_RECORD_SHA256'] == records[root], (root, mode)
++            assert [entry[0] for entry in constants['MODEL_INCLUDES']] == INCLUDES
++    # The default mode still refuses a temporal model, as the notes say.
++    temporal = new('export', 'pyrel', 'checking.orm.json', '--out', 'temporal.py', expected=3)
++    assert 'PyRel export does not support temporal models' in temporal.stderr
++    for root in modes:
++        for mode in (None, 'duckdb', 'lqp'):
++            refused = old('export', 'pyrel', f'{root}.orm.json', *rules_mode(mode), '--out', 'old.py', expected=3)
++            assert 'include:unsupported-route' in refused.stderr, (root, mode)
++    assert not (work / 'temporal.py').exists() and not (work / 'old.py').exists()
++
++    # P1 control, last because it changes an include: an include edited without a new pin is refused.
++    include = work / 'vocabulary/chronology.orm.json'
++    document = json.loads(include.read_bytes())
++    document['object_types'].append({'id': 'extra_0', 'kind': 'value', 'name': 'Extra0', 'primitive': 'String'})
++    include.write_text(json.dumps(document), encoding='utf-8')
++    assert json.loads(new(*JUDGE, expected=3).stdout)['error'] == {
++        'message': 'include:hash-mismatch', 'reason': 'binding'}
++
++
++def test_installed_rw2_pyrel_rules(rv2_installed, published_0_4_0, tmp_path):
++    _, checkout, python, _, env, prefix = rv2_installed
++    old_python, old_env = published_0_4_0
++    literature = copy_packaged(python, prefix, env, tmp_path, 'examples/literature', 'literature')
++    fixtures = checkout / 'tests/fixtures'
++    # Each model, with the refusal 0.4.0 gives it by name.
++    cases = {
++        'external': (literature / 'assertions/model.orm.yaml',
++                     'external uniqueness is a later phase of the rules programs'),
++        'anchored': (literature / 'model.orm.yaml', "family 'anchored' is a later phase of the rules programs"),
++        'number': (literature / 'depth_fixture/decimal.orm.json',
++                   "primitive 'Number' is not supported by the rules programs yet"),
++        # The packaged role-scoped model also has an anchored rule, which 0.4.0 refuses first.
++        'role-anchored': (literature / 'quantity_fixture/time.orm.yaml',
++                          "family 'anchored' is a later phase of the rules programs"),
++        'role': (fixtures / 'pyrel-rules-coverage/rp4/range.orm.json',
++                 'role-scoped value constraints are a later phase'),
++    }
++    frequency = fixtures / 'pyrel-rules-families/review/refuse-external-frequency.orm.json'
++    for mode in ('duckdb', 'lqp'):
++        constants = {}
++        for label, (model, refusal) in cases.items():
++            program = tmp_path / f'{label}-{mode}.py'
++            gnd(python, prefix, env, tmp_path, 'export', 'pyrel', model, '--rules', mode, '--out', program, expected=0)
++            constants[label] = program_constants(program, 'RULES', 'UNCHECKED')
++            refused = gnd(old_python, prefix, old_env, tmp_path, 'export', 'pyrel', model, '--rules', mode,
++                          '--out', 'old.py', expected=3)
++            assert refusal in refused.stderr, (label, mode)
++        # What each program holds: the external-uniqueness requirement over its two roles, the anchored
++        # rule listed as not checked, and the value rule of one role.
++        external = [rule for rule in constants['external']['RULES'] if rule['info'].get('external')]
++        assert external and all(rule['info']['refs'] == [['assertion_names_passage', 'passage'],
++                                                         ['assertion_names_work', 'work']] for rule in external)
++        unchecked = {rule['id']: rule['reason'] for rule in constants['anchored']['UNCHECKED']}
++        assert unchecked['work_introduces_method#0'].startswith('source anchor:')
++        assert ('time_step#1', 'value') in {(rule['id'], rule['family'])
++                                            for rule in constants['role-anchored']['RULES']}
++        assert any(rule['family'] == 'value' for rule in constants['role']['RULES'])
++        # Control: an external frequency rule is still refused by name.
++        still = gnd(python, prefix, env, tmp_path, 'export', 'pyrel', frequency, '--rules', mode,
++                    '--out', 'frequency.py', expected=3)
++        assert 'external frequency is a later phase of the rules programs' in still.stderr
++    assert not (tmp_path / 'old.py').exists() and not (tmp_path / 'frequency.py').exists()
++
++
++COUNT_COMMANDS = [
++    ('check', 'model.orm.yaml', 'population.json'),
++    ('witness-count', 'model.orm.yaml', 'population.json', '--request', 'group.json', '--raw', '--out', 'flow.cert.json'),
++    ('replay-count', 'model.orm.yaml', 'population.json', 'flow.cert.json', '--request', 'group.json', '--raw'),
++    ('witness-count', 'model.orm.yaml', 'population.json', '--request', 'empty-group.json', '--raw',
++     '--out', 'empty.cert.json'),
++    ('replay-count', 'model.orm.yaml', 'population.json', 'empty.cert.json', '--request', 'empty-group.json', '--raw'),
++]
++
++
++def readme_commands(folder, commands):
++    """COMMANDS, after checking that each is a command line of a shell block in the packaged README.
++
++    The README is read as Markdown blocks and each line of a `sh` or `bash` fence as a shell command, so
++    a command that is commented out, given another executable or moved out of its block does not count.
++    """
++    blocks = markdown_blocks((folder / 'README.md').read_text(encoding='utf-8'))
++    documented = [shlex.split(line, comments=True) for block in blocks
++                  if block.kind == 'fence' and block.info.split()[:1] in (['sh'], ['bash'])
++                  for line in block.text.splitlines()]
++    for command in commands:
++        assert ['gnd', *command] in documented, command
++    return commands
++
++
++def test_installed_rw2_count_certificates(rv2_installed, published_0_4_0, tmp_path):
++    _, _, python, _, env, prefix = rv2_installed
++    old_python, old_env = published_0_4_0
++    work = copy_packaged(python, prefix, env, tmp_path, 'examples/literature/count_fixture', 'count')
++    # P4: the README's commands, each exit 0; the certificates replay with their counts.
++    replays = []
++    for command in readme_commands(work, COUNT_COMMANDS):
++        result = gnd(python, prefix, env, work, *command, expected=0)
++        if command[0] == 'replay-count':
++            replays.append(json.loads(result.stdout))
++    assert [(row['count'], row['status']) for row in replays] == [(2, 'complete'), (0, 'empty-group')]
++    assert json.loads((work / 'empty.cert.json').read_bytes())['members'] == []
++    # Control: the population without the first roster member's row no longer replays.
++    flow = json.loads((work / 'flow.cert.json').read_bytes())
++    population = json.loads((work / 'population.json').read_bytes())
++    del population['facts']['observation'][flow['members'][0]['fact_index']]
++    (work / 'lost.population.json').write_text(json.dumps(population), encoding='utf-8')
++    lost = gnd(python, prefix, env, work, 'replay-count', 'model.orm.yaml', 'lost.population.json', 'flow.cert.json',
++               '--request', 'group.json', '--raw', expected=3)
++    assert json.loads(lost.stdout)['reason'] == 'binding-stale'
++    # 0.4.0 has neither the command nor the example.
++    gnd(old_python, prefix, old_env, work, *COUNT_COMMANDS[1][:-1], 'old.cert.json', expected=64)
++    assert not (work / 'old.cert.json').exists()
++    assert run([*prefix, old_python, '-I', '-c', PACKAGE_HAS_DIRECTORY, 'examples/literature/count_fixture'],
++               tmp_path, old_env).strip() == 'False'
++
++
++def test_installed_rw2_ossie_relational(rv2_installed, published_0_4_0, tmp_path):
++    _, _, python, _, env, prefix = rv2_installed
++    old_python, old_env = published_0_4_0
++    work, old_work = tmp_path / 'ossie', tmp_path / 'ossie-old'
++    for folder in (work, old_work):
++        folder.mkdir()
++        copy_packaged(python, prefix, env, folder, 'examples/refunds/model.orm.yaml', 'model.orm.yaml')
++    copy_packaged(python, prefix, env, work, 'examples/refunds/physical-binding.json', 'binding.json')
++
++    def export(out, *extra, expected, runner=(python, env), cwd=work):
++        return gnd(runner[0], prefix, runner[1], cwd, 'export', 'ossie', 'model.orm.yaml', '--out', out, *extra,
++                   expected=expected)
++
++    def written(folder, out):
++        return sorted(path.name for path in folder.iterdir() if path.name.startswith(out))
++
++    # P5: five files by default; the tables are the relational mapping's; --ontology-only keeps the
++    # three-file run with the same bytes; a binding file is accepted.
++    export('o.yaml', expected=0)
++    assert written(work, 'o.yaml') == ['o.yaml' + suffix for suffix in OSSIE_OUTPUTS]
++    semantic = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON, 'o.yaml.semantic_model.yaml'], work, env))
++    tables = json.loads(run([*prefix, python, '-I', '-c', RMAP_TABLES, 'model.orm.yaml'], work, env))
++    assert tables and sorted(dataset['name'] for dataset in semantic['datasets']) == tables
++    export('t.yaml', '--ontology-only', expected=0)
++    assert written(work, 't.yaml') == ['t.yaml' + suffix for suffix in OSSIE_ONTOLOGY_OUTPUTS]
++    for suffix in OSSIE_ONTOLOGY_OUTPUTS:
++        assert (work / ('t.yaml' + suffix)).read_bytes() == (work / ('o.yaml' + suffix)).read_bytes(), suffix
++    export('b.yaml', '--physical-binding', 'binding.json', expected=0)
++    assert written(work, 'b.yaml') == ['b.yaml' + suffix for suffix in OSSIE_OUTPUTS]
++    # Controls: a file at a new path stops the run and nothing else is written; the two options
++    # exclude each other; a bound of one byte is a size refusal.
++    (work / 'c.yaml.mapping.yaml').write_text('kept', encoding='utf-8')
++    export('c.yaml', expected=11)
++    assert written(work, 'c.yaml') == ['c.yaml.mapping.yaml']
++    assert (work / 'c.yaml.mapping.yaml').read_text(encoding='utf-8') == 'kept'
++    export('u.yaml', '--physical-binding', 'binding.json', '--ontology-only', expected=64)
++    assert 'ossie:output-size' in export('s.yaml', '--max-output-bytes', '1', expected=3).stderr
++    assert written(work, 'u.yaml') == written(work, 's.yaml') == []
++    # 0.4.0 writes the three ontology files, with the candidate's bytes, and has no --ontology-only.
++    published = (old_python, old_env)
++    export('o.yaml', expected=0, runner=published, cwd=old_work)
++    assert written(old_work, 'o.yaml') == ['o.yaml' + suffix for suffix in OSSIE_ONTOLOGY_OUTPUTS]
++    for suffix in OSSIE_ONTOLOGY_OUTPUTS:
++        assert (old_work / ('o.yaml' + suffix)).read_bytes() == (work / ('o.yaml' + suffix)).read_bytes(), suffix
++    export('t.yaml', '--ontology-only', expected=64, runner=published, cwd=old_work)
++    assert written(old_work, 't.yaml') == []
++
++
++GROWTH_COMMANDS = [
++    ('validate', 'root.orm.yaml'),
++    ('evolve', 'preview', 'root.orm.yaml', 'round-1.proposal.json', '--workspace', '.', '--records', 'records',
++     '--out', 'preview-1.json', '--policy', 'additive'),
++    ('evolve', 'apply', 'root.orm.yaml', 'round-1.proposal.json', '--preview', 'preview-1.json', '--workspace', '.',
++     '--records', 'records', '--policy', 'additive'),
++    ('evolve', 'preview', 'root.orm.yaml', 'round-2.proposal.json', '--workspace', '.', '--records', 'records',
++     '--out', 'preview-2.json', '--policy', 'additive'),
++    ('evolve', 'apply', 'root.orm.yaml', 'round-2.proposal.json', '--preview', 'preview-2.json', '--workspace', '.',
++     '--records', 'records', '--policy', 'additive'),
++    ('validate', 'root.orm.yaml', '--document', 'round-1.document.txt', '--document', 'round-2.document.txt',
++     '--require-documents'),
++    ('check', 'root.orm.yaml', 'population.json'),
++    ('judgments', 'check', 'root.orm.yaml', 'population.json', '--policy', 'policy.json', '--receipts',
++     'receipts.json', '--trusted-root', '.'),
++]
++
++
++def test_installed_rw2_seeded_growth(rv2_installed, published_0_4_0, tmp_path):
++    _, _, python, _, env, prefix = rv2_installed
++    old_python, old_env = published_0_4_0
++    work = copy_packaged(python, prefix, env, tmp_path, 'examples/seeded_growth', 'growth')
++    old_work = tmp_path / 'growth-old'
++    shutil.copytree(work, old_work)
++    # P6: the README's commands, each exit 0, from the packaged example.
++    outputs = [gnd(python, prefix, env, work, *command, expected=0).stdout
++               for command in readme_commands(work, GROWTH_COMMANDS)]
++    assert sum(line.startswith('INCLUDE seed ') for line in outputs[0].splitlines()) == 1
++    # 0.4.0 holds the reviewed include to the unattended rules, and does not ship the example.
++    refused = gnd(old_python, prefix, old_env, old_work, *GROWTH_COMMANDS[0], '--format', 'json', expected=3)
++    assert 'semantic:unattended-u5' in {issue['rule_id'] for issue in json.loads(refused.stdout)['issues']}
++    assert run([*prefix, old_python, '-I', '-c', PACKAGE_HAS_DIRECTORY, 'examples/seeded_growth'],
++               tmp_path, old_env).strip() == 'False'

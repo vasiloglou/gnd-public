@@ -1,7 +1,8 @@
 # release-0.5.0
 
-Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **RW1 is
-implemented and recorded; its pull request waits for the owner's merge.** The four milestones the owner made the release wait for are
+Opened on 2026-11-23 at the owner's request ("Release 0.5.0"). **RW1 is on
+main. RW2's installed probes are written and wait for the owner's merge; no
+candidate is built.** The four milestones the owner made the release wait for are
 merged to main:
 [literature-host-interfaces](../literature-host-interfaces/README.md),
 [reviewed-vocabulary-growth](../reviewed-vocabulary-growth/README.md),
@@ -9,6 +10,11 @@ merged to main:
 [ossie-relational-bundle](../ossie-relational-bundle/README.md), each with
 its close record; the plan's §14 has the last one's history. Nothing is
 built or published.
+
+RW2 began on 2026-11-25 after the owner merged RW1 (pull request 282). Its
+[pre-freeze record](003-RW2-pre-freeze.md) has the probes, their rehearsal
+and two review rounds. The freeze, the two builds and the acceptance run on
+beast-3 follow the merge of the probes pull request.
 
 RW1 started on 2026-11-24, was held for ossie-relational-bundle, and resumed
 on 2026-11-25. Its [record](002-phase-RW1.md) has the result: the version is
@@ -38,12 +44,16 @@ ship.
   [the 0.4.0 comparisons](evidence/RW1/old-version-probes.md).
 - Review rounds [1](notes/reviews/phase-RW1-r1/FINDINGS.md) and
   [2](notes/reviews/phase-RW1-r2/FINDINGS.md) over the RW1 diff.
+- [RW2 spec](notes/phase-RW2-spec.md), its
+  [pre-freeze record](003-RW2-pre-freeze.md), the
+  [0.4.0 controls](evidence/RW2/controls-0.4.0.md) and the
+  [probe rehearsal](evidence/RW2/probes-rehearsal.md).
 
 Three phases prepare the release and publish nothing: RW1 candidate content,
 RW2 candidate build and installed acceptance, RW3 publication hand-over.
 Publication is a separate stage in which each act runs on the owner's
 request.
 
-Next action: the owner's merge decision on the RW1 pull request. RW2 (the
-candidate build and installed acceptance) needs RW1 on main; its spec asks
-the owner about the `ossie_oracle` lane and a fifth installed probe.
+Next action: the owner's merge decision on the RW2 probes pull request. The
+main commit it makes is the freeze commit: the freeze checks, the two builds,
+the acceptance run and the two oracle lanes run at it.

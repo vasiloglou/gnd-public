@@ -53,3 +53,26 @@ guard block. No reviewer has read them.
 
 The oracle lane was not run on these bytes. The changes do not alter a
 written byte: the corpora and baselines are unchanged.
+
+## A red test on main, found after the close
+
+On 2026-11-25 the 0.5.0 release session reported one default-lane failure on
+main at `e8359685`, in a page this milestone wrote:
+`tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[share-an-ossie-ontology.md]`.
+The how-to's prose said "stops with exit code 11". That test refuses an exit
+number in the prose of tutorial, how-to and explanation pages.
+
+- **Reproduced:** 1 failed, 94 passed for that file.
+- **Why it was missed:** `tests/test_plan_app_docs.py` was in no OB5 gate and
+  not in the close record's gate list. The close record's statement that the
+  guard block's known red was the only failure was true of the files it ran,
+  and false of the default lane. The close ran no full default lane.
+- **Repaired:** the sentence now says the run stops and writes nothing. The
+  binding how-to's "exits with code 3" passed the test's pattern by its
+  wording only, and is reworded the same way.
+- **Checked:** the fourteen test files that read the docs pages (379
+  passed), the docs tests of this milestone and the `ossie` tutorial group
+  (114 passed), the strict site build and the link check.
+
+The full default lane has still not been run by this milestone. The release
+session's six-shard run is the only one.

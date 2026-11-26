@@ -128,6 +128,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.codegen, subsystem.conformance
 - tests: tests/test_codegen_manifest.py
 - notes: This record intentionally differs from the extraction artifact index: ownership and regeneration require a separate contract.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### codegen.emit
@@ -143,6 +144,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_codegen_emit.py, tests/test_codegen_derivation.py, tests/test_codegen_manifest.py, tests/test_codegen_smoke_naming.py
 - notes: Docstrings are derived from readings and role shapes; structured-derived fact types receive no constructor.
 - checked: partial
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### codegen.regenerate
@@ -171,6 +173,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.codegen_command, cli.dispatch
 - part_of: subsystem.codegen
 - tests: tests/test_codegen_force.py, tests/test_codegen_emit.py, tests/test_codegen_smoke_naming.py
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### conformance.integrity
@@ -199,6 +202,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.conformance
 - tests: tests/test_conformance_drift.py
 - notes: model_digest is an explicit compatibility alias for model_file_sha256.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### conformance.structural
@@ -257,6 +261,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.conformance
 - tests: tests/test_conformance_payload.py, tests/test_conformance_drift.py, tests/test_architecture_conformance.py, tests/test_evolution_conformance.py
 - notes: Exit precedence is 74 > 66 > 3 > 13 > 0; later failures retain completed observations.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### conformance.command
@@ -299,7 +304,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### discover.joined
 - does: Mine bounded guarded rules over a binary relation and complete endpoint classifications.
-- verbs: guarded join, joined discovery, directed class pairs, target marker, relation support
+- verbs: guarded join, joined discovery, directed class pairs, target marker, relation support, matches_counterexamples, require_family, guard_key, canonical candidate identity, counterexample binding check, joined selectors
 - in: Validated population view, explicit role coordinates and a directed pair cap.
 - out: Independently counted guarded candidates and joined-family work or refusal metadata.
 - status: canonical
@@ -333,6 +338,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: (none)
 - tests: tests/test_go3_narrowed_proposal.py
 - notes: GO3 (#227). Writes nothing: apply stays whole. The dependents closure is GO2's, re-run over the kept set. The contract is the evolution contract's "Narrowing a proposal".
+- reread: 2026-11-26, beside the diff of its modules since b2d67b8 (code at a223ac7); still accurate.
 
 
 ### discover.fact_types
@@ -359,6 +365,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: discover.service
 - tests: tests/test_discover_type_evidence.py, tests/test_discover_type_judgements.py
 - notes: The evidence supplies observations for a semantic judge; it does not itself decide duplicate meaning.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### discover.type_judgements
@@ -412,6 +419,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: codegen.emit, codegen.service, extract.service
 - part_of: subsystem.extract
 - tests: tests/test_extract_projection.py, tests/test_codegen_emit.py, tests/test_object_type_description.py
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### extract.guidelines
@@ -453,6 +461,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.extract
 - tests: tests/test_extract_guidelines.py, tests/test_extract_projection.py, tests/test_lx1_flattening.py
 - notes: The command derives artifacts for an extracting agent; the actual language extraction is performed outside this service.
+- reread: 2026-11-26, beside the diff of its modules since e2ce2ad (code at a223ac7); still accurate.
 
 
 ### extract.flatten_service
@@ -467,6 +476,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.extract
 - tests: tests/test_ir2_flatten.py
 - notes: Reuses extract's file names and the shipped flatten_model; unlike extract's bundle it never replaces an existing file.
+- reread: 2026-11-26, beside the diff of its modules since 6aacb92 (code at a223ac7); still accurate.
 
 
 ### extract.source_anchors
@@ -544,6 +554,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.checking_command, cli.dispatch, cli.exp_command
 - tests: tests/test_rf9_repairs.py
 - notes: Merge this fragment into the component owning src/gnd/output.py; the assigned file is a pure re-export shim, not a separate implementation.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### cli.checking_command
@@ -559,6 +570,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_rf5_commands.py, tests/test_reference_transition_text.py
 - notes: The commands package initializer is documentation only; checking.py also owns unrelated import, diff, composition and coverage arms.
 - checked: partial
+- reread: 2026-11-26, beside the diff of its modules since 6034a65 (code at a223ac7); still accurate.
 
 
 ### cli.codegen_command
@@ -883,6 +895,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.measure
 - tests: tests/test_measure_offline.py, tests/test_measure_labels.py, tests/test_measure_coverage.py, tests/test_measure_negative_control.py
 - notes: Re-exports stable_model_identifier from gnd.model_identity for compatibility; schema loading lives here alongside payload building.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### measure.promote
@@ -911,6 +924,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.measure
 - tests: tests/test_measure_offline.py, tests/test_measure_labels.py, tests/test_measure_negative_control.py, tests/test_measure_coverage.py
 - notes: The initializer documents the lane and exports no names; historical command functions retain gnd.cli qualification.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### fidelity.match
@@ -967,11 +981,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.extract
 - tests: tests/test_doccheck.py, tests/test_fidelity_payload.py
 - notes: Mention checking does not establish that the prose pairs role fillers into the correct relationships.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### evolve.service
 - does: Preview explicit authored model changes, authenticate shared vocabulary snapshots and ownership, publish a model CAS, and finalize evidence [EvolutionService].
-- verbs: evolve model, preview proposal, apply evolution, finalize evolution, compare and swap, blast radius, breaking change, replay operations, pending finalization, linked conformance, resume interrupted apply, immutable evidence, model drift, read evolution record, population check, constraint placement, declare source document
+- verbs: evolve model, preview proposal, apply evolution, finalize evolution, compare and swap, blast radius, breaking change, replay operations, pending finalization, linked conformance, resume interrupted apply, immutable evidence, model drift, read evolution record, population check, constraint placement, declare source document, read_evolution_outcome_report, OutcomeRefusalPending, operation outcomes, outcome report, outcome refusal, refusing gate, unattended repin
 - in: Current model bytes, explicit EvolutionProposal or reviewed EvolutionPreview, evidence root, allowed project root.
 - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
 - status: canonical
@@ -1011,10 +1026,11 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.evolve
 - tests: tests/test_evolve_additive_policy.py, tests/test_evolve_population_check.py
 - notes: The one operation walk conservatively refuses include re-pins and includes owned included_fact_type hosts in populated subjects. Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
+- reread: 2026-11-26, beside the diff of its modules since 2dea8a8 (code at a223ac7); still accurate.
 
 ### evolve.population_check
 - does: Read one population file beneath the workspace, check the candidate model over it once, and give one outcome word per constraint operation for the additive policy [population_outcomes].
-- verbs: check population, population-checked admission, clean population, check-population, admit constraint on populated fact type, population digest, uncovered subject, sample rows, constraint placement
+- verbs: check population, population-checked admission, clean population, check-population, admit constraint on populated fact type, population digest, uncovered subject, sample rows, constraint placement, workspace_relative, population outside workspace, stale population before apply, yaml population, not-located placement
 - in: Workspace anchor and relative population path, candidate and before models, the proposal, effective populated identifiers, replay placements of constraint objects.
 - out: The SHA-256 of the bytes read, the candidate model_id and an outcome word per constraint ADD/MODIFY operation; EvolutionPopulationError with a fixed message and exit band on refusal.
 - status: canonical
@@ -1051,7 +1067,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: discover.narrow, evolve.service
 - part_of: subsystem.evolve
 - tests: tests/test_go2_operation_outcomes.py
-- notes: GO2 (#227). Read by nothing that decides a refusal: the printed refusal and its exit are those of the preview without outcomes. The verdict words have one home in the evolution contract's "Operation outcomes".
+- notes: GO2 (#227). The preview's printed refusal and exit never read the outcomes; discover.narrow reads them to pick the operations a narrowed proposal keeps. The verdict words have one home in the evolution contract's "Operation outcomes".
+- reread: 2026-11-26, beside the diff of its modules since f7ec03b (code at a223ac7); still accurate.
 
 
 ### evolve.round_summary
@@ -1066,6 +1083,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.evolve
 - tests: tests/test_go5_round_summary.py
 - notes: GO5 (#227, #228). Elements added come from the evolution record only. The fields are the evolution contract's "Round summary".
+- reread: 2026-11-26, beside the diff of its modules since b2d67b8 (code at a223ac7); still accurate.
 
 
 ### evolve.command
@@ -1126,6 +1144,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_recovery_report.py, tests/test_recovery_adversarial.py, tests/test_evolve_loading.py
 - checked: partial
 - notes: The package initializer re-exports inventory, schema, and verification names without implementing another recovery path. Verification loads a temporary model copy and compares complete deterministic verbalization before rescanning selected roots.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### recovery.command
@@ -1228,6 +1247,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_exp_session_contract.py, tests/test_public_local_adapter_policy_controls.py
 - checked: partial
 - notes: Versions select closed wire readers before normalization; this component owns contract integrity rather than runtime acceptance.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### exp.adapter_policy
@@ -1271,6 +1291,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_exp_session_eval.py, tests/test_exp_session_recurrence.py
 - checked: partial
 - notes: session.py retains identity aliases for moved session_control helpers and verifier_environment; it also runs fixed GND verifier subprocesses and delegates patch profiles to session_runtime.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### exp.verifier_environment
@@ -1299,6 +1320,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_exp_session_eval.py, tests/test_exp_session_recurrence.py
 - checked: partial
 - notes: One module owns payload validation, feedback wire models, acceptance policy, ranking, and feedback projection; its size merits a later split review.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### exp.junit
@@ -1338,6 +1360,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: codegen.emit, exp.command, exp.conclusions, exp.spec
 - tests: tests/test_exp_frontmatter.py
 - notes: The reader checks stat size before read_text; it does not enforce a streaming byte cap during the read.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### exp.conclusions
@@ -1459,6 +1482,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: exp.close, exp.service, exp.session_runtime, exp.session_store
 - tests: tests/test_rf8_sessions.py, tests/test_v71_phase4_successors.py, tests/test_public_v71_judgment_successor_guards.py, tests/test_public_v72_ownership_direct.py, tests/test_rf8_structure.py
 - notes: Also owns shared verifier evaluation and operator/candidate feedback projection used by session_runtime.py. Reconstruction reads evidence without repairing it and refreshes process-local best caches.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### exp.session_judgments
@@ -1472,6 +1496,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: exp.session_replay, exp.session_runtime
 - tests: tests/test_rf8_sessions.py, tests/test_public_v71_judgment_successor_guards.py
 - notes: Judgment semantics are delegated to gnd.judgments; this component handles session retention, authority checks, feedback and byte-for-byte replay comparison.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### exp.session_profile
@@ -1630,11 +1655,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.checking_command, cli.export_command
 - tests: tests/test_ilp_bridge.py, tests/test_ilp_amie.py, tests/test_ilp_learners.py, tests/test_ih1_counting.py, tests/test_ih2_ownref.py, tests/test_il6_walk.py
 - notes: Prepare, mined-input and candidate admission compose rooted inputs; generated proposals retain the authored includer and leave vocabulary files unchanged. Labelled imports recompute checker coverage; mined imports bind facts, recount support, require holding rules and confirm checker pass before proposal publication. Public counting helpers are also usable without admitting the rules; _Mined and _mined_inputs retain identity aliases.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### export.ossie
 - does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, encode and bind the semantic model and mapping of the same run, and count the fact types that declare redact [render_ossie].
-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view, physical binding run
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count, output size bound, max output bytes, relational files, document name, encode yaml or json, ontology view, physical binding run, unit-based reference, multi-parent inherited identifier, default relationship key collision
 - in: standalone model path, output format, whether to add the relational files, and an optional physical binding path
 - out: ontology, sidecar and loss report bytes, and semantic model and mapping bytes or None
 - status: canonical
@@ -1656,11 +1682,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: export.ossie, export.physical_binding
 - tests: tests/test_ossie_relational.py, tests/test_physical_binding.py
 - notes: Normative rules in representation-format.md, "Semantic model and mapping". Builds documents only; export.ossie encodes and binds them. Nothing here refuses a model. Validation resolves the pinned schemas' upstream cross references to the vendored files and never opens a connection. The same builders serve a physical binding: field types and source_kind come from the binding, and the extension gains its members. An identifier is quoted in Ossie's normalized form: uppercased when regular, else as written (OB5).
+- reread: 2026-11-26, beside the diff of its modules since 5424876 (code at a223ac7); still accurate.
 
 
 ### export.physical_binding
 - does: Read a physical binding (a delivered relational schema and where it holds a model's roles) as untrusted JSON, check it in one pinned order of rule ids, and return the relational schema, field types and extension members the Ossie relational files are built from [read_binding; bind].
-- verbs: physical binding, column map, delivered schema, bind roles to columns, binding refusal, rule order, unknown table, unknown column, ambiguous column, role name normalization, NFKC casefold, foreign key group, reference not a key, role arity, home table, identifier target, key role, incompatible keys, sql type map, lex sql type, unbound fact type, extension roles, derived unique key, binding sha256
+- verbs: physical binding, column map, delivered schema, bind roles to columns, binding refusal, rule order, unknown table, unknown column, ambiguous column, role name normalization, NFKC casefold, foreign key group, reference not a key, role arity, home table, identifier target, key role, incompatible keys, sql type map, lex sql type, unbound fact type, extension roles, derived unique key, binding sha256, MAX_IDENTIFIER_DEPTH, identifier nesting depth, lone surrogate refusal, sorted foreign keys
 - in: a binding file path; then a loaded Model, the OntologyView of the export run and the read Binding
 - out: Binding (document and digest); Bound (RelationalSchema, field types, extension members); BindingError with a rule id
 - status: canonical
@@ -1673,7 +1700,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### export.pyrel_emit
 - does: Emit a self-contained PyRel checker with embedded model text or route readable rule-program rendering [render_pyrel].
-- verbs: export PyRel, standalone Python, embed model, copy runtime, script dependencies, offline rendering, DuckDB config, connection option, temporal refusal, compile source, render_pyrel, render_pyrel_rules
+- verbs: export PyRel, standalone Python, embed model, copy runtime, script dependencies, offline rendering, DuckDB config, connection option, temporal refusal, compile source, render_pyrel, render_pyrel_rules, render_pyrel_rules_report, not checked rule ids, guarded clause refusal, membership refusal, unattended source load
 - in: Model path and optional local database/connection configuration or rule target.
 - out: Python source string; callers own publication.
 - status: canonical
@@ -1686,7 +1713,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### export.include_roots
 - does: Give both PyRel renderers an include root's flat model and the two constants that record its flattening [flatten_for_export, flattening_constants].
-- verbs: export include root, flat model export, flattening record digest, model includes constant, include refusal to export error, one read path
+- verbs: export include root, flat model export, flattening record digest, model includes constant, include refusal to export error, one read path, model_validation_message, validation message with rule ids, flattening re-entry message
 - in: Model path and the bytes already read
 - out: None for a model without includes, otherwise the flat model bytes, record digest and pins
 - status: canonical
@@ -1713,7 +1740,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### export.pyrel_rules
 - does: Render readable PyRel requirements as DuckDB violation queries or LQP require programs, exporting an include root through its flat model [requirements, render].
-- verbs: readable rules, PyRel requirements, denial queries, violation witnesses, LQP program, DuckDB program, guarded lowering, rule families, derived relations, plan checking, transition programs, require_text, denial_text, requirements, render
+- verbs: readable rules, PyRel requirements, denial queries, violation witnesses, LQP program, DuckDB program, guarded lowering, rule families, derived relations, plan checking, transition programs, require_text, denial_text, requirements, render, render_report, rules not checked, external uniqueness, shared-entity join, role-scoped value rule, anchored rule, Number type, binary float exactness, externally identified entity
 - in: Model path and duckdb or lqp target.
 - out: Standalone Python program assembled from shared Requirement records and target-specific execution code.
 - status: canonical
@@ -1722,7 +1749,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: examples.plan_apps, export.ossie, export.pyrel_emit
 - tests: tests/test_pyrel_rules.py, tests/test_pyrel_rules_calendar.py, tests/test_pyrel_rules_derivations.py, tests/test_pyrel_rules_families.py, tests/test_pyrel_rules_plans.py, tests/test_plan_apps.py
 - checked: partial
-- notes: This is a separate renderer from the applications checker; DuckDB evaluates denial queries because it does not enforce require. Generated LQP programs are labelled engine-unverified; unsupported semantics are refused during lowering.
+- notes: This is a separate renderer from the applications checker; DuckDB evaluates denial queries because it does not enforce require. Generated LQP programs are labelled engine-unverified; unsupported semantics are refused during lowering, except rules GND itself leaves unchecked (textual, anchored, disconnected joins), which are listed as not checked.
 
 
 ### export.applications
@@ -1736,11 +1763,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: examples.book_recommendations, examples.expense_application
 - tests: tests/test_pyrel_application_driver.py, tests/test_pyrel_application_publication.py, tests/test_pyrel_proposal_check.py, tests/test_pyrel_interpreter_env.py, tests/test_pyrel_application_guards.py, tests/test_pyrel_native_seam.py
 - notes: Query and checker use separate temporary stages; the parent checks complete digest-bound reports and rereads sources before atomic publication. format_result also formats proposal, policy, witness and publication summaries in this module.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### export.souffle_lowering
 - does: Lower admitted relational derivations to bounded deterministic Souffle programs with symbols and origins [render_souffle].
-- verbs: Souffle export, Datalog program, relational derivation, stratified negation, distinct count, typed token encoding, input facts, origin map, symbol map, manifest, fragment refusal, work limits, render_souffle, SouffleLimits
+- verbs: Souffle export, Datalog program, relational derivation, stratified negation, distinct count, typed token encoding, input facts, origin map, symbol map, manifest, fragment refusal, work limits, render_souffle, SouffleLimits, guarded disjunction unsupported, guarded antecedent filters unsupported, membership unsupported, include root refusal
 - in: Model/candidate bytes, formats, reference snapshots and bounded SouffleLimits.
 - out: ExportResult containing program.dl, fact inputs, symbol/origin maps, retained inputs and manifest, or refusal.
 - status: canonical
@@ -1762,6 +1790,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: export.lean_bundle, export.lean_compile, export.service, export.souffle_runtime
 - tests: tests/test_public_souffle_successors.py, tests/test_public_souffle_input_contract.py, tests/test_disclosure_mode.py
 - notes: Reconstruction compares the whole regenerated file mapping, then reapplies caller ceilings; publication delegates to the artifact directory publisher.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### export.souffle_runtime
@@ -1779,7 +1808,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### export.lean_lowering
 - does: Emit finite Lean definitions, carrier/source maps and explicit unproved theorem templates [render_lean].
-- verbs: Lean export, finite model, finite carriers, ordinal encoding, acyclic derivations, constraint predicates, source map, proof obligations, theorem templates, satisfiability obligation, concrete witness, toolchain pin, render_lean, LeanLimits
+- verbs: Lean export, finite model, finite carriers, ordinal encoding, acyclic derivations, constraint predicates, source map, proof obligations, theorem templates, satisfiability obligation, concrete witness, toolchain pin, render_lean, LeanLimits, guarded disjunction unsupported, guarded antecedent filters unsupported, membership unsupported, include root refusal
 - in: Model/candidate bytes, formats, reference snapshots, release-pinned toolchain string and bounded LeanLimits.
 - out: LeanResult with Definitions.lean, ProofObligations.lean, maps, obligations, toolchain, retained inputs and manifest.
 - status: canonical
@@ -1802,6 +1831,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: export.lean_compile, export.service
 - tests: tests/test_public_lean_export_successors.py, tests/test_public_lean_native_successors.py
 - notes: Verification rerenders once with recorded limits for exact byte equality and again under caller limits. Compatibility import bindings remain in this module; runtime model loading uses the model module's public bound loader.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### export.lean_compile
@@ -1868,11 +1898,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+- reread: 2026-11-26, beside the diff of its modules since 6034a65 (code at a223ac7); still accurate.
 
 
 ### model.validation
 - does: Parse bounded model bytes, remembering each parse for one public call inside a parse scope, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate, parse_scope]. The unattended rules exempt included elements from U2-U6 and keep U7 and U8 as the include rule says.
-- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage, parse once, parse scope, parse cache, parse_scoped, remembered document, write check
+- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage, parse once, parse scope, parse cache, parse_scoped, remembered document, write check, flat_without_root_issue, flattened model without root hint, first document pending, include-only root, block scalar trailing whitespace
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
@@ -1912,7 +1943,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### checker.evaluate
 - does: Check validated populations with reference, opaque and source-anchor handling [check, check_partial, check_with_anchors].
-- verbs: check population, evaluate constraints, deterministic verdict, snapshot checking, check_partial, opaque facts, partial knowledge, exact term unavailable, reference populations, source anchors, composed anchors, derivation evaluation, constraint coverage, compiled operations, structured_extension_facts, offending facts, correspondence projection, vacuous constraint, acyclic_extents, version-15 acyclic extent, guarded binding metadata
+- verbs: check population, evaluate constraints, deterministic verdict, snapshot checking, check_partial, opaque facts, partial knowledge, exact term unavailable, reference populations, source anchors, composed anchors, derivation evaluation, constraint coverage, compiled operations, structured_extension_facts, offending facts, correspondence projection, vacuous constraint, acyclic_extents, version-15 acyclic extent, guarded binding metadata, guarded disjunction message, guarded alternatives
 - in: Model and population carrying its current validation marker; optional bound references, anchors, documents or composition lineage.
 - out: CheckReport with constraint and derivation verdicts, fact-type coverage and internal semantic projection or refusal information.
 - status: canonical
@@ -1937,6 +1968,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.check
 - tests: tests/test_public_branch_runtime.py, tests/test_report_json.py, tests/test_v62_phase5_checker.py
 - notes: The public names are re-exported by gnd.checker; internal evidence, derivations and projection fields are excluded from ordinary report serialization. Band selection preserves failure over unchecked over vacuity precedence, including derivation results and reference work refusals.
+- reread: 2026-11-26, beside the diff of its modules since 24c72d8 (code at a223ac7); still accurate.
 
 
 ### assurance.policy
@@ -1950,6 +1982,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: assurance.transport, check.service, cli.api, exp.acceptance, infra.report_payloads
 - tests: tests/test_v6_phase6_execution.py
 - notes: The package initializer is a pure compatibility re-export surface assigned to its policy owner, including CorrespondenceDigests from assurance.identity. Certification separates semantic acceptance from evidence coverage and requires proved infrastructure, matching production identity and a valid extraction route. The legacy Phase 3 denominator excludes the later guarded exists, filter and disjunction rows.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### assurance.identity
@@ -2091,6 +2124,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, … +3 more (graph.md)
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
+- reread: 2026-11-26, beside the diff of its modules since 07a2bb0 (code at a223ac7); still accurate.
 
 
 ### agent.invocation
@@ -2118,6 +2152,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.check
 - tests: tests/test_rc3_baseline.py
 - checked: full
+- reread: 2026-11-26, beside the diff of its modules since 05b56ed (code at a223ac7); still accurate.
 
 ### check.admission
 - does: Project and validate admitted or blocked fact occurrences by propagating verdict blockers and opaque dependencies.
@@ -2131,6 +2166,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.check
 - tests: tests/test_v71_phase4_successors.py, tests/test_public_v72_status.py
 - notes: Validation trusts supplied mechanical judgments and checks their partition against bound facts; it does not reevaluate constraints.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### check.applicability
@@ -2143,6 +2179,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: check.branches, check.universe, infra.errors, model.address, model.loading, model.scalar_terms, semantics.extensions, semantics.phase1_slice
 - used_by: check.branches, semantics.snapshot_adapter
 - tests: tests/test_v6_phase2_applicability.py, tests/test_rf3_core.py
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### check.branches
@@ -2157,6 +2194,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_v6_phase2_registry.py, tests/test_rf3_core.py
 - checked: partial
 - notes: Descriptor factories cover snapshot, applicability, composition, derivation, transition, projection, feedback and assurance surfaces. src/gnd/semantic_registry.py is a compatibility shim re-exporting this component.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### check.compiled_obligations
@@ -2184,6 +2222,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_report_json.py, tests/test_public_exact_scope_guards.py, tests/test_v71_phase4_successors.py
 - checked: partial
 - notes: Public aliases retain historical gnd.api object qualifications; the service sits below entry points.
+- reread: 2026-11-26, beside the diff of its modules since 28dc21b (code at a223ac7); still accurate.
 
 
 ### cli.api
@@ -2199,6 +2238,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_v61_phase2_api.py, tests/test_tp3_check_receipts.py, tests/test_incremental_sessions.py, tests/test_composition.py
 - checked: partial
 - notes: api.py also owns transition/validation orchestration and delegates lane exports; a single module has several public jobs.
+- reread: 2026-11-26, beside the diff of its modules since fdd6f68 (code at a223ac7); still accurate.
 
 
 ### cli.dispatch
@@ -2214,6 +2254,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_report_json.py, tests/test_packaged_skills.py
 - checked: partial
 - notes: __main__.py delegates python -m gnd to main; cli.py retains many historical helper re-exports.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### check.batch
@@ -2226,6 +2267,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: checker.evaluate, infra.artifacts, model.loading, model.population_loading, model.query_index, model.reference_binding
 - used_by: cli.checking_command
 - tests: tests/test_v61_phase1_batch.py, tests/test_compiled_snapshot_obligations.py
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### model.composition
@@ -2238,6 +2280,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index, model.scalar_identity
 - used_by: check.service, cli.api, examples.literature_lineage, witness.service
 - tests: tests/test_composition.py
+- reread: 2026-11-26, beside the diff of its modules since 28dc21b (code at a223ac7); still accurate.
 
 
 ### model.composition_resolution
@@ -2316,11 +2359,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +16 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
 - notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
+- reread: 2026-11-26, beside the diff of its modules since c7fc66d (code at a223ac7); still accurate.
 
 
 ### infra.errors
 - does: Share structured validation issues and model, reference-boundary, population, transition and unvalidated-check exceptions.
-- verbs: validation issue, validation errors, error records, model load error, model validation error, population load error, population validation error, transition load error, unvalidated population, validation marker, Pydantic errors, convert issues, exception summary, issue severity, issues_from_validation_error
+- verbs: validation issue, validation errors, error records, model load error, model validation error, population load error, population validation error, transition load error, unvalidated population, validation marker, Pydantic errors, convert issues, exception summary, issue severity, issues_from_validation_error, ReferenceHashMismatch, reference hash mismatch, catalog digest mismatch
 - in: Pydantic errors, ValidationIssue lists, population validation-marker state and supplied transition metadata
 - out: Ordered issue records and typed exceptions with retained issues, warnings or supplied metadata
 - status: canonical
@@ -2359,7 +2403,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### semantics.extensions
 - does: Compute structured derived relations and effective constraint facts, with selective refresh and derivation-claim verdicts.
-- verbs: compute derivation, derived relations, structured extension, effective facts, selective refresh, refresh heads, dependency strata, recursive derivation, exact arithmetic, aggregate derivation, opaque values, unavailable relation, possible rows, derivation claims, work counters, structured_extension_view, effective_view, derivation_claims_against, exact_extension_envelope
+- verbs: compute derivation, derived relations, structured extension, effective facts, selective refresh, refresh heads, dependency strata, recursive derivation, exact arithmetic, aggregate derivation, opaque values, unavailable relation, possible rows, derivation claims, work counters, structured_extension_view, effective_view, derivation_claims_against, exact_extension_envelope, membership where comparison, in and not in derivation filter, prepared where comparisons
 - in: Loaded model and currently validated population; optional prior extension envelopes and refresh heads
 - out: Computed relation views, unavailability and possible-row envelopes, derivation verdicts and calculation work records
 - status: canonical
@@ -2395,11 +2439,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: check.snapshot_decision, cli.api, semantics.extensions
 - tests: tests/test_incremental_state.py, tests/test_incremental_state_review.py, tests/test_incremental_prepared_policy.py, tests/test_incremental_extensions.py, tests/test_incremental_sessions.py
 - notes: Only a completed transaction publishes a generation; task/thread ownership, byte and row bounds, or unsupported fingerprints can refuse reuse or fall back to calculation.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### check.snapshot_decision
 - does: Evaluate adapted snapshot constraints into semantic decisions and project witnesses onto admitted public origins.
-- verbs: snapshot decision, constraint evaluation, correspondence, semantic verdict, acceptance ready, band composition, witness projection, public values, fact occurrences, origin selection, guarded constraints, antecedent binding count, first empty atom, indexed evaluation, reference join limit, branch evidence, correspond_snapshot, evaluate_snapshot, project_snapshot, project_finding, acyclic extents, acyclic_extents, in-group edges, project_witness, evaluation_snapshot
+- verbs: snapshot decision, constraint evaluation, correspondence, semantic verdict, acceptance ready, band composition, witness projection, public values, fact occurrences, origin selection, guarded constraints, antecedent binding count, first empty atom, indexed evaluation, reference join limit, branch evidence, correspond_snapshot, evaluate_snapshot, project_snapshot, project_finding, acyclic extents, acyclic_extents, in-group edges, project_witness, evaluation_snapshot, guarded disjunction, any_of alternatives, guarded alternatives, guarded filter, vacuous filter empty, alternative failure diagnostics, membership operators, computed_available
 - in: Model and validated population or adapted snapshot; effective facts, lineage and optional variant aliases
 - out: SnapshotDecision and SnapshotProjection with findings, bands, counts, semantic decisions and fact coordinates
 - status: canonical
@@ -2422,6 +2467,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
 - tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
 - notes: Customer mode wins over internal mode from either source. The surface registry includes both COUNT membership commands. Forward propagates only the restrictive customer setting.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### check.evaluation_feedback
@@ -2488,6 +2534,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.api, cli.checking_command
 - tests: tests/test_v70_phase6_corpus.py, tests/test_v70_phase6_adversarial.py, tests/test_v70_phase6_review.py, tests/test_public_semantic_boundaries.py
 - notes: Undecided entailment is retained explicitly; structured-rule or fixed-reference models refuse synthesis while supplied populations can still be compared.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### check.element_coverage
@@ -2502,6 +2549,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_coverage_cli.py, tests/test_coverage_payload.py, tests/test_coverage_scaling.py, tests/test_public_coverage_goldens.py, tests/test_coverage_derivation.py, tests/test_v62_phase6_coverage.py
 - checked: partial
 - notes: This reports existing evidence and does not execute checks or establish truth; it preserves explicit legacy-unbound source gaps.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### agent.declared_adapter
@@ -2544,6 +2592,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - in: Population path or bytes; optional loaded Model.
 - out: Population with warnings and a model validation marker when a model was supplied.
 - checked: partial
+- reread: 2026-11-26, beside the diff of its modules since f9792da (code at a223ac7); still accurate.
 
 
 ### model.query_index
@@ -2556,6 +2605,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
+- reread: 2026-11-26, beside the diff of its modules since 1519ecb (code at a223ac7); still accurate.
 
 
 ### model.reference_resolution
@@ -2581,7 +2631,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.verbalization
 - does: Render deterministic stakeholder text for composed models with loader-resolved include headers and selected derivation rules.
-- verbs: verbalize model, stakeholder review, natural language, ORM declarations, render_model_verbalization, render_rule_verbalizations, rule verbalization, structured derivation, prose rule refusal, stable ordering, constraint provenance, operation description, include header, pinned vocabulary review, unresolved include model
+- verbs: verbalize model, stakeholder review, natural language, ORM declarations, render_model_verbalization, render_rule_verbalizations, rule verbalization, structured derivation, prose rule refusal, stable ordering, constraint provenance, operation description, include header, pinned vocabulary review, unresolved include model, guarded disjunction wording, membership wording, antecedent filter wording, unless exceptions
 - status: canonical
 - modules: src/gnd/model_verbalization.py
 - uses: check.universe, infra.verdict_prose, model.atom_bindings, model.document, model.extraction_vocabulary, model.loading, model.population_sentences, model.query_index, model.reference_schemes, model.scalar_terms
@@ -2593,7 +2643,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.reference_schemes
 - does: Classify direct or composite entity identities and fact applicability [reference_identity; applicable_set].
-- verbs: reference identity, direct identification, composite reference, applicable set, unmatchable entity, reference cycle, extraction scope, role_player_signature, fact_type_signatures, shape matching, entity_reference, role player multiset
+- verbs: reference identity, direct identification, composite reference, applicable set, unmatchable entity, reference cycle, extraction scope, role_player_signature, fact_type_signatures, shape matching, entity_reference, role player multiset, preferred external uniqueness, reviewed composite reference key, confirmed alethic preferred key, first anchored fallback
 - status: canonical
 - modules: src/gnd/refscheme.py
 - uses: check.universe, model.extraction_scope, model.query_index, model.relational_mapping
@@ -2605,7 +2655,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.relational_mapping
 - does: Map a loaded model to a Halpin relational schema (tables, keys, foreign keys) with one disposition per fact type and constraint, and state which constraints the relational forms may carry [map_model; dispositions; is_confirmed_alethic].
-- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, unary flag column, identification record, absorbed subtype flag, functional identifier component, name foreign keys, binding-only reasons, map_model, dispositions
+- verbs: relational mapping, rmap, halpin rmap, relational schema, table mapping, primary key, unique keys, foreign key, column naming, absorb subtype, objectification table, unmapped reason, semantic model, role placement, role columns, unary flag column, identification record, absorbed subtype flag, functional identifier component, name foreign keys, binding-only reasons, map_model, dispositions, external_uniqueness_order, external uniqueness tie order, simple identification target
 - status: canonical
 - modules: src/gnd/rmap.py
 - uses: model.query_index, model.reference_resolution
@@ -2614,7 +2664,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - in: a loaded Model and an RmapVariant
 - out: RelationalSchema (tables, role placements, identifications) and Disposition rows
 - checked: partial
-- notes: Normative rules in representation-format.md, "Relational mapping (Rmap)". Direct identification comes from ModelIndex.reference_value_types. Composite identification is the Rmap's own selection: the preferred, confirmed alethic external uniqueness, indexed once per model. refscheme is not used, because it takes the first external uniqueness anchored on the entity whatever its status, and calling it per entity was quadratic (review r1 F1, F9).
+- notes: Normative rules in representation-format.md, "Relational mapping (Rmap)". Direct identification comes from ModelIndex.reference_value_types. Composite identification is the Rmap's own selection: the preferred, confirmed alethic external uniqueness, indexed once per model. refscheme is not called, because calling it per entity was quadratic (review r1 F1, F9); it now makes the same preferred choice through this module's external_uniqueness_order and is_confirmed_alethic, with the first anchored declaration as its own fallback.
 
 ### model.reference_binding
 - does: Expose invocation-bound reference-population intake through the historical references import surface.
@@ -2662,6 +2712,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
+- reread: 2026-11-26, beside the diff of its modules since 050a2f6 (code at a223ac7); still accurate.
 
 
 ### infra.bounded_process
@@ -2688,6 +2739,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_public_construction_site_guards.py
 - checked: partial
 - notes: report.py is the compatibility re-export of payloads.py; report_schema loads the packaged report contract used by payload consumers.
+- reread: 2026-11-26, beside the diff of its modules since c521349 (code at a223ac7); still accurate.
 
 
 ### infra.text_output
@@ -2699,6 +2751,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: codegen.service, exp.command, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
 - tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py, tests/test_rof2_projected_text.py
 - notes: Projected text is rendered from the projected payload only: for an active redaction policy on check, validate, walks, `check --admission` and verify, and for temporal terms on check, validate and walks (temporal admission and verify are not projected and print plain text); the plain routes share the same row renderers (render_check_rows, render_transition_rows) and the one extraction_line. _print_projected_text is a dispatcher kept for the historical binding. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
+- reread: 2026-11-26, beside the diff of its modules since 3b0dbcc (code at a223ac7); still accurate.
 
 
 ### semantics.ground_atoms
@@ -2754,6 +2807,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.checking_command
 - tests: tests/test_ossie_import.py
 - notes: The admitted plan contains only output bytes. The CLI publishes the report first and the model last. Sidecar pointers are built by infra.artifacts' json_pointer.
+- reread: 2026-11-26, beside the diff of its modules since cfb4b54 (code at a223ac7); still accurate.
 
 ### model.rai_import
 - does: Normalize the admitted RAI schema dialect into validated ORM YAML and a digest-bound alias map.
@@ -2765,6 +2819,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_v61_phase1_import.py, tests/test_public_alias_schema_guards.py, tests/test_public_hostile_import.py
 - checked: partial
 - notes: Planning returns model and alias bytes without writing the output directory; publication is a separate create-once step.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### infra.report_redaction
@@ -2777,11 +2832,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_v62_phase1_redaction.py, tests/test_public_redaction_reports.py
 - checked: partial
 - notes: Projection copies the completed payload after verdict evaluation; project_failure builds a separate witness-free failure envelope.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### semantics.snapshot_ir
 - does: Represent immutable typed snapshot inputs, constraints, relations, rosters and explicit adapter refusals.
-- verbs: snapshot IR, immutable inputs, Scalar, Opaque, IRConstraint, SnapshotIR, typed relation, roster members, structured derivation, refusal location, operand, admitted claims
+- verbs: snapshot IR, immutable inputs, Scalar, Opaque, IRConstraint, SnapshotIR, typed relation, roster members, structured derivation, refusal location, operand, admitted claims, MembershipSet, membership operand, negated atoms, where filter, any_of alternatives, disjunctive consequent, computed_available
 - status: canonical
 - modules: src/gnd/semantic_ir.py
 - uses: (none)
@@ -2792,7 +2848,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### semantics.snapshot_adapter
 - does: Adapt validated populations into typed immutable snapshots with optional exact value-origin observations.
-- verbs: adapt snapshot, canonical_scalar, typed scalar, rational identity, datetime coordinate, opaque refusal, adapt_constraint, adapt_snapshot, adapt_snapshot_observed, derived lineage, value origins, validation marker, input refusal, canonical scalar compatibility alias
+- verbs: adapt snapshot, canonical_scalar, typed scalar, rational identity, datetime coordinate, opaque refusal, adapt_constraint, adapt_snapshot, adapt_snapshot_observed, derived lineage, value origins, validation marker, input refusal, canonical scalar compatibility alias, guarded where filters, negated atoms, any_of alternatives, membership operand, computed_available
 - status: canonical
 - modules: src/gnd/semantic_adapter.py
 - uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
@@ -2826,7 +2882,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### semantics.snapshot_spec
 - does: Evaluate snapshot constraint specifications with explicit applicability, witnesses, modality and exit-band rules.
-- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, ring_pairs, acyclic_extent, strongly connected groups, guarded rule, bounded negative relation index, guarded term filters, value comparison, cardinality, subtype partition, assurance_of, band_of
+- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, ring_pairs, acyclic_extent, strongly connected groups, guarded rule, bounded negative relation index, guarded term filters, value comparison, cardinality, subtype partition, assurance_of, band_of, guarded disjunction, any_of alternatives, exists alternative, disjunction work limit, GuardedDisjunctionBudget, guarded_disjunction_state, guarded_exists_comparison, guarded_relation_availability, guarded_alternative_available, guarded_term_binding
 - status: canonical
 - modules: src/gnd/semantic_spec.py
 - uses: check.constraint_families, infra.graphs, model.scalar_terms, semantics.snapshot_ir
@@ -2847,7 +2903,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +23 more (graph.md)
 - tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py, tests/test_issue_286_role_keyed_maps.py
 - notes: Includes the guarded operand evaluator adapter and temporal syntax detection used to refuse unsupported consumers.
-- reread: 2026-11-25, beside src/gnd/terms.py after the issue 286 change to temporal_nodes (role-keyed maps decided by their holding key); still accurate.
+- reread: 2026-11-26, beside the diff of src/gnd/terms.py since a8059ad (description and sample_population are no longer walked as syntax; role-keyed bind and head maps still are); still accurate.
 
 
 ### check.universe
@@ -2861,6 +2917,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: check.admission, check.applicability, check.population_structure, checker.evaluate, discover.candidates, discover.population_view, extract.reference_schemes, extract.vocabulary, model.extraction_vocabulary, model.population_sentences, model.reference_schemes, model.validation, … +5 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf6_index.py, tests/test_checker_families.py, tests/test_popvalidate.py, tests/test_vg1_object_type_scaling.py
 - notes: Also owns constraint shape/scope hooks dispatched through FAMILIES; layer-map placement is model despite the check area chosen by capability. Historical model, checker and popvalidate names remain compatibility aliases. The descendant, denoting and kind walks read model.query_index's per-model tables (VG1); resolve_reference_value_type stays the uncached definition those tables cache.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### model.scalar_identity
@@ -2877,8 +2934,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### semantics.temporal_guards
-- does: Evaluate temporal guarded comparisons through connected indexed joins with a shared date-function work bound.
-- verbs: temporal guards, guarded comparison, date comparison, Gregorian dates, connected joins, indexed joins, duplicate rows, opaque values, unknown precedence, duration operands, temporal work limit, temporal_operand, evaluate_temporal_guard, violation witness
+- does: Evaluate temporal guarded comparisons and date memberships over connected indexed joins or supplied filtered bindings with a shared date-function work bound.
+- verbs: temporal guards, guarded comparison, date comparison, Gregorian dates, connected joins, indexed joins, duplicate rows, opaque values, unknown precedence, duration operands, temporal work limit, temporal_operand, evaluate_temporal_guard, violation witness, evaluate_filtered_temporal_guard, filtered temporal guard, date membership, term_syntax
 - in: Guarded comparison IRConstraint and SnapshotIR relations and fact types.
 - out: Verdict, reason and canonical witness tuple; None when the special temporal path does not apply or an antecedent relation is empty.
 - status: canonical
@@ -2901,6 +2958,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_transition_report.py, tests/test_public_transition_walks.py, tests/test_public_transition_contract.py, tests/test_v62_phase2_intermediate.py, tests/test_v62_phase3_terms.py, tests/test_public_phase4_transition_support.py
 - checked: partial
 - notes: transition.py combines input validation, report models and evaluation; transition_kernel.py supplies pure primitive decisions also consumed by payloads. Failed preconditions produce findings while effects still apply; band combines embedded snapshot findings with transition findings.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### agent.solve
@@ -2955,6 +3013,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: export.ilp_prompt, extract.vocabulary, model.verbalization
 - tests: tests/test_extract_vocabulary.py, tests/test_object_type_description.py
 - notes: Withholds constraint prose, modalities, provenance and operation obligations; composite identification still reads external reference identity. The pure re-export shim src/gnd/extract/vocabulary.py should be merged into this entry by the writer handling that module.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### infra.graphs
@@ -3078,7 +3137,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### synth.guarded
 - does: Construct and independently evaluate guarded-rule case pairs and bounded existential witnesses [build_pair, exists_witness].
-- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, antecedent filters, negative exceptions, membership witnesses, active passing case
+- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, antecedent filters, negative exceptions, membership witnesses, active passing case, guarded disjunction pair, any_of alternatives, disjunction case search
 - in: Guarded constraint, raw fact rows, optional covered fact types; model for private-source analysis.
 - out: Bindings, a modular repair plan or witness true/false/None; None represents unsupported or unavailable work.
 - status: canonical
@@ -3171,6 +3230,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: measure.coverage, measure.report, synth.service
 - tests: tests/test_measure_coverage.py, tests/test_measure_derivation.py, tests/test_synth_boundary.py
 - notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists, guarded-filter, guarded-disjunction and opt-in compiled-subset routes from the predecessor frontier contract.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### synth.corpus
@@ -3185,11 +3245,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.synth
 - tests: tests/test_synth_conforming.py, tests/test_measure_offline.py
 - notes: Shared by synth and measure; historical names identify gnd.cli for compatibility. The directory publication transaction supports both merging existing corpus trees and requiring a fresh output root.
+- reread: 2026-11-26, beside the diff of its modules since 5b56239 (code at a223ac7); still accurate.
 
 
 ### synth.service
 - does: Orchestrate synthetic corpus generation, provenance, quarantine retention and publication for gnd synth [_cmd_synth].
-- verbs: synth command, _cmd_synth, synthetic corpus, conforming corpus, violating corpus, boundary corpus, multiple seeds, baseline seed, random seed, deterministic reproduction, materialize pool, provenance sidecar, quarantine retention, discrepancy artifact, generator manifest, corpus publication
+- verbs: synth command, _cmd_synth, synthetic corpus, conforming corpus, violating corpus, boundary corpus, multiple seeds, baseline seed, random seed, deterministic reproduction, materialize pool, provenance sidecar, quarantine retention, discrepancy artifact, generator manifest, corpus publication, run_guarded_cases, guarded cases, guarded case manifest, guarded-cases.json, passing and failing case pair, checker confirmation, scoped ordinary corpus
 - in: Model path, output root, requested class, optional pool and baseline seed, seed count and output format.
 - out: Ordinary synth artifacts or a guarded case manifest, matched populations and scoped ordinary corpus. A checker disagreement retains quarantine evidence.
 - status: canonical
@@ -3213,6 +3274,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_public_why_not.py, tests/test_witness_composition.py
 - notes: Structural intake and conservative fragment classification are shared by production and replay; they contain no derivation evaluator. Model wire is re-exported from model.json_document. Limits may only be lowered from the fixed ceilings.
+- reread: 2026-11-26, beside the diff of its modules since 28dc21b (code at a223ac7); still accurate.
 
 
 ### witness.service
@@ -3227,11 +3289,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.witness
 - tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py
 - notes: The package marker is documentation only; gnd.api exposes the service functions through compatibility aliases. Composition certificates bind the record digest and each base fact's source lineage.
+- reread: 2026-11-26, beside the diff of its modules since 28dc21b (code at a223ac7); still accurate.
 
 
 ### witness.command
 - does: Dispatch witness, replay, witness-view and why-not CLI requests with redacted output and explicit raw certificate export.
-- verbs: witness command, replay command, witness view, why not command, add parsers, CLI dispatch, raw export, save certificate, create output, redacted output, expand proof, reference root, composition option, JSON output
+- verbs: witness command, replay command, witness view, why not command, add parsers, CLI dispatch, raw export, save certificate, create output, redacted output, expand proof, reference root, composition option, JSON output, flat model option, flattening record option, include root witness, rooted replay
 - in: Argparse subparsers or parsed command arguments.
 - out: Printed JSON, command exit codes, optional exclusively created raw certificate file.
 - status: canonical
@@ -3255,6 +3318,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.witness
 - tests: tests/test_count_certificates.py
 - notes: Replay reconstructs the roster through the shared bounded scan. Ordinary witness and aggregate checker behavior is unchanged.
+- reread: 2026-11-26, beside the diff of its modules since c56ce75 (code at a223ac7); still accurate.
 
 
 ### witness.produce
@@ -3269,11 +3333,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_witness_composition.py
 - notes: Uses the production evaluator's context-local witness trace and only retains nodes reachable from requested roots. Missing and opaque-dependent unknown results are distinct from proofs.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### witness.replay
 - does: Independently verify grounded certificate inferences and input bindings without fixpoint search [replay_witness].
-- verbs: replay witness, verify certificate, independent kernel, local inference, unify body, instantiate head, compare scalars, validate base facts, reject cycles, reject unreachable nodes, stale binding, composition lineage, proof depth, invalid proof, replay_witness
+- verbs: replay witness, verify certificate, independent kernel, local inference, unify body, instantiate head, compare scalars, validate base facts, reject cycles, reject unreachable nodes, stale binding, composition lineage, proof depth, invalid proof, replay_witness, flattening binding, model origin check, catalog certificate, either model identity
 - in: Model and candidate documents, certificate, optional raw reference inputs, composition identity and limits.
 - out: WitnessResult with independently checked per-target statuses and graph work counts.
 - status: canonical
@@ -3393,7 +3458,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### examples.literature_assurance
 - does: Example: score a literature pipeline run against an answer key in seven separate stages, including opt-in reading coverage, with exact-fraction floors and value-free refusals [score, stage_status].
-- verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, identity decisions, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages
+- verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, identity decisions, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages, score_reading_coverage, reading coverage score, caller answer roster
 - in: The literature example root (corpus/corpus.json, model, documents, extract artifacts), a literature-answer-key/1 file with gold/ and render/ beside it, and a literature-run/1 directory.
 - out: A literature-assurance-report/1 payload and exit 0, 1 or 3. The routes are gnd check (plain, --anchors, --composition) and gnd fidelity, run as subprocesses.
 - status: canonical
@@ -3427,11 +3492,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: examples.literature_lineage
 - tests: tests/test_li4_assertions.py, tests/test_lh3_admission_shape.py, tests/test_lh4_admission_rules.py
 - notes: The shape, the admission rules and the /2 record are described once, in src/gnd/examples/literature/README.md, "Admitting your own assertion entity".
+- reread: 2026-11-26, beside the diff of its modules since a84cff3 (code at a223ac7); still accurate.
 
 
 ### examples.literature_lineage
 - does: Compose saved-opinion literature assertions and score ordered ancestry paths through GND witnesses.
-- verbs: literature lineage, conditional transfer, ordered path, source identity, witnessed assertion, context qualification
+- verbs: literature lineage, conditional transfer, ordered path, source identity, witnessed assertion, context qualification, admission binding, byte-bound admission marker, frozen input snapshot
 - in: Approved path policy, contextual annotation documents, and a development or reserved answer key.
 - out: Composed run with revision-bound admission and resolution records, and a separated score.
 - status: canonical
@@ -3515,6 +3581,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: (none)
 - tests: tests/test_adopt_migration.py
 - notes: Standalone skill helper runnable without importing gnd; verification checks form and recorded bytes, while semantic correctness of mappings requires review. The printed model-elements count counts mapping rows with model-element disposition, not unique referenced model elements.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### skills.model_structure
@@ -3528,6 +3595,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: (none)
 - tests: tests/test_review_fixes.py, tests/test_public_packaged_invocation_guards.py, tests/test_public_distribution_runtime.py
 - notes: Standalone PEP 723 skill helper; it does not check semantic model rules, populations, acceptance readiness or indeterminate verdicts. Local YAML guarding deliberately keeps it runnable without importing gnd.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
 
 
 ### skills.harness_update
@@ -3552,6 +3620,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - age appropriate: examples.book_recommendations, examples.book_rules
 - allow vacuous: check.service, checker.reports, cli.checking_command
 - anchor_normalize: extract.scalar_identity, model.anchor_identity
+- any_of alternatives: check.snapshot_decision, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.snapshot_spec, synth.guarded
 - applicable set: cli.extract_command, extract.service, fidelity.doccheck, fidelity.service, model.reference_schemes
 - application launcher: examples.book_recommendations, examples.expense_application
 - approval chain: examples.expense_application, examples.expense_rules
@@ -3597,6 +3666,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - composite identity: extract.reference_schemes, fidelity.match
 - composition lineage: witness.replay, witness.service
 - computed post: infra.report_payloads, semantics.transitions
+- computed_available: check.snapshot_decision, semantics.snapshot_adapter, semantics.snapshot_ir
 - conflicting options: cli.measure_command, cli.verify_command
 - conformance command: cli.conformance_command, conformance.command
 - constraint blind: extract.guidelines, model.extraction_vocabulary
@@ -3633,6 +3703,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - expected verdict: synth.prediction, synth.provenance
 - export ilp: export.ilp_neutral, export.ilp_service
 - export_lean: export.lean_bundle, export.service
+- external uniqueness: export.pyrel_rules, synth.constructive
 - extract command: cli.extract_command, extract.service
 - extraction artifacts: cli.doccheck_command, cli.fidelity_command
 - extraction bundle: cli.extract_command, codegen.emit, extract.bundle
@@ -3647,12 +3718,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - finalize evolution: cli.evolve_command, evolve.service
 - fingerprint: assurance.evidence, check.calculation_scope
 - finite numbers: assurance.identity, infra.input_policy
+- flattening binding: witness.replay, witness.service
 - force overwrite: cli.codegen_command, codegen.regenerate
 - formal map: assurance.claim_graph, assurance.claims
 - generate project: agent.solve, cli.codegen_command, codegen.emit, subsystem.codegen
 - generated project: cli.conformance_command, conformance.command
 - gnd check: examples.expense_application, subsystem.check
 - ground truth: measure.truth, synth.prediction, synth.provenance
+- guarded alternatives: check.snapshot_decision, checker.evaluate
+- guarded antecedent filters unsupported: export.lean_lowering, export.souffle_lowering
+- guarded cases: synth.guarded, synth.service
+- guarded disjunction: check.snapshot_decision, semantics.snapshot_spec
+- guarded disjunction unsupported: export.lean_lowering, export.souffle_lowering
 - hand written pyrel: examples.book_rules, examples.expense_rules
 - host labels: cli.measure_command, measure.labels, subsystem.measure
 - identity key: model.scalar_identity, synth.identity
@@ -3661,6 +3738,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - import mined rules: cli.checking_command, export.ilp_service
 - import ossie: cli.checking_command, model.ossie_import
 - imported provenance: model.ossie_import, model.rai_import
+- include root refusal: export.lean_lowering, export.souffle_lowering
 - induced provenance: discover.output, export.ilp_service
 - input refusal: semantics.snapshot_adapter, witness.service
 - install skills: cli.lifecycle_command, install.skill_lifecycle
@@ -3680,6 +3758,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - load model: codegen.service, model.loading
 - local duckdb: examples.book_rules, examples.expense_rules, examples.governance_reports, export.pyrel_runtime
 - manifest last: codegen.regenerate, export.lean_bundle, export.souffle_bundle, review.service
+- membership operand: semantics.snapshot_adapter, semantics.snapshot_ir
+- membership unsupported: export.lean_lowering, export.souffle_lowering
 - model code drift: cli.conformance_command, conformance.command, infra.exit_codes
 - model currency: conformance.currency, subsystem.conformance
 - model digest: codegen.manifest, measure.labels, model.scalar_identity, synth.provenance
@@ -3689,6 +3769,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - narrowed_from: discover.narrow, evolve.schema
 - native query: examples.book_recommendations, examples.expense_application, export.applications
 - near misses: discover.service, witness.why_not
+- negated atoms: semantics.snapshot_adapter, semantics.snapshot_ir
 - no extraction: cli.verify_command, export.verification
 - no subjects: measure.coverage, synth.frontier, synth.prediction
 - not derivable: synth.boundary, synth.mutations
@@ -3698,10 +3779,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - offending facts: checker.evaluate, examples.session_agents
 - opaque values: model.population_sentences, semantics.extensions, semantics.temporal_guards
 - openai compatible: agent.declared_adapter, exp.adapter_policy
-- operation outcomes: cli.evolve_command, discover.narrow, evolve.operation_outcomes, subsystem.evolve
+- operation outcomes: cli.evolve_command, discover.narrow, evolve.operation_outcomes, evolve.service, subsystem.evolve
 - oracle abstention: synth.guarded, synth.prediction
 - oscillation: exp.service, exp.session_runtime
-- outcome report: cli.evolve_command, discover.narrow, evolve.operation_outcomes, subsystem.evolve
+- outcome report: cli.evolve_command, discover.narrow, evolve.operation_outcomes, evolve.service, subsystem.evolve
 - output collision: cli.export_command, extract.flatten_service, review.command
 - output directory: cli.codegen_command, cli.flatten_command, codegen.service, synth.paths
 - output format: cli.arguments, cli.conformance_command, cli.fidelity_command, cli.flatten_command, cli.judgments_command, cli.verify_command
@@ -3849,6 +3930,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: extract.bundle, extract.service, infra.artifacts, infra.bounded_process, infra.disclosure, infra.errors, model.anchors, model.loading, model.population_loading, witness.schema
 - used_by: (none)
 - tests: tests/test_lx4_literature_interop.py
+- reread: 2026-11-26, beside the diff of its modules since 8e98afc (code at a223ac7); still accurate.
 
 ### examples.literature_depth
 - does: Run source-bound science competency questions, experiment comparisons and quantity probes over rooted literature models.
@@ -3860,6 +3942,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: infra.artifacts, infra.bounded_process, model.anchors
 - used_by: examples.literature_reading, examples.literature_reference_set, examples.literature_revision, examples.literature_verdict
 - tests: tests/test_ld1_competency_examples.py
+- reread: 2026-11-26, beside the diff of its modules since da41bc0 (code at a223ac7); still accurate.
 
 ### examples.literature_reading
 - does: Run and replay bounded literature reading, with saved producer outputs or a caller's live producer over a caller's root, typed coverage, custody and fidelity; replay re-derives a caller run from its folder and root with no producer call.
@@ -3872,6 +3955,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: examples.literature_assurance, examples.literature_revision
 - tests: tests/test_ld3_reading_workflow.py, tests/test_lh1_reading_host.py, tests/test_lh2_reading_replay.py
 - notes: Release replay can provide its retained reading fixture and rooted vocabulary together. The protocol's one home is src/gnd/examples/literature/reading_fixture/README.md, "Drive it from your host".
+- reread: 2026-11-26, beside the diff of its modules since 0b330eb (code at a223ac7); still accurate.
 
 ### examples.literature_reference_set
 - does: Build the literature reading reference set over the regression corpus's development documents without changing them, and score a reading run's produced facts against its labels at section grain.
@@ -3884,10 +3968,11 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: (none)
 - tests: tests/test_lr3_reference_set.py
 - notes: The scoring rule's one home is src/gnd/examples/literature/reference_fixture/README.md. The recorded run was produced by tools/record_lr3_reference_run.py, which spends paid calls and is outside every gate; tests replay the run.
+- reread: 2026-11-26, beside the diff of its modules since 7be62b0 (code at a223ac7); still accurate.
 
 ### examples.literature_revision
 - does: Bind, migrate and independently replay literature release artifacts and source-qualified supports across a semantic revision.
-- verbs: semantic revision, release dependencies, sense migration, prior snapshot replay, stale coverage, predicate definition, support certificate
+- verbs: semantic revision, release dependencies, sense migration, prior snapshot replay, stale coverage, predicate definition, support certificate, replay_renewed_support, renewed review
 - in: Replayable reading evidence, a separately pinned dependency policy, verified source bundles and saved occurrence reviews.
 - out: Before and after releases, changed occurrence and dependent artifact worklists, public proof and replay reports, and independent support bindings.
 - status: canonical
@@ -3907,3 +3992,4 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: examples.literature_depth, examples.literature_revision, infra.artifacts, infra.errors
 - used_by: (none)
 - tests: tests/test_ld5_verdict.py
+- reread: 2026-11-26, beside the diff of its modules since 2e34530 (code at a223ac7); still accurate.

@@ -1,0 +1,21 @@
+IS2 final gate, run 2026-11-26 in a clean clone at the commit below (macOS, Python 3.14).
+902c894950417cac2ed2d59904efde2318d8aad7
+$ uv run pytest -q -p no:randomly <IS2 spec gate files>
+892 passed in 196.53s (0:03:16)
+$ uv run pytest -q <project structure guards, project.md>
+872 passed, 2 deselected in 122.61s (0:02:02)
+$ uv run ruff check
+All checks passed!
+$ uv run --group docs zensical build --strict
+Build finished in 1.13s
+$ uv run python tools/check_docs.py site
+19722 local links/assets/anchors checked
+exit 0
+$ python3 scripts/components_index.py changed --base a223ac72 --strict
+changed against a223ac72 (a223ac7): 154 file(s) differ; 1 to fix, 0 warning(s), 0 to reread
+$ uv run gnd install --symlink --project --force && uv run gnd doctor --project
+exit 0
+
+The component index's one fix was dev/components/modules/tools.md, stale line numbers after the round-2 repairs; regenerated in 312d1067, then:
+$ python3 scripts/components_index.py changed --base a223ac72 --strict
+changed against a223ac72 (a223ac7): 193 file(s) differ; 0 to fix, 0 warning(s), 0 to reread

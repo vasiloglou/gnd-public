@@ -36,7 +36,10 @@ Synthesis attempts a conforming population from each source model and
 constraint-derived boundary cases from both models. A boundary is retained as
 a separator only after independent checks show source band 0 and target band 1
 or 4. Unsupported synthesis or an unreachable boundary is recorded in
-`not_derivable`. No model, population or existing check report is rewritten.
+`not_derivable`. Synthesis needs the optional `synth` extra; without it, each
+model's synthesis is one `not_derivable` row whose reason names the extra, and
+the entailment comparison and any supplied populations are reported as usual.
+No model, population or existing check report is rewritten.
 
 API and CLI reports project sensitive witnesses after evaluation. Applied
 projection removes role-bearing offending facts, derived tuples and witness

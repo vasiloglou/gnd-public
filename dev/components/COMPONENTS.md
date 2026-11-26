@@ -2484,10 +2484,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Differential report with entailment rows, population bands, directional separators, derivation differences and synthesis refusals
 - status: canonical
 - modules: src/gnd/diff.py
-- uses: check.service, checker.evaluate, extract.source_anchors, infra.artifacts, model.address, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_terms, synth.assemble, synth.boundary
+- uses: check.service, checker.evaluate, extract.source_anchors, infra.artifacts, model.address, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_terms, synth.assemble, synth.boundary, synth.values
 - used_by: cli.api, cli.checking_command
-- tests: tests/test_v70_phase6_corpus.py, tests/test_v70_phase6_adversarial.py, tests/test_v70_phase6_review.py, tests/test_public_semantic_boundaries.py
-- notes: Undecided entailment is retained explicitly; structured-rule or fixed-reference models refuse synthesis while supplied populations can still be compared.
+- tests: tests/test_v70_phase6_corpus.py, tests/test_v70_phase6_adversarial.py, tests/test_v70_phase6_review.py, tests/test_public_semantic_boundaries.py, tests/test_diff_synth_extra.py
+- notes: Undecided entailment is retained explicitly; structured-rule or fixed-reference models refuse synthesis while supplied populations can still be compared. Without the optional synth extra, synthesis is a not-derivable row naming the extra (issue 323).
 
 
 ### check.element_coverage
@@ -3031,7 +3031,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/values.py
 - uses: check.population_structure, infra.input_policy, model.scalar_terms
-- used_by: synth.guarded, synth.prediction, synth.service, synth.value_domain
+- used_by: model.diff, synth.guarded, synth.prediction, synth.service, synth.value_domain
 - part_of: subsystem.synth
 - tests: tests/test_synth_values.py, tests/test_rf1_helper_pins.py, tests/test_rf7_consumers.py
 - notes: PRIMITIVES comes from the vendored meta-schema; unconstrained dates use fixed anchors for seed reproduction.

@@ -11,6 +11,8 @@ procedure](releasing.md). Changes on `main` after a release are listed in an
 
 The first release carrying this notice keeps the live refactoring aliases. The migration guide lists replacements and patch sites. See the [import migration guide](refactoring-import-migration.md).
 
+- `gnd diff` on an install without the optional `synth` extra no longer ends with an internal error. Each model's synthesis is recorded as not derivable, with a reason naming the extra, and the rest of the report is unchanged (issue 323).
+
 ## 0.5.2 (tagged 2026-11-25, not published on PyPI)
 
 0.5.2 is a GitHub tag only. Install it from the tag:

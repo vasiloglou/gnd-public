@@ -323,6 +323,7 @@ def diff_models(
     if synthesize:
         from gnd.synth.assemble import GeneratorError, assemble_conforming
         from gnd.synth.boundary import derive_boundary_cases
+        from gnd.synth.values import SynthDependencyError
 
         for source_id, model in (("a", model_a), ("b", model_b)):
             if model.reference_populations:
@@ -339,32 +340,43 @@ def diff_models(
                 not_derivable.append({"source": source_id, "kind": "synthesis", "subject": "model",
                                       "reason": "structured derivation synthesis unavailable"})
                 continue
+            # The extra may be absent: synthesis is then unsupported, which the contract records in
+            # not_derivable rather than as an internal error, and this model's partial rows are
+            # discarded (issue 323).
+            model_rows, model_refusals = [], []
             try:
-                assembly = assemble_conforming(model, seed, model_ref=f"model-{source_id}.orm.yaml")
-            except GeneratorError as error:
+                try:
+                    assembly = assemble_conforming(model, seed, model_ref=f"model-{source_id}.orm.yaml")
+                except GeneratorError as error:
+                    not_derivable.append({"source": source_id, "kind": "synthesis", "subject": "model", "reason": str(error)})
+                    continue
+                raw = canonical_json_bytes(assembly.doc)
+                model_rows.append(compare_population(model_a, model_b, raw, source=f"synth-{source_id}.pop.json",
+                                                     population_ref=f"synth-{source_id}-conforming",
+                                                     origin=f"synth-{source_id}-conforming"))
+                other = model_b if source_id == "a" else model_a
+                for boundary_model, origin in ((other, "other-model-boundary"),
+                                               (model, f"synth-{source_id}-boundary")):
+                    for ref, _, _ in _constraints(boundary_model):
+                        cases, refusals = derive_boundary_cases(boundary_model, ref, assembly.doc, Random(seed))
+                        for refusal in refusals:
+                            model_refusals.append({"source": source_id, "kind": "boundary",
+                                                   "subject": ref, "reason": refusal.reason})
+                        for candidate in cases:
+                            boundary_raw = canonical_json_bytes(candidate.doc)
+                            row = compare_population(model_a, model_b, boundary_raw,
+                                                     source=f"boundary-{source_id}.pop.json",
+                                                     population_ref=f"{origin}:{source_id}:{ref}:{candidate.name}",
+                                                     origin=origin)
+                            source_summary = row[source_id]
+                            target_summary = row["b" if source_id == "a" else "a"]
+                            if source_summary.get("band") == 0 and target_summary.get("band") in {1, 4}:
+                                model_rows.append(row)
+            except SynthDependencyError as error:
                 not_derivable.append({"source": source_id, "kind": "synthesis", "subject": "model", "reason": str(error)})
                 continue
-            raw = canonical_json_bytes(assembly.doc)
-            rows.append(compare_population(model_a, model_b, raw, source=f"synth-{source_id}.pop.json",
-                                           population_ref=f"synth-{source_id}-conforming", origin=f"synth-{source_id}-conforming"))
-            other = model_b if source_id == "a" else model_a
-            for boundary_model, origin in ((other, "other-model-boundary"),
-                                           (model, f"synth-{source_id}-boundary")):
-                for ref, _, _ in _constraints(boundary_model):
-                    cases, refusals = derive_boundary_cases(boundary_model, ref, assembly.doc, Random(seed))
-                    for refusal in refusals:
-                        not_derivable.append({"source": source_id, "kind": "boundary",
-                                              "subject": ref, "reason": refusal.reason})
-                    for candidate in cases:
-                        boundary_raw = canonical_json_bytes(candidate.doc)
-                        row = compare_population(model_a, model_b, boundary_raw,
-                                                 source=f"boundary-{source_id}.pop.json",
-                                                 population_ref=f"{origin}:{source_id}:{ref}:{candidate.name}",
-                                                 origin=origin)
-                        source_summary = row[source_id]
-                        target_summary = row["b" if source_id == "a" else "a"]
-                        if source_summary.get("band") == 0 and target_summary.get("band") in {1, 4}:
-                            rows.append(row)
+            rows.extend(model_rows)
+            not_derivable.extend(model_refusals)
     from gnd.references import reference_model_digest
 
     payload = {

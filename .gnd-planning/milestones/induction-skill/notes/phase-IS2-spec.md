@@ -503,3 +503,11 @@ cannot show the refusal.
 **Page style.** `tests/test_plan_app_docs.py` holds business pages to
 paragraphs of at most 90 words and no exit codes in prose; Fable revised the
 notes to meet it (D12).
+
+**Round budget (declared before round 2).** One more round, the last: the
+same reviewer over the repair diff from `f7aebc80` (round 1's subject) to the
+round-2 head, asking whether each repair holds for its input class and
+whether a repair broke anything. No round 3 unless round 2 returns a blocking
+finding that reproduces; then the stop rule of review-convergence applies
+(more than half of a round's findings self-inflicted ends the loop), and
+remaining items go to the IS2 record as residuals.

@@ -402,6 +402,29 @@ A model behind a plan app's bot interface: Claude Code, or a small model on Open
 | `plan_text(reply) -> str` | function | 112 | The reply as the app reads it. One courtesy only: a JSON object wrapped in a code fence is unwrapped. |
 | `main() -> int` | function | 118 | (no docstring) |
 
+## tools.record_induce_sessions — `tools/record_induce_sessions.py`
+Components: unassigned
+Record Claude Code running gnd-induce over the refunds example, one scripted conversation at a time.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `environment() -> dict[str, str]` | function | 105 | (no docstring) |
+| `gate_ok(path) -> bool` | function | 112 | The recording gate record: a committed file whose front matter names this scope. |
+| `spent(home) -> float` | function | 121 | USD reported by every kept conversation's turns so far (a missing cost counts as 0). With no folder |
+| `seed(workspace, steps) -> list[dict]` | function | 139 | Run the commands-page steps in the workspace; each step's argv, exit and the digests after it. |
+| `workspace_digests(workspace) -> dict[str, str]` | function | 155 | (no docstring) |
+| `tool_uses(streams) -> list[tuple[str, dict]]` | function | 160 | (tool name, input) for every tool call in the raw streams; total over any line. |
+| `bash_commands(calls) -> list[str]` | function | 177 | (no docstring) |
+| `assistant_text(streams) -> str` | function | 181 | (no docstring) |
+| `programs(command) -> list[str]` | function | 204 | The program each shell segment runs, after NAME=value assignments; quotes respected (IS2 finding F4: |
+| `out_paths(commands, sub) -> set[str]` | function | 228 | The --out values of every command running `gnd <sub>`, relative to the workspace. |
+| `checks(conversation, workspace, before, streams, after) -> dict` | function | 238 | Spec section 6.2: each check true or false, computed outside the agent. `after` may be given |
+| `recheck(run) -> dict` | function | 287 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
+| `passed(result) -> bool` | function | 295 | (no docstring) |
+| `record(conversation, model, gate, commit) -> int` | function | 299 | (no docstring) |
+| `finish(target, commit) -> int` | function | 364 | The leak search, then the manifest. On a hit only results.json stays. |
+| `main(argv) -> int` | function | 391 | (no docstring) |
+
 ## tools.record_judge_sessions — `tools/record_judge_sessions.py`
 Components: unassigned
 Record Claude Code running a GND judgement skill over its fixture, every run kept.
@@ -483,13 +506,13 @@ Record Claude Code running a GND skill on an example's rules, every run kept.
 | --- | --- | --- | --- |
 | `sha256(data) -> str` | function | 63 | (no docstring) |
 | `redact(text, workspace) -> str` | function | 67 | (no docstring) |
-| `kept_stream(stream, workspace_marker) -> str` | function | 74 | The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and |
-| `model_file(workspace) -> Path \| None` | function | 113 | (no docstring) |
-| `record_run(name, run, out, skill) -> dict` | function | 118 | (no docstring) |
-| `git_identity() -> list[str]` | function | 179 | The git user's email and its handle: an agent may copy them into what it writes (audit fields). |
-| `leaks(out) -> list[str]` | function | 185 | (no docstring) |
-| `finish(out, finished_later) -> int` | function | 194 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
-| `main() -> int` | function | 216 | (no docstring) |
+| `kept_stream(stream, workspace_marker, keep) -> str` | function | 74 | The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and |
+| `model_file(workspace) -> Path \| None` | function | 117 | (no docstring) |
+| `record_run(name, run, out, skill) -> dict` | function | 122 | (no docstring) |
+| `git_identity() -> list[str]` | function | 183 | The git user's email and its handle: an agent may copy them into what it writes (audit fields). |
+| `leaks(out) -> list[str]` | function | 189 | (no docstring) |
+| `finish(out, finished_later) -> int` | function | 198 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
+| `main() -> int` | function | 220 | (no docstring) |
 
 ## tools.release_text — `tools/release_text.py`
 Components: unassigned

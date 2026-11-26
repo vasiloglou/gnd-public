@@ -42,6 +42,11 @@ ACTOR, REQUESTED_AT = "reader", "2026-10-26T00:00:00+00:00"
 GATE_SCOPE = "scope: IS2-recording-gate"
 GATE_NAME = "induction-skill IS2"
 CEILING_USD = 10.0
+#: Spend the ceiling counts beyond the example's own runs (IS2 finding F7): the first attempt's runs, kept as
+#: evidence, and the test run of finding F2, which kept nothing.
+EVIDENCE = ROOT / ".gnd-planning/milestones/induction-skill/evidence/IS2"
+EARLIER = sorted(EVIDENCE.glob("attempt-*"))
+UNRECORDED_USD = 0.084
 MAX_TURNS = 4
 TURN_SECONDS = 900
 #: The second turn: the actor, and outputs in the working folder (IS2 finding F1); the learner's
@@ -114,8 +119,10 @@ def gate_ok(path: Path) -> bool:
 
 
 def spent(home: Path | None = None) -> float:
-    """USD reported by every kept conversation's turns so far (a missing cost counts as 0)."""
-    home = HOME if home is None else home   # read at call time (IS2 finding F2)
+    """USD reported by every kept conversation's turns so far (a missing cost counts as 0). With no folder
+    named: the example's runs, the earlier attempts kept as evidence, and F2's unrecorded run (IS2 finding F7)."""
+    if home is None:   # HOME is read at call time (IS2 finding F2)
+        return spent(HOME) + sum(spent(folder) for folder in EARLIER) + UNRECORDED_USD
     total = 0.0
     for results in sorted(home.glob("*/claude-*/run-*/results.json")):
         try:
@@ -324,10 +331,10 @@ def record(conversation: str, model: str, gate: Path, commit: str) -> int:
             except subprocess.TimeoutExpired as error:
                 stream = error.stdout.decode() if isinstance(error.stdout, bytes) else (error.stdout or "")
                 code = None
-            raw.append(stream)
-            (target / f"turn-{number:02d}.jsonl").write_text(
-                kept_stream(redact(stream.replace(str(plugin), "<plugin>"), workspace), keep=LEARNER_FORMS),
-                encoding="utf-8")
+            # The checks read the redacted stream, as recheck() does (IS2 finding F6).
+            raw.append(redact(stream.replace(str(plugin), "<plugin>"), workspace))
+            (target / f"turn-{number:02d}.jsonl").write_text(kept_stream(raw[-1], keep=LEARNER_FORMS),
+                                                             encoding="utf-8")
             result = {}
             for line in stream.splitlines():
                 try:

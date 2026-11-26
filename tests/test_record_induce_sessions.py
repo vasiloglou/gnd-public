@@ -194,6 +194,38 @@ def test_f4_done_follows_the_import_out_path_not_a_file_name(tmp_path):
     assert recorder.checks("import", tmp_path, {}, [stream(part)], after={})["done"] is False
 
 
+def test_f6_reading_a_skill_reference_is_not_outside(tmp_path, monkeypatch):
+    """IS2 finding F6: the live checks read the raw stream, where the plugin is an absolute temporary path."""
+    class Done:
+        returncode = 0
+        stdout = ""
+
+    def fake_run(argv, **kwargs):
+        if argv and argv[0] == "claude":
+            plugin = argv[argv.index("--plugin-dir") + 1]
+            reference = f"{plugin}/src/gnd/skills/gnd-orm-core/references/labels.schema.json"
+            Done.stdout = stream(("Read", {"file_path": reference}, "{}")) + json.dumps(
+                {"type": "result", "result": "ok", "total_cost_usd": 0.0}) + "\n"
+        return Done()
+
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    monkeypatch.setattr(recorder.subprocess, "run", fake_run)
+    monkeypatch.setattr(recorder, "finish", lambda target, commit: 0)
+    gate = recorder.ROOT / ".gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md"
+    recorder.record("score", "haiku", gate, "0" * 40)
+    results = json.loads((tmp_path / "home/score/claude-haiku/run-1/results.json").read_text(encoding="utf-8"))
+    assert results["checks"]["no_outside_path"] is True
+
+
+def test_f7_spent_counts_the_earlier_attempts_and_f2(tmp_path, monkeypatch):
+    """IS2 finding F7: after attempt-1 moved to evidence, the ceiling would have restarted at zero."""
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    earlier = sum(recorder.spent(folder) for folder in recorder.EARLIER)
+    assert earlier > 1.4   # attempt-1: USD 1.446
+    assert recorder.spent() == pytest.approx(earlier + recorder.UNRECORDED_USD)
+    assert recorder.UNRECORDED_USD == pytest.approx(0.084)
+
+
 def test_f3_redaction_runs_before_truncation():
     source = __import__("inspect").getsource(recorder.record)
     assert 'redact(result.get("result") or "", workspace)[-600:]' in source

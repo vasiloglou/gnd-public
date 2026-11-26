@@ -309,3 +309,52 @@ the recorder checks. C1 and C2 are owner checkpoints.
   each having asked first. `make-it-pass` never edited the claim (it re-ran
   the honest learner). These go to checkpoint C1 (section 6.5) before any
   re-recording or rewrite.
+
+## 14. Checkpoint C1 ruling and the skill amendment
+
+> **Owner ruling, 2026-11-26.** At checkpoint C1 the owner chose "Fix and
+> re-record", quoted whole in
+> [owner-statements-c1.txt](../evidence/IS2/owner-statements-c1.txt). This is
+> the owner's own selection, not a delegated ruling.
+
+**The skill amendment (IS2-A1).** `src/gnd/skills/gnd-induce/SKILL.md` changes
+these sentences, each tested first in `tests/test_induce_skill.py` (the IS1
+wording stays in git history at the IS1 merge, `a223ac72`):
+
+1. *Outputs in the working folder* (F5: every run wrote to a scratch folder).
+   A new input bullet: every output path is in the working folder, because the
+   outputs are the user's results, never in a temporary or scratch folder; the
+   skill reads nothing outside the working folder but its own linked
+   references.
+2. *The actor before the first writing command* (F5: `discover` ran with a
+   placeholder actor). The actor bullet says to ask before the first command
+   that writes anything, to wait for the answer, and never to run with a
+   placeholder actor.
+3. *"Don't import" stops at the learner* (F5: `learn` imported). The stop
+   sentence covers "says not to import yet" and says to run no `gnd import`.
+4. *No proposal by hand* (F5: `discover` and `existing-output` wrote
+   proposals). R-a becomes "This skill never applies, confirms or edits a
+   model, and never writes or edits a proposal by hand: only a gnd command
+   writes one."
+5. *The handoff stops* (F5: four conversations started the review and applied
+   in the same conversation). The handoff ends with: this skill never starts
+   gnd-model-evolve, gnd evolve preview or gnd evolve apply itself; the user
+   starts the review.
+6. *Beyond the five proposed at C1, disclosed here:* the absent-learner stop
+   says the sentence "in these words" (F5: the agent stopped but
+   paraphrased). This is wording of an existing sentence, not a new rule, and
+   falls under the delegated ruling of section 12.
+
+**Recorder repairs found while amending (F6, F7).**
+
+- **F6.** `record()` computed the checks over the raw stream, where the
+  plugin's skill references are absolute temporary paths; a read of a skill
+  reference counted as outside the workspace there but not in `recheck()`,
+  which reads the redacted stream. Repair: both read the redacted stream.
+- **F7.** `spent()` counted only the packaged example's runs. After attempt-1
+  moved to the evidence folder, it would have restarted at zero. Repair: it
+  also counts every `evidence/IS2/attempt-*` run and F2's USD 0.084.
+
+**Re-recording.** Nine runs, one per conversation, under a new gate record
+`004-IS2-recording-gate.md` that names them; the USD 10 ceiling of D11 stands
+and counts the USD 1.53 already spent. The first attempt stays evidence.

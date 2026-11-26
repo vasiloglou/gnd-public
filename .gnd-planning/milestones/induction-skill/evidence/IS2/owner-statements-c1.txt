@@ -1,0 +1,15 @@
+Owner statements for IS2 of induction-skill at checkpoint C1, quoted whole.
+
+1. 2026-11-26, in the planning session, after checkpoint C1 showed the nine
+   first recordings (spec section 13, findings F4 and F5) and asked "Fix the
+   skill and re-record, or show these runs as they are?", with the proposal to
+   amend five sentences of gnd-induce (outputs stay in the working folder; ask
+   for the actor before the first command that writes anything; "don't import"
+   stops at the learner; never write a proposal by hand; the handoff names the
+   files and stops, without starting gnd-model-evolve) and then record all nine
+   again, once each, under an amended gate, at about USD 1.5 within the USD 10
+   ceiling:
+   "Fix and re-record"
+
+Read as: the owner selects the proposal as stated, including nine paid re-runs,
+one per conversation, within the D11 ceiling. That reading is the author's.

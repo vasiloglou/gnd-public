@@ -144,9 +144,39 @@ def test_t2_the_goldens_name_exactly_the_written_files():
     assert sorted(json.loads(GOLDENS.read_text(encoding="utf-8"))["files"]) == sorted(WRITTEN)
 
 
+def _strings(value) -> list[str]:
+    """Every string a parsed JSON value holds, keys included."""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [s for k, v in value.items() for s in (k, *_strings(v))]
+    if isinstance(value, list):
+        return [s for item in value for s in _strings(item)]
+    return []
+
+
+def _readable(path: Path) -> str:
+    """The text a reader of the file sees: JSON and JSON lines through their loader, so an escape such as the
+    `\\n` after `p:` in recorded code is not read as a drive path (induction-skill IS2)."""
+    text = path.read_text(encoding="utf-8")
+    if path.suffix == ".json":
+        return "\n".join(_strings(json.loads(text)))
+    if path.suffix == ".jsonl":
+        return "\n".join(s for line in text.splitlines() if line.strip() for s in _strings(json.loads(line)))
+    return text
+
+
 def _public_texts():
     paths = sorted(p for p in EXAMPLE.rglob("*") if p.is_file() and "__pycache__" not in p.parts)
-    return [(p, p.read_text(encoding="utf-8")) for p in paths + PAGES]
+    return [(p, _readable(p)) for p in paths + PAGES]
+
+
+def test_t3_json_is_read_decoded(tmp_path):
+    record = tmp_path / "turn-01.jsonl"
+    record.write_text(json.dumps({"code": "for k in p:\n    print(k)", "where": "C:\\Users\\me"}) + "\n",
+                      encoding="utf-8")
+    seen = _readable(record)
+    assert not re.search(r"\bp:[\\/]", seen) and re.search(ABSOLUTE[-1], seen)
 
 
 ABSOLUTE = [r"/Users/", r"/home/", r"/private/", r"/tmp/", r"/var/folders/", r"/opt/", r"~/",

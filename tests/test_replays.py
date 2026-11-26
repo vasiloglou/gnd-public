@@ -71,3 +71,16 @@ def test_each_replay_is_named_after_the_run_it_replays(name):
         evolve, model, run = skill.groups()
         skill_name = 'model-evolve' if evolve else 'model-from-text'
         assert name == f'course-{skill_name}-{model}-run-{run}' and f'run {run})' in TABLE[name]['title']
+
+
+def test_each_tool_result_is_drawn_under_its_own_call():
+    """induction-skill IS2: a batch of parallel calls was drawn as all calls, then all results, so a result
+    appeared under the wrong command."""
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import render_replay
+    calls = [{'type': 'tool_use', 'id': i, 'name': 'Bash', 'input': {'command': f'cmd-{i}'}} for i in ('a', 'b')]
+    results = [{'type': 'tool_result', 'tool_use_id': i, 'content': f'out-{i}'} for i in ('a', 'b')]
+    stream = '\n'.join([json.dumps({'type': 'assistant', 'message': {'content': calls}}),
+                        json.dumps({'type': 'user', 'message': {'content': results}})])
+    texts = [text.strip() for _, text in render_replay.stream_lines([stream])]
+    assert texts == ['Bash cmd-a', '→ out-a', 'Bash cmd-b', '→ out-b']

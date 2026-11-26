@@ -158,3 +158,61 @@ def test_t6_the_recorder_refuses_at_the_ceiling(tmp_path, monkeypatch, capsys):
     assert recorder.record("score", "haiku", tmp_path / "gate.md", "0" * 40) == 2
     assert "ceiling" in capsys.readouterr().err
     assert not (tmp_path / "score").exists()
+
+
+# --- IS2 finding F4: the check bugs the first recordings exposed -------------------------
+
+@pytest.mark.parametrize("command", ["ls -la && find . -maxdepth 3 -not -path '*/.git*' | head",
+                                     "gnd export ilp model.orm.yaml --labels labels.json --target popper --out x",
+                                     "which popper ilasp", "S=out && mkdir -p $S && gnd discover m p --out $S/a",
+                                     'ls bin | grep -i -E "popper|ilasp|amie"'])
+def test_f4_arguments_that_mention_a_program_are_not_forbidden(tmp_path, command):
+    assert _checks("score", tmp_path, ("Bash", {"command": command}, ""))["no_forbidden_bash"] is True
+
+
+@pytest.mark.parametrize("command", ["cd x && git status", "python -m pip install popper", "uv add popper",
+                                     "S=1 curl https://example.com"])
+def test_f4_running_a_forbidden_program_is_caught(tmp_path, command):
+    assert _checks("score", tmp_path, ("Bash", {"command": command}, ""))["no_forbidden_bash"] is False
+
+
+def test_f4_a_redacted_temporary_path_counts_as_outside(tmp_path):
+    assert _checks("score", tmp_path, ("Write", {"file_path": "<tmp>", "content": "x"}, ""))["no_outside_path"] is False
+    assert _checks("score", tmp_path, ("Bash", {"command": "gnd measure m --out <tmp>"}, ""))["no_outside_path"] is False
+
+
+def test_f4_a_hand_written_proposal_is_caught(tmp_path):
+    part = ("Write", {"file_path": "<workspace>/south-refund-rules.proposal.json", "content": "{}"}, "")
+    assert _checks("discover", tmp_path, part)["no_hand_written_proposal"] is False
+
+
+def test_f4_done_follows_the_import_out_path_not_a_file_name(tmp_path):
+    part = ("Bash", {"command": "gnd import ilp-rules m.yaml c.json --labels l.json --reported-coverage r.json "
+                                "--target neutral --out induce/proposal.json --actor reader"}, "")
+    result = recorder.checks("import", tmp_path, {}, [stream(part)], after={"induce/proposal.json": "x"})
+    assert result["done"] is True
+    assert recorder.checks("import", tmp_path, {}, [stream(part)], after={})["done"] is False
+
+
+def test_f3_redaction_runs_before_truncation():
+    source = __import__("inspect").getsource(recorder.record)
+    assert 'redact(result.get("result") or "", workspace)[-600:]' in source
+
+
+def test_f4_the_recorder_sends_only_the_declared_turns(tmp_path, monkeypatch):
+    sent = []
+
+    class Done:
+        returncode, stdout = 0, json.dumps({"type": "result", "result": "ok", "total_cost_usd": 0.0}) + "\n"
+
+    def fake_run(argv, **kwargs):
+        if argv and argv[0] == "claude":
+            sent.append(argv[-1])
+        return Done()
+
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    monkeypatch.setattr(recorder.subprocess, "run", fake_run)
+    monkeypatch.setattr(recorder, "finish", lambda target, commit: 0)
+    gate = recorder.ROOT / ".gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md"
+    assert recorder.record("score", "haiku", gate, "0" * 40) == 0
+    assert sent == recorder.CONVERSATIONS["score"]["turns"]

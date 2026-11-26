@@ -1,0 +1,8 @@
+absent-learner   failed: ['no_outside_path', 'done']
+discover         failed: ['no_hand_written_proposal', 'actor_from_user', 'no_outside_path']
+existing-output  failed: ['no_apply_call', 'no_hand_written_proposal', 'no_outside_path']
+faulty           failed: ['no_apply_call', 'no_outside_path', 'done']
+import           failed: ['no_apply_call', 'no_outside_path']
+learn            failed: ['no_apply_call', 'no_outside_path', 'done']
+make-it-pass     failed: ['no_outside_path', 'done']
+score            failed: ['no_outside_path']

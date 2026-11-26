@@ -58,3 +58,24 @@ test-strength residuals carried (IS1-Q2).
 ([receipt](evidence/IS2/owner-statements.txt)). Next action: the IS2 spec, its
 recording gate record with a run bound and cost ceiling, then the recordings
 and Fable's tutorial rewrite.
+
+**IS2 done, 2026-11-26** ([record 005](005-phase-IS2.md)): nine recorded
+Haiku conversations over the refunds example under gate records
+[003](003-IS2-recording-gate.md) and [004](004-IS2-recording-gate.md)
+(USD 1.79 of USD 10); `gnd-induce` amended after checkpoint C1; the
+learn-rules tutorial rewritten by Fable around six replays, approved at C2;
+the wheel budget raised to 13 MiB at C2. Two review rounds, the second ended
+by the stop rule; residuals IS2-Q1 to IS2-Q4. Next action: the milestone
+close (plan D13: four local reviewer agents), with its plan repairs and
+question sweep.
+
+**Close, 2026-11-26** ([record 006](006-milestone-close.md)): delegated close
+ruling under `auto=true`; owner acceptance pending. Plan
+[§11](notes/induction-skill-plan.md#11-close-amendments-2026-11-26) amends four
+premises; the [sweep](notes/close-sweep.md) dispositions every open question;
+four local reader agents reviewed the close
+([disposition](notes/close-review-disposition.md)). Open: predicate 2's
+installed docs check exits 1 at `gnd diff` needing the `synth` extra (a
+defect on main, close-Q1); the distribution lane is unrun (close-Q2); IS2-Q4.
+Follow-ups: #318 (recorder; leak fixes on `claude/issue-318-recorder`) and
+#319 (test guards; fixed on `claude/issue-319-guards`).

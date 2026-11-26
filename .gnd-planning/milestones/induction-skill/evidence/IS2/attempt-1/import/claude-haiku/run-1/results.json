@@ -1,0 +1,47 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "import",
+ "model": "haiku",
+ "recorded_at_commit": "9fd4d87d38632b7571d05634f94ae667668f5d11",
+ "declared_turns": [
+  "/gnd:gnd-induce Bring the learned rule into GND as a proposal. Check its coverage on every week before you believe the learner.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner.",
+  "Yes, as you propose."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Bring the learned rule into GND as a proposal. Check its coverage on every week before you believe the learner.",
+   "exit": 0,
+   "cost_usd": 0.01540705,
+   "assistant_last": "ner that produced them unless you name a different one.\n- **The threshold is fragile.** Clean weeks top out at 500 (south) and flagged weeks start at 640 (station), so any cut point from 500 up to 640 separates these eight weeks. The learner picked 500, which is the clean week's own maximum. Eight weeks is a small sample, so review the rule before you apply it.\n\nOnce you give the actor, I'll run `gnd import ilp-rules` against a new output path in the scratchpad and report the exit code and printed output. The proposal would then go to gnd-model-evolve for review. It won't be applied from here."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner.",
+   "exit": 0,
+   "cost_usd": 0.020587340000000003,
+   "assistant_last": "s clauses and run record. Its clauses digest matches the existing `learned/learned.clauses.json`.\n- `induce/faulty/` \u2014 the faulty learner's clauses and run record.\n- `induce/proposal.json` \u2014 the accepted proposal.\n\n**Hand-off**\n\nReview `induce/proposal.json` in gnd-model-evolve. Nothing has been applied.\n\n- The learner is `refunds-stand-in-learner`, the example's own script, so the proposal names it as the inducer.\n- The rule's threshold, 500, comes from this batch data. It is the clean south week's maximum, and any cut from 500 up to 640 separates these eight weeks. Review it before applying."
+  },
+  {
+   "user": "Yes, as you propose.",
+   "exit": 0,
+   "cost_usd": 0.029215630000000006,
+   "assistant_last": "iew `d93e4e6d004a8d25495fde67afe7c8f818b3ceedd4566862c9309bbe78706bff`, report `c5239b77f0c07452b7f966e830d0272950f70e723080dd66e3c60a73fdf34742`.\n\nThe preview is at `<workspace>/induce/preview.json`. The empty records directory is `induce/records/` in the same folder.\n\nI haven't applied it. Applying publishes the new constraint to `model.orm.yaml`, which is hard to reverse. Tell me to go ahead and I'll run `gnd evolve apply` with that preview, the same records directory and actor `reader`, and keep the streams and the exit code."
+  },
+  {
+   "user": "Yes, as you propose.",
+   "exit": 0,
+   "cost_usd": 0.03393179,
+   "assistant_last": "t` (empty). Stdout holds the pending-finalization state, then the record, in that order.\n\n**Exit code**\n\nI didn't capture `$?`, so I haven't written an `apply.exit.json` receipt. The shell reported no error for the run, and the record's conformance exit is `0`. Treat exit `0` as inferred until you confirm it.\n\n**Not done**\n\n- No milestone record or git commit. This folder isn't a git repository, and the skill commits only on your explicit go-ahead. Tell me if you want a `.gnd-planning` record first.\n- The constraint is still `proposed`. Confirming it would be a separate reviewed status change."
+  }
+ ],
+ "checks": {
+  "no_apply_call": false,
+  "no_edit_of_learner_artifacts": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": false,
+  "no_outside_path": true,
+  "done": false
+ },
+ "seconds": 91.8
+}

@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/004-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "import",
+ "model": "haiku",
+ "recorded_at_commit": "388d6fa6dba48a12808796006b6baa081b971ca3",
+ "declared_turns": [
+  "/gnd:gnd-induce Bring the learned rule into GND as a proposal. Check its coverage on every week before you believe the learner.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Bring the learned rule into GND as a proposal. Check its coverage on every week before you believe the learner.",
+   "exit": 0,
+   "cost_usd": 0.01086844,
+   "assistant_last": "ith a UTC offset, for example `2026-11-26T09:00:00+00:00`.\n\nOnce you answer, I'll run this from the working folder, writing a new proposal file (I'd suggest `refunds-limit.proposal.json`, which does not exist yet):\n\n```sh\ngnd import ilp-rules model.orm.yaml learned/learned.clauses.json --labels labels.json --reported-coverage learned/learned.run.json --target neutral --out refunds-limit.proposal.json --actor <ACTOR> --requested-at <TIMESTAMP>\n```\n\nIf you'd rather a different output name, tell me. After the import exits 0, I'll hand the proposal to gnd-model-evolve for review. I won't apply it."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner.",
+   "exit": 0,
+   "cost_usd": 0.01672517,
+   "assistant_last": "Things for you to check:**\n- **Timestamp:** `2026-10-26` is a month before today's date (2026-11-26). GND recorded the time you gave, but if you meant November, say so and I'll redo the import.\n- **Host values:** the proposed threshold of 500 comes from the batch data, so the candidate carries host values. Its provenance names `refunds-stand-in-learner` as the inducer, because the program is the learner's.\n- **Next step:** the proposal goes to review in gnd-model-evolve, which previews it and applies only what you accept. I haven't applied anything, and I won't start the review unless you ask."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "no_hand_written_proposal": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 62.6
+}

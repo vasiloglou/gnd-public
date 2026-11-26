@@ -1,0 +1,10 @@
+Checks recomputed from the kept files with the checker after review phase-IS2-r1 (spec section 17).
+score            attempt-2: all checks pass
+learn            attempt-2: failed ['done']
+import           attempt-2: all checks pass
+faulty           attempt-2: all checks pass
+discover         attempt-2: all checks pass
+recheck          attempt-2: all checks pass
+absent-learner   attempt-2: failed ['no_forbidden_bash', 'no_outside_path']
+existing-output  attempt-2: all checks pass
+make-it-pass     attempt-2: failed ['no_outside_path', 'done']

@@ -1,0 +1,78 @@
+# induction-skill milestone close: reader brief (common part)
+
+You are one of four independent local readers of a milestone close in the GND
+repository (a Python CLI that checks ORM models and populations). The plan's
+decision D13 selects "four local reviewer agents for the plan and close review".
+Your opinion is advisory; the owner and the close ruling decide.
+
+## Subject
+
+- Candidate commit: `9b69ca5fbf081b154c89fbd0aa27edee9b4a88b6` on branch
+  `claude/induction-skill-close`. It is stacked on PR 317 (phase IS2, not yet
+  merged). `main` is `6bbbee81d7f47c8fd7d3f02bedbc6acb648765c4` and already holds
+  IS1 (PR 315). The whole unmerged milestone diff is
+  `git diff 6bbbee81 9b69ca5f`.
+- Milestone folder: `.gnd-planning/milestones/induction-skill/`. Read
+  `notes/induction-skill-plan.md` (the plan, with the new §11 close amendments
+  at the end), `notes/close-sweep.md` (the open-questions sweep), the records
+  `001-plan-gate.md`, `002-phase-IS1.md`, `003-` and `004-IS2-recording-gate.md`,
+  `005-phase-IS2.md`, and the IS2 spec `notes/phase-IS2-spec.md`.
+- The close's code change is commit `4e1ae32c` (`tools/check_installed_docs.py`
+  installs each wheel with the extras it declares; test in
+  `tests/test_documentation_tutorials.py`).
+- `evidence/close/` is not committed yet. The review helper's status over the
+  milestone's review rounds (run in a clean clone of the candidate) reports 13
+  files changed since their last review:
+  `evidence/IS1/review-r1-repairs.txt`, `notes/phase-IS2-spec.md`,
+  `notes/reviews/phase-IS1-r1/review.md`, `dev/components/modules/tools.md`,
+  `docs/release-notes.md`, `docs/tutorials/learn-rules.md`,
+  `src/gnd/skills/gnd-dev-session/SKILL.md`, `tests/test_packaged_skills.py`,
+  `tests/test_record_induce_sessions.py`, `tests/test_replays.py`,
+  `tools/check_installed_docs.py`, `tools/record_induce_sessions.py`,
+  `tools/render_replay.py`.
+
+Digests to verify first (`shasum -a 256`, from the milestone folder):
+
+| File | SHA-256 |
+|---|---|
+| notes/induction-skill-plan.md | 535679f68445a9d2c14f893b3511e9cca1f52657b17dacfaa58ebb1625d49873 |
+| notes/close-sweep.md | fb224396ed280d3110d64929c8f2367411dc09b27a97f4266c337283e02c800b |
+| 002-phase-IS1.md | 81b010ef6c8ca389676cc706c9706f1d764e488478070feaaa19f7531772ed5e |
+| 005-phase-IS2.md | 70b885fe082086ba0ef01b912581b8c72538ae6abc4520ba178fb5274f74bb3a |
+
+Still running when you start (results go to the close record, not to you): the
+full installed docs check over both wheel origins, and the full default test
+lane on another machine.
+
+## Rules
+
+- Make your own clean clone: `git clone -q --no-local SOURCE READERDIR/repo`
+  then `git -C READERDIR/repo checkout -q 9b69ca5f`, where SOURCE and READERDIR
+  are given in your prompt. Work only there. **Every file you write, including
+  files a tool derives from an input (outputs next to inputs, caches, venvs),
+  goes under READERDIR.** Never write to SOURCE.
+- Read-only toward everything else: no `git push`, no `gh` writes, no ssh, no
+  paid model or API calls, no network beyond what `uv sync` needs inside your
+  clone. Never read or source any `.env` file.
+- You may run tests in your clone (`uv sync -q --group dev` then
+  `uv run pytest -q ...`). Keep runs focused; the full lane is run elsewhere.
+- Treat every claim as unproved until you reproduce it. A finding needs a
+  concrete reproduction (a command and its output, or a quoted line with
+  file:line in the candidate).
+- Apply the repository's "code fitted to its examples" rule (AGENTS.md): read
+  each new regular expression, string split, slice and special case as a claim
+  that it covers its input class; build a legal input the tests lack, run it,
+  and report a wrong result naming the input.
+- In your report, write local paths as `<scratch>`; never print a home
+  directory, user name or email.
+
+## Report (your final message, Markdown, under 1,500 words)
+
+1. Digest check (each of the four: matches or not).
+2. Findings table: Id (R<n>-F<k>), file:line, what is wrong, reproduction,
+   class (`blocking` = the close cannot honestly claim this; `hardening`;
+   `completeness`), suggested fix.
+3. What checked out (briefly, with what you ran).
+4. Verification limits.
+5. A last line `VERDICT: APPROVE`, `VERDICT: APPROVE_WITH_FIXES` or
+   `VERDICT: CHANGES_REQUESTED`.

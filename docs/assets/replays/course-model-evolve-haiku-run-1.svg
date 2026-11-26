@@ -26,8 +26,8 @@
 <text class="l c-say" x="18" y="381" xml:space="preserve" style="animation-delay:4.18s">claude: The model is JSON, but the skill and the contract are written for YAML. I'll check</text>
 <text class="l c-say" x="18" y="398" xml:space="preserve" style="animation-delay:4.40s">    whether `gnd` accepts the JSON file as-is, running the commands one at a time.</text>
 <text class="l c-plan" x="18" y="415" xml:space="preserve" style="animation-delay:4.62s">  Bash gnd validate model.orm.json</text>
-<text class="l c-plan" x="18" y="432" xml:space="preserve" style="animation-delay:4.84s">  Bash gnd evolve --help</text>
-<text class="l c-ok" x="18" y="449" xml:space="preserve" style="animation-delay:5.06s">    → OK: model.orm.json is a valid GND ORM model</text>
+<text class="l c-ok" x="18" y="432" xml:space="preserve" style="animation-delay:4.84s">    → OK: model.orm.json is a valid GND ORM model</text>
+<text class="l c-plan" x="18" y="449" xml:space="preserve" style="animation-delay:5.06s">  Bash gnd evolve --help</text>
 <text class="l c-ink" x="18" y="466" xml:space="preserve" style="animation-delay:5.28s">    → usage: gnd evolve [-h] {preview,apply,finalize} ...</text>
 <text class="l c-say" x="18" y="483" xml:space="preserve" style="animation-delay:5.50s">claude: `gnd validate` accepts the JSON model (exit 0). The proposal's closed schema is the next</text>
 <text class="l c-say" x="18" y="500" xml:space="preserve" style="animation-delay:5.72s">     blocker, so I'll look up the exact `ConstraintLocator` and proposal field shapes in the gnd</text>

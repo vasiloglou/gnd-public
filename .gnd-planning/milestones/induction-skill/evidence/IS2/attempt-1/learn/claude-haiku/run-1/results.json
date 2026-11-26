@@ -1,0 +1,47 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "learn",
+ "model": "haiku",
+ "recorded_at_commit": "9fd4d87d38632b7571d05634f94ae667668f5d11",
+ "declared_turns": [
+  "/gnd:gnd-induce Export the labelled weeks for a rule learner, run the stand-in learner on them, and tell me the rule it finds. Don't import it yet.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner.",
+  "Yes, as you propose."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Export the labelled weeks for a rule learner, run the stand-in learner on them, and tell me the rule it finds. Don't import it yet.",
+   "exit": 0,
+   "cost_usd": 0.013196169999999998,
+   "assistant_last": "ned/learned.clauses.json`\n- Run record: `<tmp>\n\n**Next step**\n\nWhen you want it checked, the import needs two things from you: the audit actor (who the proposal is recorded as) and the request time. With those I'll run `gnd import ilp-rules`. GND will re-check the rule over every week and write a proposal only if its coverage matches the learner's claim. The proposal then goes to gnd-model-evolve for review; nothing is applied."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner.",
+   "exit": 0,
+   "cost_usd": 0.019909499999999997,
+   "assistant_last": " did not assemble either one.\n- The combined command printed \"Exit code 3\" because the faulty import refused. The honest import exited 0.\n\n**Files in the working folder**\n- `export-neutral/`: the export, digest `f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77`\n- `learned/`: honest learner clauses and run record\n- `learned-faulty/`: faulty learner clauses and run record\n- `proposal-honest.evolve.json`: the proposal\n\nThe honest proposal goes to gnd-model-evolve for review. Nothing has been applied to the model. The earlier copies in the scratchpad folder are superseded by these."
+  },
+  {
+   "user": "Yes, as you propose.",
+   "exit": 0,
+   "cost_usd": 0.029132189999999995,
+   "assistant_last": "ew_sha256`: `d93e4e6d004a8d25495fde67afe7c8f818b3ceedd4566862c9309bbe78706bff`\n\n**One thing to know before you accept.** The candidate model text is GND's canonical serialization, not your hand-written YAML. Applying would replace `model.orm.yaml` with that form, which drops the header comments and changes the layout. The constraints and their provenance are preserved. The preview's `before_model` and `candidate_model` fields in `preview-honest.json` show the exact text.\n\nNo breaking acceptance is needed, but apply still needs your go-ahead. Do you accept this preview for apply, or decline it?"
+  },
+  {
+   "user": "Yes, as you propose.",
+   "exit": 0,
+   "cost_usd": 0.0362834,
+   "assistant_last": "\n- Evidence and record: `evolve-records/ilp-6e77ed5e045b0ef6/`, including `record.json`, `pending.json`, `preview.json`, `proposal.json`, `candidate.orm.yaml`, `before.orm.yaml` and `candidate.verbalization.txt`\n- Apply streams: `streams/apply.stdout.txt`, `streams/apply.stderr.txt` (empty), and `streams/apply.exit.json`\n\n**Not done**\n- I did not write a milestone record or commit. This folder is not a git repository, and the record-and-commit step needs your explicit go-ahead.\n- The applied `model.orm.yaml` is GND's canonical serialization, as the preview warned. The header comments are gone."
+  }
+ ],
+ "checks": {
+  "no_apply_call": false,
+  "no_edit_of_learner_artifacts": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": false,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 85.9
+}

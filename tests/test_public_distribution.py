@@ -277,7 +277,7 @@ def test_artifact_and_installed_resource_sets(package_probe):
     with zipfile.ZipFile(probe["wheel"]) as archive:
         audit_archive_names(archive.namelist(), "wheel")
         assert not any(stat.S_ISLNK(row.external_attr >> 16) for row in archive.infolist())
-        assert sum(row.file_size for row in archive.infolist()) <= 12582912
+        assert sum(row.file_size for row in archive.infolist()) <= 13631488   # 13 MiB wheel budget, IS2 C2
         wheel_payload = {
             n: archive.read(n)
             for n in archive.namelist()

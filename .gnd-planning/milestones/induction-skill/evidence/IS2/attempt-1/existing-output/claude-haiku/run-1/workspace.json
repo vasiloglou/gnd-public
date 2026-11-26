@@ -1,0 +1,59 @@
+{
+ "seed": [
+  {
+   "step": "empty-discovered",
+   "exit": 0
+  }
+ ],
+ "before": {
+  "README.md": "ea95bd520a3a1e61dddb3a54c9709f35e1bb0e5d6bf1e3f7542ffff246c4ca23",
+  "batches/airport.yaml": "518b533b2f7c203a8dddcd73f26d25fddde0466d2c89b33eda3ef72ea5f2c0f4",
+  "batches/east.yaml": "29acd8050b53ceccee0bc1d3c3e9f9423e331c0c474bcb7bb12d94989970064e",
+  "batches/harbor.yaml": "58a8e9c74d0e7b2711eef0e5cc2a8c7a272bc84126e45e26332d71bc7dc47c5b",
+  "batches/market.yaml": "d893718faae108f5e1df08b29d4232043f0aab3b7890f2b63abf851144093244",
+  "batches/north.yaml": "3f10fb892fb68107694e345e80759f363a687f6f0305819035a5903b8a60e3f7",
+  "batches/south.yaml": "b13e0e200de530576c728465ee02503c0858185df689b91678939ac224ec08c6",
+  "batches/station.yaml": "5464e5e0d4892e9b42e566db53e011c19956449bda1cb82cb1f2bba01675076a",
+  "batches/west.yaml": "cd0fc78ef16991df4c5adb1bd8823a4c3380a16e9329bf5b2627892e4404ec7a",
+  "discovered.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "labels.json": "888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa",
+  "model.orm.yaml": "8e03676063123e10447ccc0b448156867a5e3a10804d33443146bbea1b50baf0",
+  "physical-binding.json": "74b253fa1abdb66334283c0dbf2d1070c7db204e0a08f3641a964eac7f66cc6b",
+  "stand_in_learner.py": "cc750c5463a8a59a9531b24245258371af8e5601354b14959c5a069da0dec88e"
+ },
+ "after": {
+  "README.md": "ea95bd520a3a1e61dddb3a54c9709f35e1bb0e5d6bf1e3f7542ffff246c4ca23",
+  "batches/airport.yaml": "518b533b2f7c203a8dddcd73f26d25fddde0466d2c89b33eda3ef72ea5f2c0f4",
+  "batches/east.yaml": "29acd8050b53ceccee0bc1d3c3e9f9423e331c0c474bcb7bb12d94989970064e",
+  "batches/harbor.yaml": "58a8e9c74d0e7b2711eef0e5cc2a8c7a272bc84126e45e26332d71bc7dc47c5b",
+  "batches/market.yaml": "d893718faae108f5e1df08b29d4232043f0aab3b7890f2b63abf851144093244",
+  "batches/north.yaml": "3f10fb892fb68107694e345e80759f363a687f6f0305819035a5903b8a60e3f7",
+  "batches/south.yaml": "b13e0e200de530576c728465ee02503c0858185df689b91678939ac224ec08c6",
+  "batches/station.yaml": "5464e5e0d4892e9b42e566db53e011c19956449bda1cb82cb1f2bba01675076a",
+  "batches/west.yaml": "cd0fc78ef16991df4c5adb1bd8823a4c3380a16e9329bf5b2627892e4404ec7a",
+  "discovered.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "labels.json": "888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa",
+  "model.orm.yaml": "45b96eaf5885385d14a49241fbfcf8299f0c10e9860015c4dc6be19384173806",
+  "model.verbalization.txt": "7dd423af14f1a23ba742ab17941169521414089504fcddcbb3cf80dd83c267dd",
+  "physical-binding.json": "74b253fa1abdb66334283c0dbf2d1070c7db204e0a08f3641a964eac7f66cc6b",
+  "south-discovery.proposal.json": "8224a84890b2d69f5bd32d18b7c1f8d90cc23dec0cb0f621900bef3f3a7777d5",
+  "south-discovery.report.md": "9ba82afefeef0b8012c01eaff1e4114558da99766c912b40d2c10760957b0eef",
+  "south-refund-rules-records/south-refund-rules-1/before.orm.yaml": "8e03676063123e10447ccc0b448156867a5e3a10804d33443146bbea1b50baf0",
+  "south-refund-rules-records/south-refund-rules-1/candidate.orm.yaml": "45b96eaf5885385d14a49241fbfcf8299f0c10e9860015c4dc6be19384173806",
+  "south-refund-rules-records/south-refund-rules-1/candidate.verbalization.txt": "7dd423af14f1a23ba742ab17941169521414089504fcddcbb3cf80dd83c267dd",
+  "south-refund-rules-records/south-refund-rules-1/intent.json": "95bca22fd44ba46b92b8b22470b74902a545a22da9e7f9bfc232413d98d7d853",
+  "south-refund-rules-records/south-refund-rules-1/pending.json": "8c004de4aba3d343fdc7d7281912a38af3bf1647b4d64977f230f08af89d888e",
+  "south-refund-rules-records/south-refund-rules-1/preview.json": "557a86f475dad88fa89d4a4394521b5a7f657206f0a66c65ed4b68cd9dbd2ce1",
+  "south-refund-rules-records/south-refund-rules-1/proposal.json": "1cff3db4a1edd3bf912c374d859dfe3c701e4f5060b8cec90887f35ff9329e76",
+  "south-refund-rules-records/south-refund-rules-1/record.json": "68a1099e3a61364852c75fd722e951a2251efa30d56ff24698bb7cea75edf60e",
+  "south-refund-rules-streams/apply.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "south-refund-rules-streams/apply.stdout.txt": "cc55556d3f0454910d0828c824f219bba188cf31d62b0519b93bf760ec717701",
+  "south-refund-rules-streams/finalize-run.sh": "8218e90e7353450da4e370e3a6d606a64286595a07390903dd4aed6bde4d3460",
+  "south-refund-rules-streams/finalize.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "south-refund-rules-streams/finalize.stdout.txt": "d2129a5fb4443188e93923cc090f94fca5e8de3096555b9bb26bcdb673f46187",
+  "south-refund-rules.candidate.orm.yaml": "45b96eaf5885385d14a49241fbfcf8299f0c10e9860015c4dc6be19384173806",
+  "south-refund-rules.preview.json": "733a708fdb568ea330e498ced6bbd711865de3d68bc18bacb4720a3634582de0",
+  "south-refund-rules.proposal.json": "1fb9948f5a89f4635a2a1b0c6c226fe8df7edd8db1e2ecb78771f8fb4c560ea3",
+  "stand_in_learner.py": "cc750c5463a8a59a9531b24245258371af8e5601354b14959c5a069da0dec88e"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "commit": "388d6fa6dba48a12808796006b6baa081b971ca3",
+ "files": {
+  "results.json": "f243cfb833d763113b57687af58427175895dd863a1c8e2ffb063d79c18beabb",
+  "turn-01.jsonl": "b5de8f677571759ba1125236042f3acbfb2c94654f6ec8d0135d74fda723abea",
+  "turn-02.jsonl": "3b76da9425325c6e23e5624f5de1eb4a611ccb95e9c9693e12cd168e499f2ea6",
+  "workspace.json": "68f8793bffac02e7bd9046233832a23f0cae058494b735e5ab7de2e9fe8df0a9"
+ },
+ "sources": {
+  "tools/record_induce_sessions.py": "6d75298fee37bb32cc864b49d50c2556e2e3cee513826d712624a1eecb0a9578",
+  "tools/record_skill_sessions.py": "83eef9d8e19906c21681ddd3471d924f0fcde6b1a8ac86f4f5ab06af2899e468",
+  "src/gnd/skills/gnd-induce/SKILL.md": "8517e32d0c10c35f22652e01e2b798bbeca00bd773b47a23980279f734eec5f0",
+  "src/gnd/examples/refunds/README.md": "ea95bd520a3a1e61dddb3a54c9709f35e1bb0e5d6bf1e3f7542ffff246c4ca23",
+  "src/gnd/examples/refunds/labels.json": "888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa",
+  "src/gnd/examples/refunds/model.orm.yaml": "8e03676063123e10447ccc0b448156867a5e3a10804d33443146bbea1b50baf0",
+  "src/gnd/examples/refunds/physical-binding.json": "74b253fa1abdb66334283c0dbf2d1070c7db204e0a08f3641a964eac7f66cc6b",
+  "src/gnd/examples/refunds/stand_in_learner.py": "cc750c5463a8a59a9531b24245258371af8e5601354b14959c5a069da0dec88e",
+  "src/gnd/examples/refunds/batches/airport.yaml": "518b533b2f7c203a8dddcd73f26d25fddde0466d2c89b33eda3ef72ea5f2c0f4",
+  "src/gnd/examples/refunds/batches/east.yaml": "29acd8050b53ceccee0bc1d3c3e9f9423e331c0c474bcb7bb12d94989970064e",
+  "src/gnd/examples/refunds/batches/harbor.yaml": "58a8e9c74d0e7b2711eef0e5cc2a8c7a272bc84126e45e26332d71bc7dc47c5b",
+  "src/gnd/examples/refunds/batches/market.yaml": "d893718faae108f5e1df08b29d4232043f0aab3b7890f2b63abf851144093244",
+  "src/gnd/examples/refunds/batches/north.yaml": "3f10fb892fb68107694e345e80759f363a687f6f0305819035a5903b8a60e3f7",
+  "src/gnd/examples/refunds/batches/south.yaml": "b13e0e200de530576c728465ee02503c0858185df689b91678939ac224ec08c6",
+  "src/gnd/examples/refunds/batches/station.yaml": "5464e5e0d4892e9b42e566db53e011c19956449bda1cb82cb1f2bba01675076a",
+  "src/gnd/examples/refunds/batches/west.yaml": "cd0fc78ef16991df4c5adb1bd8823a4c3380a16e9329bf5b2627892e4404ec7a"
+ }
+}

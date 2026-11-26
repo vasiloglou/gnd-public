@@ -71,28 +71,48 @@ def redact(text: str, workspace: Path) -> str:
     return TEMPORARY.sub("<tmp>", text)
 
 
-def kept_stream(stream: str, workspace_marker: str = "<workspace>") -> str:
+def _words(command: str) -> list[str]:
+    """A command's words, quotes respected (induction-skill IS2 review F7: a character prefix kept
+    `python stand_in_learner.py.backup` and dropped `python  stand_in_learner.py`)."""
+    import shlex
+    try:
+        return shlex.split(command)
+    except ValueError:
+        return command.split()
+
+
+def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[str, ...] = ()) -> str:
     """The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and
     reads and writes of files in the workspace). Other tool output is replaced by its size, so nothing the agent
-    happened to list or read elsewhere on the machine is kept. Claude Code's start event keeps no paths."""
+    happened to list or read elsewhere on the machine is kept. Claude Code's start event keeps no paths.
+    `keep` names further plain Bash commands, by their opening words, whose output is kept too
+    (induction-skill IS2: the refunds stand-in learner)."""
     wanted, lines = set(), []
-    for raw in stream.splitlines():
+    forms = [_words(prefix) for prefix in keep]
+    for raw in stream.split("\n"):   # JSON lines end at newlines; U+2028 may sit inside a string
         try:
             event = json.loads(raw)
         except ValueError:
             continue
+        if not isinstance(event, dict):
+            continue   # induction-skill IS2 review F7: a non-object line raised instead of being skipped
         if event.get("type") == "system":
             event = {k: event.get(k) for k in ("type", "subtype", "model", "permissionMode") if k in event}
         elif event.get("type") == "assistant":
             message = event.get("message", {})
             event = {"type": "assistant", "message": {"model": message.get("model"), "content": message.get("content", [])}}
             for part in event["message"]["content"]:
+                if not isinstance(part, dict):
+                    continue
                 part.pop("signature", None)   # opaque bytes; the reasoning text stays
                 if part.get("type") == "tool_use":
                     target = str(part["input"].get("command") or part["input"].get("file_path") or "")
                     first = target.split()[0] if target.split() else ""
                     plain = not any(mark in target for mark in (";", "&&", "||", "|", "$(", "`"))
-                    if (first.endswith("gnd") and plain and part["name"] == "Bash") or target.startswith(workspace_marker) or (
+                    words = _words(target)
+                    kept_bash = part["name"] == "Bash" and plain and (
+                        first.endswith("gnd") or any(form and words[:len(form)] == form for form in forms))
+                    if kept_bash or target.startswith(workspace_marker) or (
                             part["name"] in ("Write", "Edit") and "/" not in target.replace(workspace_marker, "")):
                         wanted.add(part["id"])
         elif event.get("type") in ("rate_limit_event",):
@@ -102,7 +122,7 @@ def kept_stream(stream: str, workspace_marker: str = "<workspace>") -> str:
             content = event["message"]["content"]
             if isinstance(content, list):
                 for part in content:
-                    if part.get("type") == "tool_result" and part.get("tool_use_id") not in wanted:
+                    if isinstance(part, dict) and part.get("type") == "tool_result" and part.get("tool_use_id") not in wanted:
                         size = len(json.dumps(part.get("content")))
                         part["content"] = f"[{size} bytes of output not kept]"
             event.pop("tool_use_result", None)
@@ -182,11 +202,17 @@ def git_identity() -> list[str]:
     return [email, email.split("@")[0]] if "@" in email else []
 
 
-def leaks(out: Path) -> list[str]:
+def leak_needles() -> list[str]:
+    """Every literal the leak search looks for. A scrubber uses the same list, so whatever the search
+    finds the scrubber removes (issue 318: the email's handle was found but never removed)."""
     home = Path.home()
     machine = Path(tempfile.gettempdir()).resolve().parts   # e.g. /private/var/folders/nb/<id>/T
-    needles = [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12],
-               *git_identity()]
+    return [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12],
+            *git_identity()]
+
+
+def leaks(out: Path) -> list[str]:
+    needles = leak_needles()
     return [str(p.relative_to(out)) for p in sorted(out.rglob("*")) if p.is_file()
             and any(n in p.read_text(encoding="utf-8", errors="replace") for n in needles)]
 

@@ -17,6 +17,7 @@ The first release carrying this notice keeps the live refactoring aliases. The m
   population, handing every proposal to `gnd-model-evolve` for review. The
   [learn-rules tutorial](tutorials/learn-rules.md) now shows recorded runs of
   the skill with Claude Code (Haiku), each failure explained beside its replay.
+- `gnd diff` on an install without the optional `synth` extra no longer ends with an internal error. Each model's synthesis is recorded as not derivable, with a reason naming the extra, and the rest of the report is unchanged (issue 323).
 
 ## 0.5.2 (tagged 2026-11-25, not published on PyPI)
 

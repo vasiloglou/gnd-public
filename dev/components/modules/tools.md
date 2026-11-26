@@ -416,14 +416,14 @@ Record Claude Code running gnd-induce over the refunds example, one scripted con
 | `tool_uses(streams) -> list[tuple[str, dict]]` | function | 160 | (tool name, input) for every tool call in the raw streams; total over any line. |
 | `bash_commands(calls) -> list[str]` | function | 177 | (no docstring) |
 | `assistant_text(streams) -> str` | function | 181 | (no docstring) |
-| `programs(command) -> list[str]` | function | 204 | The program each shell segment runs, after NAME=value assignments; quotes respected (IS2 finding F4: |
-| `out_paths(commands, sub) -> set[str]` | function | 228 | The --out values of every command running `gnd <sub>`, relative to the workspace. |
-| `checks(conversation, workspace, before, streams, after) -> dict` | function | 238 | Spec section 6.2: each check true or false, computed outside the agent. `after` may be given |
-| `recheck(run) -> dict` | function | 287 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
-| `passed(result) -> bool` | function | 295 | (no docstring) |
-| `record(conversation, model, gate, commit) -> int` | function | 299 | (no docstring) |
-| `finish(target, commit) -> int` | function | 364 | The leak search, then the manifest. On a hit only results.json stays. |
-| `main(argv) -> int` | function | 391 | (no docstring) |
+| `programs(command) -> list[str]` | function | 207 | The program each shell segment runs, after NAME=value assignments; quotes respected (IS2 finding F4: |
+| `out_paths(commands, sub) -> set[str]` | function | 231 | The --out values of every command running `gnd <sub>`, relative to the workspace. |
+| `checks(conversation, workspace, before, streams, after) -> dict` | function | 241 | Spec section 6.2: each check true or false, computed outside the agent. `after` may be given |
+| `recheck(run) -> dict` | function | 291 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
+| `passed(result) -> bool` | function | 299 | (no docstring) |
+| `record(conversation, model, gate, commit) -> int` | function | 303 | (no docstring) |
+| `finish(target, commit) -> int` | function | 368 | The leak search, then the manifest. On a hit only results.json stays. |
+| `main(argv) -> int` | function | 395 | (no docstring) |
 
 ## tools.record_judge_sessions — `tools/record_judge_sessions.py`
 Components: unassigned
@@ -548,12 +548,12 @@ Render a recorded session as an animated SVG replay, in the hero figure's visual
 | --- | --- | --- | --- |
 | `session_lines(text) -> list[tuple[str, str]]` | function | 33 | (class, text) per line of a plan app's session.txt. |
 | `stream_lines(texts) -> list[tuple[str, str]]` | function | 54 | (class, text) per event of Claude Code stream-json turns: what the user said, what the assistant |
-| `user_turns(paths, said) -> list[str]` | function | 104 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
-| `condensed(lines) -> list[tuple[str, str]]` | function | 113 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
-| `wrap(lines) -> list[tuple[str, str]]` | function | 137 | (no docstring) |
-| `svg(lines, title, ident) -> str` | function | 149 | (no docstring) |
-| `transcript(lines) -> str` | function | 178 | (no docstring) |
-| `main() -> int` | function | 182 | (no docstring) |
+| `user_turns(paths, said) -> list[str]` | function | 129 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
+| `condensed(lines) -> list[tuple[str, str]]` | function | 138 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
+| `wrap(lines) -> list[tuple[str, str]]` | function | 162 | (no docstring) |
+| `svg(lines, title, ident) -> str` | function | 174 | (no docstring) |
+| `transcript(lines) -> str` | function | 203 | (no docstring) |
+| `main() -> int` | function | 207 | (no docstring) |
 
 ## tools.rf1_pins — `tools/rf1_pins.py`
 Components: unassigned

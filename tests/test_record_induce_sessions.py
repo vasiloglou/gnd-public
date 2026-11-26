@@ -181,6 +181,13 @@ def test_f4_a_redacted_temporary_path_counts_as_outside(tmp_path):
     assert _checks("score", tmp_path, ("Bash", {"command": "gnd measure m --out <tmp>"}, ""))["no_outside_path"] is False
 
 
+@pytest.mark.parametrize("command", ["ls <repo>/.venv/bin", "<repo>/.venv/bin/gnd export ilp --help",
+                                     "cat <home>/notes.txt"])
+def test_f8_a_command_naming_the_repository_or_home_is_outside(tmp_path, command):
+    """IS2 finding F8: only <tmp> was looked for in commands, so a run that listed the repository passed."""
+    assert _checks("score", tmp_path, ("Bash", {"command": command}, ""))["no_outside_path"] is False
+
+
 def test_f4_a_hand_written_proposal_is_caught(tmp_path):
     part = ("Write", {"file_path": "<workspace>/south-refund-rules.proposal.json", "content": "{}"}, "")
     assert _checks("discover", tmp_path, part)["no_hand_written_proposal"] is False

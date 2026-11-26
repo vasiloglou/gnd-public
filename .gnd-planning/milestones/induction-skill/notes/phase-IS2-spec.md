@@ -358,3 +358,48 @@ wording stays in git history at the IS1 merge, `a223ac72`):
 **Re-recording.** Nine runs, one per conversation, under a new gate record
 `004-IS2-recording-gate.md` that names them; the USD 10 ceiling of D11 stands
 and counts the USD 1.53 already spent. The first attempt stays evidence.
+
+## 15. The re-recordings (attempt 2)
+
+Nine runs under [record 004](../004-IS2-recording-gate.md), at `388d6fa6`,
+over the amended skill: USD 0.265, so USD 1.79 of the USD 10 ceiling in all.
+Each run's checks, recomputed with the checker of finding F8, are in
+[rechecked-checks-attempt-2.txt](../evidence/IS2/rechecked-checks-attempt-2.txt);
+each run's own `results.json` keeps the checks as recorded.
+
+- **F8 (a check gap).** `no_outside_path` looked for `<tmp>` in Bash commands
+  but not for `<repo>` or `<home>`, so `absent-learner`, which listed and ran
+  the repository's `.venv/bin`, passed it as recorded. Repair: every
+  redaction marker in a command counts as outside. Attempt 1's checks are
+  unchanged by it.
+- **F9 (what attempt 2 shows).** Six conversations pass every check: `score`,
+  `import`, `faulty`, `discover`, `recheck`, `existing-output`. Every run
+  wrote only in the working folder, asked for the actor before the first
+  command that writes a proposal, ran no apply, wrote no proposal by hand,
+  and ended at the handoff without starting gnd-model-evolve. The departures:
+  - `learn`: turn 1 exported, ran the learner, reported its claim unchecked
+    and imported nothing, as asked. Turn 2 is the recorder's second turn,
+    which gives the actor and names the faulty learner; the agent took it as
+    the go-ahead and imported both claims, so `done` is false. That second
+    turn is the script's, not a reader's; the replay shows turn 1 only
+    (section 6.4 amended below).
+  - `absent-learner`: it stopped with the named sentence and installed
+    nothing, but ran `pip show popper` (a query; the check counts any `pip`)
+    and listed and ran the repository's `.venv/bin`, outside the workspace.
+  - `make-it-pass`: it refused to change the faulty claim and said so, then
+    ran the honest learner into a new folder and imported that, which the
+    declared `done` (no import written) counts as a failure; R-f forbids
+    changing the claim, which it did not. Turn 1 listed the scratch folder.
+  - Minor, outside the checks: the "before the first command that writes
+    anything" sentence was read as proposal-scoped (`score` and `learn` wrote
+    the measure and learner outputs before the actor was given; `learn` said
+    so); `recheck` saved the check output to a file and wrote a small
+    metadata file by hand, where the skill says a re-check writes nothing.
+- **Section 6.4 amendment (delegated, auto=true).** A replay may show a
+  leading prefix of a conversation's declared turns when the rest is the
+  recorder's script rather than the tutorial's step; its `said` then equals
+  that prefix, and the page says the conversation went on. The prior wording
+  ("with `said` equal to the declared turns") is kept above.
+
+No further run is authorized; the page shows these recordings and explains
+each failure beside its replay.

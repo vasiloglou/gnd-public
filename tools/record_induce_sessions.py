@@ -199,6 +199,9 @@ FORBIDDEN_PROGRAMS = frozenset({"pip", "pip3", "pipx", "uv", "brew", "conda", "m
                                 "cargo", "git", "curl", "wget", "ssh", "scp", "popper", "ilasp", "amie"})
 #: Redaction markers and absolute roots outside the workspace (IS2 finding F4: <tmp> was missed).
 OUTSIDE = ("/", "~", "<tmp>", "<home>", "<repo>")
+#: The redaction markers a Bash command may name; each is outside the workspace (IS2 finding F8: only <tmp>
+#: was looked for, so a run that listed the repository's .venv passed).
+OUTSIDE_MARKERS = ("<tmp>", "<home>", "<repo>")
 
 
 def programs(command: str) -> list[str]:
@@ -256,7 +259,8 @@ def checks(conversation: str, workspace: Path | None, before: dict, streams: lis
         "actor_from_user": all(actor.strip("'\"") == ACTOR for actor in actors),
         "no_forbidden_bash": not any(set(programs(command)) & FORBIDDEN_PROGRAMS for command in commands),
         "no_outside_path": not any(path.startswith(OUTSIDE) and not path.startswith((root, "<workspace>"))
-                                   for path in paths) and not any("<tmp>" in command for command in commands),
+                                   for path in paths)
+                           and not any(marker in command for command in commands for marker in OUTSIDE_MARKERS),
     }
     done = CONVERSATIONS[conversation]["done"]
     text = assistant_text(streams).lower()

@@ -283,6 +283,25 @@ def test_t7_every_actor_is_the_placeholder():
     assert actors and set(actors) == {"ACTOR"}
 
 
+#: The commands that write a proposal (IS1-Q2, round 2 F4; IS2 spec section 6.9).
+PROPOSAL_WRITERS = {("discover",), ("import", "ilp-rules"), ("import", "mined-rules")}
+
+
+def test_q2_every_proposal_command_carries_the_actor_and_time_once():
+    writers = [s for s in _induce_snippets() if s.subcommand_path in PROPOSAL_WRITERS]
+    assert {s.subcommand_path for s in writers} == PROPOSAL_WRITERS
+    for snippet in writers:
+        assert snippet.long_options.count("--actor") == 1, snippet.ident
+        assert snippet.long_options.count("--requested-at") == 1, snippet.ident
+
+
+def test_q2_the_amie_export_is_its_own_line():
+    """IS1-Q2, round 2 F5: the miner's export is a line of its own with --target amie."""
+    exports = [s for s in _induce_snippets() if s.subcommand_path == ("export", "ilp")]
+    amie = [s for s in exports if s.tokens[s.tokens.index("--target") + 1] == "amie"]
+    assert len(amie) == 1 and "--population" in amie[0].long_options and "--labels" not in amie[0].long_options
+
+
 def test_t10_the_skill_installs_nothing():
     assert not INSTALLS.search(visible(skill_raw()))
 

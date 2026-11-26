@@ -557,12 +557,12 @@ Render a recorded session as an animated SVG replay, in the hero figure's visual
 | --- | --- | --- | --- |
 | `session_lines(text) -> list[tuple[str, str]]` | function | 33 | (class, text) per line of a plan app's session.txt. |
 | `stream_lines(texts) -> list[tuple[str, str]]` | function | 60 | (class, text) per event of Claude Code stream-json turns: what the user said, what the assistant |
-| `user_turns(paths, said) -> list[str]` | function | 135 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
-| `condensed(lines) -> list[tuple[str, str]]` | function | 144 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
-| `wrap(lines) -> list[tuple[str, str]]` | function | 168 | (no docstring) |
-| `svg(lines, title, ident) -> str` | function | 180 | (no docstring) |
-| `transcript(lines) -> str` | function | 209 | (no docstring) |
-| `main() -> int` | function | 213 | (no docstring) |
+| `user_turns(paths, said) -> list[str]` | function | 141 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
+| `condensed(lines) -> list[tuple[str, str]]` | function | 150 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
+| `wrap(lines) -> list[tuple[str, str]]` | function | 174 | (no docstring) |
+| `svg(lines, title, ident) -> str` | function | 186 | (no docstring) |
+| `transcript(lines) -> str` | function | 215 | (no docstring) |
+| `main() -> int` | function | 219 | (no docstring) |
 
 ## tools.rf1_pins — `tools/rf1_pins.py`
 Components: unassigned

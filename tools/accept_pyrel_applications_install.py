@@ -12,7 +12,9 @@ import zipfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-CAP=12*1024*1024
+# 13 MiB: the owner raised the wheel budget at induction-skill IS2 checkpoint C2; this copy was missed
+# then and raised at the milestone close.
+CAP=13*1024*1024
 GRAPHICS={'bookrec':['flow','eligibility','evolution'],'expense':['flow','limits','currency']}
 
 

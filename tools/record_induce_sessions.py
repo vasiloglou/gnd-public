@@ -28,7 +28,16 @@ import time
 import uuid
 from pathlib import Path
 
-from record_skill_sessions import ROOT, kept_stream, leak_needles, leaks, redact, sha256
+from record_skill_sessions import (
+    ROOT,
+    kept_stream,
+    last_result,
+    leak_needles,
+    leaks,
+    redact,
+    sha256,
+    stream_events,
+)
 
 EXAMPLE = ROOT / "src/gnd/examples/refunds"
 HOME = EXAMPLE / "skill-sessions"
@@ -117,15 +126,15 @@ MODELS = ("haiku",)
 def gate_ok(path: Path) -> bool:
     """The recording gate record: a file in this milestone's folder, named for the IS2 gate, whose YAML front
     matter names this milestone and scope, committed and unchanged since (review phase-IS2-r1 F1: two strings
-    anywhere in any file named like a gate passed)."""
-    from ruamel.yaml import YAML
-    from ruamel.yaml.error import YAMLError
+    anywhere in any file named like a gate passed). The front matter is read by GND's own fenced-YAML reader
+    (issue 318 F12: splitting at the first "---\\n" cut a value ending in three dashes, and refused a fence
+    with trailing spaces)."""
+    from gnd.exp.frontmatter import FrontmatterError, read_frontmatter
     try:
         path = path.resolve()
         text = path.read_text(encoding="utf-8")
-        _, front, _ = text.split("---\n", 2) if text.startswith("---\n") else ("", "", "")
-        meta = YAML(typ="safe").load(front) if front else None
-    except (OSError, UnicodeDecodeError, ValueError, YAMLError):   # unreadable or malformed: not a gate
+        meta, _ = read_frontmatter(path)
+    except (OSError, UnicodeDecodeError, FrontmatterError):   # unreadable, unfenced or malformed: not a gate
         return False
     if (path.parent != GATES.resolve() or not path.name.endswith("-IS2-recording-gate.md")
             or not isinstance(meta, dict) or meta.get("milestone") != "induction-skill"
@@ -180,13 +189,7 @@ def workspace_digests(workspace: Path) -> dict[str, str]:
 
 def _events(streams: list[str]):
     for stream in streams:
-        for line in stream.split("\n"):
-            try:
-                event = json.loads(line)
-            except ValueError:
-                continue
-            if isinstance(event, dict):
-                yield event
+        yield from stream_events(stream)
 
 
 def tool_calls(streams: list[str]) -> list[dict]:
@@ -475,14 +478,7 @@ def _record(conversation: str, model: str, gate: Path, commit: str, plan: dict, 
             raw.append(redact(stream.replace(str(plugin), "<plugin>"), workspace))
             (target / f"turn-{number:02d}.jsonl").write_text(kept_stream(raw[-1], keep=LEARNER_FORMS),
                                                              encoding="utf-8")
-            result = {}
-            for line in stream.split("\n"):   # U+2028 may sit inside a JSON string (review r2 F4)
-                try:
-                    event = json.loads(line)
-                except ValueError:
-                    continue
-                if isinstance(event, dict) and event.get("type") == "result":
-                    result = event
+            result = last_result(stream)   # U+2028 may sit inside a JSON string (review r2 F4)
             cost = result.get("total_cost_usd")
             turns.append({"user": said, "exit": code, "cost_usd": cost,
                           "assistant_last": redact(result.get("result") or "", workspace)[-600:]})   # F3

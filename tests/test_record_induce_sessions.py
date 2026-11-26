@@ -406,7 +406,7 @@ def test_review_r2_f4_a_line_separator_keeps_the_turns_cost(tmp_path, monkeypatc
     """Review phase-IS2-r2 F4: the result event was split at U+2028 inside its text, so its cost was lost."""
     class Done:
         returncode = 0
-        stdout = json.dumps({"type": "result", "result": "alpha beta", "total_cost_usd": 0.24},
+        stdout = json.dumps({"type": "result", "result": "alpha\u2028beta", "total_cost_usd": 0.24},
                             ensure_ascii=False) + "\n"
 
     monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
@@ -493,3 +493,42 @@ def test_issue_318_f3_what_the_leak_gate_finds_the_scrubber_removes(tmp_path, mo
     kept = (target / "results.json").read_text(encoding="utf-8")
     assert "fictional-handle" not in kept and "Fictional Person" not in kept
     assert json.loads(kept)["turns"][0]["cost_usd"] == 0.5
+
+
+def _committed_gate(tmp_path, monkeypatch, text: str) -> Path:
+    """A gate record committed in a scratch repository standing in for this one."""
+    import subprocess
+    gates = tmp_path / "repo/.gnd-planning/milestones/induction-skill"
+    gates.mkdir(parents=True)
+    gate = gates / "009-IS2-recording-gate.md"
+    gate.write_bytes(text.encode("utf-8"))
+    for argv in (["git", "init", "-q"], ["git", "add", "-A"],
+                 ["git", "-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "-qm", "gate"]):
+        subprocess.run(argv, cwd=tmp_path / "repo", check=True, capture_output=True)
+    monkeypatch.setattr(recorder, "ROOT", tmp_path / "repo")
+    monkeypatch.setattr(recorder, "GATES", gates)
+    return gate
+
+
+GATE_BODY = f"\n# {recorder.GATE_NAME} recording gate\n"
+
+
+@pytest.mark.parametrize("front", [
+    "---\nmilestone: induction-skill\nnote: before the scope, a value ending in dashes ---\nscope: IS2-recording-gate\n---\n",
+    "--- \nmilestone: induction-skill\nscope: IS2-recording-gate\n---\t\n",
+    "---\r\nmilestone: induction-skill\r\nscope: IS2-recording-gate\r\n---\r\n",
+])
+def test_issue_318_f12_a_gate_is_read_by_the_yaml_front_matter_reader(tmp_path, monkeypatch, front):
+    """Issue 318 (IS2 review r2 F12): the front matter was cut at the first "---\\n" in the file."""
+    assert recorder.gate_ok(_committed_gate(tmp_path, monkeypatch, front + GATE_BODY))
+
+
+@pytest.mark.parametrize("front", [
+    "milestone: induction-skill\nscope: IS2-recording-gate\n",                      # no fence
+    "---\nmilestone: induction-skill\nscope: IS2-recording-gate\n",                 # never closed
+    "---\n- milestone: induction-skill\n- scope: IS2-recording-gate\n---\n",        # not a mapping
+    "---\nmilestone: induction-skill\nscope: other\n---\n",                         # another scope
+    "  ---\nmilestone: induction-skill\nscope: IS2-recording-gate\n---\n",          # indented: not a fence
+])
+def test_issue_318_f12_a_malformed_front_matter_is_not_a_gate(tmp_path, monkeypatch, front):
+    assert not recorder.gate_ok(_committed_gate(tmp_path, monkeypatch, front + GATE_BODY))

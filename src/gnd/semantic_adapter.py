@@ -33,7 +33,7 @@ from gnd.model import (
     derivation_strata,
     iter_derivation_clauses,
 )
-from gnd.model_index import scoped
+from gnd.model_index import ModelIndex, scoped
 from gnd.population import Population
 from gnd.semantic_ir import (
     ADAPTER_REFUSALS,
@@ -756,7 +756,7 @@ def adapt_snapshot_observed(
     """Retain the exact value origins beside the immutable semantic snapshot."""
     fact_source = population.facts if effective_facts is None else effective_facts
     snapshot = adapt_snapshot(model, population, effective_facts=effective_facts, computed_available=computed_available)
-    fact_types = {str(row.get("id")): row for row in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=False)
     relations = {row.fact_type: row for row in snapshot.relations}
     origins: list[ValueOrigin] = []
     for fact_type_id, facts in fact_source.items():

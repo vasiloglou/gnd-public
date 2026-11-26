@@ -21,6 +21,7 @@ from ruamel.yaml import YAML
 
 from gnd.documents import MAX_YAML_EVENTS
 from gnd.errors import ModelLoadError
+from gnd.input_policy import checked_yaml_depth
 from gnd.yaml_comments import configure_comment_scanner
 
 MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
@@ -166,9 +167,11 @@ def _parse_model_document(data: bytes, *, source: str | Path) -> Any:
         # knew it only under LF.
         stripped = text.rstrip()
         block_scalar = False
+        depth = 0
         for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(stripped), 1):
             if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
                 raise ModelLoadError("model YAML alias/event guard refused input")
+            depth = checked_yaml_depth(depth, event, error_type=ModelLoadError)
             block_scalar = block_scalar or (isinstance(event, ScalarEvent) and event.style in _BLOCK_STYLES)
         doc = configure_comment_scanner(YAML(typ="rt")).load(text if block_scalar else stripped)
     return doc

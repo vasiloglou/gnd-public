@@ -13,6 +13,7 @@ from gnd.documents import Model
 from gnd.errors import PopulationLoadError
 from gnd.extensions import identity_token as _identity_token
 from gnd.model import _layer1_structural, semantic_validate
+from gnd.model_index import ModelIndex
 from gnd.population import Population, load_population_bytes
 from gnd.redaction import INSTANCE_DETAIL, RedactionPolicy, RedactionProjectionError, project_output
 from gnd.values import content_digest as _content_digest
@@ -170,7 +171,7 @@ def _project_rows(
     except Exception as error:
         raise RedactionProjectionError("population projection failed") from error
     result: list[dict[str, Any]] = []
-    by_id = {str(fact_type["id"]): fact_type for fact_type in model.fact_types}
+    by_id = ModelIndex.fact_map(model, require_id=True)
     for item in projected["rows"]:
         fact_type = by_id[item["fact_ref"]["fact_type"]]
         sentence = _sentence(item["reading"], fact_type, item["roles"], inverse=item["inverse"])

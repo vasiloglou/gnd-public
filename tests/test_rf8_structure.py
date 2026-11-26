@@ -56,6 +56,9 @@ def test_v7_is_only_compatibility_strategy_hooks():
 
 def test_unchanged_moved_bodies_and_shim_identity():
     rows = json.loads((EVIDENCE / 'moves-predecessor.json').read_text())
+    followups = ROOT / ".gnd-planning/milestones/refactoring-followups/evidence/F7/session-body-successors.json"
+    changes = {r["name"]: r for r in json.loads(followups.read_text())}
+    assert set(changes) == {"AttemptRecord", "SessionResult"}
     for row in rows:
         source = (ROOT / row['new']).read_text()
         candidates = [n for n in ast.parse(source).body
@@ -71,6 +74,11 @@ def test_unchanged_moved_bodies_and_shim_identity():
             assert successor['name'] == row['name'] and successor['path'] == row['new']
             assert successor['predecessor_sha256'] == row['ast_sha256']
             row = dict(row, ast_sha256=successor['ast_sha256'])
+        if row["name"] in changes:
+            change = changes[row["name"]]
+            assert change["path"] == row["new"]
+            assert change["predecessor_sha256"] == row["ast_sha256"]
+            row = dict(row, ast_sha256=change["ast_sha256"])
         # Run's public identity lookup intentionally changes; its end-to-end matrix is G3.
         if row['name'] != 'run':
             assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row['ast_sha256'], row['name']

@@ -1,0 +1,1 @@
+Delegated F4 gate (auto=true), 2026-11-25. Spec aaffc84e408138dc1bc8cd6ce2ed3a404c7da87ac93e5d6776c8d51fb4524c63. D1–D3 approved. Public reader depths, strict writer, local continuity tests and one Claude review.

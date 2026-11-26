@@ -147,7 +147,7 @@ def _cmd_exp_run(
         TESTS_ARGV_ECHO_MISMATCH_REASON,
         SessionContractError,
         TestsAcceptance,
-        read_session_contract,
+        read_session_contract_with_digest,
     )
     from gnd.exp.session_store import SessionResult
     from gnd.exp.spec import KIND_POLICY, SpecError, read_spec
@@ -198,7 +198,7 @@ def _cmd_exp_run(
         return 3
 
     try:
-        contract = read_session_contract(
+        contract, contract_sha256 = read_session_contract_with_digest(
             contract_path,
             experiment_root=root,
             experiment_id=spec.id,
@@ -281,7 +281,6 @@ def _cmd_exp_run(
     if tests_only:
         try:
             run_root = _next_session_run_root(root)
-            contract_sha256 = hashlib.sha256(contract_path.read_bytes()).hexdigest()
             outcome = _run_tests_mode_bridge(
                 contract,
                 test_argv=test_argv,
@@ -301,7 +300,6 @@ def _cmd_exp_run(
 
     try:
         run_root = _next_session_run_root(root)
-        contract_sha256 = hashlib.sha256(contract_path.read_bytes()).hexdigest()
         selected_adapter = None if adapter is None else AgentAdapterId(adapter)
         # D-P3.4: each case's digest-bound model selects the payload version
         # its verifier evidence must carry; a structured case promotes the feedback
@@ -343,9 +341,14 @@ def _cmd_exp_run(
                 timeout_seconds=contract.wall_seconds or 300.0,
             )
 
+        locator = (
+            f"../session.contract.json (sha256:{contract_sha256})"
+            if contract.prompt_format == "portable-v1"
+            else str(contract_path.absolute())
+        )
         prompt = (
             "Modify only the current candidate directory so it satisfies every "
-            f"required case in the caller-validated contract at {contract_path.absolute()}."
+            f"required case in the caller-validated contract at {locator}."
         )
         result = asyncio.run(
             run_session(

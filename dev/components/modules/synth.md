@@ -198,8 +198,8 @@ The pool artifact: load / validate / write / build, with one notion of validity.
 | `PoolValidationError` | class(Exception) | 79 | A pool failed the schema or coherence gate. |
 | `Pool` | class | 93 | A loaded, gate-passed pool artifact. |
 | `load_pool(path, model) -> Pool` | function | 403 | Load, schema-gate, then coherence-gate a pool against ``model``. |
-| `write_pool(pool, path) -> None` | function | 448 | Write ``pool`` as canonical (key-sorted) JSON, so any writer's bytes hash |
-| `build_faker_pool(model, rng, *, size_per_type) -> Pool` | function | 594 | Draw a Faker-backed pool that passes ``load_pool`` for ``model`` by |
+| `write_pool(pool, path) -> None` | function | 454 | Write ``pool`` as canonical (key-sorted) JSON, so any writer's bytes hash |
+| `build_faker_pool(model, rng, *, size_per_type) -> Pool` | function | 600 | Draw a Faker-backed pool that passes ``load_pool`` for ``model`` by |
 
 ## gnd.synth.provenance — `src/gnd/synth/provenance.py`
 Components: synth.provenance

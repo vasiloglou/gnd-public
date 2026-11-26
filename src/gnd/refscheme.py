@@ -25,7 +25,7 @@ def _object_types_by_id(model: Any) -> dict[str, dict[str, Any]]:
 
 
 def _fact_types_by_id(model: Any) -> dict[str, dict[str, Any]]:
-    return {str(fact_type.get("id")): fact_type for fact_type in model.fact_types}
+    return ModelIndex.fact_map(model, require_id=False)
 
 
 def _referenced_object_type(role_ref: dict[str, Any], model: Any) -> str | None:

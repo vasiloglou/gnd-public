@@ -1182,7 +1182,17 @@ class _AttemptFeedbackV9(_AttemptFeedbackV8):
     judgments: tuple[dict[str, Any], ...]
 
 
-class AttemptFeedback(BaseModel):
+class SessionEvidenceJson:
+    """Decode bounded JSON before delegating to each evidence type's version dispatcher."""
+
+    @classmethod
+    def model_validate_json(cls, json_data: str | bytes | bytearray, *args: Any, **kwargs: Any) -> Self:
+        if isinstance(json_data, bytearray):
+            json_data = bytes(json_data)
+        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
+
+
+class AttemptFeedback(SessionEvidenceJson, BaseModel):
     """Version-dispatched feedback normalized without rewriting its wire shape."""
 
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -1306,23 +1316,6 @@ class AttemptFeedback(BaseModel):
         }:
             document.pop("redaction")
         return document
-
-    @classmethod
-    def model_validate_json(
-        cls, json_data: str | bytes | bytearray, *args: Any, **kwargs: Any
-    ) -> Self:
-        """Route JSON through the version dispatcher above.
-
-        ``model_validate_json`` is a SEPARATE pydantic entry point, not a
-        decode in front of ``model_validate``, so overriding only the latter
-        leaves the dispatcher bypassable by any caller holding bytes — and the
-        bypass does not merely lose compatibility, it can ADMIT what dictionary
-        dispatch refuses. ``gnd.evolve.models`` pairs every dispatcher with
-        this override for the same reason.
-        """
-        if isinstance(json_data, bytearray):
-            json_data = bytes(json_data)
-        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
 
     @model_validator(mode="after")
     def _ordered_current_case_sets(self) -> Self:

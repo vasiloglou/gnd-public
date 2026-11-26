@@ -643,3 +643,69 @@ def test_pool_is_frozen() -> None:
     assert isinstance(pool, Pool)
     with pytest.raises((AttributeError, TypeError)):
         pool.sha256 = "tampered"  # type: ignore[misc]
+
+
+def test_pool_physical_byte_boundary(tmp_path, monkeypatch):
+    from gnd import input_policy
+
+    model = load_model(RING)
+    path = _write(tmp_path, _valid_payload(model))
+    expected = load_pool(path, model).sha256
+    exact = path.read_bytes() + b"\r\n"
+    monkeypatch.setattr(input_policy, "MAX_BYTES", max(len(exact), len(
+        (SRC_GND / "pool.schema.json").read_bytes()
+    )))
+    exact = exact.ljust(input_policy.MAX_BYTES)
+    path.write_bytes(exact)
+    assert load_pool(path, model).sha256 == expected
+    path.write_bytes(exact + b" ")
+    with pytest.raises(PoolValidationError) as exc:
+        load_pool(path, model)
+    assert exc.value.failures == ["input: JSON input exceeds byte cap"]
+
+
+def test_pool_read_is_bounded_before_decoding(monkeypatch):
+    import io
+
+    from gnd import input_policy
+
+    class Reader(io.BytesIO):
+        def read(self, size=-1):
+            assert size == input_policy.MAX_BYTES + 1
+            return super().read(size)
+
+    monkeypatch.setattr(input_policy, "MAX_BYTES", 8)
+    monkeypatch.setattr(Path, "open", lambda self, mode: Reader(b"\xff" * 10))
+    with pytest.raises(PoolValidationError) as exc:
+        load_pool("pool", None)
+    assert exc.value.failures == ["input: JSON input exceeds byte cap"]
+
+
+def test_pool_oversize_finishes_with_domain_finding(tmp_path):
+    path = tmp_path / "pool.json"
+    path.write_bytes(b" " * (11 * 1024 * 1024))
+    script = """
+import signal, sys
+from gnd.synth.poolfile import load_pool, PoolValidationError
+signal.alarm(5)
+try:
+    load_pool(sys.argv[1], None)
+except PoolValidationError as error:
+    assert error.failures == ["input: JSON input exceeds byte cap"]
+else:
+    raise AssertionError("oversized pool admitted")
+"""
+    subprocess.run([sys.executable, "-c", script, str(path)], check=True, timeout=30)
+
+
+def test_pool_file_errors(tmp_path):
+    path = tmp_path / "pool.json"
+    with pytest.raises(FileNotFoundError):
+        load_pool(path, None)
+    path.write_bytes(b"\xff")
+    with pytest.raises(UnicodeDecodeError):
+        load_pool(path, None)
+    path.write_text("{", encoding="utf-8")
+    with pytest.raises(json.JSONDecodeError) as malformed:
+        load_pool(path, None)
+    assert malformed.value.pos == 1

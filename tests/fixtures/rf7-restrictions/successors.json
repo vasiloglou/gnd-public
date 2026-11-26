@@ -854,6 +854,43 @@
           "after": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7, or 8 [contract:shape]\n"
         }
       ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "canonical_json_gnd.cli__canonical_payload",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/canonical_json_gnd.cli__canonical_payload.json",
+      "before_sha256": "be8c09ce7369f5b31c07e583ab28f921d6b1ee4b449e899b6f646a160f1d9596",
+      "reason": "F4 delegated strict JSON writer for issue #301",
+      "changes": [
+        {
+          "path": "/observed/nan",
+          "before": {
+            "ok": "NaN"
+          },
+          "after": {
+            "raises": "builtins.ValueError",
+            "message": "Out of range float values are not JSON compliant: nan"
+          }
+        },
+        {
+          "path": "/observed/infinity",
+          "before": {
+            "ok": "Infinity"
+          },
+          "after": {
+            "raises": "builtins.ValueError",
+            "message": "Out of range float values are not JSON compliant: inf"
+          }
+        }
+      ],
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/canonical_json_gnd.cli__canonical_payload.json",
+      "after_sha256": "3ac0306ada2ea88e0ab991a6932bb986be7527ce98f1ef4f6eab95348d036188",
+      "minor_overrides": {
+        "py311": {
+          "after_path": "tests/fixtures/rf7-restrictions/helpers/canonical_json_gnd.cli__canonical_payload.py311.json",
+          "after_sha256": "e179ec3f188d0feba447f84e588df8827e413d4fca86326db675395f1471616c"
+        }
+      }
     }
   ]
 }

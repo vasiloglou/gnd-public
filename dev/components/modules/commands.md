@@ -83,8 +83,8 @@ Components: cli.exp_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 615 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 626 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 618 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 629 | (no docstring) |
 
 ## gnd.commands.export — `src/gnd/commands/export.py`
 Components: cli.export_command

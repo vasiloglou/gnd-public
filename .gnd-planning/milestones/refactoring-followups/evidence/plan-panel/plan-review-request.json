@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/refactoring-followups/notes/refactoring-followups-plan.md",
+    "sha256": "6ca733e30bffb9637b1534800adf2ebf72df84af381bcd7ea2ffc8bdb1d384be",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "Refactoring follow-ups plan",
+    "criteria": [
+      "Assess whether each of issues 297 through 308 has an implementable phase and falsifiable acceptance criteria, and whether dependencies and historical rulings are respected.",
+      "Check release and evidence compatibility, residual ownership and closure. Prioritize blocking concerns. Cite the specific plan passage.",
+      "Consult only directly relevant files when needed. Do not run tests, builds, or delegate."
+    ]
+  }
+}

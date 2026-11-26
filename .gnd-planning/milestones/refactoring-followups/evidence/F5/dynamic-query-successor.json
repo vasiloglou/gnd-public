@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "reason": "F5 relocates validation to the digest-returning reader and adds four type annotations; the dynamic scanner counts annotations as subscriptions.",
+  "predecessor": ".gnd-planning/milestones/ossie-relational-bundle/evidence/close-followups/dynamic-query-successor.json",
+  "predecessor_sha256": "99a70caa10d8a175774809e99b2f645374c1eea0ffebf886b1915b0ae5023ef7",
+  "removed": [
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "dict[str, set[str]]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "list[ValidationIssue]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "loaded_models.get(model_path)",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "loaded_models[model_path]",
+      2
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "model_fact_types[model_path]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "set[str]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/exp/session_contract.py",
+      "DataDrivenContract",
+      "Literal['absolute-v1', 'portable-v1']",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "_DataDrivenContractV6",
+      "Literal['absolute-v1', 'portable-v1']",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "_read_contract_document",
+      "tuple[object, str]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "dict[str, set[str]]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "list[ValidationIssue]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "loaded_models.get(model_path)",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "loaded_models[model_path]",
+      2
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "model_fact_types[model_path]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract_with_digest",
+      "tuple[DataDrivenContract, str]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8364,
+  "result_occurrences": 10400
+}

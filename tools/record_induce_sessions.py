@@ -28,7 +28,7 @@ import time
 import uuid
 from pathlib import Path
 
-from record_skill_sessions import ROOT, kept_stream, leaks, redact, sha256
+from record_skill_sessions import ROOT, kept_stream, leak_needles, leaks, redact, sha256
 
 EXAMPLE = ROOT / "src/gnd/examples/refunds"
 HOME = EXAMPLE / "skill-sessions"
@@ -433,6 +433,17 @@ def record(conversation: str, model: str, gate: Path, commit: str) -> int:
         print(f"refusing: USD {already:.2f} already spent reaches the ceiling {CEILING_USD}", file=sys.stderr)
         return 2
     target.mkdir(parents=True)
+    try:
+        return _record(conversation, model, gate, commit, plan, target, already)
+    except BaseException:
+        # An interrupted run keeps what it wrote, so its spend still counts, but never a path or name:
+        # the leak gate runs before the error goes on, and no manifest is written (issue 318).
+        _leak_gate(target)
+        raise
+
+
+def _record(conversation: str, model: str, gate: Path, commit: str, plan: dict, target: Path,
+            already: float) -> int:
     session, started, turns, raw = str(uuid.uuid4()), time.monotonic(), [], []
     header = {"gate": str(gate.resolve().relative_to(ROOT.resolve())) if gate.resolve().is_relative_to(ROOT.resolve())
               else str(gate), "skill": "gnd-induce", "conversation": conversation, "model": model,
@@ -523,22 +534,34 @@ def _scrubbed(value, needles: list[str]):
     return value
 
 
-def finish(target: Path, commit: str) -> int:
-    """The leak search, then the manifest. On a hit only results.json stays, with every path and needle
-    replaced, so its costs still count against the ceiling (review phase-IS2-r1 F3)."""
+def _decoded(text: str) -> list[str]:
+    """Every string in a JSON value, with a repeated key's earlier values kept (issue 318: the default
+    loader kept only the last, so `{"where": "/opt/x", "where": "ok"}` hid its path)."""
+    return _strings_of(json.loads(text, object_pairs_hook=lambda pairs: [part for pair in pairs for part in pair]))
+
+
+def _needles() -> list[str]:
+    """The leak search's literals and the git user's name, longest first so a handle never splits an email."""
+    name = subprocess.run(["git", "config", "user.name"], capture_output=True, text=True,
+                          check=False).stdout.strip()
+    return sorted({needle for needle in (*leak_needles(), name) if needle}, key=len, reverse=True)
+
+
+def _leak_gate(target: Path) -> list[str]:
+    """The leak search over every kept file. On a hit only results.json stays, with every path and needle
+    replaced, so its costs still count against the ceiling (review phase-IS2-r1 F3). The search and the
+    scrubber read one needle list (issue 318)."""
     found = leaks(target)
-    identity = [subprocess.run(["git", "config", key], capture_output=True, text=True, check=False).stdout.strip()
-                for key in ("user.name", "user.email")]
-    identity = [value for value in identity if value]
+    needles = _needles()
     for path in sorted(target.rglob("*")):
         if path.is_file():
             text = path.read_text(encoding="utf-8", errors="replace")
             try:   # JSON is read decoded, so an escape such as \n after "p:" is not a drive path
-                text = "\n".join(_strings_of(json.loads(text))) if path.suffix == ".json" else "\n".join(
-                    s for line in text.split("\n") if line.strip() for s in _strings_of(json.loads(line)))
+                text = "\n".join(_decoded(text)) if path.suffix == ".json" else "\n".join(
+                    s for line in text.split("\n") if line.strip() for s in _decoded(line))
             except ValueError:
                 pass
-            found += [f"{path.name}: git identity" for value in identity if value in text]
+            found += [f"{path.name}: a local name" for value in needles if value in text]
             found += [f"{path.name}: {pattern}" for pattern in ABSOLUTE if re.search(pattern, text)]
     if found:
         for path in target.iterdir():
@@ -546,10 +569,15 @@ def finish(target: Path, commit: str) -> int:
                 path.unlink()
         results = target / "results.json"
         if results.exists():
-            needles = [str(Path.home()), "sk-ant-", "sk-or-", *identity]
             results.write_text(json.dumps(_scrubbed(json.loads(results.read_text(encoding="utf-8")), needles),
                                           indent=1) + "\n", encoding="utf-8")
         print("refusing to keep the recording: " + ", ".join(sorted(set(found))), file=sys.stderr)
+    return found
+
+
+def finish(target: Path, commit: str) -> int:
+    """The leak gate, then the manifest."""
+    if _leak_gate(target):
         return 1
     sources = ["tools/record_induce_sessions.py", "tools/record_skill_sessions.py",
                "src/gnd/skills/gnd-induce/SKILL.md",
@@ -577,7 +605,11 @@ def main(argv: list[str] | None = None) -> int:
     code = record(args.conversation, args.model, gate, commit)
     target = HOME / args.conversation / f"claude-{args.model}" / "run-1" / "results.json"
     if target.exists():
-        print(json.dumps(json.loads(target.read_text(encoding="utf-8"))["checks"], indent=1))
+        document = json.loads(target.read_text(encoding="utf-8"))
+        if "checks" in document:
+            print(json.dumps(document["checks"], indent=1))
+        else:   # an interrupted run writes its turns but no checks (issue 318)
+            print(f"the recorded {args.conversation} run is incomplete: it has no checks", file=sys.stderr)
     return code
 
 

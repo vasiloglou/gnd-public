@@ -262,7 +262,7 @@ def test_f7_spent_counts_the_earlier_attempts_and_f2(tmp_path, monkeypatch):
 
 
 def test_f3_redaction_runs_before_truncation():
-    source = __import__("inspect").getsource(recorder.record)
+    source = __import__("inspect").getsource(recorder._record)   # the turn loop moved there (issue 318)
     assert 'redact(result.get("result") or "", workspace)[-600:]' in source
 
 
@@ -414,3 +414,82 @@ def test_review_r2_f4_a_line_separator_keeps_the_turns_cost(tmp_path, monkeypatc
     monkeypatch.setattr(recorder, "finish", lambda target, commit: 0)
     recorder.record("score", "haiku", GATES / "004-IS2-recording-gate.md", "0" * 40)
     assert recorder.spent(tmp_path / "home") == pytest.approx(0.48)   # both declared turns, 0.24 each
+
+
+class _Ran:
+    def __init__(self, stdout="", returncode=0):
+        self.stdout, self.returncode = stdout, returncode
+
+
+def _identity(email, name=""):
+    """A fake subprocess.run that answers `git config` with a synthetic identity."""
+    def run(argv, **kwargs):
+        if argv[:2] == ["git", "config"]:
+            return _Ran({"user.email": email, "user.name": name}[argv[2]] + "\n")
+        raise AssertionError(argv)
+    return run
+
+
+def test_issue_318_f1_an_interrupted_run_keeps_no_path_and_keeps_its_spend(tmp_path, monkeypatch):
+    """Issue 318 (IS2 review r2 F1): an interrupt on turn two skipped finish(), so turn one's path stayed."""
+    calls = []
+
+    def fake_run(argv, **kwargs):
+        if argv[:2] == ["git", "config"]:
+            return _Ran()
+        calls.append(argv)
+        if len(calls) == 2:
+            raise KeyboardInterrupt
+        return _Ran(json.dumps({"type": "result", "result": "wrote /opt/example/report",
+                                "total_cost_usd": 0.24}) + "\n")
+
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    monkeypatch.setattr(recorder.subprocess, "run", fake_run)
+    with pytest.raises(KeyboardInterrupt):
+        recorder.record("score", "haiku", GATES / "004-IS2-recording-gate.md", "0" * 40)
+    target = tmp_path / "home/score/claude-haiku/run-1"
+    kept = {path.name: path.read_text(encoding="utf-8") for path in target.iterdir()}
+    assert "results.json" in kept and "manifest.json" not in kept
+    assert not [name for name, text in kept.items() if "/opt/example" in text]
+    assert recorder.spent(tmp_path / "home") == pytest.approx(0.24)
+
+
+def test_issue_318_f1_reporting_an_incomplete_run_does_not_crash(tmp_path, monkeypatch, capsys):
+    """Issue 318 (IS2 review r2 F1): main() read results.json["checks"], which an interrupted run lacks."""
+    target = tmp_path / "home/score/claude-haiku/run-1"
+    target.mkdir(parents=True)
+    (target / "results.json").write_text(json.dumps({"turns": [], "complete": False}), encoding="utf-8")
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    monkeypatch.setattr(recorder, "record", lambda *args: 2)
+    code = recorder.main(["--authorized-by", str(GATES / "004-IS2-recording-gate.md"), "--conversation", "score"])
+    assert code == 2 and "incomplete" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("name,text", [
+    ("turn-01.jsonl", '{"where": "/opt/example/note", "where": "ok"}\n'),
+    ("workspace.json", '{"where": "/opt/example/note", "where": "ok"}\n'),
+    ("turn-01.jsonl", '{"a": {"b": "<workspace>", "b": "/Users/example/x"}, "b": "ok"}\n'),
+])
+def test_issue_318_f2_a_repeated_key_cannot_hide_a_path(tmp_path, monkeypatch, name, text):
+    """Issue 318 (IS2 review r2 F2): the JSON loader kept the last value of a repeated key, as T3 does not."""
+    target = tmp_path / "run-1"
+    target.mkdir()
+    (target / name).write_text(text, encoding="utf-8")
+    (target / "results.json").write_text(json.dumps({"turns": []}), encoding="utf-8")
+    monkeypatch.setattr(recorder.subprocess, "run", _identity(""))
+    assert recorder.finish(target, "0" * 40) == 1
+    assert not (target / "manifest.json").exists()
+
+
+@pytest.mark.parametrize("said", ["fictional-handle", "by fictional-handle@example.invalid", "Fictional Person"])
+def test_issue_318_f3_what_the_leak_gate_finds_the_scrubber_removes(tmp_path, monkeypatch, said):
+    """Issue 318 (IS2 review r2 F3): the detector looked for the email's local part; the scrubber did not."""
+    target = tmp_path / "run-1"
+    target.mkdir()
+    (target / "results.json").write_text(json.dumps({"turns": [{"cost_usd": 0.5, "assistant_last": said}]}),
+                                         encoding="utf-8")
+    monkeypatch.setattr(recorder.subprocess, "run", _identity("fictional-handle@example.invalid", "Fictional Person"))
+    assert recorder.finish(target, "0" * 40) == 1
+    kept = (target / "results.json").read_text(encoding="utf-8")
+    assert "fictional-handle" not in kept and "Fictional Person" not in kept
+    assert json.loads(kept)["turns"][0]["cost_usd"] == 0.5

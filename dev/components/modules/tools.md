@@ -431,8 +431,8 @@ Record Claude Code running gnd-induce over the refunds example, one scripted con
 | `recheck(run) -> dict` | function | 413 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
 | `passed(result) -> bool` | function | 421 | (no docstring) |
 | `record(conversation, model, gate, commit) -> int` | function | 425 | (no docstring) |
-| `finish(target, commit) -> int` | function | 526 | The leak search, then the manifest. On a hit only results.json stays, with every path and needle |
-| `main(argv) -> int` | function | 566 | (no docstring) |
+| `finish(target, commit) -> int` | function | 578 | The leak gate, then the manifest. |
+| `main(argv) -> int` | function | 594 | (no docstring) |
 
 ## tools.record_judge_sessions — `tools/record_judge_sessions.py`
 Components: unassigned
@@ -519,9 +519,10 @@ Record Claude Code running a GND skill on an example's rules, every run kept.
 | `model_file(workspace) -> Path \| None` | function | 133 | (no docstring) |
 | `record_run(name, run, out, skill) -> dict` | function | 138 | (no docstring) |
 | `git_identity() -> list[str]` | function | 199 | The git user's email and its handle: an agent may copy them into what it writes (audit fields). |
-| `leaks(out) -> list[str]` | function | 205 | (no docstring) |
-| `finish(out, finished_later) -> int` | function | 214 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
-| `main() -> int` | function | 236 | (no docstring) |
+| `leak_needles() -> list[str]` | function | 205 | Every literal the leak search looks for. A scrubber uses the same list, so whatever the search |
+| `leaks(out) -> list[str]` | function | 214 | (no docstring) |
+| `finish(out, finished_later) -> int` | function | 220 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
+| `main() -> int` | function | 242 | (no docstring) |
 
 ## tools.release_text — `tools/release_text.py`
 Components: unassigned

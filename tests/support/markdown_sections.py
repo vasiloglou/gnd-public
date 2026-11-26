@@ -39,15 +39,17 @@ def markdown_section(text: str, heading: str) -> str:
 
 class Block:
     """One block of a Markdown page: ``paragraph`` (a list item included),
-    ``table`` (``rows``: the cells of each body row), ``fence`` (``info``, the
-    fence's info string, and ``text``, its literal content) or ``heading``.
-    A paragraph's and a cell's ``text`` has its whitespace runs collapsed, so
-    a reflowed sentence reads the same."""
+    ``table`` (``header``: its header cells; ``rows``: the cells of each body
+    row), ``fence`` (``info``, the fence's info string, and ``text``, its
+    literal content) or ``heading``. A paragraph's and a cell's ``text`` has
+    its whitespace runs collapsed, so a reflowed sentence reads the same."""
 
-    __slots__ = ("info", "kind", "rows", "text")
+    __slots__ = ("header", "info", "kind", "rows", "text")
 
-    def __init__(self, kind: str, text: str = "", *, rows: list[list[str]] | None = None, info: str = "") -> None:
+    def __init__(self, kind: str, text: str = "", *, rows: list[list[str]] | None = None, info: str = "",
+                 header: list[str] | None = None) -> None:
         self.kind, self.text, self.rows, self.info = kind, text, rows or [], info
+        self.header = header or []
 
 
 def _collapse(text: str) -> str:
@@ -163,17 +165,94 @@ def _without_comments(lines: list[str]) -> list[str]:
     return out
 
 
+def _skip_spaces(text: str, i: int, newline: bool) -> int:
+    """Past spaces and tabs from I, and past at most one line end when NEWLINE allows it."""
+    while i < len(text) and text[i] in " \t":
+        i += 1
+    if newline and i < len(text) and text[i] == "\n":
+        i += 1
+        while i < len(text) and text[i] in " \t":
+            i += 1
+    return i
+
+
+def _definition_end(text: str) -> int:
+    """Where the link reference definition at the start of TEXT ends (after its line end), or -1.
+
+    The CommonMark form: up to three spaces, ``[label]:`` with a non-blank label
+    holding no unescaped bracket, the destination (``<...>`` on one line, or a
+    run of non-space characters), then an optional title in double quotes,
+    single quotes or parentheses, which may continue over lines; only spaces may
+    follow on the line where it ends. A definition is not shown (CommonMark 4.7),
+    and neither is its title until a link that uses it is hovered."""
+    i = len(text) - len(text.lstrip(" "))
+    if i > 3 or not text.startswith("[", i):
+        return -1
+    i += 1
+    label_start = i
+    while i < len(text) and text[i] != "]":
+        if text[i] == "[":
+            return -1
+        i += 2 if text[i] == "\\" else 1
+    if i >= len(text) or not text[label_start:i].strip() or not text.startswith("]:", i):
+        return -1
+    i = _skip_spaces(text, i + 2, newline=True)
+    if text.startswith("<", i):
+        close = text.find(">", i)
+        if close < 0 or "\n" in text[i:close]:
+            return -1
+        i = close + 1
+    else:
+        start = i
+        while i < len(text) and not text[i].isspace():
+            i += 1
+        if i == start:
+            return -1
+    destination_end = i
+
+    def line_end(at: int) -> int:
+        at = _skip_spaces(text, at, newline=False)
+        if at == len(text):
+            return at
+        return at + 1 if text[at] == "\n" else -1
+
+    after_title = -1
+    j = _skip_spaces(text, i, newline=True)
+    if j > i and j < len(text) and text[j] in "\"'(":
+        closer = {'"': '"', "'": "'", "(": ")"}[text[j]]
+        k = j + 1
+        while k < len(text) and text[k] != closer:
+            if text[k] == "\n" and text[k + 1:k + 2] == "\n":
+                break   # a blank line ends the paragraph, and the title with it
+            k += 2 if text[k] == "\\" else 1
+        if k < len(text) and text[k] == closer:
+            after_title = line_end(k + 1)
+    return after_title if after_title >= 0 else line_end(destination_end)
+
+
+def _without_link_definitions(lines: list[str]) -> list[str]:
+    """A paragraph's LINES without the link reference definitions it opens with."""
+    text = "\n".join(lines)
+    end = _definition_end(text)
+    while end >= 0 and text:
+        text = text[end:]
+        end = _definition_end(text) if text else -1
+    return text.split("\n") if text.strip() else []
+
+
 def markdown_blocks(text: str) -> list[Block]:
-    """The blocks of TEXT, in order. HTML comments are not content and are
-    dropped, inline or not; a fence keeps its lines verbatim."""
+    """The blocks of TEXT, in order. HTML comments and link reference
+    definitions are not content and are dropped; a fence keeps its lines
+    verbatim."""
     blocks: list[Block] = []
     lines = _without_comments(text.splitlines())
     paragraph: list[str] = []
 
     def flush() -> None:
-        if paragraph:
-            blocks.append(Block("paragraph", _collapse(" ".join(paragraph))))
-            paragraph.clear()
+        kept = _without_link_definitions(paragraph)
+        if kept:
+            blocks.append(Block("paragraph", _collapse(" ".join(kept))))
+        paragraph.clear()
 
     i = 0
     while i < len(lines):
@@ -204,11 +283,11 @@ def markdown_blocks(text: str) -> list[Block]:
             continue
         if "|" in line and i + 1 < len(lines) and _is_delimiter(lines[i + 1]):
             flush()
-            rows, i = [], i + 2
+            header, rows, i = _cells(line), [], i + 2
             while i < len(lines) and lines[i].strip() and "|" in lines[i]:
                 rows.append(_cells(lines[i]))
                 i += 1
-            blocks.append(Block("table", rows=rows))
+            blocks.append(Block("table", rows=rows, header=header))
             continue
         if not line.strip():
             flush()

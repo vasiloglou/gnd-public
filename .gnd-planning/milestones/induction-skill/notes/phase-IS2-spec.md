@@ -403,3 +403,37 @@ each run's own `results.json` keeps the checks as recorded.
 
 No further run is authorized; the page shows these recordings and explains
 each failure beside its replay.
+
+## 16. The rewrite (D12) and what it found
+
+Fable rewrote `docs/tutorials/learn-rules.md` from the six replays (D12): a
+`/gnd:` prompt and its recording in every step, a "How to read a replay"
+section, an "In this run." note after each transcript explaining every
+failure, and a **Not recorded.** marker on step 6's review, which no IS2
+recording holds. Findings while gating it:
+
+- **F10 (the keep rule misses a prefixed learner).** `learn` ran the learner
+  as `timeout 120 python3 -I stand_in_learner.py ...`; the keep rule matches a
+  command's opening words, so its output was dropped. The page says so and
+  points to `faulty`'s replay, whose kept output holds the same learner's
+  printout. Not repaired: no further recording is authorized, and a repair
+  would change no kept file.
+- **F11 (replay results under the wrong call).** The renderer drew a batch of
+  parallel calls, then all their results. It now pairs them by tool-call id;
+  the one affected existing replay (`course-model-evolve-haiku-run-1`) is
+  re-rendered.
+- **F12 (three backticks in a flattened message).** A Claude message's lines
+  are joined into one, so a code block left a bare fence in the `recheck`
+  transcript, which the site's leaked-fence check (rightly) refuses. The
+  renderer marks such a fence `[code]`.
+- **F13 (checks that read recordings as pages).** The example's path scan read
+  JSON escapes as text (an escaped newline after `p:` looked like a drive
+  path); it now reads JSON through its loader. The release-wording check read
+  the recorded agent's words ("newer than") as a page's claim; replays,
+  rendered verbatim from recordings, are now outside its page set.
+- **F14 (the wheel budget).** `tools/check_installed_docs.py` asserts the
+  wheel's payload is under 12 MiB (12,582,912 bytes). With the nine
+  recordings (432 KB) under `src/gnd/examples/refunds/skill-sessions/` the
+  payload is 12,621,060 bytes. The budget predates this milestone and is not
+  this milestone's to change under the delegated ruling; the choice goes to
+  the owner at checkpoint C2.

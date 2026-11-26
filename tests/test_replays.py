@@ -62,10 +62,15 @@ def test_each_replay_is_named_after_the_run_it_replays(name):
     session = re.fullmatch(r'src/gnd/examples/plan_apps/recordings/([\w.-]+)/(\w+)/run-(\d)/session\.txt', source)
     skill = re.fullmatch(r'src/gnd/examples/plan_apps/skill-sessions(-evolve)?/claude-(\w+)/run-(\d)/turn-01\.jsonl',
                          source)
+    refunds = re.fullmatch(r'src/gnd/examples/refunds/skill-sessions/([\w-]+)/claude-(\w+)/run-(\d)/turn-01\.jsonl',
+                           source)   # induction-skill IS2, spec section 6.4
     if session:
         model, example, run = session.groups()
         assert name == f'{example}-{model}-run-{run}', (name, source)
         assert f'run {run})' in TABLE[name]['title']
+    elif refunds:
+        conversation, model, run = refunds.groups()
+        assert name == f'refunds-{conversation}-{model}-run-{run}' and f'run {run})' in TABLE[name]['title']
     else:
         assert skill, source
         evolve, model, run = skill.groups()
@@ -84,3 +89,12 @@ def test_each_tool_result_is_drawn_under_its_own_call():
                         json.dumps({'type': 'user', 'message': {'content': results}})])
     texts = [text.strip() for _, text in render_replay.stream_lines([stream])]
     assert texts == ['Bash cmd-a', '→ out-a', 'Bash cmd-b', '→ out-b']
+
+
+def test_a_code_block_in_a_flattened_message_is_marked_not_left_as_a_fence():
+    """induction-skill IS2: a message's lines are joined into one, so a code block's fence survives only as
+    three backticks in the text, which the site's leaked-fence check reads as an unrendered fence."""
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import render_replay
+    shown = render_replay._short("It ran.\n```text\nBLOCKING (none)\n```\nDone.")
+    assert '```' not in shown and shown == 'It ran. [code] BLOCKING (none) [code] Done.'

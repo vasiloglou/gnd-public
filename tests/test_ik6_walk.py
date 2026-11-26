@@ -274,21 +274,45 @@ def test_h3_missing_arguments_are_a_usage_error():
 
 
 # Each number the business tutorial states, beside the commands-page output it restates.
+#: (the tutorial's words, the commands page's output, the recording side). The recording side (induction-skill
+#: IS2, plan IS2-C4) is (conversation, a string its kept turns hold), or (None, a visible marker on the page) where
+#: no IS2 recording holds the result.
 TUTORIAL_CLAIMS = [
-    ("2 of 4 (harbor, airport)", "fired_on_negative=2/4 fired_on_positive=0/4 silent_on_negative=2/4"),
-    ("tries 40 simple rules", "searched 40 rules"),
-    ("support 4 of 4", "covers 4 (support 4/4)"),
-    ("**4 of 4** | 0 of 4", "covers harbor, market, airport, station"),
-    ("ten rules held in that week", "EMITTED 10"),
-    ("It left out four more", "SUPPRESSED declared=1 spanning-uniqueness=3"),
-    ("neither proposal is breaking", "  breaking: false\n  breaking: false"),
-    ("is at most 500", "then $v_v1 is at most 500."),
-    ("**warning** on refund 601, for 750", "{'$v_v0': '601', '$v_v1': '750'}"),
+    ("2 of 4 (harbor, airport)", "fired_on_negative=2/4 fired_on_positive=0/4 silent_on_negative=2/4",
+     ("score", "fired_on_negative=2/4")),
+    ("tries 40 simple rules", "searched 40 rules", ("faulty", "searched 40 rules")),
+    ("support 4 of 4", "covers 4 (support 4/4)", ("import", "covers 4 (support 4/4)")),
+    ("**4 of 4** | 0 of 4", "covers harbor, market, airport, station",
+     ("faulty", "covers harbor, market, airport, station")),
+    ("ten rules held in that week", "EMITTED 10", ("discover", "EMITTED 10")),
+    ("It left out four more", "SUPPRESSED declared=1 spanning-uniqueness=3",
+     ("discover", "SUPPRESSED declared=1 spanning-uniqueness=3")),
+    ("neither proposal is breaking", "  breaking: false\n  breaking: false", (None, "**Not recorded.**")),
+    ("is at most 500", "then $v_v1 is at most 500.", ("import", '"right": 500')),
+    ("**warning** on refund 601, for 750", "{'$v_v0': '601', '$v_v1': '750'}",
+     ("recheck", "{'$v_v0': '601', '$v_v1': '750'}")),
 ]
+SESSIONS = EXAMPLE / "skill-sessions"
 
 
-@pytest.mark.parametrize("tutorial, commands", TUTORIAL_CLAIMS)
-def test_c1_the_tutorial_numbers_match_the_commands_page(tutorial, commands):
+def _recorded(conversation: str) -> str:
+    """Every string the conversation's kept turns hold, decoded."""
+    run = SESSIONS / conversation / "claude-haiku/run-1"
+    return "\n".join(s for path in sorted(run.glob("turn-*.jsonl")) for line in path.read_text(encoding="utf-8").splitlines()
+                     if line.strip() for s in _strings(json.loads(line)))
+
+
+@pytest.mark.parametrize("tutorial, commands, recording", TUTORIAL_CLAIMS)
+def test_is2_each_claim_is_in_its_recording_or_marked(tutorial, commands, recording):
+    conversation, held = recording
+    if conversation is None:
+        assert held in PAGES[0].read_text(encoding="utf-8")
+    else:
+        assert held in _recorded(conversation), (conversation, held)
+
+
+@pytest.mark.parametrize("tutorial, commands, recording", TUTORIAL_CLAIMS)
+def test_c1_the_tutorial_numbers_match_the_commands_page(tutorial, commands, recording):
     assert tutorial in PAGES[0].read_text(encoding="utf-8")
     assert commands in PAGES[1].read_text(encoding="utf-8")
 

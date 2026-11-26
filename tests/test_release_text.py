@@ -370,6 +370,18 @@ def test_a_longer_version_and_a_first_version_statement_are_not_stale(tmp_path):
     assert not tool._mentions("version 0.2.0.dev0", "0.2.0") and not tool._mentions("10.2.0", "0.2.0")
 
 
+def test_a_recorded_replay_is_not_a_page_but_a_page_saying_the_same_is_stale(tmp_path):
+    """induction-skill IS2: a replay is rendered verbatim from a recording, so its words are the recorded agent's
+    and say nothing about a release."""
+    root = copy_tree(tmp_path)
+    words = "the model file is newer than the labels."
+    (root / "docs/assets/replays").mkdir(parents=True)
+    (root / "docs/assets/replays/example-run-1.txt").write_text(f"claude: {words}\n", encoding="utf-8")
+    assert tool.problems(root) == []
+    edit(root, "docs/index.md", "uv tool install get-nick-done==0.3.0", f"uv tool install get-nick-done==0.3.0\n{words}")
+    assert tool.problems(root) == [f"stale: docs/index.md: {words}"]
+
+
 @pytest.mark.parametrize("arguments, message", [
     ({"date": "11/11/2026"}, "is not YYYY-MM-DD"),
     ({"built": "4C07C0E6"}, "eight lowercase hexadecimal digits"),

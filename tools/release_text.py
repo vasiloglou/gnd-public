@@ -198,12 +198,17 @@ def _standing(relative: str, line: str) -> int | None:
     return None
 
 
+#: Replays are rendered verbatim from committed recordings (tools/render_replay.py, checked by
+#: tests/test_replays.py): their words are the recorded agent's, not a page's statement about a release.
+REPLAYS = "docs/assets/replays/"
+
+
 def page_files(root: Path) -> list[str]:
-    """README.md and every text file under docs/, except the release notes."""
+    """README.md and every text file under docs/, except the release notes and the recorded replays."""
     names = ["README.md"]
     for path in sorted((root / "docs").rglob("*")):
         relative = path.relative_to(root).as_posix()
-        if path.is_file() and relative != NOTES:
+        if path.is_file() and relative != NOTES and not relative.startswith(REPLAYS):
             names.append(relative)
     return names
 

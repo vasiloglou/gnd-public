@@ -46,8 +46,13 @@ def session_lines(text: str) -> list[tuple[str, str]]:
     return lines
 
 
+#: A code block's fence line. Joining a message's lines into one leaves only the backticks, which would read as
+#: an unrendered fence on the site (induction-skill IS2); the joined text marks it instead.
+CODE_FENCE = re.compile(r"^[ \t]*(?:`{3,}|~{3,})[^\n`]*$", re.MULTILINE)
+
+
 def _short(value: str, limit: int = 300) -> str:
-    value = " ".join(value.split())
+    value = " ".join(CODE_FENCE.sub("[code]", value).split())
     return value if len(value) <= limit else value[:limit - 1] + "…"
 
 

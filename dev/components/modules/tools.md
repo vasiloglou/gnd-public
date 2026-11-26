@@ -530,15 +530,15 @@ Publication-day text: move the pages from "prepared" to "published", and check t
 | `notes_opening(declared, date, released, tagged) -> str` | function | 150 | The first paragraph of the release notes once `declared` is published. |
 | `compatibility_paragraph(declared, date, released, tagged) -> str` | function | 169 | The first paragraph of the compatibility page once `declared` is published. |
 | `support_row(declared, built, profile) -> str` | function | 181 | (no docstring) |
-| `page_files(root) -> list[str]` | function | 201 | README.md and every text file under docs/, except the release notes. |
-| `stale_lines(root, declared, released) -> list[str]` | function | 211 | Lines that name an older version or use prepared-state wording and are not standing. |
-| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 239 | (no docstring) |
-| `presence_problems(root, declared) -> list[str]` | function | 264 | The pins, the links and the support row name the declared version. |
-| `tag_problems(root, declared, released) -> list[str]` | function | 292 | A tag-only version: newer than every published one, with its own notes heading and install command. |
-| `subject_version(root) -> str \| None` | function | 311 | The version the pages are held to: the declared one, or the latest published one while |
-| `problems(root) -> list[str]` | function | 321 | Everything that still describes the state before the declared version was published. |
-| `publish(root, *, date, built, profile) -> list[str]` | function | 338 | Make the publication-day edits for the declared version. Return the files changed. |
-| `main(argv) -> int` | function | 415 | (no docstring) |
+| `page_files(root) -> list[str]` | function | 206 | README.md and every text file under docs/, except the release notes and the recorded replays. |
+| `stale_lines(root, declared, released) -> list[str]` | function | 216 | Lines that name an older version or use prepared-state wording and are not standing. |
+| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 244 | (no docstring) |
+| `presence_problems(root, declared) -> list[str]` | function | 269 | The pins, the links and the support row name the declared version. |
+| `tag_problems(root, declared, released) -> list[str]` | function | 297 | A tag-only version: newer than every published one, with its own notes heading and install command. |
+| `subject_version(root) -> str \| None` | function | 316 | The version the pages are held to: the declared one, or the latest published one while |
+| `problems(root) -> list[str]` | function | 326 | Everything that still describes the state before the declared version was published. |
+| `publish(root, *, date, built, profile) -> list[str]` | function | 343 | Make the publication-day edits for the declared version. Return the files changed. |
+| `main(argv) -> int` | function | 420 | (no docstring) |
 
 ## tools.render_replay — `tools/render_replay.py`
 Components: unassigned
@@ -547,13 +547,13 @@ Render a recorded session as an animated SVG replay, in the hero figure's visual
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `session_lines(text) -> list[tuple[str, str]]` | function | 33 | (class, text) per line of a plan app's session.txt. |
-| `stream_lines(texts) -> list[tuple[str, str]]` | function | 54 | (class, text) per event of Claude Code stream-json turns: what the user said, what the assistant |
-| `user_turns(paths, said) -> list[str]` | function | 129 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
-| `condensed(lines) -> list[tuple[str, str]]` | function | 138 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
-| `wrap(lines) -> list[tuple[str, str]]` | function | 162 | (no docstring) |
-| `svg(lines, title, ident) -> str` | function | 174 | (no docstring) |
-| `transcript(lines) -> str` | function | 203 | (no docstring) |
-| `main() -> int` | function | 207 | (no docstring) |
+| `stream_lines(texts) -> list[tuple[str, str]]` | function | 59 | (class, text) per event of Claude Code stream-json turns: what the user said, what the assistant |
+| `user_turns(paths, said) -> list[str]` | function | 134 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
+| `condensed(lines) -> list[tuple[str, str]]` | function | 143 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
+| `wrap(lines) -> list[tuple[str, str]]` | function | 167 | (no docstring) |
+| `svg(lines, title, ident) -> str` | function | 179 | (no docstring) |
+| `transcript(lines) -> str` | function | 208 | (no docstring) |
+| `main() -> int` | function | 212 | (no docstring) |
 
 ## tools.rf1_pins — `tools/rf1_pins.py`
 Components: unassigned

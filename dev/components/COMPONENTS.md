@@ -640,7 +640,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.exp_command
 - does: Register experiment lifecycle commands and dispatch initialization, validation, expectation authoring, runs and closure.
-- verbs: experiment command, initialize experiment, validate specification, author expectation, run experiment, close experiment, session contract, adapter policy, test argv, wall seconds, register parser, dispatch handler
+- verbs: experiment command, initialize experiment, validate specification, author expectation, run experiment, close experiment, session contract, adapter policy, test argv, wall seconds, register parser, dispatch handler, portable prompt, contract digest in prompt, prompt locator, read contract once
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1247,7 +1247,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_exp_session_contract.py, tests/test_public_local_adapter_policy_controls.py
 - checked: partial
 - notes: Versions select closed wire readers before normalization; this component owns contract integrity rather than runtime acceptance.
-- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
+- reread: 2026-11-26, beside the diff of its modules since bedba9a (code at c304885); still accurate.
 
 
 ### exp.adapter_policy
@@ -1309,7 +1309,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### exp.acceptance
 - does: Cross-check verifier payloads, decide required-case acceptance, rank attempts, and build canonical repair feedback.
-- verbs: validate_verifier_payload, validate_tests_payload, case_decision, contract_accepts, best_key, build_attempt_feedback, canonical_feedback, normalized_verifier_signature, exact output, coverage gap, checker band, stale evidence, required denominator, diagnostic case, repair feedback, attempt ranking
+- verbs: validate_verifier_payload, validate_tests_payload, case_decision, contract_accepts, best_key, build_attempt_feedback, canonical_feedback, normalized_verifier_signature, exact output, coverage gap, checker band, stale evidence, required denominator, diagnostic case, repair feedback, attempt ranking, SessionEvidenceJson, bounded JSON decode before version dispatch
 - in: Retained verifier bytes, process exit, contract case, current digests, and immutable output observations
 - out: CaseEvaluation, acceptance decisions, ranking keys, and canonical feedback bytes with SHA-256
 - status: canonical
@@ -1429,6 +1429,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: exp.candidate_patch, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store
 - tests: tests/test_exp_session_store.py, tests/test_exp_session_evidence_compat.py, tests/test_rf8_sessions.py, tests/test_public_session_wire_guards.py, tests/test_public_session_version_relabel.py
 - notes: session_store.py preserves historical identity aliases for these moved types and helpers; qualification remains gnd.exp.session_store. This module also owns bounded descriptor-based candidate intake and exclusive evidence-file creation.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at c304885); still accurate.
 
 
 ### exp.session_store
@@ -1903,7 +1904,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.validation
 - does: Parse bounded model bytes, remembering each parse for one public call inside a parse scope, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate, parse_scope]. The unattended rules exempt included elements from U2-U6 and keep U7 and U8 as the include rule says.
-- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage, parse once, parse scope, parse cache, parse_scoped, remembered document, write check, flat_without_root_issue, flattened model without root hint, first document pending, include-only root, block scalar trailing whitespace
+- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, YAML depth cap, nesting depth limit, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage, parse once, parse scope, parse cache, parse_scoped, remembered document, write check, flat_without_root_issue, flattened model without root hint, first document pending, include-only root, block scalar trailing whitespace
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
@@ -2166,7 +2167,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.check
 - tests: tests/test_v71_phase4_successors.py, tests/test_public_v72_status.py
 - notes: Validation trusts supplied mechanical judgments and checks their partition against bound facts; it does not reevaluate constraints.
-- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
+- reread: 2026-11-26, beside the diff of its modules since bedba9a (code at c304885); still accurate.
 
 
 ### check.applicability
@@ -2413,6 +2414,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_incremental_extensions.py, tests/test_incremental_extensions_review.py, tests/test_m3_extension_preparation.py, tests/test_rf3_core.py, tests/test_public_adapter_derivation.py, tests/test_public_derivation_evaluation_complete.py
 - checked: partial
 - notes: This is the defining calculation home below checker; historical checker names remain explicit aliases, and applicability consumes effective_view.
+- reread: 2026-11-26, beside the diff of its modules since bedba9a (code at c304885); still accurate.
 
 
 ### check.calculation_scope
@@ -2525,7 +2527,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.diff
 - does: Compare same-vocabulary models using conservative entailment rules and shared population counterexamples [diff_models].
-- verbs: model diff, semantic comparison, compare constraints, conservative entailment, implication rules, undecided result, vocabulary identity, population counterexample, separating population, boundary synthesis, derived tuple difference, description annotations, model digests, compare_constraints, compare_population, description_annotations, diff_models
+- verbs: model diff, semantic comparison, compare constraints, conservative entailment, implication rules, undecided result, vocabulary identity, population counterexample, separating population, boundary synthesis, derived tuple difference, description annotations, model digests, compare_constraints, compare_population, description_annotations, diff_models, synth extra absent, synthesis not derivable
 - in: Two non-temporal loaded models with the same vocabulary, optional population bytes, synthesis selection and seed
 - out: Differential report with entailment rows, population bands, directional separators, derivation differences and synthesis refusals
 - status: canonical
@@ -2581,7 +2583,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.population_loading
 - does: Load YAML or JSON populations through shape and optional model validation [load_population].
-- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, duplicate keys, read_population_bytes, read population file once, tool-output source, producer, population source enum, producer invariant on model_copy
+- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, YAML depth cap, nesting depth limit, duplicate keys, read_population_bytes, read population file once, tool-output source, producer, population source enum, producer invariant on model_copy
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
@@ -2595,8 +2597,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.query_index
-- does: Query detached model snapshots through a bounded content cache [ModelIndex], and keep per-model universe tables (reference value types, denoting types, subtype children, kinds) that the checker's universe walks read.
-- verbs: model lookup, query model, cached models, detached snapshot, fact types, object types, role players, supertype closure, positional constraints, index_scope, independent_index_scope, cache invalidation, reference value type table, denoted by, subtype children, object type kind
+- does: Query detached model snapshots through a bounded cache keyed on content and key order [ModelIndex], and keep per-model universe tables, built from the canonical document (reference value types, denoting types, subtype children, kinds), that the checker's universe walks read.
+- verbs: model lookup, query model, cached models, detached snapshot, fact types, object types, role players, supertype closure, positional constraints, index_scope, independent_index_scope, cache invalidation, key order cache key, fact_map, fact rows by id, last duplicate wins, canonical document tables, reference value type table, denoted by, subtype children, object type kind
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
@@ -2649,6 +2651,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_evolve_shape_matches.py
 - checked: partial
 - notes: Also owns role-player multiset signatures used by discovery and evolution; equal primitives do not collapse distinct object-type ids.
+- reread: 2026-11-26, beside the diff of its modules since bedba9a (code at c304885); still accurate.
 
 
 ### model.relational_mapping
@@ -2742,7 +2745,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### infra.text_output
 - does: Print validation issues, snapshot verdicts, transition traces and projected report text; render check, validate, walk and verify text from a payload's rows, plain or projected.
-- verbs: text report, projected check text, row renderer, issue lines, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance, walk renderer, render_transition_rows, projected walk text, extraction line, projected verify text, model identity output
+- verbs: text report, projected check text, row renderer, issue lines, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, finite JSON numbers only, live assurance, vacuous acceptance line, print_vacuous_acceptance, walk renderer, render_transition_rows, projected walk text, extraction line, projected verify text, model identity output
 - status: canonical
 - modules: src/gnd/output.py
 - uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, model.scalar_identity, semantics.transitions
@@ -2854,6 +2857,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py, tests/test_public_adapter_derivation.py
 - checked: partial
 - notes: Explicit effective facts may carry derived observations; derived origins require dependency lineage.
+- reread: 2026-11-26, beside the diff of its modules since bedba9a (code at c304885); still accurate.
 
 
 ### semantics.witness_origins
@@ -2956,7 +2960,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_transition_report.py, tests/test_public_transition_walks.py, tests/test_public_transition_contract.py, tests/test_v62_phase2_intermediate.py, tests/test_v62_phase3_terms.py, tests/test_public_phase4_transition_support.py
 - checked: partial
 - notes: transition.py combines input validation, report models and evaluation; transition_kernel.py supplies pure primitive decisions also consumed by payloads. Failed preconditions produce findings while effects still apply; band combines embedded snapshot findings with transition findings.
-- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
+- reread: 2026-11-26, beside the diff of its modules since bedba9a (code at c304885); still accurate.
 
 
 ### agent.solve
@@ -2998,6 +3002,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.api, model.diff, model.verbalization
 - tests: tests/test_v70_phase5_adversarial.py, tests/test_v70_phase5_corpus.py
 - notes: Projection occurs before sentence construction; original population fact indices survive deterministic sorting. Witness rendering validates role completeness and primitive compatibility without asserting population membership.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at c304885); still accurate.
 
 
 ### model.extraction_vocabulary
@@ -3078,6 +3083,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.synth
 - tests: tests/test_poolfile.py, tests/test_synth_conforming.py, tests/test_synth_values.py
 - notes: Loading checks the closed pool schema before model coherence; the builder checks coherence before returning. EntityPool never mints entity identifiers and falls back to constrained primitive generation for unsampled value types.
+- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at c304885); still accurate.
 
 
 ### synth.values
@@ -3768,6 +3774,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - native query: examples.book_recommendations, examples.expense_application, export.applications
 - near misses: discover.service, witness.why_not
 - negated atoms: semantics.snapshot_adapter, semantics.snapshot_ir
+- nesting depth limit: model.population_loading, model.validation
 - no extraction: cli.verify_command, export.verification
 - no subjects: measure.coverage, synth.frontier, synth.prediction
 - not derivable: synth.boundary, synth.mutations
@@ -3914,6 +3921,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - witness projection: check.snapshot_decision, semantics.phase1_slice
 - witness view: cli.witness_command, subsystem.witness, witness.command
 - work budget: discover.service, synth.guarded, witness.why_not
+- yaml depth cap: model.population_loading, model.validation
 <!-- verbs:end -->
 
 

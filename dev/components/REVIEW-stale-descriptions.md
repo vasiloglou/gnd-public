@@ -95,3 +95,48 @@ evolution contract pins the text.
 - "check value is one of a list membership" -> model.validation (model.scalar_terms, where membership is compiled, is not first)
 - "refuse stale population before apply" -> the module src/gnd/evolve/population_check.py, not its component
 - "operation outcomes report" -> cli.evolve_command (evolve.operation_outcomes is not first)
+
+## Second pass, after main moved to c304885
+
+Main was merged into this branch at c304885, and 16 components had commits to their
+modules after their `does`, `verbs` or `reread` line (the first group of `review`).
+Each was read the same way: the entry beside `git diff <commit>..HEAD` of its modules,
+from the commit the lead named (1519ecb, 08fcfd0 or bedba9a). The source tree at HEAD
+is that of c304885.
+
+9 entries read and found still accurate; each has a `reread:` line dated 2026-11-26
+naming the commit it was read from (code at c304885): model.reference_schemes,
+check.admission, semantics.extensions, semantics.snapshot_adapter,
+semantics.transitions, model.population_sentences (each only reads fact rows through
+`ModelIndex.fact_map`, the same last-wins map it built before), exp.schema (its verbs
+already name `read_session_contract_with_digest` and the portable prompt),
+exp.session_evidence (its readers now share `SessionEvidenceJson`; same behaviour) and
+synth.pool (its `out` already names the pool byte limit). 7 entries edited:
+
+- model.query_index: `does` now says the cache is keyed on content and key order and the universe tables are built from the canonical document; verbs for `fact_map` and the last-wins fact map.
+- model.diff: verbs for the absent synth extra, recorded as not-derivable synthesis (issue 323).
+- model.validation: verbs for the YAML depth cap the model parser now enforces.
+- model.population_loading: verbs for the YAML depth cap the population parser now enforces.
+- cli.exp_command: verbs for the portable prompt, which names the contract by digest, and for reading the contract once.
+- exp.acceptance: verbs for `SessionEvidenceJson`, the bounded JSON decode in front of each version dispatcher.
+- infra.text_output: verbs for the canonical payload refusing non-finite numbers.
+
+### Suggested code changes
+
+| # | Kind | What | Where | Size | Checked how |
+|---|---|---|---|---|---|
+| 5 | Duplicate | Two `model_validate_json` overrides still repeat the body `SessionEvidenceJson` now holds | src/gnd/exp/session_contract.py:1138, src/gnd/exp/session_records.py:409 | small | read both overrides and the mixin at src/gnd/exp/session_eval.py:1185 |
+
+`SessionEvidenceJson` decodes through the shared bounded reader and hands the document
+to `model_validate`. `DataDrivenContract` and `DeclaredLaunchIntent` do the same in
+their own overrides. The contract module cannot import the mixin from `session_eval.py`,
+which imports it, so sharing it means moving the mixin lower (beside the contract or
+into the input policy). The overrides in `evolve/models.py` use their own decoder and
+were not compared.
+
+### Searches tried
+
+- "yaml depth cap" -> infra.input_policy, then model.population_loading and model.validation
+- "portable prompt contract digest" -> cli.exp_command, then exp.schema
+- "diff without synth extra" -> model.diff
+- "bounded json decode version dispatch" -> exp.acceptance

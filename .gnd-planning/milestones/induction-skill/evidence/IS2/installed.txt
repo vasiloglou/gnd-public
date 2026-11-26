@@ -1,0 +1,9 @@
+IS2 T12, 2026-11-26, at commit f7aebc80 (tools/check_installed_docs.py, 13 MiB wheel budget).
+release: get_nick_done-0.5.2-py3-none-any.whl payload 12621060 bytes (< 13631488: True) sha256 d57a14c317785cb0e699cd1c322b9f9b685606671fbefe34ceb1506a168ba401
+comparison: get_nick_done-0.5.2-py3-none-any.whl payload 12621060 bytes (< 13631488: True) sha256 d57a14c317785cb0e699cd1c322b9f9b685606671fbefe34ceb1506a168ba401
+check_installed_docs.py: exit 1 in the release origin at docs/bookrec/08-guarded-rules.md block 15
+  (gnd synth needs the optional synth extra; the check installs the wheel without extras).
+  The same command on an export of the IS2 base a223ac72 fails at the same block: pre-existing, spec finding F15.
+The IS2 pages' runner group, run from each installed wheel with tools/run_tutorials.py --group induced:
+  release: learn-rules-commands.md: selected executable blocks passed; 10 tutorial blocks passed
+  comparison: learn-rules-commands.md: selected executable blocks passed; 10 tutorial blocks passed

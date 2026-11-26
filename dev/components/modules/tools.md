@@ -409,21 +409,29 @@ Record Claude Code running gnd-induce over the refunds example, one scripted con
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `environment() -> dict[str, str]` | function | 105 | (no docstring) |
-| `gate_ok(path) -> bool` | function | 112 | The recording gate record: a committed file whose front matter names this scope. |
-| `spent(home) -> float` | function | 121 | USD reported by every kept conversation's turns so far (a missing cost counts as 0). With no folder |
-| `seed(workspace, steps) -> list[dict]` | function | 139 | Run the commands-page steps in the workspace; each step's argv, exit and the digests after it. |
-| `workspace_digests(workspace) -> dict[str, str]` | function | 155 | (no docstring) |
-| `tool_uses(streams) -> list[tuple[str, dict]]` | function | 160 | (tool name, input) for every tool call in the raw streams; total over any line. |
-| `bash_commands(calls) -> list[str]` | function | 177 | (no docstring) |
-| `assistant_text(streams) -> str` | function | 181 | (no docstring) |
-| `programs(command) -> list[str]` | function | 207 | The program each shell segment runs, after NAME=value assignments; quotes respected (IS2 finding F4: |
-| `out_paths(commands, sub) -> set[str]` | function | 231 | The --out values of every command running `gnd <sub>`, relative to the workspace. |
-| `checks(conversation, workspace, before, streams, after) -> dict` | function | 241 | Spec section 6.2: each check true or false, computed outside the agent. `after` may be given |
-| `recheck(run) -> dict` | function | 291 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
-| `passed(result) -> bool` | function | 299 | (no docstring) |
-| `record(conversation, model, gate, commit) -> int` | function | 303 | (no docstring) |
-| `finish(target, commit) -> int` | function | 368 | The leak search, then the manifest. On a hit only results.json stays. |
-| `main(argv) -> int` | function | 395 | (no docstring) |
+| `gate_ok(path) -> bool` | function | 117 | The recording gate record: a file in this milestone's folder, named for the IS2 gate, whose YAML front |
+| `spent(home) -> float` | function | 142 | USD reported by every kept conversation's turns so far (a missing cost counts as 0). With no folder |
+| `seed(workspace, steps) -> list[dict]` | function | 160 | Run the commands-page steps in the workspace; each step's argv, exit and the digests after it. |
+| `workspace_digests(workspace) -> dict[str, str]` | function | 176 | (no docstring) |
+| `tool_calls(streams) -> list[dict]` | function | 192 | Every tool call with its own result, paired by call id within its stream (one stream per turn): name, |
+| `tool_uses(streams) -> list[tuple[str, dict]]` | function | 219 | (tool name, input) for every tool call in the streams. |
+| `bash_commands(calls) -> list[str]` | function | 224 | (no docstring) |
+| `assistant_text(streams) -> str` | function | 228 | (no docstring) |
+| `segments(command) -> list[list[str]]` | function | 251 | The words of each simple command, split at ; & \| and newlines, quotes respected, NAME=value |
+| `program(words) -> str` | function | 276 | (no docstring) |
+| `programs(command) -> list[str]` | function | 280 | The program each shell segment runs (`python -m pip` counts as pip). |
+| `runs(words, *path) -> bool` | function | 290 | True when the segment runs `gnd PATH...` (gnd by any path), not its help. |
+| `option_values(words, name) -> list[str]` | function | 296 | (no docstring) |
+| `relative(path) -> str \| None` | function | 306 | A path relative to the workspace, normalized; None when it is outside the workspace. |
+| `out_paths(commands, *sub, option) -> set[str]` | function | 317 | The `option` values of every segment running `gnd SUB...`, relative to the workspace. |
+| `outside_words(command) -> list[str]` | function | 323 | Words of a command that name a place outside the workspace: a redaction marker, an absolute or home |
+| `is_proposal(content) -> bool` | function | 339 | Text that parses as an evolve proposal: a JSON object with operations and a proposal id or the expected |
+| `checks(conversation, workspace, before, streams, after) -> dict` | function | 350 | Spec sections 6.1 and 6.2: each check true or false, computed outside the agent. `after` may be given |
+| `recheck(run) -> dict` | function | 413 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
+| `passed(result) -> bool` | function | 421 | (no docstring) |
+| `record(conversation, model, gate, commit) -> int` | function | 425 | (no docstring) |
+| `finish(target, commit) -> int` | function | 526 | The leak search, then the manifest. On a hit only results.json stays, with every path and needle |
+| `main(argv) -> int` | function | 566 | (no docstring) |
 
 ## tools.record_judge_sessions — `tools/record_judge_sessions.py`
 Components: unassigned
@@ -506,13 +514,13 @@ Record Claude Code running a GND skill on an example's rules, every run kept.
 | --- | --- | --- | --- |
 | `sha256(data) -> str` | function | 63 | (no docstring) |
 | `redact(text, workspace) -> str` | function | 67 | (no docstring) |
-| `kept_stream(stream, workspace_marker, keep) -> str` | function | 74 | The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and |
-| `model_file(workspace) -> Path \| None` | function | 117 | (no docstring) |
-| `record_run(name, run, out, skill) -> dict` | function | 122 | (no docstring) |
-| `git_identity() -> list[str]` | function | 183 | The git user's email and its handle: an agent may copy them into what it writes (audit fields). |
-| `leaks(out) -> list[str]` | function | 189 | (no docstring) |
-| `finish(out, finished_later) -> int` | function | 198 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
-| `main() -> int` | function | 220 | (no docstring) |
+| `kept_stream(stream, workspace_marker, keep) -> str` | function | 84 | The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and |
+| `model_file(workspace) -> Path \| None` | function | 133 | (no docstring) |
+| `record_run(name, run, out, skill) -> dict` | function | 138 | (no docstring) |
+| `git_identity() -> list[str]` | function | 199 | The git user's email and its handle: an agent may copy them into what it writes (audit fields). |
+| `leaks(out) -> list[str]` | function | 205 | (no docstring) |
+| `finish(out, finished_later) -> int` | function | 214 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
+| `main() -> int` | function | 236 | (no docstring) |
 
 ## tools.release_text — `tools/release_text.py`
 Components: unassigned
@@ -520,25 +528,26 @@ Publication-day text: move the pages from "prepared" to "published", and check t
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ReleaseTextError` | class(Exception) | 100 | An input the tool cannot work from. |
-| `version_key(version) -> tuple[int, ...]` | function | 104 | (no docstring) |
-| `declared_version(root) -> str` | function | 108 | (no docstring) |
-| `released_versions(root) -> list[str]` | function | 112 | The published versions, oldest first, from their one home in the tests. |
-| `tagged_versions(root) -> list[str]` | function | 121 | The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`. |
-| `tag_sentence(version) -> str` | function | 130 | (no docstring) |
-| `tag_install_command(version) -> str` | function | 138 | (no docstring) |
-| `notes_opening(declared, date, released, tagged) -> str` | function | 150 | The first paragraph of the release notes once `declared` is published. |
-| `compatibility_paragraph(declared, date, released, tagged) -> str` | function | 169 | The first paragraph of the compatibility page once `declared` is published. |
-| `support_row(declared, built, profile) -> str` | function | 181 | (no docstring) |
-| `page_files(root) -> list[str]` | function | 206 | README.md and every text file under docs/, except the release notes and the recorded replays. |
-| `stale_lines(root, declared, released) -> list[str]` | function | 216 | Lines that name an older version or use prepared-state wording and are not standing. |
-| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 244 | (no docstring) |
-| `presence_problems(root, declared) -> list[str]` | function | 269 | The pins, the links and the support row name the declared version. |
-| `tag_problems(root, declared, released) -> list[str]` | function | 297 | A tag-only version: newer than every published one, with its own notes heading and install command. |
-| `subject_version(root) -> str \| None` | function | 316 | The version the pages are held to: the declared one, or the latest published one while |
-| `problems(root) -> list[str]` | function | 326 | Everything that still describes the state before the declared version was published. |
-| `publish(root, *, date, built, profile) -> list[str]` | function | 343 | Make the publication-day edits for the declared version. Return the files changed. |
-| `main(argv) -> int` | function | 420 | (no docstring) |
+| `ReleaseTextError` | class(Exception) | 101 | An input the tool cannot work from. |
+| `version_key(version) -> tuple[int, ...]` | function | 105 | (no docstring) |
+| `declared_version(root) -> str` | function | 109 | (no docstring) |
+| `released_versions(root) -> list[str]` | function | 113 | The published versions, oldest first, from their one home in the tests. |
+| `tagged_versions(root) -> list[str]` | function | 122 | The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`. |
+| `tag_sentence(version) -> str` | function | 131 | (no docstring) |
+| `tag_install_command(version) -> str` | function | 139 | (no docstring) |
+| `notes_opening(declared, date, released, tagged) -> str` | function | 151 | The first paragraph of the release notes once `declared` is published. |
+| `compatibility_paragraph(declared, date, released, tagged) -> str` | function | 170 | The first paragraph of the compatibility page once `declared` is published. |
+| `support_row(declared, built, profile) -> str` | function | 182 | (no docstring) |
+| `rendered_replays(root) -> set[str]` | function | 209 | (no docstring) |
+| `page_files(root) -> list[str]` | function | 218 | README.md and every text file under docs/, except the release notes and the rendered replays. |
+| `stale_lines(root, declared, released) -> list[str]` | function | 229 | Lines that name an older version or use prepared-state wording and are not standing. |
+| `notes_problems(root, declared, released, tagged) -> list[str]` | function | 257 | (no docstring) |
+| `presence_problems(root, declared) -> list[str]` | function | 282 | The pins, the links and the support row name the declared version. |
+| `tag_problems(root, declared, released) -> list[str]` | function | 310 | A tag-only version: newer than every published one, with its own notes heading and install command. |
+| `subject_version(root) -> str \| None` | function | 329 | The version the pages are held to: the declared one, or the latest published one while |
+| `problems(root) -> list[str]` | function | 339 | Everything that still describes the state before the declared version was published. |
+| `publish(root, *, date, built, profile) -> list[str]` | function | 356 | Make the publication-day edits for the declared version. Return the files changed. |
+| `main(argv) -> int` | function | 433 | (no docstring) |
 
 ## tools.render_replay — `tools/render_replay.py`
 Components: unassigned
@@ -547,13 +556,13 @@ Render a recorded session as an animated SVG replay, in the hero figure's visual
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `session_lines(text) -> list[tuple[str, str]]` | function | 33 | (class, text) per line of a plan app's session.txt. |
-| `stream_lines(texts) -> list[tuple[str, str]]` | function | 59 | (class, text) per event of Claude Code stream-json turns: what the user said, what the assistant |
-| `user_turns(paths, said) -> list[str]` | function | 134 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
-| `condensed(lines) -> list[tuple[str, str]]` | function | 143 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
-| `wrap(lines) -> list[tuple[str, str]]` | function | 167 | (no docstring) |
-| `svg(lines, title, ident) -> str` | function | 179 | (no docstring) |
-| `transcript(lines) -> str` | function | 208 | (no docstring) |
-| `main() -> int` | function | 212 | (no docstring) |
+| `stream_lines(texts) -> list[tuple[str, str]]` | function | 60 | (class, text) per event of Claude Code stream-json turns: what the user said, what the assistant |
+| `user_turns(paths, said) -> list[str]` | function | 135 | Stream-json in --print mode does not echo the prompt, so the user's declared turns are put back in. |
+| `condensed(lines) -> list[tuple[str, str]]` | function | 144 | For the picture only: a run of the assistant reading the skill's own pages (and their results) becomes one |
+| `wrap(lines) -> list[tuple[str, str]]` | function | 168 | (no docstring) |
+| `svg(lines, title, ident) -> str` | function | 180 | (no docstring) |
+| `transcript(lines) -> str` | function | 209 | (no docstring) |
+| `main() -> int` | function | 213 | (no docstring) |
 
 ## tools.rf1_pins — `tools/rf1_pins.py`
 Components: unassigned

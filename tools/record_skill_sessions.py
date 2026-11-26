@@ -71,6 +71,16 @@ def redact(text: str, workspace: Path) -> str:
     return TEMPORARY.sub("<tmp>", text)
 
 
+def _words(command: str) -> list[str]:
+    """A command's words, quotes respected (induction-skill IS2 review F7: a character prefix kept
+    `python stand_in_learner.py.backup` and dropped `python  stand_in_learner.py`)."""
+    import shlex
+    try:
+        return shlex.split(command)
+    except ValueError:
+        return command.split()
+
+
 def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[str, ...] = ()) -> str:
     """The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and
     reads and writes of files in the workspace). Other tool output is replaced by its size, so nothing the agent
@@ -78,24 +88,30 @@ def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[
     `keep` names further plain Bash commands, by their opening words, whose output is kept too
     (induction-skill IS2: the refunds stand-in learner)."""
     wanted, lines = set(), []
-    for raw in stream.splitlines():
+    forms = [_words(prefix) for prefix in keep]
+    for raw in stream.split("\n"):   # JSON lines end at newlines; U+2028 may sit inside a string
         try:
             event = json.loads(raw)
         except ValueError:
             continue
+        if not isinstance(event, dict):
+            continue   # induction-skill IS2 review F7: a non-object line raised instead of being skipped
         if event.get("type") == "system":
             event = {k: event.get(k) for k in ("type", "subtype", "model", "permissionMode") if k in event}
         elif event.get("type") == "assistant":
             message = event.get("message", {})
             event = {"type": "assistant", "message": {"model": message.get("model"), "content": message.get("content", [])}}
             for part in event["message"]["content"]:
+                if not isinstance(part, dict):
+                    continue
                 part.pop("signature", None)   # opaque bytes; the reasoning text stays
                 if part.get("type") == "tool_use":
                     target = str(part["input"].get("command") or part["input"].get("file_path") or "")
                     first = target.split()[0] if target.split() else ""
                     plain = not any(mark in target for mark in (";", "&&", "||", "|", "$(", "`"))
+                    words = _words(target)
                     kept_bash = part["name"] == "Bash" and plain and (
-                        first.endswith("gnd") or any(target.startswith(prefix) for prefix in keep))
+                        first.endswith("gnd") or any(form and words[:len(form)] == form for form in forms))
                     if kept_bash or target.startswith(workspace_marker) or (
                             part["name"] in ("Write", "Edit") and "/" not in target.replace(workspace_marker, "")):
                         wanted.add(part["id"])
@@ -106,7 +122,7 @@ def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[
             content = event["message"]["content"]
             if isinstance(content, list):
                 for part in content:
-                    if part.get("type") == "tool_result" and part.get("tool_use_id") not in wanted:
+                    if isinstance(part, dict) and part.get("type") == "tool_result" and part.get("tool_use_id") not in wanted:
                         size = len(json.dumps(part.get("content")))
                         part["content"] = f"[{size} bytes of output not kept]"
             event.pop("tool_use_result", None)

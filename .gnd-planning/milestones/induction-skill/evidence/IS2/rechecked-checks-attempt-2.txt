@@ -1,3 +1,4 @@
+Checks recomputed from the kept files with the checker after review phase-IS2-r1 (spec section 17).
 score            attempt-2: all checks pass
 learn            attempt-2: failed ['done']
 import           attempt-2: all checks pass

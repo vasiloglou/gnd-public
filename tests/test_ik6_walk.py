@@ -145,24 +145,30 @@ def test_t2_the_goldens_name_exactly_the_written_files():
 
 
 def _strings(value) -> list[str]:
-    """Every string a parsed JSON value holds, keys included."""
+    """Every string a parsed JSON value holds, keys included. Objects arrive as lists of pairs (see _load)."""
     if isinstance(value, str):
         return [value]
-    if isinstance(value, dict):
-        return [s for k, v in value.items() for s in (k, *_strings(v))]
+    if isinstance(value, tuple):
+        return [s for item in value for s in _strings(item)]
     if isinstance(value, list):
         return [s for item in value for s in _strings(item)]
     return []
 
 
+def _load(text: str):
+    """JSON with every key-value pair kept, duplicates included (review phase-IS2-r1 F13)."""
+    return json.loads(text, object_pairs_hook=lambda pairs: [tuple(pair) for pair in pairs])
+
+
 def _readable(path: Path) -> str:
     """The text a reader of the file sees: JSON and JSON lines through their loader, so an escape such as the
-    `\\n` after `p:` in recorded code is not read as a drive path (induction-skill IS2)."""
+    `\\n` after `p:` in recorded code is not read as a drive path (induction-skill IS2). JSON lines are split
+    at newlines only: U+2028 is legal inside a JSON string."""
     text = path.read_text(encoding="utf-8")
     if path.suffix == ".json":
-        return "\n".join(_strings(json.loads(text)))
+        return "\n".join(_strings(_load(text)))
     if path.suffix == ".jsonl":
-        return "\n".join(s for line in text.splitlines() if line.strip() for s in _strings(json.loads(line)))
+        return "\n".join(s for line in text.split("\n") if line.strip() for s in _strings(_load(line)))
     return text
 
 
@@ -298,8 +304,7 @@ SESSIONS = EXAMPLE / "skill-sessions"
 def _recorded(conversation: str) -> str:
     """Every string the conversation's kept turns hold, decoded."""
     run = SESSIONS / conversation / "claude-haiku/run-1"
-    return "\n".join(s for path in sorted(run.glob("turn-*.jsonl")) for line in path.read_text(encoding="utf-8").splitlines()
-                     if line.strip() for s in _strings(json.loads(line)))
+    return "\n".join(_readable(path) for path in sorted(run.glob("turn-*.jsonl")))
 
 
 @pytest.mark.parametrize("tutorial, commands, recording", TUTORIAL_CLAIMS)
@@ -321,3 +326,14 @@ def test_c2_south_is_never_over_500_not_under_it():
     for path in (PAGES[0], ROOT / "docs/assets/applications/refunds-weeks.svg"):
         text = path.read_text(encoding="utf-8")
         assert "under 500" not in text and "never go over 500" in text, path.name
+
+
+def test_t3_json_keeps_every_duplicate_key_and_a_line_separator(tmp_path):
+    """Review phase-IS2-r1 F13: json.loads keeps the last of duplicate keys, so an earlier value went unread;
+    and str.splitlines splits a JSON line at U+2028 inside a string."""
+    doubled = tmp_path / "x.json"
+    doubled.write_text('{"where": "/opt/example/note", "where": "ok"}', encoding="utf-8")
+    assert "/opt/example/note" in _readable(doubled)
+    separated = tmp_path / "turn-01.jsonl"
+    separated.write_text(json.dumps({"text": "a b"}, ensure_ascii=False) + "\n", encoding="utf-8")
+    assert "a b" in _readable(separated)

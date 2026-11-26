@@ -46,13 +46,14 @@ def session_lines(text: str) -> list[tuple[str, str]]:
     return lines
 
 
-#: A code block's fence line. Joining a message's lines into one leaves only the backticks, which would read as
-#: an unrendered fence on the site (induction-skill IS2); the joined text marks it instead.
-CODE_FENCE = re.compile(r"^[ \t]*(?:`{3,}|~{3,})[^\n`]*$", re.MULTILINE)
+#: A code fence's marker. Joining a message's lines into one leaves only the backticks, which would read as an
+#: unrendered fence on the site (induction-skill IS2); every run of three backticks or tildes, wherever it
+#: stands (a quoted block too), is marked, and the words around it stay (review phase-IS2-r1 F8).
+CODE_FENCE = re.compile(r"`{3,}|~{3,}")
 
 
 def _short(value: str, limit: int = 300) -> str:
-    value = " ".join(CODE_FENCE.sub("[code]", value).split())
+    value = " ".join(CODE_FENCE.sub(" [code] ", value).split())
     return value if len(value) <= limit else value[:limit - 1] + "…"
 
 
@@ -86,8 +87,9 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
 
     # Each result is drawn under its own call, found by id: a batch of parallel calls is followed by all its
     # results, which drew a result under the wrong command (induction-skill IS2).
-    results, calls = {}, set()
-    for text in texts:
+    # Pairs are found within one turn: a call id is unique only there (review phase-IS2-r1 F8).
+    for number, text in enumerate(texts, 1):
+        results, calls = {}, set()
         for raw in text.splitlines():
             try:
                 event = json.loads(raw)
@@ -99,7 +101,6 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
                     results[part["tool_use_id"]] = part
                 elif isinstance(part, dict) and part.get("type") == "tool_use" and part.get("id"):
                     calls.add(part["id"])
-    for number, text in enumerate(texts, 1):
         for raw in text.splitlines():
             try:
                 event = json.loads(raw)

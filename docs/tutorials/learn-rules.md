@@ -60,7 +60,9 @@ as a **proposal**, and only you can accept one.
 **Before you start.** Install GND from PyPI as the [installation page](../installation.md)
 shows, or from a checkout of the repository for unreleased work on `main`, as the [course planner's "Before you start"](course-planner.md#what-youll-build)
 shows. Add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
-shows, then copy the `refunds` example into an empty folder. The
+shows, then copy the `refunds` example into an empty folder.
+
+The
 [commands page](../how-to/learn-rules-commands.md) has the copy step, and shows
 every command with the output of a real run. The replays on this page are real
 recorded runs of Claude Code with Haiku over the shipped example, recorded on
@@ -98,8 +100,8 @@ in one, and each note below says which is which:
 | a wrong or surprising step by Haiku | a model's mistake or shortcut. The note says what it was. |
 | **Exit code 3** from GND | GND refusing something it could not reproduce. This is the check the page is about. |
 
-A recording has at most two messages from the reader. The second one tells
-Claude Code who to record a proposal as, and when. The skill never takes a
+Each replay on this page has at most two messages from the reader. The second
+one tells Claude Code who to record a proposal as, and when. The skill never takes a
 name from the computer; it asks you.
 
 ## 1. How good is the written rule?
@@ -129,12 +131,17 @@ Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this fo
     ```
 
 **In this run.** Haiku ran GND's measure over the eight weeks and the verdicts.
-GND's report opens with "REDACTION applied:" and then nothing: that line lists
-any values GND held back from the report, and here there were none. The score
+GND's report opens with "REDACTION applied:" and then nothing: that line names
+the parts of the data whose values the model asks GND to hold back, and this
+model names none.
+
+The score
 followed, and Haiku read it correctly: the rule fired on 2 of the 4 flagged
 weeks and on none of the 4 clean ones. The second message named who to record
 the work as. Haiku answered that scoring writes no proposal, so there was
-nothing to record, and it wrote nothing extra. Two commands were refused by
+nothing to record, and it wrote nothing extra.
+
+Two commands were refused by
 Claude Code's permission rules because Haiku had added an `echo` or a pipe;
 that is a limit of the recording, not a mistake GND caught, and Haiku ran each
 plain command again.
@@ -179,17 +186,24 @@ explained.
 **In this run.** Haiku exported the eight weeks, ran the stand-in learner
 under a two-minute time limit, and reported the learner's rule: a refund over
 500, covering harbor, market, airport and station. It said the claim was still
-unchecked and imported nothing, as asked. Three commands were refused by
+unchecked and imported nothing, as asked.
+
+Three commands were refused by
 Claude Code's permission rules (a loop over the week files, and two commands
 with an `echo` added); that is a limit of the recording, and Haiku read the
-files another way or ran the plain command again. The learner's own printout
+files another way or ran the plain command again.
+
+The learner's own printout
 is not in this replay, because the recorder keeps the output only of commands
 that start with the learner's name and Haiku started this one with the time
 limit. The same learner's printout is in step 4's replay ("searched 40
-rules"). The recorded conversation had a second turn, and the replay stops
+rules").
+
+The recorded conversation had a second turn, and the replay stops
 before it. That second turn belongs to the recording script, not to this
-step: it gave the name to record as and described the faulty learner, Haiku
-took it as the go-ahead, and it imported both claims. Steps 3 and 4 show
+step: it gave the name to record as and described the faulty learner. Haiku
+took it as the go-ahead and tried to import both claims: GND accepted the
+honest one and refused the faulty one. Steps 3 and 4 show
 those two imports in their own recordings.
 
 **The learner says**
@@ -235,12 +249,18 @@ OUT_DIR, with --also-claim north for the faulty learner.
 **In this run.** First message: Haiku read the learner's output and the week
 files and drew its own table of which weeks the rule covers. It said plainly
 that this was its own reading, not GND's check, and then asked who to record
-the proposal as and when. Second message: GND re-ran the rule on all eight
+the proposal as and when.
+
+Second message: GND re-ran the rule on all eight
 weeks and agreed with the learner. It printed "IMPORTED 1 learned clauses" and
-"covers 4 (support 4/4)", and wrote the proposal. The second message also
+"covers 4 (support 4/4)", and wrote the proposal.
+
+The second message also
 described the faulty learner, so Haiku ran that too and tried to import its
-claim. GND refused it with exit code 3, a coverage mismatch on north; step 4
-shows that refusal on its own. Three commands were refused by Claude Code's
+claim. GND refused it, because of a coverage mismatch on north; step 4
+shows that refusal on its own.
+
+Three commands were refused by Claude Code's
 permission rules (a loop over the week files, and two commands with an `echo`
 added); that is a limit of the recording, not something GND caught. Haiku
 handed the proposal over for review and did not start `gnd-model-evolve`
@@ -290,13 +310,17 @@ OUT_DIR, with --also-claim north for the faulty learner.
 import as. After the answer it ran the faulty learner, which printed "searched
 40 rules; 4 hold in some flagged batch and in no clean one", then its rule,
 then "deliberate mistake: also claiming that rule 0 covers north". Haiku
-passed that claim to GND unchanged. GND's import stopped with exit code 3:
+passed that claim to GND unchanged.
+
+GND refused the import:
 "coverage-mismatch: ... the learner reports ['north'] that GND does not
 cover". No proposal was written. Haiku reported the refusal as printed and did
-not change the claim or try again. Two commands were refused by Claude Code's
+not change the claim or try again.
+
+Two commands were refused by Claude Code's
 permission rules (one with a small script attached, one with an `echo`
-added); that is a limit of the recording. The exit code 3 is the only refusal
-here that comes from GND.
+added); that is a limit of the recording. GND's refusal of the import is the only
+refusal here that comes from GND.
 
 **GND says** no.
 
@@ -319,7 +343,9 @@ One asks for a learner that is not installed: Haiku stopped with "no learner
 named popper is installed". One starts in a folder where an output file
 already exists. One says "Make the import pass" after the refusal above: Haiku
 refused to change the learner's claim, then ran the honest learner and
-imported that instead. These runs were not tidy. In them Haiku also looked
+imported that instead.
+
+These runs were not tidy. In them Haiku also looked
 outside the folder and asked the computer which packages were installed, so
 read the recordings before relying on them.
 
@@ -357,10 +383,14 @@ proposal as before running anything that writes one. After the answer, GND's
 discover ran on that one week and printed "EMITTED 10" and "SUPPRESSED
 declared=1 spanning-uniqueness=3". Haiku read the ten suggestions back in
 plain English and marked the same two as likely accidents that the table below
-does. Four commands were refused by Claude Code's permission rules: Haiku had
+does.
+
+Four commands were refused by Claude Code's permission rules: Haiku had
 chained an `echo`, an `ls` or a second command onto each, and after the last
 refusal it read the proposal file directly. That is a limit of the recording,
-not a mistake GND caught. It had two small costs, and Haiku said both: it
+not a mistake GND caught.
+
+It had two small costs, and Haiku said both: it
 could not report GND's exit code, because the `echo` that would have shown it
 was refused, and it left two parts of GND's report unexamined: one candidate
 GND rejected with a warning, and the four it suppressed.
@@ -444,9 +474,13 @@ Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this fo
 **In this run.** Haiku ran GND's check on market's week. GND found nothing
 blocking and printed one advisory "[warning]": refund 601, for 750, breaks the
 new rule. The totals were pass=2 fail=0 warning=1, so the written rule still
-passes. Two commands were refused by Claude Code's permission rules because
+passes.
+
+Two commands were refused by Claude Code's permission rules because
 Haiku had chained extra commands onto them; that is a limit of the recording,
-and Haiku ran the plain check again. One small departure is Haiku's own. The
+and Haiku ran the plain check again.
+
+One small departure is Haiku's own. The
 skill says a re-check writes nothing. After the second message Haiku saved the
 check's output to a file and wrote a short notes file of its own beside it,
 holding the name and time. Those notes are Haiku's, not a GND record, and

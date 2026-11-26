@@ -380,7 +380,10 @@ each run's own `results.json` keeps the checks as recorded.
   - `learn`: turn 1 exported, ran the learner, reported its claim unchecked
     and imported nothing, as asked. Turn 2 is the recorder's second turn,
     which gives the actor and names the faulty learner; the agent took it as
-    the go-ahead and imported both claims, so `done` is false. That second
+    the go-ahead and tried to import both claims (GND wrote the honest
+    proposal and refused the faulty one, exit 3; corrected after review
+    phase-IS2-r1 F9, which found "imported both claims" here), so `done` is
+    false. That second
     turn is the script's, not a reader's; the replay shows turn 1 only
     (section 6.4 amended below).
   - `absent-learner`: it stopped with the named sentence and installed
@@ -437,3 +440,66 @@ recording holds. Findings while gating it:
   payload is 12,621,060 bytes. The budget predates this milestone and is not
   this milestone's to change under the delegated ruling; the choice goes to
   the owner at checkpoint C2.
+- **F15 (T12, a break that predates IS2).** `tools/check_installed_docs.py`
+  stops in the release origin at `docs/bookrec/08-guarded-rules.md` block 15:
+  `gnd synth` needs the optional `synth` extra, and the check installs the
+  wheel without extras. The same command on an export of the IS2 base
+  `a223ac72` fails at the same block, so it is not this phase's. The IS2
+  pages' runner group (`--group induced`) passes from both installed wheels
+  (10 blocks each), and both wheels are under the 13 MiB budget
+  ([installed.txt](../evidence/IS2/installed.txt)). Carried to the milestone
+  close as a residual with its own fix outside this milestone.
+
+## 17. Review round 1 and its repairs
+
+One independent reviewer (Codex, through the review helper) read the IS2 diff
+at `f7aebc80` ([phase-IS2-r1](reviews/phase-IS2-r1/review.md)): 14
+findings, verdict CHANGES_REQUESTED. Every finding was reproduced before its
+repair, each with a failing test first; the ledger is
+[FINDINGS.md](reviews/phase-IS2-r1/FINDINGS.md).
+
+- **Page (F9, F10).** Step 2 said Haiku "imported both claims"; GND accepted
+  the honest one and refused the faulty one. The page said a recording has at
+  most two reader messages (`make-it-pass` has three) and that the REDACTION
+  line lists held-back values (it names the coordinates the model asks to
+  redact). Corrected, with section 15's same phrase.
+- **Recorder checks (F4, F5, F6, F7).** Commands are now read as shell:
+  segments split at `; & |` and newlines, quotes respected, options read as
+  words, `gnd` by any path; outside paths include absolute and climbing words
+  (program texts such as an `awk` script excepted); a proposal is known by its
+  content; learner artifacts by their file names; the keep rule compares
+  words. Each `done` predicate now follows section 6.1's table, which the
+  first implementation had weakened: `faulty` needs GND's refusal of an import
+  that was not denied, `absent-learner` needs no learner call, and
+  `existing-output` a new discover output.
+- **Recorder gate (F1, F2, F3).** A gate record must sit in this milestone's
+  folder, carry the milestone and scope in YAML front matter, and be
+  committed and unchanged; `--model` admits only Haiku; each turn's cost is
+  written at once, so an interrupted conversation still counts; the leak gate
+  uses T3's `ABSOLUTE` patterns, and a refused run keeps only a scrubbed
+  `results.json` with its costs. C3's "hard cap" wording in the brief is
+  rejected as a claim: records 003 and 004 declare stop-after-crossing, which
+  the recorder does.
+- **Renderer and release check (F8, F12).** Every run of three backticks or
+  tildes in a flattened message becomes `[code]`, words kept; results pair
+  with calls within their turn. Only the rendered picture and transcript of a
+  listed replay leave the release-wording scan; `replays.json` and any other
+  file stay in it.
+- **Tests (F11, F13, F14).** The page test reads any fence length, allows the
+  unrecorded review prompt in step 6 only, and finds commands anywhere in
+  prose; the path scan keeps duplicate JSON keys and splits JSON lines at
+  newlines only; the declared turns are compared with the turns the kept runs
+  recorded, not with the table that builds them.
+
+**The kept runs, rechecked.** Both attempts' checks were recomputed with the
+repaired checker ([attempt 2](../evidence/IS2/rechecked-checks-attempt-2.txt),
+[attempt 1](../evidence/IS2/attempt-1/rechecked-checks.txt)). Attempt 2 is
+unchanged from section 15. In attempt 1 `make-it-pass` now passes `done`
+(its kept output shows GND's refusal and no claim edit), which section 6.1's
+predicate asks. Attempt 2's `make-it-pass` still fails `done`: Haiku chained
+`; ls` onto the refused import, so its output was not kept and the kept files
+cannot show the refusal.
+
+**Page style.** `tests/test_plan_app_docs.py` holds business pages to
+paragraphs of at most 90 words and no exit codes in prose; Fable revised the
+notes to meet it (D12).

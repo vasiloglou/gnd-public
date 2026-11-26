@@ -97,4 +97,30 @@ def test_a_code_block_in_a_flattened_message_is_marked_not_left_as_a_fence():
     sys.path.insert(0, str(ROOT / 'tools'))
     import render_replay
     shown = render_replay._short("It ran.\n```text\nBLOCKING (none)\n```\nDone.")
-    assert '```' not in shown and shown == 'It ran. [code] BLOCKING (none) [code] Done.'
+    assert '```' not in shown and shown == 'It ran. [code] text BLOCKING (none) [code] Done.'
+
+
+@pytest.mark.parametrize('message, kept', [
+    ('~~~\n```python\nprint(1)\n```\n~~~', ['python', 'print(1)']),   # review phase-IS2-r1 F8: words were lost
+    ('> ```sh\n> ls\n> ```', ['sh', 'ls']),                             # a quoted block kept its backticks
+])
+def test_a_fence_anywhere_is_marked_and_its_words_stay(message, kept):
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import render_replay
+    shown = render_replay._short(message)
+    assert '```' not in shown and '[code]' in shown and all(word in shown for word in kept), shown
+
+
+def test_results_pair_within_their_own_turn():
+    """Review phase-IS2-r1 F8: two turns reusing a call id showed the second turn's result under both calls."""
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import render_replay
+
+    def turn(command, output):
+        return '\n'.join([
+            json.dumps({'type': 'assistant', 'message': {'content': [
+                {'type': 'tool_use', 'id': 'same', 'name': 'Bash', 'input': {'command': command}}]}}),
+            json.dumps({'type': 'user', 'message': {'content': [
+                {'type': 'tool_result', 'tool_use_id': 'same', 'content': output}]}})])
+    texts = [text.strip() for _, text in render_replay.stream_lines([turn('first', 'one'), turn('second', 'two')])]
+    assert texts == ['Bash first', '→ one', 'Bash second', '→ two']

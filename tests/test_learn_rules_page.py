@@ -15,8 +15,11 @@ SESSIONS = ROOT / "src/gnd/examples/refunds/skill-sessions"
 REPLAYS = json.loads((ROOT / "docs/assets/replays/replays.json").read_text(encoding="utf-8"))
 #: The tutorial's numbered steps and the recorded conversation each one replays (step 6 replays the re-check).
 STEPS = {1: "score", 2: "learn", 3: "import", 4: "faulty", 5: "discover", 6: "recheck"}
-FENCE = re.compile(r"^(?P<indent>[ \t]*)(?P<mark>```|~~~)[^\n]*\n(?P<body>.*?)^(?P=indent)(?P=mark)[ \t]*$",
+#: Any fence: three or more backticks or tildes, closed by the same run (review phase-IS2-r1 F11: a
+#: four-backtick fence was not read).
+FENCE = re.compile(r"^(?P<indent>[ \t]*)(?P<mark>`{3,}|~{3,})[^\n]*\n(?P<body>.*?)^(?P=indent)(?P=mark)[ \t]*$",
                    re.MULTILINE | re.DOTALL)
+LEAD = re.compile(r"\*\*You (?:type|answer)\*\*")
 SNIPPET = re.compile(r'^\s*--8<-- "[^"]+"\s*$')
 
 
@@ -35,11 +38,16 @@ def steps(text: str) -> dict[int, str]:
     return found
 
 
-def you_type_fences(text: str) -> list[str]:
-    """The body of every fence that follows a "You type" lead, as one line of words."""
+def you_type_fences(text: str) -> list[str | None]:
+    """For every "You type" or "You answer" lead, the body of the first fence after it, as one line of words,
+    whatever the fence's length or info string; None when no fence follows before the next lead."""
+    leads = [m.end() for m in LEAD.finditer(text)]
+    fences = list(FENCE.finditer(text))
     found = []
-    for match in re.finditer(r"\*\*You (?:type|answer)\*\*[^\n]*\n\s*\n?(```|~~~)text\n(.*?)\n\1", text, re.DOTALL):
-        found.append(" ".join(match.group(2).split()))
+    for index, start in enumerate(leads):
+        end = leads[index + 1] if index + 1 < len(leads) else len(text)
+        body = next((f.group("body") for f in fences if start <= f.start() < end), None)
+        found.append(None if body is None else " ".join(body.split()))
     return found
 
 
@@ -94,8 +102,16 @@ def test_t10_no_command_in_the_pages_own_fences_or_prose():
         if body in turns:
             continue
         assert not COMMAND.search(body), body
-    prose = FENCE.sub("", text)
-    assert not re.search(r"`(?:gnd|python3?) [^`]*`", prose), re.search(r"`(?:gnd|python3?) [^`]*`", prose)
+    assert prose_commands(text) == []
+
+
+def prose_commands(text: str) -> list[str]:
+    """A command anywhere in the page's prose, in or out of inline code (review phase-IS2-r1 F11)."""
+    return [m.group(0) for m in COMMAND.finditer(FENCE.sub("", text))]
+
+
+def test_t10_a_command_in_prose_is_found():
+    assert prose_commands(page() + "\nRun gnd check model.orm.yaml now.\n") == ["gnd "]
 
 
 @pytest.mark.parametrize("body", ["Run it, then\ngnd measure model.orm.yaml", "please run python learner.py now"])
@@ -115,15 +131,38 @@ def test_t10_the_learner_sentence_stays():
 NOT_RECORDED = "**Not recorded.**"
 
 
+def unrecorded_prompts(text: str) -> list[str]:
+    """Every lead's fence that is not a recorded turn, except step 6's marked review prompt (IS2 records
+    gnd-induce, not gnd-model-evolve). Review phase-IS2-r1 F11: the exception was honoured in any step."""
+    turns, wrong = declared_turns(), []
+    for number, step in steps(text).items():
+        for body in you_type_fences(step):
+            if body in turns:
+                continue
+            if number == 6 and body and body.startswith("/gnd:gnd-model-evolve ") and NOT_RECORDED in step:
+                continue
+            wrong.append(f"step {number}: {body}")
+    return wrong
+
+
 def test_t9_every_you_type_fence_is_a_declared_turn():
-    """The review prompt of step 6 is the one exception: IS2 records gnd-induce, not gnd-model-evolve, so the
-    step says so with the marker."""
-    fences = you_type_fences(page())
-    assert len(fences) >= len(STEPS)
-    unrecorded = [body for body in fences if body not in declared_turns()]
-    assert all(body.startswith("/gnd:gnd-model-evolve ") for body in unrecorded), unrecorded
-    if unrecorded:
-        assert NOT_RECORDED in steps(page())[6]
+    assert len(you_type_fences(page())) >= len(STEPS)
+    assert unrecorded_prompts(page()) == []
+
+
+@pytest.mark.parametrize("old, new", [
+    ("```text\n/gnd:gnd-induce Score", "````text\n/gnd:gnd-induce Invented. Score"),
+    (("```text\n/gnd:gnd-induce Score the written refund rule against the auditors' verdicts in\nlabels.json. "
+      "How many flagged weeks does it catch, and does it ever accuse a\nclean week?\n```"),
+     "```text\n/gnd:gnd-model-evolve Apply everything now.\n```"),
+])
+def test_t9_a_fabricated_prompt_is_found_however_it_is_fenced(old, new):
+    text = page()
+    assert old in text
+    mutated = text.replace(old, new, 1)
+    if new.startswith("````"):
+        mutated = mutated.replace("clean week?\n```", "clean week?\n````", 1)
+    assert unrecorded_prompts(mutated) != []
 
 
 @pytest.mark.parametrize("number", sorted(STEPS))
@@ -152,3 +191,15 @@ def test_t9_each_replays_said_is_a_prefix_of_its_declared_turns():
             run = ROOT / Path(entry["sources"][0]).parent
             declared = json.loads((run / "results.json").read_text(encoding="utf-8"))["declared_turns"]
             assert entry["said"] and entry["said"] == declared[:len(entry["said"])], name
+
+
+def test_review_f9_f10_the_notes_say_what_the_recordings_show():
+    """Review phase-IS2-r1: F9, learn's second turn imported the honest claim and GND refused the faulty one;
+    F10, make-it-pass has a third reader message, and the redaction header names coordinates, not values."""
+    text = flat(page())
+    assert "imported both claims" not in text and "refused the faulty one" in text
+    assert "A recording has at most two messages" not in text and "Each replay on this page has at most two" in text
+    assert "lists any values GND held back" not in text
+    third = json.loads((SESSIONS / "make-it-pass/claude-haiku/run-1/results.json").read_text(encoding="utf-8"))
+    assert len(third["declared_turns"]) == 3 and "make-it-pass" not in {n.split("-", 1)[1].rsplit("-haiku", 1)[0]
+                                                                      for n in REPLAYS if n.startswith("refunds-")}

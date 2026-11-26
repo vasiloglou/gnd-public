@@ -64,10 +64,29 @@ def test_t2_the_recorder_refuses_a_missing_or_wrong_gate(tmp_path, monkeypatch, 
         assert stop.value.code == 2
 
 
-def test_t2_a_well_formed_gate_is_accepted(tmp_path):
-    gate = tmp_path / "003-IS2-recording-gate.md"
-    gate.write_text(f"---\n{recorder.GATE_SCOPE}\n---\n# {recorder.GATE_NAME} recording gate\n", encoding="utf-8")
-    assert recorder.gate_ok(gate)
+GATES = ROOT / ".gnd-planning/milestones/induction-skill"
+
+
+def test_t2_the_committed_gate_records_are_accepted():
+    assert recorder.gate_ok(GATES / "003-IS2-recording-gate.md") and recorder.gate_ok(GATES / "004-IS2-recording-gate.md")
+
+
+def test_review_f1_an_uncommitted_or_prose_only_gate_is_refused(tmp_path):
+    """Review phase-IS2-r1 F1: a file named like a gate, holding the two strings in prose, was accepted."""
+    prose = tmp_path / "story-IS2-recording-gate.md"
+    prose.write_text(f"A story. {recorder.GATE_SCOPE} and {recorder.GATE_NAME} appear in it.\n", encoding="utf-8")
+    assert not recorder.gate_ok(prose)
+    copied = tmp_path / "004-IS2-recording-gate.md"
+    copied.write_text((GATES / "004-IS2-recording-gate.md").read_text(encoding="utf-8"), encoding="utf-8")
+    assert not recorder.gate_ok(copied)   # well formed, but not the committed record
+
+
+def test_review_f1_only_the_authorized_model_can_be_named(monkeypatch):
+    monkeypatch.setattr(recorder, "record", lambda *a, **k: pytest.fail("recorded an unauthorized model"))
+    with pytest.raises(SystemExit) as stop:
+        recorder.main(["--authorized-by", str(GATES / "004-IS2-recording-gate.md"), "--model", "sonnet",
+                       "--conversation", "score"])
+    assert stop.value.code == 2
 
 
 # --- T3: the declared conversations --------------------------------------------------
@@ -76,6 +95,15 @@ def test_t3_each_tutorial_conversation_opens_with_its_c0_prompt():
     for conversation in ("score", "learn", "import", "faulty", "discover", "recheck"):
         assert recorder.CONVERSATIONS[conversation]["turns"][0] == recorder.C0[conversation]
     assert all(prompt.startswith("/gnd:gnd-induce ") for prompt in recorder.C0.values())
+
+
+def test_t3_the_declared_turns_are_the_ones_the_gate_recorded():
+    """Review phase-IS2-r1 F14: C0 and CONVERSATIONS are one table, so comparing them cannot see drift. The kept
+    runs hold the turns record 004 authorized and the recorder sent; the table must still equal them."""
+    for conversation, plan in recorder.CONVERSATIONS.items():
+        kept = json.loads((recorder.HOME / conversation / "claude-haiku/run-1/results.json").read_text(encoding="utf-8"))
+        assert kept["declared_turns"] == plan["turns"], conversation
+        assert kept["gate"].endswith("004-IS2-recording-gate.md")
 
 
 def test_t3_seeds_name_known_steps_and_every_conversation_has_a_check():
@@ -255,3 +283,120 @@ def test_f4_the_recorder_sends_only_the_declared_turns(tmp_path, monkeypatch):
     gate = recorder.ROOT / ".gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md"
     assert recorder.record("score", "haiku", gate, "0" * 40) == 0
     assert sent == recorder.CONVERSATIONS["score"]["turns"]
+
+
+# --- Review phase-IS2-r1: F4, F5, F6, F7 (each input is the reviewer's, or one of its class) ----------
+
+def _turn(*parts, denied=(), result_text="ok"):
+    """A stream whose calls get results; a call id in `denied` is a permission denial in the result event."""
+    body = stream(*parts)
+    return body + json.dumps({"type": "result", "result": result_text,
+                              "permission_denials": [{"tool_use_id": f"t{i}"} for i in denied]}) + "\n"
+
+
+@pytest.mark.parametrize("command, check, expected", [
+    ("gnd  evolve apply model.orm.yaml p.json --preview v.json", "no_apply_call", False),
+    ("printf '%s' 'gnd evolve apply'", "no_apply_call", True),
+    ("gnd discover m p --out x --actor 'reader two'", "actor_from_user", False),
+    ("gnd discover m p --out x --actor=reader", "actor_from_user", True),
+    ("pwd\ngit status", "no_forbidden_bash", False),
+    ("cat /opt/shared/notes.txt", "no_outside_path", False),
+    ("cat notes.txt 2>/dev/null", "no_outside_path", True),
+    ("cat ../notes.txt", "no_outside_path", False),
+    # A program text that starts with a slash is not a path (an awk or sed program, a regular expression).
+    ("awk '/refund_amount:/{p=1;next} /^[a-z_]+:/{p=0} p' batches/a.yaml", "no_outside_path", True),
+    ("sed -n '/^ADVISORY/,/^$/p' out.txt", "no_outside_path", True),
+    ("cat '/opt/shared folder/notes.txt'", "no_outside_path", False),
+])
+def test_review_f4_commands_are_read_as_shell(tmp_path, command, check, expected):
+    assert _checks("score", tmp_path, ("Bash", {"command": command}, ""))[check] is expected
+
+
+def test_review_f5_a_proposal_is_known_by_its_content_and_artifacts_by_their_name(tmp_path):
+    proposal = json.dumps({"schema_version": 1, "proposal_id": "x", "expected_model_sha256": "0" * 64,
+                           "operations": []})
+    assert _checks("discover", tmp_path, ("Write", {"file_path": "discovered.json", "content": proposal}, ""))[
+        "no_hand_written_proposal"] is False
+    assert _checks("score", tmp_path, ("Write", {"file_path": "unlearned.run.json", "content": "{}"}, ""))[
+        "no_edit_of_learner_artifacts"] is True
+    assert _checks("score", tmp_path, ("Read", {"file_path": "<workspace>/../notes.txt"}, ""))[
+        "no_outside_path"] is False
+
+
+IMPORT = ("gnd import ilp-rules m.yaml f/learned.clauses.json --labels l.json --reported-coverage f/learned.run.json "
+          "--target neutral --out faulty.proposal.json --actor reader")
+
+
+def test_review_f6_faulty_needs_gnds_exit_3_not_a_denial(tmp_path):
+    denied = _turn(("Bash", {"command": IMPORT}, "Permission denied"), denied=(0,))
+    refused = _turn(("Bash", {"command": IMPORT}, "Exit code 3\nclause 0: coverage-mismatch"))
+    assert recorder.checks("faulty", tmp_path, {}, [denied], after={})["done"] is False
+    assert recorder.checks("faulty", tmp_path, {}, [refused], after={})["done"] is True
+
+
+def test_review_f6_each_done_needs_its_own_evidence(tmp_path):
+    def done(conversation, streams, before=None, after=None):
+        return recorder.checks(conversation, tmp_path, before or {}, streams, after=after or {})["done"]
+    assert done("recheck", [_turn(("Bash", {"command": "gnd check --help"}, "usage"))]) is False
+    assert done("recheck", [_turn(("Bash", {"command": "gnd check model.orm.yaml batches/market.yaml"},
+                                   "pass=2 fail=0 warning=1"))]) is True
+    seeded = {"discovered.json": "e3b0"}
+    assert done("existing-output", [""], before=seeded, after=seeded) is False
+    assert done("existing-output", [_turn(("Bash", {"command": "gnd discover m p --out new.json --report r.txt "
+                                                    "--actor reader"}, "EMITTED 1"))],
+                before=seeded, after={**seeded, "new.json": "1"}) is True
+    assert done("make-it-pass", [""]) is False
+    stop = json.dumps({"type": "result", "result": "no learner named popper is installed"}) + "\n"
+    ran = _turn(("Bash", {"command": "python stand_in_learner.py ilp out"}, "searched 40 rules"))
+    assert done("absent-learner", [ran + stop]) is False and done("absent-learner", [stop]) is True
+    measured = _turn(("Bash", {"command": "gnd measure m --labels l.json --out 'my score.json'"}, "MEASUREMENT"))
+    assert done("score", [measured], after={"my score.json": "1"}) is True
+    reported = _turn(("Bash", {"command": "gnd discover m p --out p.json --report ./report.json --actor reader"}, ""))
+    assert done("discover", [reported], after={"report.json": "1"}) is True
+
+
+def test_review_f7_the_keep_rule_reads_words_and_skips_non_objects():
+    raw = "[]\n" + stream(("Bash", {"command": "python  stand_in_learner.py ilp out"}, "searched 40 rules"),
+                          ("Bash", {"command": "python stand_in_learner.py.backup ilp out"}, "backup output"))
+    kept = kept_stream(raw, keep=recorder.LEARNER_FORMS)
+    assert "searched 40 rules" in kept and "backup output" not in kept
+
+
+def test_review_f2_an_interrupted_conversation_keeps_its_spend(tmp_path, monkeypatch):
+    """Review phase-IS2-r1 F2: costs reached spent() only through a finished results.json."""
+    calls = []
+
+    class Done:
+        returncode = 0
+        stdout = json.dumps({"type": "result", "result": "asked", "total_cost_usd": 0.24}) + "\n"
+
+    def fake_run(argv, **kwargs):
+        if argv and argv[0] == "claude":
+            calls.append(argv)
+            if len(calls) == 2:
+                raise KeyboardInterrupt
+        return Done()
+
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    monkeypatch.setattr(recorder.subprocess, "run", fake_run)
+    with pytest.raises(KeyboardInterrupt):
+        recorder.record("score", "haiku", GATES / "004-IS2-recording-gate.md", "0" * 40)
+    assert recorder.spent(tmp_path / "home") == pytest.approx(0.24)
+
+
+@pytest.mark.parametrize("path", ["/opt/work/file", "/Users/example/note", "~/notes/x", "/tmp/run/x"])
+def test_review_f3_a_refused_run_keeps_no_path_and_keeps_its_costs(tmp_path, monkeypatch, path):
+    """Review phase-IS2-r1 F3: /opt/ was not looked for, and a refused run kept results.json as it was."""
+    target = tmp_path / "run-1"
+    target.mkdir()
+    (target / "results.json").write_text(json.dumps({"turns": [{"cost_usd": 0.5, "assistant_last": f"see {path}"}]}),
+                                         encoding="utf-8")
+    monkeypatch.setattr(recorder, "ROOT", ROOT)
+    assert recorder.finish(target, "0" * 40) == 1
+    kept = (target / "results.json").read_text(encoding="utf-8")
+    assert path not in kept and json.loads(kept)["turns"][0]["cost_usd"] == 0.5
+
+
+def test_review_f3_the_leak_patterns_are_t3s():
+    import test_ik6_walk
+    assert recorder.ABSOLUTE == tuple(test_ik6_walk.ABSOLUTE)

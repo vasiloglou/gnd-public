@@ -301,19 +301,60 @@ TUTORIAL_CLAIMS = [
 SESSIONS = EXAMPLE / "skill-sessions"
 
 
+def _tool_output(turns: list[str]) -> str:
+    """The tool output kept in stream-json turns, decoded: only tool_result parts, so a number the agent
+    only said in its own prose is not read as recorded output (issue 318)."""
+    found = []
+    for text in turns:
+        for line in text.split("\n"):
+            if not line.strip():
+                continue
+            event = json.loads(line)
+            content = (event.get("message") or {}).get("content") if isinstance(event, dict) else None
+            for part in content if isinstance(content, list) else []:
+                if isinstance(part, dict) and part.get("type") == "tool_result":
+                    found.extend(_strings(_load(json.dumps(part.get("content"), ensure_ascii=False))))
+    return "\n".join(found)
+
+
 def _recorded(conversation: str) -> str:
-    """Every string the conversation's kept turns hold, decoded."""
+    """The tool output the conversation's kept turns hold."""
     run = SESSIONS / conversation / "claude-haiku/run-1"
-    return "\n".join(_readable(path) for path in sorted(run.glob("turn-*.jsonl")))
+    return _tool_output([path.read_text(encoding="utf-8") for path in sorted(run.glob("turn-*.jsonl"))])
+
+
+def _marked(page: str, claim: str, marker: str) -> bool:
+    """The marker stands in the claim's own section of the page, before the claim (issue 318: a marker
+    anywhere on the page excused every claim)."""
+    for section in re.split(r"^(?=## )", page, flags=re.MULTILINE):
+        flat = " ".join(section.split())
+        if " ".join(claim.split()) in flat:
+            return marker in flat.split(" ".join(claim.split()), 1)[0]
+    return False
 
 
 @pytest.mark.parametrize("tutorial, commands, recording", TUTORIAL_CLAIMS)
 def test_is2_each_claim_is_in_its_recording_or_marked(tutorial, commands, recording):
     conversation, held = recording
     if conversation is None:
-        assert held in PAGES[0].read_text(encoding="utf-8")
+        assert _marked(PAGES[0].read_text(encoding="utf-8"), tutorial, held)
     else:
         assert held in _recorded(conversation), (conversation, held)
+
+
+def test_issue_318_a_number_only_the_agent_said_is_not_recorded_output():
+    said = {"type": "assistant", "message": {"content": [{"type": "text", "text": "fired_on_negative=2/4"}]}}
+    ran = {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "t0",
+                                                    "content": [{"type": "text", "text": "EMITTED 10"}]}]}}
+    output = _tool_output([json.dumps(said) + "\n" + json.dumps(ran) + "\n"])
+    assert "EMITTED 10" in output and "fired_on_negative=2/4" not in output
+
+
+def test_issue_318_the_not_recorded_marker_must_stand_beside_its_claim():
+    page = PAGES[0].read_text(encoding="utf-8")
+    assert _marked(page, "neither proposal is breaking", "**Not recorded.**")
+    moved = page.replace("**Not recorded.**", "**Note.**", 1) + "\n\n## Elsewhere\n\n**Not recorded.** Something else.\n"
+    assert "**Not recorded.**" in moved and not _marked(moved, "neither proposal is breaking", "**Not recorded.**")
 
 
 @pytest.mark.parametrize("tutorial, commands, recording", TUTORIAL_CLAIMS)

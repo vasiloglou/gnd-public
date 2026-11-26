@@ -38,21 +38,28 @@ def steps(text: str) -> dict[int, str]:
     return found
 
 
-def you_type_fences(text: str) -> list[str | None]:
+def lead_fences(text: str) -> list[tuple[str | None, str]]:
     """For every "You type" or "You answer" lead, the body of the first fence after it, as one line of words,
-    whatever the fence's length or info string; None when no fence follows before the next lead."""
+    whatever the fence's length or info string (None when no fence follows before the next lead), and the
+    text after that fence up to the next lead."""
     leads = [m.end() for m in LEAD.finditer(text)]
     fences = list(FENCE.finditer(text))
     found = []
     for index, start in enumerate(leads):
         end = leads[index + 1] if index + 1 < len(leads) else len(text)
-        body = next((f.group("body") for f in fences if start <= f.start() < end), None)
-        found.append(None if body is None else " ".join(body.split()))
+        fence = next((f for f in fences if start <= f.start() < end), None)
+        found.append((None, text[start:end]) if fence is None
+                     else (" ".join(fence.group("body").split()), text[fence.end():end]))
     return found
 
 
-def declared_turns() -> set[str]:
-    return {" ".join(turn.split()) for results in SESSIONS.glob("*/claude-*/run-*/results.json")
+def you_type_fences(text: str) -> list[str | None]:
+    return [body for body, _ in lead_fences(text)]
+
+
+def declared_turns(conversation: str = "*") -> set[str]:
+    """The declared user turns of one recorded conversation, or of every one."""
+    return {" ".join(turn.split()) for results in SESSIONS.glob(f"{conversation}/claude-*/run-*/results.json")
             for turn in json.loads(results.read_text(encoding="utf-8"))["declared_turns"]}
 
 
@@ -106,12 +113,18 @@ def test_t10_no_command_in_the_pages_own_fences_or_prose():
 
 
 def prose_commands(text: str) -> list[str]:
-    """A command anywhere in the page's prose, in or out of inline code (review phase-IS2-r1 F11)."""
-    return [m.group(0) for m in COMMAND.finditer(FENCE.sub("", text))]
+    """A command anywhere in the page's prose, in or out of inline code (review phase-IS2-r1 F11), whatever
+    its spacing: a run of spaces, a tab or a line break after the program name (issue 318, F13)."""
+    return [m.group(0) for m in COMMAND.finditer(" ".join(FENCE.sub("", text).split()))]
 
 
 def test_t10_a_command_in_prose_is_found():
     assert prose_commands(page() + "\nRun gnd check model.orm.yaml now.\n") == ["gnd "]
+
+
+@pytest.mark.parametrize("spacing", ["  ", "\t", "\n", " \n  "])
+def test_issue_318_f13_a_command_in_prose_is_found_whatever_its_spacing(spacing):
+    assert prose_commands(page() + f"\nThen run `gnd{spacing}check model.orm.yaml` again.\n") == ["gnd "]
 
 
 @pytest.mark.parametrize("body", ["Run it, then\ngnd measure model.orm.yaml", "please run python learner.py now"])
@@ -132,14 +145,19 @@ NOT_RECORDED = "**Not recorded.**"
 
 
 def unrecorded_prompts(text: str) -> list[str]:
-    """Every lead's fence that is not a recorded turn, except step 6's marked review prompt (IS2 records
-    gnd-induce, not gnd-model-evolve). Review phase-IS2-r1 F11: the exception was honoured in any step."""
-    turns, wrong = declared_turns(), []
+    """Every lead's fence that is not a turn of its own step's recording, except one: step 6's review prompt
+    (IS2 records gnd-induce, not gnd-model-evolve), with the marker as the next thing after its fence.
+    Review phase-IS2-r1 F11: the exception was honoured in any step. Issue 318 (F13): a step could show
+    another step's prompt, and the marker anywhere in step 6 excused every evolve prompt there."""
+    wrong, excused = [], 0
     for number, step in steps(text).items():
-        for body in you_type_fences(step):
+        turns = declared_turns(STEPS[number])
+        for body, after in lead_fences(step):
             if body in turns:
                 continue
-            if number == 6 and body and body.startswith("/gnd:gnd-model-evolve ") and NOT_RECORDED in step:
+            if (number == 6 and not excused and body and body.startswith("/gnd:gnd-model-evolve ")
+                    and after.lstrip().startswith(NOT_RECORDED)):
+                excused += 1
                 continue
             wrong.append(f"step {number}: {body}")
     return wrong
@@ -163,6 +181,33 @@ def test_t9_a_fabricated_prompt_is_found_however_it_is_fenced(old, new):
     if new.startswith("````"):
         mutated = mutated.replace("clean week?\n```", "clean week?\n````", 1)
     assert unrecorded_prompts(mutated) != []
+
+
+def _swapped(text: str, first: int, second: int) -> str:
+    """The page with the first "You type" fence of two steps exchanged."""
+    found = steps(text)
+    fences = {n: next(FENCE.finditer(found[n].split("**You type**", 1)[1])).group(0) for n in (first, second)}
+    mutated = {n: found[n].replace(fences[n], fences[other], 1) for n, other in ((first, second), (second, first))}
+    return text.replace(found[first], mutated[first], 1).replace(found[second], mutated[second], 1)
+
+
+@pytest.mark.parametrize("first, second", [(1, 5), (2, 3), (4, 6)])
+def test_issue_318_f13_a_step_showing_another_steps_prompt_is_found(first, second):
+    mutated = _swapped(page(), first, second)
+    assert mutated != page()
+    assert unrecorded_prompts(mutated) != []
+
+
+def test_issue_318_f13_the_not_recorded_exception_covers_one_marked_prompt():
+    text = page()
+    evolve = ("```text\n/gnd:gnd-model-evolve Review learned.proposal.json and discovered.json with me.\n"
+              "Preview both, explain each rule in plain English, and apply only the ones I accept.\n```\n")
+    assert evolve in text
+    second = "**You type**\n\n```text\n/gnd:gnd-model-evolve Apply everything now.\n```\n\n"
+    assert unrecorded_prompts(text.replace("**Check the market week again**", second
+                                           + "**Check the market week again**", 1)) != []
+    marked_later = text.replace(evolve + "\n" + NOT_RECORDED, evolve + "\nAn aside.\n\n" + NOT_RECORDED, 1)
+    assert marked_later != text and unrecorded_prompts(marked_later) != []
 
 
 @pytest.mark.parametrize("number", sorted(STEPS))

@@ -409,30 +409,30 @@ Record Claude Code running gnd-induce over the refunds example, one scripted con
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `environment() -> dict[str, str]` | function | 105 | (no docstring) |
-| `gate_ok(path) -> bool` | function | 117 | The recording gate record: a file in this milestone's folder, named for the IS2 gate, whose YAML front |
-| `spent(home) -> float` | function | 142 | USD reported by every kept conversation's turns so far (a missing cost counts as 0). With no folder |
-| `seed(workspace, steps) -> list[dict]` | function | 160 | Run the commands-page steps in the workspace; each step's argv, exit and the digests after it. |
-| `workspace_digests(workspace) -> dict[str, str]` | function | 176 | (no docstring) |
-| `tool_calls(streams) -> list[dict]` | function | 192 | Every tool call with its own result, paired by call id within its stream (one stream per turn): name, |
-| `tool_uses(streams) -> list[tuple[str, dict]]` | function | 219 | (tool name, input) for every tool call in the streams. |
-| `bash_commands(calls) -> list[str]` | function | 224 | (no docstring) |
-| `assistant_text(streams) -> str` | function | 228 | (no docstring) |
-| `segments(command) -> list[list[str]]` | function | 251 | The words of each simple command, split at ; & \| and newlines, quotes respected, NAME=value |
-| `program(words) -> str` | function | 276 | (no docstring) |
-| `programs(command) -> list[str]` | function | 280 | The program each shell segment runs (`python -m pip` counts as pip). |
-| `runs(words, *path) -> bool` | function | 290 | True when the segment runs `gnd PATH...` (gnd by any path), not its help. |
-| `option_values(words, name) -> list[str]` | function | 296 | (no docstring) |
-| `relative(path) -> str \| None` | function | 306 | A path relative to the workspace, normalized; None when it is outside the workspace. |
-| `out_paths(commands, *sub, option) -> set[str]` | function | 317 | The `option` values of every segment running `gnd SUB...`, relative to the workspace. |
-| `outside_words(command) -> list[str]` | function | 323 | Words of a command that name a place outside the workspace: a redaction marker, an absolute or home |
-| `is_proposal(content) -> bool` | function | 339 | Text that parses as an evolve proposal: a JSON object with operations and a proposal id or the expected |
-| `checks(conversation, workspace, before, streams, after) -> dict` | function | 350 | Spec sections 6.1 and 6.2: each check true or false, computed outside the agent. `after` may be given |
-| `recheck(run) -> dict` | function | 413 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
-| `passed(result) -> bool` | function | 421 | (no docstring) |
-| `record(conversation, model, gate, commit) -> int` | function | 425 | (no docstring) |
-| `finish(target, commit) -> int` | function | 578 | The leak gate, then the manifest. |
-| `main(argv) -> int` | function | 594 | (no docstring) |
+| `environment() -> dict[str, str]` | function | 114 | (no docstring) |
+| `gate_ok(path) -> bool` | function | 126 | The recording gate record: a file in this milestone's folder, named for the IS2 gate, whose YAML front |
+| `spent(home) -> float` | function | 151 | USD reported by every kept conversation's turns so far (a missing cost counts as 0). With no folder |
+| `seed(workspace, steps) -> list[dict]` | function | 169 | Run the commands-page steps in the workspace; each step's argv, exit and the digests after it. |
+| `workspace_digests(workspace) -> dict[str, str]` | function | 185 | (no docstring) |
+| `tool_calls(streams) -> list[dict]` | function | 195 | Every tool call with its own result, paired by call id within its stream (one stream per turn): name, |
+| `tool_uses(streams) -> list[tuple[str, dict]]` | function | 222 | (tool name, input) for every tool call in the streams. |
+| `bash_commands(calls) -> list[str]` | function | 227 | (no docstring) |
+| `assistant_text(streams) -> str` | function | 231 | (no docstring) |
+| `segments(command) -> list[list[str]]` | function | 254 | The words of each simple command, split at ; & \| and newlines, quotes respected, NAME=value |
+| `program(words) -> str` | function | 279 | (no docstring) |
+| `programs(command) -> list[str]` | function | 283 | The program each shell segment runs (`python -m pip` counts as pip). |
+| `runs(words, *path) -> bool` | function | 293 | True when the segment runs `gnd PATH...` (gnd by any path), not its help. |
+| `option_values(words, name) -> list[str]` | function | 299 | (no docstring) |
+| `relative(path) -> str \| None` | function | 309 | A path relative to the workspace, normalized; None when it is outside the workspace. |
+| `out_paths(commands, *sub, option) -> set[str]` | function | 320 | The `option` values of every segment running `gnd SUB...`, relative to the workspace. |
+| `outside_words(command) -> list[str]` | function | 326 | Words of a command that name a place outside the workspace: a redaction marker, an absolute or home |
+| `is_proposal(content) -> bool` | function | 342 | Text that parses as an evolve proposal: a JSON object with operations and a proposal id or the expected |
+| `checks(conversation, workspace, before, streams, after) -> dict` | function | 353 | Spec sections 6.1 and 6.2: each check true or false, computed outside the agent. `after` may be given |
+| `recheck(run) -> dict` | function | 416 | Recompute a kept run's checks from its turn files and workspace.json (IS2 finding F4). |
+| `passed(result) -> bool` | function | 424 | (no docstring) |
+| `record(conversation, model, gate, commit) -> int` | function | 428 | (no docstring) |
+| `finish(target, commit) -> int` | function | 574 | The leak gate, then the manifest. |
+| `main(argv) -> int` | function | 590 | (no docstring) |
 
 ## tools.record_judge_sessions — `tools/record_judge_sessions.py`
 Components: unassigned
@@ -440,17 +440,17 @@ Record Claude Code running a GND judgement skill over its fixture, every run kep
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `build_evidence(directory, fixture) -> Path` | function | 70 | The evidence the judge reads: unset disclosure, no --show-values, default --min-support (D6). |
-| `judgements_in(workspace) -> Path \| None` | function | 82 | (no docstring) |
-| `workspace_digests(workspace) -> dict[str, str]` | function | 92 | Each workspace file's SHA-256, so an edited input is seen, not only a new name (review F6). |
-| `forbidden_calls(streams, needles) -> list[str]` | function | 107 | Tool inputs naming any needle, read from the raw streams before redaction hides paths (review F5). |
-| `outside_calls(streams, allowed) -> list[str]` | function | 127 | Tool inputs reaching outside the workspace and the plugin copy (TS4 review F4). |
-| `tool_calls(target) -> list[str]` | function | 155 | Every tool input the agent sent, as text, from the kept streams. |
+| `build_evidence(directory, fixture) -> Path` | function | 79 | The evidence the judge reads: unset disclosure, no --show-values, default --min-support (D6). |
+| `judgements_in(workspace) -> Path \| None` | function | 91 | (no docstring) |
+| `workspace_digests(workspace) -> dict[str, str]` | function | 101 | Each workspace file's SHA-256, so an edited input is seen, not only a new name (review F6). |
+| `forbidden_calls(streams, needles) -> list[str]` | function | 116 | Tool inputs naming any needle, read from the raw streams before redaction hides paths (review F5). |
+| `outside_calls(streams, allowed) -> list[str]` | function | 132 | Tool inputs reaching outside the workspace and the plugin copy (TS4 review F4). |
+| `tool_calls(target) -> list[str]` | function | 156 | Every tool input the agent sent, as text, from the kept streams. |
 | `check(target, judgements, evidence, option, fixture) -> dict` | function | 167 | The checks of spec section 6.6, run in a fresh directory with the real population. |
 | `record_run(skill, model, out) -> dict` | function | 205 | (no docstring) |
-| `passed(checks) -> bool` | function | 274 | Every check holds: each exit is 0 and every other check is True (False == 0 must not pass). |
-| `finish(out, skill) -> int` | function | 280 | The leak search, then the manifest. On a hit the run folder is removed and only results.json stays. |
-| `main() -> int` | function | 299 | (no docstring) |
+| `passed(checks) -> bool` | function | 267 | Every check holds: each exit is 0 and every other check is True (False == 0 must not pass). |
+| `finish(out, skill) -> int` | function | 273 | The leak search, then the manifest. On a hit the run folder is removed and only results.json stays. |
+| `main() -> int` | function | 292 | (no docstring) |
 
 ## tools.record_lr3_reference_run — `tools/record_lr3_reference_run.py`
 Components: unassigned
@@ -514,15 +514,17 @@ Record Claude Code running a GND skill on an example's rules, every run kept.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `sha256(data) -> str` | function | 63 | (no docstring) |
-| `redact(text, workspace) -> str` | function | 67 | (no docstring) |
-| `kept_stream(stream, workspace_marker, keep) -> str` | function | 84 | The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and |
-| `model_file(workspace) -> Path \| None` | function | 133 | (no docstring) |
-| `record_run(name, run, out, skill) -> dict` | function | 138 | (no docstring) |
-| `git_identity() -> list[str]` | function | 199 | The git user's email and its handle: an agent may copy them into what it writes (audit fields). |
-| `leak_needles() -> list[str]` | function | 205 | Every literal the leak search looks for. A scrubber uses the same list, so whatever the search |
-| `leaks(out) -> list[str]` | function | 214 | (no docstring) |
-| `finish(out, finished_later) -> int` | function | 220 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
-| `main() -> int` | function | 242 | (no docstring) |
+| `stream_events(stream)` | function | 67 | The JSON objects of a Claude Code stream-json text, one per line, in order. A line ends at a newline |
+| `last_result(stream) -> dict` | function | 80 | The stream's last result event (its cost and final text), or {} when the turn never finished. |
+| `redact(text, workspace) -> str` | function | 85 | (no docstring) |
+| `kept_stream(stream, workspace_marker, keep) -> str` | function | 102 | The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and |
+| `model_file(workspace) -> Path \| None` | function | 145 | (no docstring) |
+| `record_run(name, run, out, skill) -> dict` | function | 150 | (no docstring) |
+| `git_identity() -> list[str]` | function | 204 | The git user's email and its handle: an agent may copy them into what it writes (audit fields). |
+| `leak_needles() -> list[str]` | function | 210 | Every literal the leak search looks for. A scrubber uses the same list, so whatever the search |
+| `leaks(out) -> list[str]` | function | 219 | (no docstring) |
+| `finish(out, finished_later) -> int` | function | 225 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
+| `main() -> int` | function | 247 | (no docstring) |
 
 ## tools.release_text — `tools/release_text.py`
 Components: unassigned

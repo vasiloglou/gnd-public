@@ -64,6 +64,24 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def stream_events(stream: str):
+    """The JSON objects of a Claude Code stream-json text, one per line, in order. A line ends at a newline
+    only: str.splitlines() also breaks at U+2028 and the other separators a JSON string may hold unescaped,
+    which cut a result event in two and lost its cost (issue 318). Lines that are not a JSON object are skipped."""
+    for raw in stream.split("\n"):
+        try:
+            event = json.loads(raw)
+        except ValueError:
+            continue
+        if isinstance(event, dict):
+            yield event
+
+
+def last_result(stream: str) -> dict:
+    """The stream's last result event (its cost and final text), or {} when the turn never finished."""
+    return next((e for e in reversed(list(stream_events(stream))) if e.get("type") == "result"), {})
+
+
 def redact(text: str, workspace: Path) -> str:
     for old, new in ((str(workspace.resolve()), "<workspace>"), (str(workspace), "<workspace>"),
                      (str(ROOT), "<repo>"), (str(Path.home()), "<home>")):
@@ -89,13 +107,7 @@ def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[
     (induction-skill IS2: the refunds stand-in learner)."""
     wanted, lines = set(), []
     forms = [_words(prefix) for prefix in keep]
-    for raw in stream.split("\n"):   # JSON lines end at newlines; U+2028 may sit inside a string
-        try:
-            event = json.loads(raw)
-        except ValueError:
-            continue
-        if not isinstance(event, dict):
-            continue   # induction-skill IS2 review F7: a non-object line raised instead of being skipped
+    for event in stream_events(stream):   # a non-object line is skipped (induction-skill IS2 review F7)
         if event.get("type") == "system":
             event = {k: event.get(k) for k in ("type", "subtype", "model", "permissionMode") if k in event}
         elif event.get("type") == "assistant":
@@ -165,14 +177,7 @@ def record_run(name: str, run: int, out: Path, skill: str = "model-from-text") -
                 stream, code = (error.stdout or b"").decode() if isinstance(error.stdout, bytes) else (error.stdout or ""), None
             (target / f"turn-{number:02d}.jsonl").write_text(
                 kept_stream(redact(stream.replace(str(plugin), "<plugin>"), workspace)), encoding="utf-8")
-            result = {}
-            for line in stream.splitlines():
-                try:
-                    event = json.loads(line)
-                except ValueError:
-                    continue
-                if isinstance(event, dict) and event.get("type") == "result":
-                    result = event
+            result = last_result(stream)
             turns.append({"user": said, "exit": code, "cost_usd": result.get("total_cost_usd"),
                           "assistant_last": redact((result.get("result") or "")[-600:], workspace)})
             written = model_file(workspace)

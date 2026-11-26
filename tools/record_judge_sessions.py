@@ -30,7 +30,16 @@ import uuid
 from pathlib import Path
 
 import jsonschema
-from record_skill_sessions import ROOT, TOOLS, kept_stream, leaks, redact, sha256
+from record_skill_sessions import (
+    ROOT,
+    TOOLS,
+    kept_stream,
+    last_result,
+    leaks,
+    redact,
+    sha256,
+    stream_events,
+)
 
 FIXTURE = ROOT / "tests/fixtures/type-judgements/round-two"
 GND = str(ROOT / ".venv/bin/gnd")
@@ -108,12 +117,8 @@ def forbidden_calls(streams: list[str], needles: list[str]) -> list[str]:
     """Tool inputs naming any needle, read from the raw streams before redaction hides paths (review F5)."""
     found = []
     for stream in streams:
-        for line in stream.splitlines():
-            try:
-                event = json.loads(line)
-            except ValueError:
-                continue
-            for part in (event.get("message") or {}).get("content") or [] if isinstance(event, dict) else []:
+        for event in stream_events(stream):
+            for part in (event.get("message") or {}).get("content") or []:
                 if isinstance(part, dict) and part.get("type") == "tool_use":
                     call = _reaching(part.get("input"))
                     if any(needle in call for needle in needles):
@@ -134,12 +139,8 @@ def outside_calls(streams: list[str], allowed: list[Path]) -> list[str]:
     needles = [str(ROOT), str(Path.home())]
     found = []
     for stream in streams:
-        for line in stream.splitlines():
-            try:
-                event = json.loads(line)
-            except ValueError:
-                continue
-            for part in (event.get("message") or {}).get("content") or [] if isinstance(event, dict) else []:
+        for event in stream_events(stream):
+            for part in (event.get("message") or {}).get("content") or []:
                 if not (isinstance(part, dict) and part.get("type") == "tool_use"):
                     continue
                 arguments = part.get("input") if isinstance(part.get("input"), dict) else {}
@@ -156,8 +157,7 @@ def tool_calls(target: Path) -> list[str]:
     """Every tool input the agent sent, as text, from the kept streams."""
     calls = []
     for path in sorted(target.glob("turn-*.jsonl")):
-        for line in path.read_text(encoding="utf-8").splitlines():
-            event = json.loads(line)
+        for event in stream_events(path.read_text(encoding="utf-8")):
             for part in (event.get("message") or {}).get("content") or []:
                 if isinstance(part, dict) and part.get("type") == "tool_use":
                     calls.append(json.dumps(part.get("input"), ensure_ascii=False))
@@ -234,14 +234,7 @@ def record_run(skill: str, model: str, out: Path) -> dict:
             raw.append(stream)
             (target / f"turn-{number:02d}.jsonl").write_text(
                 kept_stream(redact(stream.replace(str(plugin), "<plugin>"), workspace)), encoding="utf-8")
-            result = {}
-            for line in stream.splitlines():
-                try:
-                    event = json.loads(line)
-                except ValueError:
-                    continue
-                if isinstance(event, dict) and event.get("type") == "result":
-                    result = event
+            result = last_result(stream)
             written = judgements_in(workspace)
             turns.append({"user": said, "exit": code, "cost_usd": result.get("total_cost_usd"),
                           "assistant_last": redact((result.get("result") or "")[-600:], workspace),

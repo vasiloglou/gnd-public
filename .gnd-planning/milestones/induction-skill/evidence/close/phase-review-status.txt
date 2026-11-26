@@ -1,0 +1,266 @@
+review_tool.py status over notes/reviews/phase-IS*, run 2026-11-26 in a clean clone of 9b69ca5f; exit 1 (13 unreviewed).
+.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1: phase review by codex (codex default), done, 12 finding(s) in the ledger
+  problem: codex F1: Reproduced is yes or no, not 'yes: `--out` is written whenever anything is proposed, and fact types are counted under `FACT TYPES` (`docs/reference/discover.md`, `src/gnd/discover/output.py:184`)'
+  problem: codex F2: Reproduced is yes or no, not 'yes: `gnd import mined-rules --help` says "Admission is all-or-nothing"'
+  problem: codex F3: Reproduced is yes or no, not 'yes: `docs/reference/ilp-bridge.md:242`; the run record has `learner`'
+  problem: codex F4: Reproduced is yes or no, not 'yes: `ilp-bridge.md:33`, `:113`'
+  problem: codex F5: Reproduced is yes or no, not 'yes: the bridge\'s "Comparing the learners" table lists three Popper runs, run 3 admitted; `gnd measure --help`'
+  problem: codex F6: Reproduced is yes or no, not 'yes: swapping the links passed 20 route tests'
+  problem: codex F7: Reproduced is yes or no, not 'yes: both mutations passed'
+  problem: codex F8: Reproduced is yes or no, not 'yes: each passed'
+  problem: codex F9: Reproduced is yes or no, not 'yes: the mined-rules swap passed 277 cases; `--fam` would pass the substring test'
+  problem: codex F9: Disposition is one of fixed, deferred, rejected, open, not 'fixed for gnd-induce; deferred for the global guard'
+  problem: codex F11: Reproduced is yes or no, not 'yes: each passed'
+  problem: review.md is not the reviewer's output: its SHA-256 matches neither run.json digest
+.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2: phase review by codex (codex default), done, 11 finding(s) in the ledger
+  problem: codex F1: Reproduced is yes or no, not 'yes: `docs/reference/measure-labels.md`, schema 4 has the synth cell table, schema 5 the six counts'
+  problem: codex F1: Repaired at "the IS1 record's commit" is not a commit or tag here
+  problem: codex F2: Reproduced is yes or no, not 'yes: `ilp-bridge.md`, Export: neutral writes only `neutral.json` and `export.json`'
+  problem: codex F2: Repaired at "the IS1 record's commit" is not a commit or tag here
+  problem: codex F3: Reproduced is yes or no, not 'yes for the description; yes for the test'
+  problem: codex F3: Class is one of blocking, hardening, completeness, not 'blocking (description); hardening (test)'
+  problem: codex F3: Disposition is one of fixed, deferred, rejected, open, not 'fixed (description); deferred (test)'
+  problem: codex F4: Reproduced is yes or no, not 'yes, by reading `_induce_snippets` and the test'
+  problem: codex F6: Reproduced is yes or no, not 'yes, by reading `tables()` and the reactions test'
+  problem: codex F7: Reproduced is yes or no, not 'yes, by reading `visible()` and `section()`'
+  problem: codex F10: Reproduced is yes or no, not 'yes, by reading the three patterns'
+  problem: codex F11: Reproduced is yes or no, not 'yes, by reading `review-r1-mutations.py`'
+  problem: review.md is not the reviewer's output: its SHA-256 matches neither run.json digest
+.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1: phase review by codex (codex default), done, 14 finding(s) in the ledger
+  problem: F1: Reproduced is yes or no, not 'yes (`--model sonnet` reached `record`; a story file passed `gate_ok`)'
+  problem: F2: Reproduced is yes or no, not 'yes for the lost spend (mocked interrupt left `spent()` at 0)'
+  problem: F2: Disposition is one of fixed, deferred, rejected, open, not 'fixed; the hard-cap part rejected'
+  problem: F3: Reproduced is yes or no, not 'yes (`/opt/work/file` passed; `/Users/...` kept)'
+  problem: F4: Reproduced is yes or no, not 'yes, all four inputs'
+  problem: F6: Reproduced is yes or no, not 'yes (denied faulty import passed every check, and the rest)'
+  problem: F9: Reproduced is yes or no, not 'yes (turn 2 line 20: exit 3 for the faulty claim)'
+  problem: F10: Reproduced is yes or no, not 'yes (`make-it-pass` has three turns; `render_text_header`)'
+  problem: F11: Reproduced is yes or no, not 'yes, all three'
+  problem: review.md is not the reviewer's output: its SHA-256 matches neither run.json digest
+.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2: phase review by codex (codex default), done, 14 finding(s) in the ledger
+  problem: F1: Reproduced is yes or no, not 'no (not probed)'
+  problem: F2: Reproduced is yes or no, not 'no (not probed)'
+  problem: F3: Reproduced is yes or no, not 'no (not probed)'
+  problem: F4: Reproduced is yes or no, not 'yes (two pieces from one line)'
+  problem: F5: Reproduced is yes or no, not "yes (`printf '%s' ';' gnd evolve apply`; a comment before a newline)"
+  problem: F6: Reproduced is yes or no, not 'yes (all three probed)'
+  problem: F7: Reproduced is yes or no, not 'yes (unspaced redirect passed)'
+  problem: F8: Reproduced is yes or no, not 'yes (both passed)'
+  problem: F9: Reproduced is yes or no, not 'yes (learn and absent-learner probed)'
+  problem: F10: Reproduced is yes or no, not 'yes (both)'
+  problem: F12: Reproduced is yes or no, not 'no (not probed)'
+  problem: F13: Reproduced is yes or no, not 'no (not probed)'
+  problem: F14: Reproduced is yes or no, not 'yes (`shasum` in recheck turn 1; a `cd && gnd export && ls` chain in learn turn 1)'
+  problem: review.md is not the reviewer's output: its SHA-256 matches neither run.json digest
+missing: .claude/launch.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR1-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR2-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/include-root-routes/notes/reviews/phase-IR3-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/004-IS2-recording-gate.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS1/c0-owner-reaction.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS1/gate-after-r1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS1/gate.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS1/regressions-red.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS1/review-r1-mutations.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+unreviewed: .gnd-planning/milestones/induction-skill/evidence/IS1/review-r1-repairs.txt (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2 read c7abbb0c7ac8)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/absent-learner/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/absent-learner/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/absent-learner/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/absent-learner/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/absent-learner/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/absent-learner/claude-haiku/run-1/turn-04.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/absent-learner/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/discover/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/discover/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/discover/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/discover/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/discover/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/discover/claude-haiku/run-1/turn-04.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/discover/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/existing-output/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/existing-output/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/existing-output/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/existing-output/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/existing-output/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/existing-output/claude-haiku/run-1/turn-04.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/existing-output/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/faulty/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/faulty/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/faulty/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/faulty/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/faulty/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/faulty/claude-haiku/run-1/turn-04.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/faulty/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/import/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/import/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/import/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/import/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/import/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/import/claude-haiku/run-1/turn-04.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/import/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/learn/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/learn/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/learn/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/learn/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/learn/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/learn/claude-haiku/run-1/turn-04.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/learn/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/make-it-pass/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/make-it-pass/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/make-it-pass/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/make-it-pass/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/make-it-pass/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/make-it-pass/claude-haiku/run-1/turn-04.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/make-it-pass/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/recheck/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/rechecked-checks.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/score/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/score/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/score/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/score/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/attempt-1/score/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/installed.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/owner-statements-c1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/owner-statements-c2.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: .gnd-planning/milestones/induction-skill/evidence/IS2/rechecked-checks-attempt-2.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/phase-IS1-spec.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+unreviewed: .gnd-planning/milestones/induction-skill/notes/phase-IS2-spec.md (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2 read f0fcfa73c7d2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1/BRIEF.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1/FINDINGS.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1/brief.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1/diff.patch (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+missing: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+unreviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1/review.md (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2 read ada4b7e24c8b)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1/run.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2/diff.patch (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2)
+missing: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1/BRIEF.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1/FINDINGS.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1/brief.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1/diff.patch (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1/review.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1/run.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2/diff.patch (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/close-repairs-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP1-r3/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP2-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP3-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP3-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP3-r3/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP3-r4/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP3-r5/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP3-r6/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP4-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP4-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP4-r3/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP4-r4/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP4-r5/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP5-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP5-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/pyrel-rules-coverage/notes/reviews/phase-RP5-r3/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW1-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW2-probes-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/milestones/release-0.5.0/notes/reviews/phase-RW3-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/reviews/issue-286-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/reviews/issue-286-r2/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/reviews/issue-286-r3/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/reviews/pr-289-r1/posted.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+missing: .gnd-planning/reviews/pr-289-r1/review.log (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: AGENTS.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+unreviewed: dev/components/modules/tools.md (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2 read 3e6e0f61a06f)
+reviewed: docs/agents/index.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: docs/assets/replays/course-model-evolve-haiku-run-1.svg (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/course-model-evolve-haiku-run-1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-discover-haiku-run-1.svg (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-discover-haiku-run-1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-faulty-haiku-run-1.svg (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-faulty-haiku-run-1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-import-haiku-run-1.svg (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-import-haiku-run-1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-learn-haiku-run-1.svg (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-learn-haiku-run-1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-recheck-haiku-run-1.svg (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-recheck-haiku-run-1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-score-haiku-run-1.svg (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/refunds-score-haiku-run-1.txt (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/assets/replays/replays.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: docs/how-to/learn-rules-commands.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+unreviewed: docs/release-notes.md (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1 read d26eb18ca233)
+unreviewed: docs/tutorials/learn-rules.md (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2 read ddf0569d791a)
+reviewed: src/gnd/examples/refunds/skill-sessions/absent-learner/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/absent-learner/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/absent-learner/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/absent-learner/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/absent-learner/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/discover/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/discover/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/discover/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/discover/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/discover/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/existing-output/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/existing-output/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/existing-output/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/existing-output/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/existing-output/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/faulty/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/faulty/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/faulty/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/faulty/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/faulty/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/import/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/import/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/import/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/import/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/import/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/learn/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/learn/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/learn/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/learn/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/learn/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/make-it-pass/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/make-it-pass/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/make-it-pass/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/make-it-pass/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/make-it-pass/claude-haiku/run-1/turn-03.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/make-it-pass/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/recheck/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/recheck/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/recheck/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/recheck/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/recheck/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/score/claude-haiku/run-1/manifest.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/score/claude-haiku/run-1/results.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/score/claude-haiku/run-1/turn-01.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/score/claude-haiku/run-1/turn-02.jsonl (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/examples/refunds/skill-sessions/score/claude-haiku/run-1/workspace.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+unreviewed: src/gnd/skills/gnd-dev-session/SKILL.md (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1 read 5668337384a0)
+reviewed: src/gnd/skills/gnd-export/SKILL.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: src/gnd/skills/gnd-induce/SKILL.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: src/gnd/skills/gnd-model-evolve/SKILL.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: src/gnd/skills/gnd-orm-core/SKILL.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: src/gnd/skills/gnd-orm-core/references/labels.schema.json (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: src/gnd/skills/gnd-solve/SKILL.md (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: tests/test_doctor_uninstall.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+reviewed: tests/test_ik6_walk.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: tests/test_induce_skill.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: tests/test_learn_rules_page.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+unreviewed: tests/test_packaged_skills.py (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1 read 87bdb5730e5b)
+reviewed: tests/test_public_distribution.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: tests/test_public_packaged_invocation_guards.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+unreviewed: tests/test_record_induce_sessions.py (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2 read d83756305765)
+reviewed: tests/test_release_acceptance.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1)
+reviewed: tests/test_release_text.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+unreviewed: tests/test_replays.py (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2 read 1501200b0009)
+reviewed: tests/test_schema_sync.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS1-r1)
+unreviewed: tools/check_installed_docs.py (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r1 read 3612607a9d4d)
+unreviewed: tools/record_induce_sessions.py (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2 read 71d5383c65ad)
+reviewed: tools/record_skill_sessions.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+reviewed: tools/release_text.py (.gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2)
+unreviewed: tools/render_replay.py (changed since .gnd-planning/milestones/induction-skill/notes/reviews/phase-IS2-r2 read 2bad2cd856ad)

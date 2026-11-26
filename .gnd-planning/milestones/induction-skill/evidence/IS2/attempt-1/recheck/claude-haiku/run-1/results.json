@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "recheck",
+ "model": "haiku",
+ "recorded_at_commit": "9fd4d87d38632b7571d05634f94ae667668f5d11",
+ "declared_turns": [
+  "/gnd:gnd-induce Check batches/market.yaml against the model again.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder.",
+  "Yes, as you propose."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Check batches/market.yaml against the model again.",
+   "exit": 0,
+   "cost_usd": 0.00838166,
+   "assistant_last": "- **Advisory:** one warning on `constraints[1]`. That is the induced, proposed \"no refund over 500\" rule, not the written rule. Refund 601 is for 750, so it is over 500. The written rule (`constraints[0]`, no refund over 1000) is not violated, since 750 is under 1000.\n- **Coverage:** all three fact types are declared and populated with 3 facts each.\n\nI did not capture the process exit code, because my shell check for it was refused. This re-check wrote nothing, so there is no proposal to hand off and nothing to route to gnd-model-evolve. The 500 rule stays a proposal until you review it there."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder.",
+   "exit": 0,
+   "cost_usd": 0.01248201,
+   "assistant_last": "<tmp> the record, with actor, requested time, model digest, exit code and handoff.\n\n`gnd check` has no actor or timestamp option and writes no record of its own. The actor and time are in the record file, not in GND's output.\n\nThe exit code is now known: 0, with `outcome: accepted`. The result is unchanged from before: no blocking failures, and one advisory warning on the induced \"no refund over 500\" rule, which is still only a proposal. No proposal was written, so there is nothing to hand off to gnd-model-evolve."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 31.5
+}

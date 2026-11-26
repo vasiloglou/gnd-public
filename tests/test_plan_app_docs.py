@@ -218,10 +218,13 @@ def test_every_github_link_names_a_file_in_the_repository(page):
         assert (ROOT / path).exists(), (page.name, path)
 
 
-@pytest.mark.parametrize('folder', ['recordings', 'skill-sessions', 'skill-sessions-evolve'])
+@pytest.mark.parametrize('folder', ['plan_apps/recordings', 'plan_apps/skill-sessions',
+                                    'plan_apps/skill-sessions-evolve', 'refunds/skill-sessions'])
 def test_no_recording_holds_an_email_address(folder):
-    """Close reading three: an agent copied the git user's email into a proposal's audit field."""
-    for path in (APPS / folder).rglob('*'):
+    """Close reading three: an agent copied the git user's email into a proposal's audit field.
+    induction-skill IS2-C1 adds the refunds recording home (close reader R1-F3)."""
+    assert (APPS.parent / folder).is_dir(), folder
+    for path in (APPS.parent / folder).rglob('*'):
         if path.is_file():
             found = re.findall(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}', path.read_text(encoding='utf-8'))
             assert not found, (path, found[:2])

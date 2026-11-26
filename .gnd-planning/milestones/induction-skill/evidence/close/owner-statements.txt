@@ -1,0 +1,31 @@
+Owner statements for the induction-skill close, quoted whole.
+
+1. 2026-11-26, after PR 317 was opened, the owner asked:
+   "what do you suggest for the open questions"
+
+2. The answer proposed, for the nine open questions of records 002 and 005:
+   - one issue for the recorder and the induce-skill tests (IS2-Q1, IS2-Q3,
+     IS1-Q2), fixing the leak gaps F1 to F3 before any further paid recording
+     and then recording each command's argv and exit instead of reading shell
+     text;
+   - one issue for test-guard maintenance (IS1-Q1, IS1-Q3);
+   - IS2-Q2 as its own task (the installed docs check and the synth extra);
+   - IS2-Q4 accepted as a residual (a squash merge keeps commit 1cbbc18d out
+     of main; GitHub keeps it reachable from the PR page; no history rewrite);
+   - IS1-Q4 and IS1-Q5 retired.
+   It ended: "Under auto=true I can record these dispositions in the close
+   myself. Filing the two issues is publishing, so that needs your word. PR 317
+   also still waits for your word to merge. Should I record the dispositions
+   and file both issues, or record them without filing any issues?"
+
+3. The owner answered:
+   "yes do the first and then start addressing the issues you filed"
+
+Read as: the owner approves filing the two issues (filed as #318 and #319)
+and recording the proposed dispositions at the close, and asks for work on
+both issues to start. It does not authorize merging PR 317 or any other PR.
+IS2-Q2 was then fixed at the close rather than as its own task, because plan
+completion predicate 2 needs the installed check to pass; and the
+dispositions were revised after the close's four reader reports. Those
+revisions are delegated (auto=true) rulings, not the owner's reading. That
+reading is the author's.

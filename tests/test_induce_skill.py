@@ -29,7 +29,9 @@ IS1_BASE = "1e6083f3554e785aa994422c837fda874d74d1e6"
 
 #: R-a..R-h of spec section 6.1: each is said once, in gnd-induce/SKILL.md, and nowhere else.
 ONE_HOME = {
-    "R-a": "This skill never applies, confirms or edits a model, and never edits a proposal.",
+    # IS2-A1 item 4 (IS2 spec section 14): a proposal is never written by hand either.
+    "R-a": "This skill never applies, confirms or edits a model, and never writes or edits a proposal by hand: "
+           "only a gnd command writes one.",
     "R-b": "It never writes or edits a learner's clauses or run record, and never answers as the learner "
            "itself, except to save a learner's printed program verbatim as CLAUSES and to assemble a Popper "
            "run record as stated below.",
@@ -213,6 +215,36 @@ def test_t8_every_proposal_command_asks_the_actor_of_the_user():
     assert "Who should the proposal be recorded as" in inputs
 
 
+# --- IS2-A1 (IS2 spec section 14): what the first Haiku recordings did not follow ----
+
+def test_a1_outputs_stay_in_the_working_folder():
+    inputs = section("Fix the inputs first")
+    assert "never in a temporary or scratch folder" in inputs
+    assert "Read nothing outside the working folder but this skill's linked references" in inputs
+
+
+def test_a1_the_actor_is_asked_before_the_first_writing_command():
+    inputs = section("Fix the inputs first")
+    assert "Ask before the first command that writes anything, and wait for the answer" in inputs
+    assert "never a placeholder" in inputs
+
+
+def test_a1_dont_import_stops_at_the_learner():
+    learn = section("Learn")
+    assert ("When the user asks for the learner's answer only, or says not to import yet, stop here: report "
+            "its claim as unchecked and run no `gnd import`.") in learn
+
+
+def test_a1_the_handoff_stops_without_starting_review():
+    handoff = section("Hand off")
+    assert handoff.endswith("This skill never starts gnd-model-evolve, gnd evolve preview or gnd evolve apply "
+                            "itself; the user starts the review.")
+
+
+def test_a1_the_absent_learner_stop_is_said_in_its_words():
+    assert 'stop and say, in these words, "no learner named X is installed"' in section("Learn")
+
+
 # --- T8, D23, F6: every skill link names the skill it opens ------------------------
 
 def test_t8_each_skill_link_label_names_its_destination():
@@ -249,6 +281,25 @@ def test_t7_every_actor_is_the_placeholder():
     """F11: a fixed --actor would record one name for every user."""
     actors = [s.tokens[s.tokens.index("--actor") + 1] for s in _induce_snippets() if "--actor" in s.tokens]
     assert actors and set(actors) == {"ACTOR"}
+
+
+#: The commands that write a proposal (IS1-Q2, round 2 F4; IS2 spec section 6.9).
+PROPOSAL_WRITERS = {("discover",), ("import", "ilp-rules"), ("import", "mined-rules")}
+
+
+def test_q2_every_proposal_command_carries_the_actor_and_time_once():
+    writers = [s for s in _induce_snippets() if s.subcommand_path in PROPOSAL_WRITERS]
+    assert {s.subcommand_path for s in writers} == PROPOSAL_WRITERS
+    for snippet in writers:
+        assert snippet.long_options.count("--actor") == 1, snippet.ident
+        assert snippet.long_options.count("--requested-at") == 1, snippet.ident
+
+
+def test_q2_the_amie_export_is_its_own_line():
+    """IS1-Q2, round 2 F5: the miner's export is a line of its own with --target amie."""
+    exports = [s for s in _induce_snippets() if s.subcommand_path == ("export", "ilp")]
+    amie = [s for s in exports if s.tokens[s.tokens.index("--target") + 1] == "amie"]
+    assert len(amie) == 1 and "--population" in amie[0].long_options and "--labels" not in amie[0].long_options
 
 
 def test_t10_the_skill_installs_nothing():

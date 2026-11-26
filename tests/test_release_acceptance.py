@@ -87,7 +87,7 @@ def test_retained_candidate_identity(candidate):
         with zipfile.ZipFile(wheel) as archive:
             names = archive.namelist()
             assert len(names) == len(set(names))
-            assert sum(p.file_size for p in archive.infolist()) <= 12 * 1024 * 1024
+            assert sum(p.file_size for p in archive.infolist()) <= 13 * 1024 * 1024   # IS2 C2
             assert 'gnd/yaml_comments.py' in names
             from test_packaged_skills import EXPECTED_SKILL_FILES, EXPECTED_SKILL_NAMES
             skill_names = {n.removeprefix('gnd/skills/') for n in names

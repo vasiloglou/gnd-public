@@ -491,3 +491,71 @@ D14..D16 remain proposed (D3, D8, D9 and D11 amended (p1); D5 and D8 amended
 **Next action:** the owner decides plan approval over r3. Then an explicit
 `process-phase IS1 induction-skill` selection, at whose gate the IS1 base commit
 (which is also the D8 pin) is named.
+
+## 11. Close amendments (2026-11-26)
+
+Written at the milestone close under `process-milestone induction-skill
+auto=true`, and revised after the close's four reader reports. The approved r3
+bytes above (SHA-256
+`46e8e6c82d34dd6ca5b61abeebdc0c58fc9860671f08be7580a9a28d1834b0e7`, plan gate
+[001](../001-plan-gate.md)) are kept unchanged; each amendment quotes the
+wording it corrects.
+
+**A1. The Popper branch (§2).** Raised by [record 002](../002-phase-IS1.md),
+"Refuted premises", which names this plan repair for the close.
+- Prior wording: "It is unproven on the refunds example: `ilp-bridge.md` says
+  the rendering has not been run against a real Popper, and sibling PR #51 (not
+  on main) reports that the rendering as written does not run (P1..P3)."
+- Correction: `docs/reference/ilp-bridge.md`, "Comparing the learners", records
+  three Popper 5.0.1 runs over the refunds example. Run 1, the run of record,
+  was refused at the rendering, as #51 reported; runs 2 and 3 used later
+  renderings, and the shipped rendering is run 3's. Run 3 completed and its one
+  clause was admitted by `gnd import ilp-rules` (exit 0). The `gnd-induce` skill
+  says the reference records the runs.
+- Unchanged: this milestone installs and runs no real learner, and no page
+  implies that a real learner reproduced tutorial step 2 (§4, "Carried
+  limitations").
+
+**A2. The installed check in completion predicate 2 and IS2-C8.** Raised by
+[record 005](../005-phase-IS2.md), open question IS2-Q2.
+- Prior wording kept: "The installed-candidate docs check passes in both wheel
+  origins."
+- Finding: the check installed the bare wheel, while the guarded-rules chapter
+  says its case generation needs the optional `synth` extra, so the release
+  origin stopped at that chapter on main as well. At the close each wheel
+  origin runs the tutorial groups that need no extra on the bare wheel, and the
+  groups whose pages name an extra (`bookrec`, declared in
+  `tools/run_tutorials.py` as `GROUP_EXTRAS`) with exactly those extras
+  (commits `4e1ae32c`, `1c4bc454`). The predicate's wording is unchanged; its
+  measurement is in the close record.
+
+**A3. IS-R7 and the reader's recorded turns.** Raised by close reader 4 (R4-F4).
+- Prior wording kept (§0, IS-R7): "The business page shows `/gnd:<skill>`
+  prompts and visual results, never Python or `gnd` commands in its own prose
+  or fences. **Exception (p1):** a replay transcript shows the commands the
+  agent ran, because that is what was recorded."
+- Conflict: IS2-C1 (p2) requires that "the user turn gives the exact learner
+  invocation", and IS2-C4 requires each "You type" fence to equal the declared
+  turn. Two "You answer" fences therefore hold the stand-in learner's
+  invocation as the reader's recorded words.
+- Resolution: a second exception, as `tests/test_learn_rules_page.py` T10
+  already applies it: a fence that equals a declared turn shows what the reader
+  typed in the recording, and may name the learner's invocation.
+
+**A4. The IK census red control (completion predicate 1, IS1-C6).** Raised by
+close reader 1 (R1-F1).
+- Prior wording kept: "the unchanged AGENTS.md table test and IK census test go
+  red on a tree with the skill added and their repairs not yet made (p1)"; "The
+  unchanged census test is red on a tree with the skill added (p1)."
+- Finding: the census test reads the IK milestone's own fixed commit, so adding
+  a skill cannot turn it red; D8 was already met on main (record 002, IS1-C6).
+  At a tree with the skill added and no repairs, only the AGENTS.md table test
+  fails. The census half of the red control does not exist; the clause holds
+  for the AGENTS.md table test only.
+
+**Not plan repairs.** Record 005's other refuted premises have no wording in
+these bytes. The spec's `done` table and its `said` rule were spec text,
+amended in the IS2 spec. The plan never claimed the skill holds on a model
+(D10 asks for recordings, not a pass rate), and it states no wheel budget; the
+owner raised the budget in the code at checkpoint C2. The
+[close sweep](close-sweep.md) dispositions each of them.

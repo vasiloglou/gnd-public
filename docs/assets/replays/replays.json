@@ -58,5 +58,69 @@
    "/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student."
   ],
   "title": "Claude Code (Haiku) changes the credit cap (recorded run 1)"
+ },
+ "refunds-score-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/refunds/skill-sessions/score/claude-haiku/run-1/turn-01.jsonl",
+   "src/gnd/examples/refunds/skill-sessions/score/claude-haiku/run-1/turn-02.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-induce Score the written refund rule against the auditors' verdicts in labels.json. How many flagged weeks does it catch, and does it ever accuse a clean week?",
+   "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder."
+  ],
+  "title": "Claude Code (Haiku) scores the written refund rule (recorded run 1)"
+ },
+ "refunds-learn-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/refunds/skill-sessions/learn/claude-haiku/run-1/turn-01.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-induce Export the labelled weeks for a rule learner, run the stand-in learner on them, and tell me the rule it finds. Don't import it yet."
+  ],
+  "title": "Claude Code (Haiku) runs the stand-in learner (recorded run 1)"
+ },
+ "refunds-import-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/refunds/skill-sessions/import/claude-haiku/run-1/turn-01.jsonl",
+   "src/gnd/examples/refunds/skill-sessions/import/claude-haiku/run-1/turn-02.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-induce Bring the learned rule into GND as a proposal. Check its coverage on every week before you believe the learner.",
+   "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner."
+  ],
+  "title": "Claude Code (Haiku) brings the learned rule into GND (recorded run 1)"
+ },
+ "refunds-faulty-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/refunds/skill-sessions/faulty/claude-haiku/run-1/turn-01.jsonl",
+   "src/gnd/examples/refunds/skill-sessions/faulty/claude-haiku/run-1/turn-02.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-induce Run the stand-in learner again, this time as the faulty learner that also claims north. Try to import what it produces.",
+   "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner."
+  ],
+  "title": "Claude Code (Haiku) tries to import a faulty learner's claim (recorded run 1)"
+ },
+ "refunds-discover-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/refunds/skill-sessions/discover/claude-haiku/run-1/turn-01.jsonl",
+   "src/gnd/examples/refunds/skill-sessions/discover/claude-haiku/run-1/turn-02.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-induce Look at south's week alone and suggest rules of two kinds: \"each X has exactly one Y\" and \"every X has a Y\". Read each suggestion back to me in plain English.",
+   "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder."
+  ],
+  "title": "Claude Code (Haiku) suggests rules from south's week (recorded run 1)"
+ },
+ "refunds-recheck-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/refunds/skill-sessions/recheck/claude-haiku/run-1/turn-01.jsonl",
+   "src/gnd/examples/refunds/skill-sessions/recheck/claude-haiku/run-1/turn-02.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-induce Check batches/market.yaml against the model again.",
+   "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder."
+  ],
+  "title": "Claude Code (Haiku) re-checks the market week (recorded run 1)"
  }
 }

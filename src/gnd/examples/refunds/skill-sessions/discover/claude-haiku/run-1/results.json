@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/004-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "discover",
+ "model": "haiku",
+ "recorded_at_commit": "388d6fa6dba48a12808796006b6baa081b971ca3",
+ "declared_turns": [
+  "/gnd:gnd-induce Look at south's week alone and suggest rules of two kinds: \"each X has exactly one Y\" and \"every X has a Y\". Read each suggestion back to me in plain English.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Look at south's week alone and suggest rules of two kinds: \"each X has exactly one Y\" and \"every X has a Y\". Read each suggestion back to me in plain English.",
+   "exit": 0,
+   "cost_usd": 0.00972586,
+   "assistant_last": "corded as?** This becomes the audit actor. I won't take one from git, the shell, or the environment.\n2. **At what time?** ISO-8601 with a UTC offset, for example `2026-11-26T09:00:00+01:00`.\n3. **Output paths:** are these fine in the working folder? `south-discovery.proposal.json` (the proposal, written only if something is emitted) and `south-discovery-report.txt` (the report). Neither exists yet, so discover won't refuse them.\n\nOnce you answer, I'll run discover, read each candidate back in plain English, and hand off to gnd-model-evolve if a proposal file is written. I won't apply anything."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder.",
+   "exit": 0,
+   "cost_usd": 0.022450809999999998,
+   "assistant_last": "em is a value-family candidate, so none carries host values.\n- The report lists one rejected candidate with a warning, but its text doesn't name which one. I did not dig further.\n- The report suppressed one candidate as already declared, and three as spanning uniqueness, which I did not examine.\n- You gave the audit time as 2026-10-26. Today is 2026-11-26. I recorded the time you gave.\n\nThe next step is to review the proposal in gnd-model-evolve, which previews it and applies only what you accept. I have not started that and have not applied anything. Tell me when you want to start the review."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "no_hand_written_proposal": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 85.6
+}

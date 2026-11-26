@@ -1,0 +1,10 @@
+Checks recomputed from the kept files with the checker after review phase-IS2-r1 (spec section 17).
+score           : failed ['no_outside_path']
+learn           : failed ['no_apply_call', 'no_outside_path', 'done']
+import          : failed ['no_apply_call', 'no_outside_path']
+faulty          : failed ['no_apply_call', 'no_outside_path', 'done']
+discover        : failed ['no_hand_written_proposal', 'actor_from_user', 'no_outside_path']
+recheck         : lost (leak gate)
+absent-learner  : failed ['no_outside_path', 'done']
+existing-output : failed ['no_apply_call', 'no_hand_written_proposal', 'no_outside_path']
+make-it-pass    : failed ['no_outside_path']

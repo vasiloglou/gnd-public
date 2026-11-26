@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/004-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "faulty",
+ "model": "haiku",
+ "recorded_at_commit": "388d6fa6dba48a12808796006b6baa081b971ca3",
+ "declared_turns": [
+  "/gnd:gnd-induce Run the stand-in learner again, this time as the faulty learner that also claims north. Try to import what it produces.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Run the stand-in learner again, this time as the faulty learner that also claims north. Try to import what it produces.",
+   "exit": 0,
+   "cost_usd": 0.01057556,
+   "assistant_last": "run.json --target neutral --out faulty-proposal.json --actor ACTOR --requested-at TIMESTAMP`.\n\nI expect GND to refuse the import with exit 3, because `north` is in rule 0's claimed coverage but not in the set GND reproduces. If it refuses, no proposal file is written. I won't change the claim or import again. I'll report the refusal as printed.\n\n**Please tell me:**\n1. **Who should the proposal be recorded as?** (the audit actor, your name or handle)\n2. **At what time?** An ISO-8601 timestamp with a UTC offset, for example `2026-11-26T10:00:00+01:00`. Or say \"now\" and I'll use the current time."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner.",
+   "exit": 0,
+   "cost_usd": 0.015120060000000001,
+   "assistant_last": "port, station`. GND reproduced only the four flagged batches. `north` is a clean batch, so the over-claim is what the import caught. Admission is all-or-nothing, so nothing was written. `faulty-proposal.json` does not exist.\n\nI did not change the claim or import again.\n\n**Files written in the working folder:**\n- `faulty-learner/learned.clauses.json`\n- `faulty-learner/learned.run.json`\n\nI reused the existing `ilp/` export, which I did not regenerate.\n\nOne thing to check: you gave the audit time as 2026-10-26, but today is 2026-11-26. I used your value as given. Tell me if it should be November."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "no_hand_written_proposal": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 47.0
+}

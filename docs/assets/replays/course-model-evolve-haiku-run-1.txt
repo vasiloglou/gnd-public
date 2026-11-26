@@ -14,8 +14,8 @@ claude: The model is `model.orm.json`, and the cap is the `credit_cap` constrain
   Read <plugin>/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md
 claude: The model is JSON, but the skill and the contract are written for YAML. I'll check whether `gnd` accepts the JSON file as-is, running the commands one at a time.
   Bash gnd validate model.orm.json
-  Bash gnd evolve --help
     → OK: model.orm.json is a valid GND ORM model
+  Bash gnd evolve --help
     → usage: gnd evolve [-h] {preview,apply,finalize} ...
 claude: `gnd validate` accepts the JSON model (exit 0). The proposal's closed schema is the next blocker, so I'll look up the exact `ConstraintLocator` and proposal field shapes in the gnd source.
   Bash cd <repo> && grep -rln "ConstraintLocator" --include=*.py . | grep -v .venv | head -20; grep -rn "class ConstraintLocator" --include=*.py . | grep -v .venv

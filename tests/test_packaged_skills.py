@@ -17,35 +17,241 @@ import pytest
 from gnd import DEV_VERSION, DISTRIBUTION, resolve_version
 
 EXPECTED_SKILL_FILE_COUNT = 73  # AC1 adds the bounded COUNT membership contract; IS1: gnd-induce and the vendored label schema.
-EXPECTED_RELATIVE_LINK_COUNT = 238  # MG5: the Unattended mode cites representation-format.md once more; TS3: six new edges; TS4: nine, and S1 cites gnd-model-evolve once more; #104: unattended-growth.md adds seven; UG4: it cites the contract at two new anchors and representation-format.md once more
-EXPECTED_RELATIVE_LINKS = frozenset({('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/constraint-reference.md#internal-uniqueness-uc'), ('gnd-model-multivalued/SKILL.md', '../gnd-judge-fact-types/SKILL.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-multivalued/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-multivalued/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'), ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'), ('gnd-orm-core/SKILL.md', '../gnd-judge-fact-types/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-extract/references/extraction-contract.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/references/population-format.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-render-doc/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'), ('gnd-render-doc/references/rendering-contract.md', '../../gnd-dev-session/references/judgment-contract.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'), ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/session-v7-contract.md'), ('gnd-extract/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-export/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-export/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-export/references/export-contract.md', '../SKILL.md'), ('gnd-export/references/witness-contract.md', '../SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-export/SKILL.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-adopt/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-adopt/SKILL.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-adopt/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-adopt/references/gsd-mapping.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-codegen/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-codegen/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-codegen/references/codegen-contract.md', '../../gnd-extract/references/extraction-contract.md'), ('gnd-codegen/references/codegen-contract.md', '../../gnd-orm-core/references/population-format.md'), ('gnd-codegen/references/codegen-contract.md', '../SKILL.md'), ('gnd-codegen/references/architecture-contract.md', '../SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-conformance/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-conformance/references/conformance-contract.md', '../SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/representation-format.md'), ('gnd-dev-session/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'), ('gnd-extract/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-extract/references/extraction-contract.md', '../../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'), ('gnd-extract/references/extraction-contract.md', '../SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-conformance/references/conformance-contract.md'), ('gnd-model-evolve/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/SKILL.md'), ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-evolve/references/evolution-contract.md', '../SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-code/references/recovery-contract.md', '../../gnd-orm-core/SKILL.md'), ('gnd-model-from-code/references/recovery-contract.md', '../SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/orm-meta.schema.json'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md'), ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/verbalization-patterns.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/SKILL.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/evals/README.md', '../examples/movie_catalog.dialogue.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/representation-format.md'), ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/verbalization-patterns.md'), ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/halpin-posture.md'), ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/provenance-and-modality.md'), ('gnd-new-project/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-new-project/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/coverage-and-element-addressing.md'), ('gnd-new-project/SKILL.md', '../gnd-solve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-dev-session/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-render-doc/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-review-panel-light/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-solve/SKILL.md'), ('gnd-orm-core/SKILL.md', '../gnd-update-review-panel/SKILL.md'), ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-new-project/SKILL.md'), ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-solve/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-extract/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/population-format.md'), ('gnd-render-doc/references/rendering-contract.md', '../SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-review-panel/SKILL.md', '../gnd-update-review-panel/SKILL.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/references/review-contract.md'), ('gnd-review-panel-light/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-review-panel/references/review-contract.md', '../../gnd-update-review-panel/SKILL.md'), ('gnd-review-panel/references/review-contract.md', '../SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-codegen/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-conformance/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-dev-session/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-evolve/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-from-code/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-model-from-text/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-new-project/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-orm-core/SKILL.md'), ('gnd-solve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-solve/SKILL.md', '../gnd-review-panel/SKILL.md'), ('gnd-update-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/SKILL.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#additive-policy'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-inference.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-reference.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#unattended-source'), ('gnd-model-from-text/references/unattended-growth.md', '../SKILL.md'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#stable-locators'), ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#population-check')})
 EXPECTED_SKILL_NAMES = frozenset({'gnd-adopt', 'gnd-induce', 'gnd-judge-fact-types', 'gnd-model-multivalued', 'gnd-codegen', 'gnd-conformance', 'gnd-dev-session', 'gnd-extract', 'gnd-export', 'gnd-model-evolve', 'gnd-model-from-code', 'gnd-model-from-text', 'gnd-new-project', 'gnd-orm-core', 'gnd-render-doc', 'gnd-review-panel', 'gnd-review-panel-light', 'gnd-solve', 'gnd-update-review-panel'})
 EXPECTED_SKILL_FILES = frozenset({'gnd-induce/SKILL.md', 'gnd-orm-core/references/labels.schema.json', 'gnd-judge-fact-types/SKILL.md', 'gnd-model-multivalued/SKILL.md', 'gnd-orm-core/references/type-evidence.schema.json', 'gnd-orm-core/references/type-judgements.schema.json', 'gnd-dev-session/references/judgment-contract.md', 'gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adopt/references/gsd-mapping.md', 'gnd-adopt/scripts/verify_migration.py', 'gnd-codegen/SKILL.md', 'gnd-codegen/references/architecture-contract.md', 'gnd-codegen/references/codegen-contract.md', 'gnd-conformance/SKILL.md', 'gnd-conformance/references/conformance-contract.md', 'gnd-dev-session/SKILL.md', 'gnd-dev-session/references/session-v7-contract.md', 'gnd-export/SKILL.md', 'gnd-export/references/export-contract.md', 'gnd-export/references/witness-contract.md', 'gnd-export/references/witness.schema.json', 'gnd-extract/SKILL.md', 'gnd-extract/references/extraction-contract.md', 'gnd-model-evolve/SKILL.md', 'gnd-model-evolve/references/evolution-contract.md', 'gnd-model-from-code/SKILL.md', 'gnd-model-from-code/references/recovery-contract.md', 'gnd-model-from-text/SKILL.md', 'gnd-model-from-text/USAGE.md', 'gnd-model-from-text/evals/README.md', 'gnd-model-from-text/evals/cases.json', 'gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md', 'gnd-model-from-text/evals/reviewability_checklist.md', 'gnd-model-from-text/examples/library_with_subtypes.dialogue.md', 'gnd-model-from-text/examples/library_with_subtypes.orm.yaml', 'gnd-model-from-text/examples/movie_catalog.dialogue.md', 'gnd-model-from-text/examples/movie_catalog.orm.yaml', 'gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md', 'gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml', 'gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md', 'gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml', 'gnd-model-from-text/references/csdp-workflow.md', 'gnd-model-from-text/references/dialogue-patterns.md', 'gnd-model-from-text/references/unattended-growth.md', 'gnd-model-from-text/scripts/validate_model.py', 'gnd-new-project/SKILL.md', 'gnd-orm-core/SKILL.md', 'gnd-orm-core/references/constraint-inference.md', 'gnd-orm-core/references/coverage-and-element-addressing.md', 'gnd-orm-core/references/constraint-reference.md', 'gnd-orm-core/references/halpin-posture.md', 'gnd-orm-core/references/milestone-record-format.md', 'gnd-orm-core/references/orm-meta.schema.json', 'gnd-orm-core/references/population-format.md', 'gnd-orm-core/references/population.schema.json', 'gnd-orm-core/references/provenance-and-modality.md', 'gnd-orm-core/references/representation-format.md', 'gnd-orm-core/references/steps.schema.json', 'gnd-orm-core/references/verbalization-patterns.md', 'gnd-render-doc/SKILL.md', 'gnd-render-doc/references/rendering-contract.md', 'gnd-review-panel/SKILL.md', 'gnd-review-panel/references/review-contract.md', 'gnd-review-panel-light/SKILL.md', 'gnd-solve/SKILL.md', 'gnd-update-review-panel/SKILL.md', 'gnd-update-review-panel/agents/openai.yaml', 'gnd-update-review-panel/scripts/update_harnesses.py'})
 FROZEN_BASE_DEPENDENCIES = {'jsonschema', 'pydantic', 'ruamel-yaml'}
 PEP723_SIBLING_SCHEMA = 'gnd-orm-core/references/orm-meta.schema.json'
-# MC3 preserves the 238-edge predecessor and adds exactly this normative edge.
+# The skill link inventory: every (file, relative target) edge in the packaged tree, and how many
+# link occurrences there are. One literal, regenerated by
+#     uv run python tests/test_packaged_skills.py
+# which prints both from the tree (issue 319 retired the per-milestone union chain).
+RELATIVE_LINKS = frozenset({
+    ('gnd-adopt/SKILL.md', '../gnd-model-from-code/SKILL.md'),
+    ('gnd-adopt/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-adopt/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-adopt/references/gsd-mapping.md', '../../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-conformance/SKILL.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-extract/SKILL.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-model-from-text/SKILL.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/population-format.md'),
+    ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-codegen/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-codegen/SKILL.md', '../gnd-render-doc/SKILL.md'),
+    ('gnd-codegen/references/architecture-contract.md', '../SKILL.md'),
+    ('gnd-codegen/references/codegen-contract.md', '../../gnd-extract/references/extraction-contract.md'),
+    ('gnd-codegen/references/codegen-contract.md', '../../gnd-orm-core/references/population-format.md'),
+    ('gnd-codegen/references/codegen-contract.md', '../SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-codegen/SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-extract/SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-model-from-code/SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-model-from-text/SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-conformance/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-conformance/SKILL.md', '../gnd-review-panel/SKILL.md'),
+    ('gnd-conformance/references/conformance-contract.md', '../SKILL.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-codegen/SKILL.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-conformance/SKILL.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-induce/SKILL.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/population-format.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-orm-core/references/representation-format.md'),
+    ('gnd-dev-session/SKILL.md', '../gnd-review-panel/SKILL.md'),
+    ('gnd-export/SKILL.md', '../gnd-induce/SKILL.md'),
+    ('gnd-export/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-export/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-export/SKILL.md', '../gnd-orm-core/references/representation-format.md#ossie-interchange'),
+    ('gnd-export/references/export-contract.md', '../SKILL.md'),
+    ('gnd-export/references/witness-contract.md', '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record'),
+    ('gnd-export/references/witness-contract.md', '../SKILL.md'),
+    ('gnd-extract/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'),
+    ('gnd-extract/SKILL.md', '../gnd-export/SKILL.md'),
+    ('gnd-extract/SKILL.md', '../gnd-model-from-text/SKILL.md'),
+    ('gnd-extract/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-extract/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-extract/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md'),
+    ('gnd-extract/SKILL.md', '../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'),
+    ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-extract/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-extract/SKILL.md', '../gnd-render-doc/SKILL.md'),
+    ('gnd-extract/references/extraction-contract.md', '../../gnd-dev-session/references/judgment-contract.md'),
+    ('gnd-extract/references/extraction-contract.md', '../../gnd-orm-core/references/population-format.md#deterministic-document-extraction-covers'),
+    ('gnd-extract/references/extraction-contract.md', '../SKILL.md'),
+    ('gnd-induce/SKILL.md', '../gnd-dev-session/SKILL.md'),
+    ('gnd-induce/SKILL.md', '../gnd-export/SKILL.md'),
+    ('gnd-induce/SKILL.md', '../gnd-judge-fact-types/SKILL.md'),
+    ('gnd-induce/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-induce/SKILL.md', '../gnd-model-multivalued/SKILL.md'),
+    ('gnd-induce/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/labels.schema.json'),
+    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/population-format.md'),
+    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-judge-fact-types/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-judge-fact-types/SKILL.md', '../gnd-model-multivalued/SKILL.md'),
+    ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'),
+    ('gnd-judge-fact-types/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-conformance/references/conformance-contract.md'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-induce/SKILL.md'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#guarded-constraints'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#model-includes-version-5'),
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'),
+    ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/SKILL.md'),
+    ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-evolve/references/evolution-contract.md', '../../gnd-orm-core/references/representation-format.md#model-includes-version-5'),
+    ('gnd-model-evolve/references/evolution-contract.md', '../SKILL.md'),
+    ('gnd-model-from-code/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-model-from-code/SKILL.md', '../gnd-orm-core/references/representation-format.md#guarded-constraints'),
+    ('gnd-model-from-code/references/recovery-contract.md', '../../gnd-orm-core/SKILL.md'),
+    ('gnd-model-from-code/references/recovery-contract.md', '../SKILL.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-model-from-code/SKILL.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-inference.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/constraint-reference.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/halpin-posture.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/orm-meta.schema.json'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#guarded-constraints'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#model-includes-version-5'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#repair-annotations'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/verbalization-patterns.md'),
+    ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/constraint-inference.md'),
+    ('gnd-model-from-text/USAGE.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-from-text/evals/README.md', '../examples/movie_catalog.dialogue.md'),
+    ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-inference.md'),
+    ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/constraint-reference.md'),
+    ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/halpin-posture.md'),
+    ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/representation-format.md'),
+    ('gnd-model-from-text/references/csdp-workflow.md', '../../gnd-orm-core/references/verbalization-patterns.md'),
+    ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/halpin-posture.md'),
+    ('gnd-model-from-text/references/dialogue-patterns.md', '../../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/SKILL.md'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#additive-policy'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#population-check'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-model-evolve/references/evolution-contract.md#stable-locators'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-inference.md'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/constraint-reference.md'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/provenance-and-modality.md#evolve-admission-d-12'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#an-unattended-root-that-includes-a-reviewed-model'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../../gnd-orm-core/references/representation-format.md#unattended-source'),
+    ('gnd-model-from-text/references/unattended-growth.md', '../SKILL.md'),
+    ('gnd-model-multivalued/SKILL.md', '../gnd-judge-fact-types/SKILL.md'),
+    ('gnd-model-multivalued/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/constraint-reference.md#internal-uniqueness-uc'),
+    ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
+    ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-evidence.schema.json'),
+    ('gnd-model-multivalued/SKILL.md', '../gnd-orm-core/references/type-judgements.schema.json'),
+    ('gnd-new-project/SKILL.md', '../gnd-model-from-code/SKILL.md'),
+    ('gnd-new-project/SKILL.md', '../gnd-model-from-text/SKILL.md'),
+    ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/coverage-and-element-addressing.md'),
+    ('gnd-new-project/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-new-project/SKILL.md', '../gnd-solve/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-adopt/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-codegen/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-conformance/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-dev-session/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-export/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-extract/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-induce/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-judge-fact-types/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-model-from-code/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-model-from-text/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-model-multivalued/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-render-doc/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-review-panel-light/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-review-panel/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-solve/SKILL.md'),
+    ('gnd-orm-core/SKILL.md', '../gnd-update-review-panel/SKILL.md'),
+    ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-new-project/SKILL.md'),
+    ('gnd-orm-core/references/milestone-record-format.md', '../../gnd-solve/SKILL.md'),
+    ('gnd-orm-core/references/population-format.md', '../../gnd-dev-session/references/judgment-contract.md'),
+    ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/judgment-contract.md'),
+    ('gnd-orm-core/references/representation-format.md', '../../gnd-dev-session/references/session-v7-contract.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-dev-session/references/judgment-contract.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-export/SKILL.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-extract/SKILL.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/population-format.md'),
+    ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#calendar-day-terms-v71'),
+    ('gnd-render-doc/SKILL.md', '../gnd-orm-core/references/representation-format.md#fixed-reference-populations-version-4'),
+    ('gnd-render-doc/references/rendering-contract.md', '../../gnd-dev-session/references/judgment-contract.md'),
+    ('gnd-render-doc/references/rendering-contract.md', '../SKILL.md'),
+    ('gnd-review-panel-light/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/SKILL.md'),
+    ('gnd-review-panel-light/SKILL.md', '../gnd-review-panel/references/review-contract.md'),
+    ('gnd-review-panel/SKILL.md', '../gnd-conformance/SKILL.md'),
+    ('gnd-review-panel/SKILL.md', '../gnd-model-from-text/SKILL.md'),
+    ('gnd-review-panel/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-review-panel/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-review-panel/SKILL.md', '../gnd-update-review-panel/SKILL.md'),
+    ('gnd-review-panel/references/review-contract.md', '../../gnd-update-review-panel/SKILL.md'),
+    ('gnd-review-panel/references/review-contract.md', '../SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-codegen/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-conformance/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-dev-session/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-export/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-induce/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-model-evolve/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-model-from-code/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-model-from-text/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-new-project/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-orm-core/SKILL.md'),
+    ('gnd-solve/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+    ('gnd-solve/SKILL.md', '../gnd-review-panel/SKILL.md'),
+    ('gnd-update-review-panel/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
+})
+RELATIVE_LINK_COUNT = 265
+# MC3 and MC4 normative edges, damaged one at a time by the include-edge test below.
 MC3_INCLUDE_EDGE = ('gnd-model-evolve/references/evolution-contract.md',
                     '../../gnd-orm-core/references/representation-format.md#model-includes-version-5')
-MC3_RELATIVE_LINKS = EXPECTED_RELATIVE_LINKS | {MC3_INCLUDE_EDGE}
-MC3_RELATIVE_LINK_COUNT = EXPECTED_RELATIVE_LINK_COUNT + 1
-# MC4 keeps the predecessor and adds two cross-skill entry-point citations to one home.
 MC4_INCLUDE_EDGES = {
     ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#model-includes-version-5'),
     ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#model-includes-version-5'),
 }
-MC4_RELATIVE_LINKS = MC3_RELATIVE_LINKS | MC4_INCLUDE_EDGES
-MC4_RELATIVE_LINK_COUNT = MC3_RELATIVE_LINK_COUNT + 2
-# RN0 (release-0.3.0) records the edge the Ossie export skill text added (PR 160).
-RN0_OSSIE_EDGE = ('gnd-export/SKILL.md', '../gnd-orm-core/references/representation-format.md#ossie-interchange')
-RN0_RELATIVE_LINKS = MC4_RELATIVE_LINKS | {RN0_OSSIE_EDGE}
-RN0_RELATIVE_LINK_COUNT = MC4_RELATIVE_LINK_COUNT + 1
-
-GC4_GUARDED_EDGES = frozenset(
-    (f'{skill}/SKILL.md', '../gnd-orm-core/references/representation-format.md#guarded-constraints')
-    for skill in ('gnd-model-from-text', 'gnd-model-from-code', 'gnd-model-evolve')
-)
-GC4_RELATIVE_LINKS = RN0_RELATIVE_LINKS | GC4_GUARDED_EDGES
-GC4_RELATIVE_LINK_COUNT = RN0_RELATIVE_LINK_COUNT + len(GC4_GUARDED_EDGES)
 EXPECTED_SKILL_FILES |= {'gnd-export/references/count-witness-contract.md'}
 
 
@@ -92,45 +298,9 @@ def test_the_packaged_tree_holds_exactly_the_named_skills() -> None:
     assert names == EXPECTED_SKILL_NAMES, f'packaged skills are {sorted(names)}, expected {sorted(EXPECTED_SKILL_NAMES)}.\n  missing: {sorted(EXPECTED_SKILL_NAMES - names)}\n  extra:   {sorted(names - EXPECTED_SKILL_NAMES)}'
     assert len(EXPECTED_SKILL_NAMES) == 19, 'the packaged surface is exactly the named skills; another is a decision with a plan behind it, not an edit to this literal (the latest: gnd-induce, induction-skill IS1)'
 
-LX2_FLATTENING_EDGE = (
-    'gnd-export/references/witness-contract.md',
-    '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record',
-)
-# reviewed-vocabulary-growth VG5: "Starting from a reviewed vocabulary" cites the two homes.
-VG5_GROWTH_EDGES = {
-    ('gnd-model-from-text/references/unattended-growth.md',
-     '../../gnd-orm-core/references/representation-format.md#an-unattended-root-that-includes-a-reviewed-model'),
-    ('gnd-model-from-text/references/unattended-growth.md',
-     '../../gnd-orm-core/references/provenance-and-modality.md#evolve-admission-d-12'),
-}
-# induction-skill IS1: gnd-induce, its five inbound route sentences and its outbound links.
-IS1_INDUCE_EDGES = frozenset({
-    ('gnd-dev-session/SKILL.md', '../gnd-induce/SKILL.md'),
-    ('gnd-export/SKILL.md', '../gnd-induce/SKILL.md'),
-    ('gnd-model-evolve/SKILL.md', '../gnd-induce/SKILL.md'),
-    ('gnd-orm-core/SKILL.md', '../gnd-induce/SKILL.md'),
-    ('gnd-solve/SKILL.md', '../gnd-induce/SKILL.md'),
-    ('gnd-induce/SKILL.md', '../gnd-dev-session/SKILL.md'),
-    ('gnd-induce/SKILL.md', '../gnd-export/SKILL.md'),
-    ('gnd-induce/SKILL.md', '../gnd-judge-fact-types/SKILL.md'),
-    ('gnd-induce/SKILL.md', '../gnd-model-evolve/SKILL.md'),
-    ('gnd-induce/SKILL.md', '../gnd-model-multivalued/SKILL.md'),
-    ('gnd-induce/SKILL.md', '../gnd-orm-core/SKILL.md'),
-    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/labels.schema.json'),
-    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/milestone-record-format.md'),
-    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/population-format.md'),
-    ('gnd-induce/SKILL.md', '../gnd-orm-core/references/provenance-and-modality.md'),
-})
-IS1_INDUCE_LINK_COUNT = 16  # 15 edges; gnd-induce cites gnd-model-evolve twice (the summary and the handoff).
-SI1_FLATTENING_EDGE = (
-    'gnd-model-from-text/references/unattended-growth.md',
-    '../../gnd-orm-core/references/representation-format.md#extraction-flattening-record',
-)
-
-
-def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
-    root = _skills_root()
-    assert root.is_dir(), 'gnd/skills resource directory is absent (see the sibling test)'
+def _relative_links(root: Traversable) -> tuple[set[tuple[str, str]], int, list[str]]:
+    """Every (file, relative target) edge of the packaged skill tree, the number of link occurrences,
+    and the links that resolve to nothing."""
     entries = {rel for rel, _ in iter_skill_files(root)}
     directories = set()
     for rel in entries:
@@ -152,13 +322,36 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
             resolved = posixpath.normpath(posixpath.join(parent, target_path))
             if resolved not in entries and resolved not in directories:
                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
+    return edges, checked, unresolved
+
+
+def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
+    root = _skills_root()
+    assert root.is_dir(), 'gnd/skills resource directory is absent (see the sibling test)'
+    edges, checked, unresolved = _relative_links(root)
     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
-    expected = GC4_RELATIVE_LINKS | {LX2_FLATTENING_EDGE, SI1_FLATTENING_EDGE} | VG5_GROWTH_EDGES | IS1_INDUCE_EDGES
+    expected = RELATIVE_LINKS
     missing = sorted(expected - edges)
     extra = sorted(edges - expected)
-    assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
-    expected_count = GC4_RELATIVE_LINK_COUNT + 2 + len(VG5_GROWTH_EDGES) + IS1_INDUCE_LINK_COUNT
-    assert checked == expected_count, f'checked {checked} relative links, expected {expected_count}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+    assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate RELATIVE_LINKS per its comment.'
+    assert checked == RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+
+
+def test_issue_319_the_link_inventory_is_one_sorted_literal() -> None:
+    """Issue 319: the inventory was a base literal plus a union per milestone. It is now the
+    literal the regeneration command prints, so a reader sees every edge in one place."""
+    assert _links_literal() in Path(__file__).read_text(encoding='utf-8'), \
+        'RELATIVE_LINKS is not the regenerated literal; run `uv run python tests/test_packaged_skills.py`'
+    assert MC3_INCLUDE_EDGE in RELATIVE_LINKS and MC4_INCLUDE_EDGES <= RELATIVE_LINKS
+    names = {name for name in globals() if name.endswith(('_RELATIVE_LINKS', '_RELATIVE_LINK_COUNT'))}
+    assert not names, sorted(names)
+
+
+def _links_literal() -> str:
+    edges, checked, _ = _relative_links(_skills_root())
+    body = ''.join(f'    {edge!r},\n' for edge in sorted(edges))
+    return f'RELATIVE_LINKS = frozenset({{\n{body}}})\nRELATIVE_LINK_COUNT = {checked}\n'
+
 
 def test_pep723_validator_sibling_schema_ships() -> None:
     root = _skills_root()
@@ -297,3 +490,9 @@ def test_include_normative_edges_reject_removal_or_replacement(tmp_path, monkeyp
     monkeypatch.setattr(sys.modules[__name__], '_skills_root', lambda: destination)
     with pytest.raises(AssertionError):
         test_every_relative_skill_link_resolves_inside_the_resource_tree()
+
+
+if __name__ == '__main__':
+    # Regenerate the skill link inventory: paste the printed lines over RELATIVE_LINKS and
+    # RELATIVE_LINK_COUNT, after checking that every new or missing edge is intended.
+    print(_links_literal(), end='')

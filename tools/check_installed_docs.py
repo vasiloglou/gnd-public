@@ -54,7 +54,8 @@ def main():
         wheel = next((out / origin).glob('*.whl'))
         with zipfile.ZipFile(wheel) as archive:
             payload = sum(info.file_size for info in archive.infolist())
-            assert payload < 12 * 1024 * 1024, payload
+            # 13 MiB: the owner raised the wheel budget at induction-skill IS2 checkpoint C2.
+            assert payload < 13 * 1024 * 1024, payload
             for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps', 'refunds', 'quoted_claims'):
                 assert any(name.startswith(f'gnd/examples/{domain}/') for name in archive.namelist())
         venv = out / f'venv-{origin}'

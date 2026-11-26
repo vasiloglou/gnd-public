@@ -465,7 +465,7 @@ def record(conversation: str, model: str, gate: Path, commit: str) -> int:
             (target / f"turn-{number:02d}.jsonl").write_text(kept_stream(raw[-1], keep=LEARNER_FORMS),
                                                              encoding="utf-8")
             result = {}
-            for line in stream.splitlines():
+            for line in stream.split("\n"):   # U+2028 may sit inside a JSON string (review r2 F4)
                 try:
                     event = json.loads(line)
                 except ValueError:

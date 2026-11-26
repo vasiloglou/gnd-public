@@ -511,3 +511,21 @@ whether a repair broke anything. No round 3 unless round 2 returns a blocking
 finding that reproduces; then the stop rule of review-convergence applies
 (more than half of a round's findings self-inflicted ends the loop), and
 remaining items go to the IS2 record as residuals.
+
+## 18. Review round 2 and the stop rule
+
+Round 2 ([phase-IS2-r2](reviews/phase-IS2-r2/review.md)), over the repair
+diff from `f7aebc80`, returned 14 findings, verdict CHANGES_REQUESTED. The
+reviewer reproduced both published check tables, all 15 replays byte for
+byte, both genuine gate records, and the round-1 page corrections.
+
+Twelve of the fourteen (F1 to F3, F5 to F13) are in code round 1 added, so
+more than half are self-inflicted and the stop rule ends the loop: no round
+3, as declared in section 17. Repaired anyway, unreviewed: F14 (the page's
+account of the permission list, and the turn-1 writes of `score` and
+`learn`, which section 15 named and the page had left out), F4 (JSON lines
+split at U+2028, in the recorder and the renderer) and F11 (renderer denials
+per turn). The other eleven are deferred, with the ledger's reasons; all are
+hardening of the recorder's checks, its gate and the page tests, and none
+changes a published result. They go to the IS2 record as residual IS2-Q1,
+carried to the milestone close.

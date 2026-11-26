@@ -400,3 +400,17 @@ def test_review_f3_a_refused_run_keeps_no_path_and_keeps_its_costs(tmp_path, mon
 def test_review_f3_the_leak_patterns_are_t3s():
     import test_ik6_walk
     assert recorder.ABSOLUTE == tuple(test_ik6_walk.ABSOLUTE)
+
+
+def test_review_r2_f4_a_line_separator_keeps_the_turns_cost(tmp_path, monkeypatch):
+    """Review phase-IS2-r2 F4: the result event was split at U+2028 inside its text, so its cost was lost."""
+    class Done:
+        returncode = 0
+        stdout = json.dumps({"type": "result", "result": "alpha beta", "total_cost_usd": 0.24},
+                            ensure_ascii=False) + "\n"
+
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    monkeypatch.setattr(recorder.subprocess, "run", lambda argv, **k: Done())
+    monkeypatch.setattr(recorder, "finish", lambda target, commit: 0)
+    recorder.record("score", "haiku", GATES / "004-IS2-recording-gate.md", "0" * 40)
+    assert recorder.spent(tmp_path / "home") == pytest.approx(0.48)   # both declared turns, 0.24 each

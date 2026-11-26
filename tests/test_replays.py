@@ -124,3 +124,32 @@ def test_results_pair_within_their_own_turn():
                 {'type': 'tool_result', 'tool_use_id': 'same', 'content': output}]}})])
     texts = [text.strip() for _, text in render_replay.stream_lines([turn('first', 'one'), turn('second', 'two')])]
     assert texts == ['Bash first', '→ one', 'Bash second', '→ two']
+
+
+def _turn_events(command, output, denied=False, said=None):
+    events = [json.dumps({'type': 'assistant', 'message': {'content': [
+                  {'type': 'tool_use', 'id': 't0', 'name': 'Bash', 'input': {'command': command}}]}}),
+              json.dumps({'type': 'user', 'message': {'content': [
+                  {'type': 'tool_result', 'tool_use_id': 't0', 'content': output}]}})]
+    if said:
+        events.append(json.dumps({'type': 'assistant', 'message': {'content': [{'type': 'text', 'text': said}]}},
+                                 ensure_ascii=False))
+    events.append(json.dumps({'type': 'result', 'permission_denials': [{'tool_use_id': 't0'}] if denied else []}))
+    return '\n'.join(events)
+
+
+def test_a_denial_marks_only_its_own_turns_call():
+    """Review phase-IS2-r2 F11: the denial set spanned every turn, so a reused id was refused in both."""
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import render_replay
+    lines = [t.strip() for _, t in render_replay.stream_lines([_turn_events('a', 'ok'),
+                                                               _turn_events('b', 'no', denied=True)]) if '→' in t]
+    assert lines == ['→ ok', "→ refused by Claude Code's permission rules"]
+
+
+def test_a_line_separator_inside_a_message_keeps_the_message():
+    """Review phase-IS2-r2 F4: str.splitlines split a JSON line at U+2028 inside a string, dropping the event."""
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import render_replay
+    texts = [t for _, t in render_replay.stream_lines([_turn_events('a', 'ok', said='alpha beta')])]
+    assert any('alpha' in t and 'beta' in t for t in texts), texts

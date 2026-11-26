@@ -96,7 +96,7 @@ in one, and each note below says which is which:
 
 | What you see | What it is |
 |---|---|
-| **refused by Claude Code's permission rules** | a limit of the recording. Claude Code was allowed to run only plain GND commands and the stand-in learner. When Haiku tacked an `echo`, an `ls` or a pipe onto a command, Claude Code refused it and Haiku ran the plain command again. Nothing is wrong with the data or the rule. |
+| **refused by Claude Code's permission rules** | a limit of the recording. The recording let Claude Code run GND commands, the stand-in learner and `shasum` (a checksum tool), plus the read-only commands Claude Code permits on its own, such as `ls`, `cat` and `cd`. Anything else was refused: a command with an `echo` or a pipe added, a loop, or a small script. Haiku then ran the plain command again or read the file another way. Nothing is wrong with the data or the rule. |
 | a wrong or surprising step by Haiku | a model's mistake or shortcut. The note says what it was. |
 | **Exit code 3** from GND | GND refusing something it could not reproduce. This is the check the page is about. |
 
@@ -146,6 +146,11 @@ Claude Code's permission rules because Haiku had added an `echo` or a pipe;
 that is a limit of the recording, not a mistake GND caught, and Haiku ran each
 plain command again.
 
+One small departure from the skill: it says to ask who to record the work as
+before the first command that writes anything, and Haiku wrote the score's
+output file, `measure.json`, in its first turn. That file is not a proposal,
+and the name is recorded only on proposals.
+
 **GND says**
 
 | The written rule: no refund over 1000 | Flagged weeks | Clean weeks |
@@ -192,6 +197,12 @@ Three commands were refused by
 Claude Code's permission rules (a loop over the week files, and two commands
 with an `echo` added); that is a limit of the recording, and Haiku read the
 files another way or ran the plain command again.
+
+One small departure from the skill: it says to ask who to record the work as
+before the first command that writes anything. Haiku wrote the export and the
+learner's output in its first turn, and said it would ask only when a proposal
+is written. Nothing it wrote was a proposal, and the name is recorded only on
+proposals.
 
 The learner's own printout
 is not in this replay, because the recorder keeps the output only of commands

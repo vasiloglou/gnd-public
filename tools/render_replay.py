@@ -61,14 +61,20 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
     """(class, text) per event of Claude Code stream-json turns: what the user said, what the assistant
     said, and each tool it used, with a short result."""
     lines = []
-    denied = set()   # tool calls Claude Code's permission rules refused, from each turn's closing result event
+    # Tool calls Claude Code's permission rules refused, per turn, from that turn's closing result event: a call
+    # id is unique only within its turn (review phase-IS2-r2 F11). JSON lines end at newlines only, since U+2028
+    # may sit inside a string (review phase-IS2-r2 F4).
+    denials = []
     for text in texts:
-        for raw in text.splitlines():
+        turn = set()
+        for raw in text.split("\n"):
             if '"permission_denials"' in raw:
                 try:
-                    denied |= {d.get("tool_use_id") for d in json.loads(raw).get("permission_denials") or []}
+                    turn |= {d.get("tool_use_id") for d in json.loads(raw).get("permission_denials") or []}
                 except ValueError:
                     pass
+        denials.append(turn)
+    denied = set()
     def result_line(part: dict) -> tuple[str, str] | None:
         content = part.get("content")
         text = content if isinstance(content, str) else " ".join(
@@ -89,8 +95,8 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
     # results, which drew a result under the wrong command (induction-skill IS2).
     # Pairs are found within one turn: a call id is unique only there (review phase-IS2-r1 F8).
     for number, text in enumerate(texts, 1):
-        results, calls = {}, set()
-        for raw in text.splitlines():
+        results, calls, denied = {}, set(), denials[number - 1]
+        for raw in text.split("\n"):
             try:
                 event = json.loads(raw)
             except ValueError:
@@ -101,7 +107,7 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
                     results[part["tool_use_id"]] = part
                 elif isinstance(part, dict) and part.get("type") == "tool_use" and part.get("id"):
                     calls.add(part["id"])
-        for raw in text.splitlines():
+        for raw in text.split("\n"):
             try:
                 event = json.loads(raw)
             except ValueError:

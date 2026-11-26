@@ -202,11 +202,17 @@ def git_identity() -> list[str]:
     return [email, email.split("@")[0]] if "@" in email else []
 
 
-def leaks(out: Path) -> list[str]:
+def leak_needles() -> list[str]:
+    """Every literal the leak search looks for. A scrubber uses the same list, so whatever the search
+    finds the scrubber removes (issue 318: the email's handle was found but never removed)."""
     home = Path.home()
     machine = Path(tempfile.gettempdir()).resolve().parts   # e.g. /private/var/folders/nb/<id>/T
-    needles = [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12],
-               *git_identity()]
+    return [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12],
+            *git_identity()]
+
+
+def leaks(out: Path) -> list[str]:
+    needles = leak_needles()
     return [str(p.relative_to(out)) for p in sorted(out.rglob("*")) if p.is_file()
             and any(n in p.read_text(encoding="utf-8", errors="replace") for n in needles)]
 

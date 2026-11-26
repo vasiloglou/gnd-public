@@ -8,12 +8,12 @@ Execute finite application acceptance from a fresh wheel outside the checkout.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `sha(path)` | function | 19 | (no docstring) |
-| `verify_origin(origin, venv, checkout)` | function | 23 | (no docstring) |
-| `verify_wheel_resources(wheel, source_root)` | function | 29 | (no docstring) |
-| `verify_learning_paths(data, group, lane)` | function | 57 | (no docstring) |
-| `source_identity()` | function | 80 | (no docstring) |
-| `main()` | function | 90 | (no docstring) |
+| `sha(path)` | function | 21 | (no docstring) |
+| `verify_origin(origin, venv, checkout)` | function | 25 | (no docstring) |
+| `verify_wheel_resources(wheel, source_root)` | function | 31 | (no docstring) |
+| `verify_learning_paths(data, group, lane)` | function | 59 | (no docstring) |
+| `source_identity()` | function | 82 | (no docstring) |
+| `main()` | function | 92 | (no docstring) |
 
 ## tools.agent_with_env_key — `tools/agent_with_env_key.py`
 Components: unassigned
@@ -153,8 +153,9 @@ Build two wheel origins and run actual tutorial Markdown outside the checkout.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `check_origin(installed, venv, root) -> None` | function | 16 | (no docstring) |
-| `main()` | function | 21 | (no docstring) |
+| `declared_extras(archive) -> list[str]` | function | 19 | The extras a wheel declares, read from its METADATA headers. |
+| `check_origin(installed, venv, root) -> None` | function | 29 | (no docstring) |
+| `main()` | function | 34 | (no docstring) |
 
 ## tools.figures.build — `tools/figures/build.py`
 Components: unassigned
@@ -638,4 +639,5 @@ Execute explicitly marked, trusted repository tutorial blocks as written.
 | `require_runtime(lane, python, env) -> dict` | function | 83 | (no docstring) |
 | `run_pages(pages, cwd, python, lane, *, receipts, group) -> int` | function | 122 | (no docstring) |
 | `groups(root) -> dict[str, list[Path]]` | function | 200 | (no docstring) |
-| `main()` | function | 236 | (no docstring) |
+| `selected(name, group, extras_scope) -> bool` | function | 241 | Whether group NAME runs under --group GROUP and --extras-scope EXTRAS_SCOPE. |
+| `main()` | function | 248 | (no docstring) |

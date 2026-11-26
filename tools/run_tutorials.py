@@ -233,6 +233,18 @@ def groups(root: Path) -> dict[str, list[Path]]:
     }
 
 
+#: The optional extras a group's pages tell the reader to install. Every other group runs on the bare
+#: install; tools/check_installed_docs.py runs the two kinds in separate environments.
+GROUP_EXTRAS = {'bookrec': ('synth',)}   # docs/bookrec/08-guarded-rules.md: `gnd synth` needs `synth`
+
+
+def selected(name: str, group: str | None, extras_scope: str) -> bool:
+    """Whether group NAME runs under --group GROUP and --extras-scope EXTRAS_SCOPE."""
+    if group and name != group:
+        return False
+    return extras_scope == 'all' or (name in GROUP_EXTRAS) == (extras_scope == 'with')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--python', type=Path, default=Path(sys.executable))
@@ -240,6 +252,8 @@ def main():
     parser.add_argument('--group', choices=list(groups(Path('.'))))
     parser.add_argument('--lane', choices=LANES, default='offline')
     parser.add_argument('--receipt', type=Path, help='Record observed step timings after a completed run')
+    parser.add_argument('--extras-scope', choices=('all', 'without', 'with'), default='all',
+                        help='Only the groups that need no optional extra, or only those that need one')
     args = parser.parse_args()
     if args.receipt and (args.receipt.exists() or args.receipt.is_symlink()
                          or not args.receipt.parent.is_dir()):
@@ -247,7 +261,7 @@ def main():
     total = 0
     receipts = []
     for name, pages in groups(args.root).items():
-        if args.group and name != args.group:
+        if not selected(name, args.group, args.extras_scope):
             continue
         if not pages:
             raise AssertionError(f'{name}: no tutorial pages')

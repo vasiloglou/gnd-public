@@ -1,5 +1,6 @@
 """Tutorial commands are the test input, including expected deliberate failures."""
 import importlib.util
+import json
 import os
 import re
 import shlex
@@ -13,6 +14,7 @@ from types import SimpleNamespace
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'tools'))   # check_installed_docs imports run_tutorials, as it does when run
 
 
 def load_tool(name):
@@ -82,11 +84,13 @@ def test_installed_validator_requires_matching_wheels(tmp_path, monkeypatch, sam
     if same_bytes:
         installed_docs.main()
         assert (out / 'results.json').is_file()
-        # Each origin installs with every extra the wheel declares: the learning
-        # paths document their optional extras (guarded-rules case generation needs
-        # `synth`), so the check installs what a reader following them installs.
-        assert installs == [str(out / origin / 'example.whl') + '[second-extra,synth]'
-                            for origin in ('release', 'comparison')]
+        # Each origin runs the groups that need no extra on the bare wheel, and the
+        # groups whose pages name an extra (guarded-rules case generation needs
+        # `synth`) with exactly those extras, not every extra the wheel declares.
+        assert installs == [str(out / origin / 'example.whl') + suffix
+                            for origin in ('release', 'comparison') for suffix in ('', '[synth]')]
+        passes = json.loads((out / 'results.json').read_text())[0]['passes']
+        assert [entry['groups'] for entry in passes] == ['without extras', 'with extras']
     else:
         with pytest.raises(AssertionError, match='wheel origins differ'):
             installed_docs.main()
@@ -156,3 +160,16 @@ def test_rendered_markdown_fence_leak_rejected(tmp_path):
     (tmp_path / 'index.html').write_text('<p>```python gnd-run expect=0</p>')
     with pytest.raises(AssertionError, match='unrendered Markdown fence'):
         links.check_site(tmp_path)
+
+
+def test_every_group_runs_in_exactly_one_extras_scope():
+    """The installed check's two passes cover every group once (induction-skill close, reader R2-F2)."""
+    names = list(runner.groups(ROOT))
+    without = {name for name in names if runner.selected(name, None, 'without')}
+    with_extras = {name for name in names if runner.selected(name, None, 'with')}
+    assert without | with_extras == set(names) and not without & with_extras
+    assert with_extras == set(runner.GROUP_EXTRAS) <= set(names)
+    import tomllib
+    declared = tomllib.loads((ROOT / 'pyproject.toml').read_text())['project']['optional-dependencies']
+    assert {extra for needed in runner.GROUP_EXTRAS.values() for extra in needed} <= set(declared)
+    assert runner.selected('bookrec', 'bookrec', 'all') and not runner.selected('bookrec', 'quickstart', 'all')

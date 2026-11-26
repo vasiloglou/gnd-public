@@ -491,3 +491,42 @@ D14..D16 remain proposed (D3, D8, D9 and D11 amended (p1); D5 and D8 amended
 **Next action:** the owner decides plan approval over r3. Then an explicit
 `process-phase IS1 induction-skill` selection, at whose gate the IS1 base commit
 (which is also the D8 pin) is named.
+
+## 11. Close amendments (2026-11-26)
+
+Written at the milestone close under `process-milestone induction-skill
+auto=true`. The approved r3 bytes above (SHA-256
+`46e8e6c82d34dd6ca5b61abeebdc0c58fc9860671f08be7580a9a28d1834b0e7`, plan gate
+[001](../001-plan-gate.md)) are kept unchanged; each amendment quotes the
+wording it corrects.
+
+**A1. The Popper branch (§2).** Raised by [record 002](../002-phase-IS1.md),
+"Refuted premises", which names this plan repair for the close.
+- Prior wording: "It is unproven on the refunds example: `ilp-bridge.md` says
+  the rendering has not been run against a real Popper, and sibling PR #51 (not
+  on main) reports that the rendering as written does not run (P1..P3)."
+- Correction: `docs/reference/ilp-bridge.md`, "Comparing the learners", records
+  three Popper 5.0.1 runs over the refunds example; run 3 completed and its one
+  clause was admitted by `gnd import ilp-rules` (exit 0). The `gnd-induce` skill
+  says the reference records them.
+- Unchanged: this milestone installs and runs no real learner, and no page
+  implies that a real learner reproduced tutorial step 2 (§4, "Carried
+  limitations").
+
+**A2. The installed check in completion predicate 2 and IS2-C8.** Raised by
+[record 005](../005-phase-IS2.md), open question IS2-Q2.
+- Prior wording kept: "The installed-candidate docs check passes in both wheel
+  origins."
+- Finding: the check installed the bare wheel, while the guarded-rules chapter
+  says its case generation needs the optional `synth` extra, so the release
+  origin stopped at that chapter on main as well. At the close the check
+  installs each origin with every extra the wheel declares (commit `4e1ae32c`),
+  which is what a reader following the learning paths installs. The predicate's
+  wording is unchanged; its measurement is in the close record.
+
+**Not plan repairs.** Record 005's other refuted premises have no wording in
+these bytes. The spec's `done` table and its `said` rule were spec text,
+amended in the IS2 spec. The plan never claimed the skill holds on a model
+(D10 asks for recordings, not a pass rate), and it states no wheel budget; the
+owner raised the budget in the code at checkpoint C2. The close record's
+question sweep carries each of them.

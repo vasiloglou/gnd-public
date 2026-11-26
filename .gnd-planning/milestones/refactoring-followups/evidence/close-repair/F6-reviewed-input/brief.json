@@ -1,0 +1,30 @@
+{
+  "base": "4497f723",
+  "claims": [],
+  "created": "2026-11-25T22:34:13.482195+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/refactoring-followups/notes/reviews/F6/diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/test_refactoring_pyrel_parity.py",
+      "sha256": "c1229cc177a704e0d044a55925c5528198fbff23040d46306194cece3c1c8365"
+    },
+    {
+      "path": ".gnd-planning/milestones/refactoring-followups/notes/phase-F6-spec.md",
+      "sha256": "c1d7dd0b25262a84bdf98db04ef178b05817e346968a6970f4afd61aa1c5409b"
+    }
+  ],
+  "head": "4497f72389e8e9fed8ee8019cabc5267e7f1e695",
+  "left_out": [],
+  "notes": [
+    "new: tests/test_refactoring_pyrel_parity.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Does the paired test exercise actual generated references and admission, preserve fixed emitted bytes, and establish standalone isolation?",
+  "subject": "phase",
+  "version": 1
+}

@@ -1236,7 +1236,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### exp.schema
 - does: Load versioned session contracts and verify their paths, byte digests, required cases, and acceptance declarations.
-- verbs: read_session_contract, DataDrivenContract, session contract, validate schema, version dispatch, normalize contracts, digest binding, verify inputs, required cases, exact bytes, coverage floors, protected tests, transition declarations, patch declarations, judgment gate
+- verbs: read_session_contract, read_session_contract_with_digest, portable prompt identity, DataDrivenContract, session contract, validate schema, version dispatch, normalize contracts, digest binding, verify inputs, required cases, exact bytes, coverage floors, protected tests, transition declarations, patch declarations, judgment gate
 - in: Contract JSON, experiment root, and caller-selected experiment id
 - out: Normalized DataDrivenContract or SessionContractError
 - status: canonical
@@ -2161,7 +2161,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: admitted/blocked partition; occurrence verdict references; validated candidate metrics
 - status: canonical
 - modules: src/gnd/admission.py, src/gnd/admission_validation.py
-- uses: check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.bounded_json, infra.report_payloads, model.address, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_adapter, semantics.snapshot_ir
+- uses: check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.bounded_json, infra.report_payloads, model.address, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, semantics.snapshot_adapter, semantics.snapshot_ir
 - used_by: check.service, exp.session_replay, exp.session_runtime, semantics.saved_judgments
 - part_of: subsystem.check
 - tests: tests/test_v71_phase4_successors.py, tests/test_public_v72_status.py
@@ -2336,7 +2336,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### infra.input_policy
-- does: Enforce shared JSON duplicate, finite-number and depth rules, YAML resource limits, and strict ISO datetime syntax.
+- does: Enforce shared JSON duplicate, finite-number and depth rules, YAML collection depth and resource limits, and strict ISO datetime syntax.
 - verbs: parse JSON, decode JSON, duplicate keys, finite numbers, nonfinite numbers, nesting depth, byte limits, byte cap read at call time, guard YAML, YAML aliases, event budget, parse datetime, ISO datetime, JSONDecoder, loads, load, guard_yaml, parse_datetime
 - in: JSON text or encoded bytes, readable handles, YAML text or bytes, datetime strings
 - out: Decoded JSON values or datetime objects; input refusals before unsupported input is accepted
@@ -2530,11 +2530,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Differential report with entailment rows, population bands, directional separators, derivation differences and synthesis refusals
 - status: canonical
 - modules: src/gnd/diff.py
-- uses: check.service, checker.evaluate, extract.source_anchors, infra.artifacts, model.address, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_terms, synth.assemble, synth.boundary
+- uses: check.service, checker.evaluate, extract.source_anchors, infra.artifacts, model.address, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_terms, synth.assemble, synth.boundary, synth.values
 - used_by: cli.api, cli.checking_command
-- tests: tests/test_v70_phase6_corpus.py, tests/test_v70_phase6_adversarial.py, tests/test_v70_phase6_review.py, tests/test_public_semantic_boundaries.py
-- notes: Undecided entailment is retained explicitly; structured-rule or fixed-reference models refuse synthesis while supplied populations can still be compared.
-- reread: 2026-11-26, beside the diff of its modules since 08fcfd0 (code at a223ac7); still accurate.
+- tests: tests/test_v70_phase6_corpus.py, tests/test_v70_phase6_adversarial.py, tests/test_v70_phase6_review.py, tests/test_public_semantic_boundaries.py, tests/test_diff_synth_extra.py
+- notes: Undecided entailment is retained explicitly; structured-rule or fixed-reference models refuse synthesis while supplied populations can still be compared. Without the optional synth extra, synthesis is a not-derivable row naming the extra (issue 323).
 
 
 ### check.element_coverage
@@ -2601,11 +2600,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +42 more (graph.md)
+- used_by: check.admission, check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, … +45 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.
-- out: Detached lookup results and scoped ModelIndex snapshots.
-- reread: 2026-11-26, beside the diff of its modules since 1519ecb (code at a223ac7); still accurate.
+- out: Detached lookup results, scoped ModelIndex snapshots and compatibility maps with live last-wins fact rows.
 
 
 ### model.reference_resolution
@@ -2953,7 +2951,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Validated walk data, digest strings, TransitionReport or ComputedTransition, frame modalities and exit band.
 - status: canonical
 - modules: src/gnd/transition.py, src/gnd/transition_kernel.py
-- uses: check.branches, check.compiled_obligations, check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.extensions, semantics.ground_atoms
+- uses: check.branches, check.compiled_obligations, check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, semantics.extensions, semantics.ground_atoms
 - used_by: assurance.policy, check.element_coverage, check.service, cli.api, cli.dispatch, examples.plan_apps, exp.schema, exp.service, exp.session_store, export.pyrel_rules, export.verification, infra.report_payloads, … +1 more (graph.md)
 - tests: tests/test_transition_report.py, tests/test_public_transition_walks.py, tests/test_public_transition_contract.py, tests/test_v62_phase2_intermediate.py, tests/test_v62_phase3_terms.py, tests/test_public_phase4_transition_support.py
 - checked: partial
@@ -2996,7 +2994,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Ordered tuple of fact references and sentences with optional excerpts, or a single rendered witness sentence.
 - status: canonical
 - modules: src/gnd/verbalize_population.py
-- uses: check.population_structure, check.universe, infra.errors, infra.report_redaction, infra.verdict_prose, model.anchors, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.extensions
+- uses: check.population_structure, check.universe, infra.errors, infra.report_redaction, infra.verdict_prose, model.anchors, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, semantics.extensions
 - used_by: cli.api, model.diff, model.verbalization
 - tests: tests/test_v70_phase5_adversarial.py, tests/test_v70_phase5_corpus.py
 - notes: Projection occurs before sentence construction; original population fact indices survive deterministic sorting. Witness rendering validates role completeness and primitive compatibility without asserting population membership.
@@ -3072,7 +3070,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - does: Build and validate identifier pools against a model, then sample admitted universes with replacement [load_pool, EntityPool].
 - verbs: identifier pool, entity pool, pool artifact, load_pool, write_pool, build_faker_pool, EntityPool, faker pool, proposed pool, coherence, schema validation, distinct identifiers, join recurrence, sample with replacement, canonical hash, pool provenance
 - in: Model, pool JSON or seed and desired pool size; admitted Pool and Random for sampling.
-- out: Content-addressed Pool, canonical pool JSON, sampled identifiers or values; PoolValidationError with enumerated failures.
+- out: Content-addressed Pool, canonical pool JSON, sampled identifiers or values; PoolValidationError with enumerated failures, including the on-disk pool byte limit.
 - status: canonical
 - modules: src/gnd/synth/poolfile.py, src/gnd/synth/pool.py
 - uses: check.population_structure, infra.input_policy, model.loading, model.query_index, synth.identity, synth.value_domain
@@ -3090,7 +3088,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/values.py
 - uses: check.population_structure, infra.input_policy, model.scalar_terms
-- used_by: synth.guarded, synth.prediction, synth.service, synth.value_domain
+- used_by: model.diff, synth.guarded, synth.prediction, synth.service, synth.value_domain
 - part_of: subsystem.synth
 - tests: tests/test_synth_values.py, tests/test_rf1_helper_pins.py, tests/test_rf7_consumers.py
 - notes: PRIMITIVES comes from the vendored meta-schema; unconstrained dates use fixed anchors for seed reproduction.

@@ -1,0 +1,49 @@
+Default lane, induction-skill close, 2026-11-26. beast-3 (macOS 27.0.1, uv 0.13.7 -- not the 0.10.10 release.yml pins -- Python 3.13.18),
+a fresh clone of GitHub per run, six shards over tests/test_*.py:
+ssh beast-3 'bash -s -- <commit> base' < .gnd-planning/milestones/release-0.5.0/evidence/RW1/e1-shards.sh
+
+Run 1 at 4e1ae32c29de98be9c76624a9406ba63ecd08f2c:
+  Shard 0 exit 1
+  12 failed, 3419 passed, 160 deselected in 811.90s (0:13:31)
+  Shard 1 exit 1
+  6 failed, 3736 passed, 236 deselected in 804.85s (0:13:24)
+  Shard 2 exit 1
+  3138 passed, 187 deselected, 1 warning, 2 errors in 541.34s (0:09:01)
+  Shard 3 exit 1
+  1 failed, 4365 passed, 13 skipped, 108 deselected in 754.96s (0:12:34)
+  Shard 4 exit 0
+  4280 passed, 178 deselected in 674.45s (0:11:14)
+  Shard 5 exit 0
+  3465 passed, 215 deselected in 448.36s (0:07:28)
+  Failing: the 11 cases of tests/test_pyrel_applications_install.py (tools/accept_pyrel_applications_install.py:
+  'wheel compressed size exceeds cap', its 12 MiB copy of the wheel budget; fixed in bfc2495e) and the set below.
+
+Run 2 at c59dc769:
+  Shard 0 exit 1
+  1 failed, 3431 passed, 160 deselected in 817.24s (0:13:37)
+  Shard 1 exit 1
+  6 failed, 3736 passed, 236 deselected in 810.22s (0:13:30)
+  Shard 2 exit 1
+  3139 passed, 187 deselected, 1 warning, 2 errors in 547.74s (0:09:07)
+  Shard 3 exit 1
+  1 failed, 4365 passed, 13 skipped, 108 deselected in 761.59s (0:12:41)
+  Shard 4 exit 0
+  4280 passed, 178 deselected in 677.22s (0:11:17)
+  Shard 5 exit 0
+  3465 passed, 215 deselected in 453.77s (0:07:33)
+  Sum: 22416 passed, 13 skipped, 8 failed, 2 errors.
+  ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+  ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+  FAILED tests/test_object_type_description.py::test_q1_depth_below_the_loader_limit_is_the_named_refusal
+  FAILED tests/test_object_type_description.py::test_q1_depth_cap_applies_only_inside_descriptions
+  FAILED tests/test_object_type_description.py::test_q1_description_at_64_levels_is_accepted[dict]
+  FAILED tests/test_object_type_description.py::test_q1_description_at_64_levels_is_accepted[list]
+  FAILED tests/test_object_type_description.py::test_q1_description_at_65_levels_is_refused[dict]
+  FAILED tests/test_object_type_description.py::test_q1_description_at_65_levels_is_refused[list]
+  FAILED tests/test_rf2_helpers.py::test_diverged_encoder_source_unchanged
+  FAILED tests/test_v71_phase1_dates.py::test_phase1_corpus[B41-at-depth]
+
+At main 6bbbee81 on beast-3, the four failing files (test_pyrel_applications_install, test_rf2_helpers,
+test_object_type_description, test_v71_phase1_dates) give the same 8 failures:
+  8 failed, 191 passed in 91.46s (0:01:31): test_rf2_helpers 1, test_object_type_description 6, test_v71_phase1_dates 1.
+The 2 test_public_optional setup errors are the known pair recorded at earlier closes (release-0.3.0 baseline).

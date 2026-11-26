@@ -1,0 +1,17 @@
+Owner statements for the issue 318 discovery gate, 2026-11-26, quoted whole.
+
+1. In chat, after the assistant said the per-command log "needs one paid
+   discovery run, so it waits for a new gate record from you":
+
+   appeoved
+
+2. The assistant asked whether that opened the gate, on this scope: "One
+   Claude Code Haiku run, a single scripted conversation in a throwaway
+   folder, with hooks that write one JSON line per Bash call (success and
+   failure). It finds the key that holds the exit code. Spend ceiling $1.00.
+   Nothing gets recorded into the example, and I'd write the gate record
+   quoting your words before the run." The options were "Yes, that scope",
+   "Yes, higher ceiling" ("Same run, but allow up to $3.00 in case a retry is
+   needed.") and "No, something else". The owner chose:
+
+   Yes, higher ceiling

@@ -1,0 +1,1 @@
+{"argv":["<fixture-dir>/producer.py","<fixture-dir>/producer-plan.json","<fixture-dir>/producer-log"],"environment_allowlist":["PATH","TMPDIR","LANG","LC_ALL"],"executable":"<python>","kind":"command","policy_id":"local-command","prompt_transport":"stdin","schema_version":1,"version_argv":["<fixture-dir>/producer.py","--version"]}

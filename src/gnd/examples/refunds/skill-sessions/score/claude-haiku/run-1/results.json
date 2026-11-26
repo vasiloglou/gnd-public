@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/004-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "score",
+ "model": "haiku",
+ "recorded_at_commit": "388d6fa6dba48a12808796006b6baa081b971ca3",
+ "declared_turns": [
+  "/gnd:gnd-induce Score the written refund rule against the auditors' verdicts in labels.json. How many flagged weeks does it catch, and does it ever accuse a clean week?",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Score the written refund rule against the auditors' verdicts in labels.json. How many flagged weeks does it catch, and does it ever accuse a clean week?",
+   "exit": 0,
+   "cost_usd": 0.014345290000000004,
+   "assistant_last": "ent_on_positive=4/4`: it is silent on all 4 clean weeks.\n- `vacuous=0/8` and `unchecked=0/8`: every week was checked.\n\nGND printed no combined accuracy figure, so none is reported here. The full JSON payload is in `<workspace>/measure.json`.\n\nThis is a score only. No proposal was written, so there is nothing to hand to review. The README says the written rule should catch two of the four flagged weeks, which matches the printed result. Its companion \"no refund over 500\" rule, the one the README says separates the two groups, has not been scored here. I can score it next if you want to compare."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder.",
+   "exit": 0,
+   "cost_usd": 0.015455390000000003,
+   "assistant_last": "apply only to commands that write a proposal, and the score wrote none.\n\nTwo ways to go from here:\n\n1. **Sidecar note:** I write a short text file in this folder stating the score, reader as the actor, and 2026-10-26T00:00:00+00:00 as the time, next to `measure.json`. It would be my note, not a GND record, so it carries no gnd provenance.\n2. **Discover:** you tell me which families to run, and I run `gnd discover` on the population with reader and that time. That would write a proposal, which then goes to gnd-model-evolve for review.\n\nWhich do you want? I'll leave both undone until you choose."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "no_hand_written_proposal": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 33.4
+}

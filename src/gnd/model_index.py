@@ -194,6 +194,13 @@ class ModelIndex:
             return built
 
     @staticmethod
+    def fact_map(model: Any, *, require_id: bool) -> dict[str, dict[str, Any]]:
+        """Live fact rows by string id, with the last duplicate taking precedence."""
+        if require_id:
+            return {str(row["id"]): row for row in model.fact_types}
+        return {str(row.get("id")): row for row in model.fact_types}
+
+    @staticmethod
     def object_map(model: Any) -> dict[str, dict[str, Any]]:
         """Compatibility lookup retains live rows and historical malformed errors."""
         return {str(row.get('id')): row for row in model.object_types or []

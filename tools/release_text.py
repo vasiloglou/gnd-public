@@ -35,6 +35,7 @@ Exit codes: 0 clean, 1 problems listed on standard output, 2 usage or input erro
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 import textwrap
@@ -198,12 +199,29 @@ def _standing(relative: str, line: str) -> int | None:
     return None
 
 
+#: Replays are rendered verbatim from committed recordings (tools/render_replay.py, checked by
+#: tests/test_replays.py): their words are the recorded agent's, not a page's statement about a release. Only
+#: the rendered picture and transcript of a replay that replays.json lists are left out; replays.json itself,
+#: which holds the authored titles, and any other file there are pages (review phase-IS2-r1 F12).
+REPLAYS = "docs/assets/replays/"
+
+
+def rendered_replays(root: Path) -> set[str]:
+    table = root / REPLAYS / "replays.json"
+    try:
+        names = json.loads(table.read_text(encoding="utf-8")) if table.is_file() else {}
+    except ValueError:
+        names = {}
+    return {f"{REPLAYS}{name}{suffix}" for name in names for suffix in (".svg", ".txt")}
+
+
 def page_files(root: Path) -> list[str]:
-    """README.md and every text file under docs/, except the release notes."""
+    """README.md and every text file under docs/, except the release notes and the rendered replays."""
     names = ["README.md"]
+    rendered = rendered_replays(root)
     for path in sorted((root / "docs").rglob("*")):
         relative = path.relative_to(root).as_posix()
-        if path.is_file() and relative != NOTES:
+        if path.is_file() and relative != NOTES and relative not in rendered:
             names.append(relative)
     return names
 

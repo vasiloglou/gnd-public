@@ -64,6 +64,24 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def stream_events(stream: str):
+    """The JSON objects of a Claude Code stream-json text, one per line, in order. A line ends at a newline
+    only: str.splitlines() also breaks at U+2028 and the other separators a JSON string may hold unescaped,
+    which cut a result event in two and lost its cost (issue 318). Lines that are not a JSON object are skipped."""
+    for raw in stream.split("\n"):
+        try:
+            event = json.loads(raw)
+        except ValueError:
+            continue
+        if isinstance(event, dict):
+            yield event
+
+
+def last_result(stream: str) -> dict:
+    """The stream's last result event (its cost and final text), or {} when the turn never finished."""
+    return next((e for e in reversed(list(stream_events(stream))) if e.get("type") == "result"), {})
+
+
 def redact(text: str, workspace: Path) -> str:
     for old, new in ((str(workspace.resolve()), "<workspace>"), (str(workspace), "<workspace>"),
                      (str(ROOT), "<repo>"), (str(Path.home()), "<home>")):
@@ -71,28 +89,44 @@ def redact(text: str, workspace: Path) -> str:
     return TEMPORARY.sub("<tmp>", text)
 
 
-def kept_stream(stream: str, workspace_marker: str = "<workspace>") -> str:
+def _words(command: str) -> list[str]:
+    """A command's words, quotes respected (induction-skill IS2 review F7: a character prefix kept
+    `python stand_in_learner.py.backup` and dropped `python  stand_in_learner.py`)."""
+    import shlex
+    try:
+        return shlex.split(command)
+    except ValueError:
+        return command.split()
+
+
+def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[str, ...] = (),
+                keep_bash=None) -> str:
     """The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and
     reads and writes of files in the workspace). Other tool output is replaced by its size, so nothing the agent
-    happened to list or read elsewhere on the machine is kept. Claude Code's start event keeps no paths."""
+    happened to list or read elsewhere on the machine is kept. Claude Code's start event keeps no paths.
+    `keep` names further plain Bash commands, by their opening words, whose output is kept too
+    (induction-skill IS2: the refunds stand-in learner). `keep_bash`, when given, decides for each Bash
+    command instead of the plain-command rule (issue 318: a `timeout` prefix or a `cd ... &&` lost the output)."""
     wanted, lines = set(), []
-    for raw in stream.splitlines():
-        try:
-            event = json.loads(raw)
-        except ValueError:
-            continue
+    forms = [_words(prefix) for prefix in keep]
+    for event in stream_events(stream):   # a non-object line is skipped (induction-skill IS2 review F7)
         if event.get("type") == "system":
             event = {k: event.get(k) for k in ("type", "subtype", "model", "permissionMode") if k in event}
         elif event.get("type") == "assistant":
             message = event.get("message", {})
             event = {"type": "assistant", "message": {"model": message.get("model"), "content": message.get("content", [])}}
             for part in event["message"]["content"]:
+                if not isinstance(part, dict):
+                    continue
                 part.pop("signature", None)   # opaque bytes; the reasoning text stays
                 if part.get("type") == "tool_use":
                     target = str(part["input"].get("command") or part["input"].get("file_path") or "")
                     first = target.split()[0] if target.split() else ""
                     plain = not any(mark in target for mark in (";", "&&", "||", "|", "$(", "`"))
-                    if (first.endswith("gnd") and plain and part["name"] == "Bash") or target.startswith(workspace_marker) or (
+                    words = _words(target)
+                    kept_bash = part["name"] == "Bash" and (keep_bash(target) if keep_bash else plain and (
+                        first.endswith("gnd") or any(form and words[:len(form)] == form for form in forms)))
+                    if kept_bash or target.startswith(workspace_marker) or (
                             part["name"] in ("Write", "Edit") and "/" not in target.replace(workspace_marker, "")):
                         wanted.add(part["id"])
         elif event.get("type") in ("rate_limit_event",):
@@ -102,7 +136,7 @@ def kept_stream(stream: str, workspace_marker: str = "<workspace>") -> str:
             content = event["message"]["content"]
             if isinstance(content, list):
                 for part in content:
-                    if part.get("type") == "tool_result" and part.get("tool_use_id") not in wanted:
+                    if isinstance(part, dict) and part.get("type") == "tool_result" and part.get("tool_use_id") not in wanted:
                         size = len(json.dumps(part.get("content")))
                         part["content"] = f"[{size} bytes of output not kept]"
             event.pop("tool_use_result", None)
@@ -145,14 +179,7 @@ def record_run(name: str, run: int, out: Path, skill: str = "model-from-text") -
                 stream, code = (error.stdout or b"").decode() if isinstance(error.stdout, bytes) else (error.stdout or ""), None
             (target / f"turn-{number:02d}.jsonl").write_text(
                 kept_stream(redact(stream.replace(str(plugin), "<plugin>"), workspace)), encoding="utf-8")
-            result = {}
-            for line in stream.splitlines():
-                try:
-                    event = json.loads(line)
-                except ValueError:
-                    continue
-                if isinstance(event, dict) and event.get("type") == "result":
-                    result = event
+            result = last_result(stream)
             turns.append({"user": said, "exit": code, "cost_usd": result.get("total_cost_usd"),
                           "assistant_last": redact((result.get("result") or "")[-600:], workspace)})
             written = model_file(workspace)
@@ -182,11 +209,17 @@ def git_identity() -> list[str]:
     return [email, email.split("@")[0]] if "@" in email else []
 
 
-def leaks(out: Path) -> list[str]:
+def leak_needles() -> list[str]:
+    """Every literal the leak search looks for. A scrubber uses the same list, so whatever the search
+    finds the scrubber removes (issue 318: the email's handle was found but never removed)."""
     home = Path.home()
     machine = Path(tempfile.gettempdir()).resolve().parts   # e.g. /private/var/folders/nb/<id>/T
-    needles = [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12],
-               *git_identity()]
+    return [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12],
+            *git_identity()]
+
+
+def leaks(out: Path) -> list[str]:
+    needles = leak_needles()
     return [str(p.relative_to(out)) for p in sorted(out.rglob("*")) if p.is_file()
             and any(n in p.read_text(encoding="utf-8", errors="replace") for n in needles)]
 

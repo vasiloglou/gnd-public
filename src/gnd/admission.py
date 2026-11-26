@@ -7,6 +7,7 @@ from typing import Any
 
 from gnd.checker import CheckReport
 from gnd.model import Model
+from gnd.model_index import ModelIndex
 from gnd.population import Population
 from gnd.popvalidate import resolve_primitive, resolve_reference_value_type
 from gnd.semantic_adapter import canonical_scalar
@@ -72,7 +73,7 @@ def build_admission(
     max_cells: int | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
     """Partition asserted occurrences using typed joins and completed verdicts."""
-    fact_types = {str(row["id"]): row for row in model.fact_types}
+    fact_types = ModelIndex.fact_map(model, require_id=True)
     reference_value_types = {
         str(row["reference"]["value_type"])
         for row in model.object_types

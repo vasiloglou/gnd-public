@@ -1,0 +1,70 @@
+"""Paired positional references from a real offline export and the production model."""
+import copy
+import json
+import subprocess
+import sys
+
+import pytest
+from pyrel_export_support import BASICS, REPO, cli
+from ruamel.yaml import YAML
+
+from gnd.errors import ModelValidationError
+from gnd.model import load_model_bytes
+from gnd.model_index import ModelIndex
+
+PROBE = """
+import json, runpy, sys
+
+class BlockGnd:
+    def find_spec(self, fullname, path, target=None):
+        if fullname == 'gnd' or fullname.startswith('gnd.'):
+            raise AssertionError('generated program imports ' + fullname)
+
+sys.meta_path.insert(0, BlockGnd())
+api = runpy.run_path(sys.argv[1])
+result = []
+for doc in json.load(sys.stdin):
+    try:
+        rows = api['_constraint_entries'](api['admit_model'](doc))
+    except api['ExportInputError']:
+        result.append('refused')
+    else:
+        result.append([[ref, row.get('id'), ft] for ref, row, ft in rows])
+print(json.dumps(result))
+"""
+
+
+def test_emitted_program_routes_positional_references(tmp_path):
+    program = tmp_path / "program.py"
+    published = cli(str(BASICS.relative_to(REPO)), "--out", str(program), cwd=REPO)
+    assert published.returncode == 0, published.stderr
+    base = YAML(typ="safe").load(BASICS.read_text())
+    declared = copy.deepcopy(base)
+    declared["fact_types"][0]["constraints"][0]["id"] = "named_inline"
+    declared["constraints"][0]["id"] = "named_top"
+    absent = copy.deepcopy(base)
+    absent.pop("constraints")
+    malformed = dict(base, constraints="invalid")
+    inline_bad = copy.deepcopy(base)
+    inline_bad["fact_types"][0]["constraints"] = ["invalid"]
+    absent["fact_types"][0].pop("constraints")
+    valid = [base, declared, absent]
+    invalid = [malformed, inline_bad]
+    documents = valid + invalid
+    result = subprocess.run(
+        [sys.executable, "-I", "-c", PROBE, str(program)], cwd=tmp_path,
+        input=json.dumps(documents), capture_output=True, text=True, timeout=30, check=True,
+    )
+    expected = []
+    for doc in valid:
+        model = load_model_bytes(json.dumps(doc).encode(), source="fixture.json")
+        expected.append([
+            [ref, row.get("id"), ft["id"] if ft is not None else None]
+            for ref, row, ft in ModelIndex.for_model(model).iter_constraints()
+        ])
+    for doc in invalid:
+        with pytest.raises(ModelValidationError):
+            load_model_bytes(json.dumps(doc).encode(), source="fixture.json")
+    assert json.loads(result.stdout) == expected + ["refused"] * len(invalid)
+    assert ["constraints[0]", "named_top", None] in expected[1]
+    assert ["fact_types[student_has_nickname].constraints[0]", "named_inline", "student_has_nickname"] in expected[1]

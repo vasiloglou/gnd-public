@@ -1,0 +1,1 @@
+Delegated F5 spec gate (auto=true), 2026-11-25. Approved spec SHA-256 d183db84fd55bc77a7689e6bd3d4fd754d846e67d34065e0e3081d33eecb812a. Evidence binding and documented refusal retain legacy replay behavior.

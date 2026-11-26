@@ -33,9 +33,14 @@ Before any command, settle these with the user and say them back:
   [label manifest schema](../gnd-orm-core/references/labels.schema.json);
   `gnd measure --help` names its modes. Labels come from the user.
 - **The audit actor and the request time**, for every command that writes a
-  proposal. Ask: "Who should the proposal be recorded as, and at what time?"
-  The actor is the user's answer, never a name taken from git, the shell or
-  the environment.
+  proposal. Ask before the first command that writes anything, and wait for
+  the answer: "Who should the proposal be recorded as, and at what time?"
+  The actor is the user's answer, never a placeholder and never a name taken
+  from git, the shell or the environment.
+- **The working folder.** Every output path is in the folder the user works
+  in: these files are the user's results, so write them there, never in a
+  temporary or scratch folder. Read nothing outside the working folder but this
+  skill's linked references.
 - **New output paths.** Discover, export and both imports refuse an existing
   `--out` (exit 11). `gnd measure` overwrites its `--out` without warning, so
   confirm that the measure output path does not exist before you run it.
@@ -87,13 +92,14 @@ gnd export ilp MODEL --labels MANIFEST --target TARGET --out EXPORT_DIR
 ```
 
 Then run the learner, with a stated time limit, and give the user the exact
-command you ran. It never installs a learner and never runs one the user did not name. When the named learner is not found, stop with "no learner named X
+command you ran. It never installs a learner and never runs one the user did not name. When the named learner is not found, stop and say, in these words, "no learner named X
 is installed", and offer the neutral export alone (`--target neutral`). It holds the
 learner-neutral form only; a learner run later needs its own target's files
 ([the ILP bridge](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/ilp-bridge.md)).
 
-When the user asks for the learner's answer only, stop here and report its
-claim as unchecked. Otherwise import it:
+When the user asks for the learner's answer only, or says not to import yet,
+stop here: report its claim as unchecked and run no `gnd import`. Otherwise
+import it:
 
 ```sh
 gnd import ilp-rules MODEL CLAUSES --labels MANIFEST --reported-coverage RUN --target TARGET --out PROPOSAL --actor ACTOR --requested-at TIMESTAMP
@@ -165,9 +171,11 @@ applies only what the user accepts. At the handoff, also name:
 - each value-family candidate, as carrying host values;
 - each run record this skill assembled, and the evaluation that produced its sets; and that the proposal's induction provenance names the learner as its inducer, because the program is the learner's.
 
+Then stop. This skill never starts gnd-model-evolve, gnd evolve preview or gnd evolve apply itself; the user starts the review.
+
 ## Refusals
 
-This skill never applies, confirms or edits a model, and never edits a proposal. It never writes, edits or re-binds a label manifest; labels come from the user. It never copies host values or paths into a file it writes or a public page, apart from the learner artifacts it saves or assembles in the user's working paths; chat read-back may show them.
+This skill never applies, confirms or edits a model, and never writes or edits a proposal by hand: only a gnd command writes one. It never writes, edits or re-binds a label manifest; labels come from the user. It never copies host values or paths into a file it writes or a public page, apart from the learner artifacts it saves or assembles in the user's working paths; chat read-back may show them.
 
 ## Not this skill
 

@@ -859,6 +859,7 @@ class _DataDrivenContractV6(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     schema_version: Literal[DECLARED_ADAPTER_SESSION_CONTRACT_VERSION]
+    prompt_format: Literal["absolute-v1", "portable-v1"] = "absolute-v1"
     experiment_id: NonEmptyString
     max_attempts: int = Field(gt=0)
     wall_seconds: float | None = Field(default=None, gt=0, allow_inf_nan=False)
@@ -1065,6 +1066,7 @@ class DataDrivenContract(BaseModel):
         PATCH_SESSION_CONTRACT_VERSION,
         JUDGMENT_SESSION_CONTRACT_VERSION,
     ]
+    prompt_format: Literal["absolute-v1", "portable-v1"] = "absolute-v1"
     experiment_id: NonEmptyString
     max_attempts: int = Field(gt=0)
     wall_seconds: float | None = Field(default=None, gt=0, allow_inf_nan=False)
@@ -1152,6 +1154,8 @@ class DataDrivenContract(BaseModel):
     @model_serializer(mode="wrap")
     def _serialize_wire_version(self, handler):
         document = handler(self)
+        if self.prompt_format == "absolute-v1":
+            document.pop("prompt_format", None)
         if not self.profile.judgments:
             for case in document["cases"]:
                 case.pop("judgment_gate", None)
@@ -1272,7 +1276,7 @@ def _contract_json(raw):
     return document
 
 
-def _read_contract_document(path: Path, root: Path) -> object:
+def _read_contract_document(path: Path, root: Path) -> tuple[object, str]:
     """Read the contract through a no-follow leaf descriptor under ``root``."""
 
     try:
@@ -1324,13 +1328,14 @@ def _read_contract_document(path: Path, root: Path) -> object:
             and isinstance(document := _rf7_input.loads(text), dict)
             and (profile := profile_for_version(document.get("schema_version"))) is not None and profile.patch
         ):
-            return _contract_json(text)
-        return _rf7_input.loads(
+            return _contract_json(text), hashlib.sha256(raw).hexdigest()
+        document = _rf7_input.loads(
             text,
             parse_constant=lambda token: (_ for _ in ()).throw(
                 ValueError(f"non-finite JSON number {token!r} is forbidden")
             ),
         )
+        return document, hashlib.sha256(raw).hexdigest()
     except (UnicodeDecodeError, json.JSONDecodeError, ValueError, RecursionError) as error:
         issue_path = "wall_seconds" if '"wall_seconds"' in text else str(path)
         raise SessionContractError(
@@ -1611,9 +1616,19 @@ def read_session_contract(
 ) -> DataDrivenContract:
     """Load, close, path-check, and recompute every contract byte binding."""
 
+    contract, _ = read_session_contract_with_digest(
+        path, experiment_root=experiment_root, experiment_id=experiment_id
+    )
+    return contract
+
+
+def read_session_contract_with_digest(
+    path: str | Path, *, experiment_root: str | Path, experiment_id: str
+) -> tuple[DataDrivenContract, str]:
+    """Return the validated contract and the SHA-256 of the same descriptor read."""
     file_path = Path(path)
     root = Path(experiment_root)
-    document = _read_contract_document(file_path, root)
+    document, digest = _read_contract_document(file_path, root)
     schema_version = document.get("schema_version") if isinstance(document, dict) else None
     try:
         contract = DataDrivenContract.model_validate(document)
@@ -1866,4 +1881,4 @@ def read_session_contract(
             f"{file_path} failed session contract integrity validation",
             issues,
         )
-    return contract
+    return contract, digest

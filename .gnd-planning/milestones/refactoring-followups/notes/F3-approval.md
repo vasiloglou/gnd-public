@@ -1,0 +1,1 @@
+Delegated approval (auto=true), 2026-11-25. Named F3 spec SHA-256 b040ffcb178b559a9ddb7ec3c61672749c74a9902e428f11cc89b0a9a581f67a. Owner confirmed the eight-phase plan and delegated judgment. D1–D3 govern the bounded migration, diagnostic ratchet, focused default-lane tests and one independent Claude Code review.

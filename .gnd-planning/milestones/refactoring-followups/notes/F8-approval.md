@@ -1,0 +1,1 @@
+Owner authorized the four transfers and publication of their original wording and provenance in PR #310 on 2026-11-25. Delegated F8 spec approval SHA-256 ad86fca7256e9d8b19f5819adc657ab39d4cb133f91a4679f1ebf5549bc4e441. No other source material or transfer is within this handoff.

@@ -116,7 +116,7 @@ def test_two_wheel_build_import_smoke(tmp_path):
             for domain in ['dispatch', 'release']:
                 assert f'gnd/examples/{domain}/model.orm.json' in names
             payload_bytes = sum(i.file_size for i in archive.infolist())
-            assert payload_bytes <= 12 * 1024 * 1024
+            assert payload_bytes <= 13 * 1024 * 1024   # the wheel budget raised at induction-skill C2
             print('Preparation wheel payload:', origin, payload_bytes, 'bytes')
         venv = tmp_path / ('venv-' + origin)
         run(['uv', 'venv', '--python', sys.executable, str(venv)])

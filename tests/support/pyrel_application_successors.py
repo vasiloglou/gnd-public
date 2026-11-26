@@ -19,6 +19,7 @@ QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/query-successor.json',
     ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json',
     ROOT / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/query-successor.json',
+    ROOT / '.gnd-planning/milestones/refactoring-followups/evidence/F3/query-successor.json',
 ]
 
 
@@ -162,6 +163,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/OB4/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/close-followups/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/refactoring-followups/evidence/F5/dynamic-query-successor.json',
 ]
 
 

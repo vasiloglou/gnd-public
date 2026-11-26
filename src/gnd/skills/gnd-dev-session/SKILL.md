@@ -274,6 +274,19 @@ selector, or the selector for the other contract generation is usage exit
 **64**. `--wall-seconds` may only **tighten** the contract's positive finite
 wall bound; a loosening is also 64.
 
+To make prompt digests portable, put `"prompt_format": "portable-v1"` at the
+top level of a v6, v7 or v8 contract before starting its first run. From the
+agent's candidate directory, the locator is `../session.contract.json`. The
+prompt includes the SHA-256 of the validated file, including its whitespace.
+Moving an identical experiment preserves these prompt digests. The older
+profiles and contracts that omit this selector retain their original absolute
+locator. The selector applies to prompt identity. Adapter policy, candidate
+content and elapsed times have their own evidence fields.
+
+Preserve the entire run directory, including its terminal `result.json`.
+Versions 2, 3, 7 and 8 refuse attempts to resume a finished run after this
+file is removed. Use `gnd exp run` again to allocate a fresh run directory.
+
 ### 4. Read the band and the disposition, do not translate them
 
 | Exit | What it means | What to do |

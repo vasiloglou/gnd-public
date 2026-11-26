@@ -77,7 +77,7 @@ def test_native_learning_inventory_rejects_skips_and_missing_pages(group,total,n
 def test_payload_cap_refuses(tmp_path):
     target=tmp_path/'large.whl'
     with zipfile.ZipFile(target,'w',compression=zipfile.ZIP_DEFLATED) as archive:
-        archive.writestr('padding',b'x'*(12*1024*1024+1))
+        archive.writestr('padding',b'x'*(tool().CAP+1))
     with pytest.raises(ValueError,match='payload'):
         tool().verify_wheel_resources(target,ROOT)
 

@@ -437,6 +437,7 @@ def _parse_document_bytes(data: bytes, *, suffix: str, source: str) -> Any:
     from ruamel.yaml.events import AliasEvent
 
     yaml = configure_comment_scanner(YAML(typ="safe"))
+    depth = 0
     for count, event in enumerate(yaml.parse(text), start=1):
         if count > MAX_YAML_EVENTS:
             raise PopulationLoadError(
@@ -448,6 +449,10 @@ def _parse_document_bytes(data: bytes, *, suffix: str, source: str) -> Any:
                 f"YAML document '{source}' uses an anchor/alias ('*{event.anchor}') "
                 "— aliases are rejected for untrusted input"
             )
+        try:
+            depth = _rf7_input.checked_yaml_depth(depth, event)
+        except ValueError as error:
+            raise PopulationLoadError(f"YAML document '{source}': {error}") from error
     return yaml.load(text)
 
 

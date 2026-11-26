@@ -9,6 +9,7 @@ an invented next version.
 from __future__ import annotations
 
 import importlib.util
+import json
 import re
 import sys
 from pathlib import Path
@@ -370,6 +371,20 @@ def test_a_longer_version_and_a_first_version_statement_are_not_stale(tmp_path):
     assert not tool._mentions("version 0.2.0.dev0", "0.2.0") and not tool._mentions("10.2.0", "0.2.0")
 
 
+def test_a_recorded_replay_is_not_a_page_but_a_page_saying_the_same_is_stale(tmp_path):
+    """induction-skill IS2: a replay is rendered verbatim from a recording, so its words are the recorded agent's
+    and say nothing about a release."""
+    root = copy_tree(tmp_path)
+    words = "the model file is newer than the labels."
+    (root / "docs/assets/replays").mkdir(parents=True)
+    (root / "docs/assets/replays/replays.json").write_text(json.dumps({"example-run-1": {"title": "A run"}}),
+                                                           encoding="utf-8")
+    (root / "docs/assets/replays/example-run-1.txt").write_text(f"claude: {words}\n", encoding="utf-8")
+    assert tool.problems(root) == []
+    edit(root, "docs/index.md", "uv tool install get-nick-done==0.3.0", f"uv tool install get-nick-done==0.3.0\n{words}")
+    assert tool.problems(root) == [f"stale: docs/index.md: {words}"]
+
+
 @pytest.mark.parametrize("arguments, message", [
     ({"date": "11/11/2026"}, "is not YYYY-MM-DD"),
     ({"built": "4C07C0E6"}, "eight lowercase hexadecimal digits"),
@@ -416,3 +431,15 @@ def test_command_exit_codes(tmp_path, capsys):
     published = copy_tree(tmp_path / "tagged")
     assert tool.main(["--root", str(published), "check"]) == 0
     assert "no page describes the state before" in capsys.readouterr().out
+
+
+def test_authored_files_beside_the_replays_are_still_pages(tmp_path):
+    """Review phase-IS2-r1 F12: the whole replay folder was left out, titles and authored files included."""
+    root = copy_tree(tmp_path)
+    folder = root / "docs/assets/replays"
+    folder.mkdir(parents=True)
+    title = "Install GND 0.2.0, the next release."
+    (folder / "replays.json").write_text(json.dumps({"example-run-1": {"title": title}}), encoding="utf-8")
+    (folder / "guide.md").write_text("This is not published yet.\n", encoding="utf-8")
+    problems = tool.problems(root)
+    assert any("replays.json" in p for p in problems) and any("guide.md" in p for p in problems)

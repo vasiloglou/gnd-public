@@ -1,0 +1,33 @@
+you: /gnd:gnd-induce Bring the learned rule into GND as a proposal. Check its coverage on every week before you believe the learner.
+claude: I'll start by checking what's in the working folder: the model, label manifest, and any learner output.
+  Bash ls -la && find . -maxdepth 3 -not -path '*/.git*' | head -100
+  Bash which gnd ilp popper amie swipl 2>&1; gnd --version 2>&1 | head -3
+  Bash cat README.md && echo ---- && cat model.orm.yaml && echo ---- && cat labels.json && echo ---- && cat learned/learned.run.json && echo ---- && cat learned/learn…
+  Bash head -c 1500 stand_in_learner.py; echo ----; ls -la ilp batches; head -c 600 batches/west.yaml
+claude: The learner's rule is `wrong(A) :- refund_amount(A, _, V), V > 500`, and its claim covers the four flagged stores. Before trusting that, I'll check it against all eight weekly batches, read-only.
+  Bash for f in batches/*.yaml; do echo "== $f"; awk '/refund_amount:/{p=1;next} /^[a-z_]+:/{p=0} p' "$f"; done
+    → refused by Claude Code's permission rules
+  Bash gnd import ilp-rules --help 2>&1 | head -60
+claude: The shell refused the loop, so I'll read the batch files directly.
+  Read <workspace>/batches/west.yaml
+    → 1 # The west store's refunds for one week. The auditors marked this batch clean.
+  Grep \{ refund: \d+, amount: \d+ \}
+claude: I checked the learner's rule against all eight weekly batches before writing anything. It holds up, but I have not imported it yet, because GND needs an audit actor and request time first. **Coverage check**, read from the batch files. The rule is `wrong(A) :- refund_amount(A, _, V), V > 500`. I re…
+  (turn 1 ends)
+you: Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the fault…
+claude: Recording the actor as `reader` at `2026-10-26T00:00:00+00:00`. That timestamp is a month before today's date (2026-11-26), so I'll note it in the summary. I'll run the honest import and the faulty learner's run in parallel, and write the faulty run into a new `faulty/` folder so the existing `lear…
+  Bash ls refunds-limit.proposal.json 2>/dev/null; gnd import ilp-rules model.orm.yaml learned/learned.clauses.json --labels labels.json --reported-coverage learned/l…
+    → refused by Claude Code's permission rules
+  Bash mkdir -p faulty && python3 stand_in_learner.py ilp faulty --also-claim north; echo "EXIT=$?"; ls -la faulty; cat faulty/learned.run.json
+    → refused by Claude Code's permission rules
+claude: The shell rejected the `echo` part of each command, so I'll run the same commands without it.
+  Bash gnd import ilp-rules model.orm.yaml learned/learned.clauses.json --labels labels.json --reported-coverage learned/learned.run.json --target neutral --out refun…
+    → IMPORTED 1 learned clauses -> refunds-limit.proposal.json
+  Bash mkdir -p faulty && python3 stand_in_learner.py ilp faulty --also-claim north && ls -la faulty && cat faulty/learned.run.json
+claude: The honest import went through. Next, the faulty run's claim should be refused by GND.
+  Bash gnd import ilp-rules model.orm.yaml faulty/learned.clauses.json --labels labels.json --reported-coverage faulty/learned.run.json --target neutral --out faulty/…
+    → Exit code 3: clause 0: coverage-mismatch: GND covers [] that the learner did not report, and the learner reports ['north'] that GND does not cover; vacuous [], unchecked []
+  Read <workspace>/refunds-limit.proposal.json
+    → 1 {
+claude: The rule is now a proposal in GND, and the faulty learner's over-claim was refused, as it should be. **Honest learner (proposal written):** `gnd import ilp-rules` exited 0 and wrote `refunds-limit.proposal.json` in this folder. Its one clause covers 4 of 4 flagged batches (harbor, market, airport, …
+  (turn 2 ends)

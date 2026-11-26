@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/004-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "existing-output",
+ "model": "haiku",
+ "recorded_at_commit": "388d6fa6dba48a12808796006b6baa081b971ca3",
+ "declared_turns": [
+  "/gnd:gnd-induce Look at south's week alone and suggest rules of two kinds: \"each X has exactly one Y\" and \"every X has a Y\". Read each suggestion back to me in plain English.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Look at south's week alone and suggest rules of two kinds: \"each X has exactly one Y\" and \"every X has a Y\". Read each suggestion back to me in plain English.",
+   "exit": 0,
+   "cost_usd": 0.0090025,
+   "assistant_last": "l. Give me a name or identifier.\n2. **At what time?** An ISO-8601 timestamp with a UTC offset, for example `2026-11-26T09:00:00+00:00`.\n\n**One thing to know about output names:** `discovered.json` already exists in this folder as an empty file. Discover refuses an existing `--out`, so I'd write to `proposal.json` and `discovery-report.json` here instead. Tell me if you want different names.\n\nOnce you answer, I'll run discovery and read every candidate back to you in plain English. Because south is a single week of only 3 refunds, expect some accidental rules; you'll decide which ones are real."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder.",
+   "exit": 0,
+   "cost_usd": 0.01774468,
+   "assistant_last": " the amount-side rules are most likely accidents of this small sample, since a customer who requests one refund is not a general fact. The channel rule is the same kind of accident, because two channels is a small sample. You decide which to keep. I haven't dropped any.\n\nDiscovery also suppressed one candidate that the model already declares, and three trivial spanning uniqueness checks.\n\n**Next step:** the proposal is for review only. Nothing is applied. Run `gnd-model-evolve` to preview the proposal and accept the rules you want. Tell me if you'd like the proposal narrowed to a subset first."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "no_hand_written_proposal": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 59.1
+}

@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "run_sha256": "54665bfcedea6259972825a2794e920f94d6e9e9710def8db540f9b4379630a6",
+  "summary": "Four complete reviews. Three requested revision and GLM approved. Gemini returned malformed output and Kimi exited nonzero. One Claude concern lacked a matched quote.",
+  "agreed_concerns": [
+    {
+      "group_id": "G1",
+      "severity": "high",
+      "title": "Reader selection leaves #302 without a falsifiable completion gate",
+      "summary": "Name the readers required for #302, or require a recorded disposition for every inventoried reader and keep the issue open for deferred ones.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "302-acceptance-not-falsifiable"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "F4-302-reader-scope"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "G2",
+      "severity": "medium",
+      "title": "F7 acceptance depends on an undefined retirement phase",
+      "summary": "Define the separate retirement phase, approval and evidence gate, or make F7 an inventory and migration decision gate and keep #297 open until retirement is separately completed.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f7-retirement-spans-releases-no-close-rule"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "F7-297-retirement-gate"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "G3",
+      "severity": "medium",
+      "title": "F8's closure evidence demands four signed dispositions while its acceptance text allows missing originals, leaving the pass condition undecidable",
+      "summary": "State whether a signed transfer/retirement ruling obtained without the retrieved original text satisfies the \u00a79 F8 evidence row; if it does not, say what closure does with the shortfall (accepted deferral with the named owner and trigger required by \u00a79) so the phase pass condition is decidable when an original cannot be found.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f8-missing-originals-vs-four-signed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f8-missing-original-pass-condition"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "G4",
+      "severity": "medium",
+      "title": "The header declares the review instrument unselected while \u00a78 requires recording instrument, digest, findings and owner gate, for which the plan provides no destination",
+      "summary": "Name the selected plan-review instrument and add a review-record block (instrument, reviewed sha256 of this plan, findings, owner gate decision) to the plan or to a linked record that \u00a78 points at, and update the header status line once this review lands so the gate is evidenced rather than asserted.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-review-status"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "review-gate-record-has-no-home"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "binding-rule-vs-305-exemption-removal"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "closure-count-and-deferral-inconsistent"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "no-full-lane-regression-gate"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "299-validation-overrides-untraced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "plan-defaults-absent-from-s4"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "f2-characterization-support-unbacked"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "historical-counts-vs-re-measure"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "layer-rule-has-no-verification"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "session-version-subset-unrationaled"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "decision-register-omits-f2"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "f3-lookup-target-undecided"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "F1",
+      "rank": 1,
+      "title": "Reader selection leaves #302 without a falsifiable completion gate",
+      "action": "Name the readers required for #302, or require a recorded disposition for every inventoried reader and keep the issue open for deferred ones.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "302-acceptance-not-falsifiable"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "F4-302-reader-scope"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "302-acceptance-not-falsifiable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "F4-302-reader-scope",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F2",
+      "rank": 2,
+      "title": "F7 acceptance depends on an undefined retirement phase",
+      "action": "Define the separate retirement phase, approval and evidence gate, or make F7 an inventory and migration decision gate and keep #297 open until retirement is separately completed.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f7-retirement-spans-releases-no-close-rule"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "F7-297-retirement-gate"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f7-retirement-spans-releases-no-close-rule",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "F7-297-retirement-gate",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F3",
+      "rank": 3,
+      "title": "F8's closure evidence demands four signed dispositions while its acceptance text allows missing originals, leaving the pass condition undecidable",
+      "action": "State whether a signed transfer/retirement ruling obtained without the retrieved original text satisfies the \u00a79 F8 evidence row; if it does not, say what closure does with the shortfall (accepted deferral with the named owner and trigger required by \u00a79) so the phase pass condition is decidable when an original cannot be found.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f8-missing-originals-vs-four-signed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f8-missing-original-pass-condition"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f8-missing-originals-vs-four-signed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f8-missing-original-pass-condition",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F4",
+      "rank": 4,
+      "title": "The header declares the review instrument unselected while \u00a78 requires recording instrument, digest, findings and owner gate, for which the plan provides no destination",
+      "action": "Name the selected plan-review instrument and add a review-record block (instrument, reviewed sha256 of this plan, findings, owner gate decision) to the plan or to a linked record that \u00a78 points at, and update the header status line once this review lands so the gate is evidenced rather than asserted.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-review-status"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "review-gate-record-has-no-home"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-review-status",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "review-gate-record-has-no-home",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

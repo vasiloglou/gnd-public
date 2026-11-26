@@ -1,0 +1,1 @@
+Delegated approval (auto=true), 2026-11-25. F2 spec SHA-256 5e6f4c5960d44b953d0debd705f29b499acb9d9080576074d8b1015b5e8c3496. One focused test-support phase and one Claude Code diff review. No paid engineering tests.

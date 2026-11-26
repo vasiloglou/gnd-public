@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/003-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "score",
+ "model": "haiku",
+ "recorded_at_commit": "9fd4d87d38632b7571d05634f94ae667668f5d11",
+ "declared_turns": [
+  "/gnd:gnd-induce Score the written refund rule against the auditors' verdicts in labels.json. How many flagged weeks does it catch, and does it ever accuse a clean week?",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder.",
+  "Yes, as you propose."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Score the written refund rule against the auditors' verdicts in labels.json. How many flagged weeks does it catch, and does it ever accuse a clean week?",
+   "exit": 0,
+   "cost_usd": 0.01111467,
+   "assistant_last": "ent on positive (clean) | 4/4 |\n\n- **Caught:** harbor (a refund of 1200) and airport (a refund of 1500).\n- **Missed:** market (largest refund 750) and station (largest refund 640). Both are under the written 1000 limit, so no change to that threshold alone would catch them.\n- **Clean weeks:** the largest clean refund is 500 (south), so none goes over 1000.\n\nGND printed these cells as they are and did not combine them into an accuracy figure. I wrote no proposal and changed no model or labels. Discovering or learning a rule that catches market and station would be the next step, if you want it."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder.",
+   "exit": 0,
+   "cost_usd": 0.01967804,
+   "assistant_last": "d's cells are unchanged: the written rule fired on 2 of 4 flagged weeks and 0 of 4 clean weeks.\n\nA copy of the earlier measure output is still in the scratchpad at `<tmp> I left it there; I can delete it if you want only the folder copy.\n\nNo proposal was written, so the actor `reader` applies to the record only. This folder has no `.gnd-planning/` and no git repo, so the record is not a milestone record. Committing it needs your go-ahead."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": true
+ },
+ "seconds": 47.1
+}

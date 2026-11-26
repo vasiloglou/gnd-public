@@ -1,11 +1,15 @@
 """TS5: the type-judgements example is the fixtures and the recorded judgements, byte for byte (spec section 5.2)."""
 
 import json
+import sys
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from record_skill_sessions import stream_events
+
 EXAMPLE = ROOT / "src/gnd/examples/type_judgements"
 EVIDENCE = ROOT / ".gnd-planning/milestones/type-induction-skills/evidence"
 SOURCES = {
@@ -48,8 +52,7 @@ def recording(name: str) -> tuple[list[str], str]:
     turns = json.loads((EVIDENCE / name / "results.json").read_text(encoding="utf-8"))["user_turns"]
     parts = []
     for stream in sorted((EVIDENCE / name / "run-1").glob("turn-*.jsonl")):
-        for line in stream.read_text(encoding="utf-8").splitlines():
-            event = json.loads(line)
+        for event in stream_events(stream.read_text(encoding="utf-8")):
             for part in (event.get("message") or {}).get("content") or []:
                 if isinstance(part, dict) and part.get("type") == "text":
                     parts.append(part["text"])

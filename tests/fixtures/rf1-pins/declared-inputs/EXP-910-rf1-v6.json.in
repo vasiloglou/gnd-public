@@ -1,0 +1,1 @@
+{"schema_version": 1, "policy_id": "rf1-agent", "kind": "command", "executable": "<python>", "argv": ["<fixture-dir>/agent/rf1_agent.py"], "version_argv": ["<fixture-dir>/agent/rf1_agent.py", "--version"], "prompt_transport": "stdin", "environment_allowlist": ["PATH", "HOME"]}

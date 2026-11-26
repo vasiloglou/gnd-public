@@ -1,0 +1,550 @@
+{
+  "schema_version": 1,
+  "run_sha256": "e9c5068288af7e79d152e6efe872e9a87a78f0396f24965ecd64fbe385e677c0",
+  "summary": "Five complete responses. Claude, Codex and Qwen requested revision, Gemini blocked, and GLM approved with observations. Kimi exited nonzero. Gemini lacked matched quotations on six concerns.",
+  "agreed_concerns": [
+    {
+      "group_id": "G1",
+      "title": "Portability of recorded evidence",
+      "summary": "State exactly which hashes agree across roots and track outstanding evidence comparisons under #304.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f5-evidence-digest-portability-narrowed"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "FU-CLOSE-304-SCOPE"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f5-evidence-portability"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "G2",
+      "title": "Integrated migration inventory",
+      "summary": "Rerun the compatibility suite and audit at the integrated revision and bind the generated table and served bytes.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f7-tsv-regenerated-without-recheck"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "FU-CLOSE-F7-INTEGRATED-INVENTORY"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f7-counts-not-bound-to-integrated-source"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "G3",
+      "title": "Independent opinions on repaired phases",
+      "summary": "Identify the reviewed versions and distinguish independently reviewed diffs from subsequent delegated acceptance.",
+      "severity": "critical",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "phase-diff-review-change-requests-not-re-reviewed"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unapproved-repairs"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-unreviewed-final-versions"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G4",
+      "title": "F4 test selections",
+      "summary": "Give the two commands and their scopes, then identify the boundary controls in the final selection.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f4-post-repair-gate-narrower"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f4-test-count-decrease-unexplained"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f4-test-drop"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-f4-test-count-framing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G5",
+      "title": "Finite review JSON",
+      "summary": "Name the writer controls, reachable callers and caller migration behavior.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "issue-301-migration-story-and-controls-missing"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f4-nan-infinity"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "G6",
+      "title": "Integration evidence",
+      "summary": "Record the consolidated affected test selection and explain which subsequent repairs it covers.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-integration-repair-review-and-merge-status"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "fragmented-integration-test"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "G7",
+      "title": "F3 approval scope",
+      "summary": "Identify the twelve-site diff reviewed and the thirteenth lookup added after the review.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f3-approval-scope-overstated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-f3-approval-vs-repair"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G8",
+      "title": "F3 graph evidence",
+      "summary": "Name the lane groups and cite the layer and cold-start controls.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f3-lane-groups-unnamed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f3-cold-import-and-layer-evidence-not-cited"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "297-305-residual-triggers-discretionary"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "f1-f6-helper-status-failed"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "close-plan-digest-vs-r3-amendments"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "issue-307-malformed-id-divergence-no-residual"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "issue-303-retained-refusal-no-owner"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "f4-mime-variance-and-validator-inventory-not-recorded"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "issue-305-row-count-arithmetic"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "f2-owed-rows-and-terminology"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "f5-v6-resume-and-contract-byte-controls"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "phase-refactoring-review-instrument-not-evidenced"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "f7-cross-phase-repair"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "close-results-f1-malformed-json-gap"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "F1",
+      "rank": 1,
+      "title": "Portability of recorded evidence",
+      "action": "State exactly which hashes agree across roots and track outstanding evidence comparisons under #304.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f5-evidence-digest-portability-narrowed"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "FU-CLOSE-304-SCOPE"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f5-evidence-portability"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "gemini"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f5-evidence-digest-portability-narrowed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "FU-CLOSE-304-SCOPE",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f5-evidence-portability",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F2",
+      "rank": 2,
+      "title": "Integrated migration inventory",
+      "action": "Rerun the compatibility suite and audit at the integrated revision and bind the generated table and served bytes.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f7-tsv-regenerated-without-recheck"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "FU-CLOSE-F7-INTEGRATED-INVENTORY"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f7-counts-not-bound-to-integrated-source"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f7-tsv-regenerated-without-recheck",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "FU-CLOSE-F7-INTEGRATED-INVENTORY",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f7-counts-not-bound-to-integrated-source",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F3",
+      "rank": 3,
+      "title": "Independent opinions on repaired phases",
+      "action": "Identify the reviewed versions and distinguish independently reviewed diffs from subsequent delegated acceptance.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "phase-diff-review-change-requests-not-re-reviewed"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unapproved-repairs"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-unreviewed-final-versions"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "phase-diff-review-change-requests-not-re-reviewed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unapproved-repairs",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-unreviewed-final-versions",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F4",
+      "rank": 4,
+      "title": "F4 test selections",
+      "action": "Give the two commands and their scopes, then identify the boundary controls in the final selection.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f4-post-repair-gate-narrower"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f4-test-count-decrease-unexplained"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f4-test-drop"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-f4-test-count-framing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f4-post-repair-gate-narrower",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f4-test-count-decrease-unexplained",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f4-test-drop",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-f4-test-count-framing",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F5",
+      "rank": 5,
+      "title": "Finite review JSON",
+      "action": "Name the writer controls, reachable callers and caller migration behavior.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "issue-301-migration-story-and-controls-missing"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f4-nan-infinity"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "issue-301-migration-story-and-controls-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "f4-nan-infinity",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F6",
+      "rank": 6,
+      "title": "Integration evidence",
+      "action": "Record the consolidated affected test selection and explain which subsequent repairs it covers.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-integration-repair-review-and-merge-status"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "fragmented-integration-test"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-integration-repair-review-and-merge-status",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "fragmented-integration-test",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F7",
+      "rank": 7,
+      "title": "F3 approval scope",
+      "action": "Identify the twelve-site diff reviewed and the thirteenth lookup added after the review.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f3-approval-scope-overstated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-f3-approval-vs-repair"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f3-approval-scope-overstated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-results-f3-approval-vs-repair",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "F8",
+      "rank": 8,
+      "title": "F3 graph evidence",
+      "action": "Name the lane groups and cite the layer and cold-start controls.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f3-lane-groups-unnamed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f3-cold-import-and-layer-evidence-not-cited"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "f3-lane-groups-unnamed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "f3-cold-import-and-layer-evidence-not-cited",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

@@ -23,9 +23,19 @@ spec.loader.exec_module(recorder)
 RUNS = json.loads((APPS / 'recordings/results.json').read_text(encoding='utf-8'))['runs']
 
 
-def prose(path):
+def _outside_fences(path):
     text = re.sub(r'```.*?```', '', path.read_text(encoding='utf-8'), flags=re.DOTALL)
-    text = re.sub(r'<!--.*?-->|<figure.*?</figure>', '', text, flags=re.DOTALL)
+    return re.sub(r'<!--.*?-->|<figure.*?</figure>', '', text, flags=re.DOTALL)
+
+
+def table_and_image_lines(path):
+    """The table rows and image lines prose() leaves out: they are not paragraphs, so the length rule does not
+    apply, but a reader still reads their cells and alt text (issue 318)."""
+    return [line.strip() for line in _outside_fences(path).splitlines() if line.strip().startswith(('|', '!['))]
+
+
+def prose(path):
+    text = _outside_fences(path)
     paragraphs = []
     for block in re.split(r'\n\s*\n|\n(?=\s*(?:- |\d+\. ))', text):   # each list item reads as its own paragraph
         lines = [line.strip() for line in block.splitlines()
@@ -35,12 +45,29 @@ def prose(path):
     return paragraphs
 
 
+EXIT_CODE = re.compile(r'\bexit (?:code )?\d+')
+SNIPPET_LINE = re.compile(r'^\s*--8<-- "([^"]+)"\s*$', re.MULTILINE)
+IMAGE_TARGET = re.compile(r'!\[[^\]]*\]\(([^)\s]+)\)')
+
+
+def shown_text(page):
+    """The lowercased text of every replay transcript and image the page includes: what the reader sees."""
+    text = page.read_text(encoding='utf-8')
+    paths = [ROOT / m for m in SNIPPET_LINE.findall(text)] + [page.parent / m for m in IMAGE_TARGET.findall(text)]
+    return '\n'.join(p.read_text(encoding='utf-8').lower() for p in paths if p.is_file())
+
+
 @pytest.mark.parametrize('page', PAGES, ids=lambda p: p.name)
 def test_plain_short_prose_without_exit_codes(page):
-    for paragraph in prose(page):
-        assert len(paragraph.split()) <= 90, paragraph[:80]
+    shown = None
+    for paragraph in prose(page) + table_and_image_lines(page):
+        assert len(paragraph.split()) <= 90 or paragraph.startswith(('|', '![')), paragraph[:80]
         lowered = paragraph.lower()
-        assert not re.search(r'\bexit (code )?\d', lowered), paragraph[:80]
+        codes = EXIT_CODE.findall(lowered)
+        if codes and paragraph.startswith(('|', '![')):   # a legend cell or alt text may quote what is shown
+            shown = shown_text(page) if shown is None else shown
+            codes = [code for code in codes if code not in shown]
+        assert not codes, paragraph[:80]
         for term in BANNED:
             if term == 'receipt' and page.name in {
                 'shared-expense-policies.md', 'shared-expense-policies-commands.md',
@@ -48,6 +75,22 @@ def test_plain_short_prose_without_exit_codes(page):
                 assert not re.search(r'\b(?:execution|validation|verification|evidence) receipts?\b', lowered)
                 continue
             assert term not in lowered, term
+
+
+@pytest.mark.parametrize('line', ['| Step | gnd check returned exit 3 |', '![The run ended with exit code 1](x.svg)'])
+def test_issue_318_an_exit_code_in_a_table_cell_or_alt_text_is_read(tmp_path, line):
+    page = tmp_path / 'page.md'
+    page.write_text(f'Some prose.\n\n{line}\n', encoding='utf-8')
+    assert line in table_and_image_lines(page) and line not in ' '.join(prose(page))
+    assert EXIT_CODE.search(line.lower()) and EXIT_CODE.search(line.lower()).group(0) not in shown_text(page)
+
+
+def test_issue_318_a_legend_may_quote_an_exit_code_its_replay_shows(tmp_path):
+    shown = tmp_path / 'shown.svg'
+    shown.write_text('<svg><text>Exit code 3: refused</text></svg>', encoding='utf-8')
+    page = tmp_path / 'page.md'
+    page.write_text('Prose.\n\n![The check ended with exit code 3](shown.svg)\n', encoding='utf-8')
+    assert 'exit code 3' in shown_text(page) and 'exit code 1' not in shown_text(page)
 
 
 @pytest.mark.parametrize('page', TUTORIALS, ids=lambda p: p.name)
@@ -218,10 +261,13 @@ def test_every_github_link_names_a_file_in_the_repository(page):
         assert (ROOT / path).exists(), (page.name, path)
 
 
-@pytest.mark.parametrize('folder', ['recordings', 'skill-sessions', 'skill-sessions-evolve'])
+@pytest.mark.parametrize('folder', ['plan_apps/recordings', 'plan_apps/skill-sessions',
+                                    'plan_apps/skill-sessions-evolve', 'refunds/skill-sessions'])
 def test_no_recording_holds_an_email_address(folder):
-    """Close reading three: an agent copied the git user's email into a proposal's audit field."""
-    for path in (APPS / folder).rglob('*'):
+    """Close reading three: an agent copied the git user's email into a proposal's audit field.
+    induction-skill IS2-C1 adds the refunds recording home (close reader R1-F3)."""
+    assert (APPS.parent / folder).is_dir(), folder
+    for path in (APPS.parent / folder).rglob('*'):
         if path.is_file():
             found = re.findall(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}', path.read_text(encoding='utf-8'))
             assert not found, (path, found[:2])

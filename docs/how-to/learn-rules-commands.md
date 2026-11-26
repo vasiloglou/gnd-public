@@ -204,5 +204,6 @@ describes.
 
 With an assistant, step 6 is the
 [gnd-model-evolve](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-evolve/SKILL.md)
-skill's work; the other steps are plain requests that Claude Code carries out
-with the commands above.
+skill's work; the other steps are the
+[gnd-induce](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-induce/SKILL.md)
+skill's, which runs the commands above and hands every proposal to review.

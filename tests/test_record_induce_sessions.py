@@ -532,3 +532,163 @@ def test_issue_318_f12_a_gate_is_read_by_the_yaml_front_matter_reader(tmp_path, 
 ])
 def test_issue_318_f12_a_malformed_front_matter_is_not_a_gate(tmp_path, monkeypatch, front):
     assert not recorder.gate_ok(_committed_gate(tmp_path, monkeypatch, front + GATE_BODY))
+
+
+# --- Issue 318 item 2: each Bash call's exit from Claude Code's hooks, not from shell text ----------
+
+def _hook(event, call_id, command, **fields):
+    return json.dumps({"hook_event_name": event, "tool_name": "Bash", "tool_use_id": call_id,
+                       "tool_input": {"command": command}, **fields}, ensure_ascii=False)
+
+
+def test_issue_318_the_command_log_reads_each_outcome_the_discovery_run_showed():
+    """The event forms of the discovery run (.gnd-planning/maintenance/2026-11-26-issue-318-command-log)."""
+    text = "\n".join([
+        _hook("PreToolUse", "a", "gnd check model.orm.yaml batches/market.yaml"),
+        _hook("PostToolUse", "a", "gnd check model.orm.yaml batches/market.yaml", tool_response={"stdout": "ok"}),
+        _hook("PreToolUse", "b", "sh -c 'exit 3'"),
+        _hook("PostToolUseFailure", "b", "sh -c 'exit 3'", error="Exit code 3", is_interrupt=False),
+        _hook("PreToolUse", "c", "gnd import ilp-rules x"),                        # started, no outcome
+        _hook("PostToolUseFailure", "d", "sleep 999", error="Interrupted", is_interrupt=True),
+        json.dumps({"hook_event_name": "PreToolUse", "tool_name": "Read", "tool_use_id": "e"}),   # not Bash
+        _hook("PreToolUse", "f", "echo 'a b'"),
+        _hook("PostToolUse", "f", "echo 'a b'"),
+    ]) + "\n"
+    log = recorder.command_log(text, 2, lambda value: value.replace("model.orm.yaml", "MODEL"))
+    assert [(r["id"], r["exit"], r["finished"]) for r in log] == [
+        ("a", 0, True), ("b", 3, True), ("c", None, False), ("d", None, True), ("f", 0, True)]
+    assert log[0]["command"] == "gnd check MODEL batches/market.yaml" and log[0]["turn"] == 2
+    assert log[3]["interrupted"] is True and log[4]["command"] == "echo 'a b'"
+
+
+IMPORT = ("gnd import ilp-rules model.orm.yaml learned/learned.clauses.json --labels labels.json "
+          "--reported-coverage learned/learned.run.json --target neutral --out faulty.proposal.json")
+
+
+def _logged(*records):
+    return [{"turn": 1, "id": call_id, "command": "", "exit": code, "finished": done} for call_id, code, done in records]
+
+
+@pytest.mark.parametrize("command, result_text, records, refused", [
+    (IMPORT, "Exit code 3\nrefused", [("t0", 3, True)], True),
+    (IMPORT, "Exit code 3\nrefused", [("t0", 0, True)], False),      # the log is the fact, not the text
+    (IMPORT, "imported", [("t0", 3, True)], True),
+    (f"timeout 60 {IMPORT}", "", [("t0", 3, True)], True),            # a wrapper runs the import
+    (f"{IMPORT}; echo done", "", [("t0", 3, True)], False),           # the exit is not the import's alone
+    (IMPORT, "Exit code 3", [], False),                               # no record, no exit
+])
+def test_issue_318_the_faulty_refusal_is_read_from_the_log(tmp_path, command, result_text, records, refused):
+    result = recorder.checks("faulty", tmp_path, {}, [stream(("Bash", {"command": command}, result_text))],
+                             log=_logged(*records))
+    assert result["done"] is refused
+    assert result["every_bash_call_logged"] is bool(records)
+
+
+def test_issue_318_without_a_log_a_recorded_run_is_read_as_it_was(tmp_path):
+    result = recorder.checks("faulty", tmp_path, {}, [stream(("Bash", {"command": IMPORT}, "Exit code 3\nno"))])
+    assert result["done"] is True and "every_bash_call_logged" not in result
+
+
+def test_issue_318_a_check_counts_only_when_its_call_finished(tmp_path):
+    turn = [_turn(("Bash", {"command": "gnd check model.orm.yaml batches/market.yaml"}, "OK"))]
+    assert recorder.checks("recheck", tmp_path, {}, turn, log=_logged(("t0", 1, True)))["done"] is True
+    unfinished = recorder.checks("recheck", tmp_path, {}, turn, log=_logged(("t0", None, False)))
+    assert unfinished["done"] is False and unfinished["every_bash_call_logged"] is False
+    refused = [_turn(("Bash", {"command": "gnd check model.orm.yaml batches/market.yaml"}, "denied"), denied=[0])]
+    assert recorder.checks("recheck", tmp_path, {}, refused, log=[])["every_bash_call_logged"] is True
+
+
+@pytest.mark.parametrize("command, words", [
+    ("timeout 120 python3 -I stand_in_learner.py ilp learned", ["python3", "-I", "stand_in_learner.py", "ilp", "learned"]),
+    ("timeout -k 5 --signal=TERM 2m gnd check m p", ["gnd", "check", "m", "p"]),
+    ("env -u HOME A=1 B=2 gnd measure m", ["gnd", "measure", "m"]),
+    ("nice -n 5 nohup time gnd discover m p", ["gnd", "discover", "m", "p"]),
+    ("/usr/bin/env gnd check m p", ["gnd", "check", "m", "p"]),
+    ("command gnd check m p", ["gnd", "check", "m", "p"]),
+    ("command -v gnd", ["command", "-v", "gnd"]),                     # a lookup runs nothing
+    ("timeout 5", ["timeout", "5"]),                                  # nothing to run
+])
+def test_issue_318_a_wrapper_is_read_as_the_command_it_runs(command, words):
+    assert recorder.segments(command) == [words]
+
+
+def test_issue_318_a_wrapped_installer_is_still_forbidden(tmp_path):
+    assert _checks("score", tmp_path, ("Bash", {"command": "timeout 30 pip install popper"}, ""))["no_forbidden_bash"] is False
+
+
+@pytest.mark.parametrize("command, kept", [
+    ("timeout 120 python3 -I stand_in_learner.py ilp learned", True),
+    ("cd <workspace> && gnd export ilp model.orm.yaml --labels labels.json --target neutral --out ilp && ls ilp", True),
+    ("gnd check model.orm.yaml batches/market.yaml | head -20", True),
+    ("python stand_in_learner.py ilp learned --also-claim north", True),
+    ("ls -la", False),
+    ("gnd check model.orm.yaml $(cat notes.txt)", False),             # another command's output goes in
+    ("gnd check model.orm.yaml `ls`", False),
+    ("cat <home>/notes && gnd check model.orm.yaml p", False),        # names a place outside the workspace
+    ("ls /etc; gnd --version", False),
+])
+def test_issue_318_the_keep_rule_reads_every_command_of_a_call(command, kept):
+    assert recorder.keeps_output(command) is kept
+    body = kept_stream(stream(("Bash", {"command": command}, "OUTPUT-MARK")), keep_bash=recorder.keeps_output)
+    assert ("OUTPUT-MARK" in body) is kept
+
+
+def test_issue_318_the_hook_appends_its_input_as_one_line(tmp_path):
+    import subprocess
+    log = tmp_path / "hooks.jsonl"
+    for event in ({"hook_event_name": "PreToolUse", "tool_input": {"command": "true"}}, "not json"):
+        done = subprocess.run([sys.executable, "-I", str(recorder.HOOK), str(log)], capture_output=True, text=True,
+                              input=json.dumps(event) if isinstance(event, dict) else event, check=False)
+        assert done.returncode == 0 and done.stdout == ""
+    lines = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()]
+    assert lines == [{"hook_event_name": "PreToolUse", "tool_input": {"command": "true"}}, {"unparsed": "not json"}]
+
+
+def test_issue_318_every_call_attaches_the_hooks_and_the_run_keeps_its_log(tmp_path, monkeypatch):
+    """Each claude call, the resumed one too, gets --settings with the hook on all three events and loads
+    no user or local settings; the run folder gets commands.json, and the checks read it."""
+    real_run, seen = recorder.subprocess.run, []
+
+    def fake(argv, **kwargs):
+        if argv[0] != "claude":
+            return real_run(argv, **kwargs)
+        seen.append(argv)
+        settings = json.loads(Path(argv[argv.index("--settings") + 1]).read_text(encoding="utf-8"))
+        hooks = settings["hooks"]
+        assert set(hooks) == set(recorder.HOOK_EVENTS)
+        log = Path(hooks["PostToolUseFailure"][0]["hooks"][0]["command"].rsplit(" ", 1)[1])
+        call = f"t{len(seen)}"
+        log.write_text(_hook("PreToolUse", call, IMPORT) + "\n" + _hook(
+            "PostToolUseFailure", call, IMPORT, error="Exit code 3", is_interrupt=False) + "\n", encoding="utf-8")
+        tool = {"type": "tool_use", "id": call, "name": "Bash", "input": {"command": IMPORT}}
+        result = {"type": "tool_result", "tool_use_id": call, "content": "Exit code 3\nrefused", "is_error": True}
+        return _Ran("\n".join(json.dumps(e) for e in (
+            {"type": "assistant", "message": {"content": [tool]}}, {"type": "user", "message": {"content": [result]}},
+            {"type": "result", "result": "GND refused it.", "total_cost_usd": 0.01})) + "\n")
+
+    monkeypatch.setattr(recorder, "HOME", tmp_path / "home")
+    monkeypatch.setattr(recorder.subprocess, "run", fake)
+    monkeypatch.setattr(recorder, "finish", lambda target, commit: 0)
+    recorder.record("faulty", "haiku", GATES / "004-IS2-recording-gate.md", "0" * 40)
+    assert len(seen) == 2 and "--resume" in seen[1]
+    assert all(argv[argv.index("--setting-sources") + 1] == "project" for argv in seen)
+    run = tmp_path / "home/faulty/claude-haiku/run-1"
+    log = json.loads((run / "commands.json").read_text(encoding="utf-8"))["calls"]
+    assert [(r["turn"], r["exit"]) for r in log] == [(1, 3), (2, 3)]
+    checks = json.loads((run / "results.json").read_text(encoding="utf-8"))["checks"]
+    assert checks["done"] is True and checks["every_bash_call_logged"] is True
+    assert recorder.recheck(run) == checks
+
+
+#: The stored checks a recheck with the current recorder does not reproduce, each with its reason; the
+#: skill-sessions README states it. absent-learner's runs recorded `<repo>` inside a Bash command, which the
+#: recorder at its recorded commit did not read as outside.
+KNOWN_RECHECK_DIFFERENCES = {"absent-learner": {"no_outside_path": (True, False)}}
+
+
+@pytest.mark.parametrize("run", sorted(recorder.HOME.glob("*/claude-*/run-1")), ids=lambda p: p.parts[-3])
+def test_issue_318_each_committed_recording_rechecks_to_its_stored_checks(run):
+    stored = json.loads((run / "results.json").read_text(encoding="utf-8"))["checks"]
+    again = recorder.recheck(run)
+    differences = {k: (stored.get(k), again.get(k)) for k in set(stored) | set(again) if stored.get(k) != again.get(k)}
+    assert differences == KNOWN_RECHECK_DIFFERENCES.get(run.parts[-3], {})

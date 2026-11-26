@@ -1,0 +1,627 @@
+{
+ "claude_code": "2.1.322 (Claude Code)",
+ "turns": [
+  {
+   "turn": 1,
+   "exit": 0,
+   "cost_usd": 0.00404527,
+   "denied_commands": []
+  },
+  {
+   "turn": 2,
+   "exit": 0,
+   "cost_usd": 0.00484778,
+   "denied_commands": []
+  }
+ ],
+ "spent_usd": 0.0089,
+ "events": [
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PreToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "true"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run the command true"
+   },
+   "tool_use_id": {
+    "type": "str"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PostToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "true"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run the command true"
+   },
+   "tool_response.stdout": {
+    "type": "str",
+    "value": ""
+   },
+   "tool_response.stderr": {
+    "type": "str",
+    "value": ""
+   },
+   "tool_response.interrupted": {
+    "type": "bool",
+    "value": false
+   },
+   "tool_response.isImage": {
+    "type": "bool",
+    "value": false
+   },
+   "tool_response.noOutputExpected": {
+    "type": "bool",
+    "value": false
+   },
+   "tool_use_id": {
+    "type": "str"
+   },
+   "duration_ms": {
+    "type": "int"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PreToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "false"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run the command false"
+   },
+   "tool_use_id": {
+    "type": "str"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PostToolUseFailure"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "false"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run the command false"
+   },
+   "tool_use_id": {
+    "type": "str"
+   },
+   "error": {
+    "type": "str",
+    "value": "Exit code 1"
+   },
+   "is_interrupt": {
+    "type": "bool",
+    "value": false
+   },
+   "duration_ms": {
+    "type": "int"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PreToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "sh -c 'exit 3'"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run shell that exits with status 3"
+   },
+   "tool_use_id": {
+    "type": "str"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PostToolUseFailure"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "sh -c 'exit 3'"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run shell that exits with status 3"
+   },
+   "tool_use_id": {
+    "type": "str"
+   },
+   "error": {
+    "type": "str",
+    "value": "Exit code 3"
+   },
+   "is_interrupt": {
+    "type": "bool",
+    "value": false
+   },
+   "duration_ms": {
+    "type": "int"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PreToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "true && false"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run true and then false"
+   },
+   "tool_use_id": {
+    "type": "str"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PostToolUseFailure"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "true && false"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run true and then false"
+   },
+   "tool_use_id": {
+    "type": "str"
+   },
+   "error": {
+    "type": "str",
+    "value": "Exit code 1"
+   },
+   "is_interrupt": {
+    "type": "bool",
+    "value": false
+   },
+   "duration_ms": {
+    "type": "int"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PreToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "date"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Print the current date and time"
+   },
+   "tool_use_id": {
+    "type": "str"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PostToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "date"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Print the current date and time"
+   },
+   "tool_response.stdout": {
+    "type": "str",
+    "value": "<the date and time zone it printed, not kept>"
+   },
+   "tool_response.stderr": {
+    "type": "str",
+    "value": ""
+   },
+   "tool_response.interrupted": {
+    "type": "bool",
+    "value": false
+   },
+   "tool_response.isImage": {
+    "type": "bool",
+    "value": false
+   },
+   "tool_response.noOutputExpected": {
+    "type": "bool",
+    "value": false
+   },
+   "tool_use_id": {
+    "type": "str"
+   },
+   "duration_ms": {
+    "type": "int"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PreToolUse"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "sh -c 'exit 5'"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run shell that exits with status 5"
+   },
+   "tool_use_id": {
+    "type": "str"
+   }
+  },
+  {
+   "session_id": {
+    "type": "str"
+   },
+   "transcript_path": {
+    "type": "str"
+   },
+   "cwd": {
+    "type": "str"
+   },
+   "scratchpad_dir": {
+    "type": "str"
+   },
+   "prompt_id": {
+    "type": "str"
+   },
+   "permission_mode": {
+    "type": "str",
+    "value": "default"
+   },
+   "effort.level": {
+    "type": "str"
+   },
+   "hook_event_name": {
+    "type": "str",
+    "value": "PostToolUseFailure"
+   },
+   "tool_name": {
+    "type": "str",
+    "value": "Bash"
+   },
+   "tool_input.command": {
+    "type": "str",
+    "value": "sh -c 'exit 5'"
+   },
+   "tool_input.description": {
+    "type": "str",
+    "value": "Run shell that exits with status 5"
+   },
+   "tool_use_id": {
+    "type": "str"
+   },
+   "error": {
+    "type": "str",
+    "value": "Exit code 5"
+   },
+   "is_interrupt": {
+    "type": "bool",
+    "value": false
+   },
+   "duration_ms": {
+    "type": "int"
+   }
+  }
+ ],
+ "kept_note": "the stdout of `date` is replaced: it showed the host's time zone"
+}

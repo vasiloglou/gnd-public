@@ -11,6 +11,7 @@ src/gnd/examples/refunds/skill-sessions/<id>/claude-<model>/run-1/ (a new direct
     manifest.json           SHA-256 of every recorded file, of the sources, and the commit recorded at
     turn-NN.jsonl           Claude Code's stream-json per turn (paths redacted, other output dropped)
     workspace.json          the workspace's files and digests before the first turn and after the last
+    commands.json           every Bash call as Claude Code ran it: its command and exit, logged by hooks
 
 The checks run outside the agent, after the conversation (spec section 6.2).
 """
@@ -58,6 +59,12 @@ EARLIER = sorted(EVIDENCE.glob("attempt-*"))
 UNRECORDED_USD = 0.084
 MAX_TURNS = 4
 TURN_SECONDS = 900
+#: The hook that logs each Bash call as Claude Code runs it (issue 318), and the events it is attached to. A
+#: zero exit fires PostToolUse, which holds no exit code; a non-zero one fires PostToolUseFailure with
+#: `error` "Exit code N" (the issue 318 discovery run, .gnd-planning/maintenance/2026-11-26-issue-318-command-log).
+HOOK = ROOT / "tools/claude_bash_hook.py"
+HOOK_EVENTS = ("PreToolUse", "PostToolUse", "PostToolUseFailure")
+EXIT_CODE = re.compile(r"Exit code (\d+)")
 #: The second turn: the actor, and outputs in the working folder (IS2 finding F1); the learner's
 #: invocation only where the conversation runs it.
 ACTOR_TURN = f"Record it as {ACTOR}, at {REQUESTED_AT}. Write every output in this folder."
@@ -214,7 +221,7 @@ def tool_calls(streams: list[str]) -> list[dict]:
                     results[part.get("tool_use_id")] = body if isinstance(body, str) else " ".join(
                         c.get("text", "") for c in body or [] if isinstance(c, dict))
         for part in calls:
-            found.append({"name": str(part.get("name")), "input": part["input"],
+            found.append({"id": part.get("id"), "name": str(part.get("name")), "input": part["input"],
                           "result": results.get(part.get("id")), "denied": part.get("id") in denied})
     return found
 
@@ -246,6 +253,32 @@ OUTSIDE_MARKERS = ("<tmp>", "<home>", "<repo>")
 #: Device files a command may redirect to without leaving the workspace.
 DEVICES = frozenset({"/dev/null", "/dev/stdout", "/dev/stderr"})
 ASSIGNMENT = re.compile(r"[A-Za-z_][A-Za-z0-9_]*=.*", re.DOTALL)
+#: Programs that run the command after them (issue 318: `timeout 120 python3 -I stand_in_learner.py` was read
+#: as timeout): each one's options that take a separate value, and how many plain words it takes first.
+WRAPPERS = {"timeout": ({"-s", "--signal", "-k", "--kill-after"}, 1), "env": ({"-u", "--unset", "-C", "--chdir"}, 0),
+            "nice": ({"-n", "--adjustment"}, 0), "nohup": (set(), 0), "time": (set(), 0), "command": (set(), 0)}
+
+
+def unwrapped(words: list[str]) -> list[str]:
+    """The command a wrapper runs: `timeout 120 X`, `env A=1 X`, `nice -n 5 X`, `nohup X`, `time X` and
+    `command X` all run X. `command -v X` only looks X up, so it stays as it is."""
+    while words and words[0].rsplit("/", 1)[-1] in WRAPPERS:
+        name = words[0].rsplit("/", 1)[-1]
+        if name == "command" and len(words) > 1 and words[1] in ("-v", "-V"):
+            return words
+        takes, plain = WRAPPERS[name]
+        rest = words[1:]
+        while rest and (rest[0].startswith("-") or (name == "env" and ASSIGNMENT.fullmatch(rest[0]))):
+            option = rest.pop(0)
+            if option == "--":
+                break
+            if option in takes and rest:
+                rest.pop(0)
+        rest = rest[plain:]
+        if not rest:
+            return words   # a wrapper with nothing to run is read as itself
+        words = rest
+    return words
 #: An absolute or home path: a word made of path characters only, so a program text that starts with a slash
 #: (`awk '/x:/{p=1}'`, `sed -n '/^A/,/^$/p'`) is not read as one (review phase-IS2-r1, while rechecking).
 PATH_WORD = re.compile(r"(?:/|~/)[\w.@+%, -]*(?:/[\w.@+%, -]*)*")
@@ -269,7 +302,7 @@ def segments(command: str) -> list[list[str]]:
             while words and ASSIGNMENT.fullmatch(words[0]):
                 words.pop(0)
             if words:
-                found.append(words)
+                found.append(unwrapped(words))
             segment = []
         else:
             segment.append(token)
@@ -339,6 +372,49 @@ def outside_words(command: str) -> list[str]:
     return found
 
 
+def is_learner(words: list[str]) -> bool:
+    """The segment runs the example's stand-in learner with Python, by any of the forms an agent uses."""
+    return (len(words) > 1 and program(words) in ("python", "python3")
+            and "stand_in_learner.py" in [w.rsplit("/", 1)[-1] for w in words[1:3]])
+
+
+def keeps_output(command: str) -> bool:
+    """Whether a Bash call's output is kept: one of its commands runs gnd or the learner, it names no place
+    outside the workspace, and it substitutes no other command's output (issue 318: a `timeout` prefix or a
+    `cd <workspace> && gnd export ... && ls` lost the output the replay needs)."""
+    if "$(" in command or "`" in command or outside_words(command):
+        return False
+    return any(program(words) == "gnd" or is_learner(words) for words in segments(command))
+
+
+def hook_settings(log: Path) -> dict:
+    """Claude Code settings that attach the logging hook to every Bash event, writing to `log`."""
+    hook = [{"matcher": "Bash", "hooks": [{"type": "command", "command": f"python3 -I {HOOK} {log}"}]}]
+    return {"hooks": {name: hook for name in HOOK_EVENTS}}
+
+
+def command_log(text: str, turn: int, scrub=lambda value: value) -> list[dict]:
+    """One record per Bash call from a turn's hook log, in the order the calls started: its id, its command
+    (through `scrub`), its exit (0 from PostToolUse, N from PostToolUseFailure's "Exit code N", None when
+    the failure names no code) and whether it finished. A call that started and has no outcome did not
+    finish: a refusal or an interruption."""
+    calls: dict[str, dict] = {}
+    for event in stream_events(text):
+        if event.get("tool_name") != "Bash" or not isinstance(event.get("tool_use_id"), str):
+            continue
+        call = calls.setdefault(event["tool_use_id"], {"turn": turn, "id": event["tool_use_id"], "command": None,
+                                                       "exit": None, "finished": False})
+        if call["command"] is None and isinstance((event.get("tool_input") or {}).get("command"), str):
+            call["command"] = scrub(event["tool_input"]["command"])
+        if event.get("hook_event_name") == "PostToolUse":
+            call["exit"], call["finished"] = 0, True
+        elif event.get("hook_event_name") == "PostToolUseFailure":
+            code = EXIT_CODE.match(str(event.get("error") or ""))
+            call["exit"], call["finished"] = (int(code.group(1)) if code else None), True
+            call["interrupted"] = event.get("is_interrupt") is True
+    return list(calls.values())
+
+
 def is_proposal(content: object) -> bool:
     """Text that parses as an evolve proposal: a JSON object with operations and a proposal id or the expected
     model digest (review phase-IS2-r1 F5: the check read only the file name)."""
@@ -351,10 +427,31 @@ def is_proposal(content: object) -> bool:
 
 
 def checks(conversation: str, workspace: Path | None, before: dict, streams: list[str],
-           after: dict | None = None) -> dict:
+           after: dict | None = None, log: list[dict] | None = None) -> dict:
     """Spec sections 6.1 and 6.2: each check true or false, computed outside the agent. `after` may be given
-    instead of reading the workspace (re-checking a kept run from its files)."""
+    instead of reading the workspace (re-checking a kept run from its files). `log` is the run's command log
+    (commands.json): where it is given, a command's exit is read from it, never from the result text, and
+    every Bash call that was not refused must be in it, finished. A run recorded before the log existed is
+    rechecked as it was (issue 318)."""
     calls = tool_calls(streams)
+    logged = {record["id"]: record for record in log} if log is not None else None
+
+    def exited(call: dict, code: int) -> bool:
+        """The call ran and its one command exited `code`; a call of several commands is not read, since
+        its exit is the last one's. Without a log, read from the result text, as recorded runs were."""
+        if call["denied"]:
+            return False
+        if logged is None:
+            return (call["result"] or "").startswith(f"Exit code {code}")
+        record = logged.get(call["id"])
+        return (record is not None and record["exit"] == code
+                and len(segments(str(call["input"].get("command")))) == 1)
+
+    def finished(call: dict) -> bool:
+        if call["denied"]:
+            return False
+        return bool(call["result"]) if logged is None else bool(logged.get(call["id"], {}).get("finished"))
+
     commands = [str(c["input"].get("command", "")) for c in calls if c["name"] == "Bash"]
     words_run = [words for command in commands for words in segments(command)]
     after = workspace_digests(workspace) if after is None else after
@@ -385,9 +482,8 @@ def checks(conversation: str, workspace: Path | None, before: dict, streams: lis
     import_calls = [c for c in calls if c["name"] == "Bash"
                     and any(runs(words, "import", "ilp-rules") for words in segments(str(c["input"].get("command"))))]
     imports = out_paths(commands, "import", "ilp-rules")
-    refused = any(not c["denied"] and (c["result"] or "").startswith("Exit code 3") for c in import_calls)
-    learner_ran = any(len(words) > 1 and program(words) in ("python", "python3")
-                      and "stand_in_learner.py" in words[1:3] for words in words_run)
+    refused = any(exited(c, 3) for c in import_calls)
+    learner_ran = any(is_learner(words) for words in words_run)
     if done == "measure_written":
         result["done"] = bool(out_paths(commands, "measure") & new)
     elif done == "learned_not_imported":
@@ -400,7 +496,7 @@ def checks(conversation: str, workspace: Path | None, before: dict, streams: lis
     elif done == "discover_report_written":
         result["done"] = bool(out_paths(commands, "discover", option="--report") & new)
     elif done == "check_ran":   # a gnd check that ran and returned, not its help or a denial
-        result["done"] = any(not c["denied"] and c["result"] and any(runs(words, "check")
+        result["done"] = any(finished(c) and any(runs(words, "check")
                              for words in segments(str(c["input"].get("command")))) for c in calls
                              if c["name"] == "Bash")
     elif done == "named_absent_stop":   # spec 6.1: no learner call ran, and the reply names the stop
@@ -410,6 +506,9 @@ def checks(conversation: str, workspace: Path | None, before: dict, streams: lis
                           and bool(out_paths(commands, "discover") & new))
     elif done == "no_claim_edited_after_refusal":   # spec 6.1: no edit to a clause or run record after exit 3
         result["done"] = refused and result["no_edit_of_learner_artifacts"]
+    if logged is not None:   # the hooks ran for every call: a missing record is a gap, not a pass
+        result["every_bash_call_logged"] = all(c["denied"] or logged.get(c["id"], {}).get("finished")
+                                               for c in calls if c["name"] == "Bash")
     return result
 
 
@@ -418,7 +517,9 @@ def recheck(run: Path) -> dict:
     document = json.loads((run / "results.json").read_text(encoding="utf-8"))
     space = json.loads((run / "workspace.json").read_text(encoding="utf-8"))
     streams = [p.read_text(encoding="utf-8") for p in sorted(run.glob("turn-*.jsonl"))]
-    return checks(document["conversation"], None, space["before"], streams, after=space["after"])
+    log = run / "commands.json"
+    calls = json.loads(log.read_text(encoding="utf-8"))["calls"] if log.exists() else None
+    return checks(document["conversation"], None, space["before"], streams, after=space["after"], log=calls)
 
 
 def passed(result: dict) -> bool:
@@ -447,13 +548,14 @@ def record(conversation: str, model: str, gate: Path, commit: str) -> int:
 
 def _record(conversation: str, model: str, gate: Path, commit: str, plan: dict, target: Path,
             already: float) -> int:
-    session, started, turns, raw = str(uuid.uuid4()), time.monotonic(), [], []
+    session, started, turns, raw, log = str(uuid.uuid4()), time.monotonic(), [], [], []
     header = {"gate": str(gate.resolve().relative_to(ROOT.resolve())) if gate.resolve().is_relative_to(ROOT.resolve())
               else str(gate), "skill": "gnd-induce", "conversation": conversation, "model": model,
               "recorded_at_commit": commit, "declared_turns": plan["turns"]}
     with tempfile.TemporaryDirectory(prefix="induce-rec-") as directory, \
-            tempfile.TemporaryDirectory(prefix="skill-plugin-") as plugin_directory:
-        workspace, plugin = Path(directory).resolve(), Path(plugin_directory).resolve()
+            tempfile.TemporaryDirectory(prefix="skill-plugin-") as plugin_directory, \
+            tempfile.TemporaryDirectory(prefix="induce-hooks-") as hook_directory:
+        workspace, plugin, hooks = Path(directory).resolve(), Path(plugin_directory).resolve(), Path(hook_directory)
         shutil.copytree(ROOT / ".claude-plugin", plugin / ".claude-plugin")
         shutil.copytree(ROOT / "src/gnd/skills", plugin / "src/gnd/skills")
         shutil.copytree(EXAMPLE, workspace, dirs_exist_ok=True,
@@ -464,8 +566,13 @@ def _record(conversation: str, model: str, gate: Path, commit: str, plan: dict, 
             if number > len(plan["turns"]):
                 break   # no padding turns: a scripted yes gave consent no reader gave (IS2 finding F4)
             said = plan["turns"][number - 1]
+            # The hooks are attached on every call, the resumed ones too; user and local settings are not
+            # loaded, so no hook of the host's runs (issue 318).
+            hook_log, settings = hooks / f"hooks-{number:02d}.jsonl", hooks / f"settings-{number:02d}.json"
+            settings.write_text(json.dumps(hook_settings(hook_log)), encoding="utf-8")
             command = ["claude", "--print", "--plugin-dir", str(plugin), "--permission-mode", "acceptEdits",
                        "--allowedTools", TOOLS, "--output-format", "stream-json", "--verbose", "--strict-mcp-config",
+                       "--setting-sources", "project", "--settings", str(settings),
                        "--model", model, *(["--session-id", session] if number == 1 else ["--resume", session])]
             try:
                 done = subprocess.run([*command, said], capture_output=True, text=True, timeout=TURN_SECONDS,
@@ -476,8 +583,12 @@ def _record(conversation: str, model: str, gate: Path, commit: str, plan: dict, 
                 code = None
             # The checks read the redacted stream, as recheck() does (IS2 finding F6).
             raw.append(redact(stream.replace(str(plugin), "<plugin>"), workspace))
-            (target / f"turn-{number:02d}.jsonl").write_text(kept_stream(raw[-1], keep=LEARNER_FORMS),
+            (target / f"turn-{number:02d}.jsonl").write_text(kept_stream(raw[-1], keep_bash=keeps_output),
                                                              encoding="utf-8")
+            log += command_log(hook_log.read_text(encoding="utf-8") if hook_log.exists() else "", number,
+                               lambda value: redact(value.replace(str(plugin), "<plugin>"), workspace))
+            (target / "commands.json").write_text(json.dumps({"source": "Claude Code hooks: " + ", ".join(HOOK_EVENTS),
+                                                              "calls": log}, indent=1) + "\n", encoding="utf-8")
             result = last_result(stream)   # U+2028 may sit inside a JSON string (review r2 F4)
             cost = result.get("total_cost_usd")
             turns.append({"user": said, "exit": code, "cost_usd": cost,
@@ -488,9 +599,9 @@ def _record(conversation: str, model: str, gate: Path, commit: str, plan: dict, 
                 {**header, "turns": turns, "complete": False}, indent=1) + "\n", encoding="utf-8")
             over = already + sum(t["cost_usd"] or 0 for t in turns) >= CEILING_USD
             if code != 0 or over or (number >= len(plan["turns"]) and passed(checks(conversation, workspace,
-                                                                                         before, raw))):
+                                                                                         before, raw, log=log))):
                 break
-        result_checks = checks(conversation, workspace, before, raw)
+        result_checks = checks(conversation, workspace, before, raw, log=log)
         after = workspace_digests(workspace)
         (target / "workspace.json").write_text(json.dumps({"seed": seeded, "before": before, "after": after},
                                                           indent=1) + "\n", encoding="utf-8")
@@ -575,7 +686,7 @@ def finish(target: Path, commit: str) -> int:
     """The leak gate, then the manifest."""
     if _leak_gate(target):
         return 1
-    sources = ["tools/record_induce_sessions.py", "tools/record_skill_sessions.py",
+    sources = ["tools/record_induce_sessions.py", "tools/record_skill_sessions.py", "tools/claude_bash_hook.py",
                "src/gnd/skills/gnd-induce/SKILL.md",
                *(str(p.relative_to(ROOT)) for p in sorted(EXAMPLE.glob("*")) if p.is_file()),
                *(str(p.relative_to(ROOT)) for p in sorted((EXAMPLE / "batches").glob("*")))]

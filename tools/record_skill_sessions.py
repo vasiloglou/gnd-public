@@ -99,12 +99,14 @@ def _words(command: str) -> list[str]:
         return command.split()
 
 
-def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[str, ...] = ()) -> str:
+def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[str, ...] = (),
+                keep_bash=None) -> str:
     """The transcript as kept: every event, but tool output only where the replay needs it (gnd commands, and
     reads and writes of files in the workspace). Other tool output is replaced by its size, so nothing the agent
     happened to list or read elsewhere on the machine is kept. Claude Code's start event keeps no paths.
     `keep` names further plain Bash commands, by their opening words, whose output is kept too
-    (induction-skill IS2: the refunds stand-in learner)."""
+    (induction-skill IS2: the refunds stand-in learner). `keep_bash`, when given, decides for each Bash
+    command instead of the plain-command rule (issue 318: a `timeout` prefix or a `cd ... &&` lost the output)."""
     wanted, lines = set(), []
     forms = [_words(prefix) for prefix in keep]
     for event in stream_events(stream):   # a non-object line is skipped (induction-skill IS2 review F7)
@@ -122,8 +124,8 @@ def kept_stream(stream: str, workspace_marker: str = "<workspace>", keep: tuple[
                     first = target.split()[0] if target.split() else ""
                     plain = not any(mark in target for mark in (";", "&&", "||", "|", "$(", "`"))
                     words = _words(target)
-                    kept_bash = part["name"] == "Bash" and plain and (
-                        first.endswith("gnd") or any(form and words[:len(form)] == form for form in forms))
+                    kept_bash = part["name"] == "Bash" and (keep_bash(target) if keep_bash else plain and (
+                        first.endswith("gnd") or any(form and words[:len(form)] == form for form in forms)))
                     if kept_bash or target.startswith(workspace_marker) or (
                             part["name"] in ("Write", "Edit") and "/" not in target.replace(workspace_marker, "")):
                         wanted.add(part["id"])

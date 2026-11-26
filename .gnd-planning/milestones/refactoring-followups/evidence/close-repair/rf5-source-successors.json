@@ -1,0 +1,38 @@
+{
+ "schema_version": 1,
+ "reason": "Refactoring follow-ups F4 and F5 changed two RF5-pinned definitions.",
+ "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+ "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+ "successors": [
+  {
+   "kind": "RF5",
+   "old": "gnd.cli",
+   "name": "_canonical_payload",
+   "home": "gnd.output",
+   "before": {
+    "raw_sha256": "e4affb7b5febe0797f7ae0835dcc4e9e8fd9e769bf6e715b6df051daac9e7bb1",
+    "algorithm_sha256": "1a1b6e5d1c5f5131de5dbc6edd7566c842acc9e15e6e4afbabaa181435770710"
+   },
+   "after": {
+    "raw_sha256": "b95abbd1c9aeacc9122f37bfd1a168789f1b0fbc25422e00960ae4db80adcc03",
+    "algorithm_sha256": "814a2b641ac720d7a64ce8872284594da6f3c2b86bf449a557509b84a005d6ab"
+   },
+   "reason": "F4 (#301): Reject nonfinite floats in canonical review JSON."
+  },
+  {
+   "kind": "RF5",
+   "old": "gnd.cli",
+   "name": "_cmd_exp_run",
+   "home": "gnd.commands.exp",
+   "before": {
+    "raw_sha256": "e8ca1b88abdcc8566b727a521b713c556c1a2f86b3b135778fe2aa9d53bfabf1",
+    "algorithm_sha256": "25ece4b3d2be4b74f114a8c2a209f99c344964b6262cb165c281391fa8996c9a"
+   },
+   "after": {
+    "raw_sha256": "6babc8e057a841064a765fe08399cb2f155d227311c9dce795d419588315962b",
+    "algorithm_sha256": "e4529949954098c481b5e3c676ae4cc89006578cfccbc504b9018c69d908c9e1"
+   },
+   "reason": "F5 (#304): Use the validated contract read for the digest and offer an opt-in portable prompt locator."
+  }
+ ]
+}

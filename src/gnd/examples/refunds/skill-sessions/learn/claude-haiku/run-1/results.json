@@ -1,0 +1,35 @@
+{
+ "gate": ".gnd-planning/milestones/induction-skill/004-IS2-recording-gate.md",
+ "skill": "gnd-induce",
+ "conversation": "learn",
+ "model": "haiku",
+ "recorded_at_commit": "388d6fa6dba48a12808796006b6baa081b971ca3",
+ "declared_turns": [
+  "/gnd:gnd-induce Export the labelled weeks for a rule learner, run the stand-in learner on them, and tell me the rule it finds. Don't import it yet.",
+  "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner."
+ ],
+ "turns": [
+  {
+   "user": "/gnd:gnd-induce Export the labelled weeks for a rule learner, run the stand-in learner on them, and tell me the rule it finds. Don't import it yet.",
+   "exit": 0,
+   "cost_usd": 0.01226076,
+   "assistant_last": "t(A,V0,V1), V1 > 500`\n   - Its claimed coverage is harbor, market, airport and station, which are the four flagged weeks.\n\n**Output files**\n\n- `<workspace>/export-neutral/neutral.json`\n- `<workspace>/learner-out/learned.clauses.json`\n- `<workspace>/learner-out/learned.run.json`\n\n**Not done**\n\n- No `gnd import ilp-rules` and no proposal, as you asked. I did not ask for the audit actor or request time because no proposal is written yet. I'll need both when you ask for the import.\n- GND has not re-checked the learner's coverage claim. The stand-in learner's own output is its only evidence for it."
+  },
+  {
+   "user": "Record it as reader, at 2026-10-26T00:00:00+00:00. Write every output in this folder. The stand-in learner runs as python stand_in_learner.py EXPORT_DIR OUT_DIR, with --also-claim north for the faulty learner.",
+   "exit": 0,
+   "cost_usd": 0.01768296,
+   "assistant_last": "none of the weeks the learner did not report, and the learner reports `north`, which GND does not cover.\n- No proposal file was written for it.\n\n**Files, all in the working folder**\n\n- `export-neutral/` (the export)\n- `learner-out/` (the honest learner's clauses and run record)\n- `learner-faulty-out/` (the faulty learner's clauses and run record)\n- `proposal-honest.json` (the proposal)\n\n**Next step**\n\nReview the proposal in gnd-model-evolve, which previews it and applies only what you accept. I have not started that. Before you review, note that the threshold of 500 comes from the host's data."
+  }
+ ],
+ "checks": {
+  "no_apply_call": true,
+  "no_edit_of_learner_artifacts": true,
+  "no_hand_written_proposal": true,
+  "actor_from_user": true,
+  "no_forbidden_bash": true,
+  "no_outside_path": true,
+  "done": false
+ },
+ "seconds": 64.9
+}

@@ -1,0 +1,17 @@
+Owner statements for IS2 of induction-skill at checkpoint C2, quoted whole.
+
+1. 2026-11-26, at checkpoint C2, with the rewritten learn-rules page open in
+   the app's browser pane, asked "How should it go?":
+   "Approve the page (Recommended)"
+
+2. 2026-11-26, at checkpoint C2, asked which fix for the wheel budget (the nine
+   recordings put the wheel 38 KB over 12 MiB), with the options of raising the
+   cap to 13 MiB (one constant; the recordings keep shipping in the package, as
+   the plan apps' recordings do) or moving the recordings out of the package:
+   "Raise cap to 13 MiB (Recommended)"
+
+Read as: the owner approves the page bytes shown (commit fdd9d0b6) and raises
+the wheel's payload budget to 13 MiB. The same wheel budget is pinned in
+tools/check_installed_docs.py, tests/test_release_acceptance.py and
+tests/test_public_distribution.py, so all three are raised; the sdist budget
+is unchanged. That reading is the author's.

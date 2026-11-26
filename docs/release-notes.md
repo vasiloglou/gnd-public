@@ -11,6 +11,13 @@ procedure](releasing.md). Changes on `main` after a release are listed in an
 
 The first release carrying this notice keeps the live refactoring aliases. The migration guide lists replacements and patch sites. See the [import migration guide](refactoring-import-migration.md).
 
+- A new packaged skill, `gnd-induce`, runs GND's induction loop from Claude
+  Code: score a model's rules against host labels, discover rules, round-trip a
+  rule learner with GND re-checking its coverage claim, and re-check a
+  population, handing every proposal to `gnd-model-evolve` for review. The
+  [learn-rules tutorial](tutorials/learn-rules.md) now shows recorded runs of
+  the skill with Claude Code (Haiku), each failure explained beside its replay.
+
 ## 0.5.2 (tagged 2026-11-25, not published on PyPI)
 
 0.5.2 is a GitHub tag only. Install it from the tag:

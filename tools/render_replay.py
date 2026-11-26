@@ -46,8 +46,14 @@ def session_lines(text: str) -> list[tuple[str, str]]:
     return lines
 
 
+#: A code fence's marker. Joining a message's lines into one leaves only the backticks, which would read as an
+#: unrendered fence on the site (induction-skill IS2); every run of three backticks or tildes, wherever it
+#: stands (a quoted block too), is marked, and the words around it stay (review phase-IS2-r1 F8).
+CODE_FENCE = re.compile(r"`{3,}|~{3,}")
+
+
 def _short(value: str, limit: int = 300) -> str:
-    value = " ".join(value.split())
+    value = " ".join(CODE_FENCE.sub(" [code] ", value).split())
     return value if len(value) <= limit else value[:limit - 1] + "…"
 
 
@@ -55,16 +61,53 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
     """(class, text) per event of Claude Code stream-json turns: what the user said, what the assistant
     said, and each tool it used, with a short result."""
     lines = []
-    denied = set()   # tool calls Claude Code's permission rules refused, from each turn's closing result event
+    # Tool calls Claude Code's permission rules refused, per turn, from that turn's closing result event: a call
+    # id is unique only within its turn (review phase-IS2-r2 F11). JSON lines end at newlines only, since U+2028
+    # may sit inside a string (review phase-IS2-r2 F4).
+    denials = []
     for text in texts:
-        for raw in text.splitlines():
+        turn = set()
+        for raw in text.split("\n"):
             if '"permission_denials"' in raw:
                 try:
-                    denied |= {d.get("tool_use_id") for d in json.loads(raw).get("permission_denials") or []}
+                    turn |= {d.get("tool_use_id") for d in json.loads(raw).get("permission_denials") or []}
                 except ValueError:
                     pass
+        denials.append(turn)
+    denied = set()
+    def result_line(part: dict) -> tuple[str, str] | None:
+        content = part.get("content")
+        text = content if isinstance(content, str) else " ".join(
+            c.get("text", "") for c in content or [] if isinstance(c, dict))
+        if part.get("tool_use_id") in denied:
+            return ("fail", "    → refused by Claude Code's permission rules")
+        if part.get("is_error") and text.endswith("output not kept]"):
+            return ("fail", "    → returned an error (its output is not kept)")
+        if text and not text.endswith("output not kept]"):
+            text = re.sub(r" \(file state is current in your context[^)]*\)", "", text)
+            shown = [line for line in text.splitlines() if line.strip()][:2]
+            first = ": ".join(shown) if shown and shown[0].startswith("Exit code") else (shown or [""])[0]
+            return ("fail" if part.get("is_error") or "ERROR" in first else "ok"
+                    if first.startswith("OK") else "ink", f"    → {_short(first, 200)}")
+        return None
+
+    # Each result is drawn under its own call, found by id: a batch of parallel calls is followed by all its
+    # results, which drew a result under the wrong command (induction-skill IS2).
+    # Pairs are found within one turn: a call id is unique only there (review phase-IS2-r1 F8).
     for number, text in enumerate(texts, 1):
-        for raw in text.splitlines():
+        results, calls, denied = {}, set(), denials[number - 1]
+        for raw in text.split("\n"):
+            try:
+                event = json.loads(raw)
+            except ValueError:
+                continue
+            content = event.get("message", {}).get("content") if isinstance(event, dict) else None
+            for part in content if isinstance(content, list) else []:
+                if isinstance(part, dict) and part.get("type") == "tool_result" and part.get("tool_use_id"):
+                    results[part["tool_use_id"]] = part
+                elif isinstance(part, dict) and part.get("type") == "tool_use" and part.get("id"):
+                    calls.add(part["id"])
+        for raw in text.split("\n"):
             try:
                 event = json.loads(raw)
             except ValueError:
@@ -81,21 +124,15 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
                         shown = part["input"].get("command") or part["input"].get("file_path") or \
                             part["input"].get("pattern") or ""
                         lines.append(("plan", f"  {part['name']} {_short(str(shown), 160)}"))
+                        line = result_line(results[part["id"]]) if part.get("id") in results else None
+                        if line:
+                            lines.append(line)
             elif event.get("type") == "user" and isinstance(event.get("message", {}).get("content"), list):
                 for part in event["message"]["content"]:
-                    content = part.get("content") if part.get("type") == "tool_result" else None
-                    text = content if isinstance(content, str) else " ".join(
-                        c.get("text", "") for c in content or [] if isinstance(c, dict))
-                    if part.get("type") == "tool_result" and part.get("tool_use_id") in denied:
-                        lines.append(("fail", "    → refused by Claude Code's permission rules"))
-                    elif part.get("type") == "tool_result" and part.get("is_error") and text.endswith("output not kept]"):
-                        lines.append(("fail", "    → returned an error (its output is not kept)"))
-                    elif text and not text.endswith("output not kept]"):
-                        text = re.sub(r" \(file state is current in your context[^)]*\)", "", text)
-                        shown = [line for line in text.splitlines() if line.strip()][:2]
-                        first = ": ".join(shown) if shown and shown[0].startswith("Exit code") else (shown or [""])[0]
-                        lines.append(("fail" if part.get("is_error") or "ERROR" in first else "ok"
-                                      if first.startswith("OK") else "ink", f"    → {_short(first, 200)}"))
+                    if part.get("type") == "tool_result" and part.get("tool_use_id") not in calls:
+                        line = result_line(part)   # a result whose call is not in the stream stays in place
+                        if line:
+                            lines.append(line)
             elif event.get("type") == "result":
                 lines.append(("muted", f"  (turn {number} ends)"))
     return lines

@@ -144,9 +144,45 @@ def test_t2_the_goldens_name_exactly_the_written_files():
     assert sorted(json.loads(GOLDENS.read_text(encoding="utf-8"))["files"]) == sorted(WRITTEN)
 
 
+def _strings(value) -> list[str]:
+    """Every string a parsed JSON value holds, keys included. Objects arrive as lists of pairs (see _load)."""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, tuple):
+        return [s for item in value for s in _strings(item)]
+    if isinstance(value, list):
+        return [s for item in value for s in _strings(item)]
+    return []
+
+
+def _load(text: str):
+    """JSON with every key-value pair kept, duplicates included (review phase-IS2-r1 F13)."""
+    return json.loads(text, object_pairs_hook=lambda pairs: [tuple(pair) for pair in pairs])
+
+
+def _readable(path: Path) -> str:
+    """The text a reader of the file sees: JSON and JSON lines through their loader, so an escape such as the
+    `\\n` after `p:` in recorded code is not read as a drive path (induction-skill IS2). JSON lines are split
+    at newlines only: U+2028 is legal inside a JSON string."""
+    text = path.read_text(encoding="utf-8")
+    if path.suffix == ".json":
+        return "\n".join(_strings(_load(text)))
+    if path.suffix == ".jsonl":
+        return "\n".join(s for line in text.split("\n") if line.strip() for s in _strings(_load(line)))
+    return text
+
+
 def _public_texts():
     paths = sorted(p for p in EXAMPLE.rglob("*") if p.is_file() and "__pycache__" not in p.parts)
-    return [(p, p.read_text(encoding="utf-8")) for p in paths + PAGES]
+    return [(p, _readable(p)) for p in paths + PAGES]
+
+
+def test_t3_json_is_read_decoded(tmp_path):
+    record = tmp_path / "turn-01.jsonl"
+    record.write_text(json.dumps({"code": "for k in p:\n    print(k)", "where": "C:\\Users\\me"}) + "\n",
+                      encoding="utf-8")
+    seen = _readable(record)
+    assert not re.search(r"\bp:[\\/]", seen) and re.search(ABSOLUTE[-1], seen)
 
 
 ABSOLUTE = [r"/Users/", r"/home/", r"/private/", r"/tmp/", r"/var/folders/", r"/opt/", r"~/",
@@ -244,21 +280,44 @@ def test_h3_missing_arguments_are_a_usage_error():
 
 
 # Each number the business tutorial states, beside the commands-page output it restates.
+#: (the tutorial's words, the commands page's output, the recording side). The recording side (induction-skill
+#: IS2, plan IS2-C4) is (conversation, a string its kept turns hold), or (None, a visible marker on the page) where
+#: no IS2 recording holds the result.
 TUTORIAL_CLAIMS = [
-    ("2 of 4 (harbor, airport)", "fired_on_negative=2/4 fired_on_positive=0/4 silent_on_negative=2/4"),
-    ("tries 40 simple rules", "searched 40 rules"),
-    ("support 4 of 4", "covers 4 (support 4/4)"),
-    ("**4 of 4** | 0 of 4", "covers harbor, market, airport, station"),
-    ("ten rules held in that week", "EMITTED 10"),
-    ("It left out four more", "SUPPRESSED declared=1 spanning-uniqueness=3"),
-    ("neither proposal is breaking", "  breaking: false\n  breaking: false"),
-    ("is at most 500", "then $v_v1 is at most 500."),
-    ("**warning** on refund 601, for 750", "{'$v_v0': '601', '$v_v1': '750'}"),
+    ("2 of 4 (harbor, airport)", "fired_on_negative=2/4 fired_on_positive=0/4 silent_on_negative=2/4",
+     ("score", "fired_on_negative=2/4")),
+    ("tries 40 simple rules", "searched 40 rules", ("faulty", "searched 40 rules")),
+    ("support 4 of 4", "covers 4 (support 4/4)", ("import", "covers 4 (support 4/4)")),
+    ("**4 of 4** | 0 of 4", "covers harbor, market, airport, station",
+     ("faulty", "covers harbor, market, airport, station")),
+    ("ten rules held in that week", "EMITTED 10", ("discover", "EMITTED 10")),
+    ("It left out four more", "SUPPRESSED declared=1 spanning-uniqueness=3",
+     ("discover", "SUPPRESSED declared=1 spanning-uniqueness=3")),
+    ("neither proposal is breaking", "  breaking: false\n  breaking: false", (None, "**Not recorded.**")),
+    ("is at most 500", "then $v_v1 is at most 500.", ("import", '"right": 500')),
+    ("**warning** on refund 601, for 750", "{'$v_v0': '601', '$v_v1': '750'}",
+     ("recheck", "{'$v_v0': '601', '$v_v1': '750'}")),
 ]
+SESSIONS = EXAMPLE / "skill-sessions"
 
 
-@pytest.mark.parametrize("tutorial, commands", TUTORIAL_CLAIMS)
-def test_c1_the_tutorial_numbers_match_the_commands_page(tutorial, commands):
+def _recorded(conversation: str) -> str:
+    """Every string the conversation's kept turns hold, decoded."""
+    run = SESSIONS / conversation / "claude-haiku/run-1"
+    return "\n".join(_readable(path) for path in sorted(run.glob("turn-*.jsonl")))
+
+
+@pytest.mark.parametrize("tutorial, commands, recording", TUTORIAL_CLAIMS)
+def test_is2_each_claim_is_in_its_recording_or_marked(tutorial, commands, recording):
+    conversation, held = recording
+    if conversation is None:
+        assert held in PAGES[0].read_text(encoding="utf-8")
+    else:
+        assert held in _recorded(conversation), (conversation, held)
+
+
+@pytest.mark.parametrize("tutorial, commands, recording", TUTORIAL_CLAIMS)
+def test_c1_the_tutorial_numbers_match_the_commands_page(tutorial, commands, recording):
     assert tutorial in PAGES[0].read_text(encoding="utf-8")
     assert commands in PAGES[1].read_text(encoding="utf-8")
 
@@ -267,3 +326,14 @@ def test_c2_south_is_never_over_500_not_under_it():
     for path in (PAGES[0], ROOT / "docs/assets/applications/refunds-weeks.svg"):
         text = path.read_text(encoding="utf-8")
         assert "under 500" not in text and "never go over 500" in text, path.name
+
+
+def test_t3_json_keeps_every_duplicate_key_and_a_line_separator(tmp_path):
+    """Review phase-IS2-r1 F13: json.loads keeps the last of duplicate keys, so an earlier value went unread;
+    and str.splitlines splits a JSON line at U+2028 inside a string."""
+    doubled = tmp_path / "x.json"
+    doubled.write_text('{"where": "/opt/example/note", "where": "ok"}', encoding="utf-8")
+    assert "/opt/example/note" in _readable(doubled)
+    separated = tmp_path / "turn-01.jsonl"
+    separated.write_text(json.dumps({"text": "a b"}, ensure_ascii=False) + "\n", encoding="utf-8")
+    assert "a b" in _readable(separated)

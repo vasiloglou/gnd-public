@@ -1,0 +1,52 @@
+induction-skill close, 2026-11-26. macOS, Python 3.14.3, uv 0.10.10 (Homebrew 2026-03-13).
+
+1. At 4e1ae32c (each origin installed with every declared extra, one pass), from this checkout:
+   uv run python tools/check_installed_docs.py --out <scratch>/installed-close
+   exit 0: both origins, '409 tutorial blocks passed'; wheel sha256 493c6ede..., payload 12,621,769 bytes.
+   Superseded: close readers R1-F6 and R2-F2 found that this pass no longer showed the extra-free pages
+   running on a bare install.
+
+2. At c59dc769 (extra-free groups on the bare wheel, GROUP_EXTRAS groups with their extras), clean clone:
+   uv run python tools/check_installed_docs.py --out <scratch>/installed-close2
+   exit 1, in the release origin's bare pass:
+   AssertionError: share-an-ossie-ontology.md block 6: expected 0, got 70
+   INTERNAL ERROR: the synthetic-value generator needs the optional 'synth' extra. Install it with `pip install get-nick-done[synth]`, or `uv sync --extra synth` in a checkout.
+
+3. The same release wheel, each group run on its own so one failure does not hide the rest
+   (tools/run_tutorials.py --group G in the bare venv of run 2; bookrec with --extras-scope with in a
+   venv with the wheel's [synth] extra). The comparison wheel is byte-identical:
+   release wheel sha256 8105ba2cbece13380af2b5eb870259a136d30db75de6a014edc3cf718d218ea9
+   comparison wheel sha256 8105ba2cbece13380af2b5eb870259a136d30db75de6a014edc3cf718d218ea9
+   quickstart: exit 0 | 7 tutorial blocks passed
+   release: exit 0 | 5 tutorial blocks passed
+   shared-expenses: exit 0 | 28 tutorial blocks passed
+   expense: exit 0 | 51 tutorial blocks passed
+   literature: exit 0 | 15 tutorial blocks passed
+   api: exit 0 | 11 tutorial blocks passed
+   walkthrough: exit 0 | 1 tutorial blocks passed
+   induced: exit 0 | 10 tutorial blocks passed
+   learners: exit 0 | 12 tutorial blocks passed
+   why-not: exit 0 | 9 tutorial blocks passed
+   disclosure: exit 0 | 16 tutorial blocks passed
+   growth: exit 0 | 12 tutorial blocks passed
+   ossie: exit 1 | INTERNAL ERROR: the synthetic-value generator needs the optional 'synth' extra. Install it with `pip install get-nick-done[synth]`, or `uv sync --extra synth` i
+   compose: exit 0 | 18 tutorial blocks passed
+   failed-verification: exit 0 | 1 tutorial blocks passed
+   rule-check: exit 0 | 7 tutorial blocks passed
+   type-judgements: exit 0 | 16 tutorial blocks passed
+   agent-install: exit 0 | 3 tutorial blocks passed
+   agent-plans: exit 0 | 6 tutorial blocks passed
+   agent-model: exit 0 | 7 tutorial blocks passed
+   agent-session: exit 0 | 11 tutorial blocks passed
+   agent-recorded: exit 0 | 7 tutorial blocks passed
+   runtime-pyrel: exit 0 | 6 tutorial blocks passed
+   runtime-souffle: exit 0 | 7 tutorial blocks passed
+   runtime-lean: exit 0 | 6 tutorial blocks passed
+   runtime-decision: exit 0 | 4 tutorial blocks passed
+   plan-apps: exit 0 | 20 tutorial blocks passed
+   with-extras (bookrec): exit 0 | 100 tutorial blocks passed
+
+Reading: every group passes except ossie, where gnd diff synthesizes populations by default and, on an
+install without the synth extra, ends with an internal error naming the extra. gnd diff, the synth package, the CLI and
+the page are unchanged from main (6bbbee81); the check before the close stopped earlier, at the guarded-rules
+chapter, so it never reached this page.

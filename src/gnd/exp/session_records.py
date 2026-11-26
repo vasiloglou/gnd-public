@@ -39,6 +39,7 @@ from gnd.exp.session_contract import (
 )
 from gnd.exp.session_eval import (
     AttemptEvaluation,
+    SessionEvidenceJson,
     SessionRedaction,
 )
 from gnd.payloads import (
@@ -590,7 +591,7 @@ class _AttemptRecordV10(_AttemptRecordV9):
     judgment_evidence: dict[str, JudgmentEvidence]
 
 
-class AttemptRecord(_AttemptRecordBase):
+class AttemptRecord(SessionEvidenceJson, _AttemptRecordBase):
     """Version-dispatched immutable attempt normalized only in memory."""
 
     schema_version: Literal[
@@ -654,23 +655,6 @@ class AttemptRecord(_AttemptRecordBase):
         if version == LEGACY_EVIDENCE_SCHEMA_VERSION:
             normalized["feedback_schema_version"] = None
         return super().model_validate(normalized)
-
-    @classmethod
-    def model_validate_json(
-        cls, json_data: str | bytes | bytearray, *args: Any, **kwargs: Any
-    ) -> Self:
-        """Route JSON through the version dispatcher above.
-
-        ``model_validate_json`` is a SEPARATE pydantic entry point, not a
-        decode in front of ``model_validate``, so overriding only the latter
-        leaves the dispatcher bypassable by any caller holding bytes — and the
-        bypass does not merely lose compatibility, it can ADMIT what dictionary
-        dispatch refuses. ``gnd.evolve.models`` pairs every dispatcher with
-        this override for the same reason.
-        """
-        if isinstance(json_data, bytearray):
-            json_data = bytes(json_data)
-        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
 
     @model_serializer(mode="wrap")
     def _serialize_wire_version(self, handler):
@@ -899,7 +883,7 @@ class _SessionResultV7(_SessionResultV6):
     judgment_admission: dict[str, bool] | None
 
 
-class SessionResult(_SessionResultBase):
+class SessionResult(SessionEvidenceJson, _SessionResultBase):
     """Version-dispatched append-once terminal claim."""
 
     schema_version: Literal[
@@ -950,27 +934,6 @@ class SessionResult(_SessionResultBase):
         if version == LEGACY_EVIDENCE_SCHEMA_VERSION:
             normalized["acceptance_modes"] = ()
         return super().model_validate(normalized)
-
-    @classmethod
-    def model_validate_json(
-        cls, json_data: str | bytes | bytearray, *args: Any, **kwargs: Any
-    ) -> Self:
-        """Route JSON through the version dispatcher above.
-
-        Pydantic's ``model_validate_json`` is a SEPARATE entry point, not a
-        decode in front of ``model_validate``, so overriding only the latter
-        leaves the dispatcher bypassable by any caller that happens to hold
-        bytes. That bypass is not academic: parsed directly against this class,
-        a schema-v1 document takes the v2 ``acceptance_modes`` default and then
-        reds on the canonical-wire validator, so the frozen reader that exists
-        to keep v1 evidence readable never runs. ``gnd.evolve.models`` pairs
-        every dispatcher with this override for the same reason; the exp lane
-        did not, and a v1 ``result.json`` committed under ``examples/`` is what
-        surfaced it.
-        """
-        if isinstance(json_data, bytearray):
-            json_data = bytes(json_data)
-        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
 
     @model_serializer(mode="wrap")
     def _serialize_wire_version(self, handler):

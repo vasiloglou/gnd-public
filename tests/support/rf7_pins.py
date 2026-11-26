@@ -21,7 +21,8 @@ def assert_golden(lane, key, observed):
         return rf1_pins.assert_golden(lane, key, observed)
     assert row['reason'] and row['changes']
     before = (ROOT / row['before_path']).read_bytes()
-    after = (ROOT / row['after_path']).read_bytes()
+    successor = row.get('minor_overrides', {}).get(rf1_pins.minor_tag(), row)
+    after = (ROOT / successor['after_path']).read_bytes()
     assert hashlib.sha256(before).hexdigest() == row['before_sha256']
-    assert hashlib.sha256(after).hexdigest() == row['after_sha256']
+    assert hashlib.sha256(after).hexdigest() == successor['after_sha256']
     assert rf1_pins.canonical(observed) == after, f'RF7 restriction successor changed: {lane}/{key}'

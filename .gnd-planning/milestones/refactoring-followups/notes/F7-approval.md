@@ -1,0 +1,1 @@
+Delegated F7 gate (auto=true), 2026-11-25. Approved spec SHA-256 0b13a020628ecd2df084a00d33432b06f11be2f164f6eb7d9fdd7b802fba34b9. Document the first release carrying the notice and existing FU5 retirements. No further retirement authorized.

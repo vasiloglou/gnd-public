@@ -239,6 +239,16 @@ def check_timing(files: Mapping[str, bytes]) -> None:
         walk(document, name)
 
 
+def _replace_tokens(text: str, tokens: Mapping[str, str], *, json_observation: bool = False) -> str:
+    """Apply the longest declared token first, preserving the input representation."""
+    for needle, placeholder in sorted(tokens.items(), key=lambda item: -len(item[0])):
+        if needle:
+            if json_observation:
+                needle = json.dumps(needle, ensure_ascii=False)[1:-1]
+            text = text.replace(needle, placeholder)
+    return text
+
+
 def normalize_text(
     text: str,
     *,
@@ -248,9 +258,7 @@ def normalize_text(
     clock_injected: bool,
 ) -> str:
     """One text through N3, N7, N5 and (without an injected clock) N1/N2."""
-    for needle, placeholder in sorted(tokens.items(), key=lambda item: -len(item[0])):
-        if needle:
-            text = text.replace(needle, placeholder)
+    text = _replace_tokens(text, tokens)
     for name, placeholder in KEYED_FIELDS.items():
         text = re.sub(rf'(\\?"{name}\\?"\s*:\s*\\?")[0-9a-f]{{64}}', rf"\g<1>{placeholder}", text)
     # N8: digests of a tests-mode JUnit results file (an .xml entry of a
@@ -320,9 +328,7 @@ def normalize_tree(
 
 def normalize_json_text(text: str, *, tokens: Mapping[str, str]) -> Any:
     """Normalize a JSON document's text (N3) and parse it; non-JSON fails the pin."""
-    for needle, placeholder in sorted(tokens.items(), key=lambda item: -len(item[0])):
-        if needle:
-            text = text.replace(needle, placeholder)
+    text = _replace_tokens(text, tokens)
     try:
         return json.loads(text)
     except json.JSONDecodeError as error:
@@ -403,7 +409,5 @@ def inputs(group: str) -> list[tuple[str, Any]]:
 def scrub(observed: Any, replacements: Mapping[str, str]) -> Any:
     """Replace machine-specific strings (temporary roots) inside an observation."""
     text = json.dumps(observed, ensure_ascii=False)
-    for needle, placeholder in sorted(replacements.items(), key=lambda item: -len(item[0])):
-        if needle:
-            text = text.replace(json.dumps(needle, ensure_ascii=False)[1:-1], placeholder)
+    text = _replace_tokens(text, replacements, json_observation=True)
     return json.loads(text)

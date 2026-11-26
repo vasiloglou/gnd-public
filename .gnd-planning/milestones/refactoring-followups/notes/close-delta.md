@@ -1,0 +1,11 @@
+# Decisions against plan r2
+
+The owner delegated judgment for the named eight phases, selected the light panel for plan and close, selected Claude Code for phase diffs, and explicitly authorized transfer and publication of the four #308 questions. This is a review candidate for a delegated milestone ruling. No public release, tag, formal certification or PR merge is in scope.
+
+* #298 has a decision and a regression gate. The three core SCCs consist of implicit parent initialization edges from existing sibling imports. The new test rejects additional core groups and unexpected membership. The module-level graph is acyclic. There is no zero-initializer-cycle claim.
+* #305 remains open. The initial 294 distinct rows covered 362 occurrences. Thirteen equivalent sites now share a map operation, leaving 285 rows and 349 occurrences. The exact live policy still carries the reasons. The model/query owners will migrate the next consumer when its individual semantics can be pinned.
+* #302 remains open for the other external readers, validator contracts and host-sensitive historical MIME policy. The component maintainer owns each row when next changing its intake contract. Public model and population depth refusal occurs at the first crossing; a later alias or malformed suffix will not override that refusal.
+* #297 remains open for the release owner's choice of later removals. The first release carrying the notice retains the live imports. Three historical checker helpers had already been retired under #114. No existing binding was removed by this milestone.
+* #304 changes prompt identity by explicit opt-in for v6, v7 and v8. The absolute historical default and the v1–v5 wire profiles remain compatible. The three recorded prompt digests have portable identities; other evidence, such as timing and policy, has independent inputs.
+* #307 covers positional routing in the common admitted domain. Emitted and repository readers have different validation policies for malformed declared IDs. The fixed emitted bytes are unchanged. Native database execution is separate.
+* #308 transfers ownership of questions. Two remain open and two remain carried. Historical source records retain their states, wording and specific triggers.

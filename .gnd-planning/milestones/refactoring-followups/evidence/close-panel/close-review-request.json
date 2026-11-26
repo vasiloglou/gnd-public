@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "spec-results-delta",
+  "spec": {
+    "path": ".gnd-planning/milestones/refactoring-followups/notes/refactoring-followups-plan.md",
+    "sha256": "07d736cf14c9590b7748cb99e79cf98dff7cfc85020fab07dc15f068aabee258",
+    "media_type": "text/markdown"
+  },
+  "results": {
+    "path": ".gnd-planning/milestones/refactoring-followups/notes/close-results.md",
+    "sha256": "1631cb057fa4bb372ed72bc36541ac73ae5140f2ea66540408a630705daf2fba",
+    "media_type": "text/markdown"
+  },
+  "delta": {
+    "path": ".gnd-planning/milestones/refactoring-followups/notes/close-delta.md",
+    "sha256": "b08858e14f0ad07df48f5f8b894ccbed9edb23b05888a5afd95f04a0ea6b7e12",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "Refactoring follow-ups close",
+    "criteria": [
+      "Assess whether the twelve issue dispositions and eight phase records support the proposed delegated close. Prioritize material contradictions, missing gates or residuals without owners or triggers.",
+      "Evaluate the scope of the compatibility, portability and test claims against the measured results. Distinguish phase review, reviewed versions, repairs, and the owner ruling. Cite the specific text.",
+      "Review the three supplied artifacts as a focused pass. Do not run builds or tests, change files, or delegate."
+    ]
+  }
+}

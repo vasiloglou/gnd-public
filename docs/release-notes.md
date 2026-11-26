@@ -7,7 +7,9 @@ published on the package index. Releases follow the [release
 procedure](releasing.md). Changes on `main` after a release are listed in an
 `Unreleased:` section until the next one.
 
-## Unreleased:
+## Unreleased
+
+The first release carrying this notice keeps the live refactoring aliases. The migration guide lists replacements and patch sites. See the [import migration guide](refactoring-import-migration.md).
 
 - A new packaged skill, `gnd-induce`, runs GND's induction loop from Claude
   Code: score a model's rules against host labels, discover rules, round-trip a

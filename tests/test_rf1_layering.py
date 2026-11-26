@@ -111,3 +111,47 @@ def test_layer_ratchet_detects_a_new_pair(tmp_path):
     path.write_text(json.dumps(layers))
     metrics = arch.measure(root, path)
     assert not _pairs(metrics) <= set(KNOWN_PAIRS)
+
+
+CORE_INIT_GROUPS = (
+    {"gnd.model", "gnd.model._includes", "gnd.model._operations", "gnd.model._validation"},
+    {"gnd.checker", "gnd.checker._composed", "gnd.checker._core", "gnd.compiled_obligations"},
+    {"gnd.assurance", "gnd.assurance.core"},
+)
+
+
+def _unexpected_core_cycles(groups):
+    layers = _layer_map()["modules"]
+    return [group for group in groups
+            if any(layers[name]["layer"] in {"model", "checking", "semantics"} for name in group)
+            and not any(set(group) <= known for known in CORE_INIT_GROUPS)]
+
+
+def test_package_initialization_core_ratchet(measured):
+    assert not _unexpected_core_cycles(measured["parent_initialization_sccs"])
+
+def test_package_initialization_measured_negative_control(tmp_path):
+    root = tmp_path / "src" / "gnd"
+    root.mkdir(parents=True)
+    (root / "__init__.py").touch()
+    (root / "population.py").write_text("import gnd.universe\n")
+    (root / "universe.py").write_text("import gnd.population\n")
+    layers = _layer_map()
+    layers["modules"] = {name: layers["modules"][name] for name in
+                         ("gnd", "gnd.universe", "gnd.population")}
+    layers["allow_list"] = []
+    path = tmp_path / "layers.json"
+    path.write_text(json.dumps(layers))
+    groups = arch.measure(tmp_path, path)["parent_initialization_sccs"]
+    assert _unexpected_core_cycles(groups) == [["gnd.population", "gnd.universe"]]
+
+
+
+@pytest.mark.parametrize("first", ["gnd.model", "gnd.checker", "gnd.assurance"])
+def test_core_packages_import_cold(first):
+    import subprocess
+    names = ["gnd.model", "gnd.checker", "gnd.assurance"]
+    names.remove(first)
+    names.insert(0, first)
+    imports = "\n".join(f"import {name}" for name in names)
+    subprocess.run([sys.executable, "-c", imports], check=True, timeout=30)

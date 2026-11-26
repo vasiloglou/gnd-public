@@ -14,6 +14,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import shutil
 import stat
 import sys
@@ -83,7 +84,20 @@ class Built:
         """
         found = {"python-path": sys.executable.encode(), "python-realpath": os.path.realpath(sys.executable).encode()}
         if "--adapter-policy" in self.argv:
-            found["adapter-policy"] = Path(self.argv[self.argv.index("--adapter-policy") + 1]).read_bytes()
+            path = Path(self.argv[self.argv.index("--adapter-policy") + 1])
+            template = ROOT / "tests/fixtures/rf1-pins/declared-inputs" / f"{self.experiment_id}.json.in"
+            expected = template.read_bytes()
+            # v6 writes with json.dumps defaults. Later fixtures use canonical UTF-8.
+            ascii_policy = self.experiment_id == "EXP-910-rf1-v6"
+            bindings = {b"<fixture-dir>": str(path.parent), b"<python>": sys.executable}
+            expected = re.sub(
+                rb"<fixture-dir>|<python>",
+                lambda m: json.dumps(bindings[m[0]], ensure_ascii=ascii_policy)[1:-1].encode(),
+                expected,
+            )
+            actual = path.read_bytes()
+            assert actual == expected, "RF1 declared adapter-policy bytes changed"
+            found["adapter-policy"] = actual
         prompt = (
             "Modify only the current candidate directory so it satisfies every required case in the "
             f"caller-validated contract at {(self.root / 'session.contract.json').absolute()}."

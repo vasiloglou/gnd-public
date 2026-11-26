@@ -404,10 +404,16 @@ def load_pool(path: str | Path, model: Model) -> Pool:
     """Load, schema-gate, then coherence-gate a pool against ``model``.
 
     Raises :class:`PoolValidationError` carrying every failure. The two gates run
-    in order; a schema failure short-circuits, because a malformed document cannot
+    after a bounded UTF-8 read. Excess file bytes raise PoolValidationError
+    with an input finding. A schema failure short-circuits, because a malformed document cannot
     be coherence-checked meaningfully.
     """
-    text = Path(path).read_text(encoding="utf-8")
+    with Path(path).open("rb") as handle:
+        raw = handle.read(_rf7_input.MAX_BYTES + 1)
+    if len(raw) > _rf7_input.MAX_BYTES:
+        raise PoolValidationError(["input: JSON input exceeds byte cap"])
+    # Preserve the historical strict UTF-8 and universal-newline text reader.
+    text = raw.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
     try:
         document = _rf7_input.loads(text)
     except _rf7_input.InputRefusal as error:

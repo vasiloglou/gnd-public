@@ -10,7 +10,18 @@ import subprocess
 import sys
 import tarfile
 import zipfile
+from email.parser import Parser
 from pathlib import Path
+
+
+def declared_extras(archive: zipfile.ZipFile) -> list[str]:
+    """The extras a wheel declares, read from its METADATA headers."""
+    metadata = [name for name in archive.namelist()
+                if name.count('/') == 1 and name.split('/')[0].endswith('.dist-info')
+                and name.endswith('/METADATA')]
+    assert len(metadata) == 1, metadata
+    headers = Parser().parsestr(archive.read(metadata[0]).decode('utf-8'), headersonly=True)
+    return sorted(headers.get_all('Provides-Extra') or [])
 
 
 def check_origin(installed: str, venv: Path, root: Path) -> None:
@@ -58,10 +69,14 @@ def main():
             assert payload < 13 * 1024 * 1024, payload
             for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps', 'refunds', 'quoted_claims'):
                 assert any(name.startswith(f'gnd/examples/{domain}/') for name in archive.namelist())
+            extras = declared_extras(archive)
         venv = out / f'venv-{origin}'
         run(['uv', 'venv', '--python', sys.executable, venv])
         python = venv / 'bin/python'
-        run(['uv', 'pip', 'install', '--python', python, wheel])
+        # The learning paths document their optional extras (guarded-rules case
+        # generation needs `synth`), so install what a reader following them installs.
+        run(['uv', 'pip', 'install', '--python', python,
+             f'{wheel}[{",".join(extras)}]' if extras else wheel])
         installed = run([python, '-c', 'import gnd; print(gnd.__file__)']).strip()
         check_origin(installed, venv, root)
         output = run([python, tutorial / 'tools/run_tutorials.py', '--root', tutorial,

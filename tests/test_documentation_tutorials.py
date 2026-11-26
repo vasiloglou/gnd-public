@@ -50,9 +50,12 @@ def test_installed_validator_requires_matching_wheels(tmp_path, monkeypatch, sam
     (root / 'README.md').write_text('test fixture')
     monkeypatch.setattr(installed_docs, '__file__', str(root / 'tools/check_installed_docs.py'))
     out = tmp_path / 'candidate'
+    installs = []
 
     def fake_run(argv, **kwargs):
         stdout = ''
+        if argv[:3] == ['uv', 'pip', 'install']:
+            installs.append(argv[-1])
         if argv[:2] == ['uv', 'build']:
             target = Path(argv[argv.index('--out-dir') + 1])
             target.mkdir()
@@ -61,6 +64,8 @@ def test_installed_validator_requires_matching_wheels(tmp_path, monkeypatch, sam
                     info = zipfile.ZipInfo(f'gnd/examples/{domain}/README.md')
                     content = 'same' if same_bytes or target.name == 'release' else 'changed'
                     wheel.writestr(info, content)
+                wheel.writestr('example-1.dist-info/METADATA', 'Metadata-Version: 2.4\nName: example\n'
+                               'Provides-Extra: synth\nProvides-Extra: second-extra\n\nbody\n')
             if target.name == 'release':
                 with tarfile.open(target / 'example.tar.gz', 'w:gz') as archive:
                     info = tarfile.TarInfo('example')
@@ -77,6 +82,11 @@ def test_installed_validator_requires_matching_wheels(tmp_path, monkeypatch, sam
     if same_bytes:
         installed_docs.main()
         assert (out / 'results.json').is_file()
+        # Each origin installs with every extra the wheel declares: the learning
+        # paths document their optional extras (guarded-rules case generation needs
+        # `synth`), so the check installs what a reader following them installs.
+        assert installs == [str(out / origin / 'example.whl') + '[second-extra,synth]'
+                            for origin in ('release', 'comparison')]
     else:
         with pytest.raises(AssertionError, match='wheel origins differ'):
             installed_docs.main()

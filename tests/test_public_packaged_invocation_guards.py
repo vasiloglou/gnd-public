@@ -126,11 +126,15 @@ def test_fallback_schema_missing_exit_is_outside_the_verdict_bands() -> None:
 def test_fallback_capability_statement_is_complete(limitation: str) -> None:
     source = _fallback_source()
     assert re.search(CAPABILITY_LIMITS[limitation], source, re.IGNORECASE), f"{FALLBACK_SCRIPT}'s capability statement does not name the limitation {limitation!r}. D-14 requires the list in full, and it grew during Phase 01.1 — model-relative population validation, the indeterminate band, the JSON payload and the acceptance flag all postdate the original 'layer 1 only' sentence. Repair: state this limitation explicitly in the module docstring. A fallback whose limits are understated reads as an equivalent of `gnd validate`, which it is not."
-FENCE_RE = re.compile('^\\s*```')
+# A fence opens with three or more backticks or tildes, at any indent (fences sit inside list
+# items); a backtick fence's info string has no backtick. It closes on a line of the same
+# character, at least as long, and nothing else (CommonMark; issue 319: tilde and longer
+# fences were not scanned, and a ``` line inside a ```` fence closed it).
+FENCE_RE = re.compile('^\\s*(`{3,}(?!.*`)|~{3,})')
 PROMPT_RE = re.compile('^\\$\\s+')
 GROUPED_COMMANDS = frozenset({'evolve', 'exp', 'export', 'import', 'recovery', 'review'})
-MEASURED_EXECUTABLE_SNIPPETS = 29
-MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-induce': 7, 'gnd-judge-fact-types': 2, 'gnd-model-multivalued': 2, 'gnd-model-evolve': 6, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
+MEASURED_EXECUTABLE_SNIPPETS = 41
+MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-induce': 7, 'gnd-judge-fact-types': 2, 'gnd-model-multivalued': 2, 'gnd-model-evolve': 7, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
 SKILLS_WITH_EXECUTABLE_SNIPPETS = frozenset(MEASURED_SNIPPETS_PER_SKILL)
 
 @dataclass(frozen=True)
@@ -172,37 +176,46 @@ def _iter_executable_snippets() -> Iterator[Snippet]:
     nothing. A fenced line is what a reader copies.
     """
     for rel, resource in SKILL_RESOURCES.items():
-        if not rel.endswith('.md'):
+        if rel.endswith('.md'):
+            yield from _snippets_in(rel, resource.read_bytes().decode('utf-8', 'replace'))
+
+
+def _snippets_in(rel: str, document: str) -> Iterator[Snippet]:
+    """The executable `gnd` lines of one Markdown document."""
+    fence: str | None = None   # the opening run, while inside a fence
+    pending: str | None = None
+    pending_line = 0
+    for number, raw in enumerate(document.splitlines(), start=1):
+        opened = FENCE_RE.match(raw)
+        if fence is None:
+            if opened:
+                fence, pending = opened.group(1), None
             continue
-        in_fence = False
-        pending: str | None = None
-        pending_line = 0
-        for number, raw in enumerate(resource.read_bytes().decode('utf-8', 'replace').splitlines(), start=1):
-            if FENCE_RE.match(raw):
-                in_fence = not in_fence
-                pending = None
+        if opened and opened.group(1)[0] == fence[0] and len(opened.group(1)) >= len(fence) \
+                and not raw.strip()[len(opened.group(1)):].strip():
+            fence, pending = None, None
+            continue
+        text = raw.strip()
+        if pending is not None:
+            pending = f'{pending[:-1].strip()} {text}'
+            if text.endswith('\\'):
                 continue
-            if not in_fence:
+            command, start = (pending, pending_line)
+            pending = None
+        else:
+            text = PROMPT_RE.sub('', text)
+            if not text.startswith('gnd '):
                 continue
-            text = raw.strip()
-            if pending is not None:
-                pending = f'{pending[:-1].strip()} {text}'
-                if text.endswith('\\'):
-                    continue
-                command, start = (pending, pending_line)
-                pending = None
-            else:
-                text = PROMPT_RE.sub('', text)
-                if not text.startswith('gnd '):
-                    continue
-                if text.endswith('\\'):
-                    pending, pending_line = (text, number)
-                    continue
-                command, start = (text, number)
-            command = re.sub('\\s+#.*$', '', command)
-            command = re.split('\\s>\\s*', command)[0]
-            command = command.strip()
-            yield Snippet(rel=rel, line=start, command=command, skill=rel.split('/')[0], tokens=tuple(shlex.split(command)))
+            if text.endswith('\\'):
+                pending, pending_line = (text, number)
+                continue
+            command, start = (text, number)
+        command = re.sub('\\s+#.*$', '', command)
+        command = re.split('\\s>\\s*', command)[0]
+        command = command.strip()
+        yield Snippet(rel=rel, line=start, command=command, skill=rel.split('/')[0], tokens=tuple(shlex.split(command)))
+
+
 EXECUTABLE_SNIPPETS = tuple(_iter_executable_snippets())
 
 def _gnd_argv() -> list[str]:
@@ -292,3 +305,17 @@ def test_every_skill_that_documents_commands_still_contributes_snippets() -> Non
         f"(found, expected at least): {short}. A skill losing its examples is a "
         "documentation regression that no count over the whole tree catches."
     )
+
+
+@pytest.mark.parametrize('document,commands', [
+    ('~~~sh\ngnd validate model.orm.yaml\n~~~\n', ['gnd validate model.orm.yaml']),
+    ('````sh\ngnd check m p\n````\n', ['gnd check m p']),
+    ('````markdown\n```sh\ngnd check m p\n```\n````\n', ['gnd check m p']),
+    ('~~~\n```\n~~~\ngnd check m p\n', []),
+    ('   ```sh\n   gnd measure m --labels l\n   ```\n', ['gnd measure m --labels l']),
+    ('```sh title=`x`\ngnd check m p\n```\n', []),
+    ('prose gnd check m p\n', []),
+])
+def test_issue_319_fences_follow_their_opening_run(document: str, commands: list[str]) -> None:
+    """Issue 319: tilde and longer fences were not scanned, and a shorter run inside a fence closed it."""
+    assert [snippet.command for snippet in _snippets_in('x/SKILL.md', document)] == commands

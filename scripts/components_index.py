@@ -11,7 +11,8 @@
     components_index.py draft [--only PATH] [--by-importers]
                                              stub entries for the modules no component covers
     components_index.py list [AREA]          the component ids by area, each with its one-line description
-    components_index.py changed --base REF   check the index against the files changed since REF
+    components_index.py changed --base REF [--strict]
+                                             check the index against the files changed since REF
     components_index.py facts [--base REF] [--modules] [--out FILE]
                                              the catalog and the import graph as JSON rows, for a rule checker
     components_index.py review [AREA ...]    list leads for a review of the index (all of it, or ids starting with AREA)
@@ -48,6 +49,7 @@ import io
 import json
 import os
 from importlib import metadata, util
+import posixpath
 import re
 import subprocess
 import sys
@@ -152,6 +154,19 @@ ROOT = checkout_root() if PLUGIN else Path(__file__).resolve().parents[len(Path(
 BASE = SETTINGS['docs_dir'].strip('/') + '/'
 VERBS = re.compile(r'<!-- verbs:begin -->.*?<!-- verbs:end -->', re.S)
 GENERATED = frozenset({'uses', 'used_by', 'part_of', 'members_uses'})
+# The fields that say an entry was read against its code: `review` dates an entry from the newest of
+# them, and `changed` asks for no reread of an entry when one of them holds words it did not hold at the
+# base (`answered`).
+DATING = frozenset({'does', 'verbs', 'flow', 'reread'})
+FIELD = r'^- ([a-z_]+):[ \t]*(.*)$'  # a field line of an entry: a key of lower-case letters and underscores
+# An entry: its heading, then its lines up to the next heading of any level or the generated verbs block.
+# A comment, or a line that starts with # and is no heading, is a line of the entry.
+ENTRY_END = r'#{1,6}[ \t]|<!-- verbs:begin -->'
+ENTRY = re.compile(rf'^### ([^\n]+)\n(.*?)(?=^(?:{ENTRY_END})|\Z)', re.M | re.S)
+# What `parse_components` adds to an entry's fields. No field can have the last two names (FIELD); a field
+# named `id` gives way to the heading.
+REPEATED, REST = '*repeated', '*rest'
+NOT_FIELDS = frozenset({'id', REPEATED, REST})
 # Fields the script reads. One of these written twice in an entry is an error (the first would be lost).
 CHECKED = frozenset({'does', 'verbs', 'status', 'modules', 'tests', 'components', 'flow',
                      'duplicates', 'external', 'distinct_from', 'reread'})
@@ -227,14 +242,19 @@ def read_components(root: Path) -> list[dict]:
 
 
 def parse_components(text: str) -> list[dict]:
+    """The entries of a catalog (ENTRY): each field line as a key, with the three keys of NOT_FIELDS."""
     entries = []
-    for match in re.finditer(r'^### ([^\n]+)\n(.*?)(?=^### |\Z)', text, re.M | re.S):
-        pairs = re.findall(r'^- ([a-z_]+):[ \t]*(.*)$', match[2], re.M)
+    for match in ENTRY.finditer(text):
+        pairs = re.findall(FIELD, match[2], re.M)
         entry = dict(pairs)
+        # What the entry holds beside its fields: a line whose key FIELD does not take (`- owner2: x`) is
+        # prose, and `changed` still says the entry was edited.
+        rest = re.sub(FIELD, '', match[2], flags=re.M).splitlines()
+        entry[REST] = '\n'.join(line.rstrip() for line in rest if line.strip())
         keys = [key for key, _ in pairs]
         repeated = sorted({key for key in keys if keys.count(key) > 1} & CHECKED)
         if repeated:
-            entry['_repeated'] = ', '.join(repeated)
+            entry[REPEATED] = ', '.join(repeated)
         entry['id'] = match[1].strip()
         entries.append(entry)
     return entries
@@ -244,11 +264,20 @@ def values(entry: dict, key: str) -> list[str]:
     return [s.strip() for s in entry.get(key, '').split(',') if s.strip()]
 
 
+def answered(old: dict, entry: dict) -> bool:
+    """Whether an entry says it was read since `old`, the same entry at an earlier commit: one of its DATING
+    fields holds words now that it did not hold there. A field deleted or left empty is no answer: it is no
+    line `entry_commits` dates the entry from."""
+    return any(entry.get(key, '').strip() not in ('', old.get(key, '').strip()) for key in DATING)
+
+
 @functools.lru_cache(maxsize=None)
 def module_paths(modules: str) -> tuple[frozenset, tuple]:
-    """A `modules:` value as (the files it names, the folders it names)."""
-    names = [s.strip() for s in modules.split(',') if s.strip()]
-    return frozenset(n for n in names if not n.endswith('/')), tuple(n for n in names if n.endswith('/'))
+    """A `modules:` value as (the files it names, the folders it names), each path in one spelling:
+    `./src/a.py` and `src//a.py` are `src/a.py`, as git and the file system read them."""
+    names = [(posixpath.normpath(s.strip()), s.strip().endswith('/')) for s in modules.split(',') if s.strip()]
+    return (frozenset(n for n, folder in names if not folder),
+            tuple('' if n == '.' else n + '/' for n, folder in names if folder))
 
 
 def covers(entry: dict, path: str) -> bool:
@@ -297,7 +326,7 @@ def validate(root: Path, entries: list[dict], external_names: set[str]) -> list[
         for key in required:
             if key not in entry or (not entry[key] and key != 'modules'):
                 errors.append(f'{name}: missing {key}')
-        for key in values(entry, '_repeated'):
+        for key in values(entry, REPEATED):
             errors.append(f'{name}: {key} appears twice')
         for key in ('does', 'verbs'):
             if 'TODO' in entry.get(key, ''):
@@ -415,6 +444,18 @@ def parse(path: Path) -> ast.Module:
     return parse_source(path.read_bytes(), str(path))
 
 
+def public_names(data: bytes | None, name: str) -> set[str]:
+    """The public top-level names Python source defines; none for no source."""
+    return set() if data is None else {row['id'] for row in symbols(parse_source(data, name), methods=False)}
+
+
+def name_words(text: str) -> set[str]:
+    """The words of an identifier, or of prose that may name one, as `tokens` reads them once the capital
+    humps are apart: `run_guarded_cases`, `RunGuardedCases` and "run guarded cases" alike, and `HTTPServer`
+    as "HTTP server"."""
+    return tokens(re.sub(r'(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])', ' ', text))
+
+
 def parse_source(data: bytes, name: str) -> ast.Module:
     encoding, _ = tokenize.detect_encoding(io.BytesIO(data).readline)
     source = io.TextIOWrapper(io.BytesIO(data), encoding, line_buffering=True).read()  # as tokenize.open reads it
@@ -460,8 +501,8 @@ def module_inventory(root: Path, entries: list[dict], cache: bool = False) -> tu
             dotted = relative.removesuffix('.py').removeprefix(SOURCE_ROOT).replace('/', '.')
             about, _, rows, _, doc, hidden = file_facts(root, relative, cache)
             owners = ', '.join(e['id'] for e in entries if covers(e, relative)) or 'unassigned'
-            lines = groups.setdefault(group, [f'# {group} symbol inventory', '', f'Generated by `{LABEL}`.', ''])
-            lines.extend([f'## {dotted} — `{relative}`', f'Components: {owners}', about, '', *table(rows), ''])
+            lines = groups.setdefault(group, [f'# {shown(group)} symbol inventory', '', f'Generated by `{LABEL}`.', ''])
+            lines.extend([f'## {shown(dotted)} — `{shown(relative)}`', f'Components: {owners}', about, '', *table(rows), ''])
             text = ' '.join([dotted, doc, *(r['label'] + ' ' + r['doc'] for r in rows + hidden)])
             hits.append({'kind': 'module', 'id': relative, 'summary': about, 'text': text,
                          'symbols': [{'id': f'{dotted}.{r["id"]}', 'line': r['line'], 'summary': r['summary'],
@@ -522,7 +563,7 @@ def top_level(rows: list[dict]) -> list[dict]:
 def cache_path(root: Path) -> Path:
     """Where the facts read from the source files are kept: outside the checkout, one file per checkout."""
     home = Path(os.environ.get('XDG_CACHE_HOME') or Path.home() / '.cache')
-    return home / 'components-index' / (hashlib.sha256(str(root.resolve()).encode()).hexdigest()[:16] + '.json')
+    return home / 'components-index' / (hashlib.sha256(os.fsencode(root.resolve())).hexdigest()[:16] + '.json')
 
 
 def cache_stamp() -> list:
@@ -629,7 +670,7 @@ def external_inventory(root: Path) -> tuple[dict, list[dict], dict, list[str]]:
                 row['label'] = dotted + '.' + row['label']
                 hits.append({'kind': 'external', 'id': full, 'summary': row['summary'],
                              'text': full + ' ' + row['summary']})
-            lines.extend([f'## {dotted}', summary(tree), '', *table(rows), ''])
+            lines.extend([f'## {shown(dotted)}', summary(tree), '', *table(rows), ''])
         files[BASE + f'external/{name}.md'] = '\n'.join(lines)
     return files, hits, versions, errors
 
@@ -825,7 +866,7 @@ def rewrite(text: str, entries: list[dict], edges: dict) -> str:
             body = re.sub(r'(^- modules:[^\n]*)(?:\n|$)', lambda m: m[1] + '\n' + lines, body, flags=re.M)
         return '### ' + match[1] + '\n' + body
 
-    return re.sub(r'^### ([^\n]+)\n(.*?)(?=^### |\Z)', section, text, flags=re.M | re.S)
+    return ENTRY.sub(section, text)
 
 
 def graph_text(entries: list[dict], edges: dict) -> str:
@@ -965,13 +1006,19 @@ def external_skips(root: Path) -> dict[str, str]:
     return skipped
 
 
+def generated_bytes(text: str) -> bytes:
+    """A generated file's text as it is written and checked: UTF-8, with a module name that is not UTF-8 (held as
+    os.fsdecode spells it) written with a backslash escape in place of the byte, as the output prints it."""
+    return text.encode('utf-8', errors='backslashreplace')
+
+
 def stale_files(root: Path, files: dict[str, str] | None = None) -> list[str]:
     """Return sorted stale or missing index paths without writing or printing."""
     if files is None:
         files, _ = build_index(root)
     stale = generated_paths(root) - files.keys()
     different = [name for name, text in files.items()
-                 if not (root / name).is_file() or (root / name).read_bytes() != text.encode('utf-8')]
+                 if not (root / name).is_file() or (root / name).read_bytes() != generated_bytes(text)]
     return sorted((set(different) | stale) - external_skips(root).keys())
 
 
@@ -982,27 +1029,27 @@ def write_or_check(root: Path, check: bool, strict: bool = False) -> int:
     if check:
         stale = stale_files(root, files)
         for name in stale:
-            print(f'stale or missing: {name}')
+            print(shown(f'stale or missing: {name}'))
         for error in errors:
-            print(error)
+            print(shown(error))
         baseline = root / BASE / 'unassigned-baseline.txt'
         refused = strict and baseline.is_file() and not SETTINGS['allow_baseline']
         if refused:
-            print(f'baseline refused: {BASE}unassigned-baseline.txt exists and allow_baseline is false '
-                  f'(give its modules a component, then delete the file)')
+            print(shown(f'baseline refused: {BASE}unassigned-baseline.txt exists and allow_baseline is false '
+                        f'(give its modules a component, then delete the file)'))
         tolerated = set(baseline.read_text(encoding='utf-8').split()) if baseline.is_file() and not refused else set()
         unassigned = [p for p in coverage(root, read_components(root))[0] if p not in tolerated] if strict else []
         for path in unassigned:
-            print(f'no component: {path} (add it to the modules of an entry in {BASE}COMPONENTS.md)')
+            print(shown(f'no component: {path} (add it to the modules of an entry in {BASE}COMPONENTS.md)'))
         return int(bool(stale or errors or unassigned or refused))
     if errors:
         for error in errors:
-            print(error, file=sys.stderr)
+            print(shown(error), file=sys.stderr)
         return 1
     for name, text in files.items():
         target = root / name
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(text.encode('utf-8'))
+        target.write_bytes(generated_bytes(text))
     for name in generated_paths(root) - files.keys():
         (root / name).unlink()
     return 0
@@ -1011,8 +1058,9 @@ def write_or_check(root: Path, check: bool, strict: bool = False) -> int:
 def git(root: Path, *args: str, check: bool = True) -> str:
     """Output of a git command run in `root`; '' when it fails and `check` is off."""
     try:
+        # A byte git writes that is not UTF-8 (a folder name in a message) is kept, not stopped on.
         done = subprocess.run(['git', '-C', str(root), '-c', 'core.quotepath=off', *args],
-                              capture_output=True, text=True)
+                              capture_output=True, text=True, errors='surrogateescape')
     except OSError as exc:
         raise ValueError(f'git is not available: {exc}')
     if done.returncode and check:
@@ -1020,24 +1068,67 @@ def git(root: Path, *args: str, check: bool = True) -> str:
     return '' if done.returncode else done.stdout
 
 
-def files_at(root: Path, commit: str, paths: list[str]) -> dict[str, str]:
-    """The text each path (relative to `root`) had at a commit, read with one git process."""
-    if not paths:
-        return {}
-    prefix = git(root, 'rev-parse', '--show-prefix').strip()
+def shown(text: str) -> str:
+    """Text as one line of output or of a generated page holds it: a backslash doubled, and each character that is
+    not printable (a line break, a carriage return, U+2028, a byte that is not UTF-8 as os.fsdecode holds it) as
+    its backslash escape. A name is then one line, no line can be taken for another kind of line, and two names
+    never print alike."""
+    return ''.join(c if c.isprintable() and c != '\\' else c.encode('unicode_escape').decode('ascii') for c in text)
+
+
+def git_bytes(root: Path, *args: str) -> bytes:
+    """The output of a git command run in `root`, as the bytes git wrote: no newline translated, no name decoded."""
     try:
-        done = subprocess.run(['git', '-C', str(root), 'cat-file', '--batch'], capture_output=True,
-                              input=''.join(f'{commit}:{prefix}{p}\n' for p in paths).encode('utf-8'))
+        done = subprocess.run(['git', '-C', str(root), *args], capture_output=True)
     except OSError as exc:
         raise ValueError(f'git is not available: {exc}')
-    out, at, texts = done.stdout, 0, {}
-    for path in paths:
+    if done.returncode:
+        raise ValueError(f'git {" ".join(args)}: {done.stderr.decode(errors="replace").strip() or "failed"}')
+    return done.stdout
+
+
+def git_paths(root: Path, *args: str) -> list[str]:
+    """The fields of a git command run with -z, each a name as the file system spells it.
+
+    Read as bytes: read as text, a carriage return in a name becomes a line break, and a name that is not
+    UTF-8 stops the read. Each field is decoded as os.fsdecode does, so the name opens the file it names.
+    """
+    return [os.fsdecode(field) for field in git_bytes(root, *args).split(b'\0')]
+
+
+def files_at(root: Path, commit: str, paths: list[str]) -> dict[str, bytes]:
+    """The bytes each path (relative to `root`) had at a commit, read with one git process.
+
+    A name that holds a line break, in the file's own name or in the folder of `root`, cannot be asked for in
+    that one process, which reads a name a line: such a file is read with a git process of its own.
+    """
+    if not paths:
+        return {}
+    # The folder of `root` under the top of the checkout, as git wrote it: only the line break git ends it with
+    # is dropped, so a name that ends in a space, or that is not UTF-8, is still its folder.
+    prefix = git_bytes(root, 'rev-parse', '--show-prefix').removesuffix(b'\n')
+    asked = {p: commit.encode() + b':' + prefix + os.fsencode(p) for p in paths}
+    batch = [p for p in paths if b'\n' not in asked[p]]
+    try:
+        done = subprocess.run(['git', '-C', str(root), 'cat-file', '--batch'], capture_output=True,
+                              input=b''.join(asked[p] + b'\n' for p in batch))
+        alone = {p: subprocess.run(['git', '-C', str(root), 'cat-file', 'blob', asked[p]], capture_output=True)
+                 for p in paths if b'\n' in asked[p]}
+    except OSError as exc:
+        raise ValueError(f'git is not available: {exc}')
+    texts = {}
+    for path, one in alone.items():
+        if one.returncode:
+            raise ValueError(f'git cannot read {path} at {commit[:7]}: {one.stderr.decode(errors="replace").strip()}')
+        texts[path] = one.stdout
+    out, at = done.stdout, 0
+    for path in batch:
         end = out.find(b'\n', at)
         head = out[at:end].split()
         if done.returncode or end < 0 or len(head) != 3 or head[1] != b'blob':
             raise ValueError(f'git cannot read {path} at {commit[:7]}: {done.stderr.decode(errors="replace").strip()}')
         size = int(head[2])
-        texts[path] = out[end + 1:end + 1 + size].decode('utf-8', errors='replace')
+        texts[path] = out[end + 1:end + 1 + size]
         at = end + size + 2
     return texts
 
@@ -1139,31 +1230,43 @@ def resolve_base(root: Path, base: str) -> tuple[str, str]:
                       f'comparing with {upstream}')
 
 
-def base_snapshot(root: Path, base: str) -> tuple[str, str, dict, list[dict], dict, str]:
+def base_snapshot(root: Path, base: str) -> tuple[str, str, dict, list[dict], dict, str, dict]:
     """The checkout as it was at the merge base with `base`.
 
     Returns the name `base` resolved to (`resolve_base`), the merge-base commit, {path that
     differs: its git status letter}, the catalog entries there, for each .py file that differs
-    its text there (None when it did not exist): the `overrides` of `component_graph`, and the
-    line `resolve_base` gave ('' when there is none).
+    its text there (None when it did not exist): the `overrides` of `component_graph`, the
+    line `resolve_base` gave ('' when there is none), and the bytes of those files there, for a
+    reader that needs the file's own encoding.
     """
     base, said = resolve_base(root, base)
     anchor = git(root, 'merge-base', base, 'HEAD').strip()
     status = {}
-    for line in git(root, 'diff', '--name-status', '--no-renames', '--relative', anchor).splitlines():
-        code, path = line.split('\t', 1)
-        status[path] = code
-    for path in git(root, 'ls-files', '--others', '--exclude-standard').splitlines():
+    # With -z git writes each name as it is: without it a name that holds a quote, a backslash or a control
+    # character comes quoted, and is no file of any component.
+    fields = git_paths(root, 'diff', '--name-status', '--no-renames', '--relative', '-z', anchor)
+    status.update(zip(fields[1::2], fields[0::2]))
+    for path in filter(None, git_paths(root, 'ls-files', '--others', '--exclude-standard', '-z')):
         status.setdefault(path, 'A')
     old_entries = parse_components(git(root, 'show', f'{anchor}:./{BASE}COMPONENTS.md', check=False))
     overrides = {p: None for p, code in status.items() if p.endswith('.py')}
-    overrides.update(files_at(root, anchor, [p for p in overrides if status[p] != 'A']))
-    return base, anchor, status, old_entries, overrides, said
+    blobs = files_at(root, anchor, [p for p in overrides if status[p] != 'A'])
+    overrides.update({p: data.decode('utf-8', errors='replace') for p, data in blobs.items()})
+    return base, anchor, status, old_entries, overrides, said, blobs
 
 
 def changed(root: Path, base: str, strict: bool) -> int:
-    """Check the index against the files that differ from the merge base with `base`."""
-    base, anchor, status, old_entries, overrides, said = base_snapshot(root, base)
+    """Check the index against the files that differ from the merge base with `base`.
+
+    Exits 1 on a `fail:` line; with `strict` also on a `warn:` line and on a component's `reread:`
+    line, which an author answers in the entry (`answered`). A component gets the line when a file
+    it holds now, or held at the base, differs, and when its modules line took a file in or gave
+    one up, edited or not. The line ends with a lead, which fails nothing: the public names those
+    files gained that the entry's does and verbs do not speak of, and the ones they lost that it
+    still speaks of. A subsystem's `reread:` line is printed and never fails: a component many
+    subsystems share would otherwise ask for an answer from each of them on every change.
+    """
+    base, anchor, status, old_entries, overrides, said, blobs = base_snapshot(root, base)
     entries = read_components(root)
     files, fails = build_index(root)
     fails = list(fails)
@@ -1195,31 +1298,84 @@ def changed(root: Path, base: str, strict: bool) -> int:
             evidence = ', '.join(f'{a} -> {b}' for a, b in added[:3])
             warns.append(f'new caller of {callee} ({retired[callee]}): {caller}: {evidence}')
 
-    def authored(entry):
-        return {k: v for k, v in entry.items() if k not in GENERATED}
+    before = {e['id']: e for e in old_entries}
+    now = {e['id']: e for e in entries}
+    # The files a regrouping can move: every file git tracks, named or reached through a folder, in the package
+    # or outside it, and the ones git does not track that are counted modules or that a modules line names.
+    tracked = set(filter(None, git_paths(root, 'ls-files', '-z')))
+    # A file git does not track is a candidate when it is here: a counted module, or a file any modules line
+    # names, now or at the base. Every entry's names are taken, as a file one entry names can move to a folder
+    # another entry names.
+    named = set().union(*(module_paths(e.get('modules', ''))[0] for e in (*entries, *old_entries)))
+    untracked = {p for p in (package | named) - tracked if os.path.lexists(root / p) and not (root / p).is_dir()}
 
-    before = {e['id']: authored(e) for e in old_entries}
-    touched = {e['id']: sorted(p for p in status if covers(e, p)) for e in entries if not subsystem(e)}
-    rereads = []
+    def code_paths(name):
+        """The files that say a component's code is not what it was at the base: one that differs and that the
+        entry holds now or held there (a module edited, deleted or renamed), and one that does not differ but
+        that its modules line took in or gave up (a module regrouped into another entry)."""
+        new, old = now.get(name, {'id': name}), before.get(name, {'id': name})
+        paths = {p for p in status if covers(new, p) or covers(old, p)}
+        if new.get('modules', '') != old.get('modules', ''):
+            # What git tracks counts whatever it is here (a link whose target is gone is still its file).
+            paths |= {p for p in tracked | untracked if p not in status and covers(new, p) != covers(old, p)}
+        return sorted(paths)
+
+    def source(path, at_base):
+        """A file's bytes at the base or now; None where it is not there."""
+        if at_base and path in overrides:  # a .py file that differs: what it held at the base, in its own encoding
+            return blobs.get(path)
+        return (root / path).read_bytes() if (root / path).is_file() else None
+
+    def names_lead(old, entry, paths):
+        """What to look for in the reread: the public names the entry's files gained that does and verbs do
+        not speak of, and the ones they lost that does and verbs still speak of. A name is spoken of when
+        each of its words is there."""
+        python = [p for p in paths if p.endswith('.py')]
+        had = set().union(*(public_names(source(p, True), p) for p in python if covers(old, p)))
+        has = set().union(*(public_names(source(p, False), p) for p in python if covers(entry, p)))
+        said = name_words(entry.get('does', '') + ' ' + entry.get('verbs', ''))
+        new = sorted(n for n in has - had if not name_words(n) <= said)
+        lost = sorted(n for n in had - has if name_words(n) and name_words(n) <= said)
+        return ''.join(f'; {label}: {some(found, 8)}' for label, found in (
+            ('new public names not in does or verbs', new),
+            ('removed public names still in does or verbs', lost)) if found)
+
+    # A component the change removed is kept: a subsystem that had it is told its member changed.
+    touched = {name: code_paths(name) for name, entry in {**before, **now}.items() if not subsystem(entry)}
+    rereads, advisory = [], []  # a component's lines, which --strict refuses, and a subsystem's, which it does not
     for entry in entries:
-        name = entry['id']
-        if before.get(name) != authored(entry):
-            continue  # written or edited in this change
+        name, old = entry['id'], before.get(entry['id'])
+        if old is None or answered(old, entry):
+            continue  # written in this change, or read in it
+        # An edit to any other field (notes, tests, modules) does not say the description was read, and neither
+        # does a dating field deleted or left empty.
+        others = sorted(key for key in (old.keys() | entry.keys()) - DATING - GENERATED - NOT_FIELDS
+                        if old.get(key) != entry.get(key))
+        others += ['other lines'] if old[REST] != entry[REST] else []
+        gone = sorted(key for key in DATING if old.get(key, '').strip() and not entry.get(key, '').strip())
+        state = ', '.join(filter(None, (f'only {", ".join(others)} edited' if others else '',
+                                        f'{", ".join(gone)} removed' if gone else ''))) or 'entry not edited'
         if subsystem(entry):
-            members = [m for m in values(entry, 'components') if touched.get(m)]
+            listed = dict.fromkeys(values(entry, 'components') + values(old, 'components'))
+            members = [m for m in listed if touched.get(m)]
             if members:
-                rereads.append(f'{name} (entry not edited): its members changed: {", ".join(members)}')
+                advisory.append(f'{name} ({state}): its members changed: {", ".join(members)}')
         elif touched[name]:
             paths = touched[name]
             more = f', +{len(paths) - 5} more' if len(paths) > 5 else ''
-            rereads.append(f'{name} (entry not edited): {", ".join(paths[:5])}{more}')
+            rereads.append(f'{name} ({state}): {", ".join(paths[:5])}{more}{names_lead(old, entry, paths)}')
 
-    for prefix, rows in (('fail', fails), ('warn', warns), ('reread', rereads), ('note', [said] if said else [])):
+    notes = [said] if said else []
+    if strict and rereads:
+        notes.append("--strict fails while a component's reread: line is unanswered: edit the entry's does or "
+                     'verbs, or add or update its reread: line')
+    for prefix, rows in (('fail', fails), ('warn', warns), ('reread', rereads + advisory), ('note', notes)):
         for row in rows:
-            print(f'{prefix}: {row}')
-    print(f'changed against {base} ({anchor[:7]}): {len(status)} file(s) differ; '
-          f'{len(fails)} to fix, {len(warns)} warning(s), {len(rereads)} to reread')
-    return int(bool(fails or (strict and warns)))
+            print(shown(f'{prefix}: {row}'))
+    of_them = f', {len(advisory)} of them subsystem(s)' if advisory else ''
+    print(shown(f'changed against {base} ({anchor[:7]}): {len(status)} file(s) differ; '
+                f'{len(fails)} to fix, {len(warns)} warning(s), {len(rereads) + len(advisory)} to reread{of_them}'))
+    return int(bool(fails or (strict and (warns or rereads))))
 
 
 # What `facts` writes: each value type, and each fact type as (reading, ((role, value type), ...)).
@@ -1266,7 +1422,7 @@ def facts(root: Path, base: str = '', modules: bool = False, notes: list | None 
     ranks, forbidden = layers_config(root, {e['id'].split('.')[0] for e in entries if not subsystem(e)})
     overrides = None
     if base:
-        _, revision, _, entries, overrides, said = base_snapshot(root, base)
+        _, revision, _, entries, overrides, said, _ = base_snapshot(root, base)
         if said and notes is not None:
             notes.append(said)
     else:
@@ -1326,7 +1482,7 @@ def entry_commits(root: Path) -> dict[str, tuple[str, int, str]]:
     blame = git(root, 'blame', '--line-porcelain', '--', BASE + 'COMPONENTS.md', check=False)
     newest, commit, stamp, current = {}, '', 0, None
     for line in blame.splitlines():
-        head = re.fullmatch(r'([0-9a-f]{40}) \d+ \d+(?: \d+)?', line)
+        head = re.fullmatch(r'([0-9a-f]{40}(?:[0-9a-f]{24})?) \d+ \d+(?: \d+)?', line)  # SHA-1, or SHA-256
         if head:
             commit = head[1]
         elif line.startswith('committer-time '):
@@ -1335,8 +1491,11 @@ def entry_commits(root: Path) -> dict[str, tuple[str, int, str]]:
             text = line[1:]
             if text.startswith('### '):
                 current = text[4:].strip()
-            field = re.match(r'- ([a-z_]+):', text)
-            if not current or not (field and field[1] in {'does', 'verbs', 'flow', 'reread'}):
+            elif re.match(ENTRY_END, text):  # the entry ended: what follows is the catalog's, as ENTRY reads it
+                current = None
+            field = re.match(r'- ([a-z_]+):(.*)', text)
+            # A field left empty dates nothing, and the words are found as `answered` finds them.
+            if not current or not (field and field[1] in DATING and field[2].strip()):
                 continue
             earlier = newest.get(current, ('', -1, ''))
             if set(commit) == {'0'}:  # not committed yet: the entry counts as edited now
@@ -1565,7 +1724,7 @@ def show(root: Path, name: str) -> list[str]:
     if entry is None:
         close = [e['id'] for e in entries if e['id'].startswith(name)]
         raise ValueError(f'no component {name}' + (f'; did you mean: {", ".join(close[:8])}' if close else ''))
-    lines = [f'### {name}'] + [f'- {key}: {value}' for key, value in entry.items() if key not in {'id', '_repeated'}]
+    lines = [f'### {name}'] + [f'- {key}: {value}' for key, value in entry.items() if key not in NOT_FIELDS]
     if subsystem(entry):
         return lines
     components = [e for e in entries if not subsystem(e)]
@@ -1624,7 +1783,8 @@ def main(argv: list[str] | None = None) -> int:
     diff = commands.add_parser('changed')
     diff.add_argument('--base', default='main', help='branch or commit the change will merge into')
     diff.add_argument('--strict', dest='strict_changed', action='store_true',
-                      help='also fail on a new caller of a deprecated or duplicate component')
+                      help='also fail on a new caller of a deprecated or duplicate component, and on a '
+                           "component's reread: line left unanswered (a subsystem's never fails)")
     rows = commands.add_parser('facts')
     rows.add_argument('--base', default='', help='write the facts as they were at the merge base with this branch or commit')
     rows.add_argument('--modules', action='store_true', help='also the files: which component holds which, which imports which, which are private')
@@ -1636,6 +1796,12 @@ def main(argv: list[str] | None = None) -> int:
     one.add_argument('id')
     names = commands.add_parser('list')
     names.add_argument('area', nargs='?', default='')
+    # A file name that is not UTF-8 is held as os.fsdecode spells it, which no UTF-8 stream can write, and a
+    # stream may take less than UTF-8: what it cannot write is printed with a backslash escape, not stopped on.
+    # Before the arguments are read, as argparse prints the help and its errors itself.
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(errors='backslashreplace')
     args = parser.parse_args(argv)
     if args.check and args.command:
         parser.error('--check cannot be combined with a subcommand')
@@ -1732,7 +1898,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         return write_or_check(args.root, args.check, args.strict)
     except (OSError, ValueError, SyntaxError) as exc:
-        print(str(exc), file=sys.stderr)
+        print(shown(str(exc)), file=sys.stderr)
         return 1
     finally:
         save_caches()

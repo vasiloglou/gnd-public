@@ -14,6 +14,20 @@ and one import contract, with a small adapter per learner. The first adapter is
 end to end, including a refused over-claim,
 [find the rule your auditors are really using](../tutorials/learn-rules.md).
 
+**The commands or the skill.** The bridge is a set of commands, and this page
+is their contract. With an assistant you need not run them yourself: the
+[gnd-induce](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-induce/SKILL.md)
+skill runs them for you, and the
+[commands behind the tutorial](../how-to/learn-rules-commands.md) show each
+step it takes.
+
+| | The bridge commands | The gnd-induce skill |
+|---|---|---|
+| What it is | `gnd export ilp`, `gnd import ilp-rules` and `gnd import mined-rules` | An assistant workflow that runs those commands, and also `gnd measure --labels`, `gnd discover` and `gnd check` |
+| The learner | You run it between export and import | It runs the one you name, with a stated time limit; it never installs one, and never plays the language-model learner (`--target llm`) |
+| A refusal | The command exits with its named refusal | It stops, reports the refusal and never changes a learner's claim to make an import pass |
+| The proposal | Written to `--out` | Handed to review with [gnd-model-evolve](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-evolve/SKILL.md); it never applies one |
+
 This page is the one home of the bridge's contract, including the fragment
 table. The four wire formats are the packaged closed schemas
 `ilp.schema.json`, `ilp-clauses.schema.json`, `ilp-run.schema.json` and

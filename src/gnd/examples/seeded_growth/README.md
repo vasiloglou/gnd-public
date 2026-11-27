@@ -74,6 +74,17 @@ source = normalize("NFC", document.decode("utf-8"))
 quote = "W-1 has version V-1"
 assert source.count(quote) == 1
 start = source.index(quote)
+# This host can check the literal forward reading printed in this passage.
+# Other document styles need their own source-grounded decision.
+bindings = {"work": "W-1", "version": "V-1"}
+def supports_binding(binding):
+    names = {o["id"]: o["name"] for o in view["object_types"]}
+    placeholders = {names[player]: binding[role] for role, player in fact["roles"]}
+    return fact["reading"].format_map(placeholders) == source[start:start + len(quote)]
+
+assert supports_binding(bindings)
+reversed_binding = {"work": bindings["version"], "version": bindings["work"]}
+assert not supports_binding(reversed_binding)
 # A separate passage mentions both IDs but supplies no directed predicate.
 ambiguous = "The catalogue lists W-1 alongside V-1."
 ambiguous_hash = hashlib.sha256(ambiguous.encode("utf-8")).hexdigest()
@@ -87,12 +98,13 @@ record = {
         for query, rows in [("reading: edition", by_reading), ("role player: version", by_player)]
     ],
     "inspected_ids": [fact["id"]],
+    "reversed_binding_supported": supports_binding(reversed_binding),
     "direct_lookup": {"query": "reading: has version", "shown": direct,
                       "partial": True, "view_sha256": view_hash},
     "ambiguous_document": ambiguous,
     "decisions": [
         {"decision": "reuse", "id": fact["id"], "span": [start, start + len(quote)],
-         "bindings": {"work": "W-1", "version": "V-1"},
+         "bindings": bindings,
          "reason": "The work is the subject of has version; V-1 fills its version role."},
         {"decision": "defer", "document_sha256": ambiguous_hash, "span": [0, len(ambiguous)],
          "reason": "Listing two identifiers together leaves the relationship and direction unresolved."},

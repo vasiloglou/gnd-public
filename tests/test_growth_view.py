@@ -55,20 +55,27 @@ def test_example_search_miss_retry_and_defer(tmp_path):
     code = readme.split("```python\n", 1)[1].split("\n```", 1)[0]
     copy = tmp_path / "host"
     shutil.copytree(SEED, copy)
+    before = (copy / "root.orm.yaml").read_bytes()
     rec = json.loads(subprocess.check_output([sys.executable, "-c", code], cwd=copy))
+    assert (copy / "root.orm.yaml").read_bytes() == before
     assert rec["searches"][0]["shown"] == []
     assert rec["inspected_ids"] == ["work_has_version"]
     assert [r["decision"] for r in rec["decisions"]] == ["reuse", "defer"]
     a, b = rec["decisions"][0]["span"]
     assert (copy / "round-2.document.txt").read_text()[a:b] == "W-1 has version V-1"
     assert rec["decisions"][0]["bindings"] == {"work": "W-1", "version": "V-1"}
-    assert rec["decisions"][0]["bindings"] != {"work": "V-1", "version": "W-1"}
+    assert rec["reversed_binding_supported"] is False
     complete = render(copy / "root.orm.yaml")
     for search in rec["searches"]:
         assert search["partial"] is True
         assert search["view_sha256"] == hashlib.sha256(complete.encode()).hexdigest()
         assert all(row in json.loads(complete)["fact_types"] for row in search["shown"])
     assert [row["id"] for row in rec["direct_lookup"]["shown"]] == ["work_has_version"]
+    resolved = load_model(copy / "root.orm.yaml")
+    direct, = rec["direct_lookup"]["shown"]
+    original, = [row for row in resolved.fact_types if row["id"] == direct["id"]]
+    assert direct["reading"] == original["reading"]
+    assert direct["roles"] == [[r["role_name"], r["object_type"]] for r in original["roles"]]
     ambiguous = rec["ambiguous_document"]
     deferred = rec["decisions"][1]
     assert deferred["document_sha256"] == hashlib.sha256(ambiguous.encode()).hexdigest()

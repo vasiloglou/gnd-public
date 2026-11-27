@@ -487,3 +487,18 @@ and `gnd export pyrel`), 279 (`refscheme.reference_identity`'s selection) and
 and a tag-only 0.5.2. The owner chose the light panel for the plan and close and
 delegated approval of the plan and specs. Planning only; no phase has started.
 
+
+## Roadmap for the November 27 open issues
+
+Six planning drafts cover the 13 open issues without an earlier milestone plan. Each first spec awaits owner review. The four refactoring carryovers remain in their existing plan.
+
+| Milestone and plan | Issues | First phase | Phases |
+|---|---|---|---:|
+| [Cross-document model growth](milestones/cross-document-growth/notes/cross-document-growth-plan.md) | [#338](https://github.com/vasiloglou/gnd-public/issues/338), [#339](https://github.com/vasiloglou/gnd-public/issues/339) | [CG1 · Located additions](milestones/cross-document-growth/notes/phase-CG1-spec.md) | 3 |
+| [Python snapshot evaluation](milestones/python-snapshot-evaluation/notes/python-snapshot-evaluation-plan.md) | [#326](https://github.com/vasiloglou/gnd-public/issues/326), [#328](https://github.com/vasiloglou/gnd-public/issues/328), [#329](https://github.com/vasiloglou/gnd-public/issues/329), [#331](https://github.com/vasiloglou/gnd-public/issues/331), [#333](https://github.com/vasiloglou/gnd-public/issues/333) | [PS1 · Interpret snapshot reports](milestones/python-snapshot-evaluation/notes/phase-PS1-spec.md) | 4 |
+| [DuckDB rule checking](milestones/duckdb-rule-checking/notes/duckdb-rule-checking-plan.md) | [#327](https://github.com/vasiloglou/gnd-public/issues/327), [#330](https://github.com/vasiloglou/gnd-public/issues/330) | [DB1 · Correlated guarded existence](milestones/duckdb-rule-checking/notes/phase-DB1-spec.md) | 3 |
+| [Model and population authoring](milestones/model-and-population-authoring/notes/model-and-population-authoring-plan.md) | [#332](https://github.com/vasiloglou/gnd-public/issues/332), [#334](https://github.com/vasiloglou/gnd-public/issues/334) | [MA1 · Constraint defaults](milestones/model-and-population-authoring/notes/phase-MA1-spec.md) | 4 |
+| [Bounded graph paths](milestones/bounded-graph-paths/notes/bounded-graph-paths-plan.md) | [#335](https://github.com/vasiloglou/gnd-public/issues/335) | [GP1 · Finite path enumeration](milestones/bounded-graph-paths/notes/phase-GP1-spec.md) | 2 |
+| [Exact numeric aggregates](milestones/exact-numeric-aggregates/notes/exact-numeric-aggregates-plan.md) | [#336](https://github.com/vasiloglou/gnd-public/issues/336) | [NA1 · Explicit count domains](milestones/exact-numeric-aggregates/notes/phase-NA1-spec.md) | 3 |
+
+Cross-document growth can proceed independently of the evaluator work. Agree the Python result statuses before exposing database or graph results through that accessor. Coordinate changes to shared value and schema readers between model authoring and exact numerics. The individual plans specify their internal dependencies. No release date is assigned.

@@ -1032,9 +1032,9 @@ def verbalize_model(model: str | os.PathLike[str] | Model, *, for_growth: bool =
         # Model is frozen at the top level, but its nested rows are mutable.
         if model.includes or model._included or model._composed_vocabulary_digest is not None:
             from gnd.model._includes import refuse_unresolved
-            from gnd.values import model_digest
+            from gnd.values import vocabulary_digest
 
-            if model._composed_vocabulary_digest != model_digest(model):
+            if model._composed_vocabulary_digest != vocabulary_digest(model):
                 refuse_unresolved()
         document = model.model_dump(exclude={"warnings"}, exclude_defaults=True)
         selected = model_module._finish_model(document, model._provenance, model._included)

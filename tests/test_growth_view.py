@@ -99,3 +99,22 @@ def test_changed_included_row_requires_reload():
     model.fact_types[0]["reading"] += " changed after verification"
     with pytest.raises(ModelValidationError, match="unresolved"):
         render(model)
+
+
+def test_composed_snapshot_accepts_nonfinite_source_metadata():
+    from gnd.model import load_model_bytes_composed, parse_model_document
+    from ruamel.yaml import YAML
+    from io import StringIO
+
+    root = SEED / "root.orm.yaml"
+    doc = parse_model_document(root.read_bytes(), source=root)
+    doc["source"] = {"kind": "text-conversation", "mode": "one-shot", "note": float("nan")}
+    doc["reference_populations"] = [{
+        "id": "links", "path": "x.pop.json", "sha256": "0" * 64,
+        "fact_types": ["work_has_version"],
+    }]
+    output = StringIO()
+    YAML().dump(doc, output)
+    loaded = load_model_bytes_composed(output.getvalue().encode(), source=root, root=SEED,
+                                       bind_references=False)
+    assert "work_has_version" in render(loaded)

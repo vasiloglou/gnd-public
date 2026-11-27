@@ -1343,14 +1343,15 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_model_digest(model) -> str` | function | 222 | (no docstring) |
-| `ModelIdentityError` | class(ValueError) | 232 | A loaded model that has no canonical identity, or a version it does not define. |
-| `model_identity_document(model) -> dict[str, Any]` | function | 276 | The canonical identity document of a loaded model. |
-| `model_identity_bytes(model) -> bytes` | function | 289 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
-| `model_identity(model, version) -> str` | function | 294 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
-| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 309 | Which identity of ``model`` the ``supplied`` value names, or None. |
-| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 339 | The identities :func:`model_identity_matches` accepts, legacy first. |
-| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 381 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
+| `vocabulary_digest(model) -> str` | function | 196 | Bind positional model rows, including loader-accepted non-JSON metadata. |
+| `reference_model_digest(model) -> str` | function | 227 | (no docstring) |
+| `ModelIdentityError` | class(ValueError) | 237 | A loaded model that has no canonical identity, or a version it does not define. |
+| `model_identity_document(model) -> dict[str, Any]` | function | 281 | The canonical identity document of a loaded model. |
+| `model_identity_bytes(model) -> bytes` | function | 294 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
+| `model_identity(model, version) -> str` | function | 299 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
+| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 314 | Which identity of ``model`` the ``supplied`` value names, or None. |
+| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 344 | The identities :func:`model_identity_matches` accepts, legacy first. |
+| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 386 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

@@ -3,7 +3,7 @@
     ".claude/skills/components/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/components/SKILL.md",
-      "sha256": "a6dd3b7fe863b31a37c429e15989cfec1d60f99f32de50529c387da733845056"
+      "sha256": "42a9dfa332466aa49a1342792457aed7380b0b6c41f87b342f475464a94bdb18"
     },
     ".claude/skills/components/references/build.md": {
       "mode": "0o644",
@@ -163,7 +163,7 @@
     ".codex/skills/components/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/components/SKILL.md",
-      "sha256": "a6dd3b7fe863b31a37c429e15989cfec1d60f99f32de50529c387da733845056"
+      "sha256": "42a9dfa332466aa49a1342792457aed7380b0b6c41f87b342f475464a94bdb18"
     },
     ".codex/skills/components/references/build.md": {
       "mode": "0o644",
@@ -323,7 +323,7 @@
     "scripts/components_index.py": {
       "mode": "0o644",
       "origin": "skills/components/scripts/components_index.py",
-      "sha256": "b1131276e324cfbcfaf8620db8b0e5e8c0e9eebf119aaa54204fceadbedf2811"
+      "sha256": "d002d06876650a2e3a20ae3946361f4f96a91a7e34e9d11dd4a3638082656efb"
     },
     "scripts/components_index.settings.json": {
       "mode": "0o644",
@@ -346,7 +346,7 @@
     "skills/phase/pytest/phase_selection.py"
   ],
   "source": {
-    "commit": "d82c87ed449c2d66aa3e723855a33c42d37f3437",
+    "commit": "d8786310f73504f2a6c1b8635cb27ed98efbad6a",
     "dirty": false
   }
 }

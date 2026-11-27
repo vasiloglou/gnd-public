@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "run_sha256": "ffb7f664325b7ed106c47d4d538d4e5a0423ae357733f5296bbfe29ecbc0fa21",
+  "summary": "Six reviewers returned valid opinions. The remaining findings concern family semantics, ordering, host evidence and fixture coverage. Phase gates carry the concrete checks.",
+  "agreed_concerns": [
+    {
+      "group_id": "semantics",
+      "title": "Family signature parameters",
+      "summary": "Define the per-family signature to cover modality and every meaning-bearing parameter: allowed values and ranges, ring variant, frequency bounds, preferred. Either include status or exclude it explicitly. Extend the coverage test so that changing each such field changes the rendered record. Define the semantic fields retained for each registered family, including status and modality, and test pairs that differ only in one such field.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "constraint-signature-semantics"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "GC-CONSTRAINT-SEMANTICS"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "sorting",
+      "title": "Canonical order and ties",
+      "summary": "Say how a constraint without an ID is identified in the view: either the signature is its identity, or duplicates are merged or refused. Require a total order, for example the signature followed by the full canonical record. Add a fixture with ID-less constraints whose signatures collide, and assert byte equality after reordering it. For each registered family, declare which operand lists are ordered and which are sets. Make the reorder test assert byte equality when set operands are permuted, and a changed record when ordered or asymmetric operands are swapped. Pin a total order with an explicit tiebreaker (canonical signature then the loader-supplied constraint ID; endpoints then direction then declaration index) and require a determinism test that renders the fixture from two independent loads and with declaration order permuted, asserting identical bytes and identical SHA-256, rather than only re-rendering one in-memory model. Define the canonical signature string (operand order, delimiters, escaping) in the plan, or name the single shared helper that produces it, so constraint ordering is specified rather than implementation-defined.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "constraint-identity-ties"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "operand-order-classes"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "growth-view-sort-keys-not-total"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gnd295-canonical-signature-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "encoding",
+      "title": "CLI byte encoding",
+      "summary": "State that the digest is the sha256 of the exact rendered bytes, never embedded in them, and say which surface reports it. Specify that the API's str.encode('utf-8') equals the CLI's stdout bytes. Have the CLI write bytes to stdout.buffer, so there is no extra print() newline, no CRLF translation and no locale encoding. Test with a non-ASCII reading under a non-UTF-8 PYTHONIOENCODING. State that the CLI writes bytes with newline translation disabled and UTF-8 forced regardless of locale, and make the parity check assert SHA-256 equality of CLI stdout bytes against API string bytes under an explicitly non-UTF-8 locale and a CRLF-default setting, not only on the CI platform default.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "digest-and-byte-surface"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cli-canonical-bytes-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "version",
+      "title": "Format replay contract",
+      "summary": "Add a rule that any byte change for an unchanged model needs a new format value, or that a digest is replayable only with the same GND version. Record the format and GND version in the host record. Add a golden-bytes snapshot of the v1 fixture view so that drift fails a test. Add a checked-in golden file holding the exact bytes and SHA-256 of the fixture growth view, assert equality in GC1, and state that any change to those bytes requires bumping the format field, since recorded host digests are the compatibility contract.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "v1-compatibility-rule"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "no-golden-bytes-or-version-freeze"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "retry",
+      "title": "Host retry and scope decisions",
+      "summary": "Ship a small checker over the host JSON record, in the example or in the packaged-guide tests. It should flag a propose decision whose record shows only partial-scope inspection, and a reuse whose role bindings are reversed. Add a negative case where it fails. State which component owns the eligibility check. Tag each host-protocol sentence as advisory guide text or as a checked obligation with a named test or example assertion, and add example assertions for the two obligations that currently have none: repeated misses without novelty, and a presented view digest being refused as mutation authority. Require the host record to carry the ordered routes attempted and a terminal state (reused, deferred, or novelty after complete-inventory inspection), and add an example assertion for an exhausted search that ends in defer or in a documented full-inventory inspection rather than another round. Scope the obligation to what the packaged example demonstrates, or add an example scenario in which repeated partial misses end in deferral with no novelty assertion, and mark the rule as advisory host protocol in the packaged guide rather than a demonstrated property. Provide a mechanism for the host to signal that a specific query yielded an exhaustive result, so the agent can propose novelty rather than indefinitely deferring on partial results.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "retry-rules-unfalsifiable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "host-protocol-obligations-unfalsifiable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "retry-exhaustion-undefined"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gnd295-partial-miss-novelty-not-falsifiable"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "retry-exhaustiveness-signal"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "margin",
+      "title": "Measured reduction on fixture",
+      "summary": "Also report bytes for the include-backed example, together with bytes per object, fact and constraint record. Or compare against a baseline that serializes only the allowlisted fields, so that verbose keys or duplicated readings creeping back show up as a regression. Pin the fixture by content digest inside the size test so the three reported counts are reproducible and the gate cannot drift silently when the fixture is edited, and state the fixture-scoped meaning of compact in the packaged guidance. Strengthen the line-42 acceptance to require a stated minimum relative reduction (or explicitly declare the strict inequality a serialization sanity floor and record the measured three-way byte counts plus ratio as a tracked limitation at close, per line 33's 'Record measured sizes').",
+      "severity": "low",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compactness-bar-weak"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gnd295-compactness-gate-unpinned-fixture"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cgc-compactness-no-margin"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "subtype",
+      "title": "Subtype and object identity checks",
+      "summary": "State explicitly that a subtype record keeps an ordered super-then-sub pair and that endpoint sorting reorders records only, never the pair, and add a fixture assertion covering a chain plus a sibling pair so a canonicalizing sort cannot pass. Extend the identifier-completeness assertions to cover reference-mode fields and direct subtype pairs on the populated fixture, or state explicitly that existing fixture-equality checks subsume them.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "subtype-direction-not-asserted"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gnd295-refmodes-subtypes-unasserted"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "root-binding-not-captured"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "in-memory-model-input"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rejected-proposals-unclassified"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "disclosure-tested-only-by-sentinels"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "subset-rows-not-authenticated"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "family-coverage-guard-unverified"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "post-hoc-criteria-no-failure-rule"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "compactness-attribution"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "referenced-artifacts-not-exact"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "gnd295-empty-model-no-acceptance-check"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "compactness-json-overhead"
+    }
+  ],
+  "prioritized_fixes": []
+}

@@ -1,0 +1,70 @@
+{
+  "base": "dafd95f3",
+  "claims": [
+    "The reproduced nonfinite metadata now loads, while changed included rows still refuse."
+  ],
+  "created": "2026-11-27T09:20:49.588073+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r4/diff.patch",
+      "sha256": "39046f20a6633d4394c9ef922d046ce4b098534f967ec2b342e596b1a6f1e97d"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/BRIEF.md",
+      "sha256": "90919ff4cd9dfbca69fc3d8ac26952cfde1f3e3978a5f46f81c7649df003de10"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/FINDINGS.md",
+      "sha256": "0ff84bc4dd7cff101b848fc5cabad8b355ddf9b92a66fb9ce71fe601742561b3"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/brief.json",
+      "sha256": "a1a692ef02d50f276aec862cbb6cc9a5c056fe331f58c53b8c3157b731a2353f"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/diff.patch",
+      "sha256": "ca513736aa56cb068cf31d44f26777825634ec9517541d0ed94ca44164438c42"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/review.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/review.md",
+      "sha256": "e090ac21409624b03767310c5d18454cc5aedd1d758ba917a6abafc448d7d01a"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/run.json",
+      "sha256": "65be7cd9d7e7d870fe171f7a6033af2c8d806436f834693ba4fb156c465ee3ea"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "8b97a76c7792d502bf5e37f4f514d105d0212420837a16f9b9c67a79a7e2c94e"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "55da652f4d1f6f61876aecf63b173415c6fb05a6b6ddf3eaedd67f4775d7f86e"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "b126fe5ae74d39ff4a4068026f2285b2ceb073b8f810f5c971bbe5bdc8a1973f"
+    },
+    {
+      "path": "src/gnd/values.py",
+      "sha256": "8d4ad723d3c1851ee0ecebfcf355cf114949b8e356fba667b40af4ccf97cac14"
+    },
+    {
+      "path": "tests/test_growth_view.py",
+      "sha256": "7e42b22b3db01f9256bd0bbc3435b925dde9b68779e33965bf1f9c16f1fdb72c"
+    }
+  ],
+  "head": "21b7286f3bf3777c20dd712df8f82f9f6831b3dc",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the shared positional vocabulary digest fix the reference-bearing loader regression without changing historical model digest behavior?",
+  "subject": "phase",
+  "version": 1
+}

@@ -1,0 +1,15 @@
+# Close candidate for issue 295
+
+The owner selected two product phases and delegated their decisions in auto mode. The plan and both implementation phases have distinct evidence. The code was first drafted before formal milestone processing. The later reviews cover the reviewed bytes and the records give their actual chronology.
+
+| Plan criterion | Evidence to inspect |
+|---|---|
+| Composed inventory and identity | tests/test_growth_projection.py checks the source IDs, readings, role order, direct subtypes, references and expected family fields. tests/test_growth_view.py loads a pinned Unicode include and checks a stale pin refusal. |
+| Deterministic and compact rendering | The versioned populated-fixture digest is fixed. Reordered element collections and changed author evidence leave it unchanged. A changed reading changes it. The fixture has 16,927 source bytes, 8,864 growth bytes and 31,742 ordinary verbalization bytes. |
+| Public compatibility | The CLI grammar successor covers the new opt-in flag. Ordinary model verbalization snapshots run in the reduced suite. A fresh wheel returned identical 497-byte seed inventories through both public surfaces. Path and loaded-model growth outputs also matched on all 229 valid *.orm.yaml fixtures exercised on this checkout. |
+| Host chooses its search | The packaged guide permits reformulation, other graph paths, widening and deferral. The runnable example exercises a direct lookup, a miss followed by a role-player lookup of work_has_version, and a separate ambiguous document with two IDs and no supported relationship. Its record binds the source, model snapshot, partial flag, view digest, exact rows and named-role decision. |
+| Existing evolution boundary | The installed wheel ran all eight documented validation, preview, apply, population and judgment commands on a fresh copy. The host binds the captured root before evolution and verifies its direct include pins separately from the projected view digest. |
+| Review findings | GC1 retained status, modality, derivation, storage and independence metadata after review. GC2 validated nested in-memory mutations, repaired the CLI reference grammar, executed a direct lookup and added a separate ambiguous occurrence. GC2 also rejected edits to verified included rows before attributing their provenance and preserved legal nonfinite metadata on reference-bearing loads. Claude approved the repaired GC1 and GC2 bytes. The phase records preserve the independent evidence. |
+
+## Residuals and question sweep
+The public contract supplies compact context and a worked host protocol. The host chooses its queries and verifies their relevance. Rendering and host examples do not establish extraction recall, model quality, total prompt cost, or a general-purpose schema equivalence algorithm. No issue-295 entries appear in the project open-question register. Historical retrieval and evaluation proposals are deferred to a separately scoped owner decision. Production release and merge remain owner decisions. The repository change is attached to PR #341.

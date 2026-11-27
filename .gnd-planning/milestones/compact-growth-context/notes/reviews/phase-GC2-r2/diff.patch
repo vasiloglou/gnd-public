@@ -1,0 +1,1216 @@
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/FINDINGS.md b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/FINDINGS.md
+index c21af6fd..cddcf123 100644
+--- a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/FINDINGS.md
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/FINDINGS.md
+@@ -1,4 +1,4 @@
+-| Id | Reproduced | Class | Disposition | Repaired at | Notes |
+-|---|---|---|---|---|---|
+-| F1 | yes | blocking | fixed | 5848faf8 | test_full_inventory_and_size compares declared derivation and storage. Free-text rule bodies stay in the underlying model. |
+-| F2 | yes | hardening | fixed | 5848faf8 | Project authored independence and verify each source object's flags. |
++| Id | Finding | Reproduced | Class | Disposition | Repaired at | Notes |
++|---|---|---|---|---|---|---|
++| F1 | Derived types lose declared computation metadata | yes | blocking | fixed | 5848faf8 | test_full_inventory_and_size compares declared derivation and storage. Free-text rule bodies stay in the underlying model. |
++| F2 | Object independence omitted | yes | hardening | fixed | 5848faf8 | Project authored independence and verify each source object's flags. |
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r3/FINDINGS.md b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r3/FINDINGS.md
+index 27986799..4d0d5443 100644
+--- a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r3/FINDINGS.md
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r3/FINDINGS.md
+@@ -1,4 +1,4 @@
+-| Id | Reproduced | Class | Disposition | Repaired at | Notes |
+-|---|---|---|---|---|---|
+-| F1 | yes | completeness | rejected | — | Preserve authored optional fields. The documented exception is fact derivation, whose effective default is asserted. Semantic equivalence across differently authored models is outside the byte contract. |
+-| F2 | yes | completeness | deferred | — | Claude exercised the legal objectification fixture and observed the correct field; carry targeted fact-field coverage into the GC2 API tests. |
++| Id | Finding | Reproduced | Class | Disposition | Repaired at | Notes |
++|---|---|---|---|---|---|---|
++| F1 | Optional default spelling can change bytes | yes | completeness | rejected | — | Preserve authored optional fields. The documented exception is fact derivation, whose effective default is asserted. Semantic equivalence across differently authored models is outside the byte contract. |
++| F2 | Fact-field coverage relies on digest | yes | completeness | deferred | — | Claude exercised the legal objectification fixture and observed the correct field; carry targeted fact-field coverage into the GC2 API tests. |
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/BRIEF.md b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/BRIEF.md
+new file mode 100644
+index 00000000..f05f692a
+--- /dev/null
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/BRIEF.md
+@@ -0,0 +1,88 @@
++# Review brief: a phase's diff
++
++You are an independent reviewer, working in a different tool from the one that produced
++this work. Nothing here asks you to agree with it. Answer from the files themselves, not
++from any summary of them, including this brief's.
++
++## The question
++
++Which supported inputs, default paths or reasonable interpretations of the host instructions violate the public growth-view contract?
++
++## Claims to test
++
++The author claims what follows. For each, try to show where it is false: a claim is
++met only if you looked for the case that breaks it and did not find one.
++
++- C1. The agent can change search route, verify direction, widen or defer, and both public surfaces agree.
++
++## The change under review
++
++The work from `342f953d` to the working tree at `342f953d5780` with uncommitted changes. Its diff is `.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch`.
++- new: tests/test_growth_view.py (not tracked yet, so not in the diff: read it whole)
++
++## What to read
++
++Paths are relative to the repository root, the directory you start in. Before you rely
++on a file, check its SHA-256 (`shasum -a 256 <path>`); if one differs, say so first in
++your answer: you are not reading the bytes this brief names.
++
++| File | SHA-256 |
++|---|---|
++| `.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch` | `a348488b1a6334f253d403cca1e02c2fbd190afacf18033f9e919c2915856f4b` |
++| `dev/components/COMPONENTS.md` | `51ac46406a90d46c3edefb93a7063aaead6bbd076cafc05c2d8ba2adcea749a3` |
++| `dev/components/modules/_root.md` | `34360c58f418e6fbaeb73347560761ade853dd477f48443f9c15799bf8b7fb38` |
++| `dev/components/modules/commands.md` | `33796358cc25effc3dd37e0d36f64e90c9d1ca88228885cb2ea2d2f9152d4b26` |
++| `docs/reference/cli.md` | `bb80ffcb802063ebe2df4a92d88ea2f74636b263a9e90c9d195ce7d3cd038508` |
++| `docs/reference/disclosure.md` | `d90e3f25760bd2aad97a3e527671622830a1270b503dc52ce8fbad79cb973c72` |
++| `docs/reference/python-api.md` | `08d8455e7a38930727249ef3a6ed03c5e55617399634291054c47a9ab299738c` |
++| `src/gnd/api.py` | `7c0390cddc2ec4694c6fc5f77a54fef4146a5012316e3579963252845460dbf8` |
++| `src/gnd/commands/checking.py` | `7ee7a152a3753cc0c73fddabfd191c66ceede0c245e20dbb6b297d0d193208c5` |
++| `src/gnd/examples/seeded_growth/README.md` | `0ebdf47d4623de20b82fb0a1d9112cd9dc8b858ac0f34646a880d406b4d4d8f7` |
++| `src/gnd/skills/gnd-model-from-text/references/unattended-growth.md` | `21136cab354fa38e18f187e17c24b25ac7b5d6093734ed3b6bb0c3c0a29526fe` |
++| `tests/test_public_api.py` | `e04049af8e4250523eed5665a65b5508999b46ca002ea225cb4b1347fb8ac621` |
++| `tests/test_rf1_cli_pins.py` | `f77643f55605b749a6d77a4b50c2605cecdc739694bca80634bc07edde89c6e2` |
++| `tests/test_v61_phase2_api.py` | `3235dd3dd668f8a9438b5017b9e5302a5c61fc2f0b061cd267f856fd1abacc27` |
++| `tests/test_growth_view.py` | `be83b5608f3b0ad427554de85193c1848a146f492dd4c5745794f403380ca875` |
++| `.gnd-planning/milestones/compact-growth-context/notes/phase-GC2-spec.md` | `07bd76ef16e2ad8dcc3295459d7561d268e1fc8dda8d677d679e102afaeabe69` |
++
++You may read anything else in the repository that helps you answer.
++
++## A standing check: code fitted to its examples
++
++Whatever the question above, also look in the code this change adds or changes for a
++solution that handles the examples in its tests and fixtures, and not the whole class of
++input it is given:
++
++- a regular expression, string split, slice or index over structured text (JSON, YAML,
++  TOML, source code, paths, command lines) that a parser or an existing reader in this
++  repository already reads;
++- a pattern over output this project renders itself (a report, a table, a log line), where
++  the code could have been handed the data instead;
++- a pattern fitted to the fixtures: it matches every committed example and fails on a
++  legal input with other whitespace, quoting, casing, nesting, Unicode or a line break;
++- a branch on one literal name, file or message, added to make one case pass;
++- a second matcher for something an existing helper already does.
++
++A regular expression is not a finding in itself: one that states the whole grammar of a
++flat token (an identifier, a version number, a hex digest) is the right tool. For each
++suspect, build a legal input that the tests and fixtures lack and run the code on it.
++Report a finding only with that input: what the code returned and what it should have
++returned. A suspicion with no breaking input is style: label it so. In your list of what
++you checked, name each matcher you tried and the input you tried it with.
++
++## Rules
++
++- Read only. Do not edit, create, stage, commit, push or post anything.
++- Do not open `.env` files, keys, tokens, `auth.json` or any other credential file, and do
++  not print environment variables. If you need one, name it and go on without it.
++- A finding names its file and line and the consequence someone would observe. Run what
++  you can to show it; where you only read, say so.
++
++## What to return
++
++1. Findings, each with an id (F1, F2, ...), file and line, what is wrong, the observable
++   consequence, and how to reproduce it. A finding with no observable consequence is
++   style: label it so.
++2. What you checked and found true.
++3. What you could not check, and why.
++4. A last line: `VERDICT: APPROVE` or `VERDICT: CHANGES_REQUESTED`.
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/FINDINGS.md b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/FINDINGS.md
+new file mode 100644
+index 00000000..cce3674f
+--- /dev/null
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/FINDINGS.md
+@@ -0,0 +1,4 @@
++| Id | Finding | Reproduced | Class | Disposition | Repaired at | Notes |
++|---|---|---|---|---|---|---|
++| F1 | Invalid nested mutation reaches renderer | yes | blocking | fixed | c4da7347 | test_loaded_growth_model_refuses_invalid_role_player failed before repair. Validate an in-memory snapshot through the model loader before projection. |
++| F2 | Direct lookup and ambiguous passage absent from host example | yes | blocking | fixed | c4da7347 | The packaged example now runs a direct lookup and defers a separate document with both IDs and no directed relation. The public test checks the resulting record and document digest. |
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/brief.json b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/brief.json
+new file mode 100644
+index 00000000..8a2518cd
+--- /dev/null
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/brief.json
+@@ -0,0 +1,84 @@
++{
++  "base": "342f953d",
++  "claims": [
++    "The agent can change search route, verify direction, widen or defer, and both public surfaces agree."
++  ],
++  "created": "2026-11-27T09:03:32.359254+00:00",
++  "deleted": [],
++  "dirty": true,
++  "files": [
++    {
++      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch",
++      "sha256": "a348488b1a6334f253d403cca1e02c2fbd190afacf18033f9e919c2915856f4b"
++    },
++    {
++      "path": "dev/components/COMPONENTS.md",
++      "sha256": "51ac46406a90d46c3edefb93a7063aaead6bbd076cafc05c2d8ba2adcea749a3"
++    },
++    {
++      "path": "dev/components/modules/_root.md",
++      "sha256": "34360c58f418e6fbaeb73347560761ade853dd477f48443f9c15799bf8b7fb38"
++    },
++    {
++      "path": "dev/components/modules/commands.md",
++      "sha256": "33796358cc25effc3dd37e0d36f64e90c9d1ca88228885cb2ea2d2f9152d4b26"
++    },
++    {
++      "path": "docs/reference/cli.md",
++      "sha256": "bb80ffcb802063ebe2df4a92d88ea2f74636b263a9e90c9d195ce7d3cd038508"
++    },
++    {
++      "path": "docs/reference/disclosure.md",
++      "sha256": "d90e3f25760bd2aad97a3e527671622830a1270b503dc52ce8fbad79cb973c72"
++    },
++    {
++      "path": "docs/reference/python-api.md",
++      "sha256": "08d8455e7a38930727249ef3a6ed03c5e55617399634291054c47a9ab299738c"
++    },
++    {
++      "path": "src/gnd/api.py",
++      "sha256": "7c0390cddc2ec4694c6fc5f77a54fef4146a5012316e3579963252845460dbf8"
++    },
++    {
++      "path": "src/gnd/commands/checking.py",
++      "sha256": "7ee7a152a3753cc0c73fddabfd191c66ceede0c245e20dbb6b297d0d193208c5"
++    },
++    {
++      "path": "src/gnd/examples/seeded_growth/README.md",
++      "sha256": "0ebdf47d4623de20b82fb0a1d9112cd9dc8b858ac0f34646a880d406b4d4d8f7"
++    },
++    {
++      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
++      "sha256": "21136cab354fa38e18f187e17c24b25ac7b5d6093734ed3b6bb0c3c0a29526fe"
++    },
++    {
++      "path": "tests/test_public_api.py",
++      "sha256": "e04049af8e4250523eed5665a65b5508999b46ca002ea225cb4b1347fb8ac621"
++    },
++    {
++      "path": "tests/test_rf1_cli_pins.py",
++      "sha256": "f77643f55605b749a6d77a4b50c2605cecdc739694bca80634bc07edde89c6e2"
++    },
++    {
++      "path": "tests/test_v61_phase2_api.py",
++      "sha256": "3235dd3dd668f8a9438b5017b9e5302a5c61fc2f0b061cd267f856fd1abacc27"
++    },
++    {
++      "path": "tests/test_growth_view.py",
++      "sha256": "be83b5608f3b0ad427554de85193c1848a146f492dd4c5745794f403380ca875"
++    },
++    {
++      "path": ".gnd-planning/milestones/compact-growth-context/notes/phase-GC2-spec.md",
++      "sha256": "07bd76ef16e2ad8dcc3295459d7561d268e1fc8dda8d677d679e102afaeabe69"
++    }
++  ],
++  "head": "342f953d578084472f8ca02879a4bd2a9c841773",
++  "left_out": [],
++  "notes": [
++    "new: tests/test_growth_view.py (not tracked yet, so not in the diff: read it whole)"
++  ],
++  "pr": null,
++  "question": "Which supported inputs, default paths or reasonable interpretations of the host instructions violate the public growth-view contract?",
++  "subject": "phase",
++  "version": 1
++}
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch
+new file mode 100644
+index 00000000..8924f125
+--- /dev/null
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch
+@@ -0,0 +1,390 @@
++diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
++index 6e6b3bb9..f327befb 100644
++--- a/dev/components/COMPONENTS.md
+++++ b/dev/components/COMPONENTS.md
++@@ -547,7 +547,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
++ 
++ 
++ ### cli.checking_command
++-- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
+++- does: Register and dispatch validation, population checks, complete model review and compact growth views, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
++ - verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review, baseline model, compare rule editions
++ - in: argparse subparsers or a parsed command namespace
++ - out: registered parsers or the selected command exit code
++@@ -2187,7 +2187,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
++ 
++ 
++ ### cli.api
++-- does: Expose model review text and in-process checking reports with receipts and reusable evaluation sessions.
+++- does: Expose complete review or compact growth-prompt text and in-process checking reports with receipts and reusable evaluation sessions.
++ - verbs: validate, validate with source documents, check, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
++ - in: paths or loaded GND objects; per-operation options
++ - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
++diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
++index 7d10e531..7b24731a 100644
++--- a/dev/components/modules/_root.md
+++++ b/dev/components/modules/_root.md
++@@ -119,19 +119,19 @@ Stable in-process access to GND validation and checking reports.
++ | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
++ | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
++ | `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
++-| `verbalize_model(model) -> str` | function | 1022 | Render the caller's complete model for review, including authored samples. |
++-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1031 | Render derived fact types' rules in GND's controlled language. |
++-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1074 | Audit a declared post, or compute it when ``post`` is omitted. |
++-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1103 | Evaluate saved opinions without obtaining any external judgment. |
++-| `EvaluationSession` | class | 1220 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
++-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1244 | (no docstring) |
++-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1259 | (no docstring) |
++-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1267 | (no docstring) |
++-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1277 | Validate whole ordered relation replacements between evaluations. |
++-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1286 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
++-| `EvaluationSession.reset(self) -> None` | method | 1298 | (no docstring) |
++-| `EvaluationSession.close(self) -> None` | method | 1301 | (no docstring) |
++-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1304 | (no docstring) |
+++| `verbalize_model(model, *, for_growth) -> str` | function | 1022 | Render the complete model for review, or its canonical growth-prompt inventory. |
+++| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1034 | Render derived fact types' rules in GND's controlled language. |
+++| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1077 | Audit a declared post, or compute it when ``post`` is omitted. |
+++| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1106 | Evaluate saved opinions without obtaining any external judgment. |
+++| `EvaluationSession` | class | 1223 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+++| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1247 | (no docstring) |
+++| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1262 | (no docstring) |
+++| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1270 | (no docstring) |
+++| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1280 | Validate whole ordered relation replacements between evaluations. |
+++| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1289 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+++| `EvaluationSession.reset(self) -> None` | method | 1301 | (no docstring) |
+++| `EvaluationSession.close(self) -> None` | method | 1304 | (no docstring) |
+++| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1307 | (no docstring) |
++ 
++ ## gnd.applicability — `src/gnd/applicability.py`
++ Components: check.applicability
++diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
++index 1b05c445..64ce1858 100644
++--- a/dev/components/modules/commands.md
+++++ b/dev/components/modules/commands.md
++@@ -29,8 +29,8 @@ Components: cli.checking_command
++ 
++ | Symbol | Kind | Line | Summary |
++ | --- | --- | --- | --- |
++-| `add_parsers(subparsers, *, command)` | function | 1089 | (no docstring) |
++-| `handle(args, parsers) -> int` | function | 1124 | (no docstring) |
+++| `add_parsers(subparsers, *, command)` | function | 1094 | (no docstring) |
+++| `handle(args, parsers) -> int` | function | 1129 | (no docstring) |
++ 
++ ## gnd.commands.codegen — `src/gnd/commands/codegen.py`
++ Components: cli.codegen_command
++diff --git a/docs/reference/cli.md b/docs/reference/cli.md
++index aae0cb1c..56008a77 100644
++--- a/docs/reference/cli.md
+++++ b/docs/reference/cli.md
++@@ -153,6 +153,8 @@ whose function list is the one count of record.
++ Shared-vocabulary models use the canonical
++ [model includes contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#model-includes-version-5).
++ `gnd verbalize model MODEL` reads the composed model and identifies its includes.
+++Use `gnd verbalize model MODEL --for-growth` for canonical UTF-8 JSON containing
+++the composed vocabulary and constraint signatures for a growth prompt.
++ For an edition update, see the
++ [expense walkthrough](../how-to/shared-expense-policies-commands.md#review-edition-2)
++ and the evolution contract linked above; `--previous-include ID=PATH` supplies
++diff --git a/docs/reference/disclosure.md b/docs/reference/disclosure.md
++index 23751d74..900199b0 100644
++--- a/docs/reference/disclosure.md
+++++ b/docs/reference/disclosure.md
++@@ -124,7 +124,7 @@ Do not route them to a customer.
++ | `gnd fidelity` | the extracted facts it measures | Its input is your own extraction case. |
++ | `gnd doccheck` | the population values a rendered document misses | Its input is your own rendering case. |
++ | `gnd compose`, `gnd.api.compose` | the caller's own composed population; the composition record carries no value | Its inputs are your own populations; refusals name sources and indexes, never values. |
++-| `gnd verbalize model`, `gnd.api.verbalize_model` | the caller's complete model review, including authored sample populations | Its input is your own model; it takes no supplied population. |
+++| `gnd verbalize model`, `gnd.api.verbalize_model` | the default complete model review includes authored sample populations; the opt-in growth view emits vocabulary and constraint signatures | Its input is your own model; it takes no supplied population. |
++ | `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; the model's object-type, fact-type and role ids, as table and column names in the semantic model and mapping, or the names a `--physical-binding` file gives; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A `redact` declaration withholds population values from reports. It does not change the export, which prints a note counting the fact types that declare it. |
++ | `gnd import ossie` | whatever model content the ontology and its sidecar carry | Its inputs are your own files. |
++ 
++diff --git a/docs/reference/python-api.md b/docs/reference/python-api.md
++index b861f837..4fcccedb 100644
++--- a/docs/reference/python-api.md
+++++ b/docs/reference/python-api.md
++@@ -7,11 +7,16 @@ finding and what action to take.
++ 
++ The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
++ `verbalize`, `verbalize_rules`, `diff`, `witness`, `replay`, `why_not` and
++-`compose`: eleven functions, the one count other pages refer to. The opt-in `EvaluationSession`
+++`compose`, plus `verbalize_model`: twelve functions, the one count other pages refer to. The opt-in `EvaluationSession`
++ class reuses eligible work between calls. Code generation, experiment
++ orchestration, and model evolution have CLI and skill workflows described in
++ the [task guides](../advanced.md).
++ 
+++For a growth round, `gnd.api.verbalize_model(path, for_growth=True)` returns
+++the canonical compact inventory as a string. Its UTF-8 encoding is byte-identical
+++to `gnd verbalize model MODEL --for-growth`. Omitting the keyword gives the
+++ordinary full model review.
+++
++ ## Set up the examples
++ 
++ Install GND using the [quickstart](../quickstart.md), then run these blocks in
++diff --git a/src/gnd/api.py b/src/gnd/api.py
++index a112ca9d..a44d0e04 100644
++--- a/src/gnd/api.py
+++++ b/src/gnd/api.py
++@@ -1019,13 +1019,16 @@ def _compose_with_inputs(model, directory):
++     }, inputs
++ 
++ 
++-def verbalize_model(model: str | os.PathLike[str] | Model) -> str:
++-    """Render the caller's complete model for review, including authored samples."""
++-    from gnd.model_verbalization import render_model_verbalization
+++def verbalize_model(model: str | os.PathLike[str] | Model, *, for_growth: bool = False) -> str:
+++    """Render the complete model for review, or its canonical growth-prompt inventory."""
+++    from gnd.model_verbalization import render_growth_view, render_model_verbalization
+++
+++    if not isinstance(for_growth, bool):
+++        raise TypeError("for_growth must be a bool")
++ 
++     _check_model_input(model)
++     selected, _ = _resolve_model(model)
++-    return render_model_verbalization(selected)
+++    return render_growth_view(selected) if for_growth else render_model_verbalization(selected)
++ 
++ 
++ def verbalize_rules(
++diff --git a/src/gnd/commands/checking.py b/src/gnd/commands/checking.py
++index 186ee52b..c8344643 100644
++--- a/src/gnd/commands/checking.py
+++++ b/src/gnd/commands/checking.py
++@@ -391,9 +391,9 @@ def _print_lineage(payload: dict) -> None:
++         print(f"lineage {fact['fact_type']}#{fact['index']}: {sources}")
++ 
++ 
++-def _cmd_verbalize_model(model_path: str) -> int:
+++def _cmd_verbalize_model(model_path: str, *, for_growth: bool = False) -> int:
++     try:
++-        text = api_module.verbalize_model(model_path)
+++        text = api_module.verbalize_model(model_path, for_growth=True) if for_growth else api_module.verbalize_model(model_path)
++     except FileNotFoundError as error:
++         print(f"MISSING: {verbalize.line_text(error)}", file=sys.stderr)
++         return EXIT_NO_INPUT
++@@ -406,7 +406,10 @@ def _cmd_verbalize_model(model_path: str) -> int:
++     except Exception as error:  # noqa: BLE001 -- unexpected defects retain the internal band
++         print(f"INTERNAL ERROR: {verbalize.line_text(error)}", file=sys.stderr)
++         return EXIT_INTERNAL
++-    print(text, end='')
+++    if for_growth and getattr(sys.stdout, 'buffer', None) is not None:
+++        sys.stdout.buffer.write(text.encode('utf-8'))
+++    else:
+++        print(text, end='')
++     return 0
++ 
++ 
++@@ -1081,6 +1084,8 @@ def _register_verbalize(subparsers):
++         "model", help="Render the complete model for review."
++     )
++     verbalize_model_parser.add_argument("model")
+++    verbalize_model_parser.add_argument("--for-growth", action="store_true",
+++                                        help="Emit the compact UTF-8 JSON vocabulary for a growth round.")
++ 
++     return {'verbalize_parser': verbalize_parser, 'verbalize_population_parser': verbalize_population_parser,
++             'verbalize_model_parser': verbalize_model_parser}
++@@ -1170,7 +1175,7 @@ def handle(args, parsers) -> int:
++ 
++     if args.command == "verbalize":
++         if args.verbalize_target == 'model':
++-            return _cmd_verbalize_model(args.model)
+++            return _cmd_verbalize_model(args.model, for_growth=args.for_growth)
++         if (args.anchors is None) != (args.document is None):
++             verbalize_population_parser.error("--anchors and --document must be supplied together")
++         return _cmd_verbalize_population(
++diff --git a/src/gnd/examples/seeded_growth/README.md b/src/gnd/examples/seeded_growth/README.md
++index 51ba10ee..926e1509 100644
++--- a/src/gnd/examples/seeded_growth/README.md
+++++ b/src/gnd/examples/seeded_growth/README.md
++@@ -36,3 +36,70 @@ what the seed carries. The proposals and the judgment inputs bind digests; in
++ the source repository, regenerate them with
++ `tools/build_seeded_growth_example.py` after any edit to the seed, the root or
++ a document.
+++
+++## Retry an unsuccessful search
+++
+++Run the following in a fresh copy of this example, before applying round 1.
+++The recorded path is one possible agent decision. A host can offer different
+++searches and replay the resulting record. The root's pinned seed supplies the
+++work/version fact. The short phrase alone leaves the relation unresolved.
+++
+++```python
+++import hashlib
+++import json
+++from pathlib import Path
+++from unicodedata import normalize
+++
+++from gnd import api
+++from gnd.model import load_model_bytes_composed
+++
+++root = Path("root.orm.yaml")
+++raw = root.read_bytes()
+++model = load_model_bytes_composed(raw, source=root, root=root.parent)
+++view_text = api.verbalize_model(model, for_growth=True)
+++view = json.loads(view_text)
+++facts = view["fact_types"]
+++snapshot = hashlib.sha256(raw).hexdigest()
+++view_hash = hashlib.sha256(view_text.encode("utf-8")).hexdigest()
+++
+++by_reading = [f for f in facts if "edition" in f["reading"].casefold()]
+++by_player = [f for f in facts if any(player == "version" for _, player in f["roles"])]
+++assert not by_reading
+++fact, = by_player
+++assert fact["id"] == "work_has_version"
+++assert fact["roles"] == [["work", "work"], ["version", "version"]]
+++
+++document = Path("round-2.document.txt").read_bytes()
+++source = normalize("NFC", document.decode("utf-8"))
+++quote = "W-1 has version V-1"
+++assert source.count(quote) == 1
+++start = source.index(quote)
+++record = {
+++    "expected_model_sha256": snapshot,
+++    "document_sha256": hashlib.sha256(document).hexdigest(),
+++    "searches": [
+++        {"query": query, "partial": True, "view_sha256": view_hash, "shown": rows}
+++        for query, rows in [("reading: edition", by_reading), ("role player: version", by_player)]
+++    ],
+++    "inspected_ids": [fact["id"]],
+++    "decisions": [
+++        {"decision": "reuse", "id": fact["id"], "span": [start, start + len(quote)],
+++         "bindings": {"work": "W-1", "version": "V-1"},
+++         "reason": "The work is the subject of has version; V-1 fills its version role."},
+++        {"decision": "defer", "span": [start, start + len("W-1")],
+++         "reason": "W-1 alone does not establish a relationship."},
+++    ],
+++}
+++# Check the captured root and authenticate its pinned includes again at handoff.
+++# The evolution gate repeats its own compare-and-swap check at application time.
+++current = root.read_bytes()
+++if hashlib.sha256(current).hexdigest() != record["expected_model_sha256"]:
+++    raise ValueError("stale growth round: re-open the current model")
+++load_model_bytes_composed(current, source=root, root=root.parent)
+++print(json.dumps(record, ensure_ascii=False, indent=2))
+++```
+++
+++The same round can find a direct reading match by searching for `has version`.
+++Round 1's additive proposal illustrates the third disposition: introduce a
+++new type and fact when the full vocabulary and the source support that decision.
+++Use the preview/apply commands above against the corresponding round snapshot.
++diff --git a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
++index f99aacd1..695c8dc8 100644
++--- a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+++++ b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
++@@ -29,6 +29,69 @@ with a fact about a party. The rest of this file is what prevents that.
++ - **Never emit an inferred operation.** Operations are commitments about side effects; an
++   unattended host does not guess them.
++ 
+++## Current model in the growth prompt
+++
+++Start a round with `gnd verbalize model MODEL --for-growth` or
+++`gnd.api.verbalize_model(MODEL, for_growth=True)`. Both supply the same complete
+++inventory of the validated model, including IDs from verified includes. Name
+++existing elements by those IDs. The compact form omits provenance, samples and
+++rationale. Consult the full model for the evidence or meaning of a constraint
+++before deciding that two constraints are equivalent.
+++
+++If the view exceeds the prompt budget, retain it in the host and give the
+++agent excerpts on demand. Label every excerpt with the full view's SHA-256
+++and whether it is partial. The agent chooses its searches: after a reading
+++misses, try a synonym, inspect a role player's facts, follow a subtype or
+++reference, or widen to the complete inventory. Record the queries, candidates
+++shown and inspected IDs in order. At the budget limit, defer an unresolved
+++claim in the round's open questions. Before proposing a new element, check
+++the complete inventory for its shape and assess the matching readings against
+++the occurrence. Any number of missing shortlist entries alone is
+++insufficient evidence of novelty. A shape match prompts a reading and
+++role-direction check; it establishes no equivalence on its own.
+++
+++For each decision retain the document digest, exact occurrence and evidence
+++binding each named role, the decision (reuse, propose new, or defer), and the
+++reason. Replay the saved excerpts and decisions. Bind the proposal's
+++`expected_model_sha256` to the exact root bytes read for the round. Those bytes
+++pin the included files; GND authenticates the files when loading the root.
+++Reload and verify before applying through the ordinary evolution gates. A view
+++digest is a prompt cache key: evidence-only edits can leave it unchanged.
+++The packaged `examples/seeded_growth/README.md` walks through a missed search
+++and a second route to an included fact.
+++
+++### Growth view v1
+++
+++Hash the UTF-8 encoding of the returned string, including its single final LF.
+++V1 is compact JSON, with sorted keys, no extra whitespace, unescaped Unicode
+++and no normalization of model strings. It preserves stable IDs, excludes
+++filesystem paths, and uses these arrays:
+++
+++- `object_types` is sorted by ID. Records carry ID and kind, plus authored name,
+++  primitive, precision, scale, reference scheme, inherited-reference flag, derivation,
+++  storage and independence when present.
+++- `subtypes` lists direct `[subtype, supertype]` pairs in endpoint order.
+++- `fact_types` is sorted by ID. Each record has its primary reading, authored
+++  inverse reading and objectification target when present, derivation status
+++  (default `asserted`), authored storage and objectification independence, and ordered `[role_name, object_type]` pairs.
+++- `constraints` is sorted by the canonical JSON of each signature, preserving
+++  multiplicity. Every record identifies its type and host (fact ID or JSON
+++  null for a model-level constraint), plus its authored ID when present.
+++  Authored lifecycle status and modality are preserved. Rejected constraints are marked `archived: true`. Other absent fields are omitted.
+++
+++Uniqueness, mandatory, disjunctive mandatory, anchored and frequency signatures
+++retain their role operands and authored scope, preferred flag, recognizers or
+++bounds. Ring retains its variant. Subset, equality, exclusion and exclusive-or
+++keep the named operand sides and ordered sequences. Value, value-comparison,
+++cardinality and subtype-partition keep their declared targets, comparison
+++operators, domain values/ranges, bounds or partition flags. Guarded signatures
+++identify participating atoms by location, fact ID and role names; textual
+++signatures identify the language when declared. Rule bodies, free-text
+++expressions, operations and sample populations belong to the full model.
+++The signature is for finding candidates; interpreting an entire rule requires
+++the full model. Redacted models can still expose vocabulary and declared domain
+++values. Handle the view as model data.
+++
++ ## What one round is
++ 
++ One round is one document, in four moves.
++diff --git a/tests/test_public_api.py b/tests/test_public_api.py
++index 6d23e8c9..a82b2e16 100644
++--- a/tests/test_public_api.py
+++++ b/tests/test_public_api.py
++@@ -38,7 +38,7 @@ def test_public_exports_and_current_keyword_signatures():
++     assert tuple(signature.parameters) == ("model", "fact_types")
++     assert signature.parameters["fact_types"].kind is inspect.Parameter.KEYWORD_ONLY
++     assert signature.parameters["fact_types"].default is None
++-    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model",)
+++    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model", "for_growth")
++ 
++ 
++ def test_loaded_model_validation_rechecks_nested_mutation():
++diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
++index d7c2752a..3289da51 100644
++--- a/tests/test_rf1_cli_pins.py
+++++ b/tests/test_rf1_cli_pins.py
++@@ -228,7 +228,7 @@ def _witness_projection_successor(command):
++ 
++ 
++ def _model_review_successor():
++-    """Decode the frozen grammar independently, then add only MC2's literal leaf."""
+++    """Decode the frozen grammar independently, then add MC2's leaf and GC2's opt-in flag."""
++     base = json.loads(golden_path('cli', 'tree').read_text())['subcommands']['verbalize']
++     reference = cli._BandSafeParser(prog=base['prog'], description=base['description'])
++ 
++@@ -238,6 +238,8 @@ def _model_review_successor():
++     assert canonical(before) == canonical(base)  # Every old field binds before widening.
++     model = children.add_parser('model', help='Render the complete model for review.')
++     model.add_argument('model')
+++    model.add_argument('--for-growth', action='store_true',
+++                       help='Emit the compact UTF-8 JSON vocabulary for a growth round.')
++     after = _walk(reference, ('gnd', 'verbalize'), {})
++     after['listed_help'] = base['listed_help']
++ 
++diff --git a/tests/test_v61_phase2_api.py b/tests/test_v61_phase2_api.py
++index 9f6b4aa2..671fab9e 100644
++--- a/tests/test_v61_phase2_api.py
+++++ b/tests/test_v61_phase2_api.py
++@@ -40,7 +40,7 @@ def test_public_all_is_exact() -> None:
++ 
++ def test_public_signatures_are_stable() -> None:
++     api = _api()
++-    assert tuple(inspect.signature(api.verbalize_model).parameters) == ('model',)
+++    assert tuple(inspect.signature(api.verbalize_model).parameters) == ('model', 'for_growth')
++     assert tuple(inspect.signature(api.validate).parameters) == ('model', 'unredacted', 'references')
++     assert tuple(inspect.signature(api.check).parameters) == ('model', 'population', 'compiled_operations', 'unredacted', 'anchors', 'document', 'population_bytes', 'admission', 'references', 'composition', 'sources')
++     compiled = inspect.signature(api.check).parameters['compiled_operations']
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/review.log b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/review.log
+new file mode 100644
+index 00000000..e69de29b
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/review.md b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/review.md
+new file mode 100644
+index 00000000..028e7424
+--- /dev/null
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/review.md
+@@ -0,0 +1,61 @@
++Claim C1 does not fully hold. On the Python API, `for_growth=True` will render a loaded model that was changed after loading and no longer validates. The CLI can never do that, so the two surfaces disagree, and the guidance says the view is the inventory of "the validated model". All 16 SHA-256 values match the brief.
++
++## 1. Findings
++
++**F1. The API's growth view renders a model that fails validation. The CLI cannot produce that output, and the guidance promises a validated model.** (`src/gnd/api.py:1029-1031`; the guidance is in `src/gnd/skills/gnd-model-from-text/references/unattended-growth.md`, at its "Current model in the growth prompt" section)
++- **What's wrong:** when the caller passes a `Model` object, `verbalize_model(model, for_growth=True)` goes to `_resolve_model` (`checking_service.py:73-80`), which hands the object back unchanged. `render_growth_view` then renders it without validating it again. The CLI only takes paths, and paths always go through `load_model`, which validates.
++- **Why it matters here:** the guidance says "Both supply the same complete inventory of the validated model", and the packaged README example takes this `Model` route. The repository already has a way to recheck a changed model: `api.validate` re-checks nested mutation.
++- **Observed effect:** a host that edits a loaded model in memory gets a view of an invalid model. That view carries a SHA-256 the protocol treats as authoritative, so the agent can name role players that do not exist. The new test `test_public_growth_view_options_and_fact_metadata` edits a loaded model and renders it without validating, so it locks this behaviour in.
++- **Reproduce** (I ran this):
++  ```
++  m = load_model('tests/fixtures/rmap/cases/17-objectification/model.yaml')
++  m.fact_types[0]['roles'][0]['object_type'] = 'no_such_type'
++  m.fact_types[0]['reading'] = 'totally unrelated'
++  api.verbalize_model(m, for_growth=True)
++  ```
++  - It returns `{"id":"student_has_name","reading":"totally unrelated","roles":[["student","no_such_type"],...]}`.
++  - `api.validate(m)` on the same object reports exit 3 with `semantic:role-ref`.
++  - It should either refuse, or render only after validating again, as the path route does.
++  - The default review mode has always skipped this check for `Model` input (the earlier `verbalize_model` already did). GC2 is the change that adds the "validated model" promise and the claim that the surfaces agree.
++
++**F2. Two of the spec's acceptance checks are not run.** (`tests/test_growth_view.py:54-72`, `src/gnd/examples/seeded_growth/README.md`)
++- **Direct reading match:** the spec asks to "Verify a direct reading match and ambiguous deferral."
++  - The README only says in prose that searching for `has version` finds the fact by its reading. No search is run on that query.
++  - Line 72 of the test checks for "has version" in the result of the *role-player* search, not a reading search.
++- **Ambiguous deferral:** the example defers `W-1`, a substring of the occurrence it has just reused, with the reason "W-1 alone does not establish a relationship." That is not an ambiguous occurrence (one the agent can't resolve and so defers), so ambiguous deferral is never shown.
++- **Consequence:** a regression in either path would pass the suite. This is a gap in test coverage, not a wrong output.
++
++**Style (no observable consequence):**
++- `VOCAB` at `tests/test_growth_view.py:17` is never used.
++- The test pulls the README's code block out with `split("```python\n")`. It works on the committed README, which this project writes itself. It would break if an earlier Python block were added.
++- The conditional call at `checking.py:395` could simply pass the keyword through.
++
++## 2. What I checked and found true
++
++- **The two surfaces agree on path input:**
++  - CLI and API produced the same output for a model under a directory named `café/`, with `PYTHONIOENCODING=ascii` (SHA `b3be49…` both ways).
++  - Redirecting stdout to a buffer-less `StringIO` falls back to `print` and still emits the same text.
++  - A stale include gives `include:hash-mismatch` and exit 3 under the ascii encoding, with no view written.
++  - A missing model gives exit 66.
++  - Both surfaces refuse the same way when the path goes through the `/tmp` symlink (`include:unreadable`). That refusal comes from the existing include-safety rules, not from GC2.
++- **The agent can check role direction:** placeholders bind to roles by position (`representation-format.md:276,283`). The view keeps the authored reading and the ordered `[role_name, object_type]` pairs.
++- **The agent can change route, widen or defer:**
++  - The view includes `subtypes`, the object-type `reference` field and `inverse_reading`.
++  - The guidance tells the agent to retry with a synonym, look at a role player's facts, follow a subtype or reference, widen to the full inventory, and defer into `open_questions`.
++  - It states that a missing shortlist entry is not evidence of novelty.
++- **The README's spans follow the repository convention:** code points of the NFC-normalised text (`representation-format.md:756`), and the occurrence is checked to be unique.
++- **Inputs:** `for_growth="yes"` raises `TypeError`, and output without the flag is unchanged.
++- **Tests:** the four affected files pass (172 tests). `__all__` already included `verbalize_model`, so "twelve functions" is consistent. No other page cites the old count of eleven.
++- **Standing check (code fitted to its examples):**
++  - The README filters (`"edition" in reading.casefold()`, `player == "version"`) are illustrative host choices, not product code.
++  - The CLI's `isinstance(…, bool)` check is complete for its input.
++  - The README extraction in the test is the only structural split. It reads text the project writes itself, and I found no legal breaking input that matters.
++  - No product regex or special-case branch was added.
++
++## 3. What I could not check
++
++- I did not build a wheel or install it into a fresh environment, though the spec requires it.
++- I did not check the repository guard output, lint, or fixture byte sizes. These were outside a read-only review's time budget.
++- I did not run the README example after a real round 1 has been applied.
++
++VERDICT: CHANGES_REQUESTED
+diff --git a/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/run.json b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/run.json
+new file mode 100644
+index 00000000..83cc6524
+--- /dev/null
++++ b/.gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/run.json
+@@ -0,0 +1,20 @@
++{
++  "argv": [
++    "claude",
++    "-p",
++    "--model",
++    "opus",
++    "--permission-mode",
++    "plan"
++  ],
++  "reviewer": "claude",
++  "model": "opus",
++  "transport": "BRIEF.md on stdin",
++  "started": "2026-11-27T09:03:32.386277+00:00",
++  "brief_sha256": "9aa0722f0e59e0c7322f3679f0654f39fd93da819a008a717f9f32722208ba67",
++  "stdout": "review.md",
++  "exit": 0,
++  "finished": "2026-11-27T09:07:00.530003+00:00",
++  "state": "done",
++  "review_sha256": "26a835bb153861e99f6077bbb7e5b1f8e415ef974790363bc7d90fe65e5c1d06"
++}
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 6e6b3bb9..f327befb 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -547,7 +547,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### cli.checking_command
+-- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
++- does: Register and dispatch validation, population checks, complete model review and compact growth views, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
+ - verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review, baseline model, compare rule editions
+ - in: argparse subparsers or a parsed command namespace
+ - out: registered parsers or the selected command exit code
+@@ -2187,7 +2187,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### cli.api
+-- does: Expose model review text and in-process checking reports with receipts and reusable evaluation sessions.
++- does: Expose complete review or compact growth-prompt text and in-process checking reports with receipts and reusable evaluation sessions.
+ - verbs: validate, validate with source documents, check, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
+ - in: paths or loaded GND objects; per-operation options
+ - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 7d10e531..58d43bcb 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -119,19 +119,19 @@ Stable in-process access to GND validation and checking reports.
+ | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
+ | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
+ | `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
+-| `verbalize_model(model) -> str` | function | 1022 | Render the caller's complete model for review, including authored samples. |
+-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1031 | Render derived fact types' rules in GND's controlled language. |
+-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1074 | Audit a declared post, or compute it when ``post`` is omitted. |
+-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1103 | Evaluate saved opinions without obtaining any external judgment. |
+-| `EvaluationSession` | class | 1220 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1244 | (no docstring) |
+-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1259 | (no docstring) |
+-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1267 | (no docstring) |
+-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1277 | Validate whole ordered relation replacements between evaluations. |
+-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1286 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+-| `EvaluationSession.reset(self) -> None` | method | 1298 | (no docstring) |
+-| `EvaluationSession.close(self) -> None` | method | 1301 | (no docstring) |
+-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1304 | (no docstring) |
++| `verbalize_model(model, *, for_growth) -> str` | function | 1022 | Render the complete model for review, or its canonical growth-prompt inventory. |
++| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1038 | Render derived fact types' rules in GND's controlled language. |
++| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1081 | Audit a declared post, or compute it when ``post`` is omitted. |
++| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1110 | Evaluate saved opinions without obtaining any external judgment. |
++| `EvaluationSession` | class | 1227 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
++| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1251 | (no docstring) |
++| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1266 | (no docstring) |
++| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1274 | (no docstring) |
++| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1284 | Validate whole ordered relation replacements between evaluations. |
++| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1293 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
++| `EvaluationSession.reset(self) -> None` | method | 1305 | (no docstring) |
++| `EvaluationSession.close(self) -> None` | method | 1308 | (no docstring) |
++| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1311 | (no docstring) |
+ 
+ ## gnd.applicability — `src/gnd/applicability.py`
+ Components: check.applicability
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index 1b05c445..64ce1858 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -29,8 +29,8 @@ Components: cli.checking_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 1089 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 1124 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 1094 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 1129 | (no docstring) |
+ 
+ ## gnd.commands.codegen — `src/gnd/commands/codegen.py`
+ Components: cli.codegen_command
+diff --git a/docs/reference/cli.md b/docs/reference/cli.md
+index aae0cb1c..56008a77 100644
+--- a/docs/reference/cli.md
++++ b/docs/reference/cli.md
+@@ -153,6 +153,8 @@ whose function list is the one count of record.
+ Shared-vocabulary models use the canonical
+ [model includes contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#model-includes-version-5).
+ `gnd verbalize model MODEL` reads the composed model and identifies its includes.
++Use `gnd verbalize model MODEL --for-growth` for canonical UTF-8 JSON containing
++the composed vocabulary and constraint signatures for a growth prompt.
+ For an edition update, see the
+ [expense walkthrough](../how-to/shared-expense-policies-commands.md#review-edition-2)
+ and the evolution contract linked above; `--previous-include ID=PATH` supplies
+diff --git a/docs/reference/disclosure.md b/docs/reference/disclosure.md
+index 23751d74..900199b0 100644
+--- a/docs/reference/disclosure.md
++++ b/docs/reference/disclosure.md
+@@ -124,7 +124,7 @@ Do not route them to a customer.
+ | `gnd fidelity` | the extracted facts it measures | Its input is your own extraction case. |
+ | `gnd doccheck` | the population values a rendered document misses | Its input is your own rendering case. |
+ | `gnd compose`, `gnd.api.compose` | the caller's own composed population; the composition record carries no value | Its inputs are your own populations; refusals name sources and indexes, never values. |
+-| `gnd verbalize model`, `gnd.api.verbalize_model` | the caller's complete model review, including authored sample populations | Its input is your own model; it takes no supplied population. |
++| `gnd verbalize model`, `gnd.api.verbalize_model` | the default complete model review includes authored sample populations; the opt-in growth view emits vocabulary and constraint signatures | Its input is your own model; it takes no supplied population. |
+ | `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; the model's object-type, fact-type and role ids, as table and column names in the semantic model and mapping, or the names a `--physical-binding` file gives; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A `redact` declaration withholds population values from reports. It does not change the export, which prints a note counting the fact types that declare it. |
+ | `gnd import ossie` | whatever model content the ontology and its sidecar carry | Its inputs are your own files. |
+ 
+diff --git a/docs/reference/python-api.md b/docs/reference/python-api.md
+index b861f837..c9c4bc4a 100644
+--- a/docs/reference/python-api.md
++++ b/docs/reference/python-api.md
+@@ -7,11 +7,18 @@ finding and what action to take.
+ 
+ The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
+ `verbalize`, `verbalize_rules`, `diff`, `witness`, `replay`, `why_not` and
+-`compose`: eleven functions, the one count other pages refer to. The opt-in `EvaluationSession`
++`compose`, plus `verbalize_model`: twelve functions, the one count other pages refer to. The opt-in `EvaluationSession`
+ class reuses eligible work between calls. Code generation, experiment
+ orchestration, and model evolution have CLI and skill workflows described in
+ the [task guides](../advanced.md).
+ 
++For a growth round, `gnd.api.verbalize_model(path, for_growth=True)` returns
++the canonical compact inventory as a string. Its UTF-8 encoding is byte-identical
++to `gnd verbalize model MODEL --for-growth`. Omitting the keyword gives the
++ordinary full model review.
++The growth option revalidates a loaded model because its nested rows can change.
++For a round that may apply edits, capture its original root bytes and verify its include pins.
++
+ ## Set up the examples
+ 
+ Install GND using the [quickstart](../quickstart.md), then run these blocks in
+diff --git a/src/gnd/api.py b/src/gnd/api.py
+index a112ca9d..4bc3e006 100644
+--- a/src/gnd/api.py
++++ b/src/gnd/api.py
+@@ -1019,13 +1019,20 @@ def _compose_with_inputs(model, directory):
+     }, inputs
+ 
+ 
+-def verbalize_model(model: str | os.PathLike[str] | Model) -> str:
+-    """Render the caller's complete model for review, including authored samples."""
+-    from gnd.model_verbalization import render_model_verbalization
++def verbalize_model(model: str | os.PathLike[str] | Model, *, for_growth: bool = False) -> str:
++    """Render the complete model for review, or its canonical growth-prompt inventory."""
++    from gnd.model_verbalization import render_growth_view, render_model_verbalization
++
++    if not isinstance(for_growth, bool):
++        raise TypeError("for_growth must be a bool")
+ 
+     _check_model_input(model)
+     selected, _ = _resolve_model(model)
+-    return render_model_verbalization(selected)
++    if for_growth and isinstance(model, Model):
++        # Model is frozen at the top level, but its nested rows are mutable.
++        document = model.model_dump(exclude={"warnings"}, exclude_defaults=True)
++        selected = model_module._finish_model(document, model._provenance, model._included)
++    return render_growth_view(selected) if for_growth else render_model_verbalization(selected)
+ 
+ 
+ def verbalize_rules(
+diff --git a/src/gnd/commands/checking.py b/src/gnd/commands/checking.py
+index 186ee52b..c8344643 100644
+--- a/src/gnd/commands/checking.py
++++ b/src/gnd/commands/checking.py
+@@ -391,9 +391,9 @@ def _print_lineage(payload: dict) -> None:
+         print(f"lineage {fact['fact_type']}#{fact['index']}: {sources}")
+ 
+ 
+-def _cmd_verbalize_model(model_path: str) -> int:
++def _cmd_verbalize_model(model_path: str, *, for_growth: bool = False) -> int:
+     try:
+-        text = api_module.verbalize_model(model_path)
++        text = api_module.verbalize_model(model_path, for_growth=True) if for_growth else api_module.verbalize_model(model_path)
+     except FileNotFoundError as error:
+         print(f"MISSING: {verbalize.line_text(error)}", file=sys.stderr)
+         return EXIT_NO_INPUT
+@@ -406,7 +406,10 @@ def _cmd_verbalize_model(model_path: str) -> int:
+     except Exception as error:  # noqa: BLE001 -- unexpected defects retain the internal band
+         print(f"INTERNAL ERROR: {verbalize.line_text(error)}", file=sys.stderr)
+         return EXIT_INTERNAL
+-    print(text, end='')
++    if for_growth and getattr(sys.stdout, 'buffer', None) is not None:
++        sys.stdout.buffer.write(text.encode('utf-8'))
++    else:
++        print(text, end='')
+     return 0
+ 
+ 
+@@ -1081,6 +1084,8 @@ def _register_verbalize(subparsers):
+         "model", help="Render the complete model for review."
+     )
+     verbalize_model_parser.add_argument("model")
++    verbalize_model_parser.add_argument("--for-growth", action="store_true",
++                                        help="Emit the compact UTF-8 JSON vocabulary for a growth round.")
+ 
+     return {'verbalize_parser': verbalize_parser, 'verbalize_population_parser': verbalize_population_parser,
+             'verbalize_model_parser': verbalize_model_parser}
+@@ -1170,7 +1175,7 @@ def handle(args, parsers) -> int:
+ 
+     if args.command == "verbalize":
+         if args.verbalize_target == 'model':
+-            return _cmd_verbalize_model(args.model)
++            return _cmd_verbalize_model(args.model, for_growth=args.for_growth)
+         if (args.anchors is None) != (args.document is None):
+             verbalize_population_parser.error("--anchors and --document must be supplied together")
+         return _cmd_verbalize_population(
+diff --git a/src/gnd/examples/seeded_growth/README.md b/src/gnd/examples/seeded_growth/README.md
+index 51ba10ee..3eb8ae66 100644
+--- a/src/gnd/examples/seeded_growth/README.md
++++ b/src/gnd/examples/seeded_growth/README.md
+@@ -36,3 +36,78 @@ what the seed carries. The proposals and the judgment inputs bind digests; in
+ the source repository, regenerate them with
+ `tools/build_seeded_growth_example.py` after any edit to the seed, the root or
+ a document.
++
++## Retry an unsuccessful search
++
++Run the following in a fresh copy of this example, before applying round 1.
++The recorded path is one possible agent decision. A host can offer different
++searches and replay the resulting record. The root's pinned seed supplies the
++work/version fact. The short phrase alone leaves the relation unresolved.
++
++```python
++import hashlib
++import json
++from pathlib import Path
++from unicodedata import normalize
++
++from gnd import api
++from gnd.model import load_model_bytes_composed
++
++root = Path("root.orm.yaml")
++raw = root.read_bytes()
++model = load_model_bytes_composed(raw, source=root, root=root.parent)
++view_text = api.verbalize_model(model, for_growth=True)
++view = json.loads(view_text)
++facts = view["fact_types"]
++snapshot = hashlib.sha256(raw).hexdigest()
++view_hash = hashlib.sha256(view_text.encode("utf-8")).hexdigest()
++
++by_reading = [f for f in facts if "edition" in f["reading"].casefold()]
++by_player = [f for f in facts if any(player == "version" for _, player in f["roles"])]
++assert not by_reading
++fact, = by_player
++assert fact["id"] == "work_has_version"
++assert fact["roles"] == [["work", "work"], ["version", "version"]]
++
++document = Path("round-2.document.txt").read_bytes()
++source = normalize("NFC", document.decode("utf-8"))
++quote = "W-1 has version V-1"
++assert source.count(quote) == 1
++start = source.index(quote)
++# A separate passage mentions both IDs but supplies no directed predicate.
++ambiguous = "The catalogue lists W-1 alongside V-1."
++ambiguous_hash = hashlib.sha256(ambiguous.encode("utf-8")).hexdigest()
++direct = [f for f in facts if "has version" in f["reading"].casefold()]
++assert [f["id"] for f in direct] == [fact["id"]]
++record = {
++    "expected_model_sha256": snapshot,
++    "document_sha256": hashlib.sha256(document).hexdigest(),
++    "searches": [
++        {"query": query, "partial": True, "view_sha256": view_hash, "shown": rows}
++        for query, rows in [("reading: edition", by_reading), ("role player: version", by_player)]
++    ],
++    "inspected_ids": [fact["id"]],
++    "direct_lookup": {"query": "reading: has version", "shown": direct,
++                      "partial": True, "view_sha256": view_hash},
++    "ambiguous_document": ambiguous,
++    "decisions": [
++        {"decision": "reuse", "id": fact["id"], "span": [start, start + len(quote)],
++         "bindings": {"work": "W-1", "version": "V-1"},
++         "reason": "The work is the subject of has version; V-1 fills its version role."},
++        {"decision": "defer", "document_sha256": ambiguous_hash, "span": [0, len(ambiguous)],
++         "reason": "Listing two identifiers together leaves the relationship and direction unresolved."},
++    ],
++}
++# Check the captured root and authenticate its pinned includes again at handoff.
++# The evolution gate repeats its own compare-and-swap check at application time.
++current = root.read_bytes()
++if hashlib.sha256(current).hexdigest() != record["expected_model_sha256"]:
++    raise ValueError("stale growth round: re-open the current model")
++load_model_bytes_composed(current, source=root, root=root.parent)
++print(json.dumps(record, ensure_ascii=False, indent=2))
++```
++
++The same round can find a direct reading match by searching for `has version`.
++Round 1's additive proposal illustrates the third disposition: introduce a
++new type and fact when the full vocabulary and the source support that decision.
++Use the preview/apply commands above against the corresponding round snapshot.
+diff --git a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+index f99aacd1..695c8dc8 100644
+--- a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
++++ b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+@@ -29,6 +29,69 @@ with a fact about a party. The rest of this file is what prevents that.
+ - **Never emit an inferred operation.** Operations are commitments about side effects; an
+   unattended host does not guess them.
+ 
++## Current model in the growth prompt
++
++Start a round with `gnd verbalize model MODEL --for-growth` or
++`gnd.api.verbalize_model(MODEL, for_growth=True)`. Both supply the same complete
++inventory of the validated model, including IDs from verified includes. Name
++existing elements by those IDs. The compact form omits provenance, samples and
++rationale. Consult the full model for the evidence or meaning of a constraint
++before deciding that two constraints are equivalent.
++
++If the view exceeds the prompt budget, retain it in the host and give the
++agent excerpts on demand. Label every excerpt with the full view's SHA-256
++and whether it is partial. The agent chooses its searches: after a reading
++misses, try a synonym, inspect a role player's facts, follow a subtype or
++reference, or widen to the complete inventory. Record the queries, candidates
++shown and inspected IDs in order. At the budget limit, defer an unresolved
++claim in the round's open questions. Before proposing a new element, check
++the complete inventory for its shape and assess the matching readings against
++the occurrence. Any number of missing shortlist entries alone is
++insufficient evidence of novelty. A shape match prompts a reading and
++role-direction check; it establishes no equivalence on its own.
++
++For each decision retain the document digest, exact occurrence and evidence
++binding each named role, the decision (reuse, propose new, or defer), and the
++reason. Replay the saved excerpts and decisions. Bind the proposal's
++`expected_model_sha256` to the exact root bytes read for the round. Those bytes
++pin the included files; GND authenticates the files when loading the root.
++Reload and verify before applying through the ordinary evolution gates. A view
++digest is a prompt cache key: evidence-only edits can leave it unchanged.
++The packaged `examples/seeded_growth/README.md` walks through a missed search
++and a second route to an included fact.
++
++### Growth view v1
++
++Hash the UTF-8 encoding of the returned string, including its single final LF.
++V1 is compact JSON, with sorted keys, no extra whitespace, unescaped Unicode
++and no normalization of model strings. It preserves stable IDs, excludes
++filesystem paths, and uses these arrays:
++
++- `object_types` is sorted by ID. Records carry ID and kind, plus authored name,
++  primitive, precision, scale, reference scheme, inherited-reference flag, derivation,
++  storage and independence when present.
++- `subtypes` lists direct `[subtype, supertype]` pairs in endpoint order.
++- `fact_types` is sorted by ID. Each record has its primary reading, authored
++  inverse reading and objectification target when present, derivation status
++  (default `asserted`), authored storage and objectification independence, and ordered `[role_name, object_type]` pairs.
++- `constraints` is sorted by the canonical JSON of each signature, preserving
++  multiplicity. Every record identifies its type and host (fact ID or JSON
++  null for a model-level constraint), plus its authored ID when present.
++  Authored lifecycle status and modality are preserved. Rejected constraints are marked `archived: true`. Other absent fields are omitted.
++
++Uniqueness, mandatory, disjunctive mandatory, anchored and frequency signatures
++retain their role operands and authored scope, preferred flag, recognizers or
++bounds. Ring retains its variant. Subset, equality, exclusion and exclusive-or
++keep the named operand sides and ordered sequences. Value, value-comparison,
++cardinality and subtype-partition keep their declared targets, comparison
++operators, domain values/ranges, bounds or partition flags. Guarded signatures
++identify participating atoms by location, fact ID and role names; textual
++signatures identify the language when declared. Rule bodies, free-text
++expressions, operations and sample populations belong to the full model.
++The signature is for finding candidates; interpreting an entire rule requires
++the full model. Redacted models can still expose vocabulary and declared domain
++values. Handle the view as model data.
++
+ ## What one round is
+ 
+ One round is one document, in four moves.
+diff --git a/tests/test_growth_view.py b/tests/test_growth_view.py
+new file mode 100644
+index 00000000..b4666762
+--- /dev/null
++++ b/tests/test_growth_view.py
+@@ -0,0 +1,94 @@
++"""Public compact growth view and search-handoff regression tests."""
++
++import hashlib
++import json
++import os
++import shutil
++import subprocess
++import sys
++from pathlib import Path
++
++import pytest
++
++from gnd import api
++from gnd.model import ModelValidationError, load_model
++
++ROOT = Path(__file__).resolve().parents[1]
++SEED = ROOT / "src/gnd/examples/seeded_growth"
++
++
++def render(source):
++    return api.verbalize_model(source, for_growth=True)
++
++
++def test_cli_utf8_include_identity_and_stale_snapshot(tmp_path):
++    copy = tmp_path / "copy"
++    shutil.copytree(SEED, copy)
++    root = copy / "root.orm.yaml"
++    argv = [sys.executable, "-m", "gnd", "verbalize", "model", str(root), "--for-growth"]
++    # An ordinary text-mode stream would translate/escape non-ASCII here.
++    seed = copy / "seed.orm.yaml"
++    old = hashlib.sha256(seed.read_bytes()).hexdigest()
++    seed.write_bytes(seed.read_bytes().replace(b"WorkKey", "Caf\u00e9".encode()))
++    raw = root.read_bytes().replace(
++        old.encode(), hashlib.sha256(seed.read_bytes()).hexdigest().encode()
++    )
++    root.write_bytes(raw)
++    text = render(root)
++    assert "Caf\u00e9" in text
++    env = dict(os.environ, PYTHONIOENCODING="ascii")
++    for _ in range(2):
++        result = subprocess.run(argv, capture_output=True, env=env, check=True)
++        assert result.stdout == text.encode() and not result.stderr
++    root.write_bytes(raw + b"\n# evidence snapshot changed\n")
++    assert raw != root.read_bytes() and render(root) == text
++    seed.write_bytes(seed.read_bytes() + b"\n")
++    result = subprocess.run(argv, capture_output=True, check=False)
++    assert result.returncode == 3 and b"include:hash-mismatch" in result.stdout
++    assert b"gnd-growth-view-v1" not in result.stdout
++    with pytest.raises(ModelValidationError):
++        render(root)
++
++
++def test_example_search_miss_retry_and_defer(tmp_path):
++    readme = (SEED / "README.md").read_text()
++    code = readme.split("```python\n", 1)[1].split("\n```", 1)[0]
++    copy = tmp_path / "host"
++    shutil.copytree(SEED, copy)
++    rec = json.loads(subprocess.check_output([sys.executable, "-c", code], cwd=copy))
++    assert rec["searches"][0]["shown"] == []
++    assert rec["inspected_ids"] == ["work_has_version"]
++    assert [r["decision"] for r in rec["decisions"]] == ["reuse", "defer"]
++    a, b = rec["decisions"][0]["span"]
++    assert (copy / "round-2.document.txt").read_text()[a:b] == "W-1 has version V-1"
++    assert rec["decisions"][0]["bindings"] == {"work": "W-1", "version": "V-1"}
++    assert rec["decisions"][0]["bindings"] != {"work": "V-1", "version": "W-1"}
++    complete = render(copy / "root.orm.yaml")
++    for search in rec["searches"]:
++        assert search["partial"] is True
++        assert search["view_sha256"] == hashlib.sha256(complete.encode()).hexdigest()
++        assert all(row in json.loads(complete)["fact_types"] for row in search["shown"])
++    assert [row["id"] for row in rec["direct_lookup"]["shown"]] == ["work_has_version"]
++    ambiguous = rec["ambiguous_document"]
++    deferred = rec["decisions"][1]
++    assert deferred["document_sha256"] == hashlib.sha256(ambiguous.encode()).hexdigest()
++    assert deferred["span"] == [0, len(ambiguous)] and "bindings" not in deferred
++    assert "has version" in rec["searches"][1]["shown"][0]["reading"]
++
++def test_public_growth_view_options_and_fact_metadata():
++    model = load_model(ROOT / "tests/fixtures/rmap/cases/17-objectification/model.yaml")
++    with pytest.raises(TypeError, match="for_growth"):
++        api.verbalize_model(model, for_growth="yes")
++    fact = next(f for f in model.fact_types if "objectified_as" in f)
++    fact["objectification_independent"] = True
++    projected = next(f for f in json.loads(render(model))["fact_types"] if f["id"] == fact["id"])
++    assert projected["objectification_independent"] is True
++    assert projected["derivation"] == fact.get("derivation", "asserted")
++    assert projected.get("storage") == fact.get("storage")
++
++
++def test_loaded_growth_model_refuses_invalid_role_player():
++    model = load_model(SEED / "root.orm.yaml")
++    model.fact_types[0]["roles"][0]["object_type"] = "missing_object"
++    with pytest.raises(ModelValidationError, match="undeclared object type"):
++        render(model)
+diff --git a/tests/test_public_api.py b/tests/test_public_api.py
+index 6d23e8c9..a82b2e16 100644
+--- a/tests/test_public_api.py
++++ b/tests/test_public_api.py
+@@ -38,7 +38,7 @@ def test_public_exports_and_current_keyword_signatures():
+     assert tuple(signature.parameters) == ("model", "fact_types")
+     assert signature.parameters["fact_types"].kind is inspect.Parameter.KEYWORD_ONLY
+     assert signature.parameters["fact_types"].default is None
+-    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model",)
++    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model", "for_growth")
+ 
+ 
+ def test_loaded_model_validation_rechecks_nested_mutation():
+diff --git a/tests/test_rf1_cli_pins.py b/tests/test_rf1_cli_pins.py
+index d7c2752a..3289da51 100644
+--- a/tests/test_rf1_cli_pins.py
++++ b/tests/test_rf1_cli_pins.py
+@@ -228,7 +228,7 @@ def _witness_projection_successor(command):
+ 
+ 
+ def _model_review_successor():
+-    """Decode the frozen grammar independently, then add only MC2's literal leaf."""
++    """Decode the frozen grammar independently, then add MC2's leaf and GC2's opt-in flag."""
+     base = json.loads(golden_path('cli', 'tree').read_text())['subcommands']['verbalize']
+     reference = cli._BandSafeParser(prog=base['prog'], description=base['description'])
+ 
+@@ -238,6 +238,8 @@ def _model_review_successor():
+     assert canonical(before) == canonical(base)  # Every old field binds before widening.
+     model = children.add_parser('model', help='Render the complete model for review.')
+     model.add_argument('model')
++    model.add_argument('--for-growth', action='store_true',
++                       help='Emit the compact UTF-8 JSON vocabulary for a growth round.')
+     after = _walk(reference, ('gnd', 'verbalize'), {})
+     after['listed_help'] = base['listed_help']
+ 
+diff --git a/tests/test_v61_phase2_api.py b/tests/test_v61_phase2_api.py
+index 9f6b4aa2..671fab9e 100644
+--- a/tests/test_v61_phase2_api.py
++++ b/tests/test_v61_phase2_api.py
+@@ -40,7 +40,7 @@ def test_public_all_is_exact() -> None:
+ 
+ def test_public_signatures_are_stable() -> None:
+     api = _api()
+-    assert tuple(inspect.signature(api.verbalize_model).parameters) == ('model',)
++    assert tuple(inspect.signature(api.verbalize_model).parameters) == ('model', 'for_growth')
+     assert tuple(inspect.signature(api.validate).parameters) == ('model', 'unredacted', 'references')
+     assert tuple(inspect.signature(api.check).parameters) == ('model', 'population', 'compiled_operations', 'unredacted', 'anchors', 'document', 'population_bytes', 'admission', 'references', 'composition', 'sources')
+     compiled = inspect.signature(api.check).parameters['compiled_operations']

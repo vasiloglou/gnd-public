@@ -545,13 +545,13 @@ def _refuse_values_outside_json(loaded: Model) -> None:
         ) from None
 
 
-def _include_lines(loaded: Model) -> list[str]:
+def _check_resolved_includes(loaded: Model) -> None:
     from gnd.model._includes import refuse_unresolved
 
     if loaded.fact_type_constraints and not loaded.includes:
         refuse_unresolved()
     if not loaded.includes:
-        return []
+        return
     metadata = loaded._included
     if len(metadata) != len(loaded.includes) or any(
         tuple(entry.get(key) for key in ('id', 'path', 'sha256')) !=
@@ -559,9 +559,72 @@ def _include_lines(loaded: Model) -> list[str]:
         for entry, included in zip(loaded.includes, metadata, strict=True)
     ):
         refuse_unresolved()
+
+
+def _include_lines(loaded: Model) -> list[str]:
+    _check_resolved_includes(loaded)
     return [line_text(
         f"Includes {path_segment(entry['id'])} ({path_segment(entry['path'])}, "
         f"sha256 {entry['sha256'][:12]})") for entry in loaded.includes]
+
+
+# The version-1 growth signature projects validated semantic operands only.
+# Preserve authored sequence order, including the sides of asymmetric constraints.
+_GROWTH_CONSTRAINT_FIELDS = (
+    "id", "type", "status", "modality", "scope", "role", "roles", "role_ref", "role_refs",
+    "subset_role_seq", "superset_role_seq", "role_seq_a", "role_seq_b", "role_seqs",
+    "role_a", "role_b", "operator", "object_type", "recognise", "preferred",
+    "bound", "variant", "allowed", "range", "ranges", "supertype", "subtypes",
+    "exclusive", "exhaustive", "formal_language",
+)
+
+
+def _growth_constraint(item: dict, host: str | None) -> dict:
+    from gnd.model import _iter_guarded_atoms
+
+    row = {key: item[key] for key in _GROWTH_CONSTRAINT_FIELDS if key in item}
+    row["host"] = host
+    if item.get("status") == "rejected":
+        row["archived"] = True
+    if item["type"] == "guarded":
+        row["atoms"] = [
+            [path, atom["fact_type"], sorted(atom_bind(atom))]
+            for path, atom in _iter_guarded_atoms(item)
+        ]
+    return row
+
+
+def render_growth_view(model: Model) -> str:
+    """Render a versioned, evidence-free vocabulary for an unattended host."""
+    _check_resolved_includes(model)
+    index = ModelIndex.for_model(model)
+    objects = []
+    subtypes = []
+    for identifier, item in sorted(index.object_types_by_id().items()):
+        objects.append({
+            key: item[key] for key in (
+                "id", "kind", "name", "primitive", "precision", "scale", "reference",
+                "inherits_reference", "derivation", "storage", "independent",
+            ) if key in item
+        })
+        subtypes.extend([identifier, parent] for parent in sorted(item.get("subtype_of", ())))
+    role_players = index.role_object_types()
+    facts = []
+    constraints = [_growth_constraint(item, None) for item in model.constraints]
+    for fact in sorted(index.iter_fact_types_shared(), key=lambda item: item["id"]):
+        row = {key: fact[key] for key in ("id", "reading", "inverse_reading", "objectified_as",
+                                          "objectification_independent", "storage")
+               if key in fact}
+        row["derivation"] = fact.get("derivation", "asserted")
+        row["roles"] = list(role_players[fact["id"]].items())
+        facts.append(row)
+        constraints.extend(_growth_constraint(item, fact["id"]) for item in fact.get("constraints", ()))
+    text = _canonical({
+        "format": "gnd-growth-view-v1", "object_types": objects, "subtypes": subtypes,
+        "fact_types": facts, "constraints": sorted(constraints, key=_canonical),
+    }) + "\n"
+    text.encode("utf-8")  # Refuse non-encodable input before returning even to a text-only host.
+    return text
 
 
 def render_model_verbalization(model: Model | str | Path) -> str:

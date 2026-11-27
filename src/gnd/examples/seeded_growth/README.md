@@ -74,13 +74,17 @@ source = normalize("NFC", document.decode("utf-8"))
 quote = "W-1 has version V-1"
 assert source.count(quote) == 1
 start = source.index(quote)
-# This host can check the literal forward reading printed in this passage.
-# Other document styles need their own source-grounded decision.
+# The agent attributes the subject and object of this occurrence to named roles.
+# Verify proposed values against those citations before recording reuse.
+end = start + len(quote)
+role_spans = {"work": [start, start + len("W-1")], "version": [end - len("V-1"), end]}
 bindings = {"work": "W-1", "version": "V-1"}
+
 def supports_binding(binding):
-    names = {o["id"]: o["name"] for o in view["object_types"]}
-    placeholders = {names[player]: binding[role] for role, player in fact["roles"]}
-    return fact["reading"].format_map(placeholders) == source[start:start + len(quote)]
+    roles = {role for role, player in fact["roles"]}
+    return roles == binding.keys() == role_spans.keys() and all(
+        source[left:right] == binding[role] for role, (left, right) in role_spans.items()
+    )
 
 assert supports_binding(bindings)
 reversed_binding = {"work": bindings["version"], "version": bindings["work"]}
@@ -104,7 +108,7 @@ record = {
     "ambiguous_document": ambiguous,
     "decisions": [
         {"decision": "reuse", "id": fact["id"], "span": [start, start + len(quote)],
-         "bindings": bindings,
+         "bindings": bindings, "role_spans": role_spans,
          "reason": "The work is the subject of has version; V-1 fills its version role."},
         {"decision": "defer", "document_sha256": ambiguous_hash, "span": [0, len(ambiguous)],
          "reason": "Listing two identifiers together leaves the relationship and direction unresolved."},

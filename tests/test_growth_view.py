@@ -64,6 +64,10 @@ def test_example_search_miss_retry_and_defer(tmp_path):
     a, b = rec["decisions"][0]["span"]
     assert (copy / "round-2.document.txt").read_text()[a:b] == "W-1 has version V-1"
     assert rec["decisions"][0]["bindings"] == {"work": "W-1", "version": "V-1"}
+    cited = rec["decisions"][0]
+    source = (copy / "round-2.document.txt").read_text()
+    for role, (left, right) in cited["role_spans"].items():
+        assert source[left:right] == cited["bindings"][role]
     assert rec["reversed_binding_supported"] is False
     complete = render(copy / "root.orm.yaml")
     for search in rec["searches"]:

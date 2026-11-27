@@ -547,7 +547,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.checking_command
-- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
+- does: Register and dispatch validation, population checks, complete model review and compact growth views, transitions, composition, import, diff and coverage CLI arms; print one INCLUDE line per include of an unattended root.
 - verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review, baseline model, compare rule editions
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
@@ -2187,7 +2187,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.api
-- does: Expose model review text and in-process checking reports with receipts and reusable evaluation sessions.
+- does: Expose complete review or compact growth-prompt text and in-process checking reports with receipts and reusable evaluation sessions.
 - verbs: validate, validate with source documents, check, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
 - in: paths or loaded GND objects; per-operation options
 - out: report dictionaries or complete model review text; optional in-process receipt or session feedback

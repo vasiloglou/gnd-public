@@ -228,7 +228,7 @@ def _witness_projection_successor(command):
 
 
 def _model_review_successor():
-    """Decode the frozen grammar independently, then add only MC2's literal leaf."""
+    """Decode the frozen grammar independently, then add MC2's leaf and GC2's opt-in flag."""
     base = json.loads(golden_path('cli', 'tree').read_text())['subcommands']['verbalize']
     reference = cli._BandSafeParser(prog=base['prog'], description=base['description'])
 
@@ -238,6 +238,8 @@ def _model_review_successor():
     assert canonical(before) == canonical(base)  # Every old field binds before widening.
     model = children.add_parser('model', help='Render the complete model for review.')
     model.add_argument('model')
+    model.add_argument('--for-growth', action='store_true',
+                       help='Emit the compact UTF-8 JSON vocabulary for a growth round.')
     after = _walk(reference, ('gnd', 'verbalize'), {})
     after['listed_help'] = base['listed_help']
 

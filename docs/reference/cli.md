@@ -153,6 +153,8 @@ whose function list is the one count of record.
 Shared-vocabulary models use the canonical
 [model includes contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#model-includes-version-5).
 `gnd verbalize model MODEL` reads the composed model and identifies its includes.
+Use `gnd verbalize model MODEL --for-growth` for canonical UTF-8 JSON containing
+the composed vocabulary and constraint signatures for a growth prompt.
 For an edition update, see the
 [expense walkthrough](../how-to/shared-expense-policies-commands.md#review-edition-2)
 and the evolution contract linked above; `--previous-include ID=PATH` supplies

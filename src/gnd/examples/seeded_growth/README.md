@@ -36,3 +36,78 @@ what the seed carries. The proposals and the judgment inputs bind digests; in
 the source repository, regenerate them with
 `tools/build_seeded_growth_example.py` after any edit to the seed, the root or
 a document.
+
+## Retry an unsuccessful search
+
+Run the following in a fresh copy of this example, before applying round 1.
+The recorded path is one possible agent decision. A host can offer different
+searches and replay the resulting record. The root's pinned seed supplies the
+work/version fact. The short phrase alone leaves the relation unresolved.
+
+```python
+import hashlib
+import json
+from pathlib import Path
+from unicodedata import normalize
+
+from gnd import api
+from gnd.model import load_model_bytes_composed
+
+root = Path("root.orm.yaml")
+raw = root.read_bytes()
+model = load_model_bytes_composed(raw, source=root, root=root.parent)
+view_text = api.verbalize_model(model, for_growth=True)
+view = json.loads(view_text)
+facts = view["fact_types"]
+snapshot = hashlib.sha256(raw).hexdigest()
+view_hash = hashlib.sha256(view_text.encode("utf-8")).hexdigest()
+
+by_reading = [f for f in facts if "edition" in f["reading"].casefold()]
+by_player = [f for f in facts if any(player == "version" for _, player in f["roles"])]
+assert not by_reading
+fact, = by_player
+assert fact["id"] == "work_has_version"
+assert fact["roles"] == [["work", "work"], ["version", "version"]]
+
+document = Path("round-2.document.txt").read_bytes()
+source = normalize("NFC", document.decode("utf-8"))
+quote = "W-1 has version V-1"
+assert source.count(quote) == 1
+start = source.index(quote)
+# A separate passage mentions both IDs but supplies no directed predicate.
+ambiguous = "The catalogue lists W-1 alongside V-1."
+ambiguous_hash = hashlib.sha256(ambiguous.encode("utf-8")).hexdigest()
+direct = [f for f in facts if "has version" in f["reading"].casefold()]
+assert [f["id"] for f in direct] == [fact["id"]]
+record = {
+    "expected_model_sha256": snapshot,
+    "document_sha256": hashlib.sha256(document).hexdigest(),
+    "searches": [
+        {"query": query, "partial": True, "view_sha256": view_hash, "shown": rows}
+        for query, rows in [("reading: edition", by_reading), ("role player: version", by_player)]
+    ],
+    "inspected_ids": [fact["id"]],
+    "direct_lookup": {"query": "reading: has version", "shown": direct,
+                      "partial": True, "view_sha256": view_hash},
+    "ambiguous_document": ambiguous,
+    "decisions": [
+        {"decision": "reuse", "id": fact["id"], "span": [start, start + len(quote)],
+         "bindings": {"work": "W-1", "version": "V-1"},
+         "reason": "The work is the subject of has version; V-1 fills its version role."},
+        {"decision": "defer", "document_sha256": ambiguous_hash, "span": [0, len(ambiguous)],
+         "reason": "Listing two identifiers together leaves the relationship and direction unresolved."},
+    ],
+}
+# Check the captured root and authenticate its pinned includes again at handoff.
+# The evolution gate repeats its own compare-and-swap check at application time.
+current = root.read_bytes()
+if hashlib.sha256(current).hexdigest() != record["expected_model_sha256"]:
+    raise ValueError("stale growth round: re-open the current model")
+load_model_bytes_composed(current, source=root, root=root.parent)
+print(json.dumps(record, ensure_ascii=False, indent=2))
+```
+
+The same round can find a direct reading match by searching for `has version`.
+Round 1's additive proposal illustrates the third disposition: introduce a
+new type and fact when the full vocabulary and the source support that decision.
+Use the preview/apply commands above against the corresponding round snapshot.

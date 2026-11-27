@@ -391,9 +391,9 @@ def _print_lineage(payload: dict) -> None:
         print(f"lineage {fact['fact_type']}#{fact['index']}: {sources}")
 
 
-def _cmd_verbalize_model(model_path: str) -> int:
+def _cmd_verbalize_model(model_path: str, *, for_growth: bool = False) -> int:
     try:
-        text = api_module.verbalize_model(model_path)
+        text = api_module.verbalize_model(model_path, for_growth=True) if for_growth else api_module.verbalize_model(model_path)
     except FileNotFoundError as error:
         print(f"MISSING: {verbalize.line_text(error)}", file=sys.stderr)
         return EXIT_NO_INPUT
@@ -406,7 +406,10 @@ def _cmd_verbalize_model(model_path: str) -> int:
     except Exception as error:  # noqa: BLE001 -- unexpected defects retain the internal band
         print(f"INTERNAL ERROR: {verbalize.line_text(error)}", file=sys.stderr)
         return EXIT_INTERNAL
-    print(text, end='')
+    if for_growth and getattr(sys.stdout, 'buffer', None) is not None:
+        sys.stdout.buffer.write(text.encode('utf-8'))
+    else:
+        print(text, end='')
     return 0
 
 
@@ -1081,6 +1084,8 @@ def _register_verbalize(subparsers):
         "model", help="Render the complete model for review."
     )
     verbalize_model_parser.add_argument("model")
+    verbalize_model_parser.add_argument("--for-growth", action="store_true",
+                                        help="Emit the compact UTF-8 JSON vocabulary for a growth round.")
 
     return {'verbalize_parser': verbalize_parser, 'verbalize_population_parser': verbalize_population_parser,
             'verbalize_model_parser': verbalize_model_parser}
@@ -1170,7 +1175,7 @@ def handle(args, parsers) -> int:
 
     if args.command == "verbalize":
         if args.verbalize_target == 'model':
-            return _cmd_verbalize_model(args.model)
+            return _cmd_verbalize_model(args.model, for_growth=args.for_growth)
         if (args.anchors is None) != (args.document is None):
             verbalize_population_parser.error("--anchors and --document must be supplied together")
         return _cmd_verbalize_population(

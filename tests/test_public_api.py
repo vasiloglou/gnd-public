@@ -38,7 +38,7 @@ def test_public_exports_and_current_keyword_signatures():
     assert tuple(signature.parameters) == ("model", "fact_types")
     assert signature.parameters["fact_types"].kind is inspect.Parameter.KEYWORD_ONLY
     assert signature.parameters["fact_types"].default is None
-    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model",)
+    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model", "for_growth")
 
 
 def test_loaded_model_validation_rechecks_nested_mutation():

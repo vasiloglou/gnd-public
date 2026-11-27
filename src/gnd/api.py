@@ -1019,13 +1019,20 @@ def _compose_with_inputs(model, directory):
     }, inputs
 
 
-def verbalize_model(model: str | os.PathLike[str] | Model) -> str:
-    """Render the caller's complete model for review, including authored samples."""
-    from gnd.model_verbalization import render_model_verbalization
+def verbalize_model(model: str | os.PathLike[str] | Model, *, for_growth: bool = False) -> str:
+    """Render the complete model for review, or its canonical growth-prompt inventory."""
+    from gnd.model_verbalization import render_growth_view, render_model_verbalization
+
+    if not isinstance(for_growth, bool):
+        raise TypeError("for_growth must be a bool")
 
     _check_model_input(model)
     selected, _ = _resolve_model(model)
-    return render_model_verbalization(selected)
+    if for_growth and isinstance(model, Model):
+        # Model is frozen at the top level, but its nested rows are mutable.
+        document = model.model_dump(exclude={"warnings"}, exclude_defaults=True)
+        selected = model_module._finish_model(document, model._provenance, model._included)
+    return render_growth_view(selected) if for_growth else render_model_verbalization(selected)
 
 
 def verbalize_rules(

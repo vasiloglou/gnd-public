@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from unicodedata import normalize
 
 import pytest
 
@@ -62,11 +63,13 @@ def test_example_search_miss_retry_and_defer(tmp_path):
     assert rec["inspected_ids"] == ["work_has_version"]
     assert [r["decision"] for r in rec["decisions"]] == ["reuse", "defer"]
     a, b = rec["decisions"][0]["span"]
-    assert (copy / "round-2.document.txt").read_text()[a:b] == "W-1 has version V-1"
     assert rec["decisions"][0]["bindings"] == {"work": "W-1", "version": "V-1"}
     cited = rec["decisions"][0]
-    source = (copy / "round-2.document.txt").read_text()
+    source = normalize("NFC", (copy / "round-2.document.txt").read_bytes().decode("utf-8"))
+    assert source[a:b] == "W-1 has version V-1"
+    assert cited["role_spans"].keys() == cited["bindings"].keys()
     for role, (left, right) in cited["role_spans"].items():
+        assert cited["span"][0] <= left < right <= cited["span"][1]
         assert source[left:right] == cited["bindings"][role]
     assert rec["reversed_binding_supported"] is False
     complete = render(copy / "root.orm.yaml")

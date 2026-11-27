@@ -80,15 +80,20 @@ end = start + len(quote)
 role_spans = {"work": [start, start + len("W-1")], "version": [end - len("V-1"), end]}
 bindings = {"work": "W-1", "version": "V-1"}
 
-def supports_binding(binding):
+def supports_binding(binding, citations):
     roles = {role for role, player in fact["roles"]}
-    return roles == binding.keys() == role_spans.keys() and all(
-        source[left:right] == binding[role] for role, (left, right) in role_spans.items()
+    return roles == binding.keys() == citations.keys() and all(
+        start <= left < right <= end and source[left:right] == binding[role]
+        for role, (left, right) in citations.items()
     )
 
-assert supports_binding(bindings)
+assert supports_binding(bindings, role_spans)
 reversed_binding = {"work": bindings["version"], "version": bindings["work"]}
-assert not supports_binding(reversed_binding)
+assert not supports_binding(reversed_binding, role_spans)
+other_work = source.index("W-2", end)
+other_version = source.index("V-2", other_work)
+other_citations = {"work": [other_work, other_work + 3], "version": [other_version, other_version + 3]}
+assert not supports_binding({"work": "W-2", "version": "V-2"}, other_citations)
 # A separate passage mentions both IDs but supplies no directed predicate.
 ambiguous = "The catalogue lists W-1 alongside V-1."
 ambiguous_hash = hashlib.sha256(ambiguous.encode("utf-8")).hexdigest()
@@ -102,7 +107,7 @@ record = {
         for query, rows in [("reading: edition", by_reading), ("role player: version", by_player)]
     ],
     "inspected_ids": [fact["id"]],
-    "reversed_binding_supported": supports_binding(reversed_binding),
+    "reversed_binding_supported": supports_binding(reversed_binding, role_spans),
     "direct_lookup": {"query": "reading: has version", "shown": direct,
                       "partial": True, "view_sha256": view_hash},
     "ambiguous_document": ambiguous,

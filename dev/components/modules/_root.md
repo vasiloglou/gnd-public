@@ -746,10 +746,11 @@ Deterministic, complete stakeholder verbalization of an ORM model.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `VerbalizationError` | class(ValueError) | 38 | The caller supplied a value that is not a validated ORM model. |
-| `render_model_verbalization(model) -> str` | function | 567 | Render all model semantics in stable-id order with one final newline. |
-| `RuleVerbalization` | class | 701 | One derived fact type's rule, rendered or reported as not renderable. |
-| `check_fact_type_selection(fact_types) -> None` | function | 710 | The one argument check for a fact-type selection: None or a list or tuple of str. |
-| `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 719 | Render each selected derived fact type's rule in stable id order. |
+| `render_growth_view(model) -> str` | function | 597 | Render a versioned, evidence-free vocabulary for an unattended host. |
+| `render_model_verbalization(model) -> str` | function | 630 | Render all model semantics in stable-id order with one final newline. |
+| `RuleVerbalization` | class | 764 | One derived fact type's rule, rendered or reported as not renderable. |
+| `check_fact_type_selection(fact_types) -> None` | function | 773 | The one argument check for a fact-type selection: None or a list or tuple of str. |
+| `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 782 | Render each selected derived fact type's rule in stable id order. |
 
 ## gnd.ossie_import — `src/gnd/ossie_import.py`
 Components: model.ossie_import

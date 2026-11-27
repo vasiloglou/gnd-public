@@ -10,3 +10,6 @@ Document complete and partial prompt context, view digest, raw model root digest
 
 ## Acceptance
 Run the public API compatibility checks, default verbalization snapshots, two fresh CLI calls on an included Unicode model, and a stale include refusal. Check both complete and partial host guidance. Execute the documented example and verify the recovered ID, role bindings and exact span. Verify a direct reading match and ambiguous deferral. Build and install a wheel into a fresh environment, compare CLI and API bytes there and execute the packaged example. Record fixture byte sizes, repository guard output, lint and the independent Claude verdict.
+
+## Ruling
+2026-11-27. The delegated coordinator approves GC2 after the GC1 repair review. Include the CLI grammar successor and a public test for fact metadata. The static example demonstrates host decisions; preserve the agent's authority to retry, change paths and defer.

@@ -1,0 +1,98 @@
+{
+  "base": "c00ac195",
+  "claims": [
+    "Derived and independent objects retain their structural distinctions without disclosing rule bodies."
+  ],
+  "created": "2026-11-27T08:58:36.134210+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r3/diff.patch",
+      "sha256": "f633f28a7ab0b7b1f7ae2c4fb8591cdae577b5405a3b4faaddb6e46ad78cf058"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/evidence/dynamic-query-successor.json",
+      "sha256": "4667d94c3325f8958ede574f8fd2e2968caf9412aa59d474aa1829e913849d0b"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/BRIEF.md",
+      "sha256": "6708eea30ea960022bf5655f75b12db58f7116440fafe949dd31213c1e95750c"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/FINDINGS.md",
+      "sha256": "f370ebb155cb02eb40fbd69b6a73fb6508f612ca4972c3c247e67c77b5f4083f"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/brief.json",
+      "sha256": "9405c4dac565e0547a70ba24b161e44252ad3124144086e1c62b9d1c7125313d"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/diff.patch",
+      "sha256": "953418ef1ae92e4439eb1306a4ce7248dd1e78c00d17c81963b622ec960632e3"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/review.log",
+      "sha256": "2122456c9827a04aff9792c1149505097ac016d61c330a0df0dd73976358987c"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/review.md",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/run.json",
+      "sha256": "85cb1617a8e76d3db2e20e14d1f7d6934669065e58db724215e8f5e2d1acbcdf"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/BRIEF.md",
+      "sha256": "cf124119bcb4b1de1cb50a80d939f5d0cb8d4a68abf5c1bb1d8df1d1832fcee6"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/FINDINGS.md",
+      "sha256": "77052e5d08524e1477d37db592179a3cac042e93aa6c25a1ac3f75cf025db5e1"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/brief.json",
+      "sha256": "9b925b8f4f55ca65dbc230f79100567562144c9965c693cf89833d4d48932c2f"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/diff.patch",
+      "sha256": "953418ef1ae92e4439eb1306a4ce7248dd1e78c00d17c81963b622ec960632e3"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/review.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/review.md",
+      "sha256": "8c0f1dbfab26c03a3355902e89a5989365d4afe3a036fd580b1a56d690902c2f"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/run.json",
+      "sha256": "bb923adb3bcb5754108086af13f87eadf9cbdcc7f49fa4f5e1c2b95da60b5999"
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "sha256": "606a0b207e17af6d464978b19eb1ad8d6bb51f4cab7a9b7c09393d1d5df5200a"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "6d963332672b96692fa138fa6e413529c1453e038bfe2aec1195ccac5b37d960"
+    },
+    {
+      "path": "tests/test_growth_projection.py",
+      "sha256": "2475018268d20ee03312f4564d6730021c93411627027fdd097f36703355213e"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/phase-GC1-spec.md",
+      "sha256": "438be1e40fb319d069c4a6b57737fb1f94a071e645ce8ec185a9c99c11e08edd"
+    }
+  ],
+  "head": "9810d182698b4413db1b626f10baa23fc35ce1a1",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Do the repaired object and fact metadata projections meet GC1, and are any previously reported correctness defects still present?",
+  "subject": "phase",
+  "version": 1
+}

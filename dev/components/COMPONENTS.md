@@ -2580,7 +2580,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.verbalization
-- does: Render deterministic stakeholder text for composed models with loader-resolved include headers and selected derivation rules.
+- does: Render stakeholder reviews, selected derivation rules and deterministic growth-prompt inventories of composed models.
 - verbs: verbalize model, stakeholder review, natural language, ORM declarations, render_model_verbalization, render_rule_verbalizations, rule verbalization, structured derivation, prose rule refusal, stable ordering, constraint provenance, operation description, include header, pinned vocabulary review, unresolved include model
 - status: canonical
 - modules: src/gnd/model_verbalization.py

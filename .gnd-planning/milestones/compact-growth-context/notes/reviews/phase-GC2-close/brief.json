@@ -1,0 +1,34 @@
+{
+  "base": "e831b9dc",
+  "claims": [
+    "The amended example exercises source-backed role direction on the shipped fixture and makes no requirement on general host search."
+  ],
+  "created": "2026-11-27T09:31:33.678142+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-close/diff.patch",
+      "sha256": "20e9d4ae907c82f376d6224ae10dcd289840ac988f50db3bd9abd623a58df74c"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/evidence/verify_install.py",
+      "sha256": "27c06dd92e8d0e559cc728b6fceb5587d72138c521982ff143a003f28ddabe65"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/README.md",
+      "sha256": "f55055fe7d05adfc1ed36427d8beae06fc9bd8a8c7b018ad0cb6a51d1c6a68d4"
+    },
+    {
+      "path": "tests/test_growth_view.py",
+      "sha256": "6c918b733f02e99401c4a4b0a8a6dca503c07d09cb65bbc1ae8e3b5a303f0290"
+    }
+  ],
+  "head": "54c8a28cd6bc745331162820d44465ed35632794",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the example genuinely test role reversal against source, and can the retained installed-wheel replay reproduce the claimed measurements?",
+  "subject": "phase",
+  "version": 1
+}

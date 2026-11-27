@@ -1,0 +1,80 @@
+{
+  "base": "c00ac195",
+  "claims": [
+    "Schema context includes stable composed IDs, ordered roles and compact family signatures with semantic metadata."
+  ],
+  "created": "2026-11-27T08:55:25.506093+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/diff.patch",
+      "sha256": "953418ef1ae92e4439eb1306a4ce7248dd1e78c00d17c81963b622ec960632e3"
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "sha256": "6c65a30bcf43c947bc9b33634d6fd4059d14452772fc7179a829d14cb5e25c41"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "6d963332672b96692fa138fa6e413529c1453e038bfe2aec1195ccac5b37d960"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/evidence/dynamic-query-successor.json",
+      "sha256": "4667d94c3325f8958ede574f8fd2e2968caf9412aa59d474aa1829e913849d0b"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/BRIEF.md",
+      "sha256": "6708eea30ea960022bf5655f75b12db58f7116440fafe949dd31213c1e95750c"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/FINDINGS.md",
+      "sha256": "f370ebb155cb02eb40fbd69b6a73fb6508f612ca4972c3c247e67c77b5f4083f"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/brief.json",
+      "sha256": "9405c4dac565e0547a70ba24b161e44252ad3124144086e1c62b9d1c7125313d"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/diff.patch",
+      "sha256": "953418ef1ae92e4439eb1306a4ce7248dd1e78c00d17c81963b622ec960632e3"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/review.log",
+      "sha256": "2122456c9827a04aff9792c1149505097ac016d61c330a0df0dd73976358987c"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/review.md",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/run.json",
+      "sha256": "85cb1617a8e76d3db2e20e14d1f7d6934669065e58db724215e8f5e2d1acbcdf"
+    },
+    {
+      "path": "tests/test_growth_projection.py",
+      "sha256": "6373e722cd81a736bdc74067e035ce43372f06ecb1430cf4fe6fabbbbc7f7252"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/phase-GC1-spec.md",
+      "sha256": "438be1e40fb319d069c4a6b57737fb1f94a071e645ce8ec185a9c99c11e08edd"
+    }
+  ],
+  "head": "c00ac1953953c8e7fbb7593078a5ac793c52aca7",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/compact-growth-context/evidence/dynamic-query-successor.json (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/BRIEF.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/FINDINGS.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/brief.json (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/diff.patch (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/review.log (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/review.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/run.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/test_growth_projection.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Which validated model inputs break the specified projection, encoding, disclosure or composed identity contract?",
+  "subject": "phase",
+  "version": 1
+}

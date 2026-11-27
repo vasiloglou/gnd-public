@@ -8,22 +8,22 @@ Model loading with two-layer validation.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `load_model_bytes(data, *, source) -> Model` | function | 290 | Validate one immutable bounded buffer; source is diagnostic metadata. |
-| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 379 | Resolve the authored model and bind references under one retained root. |
-| `load_model(path) -> Model` | function | 444 | Read model and reference bytes beneath a single retained directory. |
-| `ReferenceOrigin` | class | 504 | (no docstring) |
-| `OccurrenceOrigin` | class | 510 | (no docstring) |
-| `BoundReferenceContext` | class | 516 | (no docstring) |
-| `BoundPopulationView` | class | 526 | (no docstring) |
-| `validate_reference_structure(document) -> None` | function | 533 | (no docstring) |
-| `validate_declarations(model) -> dict[str, str]` | function | 548 | (no docstring) |
-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 655 | (no docstring) |
-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 661 | Bind a model's declared reference populations at ``root``, or return None |
-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 676 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
-| `resolve_context(model, references) -> BoundReferenceContext` | function | 685 | (no docstring) |
-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 717 | (no docstring) |
-| `candidate_fact_count(view) -> int` | function | 793 | (no docstring) |
-| `is_bound_population(model, population, context) -> bool` | function | 797 | Recognize only a current combined population created by this binder. |
+| `load_model_bytes(data, *, source) -> Model` | function | 291 | Validate one immutable bounded buffer; source is diagnostic metadata. |
+| `load_model_bytes_composed(data, *, source, root, bind_references) -> Model` | function | 381 | Resolve the authored model and bind references under one retained root. |
+| `load_model(path) -> Model` | function | 446 | Read model and reference bytes beneath a single retained directory. |
+| `ReferenceOrigin` | class | 506 | (no docstring) |
+| `OccurrenceOrigin` | class | 512 | (no docstring) |
+| `BoundReferenceContext` | class | 518 | (no docstring) |
+| `BoundPopulationView` | class | 528 | (no docstring) |
+| `validate_reference_structure(document) -> None` | function | 535 | (no docstring) |
+| `validate_declarations(model) -> dict[str, str]` | function | 550 | (no docstring) |
+| `bind_references(model, *, root) -> BoundReferenceContext` | function | 657 | (no docstring) |
+| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 663 | Bind a model's declared reference populations at ``root``, or return None |
+| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 678 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+| `resolve_context(model, references) -> BoundReferenceContext` | function | 687 | (no docstring) |
+| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 719 | (no docstring) |
+| `candidate_fact_count(view) -> int` | function | 795 | (no docstring) |
+| `is_bound_population(model, population, context) -> bool` | function | 799 | Recognize only a current combined population created by this binder. |
 
 ## gnd.model._documents — `src/gnd/model/_documents.py`
 Components: model.json_document

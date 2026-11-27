@@ -120,18 +120,18 @@ Stable in-process access to GND validation and checking reports.
 | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
 | `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
 | `verbalize_model(model, *, for_growth) -> str` | function | 1022 | Render the complete model for review, or its canonical growth-prompt inventory. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1038 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1081 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1110 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1227 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1251 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1266 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1274 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1284 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1293 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1305 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1308 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1311 | (no docstring) |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1044 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1087 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1116 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1233 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1257 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1272 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1280 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1290 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1299 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1311 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1314 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1317 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -468,9 +468,9 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `ElementOrigin` | class | 20 | (no docstring) |
 | `IncludedFile` | class | 28 | (no docstring) |
 | `Model` | class(BaseModel) | 38 | A loaded, validated ORM conceptual model. |
-| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 88 | (no docstring) |
-| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 102 | The compiled and retained obligations of one operation, in order. |
-| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 118 | Ids of fact types whose ``derivation_rule`` is the structured object |
+| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 89 | (no docstring) |
+| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 103 | The compiled and retained obligations of one operation, in order. |
+| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 119 | Ids of fact types whose ``derivation_rule`` is the structured object |
 
 ## gnd.errors — `src/gnd/errors.py`
 Components: infra.errors

@@ -88,7 +88,14 @@ def test_public_growth_view_options_and_fact_metadata():
 
 
 def test_loaded_growth_model_refuses_invalid_role_player():
-    model = load_model(SEED / "root.orm.yaml")
+    model = load_model(SEED / "seed.orm.yaml")
     model.fact_types[0]["roles"][0]["object_type"] = "missing_object"
     with pytest.raises(ModelValidationError, match="undeclared object type"):
+        render(model)
+
+
+def test_changed_included_row_requires_reload():
+    model = load_model(SEED / "root.orm.yaml")
+    model.fact_types[0]["reading"] += " changed after verification"
+    with pytest.raises(ModelValidationError, match="unresolved"):
         render(model)

@@ -17,6 +17,7 @@ the canonical compact inventory as a string. Its UTF-8 encoding is byte-identica
 to `gnd verbalize model MODEL --for-growth`. Omitting the keyword gives the
 ordinary full model review.
 The growth option revalidates a loaded model because its nested rows can change.
+A changed composed vocabulary must be reloaded from its root before rendering.
 For a round that may apply edits, capture its original root bytes and verify its include pins.
 
 ## Set up the examples

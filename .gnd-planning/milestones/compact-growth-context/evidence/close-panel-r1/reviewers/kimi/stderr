@@ -1,0 +1,18 @@
+a4560bef76726de7d77933996fba7017f02f60dbc80bcd81218f3ce8cbe3571e  .gnd-planning/milestones/compact-growth-context/notes/compact-growth-context-plan.md
+6e0b9de7bb73176e9c04a09c3a6ad25fd574f453b4bb426e0570e7b018d5d2c3  .gnd-planning/milestones/compact-growth-context/003-phase-GC2.md
+fb12f51741ee7c814beb62dd16144af939065dde2b823d74fd1446bd5fd270ac  .gnd-planning/milestones/compact-growth-context/notes/close-delta.md
+   16927 tests/fixtures/models/full_vocabulary.orm.yaml
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+ModuleNotFoundError: No module named 'yaml'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'yaml'
+55da652f4d1f6f61876aecf63b173415c6fb05a6b6ddf3eaedd67f4775d7f86e  src/gnd/api.py
+7ee7a152a3753cc0c73fddabfd191c66ceede0c245e20dbb6b297d0d193208c5  src/gnd/commands/checking.py
+5c2a674b19dcf9aad323b0819c3ceae7b8a1367e6649aa72f1492de7735ad6cd  src/gnd/documents.py
+b126fe5ae74d39ff4a4068026f2285b2ceb073b8f810f5c971bbe5bdc8a1973f  src/gnd/model/__init__.py
+f28c46184e7e1b8aab375366e544b68207950ae63ea66ff4722a0811a67df7ec  src/gnd/examples/seeded_growth/README.md
+21136cab354fa38e18f187e17c24b25ac7b5d6093734ed3b6bb0c3c0a29526fe  src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+7e42b22b3db01f9256bd0bbc3435b925dde9b68779e33965bf1f9c16f1fdb72c  tests/test_growth_view.py
+ef1f1f109fc5c27bae6356c297e89b4c33500a9cd1bab2be6106bbccc39d132e  .gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r4/review.md

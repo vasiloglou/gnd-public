@@ -1,0 +1,34 @@
+{
+  "base": "0a0ad941",
+  "claims": [
+    "The worked fixture rejects the second occurrence, uses the project span convention, and attributes semantic judgment to the agent."
+  ],
+  "created": "2026-11-27T09:40:05.263449+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-occurrence/diff.patch",
+      "sha256": "61a36491a79607dda38afa176ff791900688cfcf21b127c90b25a85066e0e42a"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/close-replay.md",
+      "sha256": "da5117cf6d187492d26a7aef4bcdeef995e374865563df4753864d6886e07830"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/README.md",
+      "sha256": "70e550e5e9edc260fc5d14af38c5537a5cba71cd2fdcb02837f7d7f72e151faf"
+    },
+    {
+      "path": "tests/test_growth_view.py",
+      "sha256": "86282308f2cd2280c4b3690e5a1a8371b750753a9ec54a43c694b510f1df2b85"
+    }
+  ],
+  "head": "066d2f3dc130ee37ccd3d00990f26f5dfc5858b1",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Can an out-of-occurrence citation still pass, or does the receipt still claim automatic direction inference? Check the F1, F2 and F3 reproductions from the preceding review.",
+  "subject": "phase",
+  "version": 1
+}

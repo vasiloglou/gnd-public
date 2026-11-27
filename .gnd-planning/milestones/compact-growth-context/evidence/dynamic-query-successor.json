@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "reason": "Growth projection uses allowlisted fields, ordered role players from ModelIndex and the shared composed-include guard.",
+  "predecessor": ".gnd-planning/milestones/refactoring-followups/evidence/F5/dynamic-query-successor.json",
+  "predecessor_sha256": "3db1d97952124371baa8aa44858ada567b797bcabe32641031de0d516d697cbc",
+  "removed": [
+    [
+      "src/gnd/model_verbalization.py",
+      "_include_lines",
+      "entry.get(key)",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/model_verbalization.py",
+      "_check_resolved_includes",
+      "entry.get(key)",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "_growth_constraint",
+      "item[key]",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "render_growth_view",
+      "fact[key]",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "render_growth_view",
+      "item[key]",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "render_growth_view",
+      "role_players[fact['id']]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8368,
+  "result_occurrences": 10404
+}

@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "claude",
+    "-p",
+    "--model",
+    "opus",
+    "--permission-mode",
+    "plan"
+  ],
+  "reviewer": "claude",
+  "model": "opus",
+  "transport": "BRIEF.md on stdin",
+  "started": "2026-11-27T08:55:25.535663+00:00",
+  "brief_sha256": "cf124119bcb4b1de1cb50a80d939f5d0cb8d4a68abf5c1bb1d8df1d1832fcee6",
+  "stdout": "review.md",
+  "exit": 0,
+  "finished": "2026-11-27T08:58:05.132367+00:00",
+  "state": "done",
+  "review_sha256": "8c0f1dbfab26c03a3355902e89a5989365d4afe3a036fd580b1a56d690902c2f"
+}

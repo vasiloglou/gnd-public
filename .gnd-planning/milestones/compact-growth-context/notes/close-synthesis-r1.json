@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "run_sha256": "38b948493ecba022e44b56e85e40fa3058c34b8a5326dd34c4f4e457d3e65230",
+  "summary": "Five valid close reviews identify two agreed evidence gaps. The coordinator will exercise role reversal and retain reproducible wheel and fixture checks. Gemini returned a malformed response.",
+  "agreed_concerns": [
+    {
+      "group_id": "reproduction",
+      "title": "Reproducibility of the fixture and installed-wheel parity checks",
+      "summary": "Record the exact build, install, parity, eight-command and fixture-sweep commands verbatim, with interpreter and module/CLI paths, or check them in as a script. Rerun them at close against the final HEAD and record the output in the close delta. Record the exact sweep command and the fixture-validity selection rule alongside the count (or promote the sweep to a gate or regression test) so the headline path-vs-loaded-model parity claim can be re-run and re-verified at close.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-wheel-parity-unreproducible"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc2-close-parity-sweep-not-reproducible"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "reverse",
+      "title": "Reversed role bindings lack an executable negative case",
+      "summary": "Have the example derive role bindings from the occurrence against the fact's ordered roles. Add a test showing that a swapped binding, or an occurrence like 'V-1 has version W-1', is not recorded as reuse. Drop the redundant inequality. Add a negative-case regression that ties the recorded bindings to the source occurrence (for example, assert that the reversed assignment contradicts the captured span's subject-role order, or that a role-player search with swapped players cannot reproduce the occurrence), so the stated acceptance criterion is machine-checked rather than pinned only to the example's recorded value.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "reversed-binding-check-vacuous"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc2-reversed-binding-assertion-vacuous"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc2-cli-grammar-test-unrecorded"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "direct-lookup-not-verified"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "span-coordinates-unbound"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "guarded-signature-omits-operands"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc2-gate-output-unanchored"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc2-root-identity-after-evidence-only-edit"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc1-family-registry-coverage-growth"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc2-defer-adds-no-fact"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc2-reference-page-documentation-unrecorded"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gc2-review-rounds-1-3-unpinned"
+    }
+  ],
+  "prioritized_fixes": []
+}

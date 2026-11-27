@@ -285,6 +285,7 @@ from typing import Literal
 from gnd import artifacts
 from gnd.model._validation import parse_model_document as parse_model_document
 from gnd.values import reference_model_digest
+from gnd.values import vocabulary_digest as _composed_model_digest
 
 
 def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
@@ -367,6 +368,7 @@ def _load_model_at(data, *, source, descriptor, historical=None, analysis=False)
         else:
             model = _finish_model(doc, origins, included)
         model._authored_sha256 = hashlib.sha256(data).hexdigest()
+        model._composed_vocabulary_digest = _composed_model_digest(model)
         return CompositionView(doc, origins, included, (), model) if analysis else model
     if historical is not None:
         _refuse('declaration')

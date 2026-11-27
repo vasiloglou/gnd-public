@@ -1,0 +1,84 @@
+{
+  "base": "342f953d",
+  "claims": [
+    "The agent can change search route, verify direction, widen or defer, and both public surfaces agree."
+  ],
+  "created": "2026-11-27T09:03:32.359254+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch",
+      "sha256": "a348488b1a6334f253d403cca1e02c2fbd190afacf18033f9e919c2915856f4b"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "51ac46406a90d46c3edefb93a7063aaead6bbd076cafc05c2d8ba2adcea749a3"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "34360c58f418e6fbaeb73347560761ade853dd477f48443f9c15799bf8b7fb38"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "33796358cc25effc3dd37e0d36f64e90c9d1ca88228885cb2ea2d2f9152d4b26"
+    },
+    {
+      "path": "docs/reference/cli.md",
+      "sha256": "bb80ffcb802063ebe2df4a92d88ea2f74636b263a9e90c9d195ce7d3cd038508"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "d90e3f25760bd2aad97a3e527671622830a1270b503dc52ce8fbad79cb973c72"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "08d8455e7a38930727249ef3a6ed03c5e55617399634291054c47a9ab299738c"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "7c0390cddc2ec4694c6fc5f77a54fef4146a5012316e3579963252845460dbf8"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "sha256": "7ee7a152a3753cc0c73fddabfd191c66ceede0c245e20dbb6b297d0d193208c5"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/README.md",
+      "sha256": "0ebdf47d4623de20b82fb0a1d9112cd9dc8b858ac0f34646a880d406b4d4d8f7"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
+      "sha256": "21136cab354fa38e18f187e17c24b25ac7b5d6093734ed3b6bb0c3c0a29526fe"
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "sha256": "e04049af8e4250523eed5665a65b5508999b46ca002ea225cb4b1347fb8ac621"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "f77643f55605b749a6d77a4b50c2605cecdc739694bca80634bc07edde89c6e2"
+    },
+    {
+      "path": "tests/test_v61_phase2_api.py",
+      "sha256": "3235dd3dd668f8a9438b5017b9e5302a5c61fc2f0b061cd267f856fd1abacc27"
+    },
+    {
+      "path": "tests/test_growth_view.py",
+      "sha256": "be83b5608f3b0ad427554de85193c1848a146f492dd4c5745794f403380ca875"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/phase-GC2-spec.md",
+      "sha256": "07bd76ef16e2ad8dcc3295459d7561d268e1fc8dda8d677d679e102afaeabe69"
+    }
+  ],
+  "head": "342f953d578084472f8ca02879a4bd2a9c841773",
+  "left_out": [],
+  "notes": [
+    "new: tests/test_growth_view.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Which supported inputs, default paths or reasonable interpretations of the host instructions violate the public growth-view contract?",
+  "subject": "phase",
+  "version": 1
+}

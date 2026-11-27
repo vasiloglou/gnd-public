@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "spec-results-delta",
+  "rubric": {
+    "name": "Issue 295 milestone close",
+    "criteria": [
+      "Which claims of completed two-phase product scope are contradicted by the measured results or their exact implementation?",
+      "Assess the repaired implementation and owner-selected scope. Give a reproducible missed acceptance criterion and distinguish optional extensions."
+    ]
+  },
+  "spec": {
+    "path": ".gnd-planning/milestones/compact-growth-context/notes/compact-growth-context-plan.md",
+    "sha256": "a4560bef76726de7d77933996fba7017f02f60dbc80bcd81218f3ce8cbe3571e",
+    "media_type": "text/markdown"
+  },
+  "results": {
+    "path": ".gnd-planning/milestones/compact-growth-context/003-phase-GC2.md",
+    "sha256": "6e0b9de7bb73176e9c04a09c3a6ad25fd574f453b4bb426e0570e7b018d5d2c3",
+    "media_type": "text/markdown"
+  },
+  "delta": {
+    "path": ".gnd-planning/milestones/compact-growth-context/notes/close-delta.md",
+    "sha256": "fb12f51741ee7c814beb62dd16144af939065dde2b823d74fd1446bd5fd270ac",
+    "media_type": "text/markdown"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "base": "51f0d1f2",
+  "claims": [
+    "A changed composed vocabulary cannot reuse the original positional attribution in the growth API."
+  ],
+  "created": "2026-11-27T09:16:54.292550+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r3/diff.patch",
+      "sha256": "ca513736aa56cb068cf31d44f26777825634ec9517541d0ed94ca44164438c42"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/BRIEF.md",
+      "sha256": "6cc6a1135bab307307853489a5d62b483cd5482756f357af23d7c82d7025e9b9"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/FINDINGS.md",
+      "sha256": "09c74e98ccd2621b6b509ab48a2cdccb05d870e34cf3bf28ff9bc46801ed750d"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/brief.json",
+      "sha256": "3123b540fd06642b0673674784ebee1288f364ee727030c7d472834278259dc9"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/diff.patch",
+      "sha256": "f9e6a4dd233dc7cc526d60b25e0c03e790e5b700180ac04d56fb1bf12084181a"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/review.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/review.md",
+      "sha256": "a8465017bbae00a6882f5863a94671f80ae5c23d4857b75e356d93eb9c8e54f9"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/run.json",
+      "sha256": "2fdaea8b10751d2e080db7e75f6af3e8c139123e164df5a396202370a9e14cc9"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "bf3de895b750babb1ccf5fc912212bac5d011658fc34d2b94518da7c5fda5c2d"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "b2f83e28ff0d7499b5a15fa3c68272efa1b8fd1abada47ddbe21c9677665f7a9"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "15a16ccf6926079382e2c4d229d78c4427edb1a28ea8d5bc14d6f589d007e48c"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "175d5d4ecce3e670a34737a625afca4e153cd9170a4df1336f6d44849242ab51"
+    },
+    {
+      "path": "src/gnd/documents.py",
+      "sha256": "5c2a674b19dcf9aad323b0819c3ceae7b8a1367e6649aa72f1492de7735ad6cd"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "a1882dd01908c5cb5e6395f822468d027eac2540ac43d575f99a5e42daa3c5ed"
+    },
+    {
+      "path": "tests/test_growth_view.py",
+      "sha256": "793ae468aeb4b1d97cce33aed3791b42a10b7213687e9226479798d2d4fae885"
+    }
+  ],
+  "head": "dafd95f3029b1a99a3dba64aa7d8dcec235a15e1",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the small include-provenance repair at 0b0fa734 close the reproduced positional-row defect while preserving valid loader paths?",
+  "subject": "phase",
+  "version": 1
+}

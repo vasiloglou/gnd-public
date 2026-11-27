@@ -119,19 +119,19 @@ Stable in-process access to GND validation and checking reports.
 | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
 | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
 | `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_model(model) -> str` | function | 1022 | Render the caller's complete model for review, including authored samples. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1031 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1074 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1103 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1220 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1244 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1259 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1267 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1277 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1286 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1298 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1301 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1304 | (no docstring) |
+| `verbalize_model(model, *, for_growth) -> str` | function | 1022 | Render the complete model for review, or its canonical growth-prompt inventory. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1044 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1087 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1116 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1233 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1257 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1272 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1280 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1290 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1299 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1311 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1314 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1317 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -468,9 +468,9 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `ElementOrigin` | class | 20 | (no docstring) |
 | `IncludedFile` | class | 28 | (no docstring) |
 | `Model` | class(BaseModel) | 38 | A loaded, validated ORM conceptual model. |
-| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 88 | (no docstring) |
-| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 102 | The compiled and retained obligations of one operation, in order. |
-| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 118 | Ids of fact types whose ``derivation_rule`` is the structured object |
+| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 89 | (no docstring) |
+| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 103 | The compiled and retained obligations of one operation, in order. |
+| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 119 | Ids of fact types whose ``derivation_rule`` is the structured object |
 
 ## gnd.errors — `src/gnd/errors.py`
 Components: infra.errors
@@ -746,10 +746,11 @@ Deterministic, complete stakeholder verbalization of an ORM model.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `VerbalizationError` | class(ValueError) | 38 | The caller supplied a value that is not a validated ORM model. |
-| `render_model_verbalization(model) -> str` | function | 567 | Render all model semantics in stable-id order with one final newline. |
-| `RuleVerbalization` | class | 701 | One derived fact type's rule, rendered or reported as not renderable. |
-| `check_fact_type_selection(fact_types) -> None` | function | 710 | The one argument check for a fact-type selection: None or a list or tuple of str. |
-| `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 719 | Render each selected derived fact type's rule in stable id order. |
+| `render_growth_view(model) -> str` | function | 597 | Render a versioned, evidence-free vocabulary for an unattended host. |
+| `render_model_verbalization(model) -> str` | function | 630 | Render all model semantics in stable-id order with one final newline. |
+| `RuleVerbalization` | class | 764 | One derived fact type's rule, rendered or reported as not renderable. |
+| `check_fact_type_selection(fact_types) -> None` | function | 773 | The one argument check for a fact-type selection: None or a list or tuple of str. |
+| `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 782 | Render each selected derived fact type's rule in stable id order. |
 
 ## gnd.ossie_import — `src/gnd/ossie_import.py`
 Components: model.ossie_import
@@ -1342,14 +1343,15 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_model_digest(model) -> str` | function | 222 | (no docstring) |
-| `ModelIdentityError` | class(ValueError) | 232 | A loaded model that has no canonical identity, or a version it does not define. |
-| `model_identity_document(model) -> dict[str, Any]` | function | 276 | The canonical identity document of a loaded model. |
-| `model_identity_bytes(model) -> bytes` | function | 289 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
-| `model_identity(model, version) -> str` | function | 294 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
-| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 309 | Which identity of ``model`` the ``supplied`` value names, or None. |
-| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 339 | The identities :func:`model_identity_matches` accepts, legacy first. |
-| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 381 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
+| `vocabulary_digest(model) -> str` | function | 196 | Bind positional model rows, including loader-accepted non-JSON metadata. |
+| `reference_model_digest(model) -> str` | function | 227 | (no docstring) |
+| `ModelIdentityError` | class(ValueError) | 237 | A loaded model that has no canonical identity, or a version it does not define. |
+| `model_identity_document(model) -> dict[str, Any]` | function | 281 | The canonical identity document of a loaded model. |
+| `model_identity_bytes(model) -> bytes` | function | 294 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
+| `model_identity(model, version) -> str` | function | 299 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
+| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 314 | Which identity of ``model`` the ``supplied`` value names, or None. |
+| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 344 | The identities :func:`model_identity_matches` accepts, legacy first. |
+| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 386 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

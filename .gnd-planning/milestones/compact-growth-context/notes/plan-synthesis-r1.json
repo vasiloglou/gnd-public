@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "run_sha256": "daf3ce6e27765c19b9af3fa4b43ad9633ea4f3e22b1beb487ae4df9b15d56319",
+  "summary": "Six reviewers returned valid opinions. Recurring concerns cover compactness, replay identity, disclosure and partial-context decisions. The coordinator will bind these requirements to observable fixtures and byte contracts.",
+  "agreed_concerns": [
+    {
+      "group_id": "surfaces",
+      "title": "Public surfaces and default compatibility",
+      "summary": "Name the exact CLI subcommand and flag, the API function and keyword, and the existing output used as the ordinary baseline. Capture that default output as a golden file before GC2 lands, so 'unchanged default output' compares against fixed bytes rather than a later rerun. Name the compatibility baseline: commit golden bytes for the default (non-opt-in) review rendering captured before the GC2 change, or require the check to diff against the previously released wheel, and state in \u00a74 GC2 that the default path must be byte-identical to that baseline. Without a named baseline, \"unchanged default output\" cannot be demonstrated to a reviewer.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unnamed-surfaces"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-default-output-no-baseline"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "stale",
+      "title": "Root identity and evidence-only changes",
+      "summary": "Have the projection emit, or the API return beside it, the root SHA-256 and the include pins it was rendered from. Require the host to copy that value into expected_model_sha256 and to record it. Add a GC2 test: render the view, add a fact type non-additively elsewhere, then show that a proposal built from the old view is refused as stale. Spell out the fixture outcome (view digest identical, evolution still blocked on root-byte or transitive-pin mismatch) and confirm or extend the existing stale-state checks so verified transitive include pins are covered on the compact path.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "view-not-bound-to-root-sha"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "evidence-only-edit-outcome-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "compact",
+      "title": "Falsifiable compactness criterion",
+      "summary": "State a falsifiable criterion on the named fixture, at minimum compact bytes strictly below ordinary bytes, ideally a ratio. Assert it in the GC1 test so that a regression in size fails the build. Set a byte-size acceptance criterion for the populated fixture and record both measured values against it. Turn the comparison into an assertion: name the fixture and a pass/fail bound (for example compact bytes at most N percent of ordinary review bytes, and a maximum absolute byte count for the projected schema), and record in \u00a74 GC1 that the check fails when the bound is exceeded. Otherwise the headline obligation of issue 295 can never be shown to hold or to fail. State the expected relation on the fixture (compact strictly fewer bytes than ordinary review output, or a recorded ratio threshold), or explicitly record compactness as measured-but-unclaimed alongside the Section 9 limitations. Add an explicit, measurable acceptance criterion for compactness (e.g., a maximum compact-to-ordinary byte ratio on named fixtures, or a byte budget per model scale) to GC1 or section 9, so the comparison can falsify the plan.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compactness-no-criterion"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc-compactness-criterion"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-compactness-no-threshold"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "compactness-comparison-no-criterion"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "compact-growth-context-compactness-unfalsifiable"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "encoding",
+      "title": "Canonical byte encoding and digest",
+      "summary": "Name the encoder to reuse (artifacts.canonical_json_bytes) and its options. Define the digest as SHA-256 over the exact emitted bytes, newline included, and keep it outside those bytes. Pin the digest of one fixture in a test. Specify the canonicalization concretely: object-key order, separator and whitespace policy, whether non-ASCII is escaped or emitted literally and under which normalization form, number formatting, and the total ordering key (for example code-point order on the composed ID) used wherever order is not meaningful. Add a GC1 check that compares emitted bytes across two fresh interpreter processes with varied hash seeds and against a committed golden file, so \"deterministic bytes\" is falsifiable rather than a same-run self-comparison. State the digest algorithm, whether it covers the canonical payload bytes or a structured field subset, and whether the version marker and unresolved-include set are digest inputs. Add a GC1 check that the same model yields an identical digest across processes, and that an evidence-only edit preserves the digest while a mutated root byte or an unverified transitive include pin is rejected before evolution is applied. Pin the canonicalization profile by name or documented house rules, state whether \"Version 1\" travels inside the artifact, and derive the view digest from exactly those rules so replay identity is well defined.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "canonical-encoder-and-digest"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-canonical-form-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-view-digest-unspecified"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "canonical-json-profile-unpinned"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "version",
+      "title": "In-band format version",
+      "summary": "Emit schema_version and kind in the bytes and ship a packaged schema for the projection. Validate GC1 fixtures against it, so a host can detect a version 2 and refuse it. Require a version marker inside the payload, define consumer behaviour on an unrecognised version, and state that the projection tolerates model fields added by later additive evolution without changing version 1 semantics. Otherwise digest comparisons across versions are ambiguous and any future field addition is silently breaking for a host that stored only the digest.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "no-schema-version-field"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-no-payload-version-field"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "ordering",
+      "title": "Canonical collection order",
+      "summary": "List the meaningful orders (for example role order and reading order) and the sort key used elsewhere (for example the ID by code point). Add permutation tests: reorder fact types and includes in the source and expect identical bytes; swap the role order and expect different bytes. Enumerate the meaningfully ordered sequences and the deterministic sort key per element kind in the versioned format description, so ordering is a format rule rather than an implementation accident.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ordering-unspecified"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "deterministic-ordering-keys-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "family",
+      "title": "Constraint family coverage",
+      "summary": "Fail closed: refuse to render, with a named exit, any construct the projection cannot represent, and any unresolved include. Alternatively emit an explicit omission marker. Add a test with an unregistered constraint kind. Require a fixture or generated check for every registered family, including its referenced IDs and ordered roles, with an explicit failure when a family cannot be represented.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "inventory-not-fail-closed"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc-constraint-coverage"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "direction",
+      "title": "Named role direction and order",
+      "summary": "Define 'role-specific occurrence'. Add a GC2 negative case: a fact type with the same players in reversed roles, and a ring fact type, where the host must not reuse the existing ID. Define the ordering key and the disambiguation rule for anonymous roles, repeated roles of the same type, and multi-role facts, and add a GC1 fixture containing a duplicate-role fact that asserts the emitted signature preserves which player filled which occurrence. Ambiguity here is a direct schema-identity risk because the signature is what an agent reuses a fact on.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "direction-negative-reuse"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-role-order-edge-cases"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "identity",
+      "title": "Stable composed identifiers",
+      "summary": "Compare projected IDs and references across equivalent source representations, including evidence-only edits and reordered fields whose order is not meaningful; include an include-backed fixture. State in \u00a72 that emitted IDs are exactly the composed loader IDs with no renderer-local aliasing, abbreviation, or re-encoding, and add a GC1 check that every emitted object and fact ID resolves through ModelIndex on the composed model. The compactness pressure noted separately makes ID shortening a likely future temptation, and \u00a75's retry loop depends on those IDs staying resolvable. Add a GC1 fixture asserting identifiers are unchanged under an evidence-only edit and change only in the documented way under a targeted rename, so \"stable identifiers\" has stated falsifiable evidence.",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc-id-stability"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-identifier-form-unstated"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "composed-id-stability-unfalsified"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "partial",
+      "title": "Agent-visible partial scope",
+      "summary": "Add a scope marker plus the set of unresolved includes to the version-1 payload, include both in the digest inputs, and add a GC2 check that a subset render is byte-distinct from the full render of the same model and that the marker names the missing scope. As written, replay from \"exact view digest\" alone cannot tell a partial context from a full one, which is exactly the condition under which \u00a75's \"A subset miss requires broader investigation or deferral before asserting novelty\" must fire. State where the subset indicator lives for whoever reads the prompt (a field in the versioned view, or a preamble mandated by the packaged host protocol guide), and add a GC2 acceptance criterion that an include-backed partial view is explicitly marked as not full. Update Section 2 (Product contract) to explicitly include a subset or partial status indicator within the JSON projection, ensuring the agent receives explicit guidance to inform its retry or deferral logic.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-partial-scope-not-in-payload"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "subset-guidance-not-agent-visible"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-subset-indicator"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "exclusion",
+      "title": "Evidence exclusion test",
+      "summary": "Add an explicit GC1 check that renders a fixture deliberately populated with author evidence, samples, notes and rationale and asserts that no excluded field name, value, or evidence sentinel appears anywhere in the emitted bytes, including inside readings and signatures. Schedule the sentinel test inside GC1: inject marker strings into author evidence, samples, notes and rationale on the fixture and assert they do not appear in the compact bytes. Add a GC1 verification asserting that author evidence, samples, notes and rationale are absent from the serialized projection (a sentinel/negative test), matching the allowlist and evidence-sentinel controls in section 6.",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "plan-295-exclusion-has-no-check"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "disclosure-sentinel-unscheduled"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "compact-growth-context-exclusion-no-negative-test"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "retry-deferral-scripted"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "host-record-unverified"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "id-roundtrip"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "gc-partial-novelty"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "plan-295-truncation-behaviour-unstated"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "plan-295-archived-reference-unlocatable"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "plan-295-as-built-reconciliation-missing"
+    }
+  ],
+  "prioritized_fixes": []
+}

@@ -190,6 +190,11 @@ def _model_digest(model: Model) -> str:
     """
     if model.reference_populations:
         return reference_model_digest(model).removeprefix("sha256:")
+    return vocabulary_digest(model)
+
+
+def vocabulary_digest(model: Model) -> str:
+    """Bind positional model rows, including loader-accepted non-JSON metadata."""
     payload = model.model_dump(
         exclude=set(MODEL_DIGEST_EXCLUDED_FIELDS) | {"reference_populations"}
     )

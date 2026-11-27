@@ -29,6 +29,69 @@ with a fact about a party. The rest of this file is what prevents that.
 - **Never emit an inferred operation.** Operations are commitments about side effects; an
   unattended host does not guess them.
 
+## Current model in the growth prompt
+
+Start a round with `gnd verbalize model MODEL --for-growth` or
+`gnd.api.verbalize_model(MODEL, for_growth=True)`. Both supply the same complete
+inventory of the validated model, including IDs from verified includes. Name
+existing elements by those IDs. The compact form omits provenance, samples and
+rationale. Consult the full model for the evidence or meaning of a constraint
+before deciding that two constraints are equivalent.
+
+If the view exceeds the prompt budget, retain it in the host and give the
+agent excerpts on demand. Label every excerpt with the full view's SHA-256
+and whether it is partial. The agent chooses its searches: after a reading
+misses, try a synonym, inspect a role player's facts, follow a subtype or
+reference, or widen to the complete inventory. Record the queries, candidates
+shown and inspected IDs in order. At the budget limit, defer an unresolved
+claim in the round's open questions. Before proposing a new element, check
+the complete inventory for its shape and assess the matching readings against
+the occurrence. Any number of missing shortlist entries alone is
+insufficient evidence of novelty. A shape match prompts a reading and
+role-direction check; it establishes no equivalence on its own.
+
+For each decision retain the document digest, exact occurrence and evidence
+binding each named role, the decision (reuse, propose new, or defer), and the
+reason. Replay the saved excerpts and decisions. Bind the proposal's
+`expected_model_sha256` to the exact root bytes read for the round. Those bytes
+pin the included files; GND authenticates the files when loading the root.
+Reload and verify before applying through the ordinary evolution gates. A view
+digest is a prompt cache key: evidence-only edits can leave it unchanged.
+The packaged `examples/seeded_growth/README.md` walks through a missed search
+and a second route to an included fact.
+
+### Growth view v1
+
+Hash the UTF-8 encoding of the returned string, including its single final LF.
+V1 is compact JSON, with sorted keys, no extra whitespace, unescaped Unicode
+and no normalization of model strings. It preserves stable IDs, excludes
+filesystem paths, and uses these arrays:
+
+- `object_types` is sorted by ID. Records carry ID and kind, plus authored name,
+  primitive, precision, scale, reference scheme, inherited-reference flag, derivation,
+  storage and independence when present.
+- `subtypes` lists direct `[subtype, supertype]` pairs in endpoint order.
+- `fact_types` is sorted by ID. Each record has its primary reading, authored
+  inverse reading and objectification target when present, derivation status
+  (default `asserted`), authored storage and objectification independence, and ordered `[role_name, object_type]` pairs.
+- `constraints` is sorted by the canonical JSON of each signature, preserving
+  multiplicity. Every record identifies its type and host (fact ID or JSON
+  null for a model-level constraint), plus its authored ID when present.
+  Authored lifecycle status and modality are preserved. Rejected constraints are marked `archived: true`. Other absent fields are omitted.
+
+Uniqueness, mandatory, disjunctive mandatory, anchored and frequency signatures
+retain their role operands and authored scope, preferred flag, recognizers or
+bounds. Ring retains its variant. Subset, equality, exclusion and exclusive-or
+keep the named operand sides and ordered sequences. Value, value-comparison,
+cardinality and subtype-partition keep their declared targets, comparison
+operators, domain values/ranges, bounds or partition flags. Guarded signatures
+identify participating atoms by location, fact ID and role names; textual
+signatures identify the language when declared. Rule bodies, free-text
+expressions, operations and sample populations belong to the full model.
+The signature is for finding candidates; interpreting an entire rule requires
+the full model. Redacted models can still expose vocabulary and declared domain
+values. Handle the view as model data.
+
 ## What one round is
 
 One round is one document, in four moves.

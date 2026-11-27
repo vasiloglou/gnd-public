@@ -1,0 +1,45 @@
+{
+  "base": "c00ac195",
+  "claims": [
+    "Schema context includes stable composed IDs, ordered roles and compact family signatures with semantic metadata."
+  ],
+  "created": "2026-11-27T08:55:01.369103+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r1/diff.patch",
+      "sha256": "953418ef1ae92e4439eb1306a4ce7248dd1e78c00d17c81963b622ec960632e3"
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "sha256": "6c65a30bcf43c947bc9b33634d6fd4059d14452772fc7179a829d14cb5e25c41"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "6d963332672b96692fa138fa6e413529c1453e038bfe2aec1195ccac5b37d960"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/evidence/dynamic-query-successor.json",
+      "sha256": "4667d94c3325f8958ede574f8fd2e2968caf9412aa59d474aa1829e913849d0b"
+    },
+    {
+      "path": "tests/test_growth_projection.py",
+      "sha256": "6373e722cd81a736bdc74067e035ce43372f06ecb1430cf4fe6fabbbbc7f7252"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/phase-GC1-spec.md",
+      "sha256": "438be1e40fb319d069c4a6b57737fb1f94a071e645ce8ec185a9c99c11e08edd"
+    }
+  ],
+  "head": "c00ac1953953c8e7fbb7593078a5ac793c52aca7",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/compact-growth-context/evidence/dynamic-query-successor.json (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/test_growth_projection.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Which validated model inputs break the specified projection, encoding, disclosure or composed identity contract?",
+  "subject": "phase",
+  "version": 1
+}

@@ -1,0 +1,36 @@
+{
+  "base": "54c8a28c",
+  "claims": [
+    "The two reproduced close-repair findings are addressed on these bytes."
+  ],
+  "created": "2026-11-27T09:36:39.349124+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-close-final/diff.patch",
+      "sha256": "8f25f02a060d919becc91bacdae9ff174fc6304fe0bff44abad221faeb753ad2"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/README.md",
+      "sha256": "8f5b1434210e79c6c7500963bdfe81023f5fc678b5f0ec9c441b36ad65670bf1"
+    },
+    {
+      "path": "tests/test_growth_view.py",
+      "sha256": "f1d17e851b5c5b65931b66d432893752213109907bc3f92795f0070feaf34c7b"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/close-replay.md",
+      "sha256": "7eac46dc667374639cfe48f705be1b487b89938fcb8dd221a9abe1e78cc66b0b"
+    }
+  ],
+  "head": "1dc3c77ae151ade30b6e70fb4ff03243222149b6",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/compact-growth-context/notes/close-replay.md (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Do named-role source spans remove the placeholder grammar defect, and does the supplemental close receipt identify the final wheel separately from the historical phase artifact?",
+  "subject": "phase",
+  "version": 1
+}

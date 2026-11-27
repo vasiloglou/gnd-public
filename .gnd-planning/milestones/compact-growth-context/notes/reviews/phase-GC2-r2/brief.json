@@ -1,0 +1,118 @@
+{
+  "base": "342f953d",
+  "claims": [
+    "Invalid in-memory mutations are refused and the packaged example records direct reuse, retry and ambiguous deferral."
+  ],
+  "created": "2026-11-27T09:08:54.944094+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r2/diff.patch",
+      "sha256": "f9e6a4dd233dc7cc526d60b25e0c03e790e5b700180ac04d56fb1bf12084181a"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r2/FINDINGS.md",
+      "sha256": "29bdb6a7bb9be58653dd34bc8e93a4d54f654bd1106ad4533d6d1f742fb12498"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC1-r3/FINDINGS.md",
+      "sha256": "e45182db29ec89daf7e74d2be447a671bcd4d987bc72cd4d6e281d5107d9fb62"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/BRIEF.md",
+      "sha256": "9aa0722f0e59e0c7322f3679f0654f39fd93da819a008a717f9f32722208ba67"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/FINDINGS.md",
+      "sha256": "7f19a85c2fa956181c0e3334417b2bbd96433a616ea145d8009d0a1de1ac0cb5"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/brief.json",
+      "sha256": "02a5d899dc4e8c70e758deb44734ec5349040a69a8fad6d98b51902247d63027"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/diff.patch",
+      "sha256": "a348488b1a6334f253d403cca1e02c2fbd190afacf18033f9e919c2915856f4b"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/review.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/review.md",
+      "sha256": "26a835bb153861e99f6077bbb7e5b1f8e415ef974790363bc7d90fe65e5c1d06"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/reviews/phase-GC2-r1/run.json",
+      "sha256": "1c43465c0ad2ac2571e273dfb2c737acda0925a0555cec7745192e7d8aee9dd6"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "51ac46406a90d46c3edefb93a7063aaead6bbd076cafc05c2d8ba2adcea749a3"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "00a7a78aca2c13c86411c231bf53efde48b21370538052b53f64b0252319b2cb"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "33796358cc25effc3dd37e0d36f64e90c9d1ca88228885cb2ea2d2f9152d4b26"
+    },
+    {
+      "path": "docs/reference/cli.md",
+      "sha256": "bb80ffcb802063ebe2df4a92d88ea2f74636b263a9e90c9d195ce7d3cd038508"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "d90e3f25760bd2aad97a3e527671622830a1270b503dc52ce8fbad79cb973c72"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "2417c8f9268b7a2338caa80fa03e02e0774cf14ea915cb23e7eaf5f4ee2928ac"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "e1ca20936b24ddb0e9fc524ea5a1e3ddb6833362fd2cf3a70f74a1c47884e670"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "sha256": "7ee7a152a3753cc0c73fddabfd191c66ceede0c245e20dbb6b297d0d193208c5"
+    },
+    {
+      "path": "src/gnd/examples/seeded_growth/README.md",
+      "sha256": "f28c46184e7e1b8aab375366e544b68207950ae63ea66ff4722a0811a67df7ec"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
+      "sha256": "21136cab354fa38e18f187e17c24b25ac7b5d6093734ed3b6bb0c3c0a29526fe"
+    },
+    {
+      "path": "tests/test_growth_view.py",
+      "sha256": "ad647c943b93b3e3b821a116b8777777c739361916b4eec4882da258e69a0062"
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "sha256": "e04049af8e4250523eed5665a65b5508999b46ca002ea225cb4b1347fb8ac621"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "f77643f55605b749a6d77a4b50c2605cecdc739694bca80634bc07edde89c6e2"
+    },
+    {
+      "path": "tests/test_v61_phase2_api.py",
+      "sha256": "3235dd3dd668f8a9438b5017b9e5302a5c61fc2f0b061cd267f856fd1abacc27"
+    },
+    {
+      "path": ".gnd-planning/milestones/compact-growth-context/notes/phase-GC2-spec.md",
+      "sha256": "07bd76ef16e2ad8dcc3295459d7561d268e1fc8dda8d677d679e102afaeabe69"
+    }
+  ],
+  "head": "51f0d1f20077c812da1b47205b368121d2b1b155",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Do the validation and example repairs address F1 and F2 for supported model inputs, with existing default behavior intact?",
+  "subject": "phase",
+  "version": 1
+}

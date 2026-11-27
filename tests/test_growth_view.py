@@ -102,9 +102,11 @@ def test_changed_included_row_requires_reload():
 
 
 def test_composed_snapshot_accepts_nonfinite_source_metadata():
-    from gnd.model import load_model_bytes_composed, parse_model_document
-    from ruamel.yaml import YAML
     from io import StringIO
+
+    from ruamel.yaml import YAML
+
+    from gnd.model import load_model_bytes_composed, parse_model_document
 
     root = SEED / "root.orm.yaml"
     doc = parse_model_document(root.read_bytes(), source=root)

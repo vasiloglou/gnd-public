@@ -284,8 +284,8 @@ from typing import Literal
 
 from gnd import artifacts
 from gnd.model._validation import parse_model_document as parse_model_document
-from gnd.values import vocabulary_digest as _composed_model_digest
 from gnd.values import reference_model_digest
+from gnd.values import vocabulary_digest as _composed_model_digest
 
 
 def load_model_bytes(data: bytes, *, source: str | Path) -> Model:

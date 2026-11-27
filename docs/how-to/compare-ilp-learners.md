@@ -7,6 +7,11 @@ learner output through `gnd`, so you can see what each learner proposed and
 what GND did with it. No learner is installed or run here: the learners ran
 once each, during development, and their outputs ship with GND.
 
+This page runs the commands by hand. With an assistant, the
+[gnd-induce](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-induce/SKILL.md)
+skill runs the same export and import for a learner you have installed and
+name; the [ILP bridge](../reference/ilp-bridge.md) sets the two side by side.
+
 Each block runs in the project's tests, and the output shown is the output of
 a real run. The [comparison table](../reference/ilp-bridge.md#comparing-the-learners)
 summarizes every row.

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "reason": "Located sample admission indexes document intervals, typed facts and affected constraints.",
+  "predecessor": ".gnd-planning/milestones/compact-growth-context/evidence/dynamic-query-successor.json",
+  "predecessor_sha256": "4667d94c3325f8958ede574f8fd2e2968caf9412aa59d474aa1829e913849d0b",
+  "removed": [
+    [
+      "src/gnd/evolve/policy.py",
+      "of",
+      "set[str]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/evolve/cli_service.py",
+      "_cmd_evolve_apply",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/cli_service.py",
+      "_cmd_evolve_preview",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "additive_policy_issues",
+      "frozenset[int]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "for_constraint",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "_located_append",
+      "rows[:boundary]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "_located_append",
+      "rows[idx]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "_located_append",
+      "spans[:boundary]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "_located_append",
+      "spans[boundary:]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "verified_sample_appends",
+      "results.get(ref)",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "__init__",
+      "Sequence[str]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8378,
+  "result_occurrences": 10413
+}

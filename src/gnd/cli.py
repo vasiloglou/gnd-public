@@ -660,6 +660,7 @@ def main(argv: list[str] | None = None) -> int:
     _group_synth.add_parsers(subparsers, command='synth')
     _group_measure.add_parsers(subparsers, command='measure')
     _group_discover.add_parsers(subparsers, command='discover')
+    _group_discover.add_consolidate_parser(subparsers)
     _group_extract.add_parsers(subparsers, command='extract')
     _group_flatten.add_parsers(subparsers, command='flatten')
     _group_export.add_parsers(subparsers, command='export')

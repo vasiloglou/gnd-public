@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/cross-document-growth/notes/cross-document-growth-plan.md",
+    "sha256": "9de0dc459c7b1682d33670a2459a30a0838e7f6ecbe61575a0aa953c6034b0ab",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "Cross-document growth plan",
+    "criteria": [
+      "Assess issue 338 append-only sample and provenance safety including conflicting constraints, duplicate observations and source ownership.",
+      "Assess issue 339 candidate completeness, review decisions, loop termination, bounded work, atomic row/role rewrites and replay. Cite specific plan locations and falsifiable cases."
+    ]
+  }
+}

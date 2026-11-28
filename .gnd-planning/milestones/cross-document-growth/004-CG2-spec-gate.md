@@ -1,0 +1,3 @@
+# CG2 specification gate
+
+Delegated approval (auto=true), November 28, 2026, under the owner's direction to resume CG2 and finish the six milestones in order. The approved specification hashes to 0f33fee81a00bb8c7e0e4e45e859b66a6bae5f520c08c8da4ac46fdd5c978f35. CG1 passed its recorded gates at 88227f35. ModelIndex provides declarations, existing role-player signatures deliberately ignore role order, and the existing origin map distinguishes included definitions. The independent reading-shape signal retains role position. The budgets cover indexed declarations, observations, evidence and compared pairs. Select the focused CLI, affected inventory tests, repository guards and one independent phase diff. The phase owns read-only discovery.

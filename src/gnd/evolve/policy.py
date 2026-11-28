@@ -341,20 +341,18 @@ class ConstraintSubjects:
             found |= self._players.get(object_type, set())
         return found
 
+    def for_constraint(self, constraint: Any, host_id: str | None) -> set[str]:
+        subjects = {host_id} if host_id is not None else set()
+        _role_ref_fact_types(constraint, subjects)
+        return subjects | self._playing(_object_scoped_types(constraint))
+
     def of(self, operation: Any) -> set[str]:
         locator = operation.locator
         # A fact-type-hosted constraint ranges over its host and over anything
         # else it reaches, like a model-hosted one: a role_ref into another fact
         # type, or an object type without a role (milestone close R1-F1).
-        subjects: set[str] = set()
-        if locator.host in {"fact_type", "included_fact_type"} and locator.host_id is not None:
-            subjects.add(locator.host_id)
-        # Before AND after: a constraint spanning only unpopulated fact
-        # types must not be re-pointed at a populated one (review F1).
-        _role_ref_fact_types(operation.before, subjects)
-        _role_ref_fact_types(operation.after, subjects)
-        subjects |= self._playing(_object_scoped_types(operation.before) | _object_scoped_types(operation.after))
-        return subjects
+        host_id = locator.host_id if locator.host in {"fact_type", "included_fact_type"} else None
+        return self.for_constraint(operation.before, host_id) | self.for_constraint(operation.after, host_id)
 
 
 POPULATION_PASS: Final = "pass"
@@ -386,6 +384,7 @@ def additive_policy_issues(
     *,
     populated: frozenset[str],
     population_outcomes: Mapping[int, str] | None = None,
+    verified_appends: frozenset[int] = frozenset(),
 ) -> tuple[PolicyIssue, ...]:
     """Every operation the additive policy refuses, in proposal order.
 
@@ -444,6 +443,8 @@ def additive_policy_issues(
                     added_fact_types.add(locator.element_id)
                 continue
             if kind is _MODIFY:
+                if position in verified_appends and collection == "fact_types":
+                    continue
                 allowed = _OBJECT_TYPE_MODIFY_KEYS if collection == "object_types" else _FACT_TYPE_MODIFY_KEYS
                 detail = _element_modify_detail(operation.before, operation.after, allowed)
                 if detail is not None:

@@ -1,0 +1,129 @@
+{
+  "final_model_sha256": "78236fd7a6aacb71683524063d7cbf8da68a61d06f627306c0bac807c31ddc7d",
+  "decisions": [
+    {
+      "action": "leave",
+      "actor": "owner:fixture",
+      "after": "f1bc8f19a0df441b795d7e72ad32474cfc7c16a02c6b32e32353ddfbb2f0edfa",
+      "evidence_sha256": "70d4a5dbc3f6a2e15d4630c3d0251c47f9c7b9025dfe90ef318fb7261cb76b41",
+      "group_id": "2099c07204beef982a3269729c8b5194897a51d65319031d5566531d3215f79c",
+      "id": "3d88600133ab6faecc15686c3d94d7d76b8b0d7c6c6f393aa00e199b3a9c6b69",
+      "model_sha256": "f1bc8f19a0df441b795d7e72ad32474cfc7c16a02c6b32e32353ddfbb2f0edfa",
+      "work": {
+        "items": 248,
+        "pairs": 5
+      }
+    },
+    {
+      "action": "merge",
+      "actor": "owner:fixture",
+      "after": "78236fd7a6aacb71683524063d7cbf8da68a61d06f627306c0bac807c31ddc7d",
+      "conformance_exit": 0,
+      "evidence_sha256": "70d4a5dbc3f6a2e15d4630c3d0251c47f9c7b9025dfe90ef318fb7261cb76b41",
+      "group_id": "7900bfbc4c8ae209ecdfdf07460fd722889e599e4e842ee9f8cac51ca2c040ac",
+      "id": "bee678a492809a54580092114c4efbcc380e930507adfd9842c46977bcff9044",
+      "model_sha256": "f1bc8f19a0df441b795d7e72ad32474cfc7c16a02c6b32e32353ddfbb2f0edfa",
+      "proposal_sha256": "f7df44ccb828ad68fcd7fc5220950cb23ece341346089e8a369060ceb7002e0f",
+      "work": {
+        "items": 248,
+        "pairs": 5
+      }
+    }
+  ],
+  "terminal": {
+    "reason": "needs-decision",
+    "model_sha256": "78236fd7a6aacb71683524063d7cbf8da68a61d06f627306c0bac807c31ddc7d",
+    "group": {
+      "signal": "near-name",
+      "kind": "object",
+      "members": [
+        "customer",
+        "customer_no"
+      ],
+      "score": 86,
+      "group_id": "aba9141d17c8e3629999cdd0377e8a3c22bbf94442a5ad7572ca098e5d6a80ca",
+      "evidence_sha256": "bb065521c6a2442682395aa8177213233997a7cc02c3ea3b1bf0f5d4c33a79ab",
+      "evidence": [
+        {
+          "id": "customer",
+          "name": "Customer",
+          "spans": [
+            {
+              "document_sha256": "6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8",
+              "start": 31,
+              "end": 40,
+              "excerpt_sha256": "21eb2153dd1483cd67a621fb2c7b2f65b2ca46c64a49e49be4b939a1f0c844f8"
+            }
+          ]
+        },
+        {
+          "id": "customer_no",
+          "name": "CustomerNo",
+          "spans": [
+            {
+              "document_sha256": "6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8",
+              "start": 112,
+              "end": 122,
+              "excerpt_sha256": "7ec17d2e9ee4f734690133c8fec7337293b0e6806c671e6c7b52115040a64429"
+            }
+          ],
+          "primitive": "Integer"
+        }
+      ]
+    },
+    "work": {
+      "items": 193,
+      "pairs": 4
+    }
+  },
+  "fact_roles": {
+    "order_placed_by_customer": [
+      {
+        "object_type": "order",
+        "role_name": "order"
+      },
+      {
+        "object_type": "customer",
+        "role_name": "customer"
+      }
+    ],
+    "customer_listed": [
+      {
+        "object_type": "customer",
+        "role_name": "customer"
+      }
+    ]
+  },
+  "sample_spans": {
+    "order_placed_by_customer": [
+      {
+        "row": 0,
+        "span": {
+          "document_sha256": "6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8",
+          "start": 89,
+          "end": 123,
+          "excerpt_sha256": "d2ad43151733e3f82dd1851dbfa883fd2aa2708795d6843b002b9b7d12806abc"
+        }
+      },
+      {
+        "row": 1,
+        "span": {
+          "document_sha256": "6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8",
+          "start": 124,
+          "end": 158,
+          "excerpt_sha256": "1a38a1f25c55db72d5b8b17da30efa7cb4707293e4fed3641f90c7fee8c67ad0"
+        }
+      },
+      {
+        "row": 2,
+        "span": {
+          "document_sha256": "b41bf8685804eaee66ab67c8235d73fc23bd10d40bdf4afd43719d1e66c5d480",
+          "start": 0,
+          "end": 31,
+          "excerpt_sha256": "b41bf8685804eaee66ab67c8235d73fc23bd10d40bdf4afd43719d1e66c5d480"
+        }
+      }
+    ],
+    "customer_listed": []
+  }
+}

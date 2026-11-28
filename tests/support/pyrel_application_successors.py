@@ -165,6 +165,9 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/ossie-relational-bundle/evidence/close-followups/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/refactoring-followups/evidence/F5/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/compact-growth-context/evidence/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG2/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG3/dynamic-query-successor.json',
 ]
 
 

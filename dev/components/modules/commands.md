@@ -56,8 +56,9 @@ Components: cli.discover_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 131 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 144 | (no docstring) |
+| `add_consolidate_parser(subparsers)` | function | 131 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 141 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 154 | (no docstring) |
 
 ## gnd.commands.doccheck — `src/gnd/commands/doccheck.py`
 Components: cli.doccheck_command
@@ -74,8 +75,8 @@ Components: cli.evolve_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 195 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 207 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 198 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 210 | (no docstring) |
 
 ## gnd.commands.exp — `src/gnd/commands/exp.py`
 Components: cli.exp_command

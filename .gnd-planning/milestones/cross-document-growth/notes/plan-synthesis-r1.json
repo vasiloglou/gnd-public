@@ -1,0 +1,1084 @@
+{
+  "schema_version": 1,
+  "run_sha256": "dda696f53a3f3021747b5a5e8cf39a2e1b1bafad77a7e56668d087755f6ca78b",
+  "summary": "All six reviewers returned complete opinions. Five requested revision and Gemini recommended blocking. The coordinator will amend the specification of storage, admission, candidate completeness, bounded work and recoverable atomic edits before implementation.",
+  "agreed_concerns": [
+    {
+      "group_id": "conflicts",
+      "title": "Check candidate sample constraints before publication",
+      "summary": "Check candidate sample constraints before publication",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-conflicting-constraints-unspecified"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-338-missing-conflicting-constraints"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "conflicting-constraints-never-addressed"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ]
+    },
+    {
+      "group_id": "atomic",
+      "title": "Apply all rewrites atomically",
+      "summary": "Apply all rewrites atomically",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-apply-atomicity-unstated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg3-atomic-apply"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-339-atomicity-falsifiable-case"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-apply-atomicity-unspecified"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-02"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-atomic-apply-semantics-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "limits",
+      "title": "Bound discovery, work and review-loop termination",
+      "summary": "Bound discovery, work and review-loop termination",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-termination-threshold-undefined"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-bounded-work"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg2-cg3-bounded-work"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-339-bounded-work-threshold"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-loop-termination-undefined"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-03"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-termination-threshold-unnamed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "bounded-work-limits-unstated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "positive",
+      "title": "Test intended candidate families with known positives",
+      "summary": "Test intended candidate families with known positives",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-candidate-completeness-untested"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg2-positive-completeness"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg2-dimension-coverage-unmapped"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-04"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg2-candidate-class-coverage-incomplete"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "duplicates",
+      "title": "Distinguish observations from facts and define idempotency",
+      "summary": "Distinguish observations from facts and define idempotency",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-duplicate-observation-identity"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg1-duplicate-provenance"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-duplicate-append-semantics-open"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duplicate-observation-rule-ambiguous"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "ownership",
+      "title": "Define ownership, span verification and refusal order",
+      "summary": "Define ownership, span verification and refusal order",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-source-ownership-undefined"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg1-ownership-conflict-refusals"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-ownership-refusal-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-01"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "canonical-evidence-representation-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "public-boundaries-not-enumerated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ownership-refusal-and-transfer-provenance"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "storage",
+      "title": "Choose the storage representation and settle phase dependencies",
+      "summary": "Choose the storage representation and settle phase dependencies",
+      "severity": "critical",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-storage-decision-blocks-criteria"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-338-ownership-unresolved"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-exit-criterion-not-conditional"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-05"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-07"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg1-storage-decision-open-and-untested"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "identity",
+      "title": "Make candidate identity stable across recomputation",
+      "summary": "Make candidate identity stable across recomputation",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-stable-id-derivation"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "candidate-id-stability-across-recompute"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "log",
+      "title": "Bind decisions to evidence and support crash recovery",
+      "summary": "Bind decisions to evidence and support crash recovery",
+      "severity": "high",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-decision-log-binding"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg3-replay-accepted-decision"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-evidence-change-undefined"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-06"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "evidence-change-predicate-undecidable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "decision-record-schema-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "closure",
+      "title": "Define the deterministic closure replay",
+      "summary": "Define the deterministic closure replay",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "closure-replay-comparison"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "closure-replay-assertions-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "guide",
+      "title": "Update the host guidance with refusal and fallback paths",
+      "summary": "Update the host guidance with refusal and fallback paths",
+      "severity": "medium",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-guidance-compat"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "doc-compat-obligation-untracked"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "cg3-merge-induced-conflicts"
+    },
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "cdg-08"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "stale-component-index-relied-upon"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "conflicts",
+      "rank": 1,
+      "title": "Check candidate sample constraints before publication",
+      "action": "Check candidate sample constraints before publication",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-conflicting-constraints-unspecified"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-338-missing-conflicting-constraints"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "conflicting-constraints-never-addressed"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-conflicting-constraints-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-338-missing-conflicting-constraints",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "conflicting-constraints-never-addressed",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "atomic",
+      "rank": 2,
+      "title": "Apply all rewrites atomically",
+      "action": "Apply all rewrites atomically",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-apply-atomicity-unstated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg3-atomic-apply"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-339-atomicity-falsifiable-case"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-apply-atomicity-unspecified"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-02"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-atomic-apply-semantics-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-apply-atomicity-unstated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg3-atomic-apply",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-339-atomicity-falsifiable-case",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-apply-atomicity-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-02",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-atomic-apply-semantics-missing",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "limits",
+      "rank": 3,
+      "title": "Bound discovery, work and review-loop termination",
+      "action": "Bound discovery, work and review-loop termination",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-termination-threshold-undefined"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-bounded-work"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg2-cg3-bounded-work"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-339-bounded-work-threshold"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-loop-termination-undefined"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-03"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-termination-threshold-unnamed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "bounded-work-limits-unstated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-termination-threshold-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-bounded-work",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg2-cg3-bounded-work",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-339-bounded-work-threshold",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-loop-termination-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-03",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-termination-threshold-unnamed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "bounded-work-limits-unstated",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "positive",
+      "rank": 4,
+      "title": "Test intended candidate families with known positives",
+      "action": "Test intended candidate families with known positives",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-candidate-completeness-untested"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg2-positive-completeness"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg2-dimension-coverage-unmapped"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-04"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg2-candidate-class-coverage-incomplete"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-candidate-completeness-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg2-positive-completeness",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg2-dimension-coverage-unmapped",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-04",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg2-candidate-class-coverage-incomplete",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "duplicates",
+      "rank": 5,
+      "title": "Distinguish observations from facts and define idempotency",
+      "action": "Distinguish observations from facts and define idempotency",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-duplicate-observation-identity"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg1-duplicate-provenance"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-duplicate-append-semantics-open"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duplicate-observation-rule-ambiguous"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-duplicate-observation-identity",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg1-duplicate-provenance",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-duplicate-append-semantics-open",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duplicate-observation-rule-ambiguous",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "ownership",
+      "rank": 6,
+      "title": "Define ownership, span verification and refusal order",
+      "action": "Define ownership, span verification and refusal order",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-source-ownership-undefined"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg1-ownership-conflict-refusals"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-ownership-refusal-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-01"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "canonical-evidence-representation-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "public-boundaries-not-enumerated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ownership-refusal-and-transfer-provenance"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-source-ownership-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg1-ownership-conflict-refusals",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-ownership-refusal-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-01",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "canonical-evidence-representation-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "public-boundaries-not-enumerated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ownership-refusal-and-transfer-provenance",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "storage",
+      "rank": 7,
+      "title": "Choose the storage representation and settle phase dependencies",
+      "action": "Choose the storage representation and settle phase dependencies",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-storage-decision-blocks-criteria"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-338-ownership-unresolved"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-exit-criterion-not-conditional"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-05"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-07"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg1-storage-decision-open-and-untested"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-storage-decision-blocks-criteria",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "issue-338-ownership-unresolved",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg1-exit-criterion-not-conditional",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-05",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-07",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg1-storage-decision-open-and-untested",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "merge",
+      "rank": 8,
+      "title": "Check constraints on transferred rows",
+      "action": "Check constraints on transferred rows",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-merge-induced-conflicts"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-merge-induced-conflicts",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "identity",
+      "rank": 9,
+      "title": "Make candidate identity stable across recomputation",
+      "action": "Make candidate identity stable across recomputation",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-stable-id-derivation"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "candidate-id-stability-across-recompute"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg2-stable-id-derivation",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "candidate-id-stability-across-recompute",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "log",
+      "rank": 10,
+      "title": "Bind decisions to evidence and support crash recovery",
+      "action": "Bind decisions to evidence and support crash recovery",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-decision-log-binding"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg3-replay-accepted-decision"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-evidence-change-undefined"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-06"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "evidence-change-predicate-undecidable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "decision-record-schema-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg3-decision-log-binding",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "cg3-replay-accepted-decision",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-evidence-change-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-06",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "evidence-change-predicate-undecidable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "decision-record-schema-missing",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "closure",
+      "rank": 11,
+      "title": "Define the deterministic closure replay",
+      "action": "Define the deterministic closure replay",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "closure-replay-comparison"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "closure-replay-assertions-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "closure-replay-comparison",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "closure-replay-assertions-unspecified",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "guide",
+      "rank": 12,
+      "title": "Update the host guidance with refusal and fallback paths",
+      "action": "Update the host guidance with refusal and fallback paths",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-guidance-compat"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "doc-compat-obligation-untracked"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "cg1-guidance-compat",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "doc-compat-obligation-untracked",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "copies",
+      "rank": 13,
+      "title": "Keep normative controls in one home",
+      "action": "Keep normative controls in one home",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-08"
+        }
+      ],
+      "supporting_reviewers": [
+        "kimi"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-08",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "fix_id": "index",
+      "rank": 14,
+      "title": "Verify component ownership at the baseline",
+      "action": "Verify component ownership at the baseline",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "stale-component-index-relied-upon"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "stale-component-index-relied-upon",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

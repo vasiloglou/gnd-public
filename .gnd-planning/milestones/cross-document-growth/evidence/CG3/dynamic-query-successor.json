@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "reason": "CG3 indexes reviewed group and proposal identities, journal state, role maps, source-span multisets and exact predicate preservation.",
+  "predecessor": ".gnd-planning/milestones/cross-document-growth/evidence/CG2/dynamic-query-successor.json",
+  "predecessor_sha256": "afef430333b89ec478cda451511f36baa9df0cdd34d6228f9d839ac5ab4b3af8",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/evolve/consolidation.py",
+      "Decision",
+      "Literal['leave', 'merge', 'demote-to-row', 'link-subtype']",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "Decision",
+      "tuple[Move, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "Move",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "destinations.get(old_host, old_host)",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "new_facts[k]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "new_facts[key]",
+      3
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "new_objects[m]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "new_roles[fact_id]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "new_roles[fact_id].get(role)",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "new_roles[key]",
+      2
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "new_roles[move.target]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_facts.get(k, {})",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_facts[k]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_facts[move.source]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_objects[k]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_objects[m]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_roles[key]",
+      3
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_roles[move.source]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "results.get(ref)",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "surviving[m]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_located_rows",
+      "mapping[key]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_located_rows",
+      "spans[entry['row']]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_located_rows",
+      "spans[i]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_step_locked",
+      "entry['work'][counter]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8438,
+  "result_occurrences": 10483
+}

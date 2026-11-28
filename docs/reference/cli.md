@@ -47,6 +47,7 @@ does not add trace fields.
 
 | Command form | Result |
 |---|---|
+| `gnd consolidate candidates MODEL [--max-items N] [--max-pairs N]` | Ranked consolidation groups with source locations. The JSON includes group and evidence hashes, work counters and an explicit completion reason. |
 | `gnd codegen MODEL --out DIR` | Derived project files and initial extension structure |
 | `gnd conformance MODEL DIR --format json` | Static integrity, currency, structure and architecture findings |
 | `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT --check-population FILE] [--shape-report] [--previous-include ID=PATH]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations, and [admits a constraint on clean data](evolve-policy.md#admitting-a-constraint-on-clean-data) with `--check-population`; the [shape report](evolve-policy.md#shape-report) lists same-shaped fact types |
@@ -159,3 +160,9 @@ For an edition update, see the
 [expense walkthrough](../how-to/shared-expense-policies-commands.md#review-edition-2)
 and the evolution contract linked above; `--previous-include ID=PATH` supplies
 verified historical bytes when the old edition is unavailable.
+
+### Consolidation candidates
+
+The candidate report distinguishes group membership from evidence. A stable group ID covers the signal, element kind and sorted member IDs. Its evidence digest covers the public names, roles and located observations shown in the report. Reordering declarations preserves both identities. Sample values participate in the singleton count internally. The report carries row positions and source locations so a reviewer with the model can inspect them.
+
+A near-name comparison uses shared character trigrams. Each distinct comparison consumes one pair; revisiting a posting consumes item work. An incomplete report names the exhausted budget. Unit and counted-noun signals are suggestions for review. Explicit unit-based references identify their measure directly. Lexical detection requires a recognized multi-letter unit.

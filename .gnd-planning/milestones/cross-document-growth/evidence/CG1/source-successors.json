@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "reason": "CG1 forwards explicit source documents through the two evolution entry points.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_evolve_preview",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "b6620b91ef9c1bdc7d9977351a231a24d8146aad308d766cd3cd3742523af0a9",
+        "algorithm_sha256": "f606701c126de04f3d8d6ca83d5728a077d63a021f2bdf357cf4ceb0b6be9be2"
+      },
+      "after": {
+        "algorithm_sha256": "c7874b785760bfe8a9a5d4fe5c20925a7d252440c4a0a6ff7f46ad27e80c1380"
+      },
+      "reason": "CG1 forwards explicit source documents through the two evolution entry points."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_evolve_apply",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "15f0e87ecdf433f1c15e5b7e2cb918aed992b7ae76cbb86d38578a85a914fe97",
+        "algorithm_sha256": "5ecd05037476abc82e95da60e2c0d2fc76965e8966041f50af14c6658b4f6d76"
+      },
+      "after": {
+        "algorithm_sha256": "c3df909af1a8064c24a4d13f64b66b3a86a1286d20b15c2bac9a7cad083fdf3f"
+      },
+      "reason": "CG1 forwards explicit source documents through the two evolution entry points."
+    }
+  ]
+}

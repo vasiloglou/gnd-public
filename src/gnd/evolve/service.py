@@ -85,6 +85,8 @@ from .population_check import (
     constraint_placements,
     population_outcomes,
     read_population_for_check,
+    verified_sample_appends,
+    workspace_relative,
 )
 from .shapes import shape_matches
 
@@ -1554,7 +1556,9 @@ class EvolutionService:
         evidence_root: str | Path,
         verbalization_path: str | Path | None = None,
         allowed_project_root: str | Path | None = None,
+        sample_documents: Sequence[str] = (),
     ) -> None:
+        self.sample_documents = tuple(sample_documents)
         model = Path(model_path)
         if not model.is_absolute():
             model = Path.cwd() / model
@@ -1793,6 +1797,7 @@ class EvolutionService:
             proposal,
             policy,
             populated,
+            candidate=candidate_model,
             population=self._population_runner(
                 check_population,
                 before_loaded_model,
@@ -1927,14 +1932,15 @@ class EvolutionService:
             raise EvolutionIncludeError('include review evidence changed before publication')
         return before, document, candidate, candidate_document, validation, declared, placed
 
-    @staticmethod
     def _policy_values(
+        self,
         before_loaded_model: Any,
         proposal: EvolutionProposal,
         policy: str | None,
         populated: Sequence[str],
         *,
         population: Callable[[frozenset[str]], Any] | None = None,
+        candidate: Any = None,
     ) -> dict[str, Any]:
         """The four policy fields of a preview (five with a population), or nothing without a policy.
 
@@ -1950,9 +1956,23 @@ class EvolutionService:
             effective = effective_populated(before_loaded_model, proposal, populated_args=populated_args)
         except ValueError as error:
             raise EvolutionError(str(error)) from error
+        extra = {}
+        if self.sample_documents:
+            if len(self.sample_documents) > 64:
+                raise EvolutionError("at most 64 sample documents per proposal")
+            documents = {}
+            size = 0
+            for path in self.sample_documents:
+                relative = workspace_relative(self.allowed_project_root, path, label="sample document")
+                raw = _regular_bytes(self.allowed_project_root, relative, label="sample document")
+                size += len(raw)
+                if size > MAX_EVOLUTION_PROPOSAL_BYTES:
+                    raise EvolutionError("sample documents exceed the combined byte limit")
+                documents[sha256_hex(raw)] = raw
+            extra["verified_appends"] = verified_sample_appends(candidate, proposal, documents)
         if population is None:
             # The call shape without a population is MG2's, unchanged (UG-R1).
-            issues = additive_policy_issues(before_loaded_model, proposal, populated=effective)
+            issues = additive_policy_issues(before_loaded_model, proposal, populated=effective, **extra)
             return {
                 "policy": policy,
                 "populated_args": populated_args,
@@ -1961,7 +1981,7 @@ class EvolutionService:
             }
         checked = population(effective)
         issues = additive_policy_issues(
-            before_loaded_model, proposal, populated=effective, population_outcomes=checked.outcomes
+            before_loaded_model, proposal, populated=effective, population_outcomes=checked.outcomes, **extra
         )
         # Admitted = refused by the policy without the population, not refused
         # with it: exactly the operations the population cleared (UG-R3). The
@@ -1969,7 +1989,7 @@ class EvolutionService:
         still_refused = {issue.operation_index for issue in issues}
         cleared = sorted(
             issue.operation_index
-            for issue in additive_policy_issues(before_loaded_model, proposal, populated=effective)
+            for issue in additive_policy_issues(before_loaded_model, proposal, populated=effective, **extra)
             if issue.operation_index not in still_refused
         )
         return {
@@ -2034,6 +2054,7 @@ class EvolutionService:
             proposal,
             preview.policy,
             preview.populated_args or (),
+            candidate=candidate,
             population=self._population_runner(
                 check_population,
                 before_loaded_model,
@@ -2052,6 +2073,8 @@ class EvolutionService:
             raise EvolutionError("population changed before apply")
         if recomputed["policy_issues"]:
             raise EvolutionPolicyRefusedError(recomputed["policy_issues"])
+        if preview.policy_issues:
+            raise EvolutionPolicyRefusedError(preview.policy_issues)
 
     def _population_check(
         self,
@@ -2373,7 +2396,7 @@ class EvolutionService:
             # Re-run the additive policy on the bytes about to be published rather
             # than reading the preview's issue list: anyone can recompute
             # preview_sha256 over a stripped list, so the re-run is the guard (MG-R3).
-            if preview.policy is not None and preview.population_check is None:
+            if preview.policy is not None and preview.population_check is None and not self.sample_documents:
                 self._recheck_policy(before_loaded_model, proposal, preview)
             candidate_loaded_model, candidate_document, validation = self._validated_candidate(
                 preview.candidate_model,
@@ -2390,7 +2413,7 @@ class EvolutionService:
             # follows candidate validation, replay equality and D-12 here, the
             # order preview uses (UG2 spec §6.4). Without one the order above is
             # unchanged, so flag-free exits do not move.
-            if preview.population_check is not None:
+            if preview.population_check is not None or (preview.policy is not None and self.sample_documents):
                 self._recheck_policy(
                     before_loaded_model,
                     proposal,

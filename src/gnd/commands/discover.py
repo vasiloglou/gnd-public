@@ -128,6 +128,16 @@ def _register_discover(subparsers):
     return {"discover_parser": discover_parser}
 
 
+def add_consolidate_parser(subparsers):
+    root = subparsers.add_parser("consolidate", help="review consolidation candidates in one model")
+    root.set_defaults(handler=_handler_discover_service.run_candidates)
+    actions = root.add_subparsers(dest="consolidate_action", required=True)
+    candidates = actions.add_parser("candidates", help="find candidate groups with source locations")
+    candidates.add_argument("model")
+    candidates.add_argument("--max-items", type=_at_least(0), default=100_000)
+    candidates.add_argument("--max-pairs", type=_at_least(0), default=25_000)
+
+
 def add_parsers(subparsers, *, command: str | None = None):
     parsers = {}
     if command is None or command == "discover":

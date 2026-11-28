@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "reason": "CG2 indexes source locations, distinct candidate pairs and bounded comparisons. Typed sample values are only used internally to decide singleton status.",
+  "predecessor": ".gnd-planning/milestones/cross-document-growth/evidence/CG1/dynamic-query-successor.json",
+  "predecessor_sha256": "91979bd99aec50c9c18612171c9650433d3af883e1cafaa4c3728744e5446572",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/evolve/candidates.py",
+      "_tokens",
+      "name[i + 1:i + 2]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "_tokens",
+      "name[i - 1]",
+      3
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "charge",
+      "limits[kind]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "charge",
+      "work[kind]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "buckets['counted-noun', kind, (primitive, frame)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "buckets['reading-shape', kind, shape]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "buckets['role-players', kind, role_player_signature(roles)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "buckets['unit', kind, (primitive, reference['measure_type'])]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "buckets['unit', kind, (primitive, tuple(tokens[:-1]))]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "evidence['object', identifier]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "evidence[kind, member]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "evidence[kind, member][qualifier]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "labels[kind, a]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "labels[kind, b]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "object_locations.get(player, ())",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "object_locations.get(player, [])",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "objects.get(player, {})",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "observations[identifier]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "observations[player]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "observed[player]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "role_maps[identifier]",
+      2
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "row[key]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "sample_spans.get(i)",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "tokens[-1]",
+      2
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "tokens[:-1]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "tokens[:noun]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "tokens[noun + 1:]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "tokens[noun]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "discover_candidates",
+      "{'unit': 'unit', 'counted-noun': 'counted_noun'}.get(signal)",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "emit",
+      "evidence[kind, identifier]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "emit",
+      "item.get(field, ())",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "located",
+      "span.get(key)",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "located",
+      "span[key]",
+      2
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "name_entry",
+      "label[i:i + 3]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "name_entry",
+      "name_index[kind, gram]",
+      1
+    ],
+    [
+      "src/gnd/evolve/candidates.py",
+      "replace",
+      "spans_by_object.get(player, ())",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8414,
+  "result_occurrences": 10454
+}

@@ -1,0 +1,623 @@
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index f327befb..d42afe4f 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1013,13 +1013,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - notes: The one operation walk conservatively refuses include re-pins and includes owned included_fact_type hosts in populated subjects. Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
+ 
+ ### evolve.population_check
+-- does: Read one population file beneath the workspace, check the candidate model over it once, and give one outcome word per constraint operation for the additive policy [population_outcomes].
++- does: Check supplied populations and located sample appends against the candidate model for additive policy admission [population_outcomes, verified_sample_appends].
+ - verbs: check population, population-checked admission, clean population, check-population, admit constraint on populated fact type, population digest, uncovered subject, sample rows, constraint placement
+ - in: Workspace anchor and relative population path, candidate and before models, the proposal, effective populated identifiers, replay placements of constraint objects.
+ - out: The SHA-256 of the bytes read, the candidate model_id and an outcome word per constraint ADD/MODIFY operation; EvolutionPopulationError with a fixed message and exit band on refusal.
+ - status: canonical
+ - modules: src/gnd/evolve/population_check.py
+-- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.population_loading, model.query_index
++- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity
+ - used_by: evolve.command, evolve.service
+ - part_of: subsystem.evolve
+ - tests: tests/test_evolve_population_check.py
+@@ -1864,7 +1864,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +79 more (graph.md)
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +80 more (graph.md)
+ - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
+ - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
+ - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+@@ -2871,7 +2871,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/values.py
+ - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
+-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, … +9 more (graph.md)
++- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, evolve.population_check, export.ossie, infra.text_output, measure.report, measure.service, model.composition, … +10 more (graph.md)
+ - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
+ - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
+ 
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 2a0ba368..124b6f7e 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1745,7 +1745,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/evolve/policy.py -> src/gnd/model_index.py`
+ 
+ ### evolve.population_check
+-- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.population_loading, model.query_index
++- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity
+ - used_by: evolve.command, evolve.service
+ 
+ #### evolve.population_check -> checker.evaluate
+@@ -1772,12 +1772,18 @@ Generated by `scripts/components_index.py`.
+ #### evolve.population_check -> model.document
+ - `src/gnd/evolve/population_check.py -> src/gnd/documents.py`
+ 
++#### evolve.population_check -> model.loading
++- `src/gnd/evolve/population_check.py -> src/gnd/model/__init__.py`
++
+ #### evolve.population_check -> model.population_loading
+ - `src/gnd/evolve/population_check.py -> src/gnd/population.py`
+ 
+ #### evolve.population_check -> model.query_index
+ - `src/gnd/evolve/population_check.py -> src/gnd/model_index.py`
+ 
++#### evolve.population_check -> model.scalar_identity
++- `src/gnd/evolve/population_check.py -> src/gnd/values.py`
++
+ ### evolve.round_summary
+ - uses: evolve.schema, infra.input_policy
+ - used_by: evolve.command
+@@ -4127,7 +4133,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.loading
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.narrow, discover.service, evolve.command, evolve.operation_outcomes, evolve.schema, evolve.service, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_reference_set, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.narrow, discover.service, evolve.command, evolve.operation_outcomes, evolve.population_check, evolve.schema, evolve.service, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_reference_set, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ #### model.loading -> infra.artifacts
+ - `src/gnd/model/__init__.py -> src/gnd/artifacts.py`
+@@ -4355,7 +4361,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.scalar_identity
+ - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
+-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.reference_binding, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, witness.replay
++- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, evolve.population_check, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.reference_binding, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, witness.replay
+ 
+ #### model.scalar_identity -> infra.artifacts
+ - `src/gnd/values.py -> src/gnd/artifacts.py`
+diff --git a/dev/components/modules/commands.md b/dev/components/modules/commands.md
+index 64ce1858..dc11d1e5 100644
+--- a/dev/components/modules/commands.md
++++ b/dev/components/modules/commands.md
+@@ -74,8 +74,8 @@ Components: cli.evolve_command
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `add_parsers(subparsers, *, command)` | function | 195 | (no docstring) |
+-| `handle(args, parsers) -> int` | function | 207 | (no docstring) |
++| `add_parsers(subparsers, *, command)` | function | 198 | (no docstring) |
++| `handle(args, parsers) -> int` | function | 210 | (no docstring) |
+ 
+ ## gnd.commands.exp — `src/gnd/commands/exp.py`
+ Components: cli.exp_command
+diff --git a/dev/components/modules/evolve.md b/dev/components/modules/evolve.md
+index 467389fe..596e0115 100644
+--- a/dev/components/modules/evolve.md
++++ b/dev/components/modules/evolve.md
+@@ -132,8 +132,9 @@ The additive policy for ``gnd evolve preview --policy additive`` (MG2).
+ | `diff_paths(before, after) -> list[tuple[str, Any, Any]]` | function | 146 | (no docstring) |
+ | `constraint_change(path, before, after, *, family) -> str` | function | 196 | The closed strengthening/weakening list (plan §2.2, MG-D3 (a), (p1) F). |
+ | `ConstraintSubjects` | class | 305 | The fact types a constraint operation ranges over, before and after (MG2). |
+-| `ConstraintSubjects.of(self, operation) -> set[str]` | method | 344 | (no docstring) |
+-| `additive_policy_issues(before, proposal, *, populated, population_outcomes) -> tuple[PolicyIssue, .…` | function | 383 | Every operation the additive policy refuses, in proposal order. |
++| `ConstraintSubjects.for_constraint(self, constraint, host_id) -> set[str]` | method | 344 | (no docstring) |
++| `ConstraintSubjects.of(self, operation) -> set[str]` | method | 349 | (no docstring) |
++| `additive_policy_issues(before, proposal, *, populated, population_outcomes, verified_appends) -> tu…` | function | 381 | Every operation the additive policy refuses, in proposal order. |
+ 
+ ## gnd.evolve.population_check — `src/gnd/evolve/population_check.py`
+ Components: evolve.population_check
+@@ -141,12 +142,13 @@ The population check behind ``gnd evolve preview --check-population`` (UG2).
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `EvolutionPopulationError` | class(Exception) | 54 | A ``--check-population`` input refused before the policy ran (UG2). |
+-| `PopulationCheck` | class | 68 | The digest of the bytes read and one outcome word per constraint operation. |
+-| `workspace_relative(anchor, value) -> str` | function | 106 | The population path relative to the workspace, decided lexically (no filesystem access). |
+-| `read_population_for_check(anchor, value, *, candidate, expected_sha256) -> tuple[str, Population]` | function | 124 | Read the file once beneath ``anchor``, hash those bytes, load them against ``candidate``. |
+-| `population_outcomes(proposal, *, before, candidate, population, sha256, populated, placements) -> P…` | function | 188 | One ``check`` call; one outcome word per constraint ADD or MODIFY operation. |
+-| `constraint_placements(placed, final_host) -> dict[int, tuple[str \| None, int]]` | function | 234 | Positions, by identity, of the constraint objects the replay placed, in the final tree. |
++| `EvolutionPopulationError` | class(Exception) | 56 | A ``--check-population`` input refused before the policy ran (UG2). |
++| `PopulationCheck` | class | 70 | The digest of the bytes read and one outcome word per constraint operation. |
++| `workspace_relative(anchor, value) -> str` | function | 108 | The population path relative to the workspace, decided lexically (no filesystem access). |
++| `read_population_for_check(anchor, value, *, candidate, expected_sha256) -> tuple[str, Population]` | function | 126 | Read the file once beneath ``anchor``, hash those bytes, load them against ``candidate``. |
++| `population_outcomes(proposal, *, before, candidate, population, sha256, populated, placements) -> P…` | function | 190 | One ``check`` call; one outcome word per constraint ADD or MODIFY operation. |
++| `constraint_placements(placed, final_host) -> dict[int, tuple[str \| None, int]]` | function | 236 | Positions, by identity, of the constraint objects the replay placed, in the final tree. |
++| `verified_sample_appends(candidate, proposal, documents)` | function | 319 | Collect exact operation indices that pass both citation and population admission. |
+ 
+ ## gnd.evolve.service — `src/gnd/evolve/service.py`
+ Components: evolve.service
+@@ -154,29 +156,29 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
+ 
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+-| `EvolutionError` | class(Exception) | 110 | A proposal, stage, CAS, or immutable evidence write was refused. |
+-| `EvolutionIncludeError` | class(EvolutionError) | 114 | An include input was refused, independent of user-supplied message text. |
+-| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 123 | (no docstring) |
+-| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 143 | An old evidence document that may be READ but cannot be finished. |
+-| `EvolutionOperationsGatedError` | class(EvolutionError) | 155 | An ORM+ v2 operation delta this tool deliberately does not own. |
+-| `EvolutionPolicyRefusedError` | class(EvolutionError) | 165 | The additive policy refused an operation at apply (MG2, exit 3). |
+-| `OutcomeRefusalPending` | class | 407 | What a refused preview knows about each operation (GO2), carried on the |
+-| `OutcomeRefusalPending.report(self, *, exit_code, message) -> EvolutionOutcomeReport` | method | 419 | (no docstring) |
+-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1424 | Read one bounded, closed JSON evolution proposal. |
+-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1441 | Read one bounded, version-selected preview claim. |
+-| `read_evolution_outcome_report(path, *, anchor, relative) -> EvolutionOutcomeReport` | function | 1458 | Read one bounded outcome report (GO2); any other document is refused. |
+-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1475 | Read one bounded, version-selected staged intent. |
+-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1492 | Read one bounded pending-finalization claim. |
+-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1509 | Read one bounded, version-selected immutable record. |
+-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1526 | Read one bounded standalone conformance leaf for an explicit envelope. |
+-| `EvolutionService` | class | 1547 | Preview, apply, and finalize one explicit model evolution proposal. |
+-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1655 | Validate and bind a proposal without changing any publication leaf. |
+-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2199 | Report one staged pending finalization that has no completed record. |
+-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2253 | Refuse to start a *new* evolution over an incomplete published one. |
+-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2275 | Stage immutable evidence and publish only the candidate model CAS. |
+-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2533 | (no docstring) |
+-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2539 | (no docstring) |
+-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2543 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
++| `EvolutionError` | class(Exception) | 112 | A proposal, stage, CAS, or immutable evidence write was refused. |
++| `EvolutionIncludeError` | class(EvolutionError) | 116 | An include input was refused, independent of user-supplied message text. |
++| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 125 | (no docstring) |
++| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 145 | An old evidence document that may be READ but cannot be finished. |
++| `EvolutionOperationsGatedError` | class(EvolutionError) | 157 | An ORM+ v2 operation delta this tool deliberately does not own. |
++| `EvolutionPolicyRefusedError` | class(EvolutionError) | 167 | The additive policy refused an operation at apply (MG2, exit 3). |
++| `OutcomeRefusalPending` | class | 409 | What a refused preview knows about each operation (GO2), carried on the |
++| `OutcomeRefusalPending.report(self, *, exit_code, message) -> EvolutionOutcomeReport` | method | 421 | (no docstring) |
++| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1426 | Read one bounded, closed JSON evolution proposal. |
++| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1443 | Read one bounded, version-selected preview claim. |
++| `read_evolution_outcome_report(path, *, anchor, relative) -> EvolutionOutcomeReport` | function | 1460 | Read one bounded outcome report (GO2); any other document is refused. |
++| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1477 | Read one bounded, version-selected staged intent. |
++| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1494 | Read one bounded pending-finalization claim. |
++| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1511 | Read one bounded, version-selected immutable record. |
++| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1528 | Read one bounded standalone conformance leaf for an explicit envelope. |
++| `EvolutionService` | class | 1549 | Preview, apply, and finalize one explicit model evolution proposal. |
++| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1659 | Validate and bind a proposal without changing any publication leaf. |
++| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2220 | Report one staged pending finalization that has no completed record. |
++| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2274 | Refuse to start a *new* evolution over an incomplete published one. |
++| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2296 | Stage immutable evidence and publish only the candidate model CAS. |
++| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2554 | (no docstring) |
++| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2560 | (no docstring) |
++| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2564 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+ 
+ ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
+ Components: evolve.shape_matches
+diff --git a/docs/reference/evolve-policy.md b/docs/reference/evolve-policy.md
+index 6dbc7bca..23efec11 100644
+--- a/docs/reference/evolve-policy.md
++++ b/docs/reference/evolve-policy.md
+@@ -116,3 +116,5 @@ gnd evolve preview model.orm.yaml proposal.json --workspace . --records records
+ 
+ The signature rule and the field layout are normative in the evolution
+ contract (section "Shape report").
++
++For an unattended model, `--sample-document FILE` supplies the source for an append to locally owned samples. Repeat the option on apply. See the [evolution contract](../../src/gnd/skills/gnd-model-evolve/references/evolution-contract.md) for admission and refusal rules.
+diff --git a/src/gnd/commands/evolve.py b/src/gnd/commands/evolve.py
+index 0f4fde8b..e515e993 100644
+--- a/src/gnd/commands/evolve.py
++++ b/src/gnd/commands/evolve.py
+@@ -140,6 +140,9 @@ def _register_evolve(subparsers):
+         metavar="FILE",
+         help="repeat the reviewed preview's --check-population FILE beneath ROOT",
+     )
++    for parser in (evolve_preview_parser, evolve_apply_parser):
++        parser.add_argument("--sample-document", action="append", metavar="FILE",
++                            help="verify newly appended sample rows against this workspace document; repeatable")
+     _add_format_argument(evolve_apply_parser)
+ 
+     evolve_finalize_parser = evolve_subparsers.add_parser(
+@@ -218,6 +221,7 @@ def handle(args, parsers) -> int:
+                 populated=args.populated,
+                 shape_report=args.shape_report,
+                 check_population=args.check_population,
++                sample_documents=args.sample_document or (),
+                 previous_include=args.previous_include,
+                 operation_outcomes=args.operation_outcomes,
+                 outcome_report=args.outcome_report,
+@@ -233,6 +237,7 @@ def handle(args, parsers) -> int:
+                 policy=args.policy,
+                 populated=args.populated,
+                 check_population=args.check_population,
++                sample_documents=args.sample_document or (),
+             )
+         if args.evolve_command == "summary":
+             return _handler_evolve_cli_service._cmd_evolve_summary(
+diff --git a/src/gnd/evolve/cli_service.py b/src/gnd/evolve/cli_service.py
+index 3d9933f5..4ffe748d 100644
+--- a/src/gnd/evolve/cli_service.py
++++ b/src/gnd/evolve/cli_service.py
+@@ -644,6 +644,7 @@ def _cmd_evolve_preview(
+     populated: list[str] | None = None,
+     shape_report: bool = False,
+     check_population: str | None = None,
++    sample_documents: tuple[str, ...] = (),
+     previous_include: list[str] | None = None,
+     operation_outcomes: bool = False,
+     outcome_report: str | None = None,
+@@ -663,6 +664,8 @@ def _cmd_evolve_preview(
+     report_target = None
+     try:
+         _evolve_policy_arguments(policy, populated, check_population)
++        if sample_documents and policy is None:
++            raise _EvolutionCLIError(3, "--sample-document requires --policy additive")
+         report_target = _evolve_outcome_target(workspace_path, preview_path, operation_outcomes, outcome_report)
+         workspace = _evolve_workspace(workspace_path)
+         model, _model_relative = _evolve_workspace_path(
+@@ -686,6 +689,7 @@ def _cmd_evolve_preview(
+             model_path=model,
+             evidence_root=records,
+             allowed_project_root=workspace,
++            sample_documents=tuple(os.path.abspath(path) for path in sample_documents),
+         )
+         history = _evolve_previous_includes(workspace, model, _model_relative, proposal, previous_include)
+         try:
+@@ -780,6 +784,7 @@ def _cmd_evolve_apply(
+     policy: str | None = None,
+     populated: list[str] | None = None,
+     check_population: str | None = None,
++    sample_documents: tuple[str, ...] = (),
+ ) -> int:
+     """Revalidate an exact preview, publish the model CAS, and complete it.
+ 
+@@ -792,6 +797,8 @@ def _cmd_evolve_apply(
+ 
+     try:
+         _evolve_policy_arguments(policy, populated, check_population)
++        if sample_documents and policy is None:
++            raise _EvolutionCLIError(3, "--sample-document requires --policy additive")
+         populated_args = tuple(sorted(set(populated or ())))
+         workspace = _evolve_workspace(workspace_path)
+         model, model_relative = _evolve_workspace_path(
+@@ -849,6 +856,7 @@ def _cmd_evolve_apply(
+             model_path=model,
+             evidence_root=records,
+             allowed_project_root=workspace,
++            sample_documents=tuple(os.path.abspath(path) for path in sample_documents),
+         )
+         # Ahead of the branch split, not inside ``service.preview``: the
+         # candidate-already-live retry branch below never calls ``preview``, and
+diff --git a/src/gnd/evolve/policy.py b/src/gnd/evolve/policy.py
+index df400f79..b14d33f6 100644
+--- a/src/gnd/evolve/policy.py
++++ b/src/gnd/evolve/policy.py
+@@ -341,20 +341,18 @@ class ConstraintSubjects:
+             found |= self._players.get(object_type, set())
+         return found
+ 
++    def for_constraint(self, constraint: Any, host_id: str | None) -> set[str]:
++        subjects = {host_id} if host_id is not None else set()
++        _role_ref_fact_types(constraint, subjects)
++        return subjects | self._playing(_object_scoped_types(constraint))
++
+     def of(self, operation: Any) -> set[str]:
+         locator = operation.locator
+         # A fact-type-hosted constraint ranges over its host and over anything
+         # else it reaches, like a model-hosted one: a role_ref into another fact
+         # type, or an object type without a role (milestone close R1-F1).
+-        subjects: set[str] = set()
+-        if locator.host in {"fact_type", "included_fact_type"} and locator.host_id is not None:
+-            subjects.add(locator.host_id)
+-        # Before AND after: a constraint spanning only unpopulated fact
+-        # types must not be re-pointed at a populated one (review F1).
+-        _role_ref_fact_types(operation.before, subjects)
+-        _role_ref_fact_types(operation.after, subjects)
+-        subjects |= self._playing(_object_scoped_types(operation.before) | _object_scoped_types(operation.after))
+-        return subjects
++        host_id = locator.host_id if locator.host in {"fact_type", "included_fact_type"} else None
++        return self.for_constraint(operation.before, host_id) | self.for_constraint(operation.after, host_id)
+ 
+ 
+ POPULATION_PASS: Final = "pass"
+@@ -386,6 +384,7 @@ def additive_policy_issues(
+     *,
+     populated: frozenset[str],
+     population_outcomes: Mapping[int, str] | None = None,
++    verified_appends: frozenset[int] = frozenset(),
+ ) -> tuple[PolicyIssue, ...]:
+     """Every operation the additive policy refuses, in proposal order.
+ 
+@@ -444,6 +443,8 @@ def additive_policy_issues(
+                     added_fact_types.add(locator.element_id)
+                 continue
+             if kind is _MODIFY:
++                if position in verified_appends and collection == "fact_types":
++                    continue
+                 allowed = _OBJECT_TYPE_MODIFY_KEYS if collection == "object_types" else _FACT_TYPE_MODIFY_KEYS
+                 detail = _element_modify_detail(operation.before, operation.after, allowed)
+                 if detail is not None:
+diff --git a/src/gnd/evolve/population_check.py b/src/gnd/evolve/population_check.py
+index 5a29bd40..07f14ad3 100644
+--- a/src/gnd/evolve/population_check.py
++++ b/src/gnd/evolve/population_check.py
+@@ -25,13 +25,15 @@ from typing import Any, Final
+ from ruamel.yaml.error import YAMLError
+ 
+ from gnd.address import positional_constraint_ref
+-from gnd.artifacts import ArtifactError, read_regular_file_bytes, sha256_hex
++from gnd.artifacts import ArtifactError, canonical_json_bytes, read_regular_file_bytes, sha256_hex
+ from gnd.checker import check
+ from gnd.documents import Model
+ from gnd.errors import PopulationLoadError
+ from gnd.exits import EXIT_COLLISION, EXIT_IO, EXIT_NO_INPUT
++from gnd.model import unattended_span_issues
+ from gnd.model_index import ModelIndex
+ from gnd.population import MAX_POPULATION_BYTES, Population, load_population_bytes
++from gnd.values import identity_key
+ 
+ from .models import EvolutionOperationKind, EvolutionProposal
+ from .policy import ConstraintSubjects
+@@ -259,3 +261,92 @@ def constraint_placements(
+         if index is not None:
+             positions[position] = (host_id, index)
+     return positions
++
++
++def _located_append(before, after, source, documents):
++    """Admit only an unchanged fact declaration followed by new, located observations."""
++    if not isinstance(before, dict) or not isinstance(after, dict):
++        return False
++
++    def parts(fact):
++        remainder = dict(fact)
++        rows = remainder.pop("sample_population", [])
++        provenance = dict(remainder.get("provenance", {}))
++        spans = provenance.pop("sample_spans", [])
++        if provenance:
++            remainder["provenance"] = provenance
++        else:
++            remainder.pop("provenance", None)
++        return rows, spans, remainder
++
++    if not all(isinstance(f.get("provenance", {}), dict) for f in (before, after)):
++        return False
++    old_rows, old_spans, old_fact = parts(before)
++    rows, spans, fact = parts(after)
++    if not all(isinstance(data, (list, tuple)) for data in (old_rows, rows, old_spans, spans)):
++        return False
++    if not all(isinstance(row, dict) for row in rows):
++        return False
++    boundary = len(old_rows)
++    if (len(rows) <= boundary or len(spans) != len(rows) or len(old_spans) != boundary
++            or canonical_json_bytes([rows[:boundary], spans[:boundary], fact], exact_numbers=True)
++            != canonical_json_bytes([old_rows, old_spans, old_fact], exact_numbers=True)):
++        return False
++    seen = set()
++    covered = set()
++    for entry in spans:
++        if not isinstance(entry, dict) or set(entry) != {"row", "span"}:
++            return False
++        idx, span = entry["row"], entry["span"]
++        if type(idx) is not int or not 0 <= idx < len(rows) or idx in covered or not isinstance(span, dict):
++            return False
++        covered.add(idx)
++        observation = (_sample_identity(rows[idx]), canonical_json_bytes(span))
++        if idx >= boundary and (not isinstance(span.get("document_sha256"), str) or span["document_sha256"] not in documents or observation in seen):
++            return False
++        seen.add(observation)
++    # Candidate validation has already checked row indices and span structure.
++    # Verify the new excerpts with the same Unicode and digest rules as validate.
++    selected = list(spans[boundary:])
++    fragment = {"source": source, "fact_types": [{"id": after["id"], "provenance": {"sample_spans": selected}}]}
++    return not unattended_span_issues(fragment, documents)
++
++
++def _sample_identity(row):
++    return tuple((key, identity_key(value)) for key, value in sorted(row.items()))
++
++
++def verified_sample_appends(candidate, proposal, documents):
++    """Collect exact operation indices that pass both citation and population admission."""
++    if candidate is None or candidate.source.get("mode") != "unattended" or candidate.reference_populations:
++        return frozenset()
++    eligible = {}
++    for pos, op in enumerate(proposal.operations):
++        if (op.kind is EvolutionOperationKind.MODIFY and op.locator.locator_kind == "element"
++                and op.locator.collection == "fact_types"
++                and _located_append(op.before, op.after, candidate.source, documents)):
++            eligible[pos] = op.locator.element_id
++    if not eligible:
++        return frozenset()
++    index = ModelIndex.for_model(candidate)
++    facts = {}
++    for fact in index.iter_fact_types_shared():
++        if "sample_population" in fact:
++            unique = {_sample_identity(row): row for row in fact["sample_population"]}
++            facts[fact["id"]] = list(unique.values())
++    header = {"model": "model.orm.yaml", "source": "tool-output", "covers": sorted(facts)}
++    if candidate.model_id is not None:
++        header["model_id"] = candidate.model_id
++    try:
++        population = load_population_bytes(canonical_json_bytes({"population": header, "facts": facts}),
++                                           source="samples.json", model=candidate)
++    except PopulationLoadError:
++        return frozenset()
++    results = {v.constraint_ref: v.verdict for v in check(candidate, population).verdicts}
++    blocked = set()
++    subjects = ConstraintSubjects(index)
++    for ref, constraint, host in index.iter_constraints_shared():
++        affected = subjects.for_constraint(constraint, host["id"] if host else None)
++        if not affected or results.get(ref) != "pass" or affected.difference(facts):
++            blocked.update(affected or eligible.values())
++    return frozenset(pos for pos, fact in eligible.items() if fact not in blocked)
+diff --git a/src/gnd/evolve/service.py b/src/gnd/evolve/service.py
+index 73ec564b..e323d0c6 100644
+--- a/src/gnd/evolve/service.py
++++ b/src/gnd/evolve/service.py
+@@ -85,6 +85,8 @@ from .population_check import (
+     constraint_placements,
+     population_outcomes,
+     read_population_for_check,
++    verified_sample_appends,
++    workspace_relative,
+ )
+ from .shapes import shape_matches
+ 
+@@ -1554,7 +1556,9 @@ class EvolutionService:
+         evidence_root: str | Path,
+         verbalization_path: str | Path | None = None,
+         allowed_project_root: str | Path | None = None,
++        sample_documents: Sequence[str] = (),
+     ) -> None:
++        self.sample_documents = tuple(sample_documents)
+         model = Path(model_path)
+         if not model.is_absolute():
+             model = Path.cwd() / model
+@@ -1793,6 +1797,7 @@ class EvolutionService:
+             proposal,
+             policy,
+             populated,
++            candidate=candidate_model,
+             population=self._population_runner(
+                 check_population,
+                 before_loaded_model,
+@@ -1927,14 +1932,15 @@ class EvolutionService:
+             raise EvolutionIncludeError('include review evidence changed before publication')
+         return before, document, candidate, candidate_document, validation, declared, placed
+ 
+-    @staticmethod
+     def _policy_values(
++        self,
+         before_loaded_model: Any,
+         proposal: EvolutionProposal,
+         policy: str | None,
+         populated: Sequence[str],
+         *,
+         population: Callable[[frozenset[str]], Any] | None = None,
++        candidate: Any = None,
+     ) -> dict[str, Any]:
+         """The four policy fields of a preview (five with a population), or nothing without a policy.
+ 
+@@ -1950,9 +1956,23 @@ class EvolutionService:
+             effective = effective_populated(before_loaded_model, proposal, populated_args=populated_args)
+         except ValueError as error:
+             raise EvolutionError(str(error)) from error
++        extra = {}
++        if self.sample_documents:
++            if len(self.sample_documents) > 64:
++                raise EvolutionError("at most 64 sample documents per proposal")
++            documents = {}
++            size = 0
++            for path in self.sample_documents:
++                relative = workspace_relative(self.allowed_project_root, path)
++                raw = _regular_bytes(self.allowed_project_root, relative, label="sample document")
++                size += len(raw)
++                if size > MAX_EVOLUTION_PROPOSAL_BYTES:
++                    raise EvolutionError("sample documents exceed the combined byte limit")
++                documents[sha256_hex(raw)] = raw
++            extra["verified_appends"] = verified_sample_appends(candidate, proposal, documents)
+         if population is None:
+             # The call shape without a population is MG2's, unchanged (UG-R1).
+-            issues = additive_policy_issues(before_loaded_model, proposal, populated=effective)
++            issues = additive_policy_issues(before_loaded_model, proposal, populated=effective, **extra)
+             return {
+                 "policy": policy,
+                 "populated_args": populated_args,
+@@ -1961,7 +1981,7 @@ class EvolutionService:
+             }
+         checked = population(effective)
+         issues = additive_policy_issues(
+-            before_loaded_model, proposal, populated=effective, population_outcomes=checked.outcomes
++            before_loaded_model, proposal, populated=effective, population_outcomes=checked.outcomes, **extra
+         )
+         # Admitted = refused by the policy without the population, not refused
+         # with it: exactly the operations the population cleared (UG-R3). The
+@@ -1969,7 +1989,7 @@ class EvolutionService:
+         still_refused = {issue.operation_index for issue in issues}
+         cleared = sorted(
+             issue.operation_index
+-            for issue in additive_policy_issues(before_loaded_model, proposal, populated=effective)
++            for issue in additive_policy_issues(before_loaded_model, proposal, populated=effective, **extra)
+             if issue.operation_index not in still_refused
+         )
+         return {
+@@ -2034,6 +2054,7 @@ class EvolutionService:
+             proposal,
+             preview.policy,
+             preview.populated_args or (),
++            candidate=candidate,
+             population=self._population_runner(
+                 check_population,
+                 before_loaded_model,
+@@ -2373,7 +2394,7 @@ class EvolutionService:
+             # Re-run the additive policy on the bytes about to be published rather
+             # than reading the preview's issue list: anyone can recompute
+             # preview_sha256 over a stripped list, so the re-run is the guard (MG-R3).
+-            if preview.policy is not None and preview.population_check is None:
++            if preview.policy is not None and preview.population_check is None and not self.sample_documents:
+                 self._recheck_policy(before_loaded_model, proposal, preview)
+             candidate_loaded_model, candidate_document, validation = self._validated_candidate(
+                 preview.candidate_model,
+@@ -2390,7 +2411,7 @@ class EvolutionService:
+             # follows candidate validation, replay equality and D-12 here, the
+             # order preview uses (UG2 spec §6.4). Without one the order above is
+             # unchanged, so flag-free exits do not move.
+-            if preview.population_check is not None:
++            if preview.population_check is not None or (preview.policy is not None and self.sample_documents):
+                 self._recheck_policy(
+                     before_loaded_model,
+                     proposal,
+diff --git a/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md b/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+index 0036bd0b..57f756dd 100644
+--- a/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
++++ b/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+@@ -234,6 +234,19 @@ constraint on a populated fact type is added or strengthened. This table and the
+ are the policy's one normative home; `gnd.evolve.policy` implements them, and preview and apply
+ share that implementation.
+ 
++**Located sample appends.** For an unattended root-owned fact, supply repeatable
++`--sample-document FILE` with additive preview and apply. Append to the existing
++`sample_population` and `provenance.sample_spans` lists in a fact element MODIFY.
++Keep every prior entry and the rest of the declaration intact. Each added row
++index needs a located excerpt from a supplied workspace file. GND rechecks the
++raw document digest, normalized excerpt and affected constraint verdicts on the
++distinct candidate sample facts. Admission requires pass on each affected
++constraint, including constraints spanning relations. A second observation of
++one tuple needs a different source occurrence. Supply at most 64 regular files
++and 10 MiB of source bytes in total. Reference-bound populations require separate
++review. An included declaration belongs to its source. A stale model or changed
++source cannot publish the reviewed append.
++
+ **Populated.** A fact type is populated when it has `sample_population` rows, when a declared
+ reference population owns it, when a `population` artifact locator in the proposal references
+ `fact_types[ID]`, or when `--populated ID` names it. A `--populated` id that names no fact type of
+@@ -248,7 +261,7 @@ same proposal adds is judged like any other `modify`: declare the element once,
+ | Locator | add | modify | rename | delete |
+ |---|---|---|---|---|
+ | `object_types` element | admitted | admitted iff the diff is confined to `description` and `provenance.rationale`; otherwise `object_types.modify` | `object_types.rename` | `object_types.delete` |
+-| `fact_types` element | admitted | admitted iff the diff is confined to `provenance.rationale`; otherwise `fact_types.modify` (a changed reading, role list, constraint or sample row included) | `fact_types.rename` | `fact_types.delete` |
++| `fact_types` element | admitted | admitted for rationale edits or verified sample appends (below); other changes yield `fact_types.modify` | `fact_types.rename` | `fact_types.delete` |
+ | `operations` element | the operations gate's (exit `18`) | pre-empted by the gate | pre-empted | pre-empted |
+ | role | admitted on a fact type the same proposal adds; otherwise `role.add` | `role.modify` | `role.rename` | `role.delete` |
+ | constraint, subject not populated | admitted | admitted | pre-empted: a constraint has no stable id to rename (exit `3` at proposal read) | admitted |
+diff --git a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+index 695c8dc8..f603e38f 100644
+--- a/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
++++ b/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md
+@@ -392,12 +392,18 @@ already holds `party` and `policy_has_holder`: the reply names them and repeats
+ |---|---|
+ | `quote` | A verbatim excerpt of the document. The host searches the NFC text; no match, or more than one without a `quote_occurrence` (0-based), drops the entry and logs it |
+ | `object_types`, `fact_types` | New elements only, in the model's own element shapes; `quote` becomes `provenance.spans`. An element the model already has, its own or included, is named by its id where a field takes an id and is not repeated here; the host drops a repeated one and logs it |
+-| `rows` | Rows for a new fact type only, one entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once). Rows the document gives for a fact type the model already has are an `open_questions` entry: the additive policy refuses a changed sample row (`fact_types.modify` in the evolution contract's additive matrix) |
++| `rows` | Default reply without source-file admission: Rows for a new fact type only, one entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once). Rows the document gives for a fact type the model already has are an `open_questions` entry: the additive policy refuses a changed sample row (`fact_types.modify` in the evolution contract's additive matrix) |
+ | `subtype_links` | Sets `subtype_of` and `inherits_reference` on the subtype, appends the span to its `provenance.spans`, puts `rationale` in `provenance.rationale` |
+ | `constraints` | `host` is a fact type id, or `model` for a top-level constraint. `constraint` is the constraint body as the [constraint reference](../../gnd-orm-core/references/constraint-reference.md) gives it, without `source`, `status`, `modality` or `provenance`. The host writes those: `text-cue` is `llm-inferred` with `rationale_world_fact` set to `cue`, `rows` is `sample`, `library` is `common-sense` with `library_entry`; always `proposed` and `deontic` |
+ | `derived_fact_types` | The model's fact type shape with `derivation: derived`, `storage: computed` and a structured `derivation_rule`, the object form that `representation-format.md` defines under derived fact types. `quote` is the sentence that defines the term and becomes `provenance.spans`; `rationale` goes to `provenance.rationale`. No `rows`: its facts follow from the rule, so it holds no sample. A rule the grammar cannot express is an `open_questions` entry, never a string rule |
+ | `open_questions` | Anything the evidence does not settle. Not written to the model; kept in the host's log for the owner |
+ 
++A host with the source file can submit located observations for an existing
++root-owned fact through a separate additive MODIFY. Pass `--sample-document`
++to both preview and apply and follow “Located sample appends” in the evolution
++contract. Keep the open question when source evidence or constraint coverage is
++insufficient, or when the target belongs to an include.
++
+ ## Constraints on fact types that already hold facts
+ 
+ The procedure above prevents this by proposing constraints with the fact type. For a constraint

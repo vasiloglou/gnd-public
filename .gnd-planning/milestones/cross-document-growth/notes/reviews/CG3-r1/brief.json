@@ -1,0 +1,64 @@
+{
+  "base": "1cce6979",
+  "claims": [],
+  "created": "2026-11-28T14:23:04.271358+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/cross-document-growth/notes/reviews/CG3-r1/diff.patch",
+      "sha256": "d71e041b6c857789f5a37dd3157bedebc6d06c6be3de73f20dbcf1c36b131608"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "739a1a9bef381ebc4363f7b9f3c0f5504d8bc43aabe60d26afee7bd2453e144a"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "72492dc82f2cf3c8148da8ffa3e7b80e99b84e146810a1f3126c221037a101b2"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "db8714eb018a726c87368f2724fea21e3fe9c432ae02b6ee2d690c722bd36f31"
+    },
+    {
+      "path": "dev/components/modules/evolve.md",
+      "sha256": "404e7701e9117c7490cc4f11faa91903fb1968102dc76962055b098c492a355e"
+    },
+    {
+      "path": "src/gnd/evolve/population_check.py",
+      "sha256": "2df0b8ef85a0c94e506a28904aedf20368ae1d7d7ad9d8820552a432d631313e"
+    },
+    {
+      "path": "tests/test_packaged_skills.py",
+      "sha256": "cfca342fe3b27e51321b3d5cd490e8154fe55072ac86e3b417d71efd5009322e"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "ad65813543f19ddf26e449d14f1a1719aafb70be08b31a5603cbd3f755fbf5b0"
+    },
+    {
+      "path": "src/gnd/evolve/consolidation.py",
+      "sha256": "62e44beb89f02a5ecf96ddfc7c1076c8bbcdea8fa05a7a4cae48bd6020e05efc"
+    },
+    {
+      "path": "src/gnd/skills/gnd-consolidate/SKILL.md",
+      "sha256": "2339bb8ac12c2023f10410315a95137d9d664d0f6c92b8ea63a95727236c54fa"
+    },
+    {
+      "path": "tests/test_consolidation_loop.py",
+      "sha256": "b33c8eba00bebf1a4cef5af00b5b9d146b2000b522c25cbc5784f3106d3c0b16"
+    }
+  ],
+  "head": "1cce697983f9ce12672e5fcf3acfb3a8343cca71",
+  "left_out": [],
+  "notes": [
+    "new: src/gnd/evolve/consolidation.py (not tracked yet, so not in the diff: read it whole)",
+    "new: src/gnd/skills/gnd-consolidate/SKILL.md (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/test_consolidation_loop.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Can group decisions lose samples, role references or source spans, publish an unreviewed change, or produce different outcomes across concurrent or interrupted resumes? Exercise distinct legal inputs and the public terminal workflow.",
+  "subject": "phase",
+  "version": 1
+}

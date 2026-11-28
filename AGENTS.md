@@ -43,6 +43,7 @@ stated scope; handoffs between skills require an explicit user selection.
 |---|---|
 | gnd-adopt | [gnd-adopt](src/gnd/skills/gnd-adopt/SKILL.md) |
 | gnd-codegen | [gnd-codegen](src/gnd/skills/gnd-codegen/SKILL.md) |
+| gnd-consolidate | [gnd-consolidate](src/gnd/skills/gnd-consolidate/SKILL.md) |
 | gnd-conformance | [gnd-conformance](src/gnd/skills/gnd-conformance/SKILL.md) |
 | gnd-dev-session | [gnd-dev-session](src/gnd/skills/gnd-dev-session/SKILL.md) |
 | gnd-export | [gnd-export](src/gnd/skills/gnd-export/SKILL.md) |

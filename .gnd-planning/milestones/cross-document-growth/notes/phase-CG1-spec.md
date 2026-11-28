@@ -1,6 +1,6 @@
 # CG1 · Located additions
 
-Awaiting owner review.
+Ruled by delegated decision, 2026-11-28.
 
 ## 2. Provenance
 
@@ -32,7 +32,7 @@ CG1 changes the fact-type branch of `additive_policy_issues`. The existing `_FAC
 
 ## 7. Owner decisions
 
-D1 (open). Choose append-only in-model storage or the external population requested in #338. The external option changes the atomic publication and summary contract and requires revising CG1.
+D1 (delegated). Implement the root-owned append contract and distinct-observation rule in plan amendment §§1–2. Introduce repeatable --sample-document PATH on preview and apply; require explicit workspace-local regular files and bind each to the declared digest. Use the ordinary model population loader and checker on all available sample rows. Only the verdicts for constraints touching an appended fact determine admission. Fail closed on unknown applicability. Preserve raw operation identity and all other policy cells.
 
 ## 8. Tests and expected results
 

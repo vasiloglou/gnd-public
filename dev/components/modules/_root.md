@@ -1217,12 +1217,12 @@ Local JSON Lines protocol for repeated ordinary Python snapshot checks.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `RequestError` | class(ValueError) | 18 | A fixed protocol code, suitable for returning across the process boundary. |
-| `Worker` | class | 22 | (no docstring) |
-| `Worker.close(self)` | method | 28 | (no docstring) |
-| `Worker.check(self, request)` | method | 33 | (no docstring) |
-| `Worker.reply(self, raw)` | method | 56 | (no docstring) |
-| `serve(incoming, outgoing)` | function | 78 | (no docstring) |
+| `RequestError` | class(ValueError) | 19 | A fixed protocol code, suitable for returning across the process boundary. |
+| `Worker` | class | 23 | (no docstring) |
+| `Worker.close(self)` | method | 29 | (no docstring) |
+| `Worker.check(self, request)` | method | 34 | (no docstring) |
+| `Worker.reply(self, raw)` | method | 62 | (no docstring) |
+| `serve(incoming, outgoing)` | function | 84 | (no docstring) |
 
 ## gnd.solve — `src/gnd/solve.py`
 Components: agent.solve

@@ -8,6 +8,7 @@ from pathlib import Path
 
 from gnd import api, input_policy
 from gnd.anchors import read_regular_path
+from gnd.artifacts import ArtifactError
 from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
 from gnd.model import load_model_bytes
 from gnd.population import load_population_bytes
@@ -37,14 +38,19 @@ class Worker:
             raise RequestError("invalid-request")
         if not isinstance(request["model"], str) or not isinstance(request["population"], dict):
             raise RequestError("invalid-request")
-        path = Path(request["model"]).absolute()
+        path = Path(request["model"]).resolve(strict=True)
         model_bytes = read_regular_path(path, label="worker model", max_bytes=input_policy.MAX_BYTES)
         identity = (str(path), sha256(model_bytes).hexdigest())
         reused = identity == self.identity
         if not reused:
             self.close()
-            model = load_model_bytes(model_bytes, source=path)
-            if model.reference_populations or model.includes:
+            try:
+                model = load_model_bytes(model_bytes, source=path)
+            except ModelValidationError as error:
+                if any(issue.rule_id == "include:unresolved" for issue in error.issues):
+                    raise RequestError("external-model-dependencies") from error
+                raise
+            if model.reference_populations:
                 raise RequestError("external-model-dependencies")
             self.session = api.EvaluationSession(model)
             self.model, self.identity = model, identity
@@ -66,7 +72,7 @@ class Worker:
             return {"version": 1, "id": request_id, "status": "evaluated", **self.check(request)}
         except RequestError as error:
             code = str(error)
-        except (ValueError, OSError, TypeError, RecursionError, ModelLoadError, ModelValidationError, PopulationLoadError):
+        except (ArtifactError, ValueError, OSError, TypeError, RecursionError, ModelLoadError, ModelValidationError, PopulationLoadError):
             code = "invalid-input"
         except Exception:  # noqa: BLE001 -- isolate an unexpected evaluation failure to one request
             # The worker survives an unexpected checker failure without reusing its state.

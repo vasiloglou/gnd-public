@@ -1,0 +1,497 @@
+diff --git a/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/independent-host.json b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/independent-host.json
+new file mode 100644
+index 00000000..48672e8b
+--- /dev/null
++++ b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/independent-host.json
+@@ -0,0 +1 @@
++{"derived_rows": [{"key": "x"}], "gnd": "0.5.2", "ids": ["first", "bad", "again"], "model_sha256": "228360d5fa841ece803565a142953787d94fe4210b13e1ed59d85ad557d3b994", "pydantic": "2.12.5", "python": "3.14.3", "run_status": "unchecked"}
+diff --git a/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/installed_replay.py b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/installed_replay.py
+new file mode 100644
+index 00000000..6476a883
+--- /dev/null
++++ b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/installed_replay.py
+@@ -0,0 +1,43 @@
++"""Run this fixture with an interpreter containing the built GND wheel."""
++import json
++import subprocess
++import sys
++import tempfile
++from importlib.metadata import version
++from pathlib import Path
++
++from gnd import api
++
++
++def main(root):
++    model = root / "model.orm.json"
++    value = {"id": "item", "name": "Item", "kind": "value", "primitive": "String"}
++    roles = [{"role_name": "key", "object_type": "item"}]
++    facts = [{"id": name, "reading": "{Item} is " + name, "roles": roles}
++             for name in ("listed", "active")]
++    facts[1].update(derivation="derived", derivation_rule={
++        "body": [{"fact_type": "listed", "bind": {"key": "$x"}}], "head": {"key": "$x"}})
++    model.write_text(json.dumps({"version": 1, "model_id": "host", "object_types": [value], "fact_types": facts}))
++    population = {"population": {"model": model.name, "source": "fixture", "covers": ["listed"]},
++                  "facts": {"listed": [{"key": "x"}]}}
++    pop = root / "pop.json"
++    pop.write_text(json.dumps(population))
++    values = api.check_with_extensions(model, pop, fact_types=["active"])
++    assert values["extensions"][0]["rows"] == [{"key": "x"}]
++    req = {"version": 1, "id": "first", "model": str(model), "population": population}
++    lines = [req, {**req, "version": 0, "id": "bad"}, {**req, "id": "again"}]
++    run = subprocess.run([sys.executable, "-I", "-m", "gnd.snapshot_worker"],
++                         input="".join(json.dumps(r) + "\n" for r in lines),
++                         capture_output=True, text=True, check=True, timeout=15)
++    first, invalid, again = map(json.loads, run.stdout.splitlines())
++    assert invalid["error"] == "unsupported-version"
++    assert first["model_reused"] is False and again["model_reused"] is True
++    assert api.snapshot_verdict(again["report"]) == api.snapshot_verdict(values["report"])
++    return {"python": sys.version.split()[0], "pydantic": version("pydantic"), "gnd": version("get-nick-done"),
++            "ids": [first["id"], invalid["id"], again["id"]], "model_sha256": first["model_sha256"],
++            "run_status": api.snapshot_verdict(first["report"])["status"], "derived_rows": values["extensions"][0]["rows"]}
++
++
++if __name__ == "__main__":
++    with tempfile.TemporaryDirectory() as directory:
++        print(json.dumps(main(Path(directory).resolve()), sort_keys=True))
+diff --git a/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/locked-host.json b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/locked-host.json
+new file mode 100644
+index 00000000..c94038c9
+--- /dev/null
++++ b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/locked-host.json
+@@ -0,0 +1 @@
++{"derived_rows": [{"key": "x"}], "gnd": "0.5.2", "ids": ["first", "bad", "again"], "model_sha256": "228360d5fa841ece803565a142953787d94fe4210b13e1ed59d85ad557d3b994", "pydantic": "2.13.4", "python": "3.14.3", "run_status": "unchecked"}
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 97b44728..c970ac82 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1884,7 +1884,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +81 more (graph.md)
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, cli.snapshot_worker, … +82 more (graph.md)
+ - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
+ - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
+ - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+@@ -2108,7 +2108,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/anchors.py
+ - uses: infra.artifacts, infra.input_policy, model.anchor_identity
+-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, … +3 more (graph.md)
++- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, cli.snapshot_worker, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, … +4 more (graph.md)
+ - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
+ - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
+ 
+@@ -2214,13 +2214,24 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/api.py
+ - uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
+-- used_by: cli.checking_command, cli.dispatch, cli.judgments_command, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
++- used_by: cli.checking_command, cli.dispatch, cli.judgments_command, cli.snapshot_worker, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
+ - part_of: subsystem.check
+ - tests: tests/test_v61_phase2_api.py, tests/test_tp3_check_receipts.py, tests/test_incremental_sessions.py, tests/test_composition.py
+ - checked: partial
+ - notes: api.py also owns transition/validation orchestration and delegates lane exports; a single module has several public jobs.
+ 
+ 
++### cli.snapshot_worker
++- does: Evaluate successive JSON Lines snapshot requests with one content-bound loaded model and evaluation session [serve].
++- verbs: run persistent local evaluator, check standalone model, embed evaluator in isolated host
++- in: A trusted local model path and bounded JSON population requests.
++- out: One structured evaluation or error per request.
++- status: canonical
++- modules: src/gnd/snapshot_worker.py
++- uses: cli.api, infra.errors, infra.input_policy, model.anchors, model.loading, model.population_loading
++- used_by: (none)
++
++
+ ### cli.dispatch
+ - does: Build the command tree and dispatch handlers under resolved disclosure policy [main].
+ - verbs: main, command dispatch, argument parsing, subcommands, root options, installed version, disclosure mode, customer output, internal output, handler routing, python module, console script
+@@ -2320,7 +2331,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/input_policy.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +60 more (graph.md)
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, cli.snapshot_worker, … +61 more (graph.md)
+ - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
+ - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
+ 
+@@ -2346,7 +2357,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/errors.py
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.consolidation, evolve.population_check, evolve.schema, evolve.service, … +30 more (graph.md)
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, cli.snapshot_worker, discover.service, evolve.consolidation, evolve.population_check, evolve.schema, … +31 more (graph.md)
+ - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
+ - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
+ 
+@@ -2558,7 +2569,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/population.py
+ - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
+-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, … +33 more (graph.md)
++- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, cli.snapshot_worker, discover.population_view, discover.service, evolve.population_check, … +34 more (graph.md)
+ - part_of: subsystem.check
+ - tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
+ - in: Population path or bytes; optional loaded Model.
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index eef50659..a494dcdb 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -648,7 +648,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### cli.api
+ - uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
+-- used_by: cli.checking_command, cli.dispatch, cli.judgments_command, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
++- used_by: cli.checking_command, cli.dispatch, cli.judgments_command, cli.snapshot_worker, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
+ 
+ #### cli.api -> assurance.evidence
+ - `src/gnd/api.py -> src/gnd/assurance_evidence.py`
+@@ -1182,6 +1182,28 @@ Generated by `scripts/components_index.py`.
+ #### cli.review_command -> review.service
+ - `src/gnd/commands/review.py -> src/gnd/review/runner.py`
+ 
++### cli.snapshot_worker
++- uses: cli.api, infra.errors, infra.input_policy, model.anchors, model.loading, model.population_loading
++- used_by: (none)
++
++#### cli.snapshot_worker -> cli.api
++- `src/gnd/snapshot_worker.py -> src/gnd/api.py`
++
++#### cli.snapshot_worker -> infra.errors
++- `src/gnd/snapshot_worker.py -> src/gnd/errors.py`
++
++#### cli.snapshot_worker -> infra.input_policy
++- `src/gnd/snapshot_worker.py -> src/gnd/input_policy.py`
++
++#### cli.snapshot_worker -> model.anchors
++- `src/gnd/snapshot_worker.py -> src/gnd/anchors.py`
++
++#### cli.snapshot_worker -> model.loading
++- `src/gnd/snapshot_worker.py -> src/gnd/model/__init__.py`
++
++#### cli.snapshot_worker -> model.population_loading
++- `src/gnd/snapshot_worker.py -> src/gnd/population.py`
++
+ ### cli.solve_command
+ - uses: agent.solve, cli.arguments, infra.exit_codes
+ - used_by: cli.dispatch
+@@ -3657,7 +3679,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.errors
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.consolidation, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, examples.literature_verdict, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.flatten_service, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.count_membership, witness.service
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, cli.snapshot_worker, discover.service, evolve.consolidation, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, examples.literature_verdict, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.flatten_service, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.count_membership, witness.service
+ 
+ ### infra.exit_codes
+ - uses: (none)
+@@ -3669,7 +3691,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.input_policy
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.consolidation, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.ossie_relational, export.physical_binding, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, cli.snapshot_worker, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.consolidation, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.ossie_relational, export.physical_binding, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
+ 
+ ### infra.output
+ - uses: infra.text_output
+@@ -4051,7 +4073,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.anchors
+ - uses: infra.artifacts, infra.input_policy, model.anchor_identity
+-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
++- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, cli.snapshot_worker, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
+ 
+ #### model.anchors -> infra.artifacts
+ - `src/gnd/anchors.py -> src/gnd/artifacts.py`
+@@ -4194,7 +4216,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.loading
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.narrow, discover.service, evolve.command, evolve.consolidation, evolve.operation_outcomes, evolve.population_check, evolve.schema, evolve.service, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_reference_set, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, cli.snapshot_worker, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.narrow, discover.service, evolve.command, evolve.consolidation, evolve.operation_outcomes, evolve.population_check, evolve.schema, evolve.service, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_reference_set, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ #### model.loading -> infra.artifacts
+ - `src/gnd/model/__init__.py -> src/gnd/artifacts.py`
+@@ -4268,7 +4290,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.population_loading
+ - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
+-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, examples.plan_apps, exp.session_judgments, exp.session_replay, exp.session_runtime, export.ilp_service, export.souffle_lowering, export.verification, fidelity.doccheck, fidelity.service, measure.labels, measure.service, model.composition, model.diff, model.loading, model.population_sentences, model.validation, semantics.extensions, semantics.phase1_slice, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.frontier, synth.mutations, synth.provenance, synth.service, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service
++- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, cli.snapshot_worker, discover.population_view, discover.service, evolve.population_check, examples.literature_interop, examples.plan_apps, exp.session_judgments, exp.session_replay, exp.session_runtime, export.ilp_service, export.souffle_lowering, export.verification, fidelity.doccheck, fidelity.service, measure.labels, measure.service, model.composition, model.diff, model.loading, model.population_sentences, model.validation, semantics.extensions, semantics.phase1_slice, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.frontier, synth.mutations, synth.provenance, synth.service, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service
+ 
+ #### model.population_loading -> check.population_structure
+ - `src/gnd/population.py -> src/gnd/popvalidate.py`
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 467673ab..f1d3bf18 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -1211,6 +1211,19 @@ Executable v6 snapshot specifications, separate from production correspondence.
+ | `applicability_of(constraint, snapshot) -> str` | function | 2895 | Classify the pre-evaluation stages of NS-ORDER-OF-RESOLUTION-1. |
+ | `verdict_of(constraint, snapshot) -> tuple[str, str \| None, tuple[tuple[Scalar, ...], ...]]` | function | 2954 | Compose applicability, one family result, modality and pass-only vacuity. |
+ 
++## gnd.snapshot_worker — `src/gnd/snapshot_worker.py`
++Components: cli.snapshot_worker
++Local JSON Lines protocol for repeated ordinary Python snapshot checks.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `RequestError` | class(ValueError) | 18 | A fixed protocol code, suitable for returning across the process boundary. |
++| `Worker` | class | 22 | (no docstring) |
++| `Worker.close(self)` | method | 28 | (no docstring) |
++| `Worker.check(self, request)` | method | 33 | (no docstring) |
++| `Worker.reply(self, raw)` | method | 56 | (no docstring) |
++| `serve(incoming, outgoing)` | function | 78 | (no docstring) |
++
+ ## gnd.solve — `src/gnd/solve.py`
+ Components: agent.solve
+ The PROC-01 station harness behind ``gnd solve``.
+diff --git a/docs/reference/python-api.md b/docs/reference/python-api.md
+index e9a24850..dcf9c2ec 100644
+--- a/docs/reference/python-api.md
++++ b/docs/reference/python-api.md
+@@ -584,3 +584,17 @@ For a semiderived head, complete describes the inferred extension alone. Caller-
+ ### Proofs using grounded absence
+ 
+ A finite witness can use negative premises over covered asserted inputs. Each negative role is grounded by a positive premise or an admitted literal. The proof records the rule, clause, positive premises and exact bindings. Replay reconstructs the entire correlated negative tuple against the bound snapshot. Uncovered and opaque inputs cannot establish absence. An edit invalidates the snapshot binding. Use `why_not` with ordered targets to inspect related blocked tuples against the same loaded inputs.
++
++### Persistent local evaluator
++
++Run `python -m gnd.snapshot_worker` in the evaluator environment. Send one UTF-8 JSON object followed by a newline on stdin. Read one JSON response per line on stdout. A version-1 request contains exactly these fields:
++
++```json
++{"version":1,"id":"check-1","model":"inventory.orm.yaml","population":{"population":{"model":"inventory.orm.yaml","source":"host","covers":["listed"]},"facts":{"listed":[]}}}
++```
++
++The model path is local to the worker. The caller supplies the population as JSON data. The response echoes the supplied request ID and returns `status="evaluated"`, `model_sha256`, `model_reused` and the ordinary versioned check report. An evaluated population can violate constraints. Interpret its report with `snapshot_verdict`. A protocol or input failure returns `status="error"` with a stable error code. An unusable request ID is returned as null. Maximum input is 4 MiB per line and IDs contain 1–128 characters.
++
++The worker rereads model bytes for each request, reuses one loaded standalone model and EvaluationSession, and replaces both when the model path or digest changes. Reference-population and include-dependent models require their bound inputs and are outside protocol v1. Closing stdin exits the worker. After a process failure, launch a new worker and resend the entire request. Its first valid request loads the model. Use one writer per worker and the ordinary disclosure environment for the intended audience.
++
++The wheel accepts Pydantic >=2.12.5,<2.14. The installed-worker and derived-row examples were exercised on Python 3.14.3 with Pydantic 2.12.5 and 2.13.4. The repository lock retains 2.13.4.
+diff --git a/pyproject.toml b/pyproject.toml
+index 4f64c4b2..ad46f56e 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -24,7 +24,7 @@ license-files = ["LICENSE", "NOTICE"]
+ # which is the mechanical form of this policy.
+ dependencies = [
+     "jsonschema==4.26.0",
+-    "pydantic==2.13.4",
++    "pydantic>=2.12.5,<2.14",
+     "ruamel-yaml==0.19.1",
+ ]
+ 
+diff --git a/src/gnd/snapshot_worker.py b/src/gnd/snapshot_worker.py
+new file mode 100644
+index 00000000..1a17c15a
+--- /dev/null
++++ b/src/gnd/snapshot_worker.py
+@@ -0,0 +1,96 @@
++"""Local JSON Lines protocol for repeated ordinary Python snapshot checks."""
++from __future__ import annotations
++
++import json
++import sys
++from hashlib import sha256
++from pathlib import Path
++
++from gnd import api, input_policy
++from gnd.anchors import read_regular_path
++from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
++from gnd.model import load_model_bytes
++from gnd.population import load_population_bytes
++
++LINE_LIMIT = 4 * 1024 * 1024
++
++
++class RequestError(ValueError):
++    """A fixed protocol code, suitable for returning across the process boundary."""
++
++
++class Worker:
++    def __init__(self):
++        self.identity = None
++        self.session = None
++        self.model = None
++
++    def close(self):
++        if self.session is not None:
++            self.session.close()
++        self.identity = self.model = self.session = None
++
++    def check(self, request):
++        if type(request.get("version")) is not int or request["version"] != 1:
++            raise RequestError("unsupported-version")
++        if set(request) != {"version", "id", "model", "population"}:
++            raise RequestError("invalid-request")
++        if not isinstance(request["model"], str) or not isinstance(request["population"], dict):
++            raise RequestError("invalid-request")
++        path = Path(request["model"]).absolute()
++        model_bytes = read_regular_path(path, label="worker model", max_bytes=input_policy.MAX_BYTES)
++        identity = (str(path), sha256(model_bytes).hexdigest())
++        reused = identity == self.identity
++        if not reused:
++            self.close()
++            model = load_model_bytes(model_bytes, source=path)
++            if model.reference_populations or model.includes:
++                raise RequestError("external-model-dependencies")
++            self.session = api.EvaluationSession(model)
++            self.model, self.identity = model, identity
++        population_bytes = json.dumps(request["population"], allow_nan=False).encode("utf-8")
++        pop = load_population_bytes(population_bytes, source="request.json", model=self.model)
++        report = self.session.check(pop)
++        return {"model_sha256": identity[1], "model_reused": reused, "report": report}
++
++    def reply(self, raw):
++        request_id = None
++        try:
++            request = input_policy.loads(raw, max_bytes=LINE_LIMIT)
++            if not isinstance(request, dict):
++                raise RequestError("invalid-request")
++            value = request.get("id")
++            if not isinstance(value, str) or not 1 <= len(value) <= 128:
++                raise RequestError("invalid-id")
++            request_id = value
++            return {"version": 1, "id": request_id, "status": "evaluated", **self.check(request)}
++        except RequestError as error:
++            code = str(error)
++        except (ValueError, OSError, TypeError, RecursionError, ModelLoadError, ModelValidationError, PopulationLoadError):
++            code = "invalid-input"
++        except Exception:  # noqa: BLE001 -- isolate an unexpected evaluation failure to one request
++            # The worker survives an unexpected checker failure without reusing its state.
++            self.close()
++            code = "evaluation-error"
++        return {"version": 1, "id": request_id, "status": "error", "error": code}
++
++
++def serve(incoming, outgoing):
++    worker = Worker()
++    try:
++        while line := incoming.readline(LINE_LIMIT + 1):
++            if len(line) > LINE_LIMIT:
++                while line and not line.endswith(b"\n"):
++                    line = incoming.readline(LINE_LIMIT + 1)
++                response = {"version": 1, "id": None, "status": "error", "error": "request-too-large"}
++            else:
++                response = worker.reply(line)
++            wire = json.dumps(response, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
++            outgoing.write(wire.encode("ascii") + b"\n")
++            outgoing.flush()
++    finally:
++        worker.close()
++
++
++if __name__ == "__main__":
++    serve(sys.stdin.buffer, sys.stdout.buffer)
+diff --git a/tests/test_public_distribution.py b/tests/test_public_distribution.py
+index 8773b0d3..c5c0c867 100644
+--- a/tests/test_public_distribution.py
++++ b/tests/test_public_distribution.py
+@@ -289,7 +289,7 @@ def test_artifact_and_installed_resource_sets(package_probe):
+         requires = metadata.get_all("Requires-Dist")
+         assert {r for r in requires if ";" not in r} == {
+             "jsonschema==4.26.0",
+-            "pydantic==2.13.4",
++            "pydantic>=2.12.5,<2.14",
+             "ruamel-yaml==0.19.1",
+         }
+         assert any(r.startswith("faker==40.36.0") and "synth" in r for r in requires)
+diff --git a/tests/test_snapshot_worker.py b/tests/test_snapshot_worker.py
+new file mode 100644
+index 00000000..bae1e194
+--- /dev/null
++++ b/tests/test_snapshot_worker.py
+@@ -0,0 +1,65 @@
++import json
++import subprocess
++import sys
++
++from test_checked_extensions import fixture
++
++
++def launch():
++    return subprocess.Popen([sys.executable, "-m", "gnd.snapshot_worker"], stdin=subprocess.PIPE,
++                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
++
++
++def send(process, message):
++    wire = message if isinstance(message, bytes) else json.dumps(message).encode()
++    process.stdin.write(wire + b"\n")
++    process.stdin.flush()
++    return json.loads(process.stdout.readline())
++
++
++def test_persistent_worker_isolation_and_model_replacement(tmp_path):
++    from gnd import api
++    path, pop = fixture(tmp_path)
++    request = {"version": 1, "id": "first", "model": str(path), "population": json.loads(pop.read_text())}
++    process = launch()
++    try:
++        first = send(process, request)
++        assert first["status"] == "evaluated" and first["model_reused"] is False
++        assert first["report"]["counts"] == api.check(path, pop)["counts"]
++        repeat = send(process, {**request, "id": "second"})
++        assert repeat["id"] == "second" and repeat["model_reused"]
++        for msg, code in ((b"{", "invalid-input"), ({**request, "version": 3}, "unsupported-version"),
++                          ({**request, "population": {"bad": "private-value"}}, "invalid-input"),
++                          (b" " * (4 * 1024 * 1024 + 20), "request-too-large")):
++            error = send(process, msg)
++            assert error["error"] == code and "private-value" not in str(error)
++        assert send(process, request)["report"] == first["report"]
++        content = path.read_bytes()
++        path.write_bytes(b"invalid: model")
++        assert send(process, request)["status"] == "error"
++        path.write_bytes(content + b"\n")
++        after = send(process, request)
++        assert not after["model_reused"] and after["model_sha256"] != first["model_sha256"]
++        assert after["report"]["counts"] == api.check(path, pop)["counts"]
++        process.kill()
++    finally:
++        process.kill()
++        process.wait(timeout=10)
++    with launch() as restarted:
++        cold = send(restarted, request)
++        assert not cold["model_reused"] and cold["model_sha256"] == after["model_sha256"]
++        restarted.stdin.close()
++
++
++def test_distinct_populations_in_one_worker(tmp_path):
++    path, pop = fixture(tmp_path, claim=[])
++    init = {"version": 1, "id": "request", "model": str(path)}
++    with launch() as process:
++        try:
++            bad = send(process, {**init, "population": json.loads(pop.read_text())})
++            fixture(tmp_path, claim=["a"])
++            good = send(process, {**init, "population": json.loads(pop.read_text())})
++            assert bad["report"]["exit_code"] == 1 and good["report"]["exit_code"] == 0
++            assert good["model_reused"]
++        finally:
++            process.stdin.close()
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index b066da46..6a4955a8 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -92,6 +92,9 @@
+     "gnd.anchors": {
+       "layer": "infrastructure"
+     },
++    "gnd.snapshot_worker": {
++      "layer": "entry"
++    },
+     "gnd.api": {
+       "layer": "entry"
+     },
+diff --git a/uv.lock b/uv.lock
+index f4d46be3..fb132507 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -125,7 +125,7 @@ docs = [
+ requires-dist = [
+     { name = "faker", marker = "extra == 'synth'", specifier = "==40.36.0" },
+     { name = "jsonschema", specifier = "==4.26.0" },
+-    { name = "pydantic", specifier = "==2.13.4" },
++    { name = "pydantic", specifier = ">=2.12.5,<2.14" },
+     { name = "ruamel-yaml", specifier = "==0.19.1" },
+ ]
+ provides-extras = ["synth"]

@@ -1,0 +1,76 @@
+{
+  "base": "c6ae3e2d",
+  "claims": [],
+  "created": "2026-11-28T15:26:13.654807+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/reviews/PS4-r1/diff.patch",
+      "sha256": "b4f5d7038575951e227a945bd8aebf064e591aaa73eb42a67856ec54bbcbc542"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/independent-host.json",
+      "sha256": "83c8cb2b2e4a2e75c7c6916e5edb7f3c6f87884e547d65714011723e646a3bed"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/installed_replay.py",
+      "sha256": "e36bb1ed3047f4c8096b2aa30608bf0d30790e158192dad783ad50bfc20a4a99"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS4/locked-host.json",
+      "sha256": "c06f07982df7de4cd1900a6ebf5ee7456bdd59324673e3f9b51235f9ea5c1411"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "569b65194fc365d819903c454c2487fa3dd670805d27051a02622198c9cb20de"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "d2408789804b86381d2eca2516687e6a18881f75ae3de64873876c7e6aac4481"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "593c47637f194c2229bf8e27b13b1fcfda8d820d6802c2d66073a3df94488271"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "65d739bfd21028a1ef6e44f9a557f5168f77f6120640144efcd256be5ee183f8"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "220c87f693598d582f64f2f235a63208745ae4a80759cbc86a504e281e408565"
+    },
+    {
+      "path": "src/gnd/snapshot_worker.py",
+      "sha256": "240f98db1c76432ce5fc5a7702dc675b34378a514ec2bab230aeb1a98eaf813b"
+    },
+    {
+      "path": "tests/test_public_distribution.py",
+      "sha256": "0b71baada27325dc4ce67c48eb2c45fae12a737e0788af86df4bc0097f1801eb"
+    },
+    {
+      "path": "tests/test_snapshot_worker.py",
+      "sha256": "8e7ca421a9b00af8c3be9f958b41491619a7f4ddd7b3abf0c3535e4031b83b9c"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "708edf9e46db18445e57555816a96b498f749d603b476635f94ca034ab179049"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "25af245882873d0fa0617f370438c5a4c58e3cd03c26e79cc2d9f1f866f457e1"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/phase-PS4-spec.md",
+      "sha256": "f9f80258d16e014747e2a3357253d730887f80c6cdfd96282dd1f53d90626532"
+    }
+  ],
+  "head": "5b52e43f18c179ecef6a9118b0c6ca1df88948a6",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Review the persistent local worker and tested dependency range, including protocol recovery, invalidation and isolation over valid and malformed requests. Verify scope of the installed-wheel results.",
+  "subject": "phase",
+  "version": 1
+}

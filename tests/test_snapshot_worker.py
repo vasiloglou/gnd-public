@@ -63,3 +63,22 @@ def test_distinct_populations_in_one_worker(tmp_path):
             assert good["model_reused"]
         finally:
             process.stdin.close()
+
+
+def test_worker_path_errors_alias_and_external_dependencies(tmp_path):
+    path, pop = fixture(tmp_path)
+    request = {"version": 1, "id": "check", "model": str(path), "population": json.loads(pop.read_text())}
+    alias = tmp_path / "alias.json"
+    alias.symlink_to(path)
+    with launch() as process:
+        try:
+            assert send(process, request)["status"] == "evaluated"
+            for invalid in (tmp_path / "missing", tmp_path):
+                assert send(process, {**request, "model": str(invalid)})["error"] == "invalid-input"
+            assert send(process, {**request, "model": str(alias)})["model_reused"]
+            model = json.loads(path.read_text())
+            model["includes"] = ["dependency.json"]
+            path.write_text(json.dumps(model))
+            assert send(process, request)["error"] == "external-model-dependencies"
+        finally:
+            process.stdin.close()

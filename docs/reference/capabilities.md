@@ -92,3 +92,5 @@ extraction fidelity, advisory review, and formal assurance are different
 results. A pass in one does not automatically confer the others. Missing or
 stale assurance evidence remains unavailable; the documentation tutorials
 do not perform certification or recertification.
+
+The DuckDB rules exporter supports guarded existential consequents in snapshots when the antecedent and consequent are connected asserted positive atoms. Consequent atoms share a joint assignment. Violations name antecedent variables, and the report displays up to 100 bindings per existential rule. A missing consequent relation with active antecedent bindings produces an unchecked result. A covered empty consequent fails. The LQP target and operation models refuse this fragment.

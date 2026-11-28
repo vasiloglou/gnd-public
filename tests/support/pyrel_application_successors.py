@@ -171,6 +171,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS1/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS3/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/duckdb-rule-checking/evidence/DB1/query-successor.json',
 ]
 
 

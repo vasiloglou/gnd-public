@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reason": "DB1 validates the asserted existential atom list when exporting guarded rules.",
+  "predecessor": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS3/dynamic-query-successor.json",
+  "predecessor_sha256": "26bfdd84c42dcbde69ebbb3df2076fcdd23c50c94cf97096124acbe917507940",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "Check",
+      "tuple[Atom, ...]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8465,
+  "result_occurrences": 10516
+}

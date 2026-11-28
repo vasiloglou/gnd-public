@@ -130,6 +130,7 @@ class Check:
     atom: Atom | None = None
     compare: Compare | None = None
     pairs: tuple[tuple[str, str], ...] = ()
+    atoms: tuple[Atom, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -376,7 +377,16 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
     if len(consequent) != 1:
         raise ExportInputError(f"{c.get('id')}: one consequent expected")
     (kind, payload), = consequent.items()
-    if kind == "atom":
+    if kind == "exists":
+        if not isinstance(payload, dict) or set(payload) != {"atoms"} or not payload.get("atoms"):
+            raise ExportInputError("guarded-exists-filters-unsupported")
+        atoms = tuple(_atom(model, pattern) for pattern in payload["atoms"])
+        if c.get("where") or c.get("negate") or any(_is_derived(model, a.relation) for a in (*domain, *atoms)):
+            raise ExportInputError("guarded-exists-asserted-positive-only")
+        if not _connected((*domain, *atoms)):
+            raise ExportInputError("guarded-exists-disconnected")
+        check = Check("exists", atoms=atoms)
+    elif kind == "atom":
         check = Check("holds", atom=_atom(model, payload))
     elif kind == "absence":
         check = Check("absent", atom=_atom(model, payload))
@@ -408,6 +418,11 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
     info = (("temporal", temporal),) if temporal else ()
     found = [Requirement(c["id"], "guarded", c["modality"], _quote(c), domain, check, _variables(domain),
                          ("any", antecedents), refs, info=info)]
+    if check.kind == "exists":
+        required = tuple(dict.fromkeys(atom.relation for atom in check.atoms))
+        guard = replace(found[0], refs=tuple(dict.fromkeys((*refs, *required))),
+                        info=(("exists_coverage", required),))
+        return [guard, replace(guard, check=Check("none"), part="bindings", listing=True)]
     if temporal:
         # GND leaves the rule unchecked when a computed date leaves years 1..9999 or past 10,000 date
         # applications; the report decides that from every binding, before reading the verdict. The
@@ -1146,7 +1161,7 @@ class _Names:
 
 def _types(model: _Model, req: Requirement) -> dict[str, str]:
     types: dict[str, str] = {}
-    for atom in (*req.domain, *([req.check.atom] if req.check.atom else [])):
+    for atom in (*req.domain, *req.check.atoms, *([req.check.atom] if req.check.atom else [])):
         roles = _relation_roles(model, atom.relation)
         for (role_name, primitive), arg in zip(roles, atom.args):
             if isinstance(arg, str) and arg.startswith("$"):
@@ -1243,6 +1258,9 @@ def _operand(value: Any, names: _Names) -> str:
 
 
 def _check_text(check: Check, names: _Names, model: _Model, *, negate: bool) -> list[str]:
+    if check.kind == "exists":
+        joined = [_atom_text(atom, names, model) for atom in check.atoms]
+        return [f"not_({', '.join(joined)})"] if negate else joined
     if check.kind == "holds":
         text = _atom_text(check.atom, names, model)
         return [f"not_({text})" if negate else text]
@@ -1644,6 +1662,27 @@ def _rules_table(reqs: list[Requirement]) -> str:
 
 
 _FILTERED_REPORT_HOOK = "        # guarded filter observations\n"
+
+_EXISTS_REPORT = """\
+        if rule['info'].get('exists_coverage'):
+            missing = sorted(set(rule['info']['exists_coverage']) - covers)
+            if missing and found[f'{name}::bindings']:
+                print(f'{name}  not checked  (guarded-exists-coverage-missing: {", ".join(missing)})')
+                unchecked = unchecked or rule['modality'] == 'alethic'
+                continue
+            hits = witnesses(rule, found[name])
+            if not hits:
+                print(f'{name}  OK')
+            else:
+                status = 'violated' if rule['modality'] == 'alethic' else 'warning'
+                for hit in hits[:100]:
+                    print(f'{name}  {status}  {json.dumps(hit, sort_keys=True)}')
+                if len(hits) > 100:
+                    print(f'{name}  truncated  (showing 100 of {len(hits)} bindings)')
+                violated = violated or status == 'violated'
+            continue
+"""
+
 
 _FILTERED_REPORT = """\
         if rule['info'].get('guarded_filtered'):
@@ -2731,6 +2770,9 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
                                        "GND's plan walk computes it empty in later states (a checker bug), so there is "
                                        "no verdict to match")
     reqs = requirements(doc, model)
+    has_exists = any(req.check.kind == "exists" for req in reqs)
+    if has_exists and (target != "duckdb" or doc.get("operations")):
+        raise ExportInputError("guarded-exists-duckdb-snapshot-only")
     if target == "lqp":   # the LQP version reads stated facts only; a derived list's emptiness needs the engine
         for row in model.unchecked:
             derived = [ref for ref in row.get("vacuous_if_empty") or [] if ref in model.derived]
@@ -2931,7 +2973,8 @@ def render(model_path: Path, target: str, *, not_checked_ids: list | None = None
     if target == "duckdb":
         if main.count(_FILTERED_REPORT_HOOK) != 1:
             raise ExportInputError("guarded-filter-report-hook-invalid")
-        main = main.replace(_FILTERED_REPORT_HOOK, _FILTERED_REPORT if filtered else "")
+        main = main.replace(_FILTERED_REPORT_HOOK, (_FILTERED_REPORT if filtered else "") +
+                            (_EXISTS_REPORT if has_exists else ""))
     if names.step:
         main = (main.replace("build({'facts': {}, 'population': {}}, config)", "build([{'facts': {}, 'population': {}}], [], config)")
                     .replace("m, probe = build(population, config)", "m, probe = build([population], [], config)"))

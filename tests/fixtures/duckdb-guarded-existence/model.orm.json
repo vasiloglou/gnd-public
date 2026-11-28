@@ -1,0 +1,93 @@
+{
+    "version": 1,
+    "model_id": "result-coverage",
+    "object_types": [
+        {
+            "id": "item",
+            "name": "Item",
+            "kind": "value",
+            "primitive": "String"
+        },
+        {
+            "id": "result",
+            "name": "Result",
+            "kind": "value",
+            "primitive": "String"
+        }
+    ],
+    "fact_types": [
+        {
+            "id": "requested",
+            "reading": "{Item} was requested",
+            "roles": [
+                {
+                    "object_type": "item",
+                    "role_name": "id"
+                }
+            ]
+        },
+        {
+            "id": "outcome",
+            "reading": "{Item} has {Result}",
+            "roles": [
+                {
+                    "object_type": "item",
+                    "role_name": "id"
+                },
+                {
+                    "object_type": "result",
+                    "role_name": "result"
+                }
+            ]
+        },
+        {
+            "id": "approved",
+            "reading": "{Result} is approved",
+            "roles": [
+                {
+                    "object_type": "result",
+                    "role_name": "result"
+                }
+            ]
+        }
+    ],
+    "constraints": [
+        {
+            "id": "has_approved_outcome",
+            "type": "guarded",
+            "antecedent": [
+                {
+                    "fact_type": "requested",
+                    "bind": {
+                        "id": "$i"
+                    }
+                }
+            ],
+            "consequent": {
+                "exists": {
+                    "atoms": [
+                        {
+                            "fact_type": "outcome",
+                            "bind": {
+                                "id": "$i",
+                                "result": "$r"
+                            }
+                        },
+                        {
+                            "fact_type": "approved",
+                            "bind": {
+                                "result": "$r"
+                            }
+                        }
+                    ]
+                }
+            },
+            "source": "explicit",
+            "status": "confirmed",
+            "modality": "alethic",
+            "provenance": {
+                "user_quote": "Every requested item must have an approved outcome."
+            }
+        }
+    ]
+}

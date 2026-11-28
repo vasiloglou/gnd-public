@@ -57,3 +57,7 @@ Estimated 160–300 source lines and 130–240 test lines. Measure the actual di
 ## 11. Approval instrument
 
 This draft and its case expectations are the proposed approval instrument. Record an owner decision on the plan and this spec before phase execution.
+
+## Delegated PS1 decision, 2026-11-28
+
+Approve snapshot_verdict(report) returning status, exit_code, constraints, derivations, warnings and diagnostics. A recognized outer evaluation failure can always be distinguished from ambiguous empty results. Reject malformed structures without including arbitrary input in diagnostics. Restrict customer access to already-issued results through a value-free projection or refusal if raw rows may be present. The existing check entry point gains allow_vacuous=False at the end of its keyword options. Reject incompatible modes before evaluation and preserve the default report. Exercise zero counts on a missing input, accepted vacuity, mixed failures, unsupported wire versions and inconsistent wrappers. Show requested inventory as the antecedent of a grounded mandatory check.

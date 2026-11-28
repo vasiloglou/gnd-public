@@ -1,0 +1,496 @@
+diff --git a/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json
+new file mode 100644
+index 00000000..2236ee2f
+--- /dev/null
++++ b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json
+@@ -0,0 +1,65 @@
++{
++  "schema_version": 1,
++  "reason": "Checked extension selection reads per-request coverage and typed relation maps.",
++  "predecessor": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS1/dynamic-query-successor.json",
++  "predecessor_sha256": "536357630bf7adac6f809815a8799832444f9f211ae5150ba8466a383474e988",
++  "removed": [],
++  "added": [
++    [
++      "src/gnd/api.py",
++      "check_with_extensions",
++      "dict[str, Any]",
++      1
++    ],
++    [
++      "src/gnd/api.py",
++      "check_with_extensions",
++      "list[str]",
++      1
++    ],
++    [
++      "src/gnd/api.py",
++      "check_with_extensions",
++      "os.PathLike[str]",
++      2
++    ],
++    [
++      "src/gnd/api.py",
++      "check_with_extensions",
++      "tuple[str, ...]",
++      1
++    ],
++    [
++      "src/gnd/api.py",
++      "observe",
++      "closures.get(key, ((), False, None))",
++      1
++    ],
++    [
++      "src/gnd/api.py",
++      "observe",
++      "extensions.get(key)",
++      1
++    ],
++    [
++      "src/gnd/api.py",
++      "observe",
++      "possible.get(key)",
++      1
++    ],
++    [
++      "src/gnd/api.py",
++      "observe",
++      "selected[key]",
++      1
++    ],
++    [
++      "src/gnd/extension_preparation.py",
++      "<module>",
++      "ContextVar[Callable | None]",
++      1
++    ]
++  ],
++  "result_distinct_rows": 8451,
++  "result_occurrences": 10498
++}
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 218343b6..7877ba05 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -1937,7 +1937,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - out: CheckReport with constraint and derivation verdicts, fact-type coverage and internal semantic projection or refusal information.
+ - status: canonical
+ - modules: src/gnd/checker/__init__.py, src/gnd/checker/_core.py, src/gnd/checker/_composed.py
+-- uses: check.branches, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
++- uses: check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
+ - used_by: assurance.policy, check.admission, check.batch, check.service, cli.api, cli.checking_command, cli.dispatch, discover.service, evolve.population_check, exp.acceptance, export.ilp_service, export.verification, … +19 more (graph.md)
+ - part_of: subsystem.check
+ - tests: tests/test_checker_families.py, tests/test_public_branch_runtime.py, tests/test_v62_phase5_checker.py, tests/test_anchor_sidecar_v2.py, tests/test_reference_population_corpus.py, tests/test_compiled_snapshot_obligations.py
+@@ -2208,7 +2208,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ ### cli.api
+ - does: Expose complete review or compact growth-prompt text and in-process checking reports with receipts and reusable evaluation sessions.
+-- verbs: validate, validate with source documents, check, snapshot_verdict, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
++- verbs: validate, validate with source documents, check, snapshot_verdict, check_with_extensions, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
+ - in: paths or loaded GND objects; per-operation options
+ - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
+ - status: canonical
+@@ -2399,7 +2399,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/extension_preparation.py
+ - uses: check.branches
+-- used_by: check.incremental_reuse, check.service, check.snapshot_decision, cli.api, semantics.extensions
++- used_by: check.incremental_reuse, check.service, check.snapshot_decision, checker.evaluate, cli.api, semantics.extensions
+ - tests: tests/test_m3_extension_preparation.py, tests/test_incremental_baseline.py, tests/test_incremental_observations.py
+ - notes: Same-identity nested scopes share records; this evaluation-local preparation is separate from check.incremental_reuse across transactions.
+ 
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index 61ce337d..af399350 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -277,7 +277,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### check.calculation_scope
+ - uses: check.branches
+-- used_by: check.incremental_reuse, check.service, check.snapshot_decision, cli.api, semantics.extensions
++- used_by: check.incremental_reuse, check.service, check.snapshot_decision, checker.evaluate, cli.api, semantics.extensions
+ 
+ #### check.calculation_scope -> check.branches
+ - `src/gnd/extension_preparation.py -> src/gnd/branches.py`
+@@ -557,12 +557,15 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/universe.py -> src/gnd/values.py`
+ 
+ ### checker.evaluate
+-- uses: check.branches, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
++- uses: check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
+ - used_by: assurance.policy, check.admission, check.batch, check.service, cli.api, cli.checking_command, cli.dispatch, discover.service, evolve.population_check, exp.acceptance, export.ilp_service, export.verification, infra.report_payloads, infra.text_output, measure.coverage, measure.labels, measure.promote, measure.report, measure.score, measure.service, model.diff, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.frontier, synth.mutations, synth.prediction, synth.service, witness.produce, witness.why_not
+ 
+ #### checker.evaluate -> check.branches
+ - `src/gnd/checker/_core.py -> src/gnd/branches.py`
+ 
++#### checker.evaluate -> check.calculation_scope
++- `src/gnd/checker/_core.py -> src/gnd/extension_preparation.py`
++
+ #### checker.evaluate -> check.compiled_obligations
+ - `src/gnd/checker/_core.py -> src/gnd/compiled_obligations.py`
+ 
+diff --git a/dev/components/modules/_root.md b/dev/components/modules/_root.md
+index 862f5545..00b182b1 100644
+--- a/dev/components/modules/_root.md
++++ b/dev/components/modules/_root.md
+@@ -116,23 +116,24 @@ Stable in-process access to GND validation and checking reports.
+ | `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 174 | Return the check payload and an opaque, in-process CheckReceipt. |
+ | `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 671 | Validate a model path or reuse a loaded model, returning its report. |
+ | `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 683 | Check one population and return the same payload emitted by the CLI. |
+-| `snapshot_verdict(report) -> dict[str, Any]` | function | 756 | Interpret an existing versioned check report without evaluating a population. |
+-| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 811 | Read two models and optionally one directory of population documents. |
+-| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 995 | Public population sentence view; applied redaction is the default. |
+-| `compose(model, directory) -> dict[str, Any]` | function | 1023 | Compose a composition directory's sources into one population (CT2). |
+-| `verbalize_model(model, *, for_growth) -> str` | function | 1084 | Render the complete model for review, or its canonical growth-prompt inventory. |
+-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1106 | Render derived fact types' rules in GND's controlled language. |
+-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1149 | Audit a declared post, or compute it when ``post`` is omitted. |
+-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1178 | Evaluate saved opinions without obtaining any external judgment. |
+-| `EvaluationSession` | class | 1295 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1319 | (no docstring) |
+-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1334 | (no docstring) |
+-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1342 | (no docstring) |
+-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1352 | Validate whole ordered relation replacements between evaluations. |
+-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1361 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+-| `EvaluationSession.reset(self) -> None` | method | 1373 | (no docstring) |
+-| `EvaluationSession.close(self) -> None` | method | 1376 | (no docstring) |
+-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1379 | (no docstring) |
++| `check_with_extensions(model, population, *, fact_types, max_rows, unredacted) -> dict[str, Any]` | function | 756 | Check a snapshot and select bounded derived rows from that execution. |
++| `snapshot_verdict(report) -> dict[str, Any]` | function | 821 | Interpret an existing versioned check report without evaluating a population. |
++| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 876 | Read two models and optionally one directory of population documents. |
++| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 1060 | Public population sentence view; applied redaction is the default. |
++| `compose(model, directory) -> dict[str, Any]` | function | 1088 | Compose a composition directory's sources into one population (CT2). |
++| `verbalize_model(model, *, for_growth) -> str` | function | 1149 | Render the complete model for review, or its canonical growth-prompt inventory. |
++| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1171 | Render derived fact types' rules in GND's controlled language. |
++| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1214 | Audit a declared post, or compute it when ``post`` is omitted. |
++| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1243 | Evaluate saved opinions without obtaining any external judgment. |
++| `EvaluationSession` | class | 1360 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
++| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1384 | (no docstring) |
++| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1399 | (no docstring) |
++| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1407 | (no docstring) |
++| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1417 | Validate whole ordered relation replacements between evaluations. |
++| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1426 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
++| `EvaluationSession.reset(self) -> None` | method | 1438 | (no docstring) |
++| `EvaluationSession.close(self) -> None` | method | 1441 | (no docstring) |
++| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1444 | (no docstring) |
+ 
+ ## gnd.applicability — `src/gnd/applicability.py`
+ Components: check.applicability
+@@ -522,8 +523,8 @@ Bounded ephemeral preparation for one admitted check evaluation.
+ | `fingerprint(value) -> tuple \| None` | function | 95 | (no docstring) |
+ | `CalculationScope` | class | 109 | (no docstring) |
+ | `CalculationScope.calculate(self, key_identity, snapshot, calculate, clone, record) -> Result` | method | 116 | (no docstring) |
+-| `current_scope() -> CalculationScope \| None` | function | 161 | (no docstring) |
+-| `calculation_scope(model, population) -> Iterator[CalculationScope]` | function | 166 | (no docstring) |
++| `current_scope() -> CalculationScope \| None` | function | 165 | (no docstring) |
++| `calculation_scope(model, population) -> Iterator[CalculationScope]` | function | 170 | (no docstring) |
+ 
+ ## gnd.extensions — `src/gnd/extensions.py`
+ Components: semantics.extensions
+diff --git a/dev/components/modules/checker.md b/dev/components/modules/checker.md
+index 6869ebdd..894d2324 100644
+--- a/dev/components/modules/checker.md
++++ b/dev/components/modules/checker.md
+@@ -24,12 +24,12 @@ Deterministic constraint checker with the 5-state verdict lattice.
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ | `check_legacy(model, population) -> CheckReport` | function | 331 | Check a population against every constraint in the model. |
+-| `JoinAmbiguousError` | class(Exception) | 1069 | A fact type offers multiple same-type candidates for one join anchor. |
+-| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1432 | Return the computed structured extensions as fact-shaped rows. |
+-| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 1964 | (no docstring) |
+-| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 1982 | (no docstring) |
+-| `check_partial(model, population) -> CheckReport` | function | 2007 | Evaluate opaque input with the three-valued internal extension view. |
+-| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2016 | Use the same opaque semantics when an anchored check is requested. |
++| `JoinAmbiguousError` | class(Exception) | 1074 | A fact type offers multiple same-type candidates for one join anchor. |
++| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1437 | Return the computed structured extensions as fact-shaped rows. |
++| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 1969 | (no docstring) |
++| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 1987 | (no docstring) |
++| `check_partial(model, population) -> CheckReport` | function | 2012 | Evaluate opaque input with the three-valued internal extension view. |
++| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2021 | Use the same opaque semantics when an anchored check is requested. |
+ 
+ ## gnd.checker._reports — `src/gnd/checker/_reports.py`
+ Components: checker.reports
+diff --git a/docs/reference/disclosure.md b/docs/reference/disclosure.md
+index 29fe5390..4b7c6495 100644
+--- a/docs/reference/disclosure.md
++++ b/docs/reference/disclosure.md
+@@ -208,7 +208,7 @@ exactly one row. A test keeps this table equal to the code.
+ | Surfaces | What they disclose |
+ |---|---|
+ | Command: `gnd check`, `gnd validate`, `gnd diff`, `gnd verbalize population`, `gnd measure`, `gnd verify`, `gnd judgments check` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
+-| `gnd.api`: `validate`, `check`, `diff`, `verbalize`, `transition`, `check_with_receipt`, `judgments`, `EvaluationSession.check`, `EvaluationSession.check_with_receipt`, `EvaluationSession.transition` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
++| `gnd.api`: `validate`, `check`, `check_with_extensions`, `diff`, `verbalize`, `transition`, `check_with_receipt`, `judgments`, `EvaluationSession.check`, `EvaluationSession.check_with_receipt`, `EvaluationSession.transition` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
+ | Output kind: `validate`, `check`, `admission`, `verify`, `transition`, `plan`, `batch`, `measure`, `population-verbalization`, `diff` | declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer` |
+ | Command: `gnd witness`, `gnd witness-view`, `gnd replay`, `gnd why-not`, `gnd witness-count`, `gnd replay-count`, `gnd export lean`, `gnd export souffle`, `gnd export souffle-run`, `gnd export souffle-witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
+ | `gnd.api`: `witness`, `replay`, `why_not`, `snapshot_verdict`, `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
+diff --git a/docs/reference/python-api.md b/docs/reference/python-api.md
+index 06e5be1a..c3b8194f 100644
+--- a/docs/reference/python-api.md
++++ b/docs/reference/python-api.md
+@@ -572,3 +572,9 @@ decision = api.snapshot_verdict(report)
+ The Python keyword matches `gnd check model.orm.yaml facts.json --allow-vacuous`. It defaults to false, applies to plain snapshots and changes only the acceptance of an otherwise vacuous run. Each vacuous verdict stays visible. For “every requested item has an outcome”, bind the item in a `requested` antecedent and require a matching `outcome` in a guarded existential. With a known request, a covered empty outcome relation violates the rule. Missing outcome coverage leaves it unchecked. A role-local mandatory constraint on outcomes alone can be vacuous for an empty outcome extension.
+ 
+ The vacuity override uses the CLI's plain schema-7 model policy. Reference-bound, temporal and declared-redaction models are refused by that policy. Anchored, admission, composed and compiled checks cannot be combined with the override.
++
++### Reading inferred rows from the check that computed them
++
++Use `api.check_with_extensions(model, population, fact_types=["active"], max_rows=1000)`. The `report` field contains the ordinary check result, including findings about asserted claims. The `extensions` field contains one result per requested identifier, in request order. A missing claim can be unchecked while its inferred rows are complete.
++
++A complete relation includes `rows`, which may be empty. Unknown, non-derived, incompletely covered and uncomputable relations return `unavailable`. Declared protected roles or inputs return `protected` under the ordinary applied disclosure policy. This decision precedes the row cap. Each request accepts 1–64 distinct identifiers and a total output budget of 0–10,000 rows. A complete relation that would overflow the remaining budget returns `output-limit` and consumes zero rows. Source and rule evaluation use the checker's ordinary work limits.
+diff --git a/src/gnd/api.py b/src/gnd/api.py
+index f40df188..ef87fb7d 100644
+--- a/src/gnd/api.py
++++ b/src/gnd/api.py
+@@ -124,7 +124,7 @@ from gnd.witness.service import (
+     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
+ )
+ 
+-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose", "verbalize_model", "snapshot_verdict")  # noqa: RUF022 - approved stable order
++__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose", "verbalize_model", "snapshot_verdict", "check_with_extensions")  # noqa: RUF022 - approved stable order
+ 
+ 
+ 
+@@ -753,6 +753,71 @@ def _check_unresolved(
+     ).payload
+ 
+ 
++def check_with_extensions(
++    model: str | os.PathLike[str] | Model,
++    population: str | os.PathLike[str] | Population,
++    *,
++    fact_types: list[str] | tuple[str, ...],
++    max_rows: int = 1000,
++    unredacted: bool = False,
++) -> dict[str, Any]:
++    """Check a snapshot and select bounded derived rows from that execution."""
++    from gnd.extension_preparation import CHECKED_EXTENSIONS
++    from gnd.model import _derivation_dependency_closures
++    from gnd.model_index import ModelIndex
++    from gnd.redaction import RedactionPolicy
++
++    if not isinstance(fact_types, (tuple, list)) or not 1 <= len(fact_types) <= 64:
++        raise ValueError("fact_types must contain between one and 64 identifiers")
++    requested = tuple(fact_types)
++    if (not all(isinstance(identifier, str) and identifier for identifier in requested)
++            or len(set(requested)) != len(requested)):
++        raise ValueError("fact_types must contain distinct nonempty identifiers")
++    if type(max_rows) is not int or not 0 <= max_rows <= 10_000:
++        raise ValueError("max_rows must be an integer between zero and 10000")
++    raw = _values_allowed(unredacted, "unredacted=True")
++    _check_model_input(model)
++    _check_population_input(population, name="population")
++    selected = {key: {"fact_type": key, "status": "unavailable"} for key in requested}
++
++    def observe(checked_model, checked_population, extensions):
++        index = ModelIndex.for_model(checked_model)
++        policy = RedactionPolicy.from_model(checked_model)
++        closures = _derivation_dependency_closures(checked_model.model_dump())
++        covered = set(checked_population.covers)
++        unavailable = getattr(extensions, "unavailable", {})
++        possible = getattr(extensions, "possible", {})
++        remaining = max_rows
++        for key in requested:
++            fact = index.fact_type(key)
++            if fact is None or not isinstance(fact.get("derivation_rule"), dict):
++                continue
++            item = selected[key]
++            if not raw and (policy.fact_roles(key) or policy.derivation_roles(key)):
++                item["status"] = "protected"
++                continue
++            inputs, complete, _reason = closures.get(key, ((), False, None))
++            relation = extensions.get(key)
++            if (not complete or not covered.issuperset(inputs) or relation is None
++                    or key in unavailable or possible.get(key)):
++                continue
++            if len(relation.rows) > remaining:
++                item["status"] = "output-limit"
++                continue
++            roles = tuple(role for role, _primitive in relation.roles)
++            item.update(status="complete", rows=[dict(zip(roles, row, strict=True)) for row in relation.rows])
++            remaining -= len(relation.rows)
++
++    token = CHECKED_EXTENSIONS.set(observe)
++    try:
++        result = _run_check(model, population, unredacted=raw)
++    finally:
++        CHECKED_EXTENSIONS.reset(token)
++    if result.exit_code in (3, 70):
++        selected = {key: {"fact_type": key, "status": "unavailable"} for key in requested}
++    return {"report": result.payload, "extensions": list(selected.values())}
++
++
+ def snapshot_verdict(report: dict[str, Any]) -> dict[str, Any]:
+     """Interpret an existing versioned check report without evaluating a population."""
+     from copy import deepcopy
+diff --git a/src/gnd/checker/_core.py b/src/gnd/checker/_core.py
+index 47f9f5ac..809aa1c1 100644
+--- a/src/gnd/checker/_core.py
++++ b/src/gnd/checker/_core.py
+@@ -346,6 +346,11 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
+         raise UnvalidatedPopulationError(population, model)
+ 
+     extensions, derivations = extension_core.evaluate_derivations(model, population)
++    from gnd.extension_preparation import CHECKED_EXTENSIONS
++
++    observer = CHECKED_EXTENSIONS.get()
++    if observer is not None:
++        observer(model, population, extensions)
+     constraint_population: Population | extension_core.RuledFactView = population
+     if extensions or getattr(extensions, "unavailable", None):
+         constraint_population = extension_core.constraint_view(model, population, extensions)
+diff --git a/src/gnd/disclosure.py b/src/gnd/disclosure.py
+index 7011cc9e..f2674db9 100644
+--- a/src/gnd/disclosure.py
++++ b/src/gnd/disclosure.py
+@@ -119,7 +119,7 @@ SURFACES: Mapping[str, Surface] = {
+     "gnd import ossie": Surface(
+         "every-mode", note="restores whatever model content the ontology and its sidecar carry"),
+     **{f"api:{name}": Surface(**_DECLARED) for name in (
+-        "validate", "check", "diff", "verbalize", "transition", "check_with_receipt", "judgments")},
++        "validate", "check", "check_with_extensions", "diff", "verbalize", "transition", "check_with_receipt", "judgments")},
+     **{f"api:EvaluationSession.{name}": Surface(**_DECLARED, note="delegates to the gnd.api function")
+        for name in ("check", "check_with_receipt", "transition")},
+     **{f"api:{name}": Surface(**_VIEW) for name in (
+diff --git a/src/gnd/extension_preparation.py b/src/gnd/extension_preparation.py
+index 5d483eec..34b7676d 100644
+--- a/src/gnd/extension_preparation.py
++++ b/src/gnd/extension_preparation.py
+@@ -155,6 +155,10 @@ class CalculationScope:
+         return result
+ 
+ 
++# The observer exists only while a caller requests the checked extension rows.
++CHECKED_EXTENSIONS: ContextVar[Callable | None] = ContextVar("gnd_checked_extensions", default=None)
++
++
+ _SCOPE: ContextVar[CalculationScope | None] = ContextVar("gnd_calculation_scope", default=None)
+ 
+ 
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index 8d06c065..73d33559 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -169,6 +169,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG2/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG3/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS1/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_checked_extensions.py b/tests/test_checked_extensions.py
+new file mode 100644
+index 00000000..65571d23
+--- /dev/null
++++ b/tests/test_checked_extensions.py
+@@ -0,0 +1,84 @@
++import json
++from copy import deepcopy
++
++import pytest
++
++from gnd import api, extensions
++from gnd.checker import _core
++
++
++def fixture(folder, *, input_id="enabled", heads=("active",), covered=True, rows=("a",), claim=None,
++            protected=False):
++    model = folder / "model.orm.json"
++    pop = folder / "population.json"
++    role = {"role_name": "id", "object_type": "item"}
++    base = {"id": input_id, "reading": "{Item} is enabled", "roles": [role]}
++    facts = [base]
++    for target in heads:
++        facts.append({"id": target, "reading": "{Item} is active", "roles": [deepcopy(role)],
++                      "derivation": "derived", "derivation_rule": {
++                          "body": [{"fact_type": input_id, "bind": {"id": "$x"}}], "head": {"id": "$x"}}})
++    if protected:
++        base["roles"][0]["redact"] = True
++    model.write_text(json.dumps({"version": 1, "model_id": "active-items",
++        "object_types": [{"id": "item", "name": "Item", "kind": "value", "primitive": "String"}],
++        "fact_types": list(reversed(facts))}))
++    asserted = {input_id: [{"id": s} for s in rows]} if covered else {}
++    if claim is not None:
++        asserted[heads[0]] = [{"id": s} for s in claim]
++    pop.write_text(json.dumps({"population": {"model": model.name, "source": "fixture",
++        "covers": list(asserted)}, "facts": asserted}))
++    return model, pop
++
++
++@pytest.mark.parametrize(("input_id", "target"), [("enabled", "active"), ("selected", "eligible")])
++@pytest.mark.parametrize("claim", [None, [], ["a"]])
++def test_rows_and_findings_from_one_check(tmp_path, monkeypatch, input_id, target, claim):
++    model, pop = fixture(tmp_path, input_id=input_id, heads=(target,), claim=claim)
++    expected = api.check(model, pop)
++    counts = {"check": 0, "derive": 0}
++    for owner, name, key in ((_core, "check_legacy", "check"),
++                             (extensions, "evaluate_derivations", "derive")):
++        fn = getattr(owner, name)
++        def counted(*args, _key=key, _fn=fn, **kwargs):
++            counts[_key] += 1
++            return _fn(*args, **kwargs)
++        monkeypatch.setattr(owner, name, counted)
++    result = api.check_with_extensions(model, pop, fact_types=[target])
++    assert result["report"] == expected
++    assert result["extensions"] == [{"fact_type": target, "status": "complete", "rows": [{"id": "a"}]}]
++    assert counts == {"check": 1, "derive": 1}
++
++
++def test_coverage_and_output_limits(tmp_path):
++    model, pop = fixture(tmp_path, heads=("active", "eligible"), rows=())
++    def rows(names, cap):
++        return api.check_with_extensions(model, pop, fact_types=names, max_rows=cap)["extensions"]
++    assert rows(["active"], 0)[0] == {"fact_type": "active", "status": "complete", "rows": []}
++    fixture(tmp_path, covered=False)
++    assert rows(["active"], 10)[0] == {"fact_type": "active", "status": "unavailable"}
++    fixture(tmp_path, heads=("active", "eligible"), rows=("z", "a"))
++    result = rows(["eligible", "active", "absent", "enabled"], 2)
++    assert [item["status"] for item in result] == ["complete", "output-limit", "unavailable", "unavailable"]
++    assert {row["id"] for row in result[0]["rows"]} == {"z", "a"}
++    assert "rows" not in rows(["active"], 1)[0]
++
++
++def test_protected_relation_hides_cardinality_and_input_errors(tmp_path, monkeypatch):
++    model, pop = fixture(tmp_path, protected=True, rows=("secret",))
++    monkeypatch.setenv("GND_DISCLOSURE", "customer")
++    for cap in (0, 2):
++        record = api.check_with_extensions(model, pop, fact_types=["active"], max_rows=cap)
++        assert record["extensions"] == [{"fact_type": "active", "status": "protected"}]
++        assert "secret" not in json.dumps(record)
++    with pytest.raises(api.DisclosureRefused):
++        api.check_with_extensions(model, pop, fact_types=["active"], unredacted=True)
++    missing = api.check_with_extensions(model, tmp_path / "absent", fact_types=["active"])
++    assert missing["report"]["exit_code"] == 3 and missing["extensions"][0]["status"] == "unavailable"
++
++
++@pytest.mark.parametrize("names,limit", [([], 1), (["a", "a"], 1), (["a"], True),
++                                           (["a"], 10001), ("a", 0), (list(map(str, range(65))), 1)])
++def test_invalid_request_before_evaluation(names, limit):
++    with pytest.raises(ValueError):
++        api.check_with_extensions("missing", "missing", fact_types=names, max_rows=limit)
+diff --git a/tests/test_public_api.py b/tests/test_public_api.py
+index dfef6c2f..b14cbf3e 100644
+--- a/tests/test_public_api.py
++++ b/tests/test_public_api.py
+@@ -13,7 +13,7 @@ FIXTURES = Path(__file__).parent / "fixtures/public-launch-phase-2"
+ 
+ 
+ def test_public_exports_and_current_keyword_signatures():
+-    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model", "snapshot_verdict")
++    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model", "snapshot_verdict", "check_with_extensions")
+     expected = {
+         "validate": ("model", "unredacted", "references"),
+         "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references", "composition", "sources", "allow_vacuous"),
+diff --git a/tests/test_v61_phase2_api.py b/tests/test_v61_phase2_api.py
+index 73777978..5e589627 100644
+--- a/tests/test_v61_phase2_api.py
++++ b/tests/test_v61_phase2_api.py
+@@ -35,7 +35,7 @@ def _assert_subset(payload: dict[str, object], expected: dict[str, object]) -> N
+ def test_public_all_is_exact() -> None:
+     api = _api()
+     # Keep the ordered inventory exact, including IE3's additive session API.
+-    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay', 'check_with_receipt', 'CheckReceipt', 'ReceiptRefused', 'EvaluationSession', 'why_not', 'DisclosureRefused', 'verbalize_rules', 'compose', 'verbalize_model', 'snapshot_verdict')
++    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay', 'check_with_receipt', 'CheckReceipt', 'ReceiptRefused', 'EvaluationSession', 'why_not', 'DisclosureRefused', 'verbalize_rules', 'compose', 'verbalize_model', 'snapshot_verdict', 'check_with_extensions')
+     assert {name for name in vars(api) if not name.startswith('_')} >= set(api.__all__)
+ 
+ def test_public_signatures_are_stable() -> None:

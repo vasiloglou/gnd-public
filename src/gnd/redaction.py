@@ -17,7 +17,7 @@ from typing import Any, Literal
 from gnd.artifacts import canonical_json_text
 from gnd.atoms import atom_bind
 from gnd.branches import record_branch
-from gnd.model import Model, analyze_declared_aggregate
+from gnd.model import Model, analyze_declared_aggregate, iter_derivation_clauses
 from gnd.terms import is_function_term, term_variables
 
 RedactionMode = Literal["applied", "unredacted"]
@@ -120,57 +120,55 @@ class RedactionPolicy:
 
         for fact_type in model.fact_types:
             fact_id = str(fact_type.get("id"))
-            rule = fact_type.get("derivation_rule") or {}
-            if not isinstance(rule, Mapping):
-                continue
-            variable_sources: dict[str, set[tuple[str, str]]] = {}
-            for atom in [*(rule.get("body") or []), *(rule.get("negate") or [])]:
-                if not isinstance(atom, Mapping):
-                    continue
-                source_id = atom.get("fact_type")
-                bindings = atom_bind(dict(atom))
-                if not isinstance(source_id, str) or not bindings:
-                    continue
-                for role_name, term in bindings.items():
-                    if isinstance(term, str) and term.startswith("$"):
-                        variable_sources.setdefault(term[1:], set()).add(
-                            (source_id, str(role_name))
-                        )
-            head = rule.get("head")
-            if isinstance(head, Mapping):
-                aggregate = rule.get("aggregate")
-                aggregate_variables: set[str] = set()
-                aggregate_result: str | None = None
-                if isinstance(aggregate, Mapping):
-                    analysis = analyze_declared_aggregate(model, dict(rule))
-                    if analysis is not None and analysis.issue is None:
-                        aggregate_result = analysis.result_variable
-                        aggregate_variables.update(analysis.variables)
-                        aggregate_variables.update(analysis.over_variables)
-                        aggregate_variables.update(analysis.group_variables)
-                for role_name, term in head.items():
-                    target = (fact_id, str(role_name))
-                    used_variables = set(term_variables(term))
-                    for variable in used_variables:
-                        for source in variable_sources.get(variable, set()):
-                            connect(source, target)
-                    if aggregate_result in used_variables:
-                        for variable in aggregate_variables:
+            for rule in iter_derivation_clauses(fact_type.get("derivation_rule")):
+                variable_sources: dict[str, set[tuple[str, str]]] = {}
+                for atom in [*(rule.get("body") or []), *(rule.get("negate") or [])]:
+                    if not isinstance(atom, Mapping):
+                        continue
+                    source_id = atom.get("fact_type")
+                    bindings = atom_bind(dict(atom))
+                    if not isinstance(source_id, str) or not bindings:
+                        continue
+                    for role_name, term in bindings.items():
+                        if isinstance(term, str) and term.startswith("$"):
+                            variable_sources.setdefault(term[1:], set()).add(
+                                (source_id, str(role_name))
+                            )
+                head = rule.get("head")
+                if isinstance(head, Mapping):
+                    aggregate = rule.get("aggregate")
+                    aggregate_variables: set[str] = set()
+                    aggregate_result: str | None = None
+                    if isinstance(aggregate, Mapping):
+                        analysis = analyze_declared_aggregate(model, dict(rule))
+                        if analysis is not None and analysis.issue is None:
+                            aggregate_result = analysis.result_variable
+                            aggregate_variables.update(analysis.variables)
+                            aggregate_variables.update(analysis.over_variables)
+                            aggregate_variables.update(analysis.group_variables)
+                    for role_name, term in head.items():
+                        target = (fact_id, str(role_name))
+                        used_variables = set(term_variables(term))
+                        for variable in used_variables:
                             for source in variable_sources.get(variable, set()):
                                 connect(source, target)
-                where_variables = {
-                    variable
-                    for comparison in rule.get("where") or []
-                    if isinstance(comparison, Mapping)
-                    for side in ("left", "right")
-                    for variable in term_variables(comparison.get(side))
-                }
-                if aggregate_result in where_variables:
-                    where_variables.update(aggregate_variables)
-                for variable in where_variables:
-                    for source in variable_sources.get(variable, set()):
-                        for role_name in head:
-                            connect(source, (fact_id, str(role_name)))
+                        if aggregate_result in used_variables:
+                            for variable in aggregate_variables:
+                                for source in variable_sources.get(variable, set()):
+                                    connect(source, target)
+                    where_variables = {
+                        variable
+                        for comparison in rule.get("where") or []
+                        if isinstance(comparison, Mapping)
+                        for side in ("left", "right")
+                        for variable in term_variables(comparison.get(side))
+                    }
+                    if aggregate_result in where_variables:
+                        where_variables.update(aggregate_variables)
+                    for variable in where_variables:
+                        for source in variable_sources.get(variable, set()):
+                            for role_name in head:
+                                connect(source, (fact_id, str(role_name)))
 
         # An operation parameter is one value flowing through preconditions and
         # effects.  If any binding site is tainted, every fact role populated
@@ -312,8 +310,8 @@ class RedactionPolicy:
             fact_id = str(fact_type.get("id"))
             coordinates = {coordinate for coordinate in effective if coordinate[0] == fact_id}
             rule = fact_type.get("derivation_rule")
-            if isinstance(rule, Mapping):
-                for atom in [*(rule.get("body") or []), *(rule.get("negate") or [])]:
+            for clause in iter_derivation_clauses(rule):
+                for atom in [*(clause.get("body") or []), *(clause.get("negate") or [])]:
                     if not isinstance(atom, Mapping) or not isinstance(atom.get("fact_type"), str):
                         continue
                     for role_name in atom_bind(dict(atom)):
@@ -330,11 +328,12 @@ class RedactionPolicy:
                 if not isinstance(rule, Mapping):
                     continue
                 coordinates = set(derivation_roles.get(fact_id, frozenset()))
-                for atom in [*(rule.get("body") or []), *(rule.get("negate") or [])]:
-                    if isinstance(atom, Mapping):
-                        coordinates.update(
-                            derivation_roles.get(str(atom.get("fact_type")), frozenset())
-                        )
+                for clause in iter_derivation_clauses(rule):
+                    for atom in [*(clause.get("body") or []), *(clause.get("negate") or [])]:
+                        if isinstance(atom, Mapping):
+                            coordinates.update(
+                                derivation_roles.get(str(atom.get("fact_type")), frozenset())
+                            )
                 frozen = frozenset(coordinates)
                 if frozen != derivation_roles.get(fact_id):
                     derivation_roles[fact_id] = frozen

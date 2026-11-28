@@ -918,18 +918,18 @@ Post-verdict witness projection for model-declared sensitive roles.
 | `RedactionDeclaration.as_dict(self) -> dict[str, Any]` | method | 59 | (no docstring) |
 | `RedactionPolicy` | class | 69 | (no docstring) |
 | `RedactionPolicy.from_model(cls, model, *, case_id) -> RedactionPolicy` | method | 91 | (no docstring) |
-| `RedactionPolicy.active(self) -> bool` | method | 363 | (no docstring) |
-| `RedactionPolicy.marker(self, roles) -> dict[str, Any]` | method | 366 | (no docstring) |
-| `RedactionPolicy.fact_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 372 | (no docstring) |
-| `RedactionPolicy.parameter_roles(self, operation, parameter) -> frozenset[tuple[str, str]]` | method | 377 | (no docstring) |
-| `RedactionPolicy.derivation_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 380 | (no docstring) |
-| `RedactionPolicy.verdict_roles(self, row) -> frozenset[tuple[str, str]]` | method | 383 | (no docstring) |
-| `RedactionPolicy.metadata(self, mode) -> dict[str, Any]` | method | 395 | (no docstring) |
-| `EmitterSpec` | class | 403 | (no docstring) |
-| `emitter_specs() -> tuple[EmitterSpec, ...]` | function | 412 | The closed output census exercised by the Phase-4 leak matrix. |
-| `project_output(kind, value, *, policy, mode, case_id, emitter_id) -> dict[str, Any]` | function | 760 | Return a projected copy of one completed output payload. |
-| `render_text_header(payload) -> str \| None` | function | 872 | Render the symmetric first text line for a successor payload. |
-| `project_failure(kind, value, *, policy, mode) -> dict[str, Any]` | function | 890 | Select the successor envelope after projection itself failed. |
+| `RedactionPolicy.active(self) -> bool` | method | 362 | (no docstring) |
+| `RedactionPolicy.marker(self, roles) -> dict[str, Any]` | method | 365 | (no docstring) |
+| `RedactionPolicy.fact_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 371 | (no docstring) |
+| `RedactionPolicy.parameter_roles(self, operation, parameter) -> frozenset[tuple[str, str]]` | method | 376 | (no docstring) |
+| `RedactionPolicy.derivation_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 379 | (no docstring) |
+| `RedactionPolicy.verdict_roles(self, row) -> frozenset[tuple[str, str]]` | method | 382 | (no docstring) |
+| `RedactionPolicy.metadata(self, mode) -> dict[str, Any]` | method | 394 | (no docstring) |
+| `EmitterSpec` | class | 402 | (no docstring) |
+| `emitter_specs() -> tuple[EmitterSpec, ...]` | function | 411 | The closed output census exercised by the Phase-4 leak matrix. |
+| `project_output(kind, value, *, policy, mode, case_id, emitter_id) -> dict[str, Any]` | function | 759 | Return a projected copy of one completed output payload. |
+| `render_text_header(payload) -> str \| None` | function | 871 | Render the symmetric first text line for a successor payload. |
+| `project_failure(kind, value, *, policy, mode) -> dict[str, Any]` | function | 889 | Select the successor envelope after projection itself failed. |
 
 ## gnd.references — `src/gnd/references.py`
 Components: model.reference_binding

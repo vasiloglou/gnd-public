@@ -82,3 +82,20 @@ def test_protected_relation_hides_cardinality_and_input_errors(tmp_path, monkeyp
 def test_invalid_request_before_evaluation(names, limit):
     with pytest.raises(ValueError):
         api.check_with_extensions("missing", "missing", fact_types=names, max_rows=limit)
+
+
+def test_dependency_protection_uses_all_clauses(tmp_path):
+    from gnd.model import load_model
+    from gnd.redaction import RedactionPolicy
+
+    path, _ = fixture(tmp_path, heads=("middle", "active"), protected=True)
+    document = json.loads(path.read_text())
+    facts = {fact["id"]: fact for fact in document["fact_types"]}
+    rule = facts["middle"]["derivation_rule"]
+    facts["middle"]["derivation_rule"] = {"clauses": [rule]}
+    facts["active"]["derivation_rule"]["body"][0]["fact_type"] = "middle"
+    path.write_text(json.dumps(document))
+    policy = RedactionPolicy.from_model(load_model(path))
+    for head in ("middle", "active"):
+        assert ("enabled", "id") in policy.derivation_roles(head)
+        assert (head, "id") in policy.fact_roles(head)

@@ -1,0 +1,93 @@
+{
+  "base": "88227f35",
+  "claims": [],
+  "created": "2026-11-28T14:13:50.996280+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/cross-document-growth/notes/reviews/CG2-r1/diff.patch",
+      "sha256": "e3e32fee6c8ae0551e5070a09a710658ce688957fe1d90309e0242e791b55f04"
+    },
+    {
+      "path": ".gnd-planning/milestones/cross-document-growth/notes/phase-CG2-spec.md",
+      "sha256": "0f33fee81a00bb8c7e0e4e45e859b66a6bae5f520c08c8da4ac46fdd5c978f35"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "d5c7cf0fbfa62ae928e09e3ada8bf8478e20dbee15b87c42f1c3b9f09395fc6f"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "47e7ab6c33621cc36032c8ab068628029b25ffa2eb1ff3cd61eb8726b382d26d"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "3aedb9cf8bdfe0639fb5171834f1111e2d898963ba02f96ccbf499c94478c7b4"
+    },
+    {
+      "path": "dev/components/modules/evolve.md",
+      "sha256": "d28891b744ecbb0568a461f58f732a2a0536fa6c5fa7a5a173421f7230584a55"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "94d45c21fa7fcb3121959c40943dab3b0b7e118ed4ba84ab3544950cadf84424"
+    },
+    {
+      "path": "src/gnd/cli.py",
+      "sha256": "5fb60f4dcdf26fbfc6cd4864096830b044c4c5ba594427bb748d97ad38b36dd9"
+    },
+    {
+      "path": "src/gnd/commands/discover.py",
+      "sha256": "34464b846b0b3c0fd5735e5e7086151dcf8b658c69ca6c9635cd07cc92bfa6c3"
+    },
+    {
+      "path": "src/gnd/disclosure.py",
+      "sha256": "089c5720bff24278782e358fd3f5144a42a10404eab103b598b4adc6ec60bbd3"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "3f26a40f061edf7181a141ebad2b1473b8c0fd5b40f3159fc6c4dd3904dc3f7d"
+    },
+    {
+      "path": "tests/test_disclosure_mode.py",
+      "sha256": "3314e59d453cd3e411cebf026c32ce4845cb34a7cad5ea9ab2183bdfe6936532"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "47a784e667e2d3d5960b31dcb503fb1d8f2a036db2c6675a5869cd1e7e6557ee"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "0d5cb98b72efe7e4fea5ba7b7d284e6704aaf5855b8556625c6deaae1df17145"
+    },
+    {
+      "path": ".gnd-planning/milestones/cross-document-growth/004-CG2-spec-gate.md",
+      "sha256": "5805d86ccb3990d5d9f8e15ded79ea8ce29bf71f7b5970b907b6970a987e20e3"
+    },
+    {
+      "path": ".gnd-planning/milestones/cross-document-growth/evidence/CG2/dynamic-query-successor.json",
+      "sha256": "5cdbb8729070f501aa9233447ff832baaa96115ad8acff3d9e1df2b2cb74f65e"
+    },
+    {
+      "path": "src/gnd/evolve/candidates.py",
+      "sha256": "efacc5b2e55573d4f929553cfb64ebf047b485aa0abaf21f7c4b0345f9f71fd0"
+    },
+    {
+      "path": "tests/test_consolidation_candidates.py",
+      "sha256": "2946d6e33bdaf301385e3e9d1c1b8a4852233ac693d1b026471d895d25353741"
+    }
+  ],
+  "head": "88227f3554779b20c17a5032a767894a9cf6a8f1",
+  "left_out": [],
+  "notes": [
+    "new: .gnd-planning/milestones/cross-document-growth/004-CG2-spec-gate.md (not tracked yet, so not in the diff: read it whole)",
+    "new: .gnd-planning/milestones/cross-document-growth/evidence/CG2/dynamic-query-successor.json (not tracked yet, so not in the diff: read it whole)",
+    "new: src/gnd/evolve/candidates.py (not tracked yet, so not in the diff: read it whole)",
+    "new: tests/test_consolidation_candidates.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Can discovery misreport signals, lose source evidence, expose sample values, or exceed its declared budgets on a legal model? Exercise an input that differs from the fixtures, including each new regex and slice.",
+  "subject": "phase",
+  "version": 1
+}

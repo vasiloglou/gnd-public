@@ -1,0 +1,3 @@
+# CG3 specification gate
+
+Delegated approval (auto=true), November 28, 2026, under the owner's six-milestone execution request. The specification hashes to c7aa57b4d20908b44e4da27b4600b8ac2adb278451e0af6704c1a0b5a12b06ac. CG2 provides the stable group and evidence fields at 25efdbd3. The ordinary evolution service accepts digest-bound multi-operation proposals, compares the live model before publication and can finalize an interrupted transaction. Use one decision journal with atomic compare-and-swap, the service's preview/apply/finalize path, and a packaged terminal workflow. Run focused tests, affected guards, a two-document recovery replay and one independent diff review. Authorization covers fixture mutations and the branch implementation.

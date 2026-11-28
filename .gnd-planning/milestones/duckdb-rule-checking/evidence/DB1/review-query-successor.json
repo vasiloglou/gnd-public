@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reason": "DB1 inspects each jointly bound variable primitive and counts relational work before emitting a verdict.",
+  "predecessor": ".gnd-planning/milestones/duckdb-rule-checking/evidence/DB1/query-successor.json",
+  "predecessor_sha256": "59950cfdafba3530736899cfb98156cb0a8f6c7f9dc0811f85a211a3aa53f9ff",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_exists_budget",
+      "req.check.atoms[:depth]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8466,
+  "result_occurrences": 10517
+}

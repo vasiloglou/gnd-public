@@ -14,7 +14,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd check, check population, validate population, constraint verdicts, snapshot check, evaluate constraints, report violations
 - status: canonical
 - components: cli.dispatch, cli.checking_command, cli.api, check.service, model.loading, model.population_loading, checker.evaluate, check.admission, check.baseline, checker.reports
-- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +80 more (graph.md)
+- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.duckdb, check.element_coverage, check.evaluation_feedback, … +81 more (graph.md)
 - flow: cli.dispatch -> cli.checking_command -> cli.api -> check.service -> model.loading -> model.population_loading -> checker.evaluate -> check.admission -> checker.reports
 - notes: Extension calculation, semantic snapshot adapters and redaction branch inside check.service and checker.evaluate. Anchored and composed checks add anchor binding before evaluation. Under `--rule-ids` (report version 15) the service adds declared rule identity, remedies and acyclic extents; `--baseline` checks the base population too and compares the two in check.baseline, and the exit band then comes from `band(report, comparison, allow_vacuous=)`.
 
@@ -1738,7 +1738,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Standalone Python program assembled from shared Requirement records and target-specific execution code.
 - status: canonical
 - modules: src/gnd/export/pyrel_rules.py
-- uses: export.include_roots, export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, model.scalar_terms, semantics.transitions
+- uses: check.snapshot_decision, export.include_roots, export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, model.scalar_terms, semantics.transitions
 - used_by: examples.plan_apps, export.ossie, export.pyrel_emit
 - tests: tests/test_pyrel_rules.py, tests/test_pyrel_rules_calendar.py, tests/test_pyrel_rules_derivations.py, tests/test_pyrel_rules_families.py, tests/test_pyrel_rules_plans.py, tests/test_plan_apps.py
 - checked: partial
@@ -1884,7 +1884,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, cli.snapshot_worker, … +82 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.duckdb, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, … +83 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -2045,7 +2045,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +80 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.duckdb, check.element_coverage, check.evaluation_feedback, check.service, cli.api, … +81 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
@@ -2108,7 +2108,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, cli.snapshot_worker, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, … +4 more (graph.md)
+- used_by: check.duckdb, check.service, checker.evaluate, cli.api, cli.checking_command, cli.snapshot_worker, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, … +5 more (graph.md)
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -2213,12 +2213,23 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
 - status: canonical
 - modules: src/gnd/api.py
-- uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
+- uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.duckdb, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
 - used_by: cli.checking_command, cli.dispatch, cli.judgments_command, cli.snapshot_worker, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
 - part_of: subsystem.check
 - tests: tests/test_v61_phase2_api.py, tests/test_tp3_check_receipts.py, tests/test_incremental_sessions.py, tests/test_composition.py
 - checked: partial
 - notes: api.py also owns transition/validation orchestration and delegates lane exports; a single module has several public jobs.
+
+
+### check.duckdb
+- does: Evaluate supported asserted constraints over catalog-validated, read-only DuckDB projections [run].
+- verbs: check database snapshot, bind fact roles to tables, bound violation examples
+- in: A standalone model, a local DuckDB file and versioned fact and roster bindings.
+- out: Constraint verdicts, bounded examples and snapshot identities.
+- status: canonical
+- modules: src/gnd/duckdb_check.py
+- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.report_redaction, model.anchors, model.loading, model.query_index
+- used_by: cli.api
 
 
 ### cli.snapshot_worker
@@ -2331,7 +2342,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, cli.snapshot_worker, … +61 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.duckdb, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, … +62 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2357,7 +2368,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, cli.snapshot_worker, discover.service, evolve.consolidation, evolve.population_check, evolve.schema, … +31 more (graph.md)
+- used_by: check.applicability, check.duckdb, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, cli.snapshot_worker, discover.service, evolve.consolidation, evolve.population_check, … +32 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2436,7 +2447,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/correspondence.py
 - uses: check.branches, check.calculation_scope, check.constraint_families, check.incremental_reuse, infra.verdict_prose, model.document, model.population_loading, model.query_index, model.scalar_terms, semantics.extensions, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
-- used_by: assurance.policy, check.service, checker.evaluate
+- used_by: assurance.policy, check.service, checker.evaluate, export.pyrel_rules
 - tests: tests/test_public_correspondence_runtime.py, tests/test_public_correspondence_projection.py, tests/test_public_evidence_origins.py, tests/test_guarded_corpus.py, tests/test_incremental_sessions.py, tests/test_rc2_acyclic_extent.py, tests/test_fu3_derived_ring.py
 - checked: partial
 - notes: Evaluation dispatch and origin-based projection share this home; assurance consumers use the resulting decision rather than granting assurance in this module.
@@ -2450,7 +2461,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/disclosure.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
+- used_by: agent.declared_adapter, agent.solve, check.duckdb, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, examples.literature_interop, exp.service, export.service, review.adapters, witness.service
 - tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
 - notes: Customer mode wins over internal mode from either source. The surface registry includes both COUNT membership commands. Forward propagates only the restrictive customer setting.
 
@@ -2583,7 +2594,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
-- used_by: check.admission, check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, … +47 more (graph.md)
+- used_by: check.admission, check.batch, check.compiled_obligations, check.duckdb, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, … +48 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results, scoped ModelIndex snapshots and compatibility maps with live last-wins fact rows.
@@ -2804,7 +2815,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/redaction.py
 - uses: check.branches, check.compiled_obligations, infra.artifacts, model.atom_bindings, model.loading, model.scalar_terms
-- used_by: check.service, cli.api, cli.checking_command, discover.service, exp.service, export.ilp_service, export.mined_rules, export.ossie, export.verification, infra.report_payloads, infra.text_output, measure.report, … +2 more (graph.md)
+- used_by: check.duckdb, check.service, cli.api, cli.checking_command, discover.service, exp.service, export.ilp_service, export.mined_rules, export.ossie, export.verification, infra.report_payloads, infra.text_output, … +3 more (graph.md)
 - tests: tests/test_v62_phase1_redaction.py, tests/test_public_redaction_reports.py
 - checked: partial
 - notes: Projection copies the completed payload after verdict evaluation; project_failure builds a separate witness-free failure envelope.

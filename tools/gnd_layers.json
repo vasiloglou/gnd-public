@@ -92,6 +92,9 @@
     "gnd.anchors": {
       "layer": "infrastructure"
     },
+    "gnd.duckdb_check": {
+      "layer": "entry"
+    },
     "gnd.snapshot_worker": {
       "layer": "entry"
     },

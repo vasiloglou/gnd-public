@@ -57,3 +57,5 @@ Estimated 130–260 source lines and 120–230 test lines. Measure the actual di
 ## 11. Approval instrument
 
 This draft and its case expectations are the proposed approval instrument. Record an owner decision on the plan and this spec before phase execution.
+
+Revision 2 limits the new target to DuckDB snapshot rules and connected asserted positive existential atoms without existential filters. Require joint typed bindings; local variables must never appear in reported evidence. Reject disconnected components, unsupported filters and LQP/operation models using this new construct. In a local Python 3.13.12 / PyRel 1.30.1 / DuckDB 2.0.1 probe, a two-atom negated joint selects only the unrelated antecedent. The #330 GND control returned pass/0, fail/1, fail/1, unchecked/4 for approved, unrelated, covered-empty and missing approved input. Re-run generated code with the same fixtures. Check no applicable antecedent and renamed roles. Gate publication on an independent diff opinion and disposition of its findings.

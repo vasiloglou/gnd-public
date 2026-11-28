@@ -116,24 +116,25 @@ Stable in-process access to GND validation and checking reports.
 | `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 174 | Return the check payload and an opaque, in-process CheckReceipt. |
 | `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 671 | Validate a model path or reuse a loaded model, returning its report. |
 | `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 683 | Check one population and return the same payload emitted by the CLI. |
-| `check_with_extensions(model, population, *, fact_types, max_rows, unredacted) -> dict[str, Any]` | function | 756 | Check a snapshot and select bounded derived rows from that execution. |
-| `snapshot_verdict(report) -> dict[str, Any]` | function | 821 | Interpret an existing versioned check report without evaluating a population. |
-| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 876 | Read two models and optionally one directory of population documents. |
-| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 1060 | Public population sentence view; applied redaction is the default. |
-| `compose(model, directory) -> dict[str, Any]` | function | 1088 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_model(model, *, for_growth) -> str` | function | 1149 | Render the complete model for review, or its canonical growth-prompt inventory. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1171 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1214 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1243 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1360 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1384 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1399 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1407 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1417 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1426 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1438 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1441 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1444 | (no docstring) |
+| `check_duckdb(model, database, *, bindings, max_examples, timeout_seconds) -> dict` | function | 756 | Check supported constraints against an existing read-only local DuckDB snapshot. |
+| `check_with_extensions(model, population, *, fact_types, max_rows, unredacted) -> dict[str, Any]` | function | 764 | Check a snapshot and select bounded derived rows from that execution. |
+| `snapshot_verdict(report) -> dict[str, Any]` | function | 829 | Interpret an existing versioned check report without evaluating a population. |
+| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 884 | Read two models and optionally one directory of population documents. |
+| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 1068 | Public population sentence view; applied redaction is the default. |
+| `compose(model, directory) -> dict[str, Any]` | function | 1096 | Compose a composition directory's sources into one population (CT2). |
+| `verbalize_model(model, *, for_growth) -> str` | function | 1157 | Render the complete model for review, or its canonical growth-prompt inventory. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1179 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1222 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1251 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1368 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1392 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1407 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1415 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1425 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1434 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1446 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1449 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1452 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -473,6 +474,15 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 89 | (no docstring) |
 | `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 103 | The compiled and retained obligations of one operation, in order. |
 | `structured_derivation_ids(model) -> tuple[str, ...]` | function | 119 | Ids of fact types whose ``derivation_rule`` is the structured object |
+
+## gnd.duckdb_check — `src/gnd/duckdb_check.py`
+Components: check.duckdb
+Read-only constraint checks over explicitly bound, local DuckDB base tables.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `BindingError` | class(ValueError) | 22 | A fixed refusal code suitable for a projected report. |
+| `run(model, database, bindings, max_examples, timeout_seconds)` | function | 163 | (no docstring) |
 
 ## gnd.errors — `src/gnd/errors.py`
 Components: infra.errors

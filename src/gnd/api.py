@@ -124,7 +124,7 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose", "verbalize_model", "snapshot_verdict", "check_with_extensions")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose", "verbalize_model", "snapshot_verdict", "check_with_extensions", "check_duckdb")  # noqa: RUF022 - approved stable order
 
 
 
@@ -751,6 +751,14 @@ def _check_unresolved(
         **({"allow_vacuous": True} if allow_vacuous else {}),
         **({"composition": composition, "sources": sources} if composition is not None else {}),
     ).payload
+
+
+def check_duckdb(model: str | Path, database: str | Path, *, bindings: dict,
+                 max_examples: int = 20, timeout_seconds: int = 30) -> dict:
+    """Check supported constraints against an existing read-only local DuckDB snapshot."""
+    from gnd.duckdb_check import run
+
+    return run(model, database, bindings, max_examples, timeout_seconds)
 
 
 def check_with_extensions(

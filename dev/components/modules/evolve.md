@@ -53,8 +53,8 @@ Drive one reviewed consolidation decision with the ordinary evolution transactio
 | --- | --- | --- | --- |
 | `Move` | class(BaseModel) | 36 | (no docstring) |
 | `Decision` | class(BaseModel) | 43 | (no docstring) |
-| `step(model_path, *, decision, minimum_score, max_decisions, max_items, max_pairs)` | function | 202 | Recover a pending decision, apply one supplied decision, or return the next group. |
-| `main(argv)` | function | 374 | (no docstring) |
+| `step(model_path, *, decision, minimum_score, max_decisions, max_items, max_pairs)` | function | 223 | Recover a pending decision, apply one supplied decision, or return the next group. |
+| `main(argv)` | function | 395 | (no docstring) |
 
 ## gnd.evolve.models — `src/gnd/evolve/models.py`
 Components: evolve.schema

@@ -490,7 +490,7 @@ delegated approval of the plan and specs. Planning only; no phase has started.
 
 ## Roadmap for the November 27 open issues
 
-Six planning drafts cover the 13 open issues without an earlier milestone plan. Each first spec awaits owner review. The four refactoring carryovers remain in their existing plan.
+Six planning drafts cover the 13 open issues without an earlier milestone plan. The owner delegated sequential execution. [Cross-document model growth closed on its topic branch](milestones/cross-document-growth/008-milestone-close.md). The four refactoring carryovers remain in their existing plan.
 
 | Milestone and plan | Issues | First phase | Phases |
 |---|---|---|---:|

@@ -35,7 +35,7 @@ def decision(info, action, **more):
             "evidence_sha256": group["evidence_sha256"], "actor": "owner:fixture", "action": action, **more}
 
 
-def merge(path, doc, *, preserve=True):
+def merge(path, doc, *, preserve=True, extra=()):
     source, target = doc["fact_types"]
     after = deepcopy(target)
     if preserve:
@@ -43,7 +43,7 @@ def merge(path, doc, *, preserve=True):
         after["provenance"]["sample_spans"].append({"row": 1, "span": source["provenance"]["spans"][0]})
     ops = (policy._op("modify", policy._element("fact_types", target["id"]), before=target, after=after),
            policy._op("delete", policy._element("fact_types", source["id"]), before=source, operation_id="remove"))
-    proposal = policy._proposal(path.read_text(), ops)
+    proposal = policy._proposal(path.read_text(), ops + extra)
     service = EvolutionService(model_path=path, evidence_root=path.parent, allowed_project_root=path.parent)
     reviewed = service.preview(proposal)
     approved = service.preview(proposal, accepted_blast_radius_sha256=reviewed.blast_radius.report_sha256)
@@ -181,7 +181,7 @@ def test_conflicting_transferred_values_refuse_publication(tmp_path):
     assert path.read_bytes() == before
 
 
-def test_located_additive_growth_then_consolidation(tmp_path):
+def located_growth_replay(tmp_path, monkeypatch, interrupted):
     from pathlib import Path
 
     from support.cli_runner import run_main
@@ -216,6 +216,10 @@ def test_located_additive_growth_then_consolidation(tmp_path):
     path = paths["model"]
     desired = {another["id"], primary["id"]}
     info = step(path)
+    declined = info["group"]["group_id"]
+    step(path, decision=decision(info, "leave"))
+    info = step(path)
+    assert info["group"]["group_id"] != declined
     while set(info["group"]["members"]) != desired:
         step(path, decision=decision(info, "leave"))
         info = step(path)
@@ -231,10 +235,28 @@ def test_located_additive_growth_then_consolidation(tmp_path):
     roles = {r["role_name"]: r["role_name"] for r in primary["roles"]}
     chosen = decision(info, "merge", preview=approved.model_dump(mode="json"),
                       moves=[{"source": another["id"], "target": primary["id"], "roles": roles}])
-    assert step(path, decision=chosen)["decision"]["conformance_exit"] == 0
+    if interrupted:
+        def crash(service, state):
+            raise RuntimeError("after model publication")
+        with monkeypatch.context() as patch:
+            patch.setattr(EvolutionService, "finalize", crash)
+            with pytest.raises(RuntimeError, match="after model publication"):
+                step(path, decision=chosen)
+        completed = step(path)
+    else:
+        completed = step(path, decision=chosen)
+    assert completed["decision"]["conformance_exit"] == 0
     result = policy._doc(path.read_text())["fact_types"][0]
     assert result["sample_population"][0] == result["sample_population"][-1]
     assert result["provenance"]["sample_spans"][0]["span"] != result["provenance"]["sample_spans"][-1]["span"]
+
+    journal = next((path.parent / ".gnd-consolidation").glob("*/decisions.json"))
+    return path.read_bytes(), json.loads(journal.read_text()), step(path)
+
+
+def test_located_additive_growth_then_consolidation(tmp_path, monkeypatch):
+    assert located_growth_replay(tmp_path / "normal", monkeypatch, False) == located_growth_replay(
+        tmp_path / "restarted", monkeypatch, True)
 
 
 def test_demote_singleton_into_located_row(tmp_path):
@@ -333,3 +355,26 @@ def test_named_parent_alias_uses_same_ledger(tmp_path):
     first = step(mapped)
     step(path, decision=decision(first, "leave"))
     assert step(mapped) == step(path)
+
+
+def test_reviewed_fact_merge_refuses_unrelated_object_edit(tmp_path):
+    path, doc = workspace(tmp_path)
+    obj = doc["object_types"][0]
+    unrelated = policy._op("modify", policy._element("object_types", obj["id"]),
+                           before=obj, after={**obj, "name": "Renamed"}, operation_id="rename")
+    choice = decision(step(path), "merge", **merge(path, doc, extra=(unrelated,)))
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match="outside the reviewed group"):
+        step(path, decision=choice)
+    assert path.read_bytes() == before
+
+
+def test_score_and_positive_decision_boundaries(tmp_path):
+    path, _ = workspace(tmp_path)
+    first = step(path)
+    score = first["group"]["score"]
+    assert step(path, minimum_score=score)["group"] == first["group"]
+    assert step(path, minimum_score=score + 1)["reason"] == "no-eligible-group"
+    step(path, decision=decision(first, "leave"), max_decisions=1)
+    assert step(path, max_decisions=1) == {"reason": "decision-limit", "completed": 1}
+    assert step(path, max_decisions=2)["reason"] == "needs-decision"

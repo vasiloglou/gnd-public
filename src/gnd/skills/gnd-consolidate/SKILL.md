@@ -47,3 +47,5 @@ python -m gnd.evolve.consolidation codes.json
 ```
 
 The journal writer uses a POSIX directory lock and descriptor-relative publication. A model edited before its pending proposal was staged retires that intent with `superseded-before-publication`. Inspect the new model and request a fresh decision. If evolution had already staged evidence before a divergent edit, reconcile its immutable proposal and pending state before proceeding. Preserve each removed declaration's source spans and every citation for each moved row. A changed predicate requires separate review; consolidation preserves existing constraints.
+
+Each discovery call enforces its item and pair limits. The journal accumulates work for completed decisions. Repeated read-only probes each do work and leave the durable counter unchanged. A decision may modify selected declarations, facts that reference a removed object, and declared row-transfer destinations. Put unrelated edits in a separate evolution proposal.

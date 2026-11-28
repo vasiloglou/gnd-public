@@ -1,0 +1,690 @@
+{
+  "schema_version": 1,
+  "run_sha256": "11714224e5497c07410e0bbfd82ec994b7bc31665a940a3a0019a99bff14e0e4",
+  "summary": "All six reviewers returned opinions. Five requested revision and one recommended blocking. A public regression reproduced an out-of-scope edit. Reviewers also requested a combined replay, exact outputs, final-byte verification and explicit controls and boundaries.",
+  "agreed_concerns": [
+    {
+      "title": "Run a single two-document replay with a decline, merge, interruption and restart",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-replay-not-integrated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "combined-replay-missing"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-close-replay-missing-declined-group"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "kimi"
+      ],
+      "group_id": "group-2",
+      "severity": "high",
+      "summary": "Run a single two-document replay with a decline, merge, interruption and restart"
+    },
+    {
+      "title": "Retain exact model, decision, counter and terminal evidence",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-record-lacks-exact-results"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-delta-missing-exact-results"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-close-record-lacks-exact-results"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-delta-missing-exact-results"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-exact-results"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-3",
+      "severity": "high",
+      "summary": "Retain exact model, decision, counter and terminal evidence"
+    },
+    {
+      "title": "Rerun the installed wheel and affected gates on the repaired product",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "final-bytes-not-verified"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "final-cg3-gate-unverified"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-stale-verification-results"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-cg3-final-state-verified-by-focused-run-only"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-gate-receipts-predate-pinned-tests"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "installed-example-verified-pre-repair"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "broad-suite-result-on-earlier-implementation"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-4",
+      "severity": "high",
+      "summary": "Rerun the installed wheel and affected gates on the repaired product"
+    },
+    {
+      "title": "State and test the recovery boundaries for staged and published proposals",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "publication-interruption-overclaimed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-staging-divergence-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "group_id": "group-6",
+      "severity": "high",
+      "summary": "State and test the recovery boundaries for staged and published proposals"
+    },
+    {
+      "title": "Distinguish suppression from reopening and record how supporting evidence changed",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "reopen-test-not-source-change"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "declined-group-suppression-side-unevidenced"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "group_id": "group-8",
+      "severity": "high",
+      "summary": "Distinguish suppression from reopening and record how supporting evidence changed"
+    },
+    {
+      "title": "Map the public reproductions and unavailable corpus to each issue",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "mandatory-vs-optional-inventory"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "issue-reproduction-acceptance-unrecorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "issue-reproduction-substituted-without-ruling"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "no-per-issue-disposition"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ],
+      "group_id": "group-9",
+      "severity": "medium",
+      "summary": "Map the public reproductions and unavailable corpus to each issue"
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "codex",
+      "concern_id": "unrelated-group-mutation"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "minimum-score-stop-untested"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "loop-budget-boundaries"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "missing-pinned-old-behavior"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "refactoring-review-seat-not-evidenced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "journal-writer-locking-precondition"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "redundant-occurrence-refusal-absent-from-replay"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "relied-upon-ledger-and-delta-not-digest-bound"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "title": "Restrict mutations to the selected declarations and their required transfers and role rewrites",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unrelated-group-mutation"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ],
+      "rank": 1,
+      "fix_id": "fix-1",
+      "action": "Restrict mutations to the selected declarations and their required transfers and role rewrites",
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unrelated-group-mutation",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Run a single two-document replay with a decline, merge, interruption and restart",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-replay-not-integrated"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "combined-replay-missing"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-close-replay-missing-declined-group"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "kimi"
+      ],
+      "rank": 2,
+      "fix_id": "fix-2",
+      "action": "Run a single two-document replay with a decline, merge, interruption and restart",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-replay-not-integrated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "combined-replay-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-close-replay-missing-declined-group",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Retain exact model, decision, counter and terminal evidence",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-record-lacks-exact-results"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-delta-missing-exact-results"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-close-record-lacks-exact-results"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-delta-missing-exact-results"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-exact-results"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "rank": 3,
+      "fix_id": "fix-3",
+      "action": "Retain exact model, decision, counter and terminal evidence",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-record-lacks-exact-results",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-delta-missing-exact-results",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-close-record-lacks-exact-results",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-delta-missing-exact-results",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-exact-results",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Rerun the installed wheel and affected gates on the repaired product",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "final-bytes-not-verified"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "final-cg3-gate-unverified"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-stale-verification-results"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-cg3-final-state-verified-by-focused-run-only"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-gate-receipts-predate-pinned-tests"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "installed-example-verified-pre-repair"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "broad-suite-result-on-earlier-implementation"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "rank": 4,
+      "fix_id": "fix-4",
+      "action": "Rerun the installed wheel and affected gates on the repaired product",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "final-bytes-not-verified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "final-cg3-gate-unverified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "cg3-stale-verification-results",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "cdg-cg3-final-state-verified-by-focused-run-only",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "cg3-gate-receipts-predate-pinned-tests",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "installed-example-verified-pre-repair",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "broad-suite-result-on-earlier-implementation",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Check the minimum-score boundary",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "minimum-score-stop-untested"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ],
+      "rank": 5,
+      "fix_id": "fix-5",
+      "action": "Check the minimum-score boundary",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "minimum-score-stop-untested",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "State and test the recovery boundaries for staged and published proposals",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "publication-interruption-overclaimed"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-staging-divergence-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 6,
+      "fix_id": "fix-6",
+      "action": "State and test the recovery boundaries for staged and published proposals",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "publication-interruption-overclaimed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-staging-divergence-unspecified",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Measure positive decision and discovery limits and specify read-only probe accounting",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "loop-budget-boundaries"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ],
+      "rank": 7,
+      "fix_id": "fix-7",
+      "action": "Measure positive decision and discovery limits and specify read-only probe accounting",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "loop-budget-boundaries",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Distinguish suppression from reopening and record how supporting evidence changed",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "reopen-test-not-source-change"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "declined-group-suppression-side-unevidenced"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 8,
+      "fix_id": "fix-8",
+      "action": "Distinguish suppression from reopening and record how supporting evidence changed",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "reopen-test-not-source-change",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "declined-group-suppression-side-unevidenced",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Map the public reproductions and unavailable corpus to each issue",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "mandatory-vs-optional-inventory"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "issue-reproduction-acceptance-unrecorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "issue-reproduction-substituted-without-ruling"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "no-per-issue-disposition"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ],
+      "rank": 9,
+      "fix_id": "fix-9",
+      "action": "Map the public reproductions and unavailable corpus to each issue",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "mandatory-vs-optional-inventory",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "issue-reproduction-acceptance-unrecorded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "issue-reproduction-substituted-without-ruling",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "no-per-issue-disposition",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Demonstrate unchanged legacy behavior on an unextended input",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-pinned-old-behavior"
+        }
+      ],
+      "supporting_reviewers": [
+        "gemini"
+      ],
+      "rank": 10,
+      "fix_id": "fix-10",
+      "action": "Demonstrate unchanged legacy behavior on an unextended input",
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "missing-pinned-old-behavior",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Identify the independent phase reviewer and coordinator refactoring review",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "refactoring-review-seat-not-evidenced"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 11,
+      "fix_id": "fix-11",
+      "action": "Identify the independent phase reviewer and coordinator refactoring review",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "refactoring-review-seat-not-evidenced",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Document POSIX lock support as a runtime requirement",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "journal-writer-locking-precondition"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 12,
+      "fix_id": "fix-12",
+      "action": "Document POSIX lock support as a runtime requirement",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "journal-writer-locking-precondition",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Include the duplicate-observation negative control",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "redundant-occurrence-refusal-absent-from-replay"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 13,
+      "fix_id": "fix-13",
+      "action": "Include the duplicate-observation negative control",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "redundant-occurrence-refusal-absent-from-replay",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Bind the finding ledgers and replay artifacts to exact digests",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "relied-upon-ledger-and-delta-not-digest-bound"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 14,
+      "fix_id": "fix-14",
+      "action": "Bind the finding ledgers and replay artifacts to exact digests",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "relied-upon-ledger-and-delta-not-digest-bound",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

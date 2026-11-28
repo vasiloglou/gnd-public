@@ -28,7 +28,7 @@ from gnd.model_index import ModelIndex
 from gnd.values import identity_key
 
 from .candidates import discover_candidates
-from .models import EvolutionPreview
+from .models import ConstraintLocator, ElementLocator, EvolutionPreview, RoleLocator
 from .population_check import sample_population_report
 from .service import EvolutionError, EvolutionService, _missing_artifact
 
@@ -128,6 +128,27 @@ def _check_mutation(decision, group, before, after):
             _located_rows(old_facts[move.source], move.roles)
         )
         affected.add(move.target)
+    # Each proposal operation must belong to the selected declarations, a role
+    # that actually used a removed object, or an explicit transfer destination.
+    object_ids = members if group["kind"] == "object" else set()
+    fact_ids = members if group["kind"] == "fact" else {
+        key for key, roles in old_roles.items() if removed.intersection(roles.values())
+    }
+    if destinations.keys() - fact_ids:
+        raise ValueError("a row source is outside the reviewed group")
+    fact_ids = fact_ids.union(destinations.values())
+    for operation in decision.preview.proposal.operations:
+        locator = operation.locator
+        if isinstance(locator, ElementLocator):
+            if (locator.collection == "object_types" and locator.element_id in object_ids) or (
+                locator.collection == "fact_types" and locator.element_id in fact_ids
+            ):
+                continue
+        elif (isinstance(locator, RoleLocator) and locator.fact_type_id in fact_ids) or (
+            isinstance(locator, ConstraintLocator) and locator.host_id in fact_ids
+        ):
+            continue
+        raise ValueError("proposal operation outside the reviewed group")
     for key, fact in old_facts.items():
         if key not in new_facts:
             if (

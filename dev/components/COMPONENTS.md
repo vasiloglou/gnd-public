@@ -1013,7 +1013,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - notes: The one operation walk conservatively refuses include re-pins and includes owned included_fact_type hosts in populated subjects. Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
 
 ### evolve.consolidation
-- does: Record group decisions, check located transfers, resume interrupted consolidation transactions and select the next review group [step].
+- does: Restrict decisions to selected declarations and related facts, check located transfers, resume interrupted consolidation transactions and select the next review group [step].
 - verbs: consolidate model, review consolidation group, transfer sample rows, resume consolidation
 - in: A model, optional reviewed decision and discovery limits.
 - out: Next group, bounded stop reason or one completed decision with publication evidence.

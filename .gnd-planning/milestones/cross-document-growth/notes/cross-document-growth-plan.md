@@ -69,3 +69,7 @@ The delegated decision adopts append-only samples for root-owned facts. Included
 5. Milestone closure replays two source documents, a duplicate observation, one accepted group, one declined group and an interrupted restart. Compare the final model digest, surviving references, located evidence, decision identities, counters and terminal reason between uninterrupted and resumed runs. Preserve origin spans during transfers and refuse conflicting constraints. Put the replay and exact results in the milestone close record.
 
 The [first panel report](plan-review-r1.md) preserves every agreed and divergent finding. The runtime homes and baseline discrepancy are checked in [execution intake](execution-intake.md). The five amendment clauses supersede shorthand in the phase table. One plan round was budgeted before implementation; use focused code tests to settle runtime behavior.
+
+## Close amendment, 2026-11-28
+
+The original amendment 3 retains its wording above. The CG2 independent review in 005-phase-CG2.md demonstrated that hashing low-cardinality sample values exposes them to guessing. The evidence digest covers value-free source locations and public structural evidence. The decision binds the full model separately. CG3 close review extends its group-scope regression to edits of surviving declarations. Probe work is bounded per call. Durable work totals cover completed decisions.

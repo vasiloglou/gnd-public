@@ -1,0 +1,598 @@
+{
+  "schema_version": 1,
+  "run_sha256": "76e04635df720dd45a9f2edcfe4601809e70e20be830eaaa2bb453740b91dc79",
+  "summary": "All six seats returned usable opinions. The plan needs explicit runtime and input contracts, native differential predicates, negative and resource gates, and stable evidence homes before implementation.",
+  "agreed_concerns": [
+    {
+      "title": "Freeze the public binding interface, read-only connection and installed versions",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lowering-target-undefined"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "connection-boundary-undecided"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "native-term-ambiguous"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-entry-point-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-readonly-mechanism-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-optional-backend-absence-policy"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-readonly-safety-untested"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-engine-versions-recorded-not-pinned"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "db2-read-only-property-ungated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-1",
+      "severity": "high",
+      "summary": "Freeze the public binding interface, read-only connection and installed versions"
+    },
+    {
+      "title": "Set deterministic bounded witnesses, truncation signals and engine work controls",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "safety-controls-not-gated"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "resource-limit-semantics-unspecified"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bounded-binding-nondeterminism"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unbounded-query-work"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-resource-bounds-unquantified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-undefined-criterion-terms"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-bounded-bindings-no-truncation-signal"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-scan-side-resource-controls-missing"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "counterexample-bound-no-gate"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-2",
+      "severity": "high",
+      "summary": "Set deterministic bounded witnesses, truncation signals and engine work controls"
+    },
+    {
+      "title": "Require exact cross-engine comparisons for the three families, NULLs, duplicates and coverage",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "db3-verification-narrower-than-criterion"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "null-semantics-parity"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "db-family-live-acceptance"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-parity-equality-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-null-three-valued-handling"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-db3-recipe-underenumerates-criterion"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ],
+      "group_id": "group-3",
+      "severity": "high",
+      "summary": "Require exact cross-engine comparisons for the three families, NULLs, duplicates and coverage"
+    },
+    {
+      "title": "Define the correlated fragment and both admission and refusal controls, with explicit target disposition",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "db1-refusal-side-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-db1-gate-unobservable"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "existential-join-connectivity-unstated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lqp-target-disposition-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "group_id": "group-4",
+      "severity": "high",
+      "summary": "Define the correlated fragment and both admission and refusal controls, with explicit target disposition"
+    },
+    {
+      "title": "Record issue fixtures, phase dependencies, artifact locations, index verification and close replay",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-phase-independence-unsubstantiated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-external-issue-text-as-gate"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-stale-index-reliance"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-db2-db3-evidence-retention"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-artifact-homes-absent"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "stale-description-count-unsubstantiated"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ],
+      "group_id": "group-5",
+      "severity": "medium",
+      "summary": "Record issue fixtures, phase dependencies, artifact locations, index verification and close replay"
+    }
+  ],
+  "divergent_concerns": [],
+  "prioritized_fixes": [
+    {
+      "title": "Freeze the public binding interface, read-only connection and installed versions",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lowering-target-undefined"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "connection-boundary-undecided"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "native-term-ambiguous"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-entry-point-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-readonly-mechanism-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-optional-backend-absence-policy"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-readonly-safety-untested"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-engine-versions-recorded-not-pinned"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "db2-read-only-property-ungated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "rank": 1,
+      "fix_id": "fix-1",
+      "action": "Freeze the public binding interface, read-only connection and installed versions",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "lowering-target-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "connection-boundary-undecided",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "native-term-ambiguous",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-entry-point-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-readonly-mechanism-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-optional-backend-absence-policy",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-readonly-safety-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-engine-versions-recorded-not-pinned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "db2-read-only-property-ungated",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Set deterministic bounded witnesses, truncation signals and engine work controls",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "safety-controls-not-gated"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "resource-limit-semantics-unspecified"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bounded-binding-nondeterminism"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unbounded-query-work"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-resource-bounds-unquantified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-undefined-criterion-terms"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-bounded-bindings-no-truncation-signal"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-scan-side-resource-controls-missing"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "counterexample-bound-no-gate"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "rank": 2,
+      "fix_id": "fix-2",
+      "action": "Set deterministic bounded witnesses, truncation signals and engine work controls",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "safety-controls-not-gated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "resource-limit-semantics-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "bounded-binding-nondeterminism",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "unbounded-query-work",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-resource-bounds-unquantified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-undefined-criterion-terms",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-bounded-bindings-no-truncation-signal",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-scan-side-resource-controls-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "counterexample-bound-no-gate",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Require exact cross-engine comparisons for the three families, NULLs, duplicates and coverage",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "db3-verification-narrower-than-criterion"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "null-semantics-parity"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "db-family-live-acceptance"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-parity-equality-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-null-three-valued-handling"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-db3-recipe-underenumerates-criterion"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ],
+      "rank": 3,
+      "fix_id": "fix-3",
+      "action": "Require exact cross-engine comparisons for the three families, NULLs, duplicates and coverage",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "db3-verification-narrower-than-criterion",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "null-semantics-parity",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "db-family-live-acceptance",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-parity-equality-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-null-three-valued-handling",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "duckdb-plan-db3-recipe-underenumerates-criterion",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Define the correlated fragment and both admission and refusal controls, with explicit target disposition",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "db1-refusal-side-missing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-db1-gate-unobservable"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "existential-join-connectivity-unstated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lqp-target-disposition-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "rank": 4,
+      "fix_id": "fix-4",
+      "action": "Define the correlated fragment and both admission and refusal controls, with explicit target disposition",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "db1-refusal-side-missing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-db1-gate-unobservable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "existential-join-connectivity-unstated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "lqp-target-disposition-undefined",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Record issue fixtures, phase dependencies, artifact locations, index verification and close replay",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-phase-independence-unsubstantiated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-external-issue-text-as-gate"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-stale-index-reliance"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-db2-db3-evidence-retention"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-artifact-homes-absent"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "stale-description-count-unsubstantiated"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ],
+      "rank": 5,
+      "fix_id": "fix-5",
+      "action": "Record issue fixtures, phase dependencies, artifact locations, index verification and close replay",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-phase-independence-unsubstantiated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-external-issue-text-as-gate",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-stale-index-reliance",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-db2-db3-evidence-retention",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "duckdb-plan-artifact-homes-absent",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "stale-description-count-unsubstantiated",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

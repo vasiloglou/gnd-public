@@ -1211,6 +1211,19 @@ Executable v6 snapshot specifications, separate from production correspondence.
 | `applicability_of(constraint, snapshot) -> str` | function | 2895 | Classify the pre-evaluation stages of NS-ORDER-OF-RESOLUTION-1. |
 | `verdict_of(constraint, snapshot) -> tuple[str, str \| None, tuple[tuple[Scalar, ...], ...]]` | function | 2954 | Compose applicability, one family result, modality and pass-only vacuity. |
 
+## gnd.snapshot_worker — `src/gnd/snapshot_worker.py`
+Components: cli.snapshot_worker
+Local JSON Lines protocol for repeated ordinary Python snapshot checks.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `RequestError` | class(ValueError) | 18 | A fixed protocol code, suitable for returning across the process boundary. |
+| `Worker` | class | 22 | (no docstring) |
+| `Worker.close(self)` | method | 28 | (no docstring) |
+| `Worker.check(self, request)` | method | 33 | (no docstring) |
+| `Worker.reply(self, raw)` | method | 56 | (no docstring) |
+| `serve(incoming, outgoing)` | function | 78 | (no docstring) |
+
 ## gnd.solve — `src/gnd/solve.py`
 Components: agent.solve
 The PROC-01 station harness behind ``gnd solve``.

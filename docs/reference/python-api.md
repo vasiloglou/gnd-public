@@ -584,3 +584,17 @@ For a semiderived head, complete describes the inferred extension alone. Caller-
 ### Proofs using grounded absence
 
 A finite witness can use negative premises over covered asserted inputs. Each negative role is grounded by a positive premise or an admitted literal. The proof records the rule, clause, positive premises and exact bindings. Replay reconstructs the entire correlated negative tuple against the bound snapshot. Uncovered and opaque inputs cannot establish absence. An edit invalidates the snapshot binding. Use `why_not` with ordered targets to inspect related blocked tuples against the same loaded inputs.
+
+### Persistent local evaluator
+
+Run `python -m gnd.snapshot_worker` in the evaluator environment. Send one UTF-8 JSON object followed by a newline on stdin. Read one JSON response per line on stdout. A version-1 request contains exactly these fields:
+
+```json
+{"version":1,"id":"check-1","model":"inventory.orm.yaml","population":{"population":{"model":"inventory.orm.yaml","source":"host","covers":["listed"]},"facts":{"listed":[]}}}
+```
+
+The model path is local to the worker. The caller supplies the population as JSON data. The response echoes the supplied request ID and returns `status="evaluated"`, `model_sha256`, `model_reused` and the ordinary versioned check report. An evaluated population can violate constraints. Interpret its report with `snapshot_verdict`. A protocol or input failure returns `status="error"` with a stable error code. An unusable request ID is returned as null. Maximum input is 4 MiB per line and IDs contain 1–128 characters.
+
+The worker rereads model bytes for each request, reuses one loaded standalone model and EvaluationSession, and replaces both when the model path or digest changes. Reference-population and include-dependent models require their bound inputs and are outside protocol v1. Closing stdin exits the worker. After a process failure, launch a new worker and resend the entire request. Its first valid request loads the model. Use one writer per worker and the ordinary disclosure environment for the intended audience.
+
+The wheel accepts Pydantic >=2.12.5,<2.14. The installed-worker and derived-row examples were exercised on Python 3.14.3 with Pydantic 2.12.5 and 2.13.4. The repository lock retains 2.13.4.

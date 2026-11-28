@@ -92,6 +92,9 @@
     "gnd.anchors": {
       "layer": "infrastructure"
     },
+    "gnd.snapshot_worker": {
+      "layer": "entry"
+    },
     "gnd.api": {
       "layer": "entry"
     },

@@ -321,3 +321,15 @@ def test_stale_unstaged_intent_can_be_superseded(tmp_path, monkeypatch):
         file.write("\n")
     assert step(path)["reason"] == "superseded-before-publication"
     assert step(path)["reason"] == "needs-decision"
+
+
+def test_named_parent_alias_uses_same_ledger(tmp_path):
+    real = tmp_path / "real"
+    real.mkdir()
+    path, _ = workspace(real)
+    alias = tmp_path / "alias"
+    alias.symlink_to(real, target_is_directory=True)
+    mapped = alias / path.name
+    first = step(mapped)
+    step(path, decision=decision(first, "leave"))
+    assert step(mapped) == step(path)

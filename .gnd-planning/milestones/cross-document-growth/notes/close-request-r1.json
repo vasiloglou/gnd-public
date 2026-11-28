@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "spec-results-delta",
+  "rubric": {
+    "name": "Cross-document growth milestone close",
+    "criteria": [
+      "Assess whether the results and scoped residuals meet the five plan amendments and issues 338 and 339. Identify material unsupported claims, conflicting constraints, origin loss or journal recovery failures with reproducible evidence.",
+      "Distinguish mandatory completion criteria from optional corpus trials. Assess the reported replay, boundaries and verification of all three phases."
+    ]
+  },
+  "spec": {
+    "path": ".gnd-planning/milestones/cross-document-growth/notes/cross-document-growth-plan.md",
+    "sha256": "92335b7ea9a913ce966d21bd533a881ced47aca4cf52d860bd90c9bde7fd6332",
+    "media_type": "text/markdown"
+  },
+  "results": {
+    "path": ".gnd-planning/milestones/cross-document-growth/007-phase-CG3.md",
+    "sha256": "b9fb2264f2ab0725c469940fde2e6d9e607619f2a39e30572a2bb2d52c6b5a78",
+    "media_type": "text/markdown"
+  },
+  "delta": {
+    "path": ".gnd-planning/milestones/cross-document-growth/notes/close-delta.md",
+    "sha256": "e3fd17f2a6f0e30e760d5af1b4cca7219a420e9d1c72be558a9fe60cb92879b7",
+    "media_type": "text/markdown"
+  }
+}

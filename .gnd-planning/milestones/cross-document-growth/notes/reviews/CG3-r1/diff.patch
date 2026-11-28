@@ -1,0 +1,375 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 974e20f5..2aa6d870 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -43,6 +43,7 @@ stated scope; handoffs between skills require an explicit user selection.
+ |---|---|
+ | gnd-adopt | [gnd-adopt](src/gnd/skills/gnd-adopt/SKILL.md) |
+ | gnd-codegen | [gnd-codegen](src/gnd/skills/gnd-codegen/SKILL.md) |
++| gnd-consolidate | [gnd-consolidate](src/gnd/skills/gnd-consolidate/SKILL.md) |
+ | gnd-conformance | [gnd-conformance](src/gnd/skills/gnd-conformance/SKILL.md) |
+ | gnd-dev-session | [gnd-dev-session](src/gnd/skills/gnd-dev-session/SKILL.md) |
+ | gnd-export | [gnd-export](src/gnd/skills/gnd-export/SKILL.md) |
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 2a4b96a2..ab3b4c24 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -977,7 +977,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
+ - uses: conformance.report, conformance.service, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
+-- used_by: discover.narrow, discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
++- used_by: discover.narrow, discover.output, discover.service, evolve.command, evolve.consolidation, examples.expense_evolution, export.ilp_service
+ - part_of: subsystem.evolve
+ - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
+ - checked: partial
+@@ -992,7 +992,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/evolve/models.py
+ - uses: infra.errors, infra.input_policy, model.loading
+-- used_by: discover.fact_types, discover.output, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.round_summary, evolve.service, evolve.shape_matches, examples.expense_evolution
++- used_by: discover.fact_types, discover.output, evolve.consolidation, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.round_summary, evolve.service, evolve.shape_matches, examples.expense_evolution
+ - part_of: subsystem.evolve
+ - tests: tests/test_model_evolution.py, tests/test_public_evolution_version_graph.py, tests/test_public_evolution_legacy_readers.py, tests/test_evolve_shape_matches.py, tests/test_evolve_additive_policy.py
+ - checked: partial
+@@ -1012,6 +1012,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - tests: tests/test_evolve_additive_policy.py, tests/test_evolve_population_check.py
+ - notes: The one operation walk conservatively refuses include re-pins and includes owned included_fact_type hosts in populated subjects. Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
+ 
++### evolve.consolidation
++- does: Record group decisions, check located transfers, resume interrupted consolidation transactions and select the next review group [step].
++- verbs: consolidate model, review consolidation group, transfer sample rows, resume consolidation
++- in: A model, optional reviewed decision and discovery limits.
++- out: Next group, bounded stop reason or one completed decision with publication evidence.
++- status: canonical
++- modules: src/gnd/evolve/consolidation.py
++- uses: evolve.candidates, evolve.population_check, evolve.schema, evolve.service, infra.artifacts, infra.errors, infra.input_policy, model.loading, model.query_index, model.scalar_identity
++- used_by: (none)
++
+ ### evolve.candidates
+ - does: Discover consolidation candidates in one model and report member IDs and located evidence under work budgets [discover_candidates].
+ - verbs: discover consolidation candidates, compare reading shapes, find singleton entities
+@@ -1020,7 +1030,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/evolve/candidates.py
+ - uses: infra.artifacts, model.query_index, model.reference_schemes, model.scalar_identity, model.validation
+-- used_by: discover.service
++- used_by: discover.service, evolve.consolidation
+ 
+ ### evolve.population_check
+ - does: Check supplied populations and located sample appends against the candidate model for additive policy admission [population_outcomes, verified_sample_appends].
+@@ -1030,7 +1040,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/evolve/population_check.py
+ - uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity
+-- used_by: evolve.command, evolve.service
++- used_by: evolve.command, evolve.consolidation, evolve.service
+ - part_of: subsystem.evolve
+ - tests: tests/test_evolve_population_check.py
+ - notes: Reuses the workspace-anchored artifact read with the population cap and load_population_bytes on the same bytes; decides no policy cell; emits no population value, count or checker message (UG2, UG-R6).
+@@ -1874,7 +1884,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +80 more (graph.md)
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +81 more (graph.md)
+ - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
+ - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
+ - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+@@ -2035,7 +2045,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/artifacts.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +78 more (graph.md)
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +79 more (graph.md)
+ - tests: tests/test_artifacts.py
+ - checked: partial
+ - notes: Canonical serialization and filesystem publication share this module. Single-leaf atomic publication accepts a file mode for private artifacts. Tree hashing and tracked roster snapshots are also exposed.
+@@ -2310,7 +2320,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/input_policy.py
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +59 more (graph.md)
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, … +60 more (graph.md)
+ - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
+ - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
+ 
+@@ -2336,7 +2346,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/errors.py
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, … +29 more (graph.md)
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.consolidation, evolve.population_check, evolve.schema, evolve.service, … +30 more (graph.md)
+ - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
+ - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
+ 
+@@ -2562,7 +2572,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/model_index.py
+ - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
+-- used_by: check.admission, check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, … +46 more (graph.md)
++- used_by: check.admission, check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, … +47 more (graph.md)
+ - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py, tests/test_vg1_object_type_scaling.py
+ - in: Loaded Model and query identifiers.
+ - out: Detached lookup results, scoped ModelIndex snapshots and compatibility maps with live last-wins fact rows.
+@@ -2881,7 +2891,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/values.py
+ - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
+-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, evolve.candidates, evolve.population_check, export.ossie, infra.text_output, measure.report, measure.service, … +11 more (graph.md)
++- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, evolve.candidates, evolve.consolidation, evolve.population_check, export.ossie, infra.text_output, measure.report, … +12 more (graph.md)
+ - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
+ - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
+ 
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index e4ceb5cb..15012078 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -1693,7 +1693,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### evolve.candidates
+ - uses: infra.artifacts, model.query_index, model.reference_schemes, model.scalar_identity, model.validation
+-- used_by: discover.service
++- used_by: discover.service, evolve.consolidation
+ 
+ #### evolve.candidates -> infra.artifacts
+ - `src/gnd/evolve/candidates.py -> src/gnd/artifacts.py`
+@@ -1743,6 +1743,40 @@ Generated by `scripts/components_index.py`.
+ #### evolve.command -> model.validation
+ - `src/gnd/evolve/cli_service.py -> src/gnd/model/_parsing.py`
+ 
++### evolve.consolidation
++- uses: evolve.candidates, evolve.population_check, evolve.schema, evolve.service, infra.artifacts, infra.errors, infra.input_policy, model.loading, model.query_index, model.scalar_identity
++- used_by: (none)
++
++#### evolve.consolidation -> evolve.candidates
++- `src/gnd/evolve/consolidation.py -> src/gnd/evolve/candidates.py`
++
++#### evolve.consolidation -> evolve.population_check
++- `src/gnd/evolve/consolidation.py -> src/gnd/evolve/population_check.py`
++
++#### evolve.consolidation -> evolve.schema
++- `src/gnd/evolve/consolidation.py -> src/gnd/evolve/models.py`
++
++#### evolve.consolidation -> evolve.service
++- `src/gnd/evolve/consolidation.py -> src/gnd/evolve/service.py`
++
++#### evolve.consolidation -> infra.artifacts
++- `src/gnd/evolve/consolidation.py -> src/gnd/artifacts.py`
++
++#### evolve.consolidation -> infra.errors
++- `src/gnd/evolve/consolidation.py -> src/gnd/errors.py`
++
++#### evolve.consolidation -> infra.input_policy
++- `src/gnd/evolve/consolidation.py -> src/gnd/input_policy.py`
++
++#### evolve.consolidation -> model.loading
++- `src/gnd/evolve/consolidation.py -> src/gnd/model/__init__.py`
++
++#### evolve.consolidation -> model.query_index
++- `src/gnd/evolve/consolidation.py -> src/gnd/model_index.py`
++
++#### evolve.consolidation -> model.scalar_identity
++- `src/gnd/evolve/consolidation.py -> src/gnd/values.py`
++
+ ### evolve.operation_outcomes
+ - uses: evolve.schema, model.loading
+ - used_by: discover.narrow, evolve.service
+@@ -1768,7 +1802,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### evolve.population_check
+ - uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity
+-- used_by: evolve.command, evolve.service
++- used_by: evolve.command, evolve.consolidation, evolve.service
+ 
+ #### evolve.population_check -> checker.evaluate
+ - `src/gnd/evolve/population_check.py -> src/gnd/checker/__init__.py`
+@@ -1818,7 +1852,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### evolve.schema
+ - uses: infra.errors, infra.input_policy, model.loading
+-- used_by: discover.fact_types, discover.output, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.round_summary, evolve.service, evolve.shape_matches, examples.expense_evolution
++- used_by: discover.fact_types, discover.output, evolve.consolidation, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.round_summary, evolve.service, evolve.shape_matches, examples.expense_evolution
+ 
+ #### evolve.schema -> infra.errors
+ - `src/gnd/evolve/models.py -> src/gnd/errors.py`
+@@ -1832,7 +1866,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### evolve.service
+ - uses: conformance.report, conformance.service, evolve.operation_outcomes, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.validation, model.verbalization
+-- used_by: discover.narrow, discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
++- used_by: discover.narrow, discover.output, discover.service, evolve.command, evolve.consolidation, examples.expense_evolution, export.ilp_service
+ 
+ #### evolve.service -> conformance.report
+ - `src/gnd/evolve/service.py -> src/gnd/conformance/report.py`
+@@ -3599,7 +3633,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.artifacts
+ - uses: (none)
+-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.candidates, evolve.command, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_reference_set, examples.literature_revision, examples.literature_verdict, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.ossie_relational, export.physical_binding, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.flatten_service, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, cli.export_command, cli.judgments_command, conformance.architecture, conformance.integrity, conformance.report, conformance.service, conformance.structural, discover.fact_types, discover.service, discover.type_evidence, evolve.candidates, evolve.command, evolve.consolidation, evolve.population_check, evolve.service, examples.expense_evolution, examples.literature_assertion_admission, examples.literature_depth, examples.literature_interop, examples.literature_lineage, examples.literature_name_diagnostics, examples.literature_reading, examples.literature_reference_set, examples.literature_revision, examples.literature_verdict, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.command, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.session_store, exp.tests_runner, export.lean_bundle, export.lean_compile, export.lean_lowering, export.ossie, export.ossie_relational, export.physical_binding, export.pyrel_rules, export.service, export.souffle_bundle, export.souffle_runtime, extract.flatten_service, extract.service, fidelity.report, fidelity.service, infra.report_redaction, infra.safe_filesystem, install.skill_lifecycle, measure.labels, model.anchors, model.architecture, model.composition, model.diff, model.loading, model.ossie_import, model.query_index, model.rai_import, model.scalar_identity, recovery.inventory, recovery.schema, recovery.verify, review.schema, review.service, semantics.saved_judgments, semantics.transitions, witness.command, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ ### infra.bounded_json
+ - uses: infra.input_policy
+@@ -3618,7 +3652,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.errors
+ - uses: (none)
+-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, examples.literature_verdict, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.flatten_service, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.count_membership, witness.service
++- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.api, cli.export_command, discover.service, evolve.consolidation, evolve.population_check, evolve.schema, evolve.service, examples.literature_interop, examples.literature_revision, examples.literature_verdict, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, extract.flatten_service, extract.manifest, extract.service, infra.report_payloads, infra.safe_filesystem, model.document, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.scalar_identity, model.scalar_terms, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, synth.service, witness.count_membership, witness.service
+ 
+ ### infra.exit_codes
+ - uses: (none)
+@@ -3630,7 +3664,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### infra.input_policy
+ - uses: (none)
+-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.ossie_relational, export.physical_binding, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
++- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.arguments, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, discover.joined, discover.service, discover.type_evidence, discover.type_judgements, evolve.consolidation, evolve.round_summary, evolve.schema, evolve.service, examples.literature_reading, exp.acceptance, exp.adapter_policy, exp.close, exp.expectation_author, exp.schema, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, export.ilp_service, export.ossie, export.ossie_relational, export.physical_binding, export.souffle_lowering, export.souffle_runtime, extract.manifest, extract.service, fidelity.doccheck, fidelity.report, fidelity.service, infra.bounded_json, infra.report_payloads, install.skill_lifecycle, measure.labels, measure.report, measure.service, model.anchors, model.ossie_import, model.population_loading, model.population_shape, model.query_index, model.rai_import, model.scalar_identity, model.validation, recovery.inventory, recovery.verify, review.schema, review.service, semantics.transitions, synth.assemble, synth.boundary, synth.constructive, synth.corpus, synth.pool, synth.provenance, synth.service, synth.values, witness.count_membership, witness.schema, witness.service
+ 
+ ### infra.output
+ - uses: infra.text_output
+@@ -4155,7 +4189,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.loading
+ - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.narrow, discover.service, evolve.command, evolve.operation_outcomes, evolve.population_check, evolve.schema, evolve.service, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_reference_set, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
++- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, codegen.service, conformance.currency, conformance.service, conformance.structural, discover.narrow, discover.service, evolve.command, evolve.consolidation, evolve.operation_outcomes, evolve.population_check, evolve.schema, evolve.service, examples.literature_assertion_admission, examples.literature_interop, examples.literature_lineage, examples.literature_reference_set, examples.literature_revision, examples.plan_apps, exp.command, exp.conclusions, exp.evidence_paths, exp.frontmatter, exp.schema, exp.service, exp.session_judgments, exp.session_replay, exp.session_runtime, exp.spec, export.applications, export.ilp_service, export.include_roots, export.lean_bundle, export.lean_lowering, export.ossie, export.pyrel_emit, export.pyrel_rules, export.souffle_bundle, export.souffle_lowering, export.souffle_runtime, export.verification, extract.flatten_service, extract.service, fidelity.doccheck, fidelity.service, infra.report_payloads, infra.report_redaction, infra.text_output, measure.coverage, measure.promote, measure.report, measure.service, measure.truth, model.composition, model.diff, model.ossie_import, model.population_sentences, model.rai_import, model.reference_binding, model.verbalization, recovery.verify, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.mutations, synth.pool, synth.prediction, synth.service, synth.value_domain, witness.count_membership, witness.produce, witness.replay, witness.schema, witness.service, witness.why_not
+ 
+ #### model.loading -> infra.artifacts
+ - `src/gnd/model/__init__.py -> src/gnd/artifacts.py`
+@@ -4307,7 +4341,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.query_index
+ - uses: infra.artifacts, infra.input_policy, model.address, model.document, model.reference_resolution
+-- used_by: check.admission, check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.candidates, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.physical_binding, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.population_sentences, model.reference_schemes, model.relational_mapping, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.count_membership, witness.why_not
++- used_by: check.admission, check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, discover.candidates, discover.fact_types, discover.population_view, discover.service, discover.type_evidence, evolve.candidates, evolve.consolidation, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.plan_apps, exp.schema, export.ilp_neutral, export.lean_lowering, export.mined_rules, export.ossie, export.physical_binding, export.pyrel_rules, export.souffle_lowering, extract.guidelines, extract.projection, measure.labels, measure.report, model.composition, model.composition_resolution, model.diff, model.extraction_vocabulary, model.population_loading, model.population_sentences, model.reference_schemes, model.relational_mapping, model.validation, model.verbalization, semantics.extensions, semantics.saved_judgments, semantics.snapshot_adapter, semantics.transitions, synth.constructive, synth.frontier, synth.guarded, synth.pool, synth.service, synth.value_domain, witness.count_membership, witness.why_not
+ 
+ #### model.query_index -> infra.artifacts
+ - `src/gnd/model_index.py -> src/gnd/artifacts.py`
+@@ -4383,7 +4417,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.scalar_identity
+ - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
+-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, evolve.candidates, evolve.population_check, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.reference_binding, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, witness.replay
++- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, evolve.candidates, evolve.consolidation, evolve.population_check, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, model.ossie_import, model.population_loading, model.population_sentences, model.reference_binding, model.validation, semantics.extensions, semantics.snapshot_adapter, semantics.transitions, witness.replay
+ 
+ #### model.scalar_identity -> infra.artifacts
+ - `src/gnd/values.py -> src/gnd/artifacts.py`
+diff --git a/dev/components/modules/evolve.md b/dev/components/modules/evolve.md
+index 65c47f31..6cae80c4 100644
+--- a/dev/components/modules/evolve.md
++++ b/dev/components/modules/evolve.md
+@@ -45,6 +45,17 @@ Components: evolve.command
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ 
++## gnd.evolve.consolidation — `src/gnd/evolve/consolidation.py`
++Components: evolve.consolidation
++Drive one reviewed consolidation decision with the ordinary evolution transaction.
++
++| Symbol | Kind | Line | Summary |
++| --- | --- | --- | --- |
++| `Move` | class(BaseModel) | 35 | (no docstring) |
++| `Decision` | class(BaseModel) | 42 | (no docstring) |
++| `step(model_path, *, decision, minimum_score, max_decisions, max_items, max_pairs)` | function | 153 | Recover a pending decision, apply one supplied decision, or return the next group. |
++| `main(argv)` | function | 293 | (no docstring) |
++
+ ## gnd.evolve.models — `src/gnd/evolve/models.py`
+ Components: evolve.schema
+ Closed evidence models for staged ORM evolution.
+@@ -157,6 +168,7 @@ The population check behind ``gnd evolve preview --check-population`` (UG2).
+ | `population_outcomes(proposal, *, before, candidate, population, sha256, populated, placements) -> P…` | function | 190 | One ``check`` call; one outcome word per constraint ADD or MODIFY operation. |
+ | `constraint_placements(placed, final_host) -> dict[int, tuple[str \| None, int]]` | function | 236 | Positions, by identity, of the constraint objects the replay placed, in the final tree. |
+ | `verified_sample_appends(candidate, proposal, documents)` | function | 333 | Collect exact operation indices that pass both citation and population admission. |
++| `sample_population_report(candidate)` | function | 359 | Evaluate distinct typed inline samples using the ordinary population checker. |
+ 
+ ## gnd.evolve.service — `src/gnd/evolve/service.py`
+ Components: evolve.service
+diff --git a/src/gnd/evolve/population_check.py b/src/gnd/evolve/population_check.py
+index 59ed7e9a..ab12c8cc 100644
+--- a/src/gnd/evolve/population_check.py
++++ b/src/gnd/evolve/population_check.py
+@@ -342,6 +342,22 @@ def verified_sample_appends(candidate, proposal, documents):
+             eligible[pos] = op.locator.element_id
+     if not eligible:
+         return frozenset()
++    try:
++        facts, results, subjects = sample_population_report(candidate)
++    except PopulationLoadError:
++        return frozenset()
++    blocked = set()
++    index = ModelIndex.for_model(candidate)
++    for ref, constraint, host in index.iter_constraints_shared():
++        affected = subjects.for_constraint(constraint, host["id"] if host else None)
++        if not affected or results.get(ref) != "pass" or affected.difference(facts):
++            blocked.update(affected or eligible.values())
++    return frozenset(pos for pos, fact in eligible.items() if fact not in blocked)
++
++
++
++def sample_population_report(candidate):
++    """Evaluate distinct typed inline samples using the ordinary population checker."""
+     index = ModelIndex.for_model(candidate)
+     facts = {}
+     for fact in index.iter_fact_types_shared():
+@@ -351,16 +367,7 @@ def verified_sample_appends(candidate, proposal, documents):
+     header = {"model": "model.orm.yaml", "source": "tool-output", "covers": sorted(facts)}
+     if candidate.model_id is not None:
+         header["model_id"] = candidate.model_id
+-    try:
+-        population = load_population_bytes(canonical_json_bytes({"population": header, "facts": facts}),
++    population = load_population_bytes(canonical_json_bytes({"population": header, "facts": facts}),
+                                            source="samples.json", model=candidate)
+-    except PopulationLoadError:
+-        return frozenset()
+     results = {v.constraint_ref: v.verdict for v in check(candidate, population).verdicts}
+-    blocked = set()
+-    subjects = ConstraintSubjects(index)
+-    for ref, constraint, host in index.iter_constraints_shared():
+-        affected = subjects.for_constraint(constraint, host["id"] if host else None)
+-        if not affected or results.get(ref) != "pass" or affected.difference(facts):
+-            blocked.update(affected or eligible.values())
+-    return frozenset(pos for pos, fact in eligible.items() if fact not in blocked)
++    return facts, results, ConstraintSubjects(index)
+diff --git a/tests/test_packaged_skills.py b/tests/test_packaged_skills.py
+index 46b0fa93..121e088b 100644
+--- a/tests/test_packaged_skills.py
++++ b/tests/test_packaged_skills.py
+@@ -16,9 +16,9 @@ import pytest
+ 
+ from gnd import DEV_VERSION, DISTRIBUTION, resolve_version
+ 
+-EXPECTED_SKILL_FILE_COUNT = 73  # AC1 adds the bounded COUNT membership contract; IS1: gnd-induce and the vendored label schema.
+-EXPECTED_SKILL_NAMES = frozenset({'gnd-adopt', 'gnd-induce', 'gnd-judge-fact-types', 'gnd-model-multivalued', 'gnd-codegen', 'gnd-conformance', 'gnd-dev-session', 'gnd-extract', 'gnd-export', 'gnd-model-evolve', 'gnd-model-from-code', 'gnd-model-from-text', 'gnd-new-project', 'gnd-orm-core', 'gnd-render-doc', 'gnd-review-panel', 'gnd-review-panel-light', 'gnd-solve', 'gnd-update-review-panel'})
+-EXPECTED_SKILL_FILES = frozenset({'gnd-induce/SKILL.md', 'gnd-orm-core/references/labels.schema.json', 'gnd-judge-fact-types/SKILL.md', 'gnd-model-multivalued/SKILL.md', 'gnd-orm-core/references/type-evidence.schema.json', 'gnd-orm-core/references/type-judgements.schema.json', 'gnd-dev-session/references/judgment-contract.md', 'gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adopt/references/gsd-mapping.md', 'gnd-adopt/scripts/verify_migration.py', 'gnd-codegen/SKILL.md', 'gnd-codegen/references/architecture-contract.md', 'gnd-codegen/references/codegen-contract.md', 'gnd-conformance/SKILL.md', 'gnd-conformance/references/conformance-contract.md', 'gnd-dev-session/SKILL.md', 'gnd-dev-session/references/session-v7-contract.md', 'gnd-export/SKILL.md', 'gnd-export/references/export-contract.md', 'gnd-export/references/witness-contract.md', 'gnd-export/references/witness.schema.json', 'gnd-extract/SKILL.md', 'gnd-extract/references/extraction-contract.md', 'gnd-model-evolve/SKILL.md', 'gnd-model-evolve/references/evolution-contract.md', 'gnd-model-from-code/SKILL.md', 'gnd-model-from-code/references/recovery-contract.md', 'gnd-model-from-text/SKILL.md', 'gnd-model-from-text/USAGE.md', 'gnd-model-from-text/evals/README.md', 'gnd-model-from-text/evals/cases.json', 'gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md', 'gnd-model-from-text/evals/reviewability_checklist.md', 'gnd-model-from-text/examples/library_with_subtypes.dialogue.md', 'gnd-model-from-text/examples/library_with_subtypes.orm.yaml', 'gnd-model-from-text/examples/movie_catalog.dialogue.md', 'gnd-model-from-text/examples/movie_catalog.orm.yaml', 'gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md', 'gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml', 'gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md', 'gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml', 'gnd-model-from-text/references/csdp-workflow.md', 'gnd-model-from-text/references/dialogue-patterns.md', 'gnd-model-from-text/references/unattended-growth.md', 'gnd-model-from-text/scripts/validate_model.py', 'gnd-new-project/SKILL.md', 'gnd-orm-core/SKILL.md', 'gnd-orm-core/references/constraint-inference.md', 'gnd-orm-core/references/coverage-and-element-addressing.md', 'gnd-orm-core/references/constraint-reference.md', 'gnd-orm-core/references/halpin-posture.md', 'gnd-orm-core/references/milestone-record-format.md', 'gnd-orm-core/references/orm-meta.schema.json', 'gnd-orm-core/references/population-format.md', 'gnd-orm-core/references/population.schema.json', 'gnd-orm-core/references/provenance-and-modality.md', 'gnd-orm-core/references/representation-format.md', 'gnd-orm-core/references/steps.schema.json', 'gnd-orm-core/references/verbalization-patterns.md', 'gnd-render-doc/SKILL.md', 'gnd-render-doc/references/rendering-contract.md', 'gnd-review-panel/SKILL.md', 'gnd-review-panel/references/review-contract.md', 'gnd-review-panel-light/SKILL.md', 'gnd-solve/SKILL.md', 'gnd-update-review-panel/SKILL.md', 'gnd-update-review-panel/agents/openai.yaml', 'gnd-update-review-panel/scripts/update_harnesses.py'})
++EXPECTED_SKILL_FILE_COUNT = 74  # AC1 adds the bounded COUNT membership contract; IS1: gnd-induce and the vendored label schema.
++EXPECTED_SKILL_NAMES = frozenset({'gnd-consolidate', 'gnd-adopt', 'gnd-induce', 'gnd-judge-fact-types', 'gnd-model-multivalued', 'gnd-codegen', 'gnd-conformance', 'gnd-dev-session', 'gnd-extract', 'gnd-export', 'gnd-model-evolve', 'gnd-model-from-code', 'gnd-model-from-text', 'gnd-new-project', 'gnd-orm-core', 'gnd-render-doc', 'gnd-review-panel', 'gnd-review-panel-light', 'gnd-solve', 'gnd-update-review-panel'})
++EXPECTED_SKILL_FILES = frozenset({'gnd-consolidate/SKILL.md', 'gnd-induce/SKILL.md', 'gnd-orm-core/references/labels.schema.json', 'gnd-judge-fact-types/SKILL.md', 'gnd-model-multivalued/SKILL.md', 'gnd-orm-core/references/type-evidence.schema.json', 'gnd-orm-core/references/type-judgements.schema.json', 'gnd-dev-session/references/judgment-contract.md', 'gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adopt/references/gsd-mapping.md', 'gnd-adopt/scripts/verify_migration.py', 'gnd-codegen/SKILL.md', 'gnd-codegen/references/architecture-contract.md', 'gnd-codegen/references/codegen-contract.md', 'gnd-conformance/SKILL.md', 'gnd-conformance/references/conformance-contract.md', 'gnd-dev-session/SKILL.md', 'gnd-dev-session/references/session-v7-contract.md', 'gnd-export/SKILL.md', 'gnd-export/references/export-contract.md', 'gnd-export/references/witness-contract.md', 'gnd-export/references/witness.schema.json', 'gnd-extract/SKILL.md', 'gnd-extract/references/extraction-contract.md', 'gnd-model-evolve/SKILL.md', 'gnd-model-evolve/references/evolution-contract.md', 'gnd-model-from-code/SKILL.md', 'gnd-model-from-code/references/recovery-contract.md', 'gnd-model-from-text/SKILL.md', 'gnd-model-from-text/USAGE.md', 'gnd-model-from-text/evals/README.md', 'gnd-model-from-text/evals/cases.json', 'gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md', 'gnd-model-from-text/evals/reviewability_checklist.md', 'gnd-model-from-text/examples/library_with_subtypes.dialogue.md', 'gnd-model-from-text/examples/library_with_subtypes.orm.yaml', 'gnd-model-from-text/examples/movie_catalog.dialogue.md', 'gnd-model-from-text/examples/movie_catalog.orm.yaml', 'gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md', 'gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml', 'gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md', 'gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml', 'gnd-model-from-text/references/csdp-workflow.md', 'gnd-model-from-text/references/dialogue-patterns.md', 'gnd-model-from-text/references/unattended-growth.md', 'gnd-model-from-text/scripts/validate_model.py', 'gnd-new-project/SKILL.md', 'gnd-orm-core/SKILL.md', 'gnd-orm-core/references/constraint-inference.md', 'gnd-orm-core/references/coverage-and-element-addressing.md', 'gnd-orm-core/references/constraint-reference.md', 'gnd-orm-core/references/halpin-posture.md', 'gnd-orm-core/references/milestone-record-format.md', 'gnd-orm-core/references/orm-meta.schema.json', 'gnd-orm-core/references/population-format.md', 'gnd-orm-core/references/population.schema.json', 'gnd-orm-core/references/provenance-and-modality.md', 'gnd-orm-core/references/representation-format.md', 'gnd-orm-core/references/steps.schema.json', 'gnd-orm-core/references/verbalization-patterns.md', 'gnd-render-doc/SKILL.md', 'gnd-render-doc/references/rendering-contract.md', 'gnd-review-panel/SKILL.md', 'gnd-review-panel/references/review-contract.md', 'gnd-review-panel-light/SKILL.md', 'gnd-solve/SKILL.md', 'gnd-update-review-panel/SKILL.md', 'gnd-update-review-panel/agents/openai.yaml', 'gnd-update-review-panel/scripts/update_harnesses.py'})
+ FROZEN_BASE_DEPENDENCIES = {'jsonschema', 'pydantic', 'ruamel-yaml'}
+ PEP723_SIBLING_SCHEMA = 'gnd-orm-core/references/orm-meta.schema.json'
+ # The skill link inventory: every (file, relative target) edge in the packaged tree, and how many
+@@ -296,7 +296,7 @@ def test_the_packaged_tree_holds_exactly_the_named_skills() -> None:
+     assert root.is_dir(), 'gnd/skills resource directory is absent (see the sibling test)'
+     names = {rel.split('/')[0] for rel, _ in iter_skill_files(root)}
+     assert names == EXPECTED_SKILL_NAMES, f'packaged skills are {sorted(names)}, expected {sorted(EXPECTED_SKILL_NAMES)}.\n  missing: {sorted(EXPECTED_SKILL_NAMES - names)}\n  extra:   {sorted(names - EXPECTED_SKILL_NAMES)}'
+-    assert len(EXPECTED_SKILL_NAMES) == 19, 'the packaged surface is exactly the named skills; another is a decision with a plan behind it, not an edit to this literal (the latest: gnd-induce, induction-skill IS1)'
++    assert len(EXPECTED_SKILL_NAMES) == 20, 'the packaged surface is exactly the named skills; another is a decision with a plan behind it, not an edit to this literal (the latest: gnd-induce, induction-skill IS1)'
+ 
+ def _relative_links(root: Traversable) -> tuple[set[tuple[str, str]], int, list[str]]:
+     """Every (file, relative target) edge of the packaged skill tree, the number of link occurrences,
+diff --git a/tools/gnd_layers.json b/tools/gnd_layers.json
+index 6370d531..b066da46 100644
+--- a/tools/gnd_layers.json
++++ b/tools/gnd_layers.json
+@@ -405,6 +405,10 @@
+       "lane": "evolve",
+       "layer": "lanes"
+     },
++    "gnd.evolve.consolidation": {
++      "lane": "evolve",
++      "layer": "lanes"
++    },
+     "gnd.evolve.candidates": {
+       "lane": "evolve",
+       "layer": "lanes"

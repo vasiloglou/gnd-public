@@ -19,31 +19,38 @@ def _digest(value):
 def _tokens(name):
     """Lexical tokens with Unicode case and word boundaries for model names."""
     name = unicodedata.normalize("NFC", name)
-    separated = "".join(
-        (" " if i and ch.isupper() and name[i - 1].islower() else "") + ch
-        for i, ch in enumerate(name)
-    )
+    pieces = []
+    for i, ch in enumerate(name):
+        if (
+            i
+            and ch.isupper()
+            and (
+                name[i - 1].islower()
+                or name[i - 1].isdigit()
+                or (name[i - 1].isupper() and name[i + 1 : i + 2].islower())
+            )
+        ):
+            pieces.append(" ")
+        pieces.append(ch)
+    separated = "".join(pieces)
     return re.findall(r"[^\W_]+", separated.casefold())
 
 
 _UNITS = frozenset(
     [
         "ms",
-        "s",
         "sec",
         "seconds",
         "minutes",
         "hours",
         "days",
         "km",
-        "m",
         "cm",
         "mm",
         "meters",
         "metres",
         "miles",
         "kg",
-        "g",
         "mg",
         "grams",
         "kilograms",
@@ -126,7 +133,9 @@ def _reading_shape(reading, players, spans_by_object):
         player = next(slots)
         return "{}" if len(spans_by_object.get(player, ())) == 1 else "{" + player + "}"
 
-    return " ".join(_PLACEHOLDER.sub(replace, reading).casefold().split())
+    return " ".join(
+        unicodedata.normalize("NFC", _PLACEHOLDER.sub(replace, reading)).casefold().split()
+    )
 
 
 def discover_candidates(model, *, max_items=100_000, max_pairs=25_000):
@@ -205,6 +214,19 @@ def discover_candidates(model, *, max_items=100_000, max_pairs=25_000):
                     spans_by_object[identifier] = {
                         span["document_sha256"] for span in spans if "document_sha256" in span
                     }
+                else:
+                    roles = role_maps[identifier]
+                    sample_evidence = []
+                    for i, row in enumerate(element.get("sample_population") or []):
+                        charge("items", 1 + len(roles))
+                        row_evidence = {"row": i, "span": sample_spans.get(i)}
+                        sample_evidence.append(row_evidence)
+                        for key, player in roles.items():
+                            if key in row and objects.get(player, {}).get("kind") == "entity":
+                                observed[player].add(identity_key(row[key]))
+                                observations[player].append(
+                                    {"fact": identifier, "role": key, **row_evidence}
+                                )
                 if identifier in foreign:
                     continue
                 name = element.get("name") or identifier
@@ -213,10 +235,12 @@ def discover_candidates(model, *, max_items=100_000, max_pairs=25_000):
                 evidence[kind, identifier] = item
                 name_entry(kind, identifier, tokens)
                 if kind == "object":
-                    if element.get("kind") == "value" and tokens:
+                    reference = element.get("reference") or {}
+                    if (
+                        element.get("kind") == "value" or reference.get("mode") == "unit-based"
+                    ) and tokens:
                         primitive = index.primitive(identifier, variant="strict")
                         item["primitive"] = primitive
-                        reference = element.get("reference") or {}
                         if reference.get("mode") == "unit-based":
                             item["unit"] = reference["unit"]
                             item["measure_type"] = reference["measure_type"]
@@ -250,17 +274,6 @@ def discover_candidates(model, *, max_items=100_000, max_pairs=25_000):
                 buckets["role-players", kind, role_player_signature(roles)].append(identifier)
                 shape = _reading_shape(element["reading"], players, spans_by_object)
                 buckets["reading-shape", kind, shape].append(identifier)
-                sample_evidence = []
-                for i, row in enumerate(element.get("sample_population") or []):
-                    charge("items", 1 + len(roles))
-                    row_evidence = {"row_sha256": _digest(row), "span": sample_spans.get(i)}
-                    sample_evidence.append(row_evidence)
-                    for key, player in roles.items():
-                        if key in row and objects.get(player, {}).get("kind") == "entity":
-                            observed[player].add(identity_key(row[key]))
-                            observations[player].append(
-                                {"fact": identifier, "role": key, **row_evidence}
-                            )
                 item["samples"] = sorted(sample_evidence, key=canonical_json_bytes)
         for identifier, values in sorted(observed.items()):
             if len(values) == 1 and ("object", identifier) in evidence:
@@ -278,10 +291,11 @@ def discover_candidates(model, *, max_items=100_000, max_pairs=25_000):
         compared = set()
         for (kind, _), ids in sorted(name_index.items()):
             for a, b in combinations(ids, 2):
-                charge("pairs")
+                charge("items")
                 pair = kind, a, b
                 if pair in compared:
                     continue
+                charge("pairs")
                 compared.add(pair)
                 left, right = labels[kind, a], labels[kind, b]
                 charge("items", min(len(left), len(right)))

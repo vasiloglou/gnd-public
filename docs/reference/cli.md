@@ -160,3 +160,9 @@ For an edition update, see the
 [expense walkthrough](../how-to/shared-expense-policies-commands.md#review-edition-2)
 and the evolution contract linked above; `--previous-include ID=PATH` supplies
 verified historical bytes when the old edition is unavailable.
+
+### Consolidation candidates
+
+The candidate report distinguishes group membership from evidence. A stable group ID covers the signal, element kind and sorted member IDs. Its evidence digest covers the public names, roles and located observations shown in the report. Reordering declarations preserves both identities. Sample values participate in the singleton count internally. The report carries row positions and source locations so a reviewer with the model can inspect them.
+
+A near-name comparison uses shared character trigrams. Each distinct comparison consumes one pair; revisiting a posting consumes item work. An incomplete report names the exhausted budget. Unit and counted-noun signals are suggestions for review. Explicit unit-based references identify their measure directly. Lexical detection requires a recognized multi-letter unit.

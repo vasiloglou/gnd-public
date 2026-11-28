@@ -36,7 +36,7 @@ Read-only consolidation signals for one validated conceptual model.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `discover_candidates(model, *, max_items, max_pairs)` | function | 132 | Return deterministic groups, provenance and explicit charged work. |
+| `discover_candidates(model, *, max_items, max_pairs)` | function | 141 | Return deterministic groups, provenance and explicit charged work. |
 
 ## gnd.evolve.cli_service — `src/gnd/evolve/cli_service.py`
 Components: evolve.command

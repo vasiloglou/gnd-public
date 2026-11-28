@@ -71,7 +71,7 @@ def test_covered_absence_and_replay(tmp_path):
     assert api.witness(path, pop, request)["results"][0]["status"] == "missing"
     snapshot(tmp_path, covered=False)
     assert api.witness(path, pop, request)["results"][0]["status"] == "uncovered"
-    assert api.why_not(path, pop, "eligible", row_path=request)["reason"] == "negative-relation-not-covered"
+    assert api.why_not(path, pop, "eligible", row_path=request)["status"] == "derived"
 
 
 def test_configured_scalar_bound_and_batch_projection(tmp_path, monkeypatch):
@@ -115,3 +115,42 @@ def test_correlated_negative_checks_the_whole_tuple_on_replay(tmp_path):
     original["certificate"]["binding"] = latest["certificate"]["binding"]
     cert.write_text(json.dumps(original["certificate"]))
     assert api.replay(path, pop, cert)["results"][0]["status"] == "invalid"
+
+
+def test_why_not_agrees_with_evaluation_for_derived_negation_and_alternative_clause(tmp_path):
+    path, pop = snapshot(tmp_path)
+    doc = json.loads(path.read_text())
+    facts = {ft["id"]: ft for ft in doc["fact_types"]}
+    facts["blocked"].update(derivation="derived", derivation_rule={
+        "body": [{"fact_type": "flag", "bind": {"id": "$x"}}], "head": {"id": "$x"}})
+    doc["fact_types"].append({"id": "flag", "reading": "{Item} has a flag",
+                              "roles": [{"role_name": "id", "object_type": "item"}]})
+    path.write_text(json.dumps(doc))
+    data = json.loads(pop.read_text())
+    data["facts"]["flag"] = data["facts"].pop("blocked")
+    data["population"]["covers"] = list(data["facts"])
+    pop.write_text(json.dumps(data))
+    assert api.why_not(path, pop, "eligible", targets=[target("a")])["status"] == "derived"
+    original = facts["eligible"]["derivation_rule"]
+    facts["eligible"]["derivation_rule"] = {"clauses": [original, {
+        "body": [{"fact_type": "flag", "bind": {"id": "$x"}}], "head": {"id": "$x"}}]}
+    facts["blocked"].pop("derivation_rule")
+    facts["blocked"].pop("derivation")
+    path.write_text(json.dumps(doc))
+    assert api.why_not(path, pop, "eligible", targets=[target("b")])["status"] == "derived"
+
+
+def test_opaque_negative_source_cannot_prove_absence(tmp_path):
+    path, pop = snapshot(tmp_path)
+    request = write_request(tmp_path, [target("a")])
+    prior = api.witness(path, pop, request)["certificate"]
+    data = json.loads(pop.read_text())
+    data["format_version"] = 2
+    data["facts"]["blocked"] = [{"id": {"$opaque": "unread"}}]
+    pop.write_text(json.dumps(data))
+    result = api.witness(path, pop, request)
+    assert result["results"][0]["status"] == "unknown"
+    prior["binding"] = result["certificate"]["binding"]
+    cert = tmp_path / "proof.json"
+    cert.write_text(json.dumps(prior))
+    assert api.replay(path, pop, cert)["results"][0]["status"] == "unsupported"

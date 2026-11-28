@@ -64,6 +64,11 @@ def test_t1_census_adds_only_the_version_and_empty_near_misses(case, view):
     old = json.loads(subprocess.run(
         ["git", "show", f"{BASE}:tests/fixtures/why_not/goldens/{case['id']}{view}.json"],
         cwd=ROOT, capture_output=True, text=True, check=True).stdout)
+    if new["schema_version"] == "gnd-why-not-batch/1":
+        # PS3 accepts the ordered request previously refused by the one-target wire.
+        assert case["id"] == "g11-two-targets"
+        assert [row["request_index"] for row in new["results"]] == [0, 1]
+        return
     assert new["schema_version"] == "gnd-why-not/2"
     for blocker in blockers(new):
         if blocker["kind"] == "atom":

@@ -232,7 +232,7 @@ def explain(
 ) -> WhyNotResult:
     """Explain why ``fact_type_id`` (or one claimed row of it) is not derived."""
     _, results = explain_many(model, candidate, fact_type_id, rows=[row], references=references,
-                              limits=limits, near_misses=near_misses, require_covered_absence=False)
+                              limits=limits, near_misses=near_misses)
     result = results[0]
     if isinstance(result, WhyNotWorkError):
         raise result
@@ -240,7 +240,7 @@ def explain(
 
 
 def explain_many(model, candidate, fact_type_id, *, rows, references=None,
-                 limits=DEFAULT_WHY_NOT_LIMITS, near_misses=False, require_covered_absence=True):
+                 limits=DEFAULT_WHY_NOT_LIMITS, near_misses=False):
     """Prepare one finite relation index, then give every target a new walk budget."""
     checked_why_not_limits(limits)
     index = ModelIndex.for_model(model)
@@ -274,12 +274,6 @@ def explain_many(model, candidate, fact_type_id, *, rows, references=None,
         if references is not None
         else candidate
     )
-    negative_sources = {
-        atom["fact_type"] for fid in closure
-        for clause in iter_derivation_clauses((index.fact_type(fid) or {}).get("derivation_rule"))
-        for atom in clause.get("negate", [])
-    }
-    uncovered = sorted(negative_sources.difference(combined.covers))
     if any(
         _is_opaque(value)
         for fact_id in closure
@@ -315,12 +309,7 @@ def explain_many(model, candidate, fact_type_id, *, rows, references=None,
         walk._spellings.clear()
         walk._candidate_spellings.clear()
         try:
-            result = walk.explain(fact_type_id, row, depth=0, path=())
-            if require_covered_absence and uncovered and result.status == "derived":
-                detail = {"reason": "negative-relation-not-covered", "source_relation": uncovered[0], "binding": {}}
-                result = _status(fact_type_id, result.mode, "unavailable", detail["reason"], detail,
-                                 work=walk.budget.work)
-            results.append(result)
+            results.append(walk.explain(fact_type_id, row, depth=0, path=()))
         except WhyNotWorkError as error:
             results.append(error)
     return setup_work, results

@@ -188,4 +188,4 @@ Explain why a derivation did not derive a row, beside the finite witness lane.
 | `WhyNotResult` | class | 94 | (no docstring) |
 | `WhyNotResult.to_dict(self) -> dict` | method | 104 | (no docstring) |
 | `explain(model, candidate, fact_type_id, *, row, references, limits, near_misses) -> WhyNotResult` | function | 223 | Explain why ``fact_type_id`` (or one claimed row of it) is not derived. |
-| `explain_many(model, candidate, fact_type_id, *, rows, references, limits, near_misses, require_cove…` | function | 242 | Prepare one finite relation index, then give every target a new walk budget. |
+| `explain_many(model, candidate, fact_type_id, *, rows, references, limits, near_misses)` | function | 242 | Prepare one finite relation index, then give every target a new walk budget. |

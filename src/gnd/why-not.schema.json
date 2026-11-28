@@ -749,15 +749,8 @@
                 "const": 4
               },
               "reason": {
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "pattern": "^term:"
-                  },
-                  {
-                    "const": "negative-relation-not-covered"
-                  }
-                ]
+                "type": "string",
+                "pattern": "^term:"
               },
               "unavailable": {
                 "type": "object"

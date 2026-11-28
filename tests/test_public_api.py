@@ -28,8 +28,8 @@ def test_public_exports_and_current_keyword_signatures():
     # why_not takes paths and returns raw values like witness: no `unredacted`.
     signature = inspect.signature(api.why_not)
     assert tuple(signature.parameters) == (
-        "model_path", "population_path", "fact_type", "row_path", "reference_root")
-    for name in ("row_path", "reference_root"):
+        "model_path", "population_path", "fact_type", "row_path", "reference_root", "targets", "limits")
+    for name in ("row_path", "reference_root", "targets", "limits"):
         assert signature.parameters[name].kind is inspect.Parameter.KEYWORD_ONLY
         assert signature.parameters[name].default is None
     assert tuple(inspect.signature(api.witness).parameters)[:2] == ("model_path", "population_path")

@@ -220,7 +220,7 @@
       "--row",
       "<fx>/rows/two.json"
     ],
-    "exit": 3
+    "exit": 0
   },
   {
     "id": "g11-other-fact-type",

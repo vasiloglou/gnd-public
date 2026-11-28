@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "reason": "Shared why-not preparation, per-target result projection and covered absence replay.",
+  "predecessor": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json",
+  "predecessor_sha256": "879f84beda850deb122eec7b8cba71a83d391db68c8640a6063ad66937445d63",
+  "removed": [
+    [
+      "src/gnd/witness/types.py",
+      "checked_limits",
+      "getattr(DEFAULT_LIMITS, key)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "checked_why_not_limits",
+      "getattr(DEFAULT_WHY_NOT_LIMITS, f.name)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "explain",
+      "combined.facts.get(fact_id, ())",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/witness/io.py",
+      "support_closure",
+      "bindings.get(role)",
+      1
+    ],
+    [
+      "src/gnd/witness/io.py",
+      "support_closure",
+      "roles[relation]",
+      2
+    ],
+    [
+      "src/gnd/witness/io.py",
+      "support_closure",
+      "types[relation]",
+      1
+    ],
+    [
+      "src/gnd/witness/io.py",
+      "support_closure",
+      "variable_types.get(term)",
+      1
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "prove_absence",
+      "atom['bind'][role]",
+      1
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "prove_absence",
+      "facts[relation]",
+      1
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "prove_absence",
+      "negative_rows[relation]",
+      1
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "prove_absence",
+      "population.facts.get(relation, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "prove_absence",
+      "roles[relation]",
+      2
+    ],
+    [
+      "src/gnd/witness/kernel.py",
+      "prove_absence",
+      "row[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/producer.py",
+      "__init__",
+      "self.clauses[fid]",
+      1
+    ],
+    [
+      "src/gnd/witness/producer.py",
+      "row",
+      "binding[term[1:]]",
+      1
+    ],
+    [
+      "src/gnd/witness/producer.py",
+      "row",
+      "self.roles[afid]",
+      1
+    ],
+    [
+      "src/gnd/witness/producer.py",
+      "row",
+      "term[1:]",
+      1
+    ],
+    [
+      "src/gnd/witness/producer.py",
+      "row",
+      "terms[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/types.py",
+      "checked_limits",
+      "getattr(maximum, key)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "checked_why_not_limits",
+      "getattr(HARD_WHY_NOT_LIMITS, f.name)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "explain_many",
+      "combined.facts.get(fact_id, ())",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8464,
+  "result_occurrences": 10515
+}

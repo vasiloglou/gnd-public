@@ -49,6 +49,10 @@ class GroundedTrace:
                     references._snapshots, references._populations, strict=True
                 )
             ]
+        self.covered = {fid for _, pop in populations for fid in pop.covers}
+        self.uncovered_negative = {
+            atom["fact_type"] for fid in closure for clause in self.clauses[fid]
+            for atom in clause.get("negate", []) if atom["fact_type"] not in self.covered}
         self.opaque = set()
         for origin, pop in populations:
             for fid, rows in sorted(pop.facts.items()):
@@ -137,6 +141,17 @@ class GroundedTrace:
             if proof is None:
                 return  # The next production round can ground this firing.
             premises.append(proof)
+        for atom in clause.get("negate", []):
+            afid = atom["fact_type"]
+            if afid not in self.covered or afid in self.opaque:
+                return
+            terms = atom["bind"]
+            grounded = [
+                binding[term[1:]] if isinstance(term, str) and term.startswith("$") else term
+                for role, _ in self.roles[afid] for term in [terms[role]]
+            ]
+            if self.key(afid, self.typed_row(afid, grounded)) in self.bases:
+                return
         ci = self.clauses[fid].index(clause)
         for wi, _ in enumerate(clause.get("where", [])):
             premises.append(
@@ -227,6 +242,8 @@ def produce_witness(model, candidate, targets, *, references=None, limits=DEFAUL
             if not flag
             else "proved"
             if root is not None
+            else "uncovered"
+            if trace.uncovered_negative & scope
             else "unknown"
             if trace.opaque & scope
             else "missing"

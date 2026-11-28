@@ -92,7 +92,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
 - status: canonical
 - components: cli.witness_command, witness.command, witness.count_membership, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, … +4 more (graph.md)
+- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.document, model.json_document, model.loading, … +5 more (graph.md)
 - notes: Production evaluates through the checker; replay does not search for a fixpoint.
 
 ### subsystem.review_panel
@@ -2333,7 +2333,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/documents.py
 - uses: infra.errors
-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +16 more (graph.md)
+- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +17 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
 - notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
 
@@ -3236,13 +3236,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### witness.service
-- does: Orchestrate path-based witness production, replay and why-not requests, including independently bound model origins, catalog occurrences and candidate source lineage.
+- does: Orchestrate witness production, independent replay and bounded ordered why-not requests over paths or loaded snapshots, including independently bound model origins, catalog occurrences and candidate source lineage.
 - verbs: rooted witness projection, flattening binding, model origins, produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
 - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
 - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
 - status: canonical
 - modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py, src/gnd/witness/flattening.py
-- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.validation, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
+- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.document, model.loading, model.population_loading, model.validation, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
 - used_by: cli.api, witness.command, witness.replay
 - part_of: subsystem.witness
 - tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py

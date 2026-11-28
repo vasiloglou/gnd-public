@@ -580,3 +580,7 @@ Use `api.check_with_extensions(model, population, fact_types=["active"], max_row
 A complete relation includes `rows`, which may be empty. Unknown, non-derived, incompletely covered and uncomputable relations return `unavailable`. Declared protected roles or inputs return `protected` under the ordinary applied disclosure policy. This decision precedes the row cap. Each request accepts 1–64 distinct identifiers and a total output budget of 0–10,000 rows. A complete relation that would overflow the remaining budget returns `output-limit` and consumes zero rows. Source and rule evaluation use the checker's ordinary work limits.
 
 For a semiderived head, complete describes the inferred extension alone. Caller-asserted rows remain in the input snapshot.
+
+### Proofs using grounded absence
+
+A finite witness can use negative premises over covered asserted inputs. Each negative role is grounded by a positive premise or an admitted literal. The proof records the rule, clause, positive premises and exact bindings. Replay reconstructs the entire correlated negative tuple against the bound snapshot. Uncovered and opaque inputs cannot establish absence. An edit invalidates the snapshot binding. Use `why_not` with ordered targets to inspect related blocked tuples against the same loaded inputs.

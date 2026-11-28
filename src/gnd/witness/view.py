@@ -154,6 +154,11 @@ def _why_not_explanation(payload):
 
 def why_not_view(payload):
     """The default CLI view of a why-not payload: structure and counts, no values."""
+    if payload["schema_version"] == "gnd-why-not-batch/1":
+        return {"schema_version": payload["schema_version"], "status": "batch", "exit_code": payload["exit_code"],
+                "setup_work": {key: int(value) for key, value in payload["setup_work"].items()},
+                "results": [{"request_index": row["request_index"], **why_not_view(row)}
+                                       for row in payload["results"]]}
     return {
         "schema_version": payload["schema_version"],
         "exit_code": payload["exit_code"],

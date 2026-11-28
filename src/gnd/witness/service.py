@@ -379,21 +379,14 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
-def _why_not_intake_limits():
-    """Project the why-not input ceilings onto the witness lane's limits class."""
-    from dataclasses import replace
+def _why_not_intake_limits(limits=None):
+    """Project validated explanation limits onto the bounded wire reader."""
+    from gnd.witness.types import WhyNotWireLimits
+    from gnd.witness.why_not import DEFAULT_WHY_NOT_LIMITS
 
-    from gnd.witness.types import DEFAULT_LIMITS
-    from gnd.witness.why_not import DEFAULT_WHY_NOT_LIMITS as limits
-
-    return replace(
-        DEFAULT_LIMITS,
-        bytes=limits.bytes,
-        container_depth=limits.container_depth,
-        scalar_bytes=limits.scalar_bytes,
-        numeric_digits=limits.numeric_digits,
-        targets=1,
-    )
+    limits = limits or DEFAULT_WHY_NOT_LIMITS
+    return WhyNotWireLimits(bytes=limits.bytes, container_depth=limits.container_depth,
+                            scalar_bytes=limits.scalar_bytes, numeric_digits=limits.numeric_digits)
 
 
 def _why_not_envelope(exit_code, status, reason, *, explanation=None, work=None):
@@ -418,37 +411,81 @@ _WHY_NOT_EXITS = {"blocked": 0, "derived": 0, "unsupported": 2, "unavailable": 4
 
 
 @parse_scoped
-def why_not_result(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
+def why_not_result(model_path, population_path, fact_type, *, row_path=None, reference_root=None,
+                   targets=None, limits=None):
     """Explain why a derived fact type, or one claimed row of it, is not derived."""
     from ruamel.yaml.error import YAMLError
 
-    from gnd.witness.io import intake, load_targets, model_wire, population_wire
-    from gnd.witness.why_not import WhyNotWorkError, explain
+    from gnd.documents import Model
+    from gnd.population import Population
+    from gnd.witness.io import (
+        intake,
+        load_targets,
+        model_wire,
+        parse_targets,
+        population_wire,
+        validate_witness_structure,
+    )
+    from gnd.witness.why_not import (
+        DEFAULT_WHY_NOT_LIMITS,
+        WhyNotLimits,
+        WhyNotWorkError,
+        checked_why_not_limits,
+        explain_many,
+    )
 
     refused = _why_not_envelope(3, "refused", "input-invalid", work={})
     try:
         if type(fact_type) is not str:
             return refused
-        limits = _why_not_intake_limits()
-        row = None
-        if row_path is not None:
-            (target,) = load_targets(row_path, limits=limits)
-            if target["fact_type"] != fact_type:
+        selected_limits = DEFAULT_WHY_NOT_LIMITS if limits is None else (
+            WhyNotLimits(**limits) if isinstance(limits, dict) else limits)
+        checked_why_not_limits(selected_limits)
+        wire = _why_not_intake_limits(selected_limits)
+        if targets is not None and row_path is not None:
+            return refused
+        requests = None
+        if targets is not None:
+            request = {"version": 1, "targets": targets}
+            validate_witness_structure(request, limits=wire)
+            requests = parse_targets(request, limits=wire)
+        elif row_path is not None:
+            requests = load_targets(row_path, limits=wire)
+        if requests and any(target["fact_type"] != fact_type for target in requests):
+            return refused
+        if isinstance(model_path, Model) or isinstance(population_path, Population):
+            if not isinstance(model_path, Model) or not isinstance(population_path, Population):
                 return refused
-            row = target["tuple"]
-        model, candidate, context, _, _ = _witness_inputs(
-            model_path, population_path, reference_root
-        )
+            model, candidate = model_path, population_path
+            if not candidate.matches_validation_marker(model):
+                return refused
+            if reference_root is not None:
+                context = model_module.bind_declared_references(model, root=reference_root)
+            else:
+                context = model_module.resolve_context(model) if model.reference_populations else None
+        else:
+            model, candidate, context, _, _ = _witness_inputs(model_path, population_path, reference_root)
         raw_refs = tuple((o.id, raw) for o, _, raw in context._snapshots) if context else ()
-        intake(
-            model_wire(model),
-            population_wire(candidate),
-            raw_refs,
-            limits=limits,
-        )
-        result = explain(
-            model, candidate, fact_type, row=row, references=context, near_misses=True
-        ).to_dict()
+        intake(model_wire(model), population_wire(candidate), raw_refs, limits=wire)
+        rows = [t["tuple"] for t in requests] if requests else [None]
+        try:
+            setup, outcomes = explain_many(model, candidate, fact_type, rows=rows, references=context,
+                                          limits=selected_limits, near_misses=True)
+        except WhyNotWorkError as error:
+            setup, outcomes = error.work, [error] * len(rows)
+        results = []
+        for outcome in outcomes:
+            if isinstance(outcome, WhyNotWorkError):
+                results.append(_why_not_envelope(4, "refused", "work-limit", work=outcome.work))
+            else:
+                result = outcome.to_dict()
+                results.append(_why_not_envelope(_WHY_NOT_EXITS[result["status"]], result["status"],
+                                                 result["reason"], explanation=result))
+        if len(results) == 1:
+            return results[0]
+        return {"schema_version": "gnd-why-not-batch/1", "status": "batch",
+                "exit_code": max(result["exit_code"] for result in results), "setup_work": setup,
+                "results": [{"request_index": i, **result} for i, result in enumerate(results)]}
     except ModelValidationError as error:
         reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
         return _why_not_envelope(3, "refused", reason)
@@ -464,9 +501,7 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
         YAMLError,
     ):
         return refused
-    return _why_not_envelope(
-        _WHY_NOT_EXITS[result["status"]], result["status"], result["reason"], explanation=result
-    )
+
 
 
 
@@ -500,12 +535,12 @@ def replay(model_path, population_path, certificate_path, *, reference_root=None
     return result_view(result) if resolve() == "customer" else result
 
 
-def why_not(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
+def why_not(model_path, population_path, fact_type, *, row_path=None, reference_root=None, targets=None, limits=None):
     """Explain why a derived fact type, or one claimed row of it, is not derived.
 
     Under the customer disclosure mode the result is the redacted view."""
     result = why_not_result(
-        model_path, population_path, fact_type, row_path=row_path, reference_root=reference_root
+        model_path, population_path, fact_type, row_path=row_path, reference_root=reference_root, targets=targets, limits=limits
     )
     return {**why_not_view(result), "view": "redacted"} if resolve() == "customer" else result
 

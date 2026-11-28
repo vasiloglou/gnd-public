@@ -153,6 +153,27 @@ def _replay_graph(model, candidate, refs, certificate, flags):
         if i not in active:
             active.add(i)
             stack.extend(nodes[i].get("premises", []))
+    populations = (candidate, *refs.values())
+    covered = {name for population in populations for name in population.covers}
+    negative_rows = {}
+
+    def prove_absence(atom, bindings):
+        relation = atom["fact_type"]
+        if relation not in covered or facts[relation].get("derivation") in {"derived", "semiderived"}:
+            raise InvalidProof("negative relation is not covered asserted evidence")
+        if relation not in negative_rows:
+            observed = set()
+            for population in populations:
+                for row in population.facts.get(relation, ()):
+                    if any(isinstance(value, dict) for value in row.values()):
+                        raise UnsupportedScalar("negative relation has unknown values")
+                    observed.add(tuple(_scalar({"primitive": p, "value": row[role]})
+                                       for role, p in roles[relation]))
+            negative_rows[relation] = observed
+        wanted = tuple(_scalar(_term(atom["bind"][role], bindings, p)) for role, p in roles[relation])
+        if wanted in negative_rows[relation]:
+            raise InvalidProof("grounded negative tuple exists")
+
     valid = []
     # Wire references are checked before indexing; all inference errors stay local.
     for n in nodes:
@@ -228,6 +249,8 @@ def _replay_graph(model, candidate, refs, certificate, flags):
                         _equal(bindings[k], v) for k, v in inferred.items()
                     ):
                         raise InvalidProof("incorrect grounding bindings")
+                    for negative in clause.get("negate", []):
+                        prove_absence(negative, inferred)
                     for wi, edge in enumerate(n["premises"][len(body) :]):
                         premise = nodes[edge]
                         if (

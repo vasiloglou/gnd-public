@@ -145,7 +145,10 @@ def target_shape(t):
 
 
 def load_targets(path, *, limits=DEFAULT_LIMITS):
-    doc = read_wire(path, limits=limits)
+    return parse_targets(read_wire(path, limits=limits), limits=limits)
+
+
+def parse_targets(doc, *, limits=DEFAULT_LIMITS):
     record(doc, "version targets")
     if type(doc["version"]) is not int or doc["version"] != 1:
         raise WitnessInputError("unknown request version")
@@ -423,8 +426,7 @@ def support_closure(model, targets):
             supported = False
         for c in iter_derivation_clauses(rule):
             if (
-                c.get("negate")
-                or c.get("aggregate")
+                c.get("aggregate")
                 or any(isinstance(v, (dict, list)) for v in c["head"].values())
             ):
                 supported = False
@@ -436,6 +438,19 @@ def support_closure(model, targets):
                     if isinstance(term, str) and term.startswith("$"):
                         variable_types[term] = p
                     elif isinstance(term, (dict, list)):
+                        supported = False
+            for atom in c.get("negate", []):
+                relation = atom["fact_type"]
+                pending.append(relation)
+                bindings = atom.get("bind", {})
+                if (types[relation].get("derivation") in {"derived", "semiderived"}
+                        or set(bindings) != {role for role, _ in roles[relation]}):
+                    supported = False
+                for role, primitive in roles[relation]:
+                    term = bindings.get(role)
+                    if isinstance(term, (dict, list)) or (
+                        isinstance(term, str) and term.startswith("$") and variable_types.get(term) != primitive
+                    ):
                         supported = False
             for w in c.get("where", []):
                 operands = (w["left"], w["right"])

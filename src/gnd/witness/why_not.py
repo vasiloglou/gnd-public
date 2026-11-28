@@ -56,13 +56,14 @@ class WhyNotLimits:
 
 
 DEFAULT_WHY_NOT_LIMITS = WhyNotLimits()
+HARD_WHY_NOT_LIMITS = WhyNotLimits(scalar_bytes=65_536)
 
 
 def checked_why_not_limits(limits: WhyNotLimits) -> WhyNotLimits:
     if not isinstance(limits, WhyNotLimits) or any(
         type(getattr(limits, f.name)) is not int
         or getattr(limits, f.name) < 1
-        or getattr(limits, f.name) > getattr(DEFAULT_WHY_NOT_LIMITS, f.name)
+        or getattr(limits, f.name) > getattr(HARD_WHY_NOT_LIMITS, f.name)
         for f in fields(WhyNotLimits)
     ):
         raise WhyNotInputError("limits cannot raise the fixed ceilings")
@@ -230,41 +231,62 @@ def explain(
     near_misses: bool = False,
 ) -> WhyNotResult:
     """Explain why ``fact_type_id`` (or one claimed row of it) is not derived."""
+    _, results = explain_many(model, candidate, fact_type_id, rows=[row], references=references,
+                              limits=limits, near_misses=near_misses, require_covered_absence=False)
+    result = results[0]
+    if isinstance(result, WhyNotWorkError):
+        raise result
+    return result
+
+
+def explain_many(model, candidate, fact_type_id, *, rows, references=None,
+                 limits=DEFAULT_WHY_NOT_LIMITS, near_misses=False, require_covered_absence=True):
+    """Prepare one finite relation index, then give every target a new walk budget."""
     checked_why_not_limits(limits)
     index = ModelIndex.for_model(model)
     target = index.fact_type(fact_type_id) if isinstance(fact_type_id, str) else None
-    if target is None:
-        raise WhyNotInputError("unknown fact type")
-    if target.get("derivation") not in ("derived", "semiderived") or not isinstance(
-        target.get("derivation_rule"), (dict, str)
-    ):
-        raise WhyNotInputError("fact type is not derived")
-    mode = "rule" if row is None else "row"
-    if row is not None:
-        try:
-            validate_targets([{"fact_type": fact_type_id, "tuple": row}], model)
-            _identity_row(cell["value"] for cell in row)
-        except (WitnessInputError, ValueError, TypeError, KeyError, AttributeError) as error:
-            raise WhyNotInputError("malformed row") from error
-    budget = _Budget(limits)
+    if target is None or target.get("derivation") not in ("derived", "semiderived"):
+        raise WhyNotInputError("unknown or non-derived fact type")
     rule = target.get("derivation_rule")
+    if not isinstance(rule, (dict, str)):
+        raise WhyNotInputError("fact type has no rule")
+    try:
+        validate_targets([{"fact_type": fact_type_id, "tuple": row} for row in rows if row is not None], model)
+        for row in rows:
+            if row is not None:
+                _identity_row(cell["value"] for cell in row)
+    except (WitnessInputError, ValueError, TypeError, KeyError, AttributeError) as error:
+        raise WhyNotInputError("malformed row") from error
+    budget = _Budget(limits)
+
+    def unsupported(reason):
+        return dict(budget.work), [
+            _status(fact_type_id, "rule" if row is None else "row", "unsupported", reason, work=budget.work)
+            for row in rows]
+
     if isinstance(rule, str):
-        return _status(fact_type_id, mode, "unsupported", "rule-opaque", work=budget.work)
+        return unsupported("rule-opaque")
     if any(isinstance(clause.get("aggregate"), dict) for clause in iter_derivation_clauses(rule)):
-        return _status(fact_type_id, mode, "unsupported", "aggregate", work=budget.work)
+        return unsupported("aggregate")
     closure = _closure(index, fact_type_id)
     combined = (
         bind_population(model, candidate, references=references).combined
         if references is not None
         else candidate
     )
+    negative_sources = {
+        atom["fact_type"] for fid in closure
+        for clause in iter_derivation_clauses((index.fact_type(fid) or {}).get("derivation_rule"))
+        for atom in clause.get("negate", [])
+    }
+    uncovered = sorted(negative_sources.difference(combined.covers))
     if any(
         _is_opaque(value)
         for fact_id in closure
         for fact in combined.facts.get(fact_id, ())
         for value in fact.values()
     ):
-        return _status(fact_type_id, mode, "unsupported", "opaque-value", work=budget.work)
+        return unsupported("opaque-value")
     # Opaque rows outside the closure cannot reach the target; strip them so
     # the evaluator takes the exact path, as check's dispatch does.
     safe = {
@@ -283,7 +305,25 @@ def explain(
     walk = _Walk(
         model, index, population, relations, result.extensions, budget, near_misses=near_misses
     )
-    return walk.explain(fact_type_id, row, depth=0, path=())
+    setup_work = dict(budget.work)
+    results = []
+    for row in rows:
+        walk.budget = _Budget(limits)
+        if len(rows) == 1:
+            walk.budget.work.update(setup_work)
+        walk.near_miss_inspections = 0
+        walk._spellings.clear()
+        walk._candidate_spellings.clear()
+        try:
+            result = walk.explain(fact_type_id, row, depth=0, path=())
+            if require_covered_absence and uncovered and result.status == "derived":
+                detail = {"reason": "negative-relation-not-covered", "source_relation": uncovered[0], "binding": {}}
+                result = _status(fact_type_id, result.mode, "unavailable", detail["reason"], detail,
+                                 work=walk.budget.work)
+            results.append(result)
+        except WhyNotWorkError as error:
+            results.append(error)
+    return setup_work, results
 
 
 class _Walk:

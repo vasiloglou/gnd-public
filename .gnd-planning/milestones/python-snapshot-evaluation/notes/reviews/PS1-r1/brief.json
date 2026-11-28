@@ -1,0 +1,72 @@
+{
+  "base": "4962a4e1",
+  "claims": [],
+  "created": "2026-11-28T14:48:06.932737+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/reviews/PS1-r1/diff.patch",
+      "sha256": "a92c13c886a49664c071f656539f61be7a1af30f5b932c4e07b1fdf85885707a"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS1/dynamic-query-successor.json",
+      "sha256": "536357630bf7adac6f809815a8799832444f9f211ae5150ba8466a383474e988"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "ce5535b3a857d33a9efeab5a3678deb251c237501f172a2e101025c3bb0c7cdb"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "a534e61d42fca0826fc127e258dc0a2fa1a9573c6739413d21d775288b538b0d"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "8619dd4c0441df1fd0d0212da23b311569c6963aca2f02451588a37cecf2c66c"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "16c51e1151e34be69751168881f5bd9f6d96452181d274c54b7c93e622e9278b"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "5e3677bb75ce0970e2310fadc460f03637a0c51c0307536dea75c459a368c5c3"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "1d4f4832c61ff271935dd0ea36929392a57eedac31fde3b2d2b505c7d623cfe4"
+    },
+    {
+      "path": "src/gnd/disclosure.py",
+      "sha256": "ddc7ce17e9e87d24b3f31fd8168bba6cc77a0f42f9bbd3dafe50fc9d5ace0a24"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "10df189e22ca8545a8ea55550fc77293acd38e426192adfc8e889fd4f5700b22"
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "sha256": "1c993d41efc81738df271c5fc952352f11c02d9bf7704234b6ac3b4b5d6c6d3e"
+    },
+    {
+      "path": "tests/test_python_snapshot_evaluation_phase1.py",
+      "sha256": "9d07fe9001d441d831c7bbcf207f589242c09dc51d78f9f8763902053935a951"
+    },
+    {
+      "path": "tests/test_v61_phase2_api.py",
+      "sha256": "e483a7b50479d08be6d268fb41bc6676467f4bb6132f30e09049bb969d8b2861"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/phase-PS1-spec.md",
+      "sha256": "8b3c6531f3ae19f506ffc1ee31dd2ee73f4df3de8599b93ea0453a35689e6383"
+    }
+  ],
+  "head": "974cd754f852ad35181abdd17bef9399a465ea24",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the public Python snapshot verdict accessor preserve run status, disclosure and refusal semantics across its declared envelopes, and does the opt-in vacuity policy match the CLI? Reproduce specific failures using legal inputs.",
+  "subject": "phase",
+  "version": 1
+}

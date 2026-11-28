@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "reason": "DB2 binds catalog columns and evaluates the supported model constraints in a local read-only DuckDB transaction.",
+  "predecessor": ".gnd-planning/milestones/duckdb-rule-checking/evidence/DB1/review-query-successor.json",
+  "predecessor_sha256": "94635ad17478f5e7b594ae7037868e4abe0269233f3de5ea6b7b4194e56fecd6",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/duckdb_check.py",
+      "_projection",
+      "_TYPES.get(primitive, ())",
+      1
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "_projection",
+      "schema[column]",
+      1
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "_queries",
+      "roles[fact]",
+      1
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "_queries",
+      "roles[fact][role]",
+      1
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "_queries",
+      "rosters[obj]",
+      1
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "_relations",
+      "mapping[r]",
+      1
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "_relations",
+      "roles[name]",
+      3
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "column",
+      "roles[fact]",
+      1
+    ],
+    [
+      "src/gnd/duckdb_check.py",
+      "source",
+      "facts[fact]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8475,
+  "result_occurrences": 10528
+}

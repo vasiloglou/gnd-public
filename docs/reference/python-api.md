@@ -598,3 +598,17 @@ The model path is local to the worker. Local path aliases resolve to the same ca
 The worker rereads model bytes for each request, reuses one loaded standalone model and EvaluationSession, and replaces both when the model path or digest changes. Reference-population and include-dependent models require their bound inputs and are outside protocol v1. Closing stdin exits the worker. After a process failure, launch a new worker and resend the entire request. Its first valid request loads the model. Use one writer per worker and the ordinary disclosure environment for the intended audience.
 
 The wheel accepts Pydantic >=2.12.5,<2.14. The installed-worker and derived-row examples were exercised on Python 3.14.3 with Pydantic 2.12.5 and 2.13.4. The repository lock retains 2.13.4.
+
+### Bind a read-only DuckDB snapshot
+
+Install DuckDB in the caller's Python environment (direct checks exercised with 1.5.5). Supply exact names of local main-schema base tables and columns. For example, the following maps the two roles of a fact to the corresponding database fields.
+
+```python
+report = api.check_duckdb("model.orm.json", "snapshot.duckdb", bindings={
+    "version": 1,
+    "facts": {"assignment": {"table": "assignments", "roles": {"person": "person_id", "team": "team_id"}}},
+    "instances": {"person": {"table": "people", "column": "person_id"}},
+}, max_examples=20, timeout_seconds=30)
+```
+
+The gnd-duckdb-check/1 report supports fact-level uniqueness and mandatory participation, and single-fact projections on each side of subset rules. Bind every role of each participating asserted fact. Mandatory participation requires an explicit roster and coverage of other facts involving that object type. The supported model uses value types without subtyping; the supported columns are VARCHAR, BOOLEAN and signed integer types. NULL, views, incomplete columns and incompatible types produce fixed input errors. An unbound required relation produces an unchecked constraint. The adapter preserves repeated physical facts for uniqueness. An empty applicable fact scope produces vacuous. A successful evaluation returns the model, file and projection digests plus the DuckDB version. Keep the database checkpointed. The connection is read-only, with external access disabled, one worker thread, 256 MB engine memory and no disk spill. The deadline is 1–120 seconds. Witnesses use role order and deterministic typed ordering, with a cap of 0–100 rows per rule. Customer mode or a model with restricted roles omits counts and examples.

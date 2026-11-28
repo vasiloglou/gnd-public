@@ -45,3 +45,5 @@ python -c 'import json; r=json.load(open("next.json")); g=r["group"]; print(json
 python -m gnd.evolve.consolidation codes.json --decision decision.json
 python -m gnd.evolve.consolidation codes.json
 ```
+
+The journal writer uses a POSIX directory lock and descriptor-relative publication. A model edited before its pending proposal was staged retires that intent with `superseded-before-publication`. Inspect the new model and request a fresh decision. If evolution had already staged evidence before a divergent edit, reconcile its immutable proposal and pending state before proceeding. Preserve each removed declaration's source spans and every citation for each moved row. A changed predicate requires separate review; consolidation preserves existing constraints.

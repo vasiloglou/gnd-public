@@ -1,8 +1,9 @@
 """Drive one reviewed consolidation decision with the ordinary evolution transaction."""
 
 import argparse
+import os
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Literal
 
@@ -51,14 +52,15 @@ class Decision(BaseModel):
 
 
 def _located_rows(fact, mapping):
-    spans = {
-        entry["row"]: entry["span"]
-        for entry in (fact.get("provenance") or {}).get("sample_spans", [])
-    }
+    spans = defaultdict(list)
+    for entry in (fact.get("provenance") or {}).get("sample_spans", []):
+        if not isinstance(entry, dict) or type(entry.get("row")) is not int or "span" not in entry:
+            raise ValueError("invalid source span entry")
+        spans[entry["row"]].append(canonical_json_bytes(entry["span"]))
     result = Counter()
     for i, row in enumerate(fact.get("sample_population") or []):
         mapped = tuple(sorted((mapping[key], identity_key(value)) for key, value in row.items()))
-        result[mapped, canonical_json_bytes(spans.get(i))] += 1
+        result[mapped, tuple(sorted(spans[i]))] += 1
     return result
 
 
@@ -94,8 +96,14 @@ def _check_mutation(decision, group, before, after):
         survivor_ids = members & new_objects.keys()
         for fact_id, roles in old_roles.items():
             for role, player in roles.items():
-                if player in removed and fact_id in new_roles and new_roles[fact_id].get(role) not in survivor_ids:
-                    raise ValueError("a removed object role must reference a surviving group member")
+                if (
+                    player in removed
+                    and fact_id in new_roles
+                    and new_roles[fact_id].get(role) not in survivor_ids
+                ):
+                    raise ValueError(
+                        "a removed object role must reference a surviving group member"
+                    )
     destinations = {}
     required = {}
     affected = set()
@@ -122,7 +130,11 @@ def _check_mutation(decision, group, before, after):
         affected.add(move.target)
     for key, fact in old_facts.items():
         if key not in new_facts:
-            if key not in removed and key not in destinations and not removed.intersection(old_roles[key].values()):
+            if (
+                key not in removed
+                and key not in destinations
+                and not removed.intersection(old_roles[key].values())
+            ):
                 raise ValueError("an unrelated fact was removed")
             if fact.get("sample_population") and key not in destinations:
                 raise ValueError("deleted observations lack a declared destination")
@@ -135,6 +147,35 @@ def _check_mutation(decision, group, before, after):
             required.setdefault(key, Counter()).update(
                 _located_rows(fact, {r: r for r in old_roles[key]})
             )
+    # Each removed declaration must retain its cited locations in the selected survivors.
+    survivors = [surviving[m] for m in members.intersection(surviving)]
+    survivors.extend(new_facts[key] for key in destinations.values())
+    kept_spans = set()
+    for element in survivors:
+        provenance = element.get("provenance") or {}
+        kept_spans.update(canonical_json_bytes(span) for span in provenance.get("spans", []))
+        kept_spans.update(
+            canonical_json_bytes(entry["span"]) for entry in provenance.get("sample_spans", [])
+        )
+    deleted = [old_objects[k] for k in old_objects.keys() - new_objects.keys()]
+    deleted.extend(old_facts[k] for k in old_facts.keys() - new_facts.keys())
+    for element in deleted:
+        if any(
+            canonical_json_bytes(span) not in kept_spans
+            for span in (element.get("provenance") or {}).get("spans", [])
+        ):
+            raise ValueError("a removed declaration lost its source span")
+    # A passing verdict cannot protect a constraint the proposal removed.
+    # An unchanged predicate may move to the surviving host with its observations.
+    current_constraints = {
+        (host["id"] if host else None, canonical_json_bytes(rule, exact_numbers=True))
+        for _, rule, host in new.iter_constraints_shared()
+    }
+    for _, rule, host in old.iter_constraints_shared():
+        old_host = host["id"] if host else None
+        new_host = destinations.get(old_host, old_host)
+        if (new_host, canonical_json_bytes(rule, exact_numbers=True)) not in current_constraints:
+            raise ValueError("consolidation dropped or altered an existing constraint")
     for key, rows in required.items():
         present = _located_rows(new_facts[key], {r: r for r in new_roles[key]})
         if rows - present:
@@ -168,10 +209,25 @@ def step(
     max_pairs=25_000,
 ):
     """Recover a pending decision, apply one supplied decision, or return the next group."""
+    from fcntl import LOCK_EX, flock
+
+    original = Path(model_path).absolute()
+    root = original.parent.resolve(strict=True)
+    path = root / original.name
+    # Serialize a stale-intent retirement with every resume before testing the model CAS.
+    descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        flock(descriptor, LOCK_EX)
+        return _step_locked(
+            path, root, decision, minimum_score, max_decisions, max_items, max_pairs
+        )
+    finally:
+        os.close(descriptor)
+
+
+def _step_locked(path, root, decision, minimum_score, max_decisions, max_items, max_pairs):
     if min(max_decisions, max_items, max_pairs, minimum_score) < 0 or minimum_score > 100:
         raise ValueError("invalid consolidation limits")
-    path = Path(model_path).absolute()
-    root = path.parent
     folder = ".gnd-consolidation/" + sha256_hex(path.name.encode())
     journal = folder + "/decisions.json"
     service = EvolutionService(
@@ -278,6 +334,23 @@ def step(
     if pending["id"] != sha256_hex(canonical_json_bytes(accepted.model_dump(mode="json"))):
         raise ValueError("pending decision identity differs from its contents")
     if accepted.preview:
+        _, live = read_regular_bounded(root, path.name, max_bytes=input_policy.MAX_BYTES)
+        if live.sha256 not in (accepted.model_sha256, accepted.preview.candidate_model.sha256):
+            relative = folder + "/" + accepted.preview.proposal.proposal_id + "/proposal.json"
+            try:
+                read_regular_bounded(root, relative, max_bytes=cap)
+            except (FileNotFoundError, ArtifactError) as error:
+                if not _missing_artifact(error):
+                    raise
+                state.setdefault("superseded", []).append(
+                    {"id": pending["id"], "model_sha256": live.sha256}
+                )
+                state["pending"] = None
+                save()
+                return {"reason": "superseded-before-publication", "decision_id": pending["id"]}
+            raise ValueError(
+                "model changed after evolution evidence was staged; reconcile the recorded proposal"
+            )
         record = service.finalize(service.apply(accepted.preview))
         result = {
             "after": record.new_model_sha256,

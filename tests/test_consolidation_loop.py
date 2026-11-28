@@ -86,7 +86,7 @@ def test_stale_or_incomplete_transfer_leaves_both_facts(tmp_path):
     path, doc = workspace(tmp_path)
     info = step(path)
     before = path.read_bytes()
-    with pytest.raises(ValueError, match="lost a required"):
+    with pytest.raises(ValueError, match="lost a required|lost its source span"):
         step(path, decision=decision(info, "merge", **merge(path, doc, preserve=False)))
     with pytest.raises(ValueError, match="differs"):
         step(path, decision={**decision(info, "leave"), "model_sha256": "a" * 64})
@@ -278,3 +278,46 @@ def test_add_subtype_between_reviewed_members(tmp_path):
     preview = service.preview(proposal)
     info = step(path)
     assert step(path, decision=decision(info, "link-subtype", preview=preview.model_dump(mode="json")))["reason"] == "completed"
+
+
+def test_merge_cannot_silently_drop_source_rule(tmp_path):
+    path, doc = workspace(tmp_path)
+    doc["fact_types"][0]["constraints"] = [{"type": "uniqueness", "roles": ["code"],
+        "modality": "deontic", "source": "user-supplied", "status": "confirmed",
+        "provenance": {"rationale_world_fact": "One observation per code."}}]
+    path.write_text(json.dumps(doc))
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match="constraint"):
+        step(path, decision=decision(step(path), "merge", **merge(path, doc)))
+    assert path.read_bytes() == before
+
+
+@pytest.mark.parametrize("kind", ["declaration", "sample"])
+def test_removing_a_member_keeps_every_source_occurrence(tmp_path, kind):
+    path, doc = workspace(tmp_path)
+    witness = deepcopy(doc["fact_types"][0]["provenance"]["spans"][0])
+    witness["document_sha256"] = "c" * 64
+    if kind == "declaration":
+        doc["fact_types"][0]["provenance"]["spans"].append(witness)
+    else:
+        doc["fact_types"][0]["provenance"]["sample_spans"].insert(0, {"row": 0, "span": witness})
+    path.write_text(json.dumps(doc))
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match="source span"):
+        step(path, decision=decision(step(path), "merge", **merge(path, doc)))
+    assert path.read_bytes() == before
+
+
+def test_stale_unstaged_intent_can_be_superseded(tmp_path, monkeypatch):
+    path, doc = workspace(tmp_path)
+    choice = decision(step(path), "merge", **merge(path, doc))
+    def interrupt(service, preview):
+        raise RuntimeError("before staging")
+    with monkeypatch.context() as m:
+        m.setattr(EvolutionService, "apply", interrupt)
+        with pytest.raises(RuntimeError, match="before staging"):
+            step(path, decision=choice)
+    with path.open("a") as file:
+        file.write("\n")
+    assert step(path)["reason"] == "superseded-before-publication"
+    assert step(path)["reason"] == "needs-decision"

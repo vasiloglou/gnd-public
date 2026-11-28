@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reason": "Consolidation tracks selected group identities, decision journal work, role correspondence and located row counts.",
+  "reason": "CG3 indexes reviewed group and proposal identities, journal state, role maps, source-span multisets and exact predicate preservation.",
   "predecessor": ".gnd-planning/milestones/cross-document-growth/evidence/CG2/dynamic-query-successor.json",
   "predecessor_sha256": "afef430333b89ec478cda451511f36baa9df0cdd34d6228f9d839ac5ab4b3af8",
   "removed": [],
@@ -26,6 +26,12 @@
     [
       "src/gnd/evolve/consolidation.py",
       "_check_mutation",
+      "destinations.get(old_host, old_host)",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
       "new_facts[k]",
       1
     ],
@@ -33,7 +39,7 @@
       "src/gnd/evolve/consolidation.py",
       "_check_mutation",
       "new_facts[key]",
-      2
+      3
     ],
     [
       "src/gnd/evolve/consolidation.py",
@@ -74,7 +80,19 @@
     [
       "src/gnd/evolve/consolidation.py",
       "_check_mutation",
+      "old_facts[k]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
       "old_facts[move.source]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "old_objects[k]",
       1
     ],
     [
@@ -103,6 +121,12 @@
     ],
     [
       "src/gnd/evolve/consolidation.py",
+      "_check_mutation",
+      "surviving[m]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
       "_located_rows",
       "mapping[key]",
       1
@@ -110,16 +134,22 @@
     [
       "src/gnd/evolve/consolidation.py",
       "_located_rows",
-      "spans.get(i)",
+      "spans[entry['row']]",
       1
     ],
     [
       "src/gnd/evolve/consolidation.py",
-      "step",
+      "_located_rows",
+      "spans[i]",
+      1
+    ],
+    [
+      "src/gnd/evolve/consolidation.py",
+      "_step_locked",
       "entry['work'][counter]",
       1
     ]
   ],
-  "result_distinct_rows": 8433,
-  "result_occurrences": 10477
+  "result_distinct_rows": 8438,
+  "result_occurrences": 10483
 }

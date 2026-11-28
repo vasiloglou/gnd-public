@@ -1,0 +1,24 @@
+9de0dc459c7b1682d33670a2459a30a0838e7f6ecbe61575a0aa953c6034b0ab  .gnd-planning/milestones/cross-document-growth/notes/cross-document-growth-plan.md
+.gnd-planning/milestones/cross-document-growth/:
+total 0
+drwxr-xr-x@  4 ***  wheel   128 Nov 28 08:46 .
+drwxr-xr-x@ 53 ***  wheel  1696 Nov 28 08:45 ..
+drwxr-xr-x@  2 ***  wheel    64 Nov 28 08:46 evidence
+drwxr-xr-x@  5 ***  wheel   160 Nov 28 08:45 notes
+
+.gnd-planning/milestones/cross-document-growth/notes/:
+total 40
+drwxr-xr-x@ 5 ***  wheel   160 Nov 28 08:45 .
+drwxr-xr-x@ 4 ***  wheel   128 Nov 28 08:46 ..
+-rw-r--r--@ 1 ***  wheel  6057 Nov 28 08:45 cross-document-growth-plan.md
+-rw-r--r--@ 1 ***  wheel  4456 Nov 28 08:45 phase-CG1-spec.md
+-rw-r--r--@ 1 ***  wheel   695 Nov 28 08:45 plan-request-r1.json
+001-plan-gate.md
+002-phase-GC1.md
+003-phase-GC2.md
+004-milestone-close.md
+README.md
+evidence
+notes
+-rw-r--r--@ 1 ***  wheel   6336 Nov 28 08:45 docs/reference/evolve-policy.md
+-rw-r--r--@ 1 ***  wheel  20512 Nov 28 08:45 src/gnd/evolve/policy.py

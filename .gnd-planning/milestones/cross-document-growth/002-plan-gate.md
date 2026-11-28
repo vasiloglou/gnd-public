@@ -1,0 +1,5 @@
+# Cross-document growth plan gate
+
+Delegated approval (auto=true), 2026-11-28. The owner confirmed six sequential roadmap milestones, light plans and closes, independent phase diffs. This ruling covers Cross-document growth only. Accept r2 at SHA-256 92335b7ea9a913ce966d21bd533a881ced47aca4cf52d860bd90c9bde7fd6332 with plan §§10 and amendment 1–5. The panel reviewed r1 at 9de0dc459c7b1682d33670a2459a30a0838e7f6ecbe61575a0aa953c6034b0ab. R2 has no independent opinion of its own. The run and budget are in [001-panel](001-panel.md).
+
+CG1 spec approved by delegated decision at SHA-256 e4d9c82a7d555dee5ed15dea4ad09457f9479c6e0b4b50c15a3ed9a5a5232fd9. The two-row warning replay documents why only a passing affected verdict can establish admission. Implementation gate requires the public preview/apply, stale-CAS, root ownership, evidence and conflict cases. Budget is the focused default-lane phase tests plus affected consumers and a single independent phase diff; review convergence governs repairs. Merge remains with the owner.

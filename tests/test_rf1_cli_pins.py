@@ -20,8 +20,8 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 65  # OS1 and OS3 add one Ossie leaf each; include-root-routes IR2 adds `gnd flatten`; AC1 adds two COUNT membership leaves; GO5 adds `gnd evolve summary`.
-COUNT_CLI_PATHS = {"gnd", "gnd witness-count", "gnd replay-count"}
+EXPECTED_PARSERS = 67  # OS1 and OS3 add one Ossie leaf each; include-root-routes IR2 adds `gnd flatten`; AC1 adds two COUNT membership leaves; GO5 adds `gnd evolve summary`.
+COUNT_CLI_PATHS = {"gnd consolidate", "gnd consolidate candidates", "gnd", "gnd witness-count", "gnd replay-count"}
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )
@@ -597,6 +597,15 @@ def _count_cli_successor(base):
     }
     for name in base["actions"][-1]["choices"]:
         children.add_parser(name, help=base["subcommands"][name]["listed_help"])
+        if name == "discover":
+            from gnd.commands.discover import _at_least
+
+            group = children.add_parser("consolidate", help="review consolidation candidates in one model")
+            actions = group.add_subparsers(dest="consolidate_action", required=True)
+            leaf = actions.add_parser("candidates", help="find candidate groups with source locations")
+            leaf.add_argument("model")
+            leaf.add_argument("--max-items", type=_at_least(0), default=100_000)
+            leaf.add_argument("--max-pairs", type=_at_least(0), default=25_000)
         if name != "why-not":
             continue
         for count_name, help_text in additions.items():
@@ -612,7 +621,7 @@ def _count_cli_successor(base):
     parsers = {}
     observed = _walk(root, ("gnd",), parsers)
     base["actions"][-1] = observed["actions"][-1]
-    base["subcommands"].update({name: observed["subcommands"][name] for name in additions})
+    base["subcommands"].update({name: observed["subcommands"][name] for name in (*additions, "consolidate")})
     return parsers
 
 
@@ -735,7 +744,7 @@ def test_cli_exit_probe(path, monkeypatch):
             expected["unknown_flag"]["stderr"] = expected["unknown_flag"]["stderr"].replace(
                 "witness,replay,witness-view,why-not,import",
                 "witness,replay,witness-view,why-not,witness-count,replay-count,import",
-            )
+            ).replace("discover,extract", "discover,consolidate,extract")
         _assert_successor("cli-exit", path, observed, expected)
         return
     if path in {"gnd export", "gnd export ossie", "gnd import", "gnd import ossie"}:

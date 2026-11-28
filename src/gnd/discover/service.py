@@ -659,3 +659,30 @@ def _cmd_discover(
     else:
         sys.stdout.write(output.render_text(fields))
     return EXIT_OK
+
+
+def run_candidates(args):
+    """Read a model and emit its consolidation report."""
+
+    from ruamel.yaml.error import YAMLError
+
+    from gnd.evolve.candidates import discover_candidates
+    from gnd.model import load_model
+
+    try:
+        model = load_model(args.model)
+    except FileNotFoundError as error:
+        _stderr(str(error))
+        return EXIT_NO_INPUT
+    except (OSError, ArtifactError) as error:
+        _stderr(str(error))
+        return EXIT_IO
+    except ModelValidationError as error:
+        _stderr("invalid model: " + ", ".join(sorted({issue.rule_id for issue in error.issues})))
+        return EXIT_ILL_FORMED
+    except (ModelLoadError, ReferenceInputError, YAMLError, ValueError):
+        _stderr("could not load the model or its references")
+        return EXIT_ILL_FORMED
+    print(json.dumps(discover_candidates(model, max_items=args.max_items, max_pairs=args.max_pairs),
+                     ensure_ascii=False, sort_keys=True))
+    return 0

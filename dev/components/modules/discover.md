@@ -73,6 +73,7 @@ Components: discover.service
 | `DiscoveryDefect` | class(Exception) | 66 | An internal invariant failed (exit 70). |
 | `near_miss(violations, subjects) -> bool` | function | 70 | IK4-D3: ``1 <= v <= min(32, floor(0.05 d))``. |
 | `discover(model_path, population_path, *, families, max_values, max_pairs, min_support, show_values,…` | function | 198 | Run discovery; return the report fields plus private build inputs. |
+| `run_candidates(args)` | function | 664 | Read a model and emit its consolidation report. |
 
 ## gnd.discover.support — `src/gnd/discover/support.py`
 Components: discover.population_view

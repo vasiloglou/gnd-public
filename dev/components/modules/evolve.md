@@ -30,6 +30,14 @@ Ownership and authenticated evolution history; resolution stays in model.
 | `exclude_input_outputs(model_path, declarations, outputs)` | function | 346 | Refuse declared dependency spellings and existing aliases before writing. |
 | `included_hosts(model)` | function | 371 | Verified included fact-type identities for replay and proposal writers. |
 
+## gnd.evolve.candidates — `src/gnd/evolve/candidates.py`
+Components: evolve.candidates
+Read-only consolidation signals for one validated conceptual model.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `discover_candidates(model, *, max_items, max_pairs)` | function | 132 | Return deterministic groups, provenance and explicit charged work. |
+
 ## gnd.evolve.cli_service — `src/gnd/evolve/cli_service.py`
 Components: evolve.command
 (no docstring)

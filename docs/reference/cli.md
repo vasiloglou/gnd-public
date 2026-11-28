@@ -47,6 +47,7 @@ does not add trace fields.
 
 | Command form | Result |
 |---|---|
+| `gnd consolidate candidates MODEL [--max-items N] [--max-pairs N]` | Ranked consolidation groups with source locations. The JSON includes group and evidence hashes, work counters and an explicit completion reason. |
 | `gnd codegen MODEL --out DIR` | Derived project files and initial extension structure |
 | `gnd conformance MODEL DIR --format json` | Static integrity, currency, structure and architecture findings |
 | `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT --check-population FILE] [--shape-report] [--previous-include ID=PATH]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations, and [admits a constraint on clean data](evolve-policy.md#admitting-a-constraint-on-clean-data) with `--check-population`; the [shape report](evolve-policy.md#shape-report) lists same-shaped fact types |

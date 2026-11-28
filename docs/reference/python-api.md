@@ -557,3 +557,16 @@ receipts. These are shared-host observations with small samples and recorded ran
 not guaranteed speedups. Compare arms within a run; the earlier IE5 numbers use a
 separate measurement and must not be chained into a speedup claim. The missing
 547-program workload still prevents downstream performance acceptance.
+
+### Reading a snapshot verdict
+
+Pass the versioned result of `api.check` to `api.snapshot_verdict(report)`. It returns `status`, `exit_code`, `constraints`, `derivations`, `warnings` and `diagnostics`. It accepts plain check schemas 7, 9, 10, 11, 13 and 15–17 and reference wrappers 12 and 14. Unknown versions return `unsupported-schema`. A malformed or unrelated report returns `invalid-report`. A missing population returns `invalid-input` even if all counts are zero. Other statuses are `accepted`, `violated`, `inadequate`, `vacuous`, `unchecked` and `internal-error`. Inspect individual verdicts for mixed outcomes. The accessor preserves the original report. Customer mode exposes only the closed verdict labels and run status, since the supplied report may have been produced under a different policy.
+
+```python
+from gnd import api
+
+report = api.check("model.orm.yaml", "facts.json", allow_vacuous=True)
+decision = api.snapshot_verdict(report)
+```
+
+The Python keyword matches `gnd check model.orm.yaml facts.json --allow-vacuous`. It defaults to false, applies to plain snapshots and changes only the acceptance of an otherwise vacuous run. Each vacuous verdict stays visible. For “every requested item has an outcome”, bind the item in a `requested` antecedent and require a matching `outcome` in a guarded existential. With a known request, a covered empty outcome relation violates the rule. Missing outcome coverage leaves it unchecked. A role-local mandatory constraint on outcomes alone can be vacuous for an empty outcome extension.

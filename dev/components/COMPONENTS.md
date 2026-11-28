@@ -2208,7 +2208,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.api
 - does: Expose complete review or compact growth-prompt text and in-process checking reports with receipts and reusable evaluation sessions.
-- verbs: validate, validate with source documents, check, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
+- verbs: validate, validate with source documents, check, snapshot_verdict, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
 - in: paths or loaded GND objects; per-operation options
 - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
 - status: canonical

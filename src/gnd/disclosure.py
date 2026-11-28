@@ -123,7 +123,7 @@ SURFACES: Mapping[str, Surface] = {
     **{f"api:EvaluationSession.{name}": Surface(**_DECLARED, note="delegates to the gnd.api function")
        for name in ("check", "check_with_receipt", "transition")},
     **{f"api:{name}": Surface(**_VIEW) for name in (
-        "witness", "replay", "why_not", "export_lean", "export_souffle", "run_souffle", "souffle_witness")},
+        "witness", "replay", "why_not", "snapshot_verdict", "export_lean", "export_souffle", "run_souffle", "souffle_witness")},
     "api:EvaluationSession.check_with_feedback": Surface("every-mode", note="session feedback is applied"),
     "api:EvaluationSession.observe": Surface("every-mode", note="returns the caller's own population"),
     "api:compose": Surface("every-mode", note="returns the caller's own composed population"),

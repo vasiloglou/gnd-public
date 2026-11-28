@@ -556,7 +556,12 @@ def execute(row: dict, tmp_path: Path, monkeypatch, *, measurement: dict | None 
             return result
         save(b)
         result = produce(b)
-        assert replay(b)["exit_code"] == result["exit_code"]
+        if construct == "negative":
+            # This fixture negates its own positive premise. The previous positive proof
+            # cannot replay, and the new rule cannot produce a grounded witness.
+            assert replay(b)["results"][0]["status"] == "invalid"
+        else:
+            assert replay(b)["exit_code"] == result["exit_code"]
         return result
     if mode == "comparison":
         comparison(b, p)

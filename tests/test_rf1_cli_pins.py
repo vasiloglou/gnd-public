@@ -197,6 +197,17 @@ def _restore_frozen(parser, node, *, types=None):
     return children
 
 
+def _ordered_why_not_successor():
+    base = json.loads(golden_path("cli", "tree").read_text())["subcommands"]["why-not"]
+    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    _restore_frozen(parser, base)
+    next(action for action in parser._actions if action.dest == "row").help = (
+        "a witness request holding ordered target rows for the selected fact type")
+    tree = _walk(parser, ("gnd", "why-not"), {})
+    tree["listed_help"] = base["listed_help"]
+    return tree, parser
+
+
 def _witness_projection_successor(command):
     """Add the two rooted projection options to the frozen witness parser."""
     base = json.loads(golden_path("cli", "tree").read_text())["subcommands"][command]
@@ -644,6 +655,7 @@ def test_cli_tree(tree):
         expected["subcommands"][command] = _ossie_successor(command)["tree"]
     for command in ("witness", "replay"):
         expected["subcommands"][command] = _witness_projection_successor(command)[0]
+    expected["subcommands"]["why-not"] = _ordered_why_not_successor()[0]
     flattened = _flatten_successor()["tree"]
     expected["actions"] = flattened["actions"]
     expected["subcommands"]["flatten"] = flattened["subcommands"]["flatten"]
@@ -654,6 +666,10 @@ def test_cli_tree(tree):
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path == "gnd why-not":
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": _ordered_why_not_successor()[1].format_help()})
+        return
     if path in ROUND_SUMMARY_PATHS:
         parser = _round_summary_successor(json.loads(golden_path("cli", "tree").read_text()))[path]
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -710,6 +726,11 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path == "gnd why-not":
+        observed = {"help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+                    "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()}}
+        _assert_successor("cli-exit", path, observed, _guarded_successor_probe(_ordered_why_not_successor()[1]))
+        return
     if path in ROUND_SUMMARY_PATHS:
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},

@@ -103,7 +103,10 @@ def test_phase3_branch(row: dict, tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     started = time.monotonic()
     measurement = {}
     result = execute(row, tmp_path, monkeypatch, measurement=measurement)
-    assert_answer(result, ANSWERS[row["id"]])
+    expected = ANSWERS[row["id"]]
+    if row["mode"] == "unsupported" and row["parameters"].get("construct") == "negative":
+        expected = {**expected, "exit_code": 2, "status": "missing"}  # PS3 grounded absence
+    assert_answer(result, expected)
     if row["mode"] in {"input-limit", "work-limit", "diamond", "view-limit"}:
         assert (
             time.monotonic()

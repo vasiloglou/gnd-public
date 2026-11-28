@@ -719,7 +719,8 @@ def _check_unresolved(
     output the disclosure mode does not govern."""
     if not isinstance(allow_vacuous, bool):
         raise TypeError("allow_vacuous must be a boolean")
-    if allow_vacuous and (admission or compiled_operations or composition is not None):
+    if allow_vacuous and (admission or compiled_operations or composition is not None
+                          or anchors is not None or document is not None):
         raise ValueError("allow_vacuous applies to the plain snapshot check only")
     if not isinstance(compiled_operations, bool):
         raise TypeError('compiled_operations must be a boolean')
@@ -798,9 +799,9 @@ def snapshot_verdict(report: dict[str, Any]) -> dict[str, Any]:
         # A supplied report may have been issued under a different disclosure mode.
         # Project only closed schema verdict tags, never incoming messages or witnesses.
         for field, source in (("constraints", "verdicts"), ("derivations", "derivations")):
-            result[field] = [{"verdict": item["verdict"]} for item in body.get(source, [])]
+            result[field] = [{"verdict": item["verdict"]} for item in (body.get(source, []) or [])]
         return result
-    result.update(constraints=deepcopy(body["verdicts"]), derivations=deepcopy(body.get("derivations", [])),
+    result.update(constraints=deepcopy(body["verdicts"]), derivations=deepcopy(body.get("derivations") or []),
                   warnings=deepcopy(body["warnings"]), diagnostics=deepcopy(body["issues"]))
     if body["error"] is not None:
         result["diagnostics"].append(deepcopy(body["error"]))

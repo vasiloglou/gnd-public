@@ -92,3 +92,18 @@ def test_requested_inventory_grounds_outcome_coverage(tmp_path, outcomes, expect
                                "facts": rows}))
     raw = api.check(model, pop, allow_vacuous=True)
     assert api.snapshot_verdict(raw)["status"] == expected
+
+
+@pytest.mark.parametrize("mode", ["internal", "customer"])
+def test_null_derivation_list_in_real_report(monkeypatch, mode):
+    root = files("gnd").joinpath("examples", "approvals")
+    raw = api.check(root / "model.orm.yaml", root / "state.pop.yaml")
+    assert raw["derivations"] is None
+    monkeypatch.setenv("GND_DISCLOSURE", mode)
+    assert api.snapshot_verdict(raw)["derivations"] == []
+
+
+@pytest.mark.parametrize("kwarg", ["anchors", "document"])
+def test_vacuity_and_anchored_options_are_mutually_exclusive(kwarg):
+    with pytest.raises(ValueError, match="plain snapshot"):
+        api.check("missing-model", "missing-pop", allow_vacuous=True, **{kwarg: "missing"})

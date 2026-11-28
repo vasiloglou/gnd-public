@@ -570,3 +570,5 @@ decision = api.snapshot_verdict(report)
 ```
 
 The Python keyword matches `gnd check model.orm.yaml facts.json --allow-vacuous`. It defaults to false, applies to plain snapshots and changes only the acceptance of an otherwise vacuous run. Each vacuous verdict stays visible. For “every requested item has an outcome”, bind the item in a `requested` antecedent and require a matching `outcome` in a guarded existential. With a known request, a covered empty outcome relation violates the rule. Missing outcome coverage leaves it unchecked. A role-local mandatory constraint on outcomes alone can be vacuous for an empty outcome extension.
+
+The vacuity override uses the CLI's plain schema-7 model policy. Reference-bound, temporal and declared-redaction models are refused by that policy. Anchored, admission, composed and compiled checks cannot be combined with the override.

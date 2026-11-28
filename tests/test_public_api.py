@@ -13,7 +13,7 @@ FIXTURES = Path(__file__).parent / "fixtures/public-launch-phase-2"
 
 
 def test_public_exports_and_current_keyword_signatures():
-    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model", "snapshot_verdict")
+    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model", "snapshot_verdict", "check_with_extensions")
     expected = {
         "validate": ("model", "unredacted", "references"),
         "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references", "composition", "sources", "allow_vacuous"),

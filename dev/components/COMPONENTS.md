@@ -1937,7 +1937,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: CheckReport with constraint and derivation verdicts, fact-type coverage and internal semantic projection or refusal information.
 - status: canonical
 - modules: src/gnd/checker/__init__.py, src/gnd/checker/_core.py, src/gnd/checker/_composed.py
-- uses: check.branches, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
+- uses: check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
 - used_by: assurance.policy, check.admission, check.batch, check.service, cli.api, cli.checking_command, cli.dispatch, discover.service, evolve.population_check, exp.acceptance, export.ilp_service, export.verification, … +19 more (graph.md)
 - part_of: subsystem.check
 - tests: tests/test_checker_families.py, tests/test_public_branch_runtime.py, tests/test_v62_phase5_checker.py, tests/test_anchor_sidecar_v2.py, tests/test_reference_population_corpus.py, tests/test_compiled_snapshot_obligations.py
@@ -2208,7 +2208,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.api
 - does: Expose complete review or compact growth-prompt text and in-process checking reports with receipts and reusable evaluation sessions.
-- verbs: validate, validate with source documents, check, snapshot_verdict, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
+- verbs: validate, validate with source documents, check, snapshot_verdict, check_with_extensions, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
 - in: paths or loaded GND objects; per-operation options
 - out: report dictionaries or complete model review text; optional in-process receipt or session feedback
 - status: canonical
@@ -2399,7 +2399,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/extension_preparation.py
 - uses: check.branches
-- used_by: check.incremental_reuse, check.service, check.snapshot_decision, cli.api, semantics.extensions
+- used_by: check.incremental_reuse, check.service, check.snapshot_decision, checker.evaluate, cli.api, semantics.extensions
 - tests: tests/test_m3_extension_preparation.py, tests/test_incremental_baseline.py, tests/test_incremental_observations.py
 - notes: Same-identity nested scopes share records; this evaluation-local preparation is separate from check.incremental_reuse across transactions.
 

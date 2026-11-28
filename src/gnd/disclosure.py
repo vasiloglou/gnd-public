@@ -119,7 +119,7 @@ SURFACES: Mapping[str, Surface] = {
     "gnd import ossie": Surface(
         "every-mode", note="restores whatever model content the ontology and its sidecar carry"),
     **{f"api:{name}": Surface(**_DECLARED) for name in (
-        "validate", "check", "diff", "verbalize", "transition", "check_with_receipt", "judgments")},
+        "validate", "check", "check_with_extensions", "diff", "verbalize", "transition", "check_with_receipt", "judgments")},
     **{f"api:EvaluationSession.{name}": Surface(**_DECLARED, note="delegates to the gnd.api function")
        for name in ("check", "check_with_receipt", "transition")},
     **{f"api:{name}": Surface(**_VIEW) for name in (

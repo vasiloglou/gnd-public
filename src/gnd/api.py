@@ -124,7 +124,7 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose", "verbalize_model", "snapshot_verdict")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose", "verbalize_model", "snapshot_verdict", "check_with_extensions")  # noqa: RUF022 - approved stable order
 
 
 
@@ -751,6 +751,71 @@ def _check_unresolved(
         **({"allow_vacuous": True} if allow_vacuous else {}),
         **({"composition": composition, "sources": sources} if composition is not None else {}),
     ).payload
+
+
+def check_with_extensions(
+    model: str | os.PathLike[str] | Model,
+    population: str | os.PathLike[str] | Population,
+    *,
+    fact_types: list[str] | tuple[str, ...],
+    max_rows: int = 1000,
+    unredacted: bool = False,
+) -> dict[str, Any]:
+    """Check a snapshot and select bounded derived rows from that execution."""
+    from gnd.extension_preparation import CHECKED_EXTENSIONS
+    from gnd.model import _derivation_dependency_closures
+    from gnd.model_index import ModelIndex
+    from gnd.redaction import RedactionPolicy
+
+    if not isinstance(fact_types, (tuple, list)) or not 1 <= len(fact_types) <= 64:
+        raise ValueError("fact_types must contain between one and 64 identifiers")
+    requested = tuple(fact_types)
+    if (not all(isinstance(identifier, str) and identifier for identifier in requested)
+            or len(set(requested)) != len(requested)):
+        raise ValueError("fact_types must contain distinct nonempty identifiers")
+    if type(max_rows) is not int or not 0 <= max_rows <= 10_000:
+        raise ValueError("max_rows must be an integer between zero and 10000")
+    raw = _values_allowed(unredacted, "unredacted=True")
+    _check_model_input(model)
+    _check_population_input(population, name="population")
+    selected = {key: {"fact_type": key, "status": "unavailable"} for key in requested}
+
+    def observe(checked_model, checked_population, extensions):
+        index = ModelIndex.for_model(checked_model)
+        policy = RedactionPolicy.from_model(checked_model)
+        closures = _derivation_dependency_closures(checked_model.model_dump())
+        covered = set(checked_population.covers)
+        unavailable = getattr(extensions, "unavailable", {})
+        possible = getattr(extensions, "possible", {})
+        remaining = max_rows
+        for key in requested:
+            fact = index.fact_type(key)
+            if fact is None or not isinstance(fact.get("derivation_rule"), dict):
+                continue
+            item = selected[key]
+            if not raw and (policy.fact_roles(key) or policy.derivation_roles(key)):
+                item["status"] = "protected"
+                continue
+            inputs, complete, _reason = closures.get(key, ((), False, None))
+            relation = extensions.get(key)
+            if (not complete or not covered.issuperset(inputs) or relation is None
+                    or key in unavailable or possible.get(key)):
+                continue
+            if len(relation.rows) > remaining:
+                item["status"] = "output-limit"
+                continue
+            roles = tuple(role for role, _primitive in relation.roles)
+            item.update(status="complete", rows=[dict(zip(roles, row, strict=True)) for row in relation.rows])
+            remaining -= len(relation.rows)
+
+    token = CHECKED_EXTENSIONS.set(observe)
+    try:
+        result = _run_check(model, population, unredacted=raw)
+    finally:
+        CHECKED_EXTENSIONS.reset(token)
+    if result.exit_code in (3, 70):
+        selected = {key: {"fact_type": key, "status": "unavailable"} for key in requested}
+    return {"report": result.payload, "extensions": list(selected.values())}
 
 
 def snapshot_verdict(report: dict[str, Any]) -> dict[str, Any]:

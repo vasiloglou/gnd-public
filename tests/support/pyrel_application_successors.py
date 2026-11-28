@@ -169,6 +169,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json',
 ]
 
 

@@ -572,3 +572,9 @@ decision = api.snapshot_verdict(report)
 The Python keyword matches `gnd check model.orm.yaml facts.json --allow-vacuous`. It defaults to false, applies to plain snapshots and changes only the acceptance of an otherwise vacuous run. Each vacuous verdict stays visible. For “every requested item has an outcome”, bind the item in a `requested` antecedent and require a matching `outcome` in a guarded existential. With a known request, a covered empty outcome relation violates the rule. Missing outcome coverage leaves it unchecked. A role-local mandatory constraint on outcomes alone can be vacuous for an empty outcome extension.
 
 The vacuity override uses the CLI's plain schema-7 model policy. Reference-bound, temporal and declared-redaction models are refused by that policy. Anchored, admission, composed and compiled checks cannot be combined with the override.
+
+### Reading inferred rows from the check that computed them
+
+Use `api.check_with_extensions(model, population, fact_types=["active"], max_rows=1000)`. The `report` field contains the ordinary check result, including findings about asserted claims. The `extensions` field contains one result per requested identifier, in request order. A missing claim can be unchecked while its inferred rows are complete.
+
+A complete relation includes `rows`, which may be empty. Unknown, non-derived, incompletely covered and uncomputable relations return `unavailable`. Declared protected roles or inputs return `protected` under the ordinary applied disclosure policy. This decision precedes the row cap. Each request accepts 1–64 distinct identifiers and a total output budget of 0–10,000 rows. A complete relation that would overflow the remaining budget returns `output-limit` and consumes zero rows. Source and rule evaluation use the checker's ordinary work limits.

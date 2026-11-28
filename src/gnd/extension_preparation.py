@@ -155,6 +155,10 @@ class CalculationScope:
         return result
 
 
+# The observer exists only while a caller requests the checked extension rows.
+CHECKED_EXTENSIONS: ContextVar[Callable | None] = ContextVar("gnd_checked_extensions", default=None)
+
+
 _SCOPE: ContextVar[CalculationScope | None] = ContextVar("gnd_calculation_scope", default=None)
 
 

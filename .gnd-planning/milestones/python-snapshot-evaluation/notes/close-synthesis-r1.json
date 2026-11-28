@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "run_sha256": "e850076b201b773c77c62e0865bc71f4986473c6f47dcaba9a59b5d066ed1f67",
+  "summary": "Four valid reviewers identified missing measurements or scope in the three submitted artifacts. Two seats supplied no valid opinion. Recheck semantic invalidation and the cross-phase replay first, then report the numerical boundaries, versions, suite selections and review timing.",
+  "agreed_concerns": [
+    {
+      "title": "Replay semantic invalidation, input failure and decisive worker/direct parity",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "worker-semantic-invalidation"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "worker-input-failure-and-semantic-replacement"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "integrated-replay-unchecked-only"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ],
+      "group_id": "group-1",
+      "severity": "medium",
+      "summary": "Replay semantic invalidation, input failure and decisive worker/direct parity"
+    },
+    {
+      "title": "Report exact runtime versions, wheel digest and untested interval",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "python-version-untested-range"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "pydantic-interval-not-narrowed"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "wheel-digest-not-bound"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "pydantic-interior-versions-untested"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ],
+      "group_id": "group-2",
+      "severity": "medium",
+      "summary": "Report exact runtime versions, wheel digest and untested interval"
+    },
+    {
+      "title": "Measure extension calculation, request bounds and disclosure priority",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-criteria-unreported"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-cap-bounds-unevidenced"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-disclosure-order-unevidenced"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "integrated-single-evaluation-unstated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ],
+      "group_id": "group-3",
+      "severity": "high",
+      "summary": "Measure extension calculation, request bounds and disclosure priority"
+    },
+    {
+      "title": "Show ordered versus reversed explanation, exhaustion, coverage and intake bounds",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-criteria-unreported"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps3-close-evidence-gaps"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS3-RULED-SCENARIOS-UNEVIDENCED"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-4",
+      "severity": "high",
+      "summary": "Show ordered versus reversed explanation, exhaustion, coverage and intake bounds"
+    },
+    {
+      "title": "Enumerate supported snapshot versions and scope the tested raw reports and projection",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-redaction-status-unreported"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "supported-envelopes-not-enumerated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS1-WIRE-VERSION-COVERAGE"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-5",
+      "severity": "low",
+      "summary": "Enumerate supported snapshot versions and scope the tested raw reports and projection"
+    },
+    {
+      "title": "Identify phase-specific selections and rerun broad guards after the repairs",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "test-count-regression-unexplained"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS4-BROAD-GUARD-PRE-REPAIR"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi"
+      ],
+      "group_id": "group-6",
+      "severity": "high",
+      "summary": "Identify phase-specific selections and rerun broad guards after the repairs"
+    },
+    {
+      "title": "Record review timing and identify the delegated decisions for each issue",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "REPAIRS-WITHOUT-INDEPENDENT-REVIEW"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-header-and-issue-inventory"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi"
+      ],
+      "group_id": "group-7",
+      "severity": "medium",
+      "summary": "Record review timing and identify the delegated decisions for each issue"
+    }
+  ],
+  "divergent_concerns": [],
+  "prioritized_fixes": [
+    {
+      "title": "Replay semantic invalidation, input failure and decisive worker/direct parity",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "worker-semantic-invalidation"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "worker-input-failure-and-semantic-replacement"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "integrated-replay-unchecked-only"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ],
+      "rank": 1,
+      "fix_id": "fix-1",
+      "action": "Replay semantic invalidation, input failure and decisive worker/direct parity",
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "worker-semantic-invalidation",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "worker-input-failure-and-semantic-replacement",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "integrated-replay-unchecked-only",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Report exact runtime versions, wheel digest and untested interval",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "python-version-untested-range"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "pydantic-interval-not-narrowed"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "wheel-digest-not-bound"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "pydantic-interior-versions-untested"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ],
+      "rank": 2,
+      "fix_id": "fix-2",
+      "action": "Report exact runtime versions, wheel digest and untested interval",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "python-version-untested-range",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "pydantic-interval-not-narrowed",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "wheel-digest-not-bound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "pydantic-interior-versions-untested",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Measure extension calculation, request bounds and disclosure priority",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-criteria-unreported"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-cap-bounds-unevidenced"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-disclosure-order-unevidenced"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "integrated-single-evaluation-unstated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ],
+      "rank": 3,
+      "fix_id": "fix-3",
+      "action": "Measure extension calculation, request bounds and disclosure priority",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-criteria-unreported",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-cap-bounds-unevidenced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-disclosure-order-unevidenced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "integrated-single-evaluation-unstated",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Show ordered versus reversed explanation, exhaustion, coverage and intake bounds",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-criteria-unreported"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps3-close-evidence-gaps"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS3-RULED-SCENARIOS-UNEVIDENCED"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi",
+        "glm"
+      ],
+      "rank": 4,
+      "fix_id": "fix-4",
+      "action": "Show ordered versus reversed explanation, exhaustion, coverage and intake bounds",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-criteria-unreported",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps3-close-evidence-gaps",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS3-RULED-SCENARIOS-UNEVIDENCED",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Enumerate supported snapshot versions and scope the tested raw reports and projection",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-redaction-status-unreported"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "supported-envelopes-not-enumerated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS1-WIRE-VERSION-COVERAGE"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi",
+        "glm"
+      ],
+      "rank": 5,
+      "fix_id": "fix-5",
+      "action": "Enumerate supported snapshot versions and scope the tested raw reports and projection",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-redaction-status-unreported",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "supported-envelopes-not-enumerated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS1-WIRE-VERSION-COVERAGE",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Identify phase-specific selections and rerun broad guards after the repairs",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "test-count-regression-unexplained"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS4-BROAD-GUARD-PRE-REPAIR"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi"
+      ],
+      "rank": 6,
+      "fix_id": "fix-6",
+      "action": "Identify phase-specific selections and rerun broad guards after the repairs",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "test-count-regression-unexplained",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "PS4-BROAD-GUARD-PRE-REPAIR",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Record review timing and identify the delegated decisions for each issue",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "REPAIRS-WITHOUT-INDEPENDENT-REVIEW"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-header-and-issue-inventory"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi"
+      ],
+      "rank": 7,
+      "fix_id": "fix-7",
+      "action": "Record review timing and identify the delegated decisions for each issue",
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "REPAIRS-WITHOUT-INDEPENDENT-REVIEW",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "plan-header-and-issue-inventory",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

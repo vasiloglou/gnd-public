@@ -289,7 +289,7 @@ def test_artifact_and_installed_resource_sets(package_probe):
         requires = metadata.get_all("Requires-Dist")
         assert {r for r in requires if ";" not in r} == {
             "jsonschema==4.26.0",
-            "pydantic==2.13.4",
+            "pydantic>=2.12.5,<2.14",
             "ruamel-yaml==0.19.1",
         }
         assert any(r.startswith("faker==40.36.0") and "synth" in r for r in requires)

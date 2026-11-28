@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "reason": "The snapshot accessor reads the report envelope and bounded projected fields, without reading a model directly.",
+  "predecessor": ".gnd-planning/milestones/cross-document-growth/evidence/CG3/dynamic-query-successor.json",
+  "predecessor_sha256": "7a8d3921d33d0e9e0dddabce44e612c9974e68a68916687cda547dbca356a5be",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/api.py",
+      "snapshot_verdict",
+      "_OUTCOMES.get(code)",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "snapshot_verdict",
+      "body.get(source, [])",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "snapshot_verdict",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/api.py",
+      "snapshot_verdict",
+      "{0: 'accepted', 1: 'violated', 2: 'inadequate', 3: 'invalid-input', 4: 'unchecked', 70: 'internal-error'}[code]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8442,
+  "result_occurrences": 10488
+}

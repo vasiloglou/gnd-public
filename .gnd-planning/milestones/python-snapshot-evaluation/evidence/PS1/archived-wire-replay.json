@@ -1,0 +1,26 @@
+{
+  "7": {
+    "file": "tests/fixtures/fu3-derived-ring/expected/add-disjoint.v7.json",
+    "status": "violated"
+  },
+  "9": {
+    "file": "tests/fixtures/rof1-projected-text/expected/reports/redacted-fail-unredacted.json",
+    "status": "violated"
+  },
+  "10": {
+    "file": "tests/fixtures/rof2-projected-text/expected/reports/admission-unredacted.json",
+    "status": "violated"
+  },
+  "11": {
+    "file": "tests/fixtures/rof1-projected-text/expected/reports/temporal-advisory.json",
+    "status": "accepted"
+  },
+  "12": {
+    "file": "tests/fixtures/rof4-accept-identities/artifacts/s2s3-reference.check.json",
+    "status": "accepted"
+  },
+  "15": {
+    "file": "tests/fixtures/fu3-derived-ring/expected/add-disjoint.json",
+    "status": "violated"
+  }
+}

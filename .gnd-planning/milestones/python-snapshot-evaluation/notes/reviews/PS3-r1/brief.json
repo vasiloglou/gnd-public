@@ -1,0 +1,116 @@
+{
+  "base": "11c75ea9",
+  "claims": [],
+  "created": "2026-11-28T15:08:55.885309+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/reviews/PS3-r1/diff.patch",
+      "sha256": "3e7c69ba66065b0b40642a46d7da674f3ea3ae54e840e2cce566d25ba50569f9"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS3/dynamic-query-successor.json",
+      "sha256": "26bfdd84c42dcbde69ebbb3df2076fcdd23c50c94cf97096124acbe917507940"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "d66995f08b9e48d1121e4105be234584b59fe8af1ae03468fa4bd5ef4087a129"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "37cf8bd8d6f5e9bed66c3256c53f044ccc28f707961ff3d701fe1593ead9e20f"
+    },
+    {
+      "path": "dev/components/modules/witness.md",
+      "sha256": "dec31cd8429d1f4b6fcf117310ec4d38f37dda57dc023ee9c415a9512768427e"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "8ea954b15b9d27178251d54fa45f442a375635c5073bfd0534e9c2e040e26789"
+    },
+    {
+      "path": "docs/reference/why-not.md",
+      "sha256": "646809bdac04c52e3ff97b5c7ae74fefc85147134c0d22b611fe3eded1befbd5"
+    },
+    {
+      "path": "src/gnd/why-not.schema.json",
+      "sha256": "33361ab9559517709fd8d4d1433ff87db5d7f325fd10358de2fe7e261fffebc3"
+    },
+    {
+      "path": "src/gnd/witness/cli.py",
+      "sha256": "b02f2ef1996189bc0474682dbb7d6919648f949d4218f9fb1017a3c8482d4f97"
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "sha256": "74f1483abf766874a2bf6f0339c269d5c8b4fb457ca05f701708851896b39960"
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "sha256": "af12fc3d0c58f44e57e22f1ee5aa791bd0b636bdbee41aed527de47dd98404db"
+    },
+    {
+      "path": "src/gnd/witness/producer.py",
+      "sha256": "1227fa90264dc7e3d43e15b4e3962a28826196d60c38d38087abf48162e33065"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "sha256": "746fc199ec7a5df11a4801e7fed1bfffaced75068faa626b30dce44ac51212b8"
+    },
+    {
+      "path": "src/gnd/witness/types.py",
+      "sha256": "91a6a1a1000c85faf582d60b3ebaf228a75f4f6bc7cc8fac8d410fc6784458fc"
+    },
+    {
+      "path": "src/gnd/witness/view.py",
+      "sha256": "83419dcc68f303e9d9c63feed1df4a01b03b9a80581344bdbf1163690ce2c6d3"
+    },
+    {
+      "path": "src/gnd/witness/why_not.py",
+      "sha256": "8757089b099cc17eff6015c16a192d175a4ad66275a048ea96942c2ce628ea46"
+    },
+    {
+      "path": "tests/fixtures/why_not/cases.json",
+      "sha256": "deb5f3990fd4e1d4826828587871f27fd9dd6b5d61ecc00bc41cdf4569fd04f1"
+    },
+    {
+      "path": "tests/fixtures/why_not/goldens/g11-two-targets.json",
+      "sha256": "10bd95f7b879177e3942dd05a4474b5bc8f8adee3fcf4389a06443da8fabad53"
+    },
+    {
+      "path": "tests/fixtures/why_not/goldens/g11-two-targets.raw.json",
+      "sha256": "dc36501c63e5088879f1cb379bdb7207be903653fb78e976e472ef32e79ebe36"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "2a0424f9e80e89e0a4a8e8a5034ed25e816eddc8094ce9709bfca4e794c6d40d"
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "sha256": "9d40cd03d6ad60489cb12f9a7e59b193f8dbbb224e5e930e565a4a8c0c913275"
+    },
+    {
+      "path": "tests/test_public_reference_signatures.py",
+      "sha256": "5e862c23455f04d98843b146de8274f0dcaba585a8243daa34c8fc0331e2958f"
+    },
+    {
+      "path": "tests/test_public_why_not.py",
+      "sha256": "745200e1ab65675e8707bcd1f3b414578222fdee529dac639722781e26cab333"
+    },
+    {
+      "path": "tests/test_snapshot_explanations.py",
+      "sha256": "bcec9e739725493069b5ab87564f21aa77426841c0bd90cd3c06db2804161489"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/phase-PS3-spec.md",
+      "sha256": "2cc347de6b017eb04931d178f9abf8e90259b5be28629107da14ebbc63f16ed5"
+    }
+  ],
+  "head": "7c118a72c787fba80e75123ba2e06b777685aaa2",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Check shared setup and per-target accounting and the soundness of finite negative evidence and independent replay, including coverage, correlated multi-role bindings, reference inputs and disclosure. Exercise original single-target compatibility.",
+  "subject": "phase",
+  "version": 1
+}

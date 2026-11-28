@@ -28,7 +28,7 @@ def test_receipt_keyword_signature() -> None:
 def test_why_not_keyword_signature() -> None:
     parameters = inspect.signature(api.why_not).parameters
     assert tuple(parameters) == (
-        "model_path", "population_path", "fact_type", "row_path", "reference_root")
-    for name in ("row_path", "reference_root"):
+        "model_path", "population_path", "fact_type", "row_path", "reference_root", "targets", "limits")
+    for name in ("row_path", "reference_root", "targets", "limits"):
         assert parameters[name].kind is inspect.Parameter.KEYWORD_ONLY
         assert parameters[name].default is None

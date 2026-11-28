@@ -90,16 +90,17 @@ Bounded wire intake, structural validation and byte-bound input identities.
 | `typed(value)` | function | 129 | (no docstring) |
 | `target_shape(t)` | function | 139 | (no docstring) |
 | `load_targets(path, *, limits)` | function | 147 | (no docstring) |
-| `certificate_shape(doc, *, limits)` | function | 159 | (no docstring) |
-| `load_certificate(path, *, limits)` | function | 290 | (no docstring) |
-| `witness_input_identity(model, candidate, *, references)` | function | 296 | (no docstring) |
-| `identity(model, candidate, refs)` | function | 301 | (no docstring) |
-| `intake(model_document, candidate_document, reference_inputs, *, limits, _projected_model)` | function | 313 | (no docstring) |
-| `roster(model)` | function | 372 | (no docstring) |
-| `validate_targets(targets, model)` | function | 381 | (no docstring) |
-| `support_closure(model, targets)` | function | 407 | Conservative syntactic classifier; no tuple or comparison evaluation. |
-| `population_wire(pop)` | function | 463 | (no docstring) |
-| `classify_targets(model, targets, populations)` | function | 477 | Classify each request independently, caching only within this call. |
+| `parse_targets(doc, *, limits)` | function | 151 | (no docstring) |
+| `certificate_shape(doc, *, limits)` | function | 162 | (no docstring) |
+| `load_certificate(path, *, limits)` | function | 293 | (no docstring) |
+| `witness_input_identity(model, candidate, *, references)` | function | 299 | (no docstring) |
+| `identity(model, candidate, refs)` | function | 304 | (no docstring) |
+| `intake(model_document, candidate_document, reference_inputs, *, limits, _projected_model)` | function | 316 | (no docstring) |
+| `roster(model)` | function | 375 | (no docstring) |
+| `validate_targets(targets, model)` | function | 384 | (no docstring) |
+| `support_closure(model, targets)` | function | 410 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+| `population_wire(pop)` | function | 478 | (no docstring) |
+| `classify_targets(model, targets, populations)` | function | 492 | Classify each request independently, caching only within this call. |
 
 ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
 Components: witness.replay
@@ -110,7 +111,7 @@ Independent certificate replay: finite local inference, never fixpoint search.
 | `InvalidProof` | class(ValueError) | 34 | A structurally admitted inference is false or ungrounded. |
 | `UnsupportedScalar` | class(ValueError) | 38 | A scalar is outside the independently implemented fragment. |
 | `graph_work(certificate, *, limits)` | function | 112 | (no docstring) |
-| `replay_witness(model_document, candidate_document, certificate, *, reference_inputs, limits, compos…` | function | 290 | (no docstring) |
+| `replay_witness(model_document, candidate_document, certificate, *, reference_inputs, limits, compos…` | function | 313 | (no docstring) |
 
 ## gnd.witness.producer — `src/gnd/witness/producer.py`
 Components: witness.produce
@@ -119,14 +120,14 @@ Capture grounded firings from the production evaluator into a finite DAG.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `GroundedTrace` | class | 29 | (no docstring) |
-| `GroundedTrace.resolve(self, key)` | method | 67 | (no docstring) |
-| `GroundedTrace.key(self, fid, cells)` | method | 88 | (no docstring) |
-| `GroundedTrace.typed_row(self, fid, row)` | method | 91 | (no docstring) |
-| `GroundedTrace.charge(self, amount)` | method | 96 | (no docstring) |
-| `GroundedTrace.add(self, node)` | method | 101 | (no docstring) |
-| `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 118 | (no docstring) |
-| `GroundedTrace.compact(self, roots)` | method | 165 | (no docstring) |
-| `produce_witness(model, candidate, targets, *, references, limits, _projected_model)` | function | 182 | (no docstring) |
+| `GroundedTrace.resolve(self, key)` | method | 71 | (no docstring) |
+| `GroundedTrace.key(self, fid, cells)` | method | 92 | (no docstring) |
+| `GroundedTrace.typed_row(self, fid, row)` | method | 95 | (no docstring) |
+| `GroundedTrace.charge(self, amount)` | method | 100 | (no docstring) |
+| `GroundedTrace.add(self, node)` | method | 105 | (no docstring) |
+| `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 122 | (no docstring) |
+| `GroundedTrace.compact(self, roots)` | method | 180 | (no docstring) |
+| `produce_witness(model, candidate, targets, *, references, limits, _projected_model)` | function | 197 | (no docstring) |
 
 ## gnd.witness.service — `src/gnd/witness/service.py`
 Components: witness.service
@@ -140,10 +141,10 @@ Bounded witness/replay input orchestration.
 | `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 266 | Replay a finite proof with an independent local inference kernel. |
 | `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 304 | Produce a composed witness whose base nodes name their source facts. |
 | `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 342 | Replay a witness against the composition record it binds. |
-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 421 | Explain why a derived fact type, or one claimed row of it, is not derived. |
-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 475 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 489 | Replay a finite proof with an independent local inference kernel. |
-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 503 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root, targets, limits)` | function | 414 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 510 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 524 | Replay a finite proof with an independent local inference kernel. |
+| `why_not(model_path, population_path, fact_type, *, row_path, reference_root, targets, limits)` | function | 538 | Explain why a derived fact type, or one claimed row of it, is not derived. |
 
 ## gnd.witness.types — `src/gnd/witness/types.py`
 Components: witness.schema
@@ -154,11 +155,12 @@ Immutable limits and the separate finite-witness claim envelope.
 | `WitnessInputError` | class(ValueError) | 6 | Untrusted input did not enter the witness lane. |
 | `WitnessWorkError` | class(ValueError) | 10 | The finite work ceiling was reached; no domain falsity is implied. |
 | `WitnessLimits` | class | 15 | (no docstring) |
-| `checked_limits(limits) -> WitnessLimits` | function | 32 | (no docstring) |
-| `WitnessResult` | class | 42 | (no docstring) |
-| `WitnessResult.model_dump(self, *, mode) -> dict` | method | 49 | (no docstring) |
-| `result_rows(targets, status, *, roots)` | function | 70 | (no docstring) |
-| `reduce_results(rows, *, certificate, work)` | function | 83 | (no docstring) |
+| `WhyNotWireLimits` | class(WitnessLimits) | 30 | Input reader shared with why-not, which permits a larger opt-in scalar. |
+| `checked_limits(limits) -> WitnessLimits` | function | 37 | (no docstring) |
+| `WitnessResult` | class | 48 | (no docstring) |
+| `WitnessResult.model_dump(self, *, mode) -> dict` | method | 55 | (no docstring) |
+| `result_rows(targets, status, *, roots)` | function | 77 | (no docstring) |
+| `reduce_results(rows, *, certificate, work)` | function | 90 | (no docstring) |
 
 ## gnd.witness.view — `src/gnd/witness/view.py`
 Components: witness.presentation
@@ -180,9 +182,10 @@ Explain why a derivation did not derive a row, beside the finite witness lane.
 | `WhyNotWorkError` | class(ValueError) | 32 | A fixed ceiling was reached; ``work`` holds the counters at the breach. |
 | `WhyNotInternalError` | class(RuntimeError) | 40 | The walk disagreed with the production evaluator; this is a defect. |
 | `WhyNotLimits` | class | 45 | (no docstring) |
-| `checked_why_not_limits(limits) -> WhyNotLimits` | function | 61 | (no docstring) |
-| `ClauseExplanation` | class | 73 | (no docstring) |
-| `ClauseExplanation.to_dict(self) -> dict` | method | 81 | (no docstring) |
-| `WhyNotResult` | class | 93 | (no docstring) |
-| `WhyNotResult.to_dict(self) -> dict` | method | 103 | (no docstring) |
-| `explain(model, candidate, fact_type_id, *, row, references, limits, near_misses) -> WhyNotResult` | function | 222 | Explain why ``fact_type_id`` (or one claimed row of it) is not derived. |
+| `checked_why_not_limits(limits) -> WhyNotLimits` | function | 62 | (no docstring) |
+| `ClauseExplanation` | class | 74 | (no docstring) |
+| `ClauseExplanation.to_dict(self) -> dict` | method | 82 | (no docstring) |
+| `WhyNotResult` | class | 94 | (no docstring) |
+| `WhyNotResult.to_dict(self) -> dict` | method | 104 | (no docstring) |
+| `explain(model, candidate, fact_type_id, *, row, references, limits, near_misses) -> WhyNotResult` | function | 223 | Explain why ``fact_type_id`` (or one claimed row of it) is not derived. |
+| `explain_many(model, candidate, fact_type_id, *, rows, references, limits, near_misses)` | function | 242 | Prepare one finite relation index, then give every target a new walk budget. |

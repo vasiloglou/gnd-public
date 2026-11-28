@@ -1,0 +1,1 @@
+{"derived_rows": [{"key": "x"}], "gnd": "0.5.2", "ids": ["first", "bad", "again"], "model_sha256": "228360d5fa841ece803565a142953787d94fe4210b13e1ed59d85ad557d3b994", "pydantic": "2.12.5", "python": "3.14.3", "run_status": "unchecked"}

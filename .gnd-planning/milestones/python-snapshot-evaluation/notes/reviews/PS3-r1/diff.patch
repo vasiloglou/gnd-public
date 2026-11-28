@@ -1,0 +1,1768 @@
+diff --git a/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS3/dynamic-query-successor.json b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS3/dynamic-query-successor.json
+new file mode 100644
+index 00000000..6a00b537
+--- /dev/null
++++ b/.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS3/dynamic-query-successor.json
+@@ -0,0 +1,138 @@
++{
++  "schema_version": 1,
++  "reason": "Shared why-not preparation, per-target result projection and covered absence replay.",
++  "predecessor": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json",
++  "predecessor_sha256": "879f84beda850deb122eec7b8cba71a83d391db68c8640a6063ad66937445d63",
++  "removed": [
++    [
++      "src/gnd/witness/types.py",
++      "checked_limits",
++      "getattr(DEFAULT_LIMITS, key)",
++      1
++    ],
++    [
++      "src/gnd/witness/why_not.py",
++      "checked_why_not_limits",
++      "getattr(DEFAULT_WHY_NOT_LIMITS, f.name)",
++      1
++    ],
++    [
++      "src/gnd/witness/why_not.py",
++      "explain",
++      "combined.facts.get(fact_id, ())",
++      1
++    ]
++  ],
++  "added": [
++    [
++      "src/gnd/witness/io.py",
++      "support_closure",
++      "bindings.get(role)",
++      1
++    ],
++    [
++      "src/gnd/witness/io.py",
++      "support_closure",
++      "roles[relation]",
++      2
++    ],
++    [
++      "src/gnd/witness/io.py",
++      "support_closure",
++      "types[relation]",
++      1
++    ],
++    [
++      "src/gnd/witness/io.py",
++      "support_closure",
++      "variable_types.get(term)",
++      1
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "prove_absence",
++      "atom['bind'][role]",
++      1
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "prove_absence",
++      "facts[relation]",
++      1
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "prove_absence",
++      "negative_rows[relation]",
++      1
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "prove_absence",
++      "population.facts.get(relation, ())",
++      1
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "prove_absence",
++      "roles[relation]",
++      2
++    ],
++    [
++      "src/gnd/witness/kernel.py",
++      "prove_absence",
++      "row[role]",
++      1
++    ],
++    [
++      "src/gnd/witness/producer.py",
++      "__init__",
++      "self.clauses[fid]",
++      1
++    ],
++    [
++      "src/gnd/witness/producer.py",
++      "row",
++      "binding[term[1:]]",
++      1
++    ],
++    [
++      "src/gnd/witness/producer.py",
++      "row",
++      "self.roles[afid]",
++      1
++    ],
++    [
++      "src/gnd/witness/producer.py",
++      "row",
++      "term[1:]",
++      1
++    ],
++    [
++      "src/gnd/witness/producer.py",
++      "row",
++      "terms[role]",
++      1
++    ],
++    [
++      "src/gnd/witness/types.py",
++      "checked_limits",
++      "getattr(maximum, key)",
++      1
++    ],
++    [
++      "src/gnd/witness/why_not.py",
++      "checked_why_not_limits",
++      "getattr(HARD_WHY_NOT_LIMITS, f.name)",
++      1
++    ],
++    [
++      "src/gnd/witness/why_not.py",
++      "explain_many",
++      "combined.facts.get(fact_id, ())",
++      1
++    ]
++  ],
++  "result_distinct_rows": 8464,
++  "result_occurrences": 10515
++}
+diff --git a/dev/components/COMPONENTS.md b/dev/components/COMPONENTS.md
+index 7877ba05..97b44728 100644
+--- a/dev/components/COMPONENTS.md
++++ b/dev/components/COMPONENTS.md
+@@ -92,7 +92,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
+ - status: canonical
+ - components: cli.witness_command, witness.command, witness.count_membership, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
+-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, … +4 more (graph.md)
++- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.document, model.json_document, model.loading, … +5 more (graph.md)
+ - notes: Production evaluates through the checker; replay does not search for a fixpoint.
+ 
+ ### subsystem.review_panel
+@@ -2333,7 +2333,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ - status: canonical
+ - modules: src/gnd/documents.py
+ - uses: infra.errors
+-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +16 more (graph.md)
++- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +17 more (graph.md)
+ - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
+ - notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
+ 
+@@ -3236,13 +3236,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
+ 
+ 
+ ### witness.service
+-- does: Orchestrate path-based witness production, replay and why-not requests, including independently bound model origins, catalog occurrences and candidate source lineage.
++- does: Orchestrate witness production, independent replay and bounded ordered why-not requests over paths or loaded snapshots, including independently bound model origins, catalog occurrences and candidate source lineage.
+ - verbs: rooted witness projection, flattening binding, model origins, produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
+ - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
+ - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
+ - status: canonical
+ - modules: src/gnd/witness/__init__.py, src/gnd/witness/service.py, src/gnd/witness/flattening.py
+-- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.validation, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
++- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.document, model.loading, model.population_loading, model.validation, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
+ - used_by: cli.api, witness.command, witness.replay
+ - part_of: subsystem.witness
+ - tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py
+diff --git a/dev/components/graph.md b/dev/components/graph.md
+index af399350..eef50659 100644
+--- a/dev/components/graph.md
++++ b/dev/components/graph.md
+@@ -4156,7 +4156,7 @@ Generated by `scripts/components_index.py`.
+ 
+ ### model.document
+ - uses: infra.errors
+-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, extract.service, infra.report_payloads, model.extraction_scope, model.loading, model.operation_obligations, model.population_loading, model.population_sentences, model.query_index, model.scalar_identity, model.validation, model.verbalization, semantics.extensions, semantics.phase1_slice, semantics.snapshot_adapter, semantics.transitions, synth.guarded
++- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, extract.service, infra.report_payloads, model.extraction_scope, model.loading, model.operation_obligations, model.population_loading, model.population_sentences, model.query_index, model.scalar_identity, model.validation, model.verbalization, semantics.extensions, semantics.phase1_slice, semantics.snapshot_adapter, semantics.transitions, synth.guarded, witness.service
+ 
+ #### model.document -> infra.errors
+ - `src/gnd/documents.py -> src/gnd/errors.py`
+@@ -5003,7 +5003,7 @@ Generated by `scripts/components_index.py`.
+ - members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.document, model.json_document, model.operation_obligations, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, model.validation, synth.boundary, synth.comparison, synth.constructive, synth.frontier, synth.guarded, synth.identity, synth.paths, synth.value_domain
+ 
+ ### subsystem.witness
+-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.json_document, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_identity, model.validation
++- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, infra.safe_filesystem, model.anchors, model.composition, model.document, model.json_document, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_identity, model.validation
+ 
+ ### synth.assemble
+ - uses: check.population_structure, checker.evaluate, infra.input_policy, model.address, model.loading, model.population_loading, model.scalar_terms, synth.comparison, synth.constructive, synth.guarded, synth.identity, synth.pool, synth.prediction, synth.value_domain
+@@ -5556,7 +5556,7 @@ Generated by `scripts/components_index.py`.
+ - `src/gnd/witness/io.py -> src/gnd/references.py`
+ 
+ ### witness.service
+-- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.validation, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
++- uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.document, model.loading, model.population_loading, model.validation, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
+ - used_by: cli.api, witness.command, witness.replay
+ 
+ #### witness.service -> infra.artifacts
+@@ -5580,6 +5580,9 @@ Generated by `scripts/components_index.py`.
+ #### witness.service -> model.composition
+ - `src/gnd/witness/service.py -> src/gnd/composition.py`
+ 
++#### witness.service -> model.document
++- `src/gnd/witness/service.py -> src/gnd/documents.py`
++
+ #### witness.service -> model.loading
+ - `src/gnd/witness/flattening.py -> src/gnd/model/__init__.py`
+ - `src/gnd/witness/flattening.py -> src/gnd/model/_includes.py`
+diff --git a/dev/components/modules/witness.md b/dev/components/modules/witness.md
+index d43be8d1..93032b07 100644
+--- a/dev/components/modules/witness.md
++++ b/dev/components/modules/witness.md
+@@ -90,16 +90,17 @@ Bounded wire intake, structural validation and byte-bound input identities.
+ | `typed(value)` | function | 129 | (no docstring) |
+ | `target_shape(t)` | function | 139 | (no docstring) |
+ | `load_targets(path, *, limits)` | function | 147 | (no docstring) |
+-| `certificate_shape(doc, *, limits)` | function | 159 | (no docstring) |
+-| `load_certificate(path, *, limits)` | function | 290 | (no docstring) |
+-| `witness_input_identity(model, candidate, *, references)` | function | 296 | (no docstring) |
+-| `identity(model, candidate, refs)` | function | 301 | (no docstring) |
+-| `intake(model_document, candidate_document, reference_inputs, *, limits, _projected_model)` | function | 313 | (no docstring) |
+-| `roster(model)` | function | 372 | (no docstring) |
+-| `validate_targets(targets, model)` | function | 381 | (no docstring) |
+-| `support_closure(model, targets)` | function | 407 | Conservative syntactic classifier; no tuple or comparison evaluation. |
+-| `population_wire(pop)` | function | 463 | (no docstring) |
+-| `classify_targets(model, targets, populations)` | function | 477 | Classify each request independently, caching only within this call. |
++| `parse_targets(doc, *, limits)` | function | 151 | (no docstring) |
++| `certificate_shape(doc, *, limits)` | function | 162 | (no docstring) |
++| `load_certificate(path, *, limits)` | function | 293 | (no docstring) |
++| `witness_input_identity(model, candidate, *, references)` | function | 299 | (no docstring) |
++| `identity(model, candidate, refs)` | function | 304 | (no docstring) |
++| `intake(model_document, candidate_document, reference_inputs, *, limits, _projected_model)` | function | 316 | (no docstring) |
++| `roster(model)` | function | 375 | (no docstring) |
++| `validate_targets(targets, model)` | function | 384 | (no docstring) |
++| `support_closure(model, targets)` | function | 410 | Conservative syntactic classifier; no tuple or comparison evaluation. |
++| `population_wire(pop)` | function | 478 | (no docstring) |
++| `classify_targets(model, targets, populations)` | function | 492 | Classify each request independently, caching only within this call. |
+ 
+ ## gnd.witness.kernel — `src/gnd/witness/kernel.py`
+ Components: witness.replay
+@@ -110,7 +111,7 @@ Independent certificate replay: finite local inference, never fixpoint search.
+ | `InvalidProof` | class(ValueError) | 34 | A structurally admitted inference is false or ungrounded. |
+ | `UnsupportedScalar` | class(ValueError) | 38 | A scalar is outside the independently implemented fragment. |
+ | `graph_work(certificate, *, limits)` | function | 112 | (no docstring) |
+-| `replay_witness(model_document, candidate_document, certificate, *, reference_inputs, limits, compos…` | function | 290 | (no docstring) |
++| `replay_witness(model_document, candidate_document, certificate, *, reference_inputs, limits, compos…` | function | 313 | (no docstring) |
+ 
+ ## gnd.witness.producer — `src/gnd/witness/producer.py`
+ Components: witness.produce
+@@ -119,14 +120,14 @@ Capture grounded firings from the production evaluator into a finite DAG.
+ | Symbol | Kind | Line | Summary |
+ | --- | --- | --- | --- |
+ | `GroundedTrace` | class | 29 | (no docstring) |
+-| `GroundedTrace.resolve(self, key)` | method | 67 | (no docstring) |
+-| `GroundedTrace.key(self, fid, cells)` | method | 88 | (no docstring) |
+-| `GroundedTrace.typed_row(self, fid, row)` | method | 91 | (no docstring) |
+-| `GroundedTrace.charge(self, amount)` | method | 96 | (no docstring) |
+-| `GroundedTrace.add(self, node)` | method | 101 | (no docstring) |
+-| `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 118 | (no docstring) |
+-| `GroundedTrace.compact(self, roots)` | method | 165 | (no docstring) |
+-| `produce_witness(model, candidate, targets, *, references, limits, _projected_model)` | function | 182 | (no docstring) |
++| `GroundedTrace.resolve(self, key)` | method | 71 | (no docstring) |
++| `GroundedTrace.key(self, fid, cells)` | method | 92 | (no docstring) |
++| `GroundedTrace.typed_row(self, fid, row)` | method | 95 | (no docstring) |
++| `GroundedTrace.charge(self, amount)` | method | 100 | (no docstring) |
++| `GroundedTrace.add(self, node)` | method | 105 | (no docstring) |
++| `GroundedTrace.row(self, fact_type, clause, binding, row)` | method | 122 | (no docstring) |
++| `GroundedTrace.compact(self, roots)` | method | 180 | (no docstring) |
++| `produce_witness(model, candidate, targets, *, references, limits, _projected_model)` | function | 197 | (no docstring) |
+ 
+ ## gnd.witness.service — `src/gnd/witness/service.py`
+ Components: witness.service
+@@ -140,10 +141,10 @@ Bounded witness/replay input orchestration.
+ | `rooted_replay_result(model_path, population_path, certificate_path, *, reference_root, flat_model, …` | function | 266 | Replay a finite proof with an independent local inference kernel. |
+ | `composed_witness_result(model_path, population_path, targets_path, *, composition, flat_model, flat…` | function | 304 | Produce a composed witness whose base nodes name their source facts. |
+ | `composed_replay_result(model_path, population_path, certificate_path, *, composition, flat_model, f…` | function | 342 | Replay a witness against the composition record it binds. |
+-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 421 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 475 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 489 | Replay a finite proof with an independent local inference kernel. |
+-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 503 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root, targets, limits)` | function | 414 | Explain why a derived fact type, or one claimed row of it, is not derived. |
++| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 510 | Produce finite witnesses; exit zero requires every requested tuple proved. |
++| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 524 | Replay a finite proof with an independent local inference kernel. |
++| `why_not(model_path, population_path, fact_type, *, row_path, reference_root, targets, limits)` | function | 538 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+ 
+ ## gnd.witness.types — `src/gnd/witness/types.py`
+ Components: witness.schema
+@@ -154,11 +155,12 @@ Immutable limits and the separate finite-witness claim envelope.
+ | `WitnessInputError` | class(ValueError) | 6 | Untrusted input did not enter the witness lane. |
+ | `WitnessWorkError` | class(ValueError) | 10 | The finite work ceiling was reached; no domain falsity is implied. |
+ | `WitnessLimits` | class | 15 | (no docstring) |
+-| `checked_limits(limits) -> WitnessLimits` | function | 32 | (no docstring) |
+-| `WitnessResult` | class | 42 | (no docstring) |
+-| `WitnessResult.model_dump(self, *, mode) -> dict` | method | 49 | (no docstring) |
+-| `result_rows(targets, status, *, roots)` | function | 70 | (no docstring) |
+-| `reduce_results(rows, *, certificate, work)` | function | 83 | (no docstring) |
++| `WhyNotWireLimits` | class(WitnessLimits) | 30 | Input reader shared with why-not, which permits a larger opt-in scalar. |
++| `checked_limits(limits) -> WitnessLimits` | function | 37 | (no docstring) |
++| `WitnessResult` | class | 48 | (no docstring) |
++| `WitnessResult.model_dump(self, *, mode) -> dict` | method | 55 | (no docstring) |
++| `result_rows(targets, status, *, roots)` | function | 77 | (no docstring) |
++| `reduce_results(rows, *, certificate, work)` | function | 90 | (no docstring) |
+ 
+ ## gnd.witness.view — `src/gnd/witness/view.py`
+ Components: witness.presentation
+@@ -180,9 +182,10 @@ Explain why a derivation did not derive a row, beside the finite witness lane.
+ | `WhyNotWorkError` | class(ValueError) | 32 | A fixed ceiling was reached; ``work`` holds the counters at the breach. |
+ | `WhyNotInternalError` | class(RuntimeError) | 40 | The walk disagreed with the production evaluator; this is a defect. |
+ | `WhyNotLimits` | class | 45 | (no docstring) |
+-| `checked_why_not_limits(limits) -> WhyNotLimits` | function | 61 | (no docstring) |
+-| `ClauseExplanation` | class | 73 | (no docstring) |
+-| `ClauseExplanation.to_dict(self) -> dict` | method | 81 | (no docstring) |
+-| `WhyNotResult` | class | 93 | (no docstring) |
+-| `WhyNotResult.to_dict(self) -> dict` | method | 103 | (no docstring) |
+-| `explain(model, candidate, fact_type_id, *, row, references, limits, near_misses) -> WhyNotResult` | function | 222 | Explain why ``fact_type_id`` (or one claimed row of it) is not derived. |
++| `checked_why_not_limits(limits) -> WhyNotLimits` | function | 62 | (no docstring) |
++| `ClauseExplanation` | class | 74 | (no docstring) |
++| `ClauseExplanation.to_dict(self) -> dict` | method | 82 | (no docstring) |
++| `WhyNotResult` | class | 94 | (no docstring) |
++| `WhyNotResult.to_dict(self) -> dict` | method | 104 | (no docstring) |
++| `explain(model, candidate, fact_type_id, *, row, references, limits, near_misses) -> WhyNotResult` | function | 223 | Explain why ``fact_type_id`` (or one claimed row of it) is not derived. |
++| `explain_many(model, candidate, fact_type_id, *, rows, references, limits, near_misses, require_cove…` | function | 242 | Prepare one finite relation index, then give every target a new walk budget. |
+diff --git a/docs/reference/python-api.md b/docs/reference/python-api.md
+index c86ef7ed..e9a24850 100644
+--- a/docs/reference/python-api.md
++++ b/docs/reference/python-api.md
+@@ -580,3 +580,7 @@ Use `api.check_with_extensions(model, population, fact_types=["active"], max_row
+ A complete relation includes `rows`, which may be empty. Unknown, non-derived, incompletely covered and uncomputable relations return `unavailable`. Declared protected roles or inputs return `protected` under the ordinary applied disclosure policy. This decision precedes the row cap. Each request accepts 1–64 distinct identifiers and a total output budget of 0–10,000 rows. A complete relation that would overflow the remaining budget returns `output-limit` and consumes zero rows. Source and rule evaluation use the checker's ordinary work limits.
+ 
+ For a semiderived head, complete describes the inferred extension alone. Caller-asserted rows remain in the input snapshot.
++
++### Proofs using grounded absence
++
++A finite witness can use negative premises over covered asserted inputs. Each negative role is grounded by a positive premise or an admitted literal. The proof records the rule, clause, positive premises and exact bindings. Replay reconstructs the entire correlated negative tuple against the bound snapshot. Uncovered and opaque inputs cannot establish absence. An edit invalidates the snapshot binding. Use `why_not` with ordered targets to inspect related blocked tuples against the same loaded inputs.
+diff --git a/docs/reference/why-not.md b/docs/reference/why-not.md
+index d4f1e38b..6e726c52 100644
+--- a/docs/reference/why-not.md
++++ b/docs/reference/why-not.md
+@@ -21,9 +21,8 @@ gnd.api.why_not(model_path, population_path, fact_type, *, row_path=None,
+ ```
+ 
+ Without `--row`, the question is about the rule as a whole: why does
+-`fact-type` have no rows? With `--row`, it is about one claimed row: why is
+-this row absent? The row file uses the [witness request format](python-api.md#witness-explain-one-derived-fact-with-a-finite-proof)
+-and holds exactly one target, whose `fact_type` must equal `--fact-type`.
++`fact-type` have no rows? With `--row`, it explains each requested tuple against the same snapshot. The row file uses the [witness request format](python-api.md#witness-explain-one-derived-fact-with-a-finite-proof)
++and holds 1–256 targets, each with the selected `--fact-type`.
+ 
+ The fact type must be derived or semiderived with a structured rule. Reference
+ populations bind as they do for `check` and `witness`.
+@@ -269,3 +268,9 @@ refuses a request (see [search limits](#search-limits)).
+ 
+ The output is described by `why-not.schema.json`, packaged with GND. Its
+ `schema_version` is `gnd-why-not/2`.
++
++### Ordered Python explanations
++
++`api.why_not(model, population, "eligible", targets=targets, limits={"scalar_bytes": 8192})` accepts a matching loaded model and validated population, or two paths. Each target is a witness-format record. One target retains the original single response. Two or more return `gnd-why-not-batch/1`, shared preparation work and one indexed explanation per target. Work exhaustion is local to its target unless it occurs before the shared index is ready. Batch per-target counters exclude shared setup. Near-miss counters also restart for each target.
++
++Use the fields of `gnd.witness.why_not.WhyNotLimits` to lower the documented ceilings. The default scalar limit is 4,096 UTF-8 bytes and the configurable hard ceiling is 65,536. Limits must be positive integers. There are at most 256 targets and 10 MiB of input per wire. Customer mode projects each result through the same single-answer disclosure boundary.
+diff --git a/src/gnd/why-not.schema.json b/src/gnd/why-not.schema.json
+index 8eb98975..ee4e29b6 100644
+--- a/src/gnd/why-not.schema.json
++++ b/src/gnd/why-not.schema.json
+@@ -1,299 +1,8 @@
+ {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "https://gnd.dev/schemas/why-not.schema.json",
+-  "title": "GND why-not explanation (gnd-why-not/2)",
++  "title": "GND single and ordered batch why-not explanations",
+   "description": "WN2. What gnd why-not and gnd.api.why_not return: whether production derives the target, and, when it does not, for each clause the declared-order prefix counts, the first blocking step and an optional descent into a derived blocker. The CLI's default view replaces every population value with \"redacted\". NM3 (gnd-why-not/2): every atom blocker also reports near-misses, rows of its fact type that would have joined if bound strings were compared after the fixed normalization; matching itself stays exact.",
+-  "type": "object",
+-  "additionalProperties": false,
+-  "required": [
+-    "schema_version",
+-    "exit_code",
+-    "status",
+-    "reason",
+-    "fact_type",
+-    "mode",
+-    "order",
+-    "unavailable",
+-    "clauses",
+-    "work"
+-  ],
+-  "properties": {
+-    "schema_version": {
+-      "const": "gnd-why-not/2"
+-    },
+-    "exit_code": {
+-      "enum": [
+-        0,
+-        2,
+-        3,
+-        4
+-      ]
+-    },
+-    "view": {
+-      "enum": [
+-        "redacted",
+-        "raw"
+-      ]
+-    },
+-    "status": {
+-      "enum": [
+-        "blocked",
+-        "derived",
+-        "unsupported",
+-        "unavailable",
+-        "refused"
+-      ]
+-    },
+-    "reason": {
+-      "type": [
+-        "string",
+-        "null"
+-      ]
+-    },
+-    "fact_type": {
+-      "type": [
+-        "string",
+-        "null"
+-      ]
+-    },
+-    "mode": {
+-      "enum": [
+-        "rule",
+-        "row",
+-        null
+-      ]
+-    },
+-    "order": {
+-      "enum": [
+-        "declared",
+-        null
+-      ]
+-    },
+-    "unavailable": {
+-      "$ref": "#/$defs/unavailable"
+-    },
+-    "clauses": {
+-      "type": "array",
+-      "items": {
+-        "$ref": "#/$defs/clause"
+-      }
+-    },
+-    "work": {
+-      "$ref": "#/$defs/work"
+-    }
+-  },
+-  "allOf": [
+-    {
+-      "if": {
+-        "properties": {
+-          "status": {
+-            "const": "blocked"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "exit_code": {
+-            "const": 0
+-          },
+-          "reason": {
+-            "const": null
+-          },
+-          "clauses": {
+-            "minItems": 1
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "if": {
+-        "properties": {
+-          "status": {
+-            "const": "derived"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "exit_code": {
+-            "const": 0
+-          },
+-          "reason": {
+-            "const": null
+-          },
+-          "clauses": {
+-            "maxItems": 0
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "if": {
+-        "properties": {
+-          "status": {
+-            "const": "unsupported"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "exit_code": {
+-            "const": 2
+-          },
+-          "reason": {
+-            "enum": [
+-              "opaque-value",
+-              "aggregate",
+-              "rule-opaque"
+-            ]
+-          },
+-          "clauses": {
+-            "maxItems": 0
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "if": {
+-        "properties": {
+-          "status": {
+-            "const": "unavailable"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "exit_code": {
+-            "const": 4
+-          },
+-          "reason": {
+-            "type": "string",
+-            "pattern": "^term:"
+-          },
+-          "unavailable": {
+-            "type": "object"
+-          },
+-          "clauses": {
+-            "maxItems": 0
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "if": {
+-        "properties": {
+-          "status": {
+-            "const": "refused"
+-          },
+-          "reason": {
+-            "const": "input-invalid"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "exit_code": {
+-            "const": 3
+-          },
+-          "work": {
+-            "maxProperties": 0
+-          },
+-          "clauses": {
+-            "maxItems": 0
+-          },
+-          "fact_type": {
+-            "const": null
+-          },
+-          "mode": {
+-            "const": null
+-          },
+-          "order": {
+-            "const": null
+-          },
+-          "unavailable": {
+-            "const": null
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "if": {
+-        "properties": {
+-          "status": {
+-            "const": "refused"
+-          },
+-          "reason": {
+-            "const": "work-limit"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "exit_code": {
+-            "const": 4
+-          },
+-          "clauses": {
+-            "maxItems": 0
+-          },
+-          "fact_type": {
+-            "const": null
+-          },
+-          "mode": {
+-            "const": null
+-          },
+-          "order": {
+-            "const": null
+-          },
+-          "unavailable": {
+-            "const": null
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "if": {
+-        "properties": {
+-          "status": {
+-            "const": "refused"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "reason": {
+-            "enum": [
+-              "input-invalid",
+-              "work-limit"
+-            ]
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "if": {
+-        "required": [
+-          "view"
+-        ],
+-        "properties": {
+-          "view": {
+-            "const": "redacted"
+-          }
+-        }
+-      },
+-      "then": {
+-        "properties": {
+-          "unavailable": {
+-            "$ref": "#/$defs/redacted_unavailable"
+-          },
+-          "clauses": {
+-            "items": {
+-              "$ref": "#/$defs/redacted_clause"
+-            }
+-          }
+-        }
+-      }
+-    }
+-  ],
+   "$defs": {
+     "work": {
+       "type": "object",
+@@ -875,6 +584,402 @@
+           "minProperties": 1
+         }
+       }
++    },
++    "single_explanation": {
++      "type": "object",
++      "required": [
++        "schema_version",
++        "exit_code",
++        "status",
++        "reason",
++        "fact_type",
++        "mode",
++        "order",
++        "unavailable",
++        "clauses",
++        "work"
++      ],
++      "properties": {
++        "schema_version": {
++          "const": "gnd-why-not/2"
++        },
++        "exit_code": {
++          "enum": [
++            0,
++            2,
++            3,
++            4
++          ]
++        },
++        "view": {
++          "enum": [
++            "redacted",
++            "raw"
++          ]
++        },
++        "status": {
++          "enum": [
++            "blocked",
++            "derived",
++            "unsupported",
++            "unavailable",
++            "refused"
++          ]
++        },
++        "reason": {
++          "type": [
++            "string",
++            "null"
++          ]
++        },
++        "fact_type": {
++          "type": [
++            "string",
++            "null"
++          ]
++        },
++        "mode": {
++          "enum": [
++            "rule",
++            "row",
++            null
++          ]
++        },
++        "order": {
++          "enum": [
++            "declared",
++            null
++          ]
++        },
++        "unavailable": {
++          "$ref": "#/$defs/unavailable"
++        },
++        "clauses": {
++          "type": "array",
++          "items": {
++            "$ref": "#/$defs/clause"
++          }
++        },
++        "work": {
++          "$ref": "#/$defs/work"
++        }
++      },
++      "allOf": [
++        {
++          "if": {
++            "properties": {
++              "status": {
++                "const": "blocked"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "exit_code": {
++                "const": 0
++              },
++              "reason": {
++                "const": null
++              },
++              "clauses": {
++                "minItems": 1
++              }
++            }
++          }
++        },
++        {
++          "if": {
++            "properties": {
++              "status": {
++                "const": "derived"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "exit_code": {
++                "const": 0
++              },
++              "reason": {
++                "const": null
++              },
++              "clauses": {
++                "maxItems": 0
++              }
++            }
++          }
++        },
++        {
++          "if": {
++            "properties": {
++              "status": {
++                "const": "unsupported"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "exit_code": {
++                "const": 2
++              },
++              "reason": {
++                "enum": [
++                  "opaque-value",
++                  "aggregate",
++                  "rule-opaque"
++                ]
++              },
++              "clauses": {
++                "maxItems": 0
++              }
++            }
++          }
++        },
++        {
++          "if": {
++            "properties": {
++              "status": {
++                "const": "unavailable"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "exit_code": {
++                "const": 4
++              },
++              "reason": {
++                "anyOf": [
++                  {
++                    "type": "string",
++                    "pattern": "^term:"
++                  },
++                  {
++                    "const": "negative-relation-not-covered"
++                  }
++                ]
++              },
++              "unavailable": {
++                "type": "object"
++              },
++              "clauses": {
++                "maxItems": 0
++              }
++            }
++          }
++        },
++        {
++          "if": {
++            "properties": {
++              "status": {
++                "const": "refused"
++              },
++              "reason": {
++                "const": "input-invalid"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "exit_code": {
++                "const": 3
++              },
++              "work": {
++                "maxProperties": 0
++              },
++              "clauses": {
++                "maxItems": 0
++              },
++              "fact_type": {
++                "const": null
++              },
++              "mode": {
++                "const": null
++              },
++              "order": {
++                "const": null
++              },
++              "unavailable": {
++                "const": null
++              }
++            }
++          }
++        },
++        {
++          "if": {
++            "properties": {
++              "status": {
++                "const": "refused"
++              },
++              "reason": {
++                "const": "work-limit"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "exit_code": {
++                "const": 4
++              },
++              "clauses": {
++                "maxItems": 0
++              },
++              "fact_type": {
++                "const": null
++              },
++              "mode": {
++                "const": null
++              },
++              "order": {
++                "const": null
++              },
++              "unavailable": {
++                "const": null
++              }
++            }
++          }
++        },
++        {
++          "if": {
++            "properties": {
++              "status": {
++                "const": "refused"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "reason": {
++                "enum": [
++                  "input-invalid",
++                  "work-limit"
++                ]
++              }
++            }
++          }
++        },
++        {
++          "if": {
++            "required": [
++              "view"
++            ],
++            "properties": {
++              "view": {
++                "const": "redacted"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "unavailable": {
++                "$ref": "#/$defs/redacted_unavailable"
++              },
++              "clauses": {
++                "items": {
++                  "$ref": "#/$defs/redacted_clause"
++                }
++              }
++            }
++          }
++        }
++      ]
++    }
++  },
++  "oneOf": [
++    {
++      "$ref": "#/$defs/single_explanation",
++      "unevaluatedProperties": false
++    },
++    {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "schema_version",
++        "exit_code",
++        "status",
++        "setup_work",
++        "results"
++      ],
++      "properties": {
++        "schema_version": {
++          "const": "gnd-why-not-batch/1"
++        },
++        "status": {
++          "const": "batch"
++        },
++        "exit_code": {
++          "enum": [
++            0,
++            2,
++            4
++          ]
++        },
++        "view": {
++          "enum": [
++            "redacted",
++            "raw"
++          ]
++        },
++        "setup_work": {
++          "$ref": "#/$defs/work"
++        },
++        "results": {
++          "type": "array",
++          "minItems": 2,
++          "maxItems": 256,
++          "items": {
++            "type": "object",
++            "allOf": [
++              {
++                "$ref": "#/$defs/single_explanation"
++              }
++            ],
++            "properties": {
++              "request_index": {
++                "type": "integer",
++                "minimum": 0,
++                "maximum": 255
++              }
++            },
++            "required": [
++              "request_index"
++            ],
++            "unevaluatedProperties": false
++          }
++        }
++      },
++      "allOf": [
++        {
++          "if": {
++            "required": [
++              "view"
++            ],
++            "properties": {
++              "view": {
++                "const": "redacted"
++              }
++            }
++          },
++          "then": {
++            "properties": {
++              "results": {
++                "items": {
++                  "properties": {
++                    "unavailable": {
++                      "$ref": "#/$defs/redacted_unavailable"
++                    },
++                    "clauses": {
++                      "items": {
++                        "$ref": "#/$defs/redacted_clause"
++                      }
++                    }
++                  }
++                }
++              }
++            }
++          }
++        }
++      ]
+     }
+-  }
++  ]
+ }
+diff --git a/src/gnd/witness/cli.py b/src/gnd/witness/cli.py
+index 7a4a39a7..b0837b7b 100644
+--- a/src/gnd/witness/cli.py
++++ b/src/gnd/witness/cli.py
+@@ -42,7 +42,7 @@ def add_parsers(subparsers):
+     p.add_argument("model")
+     p.add_argument("population")
+     p.add_argument("--fact-type", required=True)
+-    p.add_argument("--row", help="a witness request holding the one claimed row")
++    p.add_argument("--row", help="a witness request holding ordered target rows for the selected fact type")
+     p.add_argument("--reference-root")
+     p.add_argument("--raw", action="store_true", help="explicitly expose population values")
+ 
+diff --git a/src/gnd/witness/io.py b/src/gnd/witness/io.py
+index cfd493dd..43f669c3 100644
+--- a/src/gnd/witness/io.py
++++ b/src/gnd/witness/io.py
+@@ -145,7 +145,10 @@ def target_shape(t):
+ 
+ 
+ def load_targets(path, *, limits=DEFAULT_LIMITS):
+-    doc = read_wire(path, limits=limits)
++    return parse_targets(read_wire(path, limits=limits), limits=limits)
++
++
++def parse_targets(doc, *, limits=DEFAULT_LIMITS):
+     record(doc, "version targets")
+     if type(doc["version"]) is not int or doc["version"] != 1:
+         raise WitnessInputError("unknown request version")
+@@ -423,8 +426,7 @@ def support_closure(model, targets):
+             supported = False
+         for c in iter_derivation_clauses(rule):
+             if (
+-                c.get("negate")
+-                or c.get("aggregate")
++                c.get("aggregate")
+                 or any(isinstance(v, (dict, list)) for v in c["head"].values())
+             ):
+                 supported = False
+@@ -437,6 +439,19 @@ def support_closure(model, targets):
+                         variable_types[term] = p
+                     elif isinstance(term, (dict, list)):
+                         supported = False
++            for atom in c.get("negate", []):
++                relation = atom["fact_type"]
++                pending.append(relation)
++                bindings = atom.get("bind", {})
++                if (types[relation].get("derivation") in {"derived", "semiderived"}
++                        or set(bindings) != {role for role, _ in roles[relation]}):
++                    supported = False
++                for role, primitive in roles[relation]:
++                    term = bindings.get(role)
++                    if isinstance(term, (dict, list)) or (
++                        isinstance(term, str) and term.startswith("$") and variable_types.get(term) != primitive
++                    ):
++                        supported = False
+             for w in c.get("where", []):
+                 operands = (w["left"], w["right"])
+                 if any(isinstance(v, (dict, list)) for v in operands):
+diff --git a/src/gnd/witness/kernel.py b/src/gnd/witness/kernel.py
+index 520ee7cd..19618d3c 100644
+--- a/src/gnd/witness/kernel.py
++++ b/src/gnd/witness/kernel.py
+@@ -153,6 +153,27 @@ def _replay_graph(model, candidate, refs, certificate, flags):
+         if i not in active:
+             active.add(i)
+             stack.extend(nodes[i].get("premises", []))
++    populations = (candidate, *refs.values())
++    covered = {name for population in populations for name in population.covers}
++    negative_rows = {}
++
++    def prove_absence(atom, bindings):
++        relation = atom["fact_type"]
++        if relation not in covered or facts[relation].get("derivation") in {"derived", "semiderived"}:
++            raise InvalidProof("negative relation is not covered asserted evidence")
++        if relation not in negative_rows:
++            observed = set()
++            for population in populations:
++                for row in population.facts.get(relation, ()):
++                    if any(isinstance(value, dict) for value in row.values()):
++                        raise UnsupportedScalar("negative relation has unknown values")
++                    observed.add(tuple(_scalar({"primitive": p, "value": row[role]})
++                                       for role, p in roles[relation]))
++            negative_rows[relation] = observed
++        wanted = tuple(_scalar(_term(atom["bind"][role], bindings, p)) for role, p in roles[relation])
++        if wanted in negative_rows[relation]:
++            raise InvalidProof("grounded negative tuple exists")
++
+     valid = []
+     # Wire references are checked before indexing; all inference errors stay local.
+     for n in nodes:
+@@ -228,6 +249,8 @@ def _replay_graph(model, candidate, refs, certificate, flags):
+                         _equal(bindings[k], v) for k, v in inferred.items()
+                     ):
+                         raise InvalidProof("incorrect grounding bindings")
++                    for negative in clause.get("negate", []):
++                        prove_absence(negative, inferred)
+                     for wi, edge in enumerate(n["premises"][len(body) :]):
+                         premise = nodes[edge]
+                         if (
+diff --git a/src/gnd/witness/producer.py b/src/gnd/witness/producer.py
+index 837ac3d6..787a8bf9 100644
+--- a/src/gnd/witness/producer.py
++++ b/src/gnd/witness/producer.py
+@@ -49,6 +49,10 @@ class GroundedTrace:
+                     references._snapshots, references._populations, strict=True
+                 )
+             ]
++        self.covered = {fid for _, pop in populations for fid in pop.covers}
++        self.uncovered_negative = {
++            atom["fact_type"] for fid in closure for clause in self.clauses[fid]
++            for atom in clause.get("negate", []) if atom["fact_type"] not in self.covered}
+         self.opaque = set()
+         for origin, pop in populations:
+             for fid, rows in sorted(pop.facts.items()):
+@@ -137,6 +141,17 @@ class GroundedTrace:
+             if proof is None:
+                 return  # The next production round can ground this firing.
+             premises.append(proof)
++        for atom in clause.get("negate", []):
++            afid = atom["fact_type"]
++            if afid not in self.covered or afid in self.opaque:
++                return
++            terms = atom["bind"]
++            grounded = [
++                binding[term[1:]] if isinstance(term, str) and term.startswith("$") else term
++                for role, _ in self.roles[afid] for term in [terms[role]]
++            ]
++            if self.key(afid, self.typed_row(afid, grounded)) in self.bases:
++                return
+         ci = self.clauses[fid].index(clause)
+         for wi, _ in enumerate(clause.get("where", [])):
+             premises.append(
+@@ -227,6 +242,8 @@ def produce_witness(model, candidate, targets, *, references=None, limits=DEFAUL
+             if not flag
+             else "proved"
+             if root is not None
++            else "uncovered"
++            if trace.uncovered_negative & scope
+             else "unknown"
+             if trace.opaque & scope
+             else "missing"
+diff --git a/src/gnd/witness/service.py b/src/gnd/witness/service.py
+index 3654a5bc..ecf87eb6 100644
+--- a/src/gnd/witness/service.py
++++ b/src/gnd/witness/service.py
+@@ -379,21 +379,14 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
+         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
+ 
+ 
+-def _why_not_intake_limits():
+-    """Project the why-not input ceilings onto the witness lane's limits class."""
+-    from dataclasses import replace
+-
+-    from gnd.witness.types import DEFAULT_LIMITS
+-    from gnd.witness.why_not import DEFAULT_WHY_NOT_LIMITS as limits
+-
+-    return replace(
+-        DEFAULT_LIMITS,
+-        bytes=limits.bytes,
+-        container_depth=limits.container_depth,
+-        scalar_bytes=limits.scalar_bytes,
+-        numeric_digits=limits.numeric_digits,
+-        targets=1,
+-    )
++def _why_not_intake_limits(limits=None):
++    """Project validated explanation limits onto the bounded wire reader."""
++    from gnd.witness.types import WhyNotWireLimits
++    from gnd.witness.why_not import DEFAULT_WHY_NOT_LIMITS
++
++    limits = limits or DEFAULT_WHY_NOT_LIMITS
++    return WhyNotWireLimits(bytes=limits.bytes, container_depth=limits.container_depth,
++                            scalar_bytes=limits.scalar_bytes, numeric_digits=limits.numeric_digits)
+ 
+ 
+ def _why_not_envelope(exit_code, status, reason, *, explanation=None, work=None):
+@@ -418,37 +411,81 @@ _WHY_NOT_EXITS = {"blocked": 0, "derived": 0, "unsupported": 2, "unavailable": 4
+ 
+ 
+ @parse_scoped
+-def why_not_result(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
++def why_not_result(model_path, population_path, fact_type, *, row_path=None, reference_root=None,
++                   targets=None, limits=None):
+     """Explain why a derived fact type, or one claimed row of it, is not derived."""
+     from ruamel.yaml.error import YAMLError
+ 
+-    from gnd.witness.io import intake, load_targets, model_wire, population_wire
+-    from gnd.witness.why_not import WhyNotWorkError, explain
++    from gnd.documents import Model
++    from gnd.population import Population
++    from gnd.witness.io import (
++        intake,
++        load_targets,
++        model_wire,
++        parse_targets,
++        population_wire,
++        validate_witness_structure,
++    )
++    from gnd.witness.why_not import (
++        DEFAULT_WHY_NOT_LIMITS,
++        WhyNotLimits,
++        WhyNotWorkError,
++        checked_why_not_limits,
++        explain_many,
++    )
+ 
+     refused = _why_not_envelope(3, "refused", "input-invalid", work={})
+     try:
+         if type(fact_type) is not str:
+             return refused
+-        limits = _why_not_intake_limits()
+-        row = None
+-        if row_path is not None:
+-            (target,) = load_targets(row_path, limits=limits)
+-            if target["fact_type"] != fact_type:
++        selected_limits = DEFAULT_WHY_NOT_LIMITS if limits is None else (
++            WhyNotLimits(**limits) if isinstance(limits, dict) else limits)
++        checked_why_not_limits(selected_limits)
++        wire = _why_not_intake_limits(selected_limits)
++        if targets is not None and row_path is not None:
++            return refused
++        requests = None
++        if targets is not None:
++            request = {"version": 1, "targets": targets}
++            validate_witness_structure(request, limits=wire)
++            requests = parse_targets(request, limits=wire)
++        elif row_path is not None:
++            requests = load_targets(row_path, limits=wire)
++        if requests and any(target["fact_type"] != fact_type for target in requests):
++            return refused
++        if isinstance(model_path, Model) or isinstance(population_path, Population):
++            if not isinstance(model_path, Model) or not isinstance(population_path, Population):
+                 return refused
+-            row = target["tuple"]
+-        model, candidate, context, _, _ = _witness_inputs(
+-            model_path, population_path, reference_root
+-        )
++            model, candidate = model_path, population_path
++            if not candidate.matches_validation_marker(model):
++                return refused
++            if reference_root is not None:
++                context = model_module.bind_declared_references(model, root=reference_root)
++            else:
++                context = model_module.resolve_context(model) if model.reference_populations else None
++        else:
++            model, candidate, context, _, _ = _witness_inputs(model_path, population_path, reference_root)
+         raw_refs = tuple((o.id, raw) for o, _, raw in context._snapshots) if context else ()
+-        intake(
+-            model_wire(model),
+-            population_wire(candidate),
+-            raw_refs,
+-            limits=limits,
+-        )
+-        result = explain(
+-            model, candidate, fact_type, row=row, references=context, near_misses=True
+-        ).to_dict()
++        intake(model_wire(model), population_wire(candidate), raw_refs, limits=wire)
++        rows = [t["tuple"] for t in requests] if requests else [None]
++        try:
++            setup, outcomes = explain_many(model, candidate, fact_type, rows=rows, references=context,
++                                          limits=selected_limits, near_misses=True)
++        except WhyNotWorkError as error:
++            setup, outcomes = error.work, [error] * len(rows)
++        results = []
++        for outcome in outcomes:
++            if isinstance(outcome, WhyNotWorkError):
++                results.append(_why_not_envelope(4, "refused", "work-limit", work=outcome.work))
++            else:
++                result = outcome.to_dict()
++                results.append(_why_not_envelope(_WHY_NOT_EXITS[result["status"]], result["status"],
++                                                 result["reason"], explanation=result))
++        if len(results) == 1:
++            return results[0]
++        return {"schema_version": "gnd-why-not-batch/1", "status": "batch",
++                "exit_code": max(result["exit_code"] for result in results), "setup_work": setup,
++                "results": [{"request_index": i, **result} for i, result in enumerate(results)]}
+     except ModelValidationError as error:
+         reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+         return _why_not_envelope(3, "refused", reason)
+@@ -464,9 +501,7 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
+         YAMLError,
+     ):
+         return refused
+-    return _why_not_envelope(
+-        _WHY_NOT_EXITS[result["status"]], result["status"], result["reason"], explanation=result
+-    )
++
+ 
+ 
+ 
+@@ -500,12 +535,12 @@ def replay(model_path, population_path, certificate_path, *, reference_root=None
+     return result_view(result) if resolve() == "customer" else result
+ 
+ 
+-def why_not(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
++def why_not(model_path, population_path, fact_type, *, row_path=None, reference_root=None, targets=None, limits=None):
+     """Explain why a derived fact type, or one claimed row of it, is not derived.
+ 
+     Under the customer disclosure mode the result is the redacted view."""
+     result = why_not_result(
+-        model_path, population_path, fact_type, row_path=row_path, reference_root=reference_root
++        model_path, population_path, fact_type, row_path=row_path, reference_root=reference_root, targets=targets, limits=limits
+     )
+     return {**why_not_view(result), "view": "redacted"} if resolve() == "customer" else result
+ 
+diff --git a/src/gnd/witness/types.py b/src/gnd/witness/types.py
+index 6e077b37..a6a7257f 100644
+--- a/src/gnd/witness/types.py
++++ b/src/gnd/witness/types.py
+@@ -26,12 +26,18 @@ class WitnessLimits:
+     expanded_visits: int = 20000
+ 
+ 
++@dataclass(frozen=True)
++class WhyNotWireLimits(WitnessLimits):
++    """Input reader shared with why-not, which permits a larger opt-in scalar."""
++
++
+ DEFAULT_LIMITS = WitnessLimits()
+ 
+ 
+ def checked_limits(limits: WitnessLimits) -> WitnessLimits:
++    maximum = WhyNotWireLimits(scalar_bytes=65_536) if type(limits) is WhyNotWireLimits else DEFAULT_LIMITS
+     if not isinstance(limits, WitnessLimits) or any(
+-        type(value) is not int or value < 1 or value > getattr(DEFAULT_LIMITS, key)
++        type(value) is not int or value < 1 or value > getattr(maximum, key)
+         for key, value in vars(limits).items()
+     ):
+         raise WitnessInputError("limits cannot raise the fixed ceilings")
+@@ -60,6 +66,7 @@ STATUS = {
+     "proved": (0, None),
+     "missing": (2, "target-missing"),
+     "unknown": (2, "value-unknown"),
++    "uncovered": (4, "negative-relation-not-covered"),
+     "unsupported": (2, "fragment-unsupported"),
+     "invalid": (1, "proof-invalid"),
+     "input-refused": (3, "input-invalid"),
+diff --git a/src/gnd/witness/view.py b/src/gnd/witness/view.py
+index c2275259..7be2b261 100644
+--- a/src/gnd/witness/view.py
++++ b/src/gnd/witness/view.py
+@@ -154,6 +154,11 @@ def _why_not_explanation(payload):
+ 
+ def why_not_view(payload):
+     """The default CLI view of a why-not payload: structure and counts, no values."""
++    if payload["schema_version"] == "gnd-why-not-batch/1":
++        return {"schema_version": payload["schema_version"], "status": "batch", "exit_code": payload["exit_code"],
++                "setup_work": {key: int(value) for key, value in payload["setup_work"].items()},
++                "results": [{"request_index": row["request_index"], **why_not_view(row)}
++                                       for row in payload["results"]]}
+     return {
+         "schema_version": payload["schema_version"],
+         "exit_code": payload["exit_code"],
+diff --git a/src/gnd/witness/why_not.py b/src/gnd/witness/why_not.py
+index 99a4bc5b..670f6292 100644
+--- a/src/gnd/witness/why_not.py
++++ b/src/gnd/witness/why_not.py
+@@ -56,13 +56,14 @@ class WhyNotLimits:
+ 
+ 
+ DEFAULT_WHY_NOT_LIMITS = WhyNotLimits()
++HARD_WHY_NOT_LIMITS = WhyNotLimits(scalar_bytes=65_536)
+ 
+ 
+ def checked_why_not_limits(limits: WhyNotLimits) -> WhyNotLimits:
+     if not isinstance(limits, WhyNotLimits) or any(
+         type(getattr(limits, f.name)) is not int
+         or getattr(limits, f.name) < 1
+-        or getattr(limits, f.name) > getattr(DEFAULT_WHY_NOT_LIMITS, f.name)
++        or getattr(limits, f.name) > getattr(HARD_WHY_NOT_LIMITS, f.name)
+         for f in fields(WhyNotLimits)
+     ):
+         raise WhyNotInputError("limits cannot raise the fixed ceilings")
+@@ -230,41 +231,62 @@ def explain(
+     near_misses: bool = False,
+ ) -> WhyNotResult:
+     """Explain why ``fact_type_id`` (or one claimed row of it) is not derived."""
++    _, results = explain_many(model, candidate, fact_type_id, rows=[row], references=references,
++                              limits=limits, near_misses=near_misses, require_covered_absence=False)
++    result = results[0]
++    if isinstance(result, WhyNotWorkError):
++        raise result
++    return result
++
++
++def explain_many(model, candidate, fact_type_id, *, rows, references=None,
++                 limits=DEFAULT_WHY_NOT_LIMITS, near_misses=False, require_covered_absence=True):
++    """Prepare one finite relation index, then give every target a new walk budget."""
+     checked_why_not_limits(limits)
+     index = ModelIndex.for_model(model)
+     target = index.fact_type(fact_type_id) if isinstance(fact_type_id, str) else None
+-    if target is None:
+-        raise WhyNotInputError("unknown fact type")
+-    if target.get("derivation") not in ("derived", "semiderived") or not isinstance(
+-        target.get("derivation_rule"), (dict, str)
+-    ):
+-        raise WhyNotInputError("fact type is not derived")
+-    mode = "rule" if row is None else "row"
+-    if row is not None:
+-        try:
+-            validate_targets([{"fact_type": fact_type_id, "tuple": row}], model)
+-            _identity_row(cell["value"] for cell in row)
+-        except (WitnessInputError, ValueError, TypeError, KeyError, AttributeError) as error:
+-            raise WhyNotInputError("malformed row") from error
+-    budget = _Budget(limits)
++    if target is None or target.get("derivation") not in ("derived", "semiderived"):
++        raise WhyNotInputError("unknown or non-derived fact type")
+     rule = target.get("derivation_rule")
++    if not isinstance(rule, (dict, str)):
++        raise WhyNotInputError("fact type has no rule")
++    try:
++        validate_targets([{"fact_type": fact_type_id, "tuple": row} for row in rows if row is not None], model)
++        for row in rows:
++            if row is not None:
++                _identity_row(cell["value"] for cell in row)
++    except (WitnessInputError, ValueError, TypeError, KeyError, AttributeError) as error:
++        raise WhyNotInputError("malformed row") from error
++    budget = _Budget(limits)
++
++    def unsupported(reason):
++        return dict(budget.work), [
++            _status(fact_type_id, "rule" if row is None else "row", "unsupported", reason, work=budget.work)
++            for row in rows]
++
+     if isinstance(rule, str):
+-        return _status(fact_type_id, mode, "unsupported", "rule-opaque", work=budget.work)
++        return unsupported("rule-opaque")
+     if any(isinstance(clause.get("aggregate"), dict) for clause in iter_derivation_clauses(rule)):
+-        return _status(fact_type_id, mode, "unsupported", "aggregate", work=budget.work)
++        return unsupported("aggregate")
+     closure = _closure(index, fact_type_id)
+     combined = (
+         bind_population(model, candidate, references=references).combined
+         if references is not None
+         else candidate
+     )
++    negative_sources = {
++        atom["fact_type"] for fid in closure
++        for clause in iter_derivation_clauses((index.fact_type(fid) or {}).get("derivation_rule"))
++        for atom in clause.get("negate", [])
++    }
++    uncovered = sorted(negative_sources.difference(combined.covers))
+     if any(
+         _is_opaque(value)
+         for fact_id in closure
+         for fact in combined.facts.get(fact_id, ())
+         for value in fact.values()
+     ):
+-        return _status(fact_type_id, mode, "unsupported", "opaque-value", work=budget.work)
++        return unsupported("opaque-value")
+     # Opaque rows outside the closure cannot reach the target; strip them so
+     # the evaluator takes the exact path, as check's dispatch does.
+     safe = {
+@@ -283,7 +305,25 @@ def explain(
+     walk = _Walk(
+         model, index, population, relations, result.extensions, budget, near_misses=near_misses
+     )
+-    return walk.explain(fact_type_id, row, depth=0, path=())
++    setup_work = dict(budget.work)
++    results = []
++    for row in rows:
++        walk.budget = _Budget(limits)
++        if len(rows) == 1:
++            walk.budget.work.update(setup_work)
++        walk.near_miss_inspections = 0
++        walk._spellings.clear()
++        walk._candidate_spellings.clear()
++        try:
++            result = walk.explain(fact_type_id, row, depth=0, path=())
++            if require_covered_absence and uncovered and result.status == "derived":
++                detail = {"reason": "negative-relation-not-covered", "source_relation": uncovered[0], "binding": {}}
++                result = _status(fact_type_id, result.mode, "unavailable", detail["reason"], detail,
++                                 work=walk.budget.work)
++            results.append(result)
++        except WhyNotWorkError as error:
++            results.append(error)
++    return setup_work, results
+ 
+ 
+ class _Walk:
+diff --git a/tests/fixtures/why_not/cases.json b/tests/fixtures/why_not/cases.json
+index 11140452..ce7e5640 100644
+--- a/tests/fixtures/why_not/cases.json
++++ b/tests/fixtures/why_not/cases.json
+@@ -220,7 +220,7 @@
+       "--row",
+       "<fx>/rows/two.json"
+     ],
+-    "exit": 3
++    "exit": 0
+   },
+   {
+     "id": "g11-other-fact-type",
+diff --git a/tests/fixtures/why_not/goldens/g11-two-targets.json b/tests/fixtures/why_not/goldens/g11-two-targets.json
+index ba5561b9..36441bd6 100644
+--- a/tests/fixtures/why_not/goldens/g11-two-targets.json
++++ b/tests/fixtures/why_not/goldens/g11-two-targets.json
+@@ -1 +1 @@
+-{"clauses": [], "exit_code": 3, "fact_type": null, "mode": null, "order": null, "reason": "input-invalid", "schema_version": "gnd-why-not/2", "status": "refused", "unavailable": null, "view": "redacted", "work": {}}
++{"exit_code": 0, "results": [{"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "derived", "fact_type": "credited", "ground": true, "index": 0, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": "redacted", "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": "redacted"}, "clause_index": 0, "descent": {"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "base", "fact_type": "wrote", "ground": true, "index": 1, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": "redacted", "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": "redacted"}, "clause_index": 0, "descent": null, "descent_stopped": "not-derived", "steps": [{"count": 1, "fact_type": "listed", "index": 0, "kind": "atom"}, {"count": 0, "fact_type": "wrote", "index": 1, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "fact_type": "credited", "mode": "row", "order": "declared", "reason": null, "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}, "descent_stopped": null, "steps": [{"count": 0, "fact_type": "credited", "index": 0, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "exit_code": 0, "fact_type": "claim", "mode": "row", "order": "declared", "reason": null, "request_index": 0, "schema_version": "gnd-why-not/2", "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}, {"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "derived", "fact_type": "credited", "ground": true, "index": 0, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": "redacted", "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": "redacted"}, "clause_index": 0, "descent": {"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "base", "fact_type": "wrote", "ground": true, "index": 1, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": "redacted", "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": "redacted"}, "clause_index": 0, "descent": null, "descent_stopped": "not-derived", "steps": [{"count": 1, "fact_type": "listed", "index": 0, "kind": "atom"}, {"count": 0, "fact_type": "wrote", "index": 1, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "fact_type": "credited", "mode": "row", "order": "declared", "reason": null, "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}, "descent_stopped": null, "steps": [{"count": 0, "fact_type": "credited", "index": 0, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "exit_code": 0, "fact_type": "claim", "mode": "row", "order": "declared", "reason": null, "request_index": 1, "schema_version": "gnd-why-not/2", "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}], "schema_version": "gnd-why-not-batch/1", "setup_work": {"binding_cells": 0, "joins": 0, "pre_joins": 2, "probes": 0}, "status": "batch", "view": "redacted"}
+diff --git a/tests/fixtures/why_not/goldens/g11-two-targets.raw.json b/tests/fixtures/why_not/goldens/g11-two-targets.raw.json
+index 6f9f3033..256d9d22 100644
+--- a/tests/fixtures/why_not/goldens/g11-two-targets.raw.json
++++ b/tests/fixtures/why_not/goldens/g11-two-targets.raw.json
+@@ -1 +1 @@
+-{"clauses": [], "exit_code": 3, "fact_type": null, "mode": null, "order": null, "reason": "input-invalid", "schema_version": "gnd-why-not/2", "status": "refused", "unavailable": null, "view": "raw", "work": {}}
++{"exit_code": 0, "results": [{"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "derived", "fact_type": "credited", "ground": true, "index": 0, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": [], "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": [{"person": "val-p1", "work": "val-w1"}]}, "clause_index": 0, "descent": {"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "base", "fact_type": "wrote", "ground": true, "index": 1, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": [], "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": [{"person": "val-p1", "work": "val-w1"}]}, "clause_index": 0, "descent": null, "descent_stopped": "not-derived", "steps": [{"count": 1, "fact_type": "listed", "index": 0, "kind": "atom"}, {"count": 0, "fact_type": "wrote", "index": 1, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "fact_type": "credited", "mode": "row", "order": "declared", "reason": null, "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}, "descent_stopped": null, "steps": [{"count": 0, "fact_type": "credited", "index": 0, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "exit_code": 0, "fact_type": "claim", "mode": "row", "order": "declared", "reason": null, "request_index": 0, "schema_version": "gnd-why-not/2", "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}, {"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "derived", "fact_type": "credited", "ground": true, "index": 0, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": [], "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": [{"person": "val-p1", "work": "val-w2"}]}, "clause_index": 0, "descent": {"clauses": [{"blocker": {"asserted_not_read": false, "derivation": "base", "fact_type": "wrote", "ground": true, "index": 1, "kind": "atom", "near_miss_count": 0, "near_miss_truncated": false, "near_misses": [], "roles": {"person": {"bound": true, "variable": "$p"}, "work": {"bound": true, "variable": "$w"}}, "sample_count": 1, "samples": [{"person": "val-p1", "work": "val-w2"}]}, "clause_index": 0, "descent": null, "descent_stopped": "not-derived", "steps": [{"count": 1, "fact_type": "listed", "index": 0, "kind": "atom"}, {"count": 0, "fact_type": "wrote", "index": 1, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "fact_type": "credited", "mode": "row", "order": "declared", "reason": null, "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}, "descent_stopped": null, "steps": [{"count": 0, "fact_type": "credited", "index": 0, "kind": "atom"}], "steps_after_blocker": "not-evaluated"}], "exit_code": 0, "fact_type": "claim", "mode": "row", "order": "declared", "reason": null, "request_index": 1, "schema_version": "gnd-why-not/2", "status": "blocked", "unavailable": null, "work": {"binding_cells": 2, "joins": 1, "pre_joins": 0, "probes": 5}}], "schema_version": "gnd-why-not-batch/1", "setup_work": {"binding_cells": 0, "joins": 0, "pre_joins": 2, "probes": 0}, "status": "batch", "view": "raw"}
+diff --git a/tests/support/pyrel_application_successors.py b/tests/support/pyrel_application_successors.py
+index 73d33559..f9e225d4 100644
+--- a/tests/support/pyrel_application_successors.py
++++ b/tests/support/pyrel_application_successors.py
+@@ -170,6 +170,7 @@ DYNAMIC_SUCCESSORS = [
+     ROOT / '.gnd-planning/milestones/cross-document-growth/evidence/CG3/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS1/dynamic-query-successor.json',
+     ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json',
++    ROOT / '.gnd-planning/milestones/python-snapshot-evaluation/evidence/PS3/dynamic-query-successor.json',
+ ]
+ 
+ 
+diff --git a/tests/test_public_api.py b/tests/test_public_api.py
+index b14cbf3e..6a5d259b 100644
+--- a/tests/test_public_api.py
++++ b/tests/test_public_api.py
+@@ -28,8 +28,8 @@ def test_public_exports_and_current_keyword_signatures():
+     # why_not takes paths and returns raw values like witness: no `unredacted`.
+     signature = inspect.signature(api.why_not)
+     assert tuple(signature.parameters) == (
+-        "model_path", "population_path", "fact_type", "row_path", "reference_root")
+-    for name in ("row_path", "reference_root"):
++        "model_path", "population_path", "fact_type", "row_path", "reference_root", "targets", "limits")
++    for name in ("row_path", "reference_root", "targets", "limits"):
+         assert signature.parameters[name].kind is inspect.Parameter.KEYWORD_ONLY
+         assert signature.parameters[name].default is None
+     assert tuple(inspect.signature(api.witness).parameters)[:2] == ("model_path", "population_path")
+diff --git a/tests/test_public_reference_signatures.py b/tests/test_public_reference_signatures.py
+index 19e76cea..31cee1c6 100644
+--- a/tests/test_public_reference_signatures.py
++++ b/tests/test_public_reference_signatures.py
+@@ -28,7 +28,7 @@ def test_receipt_keyword_signature() -> None:
+ def test_why_not_keyword_signature() -> None:
+     parameters = inspect.signature(api.why_not).parameters
+     assert tuple(parameters) == (
+-        "model_path", "population_path", "fact_type", "row_path", "reference_root")
+-    for name in ("row_path", "reference_root"):
++        "model_path", "population_path", "fact_type", "row_path", "reference_root", "targets", "limits")
++    for name in ("row_path", "reference_root", "targets", "limits"):
+         assert parameters[name].kind is inspect.Parameter.KEYWORD_ONLY
+         assert parameters[name].default is None
+diff --git a/tests/test_public_why_not.py b/tests/test_public_why_not.py
+index 9c7131e5..3f13ae70 100644
+--- a/tests/test_public_why_not.py
++++ b/tests/test_public_why_not.py
+@@ -130,7 +130,7 @@ def test_t3_intake_limits_project_the_why_not_ceilings():
+     assert isinstance(projected, WitnessLimits)
+     assert (projected.bytes, projected.container_depth, projected.scalar_bytes,
+             projected.numeric_digits, projected.targets) == (
+-        W.bytes, W.container_depth, W.scalar_bytes, W.numeric_digits, 1)
++        W.bytes, W.container_depth, W.scalar_bytes, W.numeric_digits, DEFAULT_LIMITS.targets)
+     for name in ("nodes", "edges", "binding_cells", "joins", "proof_depth", "expanded_visits"):
+         assert getattr(projected, name) == getattr(DEFAULT_LIMITS, name)
+ 
+diff --git a/tests/test_snapshot_explanations.py b/tests/test_snapshot_explanations.py
+new file mode 100644
+index 00000000..a845b02b
+--- /dev/null
++++ b/tests/test_snapshot_explanations.py
+@@ -0,0 +1,117 @@
++import json
++
++from test_checked_extensions import fixture
++
++from gnd import api
++from gnd.model import load_model
++from gnd.population import load_population
++
++
++def snapshot(folder, *, covered=True, blocked=("b",), candidates=("a", "b")):
++    model, pop = fixture(folder, input_id="candidate", heads=("eligible",), rows=candidates)
++    doc = json.loads(model.read_text())
++    rule = next(f for f in doc["fact_types"] if f["id"] == "eligible")["derivation_rule"]
++    doc["fact_types"].append({"id": "blocked", "reading": "{Item} is blocked",
++                               "roles": [{"role_name": "id", "object_type": "item"}]})
++    rule["negate"] = [{"fact_type": "blocked", "bind": {"id": "$x"}}]
++    model.write_text(json.dumps(doc))
++    population = json.loads(pop.read_text())
++    if covered:
++        population["facts"]["blocked"] = [{"id": s} for s in blocked]
++        population["population"]["covers"].append("blocked")
++    pop.write_text(json.dumps(population))
++    return model, pop
++
++
++def target(value):
++    return {"fact_type": "eligible", "tuple": [{"primitive": "String", "value": value}]}
++
++
++def write_request(folder, targets):
++    path = folder / "request.json"
++    path.write_text(json.dumps({"version": 1, "targets": targets}))
++    return path
++
++
++def test_ordered_batch_shares_preparation_and_isolates_walks(tmp_path, monkeypatch):
++    from gnd import checker
++    path, pop = snapshot(tmp_path)
++    model = load_model(path)
++    loaded = load_population(pop, model=model)
++    singles = [api.why_not(model, loaded, "eligible", targets=[target(s)]) for s in ("b", "a")]
++    calls = []
++    real = checker._evaluate_stratified_extensions
++    def counted(*args, **kwargs):
++        calls.append(1)
++        return real(*args, **kwargs)
++    monkeypatch.setattr(checker, "_evaluate_stratified_extensions", counted)
++    report = api.why_not(model, loaded, "eligible", targets=[target(s) for s in ("b", "a", "b")])
++    assert calls == [1]
++    assert [r["status"] for r in report["results"]] == ["blocked", "derived", "blocked"]
++    for index, item in enumerate(report["results"]):
++        assert item["request_index"] == index
++        assert item["clauses"] == singles[index % 2]["clauses"]
++    rev = api.why_not(path, pop, "eligible", row_path=write_request(tmp_path, [target("a"), target("b")]))
++    assert [r["status"] for r in rev["results"]] == ["derived", "blocked"]
++    bounded = api.why_not(model, loaded, "eligible", targets=[target("b"), target("a")],
++                          limits={"joins": 1, "probes": 1})
++    assert [r["status"] for r in bounded["results"]] == ["refused", "derived"]
++
++
++def test_covered_absence_and_replay(tmp_path):
++    path, pop = snapshot(tmp_path)
++    request = write_request(tmp_path, [target("a")])
++    witness = api.witness(path, pop, request)
++    assert witness["exit_code"] == 0
++    cert = tmp_path / "cert.json"
++    cert.write_text(json.dumps(witness["certificate"]))
++    assert api.replay(path, pop, cert)["exit_code"] == 0
++    snapshot(tmp_path, blocked=("a", "b"))
++    assert api.replay(path, pop, cert)["exit_code"] != 0
++    assert api.witness(path, pop, request)["results"][0]["status"] == "missing"
++    snapshot(tmp_path, covered=False)
++    assert api.witness(path, pop, request)["results"][0]["status"] == "uncovered"
++    assert api.why_not(path, pop, "eligible", row_path=request)["reason"] == "negative-relation-not-covered"
++
++
++def test_configured_scalar_bound_and_batch_projection(tmp_path, monkeypatch):
++    long_id = "x" * 5000
++    path, pop = snapshot(tmp_path, candidates=(long_id, "a"), blocked=(long_id,))
++    monkeypatch.setenv("GND_DISCLOSURE", "customer")
++    request = [target(long_id), target("a")]
++    assert api.why_not(path, pop, "eligible", targets=request)["exit_code"] == 3
++    result = api.why_not(path, pop, "eligible", targets=request, limits={"scalar_bytes": 6000})
++    assert result["exit_code"] == 0 and long_id not in json.dumps(result)
++    assert api.why_not(path, pop, "eligible", targets=request, limits={"scalar_bytes": 65537})["exit_code"] == 3
++
++
++def test_correlated_negative_checks_the_whole_tuple_on_replay(tmp_path):
++    path, pop = snapshot(tmp_path)
++    doc = json.loads(path.read_text())
++    for fact in doc["fact_types"]:
++        fact["roles"].append({"role_name": "zone", "object_type": "item"})
++        fact["reading"] = "{Item:id} is associated with {Item:zone}"
++        if rule := fact.get("derivation_rule"):
++            rule["body"][0]["bind"]["zone"] = "$z"
++            rule["negate"][0]["bind"]["zone"] = "$z"
++            rule["head"]["zone"] = "$z"
++    path.write_text(json.dumps(doc))
++    population = json.loads(pop.read_text())
++    population["facts"].update(candidate=[{"id": "a", "zone": "east"}],
++                               blocked=[{"id": "a", "zone": "west"}, {"id": "b", "zone": "east"}])
++    pop.write_text(json.dumps(population))
++    pair = target("a")
++    pair["tuple"].append({"primitive": "String", "value": "east"})
++    request = write_request(tmp_path, [pair])
++    original = api.witness(path, pop, request)
++    assert original["exit_code"] == 0
++    cert = tmp_path / "proof.json"
++    cert.write_text(json.dumps(original["certificate"]))
++    assert api.replay(path, pop, cert)["exit_code"] == 0
++    population["facts"]["blocked"].append({"id": "a", "zone": "east"})
++    pop.write_text(json.dumps(population))
++    latest = api.witness(path, pop, request)
++    assert latest["results"][0]["status"] == "missing"
++    original["certificate"]["binding"] = latest["certificate"]["binding"]
++    cert.write_text(json.dumps(original["certificate"]))
++    assert api.replay(path, pop, cert)["results"][0]["status"] == "invalid"

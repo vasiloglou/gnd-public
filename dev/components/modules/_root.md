@@ -116,22 +116,24 @@ Stable in-process access to GND validation and checking reports.
 | `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 174 | Return the check payload and an opaque, in-process CheckReceipt. |
 | `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 671 | Validate a model path or reuse a loaded model, returning its report. |
 | `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 683 | Check one population and return the same payload emitted by the CLI. |
-| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
-| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
-| `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_model(model, *, for_growth) -> str` | function | 1022 | Render the complete model for review, or its canonical growth-prompt inventory. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1044 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1087 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1116 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1233 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1257 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1272 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1280 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1290 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1299 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1311 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1314 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1317 | (no docstring) |
+| `check_with_extensions(model, population, *, fact_types, max_rows, unredacted) -> dict[str, Any]` | function | 756 | Check a snapshot and select bounded derived rows from that execution. |
+| `snapshot_verdict(report) -> dict[str, Any]` | function | 821 | Interpret an existing versioned check report without evaluating a population. |
+| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 876 | Read two models and optionally one directory of population documents. |
+| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 1060 | Public population sentence view; applied redaction is the default. |
+| `compose(model, directory) -> dict[str, Any]` | function | 1088 | Compose a composition directory's sources into one population (CT2). |
+| `verbalize_model(model, *, for_growth) -> str` | function | 1149 | Render the complete model for review, or its canonical growth-prompt inventory. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1171 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1214 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1243 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1360 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1384 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1399 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1407 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1417 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1426 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1438 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1441 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1444 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -521,8 +523,8 @@ Bounded ephemeral preparation for one admitted check evaluation.
 | `fingerprint(value) -> tuple \| None` | function | 95 | (no docstring) |
 | `CalculationScope` | class | 109 | (no docstring) |
 | `CalculationScope.calculate(self, key_identity, snapshot, calculate, clone, record) -> Result` | method | 116 | (no docstring) |
-| `current_scope() -> CalculationScope \| None` | function | 161 | (no docstring) |
-| `calculation_scope(model, population) -> Iterator[CalculationScope]` | function | 166 | (no docstring) |
+| `current_scope() -> CalculationScope \| None` | function | 165 | (no docstring) |
+| `calculation_scope(model, population) -> Iterator[CalculationScope]` | function | 170 | (no docstring) |
 
 ## gnd.extensions — `src/gnd/extensions.py`
 Components: semantics.extensions
@@ -916,18 +918,18 @@ Post-verdict witness projection for model-declared sensitive roles.
 | `RedactionDeclaration.as_dict(self) -> dict[str, Any]` | method | 59 | (no docstring) |
 | `RedactionPolicy` | class | 69 | (no docstring) |
 | `RedactionPolicy.from_model(cls, model, *, case_id) -> RedactionPolicy` | method | 91 | (no docstring) |
-| `RedactionPolicy.active(self) -> bool` | method | 363 | (no docstring) |
-| `RedactionPolicy.marker(self, roles) -> dict[str, Any]` | method | 366 | (no docstring) |
-| `RedactionPolicy.fact_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 372 | (no docstring) |
-| `RedactionPolicy.parameter_roles(self, operation, parameter) -> frozenset[tuple[str, str]]` | method | 377 | (no docstring) |
-| `RedactionPolicy.derivation_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 380 | (no docstring) |
-| `RedactionPolicy.verdict_roles(self, row) -> frozenset[tuple[str, str]]` | method | 383 | (no docstring) |
-| `RedactionPolicy.metadata(self, mode) -> dict[str, Any]` | method | 395 | (no docstring) |
-| `EmitterSpec` | class | 403 | (no docstring) |
-| `emitter_specs() -> tuple[EmitterSpec, ...]` | function | 412 | The closed output census exercised by the Phase-4 leak matrix. |
-| `project_output(kind, value, *, policy, mode, case_id, emitter_id) -> dict[str, Any]` | function | 760 | Return a projected copy of one completed output payload. |
-| `render_text_header(payload) -> str \| None` | function | 872 | Render the symmetric first text line for a successor payload. |
-| `project_failure(kind, value, *, policy, mode) -> dict[str, Any]` | function | 890 | Select the successor envelope after projection itself failed. |
+| `RedactionPolicy.active(self) -> bool` | method | 362 | (no docstring) |
+| `RedactionPolicy.marker(self, roles) -> dict[str, Any]` | method | 365 | (no docstring) |
+| `RedactionPolicy.fact_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 371 | (no docstring) |
+| `RedactionPolicy.parameter_roles(self, operation, parameter) -> frozenset[tuple[str, str]]` | method | 376 | (no docstring) |
+| `RedactionPolicy.derivation_roles(self, fact_type) -> frozenset[tuple[str, str]]` | method | 379 | (no docstring) |
+| `RedactionPolicy.verdict_roles(self, row) -> frozenset[tuple[str, str]]` | method | 382 | (no docstring) |
+| `RedactionPolicy.metadata(self, mode) -> dict[str, Any]` | method | 394 | (no docstring) |
+| `EmitterSpec` | class | 402 | (no docstring) |
+| `emitter_specs() -> tuple[EmitterSpec, ...]` | function | 411 | The closed output census exercised by the Phase-4 leak matrix. |
+| `project_output(kind, value, *, policy, mode, case_id, emitter_id) -> dict[str, Any]` | function | 759 | Return a projected copy of one completed output payload. |
+| `render_text_header(payload) -> str \| None` | function | 871 | Render the symmetric first text line for a successor payload. |
+| `project_failure(kind, value, *, policy, mode) -> dict[str, Any]` | function | 889 | Select the successor envelope after projection itself failed. |
 
 ## gnd.references — `src/gnd/references.py`
 Components: model.reference_binding
@@ -1208,6 +1210,19 @@ Executable v6 snapshot specifications, separate from production correspondence.
 | `joined_pass_is_empty(constraint, snapshot) -> bool` | function | 2877 | NS-VACUITY-4 pass-only empty joined-universe classification. |
 | `applicability_of(constraint, snapshot) -> str` | function | 2895 | Classify the pre-evaluation stages of NS-ORDER-OF-RESOLUTION-1. |
 | `verdict_of(constraint, snapshot) -> tuple[str, str \| None, tuple[tuple[Scalar, ...], ...]]` | function | 2954 | Compose applicability, one family result, modality and pass-only vacuity. |
+
+## gnd.snapshot_worker — `src/gnd/snapshot_worker.py`
+Components: cli.snapshot_worker
+Local JSON Lines protocol for repeated ordinary Python snapshot checks.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `RequestError` | class(ValueError) | 19 | A fixed protocol code, suitable for returning across the process boundary. |
+| `Worker` | class | 23 | (no docstring) |
+| `Worker.close(self)` | method | 29 | (no docstring) |
+| `Worker.check(self, request)` | method | 34 | (no docstring) |
+| `Worker.reply(self, raw)` | method | 62 | (no docstring) |
+| `serve(incoming, outgoing)` | function | 84 | (no docstring) |
 
 ## gnd.solve — `src/gnd/solve.py`
 Components: agent.solve

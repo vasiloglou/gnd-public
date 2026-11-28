@@ -1,0 +1,1305 @@
+{
+  "schema_version": 1,
+  "run_sha256": "f35dfb212466505e3da265d3ad2bc39042e3671b3f0c85ae2968c0a2072e7968",
+  "summary": "Six valid reviewers requested revision. The delegated amendment binds concrete envelope and vacuity semantics, evaluation and work counters, correlated negative evidence, and two independent embedding and lifecycle gates.",
+  "agreed_concerns": [
+    {
+      "title": "Replace restated deliverables with observable controls and bind decisions to phase gates",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "exit-criteria-restate-behavior"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-exit-criteria-column-restatements"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps10-first-phase-decision-ambiguity"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi"
+      ],
+      "group_id": "group-1",
+      "severity": "high",
+      "summary": "Replace restated deliverables with observable controls and bind decisions to phase gates"
+    },
+    {
+      "title": "Enumerate supported check versions, including unknown-version refusal",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-supported-envelopes-unenumerated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps1-supported-envelope-set"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps1-supported-envelope-set-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "group_id": "group-2",
+      "severity": "high",
+      "summary": "Enumerate supported check versions, including unknown-version refusal"
+    },
+    {
+      "title": "Give outer failures precedence and distinguish invalid input from successful zero counts",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-outer-failure-indistinguishable"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS1-OUTER-FAILURE"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps1-outer-failure"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps1-outer-failure-and-vacuity-criteria-absent"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini"
+      ],
+      "group_id": "group-3",
+      "severity": "high",
+      "summary": "Give outer failures precedence and distinguish invalid input from successful zero counts"
+    },
+    {
+      "title": "Expose the ordinary-check vacuity switch and pin default and mixed-failure outcomes",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-vacuity-default-order-parity"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS1-VACUITY-PRECEDENCE"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compat-pin-vs-intended-change"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ],
+      "group_id": "group-4",
+      "severity": "high",
+      "summary": "Expose the ordinary-check vacuity switch and pin default and mixed-failure outcomes"
+    },
+    {
+      "title": "Keep original report disclosure and refuse malformed structures without reflecting values",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-malformed-redaction-test"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "redaction-unasserted-on-failure-paths"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "group_id": "group-6",
+      "severity": "high",
+      "summary": "Keep original report disclosure and refuse malformed structures without reflecting values"
+    },
+    {
+      "title": "Prove complete-empty and unavailable with separate fixtures",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-empty-vs-uncomputed-untested"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-availability-distinction-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-availability-representation-unowned"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-not-computed-case-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-7",
+      "severity": "high",
+      "summary": "Prove complete-empty and unavailable with separate fixtures"
+    },
+    {
+      "title": "Count one actual evaluation and check inferred rows against an independent oracle",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-single-evaluation-consistency"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-single-evaluation-counter-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-single-evaluation-unmeasured"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-hand-built-oracle-single-source"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "group_id": "group-8",
+      "severity": "high",
+      "summary": "Count one actual evaluation and check inferred rows against an independent oracle"
+    },
+    {
+      "title": "Define extension caps, work units and all-or-nothing return per requested relation",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-cap-truncation-semantics"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS2-PARTIAL-EXTENSION"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps2-budget-allocation"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-cap-completeness-marker"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "limits-and-budgets-unquantified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi"
+      ],
+      "group_id": "group-9",
+      "severity": "high",
+      "summary": "Define extension caps, work units and all-or-nothing return per requested relation"
+    },
+    {
+      "title": "Measure shared indexes, ordered batch results and equivalent independent targets",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-reuse-and-order-independence"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-shared-index-equivalence"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-index-reuse-unobserved"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "group_id": "group-11",
+      "severity": "high",
+      "summary": "Measure shared indexes, ordered batch results and equivalent independent targets"
+    },
+    {
+      "title": "Isolate per-target budgets and expose exhaustion without stopping later targets",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-per-target-budget-isolation"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS3-TARGET-BUDGETS"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps3-budget-exhaustion"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps3-exhaustion-not-verified"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-exhaustion-untested"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-order-and-exhaustion-semantics-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-12",
+      "severity": "high",
+      "summary": "Isolate per-target budgets and expose exhaustion without stopping later targets"
+    },
+    {
+      "title": "Bind grounded negative absence to correlated covered inputs and invalidate on changed facts",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-correlated-negation-scope"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-invalidation-vs-shared-snapshot"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS3-CORRELATED-NEGATION"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-grounding-terms-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-covered-relation-refusal-untested"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-witness-invalidation-not-falsifiable"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi"
+      ],
+      "group_id": "group-13",
+      "severity": "high",
+      "summary": "Bind grounded negative absence to correlated covered inputs and invalidate on changed facts"
+    },
+    {
+      "title": "Force model replacement in a running worker and compare to fresh evaluation",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-model-invalidation-unexercised"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps4-model-invalidation-unexercised"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-invalidation-never-exercised"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-model-invalidation-unexercised"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-14",
+      "severity": "high",
+      "summary": "Force model replacement in a running worker and compare to fresh evaluation"
+    },
+    {
+      "title": "Define worker errors, version rejection, restart and host isolation",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-isolation-recovery-versioning"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS4-WORKER-RECOVERY"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps4-worker-recovery"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-protocol-version-mismatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-restart-and-identity-logged-not-asserted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-protocol-version-and-error-schema-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-isolation-property-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi"
+      ],
+      "group_id": "group-15",
+      "severity": "high",
+      "summary": "Define worker errors, version rejection, restart and host isolation"
+    },
+    {
+      "title": "Test both the pinned build and independent-host dependency resolution",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-matrix-and-gate-ambiguity"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps4-dependency-gate-scope"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-host-topology-mismatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-independent-host-gate-contradiction"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "group_id": "group-16",
+      "severity": "high",
+      "summary": "Test both the pinned build and independent-host dependency resolution"
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "ps1-document-verb-criterion"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "ps2-redaction-side-channel"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "component-ownership-map-missing"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "native-backend-claims-unenumerated"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "post-approval-name-change-rereview-trigger"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "title": "Replace restated deliverables with observable controls and bind decisions to phase gates",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "exit-criteria-restate-behavior"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-exit-criteria-column-restatements"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps10-first-phase-decision-ambiguity"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "kimi"
+      ],
+      "rank": 1,
+      "fix_id": "fix-1",
+      "action": "Replace restated deliverables with observable controls and bind decisions to phase gates",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "exit-criteria-restate-behavior",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-exit-criteria-column-restatements",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps10-first-phase-decision-ambiguity",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Enumerate supported check versions, including unknown-version refusal",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-supported-envelopes-unenumerated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps1-supported-envelope-set"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps1-supported-envelope-set-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "rank": 2,
+      "fix_id": "fix-2",
+      "action": "Enumerate supported check versions, including unknown-version refusal",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-supported-envelopes-unenumerated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps1-supported-envelope-set",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps1-supported-envelope-set-undefined",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Give outer failures precedence and distinguish invalid input from successful zero counts",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-outer-failure-indistinguishable"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS1-OUTER-FAILURE"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps1-outer-failure"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps1-outer-failure-and-vacuity-criteria-absent"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini"
+      ],
+      "rank": 3,
+      "fix_id": "fix-3",
+      "action": "Give outer failures precedence and distinguish invalid input from successful zero counts",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-outer-failure-indistinguishable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS1-OUTER-FAILURE",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps1-outer-failure",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps1-outer-failure-and-vacuity-criteria-absent",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Expose the ordinary-check vacuity switch and pin default and mixed-failure outcomes",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-vacuity-default-order-parity"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS1-VACUITY-PRECEDENCE"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compat-pin-vs-intended-change"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ],
+      "rank": 4,
+      "fix_id": "fix-4",
+      "action": "Expose the ordinary-check vacuity switch and pin default and mixed-failure outcomes",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-vacuity-default-order-parity",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS1-VACUITY-PRECEDENCE",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "compat-pin-vs-intended-change",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Exercise grounded and missing outcome coverage",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps1-document-verb-criterion"
+        }
+      ],
+      "supporting_reviewers": [
+        "kimi"
+      ],
+      "rank": 5,
+      "fix_id": "fix-5",
+      "action": "Exercise grounded and missing outcome coverage",
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps1-document-verb-criterion",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Keep original report disclosure and refuse malformed structures without reflecting values",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-malformed-redaction-test"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "redaction-unasserted-on-failure-paths"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 6,
+      "fix_id": "fix-6",
+      "action": "Keep original report disclosure and refuse malformed structures without reflecting values",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps1-malformed-redaction-test",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "redaction-unasserted-on-failure-paths",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Prove complete-empty and unavailable with separate fixtures",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-empty-vs-uncomputed-untested"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-availability-distinction-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-availability-representation-unowned"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-not-computed-case-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "rank": 7,
+      "fix_id": "fix-7",
+      "action": "Prove complete-empty and unavailable with separate fixtures",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-empty-vs-uncomputed-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps2-availability-distinction-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-availability-representation-unowned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-not-computed-case-missing",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Count one actual evaluation and check inferred rows against an independent oracle",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-single-evaluation-consistency"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-single-evaluation-counter-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-single-evaluation-unmeasured"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-hand-built-oracle-single-source"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "rank": 8,
+      "fix_id": "fix-8",
+      "action": "Count one actual evaluation and check inferred rows against an independent oracle",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-single-evaluation-consistency",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-single-evaluation-counter-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-single-evaluation-unmeasured",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps2-hand-built-oracle-single-source",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Define extension caps, work units and all-or-nothing return per requested relation",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-cap-truncation-semantics"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS2-PARTIAL-EXTENSION"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps2-budget-allocation"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-cap-completeness-marker"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "limits-and-budgets-unquantified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi"
+      ],
+      "rank": 9,
+      "fix_id": "fix-9",
+      "action": "Define extension caps, work units and all-or-nothing return per requested relation",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-cap-truncation-semantics",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS2-PARTIAL-EXTENSION",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps2-budget-allocation",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps2-cap-completeness-marker",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "limits-and-budgets-unquantified",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Suppress protected rows and metadata that leak their cardinality",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-redaction-side-channel"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ],
+      "rank": 10,
+      "fix_id": "fix-10",
+      "action": "Suppress protected rows and metadata that leak their cardinality",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps2-redaction-side-channel",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Measure shared indexes, ordered batch results and equivalent independent targets",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-reuse-and-order-independence"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-shared-index-equivalence"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-index-reuse-unobserved"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ],
+      "rank": 11,
+      "fix_id": "fix-11",
+      "action": "Measure shared indexes, ordered batch results and equivalent independent targets",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-reuse-and-order-independence",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-shared-index-equivalence",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-index-reuse-unobserved",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Isolate per-target budgets and expose exhaustion without stopping later targets",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-per-target-budget-isolation"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS3-TARGET-BUDGETS"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps3-budget-exhaustion"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps3-exhaustion-not-verified"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-exhaustion-untested"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-order-and-exhaustion-semantics-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ],
+      "rank": 12,
+      "fix_id": "fix-12",
+      "action": "Isolate per-target budgets and expose exhaustion without stopping later targets",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-per-target-budget-isolation",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS3-TARGET-BUDGETS",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps3-budget-exhaustion",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps3-exhaustion-not-verified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-exhaustion-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-order-and-exhaustion-semantics-unspecified",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Bind grounded negative absence to correlated covered inputs and invalidate on changed facts",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-correlated-negation-scope"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-invalidation-vs-shared-snapshot"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS3-CORRELATED-NEGATION"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-grounding-terms-undefined"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-covered-relation-refusal-untested"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-witness-invalidation-not-falsifiable"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "kimi"
+      ],
+      "rank": 13,
+      "fix_id": "fix-13",
+      "action": "Bind grounded negative absence to correlated covered inputs and invalidate on changed facts",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-correlated-negation-scope",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps3-invalidation-vs-shared-snapshot",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS3-CORRELATED-NEGATION",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps3-grounding-terms-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-covered-relation-refusal-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps3-witness-invalidation-not-falsifiable",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Force model replacement in a running worker and compare to fresh evaluation",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-model-invalidation-unexercised"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps4-model-invalidation-unexercised"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-invalidation-never-exercised"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-model-invalidation-unexercised"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "rank": 14,
+      "fix_id": "fix-14",
+      "action": "Force model replacement in a running worker and compare to fresh evaluation",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-model-invalidation-unexercised",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps4-model-invalidation-unexercised",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-invalidation-never-exercised",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-model-invalidation-unexercised",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Define worker errors, version rejection, restart and host isolation",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-isolation-recovery-versioning"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS4-WORKER-RECOVERY"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps4-worker-recovery"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-protocol-version-mismatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-restart-and-identity-logged-not-asserted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-protocol-version-and-error-schema-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-isolation-property-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi"
+      ],
+      "rank": 15,
+      "fix_id": "fix-15",
+      "action": "Define worker errors, version rejection, restart and host isolation",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-isolation-recovery-versioning",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "PS4-WORKER-RECOVERY",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "ps4-worker-recovery",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-protocol-version-mismatch",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-restart-and-identity-logged-not-asserted",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-protocol-version-and-error-schema-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-isolation-property-undefined",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Test both the pinned build and independent-host dependency resolution",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-matrix-and-gate-ambiguity"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps4-dependency-gate-scope"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-host-topology-mismatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-independent-host-gate-contradiction"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "rank": 16,
+      "fix_id": "fix-16",
+      "action": "Test both the pinned build and independent-host dependency resolution",
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "ps4-matrix-and-gate-ambiguity",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "ps4-dependency-gate-scope",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "ps4-host-topology-mismatch",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ps4-independent-host-gate-contradiction",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Verify concrete component homes against source before each phase",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "component-ownership-map-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 17,
+      "fix_id": "fix-17",
+      "action": "Verify concrete component homes against source before each phase",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "component-ownership-map-missing",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "State the native backend scope of this API milestone",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "native-backend-claims-unenumerated"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 18,
+      "fix_id": "fix-18",
+      "action": "State the native backend scope of this API milestone",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "native-backend-claims-unenumerated",
+          "evidence_index": 0
+        }
+      ]
+    },
+    {
+      "title": "Record an explicit amended contract when a deferred decision affects a prior gate",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-approval-name-change-rereview-trigger"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 19,
+      "fix_id": "fix-19",
+      "action": "Record an explicit amended contract when a deferred decision affects a prior gate",
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "post-approval-name-change-rereview-trigger",
+          "evidence_index": 0
+        }
+      ]
+    }
+  ]
+}

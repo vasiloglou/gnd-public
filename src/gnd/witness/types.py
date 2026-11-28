@@ -26,12 +26,18 @@ class WitnessLimits:
     expanded_visits: int = 20000
 
 
+@dataclass(frozen=True)
+class WhyNotWireLimits(WitnessLimits):
+    """Input reader shared with why-not, which permits a larger opt-in scalar."""
+
+
 DEFAULT_LIMITS = WitnessLimits()
 
 
 def checked_limits(limits: WitnessLimits) -> WitnessLimits:
+    maximum = WhyNotWireLimits(scalar_bytes=65_536) if type(limits) is WhyNotWireLimits else DEFAULT_LIMITS
     if not isinstance(limits, WitnessLimits) or any(
-        type(value) is not int or value < 1 or value > getattr(DEFAULT_LIMITS, key)
+        type(value) is not int or value < 1 or value > getattr(maximum, key)
         for key, value in vars(limits).items()
     ):
         raise WitnessInputError("limits cannot raise the fixed ceilings")
@@ -60,6 +66,7 @@ STATUS = {
     "proved": (0, None),
     "missing": (2, "target-missing"),
     "unknown": (2, "value-unknown"),
+    "uncovered": (4, "negative-relation-not-covered"),
     "unsupported": (2, "fragment-unsupported"),
     "invalid": (1, "proof-invalid"),
     "input-refused": (3, "input-invalid"),

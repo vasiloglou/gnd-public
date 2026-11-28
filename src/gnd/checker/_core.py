@@ -346,6 +346,11 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
         raise UnvalidatedPopulationError(population, model)
 
     extensions, derivations = extension_core.evaluate_derivations(model, population)
+    from gnd.extension_preparation import CHECKED_EXTENSIONS
+
+    observer = CHECKED_EXTENSIONS.get()
+    if observer is not None:
+        observer(model, population, extensions)
     constraint_population: Population | extension_core.RuledFactView = population
     if extensions or getattr(extensions, "unavailable", None):
         constraint_population = extension_core.constraint_view(model, population, extensions)

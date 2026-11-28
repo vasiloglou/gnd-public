@@ -42,7 +42,7 @@ def add_parsers(subparsers):
     p.add_argument("model")
     p.add_argument("population")
     p.add_argument("--fact-type", required=True)
-    p.add_argument("--row", help="a witness request holding the one claimed row")
+    p.add_argument("--row", help="a witness request holding ordered target rows for the selected fact type")
     p.add_argument("--reference-root")
     p.add_argument("--raw", action="store_true", help="explicitly expose population values")
 

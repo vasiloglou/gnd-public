@@ -557,3 +557,44 @@ receipts. These are shared-host observations with small samples and recorded ran
 not guaranteed speedups. Compare arms within a run; the earlier IE5 numbers use a
 separate measurement and must not be chained into a speedup claim. The missing
 547-program workload still prevents downstream performance acceptance.
+
+### Reading a snapshot verdict
+
+Pass the versioned result of `api.check` to `api.snapshot_verdict(report)`. It returns `status`, `exit_code`, `constraints`, `derivations`, `warnings` and `diagnostics`. It accepts plain check schemas 7, 9, 10, 11, 13 and 15–17 and reference wrappers 12 and 14. Unknown versions return `unsupported-schema`. A malformed or unrelated report returns `invalid-report`. A missing population returns `invalid-input` even if all counts are zero. Other statuses are `accepted`, `violated`, `inadequate`, `vacuous`, `unchecked` and `internal-error`. Inspect individual verdicts for mixed outcomes. The accessor preserves the original report. Customer mode exposes only the closed verdict labels and run status, since the supplied report may have been produced under a different policy.
+
+```python
+from gnd import api
+
+report = api.check("model.orm.yaml", "facts.json", allow_vacuous=True)
+decision = api.snapshot_verdict(report)
+```
+
+The Python keyword matches `gnd check model.orm.yaml facts.json --allow-vacuous`. It defaults to false, applies to plain snapshots and changes only the acceptance of an otherwise vacuous run. Each vacuous verdict stays visible. For “every requested item has an outcome”, bind the item in a `requested` antecedent and require a matching `outcome` in a guarded existential. With a known request, a covered empty outcome relation violates the rule. Missing outcome coverage leaves it unchecked. A role-local mandatory constraint on outcomes alone can be vacuous for an empty outcome extension.
+
+The vacuity override uses the CLI's plain schema-7 model policy. Reference-bound, temporal and declared-redaction models are refused by that policy. Anchored, admission, composed and compiled checks cannot be combined with the override.
+
+### Reading inferred rows from the check that computed them
+
+Use `api.check_with_extensions(model, population, fact_types=["active"], max_rows=1000)`. The `report` field contains the ordinary check result, including findings about asserted claims. The `extensions` field contains one result per requested identifier, in request order. A missing claim can be unchecked while its inferred rows are complete.
+
+A complete relation includes `rows`, which may be empty. Unknown, non-derived, incompletely covered and uncomputable relations return `unavailable`. Declared protected roles or inputs return `protected` under the ordinary applied disclosure policy. This decision precedes the row cap. Each request accepts 1–64 distinct identifiers and a total output budget of 0–10,000 rows. A complete relation that would overflow the remaining budget returns `output-limit` and consumes zero rows. Source and rule evaluation use the checker's ordinary work limits.
+
+For a semiderived head, complete describes the inferred extension alone. Caller-asserted rows remain in the input snapshot.
+
+### Proofs using grounded absence
+
+A finite witness can use negative premises over covered asserted inputs. Each negative role is grounded by a positive premise or an admitted literal. The proof records the rule, clause, positive premises and exact bindings. Replay reconstructs the entire correlated negative tuple against the bound snapshot. Uncovered and opaque inputs cannot establish absence. An edit invalidates the snapshot binding. Use `why_not` with ordered targets to inspect related blocked tuples against the same loaded inputs.
+
+### Persistent local evaluator
+
+Run `python -m gnd.snapshot_worker` in the evaluator environment. Send one UTF-8 JSON object followed by a newline on stdin. Read one JSON response per line on stdout. A version-1 request contains exactly these fields:
+
+```json
+{"version":1,"id":"check-1","model":"inventory.orm.yaml","population":{"population":{"model":"inventory.orm.yaml","source":"host","covers":["listed"]},"facts":{"listed":[]}}}
+```
+
+The model path is local to the worker. Local path aliases resolve to the same canonical file before the bounded read. The caller supplies the population as JSON data. The response echoes the supplied request ID and returns `status="evaluated"`, `model_sha256`, `model_reused` and the ordinary versioned check report. An evaluated population can violate constraints. Interpret its report with `snapshot_verdict`. A protocol or input failure returns `status="error"` with a stable error code. An unusable request ID is returned as null. Maximum input is 4 MiB per physical line, including its newline, and IDs contain 1–128 characters.
+
+The worker rereads model bytes for each request, reuses one loaded standalone model and EvaluationSession, and replaces both when the model path or digest changes. Reference-population and include-dependent models require their bound inputs and are outside protocol v1. Closing stdin exits the worker. After a process failure, launch a new worker and resend the entire request. Its first valid request loads the model. Use one writer per worker and the ordinary disclosure environment for the intended audience.
+
+The wheel accepts Pydantic >=2.12.5,<2.14. The installed-worker and derived-row examples were exercised on Python 3.14.3 with Pydantic 2.12.5 and 2.13.4. The repository lock retains 2.13.4.

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "reason": "Checked extension selection reads per-request coverage and typed relation maps.",
+  "predecessor": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS1/dynamic-query-successor.json",
+  "predecessor_sha256": "536357630bf7adac6f809815a8799832444f9f211ae5150ba8466a383474e988",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/api.py",
+      "check_with_extensions",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "check_with_extensions",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "check_with_extensions",
+      "os.PathLike[str]",
+      2
+    ],
+    [
+      "src/gnd/api.py",
+      "check_with_extensions",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "observe",
+      "closures.get(key, ((), False, None))",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "observe",
+      "extensions.get(key)",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "observe",
+      "possible.get(key)",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "observe",
+      "selected[key]",
+      1
+    ],
+    [
+      "src/gnd/extension_preparation.py",
+      "<module>",
+      "ContextVar[Callable | None]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 8451,
+  "result_occurrences": 10498
+}

@@ -130,7 +130,7 @@ def test_t3_intake_limits_project_the_why_not_ceilings():
     assert isinstance(projected, WitnessLimits)
     assert (projected.bytes, projected.container_depth, projected.scalar_bytes,
             projected.numeric_digits, projected.targets) == (
-        W.bytes, W.container_depth, W.scalar_bytes, W.numeric_digits, 1)
+        W.bytes, W.container_depth, W.scalar_bytes, W.numeric_digits, DEFAULT_LIMITS.targets)
     for name in ("nodes", "edges", "binding_cells", "joins", "proof_depth", "expanded_visits"):
         assert getattr(projected, name) == getattr(DEFAULT_LIMITS, name)
 

@@ -1,0 +1,10 @@
+1fb9b6a82abfc52c892ca29194b26cb2a146b3bc6d1e58f788b32e88eef03fa4  .gnd-planning/milestones/python-snapshot-evaluation/notes/python-snapshot-evaluation-plan.md
+.gnd-planning/milestones/python-snapshot-evaluation/:
+evidence
+notes
+
+.gnd-planning/milestones/python-snapshot-evaluation/notes/:
+phase-PS1-spec.md
+plan-request-r1.json
+python-snapshot-evaluation-plan.md
+.gnd-planning/milestones/incremental-evaluation/012-milestone-close.md

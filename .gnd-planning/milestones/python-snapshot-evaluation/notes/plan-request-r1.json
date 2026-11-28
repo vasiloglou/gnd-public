@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/python-snapshot-evaluation-plan.md",
+    "sha256": "1fb9b6a82abfc52c892ca29194b26cb2a146b3bc6d1e58f788b32e88eef03fa4",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "Python snapshot evaluation plan",
+    "criteria": [
+      "Review PS1 raw envelope and outer failure semantics, input error and vacuity controls; PS2 same-evaluation extension availability, disclosure and budgets.",
+      "Assess PS3 loaded snapshot sharing, correlated negation replay and per-target budgets, and PS4 pinned vs independent embedding and persistent worker invalidation, isolation and recovery. Cite exact plan locations and falsifiable alternatives."
+    ]
+  }
+}

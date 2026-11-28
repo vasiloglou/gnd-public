@@ -1,0 +1,7 @@
+# PS3 completion, 2026-11-28
+
+Delegated phase acceptance. Ordered batches accept matching loaded snapshots and file pairs. Evaluation and base relation indexing occur once per batch. Each requested target gets a fresh walk budget. A 5,000-byte value succeeds under its raised cap. The public proof kernel independently verifies typed, correlated absence over covered asserted relations. The raw why-not response describes evaluator membership. A finite witness separately establishes coverage.
+
+The independent reviewer examined the original 25 files and requested changes. [Review](notes/reviews/PS3-r1/independent-review.md) and [four dispositions](notes/reviews/PS3-r1/FINDINGS.md). Repairs retain the production evaluator semantics on derived negatives and positive alternative clauses. A failing public regression and version-2 opaque control accompany them. Final focused plus RF6 result: 316 passed in 40.63s. The broad witness selection returned 602 passed and four old expectations failed. All four were updated for the deliberate negative-proof and batch-wire changes and passed on rerun. The ordinary guards returned 884 passed and one nested CLI-help pin failed; the repaired RF1 plus ambient-disclosure run passed 140 in 10.31s. Whole-tree lint and strict component checks passed. No independent review of the repair.
+
+The new wire reuses the existing single-answer schema and the ordinary disclosure projection. Replay uses its own typed scalar semantics, candidate and reference identities. The frozen historical archive is unchanged. No new backend claim.

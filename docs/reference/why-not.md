@@ -21,9 +21,8 @@ gnd.api.why_not(model_path, population_path, fact_type, *, row_path=None,
 ```
 
 Without `--row`, the question is about the rule as a whole: why does
-`fact-type` have no rows? With `--row`, it is about one claimed row: why is
-this row absent? The row file uses the [witness request format](python-api.md#witness-explain-one-derived-fact-with-a-finite-proof)
-and holds exactly one target, whose `fact_type` must equal `--fact-type`.
+`fact-type` have no rows? With `--row`, it explains each requested tuple against the same snapshot. The row file uses the [witness request format](python-api.md#witness-explain-one-derived-fact-with-a-finite-proof)
+and holds 1–256 targets, each with the selected `--fact-type`.
 
 The fact type must be derived or semiderived with a structured rule. Reference
 populations bind as they do for `check` and `witness`.
@@ -269,3 +268,11 @@ refuses a request (see [search limits](#search-limits)).
 
 The output is described by `why-not.schema.json`, packaged with GND. Its
 `schema_version` is `gnd-why-not/2`.
+
+### Ordered Python explanations
+
+`api.why_not(model, population, "eligible", targets=targets, limits={"scalar_bytes": 8192})` accepts a matching loaded model and validated population, or two paths. Each target is a witness-format record. One target retains the original single response. Two or more return `gnd-why-not-batch/1`, shared preparation work and one indexed explanation per target. Work exhaustion is local to its target unless it occurs before the shared index is ready. Batch per-target counters exclude shared setup. Near-miss counters also restart for each target.
+
+Use the fields of `gnd.witness.why_not.WhyNotLimits` to lower the documented ceilings. The default scalar limit is 4,096 UTF-8 bytes and the configurable hard ceiling is 65,536. Limits must be positive integers. There are at most 256 targets and 10 MiB of input per wire. Customer mode projects each result through the same single-answer disclosure boundary.
+
+Why-not describes the evaluator's derived rows over the supplied facts. To establish that a negative premise holds over a **covered** input, request and replay a witness. The witness returns `uncovered` when the required absence cannot be established.

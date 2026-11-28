@@ -13,10 +13,10 @@ FIXTURES = Path(__file__).parent / "fixtures/public-launch-phase-2"
 
 
 def test_public_exports_and_current_keyword_signatures():
-    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model",)
+    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model", "snapshot_verdict", "check_with_extensions")
     expected = {
         "validate": ("model", "unredacted", "references"),
-        "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references", "composition", "sources"),
+        "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references", "composition", "sources", "allow_vacuous"),
         "transition": ("model", "pre", "steps", "post", "unredacted", "references", "pre_receipt"),
     }
     for name, parameters in expected.items():
@@ -28,8 +28,8 @@ def test_public_exports_and_current_keyword_signatures():
     # why_not takes paths and returns raw values like witness: no `unredacted`.
     signature = inspect.signature(api.why_not)
     assert tuple(signature.parameters) == (
-        "model_path", "population_path", "fact_type", "row_path", "reference_root")
-    for name in ("row_path", "reference_root"):
+        "model_path", "population_path", "fact_type", "row_path", "reference_root", "targets", "limits")
+    for name in ("row_path", "reference_root", "targets", "limits"):
         assert signature.parameters[name].kind is inspect.Parameter.KEYWORD_ONLY
         assert signature.parameters[name].default is None
     assert tuple(inspect.signature(api.witness).parameters)[:2] == ("model_path", "population_path")

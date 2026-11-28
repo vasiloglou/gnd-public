@@ -1,0 +1,3 @@
+# Independent PS2 diff review — public disposition
+
+The independent reviewer examined all 17 original file identities and requested changes. F1 found inconsistent downstream protection across equivalent supported rule representations. F2 requested clarification of inferred-only output for semiderived heads. The reviewer confirmed the observed checker counts, coverage distinctions and bounded output behavior. The verbatim review is retained locally with SHA-256 753535d66b49ebc07e71305cf8a5efdbb1aed1560cec6975047ac6b324747ced. The public record omits reproduction details for the disclosure finding.

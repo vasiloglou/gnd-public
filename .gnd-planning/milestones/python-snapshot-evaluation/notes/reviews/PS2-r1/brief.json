@@ -1,0 +1,84 @@
+{
+  "base": "3ea6ea74",
+  "claims": [],
+  "created": "2026-11-28T14:54:14.441759+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/reviews/PS2-r1/diff.patch",
+      "sha256": "f09140ed205fb13be9d575928cb514b6ef12b7d7222403dedb9ea0498e737f9e"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/evidence/PS2/dynamic-query-successor.json",
+      "sha256": "879f84beda850deb122eec7b8cba71a83d391db68c8640a6063ad66937445d63"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "2cae07e154e06421ef950572ade638806a072913dd02bd1c8da25bc77c752306"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "bdab5883dcea89ed1c53e295f02ea8498e666d16ae5a3f53685f8c61a09c3370"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "ccddf9cffdbc7f4c359e2fa9cb345f2be8194e9502eaa1df8309b0a34027cbee"
+    },
+    {
+      "path": "dev/components/modules/checker.md",
+      "sha256": "568405cf0473f795f5936f57573715895d4e14b81801ae250a7a4bb138b3e437"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "a7d436bfcad6492cdc5a26df2696dfd4e418ba583e54e9f01960ada72d81a54b"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "f58eebc4a907c45b24dcf800045f3e720b0e89ab5213d091f5cfaac9f13d2a8d"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "449a3a377b4827fe7a3c1239dace3c35087b69ae8cecdce7a6c412db0255f8cc"
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "sha256": "fb285d776737426e6b39f1ba0922e013d795022d84cffe0a03dd88c5fcd83b89"
+    },
+    {
+      "path": "src/gnd/disclosure.py",
+      "sha256": "36d042b5c583adc817f0e16effaf1aa8ebae937475e0ae732b267a81b62fd353"
+    },
+    {
+      "path": "src/gnd/extension_preparation.py",
+      "sha256": "41b205be5743e1245d7982f670644e912ea3d266e36e425f3894e0b96f8a9335"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "5cb6c4e2fc4658c9aa04afbf41d2378f8b5968d0f492b7d3280e954063b5fce8"
+    },
+    {
+      "path": "tests/test_checked_extensions.py",
+      "sha256": "ad4447007b4735fb91971098f893b5021941f5807bfba499529622aad82d34bd"
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "sha256": "a4677f6cc0679a021c4d12845c460f22d2f13ee22cb9709667400b7b0b52adfc"
+    },
+    {
+      "path": "tests/test_v61_phase2_api.py",
+      "sha256": "ffea9639c30a19f14b1d615c3db6483daf307e193839fc32b9e67296522e5922"
+    },
+    {
+      "path": ".gnd-planning/milestones/python-snapshot-evaluation/notes/phase-PS2-spec.md",
+      "sha256": "6c3f2457255f13238f4f0b4c7c71f9c47b7514904ba6bc480f691614c98f0fab"
+    }
+  ],
+  "head": "87c387f53dc1b75038eb602c6bff5dacb99d0d4c",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Review same-evaluation semantics, fail-closed dependency coverage, bounded projection and redaction of derived extensions. Test novel legal inputs against the public API.",
+  "subject": "phase",
+  "version": 1
+}

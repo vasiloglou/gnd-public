@@ -144,11 +144,11 @@ The population check behind ``gnd evolve preview --check-population`` (UG2).
 | --- | --- | --- | --- |
 | `EvolutionPopulationError` | class(Exception) | 56 | A ``--check-population`` input refused before the policy ran (UG2). |
 | `PopulationCheck` | class | 70 | The digest of the bytes read and one outcome word per constraint operation. |
-| `workspace_relative(anchor, value) -> str` | function | 108 | The population path relative to the workspace, decided lexically (no filesystem access). |
+| `workspace_relative(anchor, value, *, label) -> str` | function | 108 | The population path relative to the workspace, decided lexically (no filesystem access). |
 | `read_population_for_check(anchor, value, *, candidate, expected_sha256) -> tuple[str, Population]` | function | 126 | Read the file once beneath ``anchor``, hash those bytes, load them against ``candidate``. |
 | `population_outcomes(proposal, *, before, candidate, population, sha256, populated, placements) -> P…` | function | 190 | One ``check`` call; one outcome word per constraint ADD or MODIFY operation. |
 | `constraint_placements(placed, final_host) -> dict[int, tuple[str \| None, int]]` | function | 236 | Positions, by identity, of the constraint objects the replay placed, in the final tree. |
-| `verified_sample_appends(candidate, proposal, documents)` | function | 319 | Collect exact operation indices that pass both citation and population admission. |
+| `verified_sample_appends(candidate, proposal, documents)` | function | 333 | Collect exact operation indices that pass both citation and population admission. |
 
 ## gnd.evolve.service — `src/gnd/evolve/service.py`
 Components: evolve.service
@@ -173,12 +173,12 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
 | `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1528 | Read one bounded standalone conformance leaf for an explicit envelope. |
 | `EvolutionService` | class | 1549 | Preview, apply, and finalize one explicit model evolution proposal. |
 | `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1659 | Validate and bind a proposal without changing any publication leaf. |
-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2220 | Report one staged pending finalization that has no completed record. |
-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2274 | Refuse to start a *new* evolution over an incomplete published one. |
-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2296 | Stage immutable evidence and publish only the candidate model CAS. |
-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2554 | (no docstring) |
-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2560 | (no docstring) |
-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2564 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2222 | Report one staged pending finalization that has no completed record. |
+| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2276 | Refuse to start a *new* evolution over an incomplete published one. |
+| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2298 | Stage immutable evidence and publish only the candidate model CAS. |
+| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2556 | (no docstring) |
+| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2562 | (no docstring) |
+| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2566 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
 
 ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
 Components: evolve.shape_matches

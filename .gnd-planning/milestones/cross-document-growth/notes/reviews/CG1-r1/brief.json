@@ -1,0 +1,78 @@
+{
+  "base": "009d18ca",
+  "claims": [],
+  "created": "2026-11-28T13:57:00.427749+00:00",
+  "deleted": [],
+  "dirty": true,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/cross-document-growth/notes/reviews/CG1-r1/diff.patch",
+      "sha256": "c830e433b00e06e86634088768922347b5bec6adc3f00f56202b995bfa353257"
+    },
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "7650e7d644c28aac856150dc4fca858fe07e44a481abd161961b6556bb3478aa"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "de3f42f50423163c35530193838e131da0b02ccb0ffdfda9c40ad276fe304c80"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "e2e4777444dfb39c921d4340cd6059237d9d8a7abca04f17fefe667d9137d353"
+    },
+    {
+      "path": "dev/components/modules/evolve.md",
+      "sha256": "158b80f44c5b56e54a46b7a900a6a0abcd7d3edbe414a8557868ad046a860d25"
+    },
+    {
+      "path": "docs/reference/evolve-policy.md",
+      "sha256": "d21fc59fb9f6fdced47908b0d6559463cd5ed3b2560e1515256987d588e11323"
+    },
+    {
+      "path": "src/gnd/commands/evolve.py",
+      "sha256": "7cd6bd73e6d8cb40325fde1110c30185a4f71b90f33fb2a3f7a490bfd052dbe2"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "sha256": "4b2512d5303e9aa67faee3fbdde1352d84028d5ae3372b831d0f52d60c914eef"
+    },
+    {
+      "path": "src/gnd/evolve/policy.py",
+      "sha256": "48ec1743fefbb4f06414eff0345330c16adbd41bb1ea1095af89ddeae31a696c"
+    },
+    {
+      "path": "src/gnd/evolve/population_check.py",
+      "sha256": "9fbabdcd1931cd0ddf9af393523af44969aa2d8b9081a2f5f9f73346f5847dd4"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "sha256": "6f6a00defa90b62f15a56f28dc7906ecc783d8be0ab1d192fd6c7cf34d502e2e"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-evolve/references/evolution-contract.md",
+      "sha256": "e6c755659327a0fb40cfaeb9bac4ee85d3952528062ee52985dbefa49e87df65"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
+      "sha256": "d198409a8f38890a6c110fc129db507990db4d5c8d08e6a8353e9ae3ecb417bf"
+    },
+    {
+      "path": "tests/test_cross_document_growth_phase1.py",
+      "sha256": "6b69442d67973690248f0995a059c3c132b63a8773b460461a32332a3f34a04f"
+    },
+    {
+      "path": ".gnd-planning/milestones/cross-document-growth/notes/phase-CG1-spec.md",
+      "sha256": "e4d9c82a7d555dee5ed15dea4ad09457f9479c6e0b4b50c15a3ed9a5a5232fd9"
+    }
+  ],
+  "head": "009d18caa8af42f3a191ab689f0aa36907ade747",
+  "left_out": [],
+  "notes": [
+    "new: tests/test_cross_document_growth_phase1.py (not tracked yet, so not in the diff: read it whole)"
+  ],
+  "pr": null,
+  "question": "Can a caller publish an invalid or stale located append, or lose a legal source occurrence, through preview, apply or recovery? Check ordinary callers and a distinct legal input.",
+  "subject": "phase",
+  "version": 1
+}

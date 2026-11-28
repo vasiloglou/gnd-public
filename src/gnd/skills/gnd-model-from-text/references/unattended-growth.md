@@ -392,11 +392,17 @@ already holds `party` and `policy_has_holder`: the reply names them and repeats 
 |---|---|
 | `quote` | A verbatim excerpt of the document. The host searches the NFC text; no match, or more than one without a `quote_occurrence` (0-based), drops the entry and logs it |
 | `object_types`, `fact_types` | New elements only, in the model's own element shapes; `quote` becomes `provenance.spans`. An element the model already has, its own or included, is named by its id where a field takes an id and is not repeated here; the host drops a repeated one and logs it |
-| `rows` | Rows for a new fact type only, one entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once). Rows the document gives for a fact type the model already has are an `open_questions` entry: the additive policy refuses a changed sample row (`fact_types.modify` in the evolution contract's additive matrix) |
+| `rows` | Default reply without source-file admission: Rows for a new fact type only, one entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once). Rows the document gives for a fact type the model already has are an `open_questions` entry: the additive policy refuses a changed sample row (`fact_types.modify` in the evolution contract's additive matrix) |
 | `subtype_links` | Sets `subtype_of` and `inherits_reference` on the subtype, appends the span to its `provenance.spans`, puts `rationale` in `provenance.rationale` |
 | `constraints` | `host` is a fact type id, or `model` for a top-level constraint. `constraint` is the constraint body as the [constraint reference](../../gnd-orm-core/references/constraint-reference.md) gives it, without `source`, `status`, `modality` or `provenance`. The host writes those: `text-cue` is `llm-inferred` with `rationale_world_fact` set to `cue`, `rows` is `sample`, `library` is `common-sense` with `library_entry`; always `proposed` and `deontic` |
 | `derived_fact_types` | The model's fact type shape with `derivation: derived`, `storage: computed` and a structured `derivation_rule`, the object form that `representation-format.md` defines under derived fact types. `quote` is the sentence that defines the term and becomes `provenance.spans`; `rationale` goes to `provenance.rationale`. No `rows`: its facts follow from the rule, so it holds no sample. A rule the grammar cannot express is an `open_questions` entry, never a string rule |
 | `open_questions` | Anything the evidence does not settle. Not written to the model; kept in the host's log for the owner |
+
+A host with the source file can submit located observations for an existing
+root-owned fact through a separate additive MODIFY. Pass `--sample-document`
+to both preview and apply and follow “Located sample appends” in the evolution
+contract. Keep the open question when source evidence or constraint coverage is
+insufficient, or when the target belongs to an include.
 
 ## Constraints on fact types that already hold facts
 

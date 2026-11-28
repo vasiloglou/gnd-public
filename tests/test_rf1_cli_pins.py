@@ -443,6 +443,26 @@ def _include_preview_reference(*, outcomes):
             'exit_probe': {'help': probe(['--help']), 'unknown_flag': probe(['--rf1-unknown-flag'])}}
 
 
+def _sample_document_successor(command):
+    if command == "preview":
+        base = _include_preview_successor()["tree"]
+    else:
+        base = json.loads(golden_path("cli", "tree").read_text())["subcommands"]["evolve"]["subcommands"][command]
+        change = CHECK_POPULATION_SUCCESSOR[command]
+        base["actions"].insert(change["action_index"], copy.deepcopy(change["action"]))
+    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    _restore_frozen(parser, base)
+    added = parser.add_argument("--sample-document", action="append", metavar="FILE",
+                                help="verify newly appended sample rows against this workspace document; repeatable")
+    if command == "apply":
+        for actions in (parser._actions, parser._optionals._group_actions):
+            actions.remove(added)
+            actions.insert(next(i for i, action in enumerate(actions) if action.dest == "format"), added)
+    tree = _walk(parser, ("gnd", "evolve", command), {})
+    tree["listed_help"] = base["listed_help"]
+    return tree, parser
+
+
 ROUND_SUMMARY_PATHS = {"gnd evolve", "gnd evolve summary"}
 
 
@@ -609,11 +629,7 @@ def test_cli_tree(tree):
         VALIDATE_DOCUMENTS_SUCCESSOR["action_index"], copy.deepcopy(VALIDATE_DOCUMENTS_SUCCESSOR["action"])
     )
     for command in ("preview", "apply"):
-        successor = CHECK_POPULATION_SUCCESSOR[command]
-        expected["subcommands"]["evolve"]["subcommands"][command]["actions"].insert(
-            successor["action_index"], copy.deepcopy(successor["action"])
-        )
-    expected['subcommands']['evolve']['subcommands']['preview'] = _include_preview_successor()['tree']
+        expected["subcommands"]["evolve"]["subcommands"][command] = _sample_document_successor(command)[0]
     expected['subcommands']['verbalize'] = _model_review_successor()['tree']
     for command in ("export", "import"):
         expected["subcommands"][command] = _ossie_successor(command)["tree"]
@@ -652,9 +668,9 @@ def test_cli_help(tree, path):
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
                           {"path": path, "help": _ossie_successor(path.split()[1])["help"][path]})
         return
-    if path == 'gnd evolve preview':
+    if path in CHECK_POPULATION_PATHS:
         _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
-                          {'path': path, 'help': _include_preview_successor()['help']})
+                          {'path': path, 'help': _sample_document_successor(CHECK_POPULATION_PATHS[path])[1].format_help()})
         return
     if path in {'gnd verbalize', 'gnd verbalize model'}:
         _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
@@ -675,10 +691,6 @@ def test_cli_help(tree, path):
     if path == "gnd validate":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
                           {"path": path, "help": VALIDATE_DOCUMENTS_SUCCESSOR["help"]})
-        return
-    if path in CHECK_POPULATION_PATHS:
-        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
-                          {"path": path, "help": _check_population_successor(path, "help")})
         return
     assert_golden("cli-help", path, {"path": path, "help": tree[2][path]})
 
@@ -733,10 +745,11 @@ def test_cli_exit_probe(path, monkeypatch):
         }
         _assert_successor("cli-exit", path, observed, _ossie_successor(path.split()[1])["exit_probe"][path])
         return
-    if path == 'gnd evolve preview':
+    if path in CHECK_POPULATION_PATHS:
+        expected = _guarded_successor_probe(_sample_document_successor(CHECK_POPULATION_PATHS[path])[1])
         observed = {'help': {'exit': shown.returncode, 'stdout': shown.stdout.decode(), 'stderr': shown.stderr.decode()},
                     'unknown_flag': {'exit': refused.returncode, 'stdout': refused.stdout.decode(), 'stderr': refused.stderr.decode()}}
-        _assert_successor('cli-exit', path, observed, _include_preview_successor()['exit_probe'])
+        _assert_successor('cli-exit', path, observed, expected)
         return
     if path in {'gnd verbalize', 'gnd verbalize model'}:
         observed = {'help': {'exit': shown.returncode, 'stdout': shown.stdout.decode(), 'stderr': shown.stderr.decode()},
@@ -758,17 +771,6 @@ def test_cli_exit_probe(path, monkeypatch):
         expected = (VALIDATE_DOCUMENTS_SUCCESSOR["exit_probe"] if path == "gnd validate"
                     else _guarded_successor_probe(successors[path]()[1]))
         _assert_successor("cli-exit", path, observed, expected)
-        return
-    if path in CHECK_POPULATION_PATHS:
-        observed = {
-            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
-            "unknown_flag": {
-                "exit": refused.returncode,
-                "stdout": refused.stdout.decode(),
-                "stderr": refused.stderr.decode(),
-            },
-        }
-        _assert_successor("cli-exit", path, observed, _check_population_successor(path, "exit_probe"))
         return
     assert_golden(
         "cli-exit",

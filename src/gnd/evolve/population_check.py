@@ -25,13 +25,15 @@ from typing import Any, Final
 from ruamel.yaml.error import YAMLError
 
 from gnd.address import positional_constraint_ref
-from gnd.artifacts import ArtifactError, read_regular_file_bytes, sha256_hex
+from gnd.artifacts import ArtifactError, canonical_json_bytes, read_regular_file_bytes, sha256_hex
 from gnd.checker import check
 from gnd.documents import Model
 from gnd.errors import PopulationLoadError
 from gnd.exits import EXIT_COLLISION, EXIT_IO, EXIT_NO_INPUT
+from gnd.model import unattended_span_issues
 from gnd.model_index import ModelIndex
 from gnd.population import MAX_POPULATION_BYTES, Population, load_population_bytes
+from gnd.values import identity_key
 
 from .models import EvolutionOperationKind, EvolutionProposal
 from .policy import ConstraintSubjects
@@ -103,7 +105,7 @@ def _over_cap(error: BaseException, relative: str) -> bool:
     return False
 
 
-def workspace_relative(anchor: Path, value: str) -> str:
+def workspace_relative(anchor: Path, value: str, *, label: str = "population file") -> str:
     """The population path relative to the workspace, decided lexically (no filesystem access).
 
     The read itself refuses symlinks and escapes descriptor by descriptor; this
@@ -115,9 +117,9 @@ def workspace_relative(anchor: Path, value: str) -> str:
     try:
         relative = path.relative_to(Path(os.path.normpath(anchor)))
     except ValueError:
-        raise EvolutionPopulationError(EXIT_IO, "population file is outside the workspace") from None
+        raise EvolutionPopulationError(EXIT_IO, f"{label} is outside the workspace") from None
     if not relative.parts or relative.parts[0] == "..":
-        raise EvolutionPopulationError(EXIT_IO, "population file is outside the workspace")
+        raise EvolutionPopulationError(EXIT_IO, f"{label} is outside the workspace")
     return PurePosixPath(*relative.parts).as_posix()
 
 
@@ -259,3 +261,106 @@ def constraint_placements(
         if index is not None:
             positions[position] = (host_id, index)
     return positions
+
+
+def _located_append(before, after, source, documents):
+    """Admit only an unchanged fact declaration followed by new, located observations."""
+    if not isinstance(before, dict) or not isinstance(after, dict):
+        return False
+
+    def parts(fact):
+        remainder = dict(fact)
+        rows = remainder.pop("sample_population", [])
+        provenance = dict(remainder.get("provenance", {}))
+        spans = provenance.pop("sample_spans", [])
+        if provenance:
+            remainder["provenance"] = provenance
+        else:
+            remainder.pop("provenance", None)
+        return rows, spans, remainder
+
+    if not all(isinstance(f.get("provenance", {}), dict) for f in (before, after)):
+        return False
+    old_rows, old_spans, old_fact = parts(before)
+    rows, spans, fact = parts(after)
+    if not all(isinstance(data, (list, tuple)) for data in (old_rows, rows, old_spans, spans)):
+        return False
+    if not all(isinstance(row, dict) for row in rows):
+        return False
+    boundary = len(old_rows)
+    if (len(rows) <= boundary or len(spans) != len(rows) or len(old_spans) != boundary
+            or canonical_json_bytes([rows[:boundary], spans[:boundary], fact], exact_numbers=True)
+            != canonical_json_bytes([old_rows, old_spans, old_fact], exact_numbers=True)):
+        return False
+    occurrences = {}
+    covered = set()
+    for entry in spans:
+        if not isinstance(entry, dict) or set(entry) != {"row", "span"}:
+            return False
+        idx, span = entry["row"], entry["span"]
+        if type(idx) is not int or not 0 <= idx < len(rows) or idx in covered or not isinstance(span, dict):
+            return False
+        covered.add(idx)
+        digest, start, end = span.get("document_sha256"), span.get("start"), span.get("end")
+        if not isinstance(digest, str) or type(start) is not int or type(end) is not int:
+            return False
+        is_new = idx >= boundary
+        if is_new and digest not in documents:
+            return False
+        key = (_sample_identity(rows[idx]), digest)
+        occurrences.setdefault(key, []).append((start, end, is_new))
+    for intervals in occurrences.values():
+        # The same typed tuple needs a disjoint citation within one document.
+        # Historical overlaps are preserved. Only overlaps involving a new row matter.
+        farthest_end = new_end = -1
+        for start, end, is_new in sorted(intervals):
+            if start < new_end or (is_new and start < farthest_end):
+                return False
+            farthest_end = max(farthest_end, end)
+            if is_new:
+                new_end = max(new_end, end)
+    # Candidate validation has already checked row indices and span structure.
+    # Verify the new excerpts with the same Unicode and digest rules as validate.
+    selected = list(spans[boundary:])
+    fragment = {"source": source, "fact_types": [{"id": after["id"], "provenance": {"sample_spans": selected}}]}
+    return not unattended_span_issues(fragment, documents)
+
+
+def _sample_identity(row):
+    return tuple((key, identity_key(value)) for key, value in sorted(row.items()))
+
+
+def verified_sample_appends(candidate, proposal, documents):
+    """Collect exact operation indices that pass both citation and population admission."""
+    if candidate is None or candidate.source.get("mode") != "unattended" or candidate.reference_populations:
+        return frozenset()
+    eligible = {}
+    for pos, op in enumerate(proposal.operations):
+        if (op.kind is EvolutionOperationKind.MODIFY and op.locator.locator_kind == "element"
+                and op.locator.collection == "fact_types"
+                and _located_append(op.before, op.after, candidate.source, documents)):
+            eligible[pos] = op.locator.element_id
+    if not eligible:
+        return frozenset()
+    index = ModelIndex.for_model(candidate)
+    facts = {}
+    for fact in index.iter_fact_types_shared():
+        if "sample_population" in fact:
+            unique = {_sample_identity(row): row for row in fact["sample_population"]}
+            facts[fact["id"]] = list(unique.values())
+    header = {"model": "model.orm.yaml", "source": "tool-output", "covers": sorted(facts)}
+    if candidate.model_id is not None:
+        header["model_id"] = candidate.model_id
+    try:
+        population = load_population_bytes(canonical_json_bytes({"population": header, "facts": facts}),
+                                           source="samples.json", model=candidate)
+    except PopulationLoadError:
+        return frozenset()
+    results = {v.constraint_ref: v.verdict for v in check(candidate, population).verdicts}
+    blocked = set()
+    subjects = ConstraintSubjects(index)
+    for ref, constraint, host in index.iter_constraints_shared():
+        affected = subjects.for_constraint(constraint, host["id"] if host else None)
+        if not affected or results.get(ref) != "pass" or affected.difference(facts):
+            blocked.update(affected or eligible.values())
+    return frozenset(pos for pos, fact in eligible.items() if fact not in blocked)

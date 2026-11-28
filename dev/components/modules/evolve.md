@@ -132,8 +132,9 @@ The additive policy for ``gnd evolve preview --policy additive`` (MG2).
 | `diff_paths(before, after) -> list[tuple[str, Any, Any]]` | function | 146 | (no docstring) |
 | `constraint_change(path, before, after, *, family) -> str` | function | 196 | The closed strengthening/weakening list (plan §2.2, MG-D3 (a), (p1) F). |
 | `ConstraintSubjects` | class | 305 | The fact types a constraint operation ranges over, before and after (MG2). |
-| `ConstraintSubjects.of(self, operation) -> set[str]` | method | 344 | (no docstring) |
-| `additive_policy_issues(before, proposal, *, populated, population_outcomes) -> tuple[PolicyIssue, .…` | function | 383 | Every operation the additive policy refuses, in proposal order. |
+| `ConstraintSubjects.for_constraint(self, constraint, host_id) -> set[str]` | method | 344 | (no docstring) |
+| `ConstraintSubjects.of(self, operation) -> set[str]` | method | 349 | (no docstring) |
+| `additive_policy_issues(before, proposal, *, populated, population_outcomes, verified_appends) -> tu…` | function | 381 | Every operation the additive policy refuses, in proposal order. |
 
 ## gnd.evolve.population_check — `src/gnd/evolve/population_check.py`
 Components: evolve.population_check
@@ -141,12 +142,13 @@ The population check behind ``gnd evolve preview --check-population`` (UG2).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `EvolutionPopulationError` | class(Exception) | 54 | A ``--check-population`` input refused before the policy ran (UG2). |
-| `PopulationCheck` | class | 68 | The digest of the bytes read and one outcome word per constraint operation. |
-| `workspace_relative(anchor, value) -> str` | function | 106 | The population path relative to the workspace, decided lexically (no filesystem access). |
-| `read_population_for_check(anchor, value, *, candidate, expected_sha256) -> tuple[str, Population]` | function | 124 | Read the file once beneath ``anchor``, hash those bytes, load them against ``candidate``. |
-| `population_outcomes(proposal, *, before, candidate, population, sha256, populated, placements) -> P…` | function | 188 | One ``check`` call; one outcome word per constraint ADD or MODIFY operation. |
-| `constraint_placements(placed, final_host) -> dict[int, tuple[str \| None, int]]` | function | 234 | Positions, by identity, of the constraint objects the replay placed, in the final tree. |
+| `EvolutionPopulationError` | class(Exception) | 56 | A ``--check-population`` input refused before the policy ran (UG2). |
+| `PopulationCheck` | class | 70 | The digest of the bytes read and one outcome word per constraint operation. |
+| `workspace_relative(anchor, value) -> str` | function | 108 | The population path relative to the workspace, decided lexically (no filesystem access). |
+| `read_population_for_check(anchor, value, *, candidate, expected_sha256) -> tuple[str, Population]` | function | 126 | Read the file once beneath ``anchor``, hash those bytes, load them against ``candidate``. |
+| `population_outcomes(proposal, *, before, candidate, population, sha256, populated, placements) -> P…` | function | 190 | One ``check`` call; one outcome word per constraint ADD or MODIFY operation. |
+| `constraint_placements(placed, final_host) -> dict[int, tuple[str \| None, int]]` | function | 236 | Positions, by identity, of the constraint objects the replay placed, in the final tree. |
+| `verified_sample_appends(candidate, proposal, documents)` | function | 319 | Collect exact operation indices that pass both citation and population admission. |
 
 ## gnd.evolve.service — `src/gnd/evolve/service.py`
 Components: evolve.service
@@ -154,29 +156,29 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `EvolutionError` | class(Exception) | 110 | A proposal, stage, CAS, or immutable evidence write was refused. |
-| `EvolutionIncludeError` | class(EvolutionError) | 114 | An include input was refused, independent of user-supplied message text. |
-| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 123 | (no docstring) |
-| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 143 | An old evidence document that may be READ but cannot be finished. |
-| `EvolutionOperationsGatedError` | class(EvolutionError) | 155 | An ORM+ v2 operation delta this tool deliberately does not own. |
-| `EvolutionPolicyRefusedError` | class(EvolutionError) | 165 | The additive policy refused an operation at apply (MG2, exit 3). |
-| `OutcomeRefusalPending` | class | 407 | What a refused preview knows about each operation (GO2), carried on the |
-| `OutcomeRefusalPending.report(self, *, exit_code, message) -> EvolutionOutcomeReport` | method | 419 | (no docstring) |
-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1424 | Read one bounded, closed JSON evolution proposal. |
-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1441 | Read one bounded, version-selected preview claim. |
-| `read_evolution_outcome_report(path, *, anchor, relative) -> EvolutionOutcomeReport` | function | 1458 | Read one bounded outcome report (GO2); any other document is refused. |
-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1475 | Read one bounded, version-selected staged intent. |
-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1492 | Read one bounded pending-finalization claim. |
-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1509 | Read one bounded, version-selected immutable record. |
-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1526 | Read one bounded standalone conformance leaf for an explicit envelope. |
-| `EvolutionService` | class | 1547 | Preview, apply, and finalize one explicit model evolution proposal. |
-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1655 | Validate and bind a proposal without changing any publication leaf. |
-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2199 | Report one staged pending finalization that has no completed record. |
-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2253 | Refuse to start a *new* evolution over an incomplete published one. |
-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2275 | Stage immutable evidence and publish only the candidate model CAS. |
-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2533 | (no docstring) |
-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2539 | (no docstring) |
-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2543 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+| `EvolutionError` | class(Exception) | 112 | A proposal, stage, CAS, or immutable evidence write was refused. |
+| `EvolutionIncludeError` | class(EvolutionError) | 116 | An include input was refused, independent of user-supplied message text. |
+| `EvolutionIncludeAnalysis` | class(EvolutionIncludeError) | 125 | (no docstring) |
+| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 145 | An old evidence document that may be READ but cannot be finished. |
+| `EvolutionOperationsGatedError` | class(EvolutionError) | 157 | An ORM+ v2 operation delta this tool deliberately does not own. |
+| `EvolutionPolicyRefusedError` | class(EvolutionError) | 167 | The additive policy refused an operation at apply (MG2, exit 3). |
+| `OutcomeRefusalPending` | class | 409 | What a refused preview knows about each operation (GO2), carried on the |
+| `OutcomeRefusalPending.report(self, *, exit_code, message) -> EvolutionOutcomeReport` | method | 421 | (no docstring) |
+| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1426 | Read one bounded, closed JSON evolution proposal. |
+| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1443 | Read one bounded, version-selected preview claim. |
+| `read_evolution_outcome_report(path, *, anchor, relative) -> EvolutionOutcomeReport` | function | 1460 | Read one bounded outcome report (GO2); any other document is refused. |
+| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1477 | Read one bounded, version-selected staged intent. |
+| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1494 | Read one bounded pending-finalization claim. |
+| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1511 | Read one bounded, version-selected immutable record. |
+| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1528 | Read one bounded standalone conformance leaf for an explicit envelope. |
+| `EvolutionService` | class | 1549 | Preview, apply, and finalize one explicit model evolution proposal. |
+| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1659 | Validate and bind a proposal without changing any publication leaf. |
+| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 2220 | Report one staged pending finalization that has no completed record. |
+| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 2274 | Refuse to start a *new* evolution over an incomplete published one. |
+| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 2296 | Stage immutable evidence and publish only the candidate model CAS. |
+| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2554 | (no docstring) |
+| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2560 | (no docstring) |
+| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2564 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
 
 ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
 Components: evolve.shape_matches

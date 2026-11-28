@@ -140,6 +140,9 @@ def _register_evolve(subparsers):
         metavar="FILE",
         help="repeat the reviewed preview's --check-population FILE beneath ROOT",
     )
+    for parser in (evolve_preview_parser, evolve_apply_parser):
+        parser.add_argument("--sample-document", action="append", metavar="FILE",
+                            help="verify newly appended sample rows against this workspace document; repeatable")
     _add_format_argument(evolve_apply_parser)
 
     evolve_finalize_parser = evolve_subparsers.add_parser(
@@ -218,6 +221,7 @@ def handle(args, parsers) -> int:
                 populated=args.populated,
                 shape_report=args.shape_report,
                 check_population=args.check_population,
+                sample_documents=args.sample_document or (),
                 previous_include=args.previous_include,
                 operation_outcomes=args.operation_outcomes,
                 outcome_report=args.outcome_report,
@@ -233,6 +237,7 @@ def handle(args, parsers) -> int:
                 policy=args.policy,
                 populated=args.populated,
                 check_population=args.check_population,
+                sample_documents=args.sample_document or (),
             )
         if args.evolve_command == "summary":
             return _handler_evolve_cli_service._cmd_evolve_summary(

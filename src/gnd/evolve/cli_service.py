@@ -644,6 +644,7 @@ def _cmd_evolve_preview(
     populated: list[str] | None = None,
     shape_report: bool = False,
     check_population: str | None = None,
+    sample_documents: tuple[str, ...] = (),
     previous_include: list[str] | None = None,
     operation_outcomes: bool = False,
     outcome_report: str | None = None,
@@ -663,6 +664,8 @@ def _cmd_evolve_preview(
     report_target = None
     try:
         _evolve_policy_arguments(policy, populated, check_population)
+        if sample_documents and policy is None:
+            raise _EvolutionCLIError(3, "--sample-document requires --policy additive")
         report_target = _evolve_outcome_target(workspace_path, preview_path, operation_outcomes, outcome_report)
         workspace = _evolve_workspace(workspace_path)
         model, _model_relative = _evolve_workspace_path(
@@ -686,6 +689,7 @@ def _cmd_evolve_preview(
             model_path=model,
             evidence_root=records,
             allowed_project_root=workspace,
+            sample_documents=tuple(os.path.abspath(path) for path in sample_documents),
         )
         history = _evolve_previous_includes(workspace, model, _model_relative, proposal, previous_include)
         try:
@@ -780,6 +784,7 @@ def _cmd_evolve_apply(
     policy: str | None = None,
     populated: list[str] | None = None,
     check_population: str | None = None,
+    sample_documents: tuple[str, ...] = (),
 ) -> int:
     """Revalidate an exact preview, publish the model CAS, and complete it.
 
@@ -792,6 +797,8 @@ def _cmd_evolve_apply(
 
     try:
         _evolve_policy_arguments(policy, populated, check_population)
+        if sample_documents and policy is None:
+            raise _EvolutionCLIError(3, "--sample-document requires --policy additive")
         populated_args = tuple(sorted(set(populated or ())))
         workspace = _evolve_workspace(workspace_path)
         model, model_relative = _evolve_workspace_path(
@@ -849,6 +856,7 @@ def _cmd_evolve_apply(
             model_path=model,
             evidence_root=records,
             allowed_project_root=workspace,
+            sample_documents=tuple(os.path.abspath(path) for path in sample_documents),
         )
         # Ahead of the branch split, not inside ``service.preview``: the
         # candidate-already-live retry branch below never calls ``preview``, and

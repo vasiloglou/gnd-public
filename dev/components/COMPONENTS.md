@@ -1013,13 +1013,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - notes: The one operation walk conservatively refuses include re-pins and includes owned included_fact_type hosts in populated subjects. Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
 
 ### evolve.population_check
-- does: Read one population file beneath the workspace, check the candidate model over it once, and give one outcome word per constraint operation for the additive policy [population_outcomes].
+- does: Check supplied populations and located sample appends against the candidate model for additive policy admission [population_outcomes, verified_sample_appends].
 - verbs: check population, population-checked admission, clean population, check-population, admit constraint on populated fact type, population digest, uncovered subject, sample rows, constraint placement
 - in: Workspace anchor and relative population path, candidate and before models, the proposal, effective populated identifiers, replay placements of constraint objects.
 - out: The SHA-256 of the bytes read, the candidate model_id and an outcome word per constraint ADD/MODIFY operation; EvolutionPopulationError with a fixed message and exit band on refusal.
 - status: canonical
 - modules: src/gnd/evolve/population_check.py
-- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.population_loading, model.query_index
+- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity
 - used_by: evolve.command, evolve.service
 - part_of: subsystem.evolve
 - tests: tests/test_evolve_population_check.py
@@ -1864,7 +1864,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py, src/gnd/model/flattening.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +79 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +80 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -2871,7 +2871,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/values.py
 - uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.composition, model.loading, … +9 more (graph.md)
+- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, evolve.population_check, export.ossie, infra.text_output, measure.report, measure.service, model.composition, … +10 more (graph.md)
 - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
 - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 

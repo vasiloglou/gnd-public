@@ -234,6 +234,19 @@ constraint on a populated fact type is added or strengthened. This table and the
 are the policy's one normative home; `gnd.evolve.policy` implements them, and preview and apply
 share that implementation.
 
+**Located sample appends.** For an unattended root-owned fact, supply repeatable
+`--sample-document FILE` with additive preview and apply. Append to the existing
+`sample_population` and `provenance.sample_spans` lists in a fact element MODIFY.
+Keep every prior entry and the rest of the declaration intact. Each added row
+index needs a located excerpt from a supplied workspace file. GND rechecks the
+raw document digest, normalized excerpt and affected constraint verdicts on the
+distinct candidate sample facts. Admission requires pass on each affected
+constraint, including constraints spanning relations. A second observation of
+one tuple needs a different source occurrence. Supply at most 64 regular files
+and 10 MiB of source bytes in total. Reference-bound populations require separate
+review. An included declaration belongs to its source. A stale model or changed
+source cannot publish the reviewed append.
+
 **Populated.** A fact type is populated when it has `sample_population` rows, when a declared
 reference population owns it, when a `population` artifact locator in the proposal references
 `fact_types[ID]`, or when `--populated ID` names it. A `--populated` id that names no fact type of
@@ -248,7 +261,7 @@ same proposal adds is judged like any other `modify`: declare the element once, 
 | Locator | add | modify | rename | delete |
 |---|---|---|---|---|
 | `object_types` element | admitted | admitted iff the diff is confined to `description` and `provenance.rationale`; otherwise `object_types.modify` | `object_types.rename` | `object_types.delete` |
-| `fact_types` element | admitted | admitted iff the diff is confined to `provenance.rationale`; otherwise `fact_types.modify` (a changed reading, role list, constraint or sample row included) | `fact_types.rename` | `fact_types.delete` |
+| `fact_types` element | admitted | admitted for rationale edits or verified sample appends (below); other changes yield `fact_types.modify` | `fact_types.rename` | `fact_types.delete` |
 | `operations` element | the operations gate's (exit `18`) | pre-empted by the gate | pre-empted | pre-empted |
 | role | admitted on a fact type the same proposal adds; otherwise `role.add` | `role.modify` | `role.rename` | `role.delete` |
 | constraint, subject not populated | admitted | admitted | pre-empted: a constraint has no stable id to rename (exit `3` at proposal read) | admitted |
@@ -743,3 +756,5 @@ Already-live retry and finalize reverify live candidate dependencies before a
 positive return. Included input spellings and existing aliases cannot be output
 destinations. This is single-leaf CAS, with no multi-file atomicity claim.
 Include-bearing linked-project evolution remains refused.
+
+Within a document, separate observations of the same typed tuple require disjoint citation intervals. Narrowing a previous citation adds no evidence.

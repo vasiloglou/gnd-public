@@ -24,6 +24,7 @@ PHASE_SUCCESSORS = (
     # growth-round-outcomes GO2 (2026-11-23): the outcome options of evolve preview and apply.
     EVIDENCE.parents[4] / '.gnd-planning/milestones/growth-round-outcomes/evidence/GO2/source-successors.json',
     EVIDENCE.parents[4] / '.gnd-planning/milestones/refactoring-followups/evidence/close-repair/rf5-source-successors.json',
+    EVIDENCE.parents[4] / '.gnd-planning/milestones/cross-document-growth/evidence/CG1/source-successors.json',
 )
 
 

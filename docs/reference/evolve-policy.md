@@ -116,3 +116,5 @@ gnd evolve preview model.orm.yaml proposal.json --workspace . --records records 
 
 The signature rule and the field layout are normative in the evolution
 contract (section "Shape report").
+
+For an unattended model, `--sample-document FILE` supplies the source for an append to locally owned samples. Repeat the option on apply. See the [evolution contract](../../src/gnd/skills/gnd-model-evolve/references/evolution-contract.md) for admission and refusal rules.

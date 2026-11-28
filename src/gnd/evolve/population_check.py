@@ -342,6 +342,22 @@ def verified_sample_appends(candidate, proposal, documents):
             eligible[pos] = op.locator.element_id
     if not eligible:
         return frozenset()
+    try:
+        facts, results, subjects = sample_population_report(candidate)
+    except PopulationLoadError:
+        return frozenset()
+    blocked = set()
+    index = ModelIndex.for_model(candidate)
+    for ref, constraint, host in index.iter_constraints_shared():
+        affected = subjects.for_constraint(constraint, host["id"] if host else None)
+        if not affected or results.get(ref) != "pass" or affected.difference(facts):
+            blocked.update(affected or eligible.values())
+    return frozenset(pos for pos, fact in eligible.items() if fact not in blocked)
+
+
+
+def sample_population_report(candidate):
+    """Evaluate distinct typed inline samples using the ordinary population checker."""
     index = ModelIndex.for_model(candidate)
     facts = {}
     for fact in index.iter_fact_types_shared():
@@ -351,16 +367,7 @@ def verified_sample_appends(candidate, proposal, documents):
     header = {"model": "model.orm.yaml", "source": "tool-output", "covers": sorted(facts)}
     if candidate.model_id is not None:
         header["model_id"] = candidate.model_id
-    try:
-        population = load_population_bytes(canonical_json_bytes({"population": header, "facts": facts}),
+    population = load_population_bytes(canonical_json_bytes({"population": header, "facts": facts}),
                                            source="samples.json", model=candidate)
-    except PopulationLoadError:
-        return frozenset()
     results = {v.constraint_ref: v.verdict for v in check(candidate, population).verdicts}
-    blocked = set()
-    subjects = ConstraintSubjects(index)
-    for ref, constraint, host in index.iter_constraints_shared():
-        affected = subjects.for_constraint(constraint, host["id"] if host else None)
-        if not affected or results.get(ref) != "pass" or affected.difference(facts):
-            blocked.update(affected or eligible.values())
-    return frozenset(pos for pos, fact in eligible.items() if fact not in blocked)
+    return facts, results, ConstraintSubjects(index)

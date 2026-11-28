@@ -45,6 +45,17 @@ Components: evolve.command
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 
+## gnd.evolve.consolidation — `src/gnd/evolve/consolidation.py`
+Components: evolve.consolidation
+Drive one reviewed consolidation decision with the ordinary evolution transaction.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `Move` | class(BaseModel) | 35 | (no docstring) |
+| `Decision` | class(BaseModel) | 42 | (no docstring) |
+| `step(model_path, *, decision, minimum_score, max_decisions, max_items, max_pairs)` | function | 161 | Recover a pending decision, apply one supplied decision, or return the next group. |
+| `main(argv)` | function | 301 | (no docstring) |
+
 ## gnd.evolve.models — `src/gnd/evolve/models.py`
 Components: evolve.schema
 Closed evidence models for staged ORM evolution.
@@ -157,6 +168,7 @@ The population check behind ``gnd evolve preview --check-population`` (UG2).
 | `population_outcomes(proposal, *, before, candidate, population, sha256, populated, placements) -> P…` | function | 190 | One ``check`` call; one outcome word per constraint ADD or MODIFY operation. |
 | `constraint_placements(placed, final_host) -> dict[int, tuple[str \| None, int]]` | function | 236 | Positions, by identity, of the constraint objects the replay placed, in the final tree. |
 | `verified_sample_appends(candidate, proposal, documents)` | function | 333 | Collect exact operation indices that pass both citation and population admission. |
+| `sample_population_report(candidate)` | function | 359 | Evaluate distinct typed inline samples using the ordinary population checker. |
 
 ## gnd.evolve.service — `src/gnd/evolve/service.py`
 Components: evolve.service

@@ -154,3 +154,12 @@ def test_opaque_negative_source_cannot_prove_absence(tmp_path):
     cert = tmp_path / "proof.json"
     cert.write_text(json.dumps(prior))
     assert api.replay(path, pop, cert)["results"][0]["status"] == "unsupported"
+
+
+def test_batch_target_count_at_and_above_limit(tmp_path):
+    model, pop = snapshot(tmp_path)
+    requested = [target("a")] * 256
+    at_limit = api.why_not(model, pop, "eligible", targets=requested)
+    assert len(at_limit["results"]) == 256
+    assert all(item["status"] == "derived" for item in at_limit["results"])
+    assert api.why_not(model, pop, "eligible", targets=[*requested, target("b")])["exit_code"] == 3

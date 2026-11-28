@@ -107,3 +107,23 @@ def test_null_derivation_list_in_real_report(monkeypatch, mode):
 def test_vacuity_and_anchored_options_are_mutually_exclusive(kwarg):
     with pytest.raises(ValueError, match="plain snapshot"):
         api.check("missing-model", "missing-pop", allow_vacuous=True, **{kwarg: "missing"})
+
+
+def test_additional_live_snapshot_wires(tmp_path):
+    from test_guarded_diagnostics import _write as write_diagnostic
+    from test_guarded_disjunction import HIGH, LOW
+    from test_guarded_disjunction import _case as disjunctive_case
+    from test_v71_phase4_successors import _temporal_bundle
+
+    _temporal_bundle(tmp_path)
+    temporal = api.check(tmp_path / "model.orm.yaml", tmp_path / "candidate.pop.json", admission=True)
+    write_diagnostic(tmp_path, ["active_fail"])
+    diagnosed = run_main(["check", "model.orm.yaml", "population.yaml", "--guarded-diagnostics", "--format", "json"],
+                         cwd=tmp_path)
+    disjunctive = run_main(["check", *disjunctive_case(tmp_path, [LOW, HIGH], 1500),
+                            "--guarded-diagnostics", "--format", "json"])
+    for raw, wire in ((temporal, 13), (json.loads(diagnosed.stdout), 16), (json.loads(disjunctive.stdout), 17)):
+        assert raw["schema_version"] == wire
+        verdict = api.snapshot_verdict(raw)
+        assert verdict["exit_code"] == raw["exit_code"]
+        assert verdict["status"] in {"accepted", "violated", "vacuous", "unchecked"}

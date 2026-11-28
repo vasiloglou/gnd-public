@@ -1,0 +1,5 @@
+using macos seatbelt (profile: permissive-open) ...
+⚠ SAFE MODE — all customizations disabled (hooks, extensions, skills, MCP servers, QWEN.md). Restart without --safe-mode to resume normal operation.
+Retrying provider attempt (0 buffered tool call(s) discarded).
+Retrying provider attempt (0 buffered tool call(s) discarded).
+[API Error: Upstream error from Alibaba: An error occurred in model serving, error message is: [Rate limit reached. Please slow down and retry.]]

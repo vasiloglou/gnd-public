@@ -99,3 +99,11 @@ def test_dependency_protection_uses_all_clauses(tmp_path):
     for head in ("middle", "active"):
         assert ("enabled", "id") in policy.derivation_roles(head)
         assert (head, "id") in policy.fact_roles(head)
+
+
+def test_request_counts_at_both_upper_limits(tmp_path):
+    path, pop = fixture(tmp_path)
+    names = ["active", *(f"other_{i}" for i in range(63))]
+    result = api.check_with_extensions(path, pop, fact_types=names, max_rows=10000)
+    assert len(result["extensions"]) == 64
+    assert result["extensions"][0] == {"fact_type": "active", "status": "complete", "rows": [{"id": "a"}]}

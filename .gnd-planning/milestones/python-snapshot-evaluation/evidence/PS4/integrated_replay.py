@@ -3,10 +3,14 @@ import json
 import subprocess
 import sys
 import tempfile
-from importlib.metadata import version
+from hashlib import sha256
+from importlib.metadata import distribution, version
+from urllib.parse import unquote, urlparse
+from unittest.mock import patch
 from pathlib import Path
 
-from gnd import api
+from gnd import api, extensions
+from gnd.checker import _core
 from gnd.model import load_model
 from gnd.population import load_population
 
@@ -25,7 +29,12 @@ def main(root):
                   "facts": {"listed": [{"key": "x"}, {"key": "y"}], "blocked": [{"key": "y"}]}}
     pop = root / "pop.json"
     pop.write_text(json.dumps(population))
-    values = api.check_with_extensions(model, pop, fact_types=["active"])
+    with patch.object(_core, "check_legacy", wraps=_core.check_legacy) as check, patch.object(
+        extensions, "evaluate_derivations", wraps=extensions.evaluate_derivations
+    ) as derive:
+        values = api.check_with_extensions(model, pop, fact_types=["active"])
+        work_counts = {"check": check.call_count, "derive": derive.call_count}
+        assert work_counts == {"check": 1, "derive": 1}
     assert values["extensions"][0]["rows"] == [{"key": "x"}]
     loaded_model = load_model(model)
     loaded_population = load_population(pop, model=loaded_model)
@@ -64,22 +73,38 @@ def main(root):
             claimed["population"]["covers"].append("active")
             claimed["facts"]["active"] = []
             failed = exchange(worker, {**req, "population": claimed})
+            pop.write_text(json.dumps(claimed))
+            assert api.snapshot_verdict(failed["report"]) == api.snapshot_verdict(api.check(model, pop))
+            invalid_pop = exchange(worker, {**req, "population": {"bad": True}})
+            assert invalid_pop["error"] == "invalid-input"
             claimed["facts"]["active"] = [{"key": "x"}]
             passed = exchange(worker, {**req, "population": claimed})
             assert failed["report"]["exit_code"] == 1 and passed["report"]["exit_code"] == 0
             assert passed["model_reused"]
-            model.write_bytes(model.read_bytes() + b"\n")
-            changed = exchange(worker, req)
+            pop.write_text(json.dumps(claimed))
+            assert api.snapshot_verdict(passed["report"]) == api.snapshot_verdict(api.check(model, pop))
+            model_doc = json.loads(model.read_text())
+            del model_doc["fact_types"][1]["derivation_rule"]["negate"]
+            model.write_text(json.dumps(model_doc))
+            changed = exchange(worker, {**req, "population": claimed})
+            assert changed["report"]["exit_code"] == 1
+            assert api.snapshot_verdict(changed["report"]) == api.snapshot_verdict(api.check(model, pop))
             assert not changed["model_reused"] and changed["model_sha256"] != first["model_sha256"]
         finally:
             worker.kill()
     with launch() as cold:
         try:
-            restarted = exchange(cold, req)
+            restarted = exchange(cold, {**req, "population": claimed})
+            assert restarted["report"] == changed["report"]
             assert not restarted["model_reused"] and restarted["model_sha256"] == changed["model_sha256"]
         finally:
             cold.stdin.close()
-    return {"claim_exit_codes": [failed["report"]["exit_code"], passed["report"]["exit_code"]],
+    origin = json.loads(distribution("get-nick-done").read_text("direct_url.json"))
+    wheel = Path(unquote(urlparse(origin["url"]).path))
+    return {"wheel_sha256": sha256(wheel.read_bytes()).hexdigest(), "evaluation_calls": work_counts,
+            "changed_claim_exit": changed["report"]["exit_code"], "invalid_population": invalid_pop["error"],
+            "claim_verdicts": [api.snapshot_verdict(r["report"])["status"] for r in (failed, passed, changed)],
+            "claim_exit_codes": [failed["report"]["exit_code"], passed["report"]["exit_code"]],
             "replacement_and_cold_restart_sha256": changed["model_sha256"], "python": sys.version.split()[0], "pydantic": version("pydantic"), "gnd": version("get-nick-done"),
             "why_not": statuses, "replay_exit": replay["exit_code"],
             "ids": [first["id"], invalid["id"], again["id"]], "model_sha256": first["model_sha256"],

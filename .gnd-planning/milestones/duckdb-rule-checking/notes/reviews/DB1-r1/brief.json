@@ -1,0 +1,48 @@
+{
+  "base": "a81c9af0",
+  "claims": [],
+  "created": "2026-11-28T15:46:23.442847+00:00",
+  "deleted": [],
+  "dirty": false,
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/duckdb-rule-checking/notes/reviews/DB1-r1/diff.patch",
+      "sha256": "ff32f57850e79fffb703ca510953a18abb7c4fb1c2154b5648328ba309fe63f7"
+    },
+    {
+      "path": ".gnd-planning/milestones/duckdb-rule-checking/evidence/DB1/query-successor.json",
+      "sha256": "59950cfdafba3530736899cfb98156cb0a8f6c7f9dc0811f85a211a3aa53f9ff"
+    },
+    {
+      "path": "docs/reference/capabilities.md",
+      "sha256": "89fd15882e584b9ddf2e4ba03cf47ae8b646a40b9ee4844bafb8aec1350f94ad"
+    },
+    {
+      "path": "src/gnd/export/pyrel_rules.py",
+      "sha256": "d939b2f4a120bc798b30344b3b4d4d75ec87e60226558d368a6b4cdd8d35f771"
+    },
+    {
+      "path": "tests/fixtures/duckdb-guarded-existence/model.orm.json",
+      "sha256": "b2b923a4fc11cdc64418134ac9cb8ceea39b9bbab7acb430a49ccc790fd51982"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "eadbf9a9e5fd1f9b79f5398a40d23fe8f830da51ae5ede65c493560dbf7b3dd4"
+    },
+    {
+      "path": "tests/test_duckdb_rule_checking_phase1.py",
+      "sha256": "196694e8d01d2048a0faf418f2bdfbfb01219e386033a8c091dfe2bcf9d23277"
+    },
+    {
+      "path": ".gnd-planning/milestones/duckdb-rule-checking/notes/phase-DB1-spec.md",
+      "sha256": "c12ad917800ee7cf4f9c25fde6372821b868162535c77e0d7fe98caf4dcda857"
+    }
+  ],
+  "head": "94fd93779c47458a82aa78ef022367f1a6b695fc",
+  "left_out": [],
+  "notes": [],
+  "pr": null,
+  "question": "Does the DuckDB-only lowering preserve joint correlation, native coverage, typed bindings and existing export behavior across supported snapshots? Inspect matcher assumptions and quantify any semantic limits.",
+  "subject": "phase",
+  "version": 1
+}

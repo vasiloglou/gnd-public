@@ -383,6 +383,13 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
         atoms = tuple(_atom(model, pattern) for pattern in payload["atoms"])
         if c.get("where") or c.get("negate") or any(_is_derived(model, a.relation) for a in (*domain, *atoms)):
             raise ExportInputError("guarded-exists-asserted-positive-only")
+        primitives = {}
+        for atom in (*domain, *atoms):
+            for role, arg in zip(model.roles(atom.relation), atom.args, strict=True):
+                if isinstance(arg, str) and arg.startswith("$"):
+                    primitive = model.raw_role_type(atom.relation, role["role_name"])
+                    if primitives.setdefault(arg, primitive) != primitive:
+                        raise ExportInputError("guarded-exists-variable-type-mismatch")
         if not _connected((*domain, *atoms)):
             raise ExportInputError("guarded-exists-disconnected")
         check = Check("exists", atoms=atoms)
@@ -422,7 +429,7 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
         required = tuple(dict.fromkeys(atom.relation for atom in check.atoms))
         guard = replace(found[0], refs=tuple(dict.fromkeys((*refs, *required))),
                         info=(("exists_coverage", required),))
-        return [guard, replace(guard, check=Check("none"), part="bindings", listing=True)]
+        return [replace(guard, check=Check("none"), part="bindings", listing=True), guard]
     if temporal:
         # GND leaves the rule unchecked when a computed date leaves years 1..9999 or past 10,000 date
         # applications; the report decides that from every binding, before reading the verdict. The
@@ -1621,6 +1628,30 @@ def _declare(variables, types, names) -> str:
     return f"    {left} = {right}"
 
 
+def _exists_budget(req, model, names):
+    """Charge native candidate visits, index probes and merged prefix assignments."""
+    from gnd.correspondence import GUARDED_EXISTS_WORK_LIMIT
+
+    key = req.id + "::exists-work"
+    previous = req.id + "::previous-count"
+    relations = tuple(atom.relation for atom in req.check.atoms)
+    lines = [
+        f"    found[{previous!r}] = len(found[{req.id + '::bindings'!r}])",
+        f"    found[{key!r}] = sum(len(facts.get(rel, ())) for rel in {relations!r}) if found[{previous!r}] else 0",
+    ]
+    for depth in range(1, len(req.check.atoms) + 1):
+        prefix = (*req.domain, *req.check.atoms[:depth])
+        terms = ", ".join(_atom_text(atom, names, model) for atom in prefix)
+        variables = ", ".join(names.var(v) for v in _variables(prefix))
+        lines.extend([
+            f"    if found[{previous!r}] and found[{key!r}] <= {GUARDED_EXISTS_WORK_LIMIT}:",
+            f"        found[{key!r}] += found[{previous!r}]",
+            f"        found[{previous!r}] = sum(row[0] for row in rows(m.where({terms}).select(aggregates.count({variables}))))",
+            f"        found[{key!r}] += found[{previous!r}]",
+        ])
+    return lines, f"found[{key!r}] <= {GUARDED_EXISTS_WORK_LIMIT}"
+
+
 def _rule_block(req: Requirement, model: _Model, names: _Names, target: str) -> list[str]:
     strength = "must" if req.modality == "alethic" else "should"
     types = _types(model, req)
@@ -1640,6 +1671,10 @@ def _rule_block(req: Requirement, model: _Model, names: _Names, target: str) -> 
         lines.append(f"    #   rule:      {require_text(req, names, model)}")
         lines.append("    #   violation: the facts that match the domain and fail the check")
         query = f"rows({denial_text(req, names, model)})"
+        if req.check.kind == "exists":
+            budget_lines, within_budget = _exists_budget(req, model, names)
+            lines.extend(budget_lines)
+            query = f"{query} if {within_budget} else None"
         if dict(req.info).get("temporal"):   # violations come from bindings; with none, skip the date arithmetic
             query = f"{query} if found[{req.id + '::bindings'!r}] else []"
         lines.append(f"    found[{key!r}] = {query}")
@@ -1668,6 +1703,10 @@ _EXISTS_REPORT = """\
             missing = sorted(set(rule['info']['exists_coverage']) - covers)
             if missing and found[f'{name}::bindings']:
                 print(f'{name}  not checked  (guarded-exists-coverage-missing: {", ".join(missing)})')
+                unchecked = unchecked or rule['modality'] == 'alethic'
+                continue
+            if found[name] is None:
+                print(f'{name}  not checked  (guarded-exists-work-limit)')
                 unchecked = unchecked or rule['modality'] == 'alethic'
                 continue
             hits = witnesses(rule, found[name])

@@ -77,3 +77,37 @@ def test_renamed_roles_and_reordered_consequent(tmp_path):
     path = tmp_path / MODEL.name
     path.write_text(json.dumps(doc))
     assert "not_(approved(" in render(path, "duckdb")
+
+
+def test_joint_variable_must_have_one_primitive(tmp_path):
+    doc = json.loads(MODEL.read_bytes())
+    doc["object_types"].append({"id": "number", "name": "NumberId", "kind": "value", "primitive": "Integer"})
+    approved = doc["fact_types"][-1]
+    approved["roles"][0]["object_type"] = "number"
+    approved["reading"] = "{NumberId} is approved"
+    path = tmp_path / MODEL.name
+    path.write_text(json.dumps(doc))
+    with pytest.raises(ExportInputError, match="variable-type-mismatch"):
+        render(path, "duckdb")
+
+
+@pytest.mark.parametrize(("size", "expected"), [(200, 0), (500, 4)])
+def test_existential_work_ceiling_on_joint_prefixes(tmp_path, size, expected):
+    interpreter = os.environ.get("GND_TUTORIAL_PYREL_PYTHON")
+    if not interpreter:
+        pytest.skip("requires isolated PyRel runtime")
+    doc = json.loads(MODEL.read_bytes())
+    doc["constraints"][0]["consequent"]["exists"]["atoms"].reverse()
+    model = tmp_path / MODEL.name
+    model.write_text(json.dumps(doc))
+    keys = [str(i) for i in range(size)]
+    data = population(keys, requested=keys)
+    data["facts"]["outcome"] = [{"id": key, "result": key} for key in keys]
+    path = tmp_path / "population.json"
+    path.write_text(json.dumps(data))
+    assert api.check(model, path)["exit_code"] == expected
+    script = tmp_path / "rules.py"
+    script.write_text(render(model, "duckdb"))
+    result = subprocess.run([interpreter, str(script), str(path)], cwd=tmp_path, timeout=90,
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == expected, (result.stdout, result.stderr)
